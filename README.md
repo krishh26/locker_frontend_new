@@ -1,4 +1,4 @@
-# Locker Frontend
+# Locker
 
 A comprehensive Learning Management System (LMS) built with Next.js, React, and TypeScript. This platform provides role-based access control for managing courses, continuing professional development (CPD), evidence libraries, and more.
 

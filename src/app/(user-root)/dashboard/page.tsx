@@ -1,0 +1,18 @@
+"use client"
+
+import { useAppSelector } from "@/store/hooks"
+import { AdminDashboard } from "./components/admin-sections/admin-dashboard"
+import { LearnerDashboard } from "./components/learner-section/learner-dashboard"
+
+export default function DashboardPage() {
+  const userRole = useAppSelector((state) => state.auth.user?.role)
+
+  // Render dashboard based on user role
+  if (userRole === "Admin") {
+    return <AdminDashboard />
+  }
+
+  // Default to learner dashboard for all other roles
+  return <LearnerDashboard />
+}
+

@@ -1,0 +1,226 @@
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
+import type { RootState } from "@/store";
+import { assessmentMethods, qaStatuses } from "@/app/(admin-root)/qa-sample-plan/components/constants";
+
+export interface Plan {
+  id: string;
+  label: string;
+}
+
+export interface PlanSummary {
+  planId?: string;
+  courseName?: string;
+}
+
+interface QASamplePlanState {
+  // Selection state
+  selectedCourse: string;
+  selectedPlan: string;
+  plans: Plan[];
+
+  // Filter state
+  selectedMethods: string[];
+  selectedStatus: string;
+  sampleType: string;
+  dateFrom: string;
+  dateTo: string;
+  searchText: string;
+  onlyIncomplete: boolean;
+
+  // UI state
+  filterApplied: boolean;
+  filterError: string;
+  planSummary: PlanSummary | undefined;
+
+  // Unit selection (using arrays instead of Set for Redux serialization)
+  selectedUnitsMap: Record<string, string[]>;
+  unitSelectionDialogOpen: boolean;
+  selectedLearnerForUnits: {
+    learner: any;
+    learnerIndex: number;
+  } | null;
+}
+
+const initialState: QASamplePlanState = {
+  selectedCourse: "",
+  selectedPlan: "",
+  plans: [],
+  selectedMethods: assessmentMethods.map((method) => method.code),
+  selectedStatus: qaStatuses[0],
+  sampleType: "",
+  dateFrom: "",
+  dateTo: "",
+  searchText: "",
+  onlyIncomplete: false,
+  filterApplied: false,
+  filterError: "",
+  planSummary: undefined,
+  selectedUnitsMap: {},
+  unitSelectionDialogOpen: false,
+  selectedLearnerForUnits: null,
+};
+
+const qaSamplePlanSlice = createSlice({
+  name: "qaSamplePlan",
+  initialState,
+  reducers: {
+    setSelectedCourse: (state, action: PayloadAction<string>) => {
+      state.selectedCourse = action.payload;
+      state.selectedPlan = "";
+      state.plans = [];
+      state.filterApplied = false;
+      state.filterError = "";
+    },
+    setSelectedPlan: (state, action: PayloadAction<string>) => {
+      state.selectedPlan = action.payload;
+      state.filterApplied = false;
+      state.filterError = "";
+    },
+    setPlans: (state, action: PayloadAction<Plan[]>) => {
+      state.plans = action.payload;
+      // Clear selected plan if it's not in the new plans list
+      if (action.payload.length > 0 && !action.payload.some((plan) => plan.id === state.selectedPlan)) {
+        state.selectedPlan = "";
+        state.filterApplied = false;
+      }
+    },
+    setSelectedMethods: (state, action: PayloadAction<string[]>) => {
+      state.selectedMethods = action.payload;
+    },
+    toggleMethod: (state, action: PayloadAction<string>) => {
+      const code = action.payload;
+      if (state.selectedMethods.includes(code)) {
+        state.selectedMethods = state.selectedMethods.filter((item) => item !== code);
+      } else {
+        state.selectedMethods.push(code);
+      }
+    },
+    setSelectedStatus: (state, action: PayloadAction<string>) => {
+      state.selectedStatus = action.payload;
+    },
+    setSampleType: (state, action: PayloadAction<string>) => {
+      state.sampleType = action.payload;
+    },
+    setDateFrom: (state, action: PayloadAction<string>) => {
+      state.dateFrom = action.payload;
+    },
+    setDateTo: (state, action: PayloadAction<string>) => {
+      state.dateTo = action.payload;
+    },
+    setSearchText: (state, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
+    },
+    setOnlyIncomplete: (state, action: PayloadAction<boolean>) => {
+      state.onlyIncomplete = action.payload;
+    },
+    setFilterApplied: (state, action: PayloadAction<boolean>) => {
+      state.filterApplied = action.payload;
+    },
+    setFilterError: (state, action: PayloadAction<string>) => {
+      state.filterError = action.payload;
+    },
+    setPlanSummary: (state, action: PayloadAction<PlanSummary | undefined>) => {
+      state.planSummary = action.payload;
+    },
+    setSelectedUnitsMap: (state, action: PayloadAction<Record<string, string[]>>) => {
+      state.selectedUnitsMap = action.payload;
+    },
+    toggleUnitForLearner: (
+      state,
+      action: PayloadAction<{ learnerKey: string; unitKey: string }>
+    ) => {
+      const { learnerKey, unitKey } = action.payload;
+      const current = state.selectedUnitsMap[learnerKey] || [];
+      if (current.includes(unitKey)) {
+        state.selectedUnitsMap[learnerKey] = current.filter((key) => key !== unitKey);
+      } else {
+        state.selectedUnitsMap[learnerKey] = [...current, unitKey];
+      }
+    },
+    resetSelectedUnits: (state) => {
+      state.selectedUnitsMap = {};
+    },
+    setUnitSelectionDialogOpen: (state, action: PayloadAction<boolean>) => {
+      state.unitSelectionDialogOpen = action.payload;
+    },
+    setSelectedLearnerForUnits: (
+      state,
+      action: PayloadAction<{ learner: any; learnerIndex: number } | null>
+    ) => {
+      state.selectedLearnerForUnits = action.payload;
+      if (action.payload) {
+        const learnerKey = `${action.payload.learner.learner_name ?? ""}-${action.payload.learnerIndex}`;
+        if (!state.selectedUnitsMap[learnerKey]) {
+          state.selectedUnitsMap[learnerKey] = [];
+        }
+      }
+    },
+    resetFilters: (state) => {
+      state.selectedMethods = assessmentMethods.map((method) => method.code);
+      state.selectedStatus = qaStatuses[0];
+      state.sampleType = "";
+      state.dateFrom = "";
+      state.dateTo = "";
+      state.searchText = "";
+      state.onlyIncomplete = false;
+      state.filterApplied = false;
+      state.filterError = "";
+      state.planSummary = undefined;
+    },
+  },
+});
+
+export const {
+  setSelectedCourse,
+  setSelectedPlan,
+  setPlans,
+  setSelectedMethods,
+  toggleMethod,
+  setSelectedStatus,
+  setSampleType,
+  setDateFrom,
+  setDateTo,
+  setSearchText,
+  setOnlyIncomplete,
+  setFilterApplied,
+  setFilterError,
+  setPlanSummary,
+  setSelectedUnitsMap,
+  toggleUnitForLearner,
+  resetSelectedUnits,
+  setUnitSelectionDialogOpen,
+  setSelectedLearnerForUnits,
+  resetFilters,
+} = qaSamplePlanSlice.actions;
+
+// Selectors
+export const selectQASamplePlanState = (state: RootState) => state.qaSamplePlan;
+
+export const selectSelectedCourse = (state: RootState) => state.qaSamplePlan.selectedCourse;
+export const selectSelectedPlan = (state: RootState) => state.qaSamplePlan.selectedPlan;
+export const selectPlans = (state: RootState) => state.qaSamplePlan.plans;
+
+export const selectFilterState = (state: RootState) => ({
+  selectedMethods: state.qaSamplePlan.selectedMethods,
+  selectedStatus: state.qaSamplePlan.selectedStatus,
+  sampleType: state.qaSamplePlan.sampleType,
+  dateFrom: state.qaSamplePlan.dateFrom,
+  dateTo: state.qaSamplePlan.dateTo,
+  searchText: state.qaSamplePlan.searchText,
+  onlyIncomplete: state.qaSamplePlan.onlyIncomplete,
+  filterApplied: state.qaSamplePlan.filterApplied,
+  filterError: state.qaSamplePlan.filterError,
+});
+
+export const selectUnitSelection = (state: RootState) => ({
+  selectedUnitsMap: state.qaSamplePlan.selectedUnitsMap,
+  unitSelectionDialogOpen: state.qaSamplePlan.unitSelectionDialogOpen,
+  selectedLearnerForUnits: state.qaSamplePlan.selectedLearnerForUnits,
+});
+
+// Computed selectors - these will be computed in components using RTK Query hooks
+// Keeping simple selectors here for basic state access
+
+// Selector hooks (imported at component level to avoid circular dependencies)
+
+export default qaSamplePlanSlice.reducer;

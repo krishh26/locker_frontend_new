@@ -13,25 +13,30 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAcknowledgementsQuery } from "@/store/api/acknowledgement/acknowledgementApi";
 import { Separator } from "@/components/ui/separator";
+import { useUpdateLearnerMutation, useLazyGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi";
+import { useAppDispatch } from "@/store/hooks";
+import { setLearnerData } from "@/store/slices/authSlice";
+import { toast } from "sonner";
 
 interface AcknowledgementDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onClose: () => void;
-  onAccept: () => void;
+  learnerId: number | undefined;
   learnerName: string;
 }
 
 export function AcknowledgementDialog({
   open,
   onOpenChange,
-  onClose,
-  onAccept,
+  learnerId,
   learnerName,
 }: AcknowledgementDialogProps) {
-  const { data, isLoading } = useGetAcknowledgementsQuery(undefined as unknown as void,{
+  const dispatch = useAppDispatch();
+  const { data, isLoading } = useGetAcknowledgementsQuery(undefined as unknown as void, {
     skip: !open,
   });
+  const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation();
+  const [getLearnerDetails, { isLoading: isFetchingLearner }] = useLazyGetLearnerDetailsQuery();
 
   // Get the latest acknowledgement
   const latestAcknowledgement =
@@ -45,6 +50,79 @@ export function AcknowledgementDialog({
     link.click();
     document.body.removeChild(link);
   };
+
+  // Handle acknowledgement close
+  const handleClose = async () => {
+    if (learnerId) {
+      try {
+        // Update isShowMessage to false
+        await updateLearner({
+          id: learnerId,
+          data: {
+            isShowMessage: false,
+          },
+        }).unwrap();
+        
+        // Fetch updated learner data and store in Redux
+        const learnerResponse = await getLearnerDetails(learnerId).unwrap();
+        if (learnerResponse?.data) {
+          dispatch(setLearnerData(learnerResponse.data));
+        }
+        
+        // Close dialog after store is updated
+        onOpenChange(false);
+      } catch (error) {
+        const errorMessage =
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.error ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.message ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
+          "Failed to update acknowledgement status";
+        toast.error(errorMessage);
+      }
+    } else {
+      onOpenChange(false);
+    }
+  };
+
+  // Handle acknowledgement accept
+  const handleAccept = async () => {
+    if (learnerId) {
+      try {
+        // Update isShowMessage to false
+        await updateLearner({
+          id: learnerId,
+          data: {
+            isShowMessage: false,
+          },
+        }).unwrap();
+        
+        // Fetch updated learner data and store in Redux
+        const learnerResponse = await getLearnerDetails(learnerId).unwrap();
+        if (learnerResponse?.data) {
+          dispatch(setLearnerData(learnerResponse.data));
+        }
+        
+        // Close dialog after store is updated
+        onOpenChange(false);
+        toast.success("Acknowledgement accepted successfully");
+      } catch (error) {
+        const errorMessage =
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.error ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.message ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
+          "Failed to update acknowledgement status";
+        toast.error(errorMessage);
+      }
+    } else {
+      onOpenChange(false);
+    }
+  };
+
+  const isProcessing = isUpdating || isFetchingLearner;
 
   // Don't show dialog if no acknowledgement
   if (!isLoading && !latestAcknowledgement) {
@@ -115,14 +193,14 @@ export function AcknowledgementDialog({
         </div>
 
         <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onClose} disabled={isLoading}>
+          <Button variant="outline" onClick={handleClose} disabled={isLoading || isProcessing}>
             Cancel
           </Button>
-          <Button onClick={onAccept} disabled={isLoading}>
-            {isLoading ? (
+          <Button onClick={handleAccept} disabled={isLoading || isProcessing}>
+            {isProcessing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading...
+                Processing...
               </>
             ) : (
               "I Accept"

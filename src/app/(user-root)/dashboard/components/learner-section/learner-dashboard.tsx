@@ -13,11 +13,8 @@ import { AcknowledgementDialog } from './acknowledgement-dialog'
 import { Button } from '@/components/ui/button'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { clearCurrentCourseId } from '@/store/slices/courseSlice'
-import { setLearnerData } from '@/store/slices/authSlice'
 import { overviewCards } from '../../data/portfolio-data'
 import { SafeguardingCard } from './safeguarding-card'
-import { useUpdateLearnerMutation } from '@/store/api/learner/learnerApi'
-import { toast } from 'sonner'
 
 export function LearnerDashboard() {
   const router = useRouter()
@@ -28,8 +25,6 @@ export function LearnerDashboard() {
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false)
   const [isCalendarDialogOpen, setIsCalendarDialogOpen] = useState(false)
   const [isAcknowledgementOpen, setIsAcknowledgementOpen] = useState(false)
-
-  const [updateLearner] = useUpdateLearnerMutation()
 
   // Get learner's isShowMessage value
   const learnerIsShowMessage = (learner as { isShowMessage?: boolean })?.isShowMessage
@@ -51,67 +46,6 @@ export function LearnerDashboard() {
     }
   }, [learnerId, learnerIsShowMessage, isAcknowledgementOpen])
 
-  // Handle acknowledgement close
-  const handleAcknowledgementClose = async () => {
-    if (learner?.learner_id) {
-      try {
-        // Preserve all existing learner data and only update isShowMessage
-        const response = await updateLearner({
-          id: learner.learner_id,
-          data: {
-            isShowMessage: false,
-          },
-        }).unwrap()
-        if (response.data) {
-          dispatch(setLearnerData(response.data))
-          setIsAcknowledgementOpen(false)
-        }
-      } catch (error) {
-        const errorMessage =
-          (error as { data?: { error?: string; message?: string }; message?: string })?.data
-            ?.error ||
-          (error as { data?: { error?: string; message?: string }; message?: string })?.data
-            ?.message ||
-          (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
-          'Failed to update acknowledgement status'
-        toast.error(errorMessage)
-      }
-    } else {
-      setIsAcknowledgementOpen(false)
-    }
-  }
-
-  // Handle acknowledgement accept
-  const handleAcknowledgementAccept = async () => {
-    if (learner?.learner_id) {
-      try {
-        // Preserve all existing learner data and only update isShowMessage
-        const response = await updateLearner({
-          id: learner.learner_id,
-          data: {
-            isShowMessage: false,
-          },
-        }).unwrap()
-        // Update learner data in Redux store with the response
-        if (response.data) {
-          dispatch(setLearnerData(response.data))
-          setIsAcknowledgementOpen(false)
-        }
-        toast.success('Acknowledgement accepted successfully')
-      } catch (error) {
-        const errorMessage =
-          (error as { data?: { error?: string; message?: string }; message?: string })?.data
-            ?.error ||
-          (error as { data?: { error?: string; message?: string }; message?: string })?.data
-            ?.message ||
-          (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
-          'Failed to update acknowledgement status'
-        toast.error(errorMessage)
-      }
-    } else {
-      setIsAcknowledgementOpen(false)
-    }
-  }
 
   // Get count data for portfolio cards
   const countData = useMemo(() => {
@@ -204,8 +138,7 @@ export function LearnerDashboard() {
         <AcknowledgementDialog
           open={isAcknowledgementOpen}
           onOpenChange={setIsAcknowledgementOpen}
-          onClose={handleAcknowledgementClose}
-          onAccept={handleAcknowledgementAccept}
+          learnerId={learner.learner_id}
           learnerName={`${learner.first_name} ${learner.last_name}`}
         />
       )}

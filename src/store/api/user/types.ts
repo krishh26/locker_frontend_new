@@ -90,3 +90,16 @@ export interface UserResponse {
   data: User;
 }
 
+export interface ChangeUserRoleRequest {
+  role: string;
+}
+
+export interface ChangeUserRoleResponse {
+  message: string;
+  status: boolean;
+  data: {
+    accessToken: string;
+    user: User;
+  };
+}
+

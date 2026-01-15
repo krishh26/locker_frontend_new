@@ -349,6 +349,7 @@ const data: {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const learner = useAppSelector((state) => state.auth.learner)
 
@@ -445,17 +446,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         {/* <SidebarNotification /> */}
-        {learner && (
-          <NavUser
-            learner={
-              learner as unknown as {
-                first_name: string
-                last_name: string
-                email: string
-              }
-            }
-          />
-        )}
+        {(user || learner) && <NavUser />}
       </SidebarFooter>
     </Sidebar>
   )

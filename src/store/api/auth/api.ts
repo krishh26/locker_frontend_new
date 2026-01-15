@@ -76,6 +76,7 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
       (user.last_name as string | undefined) ??
       (user.lastName as string | undefined),
     role: user.role as string | undefined,
+    roles: user.roles as string[] | undefined,
     learner_id: (user.learner_id as number | undefined) ?? (user.learner_id as string | undefined),
   }
 

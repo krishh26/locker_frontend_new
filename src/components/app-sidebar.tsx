@@ -1,6 +1,6 @@
 'use client'
 
-import { Lock, Users, Shield, MessageSquare, Clock, Download } from 'lucide-react'
+import { Lock, Users, Shield, MessageSquare, Clock, Download, FileSignature } from 'lucide-react'
 import {
   LayoutDashboard,
   MessageCircle,
@@ -266,6 +266,16 @@ const data: {
           title: 'Timelog Data Export',
           url: '/timelog-export',
           icon: Download,
+        },
+        {
+          title: 'Awaiting Signature',
+          url: '/awaiting-signature',
+          icon: FileSignature,
+        },
+        {
+          title: 'Gateway Report',
+          url: '/gateway-report',
+          icon: FileBarChart,
         },
         {
           title: 'Learner Mangement',

@@ -32,6 +32,7 @@ export type AuthUser = {
   firstName?: string;
   lastName?: string;
   role?: string;
+  roles?: string[];
   [key: string]: unknown;
 };
 

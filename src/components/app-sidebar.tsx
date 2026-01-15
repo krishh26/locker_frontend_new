@@ -1,6 +1,6 @@
 'use client'
 
-import { Lock, Users, Shield, MessageSquare, Clock } from 'lucide-react'
+import { Lock, Users, Shield, MessageSquare, Clock, Download, FileSignature, Ban } from 'lucide-react'
 import {
   LayoutDashboard,
   MessageCircle,
@@ -263,6 +263,26 @@ const data: {
           icon: Clock,
         },
         {
+          title: 'Timelog Data Export',
+          url: '/timelog-export',
+          icon: Download,
+        },
+        {
+          title: 'Awaiting Signature',
+          url: '/awaiting-signature',
+          icon: FileSignature,
+        },
+        {
+          title: 'Gateway Report',
+          url: '/gateway-report',
+          icon: FileBarChart,
+        },
+        {
+          title: 'Exclude From Overall Progress',
+          url: '/progress-exclusion',
+          icon: Ban,
+        },
+        {
           title: 'Learner Mangement',
           url: '/learners',
           icon: Users,
@@ -329,6 +349,7 @@ const data: {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const learner = useAppSelector((state) => state.auth.learner)
 
@@ -425,17 +446,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         {/* <SidebarNotification /> */}
-        {learner && (
-          <NavUser
-            learner={
-              learner as unknown as {
-                first_name: string
-                last_name: string
-                email: string
-              }
-            }
-          />
-        )}
+        {(user || learner) && <NavUser />}
       </SidebarFooter>
     </Sidebar>
   )

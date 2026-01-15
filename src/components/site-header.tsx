@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { LogOut } from "lucide-react"
+import { LogOut, UserCog, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -11,8 +11,17 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { CommandSearch, SearchTrigger } from "@/components/command-search"
 import { ModeToggle } from "@/components/mode-toggle"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
-import { clearCredentials } from "@/store/slices/authSlice"
+import { clearCredentials, setCredentials } from "@/store/slices/authSlice"
+import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
+import type { AuthUser } from "@/store/api/auth/types"
+import type { User } from "@/store/api/user/types"
 
 export function SiteHeader() {
   const [searchOpen, setSearchOpen] = React.useState(false)
@@ -20,12 +29,69 @@ export function SiteHeader() {
   const router = useRouter()
   const { token, user } = useAppSelector((state) => state.auth)
   const isAuthenticated = Boolean(token && user)
+  const [changeUserRole, { isLoading: isChangingRole }] = useChangeUserRoleMutation()
+
+  // Get available roles from user object
+  const availableRoles = (user?.roles as string[] | undefined) || []
+  const currentRole = user?.role || ""
 
   const handleLogout = React.useCallback(() => {
     dispatch(clearCredentials())
     toast.success("You have been logged out")
     router.push("/")
   }, [dispatch, router])
+
+  // Handle role change
+  const handleRoleChange = React.useCallback(
+    async (role: string) => {
+      if (role === currentRole) {
+        return // Don't change if already selected
+      }
+
+      try {
+        const response = await changeUserRole({ role }).unwrap()
+
+        if (response.data) {
+          // Transform the user object from API response to AuthUser format
+          const apiUser = response.data.user as User & { role?: string }
+
+          const updatedUser: AuthUser = {
+            ...apiUser, // Include all properties first
+            id: apiUser.user_id?.toString(),
+            firstName: apiUser.first_name,
+            lastName: apiUser.last_name,
+            email: apiUser.email,
+            roles: apiUser.roles,
+            role: apiUser.role,
+          }
+
+          // Update Redux store with new token and user
+          dispatch(
+            setCredentials({
+              token: response.data.accessToken,
+              user: updatedUser,
+              passwordChanged: true,
+            })
+          )
+
+          toast.success(response.message || "Role changed successfully")
+
+          // Navigate to dashboard
+          router.push("/dashboard")
+        }
+      } catch (error) {
+        const errorMessage =
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.error ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.data
+            ?.message ||
+          (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
+          "Failed to change role"
+        toast.error(errorMessage)
+      }
+    },
+    [currentRole, changeUserRole, dispatch, router]
+  )
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -83,6 +149,44 @@ export function SiteHeader() {
               </a>
             </Button> */}
             <ModeToggle />
+            {/* Change Role - Only show for non-Learner users */}
+            {isAuthenticated &&
+              user &&
+              user.role !== "Learner" &&
+              availableRoles.length > 0 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="cursor-pointer"
+                      disabled={isChangingRole}
+                    >
+                      {isChangingRole ? (
+                        <Loader2 className="h-[1.2rem] w-[1.2rem] animate-spin" />
+                      ) : (
+                        <UserCog className="h-[1.2rem] w-[1.2rem]" />
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    {availableRoles
+                      .slice()
+                      .reverse()
+                      .map((role) => (
+                        <DropdownMenuItem
+                          key={role}
+                          onClick={() => handleRoleChange(role)}
+                          disabled={isChangingRole || role === currentRole}
+                          className={role === currentRole ? "bg-accent" : ""}
+                        >
+                          {role}
+                          {role === currentRole && " (Current)"}
+                        </DropdownMenuItem>
+                      ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             {isAuthenticated ? (
               <Button
                 variant="ghost"

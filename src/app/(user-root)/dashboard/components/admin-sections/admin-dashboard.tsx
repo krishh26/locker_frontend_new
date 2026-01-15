@@ -10,13 +10,14 @@ import {
   useLazyGetCardDataQuery,
 } from "@/store/api/dashboard/dashboardApi"
 import type { DashboardCounts } from "@/store/api/dashboard/types"
+import { useAppSelector } from "@/store/hooks"
 
 export function AdminDashboard() {
   const { data: dashboardData, isLoading: loading } = useGetDashboardCountsQuery()
   const [getCardData] = useLazyGetCardDataQuery()
   const [exporting, setExporting] = useState<Record<string, boolean>>({})
   const [fetchingData, setFetchingData] = useState<Record<string, boolean>>({})
-
+  const userRole = useAppSelector((state) => state.auth.user?.role)
   // Extract counts from API response
   const counts: DashboardCounts = dashboardData?.data || ({} as DashboardCounts)
 
@@ -108,7 +109,7 @@ export function AdminDashboard() {
     <div className="flex flex-col gap-6">
       <div className="px-4 lg:px-6">
         <PageHeader
-          title="Admin Dashboard"
+          title={`${userRole} Dashboard`}
           subtitle="Manage users, learners, courses, and system settings"
           icon={ShieldCheck}
         />

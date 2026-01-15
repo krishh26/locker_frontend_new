@@ -8,7 +8,7 @@ export default function DashboardPage() {
   const userRole = useAppSelector((state) => state.auth.user?.role)
 
   // Render dashboard based on user role
-  if (userRole === "Admin") {
+  if (userRole !== "Learner") {
     return <AdminDashboard />
   }
 

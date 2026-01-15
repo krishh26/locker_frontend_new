@@ -86,6 +86,22 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/session-types(?:\/|$)/,
     roles: authRoles.Admin,
   },
+  {
+    pattern: /^\/timelog-export(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/awaiting-signature(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/gateway-report(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/progress-exclusion(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
   // Learner pages (accessible to Admin and Learner)
   {
     pattern: /^\/cpd(?:\/|$)/,

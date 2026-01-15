@@ -5,6 +5,8 @@ import type {
   CreateUserRequest,
   UpdateUserRequest,
   UserResponse,
+  ChangeUserRoleRequest,
+  ChangeUserRoleResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -86,6 +88,19 @@ export const userApi = createApi({
         return response;
       },
     }),
+    changeUserRole: builder.mutation<ChangeUserRoleResponse, ChangeUserRoleRequest>({
+      query: (body) => ({
+        url: "/user/changerole/",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: ChangeUserRoleResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -95,5 +110,6 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useChangeUserRoleMutation,
 } = userApi;
 

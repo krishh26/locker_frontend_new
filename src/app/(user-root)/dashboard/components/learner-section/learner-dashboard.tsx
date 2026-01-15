@@ -9,6 +9,7 @@ import { LearnerInfoCard } from './learner-info-card'
 import { CourseProgressCharts } from './course-progress-charts'
 import { EmailDialog } from './email-dialog'
 import { CalendarDialog } from './calendar-dialog'
+import { AcknowledgementDialog } from './acknowledgement-dialog'
 import { Button } from '@/components/ui/button'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { clearCurrentCourseId } from '@/store/slices/courseSlice'
@@ -23,11 +24,28 @@ export function LearnerDashboard() {
 
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false)
   const [isCalendarDialogOpen, setIsCalendarDialogOpen] = useState(false)
+  const [isAcknowledgementOpen, setIsAcknowledgementOpen] = useState(false)
+
+  // Get learner's isShowMessage value
+  const learnerIsShowMessage = (learner as { isShowMessage?: boolean })?.isShowMessage
+  const learnerId = learner?.learner_id
 
   // Reset course ID when dashboard mounts
   useEffect(() => {
     dispatch(clearCurrentCourseId())
   }, [dispatch])
+
+  // Auto-open acknowledgement dialog when learner has isShowMessage set to true
+  useEffect(() => {
+    if (
+      learnerId &&
+      learnerIsShowMessage === true &&
+      !isAcknowledgementOpen
+    ) {
+      setIsAcknowledgementOpen(true)
+    }
+  }, [learnerId, learnerIsShowMessage, isAcknowledgementOpen])
+
 
   // Get count data for portfolio cards
   const countData = useMemo(() => {
@@ -114,6 +132,16 @@ export function LearnerDashboard() {
         open={isCalendarDialogOpen}
         onOpenChange={setIsCalendarDialogOpen}
       />
+
+      {/* Acknowledgement Dialog */}
+      {learner && (
+        <AcknowledgementDialog
+          open={isAcknowledgementOpen}
+          onOpenChange={setIsAcknowledgementOpen}
+          learnerId={learner.learner_id}
+          learnerName={`${learner.first_name} ${learner.last_name}`}
+        />
+      )}
     </>
   )
 }

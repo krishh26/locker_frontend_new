@@ -116,6 +116,7 @@ export interface UpdateLearnerRequest {
   national_ins_no?: string;
   job_title?: string;
   comment?: string;
+  isShowMessage?: boolean;
 }
 
 export interface UpdateLearnerCommentRequest {

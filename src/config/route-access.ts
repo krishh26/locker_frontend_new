@@ -16,6 +16,9 @@ const adminAndLearnerRoles = ["Admin", "Learner"] as const satisfies readonly Ro
 // Admin and Trainer roles combined
 const adminAndTrainerRoles = ["Admin", "Trainer"] as const satisfies readonly Role[]
 
+// Admin, Learner, and Trainer roles combined (for learner pages accessible to trainers)
+const adminLearnerAndTrainerRoles = ["Admin", "Learner", "Trainer"] as const satisfies readonly Role[]
+
 const routeRoleRules: RouteRule[] = [
   // Admin-only routes
   {
@@ -28,7 +31,11 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/learners(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: adminAndTrainerRoles,
+  },
+  {
+    pattern: /^\/learner-profile(?:\/|$)/,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/employers(?:\/|$)/,
@@ -102,18 +109,18 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/progress-exclusion(?:\/|$)/,
     roles: authRoles.Admin,
   },
-  // Learner pages (accessible to Admin and Learner)
+  // Learner pages (accessible to Admin, Learner, and Trainer)
   {
     pattern: /^\/cpd(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/forum(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/skills-scan(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/forms(?:\/|$)/,
@@ -133,75 +140,84 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/learner-forms(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/support(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/surveys(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/evidence-library(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/learning-plan(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/course-resources(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/learners-documents-to-sign(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/resources(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/time-log(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/choose-units(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/course-details(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/chat(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/mail(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   {
     pattern: /^\/tasks(?:\/|$)/,
-    roles: adminAndLearnerRoles,
+    roles: adminLearnerAndTrainerRoles,
   },
   // Dashboard 2 (Admin and Trainer)
   {
     pattern: /^\/dashboard-2(?:\/|$)/,
+    roles: adminAndTrainerRoles,
+  },
+  // Trainer-only routes
+  {
+    pattern: /^\/learner-overview(?:\/|$)/,
+    roles: authRoles.Trainer,
+  },
+  {
+    pattern: /^\/learner-dashboard\/\d+(?:\/|$)/,
     roles: adminAndTrainerRoles,
   },
   // Main dashboard (accessible to all roles - content is role-based)

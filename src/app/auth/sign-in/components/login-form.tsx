@@ -91,7 +91,7 @@ export function LoginForm({
       console.log("🚀 ~ onSubmit ~ err:", err)
       const message = extractBaseQueryErrorMessage(err as FetchBaseQueryError)
       dispatch(setAuthError(message))
-      toast.error(message)
+      toast.error(message || "An error occurred while logging in. Please try again.")
     }
   })
 

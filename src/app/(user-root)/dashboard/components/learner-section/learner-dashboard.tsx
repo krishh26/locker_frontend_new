@@ -29,6 +29,7 @@ export function LearnerDashboard() {
   // Get learner's isShowMessage value
   const learnerIsShowMessage = (learner as { isShowMessage?: boolean })?.isShowMessage
   const learnerId = learner?.learner_id
+  const userRole = user?.role
 
   // Reset course ID when dashboard mounts
   useEffect(() => {
@@ -38,13 +39,14 @@ export function LearnerDashboard() {
   // Auto-open acknowledgement dialog when learner has isShowMessage set to true
   useEffect(() => {
     if (
-      learnerId &&
+      learnerId &&  
       learnerIsShowMessage === true &&
       !isAcknowledgementOpen
+      && userRole === 'Learner'
     ) {
       setIsAcknowledgementOpen(true)
     }
-  }, [learnerId, learnerIsShowMessage, isAcknowledgementOpen])
+  }, [learnerId, learnerIsShowMessage, isAcknowledgementOpen, userRole])
 
 
   // Get count data for portfolio cards

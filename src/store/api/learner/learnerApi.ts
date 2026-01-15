@@ -122,6 +122,16 @@ export const learnerApi = createApi({
         return response;
       },
     }),
+    getLearnersByUser: builder.query<LearnerListResponse, { user_id: number; role: string }>({
+      query: ({ user_id, role }) => `/learner/list?user_id=${user_id}&role=${role}`,
+      providesTags: ["Learner"],
+      transformResponse: (response: LearnerListResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -134,5 +144,6 @@ export const {
   useDeleteLearnerMutation,
   useUpdateLearnerCommentMutation,
   useBulkCreateLearnersMutation,
+  useGetLearnersByUserQuery,
 } = learnerApi;
 

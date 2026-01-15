@@ -1,6 +1,6 @@
 'use client'
 
-import { Lock, Users, Shield, MessageSquare, Clock } from 'lucide-react'
+import { Lock, Users, Shield, MessageSquare, Clock, Download } from 'lucide-react'
 import {
   LayoutDashboard,
   MessageCircle,
@@ -261,6 +261,11 @@ const data: {
           title: 'Session Types',
           url: '/session-types',
           icon: Clock,
+        },
+        {
+          title: 'Timelog Data Export',
+          url: '/timelog-export',
+          icon: Download,
         },
         {
           title: 'Learner Mangement',

@@ -9,6 +9,8 @@ import type {
   TimeLogResponse,
   OtjSummaryRequest,
   OtjSummaryResponse,
+  TimeLogExportRequest,
+  TimeLogExportResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -141,6 +143,36 @@ export const timeLogApi = createApi({
         return response;
       },
     }),
+    getTimeLogExport: builder.mutation<TimeLogExportResponse, TimeLogExportRequest>({
+      query: (params) => {
+        const url = `/time-log/list?`;
+        const queryParams: string[] = [];
+        
+        if (params.trainer_id) {
+          queryParams.push(`trainer_id=${encodeURIComponent(params.trainer_id)}`);
+        }
+        if (params.course_id) {
+          queryParams.push(`course_id=${encodeURIComponent(params.course_id)}`);
+        }
+        if (params.date_from) {
+          queryParams.push(`date_from=${encodeURIComponent(params.date_from)}`);
+        }
+        if (params.date_to) {
+          queryParams.push(`date_to=${encodeURIComponent(params.date_to)}`);
+        }
+        if (params.type) {
+          queryParams.push(`type=${encodeURIComponent(params.type)}`);
+        }
+        
+        return url + queryParams.join("&");
+      },
+      transformResponse: (response: TimeLogExportResponse) => {
+        if (response.status === false) {
+          throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -152,4 +184,5 @@ export const {
   useUpdateTimeLogMutation,
   useDeleteTimeLogMutation,
   useGetOtjSummaryQuery,
+  useGetTimeLogExportMutation,
 } = timeLogApi;

@@ -86,6 +86,10 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/session-types(?:\/|$)/,
     roles: authRoles.Admin,
   },
+  {
+    pattern: /^\/timelog-export(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
   // Learner pages (accessible to Admin and Learner)
   {
     pattern: /^\/cpd(?:\/|$)/,

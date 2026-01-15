@@ -135,3 +135,44 @@ export type OtjSummaryResponse = {
   message?: string;
   error?: string;
 };
+
+export type TimeLogExportRequest = {
+  trainer_id?: string;
+  course_id?: string;
+  date_from?: string; // ISO date string (YYYY-MM-DD)
+  date_to?: string; // ISO date string (YYYY-MM-DD)
+  type?: string; // "Off the job" | "On the job" | "Not Applicable"
+};
+
+export type TimeLogExportData = {
+  id: number;
+  activity_date: string;
+  activity_type: string;
+  unit: string;
+  type: string;
+  spend_time: string;
+  start_time: string;
+  end_time: string;
+  impact_on_learner: string;
+  evidence_link: string;
+  verified: boolean;
+  created_at: string;
+  updated_at: string;
+  trainer_id: {
+    user_id: number;
+    user_name: string;
+    email: string;
+  };
+  course_id: {
+    course_id: number;
+    course_name: string;
+    course_code: string;
+  };
+};
+
+export type TimeLogExportResponse = {
+  status: boolean;
+  data?: TimeLogExportData[];
+  message?: string;
+  error?: string;
+};

@@ -22,6 +22,7 @@ import {
   Trash2,
   MessageSquare,
   Upload,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,6 +50,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -60,6 +66,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {
   useGetLearnersListQuery,
+  useGetLearnersByUserQuery,
   useDeleteLearnerMutation,
 } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem, LearnerFilters } from "@/store/api/learner/types";
@@ -86,8 +93,11 @@ const statusOptions = [
 ];
 
 export function LearnersDataTable() {
-  const userRole = useAppSelector((state) => state.auth.user?.role);
-  const canEditComments = userRole === "Admin" || userRole === "Trainer";
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isAdmin = userRole === "Admin";
+  const isTrainer = userRole === "Trainer";
+  const canEditComments = isAdmin || isTrainer;
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -110,10 +120,111 @@ export function LearnersDataTable() {
   const [learnerForComment, setLearnerForComment] = useState<LearnerListItem | null>(null);
   const [csvUploadOpen, setCsvUploadOpen] = useState(false);
 
-  const { data, isLoading, refetch } = useGetLearnersListQuery(filters);
+  // Client-side pagination state for trainers
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  // Admin uses server-side filtered API
+  const { data: adminData, isLoading: isAdminLoading, refetch: adminRefetch } = useGetLearnersListQuery(filters, {
+    skip: !isAdmin,
+  });
+
+  // Trainer uses user-specific API
+  const { data: trainerData, isLoading: isTrainerLoading, refetch: trainerRefetch } = useGetLearnersByUserQuery(
+    {
+      user_id: Number(user?.id) || 0,
+      role: user?.role || "",
+    },
+    {
+      skip: !isTrainer || !user?.id || !user?.role,
+    }
+  );
+
+  // Select appropriate data and loading state
+  const data = isAdmin ? adminData : trainerData;
+  const isLoading = isAdmin ? isAdminLoading : isTrainerLoading;
+  const refetch = isAdmin ? adminRefetch : trainerRefetch;
+
   const [deleteLearner, { isLoading: isDeleting }] = useDeleteLearnerMutation();
 
-  // Build status filter string from checkboxes
+  // Filter out employee learners for trainers (those with employer_id)
+  const filteredLearners = useMemo<LearnerListItem[]>(() => {
+    return Array.isArray(data?.data) ? data.data : [];
+  }, [data]);
+
+  // Client-side filtering for trainers (search, status)
+  const clientFilteredLearners = useMemo(() => {
+    if (isAdmin) {
+      return filteredLearners;
+    }
+    if (isTrainer) {
+      let result = [...filteredLearners];
+
+      // Apply search filter
+      if (globalFilter.trim()) {
+        const query = globalFilter.toLowerCase().trim();
+        result = result.filter((learner) => {
+          const firstName = (learner?.first_name || "").toString().toLowerCase();
+          const lastName = (learner?.last_name || "").toString().toLowerCase();
+          const fullName = `${firstName} ${lastName}`;
+          const learnerId = (learner?.learner_id || "").toString().toLowerCase();
+          const email = (learner?.email || "").toString().toLowerCase();
+          const comment = (learner?.comment || "").toString().toLowerCase();
+
+          return (
+            firstName.includes(query) ||
+            lastName.includes(query) ||
+            fullName.includes(query) ||
+            learnerId.includes(query) ||
+            email.includes(query) ||
+            comment.includes(query)
+          );
+        });
+      }
+
+      // Apply status filter
+      const selectedStatuses = Object.entries(statusFilters)
+        .filter(([_, checked]) => checked)
+        .map(([status]) => status);
+      if (selectedStatuses.length > 0) {
+        result = result.filter((learner) => {
+          const learnerStatus = learner.status || "";
+          return selectedStatuses.includes(learnerStatus);
+        });
+      }
+
+      // Apply course filter
+      if (courseFilter && courseFilter !== "all") {
+        const courseId = Number(courseFilter);
+        result = result.filter((learner) => {
+          return learner.course?.some((c) => c.course?.course_id === courseId);
+        });
+      }
+
+      return result;
+    }
+    return [];
+  }, [filteredLearners, globalFilter, statusFilters, courseFilter, isAdmin, isTrainer]);
+
+  // Client-side pagination for trainers
+  const paginatedLearners = useMemo(() => {
+    if (isAdmin) {
+      return clientFilteredLearners;
+    }
+    if (isTrainer) {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      return clientFilteredLearners.slice(startIndex, endIndex);
+    }
+    return [];
+  }, [clientFilteredLearners, currentPage, itemsPerPage, isAdmin, isTrainer]);
+
+  // Calculate total pages
+  const totalPages = isAdmin
+    ? data?.meta_data?.pages || 0
+    : Math.ceil(clientFilteredLearners.length / itemsPerPage);
+
+  // Build status filter string from checkboxes (for admin server-side filtering)
   const statusFilterString = useMemo(() => {
     const selectedStatuses = Object.entries(statusFilters)
       .filter(([_, checked]) => checked)
@@ -121,28 +232,40 @@ export function LearnersDataTable() {
     return selectedStatuses.length > 0 ? selectedStatuses.join(", ") : "";
   }, [statusFilters]);
 
-  // Update filters when any filter changes
+  // Update filters when any filter changes (admin only)
   useEffect(() => {
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      keyword: globalFilter || undefined,
-      course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
-      employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
-      status: statusFilterString || undefined,
-    }));
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString]);
+    if (isAdmin) {
+      setFilters((prev) => ({
+        ...prev,
+        page: 1,
+        keyword: globalFilter || undefined,
+        course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
+        employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
+        status: statusFilterString || undefined,
+      }));
+    }
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin]);
+
+  // Reset to page 1 when filters change (trainer)
+  useEffect(() => {
+    if (isTrainer) {
+      setCurrentPage(1);
+    }
+  }, [globalFilter, statusFilters, courseFilter, isTrainer]);
 
   const handleSearch = useCallback(() => {
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      keyword: globalFilter || undefined,
-      course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
-      employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
-      status: statusFilterString || undefined,
-    }));
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString]);
+    if (isAdmin) {
+      setFilters((prev) => ({
+        ...prev,
+        page: 1,
+        keyword: globalFilter || undefined,
+        course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
+        employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
+        status: statusFilterString || undefined,
+      }));
+    }
+    // For trainers, filtering is handled client-side in useMemo
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -157,14 +280,16 @@ export function LearnersDataTable() {
     setStatusFilters(
       statusOptions.reduce((acc, status) => ({ ...acc, [status]: false }), {})
     );
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      keyword: undefined,
-      course_id: undefined,
-      employer_id: undefined,
-      status: undefined,
-    }));
+    if (isAdmin) {
+      setFilters((prev) => ({
+        ...prev,
+        page: 1,
+        keyword: undefined,
+        course_id: undefined,
+        employer_id: undefined,
+        status: undefined,
+      }));
+    }
   };
 
   const handleAddNew = () => {
@@ -210,17 +335,22 @@ export function LearnersDataTable() {
   };
 
   const handlePageChange = (page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
+    if (isAdmin) {
+      setFilters((prev) => ({ ...prev, page }));
+    } else {
+      setCurrentPage(page);
+    }
   };
 
   const handleExportCsv = () => {
-    if (!data?.data || data.data.length === 0) {
+    const exportData = isAdmin ? (data?.data || []) : clientFilteredLearners;
+    if (!exportData || exportData.length === 0) {
       toast.info("No data to export");
       return;
     }
 
     const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
-    const rows = data.data.map((learner) => [
+    const rows = exportData.map((learner) => [
       `${learner.first_name} ${learner.last_name}`,
       learner.user_name,
       learner.email,
@@ -276,19 +406,51 @@ export function LearnersDataTable() {
         cell: ({ row }) => {
           const courses = row.original.course;
           if (!courses || courses.length === 0) return "-";
-          return courses.map((c) => c.course.course_name).join(", ");
+          return (
+            <div className="flex items-center gap-1">
+              {courses.map((c, index) => {
+                const courseName = c.course?.course_name || "Unknown Course";
+                return (
+                  <Tooltip key={index}>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center justify-center cursor-pointer">
+                        <BookOpen className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">{courseName}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </div>
+          );
         },
       },
       {
         accessorKey: "comment",
         header: "Comment",
         cell: ({ row }) => {
-          const comment = row.original.comment;
-          if (!comment) return "-";
+          const learner = row.original;
+          const comment = learner.comment;
           return (
-            <span className="max-w-[200px] truncate block" title={comment}>
-              {comment}
-            </span>
+            <div className="flex items-center gap-2">
+              {comment ? (
+                <span className="max-w-[200px] truncate block" title={comment}>
+                  {comment}
+                </span>
+              ) : (
+                <span className="text-muted-foreground text-sm">-</span>
+              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6"
+                onClick={() => handleCommentClick(learner)}
+              >
+                <Edit className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+              </Button>
+            </div>
           );
         },
       },
@@ -328,34 +490,41 @@ export function LearnersDataTable() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEdit(learner)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem onClick={() => handleEdit(learner)}>
+                    <Edit className="mr-2 h-4 w-4" />
+                    Edit
+                  </DropdownMenuItem>
+                )}
                 {canEditComments && (
                   <DropdownMenuItem onClick={() => handleCommentClick(learner)}>
                     <MessageSquare className="mr-2 h-4 w-4" />
                     Comment
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(learner)}
-                  className="text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem
+                    onClick={() => handleDeleteClick(learner)}
+                    className="text-destructive"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [canEditComments]
+    [canEditComments, isAdmin]
   );
 
+  // Determine table data based on role
+  const tableData = isAdmin ? (data?.data || []) : paginatedLearners;
+
   const table = useReactTable({
-    data: data?.data || [],
+    data: tableData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -371,8 +540,8 @@ export function LearnersDataTable() {
       columnVisibility,
       globalFilter,
     },
-    manualPagination: true,
-    pageCount: data?.meta_data?.pages || 0,
+    manualPagination: isAdmin,
+    pageCount: isAdmin ? (data?.meta_data?.pages || 0) : totalPages,
   });
 
   if (isLoading) {
@@ -413,16 +582,19 @@ export function LearnersDataTable() {
               {/* TODO: Add course options from API */}
             </SelectContent>
           </Select>
-          <Select value={employerFilter} onValueChange={setEmployerFilter}>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Filter by employer" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Employers</SelectItem>
-              {/* TODO: Add employer options from API */}
-            </SelectContent>
-          </Select>
-          {(globalFilter || courseFilter !== "all" || employerFilter !== "all" || Object.values(statusFilters).some(Boolean)) && (
+          {/* Only show employer filter for Admin */}
+          {isAdmin && (
+            <Select value={employerFilter} onValueChange={setEmployerFilter}>
+              <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectValue placeholder="Filter by employer" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Employers</SelectItem>
+                {/* TODO: Add employer options from API */}
+              </SelectContent>
+            </Select>
+          )}
+          {(globalFilter || courseFilter !== "all" || (isAdmin && employerFilter !== "all") || Object.values(statusFilters).some(Boolean)) && (
             <Button
               variant="ghost"
               size="sm"
@@ -450,14 +622,19 @@ export function LearnersDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" onClick={() => setCsvUploadOpen(true)} className="cursor-pointer">
-            <Upload className="mr-2 size-4" />
-            Upload Learners
-          </Button>
-          <Button onClick={handleAddNew} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New
-          </Button>
+          {/* Only show Upload and Add New for Admin */}
+          {isAdmin && (
+            <>
+              <Button variant="outline" onClick={() => setCsvUploadOpen(true)} className="cursor-pointer">
+                <Upload className="mr-2 size-4" />
+                Upload Learners
+              </Button>
+              <Button onClick={handleAddNew} className="cursor-pointer">
+                <Plus className="mr-2 size-4" />
+                Add New
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -538,7 +715,7 @@ export function LearnersDataTable() {
       </div>
 
       {/* Pagination */}
-      {data?.meta_data && (
+      {isAdmin && data?.meta_data && (
         <DataTablePagination
           table={table}
           manualPagination={true}
@@ -556,18 +733,35 @@ export function LearnersDataTable() {
           }}
         />
       )}
+      {isTrainer && (
+        <DataTablePagination
+          table={table}
+          manualPagination={false}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={clientFilteredLearners.length}
+          pageSize={itemsPerPage}
+          onPageChange={handlePageChange}
+          onPageSizeChange={(newPageSize) => {
+            setItemsPerPage(newPageSize);
+            setCurrentPage(1);
+          }}
+        />
+      )}
 
-      {/* Form Dialog */}
-      <LearnersFormDialog
-        open={isFormOpen}
-        onOpenChange={setIsFormOpen}
-        learner={editingLearner}
-        onSuccess={() => {
-          setIsFormOpen(false);
-          setEditingLearner(null);
-          refetch();
-        }}
-      />
+      {/* Form Dialog - Only for Admin */}
+      {isAdmin && (
+        <LearnersFormDialog
+          open={isFormOpen}
+          onOpenChange={setIsFormOpen}
+          learner={editingLearner}
+          onSuccess={() => {
+            setIsFormOpen(false);
+            setEditingLearner(null);
+            refetch();
+          }}
+        />
+      )}
 
       {/* Comment Dialog */}
       {learnerForComment && (
@@ -583,41 +777,45 @@ export function LearnersDataTable() {
         />
       )}
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the learner{" "}
-              <strong>
-                {learnerToDelete?.first_name} {learnerToDelete?.last_name}
-              </strong>
-              .
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteConfirm}
-              disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              {isDeleting ? "Deleting..." : "Delete"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Delete Confirmation Dialog - Only for Admin */}
+      {isAdmin && (
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the learner{" "}
+                <strong>
+                  {learnerToDelete?.first_name} {learnerToDelete?.last_name}
+                </strong>
+                .
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteConfirm}
+                disabled={isDeleting}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
 
-      {/* CSV Upload Dialog */}
-      <LearnersCsvUploadDialog
-        open={csvUploadOpen}
-        onOpenChange={setCsvUploadOpen}
-        onSuccess={() => {
-          setCsvUploadOpen(false);
-          refetch();
-        }}
-      />
+      {/* CSV Upload Dialog - Only for Admin */}
+      {isAdmin && (
+        <LearnersCsvUploadDialog
+          open={csvUploadOpen}
+          onOpenChange={setCsvUploadOpen}
+          onSuccess={() => {
+            setCsvUploadOpen(false);
+            refetch();
+          }}
+        />
+      )}
     </div>
   );
 }

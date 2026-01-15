@@ -23,8 +23,10 @@ interface CourseDetailsPageContentProps {
 
 export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDetailsPageContentProps) {
   const router = useRouter()
+  const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
   const currentCourseId = useAppSelector(selectCurrentCourseId)
+  const userRole = user?.role
 
   // Use course ID from Redux store, fallback to route param if available
   const courseId = currentCourseId ? String(currentCourseId) : routeCourseId
@@ -62,7 +64,11 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
   }, [courseData])
 
   const handleBack = () => {
-    router.push("/dashboard")
+    if (userRole === 'Learner') {
+      router.push("/dashboard")
+    } else {
+      router.push('/learner-overview')
+    }
   }
 
   if (!courseData || !course || !courseId) {
@@ -73,7 +79,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
             title="Course information not found"
             icon={BookOpen}
             showBackButton
-            backButtonHref="/dashboard"
+            backButtonHref={userRole === 'Learner' ? '/dashboard' : '/learner-overview'}
           />
         </div>
         <div className="px-4 lg:px-6 py-12 text-center">
@@ -97,7 +103,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
           subtitle="Course information"
           icon={BookOpen}
           showBackButton
-          backButtonHref="/dashboard"
+          backButtonHref={userRole === 'Learner' ? '/dashboard' : '/learner-overview'}
         />
       </div>
 

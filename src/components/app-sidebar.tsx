@@ -299,6 +299,21 @@ const data: {
         },
       ],
     },
+    {
+      label: 'Trainer',
+      items: [
+        {
+          title: 'Learner Overview',
+          url: '/learner-overview',
+          icon: Users,
+        },
+        {
+          title: 'Learner Management',
+          url: '/learners',
+          icon: GraduationCap,
+        },
+      ],
+    },
     // {
     //   label: "Pages",
     //   items: [
@@ -401,6 +416,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (group.label === 'Learner') {
         return userRole === 'Learner'
       }
+      // Show "Trainer" group only for Trainer role
+      if (group.label === 'Trainer') {
+        return userRole === 'Trainer'
+      }
       // For other groups, show based on role access
       return true
     })
@@ -431,6 +450,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className='truncate text-xs'>
                     {userRole === 'Admin'
                       ? 'Admin Dashboard'
+                      : userRole === 'Trainer'
+                      ? 'Trainer Dashboard'
                       : 'Learner Dashboard'}
                   </span>
                 </div>

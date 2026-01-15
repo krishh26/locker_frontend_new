@@ -46,13 +46,6 @@ const adminModules: AdminModule[] = [
     icon: Megaphone,
     color: "text-orange-600",
   },
-  {
-    title: "Course Builder",
-    description: "Create, manage, and organize your courses with ease",
-    href: "/course-builder",
-    icon: BookOpen,
-    color: "text-indigo-600",
-  },
 ];
 
 export function AdminPageContent() {

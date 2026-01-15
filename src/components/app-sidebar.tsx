@@ -1,6 +1,6 @@
 'use client'
 
-import { Lock, Users, Shield, MessageSquare, Clock, Download, FileSignature } from 'lucide-react'
+import { Lock, Users, Shield, MessageSquare, Clock, Download, FileSignature, Ban } from 'lucide-react'
 import {
   LayoutDashboard,
   MessageCircle,
@@ -276,6 +276,11 @@ const data: {
           title: 'Gateway Report',
           url: '/gateway-report',
           icon: FileBarChart,
+        },
+        {
+          title: 'Exclude From Overall Progress',
+          url: '/progress-exclusion',
+          icon: Ban,
         },
         {
           title: 'Learner Mangement',

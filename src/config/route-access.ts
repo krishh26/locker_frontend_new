@@ -98,6 +98,10 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/gateway-report(?:\/|$)/,
     roles: authRoles.Admin,
   },
+  {
+    pattern: /^\/progress-exclusion(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
   // Learner pages (accessible to Admin and Learner)
   {
     pattern: /^\/cpd(?:\/|$)/,

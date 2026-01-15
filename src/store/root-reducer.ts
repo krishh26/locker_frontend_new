@@ -34,6 +34,7 @@ import { defaultReviewWeeksApi } from "@/store/api/default-review-weeks/defaultR
 import { iqaQuestionsApi } from "@/store/api/iqa-questions/iqaQuestionsApi"
 import { sessionTypeApi } from "@/store/api/session-type/sessionTypeApi"
 import { awaitingSignatureApi } from "@/store/api/awaiting-signature/awaitingSignatureApi"
+import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExclusionApi"
 
 
 // Import all slices here
@@ -81,6 +82,7 @@ export const rootReducer = combineReducers({
   [iqaQuestionsApi.reducerPath]: iqaQuestionsApi.reducer,
   [sessionTypeApi.reducerPath]: sessionTypeApi.reducer,
   [awaitingSignatureApi.reducerPath]: awaitingSignatureApi.reducer,
+  [progressExclusionApi.reducerPath]: progressExclusionApi.reducer,
   auth: authReducer,
   skillsScan: skillsScanReducer,
   survey: surveyReducer,
@@ -125,5 +127,6 @@ export const concatMiddleware: Middleware[] = [
   iqaQuestionsApi.middleware,
   sessionTypeApi.middleware,
   awaitingSignatureApi.middleware,
+  progressExclusionApi.middleware,
   cacheSyncMiddleware,
 ]

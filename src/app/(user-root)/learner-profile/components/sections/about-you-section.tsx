@@ -1,0 +1,389 @@
+"use client";
+
+import { useFormContext } from "react-hook-form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import type { LearnerData } from "@/store/api/learner/types";
+
+interface AboutYouSectionProps {
+  learner: LearnerData;
+  canEdit?: boolean;
+}
+
+export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionProps) {
+  const form = useFormContext();
+  const formatDate = (date: string | undefined | null): string => {
+    if (!date) return "-";
+    try {
+      const d = new Date(date);
+      return d.toLocaleDateString();
+    } catch {
+      return date;
+    }
+  };
+
+  const firstName = learner.first_name || "-";
+  const lastName = learner.last_name || "-";
+  const userName = learner.user_name || "-";
+  const email = learner.email || "-";
+  const telephone = (learner as { telephone?: string }).telephone || "-";
+  const mobile = learner.mobile || "-";
+  const dob = formatDate((learner as { dob?: string }).dob);
+  const gender = (learner as { gender?: string }).gender || "-";
+  const nationalInsNo = learner.national_ins_no || "-";
+  const ethnicity = (learner as { ethnicity?: string }).ethnicity || "-";
+  const learnerDisability = (learner as { learner_disability?: string }).learner_disability || "-";
+  const learnerDifficulty = (learner as { learner_difficulity?: string }).learner_difficulity || "-";
+  const initialAssessmentNumeracy = (learner as { Initial_Assessment_Numeracy?: string }).Initial_Assessment_Numeracy || "-";
+  const initialAssessmentLiteracy = (learner as { Initial_Assessment_Literacy?: string }).Initial_Assessment_Literacy || "-";
+  const initialAssessmentICT = (learner as { Initial_Assessment_ICT?: string }).Initial_Assessment_ICT || "-";
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>About You</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">First Name</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("first_name")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.first_name && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.first_name.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {firstName}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Last Name</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("last_name")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.last_name && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.last_name.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {lastName}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Username</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("user_name")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.user_name && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.user_name.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {userName}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Email</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="email"
+                  {...form.register("email")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.email && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.email.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {email}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Telephone</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="tel"
+                  {...form.register("telephone")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.telephone && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.telephone.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {telephone}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Mobile</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="tel"
+                  {...form.register("mobile")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.mobile && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.mobile.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {mobile}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Date of Birth</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="date"
+                  {...form.register("dob")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.dob && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.dob.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {dob}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Gender</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("gender")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.gender && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.gender.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {gender}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">National Insurance No</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("national_ins_no")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.national_ins_no && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.national_ins_no.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {nationalInsNo}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Ethnicity</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("ethnicity")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.ethnicity && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.ethnicity.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {ethnicity}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Learner Disability</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("learner_disability")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.learner_disability && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.learner_disability.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {learnerDisability}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Learning Difficulties</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("learner_difficulity")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.learner_difficulity && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.learner_difficulity.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {learnerDifficulty}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Initial Assessment Numeracy</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("Initial_Assessment_Numeracy")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.Initial_Assessment_Numeracy && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.Initial_Assessment_Numeracy.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {initialAssessmentNumeracy}
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Initial Assessment Literacy</Label>
+            {canEdit ? (
+              <>
+                <Input
+                  type="text"
+                  {...form.register("Initial_Assessment_Literacy")}
+                  className="min-h-10"
+                />
+                {form.formState.errors.Initial_Assessment_Literacy && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.Initial_Assessment_Literacy.message as string}
+                  </p>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center">
+                {initialAssessmentLiteracy}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {initialAssessmentICT && initialAssessmentICT !== "-" && (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Initial Assessment ICT</Label>
+              {canEdit ? (
+                <>
+                  <Input
+                    type="text"
+                    {...form.register("Initial_Assessment_ICT")}
+                    className="min-h-10"
+                  />
+                  {form.formState.errors.Initial_Assessment_ICT && (
+                    <p className="text-destructive text-sm">
+                      {form.formState.errors.Initial_Assessment_ICT.message as string}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <div className="flex items-center">
+                  {initialAssessmentICT}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+

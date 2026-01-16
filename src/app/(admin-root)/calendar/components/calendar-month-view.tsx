@@ -15,7 +15,7 @@ import type { Session } from "@/store/api/session/types";
 import { transformSessionsToCalendarEvents } from "../utils/session-transform";
 import { CalendarStatusLegend } from "./calendar-status-legend";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CalendarEvent } from "@/app/(learner-root)/calendar/types";
+import { CalendarEvent } from "@/app/(learner-root)/demo-calendar/types";
 
 interface CalendarMonthViewProps {
   sessions: Session[];

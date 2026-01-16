@@ -34,6 +34,10 @@ const routeRoleRules: RouteRule[] = [
     roles: adminAndTrainerRoles,
   },
   {
+    pattern: /^\/calendar(?:\/|$)/,
+    roles: adminAndTrainerRoles,
+  },
+  {
     pattern: /^\/learner-profile(?:\/|$)/,
     roles: adminLearnerAndTrainerRoles,
   },
@@ -62,7 +66,7 @@ const routeRoleRules: RouteRule[] = [
     roles: authRoles.Admin,
   },
   {
-    pattern: /^\/calendar(?:\/|$)/,
+    pattern: /^\/demo-calendar(?:\/|$)/,
     roles: authRoles.Admin,
   },
   {

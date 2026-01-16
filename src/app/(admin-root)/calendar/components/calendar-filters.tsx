@@ -13,6 +13,7 @@ import { Download, Calendar as CalendarIcon, List } from 'lucide-react'
 import { SortByVisitDateDropdown } from './sort-by-visit-date-dropdown'
 import type { SessionFilters } from '@/store/api/session/types'
 import { useCachedUsersByRole } from '@/store/hooks/useCachedUsersByRole'
+import { useAppSelector } from '@/store/hooks'
 
 interface CalendarFiltersProps {
   viewMode: 'calendar' | 'list'
@@ -31,9 +32,14 @@ export function CalendarFilters({
   onExportCSV,
   isLoading,
 }: CalendarFiltersProps) {
+  const { user } = useAppSelector((state) => state.auth)
+  const isAdmin = user?.role === 'Admin'
+  const isTrainer = user?.role === 'Trainer'
   // Fetch trainers for the dropdown
   const { data: trainersData, isLoading: isTrainersLoading } =
-    useCachedUsersByRole('Trainer')
+    useCachedUsersByRole('Trainer', {
+      skip: isTrainer,
+    })
 
   const handleTrainerChange = (value: string) => {
     onFilterChange({ trainer_id: value === 'all' ? undefined : value })
@@ -53,29 +59,33 @@ export function CalendarFilters({
         {/* Filter Controls */}
         <div className='flex flex-col sm:flex-row gap-3 flex-1 w-full md:w-auto'>
           {/* Trainer Filter */}
-          <Select
-            value={filters.trainer_id || 'all'}
-            onValueChange={handleTrainerChange}
-          >
-            <SelectTrigger className='w-full sm:w-[200px]'>
-              <SelectValue placeholder='Search by Trainer' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='all'>All Trainers</SelectItem>
-              {isTrainersLoading ? (
-                <SelectItem value='loading' disabled>Loading...</SelectItem>
-              ) : (
-                trainersData?.data?.map((trainer) => (
-                  <SelectItem
-                    key={trainer.user_id}
-                    value={trainer.user_id.toString()}
-                  >
-                    {trainer.first_name} {trainer.last_name}
+          {isAdmin && (
+            <Select
+              value={filters.trainer_id || 'all'}
+              onValueChange={handleTrainerChange}
+            >
+              <SelectTrigger className='w-full sm:w-[200px]'>
+                <SelectValue placeholder='Search by Trainer' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='all'>All Trainers</SelectItem>
+                {isTrainersLoading ? (
+                  <SelectItem value='loading' disabled>
+                    Loading...
                   </SelectItem>
-                ))
-              )}
-            </SelectContent>
-          </Select>
+                ) : (
+                  trainersData?.data?.map((trainer) => (
+                    <SelectItem
+                      key={trainer.user_id}
+                      value={trainer.user_id.toString()}
+                    >
+                      {trainer.first_name} {trainer.last_name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          )}
 
           {/* Attended Status Filter */}
           <Select

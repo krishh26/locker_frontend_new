@@ -8,8 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
-import { Calendar } from "@/app/(learner-root)/calendar/components/calendar"
-import { CalendarEvent } from "@/app/(learner-root)/calendar/types"
+import { Calendar } from "@/app/(learner-root)/demo-calendar/components/calendar"
+import { CalendarEvent } from "@/app/(learner-root)/demo-calendar/types"
 interface CalendarDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void

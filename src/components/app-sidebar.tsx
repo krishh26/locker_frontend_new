@@ -203,7 +203,7 @@ const data: {
         },
         {
           title: 'Calendar',
-          url: '/calendar-admin',
+          url: '/calendar',
           icon: Calendar,
         },
         {
@@ -322,6 +322,11 @@ const data: {
           icon: GraduationCap,
         },
         {
+          title: 'Calendar',
+          url: '/calendar',
+          icon: Calendar,
+        },
+        {
           title: 'Resources',
           url: '/resources',
           icon: BookOpen,
@@ -330,6 +335,16 @@ const data: {
           title: 'Learner Forms',
           url: '/learners-forms',
           icon: FileText,
+        },
+        {
+          title: 'Propose Your Innovations',
+          url: '/propose-your-innovations',
+          icon: Lightbulb,
+        },
+        {
+          title: 'Support',
+          url: '/support',
+          icon: HelpCircle,
         },
       ],
     },

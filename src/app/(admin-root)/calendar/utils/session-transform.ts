@@ -1,4 +1,4 @@
-import { CalendarEvent } from "@/app/(learner-root)/calendar/types";
+import { CalendarEvent } from "@/app/(learner-root)/demo-calendar/types";
 import { type Session } from "@/store/api/session/types";
 
 /**

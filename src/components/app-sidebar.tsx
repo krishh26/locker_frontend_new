@@ -326,6 +326,11 @@ const data: {
           url: '/resources',
           icon: BookOpen,
         },
+        {
+          title: 'Learner Forms',
+          url: '/learners-forms',
+          icon: FileText,
+        },
       ],
     },
     // {

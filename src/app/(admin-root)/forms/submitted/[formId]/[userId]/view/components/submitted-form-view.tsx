@@ -1,8 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowLeft, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetFormDataDetailsQuery } from "@/store/api/forms/formsApi";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -25,7 +24,7 @@ export function SubmittedFormView({ formId, userId }: SubmittedFormViewProps) {
 
   if (error) {
     toast.error("Failed to load submitted form details");
-    router.push("/forms");
+    router.back();
     return null;
   }
 
@@ -43,7 +42,6 @@ export function SubmittedFormView({ formId, userId }: SubmittedFormViewProps) {
           subtitle="View submitted form with user responses"
           icon={FileText}
           showBackButton
-          backButtonHref="/forms"
         />
         <Card>
           <CardContent className="p-6 space-y-4">
@@ -64,7 +62,6 @@ export function SubmittedFormView({ formId, userId }: SubmittedFormViewProps) {
           subtitle="Submitted form not found"
           icon={FileText}
           showBackButton
-          backButtonHref="/forms"
         />
         <Card>
           <CardContent className="p-8 text-center">
@@ -82,7 +79,6 @@ export function SubmittedFormView({ formId, userId }: SubmittedFormViewProps) {
         subtitle="View submitted form with user responses"
         icon={FileText}
         showBackButton
-        backButtonHref="/forms"
       />
 
       {/* Form Preview with Submitted Data */}

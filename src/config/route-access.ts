@@ -122,12 +122,17 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/skills-scan(?:\/|$)/,
     roles: adminLearnerAndTrainerRoles,
   },
+  // Specific form routes must come before general /forms pattern
   {
-    pattern: /^\/forms(?:\/|$)/,
-    roles: authRoles.Admin,
+    pattern: /^\/forms\/submitted\/[^/]+\/[^/]+\/view(?:\/|$)/,
+    roles: adminAndTrainerRoles,
   },
   {
     pattern: /^\/forms\/[^/]+\/builder(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/forms(?:\/|$)/,
     roles: authRoles.Admin,
   },
   {
@@ -219,6 +224,10 @@ const routeRoleRules: RouteRule[] = [
   {
     pattern: /^\/learner-dashboard\/\d+(?:\/|$)/,
     roles: adminAndTrainerRoles,
+  },
+  {
+    pattern: /^\/learners-forms(?:\/|$)/,
+    roles: authRoles.Trainer,
   },
   // Main dashboard (accessible to all roles - content is role-based)
   {

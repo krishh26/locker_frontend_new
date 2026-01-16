@@ -1,39 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import {
-  useGetCoursesQuery,
-} from "@/store/api/course/courseApi";
-import {
-  useGetSamplePlansQuery,
-  useLazyGetSamplePlanLearnersQuery,
   useApplySamplePlanLearnersMutation,
+  useGetSamplePlansQuery,
 } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
-import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { LearnersTable } from "../learners-table";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import type { Plan } from "@/store/slices/qaSamplePlanSlice";
+import {
+  resetSelectedUnits,
+  selectFilterState,
+  selectSelectedCourse,
+  selectSelectedPlan,
+  selectUnitSelection,
+  setFilterError,
+  setPlans,
+  setSelectedPlan
+} from "@/store/slices/qaSamplePlanSlice";
+import { useCallback, useEffect, useMemo } from "react";
+import { toast } from "sonner";
 import { FilterPanel } from "../filter-panel";
+import { LearnersTable } from "../learners-table";
 import { QASamplePlanLayout } from "./components/qa-sample-plan-layout";
 import { useLearnersData } from "./hooks/use-learners-data";
 import { buildApplySamplesPayload } from "./utils/apply-samples-payload";
-import { toast } from "sonner";
-import {
-  selectQASamplePlanState,
-  selectSelectedCourse,
-  selectSelectedPlan,
-  selectPlans,
-  selectFilterState,
-  selectUnitSelection,
-  setSelectedCourse,
-  setSelectedPlan,
-  setPlans,
-  setFilterApplied,
-  setFilterError,
-  setPlanSummary,
-  toggleUnitForLearner,
-  resetSelectedUnits,
-} from "@/store/slices/qaSamplePlanSlice";
-import type { Plan } from "@/store/slices/qaSamplePlanSlice";
+import { EditSampleModalWrapper } from "../edit-sample-modal-wrapper";
 
 export function QASamplePlanPageContent() {
   const dispatch = useAppDispatch();
@@ -43,26 +33,10 @@ export function QASamplePlanPageContent() {
   const iqaId = user?.user_id as string | number | undefined;
 
   // Redux state
-  const qaState = useAppSelector(selectQASamplePlanState);
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const selectedPlan = useAppSelector(selectSelectedPlan);
-  const plans = useAppSelector(selectPlans);
   const filterState = useAppSelector(selectFilterState);
   const unitSelection = useAppSelector(selectUnitSelection);
-
-  // RTK Query - Courses
-  const { data: coursesData, isLoading: coursesLoading } = useGetCoursesQuery(
-    { page: 1, page_size: 500 },
-    { skip: false }
-  );
-
-  const courses = useMemo(() => {
-    if (!coursesData?.data) return [];
-    return coursesData.data.map((course) => ({
-      id: course.course_id.toString(),
-      name: course.course_name || "Untitled Course",
-    }));
-  }, [coursesData]);
 
   // RTK Query - Plans (conditional)
   const samplePlanQueryArgs = useMemo(() => {
@@ -98,20 +72,20 @@ export function QASamplePlanPageContent() {
       return;
     }
 
-    const rawPlanDataSource = (samplePlanResponse as any)?.data ?? samplePlanResponse ?? null;
-    let rawPlans: Array<Record<string, any>> = [];
+    const rawPlanDataSource = (samplePlanResponse as { data?: Record<string, unknown> } | undefined)?.data ?? samplePlanResponse ?? null;
+    let rawPlans: Array<Record<string, unknown>> = [];
 
     if (Array.isArray(rawPlanDataSource)) {
       rawPlans = rawPlanDataSource;
     } else if (rawPlanDataSource && typeof rawPlanDataSource === "object" && Object.keys(rawPlanDataSource).length > 0) {
       rawPlans = [rawPlanDataSource];
-    } else if (Array.isArray((samplePlanResponse as any)?.data?.data)) {
-      rawPlans = (samplePlanResponse as any).data.data ?? [];
+    } else if (Array.isArray((samplePlanResponse as { data?: { data?: unknown[] } } | undefined)?.data?.data)) {
+      rawPlans = (samplePlanResponse as { data?: { data?: Record<string, unknown>[] } } | undefined)?.data?.data ?? [];
     }
 
     if (rawPlans.length) {
       const normalizedPlans: Plan[] = rawPlans
-        .map((plan: Record<string, any>) => {
+        .map((plan: Record<string, unknown>) => {
           const idCandidate = plan?.plan_id ?? plan?.planId ?? plan?.id ?? plan?.sample_plan_id ?? "";
           const nameCandidate = plan?.plan_name ?? plan?.planName ?? plan?.sample_plan_name ?? plan?.title ?? plan?.name ?? "";
           const id = idCandidate !== null && idCandidate !== undefined ? String(idCandidate) : "";
@@ -133,15 +107,6 @@ export function QASamplePlanPageContent() {
     dispatch(setSelectedPlan(""));
   }, [isPlanListLoading, isPlansError, samplePlanResponse, selectedCourse, selectedPlan, dispatch]);
 
-  // Plan placeholder text
-  const planPlaceholderText = useMemo(() => {
-    if (!selectedCourse) return "Select a course first";
-    if (isPlanListLoading) return "Loading plans...";
-    if (isPlansError) return "Unable to load plans";
-    if (!plans.length) return "No plans available";
-    return "Select a plan";
-  }, [isPlanListLoading, isPlansError, plans.length, selectedCourse]);
-
   // Learners data hook (keeps API logic, dispatches Redux actions)
   const learnersData = useLearnersData(
     selectedPlan,
@@ -155,8 +120,8 @@ export function QASamplePlanPageContent() {
   // Handle learners error
   useEffect(() => {
     if (learnersData.isLearnersError && learnersData.learnersError) {
-      const apiError = learnersData.learnersError as any;
-      const message = apiError?.data?.message || apiError?.error || "Failed to fetch learners for the selected plan.";
+      const apiError = learnersData.learnersError as { data?: { message?: string }; message?: string };
+      const message = apiError.data?.message || apiError.message || "Failed to fetch learners for the selected plan.";
       dispatch(setFilterError(message));
     }
   }, [learnersData.isLearnersError, learnersData.learnersError, dispatch]);
@@ -168,15 +133,6 @@ export function QASamplePlanPageContent() {
     }
   }, [learnersData.learnersData.length, dispatch]);
 
-  // Computed values
-  const courseName = useMemo(() => {
-    if (qaState.planSummary?.courseName) return qaState.planSummary.courseName;
-    if (selectedCourse) {
-      const course = courses.find((c) => c.id === selectedCourse);
-      return course?.name || "";
-    }
-    return "";
-  }, [qaState.planSummary, selectedCourse, courses]);
 
   const isApplySamplesDisabled = useMemo(() => {
     return (
@@ -197,45 +153,6 @@ export function QASamplePlanPageContent() {
     learnersData.isLearnersInFlight,
     isApplySamplesLoading,
   ]);
-
-  // Handlers
-  const handleCourseChange = useCallback(
-    (courseId: string) => {
-      dispatch(setSelectedCourse(courseId));
-    },
-    [dispatch]
-  );
-
-  const handlePlanChange = useCallback(
-    (planId: string) => {
-      dispatch(setSelectedPlan(planId));
-    },
-    [dispatch]
-  );
-
-  const handleApplyFilter = useCallback(() => {
-    if (!selectedCourse) {
-      dispatch(setFilterError("Please select a course before filtering."));
-      dispatch(setFilterApplied(false));
-      return;
-    }
-
-    if (!plans.length) {
-      dispatch(setFilterError("No QA plans are available for the selected course."));
-      dispatch(setFilterApplied(false));
-      return;
-    }
-
-    if (!selectedPlan || !plans.some((plan) => plan.id === selectedPlan)) {
-      dispatch(setFilterError("Please select both a course and a plan before filtering."));
-      dispatch(setFilterApplied(false));
-      return;
-    }
-
-    dispatch(setFilterError(""));
-    dispatch(setFilterApplied(true));
-    learnersData.triggerSamplePlanLearners(selectedPlan);
-  }, [selectedCourse, plans, selectedPlan, dispatch, learnersData]);
 
   const handleApplySamples = useCallback(async () => {
     if (!selectedPlan) {
@@ -285,8 +202,9 @@ export function QASamplePlanPageContent() {
       if (selectedPlan) {
         learnersData.triggerSamplePlanLearners(selectedPlan);
       }
-    } catch (error: any) {
-      const message = error?.data?.message || error?.error || "Failed to apply sampled learners.";
+    } catch (error: unknown) {
+      const errorData = error as { data?: { message?: string }; message?: string };
+      const message = errorData.data?.message || errorData.message || "Failed to apply sampled learners.";
       dispatch(setFilterError(message));
       toast.error(message);
     }
@@ -303,18 +221,6 @@ export function QASamplePlanPageContent() {
     dispatch,
   ]);
 
-  const handleOpenLearnerDetailsDialog = useCallback(
-    (
-      _learner: SamplePlanLearner,
-      _learnerIndex: number,
-      _detailId?: string | number,
-      _unitKey?: string
-    ) => {
-      // Placeholder - will open EditSampleModal when implemented
-      toast.info("Edit sample modal will be implemented");
-    },
-    []
-  );
 
   const handleApplyRandomSamples = useCallback(async () => {
     // Placeholder - implement random sampling logic if needed
@@ -322,38 +228,24 @@ export function QASamplePlanPageContent() {
   }, []);
 
 
-  const getSelectedUnitsForLearner = useCallback(
-    (learner: SamplePlanLearner, learnerIndex: number): Set<string> => {
-      const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
-      const units = unitSelection.selectedUnitsMap[learnerKey] || [];
-      return new Set(units);
-    },
-    [unitSelection.selectedUnitsMap]
-  );
-
-  const handleUnitToggleFromTable = useCallback(
-    (learner: SamplePlanLearner, learnerIndex: number, unitKey: string) => {
-      const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
-      dispatch(toggleUnitForLearner({ learnerKey, unitKey }));
-    },
-    [dispatch]
-  );
-
   return (
-    <QASamplePlanLayout>
-      <div className="lg:col-span-4">
-        <FilterPanel
-          onApplySamples={handleApplySamples}
-          isApplySamplesDisabled={isApplySamplesDisabled}
-          isApplySamplesLoading={isApplySamplesLoading}
-          onApplyRandomSamples={handleApplyRandomSamples}
-          isApplyRandomSamplesLoading={isApplySamplesLoading}
-        />
-      </div>
+    <>
+      <QASamplePlanLayout>
+        <div className="lg:col-span-4">
+          <FilterPanel
+            onApplySamples={handleApplySamples}
+            isApplySamplesDisabled={isApplySamplesDisabled}
+            isApplySamplesLoading={isApplySamplesLoading}
+            onApplyRandomSamples={handleApplyRandomSamples}
+            isApplyRandomSamplesLoading={isApplySamplesLoading}
+          />
+        </div>
 
-      <div className="lg:col-span-8">
-        <LearnersTable />
-      </div>
-    </QASamplePlanLayout>
+        <div className="lg:col-span-8">
+          <LearnersTable />
+        </div>
+      </QASamplePlanLayout>
+      <EditSampleModalWrapper />
+    </>
   );
 }

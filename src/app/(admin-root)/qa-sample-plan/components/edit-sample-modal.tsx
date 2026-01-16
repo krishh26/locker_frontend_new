@@ -1,11 +1,12 @@
-"use client";
+'use client'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useCallback } from "react";
-import { Plus, RefreshCw, Trash2, Edit, Loader2 } from "lucide-react";
-import { useAppSelector } from "@/store/hooks";
-import { toast } from "sonner";
-import { ActionModal, type ActionFormData } from "./action-modal";
+import React, { useEffect, useState, useCallback } from 'react'
+import { Plus, RefreshCw, Trash2, Edit, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useAppSelector } from '@/store/hooks'
+import { toast } from 'sonner'
+import { ActionModal, type ActionFormData } from './action-modal'
 import {
   useLazyGetSampleActionsQuery,
   useCreateSampleActionMutation,
@@ -18,16 +19,29 @@ import {
   useLazyGetSampleDocumentsQuery,
   useUploadSampleDocumentMutation,
   useDeleteSampleDocumentMutation,
-} from "@/store/api/qa-sample-plan/qaSamplePlanApi";
-import type { SampleAction, SampleDocument, SampleAllocatedForm, SampleQuestion } from "@/store/api/qa-sample-plan/types";
-import { assessmentMethods, formatDate, formatDateForInput, iqaConclusionOptions, sampleTypes } from "./constants";
-import { formatDisplayDate } from "./utils";
+  useLazyGetEvidenceListQuery,
+} from '@/store/api/qa-sample-plan/qaSamplePlanApi'
+import type {
+  SampleAction,
+  SampleDocument,
+  SampleAllocatedForm,
+  SampleQuestion,
+  EvidenceItem,
+} from '@/store/api/qa-sample-plan/types'
+import {
+  assessmentMethods,
+  formatDate,
+  formatDateForInput,
+  iqaConclusionOptions,
+  sampleTypes,
+} from './constants'
+import { formatDisplayDate } from './utils'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,19 +51,19 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select'
 import {
   Table,
   TableBody,
@@ -57,53 +71,50 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from '@/components/ui/table'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent } from '@/components/ui/card'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 export interface ModalFormData {
-  qaName: string;
-  plannedDate: string;
-  assessmentMethods: string[];
-  assessmentProcesses: string;
-  feedback: string;
-  type: string;
-  completedDate: string;
-  sampleType: string;
-  iqaConclusion: string[];
-  assessorDecisionCorrect: string;
+  qaName: string
+  plannedDate: string
+  assessmentMethods: string[]
+  assessmentProcesses: string
+  feedback: string
+  type: string
+  completedDate: string
+  sampleType: string
+  iqaConclusion: string[]
+  assessorDecisionCorrect: string
 }
 
 interface EditSampleModalProps {
-  open: boolean;
-  onClose: () => void;
-  activeTab: number;
-  onTabChange: (value: number) => void;
-  modalFormData: ModalFormData;
-  onFormDataChange: (field: string, value: any) => void;
-  onAssessmentMethodToggle: (code: string) => void;
-  onIqaConclusionToggle: (option: string) => void;
-  sampleQuestions: SampleQuestion[];
-  onQuestionChange: (id: string, question: string) => void;
-  onAnswerChange: (id: string, answer: "Yes" | "No") => void;
-  onAddQuestion: () => void;
-  onDeleteQuestion: (id: string) => void;
-  onSaveQuestions: () => void;
-  plannedDates?: string[];
-  onSave?: () => void;
-  isSaving?: boolean;
-  planDetailId?: string | number | null;
-  unitCode?: string | null;
-  unitName?: string | null;
-  unitType?: string | null;
-  onCreateNew?: () => void;
-  isCreating?: boolean;
-  onDeleteSuccess?: () => void;
+  open: boolean
+  onClose: () => void
+  activeTab: number
+  onTabChange: (value: number) => void
+  modalFormData: ModalFormData
+  onFormDataChange: (field: string, value: any) => void
+  onAssessmentMethodToggle: (code: string) => void
+  onIqaConclusionToggle: (option: string) => void
+  sampleQuestions: SampleQuestion[]
+  onQuestionChange: (id: string, question: string) => void
+  onAnswerChange: (id: string, answer: 'Yes' | 'No') => void
+  onAddQuestion: () => void
+  onDeleteQuestion: (id: string) => void
+  onSaveQuestions: () => void
+  plannedDates?: string[]
+  onSave?: () => void
+  isSaving?: boolean
+  planDetailId?: string | number | null
+  unitCode?: string | null
+  unitName?: string | null
+  unitType?: string | null
+  onCreateNew?: () => void
+  isCreating?: boolean
+  onDeleteSuccess?: () => void
+  onDelete?: () => void
 }
 
 export function EditSampleModal({
@@ -115,109 +126,149 @@ export function EditSampleModal({
   onFormDataChange,
   onAssessmentMethodToggle,
   onIqaConclusionToggle,
-  sampleQuestions: _sampleQuestions,
+  sampleQuestions,
   onQuestionChange: _onQuestionChange,
-  onAnswerChange: _onAnswerChange,
+  onAnswerChange,
   onAddQuestion: _onAddQuestion,
-  onDeleteQuestion: _onDeleteQuestion,
-  onSaveQuestions: _onSaveQuestions,
+  onDeleteQuestion,
+  onSaveQuestions,
   plannedDates = [],
   onSave,
   isSaving = false,
   planDetailId = null,
-  unitCode: _unitCode = null,
-  unitName: _unitName = null,
-  unitType: _unitType = null,
+  unitCode = null,
+  unitName = null,
+  unitType = null,
   onCreateNew,
   isCreating = false,
   onDeleteSuccess,
+  onDelete,
 }: EditSampleModalProps) {
-  const user = useAppSelector((state) => state.auth.user);
-  const iqaId = user?.user_id;
+  const router = useRouter()
+  const user = useAppSelector((state) => state.auth.user)
+  const iqaId = user?.user_id
 
-  const [actionModalOpen, setActionModalOpen] = useState(false);
-  const [editingAction, setEditingAction] = useState<SampleAction | null>(null);
-  const [actions, setActions] = useState<SampleAction[]>([]);
-  const [deleteActionId, setDeleteActionId] = useState<number | null>(null);
-  const [allocatedForms, setAllocatedForms] = useState<SampleAllocatedForm[]>([]);
-  const [selectedFormId, setSelectedFormId] = useState<string>("");
-  const [formDescription, setFormDescription] = useState<string>("");
-  const [deleteFormId, setDeleteFormId] = useState<number | null>(null);
-  const [documents, setDocuments] = useState<SampleDocument[]>([]);
-  const [deleteDocumentId, setDeleteDocumentId] = useState<number | null>(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [actionModalOpen, setActionModalOpen] = useState(false)
+  const [editingAction, setEditingAction] = useState<SampleAction | null>(null)
+  const [actions, setActions] = useState<SampleAction[]>([])
+  const [deleteActionId, setDeleteActionId] = useState<number | null>(null)
+  const [allocatedForms, setAllocatedForms] = useState<SampleAllocatedForm[]>(
+    []
+  )
+  const [selectedFormId, setSelectedFormId] = useState<string>('')
+  const [formDescription, setFormDescription] = useState<string>('')
+  const [deleteFormId, setDeleteFormId] = useState<number | null>(null)
+  const [documents, setDocuments] = useState<SampleDocument[]>([])
+  const [deleteDocumentId, setDeleteDocumentId] = useState<number | null>(null)
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
+  const [evidenceList, setEvidenceList] = useState<EvidenceItem[]>([])
+  const [isLoadingEvidence, setIsLoadingEvidence] = useState(false)
 
-  const [triggerGetActions, { isLoading: isLoadingActions }] = useLazyGetSampleActionsQuery();
-  const [createAction, { isLoading: isCreatingAction }] = useCreateSampleActionMutation();
-  const [updateAction, { isLoading: isUpdatingAction }] = useUpdateSampleActionMutation();
-  const [deleteAction, { isLoading: isDeletingAction }] = useDeleteSampleActionMutation();
-  const [triggerGetForms] = useLazyGetSampleFormsQuery();
-  const [createSampleForm] = useCreateSampleFormMutation();
-  const [deleteSampleForm, { isLoading: isUnlinkingForm }] = useDeleteSampleFormMutation();
-  const [completeSampleForm] = useCompleteSampleFormMutation();
-  const [triggerGetDocuments] = useLazyGetSampleDocumentsQuery();
-  const [uploadDocument] = useUploadSampleDocumentMutation();
-  const [deleteDocument, { isLoading: isDeletingDocument }] = useDeleteSampleDocumentMutation();
+  const [triggerGetActions, { isLoading: isLoadingActions }] =
+    useLazyGetSampleActionsQuery()
+  const [createAction, { isLoading: isCreatingAction }] =
+    useCreateSampleActionMutation()
+  const [updateAction, { isLoading: isUpdatingAction }] =
+    useUpdateSampleActionMutation()
+  const [deleteAction, { isLoading: isDeletingAction }] =
+    useDeleteSampleActionMutation()
+  const [triggerGetForms] = useLazyGetSampleFormsQuery()
+  const [createSampleForm] = useCreateSampleFormMutation()
+  const [deleteSampleForm, { isLoading: isUnlinkingForm }] =
+    useDeleteSampleFormMutation()
+  const [completeSampleForm] = useCompleteSampleFormMutation()
+  const [triggerGetDocuments] = useLazyGetSampleDocumentsQuery()
+  const [uploadDocument] = useUploadSampleDocumentMutation()
+  const [deleteDocument, { isLoading: isDeletingDocument }] =
+    useDeleteSampleDocumentMutation()
+  const [triggerGetEvidence] = useLazyGetEvidenceListQuery()
 
   const fetchActions = useCallback(async () => {
-    if (!planDetailId) return;
+    if (!planDetailId) return
     try {
-      const response = await triggerGetActions(planDetailId).unwrap();
-      setActions((response as any)?.data || []);
+      const response = await triggerGetActions(planDetailId).unwrap()
+      setActions((response as any)?.data || [])
     } catch (error) {
-      console.error("Error fetching actions:", error);
-      setActions([]);
+      console.error('Error fetching actions:', error)
+      setActions([])
     }
-  }, [planDetailId, triggerGetActions]);
+  }, [planDetailId, triggerGetActions])
 
   const fetchAllocatedForms = useCallback(async () => {
-    if (!planDetailId) return;
+    if (!planDetailId) return
     try {
-      const res = await triggerGetForms(planDetailId).unwrap();
-      setAllocatedForms((res as any)?.data || []);
+      const res = await triggerGetForms(planDetailId).unwrap()
+      setAllocatedForms((res as any)?.data || [])
     } catch {
-      setAllocatedForms([]);
+      setAllocatedForms([])
     }
-  }, [planDetailId, triggerGetForms]);
+  }, [planDetailId, triggerGetForms])
 
   const fetchDocuments = useCallback(async () => {
-    if (!planDetailId) return;
+    if (!planDetailId) return
     try {
-      const res = await triggerGetDocuments(planDetailId).unwrap();
-      setDocuments((res as any)?.data || []);
+      const res = await triggerGetDocuments(planDetailId).unwrap()
+      setDocuments((res as any)?.data || [])
     } catch {
-      setDocuments([]);
+      setDocuments([])
     }
-  }, [planDetailId, triggerGetDocuments]);
+  }, [planDetailId, triggerGetDocuments])
+
+  const fetchEvidence = useCallback(async () => {
+    if (!planDetailId || !unitCode) return
+    setIsLoadingEvidence(true)
+    try {
+      const res = await triggerGetEvidence({
+        planDetailId,
+        unitCode: String(unitCode),
+      }).unwrap()
+      setEvidenceList((res as { data?: EvidenceItem[] })?.data || [])
+    } catch {
+      setEvidenceList([])
+    } finally {
+      setIsLoadingEvidence(false)
+    }
+  }, [planDetailId, unitCode, triggerGetEvidence])
 
   useEffect(() => {
     if (open && planDetailId) {
-      fetchActions();
-      fetchAllocatedForms();
-      fetchDocuments();
+      fetchActions()
+      fetchAllocatedForms()
+      fetchDocuments()
+      if (unitCode) {
+        fetchEvidence()
+      }
     }
-  }, [open, planDetailId, fetchActions, fetchAllocatedForms, fetchDocuments]);
+  }, [
+    open,
+    planDetailId,
+    unitCode,
+    fetchActions,
+    fetchAllocatedForms,
+    fetchDocuments,
+    fetchEvidence,
+  ])
 
   const handleOpenActionModal = () => {
-    setEditingAction(null);
-    setActionModalOpen(true);
-  };
+    setEditingAction(null)
+    setActionModalOpen(true)
+  }
 
   const handleCloseActionModal = () => {
-    setActionModalOpen(false);
-    setEditingAction(null);
-  };
+    setActionModalOpen(false)
+    setEditingAction(null)
+  }
 
   const handleEditAction = (action: SampleAction) => {
-    setEditingAction(action);
-    setActionModalOpen(true);
-  };
+    setEditingAction(action)
+    setActionModalOpen(true)
+  }
 
   const handleSaveAction = async (formData: ActionFormData) => {
     if (!planDetailId || !iqaId) {
-      toast.error("Missing required information");
-      return;
+      toast.error('Missing required information')
+      return
     }
 
     try {
@@ -229,8 +280,8 @@ export function EditSampleModal({
           status: formData.status,
           assessor_feedback: formData.assessor_feedback || undefined,
           action_with_id: formData.action_with_id,
-        }).unwrap();
-        toast.success("Action updated successfully");
+        }).unwrap()
+        toast.success('Action updated successfully')
       } else {
         await createAction({
           plan_detail_id: planDetailId,
@@ -240,46 +291,48 @@ export function EditSampleModal({
           status: formData.status,
           created_by_id: iqaId as string | number,
           assessor_feedback: formData.assessor_feedback || undefined,
-        }).unwrap();
-        toast.success("Action created successfully");
+        }).unwrap()
+        toast.success('Action created successfully')
       }
 
-      handleCloseActionModal();
-      fetchActions();
+      handleCloseActionModal()
+      fetchActions()
     } catch (error: any) {
-      const message = error?.data?.message || error?.error || "Failed to save action";
-      toast.error(message);
+      const message =
+        error?.data?.message || error?.error || 'Failed to save action'
+      toast.error(message)
     }
-  };
+  }
 
   const handleDeleteAction = async (actionId: number) => {
     try {
-      await deleteAction(actionId).unwrap();
-      toast.success("Action deleted successfully");
-      fetchActions();
-      setDeleteActionId(null);
+      await deleteAction(actionId).unwrap()
+      toast.success('Action deleted successfully')
+      fetchActions()
+      setDeleteActionId(null)
     } catch (error: any) {
-      const message = error?.data?.message || error?.error || "Failed to delete action";
-      toast.error(message);
-      setDeleteActionId(null);
+      const message =
+        error?.data?.message || error?.error || 'Failed to delete action'
+      toast.error(message)
+      setDeleteActionId(null)
     }
-  };
+  }
 
   const formatDateForDisplay = (dateString: string) => {
-    if (!dateString) return "";
-    return formatDisplayDate(dateString);
-  };
+    if (!dateString) return ''
+    return formatDisplayDate(dateString)
+  }
 
   const getActionSummary = (action: SampleAction) => {
     return action.action_required && action.action_required.length > 50
       ? `${action.action_required.substring(0, 50)}...`
-      : action.action_required || "";
-  };
+      : action.action_required || ''
+  }
 
   const handleAllocateForm = async () => {
     if (!planDetailId || !iqaId || !selectedFormId) {
-      toast.error("Select a form to allocate.");
-      return;
+      toast.error('Select a form to allocate.')
+      return
     }
     try {
       await createSampleForm({
@@ -287,174 +340,203 @@ export function EditSampleModal({
         form_id: selectedFormId,
         allocated_by_id: iqaId as string | number,
         description: formDescription || undefined,
-      }).unwrap();
-      toast.success("Form allocated successfully");
-      setFormDescription("");
-      setSelectedFormId("");
-      fetchAllocatedForms();
+      }).unwrap()
+      toast.success('Form allocated successfully')
+      setFormDescription('')
+      setSelectedFormId('')
+      fetchAllocatedForms()
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to allocate form");
+      toast.error(error?.data?.message || 'Failed to allocate form')
     }
-  };
+  }
 
   const handleDeleteAllocatedForm = async (id: number) => {
     try {
-      await deleteSampleForm(id).unwrap();
-      toast.success("Form unlinked successfully");
-      fetchAllocatedForms();
-      setDeleteFormId(null);
+      await deleteSampleForm(id).unwrap()
+      toast.success('Form unlinked successfully')
+      fetchAllocatedForms()
+      setDeleteFormId(null)
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to unlink form");
-      setDeleteFormId(null);
+      toast.error(error?.data?.message || 'Failed to unlink form')
+      setDeleteFormId(null)
     }
-  };
+  }
 
   const handleCompleteForm = async (id: number) => {
     try {
-      await completeSampleForm(id).unwrap();
-      toast.success("Form marked as completed");
-      fetchAllocatedForms();
+      await completeSampleForm(id).unwrap()
+      toast.success('Form marked as completed')
+      fetchAllocatedForms()
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to mark as completed");
+      toast.error(error?.data?.message || 'Failed to mark as completed')
     }
-  };
+  }
 
-  const handleUploadDocument = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !planDetailId) return;
+  const handleUploadDocument = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0]
+    if (!file || !planDetailId) return
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("plan_detail_id", String(planDetailId));
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('plan_detail_id', String(planDetailId))
 
     try {
-      await uploadDocument(formData).unwrap();
-      toast.success("Document uploaded successfully");
-      fetchDocuments();
+      await uploadDocument(formData).unwrap()
+      toast.success('Document uploaded successfully')
+      fetchDocuments()
       if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+        fileInputRef.current.value = ''
       }
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to upload document");
+      toast.error(error?.data?.message || 'Failed to upload document')
     }
-  };
+  }
 
   const handleDeleteDocument = async (docId: number) => {
     try {
-      await deleteDocument(docId).unwrap();
-      toast.success("Document deleted successfully");
-      fetchDocuments();
-      setDeleteDocumentId(null);
+      await deleteDocument(docId).unwrap()
+      toast.success('Document deleted successfully')
+      fetchDocuments()
+      setDeleteDocumentId(null)
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to delete document");
-      setDeleteDocumentId(null);
+      toast.error(error?.data?.message || 'Failed to delete document')
+      setDeleteDocumentId(null)
     }
-  };
+  }
 
   const handleDeleteLearner = async () => {
-    if (!planDetailId) return;
-    toast.info("Delete learner functionality will be implemented");
-    setShowDeleteConfirmation(false);
-    if (onDeleteSuccess) {
-      onDeleteSuccess();
+    if (!planDetailId) return
+    setShowDeleteConfirmation(false)
+    if (onDelete) {
+      onDelete()
+    } else if (onDeleteSuccess) {
+      onDeleteSuccess()
     }
-  };
+  }
 
   // Convert activeTab to string for shadcn Tabs (which uses string values)
-  const activeTabString = String(activeTab);
-  const handleTabChange = useCallback((value: string) => {
-    onTabChange(Number(value));
-  }, [onTabChange]);
+  const activeTabString = String(activeTab)
+  const handleTabChange = useCallback(
+    (value: string) => {
+      onTabChange(Number(value))
+    },
+    [onTabChange]
+  )
 
   // Memoize handlers to prevent infinite loops
-  const handleTypeChange = useCallback((value: string) => {
-    const currentValue = modalFormData.type || undefined;
-    if (value !== currentValue) {
-      onFormDataChange("type", value);
-    }
-  }, [modalFormData.type, onFormDataChange]);
+  const handleTypeChange = useCallback(
+    (value: string) => {
+      const currentValue = modalFormData.type || undefined
+      if (value !== currentValue) {
+        onFormDataChange('type', value)
+      }
+    },
+    [modalFormData.type, onFormDataChange]
+  )
 
-  const handleSampleTypeChange = useCallback((value: string) => {
-    const currentValue = modalFormData.sampleType || undefined;
-    if (value !== currentValue) {
-      onFormDataChange("sampleType", value);
-    }
-  }, [modalFormData.sampleType, onFormDataChange]);
+  const handleSampleTypeChange = useCallback(
+    (value: string) => {
+      const currentValue = modalFormData.sampleType || undefined
+      if (value !== currentValue) {
+        onFormDataChange('sampleType', value)
+      }
+    },
+    [modalFormData.sampleType, onFormDataChange]
+  )
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl max-h-[90vh] overflow-hidden flex flex-col p-0">
-        <DialogHeader className="px-6 py-4 border-b">
+      <DialogContent className='max-w-7xl! max-h-[90vh] overflow-hidden flex flex-col p-0'>
+        <DialogHeader className='px-6 py-4 border-b'>
           <DialogTitle>Edit Sample</DialogTitle>
         </DialogHeader>
 
         {/* Tabs and Create New Button */}
-        <div className="flex items-center justify-between px-6 pt-4 border-b">
+        <div className='flex items-center justify-between px-6 pb-4 border-b'>
           {plannedDates.length > 0 ? (
-            <Tabs value={activeTabString} onValueChange={handleTabChange} className="w-full">
+            <Tabs
+              value={activeTabString}
+              onValueChange={handleTabChange}
+              className='w-full'
+            >
               <TabsList>
                 {plannedDates.map((date, index) => (
-                  <TabsTrigger key={`planned-date-${index}-${date || "no-date"}`} value={String(index)}>
-                    FS {index + 1} - ({date ? formatDate(date) : "No Date"})
+                  <TabsTrigger
+                    key={`planned-date-${index}-${date || 'no-date'}`}
+                    value={String(index)}
+                  >
+                    FS {index + 1} - ({date ? formatDate(date) : 'No Date'})
                   </TabsTrigger>
                 ))}
               </TabsList>
             </Tabs>
           ) : (
-            <div className="text-sm text-muted-foreground">No Planned Dates</div>
+            <div className='text-sm text-muted-foreground'>
+              No Planned Dates
+            </div>
           )}
           {onCreateNew && (
             <Button
               onClick={onCreateNew}
               disabled={isCreating}
-              className="ml-4 bg-[#e91e63] hover:bg-[#c2185b]"
+              className='ml-4 bg-[#e91e63] hover:bg-[#c2185b]'
             >
-              <Plus className="mr-2 h-4 w-4" />
-              {isCreating ? "Creating..." : "Create New"}
+              <Plus className='mr-2 h-4 w-4' />
+              {isCreating ? 'Creating...' : 'Create New'}
             </Button>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-end flex-wrap gap-2 px-6 py-4 border-b">
-          <Button variant="outline" onClick={onClose} className="border-orange-500 text-orange-500 hover:bg-orange-50">
+        <div className='flex justify-end flex-wrap gap-2 px-6 py-4 border-b'>
+          <Button
+            variant='outline'
+            onClick={onClose}
+            className='border-orange-500 text-orange-500 hover:bg-orange-50'
+          >
             Cancel / Close
           </Button>
           <Button
-            variant="outline"
+            variant='outline'
             onClick={() => setShowDeleteConfirmation(true)}
             disabled={!planDetailId}
-            className="border-red-500 text-red-500 hover:bg-red-50"
+            className='border-red-500 text-red-500 hover:bg-red-50'
           >
             Delete
           </Button>
           {onSave && (
             <>
-              <Button onClick={onSave} disabled={isSaving} className="bg-green-600 hover:bg-green-700">
+              <Button
+                onClick={onSave}
+                disabled={isSaving}
+                className='bg-green-600 hover:bg-green-700'
+              >
                 {isSaving ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                     Saving...
                   </>
                 ) : (
-                  "Save"
+                  'Save'
                 )}
               </Button>
               <Button
                 onClick={() => {
-                  onSave();
-                  onClose();
+                  onSave()
+                  onClose()
                 }}
                 disabled={isSaving}
-                className="bg-green-600 hover:bg-green-700"
+                className='bg-green-600 hover:bg-green-700'
               >
                 {isSaving ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                     Saving...
                   </>
                 ) : (
-                  "Save & Close"
+                  'Save & Close'
                 )}
               </Button>
             </>
@@ -462,41 +544,41 @@ export function EditSampleModal({
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className='flex-1 overflow-auto p-6'>
+          <div className='grid grid-cols-1 md:grid-cols-12 gap-4'>
             {/* Details Section */}
-            <div className="md:col-span-4 space-y-4">
-              <div className="space-y-2">
+            <div className='md:col-span-4 space-y-4'>
+              <div className='space-y-2'>
                 <Label>QA Name</Label>
-                <Input value={modalFormData.qaName || ""} disabled />
+                <Input value={modalFormData.qaName || ''} disabled />
               </div>
             </div>
-            <div className="md:col-span-4 space-y-4">
-              <div className="space-y-2">
+            <div className='md:col-span-4 space-y-4'>
+              <div className='space-y-2'>
                 <Label>Type</Label>
-                <Select 
-                  value={modalFormData.type || undefined} 
+                <Select
+                  value={modalFormData.type || undefined}
                   onValueChange={handleTypeChange}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
+                  <SelectTrigger className='w-full'>
+                    <SelectValue placeholder='Select type' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Formative">Formative</SelectItem>
-                    <SelectItem value="Summative">Summative</SelectItem>
+                    <SelectItem value='Formative'>Formative</SelectItem>
+                    <SelectItem value='Summative'>Summative</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-            <div className="md:col-span-4 space-y-4">
-              <div className="space-y-2">
+            <div className='md:col-span-4 space-y-4'>
+              <div className='space-y-2'>
                 <Label>Sample Type</Label>
-                <Select 
-                  value={modalFormData.sampleType || undefined} 
+                <Select
+                  value={modalFormData.sampleType || undefined}
                   onValueChange={handleSampleTypeChange}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select sample type" />
+                  <SelectTrigger className='w-full'>
+                    <SelectValue placeholder='Select sample type' />
                   </SelectTrigger>
                   <SelectContent>
                     {sampleTypes.map((type) => (
@@ -509,36 +591,52 @@ export function EditSampleModal({
               </div>
             </div>
 
-            <div className="md:col-span-6 space-y-2">
+            <div className='md:col-span-6 space-y-2'>
               <Label>Planned Date</Label>
               <Input
-                type="date"
+                type='date'
                 value={formatDateForInput(modalFormData.plannedDate)}
-                onChange={(e) => onFormDataChange("plannedDate", e.target.value)}
+                onChange={(e) =>
+                  onFormDataChange('plannedDate', e.target.value)
+                }
               />
             </div>
-            <div className="md:col-span-6 space-y-2">
+            <div className='md:col-span-6 space-y-2'>
               <Label>Completed Date</Label>
               <Input
-                type="date"
+                type='date'
                 value={formatDateForInput(modalFormData.completedDate)}
-                onChange={(e) => onFormDataChange("completedDate", e.target.value)}
+                onChange={(e) =>
+                  onFormDataChange('completedDate', e.target.value)
+                }
               />
             </div>
 
-            <div className="md:col-span-4 space-y-2">
-              <Label className="text-sm font-semibold">Assessment Methods</Label>
+            <div className='md:col-span-4 space-y-2'>
+              <Label className='text-sm font-semibold'>
+                Assessment Methods
+              </Label>
               <Card>
-                <CardContent className="p-4">
-                  <div className="grid grid-cols-3 gap-2">
+                <CardContent className='p-4'>
+                  <div className='grid grid-cols-3 gap-2'>
                     {assessmentMethods.map((method) => (
-                      <div key={method.code} className="flex items-center space-x-2">
+                      <div
+                        key={method.code}
+                        className='flex items-center space-x-2'
+                      >
                         <Checkbox
                           id={`method-${method.code}`}
-                          checked={modalFormData.assessmentMethods.includes(method.code)}
-                          onCheckedChange={() => onAssessmentMethodToggle(method.code)}
+                          checked={modalFormData.assessmentMethods.includes(
+                            method.code
+                          )}
+                          onCheckedChange={() =>
+                            onAssessmentMethodToggle(method.code)
+                          }
                         />
-                        <Label htmlFor={`method-${method.code}`} className="text-sm cursor-pointer">
+                        <Label
+                          htmlFor={`method-${method.code}`}
+                          className='text-sm cursor-pointer'
+                        >
                           {method.code}
                         </Label>
                       </div>
@@ -548,19 +646,22 @@ export function EditSampleModal({
               </Card>
             </div>
 
-            <div className="md:col-span-4 space-y-2">
-              <Label className="text-sm font-semibold">IQA Conclusion</Label>
+            <div className='md:col-span-4 space-y-2'>
+              <Label className='text-sm font-semibold'>IQA Conclusion</Label>
               <Card>
-                <CardContent className="p-4">
-                  <div className="flex flex-wrap gap-2">
+                <CardContent className='p-4'>
+                  <div className='flex flex-wrap gap-2'>
                     {iqaConclusionOptions.map((option) => (
-                      <div key={option} className="flex items-center space-x-2">
+                      <div key={option} className='flex items-center space-x-2'>
                         <Checkbox
                           id={`iqa-${option}`}
                           checked={modalFormData.iqaConclusion.includes(option)}
                           onCheckedChange={() => onIqaConclusionToggle(option)}
                         />
-                        <Label htmlFor={`iqa-${option}`} className="text-sm cursor-pointer">
+                        <Label
+                          htmlFor={`iqa-${option}`}
+                          className='text-sm cursor-pointer'
+                        >
                           {option}
                         </Label>
                       </div>
@@ -570,126 +671,381 @@ export function EditSampleModal({
               </Card>
             </div>
 
-            <div className="md:col-span-4 space-y-2">
-              <Label className="text-sm font-semibold">Assessor Decision Correct</Label>
+            <div className='md:col-span-4 space-y-2'>
+              <Label className='text-sm font-semibold'>
+                Assessor Decision Correct
+              </Label>
               <RadioGroup
                 value={modalFormData.assessorDecisionCorrect}
-                onValueChange={(value) => onFormDataChange("assessorDecisionCorrect", value)}
-                className="flex flex-row gap-4"
+                onValueChange={(value) =>
+                  onFormDataChange('assessorDecisionCorrect', value)
+                }
+                className='flex flex-row gap-4'
               >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Yes" id="decision-yes" />
-                  <Label htmlFor="decision-yes" className="cursor-pointer">
+                <div className='flex items-center space-x-2'>
+                  <RadioGroupItem value='Yes' id='decision-yes' />
+                  <Label htmlFor='decision-yes' className='cursor-pointer'>
                     Yes
                   </Label>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="No" id="decision-no" />
-                  <Label htmlFor="decision-no" className="cursor-pointer">
+                <div className='flex items-center space-x-2'>
+                  <RadioGroupItem value='No' id='decision-no' />
+                  <Label htmlFor='decision-no' className='cursor-pointer'>
                     No
                   </Label>
                 </div>
               </RadioGroup>
             </div>
 
-            <div className="col-span-12 space-y-2">
+            <div className='col-span-12 space-y-2'>
               <Label>Assessment Processes</Label>
               <Textarea
                 rows={4}
                 value={modalFormData.assessmentProcesses}
-                onChange={(e) => onFormDataChange("assessmentProcesses", e.target.value)}
+                onChange={(e) =>
+                  onFormDataChange('assessmentProcesses', e.target.value)
+                }
               />
             </div>
 
-            <div className="col-span-12 space-y-2">
+            <div className='col-span-12 space-y-2'>
               <Label>Feedback</Label>
               <Textarea
                 rows={6}
                 value={modalFormData.feedback}
-                onChange={(e) => onFormDataChange("feedback", e.target.value)}
-                placeholder="Please type in feedback. Max 4400 characters."
+                onChange={(e) => onFormDataChange('feedback', e.target.value)}
+                placeholder='Please type in feedback. Max 4400 characters.'
                 maxLength={4400}
               />
             </div>
+
+            <div className='col-span-12 mt-4'>
+              <Button
+                onClick={() => {
+                  // Navigate to examine evidence page with searchParams
+                  if (planDetailId) {
+                    const params = new URLSearchParams()
+                    if (unitCode) params.set('unit_code', String(unitCode))
+                    if (unitName) params.set('unitName', unitName)
+                    if (unitType) params.set('unitType', unitType)
+                    router.push(`/qa-sample-plan/${planDetailId}/evidence?${params.toString()}`)
+                  }
+                }}
+                disabled={!planDetailId}
+                className='bg-[#e91e63] hover:bg-[#c2185b] text-white'
+              >
+                Examine Evidence
+              </Button>
+            </div>
           </div>
 
-          {/* Actions Table */}
-          <div className="mt-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Actions for Sample</h3>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="sm" onClick={fetchActions} disabled={isLoadingActions}>
-                  <RefreshCw className={`h-4 w-4 ${isLoadingActions ? "animate-spin" : ""}`} />
-                </Button>
-                <Button
-                  onClick={handleOpenActionModal}
-                  disabled={!planDetailId}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Action
-                </Button>
+          <div className='flex mt-6 gap-4 justify-between'>
+            {/* Evidence Links Table */}
+            <div className='flex-1'>
+              <div className='flex items-center justify-between mb-4'>
+                <h3 className='text-lg font-semibold'>
+                  Evidence Links for Sample
+                </h3>
+                <div className='flex gap-2'>
+                  <Button
+                    variant='ghost'
+                    size='sm'
+                    onClick={fetchEvidence}
+                    disabled={isLoadingEvidence || !unitCode}
+                  >
+                    <RefreshCw
+                      className={`h-4 w-4 ${
+                        isLoadingEvidence ? 'animate-spin' : ''
+                      }`}
+                    />
+                  </Button>
+                </div>
               </div>
-            </div>
-            <Card>
-              <CardContent className="p-0">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Summary</TableHead>
-                      <TableHead>Action Required</TableHead>
-                      <TableHead>Action With</TableHead>
-                      <TableHead>Target Date</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {isLoadingActions ? (
+              <Card>
+                <CardContent className='p-0'>
+                  <Table>
+                    <TableHeader>
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center py-8">
-                          <div className="flex items-center justify-center gap-2">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            <span className="text-sm text-muted-foreground">Loading actions...</span>
-                          </div>
-                        </TableCell>
+                        <TableHead>Examined Evidence</TableHead>
+                        <TableHead>Assessment Methods Used</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
-                    ) : actions.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                          There are no Actions on this Sample
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      actions.map((action) => (
-                        <TableRow key={action.id}>
-                          <TableCell>{getActionSummary(action)}</TableCell>
-                          <TableCell>{action.action_required}</TableCell>
-                          <TableCell>
-                            {`${(action.action_with as any)?.first_name || ""} ${(action.action_with as any)?.last_name || ""}`.trim() || "N/A"}
-                          </TableCell>
-                          <TableCell>{formatDateForDisplay(action.target_date)}</TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleEditAction(action)}
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setDeleteActionId(action.id)}
-                                disabled={isDeletingAction && deleteActionId === action.id}
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
+                    </TableHeader>
+                    <TableBody>
+                      {isLoadingEvidence ? (
+                        <TableRow>
+                          <TableCell colSpan={3} className='text-center py-8'>
+                            <div className='flex items-center justify-center gap-2'>
+                              <Loader2 className='h-4 w-4 animate-spin' />
+                              <span className='text-sm text-muted-foreground'>
+                                Loading evidence...
+                              </span>
                             </div>
                           </TableCell>
                         </TableRow>
-                      ))
-                    )}
+                      ) : evidenceList.length === 0 ? (
+                        <TableRow>
+                          <TableCell
+                            colSpan={3}
+                            className='text-center py-8 text-muted-foreground'
+                          >
+                            There are no Evidence Links on this Sample
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        evidenceList.map((evidence) => (
+                          <TableRow key={evidence.assignment_id}>
+                            <TableCell>
+                              <div>
+                                <p className='font-medium'>{evidence.title}</p>
+                                {evidence.description && (
+                                  <p className='text-sm text-muted-foreground mt-1'>
+                                    {evidence.description}
+                                  </p>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className='flex flex-wrap gap-1'>
+                                {Array.isArray(evidence.assessment_method) &&
+                                evidence.assessment_method.length > 0 ? (
+                                  evidence.assessment_method.map(
+                                    (method, idx) => (
+                                      <span
+                                        key={idx}
+                                        className='text-xs bg-secondary px-2 py-1 rounded'
+                                      >
+                                        {method}
+                                      </span>
+                                    )
+                                  )
+                                ) : (
+                                  <span className='text-sm text-muted-foreground'>
+                                    N/A
+                                  </span>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {/* Actions can be added here if needed */}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+            {/* Actions Table */}
+            <div className='flex-1'>
+              <div className='flex items-center justify-between mb-4'>
+                <h3 className='text-lg font-semibold'>Actions for Sample</h3>
+                <div className='flex gap-2'>
+                  <Button
+                    variant='ghost'
+                    size='sm'
+                    onClick={fetchActions}
+                    disabled={isLoadingActions}
+                  >
+                    <RefreshCw
+                      className={`h-4 w-4 ${
+                        isLoadingActions ? 'animate-spin' : ''
+                      }`}
+                    />
+                  </Button>
+                  <Button
+                    onClick={handleOpenActionModal}
+                    disabled={!planDetailId}
+                    className='bg-green-600 hover:bg-green-700'
+                  >
+                    <Plus className='mr-2 h-4 w-4' />
+                    Add Action
+                  </Button>
+                </div>
+              </div>
+              <Card>
+                <CardContent className='p-0'>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Summary</TableHead>
+                        <TableHead>Action Required</TableHead>
+                        <TableHead>Action With</TableHead>
+                        <TableHead>Target Date</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {isLoadingActions ? (
+                        <TableRow>
+                          <TableCell colSpan={5} className='text-center py-8'>
+                            <div className='flex items-center justify-center gap-2'>
+                              <Loader2 className='h-4 w-4 animate-spin' />
+                              <span className='text-sm text-muted-foreground'>
+                                Loading actions...
+                              </span>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ) : actions.length === 0 ? (
+                        <TableRow>
+                          <TableCell
+                            colSpan={5}
+                            className='text-center py-8 text-muted-foreground'
+                          >
+                            There are no Actions on this Sample
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        actions.map((action) => (
+                          <TableRow key={action.id}>
+                            <TableCell>{getActionSummary(action)}</TableCell>
+                            <TableCell>{action.action_required}</TableCell>
+                            <TableCell>
+                              {`${
+                                (action.action_with as any)?.first_name || ''
+                              } ${
+                                (action.action_with as any)?.last_name || ''
+                              }`.trim() || 'N/A'}
+                            </TableCell>
+                            <TableCell>
+                              {formatDateForDisplay(action.target_date)}
+                            </TableCell>
+                            <TableCell>
+                              <div className='flex gap-2'>
+                                <Button
+                                  variant='ghost'
+                                  size='sm'
+                                  onClick={() => handleEditAction(action)}
+                                >
+                                  <Edit className='h-4 w-4' />
+                                </Button>
+                                <Button
+                                  variant='ghost'
+                                  size='sm'
+                                  onClick={() => setDeleteActionId(action.id)}
+                                  disabled={
+                                    isDeletingAction &&
+                                    deleteActionId === action.id
+                                  }
+                                >
+                                  <Trash2 className='h-4 w-4 text-destructive' />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          {/* IQA Questions Section */}
+          <div className='mt-6'>
+            <div className='flex items-center justify-between mb-4'>
+              <h3 className='text-lg font-semibold text-[#e91e63]'>
+                IQA Questions
+              </h3>
+              <Button
+                onClick={onSaveQuestions}
+                className='bg-green-600 hover:bg-green-700'
+                size='sm'
+              >
+                Save
+              </Button>
+            </div>
+            <Card>
+              <CardContent className='p-0'>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className='w-[60%]'>Question</TableHead>
+                      <TableHead className='w-[15%] text-center'>Yes</TableHead>
+                      <TableHead className='w-[15%] text-center'>No</TableHead>
+                      <TableHead className='w-[10%] text-center'>
+                        Actions
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                    <TableBody>
+                      {sampleQuestions.length === 0 ? (
+                        <TableRow>
+                          <TableCell
+                            colSpan={4}
+                            className='text-center py-8 text-muted-foreground'
+                          >
+                            No IQA questions available for this sample.
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        sampleQuestions.map((question) => {
+                          const answer = question.answer || ''
+
+                          const handleAnswerSelect = (
+                            selectedAnswer: 'Yes' | 'No'
+                          ) => {
+                            onAnswerChange(String(question.id), selectedAnswer)
+                          }
+
+                          return (
+                            <TableRow key={question.id}>
+                              <TableCell>
+                                <p className='text-sm py-1'>
+                                  {question.question_text}
+                                </p>
+                              </TableCell>
+                              <TableCell colSpan={2}>
+                                <RadioGroup
+                                  value={answer}
+                                  onValueChange={(value) =>
+                                    handleAnswerSelect(value as 'Yes' | 'No')
+                                  }
+                                  className='flex flex-row justify-center gap-8'
+                                >
+                                  <div className='flex items-center space-x-2'>
+                                    <RadioGroupItem
+                                      value='Yes'
+                                      id={`yes-${question.id}`}
+                                    />
+                                    <Label
+                                      htmlFor={`yes-${question.id}`}
+                                      className='cursor-pointer'
+                                    >
+                                      Yes
+                                    </Label>
+                                  </div>
+                                  <div className='flex items-center space-x-2'>
+                                    <RadioGroupItem
+                                      value='No'
+                                      id={`no-${question.id}`}
+                                    />
+                                    <Label
+                                      htmlFor={`no-${question.id}`}
+                                      className='cursor-pointer'
+                                    >
+                                      No
+                                    </Label>
+                                  </div>
+                                </RadioGroup>
+                              </TableCell>
+                              <TableCell className='text-center'>
+                                <Button
+                                  variant='ghost'
+                                  size='sm'
+                                  onClick={() =>
+                                    onDeleteQuestion(String(question.id))
+                                  }
+                                >
+                                  <Trash2 className='h-4 w-4 text-destructive' />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })
+                      )}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -708,28 +1064,34 @@ export function EditSampleModal({
       />
 
       {/* Delete Action Confirmation Dialog */}
-      <AlertDialog open={deleteActionId !== null} onOpenChange={(open) => !open && setDeleteActionId(null)}>
+      <AlertDialog
+        open={deleteActionId !== null}
+        onOpenChange={(open) => !open && setDeleteActionId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Action?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this action? This action cannot be undone.
+              Are you sure you want to delete this action? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => deleteActionId && handleDeleteAction(deleteActionId)}
+              onClick={() =>
+                deleteActionId && handleDeleteAction(deleteActionId)
+              }
               disabled={isDeletingAction}
-              className="bg-destructive hover:bg-destructive/90"
+              className='bg-destructive hover:bg-destructive/90'
             >
               {isDeletingAction ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                   Deleting...
                 </>
               ) : (
-                "Delete"
+                'Delete'
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -737,28 +1099,34 @@ export function EditSampleModal({
       </AlertDialog>
 
       {/* Delete Document Confirmation Dialog */}
-      <AlertDialog open={deleteDocumentId !== null} onOpenChange={(open) => !open && setDeleteDocumentId(null)}>
+      <AlertDialog
+        open={deleteDocumentId !== null}
+        onOpenChange={(open) => !open && setDeleteDocumentId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Document?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this document? This action cannot be undone.
+              Are you sure you want to delete this document? This action cannot
+              be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => deleteDocumentId && handleDeleteDocument(deleteDocumentId)}
+              onClick={() =>
+                deleteDocumentId && handleDeleteDocument(deleteDocumentId)
+              }
               disabled={isDeletingDocument}
-              className="bg-destructive hover:bg-destructive/90"
+              className='bg-destructive hover:bg-destructive/90'
             >
               {isDeletingDocument ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                   Deleting...
                 </>
               ) : (
-                "Delete"
+                'Delete'
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -766,7 +1134,10 @@ export function EditSampleModal({
       </AlertDialog>
 
       {/* Delete Allocated Form Confirmation Dialog */}
-      <AlertDialog open={deleteFormId !== null} onOpenChange={(open) => !open && setDeleteFormId(null)}>
+      <AlertDialog
+        open={deleteFormId !== null}
+        onOpenChange={(open) => !open && setDeleteFormId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Remove Allocated Form?</AlertDialogTitle>
@@ -777,17 +1148,19 @@ export function EditSampleModal({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => deleteFormId && handleDeleteAllocatedForm(deleteFormId)}
+              onClick={() =>
+                deleteFormId && handleDeleteAllocatedForm(deleteFormId)
+              }
               disabled={isUnlinkingForm}
-              className="bg-destructive hover:bg-destructive/90"
+              className='bg-destructive hover:bg-destructive/90'
             >
               {isUnlinkingForm ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                   Removing...
                 </>
               ) : (
-                "Remove"
+                'Remove'
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -795,22 +1168,29 @@ export function EditSampleModal({
       </AlertDialog>
 
       {/* Delete Sampled Learner Confirmation Dialog */}
-      <AlertDialog open={showDeleteConfirmation} onOpenChange={setShowDeleteConfirmation}>
+      <AlertDialog
+        open={showDeleteConfirmation}
+        onOpenChange={setShowDeleteConfirmation}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Sampled Learner?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to remove this sampled learner? This action cannot be undone.
+              Are you sure you want to remove this sampled learner? This action
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteLearner} className="bg-destructive hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleDeleteLearner}
+              className='bg-destructive hover:bg-destructive/90'
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </Dialog>
-  );
+  )
 }

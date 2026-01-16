@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
 import { assessmentMethods, qaStatuses } from "@/app/(admin-root)/qa-sample-plan/components/constants";
 
@@ -36,9 +36,16 @@ interface QASamplePlanState {
   selectedUnitsMap: Record<string, string[]>;
   unitSelectionDialogOpen: boolean;
   selectedLearnerForUnits: {
-    learner: any;
+    learner: Record<string, unknown>;
     learnerIndex: number;
   } | null;
+
+  // Edit Sample Modal state
+  editSampleModalOpen: boolean;
+  currentPlanDetailId: string | number | null;
+  currentUnitCode: string | null;
+  currentUnitName: string | null;
+  currentUnitType: string | null;
 }
 
 const initialState: QASamplePlanState = {
@@ -58,6 +65,11 @@ const initialState: QASamplePlanState = {
   selectedUnitsMap: {},
   unitSelectionDialogOpen: false,
   selectedLearnerForUnits: null,
+  editSampleModalOpen: false,
+  currentPlanDetailId: null,
+  currentUnitCode: null,
+  currentUnitName: null,
+  currentUnitType: null,
 };
 
 const qaSamplePlanSlice = createSlice({
@@ -145,7 +157,7 @@ const qaSamplePlanSlice = createSlice({
     },
     setSelectedLearnerForUnits: (
       state,
-      action: PayloadAction<{ learner: any; learnerIndex: number } | null>
+      action: PayloadAction<{ learner: Record<string, unknown>; learnerIndex: number } | null>
     ) => {
       state.selectedLearnerForUnits = action.payload;
       if (action.payload) {
@@ -166,6 +178,31 @@ const qaSamplePlanSlice = createSlice({
       state.filterApplied = false;
       state.filterError = "";
       state.planSummary = undefined;
+    },
+    openEditSampleModal: (
+      state,
+      action: PayloadAction<{
+        detailId: string | number;
+        unitCode?: string | null;
+        unitName?: string | null;
+        unitType?: string | null;
+      }>
+    ) => {
+      state.editSampleModalOpen = true;
+      state.currentPlanDetailId = action.payload.detailId;
+      state.currentUnitCode = action.payload.unitCode ?? null;
+      state.currentUnitName = action.payload.unitName ?? null;
+      state.currentUnitType = action.payload.unitType ?? null;
+    },
+    closeEditSampleModal: (state) => {
+      state.editSampleModalOpen = false;
+      state.currentPlanDetailId = null;
+      state.currentUnitCode = null;
+      state.currentUnitName = null;
+      state.currentUnitType = null;
+    },
+    setCurrentPlanDetailId: (state, action: PayloadAction<string | number | null>) => {
+      state.currentPlanDetailId = action.payload;
     },
   },
 });
@@ -191,6 +228,9 @@ export const {
   setUnitSelectionDialogOpen,
   setSelectedLearnerForUnits,
   resetFilters,
+  openEditSampleModal,
+  closeEditSampleModal,
+  setCurrentPlanDetailId,
 } = qaSamplePlanSlice.actions;
 
 // Selectors
@@ -216,6 +256,14 @@ export const selectUnitSelection = (state: RootState) => ({
   selectedUnitsMap: state.qaSamplePlan.selectedUnitsMap,
   unitSelectionDialogOpen: state.qaSamplePlan.unitSelectionDialogOpen,
   selectedLearnerForUnits: state.qaSamplePlan.selectedLearnerForUnits,
+});
+
+export const selectEditSampleModal = (state: RootState) => ({
+  editSampleModalOpen: state.qaSamplePlan.editSampleModalOpen,
+  currentPlanDetailId: state.qaSamplePlan.currentPlanDetailId,
+  currentUnitCode: state.qaSamplePlan.currentUnitCode,
+  currentUnitName: state.qaSamplePlan.currentUnitName,
+  currentUnitType: state.qaSamplePlan.currentUnitType,
 });
 
 // Computed selectors - these will be computed in components using RTK Query hooks

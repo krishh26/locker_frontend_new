@@ -9,8 +9,8 @@ import { sanitizeText, formatDisplayDate } from "../../utils";
 import { useAppDispatch } from "@/store/hooks";
 import {
   toggleUnitForLearner,
+  openEditSampleModal,
 } from "@/store/slices/qaSamplePlanSlice";
-import { toast } from "sonner";
 
 interface LearnerUnitsTableProps {
   learner: SamplePlanLearner;
@@ -75,8 +75,31 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     detailId?: string | number,
     unitKey?: string
   ) => {
-    // Placeholder - will open EditSampleModal when implemented
-    toast.info("Edit sample modal will be implemented");
+    if (!detailId) {
+      return;
+    }
+
+    // Find the unit data to get unit information
+    const unitData = units.find((unit) => {
+      const unitData = unit as SamplePlanLearnerUnit;
+      const currentUnitKey = unitData.unit_code != null 
+        ? String(unitData.unit_code) 
+        : unitData.unit_name || "";
+      return currentUnitKey === unitKey;
+    }) as SamplePlanLearnerUnit | undefined;
+
+    // Extract unit information
+    const unitCode = unitData?.unit_code != null ? String(unitData.unit_code) : unitKey || null;
+    const unitName = unitData?.unit_name || null;
+    const unitType = (unitData as SamplePlanLearnerUnit & { type?: string })?.type || null;
+
+    // Dispatch action to open the modal
+    dispatch(openEditSampleModal({
+      detailId,
+      unitCode,
+      unitName,
+      unitType,
+    }));
   };
 
   if (units.length === 0) {
@@ -91,7 +114,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     const unitData = unit as SamplePlanLearnerUnit;
     const unitKey = unitData.unit_code != null 
       ? String(unitData.unit_code) 
-      : unitData.unit_name || "";
+      : (unitData.unit_name || "");
     return !unitKey || selectedUnitsSet.has(unitKey);
   });
 
@@ -126,7 +149,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
           return (
             <div
               key={`unit-${unitKey || unitIndex}`}
-              className="border rounded p-3 hover:border-primary/50 transition-colors flex-shrink-0 w-[300px]"
+              className="border rounded p-3 hover:border-primary/50 transition-colors shrink-0 w-[300px]"
             >
               <div className="flex items-center border-b pb-2 gap-2">
                 <div onClick={(e) => e.stopPropagation()}>
@@ -137,7 +160,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
                         handleUnitToggle(unitKey);
                       }
                     }}
-                    className="w-4 h-4 flex-shrink-0"
+                    className="w-4 h-4 shrink-0"
                   />
                 </div>
                 <div className="flex-1 min-w-0 overflow-hidden">
@@ -145,7 +168,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
                     {sanitizeText(unitData.unit_name || "Unit")}
                   </p>
                 </div>
-                <Badge variant={getUnitStatusBadge(unitData.status)} className="text-xs flex-shrink-0">
+                <Badge variant={getUnitStatusBadge(unitData.status)} className="text-xs shrink-0">
                   {typeof unitData.status === "string"
                     ? unitData.status
                     : unitData.status

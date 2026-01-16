@@ -36,6 +36,7 @@ import { sessionTypeApi } from "@/store/api/session-type/sessionTypeApi"
 import { awaitingSignatureApi } from "@/store/api/awaiting-signature/awaitingSignatureApi"
 import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExclusionApi"
 import { notificationApi } from "@/store/api/notification/notificationApi"
+import { contractedWorkApi } from "@/store/api/contracted-work/contractedWorkApi"
 
 
 // Import all slices here
@@ -83,9 +84,10 @@ export const rootReducer = combineReducers({
   [iqaQuestionsApi.reducerPath]: iqaQuestionsApi.reducer,
   [sessionTypeApi.reducerPath]: sessionTypeApi.reducer,
   [awaitingSignatureApi.reducerPath]: awaitingSignatureApi.reducer,
-  [progressExclusionApi.reducerPath]: progressExclusionApi.reducer,
-  [notificationApi.reducerPath]: notificationApi.reducer,
-  auth: authReducer,
+    [progressExclusionApi.reducerPath]: progressExclusionApi.reducer,
+    [notificationApi.reducerPath]: notificationApi.reducer,
+    [contractedWorkApi.reducerPath]: contractedWorkApi.reducer,
+    auth: authReducer,
   skillsScan: skillsScanReducer,
   survey: surveyReducer,
   response: responseReducer,
@@ -131,5 +133,6 @@ export const concatMiddleware: Middleware[] = [
   awaitingSignatureApi.middleware,
   progressExclusionApi.middleware,
   notificationApi.middleware,
+  contractedWorkApi.middleware,
   cacheSyncMiddleware,
 ]

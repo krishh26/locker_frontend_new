@@ -90,7 +90,7 @@ export function LearnerDashboardViewer({
       <div className='px-4 lg:px-6'>
         <PageHeader
           title={`Learner Dashboard - ${learnerResponse?.data?.first_name} ${learnerResponse?.data?.last_name}`}
-          backButtonHref='/learner-overview'
+          backButtonHref='/'
           showBackButton
         />
       </div>

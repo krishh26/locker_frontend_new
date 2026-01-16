@@ -21,6 +21,11 @@ export type LearnerCourse = {
   [key: string]: unknown;
 };
 
+export interface Avatar {
+  key: string;
+  url: string;
+}
+
 export type LearnerData = {
   learner_id: number;
   first_name: string;
@@ -30,6 +35,7 @@ export type LearnerData = {
   mobile: string;
   national_ins_no: string;
   funding_body: string;
+  avatar?: Avatar | null;
   custom_funding_data?: {
     original_amount: number;
     custom_amount: number;
@@ -159,5 +165,47 @@ export interface BulkCreateLearnersResponse {
       [key: string]: unknown;
     }>;
   };
+}
+
+export interface UploadFileResponse {
+  status: boolean;
+  message?: string;
+  data?: Avatar;
+  error?: string;
+}
+
+export interface CreateUserCourseRequest {
+  learner_id: number;
+  course_id: number;
+  trainer_id: number;
+  IQA_id: number;
+  LIQA_id: number;
+  EQA_id: number;
+  start_date: string;
+  end_date: string;
+  predicted_grade: string;
+  final_grade: string;
+  is_main_course?: boolean;
+  course_status?: string;
+}
+
+export interface UpdateUserCourseRequest {
+  trainer_id?: number;
+  IQA_id?: number;
+  LIQA_id?: number;
+  EQA_id?: number;
+  start_date?: string;
+  end_date?: string;
+  predicted_grade?: string;
+  final_grade?: string;
+  is_main_course?: boolean;
+  course_status?: string;
+}
+
+export interface UserCourseResponse {
+  status: boolean;
+  message?: string;
+  data?: LearnerCourse;
+  error?: string;
 }
 

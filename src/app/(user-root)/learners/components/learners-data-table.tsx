@@ -78,6 +78,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const statusOptions = [
   "Awaiting Induction",
@@ -385,7 +386,15 @@ export function LearnersDataTable() {
         header: "Learner Name",
         cell: ({ row }) => {
           const learner = row.original;
-          return `${learner.first_name} ${learner.last_name}`;
+          const learnerName = `${learner.first_name} ${learner.last_name}`;
+          return (
+            <Link
+              href={`/learner-profile?learner_id=${learner.learner_id}`}
+              className="text-primary hover:underline cursor-pointer font-medium"
+            >
+              {learnerName}
+            </Link>
+          );
         },
       },
       {

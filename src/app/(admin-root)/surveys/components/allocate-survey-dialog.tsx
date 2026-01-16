@@ -97,8 +97,12 @@ export function AllocateSurveyDialog({
   const pageSize = 10
 
   // Fetch courses and employers for filters
-  const { data: coursesData } = useGetCoursesQuery({ page: 1, page_size: 500 })
-  const { data: employersData } = useGetEmployersQuery({ page: 1, page_size: 100 })
+  const { data: coursesData } = useGetCoursesQuery({ page: 1, page_size: 500 },{
+    skip:!open
+  })
+  const { data: employersData } = useGetEmployersQuery({ page: 1, page_size: 100 },{
+    skip:!open
+  })
 
   // Get selected statuses for API filter
   const selectedStatuses = useMemo(() => {
@@ -121,7 +125,7 @@ export function AllocateSurveyDialog({
       status: selectedStatuses.length > 0 ? selectedStatuses[0] : undefined, // API supports single status, use first selected
     },
     {
-      skip: !selectedRoles.has("Learner"),
+      skip: !selectedRoles.has("Learner") || !open,
     }
   )
 
@@ -137,7 +141,7 @@ export function AllocateSurveyDialog({
       role: "Trainer",
     },
     {
-      skip: !selectedRoles.has("Trainer"),
+      skip: !selectedRoles.has("Trainer") || !open,
     }
   )
 
@@ -152,7 +156,7 @@ export function AllocateSurveyDialog({
       role: "IQA",
     },
     {
-      skip: !selectedRoles.has("IQA"),
+      skip: !selectedRoles.has("IQA") || !open,
     }
   )
 
@@ -167,7 +171,7 @@ export function AllocateSurveyDialog({
       role: "EQA",
     },
     {
-      skip: !selectedRoles.has("EQA"),
+      skip: !selectedRoles.has("EQA") || !open,
     }
   )
 

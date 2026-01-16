@@ -1,6 +1,15 @@
 'use client'
 
-import { Lock, Users, Shield, MessageSquare, Clock, Download, FileSignature, Ban } from 'lucide-react'
+import {
+  Lock,
+  Users,
+  Shield,
+  MessageSquare,
+  Clock,
+  Download,
+  FileSignature,
+  Ban,
+} from 'lucide-react'
 import {
   LayoutDashboard,
   MessageCircle,
@@ -311,6 +320,11 @@ const data: {
           title: 'Learner Management',
           url: '/learners',
           icon: GraduationCap,
+        },
+        {
+          title: 'Resources',
+          url: '/resources',
+          icon: BookOpen,
         },
       ],
     },

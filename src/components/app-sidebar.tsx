@@ -322,6 +322,11 @@ const data: {
           icon: GraduationCap,
         },
         {
+          title: 'CPD',
+          url: '/cpd',
+          icon: GraduationCap,
+        },
+        {
           title: 'Calendar',
           url: '/calendar',
           icon: Calendar,

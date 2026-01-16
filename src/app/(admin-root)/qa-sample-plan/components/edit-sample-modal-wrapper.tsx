@@ -3,7 +3,7 @@
 import { useAppSelector } from '@/store/hooks'
 import { selectEditSampleModal } from '@/store/slices/qaSamplePlanSlice'
 import { EditSampleModal } from './edit-sample-modal'
-import { useEditSampleModal } from './hooks/use-edit-sample-modal'
+import { useEditSampleModal } from './edit-sample-modal/hooks/use-edit-sample-modal'
 import { useLearnersData } from './qa-sample-plan-page-content/hooks/use-learners-data'
 import {
   selectFilterState,

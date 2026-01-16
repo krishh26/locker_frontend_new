@@ -332,6 +332,11 @@ const data: {
           icon: Calendar,
         },
         {
+          title: 'Forum',
+          url: '/forum',
+          icon: MessageCircle,
+        },
+        {
           title: 'Resources',
           url: '/resources',
           icon: BookOpen,

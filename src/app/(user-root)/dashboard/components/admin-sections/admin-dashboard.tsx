@@ -13,11 +13,14 @@ import type { DashboardCounts } from "@/store/api/dashboard/types"
 import { useAppSelector } from "@/store/hooks"
 
 export function AdminDashboard() {
-  const { data: dashboardData, isLoading: loading } = useGetDashboardCountsQuery()
+  const userRole = useAppSelector((state) => state.auth.user?.role)
+  
+  const { data: dashboardData, isLoading: loading } = useGetDashboardCountsQuery(undefined, {
+    skip: !userRole || userRole === "Learner",
+  })
   const [getCardData] = useLazyGetCardDataQuery()
   const [exporting, setExporting] = useState<Record<string, boolean>>({})
   const [fetchingData, setFetchingData] = useState<Record<string, boolean>>({})
-  const userRole = useAppSelector((state) => state.auth.user?.role)
   // Extract counts from API response
   const counts: DashboardCounts = dashboardData?.data || ({} as DashboardCounts)
 

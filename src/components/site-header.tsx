@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { CommandSearch, SearchTrigger } from "@/components/command-search"
 import { ModeToggle } from "@/components/mode-toggle"
+import { NotificationBell } from "@/components/notification-bell"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -149,6 +150,7 @@ export function SiteHeader() {
               </a>
             </Button> */}
             <ModeToggle />
+            {isAuthenticated && <NotificationBell />}
             {/* Change Role - Only show for non-Learner users */}
             {isAuthenticated &&
               user &&

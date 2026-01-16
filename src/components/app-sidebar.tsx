@@ -358,6 +358,46 @@ const data: {
         },
       ],
     },
+    {
+      label: 'IQA',
+      items: [
+        {
+          title: 'Learner Management',
+          url: '/learners',
+          icon: GraduationCap,
+        },
+        {
+          title: 'QA Sample Plan',
+          url: '/qa-sample-plan',
+          icon: ClipboardList,
+        },
+        {
+          title: 'CPD',
+          url: '/cpd',
+          icon: GraduationCap,
+        },
+        {
+          title: 'Calendar',
+          url: '/calendar',
+          icon: Calendar,
+        },
+        {
+          title: 'Forum',
+          url: '/forum',
+          icon: MessageCircle,
+        },
+        {
+          title: 'Propose Your Innovations',
+          url: '/propose-your-innovations',
+          icon: Lightbulb,
+        },
+        {
+          title: 'Support',
+          url: '/support',
+          icon: HelpCircle,
+        },
+      ],
+    },
     // {
     //   label: "Pages",
     //   items: [
@@ -464,6 +504,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (group.label === 'Trainer') {
         return userRole === 'Trainer'
       }
+      // Show "IQA" group only for IQA role
+      if (group.label === 'IQA') {
+        return userRole === 'IQA'
+      }
       // For other groups, show based on role access
       return true
     })
@@ -496,6 +540,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       ? 'Admin Dashboard'
                       : userRole === 'Trainer'
                       ? 'Trainer Dashboard'
+                      : userRole === 'IQA'
+                      ? 'IQA Dashboard'
                       : 'Learner Dashboard'}
                   </span>
                 </div>

@@ -24,6 +24,8 @@ import type {
   ApplyTemplateRequest,
   ApplyTemplateResponse,
   GetPublicSurveyResponse,
+  AllocateSurveyRequest,
+  AllocateSurveyResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -371,6 +373,25 @@ export const surveyApi = createApi({
         return response;
       },
     }),
+
+    // 5. Allocate Survey to Users (Placeholder - API endpoint to be implemented)
+    allocateSurvey: builder.mutation<AllocateSurveyResponse, AllocateSurveyRequest>({
+      query: (body) => ({
+        url: `/surveys/allocate`, // Placeholder endpoint
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Survey", id: arg.survey_id },
+        "Survey",
+      ],
+      transformResponse: (response: AllocateSurveyResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -391,8 +412,9 @@ export const {
   useSubmitResponseMutation,
   useDeleteResponseMutation,
   useApplyTemplateMutation,
+  useAllocateSurveyMutation,
 } = surveyApi;
 
 // Re-export types for convenience
-export type { Survey, SurveyStatus, Question, QuestionType, Response } from "./types";
+export type { Survey, SurveyStatus, Question, QuestionType, Response, AllocationRole } from "./types";
 

@@ -396,3 +396,31 @@ export interface GetPublicSurveyResponse {
     }>;
   };
 }
+
+// Survey Allocation API Types
+export type AllocationRole = 'Trainer' | 'IQA' | 'Learner' | 'EQA';
+
+export interface AllocateSurveyRequest {
+  survey_id: string;
+  allocations: Array<{
+    user_id: number;
+    role: AllocationRole;
+    user_type: 'user' | 'learner';
+  }>;
+}
+
+export interface AllocateSurveyResponse {
+  status: boolean;
+  message?: string;
+  data?: {
+    allocated_count: number;
+  };
+  error?: {
+    code: string;
+    message: string;
+    details?: Array<{
+      field: string;
+      message: string;
+    }>;
+  };
+}

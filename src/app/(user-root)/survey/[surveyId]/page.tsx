@@ -73,6 +73,17 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
       schemaFields[question.id] = question.required
         ? z.date({ message: "Please select a date" })
         : z.date().nullable().optional()
+    } else if (question.type === "likert") {
+      // Likert responses are stored as objects: { "0": "option1", "1": "option2" }
+      schemaFields[question.id] = question.required
+        ? z.record(z.string(), z.string()).refine(
+            (obj) => {
+              // Ensure all statements have a selected option
+              return question.statements && question.statements.every((_, idx) => obj[String(idx)])
+            },
+            { message: "Please select an option for all statements" }
+          )
+        : z.record(z.string(), z.string()).nullable().optional()
     } else {
       schemaFields[question.id] = question.required
         ? z.string().min(1, "This field is required")
@@ -84,12 +95,14 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
   type FormValues = z.infer<typeof formSchema>
 
   // Initialize default values for all fields
-  const defaultValues: Record<string, string | string[] | Date | undefined> = {}
+  const defaultValues: Record<string, string | string[] | Date | Record<string, string> | undefined> = {}
   sortedQuestions.forEach((question) => {
     if (question.type === "checkbox") {
       defaultValues[question.id] = []
     } else if (question.type === "date") {
       defaultValues[question.id] = undefined
+    } else if (question.type === "likert") {
+      defaultValues[question.id] = {}
     } else {
       defaultValues[question.id] = undefined
     }
@@ -159,13 +172,16 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
   }
 
   const onSubmit = async (data: FormValues) => {
-    const answers: Record<string, string | string[] | null> = {}
+    const answers: Record<string, string | string[] | Record<string, string> | null> = {}
     
     sortedQuestions.forEach((question) => {
       const value = data[question.id]
       if (value !== undefined && value !== null) {
         if (question.type === "date" && value instanceof Date) {
           answers[question.id] = value.toISOString()
+        } else if (question.type === "likert" && typeof value === "object" && !Array.isArray(value)) {
+          // Likert responses are stored as objects: { "0": "option1", "1": "option2" }
+          answers[question.id] = value as Record<string, string>
         } else {
           answers[question.id] = value as string | string[]
         }
@@ -527,6 +543,89 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                 />
               </PopoverContent>
             </Popover>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    )
+  }
+
+  if (question.type === "likert" && question.statements && question.options) {
+    return (
+      <FormField
+        control={form.control}
+        name={question.id}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-1" htmlFor={question.id}>
+              <label>{question.title}</label>
+              {question.required && <span className="text-destructive">*</span>}
+            </FormLabel>
+            {question.description && (
+              <FormDescription>{question.description}</FormDescription>
+            )}
+            <FormControl>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-border">
+                  <thead>
+                    <tr>
+                      <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                        Statements
+                      </th>
+                      {question.options!.map((option) => (
+                        <th
+                          key={option}
+                          className="border border-border bg-muted/50 p-2 text-center font-medium min-w-[100px]"
+                        >
+                          {option}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {question.statements!.map((statement, stmtIndex) => {
+                      const statementKey = String(stmtIndex)
+                      const currentValue = (field.value as Record<string, string>)?.[statementKey] || ""
+                      return (
+                        <tr
+                          key={stmtIndex}
+                          className={stmtIndex % 2 === 0 ? "bg-muted/30" : ""}
+                        >
+                          <td className="border border-border p-2 font-medium">
+                            {statement}
+                          </td>
+                          <RadioGroup
+                            value={currentValue}
+                            onValueChange={(value) => {
+                              const currentObj = (field.value as Record<string, string>) || {}
+                              field.onChange({
+                                ...currentObj,
+                                [statementKey]: value,
+                              })
+                            }}
+                            className="contents"
+                          >
+                            {question.options!.map((option) => (
+                              <td
+                                key={option}
+                                className="border border-border p-2 text-center"
+                              >
+                                <div className="flex justify-center">
+                                  <RadioGroupItem
+                                    value={option}
+                                    id={`${question.id}-${stmtIndex}-${option}`}
+                                  />
+                                </div>
+                              </td>
+                            ))}
+                          </RadioGroup>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}

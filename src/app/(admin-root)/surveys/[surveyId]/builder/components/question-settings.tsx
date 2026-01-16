@@ -53,9 +53,11 @@ const questionFormSchema = z
       "checkbox",
       "rating",
       "date",
+      "likert",
     ]),
     required: z.boolean(),
     options: z.array(z.object({ value: z.string().min(1) })).optional(),
+    statements: z.array(z.object({ value: z.string().min(1) })).optional(),
   })
   .refine(
     (data) => {
@@ -65,11 +67,31 @@ const questionFormSchema = z
       ) {
         return false
       }
+      if (data.type === "likert") {
+        if (!data.options || data.options.length === 0) {
+          return false
+        }
+        if (!data.statements || data.statements.length === 0) {
+          return false
+        }
+      }
       return true
     },
     {
       message: "At least one option is required for this question type.",
       path: ["options"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.type === "likert" && (!data.statements || data.statements.length === 0)) {
+        return false
+      }
+      return true
+    },
+    {
+      message: "At least one statement is required for Likert scale questions.",
+      path: ["statements"],
     }
   )
 
@@ -99,17 +121,24 @@ export function QuestionSettings({
       type: "short-text",
       required: false,
       options: [],
+      statements: [],
     },
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields: optionFields, append: appendOption, remove: removeOption } = useFieldArray({
     control: form.control,
     name: "options",
   })
 
+  const { fields: statementFields, append: appendStatement, remove: removeStatement } = useFieldArray({
+    control: form.control,
+    name: "statements",
+  })
+
   const questionType = form.watch("type")
   const showOptions =
-    questionType === "multiple-choice" || questionType === "checkbox"
+    questionType === "multiple-choice" || questionType === "checkbox" || questionType === "likert"
+  const showStatements = questionType === "likert"
 
   useEffect(() => {
     if (question) {
@@ -120,6 +149,8 @@ export function QuestionSettings({
         required: question.required,
         options:
           question.options?.map((opt) => ({ value: opt })) || [],
+        statements:
+          question.statements?.map((stmt) => ({ value: stmt })) || [],
       })
     } else {
       form.reset({
@@ -128,15 +159,22 @@ export function QuestionSettings({
         type: "short-text",
         required: false,
         options: [],
+        statements: [],
       })
     }
   }, [question, form])
 
   useEffect(() => {
-    if (showOptions && fields.length === 0) {
-      append({ value: "" })
+    if (showOptions && optionFields.length === 0) {
+      appendOption({ value: "" })
     }
-  }, [showOptions, fields.length, append])
+  }, [showOptions, optionFields.length, appendOption])
+
+  useEffect(() => {
+    if (showStatements && statementFields.length === 0) {
+      appendStatement({ value: "" })
+    }
+  }, [showStatements, statementFields.length, appendStatement])
 
   async function onSubmit(data: QuestionFormValues) {
     const questionData = {
@@ -147,6 +185,10 @@ export function QuestionSettings({
       options:
         showOptions && data.options
           ? data.options.map((opt) => opt.value).filter((v) => v.trim())
+          : null,
+      statements:
+        showStatements && data.statements
+          ? data.statements.map((stmt) => stmt.value).filter((v) => v.trim())
           : null,
     }
 
@@ -249,12 +291,76 @@ export function QuestionSettings({
                       <SelectItem value="checkbox">Checkbox</SelectItem>
                       <SelectItem value="rating">Rating (1-5)</SelectItem>
                       <SelectItem value="date">Date</SelectItem>
+                      <SelectItem value="likert">Likert Scale</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {showStatements && (
+              <FormField
+                control={form.control}
+                name="statements"
+                render={() => (
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Statements (Rows)</FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => appendStatement({ value: "" })}
+                        className="cursor-pointer"
+                      >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Statement
+                      </Button>
+                    </div>
+                    <FormDescription>
+                      Add statements for the Likert scale (one per row).
+                    </FormDescription>
+                    <div className="space-y-2">
+                      {statementFields.map((field, index) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`statements.${index}.value`}
+                            render={({ field }) => (
+                              <FormItem className="flex-1">
+                                <FormControl>
+                                  <Input
+                                    placeholder={`Statement ${index + 1}`}
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeStatement(index)}
+                            className="cursor-pointer"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                    {statementFields.length === 0 && (
+                      <p className="text-sm text-destructive">
+                        At least one statement is required.
+                      </p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             {showOptions && (
               <FormField
@@ -268,7 +374,7 @@ export function QuestionSettings({
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => append({ value: "" })}
+                        onClick={() => appendOption({ value: "" })}
                         className="cursor-pointer"
                       >
                         <Plus className="mr-2 h-4 w-4" />
@@ -276,10 +382,14 @@ export function QuestionSettings({
                       </Button>
                     </div>
                     <FormDescription>
-                      Add options for {questionType === "multiple-choice" ? "multiple choice" : "checkbox"} questions.
+                      {questionType === "likert"
+                        ? "Add rating scale options for the Likert scale (columns)."
+                        : questionType === "multiple-choice"
+                        ? "Add options for multiple choice questions."
+                        : "Add options for checkbox questions."}
                     </FormDescription>
                     <div className="space-y-2">
-                      {fields.map((field, index) => (
+                      {optionFields.map((field, index) => (
                         <div key={field.id} className="flex items-center gap-2">
                           <FormField
                             control={form.control}
@@ -300,7 +410,7 @@ export function QuestionSettings({
                             type="button"
                             variant="ghost"
                             size="icon"
-                            onClick={() => remove(index)}
+                            onClick={() => removeOption(index)}
                             className="cursor-pointer"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -308,7 +418,7 @@ export function QuestionSettings({
                         </div>
                       ))}
                     </div>
-                    {fields.length === 0 && (
+                    {optionFields.length === 0 && (
                       <p className="text-sm text-destructive">
                         At least one option is required.
                       </p>

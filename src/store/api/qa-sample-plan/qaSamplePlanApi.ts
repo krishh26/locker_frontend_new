@@ -370,7 +370,7 @@ export const qaSamplePlanApi = createApi({
     addAssignmentReview: builder.mutation<{ status: boolean; message?: string; error?: string }, AddAssignmentReviewRequest>({
       query: (body) => {
         const formData = new FormData();
-        formData.append("mapping_id", String(body.mapping_id));
+        formData.append("assignment_id", String(body.assignment_id));
         formData.append("sampling_plan_detail_id", String(body.sampling_plan_detail_id));
         formData.append("role", body.role);
         formData.append("comment", body.comment);

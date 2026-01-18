@@ -176,10 +176,22 @@ export function QASamplePlanPageContent() {
 
     if (isApplySamplesDisabled) return;
 
+    // Check if at least one unit is selected
+    const hasAtLeastOneSelectedUnit = Object.values(unitSelection.selectedUnitsMap).some(
+      (units) => units.length > 0
+    );
+    
+    if (!hasAtLeastOneSelectedUnit) {
+      dispatch(setFilterError("Please select at least one unit before applying samples."));
+      return;
+    }
+
     // Convert selectedUnitsMap from array format to Set for payload building
+    // Ensure all unit keys are strings to match the payload builder logic
     const selectedUnitsMapForPayload: Record<string, Set<string>> = {};
     Object.entries(unitSelection.selectedUnitsMap).forEach(([key, units]) => {
-      selectedUnitsMapForPayload[key] = new Set(units);
+      // Convert all unit values to strings to ensure type consistency
+      selectedUnitsMapForPayload[key] = new Set(units.map((unit) => String(unit)));
     });
 
     const payload = buildApplySamplesPayload({
@@ -192,6 +204,7 @@ export function QASamplePlanPageContent() {
       selectedMethods: filterState.selectedMethods,
     });
 
+    console.log("payload", payload);
 
     if (!payload) {
       dispatch(setFilterError("Select at least one learner with sampled units before applying."));

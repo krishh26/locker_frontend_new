@@ -287,6 +287,7 @@ export interface UnitMappingResponse {
 
 export interface EvidenceItem {
   assignment_id: number;
+  mapping_id?: number;
   title: string;
   description: string | null;
   file: {
@@ -305,8 +306,33 @@ export interface EvidenceItem {
   mappedSubUnits: Array<{
     id: number;
     subTitle: string;
+    learnerMapped?: boolean;
+    trainerMapped?: boolean;
+    review?: {
+      signed_off: boolean;
+      signed_at?: string;
+      signed_by?: {
+        user_id: number;
+        name: string;
+      };
+    } | null;
   }>;
-  reviews: Record<string, unknown>;
+  reviews: Record<
+    string,
+    {
+      id?: number;
+      completed: boolean;
+      comment: string;
+      signed_off_at: string | null;
+      signed_off_by: string | null;
+      file?: {
+        name: string;
+        size: number;
+        url: string;
+        key: string;
+      } | null;
+    }
+  >;
 }
 
 export interface EvidenceListResponse {
@@ -317,7 +343,7 @@ export interface EvidenceListResponse {
 }
 
 export interface AddAssignmentReviewRequest {
-  mapping_id: number;
+  assignment_id: number;
   sampling_plan_detail_id: number;
   role: string;
   comment: string;
@@ -331,7 +357,7 @@ export interface DeleteAssignmentReviewFileRequest {
 }
 
 export interface UpdateMappedSubUnitSignOffRequest {
-  mapping_id: number;
+  assignment_id: number;
   unit_code: string | number;
   pc_id: string | number;
   signed_off: boolean;

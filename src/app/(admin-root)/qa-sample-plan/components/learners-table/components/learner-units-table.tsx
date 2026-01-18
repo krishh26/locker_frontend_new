@@ -50,8 +50,9 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     units.forEach((unit) => {
       const unitData = unit as SamplePlanLearnerUnit;
       // Match old implementation: use unit_code if truthy, else unit_name, else empty string
-      const unitKey = unitData.unit_code || unitData.unit_name || "";
-      if (unitKey && !selectedUnitsSet.has(unitKey)) {
+      // Convert to string to ensure type consistency
+      const unitKey = String(unitData.unit_code || unitData.unit_name || "");
+      if (unitKey && unitKey.trim() && !selectedUnitsSet.has(unitKey)) {
         dispatch(toggleUnitForLearner({ learnerKey, unitKey }));
       }
     });
@@ -62,8 +63,9 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     units.forEach((unit) => {
       const unitData = unit as SamplePlanLearnerUnit;
       // Match old implementation: use unit_code if truthy, else unit_name, else empty string
-      const unitKey = unitData.unit_code || unitData.unit_name || "";
-      if (unitKey && selectedUnitsSet.has(unitKey)) {
+      // Convert to string to ensure type consistency
+      const unitKey = String(unitData.unit_code || unitData.unit_name || "");
+      if (unitKey && unitKey.trim() && selectedUnitsSet.has(unitKey)) {
         dispatch(toggleUnitForLearner({ learnerKey, unitKey }));
       }
     });
@@ -110,8 +112,9 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
   const allUnitsSelected = units.every((unit) => {
     const unitData = unit as SamplePlanLearnerUnit;
     // Match old implementation: use unit_code if truthy, else unit_name, else empty string
-    const unitKey = unitData.unit_code || unitData.unit_name || "";
-    return !unitKey || selectedUnitsSet.has(unitKey);
+    // Convert to string to ensure type consistency
+    const unitKey = String(unitData.unit_code || unitData.unit_name || "");
+    return !unitKey || !unitKey.trim() || selectedUnitsSet.has(unitKey);
   });
 
   return (
@@ -135,8 +138,9 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
         {units.map((unit, unitIndex: number) => {
           const unitData = unit as SamplePlanLearnerUnit & { status?: string | boolean };
           // Match old implementation: use unit_code if truthy, else unit_name, else empty string
-          const unitKey = unitData.unit_code || unitData.unit_name || "";
-          const isUnitSelected = unitKey ? selectedUnitsSet.has(unitKey) : false;
+          // Convert to string to ensure type consistency
+          const unitKey = String(unitData.unit_code || unitData.unit_name || "");
+          const isUnitSelected = unitKey && unitKey.trim() ? selectedUnitsSet.has(unitKey) : false;
           const sampleHistory = Array.isArray(unitData.sample_history) ? unitData.sample_history : [];
 
           return (

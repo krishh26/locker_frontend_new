@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import type { SampleAction } from '@/store/api/qa-sample-plan/types'
-import { formatDisplayDate } from '../../../utils'
+import { formatDisplayDate } from '../../../../utils/utils'
 
 interface ActionsTableProps {
   actions: SampleAction[]

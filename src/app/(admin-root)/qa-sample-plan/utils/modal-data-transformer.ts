@@ -1,6 +1,6 @@
 import type { PlanDetailsResponse } from "@/store/api/qa-sample-plan/types";
-import type { ModalFormData } from "../edit-sample-modal";
-import { assessmentMethods } from "../constants";
+import { ModalFormData } from "../components/edit-sample-modal/types";
+import { assessmentMethods } from "./constants";
 
 /**
  * Transform PlanDetailsResponse data to ModalFormData format

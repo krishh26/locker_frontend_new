@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { SamplePlanLearner, SamplePlanLearnerUnit } from "@/store/api/qa-sample-plan/types";
-import { sanitizeText, formatDisplayDate } from "../../utils";
+import { sanitizeText, formatDisplayDate } from "../../../utils/utils";
 import { useAppDispatch } from "@/store/hooks";
 import {
   toggleUnitForLearner,

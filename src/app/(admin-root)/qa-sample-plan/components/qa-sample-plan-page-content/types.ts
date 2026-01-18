@@ -1,5 +1,4 @@
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import type { SelectedLearnerForUnits } from "../unit-selection-dialog";
 
 export interface Course {
   id: string;
@@ -30,12 +29,6 @@ export interface FilterApplicationState {
   filterApplied: boolean;
   filterError: string;
   planSummary?: PlanSummary;
-}
-
-export interface UnitSelectionState {
-  unitSelectionDialogOpen: boolean;
-  selectedLearnerForUnits: SelectedLearnerForUnits | null;
-  selectedUnitsMap: Record<string, Set<string>>;
 }
 
 export interface LearnersDataState {

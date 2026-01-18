@@ -2,7 +2,7 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent } from '@/components/ui/card'
 import type { ModalFormData } from '../../types'
-import { iqaConclusionOptions } from '../../../constants'
+import { iqaConclusionOptions } from '../../../../utils/constants'
 
 interface IqaConclusionSectionProps {
   modalFormData: ModalFormData

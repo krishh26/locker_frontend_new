@@ -1,5 +1,5 @@
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { assessmentMethodCodesForPayload } from "../../constants";
+import { assessmentMethodCodesForPayload } from "../../../utils/constants";
 
 export interface ApplySamplesPayload {
   plan_id: string | number;

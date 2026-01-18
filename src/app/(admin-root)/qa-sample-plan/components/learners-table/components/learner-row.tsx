@@ -15,7 +15,7 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { sanitizeText, getRiskBadgeVariant } from "../../utils";
+import { sanitizeText, getRiskBadgeVariant } from "../../../utils/utils";
 import { LearnerUnitsTable } from "./learner-units-table";
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";

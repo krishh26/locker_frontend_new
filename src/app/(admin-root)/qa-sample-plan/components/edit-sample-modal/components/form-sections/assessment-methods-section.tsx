@@ -2,7 +2,7 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent } from '@/components/ui/card'
 import type { ModalFormData } from '../../types'
-import { assessmentMethods } from '../../../constants'
+import { assessmentMethods } from '../../../../utils/constants'
 
 interface AssessmentMethodsSectionProps {
   modalFormData: ModalFormData

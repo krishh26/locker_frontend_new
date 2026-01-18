@@ -25,7 +25,7 @@ import { LearnersTable } from "../learners-table";
 import { QASamplePlanLayout } from "./components/qa-sample-plan-layout";
 import { useLearnersData } from "./hooks/use-learners-data";
 import { buildApplySamplesPayload } from "./utils/apply-samples-payload";
-import { EditSampleModalWrapper } from "../edit-sample-modal-wrapper";
+import { EditSampleModalWrapper } from "../edit-sample-modal/edit-sample-modal-wrapper";
 
 export function QASamplePlanPageContent() {
   const dispatch = useAppDispatch();

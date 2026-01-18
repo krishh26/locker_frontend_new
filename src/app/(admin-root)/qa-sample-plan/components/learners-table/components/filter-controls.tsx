@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { qaStatuses } from "../../constants";
+import { qaStatuses } from "../../../utils/constants";
 import {
   selectFilterState,
   setSelectedStatus,

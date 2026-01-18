@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { assessmentMethods, sampleTypes } from "./constants";
+import { assessmentMethods, sampleTypes } from "../utils/constants";
 import { Loader2 } from "lucide-react";
 import {
   selectFilterState,

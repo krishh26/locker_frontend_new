@@ -25,8 +25,8 @@ import {
 import { useGetSamplePlansQuery } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import { useLearnersData } from "../../qa-sample-plan-page-content/hooks/use-learners-data";
 import { filterVisibleRows } from "../../qa-sample-plan-page-content/utils/filter-utils";
-import { sanitizeText, formatDisplayDate, getLearnerPlannedDate } from "../../utils";
-import { countSelectedUnits } from "../../utils";
+import { sanitizeText, formatDisplayDate, getLearnerPlannedDate } from "../../../utils/utils";
+import { countSelectedUnits } from "../../../utils/utils";
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
 
 interface ActionButtonsProps {

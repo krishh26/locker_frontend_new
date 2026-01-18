@@ -11,7 +11,7 @@ import {
   useApplySamplePlanLearnersMutation,
 } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import { closeEditSampleModal, selectEditSampleModal } from "@/store/slices/qaSamplePlanSlice";
-import { assessmentMethodCodesForPayload } from "../../constants";
+import { assessmentMethodCodesForPayload } from "../../../utils/constants";
 import type { ModalFormData } from "../types";
 import type { SampleQuestion } from "@/store/api/qa-sample-plan/types";
 import {

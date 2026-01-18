@@ -122,7 +122,7 @@ export const CoursePlanSelector = memo(function CoursePlanSelector() {
           onValueChange={handleCourseChange}
           disabled={coursesLoading}
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder={coursesLoading ? "Loading courses..." : "Select a course"} />
           </SelectTrigger>
           <SelectContent>
@@ -142,7 +142,7 @@ export const CoursePlanSelector = memo(function CoursePlanSelector() {
           onValueChange={handlePlanChange}
           disabled={!selectedCourse || isPlanListLoading}
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder={planPlaceholderText} />
           </SelectTrigger>
           <SelectContent>

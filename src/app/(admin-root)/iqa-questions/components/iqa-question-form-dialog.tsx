@@ -99,9 +99,10 @@ export function IQAQuestionFormDialog({
         toast.success("Question created successfully!");
       }
       onSuccess();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorData = error as { data?: { message?: string }; message?: string };
       const errorMsg =
-        error?.data?.message || error?.message || "Failed to save question";
+        errorData.data?.message || errorData.message || "Failed to save question";
       setErrorMessage(errorMsg);
       toast.error(errorMsg);
     }

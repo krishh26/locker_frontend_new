@@ -15,16 +15,14 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { assessmentMethods, sampleTypes } from "./constants";
+import { assessmentMethods, sampleTypes } from "../utils/constants";
 import { Loader2 } from "lucide-react";
 import {
   selectFilterState,
-  selectSelectedPlan,
   toggleMethod,
   setSelectedMethods,
   setSampleType,
-  setDateFrom,
-  setDateTo,
+  setPlannedSampleDate,
 } from "@/store/slices/qaSamplePlanSlice";
 
 interface FilterPanelProps {
@@ -44,12 +42,12 @@ export function FilterPanel({
 }: FilterPanelProps) {
   const dispatch = useAppDispatch();
   const filterState = useAppSelector(selectFilterState);
-  const { selectedMethods, sampleType, dateFrom, dateTo } = filterState;
+  const { selectedMethods, sampleType, plannedSampleDate } = filterState;
   const [dateError, setDateError] = useState<string>("");
   const allSelected = selectedMethods.length === assessmentMethods.length;
 
   const handleDateChange = (value: string) => {
-    dispatch(setDateFrom(value));
+    dispatch(setPlannedSampleDate(value));
     if (!value.trim()) {
       setDateError("Planned Sample Date is required");
     } else {
@@ -58,7 +56,7 @@ export function FilterPanel({
   };
 
   const handleApplySamplesClick = () => {
-    if (!dateFrom.trim()) {
+    if (!plannedSampleDate.trim()) {
       setDateError("Planned Sample Date is required");
       return;
     }
@@ -67,7 +65,7 @@ export function FilterPanel({
   };
 
   const handleApplyRandomSamplesClick = () => {
-    if (!dateFrom.trim()) {
+    if (!plannedSampleDate.trim()) {
       setDateError("Planned Sample Date is required");
       return;
     }
@@ -130,7 +128,7 @@ export function FilterPanel({
             Sample Type
           </Label>
           <Select value={sampleType || undefined} onValueChange={(value) => dispatch(setSampleType(value))}>
-            <SelectTrigger id="sample-type">
+            <SelectTrigger className="w-full" id="sample-type">
               <SelectValue placeholder="Select sample type" />
             </SelectTrigger>
             <SelectContent>
@@ -151,25 +149,12 @@ export function FilterPanel({
           <Input
             id="date-from"
             type="date"
-            value={dateFrom}
+            value={plannedSampleDate}
             onChange={(e) => handleDateChange(e.target.value)}
           />
           {dateError && (
             <p className="text-sm text-destructive">{dateError}</p>
           )}
-        </div>
-
-        {/* Date To (Optional) */}
-        <div className="space-y-2">
-          <Label htmlFor="date-to" className="text-base font-semibold">
-            Date To (Optional)
-          </Label>
-          <Input
-            id="date-to"
-            type="date"
-            value={dateTo}
-            onChange={(e) => dispatch(setDateTo(e.target.value))}
-          />
         </div>
 
         <Separator />

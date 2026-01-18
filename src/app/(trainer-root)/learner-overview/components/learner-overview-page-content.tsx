@@ -5,7 +5,8 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Users } from "lucide-react";
 import { LearnerPortfolioCard } from "./learner-portfolio-card";
 import { LearnerOverviewFilters } from "./learner-overview-filters";
-import { useGetLearnersByUserQuery } from "@/store/api/learner/learnerApi";
+import { useGetLearnersListQuery } from "@/store/api/learner/learnerApi";
+import type { LearnerFilters } from "@/store/api/learner/types";
 import { useAppSelector } from "@/store/hooks";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -33,21 +34,22 @@ export function LearnerOverviewPageContent() {
     };
   }, [searchQuery]);
 
-  // Fetch learners by user
+  // Fetch learners using unified API with user_id and role
+  const learnerFilters: LearnerFilters = useMemo(
+    () => ({
+      user_id: user?.id ? Number(user.id) : undefined,
+      role: user?.role || undefined,
+    }),
+    [user?.id, user?.role]
+  );
   const {
     data: learnersData,
     isLoading,
     error,
     refetch,
-  } = useGetLearnersByUserQuery(
-    {
-      user_id: Number(user?.id) || 0,
-      role: user?.role || "",
-    },
-    {
-      skip: !user?.id || !user?.role,
-    }
-  );
+  } = useGetLearnersListQuery(learnerFilters, {
+    skip: !user?.id || !user?.role,
+  });
 
   // Filter learners based on debounced search query
   const filteredLearners = useMemo(() => {

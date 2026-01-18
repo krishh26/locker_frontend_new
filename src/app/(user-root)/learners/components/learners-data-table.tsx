@@ -66,7 +66,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import {
   useGetLearnersListQuery,
-  useGetLearnersByUserQuery,
   useDeleteLearnerMutation,
 } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem, LearnerFilters } from "@/store/api/learner/types";
@@ -78,6 +77,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const statusOptions = [
   "Awaiting Induction",
@@ -94,9 +94,11 @@ const statusOptions = [
 
 export function LearnersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
+  console.log(user);
   const userRole = user?.role;
   const isAdmin = userRole === "Admin";
   const isTrainer = userRole === "Trainer";
+  const isEmployer = userRole === "Employer";
   const canEditComments = isAdmin || isTrainer;
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -120,111 +122,68 @@ export function LearnersDataTable() {
   const [learnerForComment, setLearnerForComment] = useState<LearnerListItem | null>(null);
   const [csvUploadOpen, setCsvUploadOpen] = useState(false);
 
-  // Client-side pagination state for trainers
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  // Client-side pagination state removed - all roles now use server-side pagination
 
-  // Admin uses server-side filtered API
-  const { data: adminData, isLoading: isAdminLoading, refetch: adminRefetch } = useGetLearnersListQuery(filters, {
-    skip: !isAdmin,
-  });
+  // Unified filters for all roles using the same API with server-side pagination and meta=true
+  const unifiedFilters: LearnerFilters = useMemo(() => {
+    const baseFilters: LearnerFilters = {
+      page: filters.page,
+      page_size: filters.page_size,
+      keyword: filters.keyword,
+      course_id: filters.course_id,
+      status: filters.status,
+    };
 
-  // Trainer uses user-specific API
-  const { data: trainerData, isLoading: isTrainerLoading, refetch: trainerRefetch } = useGetLearnersByUserQuery(
-    {
-      user_id: Number(user?.id) || 0,
-      role: user?.role || "",
-    },
-    {
-      skip: !isTrainer || !user?.id || !user?.role,
+    if (isAdmin) {
+      return {
+        ...baseFilters,
+        employer_id: filters.employer_id,
+      };
     }
-  );
+    if (isTrainer) {
+      return {
+        ...baseFilters,
+        user_id: user?.id ? Number(user.id) : undefined,
+        role: user?.role || undefined,
+      };
+    }
+    if (isEmployer) {
+      return {
+        ...baseFilters,
+        employer_id: user?.user_id ? Number(user.user_id) : undefined,
+      };
+    }
+    return baseFilters;
+  }, [
+    isAdmin,
+    isTrainer,
+    isEmployer,
+    user?.id,
+    user?.role,
+    user?.user_id,
+    filters.page,
+    filters.page_size,
+    filters.keyword,
+    filters.course_id,
+    filters.status,
+    filters.employer_id,
+  ]);
 
-  // Select appropriate data and loading state
-  const data = isAdmin ? adminData : trainerData;
-  const isLoading = isAdmin ? isAdminLoading : isTrainerLoading;
-  const refetch = isAdmin ? adminRefetch : trainerRefetch;
+  // Single unified API query for all roles with meta=true (handled by API)
+  const { data, isLoading, refetch } = useGetLearnersListQuery(unifiedFilters, {
+    skip: (!isAdmin && !isTrainer && !isEmployer) || 
+          (isTrainer && (!user?.id || !user?.role)) || 
+          (isEmployer && !user?.user_id),
+  });
 
   const [deleteLearner, { isLoading: isDeleting }] = useDeleteLearnerMutation();
 
-  // Filter out employee learners for trainers (those with employer_id)
+  // All roles now use server-side filtering and pagination
   const filteredLearners = useMemo<LearnerListItem[]>(() => {
     return Array.isArray(data?.data) ? data.data : [];
   }, [data]);
 
-  // Client-side filtering for trainers (search, status)
-  const clientFilteredLearners = useMemo(() => {
-    if (isAdmin) {
-      return filteredLearners;
-    }
-    if (isTrainer) {
-      let result = [...filteredLearners];
-
-      // Apply search filter
-      if (globalFilter.trim()) {
-        const query = globalFilter.toLowerCase().trim();
-        result = result.filter((learner) => {
-          const firstName = (learner?.first_name || "").toString().toLowerCase();
-          const lastName = (learner?.last_name || "").toString().toLowerCase();
-          const fullName = `${firstName} ${lastName}`;
-          const learnerId = (learner?.learner_id || "").toString().toLowerCase();
-          const email = (learner?.email || "").toString().toLowerCase();
-          const comment = (learner?.comment || "").toString().toLowerCase();
-
-          return (
-            firstName.includes(query) ||
-            lastName.includes(query) ||
-            fullName.includes(query) ||
-            learnerId.includes(query) ||
-            email.includes(query) ||
-            comment.includes(query)
-          );
-        });
-      }
-
-      // Apply status filter
-      const selectedStatuses = Object.entries(statusFilters)
-        .filter(([_, checked]) => checked)
-        .map(([status]) => status);
-      if (selectedStatuses.length > 0) {
-        result = result.filter((learner) => {
-          const learnerStatus = learner.status || "";
-          return selectedStatuses.includes(learnerStatus);
-        });
-      }
-
-      // Apply course filter
-      if (courseFilter && courseFilter !== "all") {
-        const courseId = Number(courseFilter);
-        result = result.filter((learner) => {
-          return learner.course?.some((c) => c.course?.course_id === courseId);
-        });
-      }
-
-      return result;
-    }
-    return [];
-  }, [filteredLearners, globalFilter, statusFilters, courseFilter, isAdmin, isTrainer]);
-
-  // Client-side pagination for trainers
-  const paginatedLearners = useMemo(() => {
-    if (isAdmin) {
-      return clientFilteredLearners;
-    }
-    if (isTrainer) {
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      return clientFilteredLearners.slice(startIndex, endIndex);
-    }
-    return [];
-  }, [clientFilteredLearners, currentPage, itemsPerPage, isAdmin, isTrainer]);
-
-  // Calculate total pages
-  const totalPages = isAdmin
-    ? data?.meta_data?.pages || 0
-    : Math.ceil(clientFilteredLearners.length / itemsPerPage);
-
-  // Build status filter string from checkboxes (for admin server-side filtering)
+  // Build status filter string from checkboxes (for server-side filtering)
   const statusFilterString = useMemo(() => {
     const selectedStatuses = Object.entries(statusFilters)
       .filter(([_, checked]) => checked)
@@ -232,40 +191,44 @@ export function LearnersDataTable() {
     return selectedStatuses.length > 0 ? selectedStatuses.join(", ") : "";
   }, [statusFilters]);
 
-  // Update filters when any filter changes (admin only)
+  // Update filters when any filter changes (all roles use server-side filtering)
   useEffect(() => {
-    if (isAdmin) {
+    if (isAdmin || isEmployer || isTrainer) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
         keyword: globalFilter || undefined,
         course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
-        employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
+        employer_id: isAdmin
+          ? employerFilter && employerFilter !== "all"
+            ? Number(employerFilter)
+            : undefined
+          : isEmployer && user?.user_id
+          ? Number(user.user_id)
+          : undefined, // For Employer, always use user.user_id
         status: statusFilterString || undefined,
       }));
     }
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin]);
-
-  // Reset to page 1 when filters change (trainer)
-  useEffect(() => {
-    if (isTrainer) {
-      setCurrentPage(1);
-    }
-  }, [globalFilter, statusFilters, courseFilter, isTrainer]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, user?.user_id]);
 
   const handleSearch = useCallback(() => {
-    if (isAdmin) {
+    if (isAdmin || isEmployer || isTrainer) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
         keyword: globalFilter || undefined,
         course_id: courseFilter && courseFilter !== "all" ? Number(courseFilter) : undefined,
-        employer_id: employerFilter && employerFilter !== "all" ? Number(employerFilter) : undefined,
+        employer_id: isAdmin
+          ? employerFilter && employerFilter !== "all"
+            ? Number(employerFilter)
+            : undefined
+          : isEmployer && user?.user_id
+          ? Number(user.user_id)
+          : undefined, // For Employer, always use user.user_id
         status: statusFilterString || undefined,
       }));
     }
-    // For trainers, filtering is handled client-side in useMemo
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, user?.user_id]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -280,13 +243,13 @@ export function LearnersDataTable() {
     setStatusFilters(
       statusOptions.reduce((acc, status) => ({ ...acc, [status]: false }), {})
     );
-    if (isAdmin) {
+    if (isAdmin || isEmployer || isTrainer) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
         keyword: undefined,
         course_id: undefined,
-        employer_id: undefined,
+        employer_id: isEmployer && user?.user_id ? Number(user.user_id) : undefined, // For Employer, keep employer_id
         status: undefined,
       }));
     }
@@ -335,15 +298,13 @@ export function LearnersDataTable() {
   };
 
   const handlePageChange = (page: number) => {
-    if (isAdmin) {
-      setFilters((prev) => ({ ...prev, page }));
-    } else {
-      setCurrentPage(page);
-    }
+    // All roles now use server-side pagination
+    setFilters((prev) => ({ ...prev, page }));
   };
 
   const handleExportCsv = () => {
-    const exportData = isAdmin ? (data?.data || []) : clientFilteredLearners;
+    // All roles now use server-side data
+    const exportData = data?.data || [];
     if (!exportData || exportData.length === 0) {
       toast.info("No data to export");
       return;
@@ -385,7 +346,15 @@ export function LearnersDataTable() {
         header: "Learner Name",
         cell: ({ row }) => {
           const learner = row.original;
-          return `${learner.first_name} ${learner.last_name}`;
+          const learnerName = `${learner.first_name} ${learner.last_name}`;
+          return (
+            <Link
+              href={`/learner-profile?learner_id=${learner.learner_id}`}
+              className="text-primary hover:underline cursor-pointer font-medium"
+            >
+              {learnerName}
+            </Link>
+          );
         },
       },
       {
@@ -520,8 +489,8 @@ export function LearnersDataTable() {
     [canEditComments, isAdmin]
   );
 
-  // Determine table data based on role
-  const tableData = isAdmin ? (data?.data || []) : paginatedLearners;
+  // Determine table data - all roles now use server-side data
+  const tableData = filteredLearners;
 
   const table = useReactTable({
     data: tableData,
@@ -540,8 +509,8 @@ export function LearnersDataTable() {
       columnVisibility,
       globalFilter,
     },
-    manualPagination: isAdmin,
-    pageCount: isAdmin ? (data?.meta_data?.pages || 0) : totalPages,
+    manualPagination: true, // All roles now use server-side pagination
+    pageCount: data?.meta_data?.pages || 0,
   });
 
   if (isLoading) {
@@ -714,8 +683,8 @@ export function LearnersDataTable() {
         </Table>
       </div>
 
-      {/* Pagination */}
-      {isAdmin && data?.meta_data && (
+      {/* Pagination - All roles now use server-side pagination */}
+      {data?.meta_data && (
         <DataTablePagination
           table={table}
           manualPagination={true}
@@ -730,21 +699,6 @@ export function LearnersDataTable() {
               page: 1,
               page_size: newPageSize,
             }));
-          }}
-        />
-      )}
-      {isTrainer && (
-        <DataTablePagination
-          table={table}
-          manualPagination={false}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalItems={clientFilteredLearners.length}
-          pageSize={itemsPerPage}
-          onPageChange={handlePageChange}
-          onPageSizeChange={(newPageSize) => {
-            setItemsPerPage(newPageSize);
-            setCurrentPage(1);
           }}
         />
       )}

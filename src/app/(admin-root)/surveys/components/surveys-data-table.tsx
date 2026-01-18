@@ -16,11 +16,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import {
-  ChevronDown,
   Eye,
   Pencil,
   Trash2,
-  Download,
   Search,
   FileText,
   FileDown,
@@ -31,10 +29,8 @@ import { format } from "date-fns"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -68,6 +64,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { SurveyForm } from "./survey-form"
+import { AllocateSurveyDialog } from "./allocate-survey-dialog"
 import { DataTablePagination } from "@/components/data-table-pagination"
 import {
   useGetSurveysQuery,
@@ -76,6 +73,7 @@ import {
   type SurveyStatus,
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
+import { UserPlus } from "lucide-react"
 
 export function SurveysDataTable() {
   const router = useRouter()
@@ -83,6 +81,8 @@ export function SurveysDataTable() {
   const [surveyToDelete, setSurveyToDelete] = useState<string | null>(null)
   const [editingSurvey, setEditingSurvey] = useState<Survey | null>(null)
   const [formOpen, setFormOpen] = useState(false)
+  const [allocateDialogOpen, setAllocateDialogOpen] = useState(false)
+  const [surveyToAllocate, setSurveyToAllocate] = useState<Survey | null>(null)
   const [statusFilter, setStatusFilter] = useState<SurveyStatus | "">("")
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [page, setPage] = useState(1)
@@ -289,6 +289,17 @@ export function SurveysDataTable() {
                 >
                   <ExternalLink className="mr-2 size-4" />
                   Open Public Form
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSurveyToAllocate(survey)
+                    setAllocateDialogOpen(true)
+                  }}
+                >
+                  <UserPlus className="mr-2 size-4" />
+                  Allocate Form
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
@@ -547,6 +558,12 @@ export function SurveysDataTable() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AllocateSurveyDialog
+        open={allocateDialogOpen}
+        onOpenChange={setAllocateDialogOpen}
+        survey={surveyToAllocate}
+      />
     </>
   )
 }

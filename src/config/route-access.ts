@@ -16,8 +16,23 @@ const adminAndLearnerRoles = ["Admin", "Learner"] as const satisfies readonly Ro
 // Admin and Trainer roles combined
 const adminAndTrainerRoles = ["Admin", "Trainer"] as const satisfies readonly Role[]
 
+// Admin and IQA roles combined
+const adminAndIqaRoles = ["Admin", "IQA"] as const satisfies readonly Role[]
+
+// Admin, Trainer, and IQA roles combined
+const adminTrainerAndIqaRoles = ["Admin", "Trainer", "IQA"] as const satisfies readonly Role[]
+
 // Admin, Learner, and Trainer roles combined (for learner pages accessible to trainers)
 const adminLearnerAndTrainerRoles = ["Admin", "Learner", "Trainer"] as const satisfies readonly Role[]
+
+// Admin, Learner, Trainer, and IQA roles combined
+const adminLearnerTrainerAndIqaRoles = ["Admin", "Learner", "Trainer", "IQA"] as const satisfies readonly Role[]
+
+// Admin, Trainer, IQA, and Employer roles combined
+const adminTrainerIqaAndEmployerRoles = ["Admin", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
+
+// Admin, Learner, Trainer, IQA, and Employer roles combined
+const adminLearnerTrainerIqaAndEmployerRoles = ["Admin", "Learner", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
 
 const routeRoleRules: RouteRule[] = [
   // Admin-only routes
@@ -31,7 +46,11 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/learners(?:\/|$)/,
-    roles: adminAndTrainerRoles,
+    roles: adminTrainerIqaAndEmployerRoles,
+  },
+  {
+    pattern: /^\/calendar(?:\/|$)/,
+    roles: adminTrainerAndIqaRoles,
   },
   {
     pattern: /^\/learner-profile(?:\/|$)/,
@@ -62,12 +81,16 @@ const routeRoleRules: RouteRule[] = [
     roles: authRoles.Admin,
   },
   {
-    pattern: /^\/calendar(?:\/|$)/,
+    pattern: /^\/demo-calendar(?:\/|$)/,
     roles: authRoles.Admin,
   },
   {
     pattern: /^\/funding-bands(?:\/|$)/,
     roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/qa-sample-plan(?:\/|$)/,
+    roles: adminAndIqaRoles,
   },
   {
     pattern: /^\/caseload(?:\/|$)/,
@@ -112,22 +135,27 @@ const routeRoleRules: RouteRule[] = [
   // Learner pages (accessible to Admin, Learner, and Trainer)
   {
     pattern: /^\/cpd(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: adminLearnerTrainerAndIqaRoles,
   },
   {
     pattern: /^\/forum(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: adminLearnerTrainerAndIqaRoles,
   },
   {
     pattern: /^\/skills-scan(?:\/|$)/,
     roles: adminLearnerAndTrainerRoles,
   },
+  // Specific form routes must come before general /forms pattern
   {
-    pattern: /^\/forms(?:\/|$)/,
-    roles: authRoles.Admin,
+    pattern: /^\/forms\/submitted\/[^/]+\/[^/]+\/view(?:\/|$)/,
+    roles: adminAndTrainerRoles,
   },
   {
     pattern: /^\/forms\/[^/]+\/builder(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/forms(?:\/|$)/,
     roles: authRoles.Admin,
   },
   {
@@ -140,7 +168,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: adminLearnerTrainerIqaAndEmployerRoles,
   },
   {
     pattern: /^\/learner-forms(?:\/|$)/,
@@ -148,7 +176,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/support(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: adminLearnerTrainerIqaAndEmployerRoles,
   },
   {
     pattern: /^\/surveys(?:\/|$)/,
@@ -219,6 +247,10 @@ const routeRoleRules: RouteRule[] = [
   {
     pattern: /^\/learner-dashboard\/\d+(?:\/|$)/,
     roles: adminAndTrainerRoles,
+  },
+  {
+    pattern: /^\/learners-forms(?:\/|$)/,
+    roles: authRoles.Trainer,
   },
   // Main dashboard (accessible to all roles - content is role-based)
   {

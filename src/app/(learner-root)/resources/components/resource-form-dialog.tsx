@@ -28,12 +28,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateResourceMutation } from "@/store/api/resources/resourcesApi";
+import { useGetCoursesQuery } from "@/store/api/course/courseApi";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const resourceFormSchema = z.object({
   course_id: z.string().min(1, {
@@ -60,11 +62,29 @@ type ResourceFormValues = z.infer<typeof resourceFormSchema>;
 
 interface ResourceFormDialogProps {
   onSuccess?: () => void;
+  trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
-  const [open, setOpen] = useState(false);
+export function ResourceFormDialog({ 
+  onSuccess, 
+  trigger,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+}: ResourceFormDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setOpen = controlledOnOpenChange || setInternalOpen;
   const [createResource, { isLoading }] = useCreateResourceMutation();
+  
+  // Fetch courses for dropdown
+  const { data: coursesResponse, isLoading: isLoadingCourses } = useGetCoursesQuery({
+    page: 1,
+    page_size: 500,
+  });
+  
+  const courses = coursesResponse?.data || [];
 
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(resourceFormSchema),
@@ -85,7 +105,7 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
     try {
       const formData = new FormData();
       formData.append("course_id", data.course_id);
-      formData.append("name", data.name);
+      formData.append("name", data.name || data.file.name);
       if (data.description) {
         formData.append("description", data.description);
       }
@@ -97,7 +117,15 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
 
       await createResource(formData as FormData).unwrap();
       toast.success("Resource created successfully");
-      form.reset();
+      form.reset({
+        course_id: "",
+        name: "",
+        description: "",
+        job_type: "On",
+        resource_type: "PDF",
+        hours: 0,
+        minute: 0,
+      });
       setOpen(false);
       onSuccess?.();
     } catch (error: unknown) {
@@ -111,12 +139,7 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="cursor-pointer">
-          <Plus className="mr-2 h-4 w-4" />
-          Create Resource
-        </Button>
-      </DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Create New Resource</DialogTitle>
@@ -131,17 +154,32 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
               name="course_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormLabel>Course <span className="text-red-500">*</span></FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="cursor-pointer w-full">
                         <SelectValue placeholder="Select course" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {/* TODO: Fetch courses from API and populate this */}
-                      <SelectItem value="1">Course 1</SelectItem>
-                      <SelectItem value="2">Course 2</SelectItem>
+                      {isLoadingCourses ? (
+                        <div className="flex items-center justify-center p-2">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        </div>
+                      ) : courses.length > 0 ? (
+                        courses.map((course) => (
+                          <SelectItem
+                            key={course.course_id}
+                            value={course.course_id.toString()}
+                          >
+                            {course.course_name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="" disabled>
+                          No courses available
+                        </SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -154,7 +192,7 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
                 name="file"
                 render={({ field: { onChange } }) => (
                 <FormItem>
-                  <FormLabel>File</FormLabel>
+                  <FormLabel>File <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
                       <Input
@@ -187,9 +225,16 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter resource name" {...field} />
+                    <Input 
+                      placeholder="Enter resource name" 
+                      {...field}
+                      readOnly
+                      className="bg-muted"
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <p className="text-sm text-muted-foreground">
+                    Name is automatically set from the uploaded file
+                  </p>
                 </FormItem>
               )}
             />
@@ -268,7 +313,7 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
                     <FormLabel>Job Type</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer w-full">
@@ -292,7 +337,7 @@ export function ResourceFormDialog({ onSuccess }: ResourceFormDialogProps) {
                     <FormLabel>Resource Type</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer w-full">

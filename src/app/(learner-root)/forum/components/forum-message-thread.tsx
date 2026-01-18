@@ -158,7 +158,7 @@ export function ForumMessageThread({
 
             // Regular message
             const message = item as ForumMessage;
-            const isSent = message.sender.user_id === user?.id;
+            const isSent = Number(message.sender.user_id) === Number(user?.id);
             const messageDate = new Date(message.created_at);
             const timeString = format(messageDate, "MMM d, HH:mm");
 

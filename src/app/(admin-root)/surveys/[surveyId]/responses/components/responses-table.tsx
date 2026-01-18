@@ -9,15 +9,13 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ChevronDown, Eye, Download, Search } from "lucide-react"
+import { ChevronDown, Eye, Download, Search, Loader2 } from "lucide-react"
 import { format } from "date-fns"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -33,13 +31,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { PageHeader } from "@/components/dashboard/page-header"
 import { DataTablePagination } from "@/components/data-table-pagination"
 import {
   useGetSurveyByIdQuery,
   useGetResponsesQuery,
+  useGetQuestionsQuery,
   type Response,
 } from "@/store/api/survey/surveyApi"
+import { toast } from "sonner"
 import { ResponseDetail } from "./response-detail"
 
 interface ResponsesTableProps {
@@ -48,7 +47,7 @@ interface ResponsesTableProps {
 
 export function ResponsesTable({ surveyId }: ResponsesTableProps) {
   const [page, setPage] = useState(1)
-  const [limit] = useState(10)
+  const [pageSize, setPageSize] = useState(10)
   
   // Fetch survey from API
   const { data: surveyResponse, isLoading: isLoadingSurvey } = useGetSurveyByIdQuery(surveyId, {
@@ -57,10 +56,10 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
   })
   const survey = surveyResponse?.data?.survey
   
-  // Fetch responses from API
+  // Fetch responses from API with pagination
   const { data: responsesResponse, isLoading: isLoadingResponses } = useGetResponsesQuery({
     surveyId,
-    params: { page, limit },
+    params: { page, limit: pageSize },
   },{
     refetchOnMountOrArgChange: true,
     skip: !surveyId,
@@ -68,15 +67,35 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
   const responses = responsesResponse?.data?.responses || []
   const pagination = responsesResponse?.data?.pagination
   
+  // Fetch questions for CSV export
+  const { data: questionsResponse } = useGetQuestionsQuery(surveyId, {
+    refetchOnMountOrArgChange: true,
+    skip: !surveyId,
+  })
+  const questions = questionsResponse?.data?.questions || []
+
+  // Fetch all responses for CSV export (high limit)
+  const { data: allResponsesResponse } = useGetResponsesQuery(
+    {
+      surveyId,
+      params: { page: 1, limit: 1000 },
+    },
+    {
+      refetchOnMountOrArgChange: false,
+      skip: !surveyId,
+    }
+  )
+  const allResponses = allResponsesResponse?.data?.responses || []
+
   const [selectedResponse, setSelectedResponse] = useState<Response | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
 
   const [sorting, setSorting] = useState<SortingState>([
     { id: "submittedAt", desc: true },
   ])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState("")
 
   const handleViewResponse = (response: Response) => {
@@ -84,30 +103,119 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
     setDetailOpen(true)
   }
 
+  const formatAnswerForCSV = (
+    answer: string | string[] | Record<string, string> | null | undefined,
+    questionType: string
+  ): string => {
+    if (answer === null || answer === undefined) {
+      return ""
+    }
+
+    if (typeof answer === "string") {
+      // Handle date strings
+      if (questionType === "date") {
+        try {
+          return format(new Date(answer), "yyyy-MM-dd")
+        } catch {
+          return answer
+        }
+      }
+      return answer.replace(/"/g, '""') // Escape quotes for CSV
+    }
+
+    if (Array.isArray(answer)) {
+      return answer.join("; ").replace(/"/g, '""')
+    }
+
+    if (typeof answer === "object") {
+      // Likert scale responses
+      return Object.entries(answer)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join("; ")
+        .replace(/"/g, '""')
+    }
+
+    return String(answer).replace(/"/g, '""')
+  }
+
+  const handleExportCSV = async () => {
+    try {
+      setIsExporting(true)
+
+      // Sort questions by order
+      const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
+
+      // Create CSV headers
+      const headers = [
+        "Response ID",
+        "Submitted Date",
+        "Email",
+        "User ID",
+        ...sortedQuestions.map((q) => q.title),
+      ]
+
+      // Create CSV rows
+      const rows = allResponses.map((response) => {
+        const row = [
+          response.id,
+          format(new Date(response.submittedAt), "yyyy-MM-dd HH:mm:ss"),
+          response.email || "",
+          response.userId || "",
+          ...sortedQuestions.map((question) => {
+            const answer = response.answers[question.id]
+            return formatAnswerForCSV(answer, question.type)
+          }),
+        ]
+        return row
+      })
+
+      // Combine headers and rows
+      const csvContent = [
+        headers.map((h) => `"${h.replace(/"/g, '""')}"`).join(","),
+        ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+      ].join("\n")
+
+      // Create blob and download
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+      const link = document.createElement("a")
+      const url = URL.createObjectURL(blob)
+
+      link.setAttribute("href", url)
+      link.setAttribute(
+        "download",
+        `${survey?.name || "survey"}_responses_${format(new Date(), "yyyy-MM-dd_HH-mm-ss")}.csv`
+      )
+      link.style.visibility = "hidden"
+
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      URL.revokeObjectURL(url)
+
+      toast.success(`Exported ${allResponses.length} response(s) to CSV`)
+    } catch (error) {
+      console.error("Error exporting CSV:", error)
+      toast.error("Failed to export CSV")
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   const columns: ColumnDef<Response>[] = [
     {
-      id: "select",
-      header: ({ table }) => (
-        <div className="flex items-center justify-center px-2">
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-          />
-        </div>
-      ),
-      cell: ({ row }) => (
-        <div className="flex items-center justify-center px-2">
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        </div>
-      ),
+      id: "rowNumber",
+      header: "#",
+      cell: ({ row, table }) => {
+        const pageIndex = table.getState().pagination.pageIndex
+        const pageSize = table.getState().pagination.pageSize
+        const rowNumber = pageIndex * pageSize + row.index + 1
+        return (
+          <div className="flex">
+            <span className="text-sm text-muted-foreground font-medium">{rowNumber}</span>
+          </div>
+        )
+      },
       enableSorting: false,
       enableHiding: false,
       size: 50,
@@ -152,62 +260,55 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
+    pageCount: pagination?.totalPages ?? 0,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection,
       globalFilter,
+      pagination: {
+        pageIndex: page - 1,
+        pageSize: pageSize,
+      },
     },
   })
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+    setPage(1) // Reset to first page when changing page size
+  }
+
   if (isLoadingSurvey || isLoadingResponses) {
     return (
-      <div className="space-y-6 px-4 lg:px-6">
-        <PageHeader
-          title="Loading Responses..."
-          subtitle="Please wait while we load the responses"
-          showBackButton
-          backButtonHref="/surveys"
-        />
+      <div className="flex items-center justify-center py-12">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <p className="text-sm text-muted-foreground">Loading responses...</p>
+        </div>
       </div>
     )
   }
 
   if (!survey) {
     return (
-      <div className="space-y-6 px-4 lg:px-6">
-        <PageHeader
-          title="Survey Not Found"
-          subtitle="The survey you're looking for doesn't exist"
-          showBackButton
-          backButtonHref="/surveys"
-        />
+      <div className="rounded-lg border border-dashed p-12 text-center">
+        <p className="text-muted-foreground">Survey not found</p>
       </div>
     )
   }
 
   return (
     <>
-      <div className="space-y-6 px-4 lg:px-6">
-        <PageHeader
-          title={`${survey.name} - Responses`}
-          subtitle={
-            pagination
-              ? `${pagination.total} response${pagination.total !== 1 ? "s" : ""} received`
-              : `${responses.length} response${responses.length !== 1 ? "s" : ""} received`
-          }
-          showBackButton
-          backButtonHref="/surveys"
-        />
-
-        <div className="w-full space-y-4">
+      <div className="w-full space-y-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-1 items-center space-x-2">
               <div className="relative flex-1 max-w-sm">
@@ -221,9 +322,23 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Button variant="outline" className="cursor-pointer">
-                <Download className="mr-2 size-4" />
-                Export CSV
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                onClick={handleExportCSV}
+                disabled={isExporting || allResponses.length === 0}
+              >
+                {isExporting ? (
+                  <>
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                    Exporting...
+                  </>
+                ) : (
+                  <>
+                    <Download className="mr-2 size-4" />
+                    Export CSV
+                  </>
+                )}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -315,11 +430,17 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
 
               <DataTablePagination
                 table={table}
-                showSelectedRows={true}
+                showSelectedRows={false}
+                manualPagination={true}
+                currentPage={page}
+                totalPages={pagination?.totalPages ?? 0}
+                totalItems={pagination?.total ?? 0}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
               />
             </>
           )}
-        </div>
       </div>
 
       <ResponseDetail

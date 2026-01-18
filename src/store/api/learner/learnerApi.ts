@@ -8,6 +8,10 @@ import type {
   UpdateLearnerCommentRequest,
   BulkCreateLearnersRequest,
   BulkCreateLearnersResponse,
+  UploadFileResponse,
+  CreateUserCourseRequest,
+  UpdateUserCourseRequest,
+  UserCourseResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -29,7 +33,16 @@ export const learnerApi = createApi({
     }),
     getLearnersList: builder.query<LearnerListResponse, LearnerFilters>({
       query: (filters = {}) => {
-        const { page = 1, page_size = 10, keyword = "", course_id = "", employer_id = "", status = "" } = filters;
+        const {
+          page = 1,
+          page_size = 10,
+          keyword = "",
+          course_id = "",
+          employer_id = "",
+          status = "",
+          user_id = "",
+          role = "",
+        } = filters;
         let url = `/learner/list?page=${page}&limit=${page_size}&meta=true`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
@@ -42,6 +55,12 @@ export const learnerApi = createApi({
         }
         if (status) {
           url += `&status=${encodeURIComponent(status)}`;
+        }
+        if (user_id) {
+          url += `&user_id=${encodeURIComponent(user_id)}`;
+        }
+        if (role) {
+          url += `&role=${encodeURIComponent(role)}`;
         }
         return url;
       },
@@ -132,6 +151,82 @@ export const learnerApi = createApi({
         return response;
       },
     }),
+    uploadLearnerAvatar: builder.mutation<UploadFileResponse, { learnerId: number; file: File }>({
+      query: ({ learnerId, file }) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("folder", "learner");
+        return {
+          url: `/learner/upload-avatar/${learnerId}`,
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: (result, error, arg) => [
+        { type: "Learner", id: arg.learnerId },
+        "Learner",
+      ],
+      transformResponse: (response: UploadFileResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    createUserCourse: builder.mutation<UserCourseResponse, CreateUserCourseRequest>({
+      query: (body) => ({
+        url: "/course/enrollment",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Learner", id: arg.learner_id },
+        "Learner",
+      ],
+      transformResponse: (response: UserCourseResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    updateUserCourse: builder.mutation<
+      UserCourseResponse,
+      { userCourseId: number; data: UpdateUserCourseRequest }
+    >({
+      query: ({ userCourseId, data }) => ({
+        url: `/course/user/update/${userCourseId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Learner"],
+      transformResponse: (response: UserCourseResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    deleteUserCourse: builder.mutation<
+      { status: boolean; message?: string; error?: string },
+      number
+    >({
+      query: (userCourseId) => ({
+        url: `/course/delete/${userCourseId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Learner"],
+      transformResponse: (response: {
+        status: boolean;
+        message?: string;
+        error?: string;
+      }) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -145,5 +240,9 @@ export const {
   useUpdateLearnerCommentMutation,
   useBulkCreateLearnersMutation,
   useGetLearnersByUserQuery,
+  useUploadLearnerAvatarMutation,
+  useCreateUserCourseMutation,
+  useUpdateUserCourseMutation,
+  useDeleteUserCourseMutation,
 } = learnerApi;
 

@@ -180,6 +180,60 @@ export function LivePreviewQuestion({
             className="bg-muted/50 cursor-not-allowed"
           />
         )
+      case "likert":
+        if (!question.statements || !question.options) {
+          return (
+            <p className="text-sm text-muted-foreground">
+              Add statements and options to see the Likert scale matrix.
+            </p>
+          )
+        }
+        return (
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-border">
+              <thead>
+                <tr>
+                  <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                    Statements
+                  </th>
+                  {question.options.map((option) => (
+                    <th
+                      key={option}
+                      className="border border-border bg-muted/50 p-2 text-center font-medium min-w-[100px]"
+                    >
+                      {option}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {question.statements.map((statement, stmtIndex) => (
+                  <tr
+                    key={stmtIndex}
+                    className={stmtIndex % 2 === 0 ? "bg-muted/30" : ""}
+                  >
+                    <td className="border border-border p-2 font-medium">
+                      {statement}
+                    </td>
+                    {question.options!.map((option) => (
+                      <td
+                        key={option}
+                        className="border border-border p-2 text-center"
+                      >
+                        <RadioGroupItem
+                          value={option}
+                          id={`${question.id}-${stmtIndex}-${option}`}
+                          disabled
+                          className="mx-auto"
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
       default:
         return null
     }

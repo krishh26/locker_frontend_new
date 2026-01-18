@@ -44,7 +44,9 @@ export function useLearnersData(
 
   // Transform learners data
   const learnersData: SamplePlanLearner[] = useMemo(() => {
-    if (!learnersResponse) return [];
+    if (!learnersResponse) {
+      return [];
+    }
 
     // API response structure: 
     // {
@@ -62,7 +64,9 @@ export function useLearnersData(
         ? ((learnersResponse as any).data.learners as SamplePlanLearner[])
         : [];
 
-    if (!learners.length) return [];
+    if (!learners.length) {
+      return [];
+    }
 
     // Deduplicate units by unit_code
     return learners
@@ -71,8 +75,10 @@ export function useLearnersData(
         const learnerUnits = Array.isArray(learner.units) ? learner.units : [];
         const learnerUnitsMap = new Map<string, any>();
         learnerUnits.forEach((unit: any) => {
-          // Convert unit_code to string for consistent key handling
-          const unitCode = unit?.unit_code != null ? String(unit.unit_code) : unit?.unit_name || "";
+          // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+          // Convert to string for consistent key handling (unit_code can be number or string)
+          const unitCodeRaw = unit?.unit_code || unit?.unit_name || "";
+          const unitCode = unitCodeRaw ? String(unitCodeRaw) : "";
           if (unitCode && !learnerUnitsMap.has(unitCode)) {
             learnerUnitsMap.set(unitCode, unit);
           }

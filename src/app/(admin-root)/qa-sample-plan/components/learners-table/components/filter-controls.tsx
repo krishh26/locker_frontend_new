@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { qaStatuses } from "../../constants";
+import { qaStatuses } from "../../../utils/constants";
 import {
   selectFilterState,
   setSelectedStatus,
@@ -54,7 +54,7 @@ export const FilterControls = memo(function FilterControls() {
       <div className="space-y-2">
         <Label>Select QA Status</Label>
         <Select value={statusValue} onValueChange={handleStatusChange}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>

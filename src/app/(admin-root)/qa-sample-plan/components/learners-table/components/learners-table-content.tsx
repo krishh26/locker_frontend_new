@@ -33,7 +33,6 @@ export const LearnersTableContent = memo(function LearnersTableContent({
   const filterState = useAppSelector(selectFilterState);
   const filterApplied = filterState.filterApplied;
   const filterError = filterState.filterError;
-
   return (
     <div className="border rounded-lg overflow-hidden">
       <Table>

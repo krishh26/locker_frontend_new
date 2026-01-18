@@ -48,6 +48,7 @@ const questionTypeLabels: Record<Question["type"], string> = {
   checkbox: "Checkbox",
   rating: "Rating",
   date: "Date",
+  likert: "Likert Scale",
 }
 
 export function QuestionCard({ question, surveyId, onEdit }: QuestionCardProps) {

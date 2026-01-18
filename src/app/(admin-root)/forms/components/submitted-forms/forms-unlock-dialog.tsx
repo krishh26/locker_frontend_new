@@ -34,9 +34,6 @@ export function FormsUnlockDialog({
   const [reason, setReason] = useState("");
 
   const handleConfirm = () => {
-    if (!reason.trim()) {
-      return; // Reason is required for unlock
-    }
     onConfirm(reason);
     setReason("");
   };
@@ -61,7 +58,7 @@ export function FormsUnlockDialog({
         </AlertDialogHeader>
         <div className="space-y-2">
           <Label htmlFor="unlock-reason">
-            Reason for Unlocking <span className="text-destructive">*</span>
+            Reason for Unlocking (Optional)
           </Label>
           <Textarea
             id="unlock-reason"
@@ -69,7 +66,6 @@ export function FormsUnlockDialog({
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             rows={3}
-            required
           />
         </div>
         <AlertDialogFooter>
@@ -78,7 +74,7 @@ export function FormsUnlockDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
-            disabled={isLoading || !reason.trim()}
+            disabled={isLoading}
             className="bg-green-600 hover:bg-green-700"
           >
             {isLoading ? "Unlocking..." : "Unlock Form"}

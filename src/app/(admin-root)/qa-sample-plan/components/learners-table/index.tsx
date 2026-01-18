@@ -12,21 +12,18 @@ import {
   selectQASamplePlanState,
   selectFilterState,
 } from "@/store/slices/qaSamplePlanSlice";
-import { useLearnersData } from "../qa-sample-plan-page-content/hooks/use-learners-data";
+import type { UseLearnersDataReturn } from "../qa-sample-plan-page-content/hooks/use-learners-data";
 
-export function LearnersTable() {
+interface LearnersTableProps {
+  learnersData: UseLearnersDataReturn;
+}
+
+export function LearnersTable({ learnersData }: LearnersTableProps) {
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   // Redux state
   const qaState = useAppSelector(selectQASamplePlanState);
   const filterState = useAppSelector(selectFilterState);
-
-  // Learners data
-  const learnersData = useLearnersData(
-    qaState.selectedPlan,
-    filterState.filterApplied,
-    filterState.searchText
-  );
 
   // Use visibleRows directly from the hook (already filtered)
   const visibleRows = learnersData.visibleRows;

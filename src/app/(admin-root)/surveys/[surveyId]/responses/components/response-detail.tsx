@@ -34,6 +34,7 @@ const questionTypeLabels: Record<Question["type"], string> = {
   checkbox: "Checkbox",
   rating: "Rating",
   date: "Date",
+  likert: "Likert Scale",
 }
 
 export function ResponseDetail({
@@ -59,9 +60,58 @@ export function ResponseDetail({
 
   const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
 
-  const formatAnswer = (question: Question, answer: string | string[] | null) => {
+  const formatAnswer = (question: Question, answer: string | string[] | Record<string, string> | null) => {
     if (answer === null || answer === undefined) {
       return <span className="text-muted-foreground italic">No answer provided</span>
+    }
+
+    if (question.type === "likert" && typeof answer === "object" && !Array.isArray(answer)) {
+      // Likert responses are stored as objects: { "0": "option1", "1": "option2" }
+      if (question.statements && question.statements.length > 0) {
+        return (
+          <div className="space-y-2">
+            <table className="w-full border-collapse border border-border text-sm">
+              <thead>
+                <tr>
+                  <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                    Statement
+                  </th>
+                  <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                    Selected Option
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {question.statements.map((statement, index) => {
+                  const statementKey = String(index)
+                  const selectedOption = answer[statementKey] || "Not answered"
+                  return (
+                    <tr key={index} className={index % 2 === 0 ? "bg-muted/30" : ""}>
+                      <td className="border border-border p-2 font-medium">
+                        {statement}
+                      </td>
+                      <td className="border border-border p-2">
+                        <Badge variant="secondary">{selectedOption}</Badge>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+      // Fallback if statements are not available
+      return (
+        <div className="space-y-1">
+          {Object.entries(answer).map(([key, value]) => (
+            <div key={key} className="flex items-center gap-2">
+              <span className="font-medium">Statement {Number(key) + 1}:</span>
+              <Badge variant="secondary">{value}</Badge>
+            </div>
+          ))}
+        </div>
+      )
     }
 
     if (question.type === "checkbox" && Array.isArray(answer)) {

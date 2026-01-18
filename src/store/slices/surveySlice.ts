@@ -19,7 +19,7 @@ export interface Question {
   surveyId: string
   title: string
   description?: string
-  type: "short-text" | "long-text" | "multiple-choice" | "checkbox" | "rating" | "date"
+  type: "short-text" | "long-text" | "multiple-choice" | "checkbox" | "rating" | "date" | "likert"
   required: boolean
   options?: string[] | null
   order: number

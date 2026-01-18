@@ -36,6 +36,15 @@ import {
   type Survey,
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
 
 const surveyFormSchema = z.object({
   name: z.string().min(2, {
@@ -43,6 +52,20 @@ const surveyFormSchema = z.object({
   }),
   description: z.string().optional(),
   status: z.enum(["Draft", "Published"]),
+  expirationDate: z
+    .date()
+    .optional()
+    .refine(
+      (date) => {
+        if (!date) return true; // Optional field
+        // Compare UTC timestamps to ensure future date validation works correctly
+        const now = new Date()
+        return date > now
+      },
+      {
+        message: "Expiration date must be in the future",
+      }
+    ),
 })
 
 type SurveyFormValues = z.infer<typeof surveyFormSchema>
@@ -63,6 +86,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
       name: "",
       description: "",
       status: "Draft",
+      expirationDate: undefined,
     },
   })
 
@@ -72,18 +96,33 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
         name: survey.name,
         description: survey.description || "",
         status: survey.status === "Archived" ? "Draft" : survey.status,
+        expirationDate: survey.expirationDate
+          ? new Date(survey.expirationDate)
+          : undefined,
       })
     } else {
       form.reset({
         name: "",
         description: "",
         status: "Draft",
+        expirationDate: undefined,
       })
     }
   }, [survey, form])
 
   async function onSubmit(data: SurveyFormValues) {
     try {
+      // Convert expiration date to UTC midnight format if provided
+      const expirationDateUTC = data.expirationDate
+        ? new Date(
+            Date.UTC(
+              data.expirationDate.getFullYear(),
+              data.expirationDate.getMonth(),
+              data.expirationDate.getDate()
+            )
+          ).toISOString()
+        : undefined
+
       if (survey) {
         await updateSurvey({
           surveyId: survey.id,
@@ -91,6 +130,9 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
             name: data.name,
             description: data.description,
             status: data.status,
+            ...(expirationDateUTC !== undefined && {
+              expirationDate: expirationDateUTC,
+            }),
           },
         }).unwrap()
         toast.success("Survey updated successfully")
@@ -99,6 +141,9 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
           name: data.name,
           description: data.description,
           status: data.status,
+          ...(expirationDateUTC !== undefined && {
+            expirationDate: expirationDateUTC,
+          }),
         }).unwrap()
         toast.success("Survey created successfully")
       }
@@ -158,6 +203,45 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="expirationDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expiration Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "dd/MM/yyyy")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value || undefined}
+                        onSelect={(date) => field.onChange(date || null)}
+                        disabled={(date) => date < new Date()}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}

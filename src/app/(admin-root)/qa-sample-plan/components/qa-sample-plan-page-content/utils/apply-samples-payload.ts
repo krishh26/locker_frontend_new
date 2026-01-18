@@ -1,5 +1,5 @@
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { assessmentMethodCodesForPayload } from "../../constants";
+import { assessmentMethodCodesForPayload } from "../../../utils/constants";
 
 export interface ApplySamplesPayload {
   plan_id: string | number;
@@ -42,15 +42,29 @@ export function buildApplySamplesPayload({
       const learnerKey = `${row.learner_name ?? ""}-${rowIndex}`;
       const selectedUnitsSet = selectedUnitsMap[learnerKey] || new Set<string>();
 
+      // Debug logs for troubleshooting
+      if (rowIndex === 0) {
+        console.log("buildApplySamplesPayload - learnerKey:", learnerKey);
+        console.log("buildApplySamplesPayload - selectedUnitsSet:", Array.from(selectedUnitsSet));
+        console.log("buildApplySamplesPayload - units:", units);
+      }
+
       const selectedUnits = units
         .filter((unit: any) => {
           if (!unit) return false;
-          // Convert unit_code to string for consistent key matching
-          const unitKey =
-            unit.unit_code != null
-              ? String(unit.unit_code)
-              : unit.unit_name || "";
-          return unitKey && selectedUnitsSet.has(unitKey);
+          // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+          // Convert to string to match the Set values (which are stored as strings)
+          const unitKey = String(unit.unit_code || unit.unit_name || "");
+          const isMatch = unitKey && unitKey.trim() && selectedUnitsSet.has(unitKey);
+          
+          // Debug logs for first unit
+          if (rowIndex === 0 && units.indexOf(unit) === 0) {
+            console.log("buildApplySamplesPayload - unit:", unit);
+            console.log("buildApplySamplesPayload - unitKey:", unitKey);
+            console.log("buildApplySamplesPayload - isMatch:", isMatch);
+          }
+          
+          return isMatch;
         })
         .map((unit) => {
           const unitIdRaw = unit?.unit_code ?? Date.now();

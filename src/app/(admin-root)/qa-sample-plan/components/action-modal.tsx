@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
 import type { SampleAction } from "@/store/api/qa-sample-plan/types";
-import { formatDateForInput } from "./constants";
+import { formatDateForInput } from "../utils/constants";
 
 const actionFormSchema = z.object({
   action_with_id: z.string().min(1, "Please select an action with user"),

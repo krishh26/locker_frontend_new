@@ -22,6 +22,7 @@ import {
   Trash2,
   Download,
   Search,
+  Plus,
 } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
 
@@ -68,10 +69,12 @@ import type { Resource } from '@/store/api/resources/types'
 
 export function ResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user)
+  const isLearner = user?.role === 'Learner'
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(25)
   const [searchKeyword, setSearchKeyword] = useState('')
   const [jobType, setJobType] = useState<'On' | 'Off' | ''>('')
+  const [dialogOpen, setDialogOpen] = useState(false)
   const debouncedSearch = useDebounce(searchKeyword, 500)
 
   const {
@@ -365,7 +368,7 @@ export function ResourcesDataTable() {
 
   return (
     <div className='w-full space-y-4'>
-      <div className='grid gap-2 sm:grid-cols-3 sm:gap-4'>
+      <div className='flex gap-4 items-center justify-between'>
         <div className='space-y-2'>
           <div className='relative flex-1 max-w-sm'>
             <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground' />
@@ -377,10 +380,7 @@ export function ResourcesDataTable() {
             />
           </div>
         </div>
-        <div className='space-y-2'>
-          <Label htmlFor='job-type-filter' className='text-sm font-medium'>
-            Job Type
-          </Label>
+        <div className='flex items-center justify-end gap-4'>
           <div className='flex items-center space-x-2'>
             <Switch
               id='job-type-switch'
@@ -399,34 +399,53 @@ export function ResourcesDataTable() {
               {jobType ? `Job Type: ${jobType}` : 'Job Type: On/Off'}
             </Label>
           </div>
-        </div>
-        <div className='space-y-2'>
-          <Label htmlFor='resource-type-filter' className='text-sm font-medium'>
-            Resource Type
-          </Label>
-          <Select
-            value={resourceTypeFilter || ''}
-            onValueChange={(value) =>
-              table
-                .getColumn('resource_type')
-                ?.setFilterValue(value === 'all' ? '' : value)
-            }
-          >
-            <SelectTrigger
-              className='cursor-pointer w-full'
-              id='resource-type-filter'
+          <div className='space-y-2'>
+            <Label
+              htmlFor='resource-type-filter'
+              className='text-sm font-medium'
             >
-              <SelectValue placeholder='Select Resource Type' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='all'>All Types</SelectItem>
-              <SelectItem value='PDF'>PDF</SelectItem>
-              <SelectItem value='WORD'>WORD</SelectItem>
-              <SelectItem value='PPT'>PPT</SelectItem>
-              <SelectItem value='Text'>Text</SelectItem>
-              <SelectItem value='Image'>Image</SelectItem>
-            </SelectContent>
-          </Select>
+              Resource Type
+            </Label>
+            <Select
+              value={resourceTypeFilter || ''}
+              onValueChange={(value) =>
+                table
+                  .getColumn('resource_type')
+                  ?.setFilterValue(value === 'all' ? '' : value)
+              }
+            >
+              <SelectTrigger
+                className='cursor-pointer w-full'
+                id='resource-type-filter'
+              >
+                <SelectValue placeholder='Select Resource Type' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='all'>All Types</SelectItem>
+                <SelectItem value='PDF'>PDF</SelectItem>
+                <SelectItem value='WORD'>WORD</SelectItem>
+                <SelectItem value='PPT'>PPT</SelectItem>
+                <SelectItem value='Text'>Text</SelectItem>
+                <SelectItem value='Image'>Image</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {!isLearner && (
+            <ResourceFormDialog
+              open={dialogOpen}
+              onOpenChange={setDialogOpen}
+              onSuccess={() => {
+                setDialogOpen(false)
+                refetch()
+              }}
+              trigger={
+                <Button type='button' className='cursor-pointer'>
+                  <Plus className='mr-2 h-4 w-4' />
+                  Create Resource
+                </Button>
+              }
+            />
+          )}
         </div>
       </div>
 

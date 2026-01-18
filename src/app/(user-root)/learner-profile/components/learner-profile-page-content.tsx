@@ -15,7 +15,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertCircle, User, BookOpen, Save } from 'lucide-react'
+import {
+  AlertCircle,
+  User,
+  BookOpen,
+  Save,
+  Briefcase,
+  ArrowRight,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StudentIdSection } from './sections/student-id-section'
 import { AboutYouSection } from './sections/about-you-section'
@@ -25,6 +32,7 @@ import { FundingBodySection } from './sections/funding-body-section'
 import { AdditionalInfoSection } from './sections/additional-info-section'
 import { FundingBandsSection } from './sections/funding-bands-section'
 import { CourseInformationTab } from './course-information-tab'
+import { ContractedWorkHoursTab } from './contracted-work-hours-tab'
 import { toast } from 'sonner'
 import type {
   LearnerData,
@@ -347,40 +355,64 @@ export function LearnerProfilePageContent({
   return (
     <div className='space-y-6 px-4 lg:px-6 pb-8'>
       {/* Page Header */}
-      <PageHeader
-        title='Profile Information'
-        subtitle='View learner profile details and personal information'
-        icon={User}
-        showBackButton
-        backButtonHref={backButtonHref}
-      />
+      <div className='flex justify-between items-center'>
+        <PageHeader
+          title='Profile Information'
+          subtitle='View learner profile details and personal information'
+          icon={User}
+          showBackButton
+          backButtonHref={backButtonHref}
+        />
 
-      {/* Profile Content with Tabs */}
-      <FormProvider {...form}>
-        <form onSubmit={onSubmit}>
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className='w-full gap-4'
+        {/* Access Profile Button */}
+        {!isLearner && (
+          <Button
+            variant='outline'
+            onClick={() =>
+              router.push(`/learner-dashboard/${learner.learner_id}`)
+            }
           >
-            <TabsList>
-              <TabsTrigger
-                value='personal'
-                className='flex items-center gap-1 px-2.5 sm:px-3'
-              >
-                <User className='h-4 w-4' />
-                Personal Information
-              </TabsTrigger>
-              <TabsTrigger
-                value='course'
-                className='flex items-center gap-1 px-2.5 sm:px-3'
-              >
-                <BookOpen className='h-4 w-4' />
-                Course Information
-              </TabsTrigger>
-            </TabsList>
+            <User className='h-4 w-4' />
+            Access Profile
+            <ArrowRight className='h-4 w-4' />
+          </Button>
+        )}
+      </div>
+      {/* Profile Content with Tabs */}
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className='w-full gap-4'
+      >
+        <TabsList>
+          <TabsTrigger
+            value='personal'
+            className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
+          >
+            <User className='h-4 w-4' />
+            Personal Information
+          </TabsTrigger>
+          <TabsTrigger
+            value='course'
+            className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
+          >
+            <BookOpen className='h-4 w-4' />
+            Course Information
+          </TabsTrigger>
+          {!isLearner && (
+            <TabsTrigger
+              value='contracted-work'
+              className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
+            >
+              <Briefcase className='h-4 w-4' />
+              Contracted Work Hours
+            </TabsTrigger>
+          )}
+        </TabsList>
 
-            <CardContent>
+        <CardContent>
+          <FormProvider {...form}>
+            <form onSubmit={onSubmit}>
               <TabsContent value='personal' className='mt-0 space-y-6'>
                 <StudentIdSection learner={learner} canEdit={canEdit} />
                 <AboutYouSection learner={learner} canEdit={canEdit} />
@@ -402,10 +434,19 @@ export function LearnerProfilePageContent({
               <TabsContent value='course' className='mt-0'>
                 <CourseInformationTab learner={learner} canEdit={canEdit} />
               </TabsContent>
-            </CardContent>
-          </Tabs>
-        </form>
-      </FormProvider>
+            </form>
+          </FormProvider>
+
+          {!isLearner && (
+            <TabsContent value='contracted-work' className='mt-0'>
+              <ContractedWorkHoursTab
+                learnerId={learner.learner_id}
+                canEdit={canEdit}
+              />
+            </TabsContent>
+          )}
+        </CardContent>
+      </Tabs>
     </div>
   )
 }

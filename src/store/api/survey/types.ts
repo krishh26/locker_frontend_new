@@ -13,6 +13,7 @@ export interface Survey {
     type: BackgroundType;
     value: string; // CSS gradient string or image URL
   };
+  expirationDate?: string; // ISO 8601 format (UTC)
   userId?: string;
   organizationId?: string;
   createdAt: string;
@@ -32,6 +33,7 @@ export interface CreateSurveyRequest {
   description?: string;
   status?: SurveyStatus;
   background?: SurveyBackground;
+  expirationDate?: string; // ISO 8601 format (UTC)
   organizationId?: string;
 }
 
@@ -40,6 +42,7 @@ export interface UpdateSurveyRequest {
   description?: string;
   status?: SurveyStatus;
   background?: SurveyBackground;
+  expirationDate?: string; // ISO 8601 format (UTC)
 }
 
 export interface GetSurveysQueryParams {
@@ -136,7 +139,7 @@ export interface DeleteSurveyResponse {
 
 // Question Management API Types
 
-export type QuestionType = 'short-text' | 'long-text' | 'multiple-choice' | 'checkbox' | 'rating' | 'date';
+export type QuestionType = 'short-text' | 'long-text' | 'multiple-choice' | 'checkbox' | 'rating' | 'date' | 'likert';
 
 export interface Question {
   id: string;
@@ -146,6 +149,7 @@ export interface Question {
   type: QuestionType;
   required: boolean;
   options?: string[] | null;
+  statements?: string[] | null; // For Likert scale questions (rows)
   order: number;
   createdAt?: string;
   updatedAt?: string;
@@ -158,6 +162,7 @@ export interface CreateQuestionRequest {
   type: QuestionType;
   required: boolean;
   options?: string[] | null;
+  statements?: string[] | null; // For Likert scale questions (rows)
   order?: number;
 }
 
@@ -167,6 +172,7 @@ export interface UpdateQuestionRequest {
   type?: QuestionType;
   required?: boolean;
   options?: string[] | null;
+  statements?: string[] | null; // For Likert scale questions (rows)
   order?: number;
 }
 
@@ -273,7 +279,7 @@ export interface Response {
   surveyId: string;
   userId?: string;
   email?: string;
-  answers: Record<string, string | string[] | null>; // questionId → answer value
+  answers: Record<string, string | string[] | Record<string, string> | null>; // questionId → answer value (Likert uses Record<string, string>)
   submittedAt: string;
 }
 
@@ -288,7 +294,7 @@ export interface GetResponsesQueryParams {
 export interface SubmitResponseRequest {
   userId?: string;
   email?: string;
-  answers: Record<string, string | string[] | null>;
+  answers: Record<string, string | string[] | Record<string, string> | null>; // questionId → answer value (Likert uses Record<string, string>)
 }
 
 // Response Response Types
@@ -380,6 +386,34 @@ export interface GetPublicSurveyResponse {
   data: {
     survey: Survey;
     questions: Question[];
+  };
+  error?: {
+    code: string;
+    message: string;
+    details?: Array<{
+      field: string;
+      message: string;
+    }>;
+  };
+}
+
+// Survey Allocation API Types
+export type AllocationRole = 'Trainer' | 'IQA' | 'Learner' | 'EQA';
+
+export interface AllocateSurveyRequest {
+  survey_id: string;
+  allocations: Array<{
+    user_id: number;
+    role: AllocationRole;
+    user_type: 'user' | 'learner';
+  }>;
+}
+
+export interface AllocateSurveyResponse {
+  status: boolean;
+  message?: string;
+  data?: {
+    allocated_count: number;
   };
   error?: {
     code: string;

@@ -28,6 +28,12 @@ const adminLearnerAndTrainerRoles = ["Admin", "Learner", "Trainer"] as const sat
 // Admin, Learner, Trainer, and IQA roles combined
 const adminLearnerTrainerAndIqaRoles = ["Admin", "Learner", "Trainer", "IQA"] as const satisfies readonly Role[]
 
+// Admin, Trainer, IQA, and Employer roles combined
+const adminTrainerIqaAndEmployerRoles = ["Admin", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
+
+// Admin, Learner, Trainer, IQA, and Employer roles combined
+const adminLearnerTrainerIqaAndEmployerRoles = ["Admin", "Learner", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
+
 const routeRoleRules: RouteRule[] = [
   // Admin-only routes
   {
@@ -40,7 +46,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/learners(?:\/|$)/,
-    roles: adminTrainerAndIqaRoles,
+    roles: adminTrainerIqaAndEmployerRoles,
   },
   {
     pattern: /^\/calendar(?:\/|$)/,
@@ -162,7 +168,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
-    roles: adminLearnerTrainerAndIqaRoles,
+    roles: adminLearnerTrainerIqaAndEmployerRoles,
   },
   {
     pattern: /^\/learner-forms(?:\/|$)/,
@@ -170,7 +176,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/support(?:\/|$)/,
-    roles: adminLearnerTrainerAndIqaRoles,
+    roles: adminLearnerTrainerIqaAndEmployerRoles,
   },
   {
     pattern: /^\/surveys(?:\/|$)/,

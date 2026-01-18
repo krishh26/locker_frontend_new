@@ -26,6 +26,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCreateUserMutation, useUpdateUserMutation } from "@/store/api/user/userApi";
 import type { User, CreateUserRequest, UpdateUserRequest } from "@/store/api/user/types";
+import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
+import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { toast } from "sonner";
 
 const roles = [
@@ -35,6 +37,7 @@ const roles = [
   { value: "EQA", label: "EQA" },
   { value: "LIQA", label: "Lead IQA" },
   { value: "Line Manager", label: "Line Manager" },
+  { value: "Employer", label: "Employer" },
 ];
 
 // Common timezones - can be extended
@@ -64,22 +67,51 @@ const createUserSchema = z
     time_zone: z.string().min(1, "Timezone is required"),
     roles: z.array(z.string()).min(1, "At least one role is required"),
     line_manager_id: z.string().optional(),
+    employer_ids: z.array(z.string()).optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-  });
+  })
+  .refine(
+    (data) => {
+      const hasEmployerRole = data.roles?.includes("Employer");
+      if (hasEmployerRole) {
+        return data.employer_ids && data.employer_ids.length > 0;
+      }
+      return true;
+    },
+    {
+      message: "At least one employee must be selected when Employer role is selected",
+      path: ["employer_ids"],
+    }
+  );
 
-const updateUserSchema = z.object({
-  first_name: z.string().min(1, "First name is required").optional(),
-  last_name: z.string().min(1, "Last name is required").optional(),
-  user_name: z.string().min(1, "Username is required").optional(),
-  email: z.string().email("Invalid email address").min(1, "Email is required").optional(),
-  mobile: z.string().min(1, "Mobile number is required").optional(),
-  time_zone: z.string().min(1, "Timezone is required").optional(),
-  roles: z.array(z.string()).min(1, "At least one role is required").optional(),
-  line_manager_id: z.string().optional(),
-});
+const updateUserSchema = z
+  .object({
+    first_name: z.string().min(1, "First name is required").optional(),
+    last_name: z.string().min(1, "Last name is required").optional(),
+    user_name: z.string().min(1, "Username is required").optional(),
+    email: z.string().email("Invalid email address").min(1, "Email is required").optional(),
+    mobile: z.string().min(1, "Mobile number is required").optional(),
+    time_zone: z.string().min(1, "Timezone is required").optional(),
+    roles: z.array(z.string()).min(1, "At least one role is required").optional(),
+    line_manager_id: z.string().optional(),
+    employer_ids: z.array(z.string()).optional(),
+  })
+  .refine(
+    (data) => {
+      const hasEmployerRole = data.roles?.includes("Employer");
+      if (hasEmployerRole) {
+        return data.employer_ids && data.employer_ids.length > 0;
+      }
+      return true;
+    },
+    {
+      message: "At least one employee must be selected when Employer role is selected",
+      path: ["employer_ids"],
+    }
+  );
 
 type CreateUserFormValues = z.infer<typeof createUserSchema>;
 type UpdateUserFormValues = z.infer<typeof updateUserSchema>;
@@ -117,6 +149,7 @@ export function UsersFormDialog({
           time_zone: "",
           roles: [],
           line_manager_id: "",
+          employer_ids: [],
         }
       : {
           first_name: "",
@@ -129,6 +162,7 @@ export function UsersFormDialog({
           time_zone: "",
           roles: [],
           line_manager_id: "",
+          employer_ids: [],
         },
   });
 
@@ -143,6 +177,7 @@ export function UsersFormDialog({
         time_zone: user.time_zone,
         roles: user.roles,
         line_manager_id: user.line_manager?.user_id?.toString() || "",
+        employer_ids: [],
       });
     } else if (!user && open) {
       form.reset({
@@ -156,9 +191,27 @@ export function UsersFormDialog({
         time_zone: "",
         roles: [],
         line_manager_id: "",
+        employer_ids: [],
       });
     }
   }, [user, open, form]);
+
+  // Watch roles to conditionally show employer field
+  const selectedRoles = form.watch("roles");
+  const hasEmployerRole = selectedRoles?.includes("Employer") || false;
+
+  // Fetch all employers
+  const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
+    { page: 1, page_size: 1000 },
+    { skip: !hasEmployerRole || !open }
+  );
+
+  // Transform employers to options for MultipleSelector
+  const employerOptions: Option[] =
+    employersData?.data?.map((employer) => ({
+      value: employer.employer_id.toString(),
+      label: employer.employer_name,
+    })) || [];
 
   const onSubmit = async (values: CreateUserFormValues | UpdateUserFormValues) => {
     try {
@@ -489,9 +542,12 @@ export function UsersFormDialog({
                             if (checked) {
                               field.onChange([...currentRoles, role.label]);
                             } else {
-                              field.onChange(
-                                currentRoles.filter((r) => r !== role.label)
-                              );
+                              const newRoles = currentRoles.filter((r) => r !== role.label);
+                              field.onChange(newRoles);
+                              // Clear employer_ids if Employer role is removed
+                              if (role.label === "Employer") {
+                                form.setValue("employer_ids", []);
+                              }
                             }
                           }}
                         />
@@ -513,6 +569,70 @@ export function UsersFormDialog({
               )}
             />
           </div>
+
+          {/* Employees - Only show when Employer role is selected */}
+          {hasEmployerRole && (
+            <div className="space-y-2">
+              <Label htmlFor="employer_ids">
+                Employers <span className="text-destructive">*</span>
+              </Label>
+              <Controller
+                name="employer_ids"
+                control={form.control}
+                render={({ field }) => {
+                  const selectedOptions: Option[] =
+                    field.value?.map((id) => {
+                      const employer = employersData?.data?.find(
+                        (e) => e.employer_id.toString() === id
+                      );
+                      return {
+                        value: id,
+                        label: employer?.employer_name || id,
+                      };
+                    }) || [];
+
+                  return (
+                    <>
+                      <MultipleSelector
+                        value={selectedOptions}
+                        options={employerOptions}
+                        placeholder={
+                          isLoadingEmployers
+                            ? "Loading employers..."
+                            : "Select employers"
+                        }
+                        onChange={(options: Option[]) => {
+                          const ids = options.map((opt: Option) => opt.value);
+                          field.onChange(ids);
+                        }}
+                        disabled={isLoadingEmployers}
+                        loadingIndicator={
+                          <div className="flex items-center justify-center p-2">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          </div>
+                        }
+                        emptyIndicator={
+                          <p className="text-center text-sm text-muted-foreground">
+                            No employers found
+                          </p>
+                        }
+                        className={
+                          form.formState.errors.employer_ids
+                            ? "border-destructive"
+                            : ""
+                        }
+                      />
+                      {form.formState.errors.employer_ids && (
+                        <p className="text-sm text-destructive">
+                          {form.formState.errors.employer_ids.message}
+                        </p>
+                      )}
+                    </>
+                  );
+                }}
+              />
+            </div>
+          )}
 
           <DialogFooter>
             <Button

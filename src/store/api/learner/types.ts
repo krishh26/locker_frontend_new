@@ -81,6 +81,8 @@ export interface LearnerFilters {
   course_id?: number;
   employer_id?: number;
   status?: string;
+  user_id?: number;
+  role?: string;
 }
 
 export interface LearnerListResponse {

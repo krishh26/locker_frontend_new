@@ -33,7 +33,16 @@ export const learnerApi = createApi({
     }),
     getLearnersList: builder.query<LearnerListResponse, LearnerFilters>({
       query: (filters = {}) => {
-        const { page = 1, page_size = 10, keyword = "", course_id = "", employer_id = "", status = "" } = filters;
+        const {
+          page = 1,
+          page_size = 10,
+          keyword = "",
+          course_id = "",
+          employer_id = "",
+          status = "",
+          user_id = "",
+          role = "",
+        } = filters;
         let url = `/learner/list?page=${page}&limit=${page_size}&meta=true`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
@@ -46,6 +55,12 @@ export const learnerApi = createApi({
         }
         if (status) {
           url += `&status=${encodeURIComponent(status)}`;
+        }
+        if (user_id) {
+          url += `&user_id=${encodeURIComponent(user_id)}`;
+        }
+        if (role) {
+          url += `&role=${encodeURIComponent(role)}`;
         }
         return url;
       },

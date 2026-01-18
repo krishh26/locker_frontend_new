@@ -398,6 +398,26 @@ const data: {
         },
       ],
     },
+    {
+      label: 'Employer',
+      items: [
+        {
+          title: 'Learner Management',
+          url: '/learners',
+          icon: GraduationCap,
+        },
+        {
+          title: 'Support',
+          url: '/support',
+          icon: HelpCircle,
+        },
+        {
+          title: 'Propose Your Innovations',
+          url: '/propose-your-innovations',
+          icon: Lightbulb,
+        },
+      ],
+    },
     // {
     //   label: "Pages",
     //   items: [
@@ -508,6 +528,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (group.label === 'IQA') {
         return userRole === 'IQA'
       }
+      // Show "Employer" group only for Employer role
+      if (group.label === 'Employer') {
+        return userRole === 'Employer'
+      }
       // For other groups, show based on role access
       return true
     })
@@ -542,6 +566,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       ? 'Trainer Dashboard'
                       : userRole === 'IQA'
                       ? 'IQA Dashboard'
+                      : userRole === 'Employer'
+                      ? 'Employer Dashboard'
                       : 'Learner Dashboard'}
                   </span>
                 </div>

@@ -20,6 +20,7 @@ import {
   setFilterApplied,
   setFilterError,
   resetFilters,
+  resetSelectedUnits,
 } from "@/store/slices/qaSamplePlanSlice";
 import { useGetSamplePlansQuery } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import { useLearnersData } from "../../qa-sample-plan-page-content/hooks/use-learners-data";
@@ -117,6 +118,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
     }
 
     dispatch(setFilterError(""));
+    dispatch(resetSelectedUnits()); // Reset selected units when filter is applied
     dispatch(setFilterApplied(true));
     triggerSamplePlanLearners(selectedPlan);
   }, [selectedCourse, plans, selectedPlan, dispatch, triggerSamplePlanLearners]);

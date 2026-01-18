@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { formatDate } from '../../../constants'
+import { formatDate } from '../../constants'
 
 interface ModalTabsProps {
   plannedDates: string[]

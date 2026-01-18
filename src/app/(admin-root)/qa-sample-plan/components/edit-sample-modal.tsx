@@ -466,6 +466,7 @@ export function EditSampleModal({
                   <TabsTrigger
                     key={`planned-date-${index}-${date || 'no-date'}`}
                     value={String(index)}
+                    className='cursor-pointer'
                   >
                     FS {index + 1} - ({date ? formatDate(date) : 'No Date'})
                   </TabsTrigger>

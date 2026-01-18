@@ -46,8 +46,9 @@ export function buildApplySamplesPayload({
         .filter((unit: any) => {
           if (!unit) return false;
           // Match old implementation: use unit_code if truthy, else unit_name, else empty string
-          const unitKey = unit.unit_code || unit.unit_name || "";
-          return unitKey && selectedUnitsSet.has(unitKey);
+          // Convert to string to match the Set values (which are stored as strings)
+          const unitKey = String(unit.unit_code || unit.unit_name || "");
+          return unitKey && unitKey.trim() && selectedUnitsSet.has(unitKey);
         })
         .map((unit) => {
           const unitIdRaw = unit?.unit_code ?? Date.now();

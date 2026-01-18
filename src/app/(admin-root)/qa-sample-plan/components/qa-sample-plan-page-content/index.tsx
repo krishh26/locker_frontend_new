@@ -15,7 +15,8 @@ import {
   selectUnitSelection,
   setFilterError,
   setPlans,
-  setSelectedPlan
+  setSelectedPlan,
+  setSelectedUnitsMap
 } from "@/store/slices/qaSamplePlanSlice";
 import { useCallback, useEffect, useMemo } from "react";
 import { toast } from "sonner";
@@ -136,17 +137,13 @@ export function QASamplePlanPageContent() {
   }, [learnersData.learnersData.length, dispatch]);
 
 
-  // Check if at least one unit is selected across all learners
-  const hasAtLeastOneSelectedUnit = useMemo(() => {
-    return Object.values(unitSelection.selectedUnitsMap).some((units) => units.length > 0);
-  }, [unitSelection.selectedUnitsMap]);
 
   const isApplySamplesDisabled = useMemo(() => {
     return (
       !filterState.filterApplied ||
       !selectedPlan ||
       !filterState.sampleType ||
-      !hasAtLeastOneSelectedUnit ||
+      !learnersData.learnersData.length ||
       isPlanListLoading ||
       learnersData.isLearnersInFlight ||
       isApplySamplesLoading
@@ -155,7 +152,7 @@ export function QASamplePlanPageContent() {
     filterState.filterApplied,
     selectedPlan,
     filterState.sampleType,
-    hasAtLeastOneSelectedUnit,
+    learnersData.learnersData.length,
     isPlanListLoading,
     learnersData.isLearnersInFlight,
     isApplySamplesLoading,
@@ -195,6 +192,7 @@ export function QASamplePlanPageContent() {
       selectedMethods: filterState.selectedMethods,
     });
 
+
     if (!payload) {
       dispatch(setFilterError("Select at least one learner with sampled units before applying."));
       return;
@@ -230,9 +228,134 @@ export function QASamplePlanPageContent() {
 
 
   const handleApplyRandomSamples = useCallback(async () => {
-    // Placeholder - implement random sampling logic if needed
-    toast.info("Random sampling functionality will be implemented");
-  }, []);
+    if (!selectedPlan) {
+      dispatch(setFilterError("Please select a plan before applying samples."));
+      return;
+    }
+
+    if (!filterState.sampleType) {
+      dispatch(setFilterError("Please select a sample type before applying samples."));
+      return;
+    }
+
+    if (!iqaId) {
+      dispatch(setFilterError("Unable to determine current user. Please re-login and try again."));
+      return;
+    }
+
+    if (isApplySamplesDisabled) {
+      return;
+    }
+
+    if (!filterState.plannedSampleDate.trim()) {
+      dispatch(setFilterError("Planned Sample Date is required"));
+      return;
+    }
+
+    if (!learnersData.learnersData.length) {
+      dispatch(setFilterError("No learners available to apply random samples."));
+      return;
+    }
+
+    // Randomly select units for all learners based on risk_percentage
+    const updatedSelectedUnitsMap: Record<string, Set<string>> = {};
+
+    learnersData.learnersData.forEach((row, rowIndex) => {
+      const units = Array.isArray(row.units) ? row.units : [];
+      if (units.length === 0) {
+        return;
+      }
+
+      // Get risk_percentage (e.g., "50.00" or 50)
+      const riskPercentageRaw = (row as Record<string, unknown>).risk_percentage;
+      const riskPercentage = riskPercentageRaw
+        ? parseFloat(String(riskPercentageRaw))
+        : 0;
+
+      // Calculate number of units to select based on risk percentage
+      // If risk_percentage is 50, select 50% of units
+      const totalUnits = units.length;
+      const unitsToSelect = Math.max(
+        1,
+        Math.round((riskPercentage / 100) * totalUnits)
+      );
+
+      // Get all unit keys (must match the logic in buildApplySamplesPayload)
+      const unitKeys: string[] = units
+        .map((unit: Record<string, unknown>) => {
+          const unitKey = unit.unit_code || unit.unit_name || "";
+          return String(unitKey);
+        })
+        .filter((key: string): key is string => Boolean(key && key.trim()));
+
+      // Randomly shuffle and select the required number
+      const shuffled = [...unitKeys].sort(() => Math.random() - 0.5);
+      const selectedUnitKeys = shuffled.slice(0, unitsToSelect);
+
+      // Store in the map
+      const learnerKey = `${row.learner_name ?? ""}-${rowIndex}`;
+      updatedSelectedUnitsMap[learnerKey] = new Set(selectedUnitKeys);
+    });
+
+    // Convert Set to array for Redux (selectedUnitsMap uses Record<string, string[]>)
+    const updatedSelectedUnitsMapForRedux: Record<string, string[]> = {};
+    Object.entries(updatedSelectedUnitsMap).forEach(([key, unitSet]) => {
+      updatedSelectedUnitsMapForRedux[key] = Array.from(unitSet);
+    });
+
+    // Update the selectedUnitsMap state
+    dispatch(setSelectedUnitsMap(updatedSelectedUnitsMapForRedux));
+
+    // Convert back to Set for payload building (buildApplySamplesPayload expects Record<string, Set<string>>)
+    const selectedUnitsMapForPayload: Record<string, Set<string>> = {};
+    Object.entries(updatedSelectedUnitsMapForRedux).forEach(([key, units]) => {
+      selectedUnitsMapForPayload[key] = new Set(units);
+    });
+
+    // Build and apply samples payload
+    const payload = buildApplySamplesPayload({
+      selectedPlan,
+      sampleType: filterState.sampleType,
+      iqaId,
+      learnersData: learnersData.learnersData,
+      selectedUnitsMap: selectedUnitsMapForPayload,
+      dateFrom: filterState.plannedSampleDate,
+      selectedMethods: filterState.selectedMethods,
+    });
+
+    if (!payload) {
+      dispatch(setFilterError("No learners with units available to apply random samples."));
+      return;
+    }
+
+
+    try {
+      const response = await applySamplePlanLearners(payload).unwrap();
+      const successMessage = response?.message || "Random sampled learners added successfully.";
+      toast.success(successMessage);
+      dispatch(setFilterError(""));
+
+      // Refresh the learners table data
+      if (selectedPlan) {
+        learnersData.triggerSamplePlanLearners(selectedPlan);
+      }
+    } catch (error: unknown) {
+      const errorData = error as { data?: { message?: string }; message?: string };
+      const message = errorData.data?.message || errorData.message || "Failed to apply random sampled learners.";
+      dispatch(setFilterError(message));
+      toast.error(message);
+    }
+  }, [
+    selectedPlan,
+    filterState.sampleType,
+    filterState.plannedSampleDate,
+    filterState.selectedMethods,
+    iqaId,
+    learnersData,
+    isApplySamplesDisabled,
+    applySamplePlanLearners,
+    dispatch,
+  ]);
 
 
   return (

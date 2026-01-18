@@ -8,8 +8,10 @@ import {
   useLazyGetSampleQuestionsQuery,
   useCreateSampleQuestionsMutation,
   useUpdateSampleQuestionMutation,
+  useApplySamplePlanLearnersMutation,
 } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
-import { closeEditSampleModal } from "@/store/slices/qaSamplePlanSlice";
+import { closeEditSampleModal, selectEditSampleModal } from "@/store/slices/qaSamplePlanSlice";
+import { assessmentMethodCodesForPayload } from "../../constants";
 import type { ModalFormData } from "../types";
 import type { SampleQuestion } from "@/store/api/qa-sample-plan/types";
 import {
@@ -32,6 +34,7 @@ export function useEditSampleModal(
   const [activeTab, setActiveTab] = useState(0);
   const [sampleQuestions, setSampleQuestions] = useState<SampleQuestion[]>([]);
   const [plannedDates, setPlannedDates] = useState<string[]>([]);
+  const [sampledLearners, setSampledLearners] = useState<Record<string, unknown>[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
@@ -42,6 +45,7 @@ export function useEditSampleModal(
   const [triggerGetQuestions, { isLoading: isLoadingQuestions }] = useLazyGetSampleQuestionsQuery();
   const [createSampleQuestions] = useCreateSampleQuestionsMutation();
   const [updateSampleQuestion] = useUpdateSampleQuestionMutation();
+  const [applySamplePlanLearners] = useApplySamplePlanLearnersMutation();
 
   // Fetch plan details when modal opens with a plan_id
   useEffect(() => {
@@ -54,8 +58,11 @@ export function useEditSampleModal(
 
         if (data) {
           // If the response has sampled_learners array, find the one matching detail_id
-          const sampledLearners = data.sampled_learners;
-          if (Array.isArray(sampledLearners)) {
+          const sampledLearnersArray = data.sampled_learners;
+          if (Array.isArray(sampledLearnersArray)) {
+            // Store sampled learners in state for tab navigation
+            setSampledLearners(sampledLearnersArray as Record<string, unknown>[]);
+            const sampledLearners = sampledLearnersArray;
             const matchingDetail = sampledLearners.find(
               (detail: Record<string, unknown>) =>
                 String(detail.detail_id) === String(planDetailId) ||
@@ -107,6 +114,7 @@ export function useEditSampleModal(
             }
           } else {
             // If no sampled_learners array, use the main data
+            setSampledLearners([]);
             const transformedData = transformPlanDetailsToModalData(data as Parameters<typeof transformPlanDetailsToModalData>[0]);
             setModalFormData(transformedData);
           }
@@ -201,6 +209,7 @@ export function useEditSampleModal(
 
   const user = useAppSelector((state) => state.auth.user);
   const iqaId = user?.user_id;
+  const modalState = useAppSelector(selectEditSampleModal);
 
   const handleSaveQuestions = useCallback(async () => {
     if (!planDetailId || !iqaId) {
@@ -299,17 +308,205 @@ export function useEditSampleModal(
   }, [dispatch]);
 
   // Tab change handler
-  const handleTabChange = useCallback((value: number) => {
-    setActiveTab(value);
-  }, []);
+  const handleTabChange = useCallback(async (newTabIndex: number) => {
+    setActiveTab(newTabIndex);
 
-  // Create new handler (placeholder for now)
-  const handleCreateNew = useCallback(() => {
+    // If we have sampled learners and the tab index is valid, populate form data and load questions
+    if (sampledLearners.length > 0 && plannedDates[newTabIndex] && planId) {
+      // Find the sampled learner entry that matches the planned date at this tab index
+      const targetPlannedDate = plannedDates[newTabIndex];
+      const selectedEntry = sampledLearners.find((entry: Record<string, unknown>) => {
+        const entryDate = (entry.planned_date as string | undefined) || (entry.plannedDate as string | undefined);
+        return entryDate === targetPlannedDate;
+      }) as Record<string, unknown> | undefined;
+
+      if (!selectedEntry) return;
+      
+      // Get the base data (we'll need it from the last fetch, but for now use what we have)
+      // Transform the selected entry to modal data (similar to useEffect logic)
+      const detailData: Record<string, unknown> = {
+        ...selectedEntry,
+        // Override with detail-specific data
+        planned_date: (selectedEntry.planned_date as string | undefined) || (selectedEntry.plannedDate as string | undefined),
+        completed_date: (selectedEntry.completed_date as string | undefined) || (selectedEntry.completedDate as string | undefined),
+        assessment_methods: selectedEntry.assessment_methods,
+        iqa_conclusion: selectedEntry.iqa_conclusion,
+        assessor_decision_correct: selectedEntry.assessor_decision_correct,
+        feedback: (selectedEntry.feedback as string | undefined) || "",
+        sample_type: selectedEntry.sample_type || "",
+        type: (selectedEntry.type as string | undefined) || "",
+      };
+      // Ensure sample_type is set from selectedEntry
+      if (selectedEntry.sample_type) {
+        detailData.sample_type = selectedEntry.sample_type;
+        detailData.sampleType = selectedEntry.sample_type;
+      }
+      const transformedData = transformPlanDetailsToModalData(detailData as Parameters<typeof transformPlanDetailsToModalData>[0]);
+      setModalFormData(transformedData);
+
+      // Load questions - always use planId for API call (matching old implementation)
+      try {
+        const response = await triggerGetQuestions(Number(planId)).unwrap();
+        const list = Array.isArray((response as { data?: unknown })?.data) 
+          ? ((response as { data?: unknown }).data as Array<Record<string, unknown>>)
+          : [];
+        const mapped: SampleQuestion[] = list.map((q: Record<string, unknown>) => ({
+          id: typeof q.id === "number" ? q.id : Number(q.id) || Date.now(),
+          question_text: (q.question_text as string) ?? "",
+          answer: ((q.answer as "Yes" | "No" | "") ?? "Yes") as "Yes" | "No",
+        }));
+        setSampleQuestions(mapped);
+      } catch {
+        // Questions might not exist yet, that's okay
+        setSampleQuestions([]);
+      }
+    }
+  }, [sampledLearners, plannedDates, planId, triggerGetQuestions]);
+
+  // Create new handler
+  const handleCreateNew = useCallback(async () => {
+    if (!planId) {
+      toast.error("Please select a plan before creating a new entry.");
+      return;
+    }
+
+    if (!iqaId) {
+      toast.error("Unable to determine current user. Please re-login and try again.");
+      return;
+    }
+
+    // Get current unit code/name from Redux state
+    const currentUnitCode = modalState?.currentUnitCode ?? null;
+    const currentUnitName = modalState?.currentUnitName ?? null;
+
+    if (!currentUnitCode && !currentUnitName) {
+      toast.error("No unit selected. Please select a unit first.");
+      return;
+    }
+
+    // Get learner data from plan details (need to fetch if not already available)
+    // For now, we'll get it from the plan details response which should have learner_id
+    let learnerId: string | number | null = null;
+
+    // Try to get learner_id from the plan details response (first sampled_learner entry)
+    if (sampledLearners.length > 0) {
+      const firstSampledLearner = sampledLearners[0] as Record<string, unknown>;
+      learnerId = (firstSampledLearner.learner_id as string | number | undefined) ?? 
+                  (firstSampledLearner.learnerId as string | number | undefined) ?? 
+                  (firstSampledLearner.id as string | number | undefined) ?? 
+                  null;
+    }
+
+    // If we don't have learner_id, try to get it from plan details
+    if (!learnerId) {
+      try {
+        const response = await triggerGetPlanDetails(planId).unwrap();
+        const data = (response as { data?: unknown })?.data as Record<string, unknown> | undefined;
+        if (data) {
+          const sampledLearnersArray = data.sampled_learners;
+          if (Array.isArray(sampledLearnersArray) && sampledLearnersArray.length > 0) {
+            const firstLearner = sampledLearnersArray[0] as Record<string, unknown>;
+            learnerId = (firstLearner.learner_id as string | number | undefined) ?? 
+                       (firstLearner.learnerId as string | number | undefined) ?? 
+                       (firstLearner.id as string | number | undefined) ?? 
+                       null;
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching plan details for learner ID:", error);
+      }
+    }
+
+    if (!learnerId) {
+      toast.error("Learner ID not found.");
+      return;
+    }
+
+    // Build unit payload
+    const unitIdRaw = currentUnitCode || currentUnitName || "";
+    const unitRefRaw = currentUnitName || currentUnitCode || "";
+    const unitId = String(unitIdRaw).trim() || "";
+    const unitRef = String(unitRefRaw).trim() || unitId;
+
+    if (!unitRef) {
+      toast.error("Invalid unit information.");
+      return;
+    }
+
+    // Get learner ID for request
+    const numericLearnerId = Number(learnerId);
+    const learnerIdForRequest = Number.isFinite(numericLearnerId)
+      ? numericLearnerId
+      : learnerId;
+
+    // Get planned date (use current date/time)
+    const plannedDate = new Date().toISOString();
+
+    // Get sample type from form data or use default
+    const sampleTypeForRequest = modalFormData.sampleType || "Learner interview";
+
+    // Build assessment methods payload (all false for new entry)
+    const assessmentMethodsPayload = assessmentMethodCodesForPayload.reduce(
+      (accumulator, code) => {
+        accumulator[code] = false;
+        return accumulator;
+      },
+      {} as Record<string, boolean>
+    );
+
+    // Build learners payload
+    const learnersPayload = [
+      {
+        learner_id: learnerIdForRequest,
+        plannedDate: plannedDate,
+        units: [
+          {
+            id: unitId,
+            unit_ref: unitRef,
+          },
+        ],
+      },
+    ];
+
+    const numericPlanId = Number(planId);
+    const planIdForRequest = Number.isFinite(numericPlanId)
+      ? numericPlanId
+      : planId;
+
+    if (!iqaId) {
+      toast.error("Unable to determine current user.");
+      setIsCreating(false);
+      return;
+    }
+
+    const numericIqaId = Number(iqaId);
+    const createdBy: string | number = Number.isFinite(numericIqaId) ? numericIqaId : (iqaId as string | number);
+
+    const payload = {
+      plan_id: planIdForRequest,
+      sample_type: sampleTypeForRequest,
+      created_by: createdBy,
+      assessment_methods: assessmentMethodsPayload,
+      learners: learnersPayload,
+    };
+
     setIsCreating(true);
-    // TODO: Implement create new functionality
-    toast.info("Create new functionality will be implemented");
-    setIsCreating(false);
-  }, []);
+    try {
+      await applySamplePlanLearners(payload).unwrap();
+      toast.success("New entry created successfully.");
+      dispatch(closeEditSampleModal());
+      if (onDeleteSuccess) {
+        onDeleteSuccess();
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
+                          (error as { message?: string })?.message || 
+                          "Failed to create new entry.";
+      toast.error(errorMessage);
+    } finally {
+      setIsCreating(false);
+    }
+  }, [planId, iqaId, modalState, sampledLearners, modalFormData.sampleType, triggerGetPlanDetails, applySamplePlanLearners, dispatch, onDeleteSuccess]);
 
   const isLoading = isLoadingPlanDetails || isLoadingQuestions;
 

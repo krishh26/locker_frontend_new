@@ -45,11 +45,8 @@ export function buildApplySamplesPayload({
       const selectedUnits = units
         .filter((unit: any) => {
           if (!unit) return false;
-          // Convert unit_code to string for consistent key matching
-          const unitKey =
-            unit.unit_code != null
-              ? String(unit.unit_code)
-              : unit.unit_name || "";
+          // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+          const unitKey = unit.unit_code || unit.unit_name || "";
           return unitKey && selectedUnitsSet.has(unitKey);
         })
         .map((unit) => {

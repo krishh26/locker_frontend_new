@@ -9,6 +9,7 @@ import type { Plan } from "@/store/slices/qaSamplePlanSlice";
 import {
   resetSelectedUnits,
   selectFilterState,
+  selectQASamplePlanState,
   selectSelectedCourse,
   selectSelectedPlan,
   selectUnitSelection,
@@ -34,7 +35,8 @@ export function QASamplePlanPageContent() {
 
   // Redux state
   const selectedCourse = useAppSelector(selectSelectedCourse);
-  const selectedPlan = useAppSelector(selectSelectedPlan);
+  const qaState = useAppSelector(selectQASamplePlanState);
+  const selectedPlan = qaState.selectedPlan; // Use same source as LearnersTable
   const filterState = useAppSelector(selectFilterState);
   const unitSelection = useAppSelector(selectUnitSelection);
 
@@ -134,12 +136,17 @@ export function QASamplePlanPageContent() {
   }, [learnersData.learnersData.length, dispatch]);
 
 
+  // Check if at least one unit is selected across all learners
+  const hasAtLeastOneSelectedUnit = useMemo(() => {
+    return Object.values(unitSelection.selectedUnitsMap).some((units) => units.length > 0);
+  }, [unitSelection.selectedUnitsMap]);
+
   const isApplySamplesDisabled = useMemo(() => {
     return (
       !filterState.filterApplied ||
       !selectedPlan ||
       !filterState.sampleType ||
-      !learnersData.learnersData.length ||
+      !hasAtLeastOneSelectedUnit ||
       isPlanListLoading ||
       learnersData.isLearnersInFlight ||
       isApplySamplesLoading
@@ -148,7 +155,7 @@ export function QASamplePlanPageContent() {
     filterState.filterApplied,
     selectedPlan,
     filterState.sampleType,
-    learnersData.learnersData.length,
+    hasAtLeastOneSelectedUnit,
     isPlanListLoading,
     learnersData.isLearnersInFlight,
     isApplySamplesLoading,
@@ -184,7 +191,7 @@ export function QASamplePlanPageContent() {
       iqaId,
       learnersData: learnersData.learnersData,
       selectedUnitsMap: selectedUnitsMapForPayload,
-      dateFrom: filterState.dateFrom,
+      dateFrom: filterState.plannedSampleDate,
       selectedMethods: filterState.selectedMethods,
     });
 
@@ -211,7 +218,7 @@ export function QASamplePlanPageContent() {
   }, [
     selectedPlan,
     filterState.sampleType,
-    filterState.dateFrom,
+    filterState.plannedSampleDate,
     filterState.selectedMethods,
     iqaId,
     learnersData,
@@ -242,7 +249,7 @@ export function QASamplePlanPageContent() {
         </div>
 
         <div className="lg:col-span-8">
-          <LearnersTable />
+          <LearnersTable learnersData={learnersData} />
         </div>
       </QASamplePlanLayout>
       <EditSampleModalWrapper />

@@ -24,6 +24,7 @@ interface QASamplePlanState {
   sampleType: string;
   dateFrom: string;
   dateTo: string;
+  plannedSampleDate: string;
   searchText: string;
   onlyIncomplete: boolean;
 
@@ -57,6 +58,7 @@ const initialState: QASamplePlanState = {
   sampleType: "",
   dateFrom: "",
   dateTo: "",
+  plannedSampleDate: "",
   searchText: "",
   onlyIncomplete: false,
   filterApplied: false,
@@ -118,6 +120,9 @@ const qaSamplePlanSlice = createSlice({
     },
     setDateTo: (state, action: PayloadAction<string>) => {
       state.dateTo = action.payload;
+    },
+    setPlannedSampleDate: (state, action: PayloadAction<string>) => {
+      state.plannedSampleDate = action.payload;
     },
     setSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
@@ -217,6 +222,7 @@ export const {
   setSampleType,
   setDateFrom,
   setDateTo,
+  setPlannedSampleDate,
   setSearchText,
   setOnlyIncomplete,
   setFilterApplied,
@@ -246,6 +252,7 @@ export const selectFilterState = (state: RootState) => ({
   sampleType: state.qaSamplePlan.sampleType,
   dateFrom: state.qaSamplePlan.dateFrom,
   dateTo: state.qaSamplePlan.dateTo,
+  plannedSampleDate: state.qaSamplePlan.plannedSampleDate,
   searchText: state.qaSamplePlan.searchText,
   onlyIncomplete: state.qaSamplePlan.onlyIncomplete,
   filterApplied: state.qaSamplePlan.filterApplied,

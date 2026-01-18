@@ -49,9 +49,8 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
     units.forEach((unit) => {
       const unitData = unit as SamplePlanLearnerUnit;
-      const unitKey = unitData.unit_code != null 
-        ? String(unitData.unit_code) 
-        : unitData.unit_name || "";
+      // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+      const unitKey = unitData.unit_code || unitData.unit_name || "";
       if (unitKey && !selectedUnitsSet.has(unitKey)) {
         dispatch(toggleUnitForLearner({ learnerKey, unitKey }));
       }
@@ -62,9 +61,8 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
     units.forEach((unit) => {
       const unitData = unit as SamplePlanLearnerUnit;
-      const unitKey = unitData.unit_code != null 
-        ? String(unitData.unit_code) 
-        : unitData.unit_name || "";
+      // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+      const unitKey = unitData.unit_code || unitData.unit_name || "";
       if (unitKey && selectedUnitsSet.has(unitKey)) {
         dispatch(toggleUnitForLearner({ learnerKey, unitKey }));
       }
@@ -82,9 +80,8 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
     // Find the unit data to get unit information
     const unitData = units.find((unit) => {
       const unitData = unit as SamplePlanLearnerUnit;
-      const currentUnitKey = unitData.unit_code != null 
-        ? String(unitData.unit_code) 
-        : unitData.unit_name || "";
+      // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+      const currentUnitKey = unitData.unit_code || unitData.unit_name || "";
       return currentUnitKey === unitKey;
     }) as SamplePlanLearnerUnit | undefined;
 
@@ -112,9 +109,8 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
 
   const allUnitsSelected = units.every((unit) => {
     const unitData = unit as SamplePlanLearnerUnit;
-    const unitKey = unitData.unit_code != null 
-      ? String(unitData.unit_code) 
-      : (unitData.unit_name || "");
+    // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+    const unitKey = unitData.unit_code || unitData.unit_name || "";
     return !unitKey || selectedUnitsSet.has(unitKey);
   });
 
@@ -138,13 +134,10 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
       <div className="flex overflow-x-auto gap-1 pb-2">
         {units.map((unit, unitIndex: number) => {
           const unitData = unit as SamplePlanLearnerUnit & { status?: string | boolean };
-          // Convert unit_code to string for consistent key handling (unit_code can be number or string)
-          const unitKey = unitData.unit_code != null 
-            ? String(unitData.unit_code) 
-            : unitData.unit_name || "";
+          // Match old implementation: use unit_code if truthy, else unit_name, else empty string
+          const unitKey = unitData.unit_code || unitData.unit_name || "";
           const isUnitSelected = unitKey ? selectedUnitsSet.has(unitKey) : false;
-          const hasSampleHistory = Array.isArray(unitData.sample_history) && unitData.sample_history.length > 0;
-          const firstHistory = hasSampleHistory && unitData.sample_history ? unitData.sample_history[0] : null;
+          const sampleHistory = Array.isArray(unitData.sample_history) ? unitData.sample_history : [];
 
           return (
             <div
@@ -176,22 +169,27 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
                       : "Incomplete"}
                 </Badge>
               </div>
-              {firstHistory && (
-                <div className="mt-2">
-                  <Button
-                    variant="link"
-                    size="sm"
-                    className="h-auto p-0 text-xs hover:text-primary underline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const detailId = (firstHistory as { detail_id?: string | number }).detail_id;
-                      if (detailId) {
-                        handleOpenLearnerDetailsDialog(detailId, unitKey);
-                      }
-                    }}
-                  >
-                    {formatDisplayDate((firstHistory as { planned_date?: string }).planned_date)}
-                  </Button>
+              {sampleHistory.length > 0 && (
+                <div className="mt-2 flex flex-col gap-1">
+                  {sampleHistory.map((history, historyIndex) => {
+                    const detailId = (history as { detail_id?: string | number }).detail_id;
+                    const plannedDate = (history as { planned_date?: string }).planned_date;
+                    if (!detailId || !plannedDate) return null;
+                    return (
+                      <Button
+                        key={`history-${detailId}-${historyIndex}`}
+                        variant="link"
+                        size="sm"
+                        className="h-auto p-0 text-xs hover:text-primary underline justify-start"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenLearnerDetailsDialog(detailId, unitKey);
+                        }}
+                      >
+                        {formatDisplayDate(plannedDate)}
+                      </Button>
+                    );
+                  })}
                 </div>
               )}
             </div>

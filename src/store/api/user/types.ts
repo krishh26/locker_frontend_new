@@ -39,6 +39,10 @@ export interface User {
   updated_at: string;
   line_manager: LineManager | null;
   number_of_active_learners: number;
+  assigned_employers: [{
+    employer_id: number;
+    employer_name: string;
+  }];
 }
 
 export interface UserListResponse {

@@ -90,6 +90,7 @@
     "tryAgain": "Tente novamente"
   },
   "dashboard": {
-    "adminDashboard": "Painel de controle do administrador"
+    "adminDashboard": "Painel de controle do administrador",
+    "dashboard": "Painel de controle"
   }
 }

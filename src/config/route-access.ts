@@ -1,6 +1,7 @@
 import {
   ALL_ROLES,
   authRoles,
+  isRoleAllowed,
   type AllowedRoles,
   type Role,
 } from "@/config/auth-roles"
@@ -10,273 +11,261 @@ type RouteRule = {
   roles: AllowedRoles
 }
 
-// Admin and Learner roles combined (Admin can access all learner pages)
-const adminAndLearnerRoles = ["Admin", "Learner"] as const satisfies readonly Role[]
-
-// Admin and Trainer roles combined
-const adminAndTrainerRoles = ["Admin", "Trainer"] as const satisfies readonly Role[]
-
-// Admin and IQA roles combined
-const adminAndIqaRoles = ["Admin", "IQA"] as const satisfies readonly Role[]
-
-// Admin, Trainer, and IQA roles combined
-const adminTrainerAndIqaRoles = ["Admin", "Trainer", "IQA"] as const satisfies readonly Role[]
-
-// Admin, Learner, and Trainer roles combined (for learner pages accessible to trainers)
-const adminLearnerAndTrainerRoles = ["Admin", "Learner", "Trainer"] as const satisfies readonly Role[]
-
-// Admin, Learner, Trainer, and IQA roles combined
-const adminLearnerTrainerAndIqaRoles = ["Admin", "Learner", "Trainer", "IQA"] as const satisfies readonly Role[]
-
-// Admin, Trainer, IQA, and Employer roles combined
-const adminTrainerIqaAndEmployerRoles = ["Admin", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
-
-// Admin, Learner, Trainer, IQA, and Employer roles combined
-const adminLearnerTrainerIqaAndEmployerRoles = ["Admin", "Learner", "Trainer", "IQA", "Employer"] as const satisfies readonly Role[]
+// Role helper for creating reusable role combinations
+const R = {
+  admin: (): readonly Role[] => authRoles.Admin,
+  with: (...roles: Role[]): readonly Role[] => roles as readonly Role[],
+  adminWith: (...roles: Role[]): readonly Role[] => {
+    const uniqueRoles = new Set<Role>(["Admin", ...roles])
+    return Array.from(uniqueRoles) as readonly Role[]
+  },
+  all: (): readonly Role[] => ALL_ROLES,
+} as const
 
 const routeRoleRules: RouteRule[] = [
   // Admin-only routes
   {
     pattern: /^\/admin(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/users(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/users\/add(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/users\/edit\/\d+(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/learners(?:\/|$)/,
-    roles: adminTrainerIqaAndEmployerRoles,
+    roles: R.adminWith("Trainer", "IQA", "Employer", "EQA"),
   },
   {
     pattern: /^\/calendar(?:\/|$)/,
-    roles: adminTrainerAndIqaRoles,
+    roles: R.adminWith("Trainer", "IQA"),
   },
   {
     pattern: /^\/learner-profile(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/employers(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/broadcast(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/course-builder(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/settings(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/pricing(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/demo(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/demo-calendar(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/funding-bands(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/qa-sample-plan(?:\/|$)/,
-    roles: adminAndIqaRoles,
+    roles: R.adminWith("IQA"),
   },
   {
     pattern: /^\/caseload(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/safeguarding(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/acknowledge-message(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/default-review-weeks(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/iqa-questions(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/session-types(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/timelog-export(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/awaiting-signature(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/gateway-report(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/progress-exclusion(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
-  // Learner pages (accessible to Admin, Learner, and Trainer)
+  // Learner pages
   {
     pattern: /^\/cpd(?:\/|$)/,
-    roles: adminLearnerTrainerAndIqaRoles,
+    roles: R.adminWith("Learner", "Trainer", "IQA"),
   },
   {
     pattern: /^\/forum(?:\/|$)/,
-    roles: adminLearnerTrainerAndIqaRoles,
+    roles: R.adminWith("Learner", "Trainer", "IQA"),
   },
   {
     pattern: /^\/skills-scan(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   // Specific form routes must come before general /forms pattern
   {
     pattern: /^\/forms\/submitted\/[^/]+\/[^/]+\/view(?:\/|$)/,
-    roles: adminAndTrainerRoles,
+    roles: R.adminWith("Trainer"),
   },
   {
     pattern: /^\/forms\/[^/]+\/builder(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/forms(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/trainer-risk-rating(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/wellbeing(?:\/|$)/,
-    roles: authRoles.Admin,
+    roles: R.admin(),
   },
   {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
-    roles: adminLearnerTrainerIqaAndEmployerRoles,
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA"),
   },
   {
     pattern: /^\/learner-forms(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/support(?:\/|$)/,
-    roles: adminLearnerTrainerIqaAndEmployerRoles,
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA"),
   },
   {
     pattern: /^\/surveys(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/evidence-library(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/learning-plan(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/course-resources(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/learners-documents-to-sign(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/resources(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/time-log(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/choose-units(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/course-details(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/chat(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/mail(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   {
     pattern: /^\/tasks(?:\/|$)/,
-    roles: adminLearnerAndTrainerRoles,
+    roles: R.adminWith("Learner", "Trainer"),
   },
   // Dashboard 2 (Admin and Trainer)
   {
     pattern: /^\/dashboard-2(?:\/|$)/,
-    roles: adminAndTrainerRoles,
+    roles: R.adminWith("Trainer"),
   },
-  // Trainer-only routes
+  // Trainer-only routes (Admin can also access)
   {
     pattern: /^\/learner-overview(?:\/|$)/,
-    roles: authRoles.Trainer,
+    roles: R.adminWith("Trainer"),
   },
   {
     pattern: /^\/learner-dashboard\/\d+(?:\/|$)/,
-    roles: adminAndTrainerRoles,
+    roles: R.adminWith("Trainer"),
   },
   {
     pattern: /^\/learners-forms(?:\/|$)/,
-    roles: authRoles.Trainer,
+    roles: R.adminWith("Trainer"),
   },
   // Main dashboard (accessible to all roles - content is role-based)
   {
     pattern: /^\/dashboard\/?$/,
-    roles: ALL_ROLES,
+    roles: R.all(),
   },
 ]
 
 export function getAllowedRolesForPath(pathname: string): AllowedRoles {
   const matchedRule = routeRoleRules.find((rule) => rule.pattern.test(pathname))
-  if (matchedRule) {
-    return matchedRule.roles
-  }
+  return matchedRule?.roles ?? ALL_ROLES
+}
 
-  // Default: Admin can access everything, but for unmatched routes,
-  // we'll return ALL_ROLES to maintain backward compatibility
-  // In production, you might want to be more restrictive
-  return ALL_ROLES
+export function canAccess(pathname: string, role: string | null): boolean {
+  if (role === "Admin") {
+    return true
+  }
+  const allowedRoles = getAllowedRolesForPath(pathname)
+  return isRoleAllowed(role, allowedRoles)
 }
 
 export { routeRoleRules }

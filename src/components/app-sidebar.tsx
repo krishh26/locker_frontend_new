@@ -418,6 +418,26 @@ const data: {
         },
       ],
     },
+    {
+      label: 'EQA',
+      items: [
+        {
+          title: 'Learner Management',
+          url: '/learners',
+          icon: GraduationCap,
+        },
+        {
+          title: 'Support',
+          url: '/support',
+          icon: HelpCircle,
+        },
+        {
+          title: 'Propose Your Innovations',
+          url: '/propose-your-innovations',
+          icon: Lightbulb,
+        },
+      ],
+    },
     // {
     //   label: "Pages",
     //   items: [
@@ -531,6 +551,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       // Show "Employer" group only for Employer role
       if (group.label === 'Employer') {
         return userRole === 'Employer'
+      }
+
+      // Show "EQA" group only for EQA role
+      if (group.label === 'EQA') {
+        return userRole === 'EQA'
       }
       // For other groups, show based on role access
       return true

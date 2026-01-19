@@ -84,6 +84,9 @@ interface MultipleSelectorProps {
 
   /** hide the clear all button. */
   hideClearAllButton?: boolean
+
+  /** Direction of the dropdown: 'up' or 'down'. Default is 'down'. */
+  direction?: 'up' | 'down'
 }
 
 export interface MultipleSelectorRef {
@@ -147,7 +150,8 @@ const MultipleSelector = ({
   triggerSearchOnFocus = false,
   commandProps,
   inputProps,
-  hideClearAllButton = false
+  hideClearAllButton = false,
+  direction = 'down'
 }: MultipleSelectorProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [open, setOpen] = React.useState(false)
@@ -490,7 +494,8 @@ const MultipleSelector = ({
       <div className='relative'>
         <div
           className={cn(
-            'border-input absolute top-2 z-10 w-full overflow-hidden rounded-md border',
+            'border-input absolute z-10 w-full overflow-hidden rounded-md border',
+            direction === 'up' ? 'bottom-full mb-2' : 'top-2',
             'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
             !open && 'hidden'
           )}

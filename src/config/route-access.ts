@@ -45,6 +45,14 @@ const routeRoleRules: RouteRule[] = [
     roles: authRoles.Admin,
   },
   {
+    pattern: /^\/users\/add(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
+    pattern: /^\/users\/edit\/\d+(?:\/|$)/,
+    roles: authRoles.Admin,
+  },
+  {
     pattern: /^\/learners(?:\/|$)/,
     roles: adminTrainerIqaAndEmployerRoles,
   },

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import {
   type ColumnDef,
   type SortingState,
@@ -17,10 +16,9 @@ import {
 import {
   Download,
   Search,
-  Plus,
   MoreHorizontal,
-  Edit,
   Trash2,
+  Folder,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,13 +37,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -55,45 +46,33 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useGetUsersQuery, useDeleteUserMutation } from "@/store/api/user/userApi";
-import type { User, UserFilters } from "@/store/api/user/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import Link from "next/link";
+import type { AssignedLearner } from "@/store/api/user/types";
 
-const roles = [
-  { value: "Admin", label: "Admin" },
-  { value: "Trainer", label: "Trainer" },
-  { value: "IQA", label: "IQA" },
-  { value: "EQA", label: "EQA" },
-  { value: "LIQA", label: "Lead IQA" },
-];
+interface AssignedLearnersDataTableProps {
+  data: AssignedLearner[];
+  onRemove: (learnerId: number) => void;
+  isLoading?: boolean;
+}
 
-export function UsersDataTable() {
-  const router = useRouter();
+export function AssignedLearnersDataTable({
+  data,
+  onRemove,
+  isLoading = false,
+}: AssignedLearnersDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
-  const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [filters, setFilters] = useState<UserFilters>({
-    page: 1,
-    page_size: 10,
-  });
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<User | null>(null);
-
-  const { data, isLoading, refetch } = useGetUsersQuery(filters);
-  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [learnerToRemove, setLearnerToRemove] = useState<AssignedLearner | null>(null);
 
   const handleSearch = useCallback(() => {
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      keyword: globalFilter || undefined,
-      role: roleFilter && roleFilter !== "all" ? roleFilter : undefined,
-    }));
-  }, [globalFilter, roleFilter]);
+    // Client-side filtering is handled by TanStack Table
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -103,67 +82,40 @@ export function UsersDataTable() {
 
   const handleClearSearch = () => {
     setGlobalFilter("");
-    setRoleFilter("all");
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      keyword: undefined,
-      role: undefined,
-    }));
   };
 
-  const handleAddNew = useCallback(() => {
-    router.push("/users/add");
-  }, [router]);
-
-  const handleEdit = useCallback(
-    (user: User) => {
-      router.push(`/users/edit/${user.user_id}`);
-    },
-    [router]
-  );
-
-  const handleDeleteClick = (user: User) => {
-    setUserToDelete(user);
-    setDeleteDialogOpen(true);
+  const handleRemoveClick = (learner: AssignedLearner) => {
+    setLearnerToRemove(learner);
+    setRemoveDialogOpen(true);
   };
 
-  const handleDeleteConfirm = async () => {
-    if (!userToDelete) return;
-
-    try {
-      await deleteUser(userToDelete.user_id).unwrap();
-      toast.success("User deleted successfully");
-      setDeleteDialogOpen(false);
-      setUserToDelete(null);
-      refetch();
-    } catch (error: unknown) {
-      const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? (error as { data?: { message?: string } }).data?.message
-          : undefined;
-      toast.error(errorMessage || "Failed to delete user");
-    }
-  };
-
-  const handlePageChange = (page: number) => {
-    setFilters((prev) => ({ ...prev, page }));
+  const handleRemoveConfirm = () => {
+    if (!learnerToRemove) return;
+    onRemove(learnerToRemove.learner_id);
+    setRemoveDialogOpen(false);
+    setLearnerToRemove(null);
+    toast.success("Learner removed from assignment");
   };
 
   const handleExportCsv = () => {
-    if (!data?.data || data.data.length === 0) {
+    if (!data || data.length === 0) {
       toast.info("No data to export");
       return;
     }
 
-    const headers = ["Name", "Username", "Email", "Mobile", "Roles", "Status"];
-    const rows = data.data.map((user) => [
-      `${user.first_name} ${user.last_name}`,
-      user.user_name,
-      user.email,
-      user.mobile,
-      user.roles.join(", "),
-      user.status,
+    const headers = [
+      "Learner Name",
+      "Course Name",
+      "Course Status",
+      "Start Date",
+      "End Date",
+    ];
+    const rows = data.map((learner) => [
+      `${learner.first_name} ${learner.last_name}`,
+      learner.course_name,
+      learner.course_status,
+      learner.start_date,
+      learner.end_date,
     ]);
 
     const csvContent = [
@@ -175,7 +127,7 @@ export function UsersDataTable() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `users_export_${new Date().toISOString().split("T")[0]}.csv`;
+    link.download = `assigned_learners_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
     toast.success("CSV exported successfully");
@@ -185,59 +137,77 @@ export function UsersDataTable() {
     toast.info("PDF export functionality will be implemented");
   };
 
-  const columns: ColumnDef<User>[] = useMemo(
+  const formatDate = (dateString: string) => {
+    if (!dateString || dateString === "N/A") return "N/A";
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const columns: ColumnDef<AssignedLearner>[] = useMemo(
     () => [
       {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: "learner_name",
+        header: "Learner Name",
         cell: ({ row }) => {
-          const user = row.original;
-          return `${user.first_name} ${user.last_name}`;
+          const learner = row.original;
+          return `${learner.first_name} ${learner.last_name}`;
         },
       },
       {
-        accessorKey: "user_name",
-        header: "Username",
-      },
-      {
-        accessorKey: "email",
-        header: "Email",
-      },
-      {
-        accessorKey: "mobile",
-        header: "Mobile",
-      },
-      {
-        accessorKey: "roles",
-        header: "Roles",
+        accessorKey: "portfolio",
+        header: "Portfolio",
         cell: ({ row }) => {
-          const roles = row.original.roles;
-          return roles.join(", ");
-        },
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => {
-          const status = row.original.status;
+          const learner = row.original;
           return (
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                status === "active"
-                  ? "bg-green-100 text-green-800"
-                  : "bg-gray-100 text-gray-800"
-              }`}
+            <Link
+              href={`/learner-profile?learner_id=${learner.learner_id}`}
+              className="inline-flex items-center justify-center"
             >
-              {status}
-            </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                aria-label={`View portfolio for ${learner.first_name} ${learner.last_name}`}
+              >
+                <Folder className="h-4 w-4" />
+              </Button>
+            </Link>
           );
         },
+      },
+      {
+        accessorKey: "course_name",
+        header: "Course Name",
+        cell: ({ row }) => row.original.course_name,
+      },
+      {
+        accessorKey: "course_status",
+        header: "Course Status",
+        cell: ({ row }) => row.original.course_status,
+      },
+      {
+        accessorKey: "start_date",
+        header: "Start Date",
+        cell: ({ row }) => formatDate(row.original.start_date),
+      },
+      {
+        accessorKey: "end_date",
+        header: "End Date",
+        cell: ({ row }) => formatDate(row.original.end_date),
       },
       {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-          const user = row.original;
+          const learner = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -247,16 +217,12 @@ export function UsersDataTable() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEdit(user)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleDeleteClick(user)}
+                  onClick={() => handleRemoveClick(learner)}
                   className="text-destructive"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  Remove
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -264,11 +230,11 @@ export function UsersDataTable() {
         },
       },
     ],
-    [handleEdit]
+    []
   );
 
   const table = useReactTable({
-    data: data?.data || [],
+    data: data || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -284,8 +250,11 @@ export function UsersDataTable() {
       columnVisibility,
       globalFilter,
     },
-    manualPagination: true,
-    pageCount: data?.meta_data?.pages || 0,
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
   });
 
   if (isLoading) {
@@ -310,27 +279,14 @@ export function UsersDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder="Search by name or course..."
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
               className="pl-9"
             />
           </div>
-          <Select value={roleFilter} onValueChange={setRoleFilter}>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Filter by role" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Roles</SelectItem>
-              {roles.map((role) => (
-                <SelectItem key={role.value} value={role.label}>
-                  {role.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {(globalFilter || (roleFilter && roleFilter !== "all")) && (
+          {globalFilter && (
             <Button
               variant="ghost"
               size="sm"
@@ -358,10 +314,6 @@ export function UsersDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddNew} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New
-          </Button>
         </div>
       </div>
 
@@ -409,7 +361,7 @@ export function UsersDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No assigned learners.
                 </TableCell>
               </TableRow>
             )}
@@ -418,46 +370,39 @@ export function UsersDataTable() {
       </div>
 
       {/* Pagination */}
-      {data?.meta_data && (
-        <DataTablePagination
-          table={table}
-          manualPagination={true}
-          currentPage={data.meta_data.page}
-          totalPages={data.meta_data.pages}
-          totalItems={data.meta_data.items}
-          pageSize={data.meta_data.page_size}
-          onPageChange={handlePageChange}
-          onPageSizeChange={(newPageSize) => {
-            setFilters((prev) => ({
-              ...prev,
-              page: 1,
-              page_size: newPageSize,
-            }));
-          }}
-        />
-      )}
+      <DataTablePagination
+        table={table}
+        manualPagination={false}
+        currentPage={table.getState().pagination.pageIndex + 1}
+        totalPages={table.getPageCount()}
+        totalItems={data.length}
+        pageSize={table.getState().pagination.pageSize}
+        onPageChange={(page) => table.setPageIndex(page - 1)}
+        onPageSizeChange={(newPageSize) => {
+          table.setPageSize(newPageSize);
+        }}
+      />
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      {/* Remove Confirmation Dialog */}
+      <AlertDialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Remove Learner?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the user{" "}
+              Are you sure you want to remove{" "}
               <strong>
-                {userToDelete?.first_name} {userToDelete?.last_name}
-              </strong>
-              .
+                {learnerToRemove?.first_name} {learnerToRemove?.last_name}
+              </strong>{" "}
+              from this EQA assignment? This will unassign the learner from this EQA user.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={handleDeleteConfirm}
-              disabled={isDeleting}
+              onClick={handleRemoveConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              Remove
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -465,4 +410,3 @@ export function UsersDataTable() {
     </div>
   );
 }
-

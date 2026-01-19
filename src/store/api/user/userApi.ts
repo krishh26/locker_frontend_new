@@ -101,6 +101,20 @@ export const userApi = createApi({
         return response;
       },
     }),
+    getUser: builder.query<UserResponse, void>({
+      query: () => ({
+        url: "/user/get",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+      transformResponse: (response: UserResponse) => {
+        // Check if data exists instead of status, as API may return status: false even on success
+        if (!response?.data) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -111,5 +125,7 @@ export const {
   useUpdateUserMutation,
   useDeleteUserMutation,
   useChangeUserRoleMutation,
+  useGetUserQuery,
+  useLazyGetUserQuery,
 } = userApi;
 

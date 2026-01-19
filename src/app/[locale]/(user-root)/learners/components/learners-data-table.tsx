@@ -94,7 +94,6 @@ const statusOptions = [
 
 export function LearnersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
-  console.log(user);
   const userRole = user?.role;
   const isAdmin = userRole === "Admin";
   const isTrainer = userRole === "Trainer";
@@ -148,9 +147,19 @@ export function LearnersDataTable() {
       };
     }
     if (isEmployer) {
+      // Extract employer IDs from assigned_employers array
+      const assignedEmployers = user?.assigned_employers;
+      const employerIds: number[] = Array.isArray(assignedEmployers) && assignedEmployers.length > 0
+        ? assignedEmployers
+            .map((employer: { employer_id: number }) => employer.employer_id)
+            .filter((id): id is number => typeof id === 'number' && !isNaN(id))
+        : [];
+      // Pass all employer IDs as comma-separated string
       return {
         ...baseFilters,
-        employer_id: user?.user_id ? Number(user.user_id) : undefined,
+        employer_ids: employerIds.length > 0 
+          ? (employerIds.length === 1 ? employerIds[0] : employerIds.join(',') as unknown as string)
+          : undefined,
       };
     }
     return baseFilters;
@@ -161,6 +170,7 @@ export function LearnersDataTable() {
     user?.id,
     user?.role,
     user?.user_id,
+    user?.assigned_employers,
     filters.page,
     filters.page_size,
     filters.keyword,
@@ -168,7 +178,6 @@ export function LearnersDataTable() {
     filters.status,
     filters.employer_id,
   ]);
-
   // Single unified API query for all roles with meta=true (handled by API)
   const { data, isLoading, refetch } = useGetLearnersListQuery(unifiedFilters, {
     skip: (!isAdmin && !isTrainer && !isEmployer) || 

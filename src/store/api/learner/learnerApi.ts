@@ -39,6 +39,7 @@ export const learnerApi = createApi({
           keyword = "",
           course_id = "",
           employer_id = "",
+          employer_ids = "",
           status = "",
           user_id = "",
           role = "",
@@ -61,6 +62,9 @@ export const learnerApi = createApi({
         }
         if (role) {
           url += `&role=${encodeURIComponent(role)}`;
+        }
+        if (employer_ids) {
+          url += `&employer_ids=${encodeURIComponent(employer_ids)}`;
         }
         return url;
       },

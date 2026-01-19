@@ -14,11 +14,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useLoginMutation } from "@/store/api/auth/authApi"
+import type { AuthUser } from "@/store/api/auth/types"
 import { useLazyGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi"
+import { useLazyGetUserQuery } from "@/store/api/user/userApi"
 import {
   setAuthError,
   setCredentials,
   setLearnerData,
+  updateUser,
 } from "@/store/slices/authSlice"
 import type { RootState } from "@/store"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
@@ -44,6 +47,7 @@ export function LoginForm({
   const authError = useAppSelector((state: RootState) => state.auth.error)
   const [login, { isLoading: isLoginLoading }] = useLoginMutation()
   const [getLearnerDetails] = useLazyGetLearnerDetailsQuery()
+  const [getUser, { isLoading: isGettingUser }] = useLazyGetUserQuery()
   const [showPassword, setShowPassword] = useState(false)
 
   const t = useTranslations("auth")
@@ -56,7 +60,7 @@ export function LoginForm({
     },
   })
 
-  const isSubmitting = form.formState.isSubmitting || isLoginLoading
+  const isSubmitting = form.formState.isSubmitting || isLoginLoading || isGettingUser
 
   const onSubmit = form.handleSubmit(async (values) => {
     dispatch(setAuthError(null))
@@ -83,12 +87,38 @@ export function LoginForm({
           // Log error but don't block login
           console.error("Failed to fetch learner details:", learnerErr)
         }
+        router.push("/dashboard")
       } else {
         // Clear learner data for non-learner users
         dispatch(setLearnerData(null))
+        
+        // Trigger user fetch - the query will run automatically via useEffect
+        const userResponse = await getUser().unwrap()
+        const userData = userResponse.data
+        const authUser: AuthUser = {
+          id: userData.user_id?.toString(),
+          email: userData.email,
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          role: userData.roles?.[0],
+          roles: userData.roles,
+          // Include all other user data
+          user_id: userData.user_id,
+          user_name: userData.user_name,
+          mobile: userData.mobile,
+          avatar: userData.avatar,
+          password_changed: userData.password_changed,
+          time_zone: userData.time_zone,
+          status: userData.status,
+          line_manager: userData.line_manager,
+          number_of_active_learners: userData.number_of_active_learners,
+          assigned_employers: userData.assigned_employers,
+          userEmployers: userData.userEmployers,
+        }
+        dispatch(updateUser(authUser))
+        router.push("/dashboard")
       }
 
-      router.push("/dashboard")
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err)
       const message = extractBaseQueryErrorMessage(err as FetchBaseQueryError)

@@ -80,6 +80,7 @@ export interface LearnerFilters {
   keyword?: string;
   course_id?: number;
   employer_id?: number;
+  employer_ids?: string | number;
   status?: string;
   user_id?: number;
   role?: string;

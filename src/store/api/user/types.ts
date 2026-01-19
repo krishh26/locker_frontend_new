@@ -38,11 +38,22 @@ export interface User {
   created_at: string;
   updated_at: string;
   line_manager: LineManager | null;
-  number_of_active_learners: number;
-  assigned_employers: [{
+  number_of_active_learners?: number;
+  assigned_employers?: Array<{
     employer_id: number;
     employer_name: string;
-  }];
+  }>;
+  userEmployers?: Array<{
+    id: number;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    employer: {
+      employer_id: number;
+      employer_name: string;
+      [key: string]: unknown;
+    };
+  }>;
 }
 
 export interface UserListResponse {

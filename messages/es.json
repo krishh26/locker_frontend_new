@@ -91,6 +91,7 @@
     "tryAgain": "Por favor, inténtalo de nuevo"
   },
   "dashboard": {
-    "adminDashboard": "Panel de administración"
+    "adminDashboard": "Panel de administración",
+    "dashboard": "Panel de control"
   }
 }

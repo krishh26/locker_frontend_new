@@ -65,7 +65,7 @@ const createUserSchema = z
     time_zone: z.string().min(1, "Timezone is required"),
     roles: z.array(z.string()).min(1, "At least one role is required"),
     line_manager_id: z.string().optional(),
-    employer_ids: z.array(z.string()).optional(),
+    employer_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -97,7 +97,7 @@ const updateUserSchema = z
     time_zone: z.string().min(1, "Timezone is required").optional(),
     roles: z.array(z.string()).min(1, "At least one role is required").optional(),
     line_manager_id: z.string().optional(),
-    employer_ids: z.array(z.string()).optional(),
+    employer_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -178,10 +178,10 @@ export function UsersForm({ user }: UsersFormProps) {
         user_name: user.user_name,
         email: user.email,
         mobile: user.mobile,
-        time_zone: user.time_zone,
+        time_zone: user.time_zone || "UTC",
         roles: user.roles,
         line_manager_id: user.line_manager?.user_id?.toString() || "",
-        employer_ids: [],
+        employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -439,9 +439,7 @@ export function UsersForm({ user }: UsersFormProps) {
         toast.success("User updated successfully");
       } else {
         const createData = values as CreateUserFormValues;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { confirmPassword, ...userData } = createData;
-        const result = await createUser(userData as CreateUserRequest).unwrap();
+        const result = await createUser(createData as CreateUserRequest).unwrap();
         createdOrUpdatedUserId = result.data.user_id;
         toast.success("User created successfully");
       }
@@ -722,7 +720,7 @@ export function UsersForm({ user }: UsersFormProps) {
             control={form.control}
             render={({ field }) => (
               <>
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select value={field.value || "UTC"} onValueChange={field.onChange}>
                   <SelectTrigger
                     id="time_zone"
                     className={form.formState.errors.time_zone ? "w-full border-destructive" : "w-full"}
@@ -815,11 +813,11 @@ export function UsersForm({ user }: UsersFormProps) {
               const selectedOptions: Option[] =
                 field.value?.map((id) => {
                   const employer = employersData?.data?.find(
-                    (e) => e.employer_id.toString() === id
+                    (e) => e.employer_id === Number(id)
                   );
                   return {
-                    value: id,
-                    label: employer?.employer_name || id,
+                    value: id.toString(),
+                    label: employer?.employer_name || id.toString(),
                   };
                 }) || [];
 
@@ -834,11 +832,10 @@ export function UsersForm({ user }: UsersFormProps) {
                         : "Select employers"
                     }
                     onChange={(options: Option[]) => {
-                      const ids = options.map((opt: Option) => opt.value);
+                      const ids = options.map((opt: Option) => Number(opt.value));
                       field.onChange(ids);
                     }}
                     disabled={isLoadingEmployers}
-                    direction="up"
                     loadingIndicator={
                       <div className="flex items-center justify-center p-2">
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -854,6 +851,7 @@ export function UsersForm({ user }: UsersFormProps) {
                         ? "border-destructive"
                         : ""
                     }`}
+                    direction="up"
                   />
                   {form.formState.errors.employer_ids && (
                     <p className="text-sm text-destructive">

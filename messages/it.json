@@ -90,6 +90,7 @@
     "tryAgain": "Riprova"
   },
   "dashboard": {
-    "adminDashboard": "Dashboard amministratore"
+    "adminDashboard": "Dashboard amministratore",
+    "dashboard": "Dashboard"
   }
 }

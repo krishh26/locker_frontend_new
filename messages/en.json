@@ -43,7 +43,7 @@
     "courses": "Courses",
     "resources": "Resources",
     "calendar": "Calendar",
-    "chat": "Chat",
+    "chat": "Chat", 
     "mail": "Mail",
     "tasks": "Tasks",
     "support": "Support"
@@ -91,6 +91,7 @@
     "tryAgain": "Please try again"
   },
   "dashboard": {
-    "adminDashboard": "Admin Dashboard"
+    "adminDashboard": "Admin Dashboard",
+    "dashboard": "Dashboard"
   }
 }

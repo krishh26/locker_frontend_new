@@ -90,6 +90,7 @@
     "tryAgain": "Veuillez réessayer"
   },
   "dashboard": {
-    "adminDashboard": "Tableau de bord administrateur"
+    "adminDashboard": "Tableau de bord administrateur",
+    "dashboard": "Tableau de bord"
   }
 }

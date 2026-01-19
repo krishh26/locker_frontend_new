@@ -90,6 +90,7 @@
     "tryAgain": "Bitte versuchen Sie es erneut"
   },
   "dashboard": {
-    "adminDashboard": "Beheerdashboard"
+    "adminDashboard": "Beheerdashboard",
+    "dashboard": "Dashboard"
   }
 }

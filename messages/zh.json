@@ -90,6 +90,7 @@
     "tryAgain": "请重试"
   },
   "dashboard": {
-    "adminDashboard": "管理员仪表板"
+    "adminDashboard": "管理员仪表板",
+    "dashboard": "仪表板"
   }
 }

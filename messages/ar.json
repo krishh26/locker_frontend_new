@@ -91,6 +91,7 @@
     "tryAgain": "يرجى المحاولة مرة أخرى"
   },
   "dashboard": {
-    "adminDashboard": "لوحة التحكم للمشرف"
+    "adminDashboard": "لوحة التحكم للمشرف",
+    "dashboard": "لوحة التحكم"
   }
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "@/i18n/navigation"
 import {
   EllipsisVertical,
   LogOut,
@@ -35,6 +35,7 @@ import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import { toast } from "sonner"
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
+import { LanguageSwitcher } from "./language-switcher"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -205,6 +206,7 @@ export function NavUser() {
               </DropdownMenuSub>
             )}
             <DropdownMenuSeparator />
+            <LanguageSwitcher />
             <DropdownMenuItem asChild className="cursor-pointer">
               <Link href="/auth/sign-in">
                 <LogOut className="mr-1" />

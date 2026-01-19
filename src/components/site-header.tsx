@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { Link } from "@/i18n/navigation"
+import { useRouter } from "@/i18n/navigation"
 import { LogOut, UserCog, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -23,6 +23,7 @@ import { clearCredentials, setCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
+import { LanguageSwitcher } from "./language-switcher"
 
 export function SiteHeader() {
   const [searchOpen, setSearchOpen] = React.useState(false)
@@ -119,38 +120,9 @@ export function SiteHeader() {
             <SearchTrigger onClick={() => setSearchOpen(true)} />
           </div>
           <div className="ml-auto flex items-center gap-2">
-            {/* <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-              <a
-                href="https://shadcnstore.com/blocks"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="dark:text-foreground"
-              >
-                Blocks
-              </a>
-            </Button> */}
-            {/* <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-              <a
-                href="/"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="dark:text-foreground"
-              >
-                Landing Page
-              </a>
-            </Button> */}
-            {/* <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-              <a
-                href="https://github.com/silicondeck/shadcn-dashboard-landing-template"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="dark:text-foreground"
-              >
-                GitHub
-              </a>
-            </Button> */}
-            <ModeToggle />
+            <ModeToggle variant="outline" />
             {isAuthenticated && <NotificationBell />}
+            <LanguageSwitcher />
             {/* Change Role - Only show for non-Learner users */}
             {isAuthenticated &&
               user &&

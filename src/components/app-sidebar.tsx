@@ -27,7 +27,7 @@ import {
   Heart,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import * as React from 'react'
 
 import { NavMain } from '@/components/nav-main'

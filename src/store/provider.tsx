@@ -1,14 +1,14 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Cookies from "js-cookie"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import { persistStore } from "redux-persist"
 
-import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY } from "@/store/api/auth/api"
+import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY, buildUser } from "@/store/api/auth/api"
 import { setAuthError, setCredentials } from "@/store/slices/authSlice"
-import type { AuthUser, LoginResult } from "@/store/api/auth/types"
+import type { LoginResult } from "@/store/api/auth/types"
 
 import { makeStore } from "./index"
 import type { AppStore } from "./index"
@@ -20,33 +20,70 @@ type ReduxProviderProps = {
 export function ReduxProvider({ children }: ReduxProviderProps) {
   const storeRef = useRef<AppStore | null>(null)
   const persistorRef = useRef<ReturnType<typeof persistStore> | null>(null)
+  const [isRehydrated, setIsRehydrated] = useState(false)
 
   if (!storeRef.current) {
     storeRef.current = makeStore()
     persistorRef.current = persistStore(storeRef.current)
+  }
 
-    if (typeof window !== "undefined") {
-      try {
-        const storedToken = Cookies.get(TOKEN_COOKIE_KEY)
-        const storedUserRaw = Cookies.get(USER_COOKIE_KEY)
+  // Restore from cookies after redux-persist rehydration completes
+  // This ensures cookies take precedence over localStorage
+  useEffect(() => {
+    if (typeof window === "undefined" || !isRehydrated || !storeRef.current) {
+      return
+    }
 
-        if (storedToken && storedUserRaw) {
-          const storedUser = JSON.parse(storedUserRaw) as AuthUser
+    try {
+      const storedToken = Cookies.get(TOKEN_COOKIE_KEY)
+      const storedUserRaw = Cookies.get(USER_COOKIE_KEY)
+
+      if (storedToken && storedUserRaw) {
+        // Parse the raw cookie data
+        const parsedCookie = JSON.parse(storedUserRaw) as Record<string, unknown>
+        
+        // Use buildUser to properly transform cookie fields (user_id -> id, first_name -> firstName, etc.)
+        const transformedUser = buildUser(parsedCookie)
+        
+        // Ensure id is a string (user_id from cookie might be a number)
+        if (transformedUser.id !== undefined) {
+          transformedUser.id = String(transformedUser.id)
+        }
+        
+        // Check if we need to update (cookies might be more recent than localStorage)
+        const currentState = storeRef.current.getState()
+        const currentToken = currentState.auth.token
+        const currentUser = currentState.auth.user
+
+        // Only update if cookies differ or if store is empty
+        // Convert IDs to strings for comparison to handle number/string differences
+        const currentUserId = currentUser?.id?.toString()
+        const transformedUserId = transformedUser.id?.toString()
+        
+        if (
+          !currentToken ||
+          !currentUser ||
+          currentToken !== storedToken ||
+          currentUserId !== transformedUserId
+        ) {
           const result: LoginResult = {
             token: storedToken,
-            user: storedUser,
-            passwordChanged: true,
-            raw: { token: storedToken, user: storedUser },
+            user: transformedUser,
+            passwordChanged: parsedCookie.password_changed as boolean ?? true,
+            raw: { token: storedToken, user: parsedCookie },
           }
           storeRef.current.dispatch(setCredentials(result))
         }
-      } catch {
+      }
+    } catch (error) {
+      console.error("Failed to restore session from cookies:", error)
+      if (storeRef.current) {
         storeRef.current.dispatch(
           setAuthError("Failed to restore your previous session."),
         )
       }
     }
-  }
+  }, [isRehydrated])
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -96,7 +133,14 @@ export function ReduxProvider({ children }: ReduxProviderProps) {
 
   return (
     <Provider store={storeRef.current}>
-      <PersistGate loading={null} persistor={persistorRef.current}>
+      <PersistGate
+        loading={null}
+        persistor={persistorRef.current!}
+        onBeforeLift={() => {
+          // Mark as rehydrated so we can restore from cookies
+          setIsRehydrated(true)
+        }}
+      >
         {children}
       </PersistGate>
     </Provider>

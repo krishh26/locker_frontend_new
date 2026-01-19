@@ -60,6 +60,20 @@ export interface UserFilters {
   role?: string;
 }
 
+export interface AssignedLearner {
+  learner_id: number;
+  first_name: string;
+  last_name: string;
+  user_name: string;
+  email: string;
+  course_id: number;
+  course_name: string;
+  user_course_id: number;
+  course_status: string;
+  start_date: string;
+  end_date: string;
+}
+
 export interface CreateUserRequest {
   first_name: string;
   last_name: string;
@@ -71,6 +85,7 @@ export interface CreateUserRequest {
   time_zone: string;
   roles: string[];
   line_manager_id?: string;
+  assigned_learner_ids?: number[];
 }
 
 export interface UpdateUserRequest {
@@ -82,6 +97,7 @@ export interface UpdateUserRequest {
   time_zone?: string;
   roles?: string[];
   line_manager_id?: string;
+  assigned_learner_ids?: number[];
 }
 
 export interface UserResponse {

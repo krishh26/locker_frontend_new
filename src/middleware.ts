@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import createMiddleware from 'next-intl/middleware';
 
 import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY } from "@/store/api/auth/api"
 import { getAllowedRolesForPath } from "@/config/route-access"
 import { isRoleAllowed } from "@/config/auth-roles"
+import { routing } from "@/i18n/navigation"
+
+// Create the i18n middleware using the routing configuration
+const intlMiddleware = createMiddleware(routing)
 
 // Protected routes - all routes except public ones need authentication
 // The route-access.ts file defines which roles can access which routes
@@ -40,6 +45,7 @@ const PROTECTED_PATH_PREFIXES = [
 const AUTH_PATH_PREFIXES = ["/auth"]
 const PUBLIC_PATH_PREFIXES = ["/"]
 
+// Since locale is not in path, pathname is already clean
 function isProtectedRoute(pathname: string) {
   return PROTECTED_PATH_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
@@ -73,18 +79,33 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // First, let i18n middleware handle locale routing
+  // With localePrefix: 'never', it won't add locale to URLs but will handle locale detection
+  const response = intlMiddleware(request)
+  
+  // If intl middleware redirected, return that response
+  if (response.status === 307 || response.status === 308) {
+    return response
+  }
+
+  // Handle auth redirects (no locale in URL)
   if (token && isPublicRoute(pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   if (token && isAuthRoute(pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  // Let auth routes through if no token (user needs to sign in)
+  // Don't redirect, just let the response through
+  if (!token && isAuthRoute(pathname)) {
+    return response
   }
 
   if (!token && isProtectedRoute(pathname)) {
-    const redirectUrl = new URL("/auth/sign-in", request.url)
+    const redirectUrl = new URL('/auth/sign-in', request.url)
     redirectUrl.searchParams.set("from", pathname)
-
     return NextResponse.redirect(redirectUrl)
   }
 
@@ -94,11 +115,11 @@ export function middleware(request: NextRequest) {
     // Check if user's role is allowed for this route
     // Admin role is included in all learner routes via route-access.ts
     if (!isRoleAllowed(userRole, allowedRoles)) {
-      return NextResponse.redirect(new URL("/errors/unauthorized", request.url))
+      return NextResponse.redirect(new URL('/errors/unauthorized', request.url))
     }
   }
 
-  return NextResponse.next()
+  return response
 }
 
 // See "Matching Paths" below to learn more

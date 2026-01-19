@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
-import { assessmentMethods, qaStatuses } from "@/app/(admin-root)/qa-sample-plan/utils/constants";
+import { assessmentMethods, qaStatuses } from "@/app/[locale]/(admin-root)/qa-sample-plan/utils/constants";
 
 export interface Plan {
   id: string;

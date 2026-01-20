@@ -64,11 +64,10 @@ export interface LearnerListItem {
   course?: LearnerCourse[];
   comment?: string;
   status?: string;
-  employer_id?: number;
   funding_body?: string;
   national_ins_no?: string;
   job_title?: string;
-  employer?: {
+  employer_id?: {
     employer_id: number;
     employer_name: string;
   };
@@ -212,3 +211,41 @@ export interface UserCourseResponse {
   error?: string;
 }
 
+export interface AssignEqaToCourseRequest {
+  course_id: number;
+  eqa_id: number;
+  learner_ids: number[];
+  action: "assign" | "unassign";
+}
+
+export interface AssignEqaToCourseResponse {
+  status: boolean;
+  message?: string;
+  error?: string;
+}
+
+export interface AssignedLearnerResponse {
+  status: boolean;
+  message?: string;
+  data?: Array<{
+    user_course_id: number;
+    course: {
+      course_id: number;
+      course_name: string;
+      [key: string]: unknown;
+    };
+    start_date: string;
+    end_date: string;
+    course_status: string;
+    learner_id: {
+      learner_id: number;
+      first_name: string;
+      last_name: string;
+      user_name: string;
+      email: string;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  }>;
+  error?: string;
+}

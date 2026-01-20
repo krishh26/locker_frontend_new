@@ -131,7 +131,7 @@ const routeRoleRules: RouteRule[] = [
   // Learner pages
   {
     pattern: /^\/cpd(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer", "IQA"),
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer"),
   },
   {
     pattern: /^\/forum(?:\/|$)/,
@@ -180,43 +180,43 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/evidence-library(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/learning-plan(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/course-resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/learners-documents-to-sign(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/time-log(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/choose-units(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/course-details(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
     pattern: /^\/chat(?:\/|$)/,

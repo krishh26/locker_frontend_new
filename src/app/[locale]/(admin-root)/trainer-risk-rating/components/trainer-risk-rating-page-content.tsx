@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { FileBarChart, User as UserIcon } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { useTranslations } from "next-intl";
 import { TrainerList } from "./trainer-list";
 import { RiskSettingsSection } from "./risk-settings-section";
 import { CoursesTable } from "./courses-table";
@@ -37,6 +38,7 @@ const assessmentMethods = [
 ] as const;
 
 export function TrainerRiskRatingPageContent() {
+  const t = useTranslations("trainerRiskRating");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [comments, setComments] = useState<{ [key: number]: string }>({});
@@ -124,8 +126,8 @@ export function TrainerRiskRatingPageContent() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Trainer Risk Rating"
-        subtitle="Manage risk ratings for trainers, courses, and assessment methods"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={FileBarChart}
       />
 
@@ -221,9 +223,9 @@ export function TrainerRiskRatingPageContent() {
               <CardContent className="p-12">
                 <div className="flex flex-col items-center justify-center text-center">
                   <UserIcon className="h-16 w-16 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Select a Trainer</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t("selectTrainer")}</h3>
                   <p className="text-muted-foreground">
-                    Select a trainer from the list to view their courses and assessment methods
+                    {t("selectTrainerDescription")}
                   </p>
                 </div>
               </CardContent>

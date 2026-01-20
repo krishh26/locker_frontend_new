@@ -3,14 +3,17 @@
 import { FileSignature } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { AwaitingSignatureDataTable } from "./awaiting-signature-data-table";
+import { useTranslations } from "next-intl";
 
 export function AwaitingSignaturePageContent() {
+  const t = useTranslations("awaitingSignature");
+  
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Awaiting Signature"
-        subtitle="Files and documents awaiting signatures from Trainer and learners"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={FileSignature}
       />
 

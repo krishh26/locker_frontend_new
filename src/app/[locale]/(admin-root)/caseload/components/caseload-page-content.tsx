@@ -10,8 +10,10 @@ import { useGetCaseloadListQuery } from "@/store/api/caseload/caseloadApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function CaseloadPageContent() {
+  const t = useTranslations("caseload");
   const [filterName, setFilterName] = useState("");
   const [page, setPage] = useState(1);
   const rowsPerPage = 6;
@@ -31,8 +33,8 @@ export function CaseloadPageContent() {
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Caseload Management"
-        subtitle="Manage and view line managers and their assigned users"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={Users}
       />
 
@@ -41,7 +43,7 @@ export function CaseloadPageContent() {
         <div className="flex-1 w-full sm:max-w-md">
           <div className="relative">
             <Input
-              placeholder="Search line managers by name or email..."
+              placeholder={t("searchPlaceholder")}
               value={filterName}
               onChange={(e) => {
                 setPage(1);
@@ -60,7 +62,7 @@ export function CaseloadPageContent() {
             disabled={isLoading}
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
-            Refresh
+            {t("refresh")}
           </Button>
           {filterName && (
             <Button
@@ -71,7 +73,7 @@ export function CaseloadPageContent() {
                 setPage(1);
               }}
             >
-              Clear
+              {t("clear")}
             </Button>
           )}
         </div>
@@ -99,7 +101,7 @@ export function CaseloadPageContent() {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Failed to load caseload data. Please try again.
+            {t("failedToLoad")}
           </AlertDescription>
         </Alert>
       )}
@@ -118,11 +120,11 @@ export function CaseloadPageContent() {
       {!isLoading && !isError && lineManagers.length === 0 && (
         <div className="border rounded-lg p-12 text-center">
           <Users className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No Line Managers Found</h3>
+          <h3 className="text-lg font-semibold mb-2">{t("noLineManagersFound")}</h3>
           <p className="text-muted-foreground">
             {filterName
-              ? `No line managers match "${filterName}"`
-              : "There are no line managers in the system yet."}
+              ? `${t("noLineManagersMatch")} "${filterName}"`
+              : t("noLineManagersInSystem")}
           </p>
         </div>
       )}

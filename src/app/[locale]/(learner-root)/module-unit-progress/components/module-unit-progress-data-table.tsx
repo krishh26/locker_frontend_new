@@ -141,7 +141,6 @@ type UnitWithSubUnits = {
 };
 
 export function ModuleUnitProgressDataTable() {
-  const leaner = useAppSelector((state) => state.auth.learner);
   const courses = useAppSelector((state) => state.auth.courses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(currentCourseId ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null : null);

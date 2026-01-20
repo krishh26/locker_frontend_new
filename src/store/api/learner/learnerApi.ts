@@ -12,6 +12,9 @@ import type {
   CreateUserCourseRequest,
   UpdateUserCourseRequest,
   UserCourseResponse,
+  AssignEqaToCourseRequest,
+  AssignEqaToCourseResponse,
+  AssignedLearnerResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -231,6 +234,33 @@ export const learnerApi = createApi({
         return response;
       },
     }),
+    assignEqaToCourse: builder.mutation<
+      AssignEqaToCourseResponse,
+      AssignEqaToCourseRequest
+    >({
+      query: (body) => ({
+        url: "/course/user/assign-eqa",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Learner"],
+      transformResponse: (response: AssignEqaToCourseResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    getEqaAssignedLearners: builder.query<AssignedLearnerResponse, number>({
+      query: (eqaId) => `/course/eqa/${eqaId}/assigned-learners`,
+      providesTags: ["Learner"],
+      transformResponse: (response: AssignedLearnerResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -248,5 +278,7 @@ export const {
   useCreateUserCourseMutation,
   useUpdateUserCourseMutation,
   useDeleteUserCourseMutation,
+  useAssignEqaToCourseMutation,
+  useGetEqaAssignedLearnersQuery,
 } = learnerApi;
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
@@ -26,19 +27,20 @@ interface UnassignedLearner extends LearnerListItem {
 
 interface UnassignedLearnersTableProps {
   data: UnassignedLearner[];
-  selectedIds: Set<number>;
-  onSelectionChange: (ids: Set<number>) => void;
+  selectedLearners: Set<LearnerListItem>;
+  onSelectionChange: (learners: Set<LearnerListItem>) => void;
   isLoading?: boolean;
   currentEqaId?: number;
 }
 
 export function UnassignedLearnersTable({
   data,
-  selectedIds,
+  selectedLearners,
   onSelectionChange,
   isLoading = false,
   currentEqaId,
 }: UnassignedLearnersTableProps) {
+  const t = useTranslations("users.learnerSelection");
   // Filter out learners already assigned to this EQA (when editing)
   const filteredData = useMemo(() => {
     if (!currentEqaId) return data;
@@ -53,36 +55,55 @@ export function UnassignedLearnersTable({
     });
   }, [data, currentEqaId]);
 
+  // Create a Map for quick lookup by learner_id
+  const selectedLearnersMap = useMemo(() => {
+    const map = new Map<number, LearnerListItem>();
+    selectedLearners.forEach((learner) => {
+      map.set(learner.learner_id, learner);
+    });
+    return map;
+  }, [selectedLearners]);
+
   const allSelected = useMemo(() => {
     if (filteredData.length === 0) return false;
-    return filteredData.every((item) => selectedIds.has(item.learner_id));
-  }, [filteredData, selectedIds]);
+    return filteredData.every((item) => selectedLearnersMap.has(item.learner_id));
+  }, [filteredData, selectedLearnersMap]);
 
   const someSelected = useMemo(() => {
     if (filteredData.length === 0) return false;
-    return filteredData.some((item) => selectedIds.has(item.learner_id));
-  }, [filteredData, selectedIds]);
+    return filteredData.some((item) => selectedLearnersMap.has(item.learner_id));
+  }, [filteredData, selectedLearnersMap]);
 
   const handleSelectAll = (checked: boolean) => {
-    const newSelection = new Set(selectedIds);
+    const newSelection = new Set(selectedLearners);
     if (checked) {
       filteredData.forEach((item) => {
-        newSelection.add(item.learner_id);
+        newSelection.add(item);
       });
     } else {
-      filteredData.forEach((item) => {
-        newSelection.delete(item.learner_id);
+      // Remove learners that are in filteredData
+      const filteredIds = new Set(filteredData.map((item) => item.learner_id));
+      selectedLearners.forEach((learner) => {
+        if (filteredIds.has(learner.learner_id)) {
+          newSelection.delete(learner);
+        }
       });
     }
     onSelectionChange(newSelection);
   };
 
-  const handleSelectItem = (id: number, checked: boolean) => {
-    const newSelection = new Set(selectedIds);
+  const handleSelectItem = (learner: UnassignedLearner, checked: boolean) => {
+    const newSelection = new Set(selectedLearners);
     if (checked) {
-      newSelection.add(id);
+      newSelection.add(learner);
     } else {
-      newSelection.delete(id);
+      // Find and remove the learner object from the set by ID
+      const learnerToRemove = Array.from(selectedLearners).find(
+        (selectedLearner) => selectedLearner.learner_id === learner.learner_id
+      );
+      if (learnerToRemove) {
+        newSelection.delete(learnerToRemove);
+      }
     }
     onSelectionChange(newSelection);
   };
@@ -129,11 +150,11 @@ export function UnassignedLearnersTable({
               <TableHead className="w-12">
                 <Skeleton className="h-4 w-4" />
               </TableHead>
-              <TableHead>Learner Name</TableHead>
-              <TableHead>Portfolio</TableHead>
-              <TableHead>Course Status</TableHead>
-              <TableHead>Start Date</TableHead>
-              <TableHead>End Date</TableHead>
+              <TableHead>{t("learnerName")}</TableHead>
+              <TableHead>{t("portfolio")}</TableHead>
+              <TableHead>{t("courseStatus")}</TableHead>
+              <TableHead>{t("startDate")}</TableHead>
+              <TableHead>{t("endDate")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -168,7 +189,7 @@ export function UnassignedLearnersTable({
   if (filteredData.length === 0) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-sm text-muted-foreground">No unassigned learners found</div>
+        <div className="text-sm text-muted-foreground">{t("noUnassignedLearners")}</div>
       </div>
     );
   }
@@ -182,22 +203,22 @@ export function UnassignedLearnersTable({
               <Checkbox
                 checked={allSelected}
                 onCheckedChange={handleSelectAll}
-                aria-label="Select all"
+                aria-label={t("selectAll")}
                 className={
                   someSelected && !allSelected ? "data-[state=checked]:bg-primary/50" : ""
                 }
               />
             </TableHead>
-            <TableHead>Learner Name</TableHead>
-            <TableHead>Portfolio</TableHead>
-            <TableHead>Course Status</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
+            <TableHead>{t("learnerName")}</TableHead>
+            <TableHead>{t("portfolio")}</TableHead>
+            <TableHead>{t("courseStatus")}</TableHead>
+            <TableHead>{t("startDate")}</TableHead>
+            <TableHead>{t("endDate")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filteredData.map((learner) => {
-            const isSelected = selectedIds.has(learner.learner_id);
+            const isSelected = selectedLearnersMap.has(learner.learner_id);
             const learnerName = `${learner.first_name} ${learner.last_name}`.trim() || learner.user_name;
             const courseInfo = getLearnerCourseInfo(learner);
 
@@ -207,7 +228,7 @@ export function UnassignedLearnersTable({
                   <Checkbox
                     checked={isSelected}
                     onCheckedChange={(checked) =>
-                      handleSelectItem(learner.learner_id, checked === true)
+                      handleSelectItem(learner, checked === true)
                     }
                     aria-label={`Select ${learnerName}`}
                   />
@@ -222,7 +243,7 @@ export function UnassignedLearnersTable({
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      aria-label={`View portfolio for ${learnerName}`}
+                      aria-label={`${t("viewPortfolio")} ${learnerName}`}
                     >
                       <Folder className="h-4 w-4" />
                     </Button>

@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCourseType } from "@/store/slices/courseBuilderSlice";
 import {
   type ColumnDef,
@@ -85,6 +85,10 @@ const createCourseTypes = [
 export function CourseBuilderDataTable() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isEmployer = userRole === "Employer";
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -262,24 +266,28 @@ export function CourseBuilderDataTable() {
                   <Eye className="mr-2 h-4 w-4" />
                   View
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleEdit(course)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(course)}
-                  className="text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuItem onClick={() => handleEdit(course)}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDeleteClick(course)}
+                      className="text-destructive"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [handleEdit, handleView]
+    [handleEdit, handleView, isEmployer]
   );
 
   const table = useReactTable({
@@ -372,22 +380,24 @@ export function CourseBuilderDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button
-            variant="outline"
-            onClick={() => setIsUploadDialogOpen(true)}
-            className="cursor-pointer"
-          >
-            <Upload className="mr-2 size-4" />
-            Upload File
-          </Button>
-          <DropdownMenu open={createCourseMenuOpen} onOpenChange={setCreateCourseMenuOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button className="cursor-pointer">
-                <Plus className="mr-2 size-4" />
-                Create Course
-                <ChevronDown className="ml-2 size-4" />
+          {!isEmployer && (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setIsUploadDialogOpen(true)}
+                className="cursor-pointer"
+              >
+                <Upload className="mr-2 size-4" />
+                Upload File
               </Button>
-            </DropdownMenuTrigger>
+              <DropdownMenu open={createCourseMenuOpen} onOpenChange={setCreateCourseMenuOpen}>
+                <DropdownMenuTrigger asChild>
+                  <Button className="cursor-pointer">
+                    <Plus className="mr-2 size-4" />
+                    Create Course
+                    <ChevronDown className="ml-2 size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {createCourseTypes.map((type) => (
                 <DropdownMenuItem
@@ -403,6 +413,8 @@ export function CourseBuilderDataTable() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+            </>
+          )}
         </div>
       </div>
 

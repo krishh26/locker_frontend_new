@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Trash2, Loader2 } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -49,6 +50,8 @@ export function CpdEditableRow({
   onUpdate,
   onDelete,
 }: CpdEditableRowProps) {
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   const [isSaving, setIsSaving] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
 
@@ -187,7 +190,7 @@ export function CpdEditableRow({
                             !field.value && "text-muted-foreground",
                             error && "border-destructive"
                           )}
-                          disabled={isSaving}
+                          disabled={isSaving || isEmployer}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {field.value ? (
@@ -217,7 +220,7 @@ export function CpdEditableRow({
                 <Textarea
                   {...form.register(fieldName)}
                   placeholder={`Enter ${header.label.toLowerCase()} *`}
-                  disabled={isSaving}
+                  disabled={isSaving || isEmployer}
                   className={cn(
                     "min-h-[80px] resize-none",
                     error && "border-destructive"
@@ -232,7 +235,7 @@ export function CpdEditableRow({
                 <Input
                   {...form.register(fieldName)}
                   placeholder={`Enter ${header.label.toLowerCase()} *`}
-                  disabled={isSaving}
+                  disabled={isSaving || isEmployer}
                   className={error ? "border-destructive" : ""}
                 />
                 {error && (
@@ -244,32 +247,34 @@ export function CpdEditableRow({
         );
       })}
       <TableCell className="align-top">
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            onClick={form.handleSubmit(onSubmit)}
-            disabled={!isDirty || isSaving || hasErrors}
-            className="h-8 w-8 p-0"
-          >
-            {isSaving ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Save className="h-4 w-4" />
-            )}
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            onClick={handleDelete}
-            disabled={isSaving}
-            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
+        {!isEmployer && (
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={form.handleSubmit(onSubmit)}
+              disabled={!isDirty || isSaving || hasErrors}
+              className="h-8 w-8 p-0"
+            >
+              {isSaving ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={handleDelete}
+              disabled={isSaving}
+              className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </TableCell>
     </TableRow>
   );

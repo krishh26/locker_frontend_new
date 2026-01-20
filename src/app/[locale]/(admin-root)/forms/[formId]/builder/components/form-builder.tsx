@@ -31,6 +31,7 @@ import { SimpleFormBuilder } from "./simple-form-builder";
 import { FormPreview } from "./form-preview";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAppSelector } from "@/store/hooks";
 
 const roles = [
   "Master Admin",
@@ -138,6 +139,10 @@ interface FormBuilderProps {
 
 export function FormBuilder({ formId }: FormBuilderProps) {
   const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isEmployer = userRole === "Employer";
+  
   const isEditMode = formId !== null && formId !== "new";
   const [formFields, setFormFields] = useState<SimpleFormField[]>([]);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -454,16 +459,20 @@ export function FormBuilder({ formId }: FormBuilderProps) {
               </Button>
             ) : (
               <>
-                {isEditMode && (
-                  <Button variant="outline" onClick={handleSaveAsForm}>
-                    <Copy className="mr-2 h-4 w-4" />
-                    Save As Form
-                  </Button>
+                {!isEmployer && (
+                  <>
+                    {isEditMode && (
+                      <Button variant="outline" onClick={handleSaveAsForm}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Save As Form
+                      </Button>
+                    )}
+                    <Button onClick={handleSave}>
+                      <Save className="mr-2 h-4 w-4" />
+                      Save Form
+                    </Button>
+                  </>
                 )}
-                <Button onClick={handleSave}>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Form
-                </Button>
               </>
             )}
           </div>

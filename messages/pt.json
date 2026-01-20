@@ -80,7 +80,159 @@
     "status": "Status",
     "actions": "Ações",
     "noUsersFound": "Nenhum usuário encontrado",
-    "confirmDelete": "Tem certeza de que deseja excluir este usuário?"
+    "confirmDelete": "Tem certeza de que deseja excluir este usuário?",
+    "pageTitle": "Gerenciamento de Usuários",
+    "pageSubtitle": "Gerencie usuários com eficiência com operações simplificadas incluindo funcionalidades de adicionar, excluir e atualizar",
+    "form": {
+      "firstName": "Nome",
+      "firstNamePlaceholder": "Digite o nome",
+      "lastName": "Sobrenome",
+      "lastNamePlaceholder": "Digite o sobrenome",
+      "username": "Nome de usuário",
+      "usernamePlaceholder": "Digite o nome de usuário",
+      "email": "E-mail",
+      "emailPlaceholder": "Digite o e-mail",
+      "password": "Senha",
+      "passwordPlaceholder": "Digite a senha",
+      "confirmPassword": "Confirmar Senha",
+      "confirmPasswordPlaceholder": "Confirme a senha",
+      "mobile": "Celular",
+      "mobilePlaceholder": "Digite o número do celular",
+      "timeZone": "Fuso Horário",
+      "timeZonePlaceholder": "Selecione o fuso horário",
+      "roles": "Funções",
+      "employers": "Empregadores",
+      "employersPlaceholder": "Selecione empregadores",
+      "loadingEmployers": "Carregando empregadores...",
+      "noEmployersFound": "Nenhum empregador encontrado",
+      "assignedLearners": "Alunos Atribuídos",
+      "assignedLearnersDescription": "Selecione um curso para visualizar e gerenciar alunos atribuídos para este usuário EQA",
+      "selectLearners": "Selecionar Alunos",
+      "noLearnersAssigned": "Nenhum aluno atribuído ainda. Clique em \"Selecionar Alunos\" para atribuir alunos aos cursos.",
+      "createUser": "Criar Usuário",
+      "updateUser": "Atualizar Usuário",
+      "required": "*"
+    },
+    "validation": {
+      "firstNameRequired": "O nome é obrigatório",
+      "lastNameRequired": "O sobrenome é obrigatório",
+      "usernameRequired": "O nome de usuário é obrigatório",
+      "emailRequired": "O e-mail é obrigatório",
+      "emailInvalid": "Endereço de e-mail inválido",
+      "passwordRequired": "A senha é obrigatória",
+      "passwordMinLength": "A senha deve ter pelo menos 6 caracteres",
+      "passwordsDoNotMatch": "As senhas não coincidem",
+      "mobileRequired": "O número do celular é obrigatório",
+      "timezoneRequired": "O fuso horário é obrigatório",
+      "rolesRequired": "Pelo menos uma função é obrigatória",
+      "employerRequired": "Pelo menos um funcionário deve ser selecionado quando a função Empregador é selecionada"
+    },
+    "roles": {
+      "admin": "Admin",
+      "trainer": "Instrutor",
+      "iqa": "IQA",
+      "eqa": "EQA",
+      "liqa": "IQA Líder",
+      "lineManager": "Gerente de Linha",
+      "employer": "Empregador"
+    },
+    "table": {
+      "name": "Nome",
+      "username": "Nome de usuário",
+      "email": "E-mail",
+      "mobile": "Celular",
+      "roles": "Funções",
+      "status": "Status",
+      "actions": "Ações",
+      "searchPlaceholder": "Pesquisar por palavra-chave...",
+      "filterByRole": "Filtrar por função",
+      "allRoles": "Todas as Funções",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "addNew": "Adicionar Novo",
+      "noResults": "Nenhum resultado.",
+      "openMenu": "Abrir menu",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "deleteDialogTitle": "Tem certeza?",
+      "deleteDialogDescription": "Esta ação não pode ser desfeita. Isso excluirá permanentemente o usuário",
+      "deleteDialogCancel": "Cancelar",
+      "deleteDialogConfirm": "Excluir",
+      "deleting": "Excluindo...",
+      "userDeleted": "Usuário excluído com sucesso",
+      "deleteFailed": "Falha ao excluir usuário",
+      "noDataToExport": "Nenhum dado para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExportInfo": "A funcionalidade de exportação PDF será implementada"
+    },
+    "assignedLearners": {
+      "title": "Alunos Atribuídos",
+      "learnerName": "Nome do Aluno",
+      "portfolio": "Portfólio",
+      "courseName": "Nome do Curso",
+      "courseStatus": "Status do Curso",
+      "startDate": "Data de Início",
+      "endDate": "Data de Término",
+      "actions": "Ações",
+      "searchPlaceholder": "Pesquisar por nome ou curso...",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "noAssignedLearners": "Nenhum aluno atribuído.",
+      "removeDialogTitle": "Remover Aluno?",
+      "removeDialogDescription": "Tem certeza de que deseja remover",
+      "removeDialogDescriptionEnd": "desta atribuição EQA? Isso removerá o aluno deste usuário EQA.",
+      "removeDialogCancel": "Cancelar",
+      "removeDialogConfirm": "Remover",
+      "viewPortfolio": "Ver portfólio de",
+      "noDataToExport": "Nenhum dado para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExportInfo": "A funcionalidade de exportação PDF será implementada"
+    },
+    "learnerSelection": {
+      "title": "Selecionar Alunos",
+      "description": "Selecione um curso e escolha alunos para atribuir a este usuário EQA.",
+      "course": "Curso",
+      "coursePlaceholder": "Selecione um curso",
+      "searchLearners": "Pesquisar Alunos",
+      "searchPlaceholder": "Pesquisar por nome ou e-mail...",
+      "unassignedLearners": "Alunos Não Atribuídos",
+      "learnersSelected": "aluno selecionado",
+      "learnersSelectedPlural": "alunos selecionados",
+      "pleaseSelectCourse": "Selecione um curso para visualizar os alunos",
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "selectAll": "Selecionar tudo",
+      "learnerName": "Nome do Aluno",
+      "portfolio": "Portfólio",
+      "courseStatus": "Status do Curso",
+      "startDate": "Data de Início",
+      "endDate": "Data de Término",
+      "noUnassignedLearners": "Nenhum aluno não atribuído encontrado",
+      "viewPortfolio": "Ver portfólio de"
+    },
+    "toast": {
+      "userCreated": "Usuário criado com sucesso",
+      "userUpdated": "Usuário atualizado com sucesso",
+      "userDeleted": "Usuário excluído com sucesso",
+      "createFailed": "Falha ao criar usuário",
+      "updateFailed": "Falha ao atualizar usuário",
+      "deleteFailed": "Falha ao excluir usuário",
+      "learnerUnassigned": "Aluno removido com sucesso",
+      "removeLearnerFailed": "Falha ao remover aluno",
+      "learnersAssigned": "Atribuídos com sucesso {count} aluno(s) a EQA",
+      "assignmentFailed": "Usuário criado/atualizado mas falhou ao atribuir alguns alunos"
+    },
+    "pages": {
+      "createTitle": "Create New User",
+      "createSubtitle": "Fill in the form below to create a new user",
+      "editTitle": "Edit User",
+      "editSubtitle": "Update user information below",
+      "userNotFound": "User not found"
+    }
   },
   "errors": {
     "unauthorized": "Não autorizado",
@@ -92,5 +244,377 @@
   "dashboard": {
     "adminDashboard": "Painel de controle do administrador",
     "dashboard": "Painel de controle"
+  },
+  "adminCommon": {
+    "name": "Nome",
+    "email": "E-mail",
+    "status": "Status",
+    "actions": "Ações",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "clear": "Limpar",
+    "addNew": "Adicionar Novo",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "loading": "Carregando...",
+    "noResults": "Nenhum resultado.",
+    "noDataToExport": "Nenhum dado para exportar",
+    "exportCsv": "Exportar como CSV",
+    "exportPdf": "Exportar como PDF",
+    "csvExported": "CSV exportado com sucesso",
+    "pdfExportInfo": "A funcionalidade de exportação PDF será implementada"
+  },
+  "employers": {
+    "pageTitle": "Employer Management",
+    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "table": {
+      "employerName": "Employer Name",
+      "businessDepartment": "Business Department",
+      "email": "Email",
+      "mobile": "Mobile",
+      "actions": "Actions",
+      "searchPlaceholder": "Search by keyword...",
+      "clear": "Clear",
+      "export": "Export",
+      "addNew": "Add New",
+      "uploadCsv": "Upload CSV",
+      "noResults": "No results.",
+      "openMenu": "Open menu",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteDialogTitle": "Are you sure?",
+      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
+      "deleteDialogCancel": "Cancel",
+      "deleteDialogConfirm": "Delete",
+      "deleting": "Deleting...",
+      "employerDeleted": "Employer deleted successfully",
+      "deleteFailed": "Failed to delete employer",
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully"
+    },
+    "form": {
+      "title": "Employer Form",
+      "companyName": "Company Name",
+      "companyNamePlaceholder": "Enter company name",
+      "misId": "MIS ID",
+      "misIdPlaceholder": "Enter MIS ID",
+      "businessDepartment": "Business Department",
+      "businessDepartmentPlaceholder": "Enter business department",
+      "businessLocation": "Business Location",
+      "businessLocationPlaceholder": "Enter business location",
+      "branchCode": "Branch Code",
+      "branchCodePlaceholder": "Enter branch code",
+      "address1": "Address 1",
+      "address1Placeholder": "Enter address 1",
+      "address2": "Address 2",
+      "address2Placeholder": "Enter address 2",
+      "town": "Town",
+      "townPlaceholder": "Enter town",
+      "county": "County",
+      "countyPlaceholder": "Enter county",
+      "country": "Country",
+      "countryPlaceholder": "Enter country",
+      "postcode": "Postcode",
+      "postcodePlaceholder": "Enter postcode",
+      "businessCategory": "Business Category",
+      "businessCategoryPlaceholder": "Select business category",
+      "numberOfEmployees": "Number of Employees",
+      "numberOfEmployeesPlaceholder": "Enter number of employees",
+      "telephone": "Telephone",
+      "telephonePlaceholder": "Enter telephone",
+      "website": "Website",
+      "websitePlaceholder": "Enter website",
+      "keyContactName": "Key Contact Name",
+      "keyContactNamePlaceholder": "Enter key contact name",
+      "keyContactNumber": "Key Contact Number",
+      "keyContactNumberPlaceholder": "Enter key contact number",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "businessDescription": "Business Description",
+      "businessDescriptionPlaceholder": "Enter business description",
+      "comments": "Comments",
+      "commentsPlaceholder": "Enter comments",
+      "assessmentDate": "Assessment Date",
+      "assessmentRenewalDate": "Assessment Renewal Date",
+      "insuranceRenewalDate": "Insurance Renewal Date",
+      "required": "*",
+      "createEmployer": "Create Employer",
+      "updateEmployer": "Update Employer"
+    },
+    "validation": {
+      "companyNameRequired": "Company Name is required",
+      "misIdRequired": "MIS ID is required",
+      "address1Required": "Address 1 is required",
+      "address2Required": "Address 2 is required",
+      "townRequired": "Town is required",
+      "countyRequired": "County is required",
+      "countryRequired": "Country is required",
+      "postcodeRequired": "Postcode is required",
+      "emailInvalid": "Invalid email address"
+    },
+    "toast": {
+      "employerCreated": "Employer created successfully",
+      "employerUpdated": "Employer updated successfully",
+      "employerDeleted": "Employer deleted successfully",
+      "createFailed": "Failed to create employer",
+      "updateFailed": "Failed to update employer",
+      "deleteFailed": "Failed to delete employer"
+    }
+  },
+  "admin": {
+    "pageTitle": "Admin Modules",
+    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "modules": {
+      "userManagement": {
+        "title": "User Management",
+        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+      },
+      "learnerManagement": {
+        "title": "Learner Management",
+        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+      },
+      "employerManagement": {
+        "title": "Employer Management",
+        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+      },
+      "broadcastManagement": {
+        "title": "Broadcast Management",
+        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+      }
+    },
+    "viewDetails": "View Details"
+  },
+  "awaitingSignature": {
+    "pageTitle": "Awaiting Signature",
+    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+  },
+  "calendar": {
+    "pageTitle": "Calendar",
+    "pageSubtitle": "Manage sessions and appointments"
+  },
+  "caseload": {
+    "pageTitle": "Caseload Management",
+    "pageSubtitle": "Manage and view line managers and their assigned users",
+    "searchPlaceholder": "Search line managers by name or email...",
+    "refresh": "Refresh",
+    "clear": "Clear",
+    "noLineManagersFound": "No Line Managers Found",
+    "noLineManagersMatch": "No line managers match",
+    "noLineManagersInSystem": "There are no line managers in the system yet.",
+    "failedToLoad": "Failed to load caseload data. Please try again."
+  },
+  "forms": {
+    "pageTitle": "Form Builder",
+    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
+    "tabs": {
+      "formList": "Form List",
+      "templateList": "Template List",
+      "response": "Response"
+    }
+  },
+  "iqaQuestions": {
+    "pageTitle": "IQA Maintain Questions",
+    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "questionTypes": {
+      "all": "All",
+      "observeAssessor": "Observe Assessor",
+      "learnerInterview": "Learner Interview",
+      "employerInterview": "Employer Interview",
+      "finalCheck": "Final Check"
+    }
+  },
+  "pricing": {
+    "pageTitle": "Pricing",
+    "pageSubtitle": "Manage pricing configurations"
+  },
+  "qaSamplePlan": {
+    "pageTitle": "QA Sample Plan",
+    "pageSubtitle": "Create and manage QA sample plans"
+  },
+  "sessionTypes": {
+    "pageTitle": "Session Types",
+    "pageSubtitle": "Manage session type configurations"
+  },
+  "surveys": {
+    "pageTitle": "Surveys",
+    "pageSubtitle": "Create and manage surveys"
+  },
+  "timelogExport": {
+    "pageTitle": "Timelog Data Export",
+    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "exportInformation": {
+      "title": "Export Information",
+      "description": "Guidelines for using the timelog data export feature",
+      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
+      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
+      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
+      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
+      "guideline5": "If no filters are selected, all available timelog data will be exported"
+    }
+  },
+  "trainerRiskRating": {
+    "pageTitle": "Trainer Risk Rating",
+    "pageSubtitle": "Manage risk ratings for trainers, courses, and assessment methods",
+    "selectTrainer": "Select a Trainer",
+    "selectTrainerDescription": "Select a trainer from the list to view their courses and assessment methods",
+    "riskOptions": {
+      "pleaseSelect": "Please select",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "assessmentMethods": {
+      "pe": "PE",
+      "peFullName": "Professional Discussion",
+      "do": "DO",
+      "doFullName": "Direct Observation",
+      "wt": "WT",
+      "wtFullName": "Witness Testimony",
+      "qa": "QA",
+      "qaFullName": "Question and Answer",
+      "ps": "PS",
+      "psFullName": "Product Sample",
+      "di": "DI",
+      "diFullName": "Discussion",
+      "si": "SI",
+      "siFullName": "Simulation",
+      "ee": "ET",
+      "eeFullName": "Expert Evidence",
+      "ba": "RA",
+      "baFullName": "Basic Assessment",
+      "ot": "OT",
+      "otFullName": "Other",
+      "ipl": "RPL",
+      "iplFullName": "Individual Personal Log",
+      "lo": "LO",
+      "loFullName": "Learning Outcome"
+    }
+  },
+  "wellbeing": {
+    "pageTitle": "Wellbeing Resources Management",
+    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+  },
+  "acknowledgeMessage": {
+    "pageTitle": "Acknowledge Message",
+    "pageSubtitle": "Create and manage acknowledgement messages for learners",
+    "form": {
+      "message": "Message",
+      "messagePlaceholder": "Enter your acknowledgement message...",
+      "messageRequired": "Message is required",
+      "messageMaxLength": "Message must be at most 1000 characters",
+      "charactersCount": "{count} / 1000 characters",
+      "uploadFile": "Upload File",
+      "dragDrop": "Drag and drop your files here or",
+      "browse": "Browse",
+      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "File size must be less than 10MB",
+      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
+      "remove": "Remove",
+      "viewCurrentFile": "View Current File",
+      "clear": "Clear",
+      "clearAll": "Clear all learner acknowledgment",
+      "clearing": "Clearing...",
+      "save": "Save",
+      "saving": "Saving...",
+      "required": "*"
+    },
+    "dialogs": {
+      "deleteTitle": "Delete Acknowledgement",
+      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
+      "clearAllTitle": "Clear All Learner Acknowledgments",
+      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "clearAll": "Clear All"
+    },
+    "toast": {
+      "messageUpdated": "Message updated successfully!",
+      "messageAcknowledged": "Message acknowledged successfully!",
+      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
+      "allCleared": "All learner acknowledgments cleared successfully!",
+      "saveFailed": "Failed to acknowledge message. Please try again.",
+      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
+      "clearFailed": "Failed to clear acknowledgments. Please try again."
+    }
+  },
+  "defaultReviewWeeks": {
+    "pageTitle": "Default Review Weeks Configuration",
+    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "form": {
+      "reviewPeriodSettings": "Review Period Settings",
+      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
+      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
+      "noReviewWeeksPlaceholder": "Enter weeks",
+      "weeks": "Weeks",
+      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
+      "noInductionWeeksPlaceholder": "Enter weeks",
+      "save": "Save",
+      "saving": "Saving...",
+      "reviewWarningRequired": "Review warning weeks is required",
+      "mustBeAtLeast1": "Must be at least 1 week",
+      "cannotExceed52": "Cannot exceed 52 weeks",
+      "mustBeWholeNumber": "Must be a whole number",
+      "inductionWarningRequired": "Induction warning weeks is required"
+    },
+    "info": {
+      "title": "Important Information",
+      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+    },
+    "toast": {
+      "configSaved": "Configuration saved successfully!",
+      "saveFailed": "Failed to save configuration. Please try again.",
+      "loadFailed": "Failed to load configuration. Please try again."
+    }
+  },
+  "safeguarding": {
+    "pageTitle": "Safeguarding Contact Management",
+    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
+    "form": {
+      "editingExisting": "Editing existing contact",
+      "contactInformation": "Contact Information",
+      "telephoneNumber": "Telephone Number",
+      "telephonePlaceholder": "+44 20 1234 5678",
+      "mobileNumber": "Mobile Number",
+      "mobilePlaceholder": "+44 7700 900123",
+      "emailAddress": "Email Address",
+      "emailPlaceholder": "safeguarding@example.com",
+      "emailRequired": "Email address is required",
+      "emailInvalid": "Please enter a valid email address",
+      "additionalInformation": "Additional Information",
+      "additionalDetails": "Additional Details",
+      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
+      "reset": "Reset",
+      "saveContact": "Save Contact",
+      "saving": "Saving...",
+      "required": "*"
+    },
+    "toast": {
+      "contactSaved": "Safeguarding contact saved successfully!",
+      "saveFailed": "Error saving data. Please try again.",
+      "loadFailed": "Failed to load safeguarding contacts. Please try again."
+    }
+  },
+  "progressExclusion": {
+    "pageTitle": "Exclude From Overall Progress",
+    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+  },
+  "gatewayReport": {
+    "pageTitle": "Gateway Report",
+    "pageSubtitle": "View and export gateway ready learner data"
+  },
+  "fundingBands": {
+    "pageTitle": "Funding Bands",
+    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+  },
+  "courseBuilder": {
+    "pageTitle": "Course Builder",
+    "pageSubtitle": "Create, manage, and organize your courses with ease"
+  },
+  "broadcast": {
+    "pageTitle": "Broadcast Management",
+    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
   }
 }

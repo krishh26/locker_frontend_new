@@ -219,6 +219,7 @@ export function LearnerProfilePageContent({
   const isLearner = userRole === 'Learner'
   const isAdmin = userRole === 'Admin'
   const isTrainer = userRole === 'Trainer'
+  const isEmployer = userRole === 'Employer'
   const canEdit = isAdmin || isTrainer
 
   const learnerIdNum = learnerId ? parseInt(learnerId, 10) : NaN
@@ -291,7 +292,7 @@ export function LearnerProfilePageContent({
   })
 
   // Determine back button href based on role
-  const backButtonHref = isLearner ? '/dashboard' : '/learner-overview'
+  const backButtonHref = isLearner || isEmployer ? '/dashboard' : '/learner-overview'
 
   // Handle loading state
   if (isLoading) {

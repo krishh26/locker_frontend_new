@@ -12,11 +12,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/dashboard/page-header";
 
 import { UsersForm } from "../../../components/users-form";
+import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 export default function EditUserPage() {
   const params = useParams();
   const router = useRouter();
+  const t = useTranslations("users.pages");
   const userId = params.id as string;
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
 
   // Fetch users and find the one with matching ID
   const { data, isLoading, error } = useGetUsersQuery({
@@ -24,21 +29,23 @@ export default function EditUserPage() {
     page_size: 1000,
   });
 
-  const user = data?.data?.find((u) => u.user_id.toString() === userId);
+  const userToEdit = data?.data?.find((u) => u.user_id.toString() === userId);
 
   useEffect(() => {
-    if (!isLoading && !user && data) {
+    if (isEmployer) {
+      router.push("/users");
+    } else if (!isLoading && !userToEdit && data) {
       // User not found, redirect to users page
       router.push("/users");
     }
-  }, [isLoading, user, data, router]);
+  }, [isEmployer, isLoading, userToEdit, data, router]);
 
   if (isLoading) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader
-          title="Edit User"
-          subtitle="Update user information below"
+          title={t("editTitle")}
+          subtitle={t("editSubtitle")}
           icon={UserCog}
           showBackButton
           backButtonHref="/users"
@@ -53,19 +60,23 @@ export default function EditUserPage() {
     );
   }
 
-  if (error || !user) {
+  if (isEmployer) {
+    return null;
+  }
+
+  if (error || !userToEdit) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader
-          title="Edit User"
-          subtitle="Update user information below"
+          title={t("editTitle")}
+          subtitle={t("editSubtitle")}
           icon={UserCog}
           showBackButton
           backButtonHref="/users"
         />
         <div className="">
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center">
-            <p className="text-destructive">User not found</p>
+            <p className="text-destructive">{t("userNotFound")}</p>
           </div>
         </div>
       </div>
@@ -82,7 +93,7 @@ export default function EditUserPage() {
         backButtonHref="/users"
       />
       <div className="">
-        <UsersForm user={user} />
+        <UsersForm user={userToEdit} />
       </div>
     </div>
   );

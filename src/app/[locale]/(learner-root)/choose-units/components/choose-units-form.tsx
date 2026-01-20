@@ -20,6 +20,8 @@ export type FormValues = z.infer<typeof formSchema>;
 
 export function ChooseUnitsForm() {
   const selectedCourseId = useAppSelector(selectCurrentCourseId);
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   // Get learner and course data from Redux state
   const learner = useAppSelector((state) => state.auth.learner);
   // Get learner ID
@@ -204,7 +206,7 @@ export function ChooseUnitsForm() {
               )}
               <Button
                 type="submit"
-                disabled={!!validationError || isSaving}
+                disabled={!!validationError || isSaving || isEmployer}
                 className="cursor-pointer"
               >
                 {isSaving ? "Saving..." : "Save Units"}

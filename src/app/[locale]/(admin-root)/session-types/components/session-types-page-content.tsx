@@ -3,14 +3,17 @@
 import { Clock } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { SessionTypesDataTable } from "./session-types-data-table";
+import { useTranslations } from "next-intl";
 
 export function SessionTypesPageContent() {
+  const t = useTranslations("sessionTypes");
+  
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Session Types"
-        subtitle="Manage session types with ordering, active status, and off-the-job settings"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={Clock}
       />
 

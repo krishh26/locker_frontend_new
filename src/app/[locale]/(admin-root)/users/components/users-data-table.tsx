@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import {
   type ColumnDef,
   type SortingState,
@@ -60,17 +61,40 @@ import type { User, UserFilters } from "@/store/api/user/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import { useAppSelector } from "@/store/hooks";
 
-const roles = [
-  { value: "Admin", label: "Admin" },
-  { value: "Trainer", label: "Trainer" },
-  { value: "IQA", label: "IQA" },
-  { value: "EQA", label: "EQA" },
-  { value: "LIQA", label: "Lead IQA" },
+// Roles will be translated in component
+const roleValues = [
+  "Admin",
+  "Trainer",
+  "IQA",
+  "EQA",
+  "LIQA",
 ];
 
 export function UsersDataTable() {
   const router = useRouter();
+  const t = useTranslations("users");
+  const common = useTranslations("common");
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isEmployer = userRole === "Employer";
+
+  // Create roles with translated labels
+  const roles = useMemo(() => {
+    const roleKeyMap: Record<string, string> = {
+      "Admin": "admin",
+      "Trainer": "trainer",
+      "IQA": "iqa",
+      "EQA": "eqa",
+      "LIQA": "liqa",
+    };
+    return roleValues.map(value => ({
+      value,
+      label: t(`roles.${roleKeyMap[value]}`) || value,
+    }));
+  }, [t]);
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -133,7 +157,7 @@ export function UsersDataTable() {
 
     try {
       await deleteUser(userToDelete.user_id).unwrap();
-      toast.success("User deleted successfully");
+      toast.success(t("toast.userDeleted"));
       setDeleteDialogOpen(false);
       setUserToDelete(null);
       refetch();
@@ -142,7 +166,7 @@ export function UsersDataTable() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to delete user");
+      toast.error(errorMessage || t("toast.deleteFailed"));
     }
   };
 
@@ -152,11 +176,11 @@ export function UsersDataTable() {
 
   const handleExportCsv = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.noDataToExport"));
       return;
     }
 
-    const headers = ["Name", "Username", "Email", "Mobile", "Roles", "Status"];
+    const headers = [t("table.name"), t("table.username"), t("table.email"), t("table.mobile"), t("table.roles"), t("table.status")];
     const rows = data.data.map((user) => [
       `${user.first_name} ${user.last_name}`,
       user.user_name,
@@ -178,18 +202,18 @@ export function UsersDataTable() {
     link.download = `users_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("table.csvExported"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("table.pdfExportInfo"));
   };
 
   const columns: ColumnDef<User>[] = useMemo(
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: t("table.name"),
         cell: ({ row }) => {
           const user = row.original;
           return `${user.first_name} ${user.last_name}`;
@@ -197,19 +221,19 @@ export function UsersDataTable() {
       },
       {
         accessorKey: "user_name",
-        header: "Username",
+        header: t("table.username"),
       },
       {
         accessorKey: "email",
-        header: "Email",
+        header: t("table.email"),
       },
       {
         accessorKey: "mobile",
-        header: "Mobile",
+        header: t("table.mobile"),
       },
       {
         accessorKey: "roles",
-        header: "Roles",
+        header: t("table.roles"),
         cell: ({ row }) => {
           const roles = row.original.roles;
           return roles.join(", ");
@@ -217,7 +241,7 @@ export function UsersDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.status"),
         cell: ({ row }) => {
           const status = row.original.status;
           return (
@@ -235,36 +259,40 @@ export function UsersDataTable() {
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.actions"),
         cell: ({ row }) => {
           const user = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{t("table.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEdit(user)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(user)}
-                  className="text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuItem onClick={() => handleEdit(user)}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      {t("table.edit")}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDeleteClick(user)}
+                      className="text-destructive"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      {t("table.delete")}
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [handleEdit]
+    [handleEdit, isEmployer, t]
   );
 
   const table = useReactTable({
@@ -310,7 +338,7 @@ export function UsersDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -319,10 +347,10 @@ export function UsersDataTable() {
           </div>
           <Select value={roleFilter} onValueChange={setRoleFilter}>
             <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Filter by role" />
+              <SelectValue placeholder={t("table.filterByRole")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Roles</SelectItem>
+              <SelectItem value="all">{t("table.allRoles")}</SelectItem>
               {roles.map((role) => (
                 <SelectItem key={role.value} value={role.label}>
                   {role.label}
@@ -337,7 +365,7 @@ export function UsersDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {t("table.clear")}
             </Button>
           )}
         </div>
@@ -346,22 +374,24 @@ export function UsersDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("table.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("table.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("table.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddNew} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New
-          </Button>
+          {!isEmployer && (
+            <Button onClick={handleAddNew} className="cursor-pointer">
+              <Plus className="mr-2 size-4" />
+              {t("table.addNew")}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -409,7 +439,7 @@ export function UsersDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -441,9 +471,9 @@ export function UsersDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("table.deleteDialogTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the user{" "}
+              {t("table.deleteDialogDescription")}{" "}
               <strong>
                 {userToDelete?.first_name} {userToDelete?.last_name}
               </strong>
@@ -451,13 +481,13 @@ export function UsersDataTable() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>{t("table.deleteDialogCancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("table.deleting") : t("table.deleteDialogConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

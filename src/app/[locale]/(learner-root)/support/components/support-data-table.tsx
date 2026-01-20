@@ -53,6 +53,7 @@ import { VariantProps } from "class-variance-authority"
 export function SupportDataTable() {
   const user = useAppSelector((state) => state.auth.user)
   const isAdmin = user?.role === "Admin"
+  const isEmployer = user?.role === "Employer"
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -213,20 +214,24 @@ export function SupportDataTable() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={() => handleEdit(row.original)}
-                      disabled={!isAdmin && row.original.status === "Resolve"}
-                    >
-                      <Pencil className="mr-2 h-4 w-4" />
-                      Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleDeleteClick(row.original)}
-                      className="text-destructive"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
+                    {!isEmployer && (
+                      <DropdownMenuItem
+                        onClick={() => handleEdit(row.original)}
+                        disabled={!isAdmin && row.original.status === "Resolve"}
+                      >
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Edit
+                      </DropdownMenuItem>
+                    )}
+                    {!isEmployer && (
+                      <DropdownMenuItem
+                        onClick={() => handleDeleteClick(row.original)}
+                        className="text-destructive"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               ),
@@ -234,7 +239,7 @@ export function SupportDataTable() {
           ]
         : []),
     ],
-    [isAdmin, handleEdit, handleDeleteClick]
+    [isAdmin, isEmployer, handleEdit, handleDeleteClick]
   )
 
   const table = useReactTable({
@@ -385,26 +390,30 @@ export function SupportDataTable() {
       />
 
       {/* Delete Dialog */}
-      <SupportDeleteDialog
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        support={selectedSupport}
-        onConfirm={handleDeleteConfirm}
-        isLoading={isDeleting}
-      />
+      {!isEmployer && (
+        <SupportDeleteDialog
+          open={deleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+          support={selectedSupport}
+          onConfirm={handleDeleteConfirm}
+          isLoading={isDeleting}
+        />
+      )}
 
       {/* Add/Edit Dialog */}
-      <SupportAddEditDialog
-        open={addEditDialogOpen}
-        onOpenChange={setAddEditDialogOpen}
-        support={selectedSupport}
-        mode={dialogMode}
-        onSuccess={() => {
-          setAddEditDialogOpen(false)
-          setSelectedSupport(null)
-          refetch()
-        }}
-      />
+      {!isEmployer && (
+        <SupportAddEditDialog
+          open={addEditDialogOpen}
+          onOpenChange={setAddEditDialogOpen}
+          support={selectedSupport}
+          mode={dialogMode}
+          onSuccess={() => {
+            setAddEditDialogOpen(false)
+            setSelectedSupport(null)
+            refetch()
+          }}
+        />
+      )}
     </div>
   )
 }

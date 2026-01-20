@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
 import { Shield, Phone, Mail, Info, Save, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,24 +20,25 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-const safeguardingSchema = z.object({
+const safeguardingSchema = (t: (key: string) => string) => z.object({
   telNumber: z.string().optional(),
   mobileNumber: z.string().optional(),
   emailAddress: z
-    .email("Please enter a valid email address")
-    .refine((val) => val !== "", { message: "Email address is required" }),
+    .email(t("form.emailInvalid"))
+    .refine((val) => val !== "", { message: t("form.emailRequired") }),
   additionalInfo: z.string().optional(),
 });
 
-type SafeguardingFormData = z.infer<typeof safeguardingSchema>;
+type SafeguardingFormData = z.infer<ReturnType<typeof safeguardingSchema>>;
 
 export function SafeguardingPageContent() {
+  const t = useTranslations("safeguarding");
   const { data, isLoading, error, refetch } = useGetSafeguardingContactsQuery();
   const [saveContact, { isLoading: isSaving }] = useSaveSafeguardingContactMutation();
   const [editingContact, setEditingContact] = useState<boolean>(false);
 
   const form = useForm<SafeguardingFormData>({
-    resolver: zodResolver(safeguardingSchema),
+    resolver: zodResolver(safeguardingSchema(t)),
     mode: "onChange",
     defaultValues: {
       telNumber: "",
@@ -67,12 +70,12 @@ export function SafeguardingPageContent() {
         emailAddress: formData.emailAddress || "",
         additionalInfo: formData.additionalInfo || "",
       }).unwrap();
-      toast.success("Safeguarding contact saved successfully!");
+      toast.success(t("toast.contactSaved"));
       refetch();
       setEditingContact(true);
     } catch (error: any) {
       console.error("Error saving data:", error);
-      toast.error(error?.data?.message || error?.message || "Error saving data. Please try again.");
+      toast.error(error?.data?.message || error?.message || t("toast.saveFailed"));
     }
   };
 
@@ -90,8 +93,8 @@ export function SafeguardingPageContent() {
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Safeguarding Contact Management"
-        subtitle="Manage safeguarding officer contact information and additional details"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={Shield}
       />
 
@@ -99,7 +102,7 @@ export function SafeguardingPageContent() {
       {editingContact && (
         <Badge variant="outline" className="mb-4">
           <Info className="h-3 w-3 mr-1" />
-          Editing existing contact
+          {t("form.editingExisting")}
         </Badge>
       )}
 
@@ -124,7 +127,7 @@ export function SafeguardingPageContent() {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Failed to load safeguarding contacts. Please try again.
+            {t("toast.loadFailed")}
           </AlertDescription>
         </Alert>
       )}
@@ -138,17 +141,17 @@ export function SafeguardingPageContent() {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Phone className="h-5 w-5 text-primary" />
-                  <CardTitle>Contact Information</CardTitle>
+                  <CardTitle>{t("form.contactInformation")}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Telephone Number */}
                   <div className="space-y-2">
-                    <Label htmlFor="telNumber">Telephone Number</Label>
+                    <Label htmlFor="telNumber">{t("form.telephoneNumber")}</Label>
                     <Input
                       id="telNumber"
-                      placeholder="+44 20 1234 5678"
+                      placeholder={t("form.telephonePlaceholder")}
                       {...form.register("telNumber")}
                       className="w-full"
                     />
@@ -161,10 +164,10 @@ export function SafeguardingPageContent() {
 
                   {/* Mobile Number */}
                   <div className="space-y-2">
-                    <Label htmlFor="mobileNumber">Mobile Number</Label>
+                    <Label htmlFor="mobileNumber">{t("form.mobileNumber")}</Label>
                     <Input
                       id="mobileNumber"
-                      placeholder="+44 7700 900123"
+                      placeholder={t("form.mobilePlaceholder")}
                       {...form.register("mobileNumber")}
                       className="w-full"
                     />
@@ -178,13 +181,13 @@ export function SafeguardingPageContent() {
 
                 {/* Email Address */}
                 <div className="space-y-2">
-                  <Label htmlFor="emailAddress">Email Address <span className="text-destructive">*</span></Label>
+                  <Label htmlFor="emailAddress">{t("form.emailAddress")} <span className="text-destructive">{t("form.required")}</span></Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="emailAddress"
                       type="email"
-                      placeholder="safeguarding@example.com"
+                      placeholder={t("form.emailPlaceholder")}
                       {...form.register("emailAddress")}
                       className="pl-10"
                     />
@@ -203,15 +206,15 @@ export function SafeguardingPageContent() {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Info className="h-5 w-5 text-primary" />
-                  <CardTitle>Additional Information</CardTitle>
+                  <CardTitle>{t("form.additionalInformation")}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <Label htmlFor="additionalInfo">Additional Details</Label>
+                  <Label htmlFor="additionalInfo">{t("form.additionalDetails")}</Label>
                   <Textarea
                     id="additionalInfo"
-                    placeholder="Available 24/7 for urgent safeguarding concerns"
+                    placeholder={t("form.additionalDetailsPlaceholder")}
                     rows={8}
                     {...form.register("additionalInfo")}
                     className="resize-none"
@@ -237,7 +240,7 @@ export function SafeguardingPageContent() {
                   disabled={isSaving}
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
-                  Reset
+                  {t("form.reset")}
                 </Button>
                 <Button
                   type="submit"
@@ -246,12 +249,12 @@ export function SafeguardingPageContent() {
                   {isSaving ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Saving...
+                      {t("form.saving")}
                     </>
                   ) : (
                     <>
                       <Save className="h-4 w-4 mr-2" />
-                      Save Contact
+                      {t("form.saveContact")}
                     </>
                   )}
                 </Button>

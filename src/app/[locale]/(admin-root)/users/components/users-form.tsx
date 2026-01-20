@@ -21,7 +21,7 @@ import { useCreateUserMutation, useUpdateUserMutation } from "@/store/api/user/u
 import type { User, CreateUserRequest, UpdateUserRequest, AssignedLearner } from "@/store/api/user/types";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 import { useGetCoursesQuery } from "@/store/api/course/courseApi";
-import { useGetLearnersListQuery, useUpdateUserCourseMutation } from "@/store/api/learner/learnerApi";
+import { useAssignEqaToCourseMutation, useGetEqaAssignedLearnersQuery } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem } from "@/store/api/learner/types";
 import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
@@ -139,7 +139,7 @@ export function UsersForm({ user }: UsersFormProps) {
 
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
-  const [updateUserCourse] = useUpdateUserCourseMutation();
+  const [assignEqaToCourse] = useAssignEqaToCourseMutation();
 
   const form = useForm<CreateUserFormValues | UpdateUserFormValues>({
     resolver: zodResolver(isEditMode ? updateUserSchema : createUserSchema),
@@ -246,163 +246,62 @@ export function UsersForm({ user }: UsersFormProps) {
     { skip: !hasEqaRole }
   );
 
-  // Fetch learners for selected course using course_id parameter
-  // Fetch when EQA role is selected and course is selected (for both add and edit modes)
+  // Fetch assigned learners for EQA when in edit mode
   const { 
-    data: learnersDataForSelectedCourse, 
-    refetch: refetchLearners 
-  } = useGetLearnersListQuery(
-    {
-      page: 1,
-      page_size: 1000,
-      course_id: selectedCourseForAssignment ? Number(selectedCourseForAssignment) : undefined,
-    },
-    {
-      skip: !hasEqaRole || !selectedCourseForAssignment,
-    }
+    data: eqaAssignedLearnersData, 
+    isLoading: isLoadingEqaAssignedLearners 
+  } = useGetEqaAssignedLearnersQuery(
+    user?.user_id || 0,
+    { skip: !isEditMode || !hasEqaRole || !user?.user_id }
   );
 
-  // Use learners data from selected course
-  const allLearnersData = useMemo(() => {
-    if (learnersDataForSelectedCourse?.data) {
-      return learnersDataForSelectedCourse;
-    }
-    return { data: [] };
-  }, [learnersDataForSelectedCourse]);
 
-  // Load existing assignments when editing EQA user and course is selected
+  // Load existing assignments from API when editing EQA user
   useEffect(() => {
-    if (
-      isEditMode &&
-      hasEqaRole &&
-      user &&
-      allLearnersData?.data &&
-      selectedCourseForAssignment
-    ) {
-      setIsLoadingAssignments(true);
-      try {
-        const assigned: AssignedLearner[] = [];
-        const selectedCourseIdNum = Number(selectedCourseForAssignment);
+    if (isEditMode && hasEqaRole && eqaAssignedLearnersData?.data) {
+      const assigned: AssignedLearner[] = eqaAssignedLearnersData.data.map((learner) => ({
+        learner_id: learner.learner_id,
+        first_name: learner.first_name,
+        last_name: learner.last_name,
+        user_name: learner.user_name,
+        email: learner.email,
+        course_id: learner.course_id,
+        course_name: learner.course_name,
+        user_course_id: learner.user_course_id,
+        course_status: learner.course_status,
+        start_date: learner.start_date,
+        end_date: learner.end_date,
+      }));
 
-        allLearnersData.data.forEach((learner: LearnerListItem) => {
-          if (learner.course && Array.isArray(learner.course)) {
-            learner.course.forEach((course) => {
-              // Check if this course matches selected course and has this EQA assigned
-              if (
-                course.course.course_id === selectedCourseIdNum &&
-                course.EQA_id === user.user_id
-              ) {
-                assigned.push({
-                  learner_id: learner.learner_id,
-                  first_name: learner.first_name,
-                  last_name: learner.last_name,
-                  user_name: learner.user_name,
-                  email: learner.email,
-                  course_id: course.course.course_id,
-                  course_name: course.course.course_name,
-                  user_course_id: course.user_course_id,
-                  course_status: course.course_status,
-                  start_date: course.start_date,
-                  end_date: course.end_date,
-                });
-              }
-            });
-          }
-        });
-
-        // Merge with existing assignments instead of replacing
-        const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
-        const existingIds = new Set(currentAssigned.map((a) => `${a.learner_id}-${a.course_id}`));
-        const newOnes = assigned.filter(
-          (a) => !existingIds.has(`${a.learner_id}-${a.course_id}`)
-        );
-        const mergedAssignments = [...currentAssigned, ...newOnes];
-        form.setValue("assignedLearners", mergedAssignments);
-      } catch (error) {
-        console.error("Error loading assigned learners:", error);
-      } finally {
-        setIsLoadingAssignments(false);
-      }
+      form.setValue("assignedLearners", assigned);
     } else if (!hasEqaRole) {
-      // Clear assignments only if EQA role is removed (not when no course is selected)
+      // Clear assignments only if EQA role is removed
       form.setValue("assignedLearners", []);
     }
   }, [
     isEditMode,
     hasEqaRole,
-    user,
-    allLearnersData,
-    selectedCourseForAssignment,
+    eqaAssignedLearnersData,
     form,
   ]);
 
-  // Handle learner selection from dialog
-  const handleLearnerSelection = async (selectedLearnerIds: Set<number>, courseId: number) => {
-    // Update the selected course in form (for dialog purposes, not for filtering display)
-    form.setValue("selectedCourseForAssignment", String(courseId));
-    
-    // Use the course ID from the dialog
-    const targetCourseId = courseId;
+  // Update loading state based on API query
+  useEffect(() => {
+    setIsLoadingAssignments(isLoadingEqaAssignedLearners);
+  }, [isLoadingEqaAssignedLearners]);
 
+  // Handle learner selection from dialog
+  const handleLearnerSelection = (selectedLearners: Set<LearnerListItem>, courseId: number) => {
     // Get course name from coursesData
-    const selectedCourse = coursesData?.data?.find((c) => c.course_id === targetCourseId);
+    const selectedCourse = coursesData?.data?.find((c) => c.course_id === courseId);
     const courseName = selectedCourse?.course_name || "Unknown Course";
 
-    // Always refetch learners data for the newly selected course
-    // Don't rely on allLearnersData as it might be for a different course
-    let learnersDataToUse: { data?: LearnerListItem[] } | null = null;
-    let retries = 5;
-    
-    // Wait for form state to update first
-    await new Promise(resolve => setTimeout(resolve, 50));
-    
-    while (retries > 0) {
-      try {
-        const result = await refetchLearners();
-        if (result.data?.data && result.data.data.length > 0) {
-          // Verify this data is for the correct course
-          const firstLearner = result.data.data[0];
-          const hasCorrectCourse = firstLearner.course?.some(
-            (c) => c.course?.course_id === targetCourseId
-          ) || true; // If no course data, assume it's correct
-          
-          if (hasCorrectCourse) {
-            learnersDataToUse = result.data;
-            break;
-          }
-        }
-      } catch (error) {
-        console.error("Error refetching learners:", error);
-      }
-      
-      if (retries > 1) {
-        await new Promise(resolve => setTimeout(resolve, 150));
-      }
-      retries--;
-    }
-
-    // Get learner details for selected IDs
-    let selectedLearners: LearnerListItem[] = [];
-    
-    if (learnersDataToUse?.data && learnersDataToUse.data.length > 0) {
-      selectedLearners = learnersDataToUse.data.filter((learner) =>
-        selectedLearnerIds.has(learner.learner_id)
-      );
-    }
-    
-    // If we still don't have the learners, we can't proceed
-    if (!learnersDataToUse?.data || learnersDataToUse.data.length === 0 || selectedLearners.length === 0) {
-      console.error("Cannot create assignments: learners data not available after refetch");
-      toast.error("Failed to load learner data. Please try again.");
-      return;
-    }
-
-    // Create assigned learner objects
-    const newAssignments: AssignedLearner[] = selectedLearners
+    // Create assigned learner objects directly from the passed learner objects
+    const newAssignments: AssignedLearner[] = Array.from(selectedLearners)
       .map((learner) => {
         // Find the course enrollment for this course
         const courseEnrollment = learner.course?.find(
-          (c) => c.course?.course_id === targetCourseId
+          (c) => c.course?.course_id === courseId
         );
 
         // If course enrollment exists, use it; otherwise create minimal object
@@ -413,7 +312,7 @@ export function UsersForm({ user }: UsersFormProps) {
             last_name: learner.last_name,
             user_name: learner.user_name,
             email: learner.email,
-            course_id: targetCourseId,
+            course_id: courseId,
             course_name: courseEnrollment.course?.course_name || courseName,
             user_course_id: courseEnrollment.user_course_id,
             course_status: courseEnrollment.course_status || "Active",
@@ -428,7 +327,7 @@ export function UsersForm({ user }: UsersFormProps) {
             last_name: learner.last_name,
             user_name: learner.user_name,
             email: learner.email,
-            course_id: targetCourseId,
+            course_id: courseId,
             course_name: courseName,
             user_course_id: 0, // Will be set when enrollment is created
             course_status: "Active",
@@ -454,15 +353,32 @@ export function UsersForm({ user }: UsersFormProps) {
   };
 
   // Handle removing a learner from assignment (course-specific)
-  const handleRemoveLearner = (learnerId: number, courseId: number) => {
-    const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
-    // Remove the specific learner-course assignment
-    form.setValue(
-      "assignedLearners",
-      currentAssigned.filter(
-        (a) => !(a.learner_id === learnerId && a.course_id === courseId)
-      )
-    );
+  const handleRemoveLearner = async (learnerId: number, courseId: number) => {
+    // If in edit mode, call API to unassign
+    if (isEditMode && user?.user_id && hasEqaRole) {
+        const payload = {
+          course_id: courseId,
+          eqa_id: user.user_id,
+          learner_ids: [learnerId],
+          action: "unassign" as const,
+        };
+        console.log("Unassign API Payload:", payload);
+        await assignEqaToCourse(payload).unwrap();
+    }
+    try {
+      // Update form state to remove the learner
+      const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
+      form.setValue(
+        "assignedLearners",
+        currentAssigned.filter(
+          (a) => !(a.learner_id === learnerId && a.course_id === courseId)
+        )
+      );
+      toast.success("Learner unassigned successfully");
+    } catch (error) {
+      console.error("Error removing learner:", error);
+      toast.error("Failed to remove learner");
+    }
   };
 
   // Get already assigned learner IDs for the dialog (course-specific)
@@ -480,7 +396,7 @@ export function UsersForm({ user }: UsersFormProps) {
 
   const onSubmit = async (values: CreateUserFormValues | UpdateUserFormValues) => {
     try {
-      let createdOrUpdatedUserId: number;
+      let createdOrUpdatedUserId: number ;
 
       if (isEditMode) {
         const updateData = values as UpdateUserFormValues;
@@ -497,26 +413,39 @@ export function UsersForm({ user }: UsersFormProps) {
         toast.success("User created successfully");
       }
 
-      // If EQA role is selected and there are assigned learners, update course enrollments
-      // if (hasEqaRole && allAssignedLearners.length > 0) {
-      //   try {
-      //     // Update each learner's course enrollment to set EQA_id
-      //     const updatePromises = allAssignedLearners.map((assigned: AssignedLearner) =>
-      //       updateUserCourse({
-      //         userCourseId: assigned.user_course_id,
-      //         data: {
-      //           EQA_id: createdOrUpdatedUserId,
-      //         },
-      //       }).unwrap()
-      //     );
+      // If EQA role is selected and there are assigned learners, assign EQA to courses
+      if (hasEqaRole && allAssignedLearners.length > 0) {
+        try {
+          // Group learners by course_id
+          const learnersByCourse = new Map<number, number[]>();
+          allAssignedLearners.forEach((assigned: AssignedLearner) => {
+            const courseId = assigned.course_id;
+            if (!learnersByCourse.has(courseId)) {
+              learnersByCourse.set(courseId, []);
+            }
+            learnersByCourse.get(courseId)!.push(assigned.learner_id);
+          });
 
-      //     await Promise.all(updatePromises);
-      //     toast.success(`Successfully assigned ${allAssignedLearners.length} learner(s) to EQA`);
-      //   } catch (assignmentError) {
-      //     console.error("Error assigning learners:", assignmentError);
-      //     toast.error("User created/updated but failed to assign some learners");
-      //   }
-      // }
+          // Create API calls for each course
+          const assignmentPromises = Array.from(learnersByCourse.entries()).map(
+            ([courseId, learnerIds]) => {
+              const payload = {
+                course_id: courseId,
+                eqa_id: createdOrUpdatedUserId,
+                learner_ids: learnerIds,
+                action: "assign" as const,
+              };
+              return assignEqaToCourse(payload).unwrap();
+            }
+          );
+
+          await Promise.all(assignmentPromises);
+          toast.success(`Successfully assigned ${allAssignedLearners.length} learner(s) to EQA`);
+        } catch (assignmentError) {
+          console.error("Error assigning learners:", assignmentError);
+          toast.error("User created/updated but failed to assign some learners");
+        }
+      }
 
       router.push("/users");
     } catch (error: unknown) {

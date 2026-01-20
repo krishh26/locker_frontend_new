@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -54,7 +54,6 @@ export function CourseResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const courses = useAppSelector((state) => state.auth.courses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
-  const isEmployer = user?.role === "Employer";
   // Filter and validate courses that have the required structure
   const validCourses = useMemo(() => {
     return courses.filter(

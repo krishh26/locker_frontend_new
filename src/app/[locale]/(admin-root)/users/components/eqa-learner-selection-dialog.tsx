@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,7 +40,7 @@ interface UnassignedLearner extends LearnerListItem {
 interface EqaLearnerSelectionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (selectedLearnerIds: Set<number>, courseId: number) => void;
+  onSave: (selectedLearners: Set<LearnerListItem>, courseId: number) => void;
   currentEqaId?: number;
   alreadyAssignedLearnerIds?: Set<number>;
 }
@@ -55,7 +55,7 @@ export function EqaLearnerSelectionDialog({
   // Use internal state for course selection instead of form state
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   
-  const [selectedLearnerIds, setSelectedLearnerIds] = useState<Set<number>>(new Set());
+  const [selectedLearners, setSelectedLearners] = useState<Set<LearnerListItem>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -69,7 +69,7 @@ export function EqaLearnerSelectionDialog({
   );
 
   // Fetch learners for selected course
-  const { data: learnersData, isLoading: isLoadingLearners } = useGetLearnersListQuery(
+  const { data: learnersData, isLoading: isLoadingLearners, isFetching: isFetchingLearners } = useGetLearnersListQuery(
     {
       page,
       page_size: pageSize,
@@ -81,12 +81,28 @@ export function EqaLearnerSelectionDialog({
     }
   );
 
+  // Clear selections and reset state when course changes
+  useEffect(() => {
+    if (selectedCourseId) {
+      setSelectedLearners(new Set());
+      setSearchTerm("");
+      setPage(1);
+    }
+  }, [selectedCourseId]);
+
   // Filter out already assigned learners
+  // Only use data if it matches the current course_id to avoid showing stale data
   const unassignedLearners = useMemo(() => {
+    // Don't show data if we're fetching or if course_id doesn't match
+    if (isFetchingLearners || !selectedCourseId) {
+      return [];
+    }
+    
     const learners = (learnersData?.data || []) as UnassignedLearner[];
     const courseId = selectedCourseId ? Number(selectedCourseId) : null;
     
-    return learners.filter((learner) => {
+    // Verify that learners belong to the selected course
+    const filteredLearners = learners.filter((learner) => {
       // Filter out if already in the assigned list for this course
       if (alreadyAssignedLearnerIds.has(learner.learner_id)) {
         return false;
@@ -99,21 +115,23 @@ export function EqaLearnerSelectionDialog({
       }
       return true;
     });
-  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId, selectedCourseId]);
+    
+    return filteredLearners;
+  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId, selectedCourseId, isFetchingLearners]);
 
   const handleSave = () => {
-    if (selectedLearnerIds.size === 0) {
+    if (selectedLearners.size === 0) {
       return;
     }
     if (!selectedCourseId) {
       return;
     }
-    onSave(selectedLearnerIds, Number(selectedCourseId));
+    onSave(selectedLearners, Number(selectedCourseId));
     handleClose();
   };
 
   const handleClose = () => {
-    setSelectedLearnerIds(new Set());
+    setSelectedLearners(new Set());
     setSelectedCourseId(""); // Reset course selection
     setSearchTerm("");
     setPage(1);
@@ -186,14 +204,14 @@ export function EqaLearnerSelectionDialog({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label>Unassigned Learners</Label>
-                {selectedLearnerIds.size > 0 && (
+                {selectedLearners.size > 0 && (
                   <div className="text-sm text-muted-foreground">
-                    {selectedLearnerIds.size} learner{selectedLearnerIds.size !== 1 ? "s" : ""} selected
+                    {selectedLearners.size} learner{selectedLearners.size !== 1 ? "s" : ""} selected
                   </div>
                 )}
               </div>
 
-              {isLoadingLearners ? (
+              {isLoadingLearners || isFetchingLearners ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                 </div>
@@ -201,9 +219,9 @@ export function EqaLearnerSelectionDialog({
                 <>
                   <UnassignedLearnersTable
                     data={unassignedLearners}
-                    selectedIds={selectedLearnerIds}
-                    onSelectionChange={setSelectedLearnerIds}
-                    isLoading={isLoadingLearners}
+                    selectedLearners={selectedLearners}
+                    onSelectionChange={setSelectedLearners}
+                    isLoading={isLoadingLearners || isFetchingLearners}
                     currentEqaId={currentEqaId}
                   />
 
@@ -242,10 +260,10 @@ export function EqaLearnerSelectionDialog({
           <Button
           type="button"
             onClick={handleSave}
-            disabled={selectedLearnerIds.size === 0 || !selectedCourseId}
+            disabled={selectedLearners.size === 0 || !selectedCourseId}
           >
             <Users className="mr-2 h-4 w-4" />
-            Save ({selectedLearnerIds.size})
+            Save ({selectedLearners.size})
           </Button>
         </DialogFooter>
       </DialogContent>

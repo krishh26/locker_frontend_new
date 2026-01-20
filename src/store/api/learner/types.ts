@@ -211,3 +211,34 @@ export interface UserCourseResponse {
   error?: string;
 }
 
+export interface AssignEqaToCourseRequest {
+  course_id: number;
+  eqa_id: number;
+  learner_ids: number[];
+  action: "assign" | "unassign";
+}
+
+export interface AssignEqaToCourseResponse {
+  status: boolean;
+  message?: string;
+  error?: string;
+}
+
+export interface AssignedLearnerResponse {
+  status: boolean;
+  message?: string;
+  data?: Array<{
+    learner_id: number;
+    first_name: string;
+    last_name: string;
+    user_name: string;
+    email: string;
+    course_id: number;
+    course_name: string;
+    user_course_id: number;
+    course_status: string;
+    start_date: string;
+    end_date: string;
+  }>;
+  error?: string;
+}

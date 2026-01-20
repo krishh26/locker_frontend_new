@@ -26,15 +26,15 @@ interface UnassignedLearner extends LearnerListItem {
 
 interface UnassignedLearnersTableProps {
   data: UnassignedLearner[];
-  selectedIds: Set<number>;
-  onSelectionChange: (ids: Set<number>) => void;
+  selectedLearners: Set<LearnerListItem>;
+  onSelectionChange: (learners: Set<LearnerListItem>) => void;
   isLoading?: boolean;
   currentEqaId?: number;
 }
 
 export function UnassignedLearnersTable({
   data,
-  selectedIds,
+  selectedLearners,
   onSelectionChange,
   isLoading = false,
   currentEqaId,
@@ -53,36 +53,55 @@ export function UnassignedLearnersTable({
     });
   }, [data, currentEqaId]);
 
+  // Create a Map for quick lookup by learner_id
+  const selectedLearnersMap = useMemo(() => {
+    const map = new Map<number, LearnerListItem>();
+    selectedLearners.forEach((learner) => {
+      map.set(learner.learner_id, learner);
+    });
+    return map;
+  }, [selectedLearners]);
+
   const allSelected = useMemo(() => {
     if (filteredData.length === 0) return false;
-    return filteredData.every((item) => selectedIds.has(item.learner_id));
-  }, [filteredData, selectedIds]);
+    return filteredData.every((item) => selectedLearnersMap.has(item.learner_id));
+  }, [filteredData, selectedLearnersMap]);
 
   const someSelected = useMemo(() => {
     if (filteredData.length === 0) return false;
-    return filteredData.some((item) => selectedIds.has(item.learner_id));
-  }, [filteredData, selectedIds]);
+    return filteredData.some((item) => selectedLearnersMap.has(item.learner_id));
+  }, [filteredData, selectedLearnersMap]);
 
   const handleSelectAll = (checked: boolean) => {
-    const newSelection = new Set(selectedIds);
+    const newSelection = new Set(selectedLearners);
     if (checked) {
       filteredData.forEach((item) => {
-        newSelection.add(item.learner_id);
+        newSelection.add(item);
       });
     } else {
-      filteredData.forEach((item) => {
-        newSelection.delete(item.learner_id);
+      // Remove learners that are in filteredData
+      const filteredIds = new Set(filteredData.map((item) => item.learner_id));
+      selectedLearners.forEach((learner) => {
+        if (filteredIds.has(learner.learner_id)) {
+          newSelection.delete(learner);
+        }
       });
     }
     onSelectionChange(newSelection);
   };
 
-  const handleSelectItem = (id: number, checked: boolean) => {
-    const newSelection = new Set(selectedIds);
+  const handleSelectItem = (learner: UnassignedLearner, checked: boolean) => {
+    const newSelection = new Set(selectedLearners);
     if (checked) {
-      newSelection.add(id);
+      newSelection.add(learner);
     } else {
-      newSelection.delete(id);
+      // Find and remove the learner object from the set by ID
+      const learnerToRemove = Array.from(selectedLearners).find(
+        (selectedLearner) => selectedLearner.learner_id === learner.learner_id
+      );
+      if (learnerToRemove) {
+        newSelection.delete(learnerToRemove);
+      }
     }
     onSelectionChange(newSelection);
   };
@@ -197,7 +216,7 @@ export function UnassignedLearnersTable({
         </TableHeader>
         <TableBody>
           {filteredData.map((learner) => {
-            const isSelected = selectedIds.has(learner.learner_id);
+            const isSelected = selectedLearnersMap.has(learner.learner_id);
             const learnerName = `${learner.first_name} ${learner.last_name}`.trim() || learner.user_name;
             const courseInfo = getLearnerCourseInfo(learner);
 
@@ -207,7 +226,7 @@ export function UnassignedLearnersTable({
                   <Checkbox
                     checked={isSelected}
                     onCheckedChange={(checked) =>
-                      handleSelectItem(learner.learner_id, checked === true)
+                      handleSelectItem(learner, checked === true)
                     }
                     aria-label={`Select ${learnerName}`}
                   />

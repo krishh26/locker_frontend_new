@@ -54,7 +54,7 @@ import type { AssignedLearner } from "@/store/api/user/types";
 
 interface AssignedLearnersDataTableProps {
   data: AssignedLearner[];
-  onRemove: (learnerId: number, courseId: number) => void;
+  onRemove: (learnerId: number, courseId: number) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -89,12 +89,11 @@ export function AssignedLearnersDataTable({
     setRemoveDialogOpen(true);
   };
 
-  const handleRemoveConfirm = () => {
+  const handleRemoveConfirm = async () => {
     if (!learnerToRemove) return;
-    onRemove(learnerToRemove.learner_id, learnerToRemove.course_id);
+    await onRemove(learnerToRemove.learner_id, learnerToRemove.course_id);
     setRemoveDialogOpen(false);
     setLearnerToRemove(null);
-    toast.success("Learner removed from assignment");
   };
 
   const handleExportCsv = () => {
@@ -209,23 +208,15 @@ export function AssignedLearnersDataTable({
         cell: ({ row }) => {
           const learner = row.original;
           return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem
+                <Button
+                  variant="outline"
+                  type="button"
+                  size="sm"
                   onClick={() => handleRemoveClick(learner)}
-                  className="text-destructive"
+                  className="cursor-pointer hover:bg-destructive/10 text-destructive"
                 >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Remove
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
           );
         },
       },

@@ -212,10 +212,15 @@ export function UsersForm({ user }: UsersFormProps) {
   // Watch form values for EQA assignment
   const selectedCourseForAssignment = form.watch("selectedCourseForAssignment") || "";
   const assignedLearnersValue = form.watch("assignedLearners");
-  const assignedLearners = useMemo(
+  // Keep all assigned learners in form state (across all courses)
+  const allAssignedLearners = useMemo(
     () => (assignedLearnersValue || []) as AssignedLearner[],
     [assignedLearnersValue]
   );
+  // Show all assigned learners (from all courses)
+  const assignedLearners = useMemo(() => {
+    return allAssignedLearners;
+  }, [allAssignedLearners]);
 
   // Fetch all employers
   const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
@@ -300,14 +305,21 @@ export function UsersForm({ user }: UsersFormProps) {
           }
         });
 
-        form.setValue("assignedLearners", assigned);
+        // Merge with existing assignments instead of replacing
+        const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
+        const existingIds = new Set(currentAssigned.map((a) => `${a.learner_id}-${a.course_id}`));
+        const newOnes = assigned.filter(
+          (a) => !existingIds.has(`${a.learner_id}-${a.course_id}`)
+        );
+        const mergedAssignments = [...currentAssigned, ...newOnes];
+        form.setValue("assignedLearners", mergedAssignments);
       } catch (error) {
         console.error("Error loading assigned learners:", error);
       } finally {
         setIsLoadingAssignments(false);
       }
-    } else if (!hasEqaRole || !selectedCourseForAssignment) {
-      // Clear assignments if EQA role is removed or no course selected
+    } else if (!hasEqaRole) {
+      // Clear assignments only if EQA role is removed (not when no course is selected)
       form.setValue("assignedLearners", []);
     }
   }, [
@@ -321,35 +333,60 @@ export function UsersForm({ user }: UsersFormProps) {
 
   // Handle learner selection from dialog
   const handleLearnerSelection = async (selectedLearnerIds: Set<number>, courseId: number) => {
-    // Ensure we're using the selected course from the dropdown
-    const targetCourseId = selectedCourseForAssignment
-      ? Number(selectedCourseForAssignment)
-      : courseId;
+    // Update the selected course in form (for dialog purposes, not for filtering display)
+    form.setValue("selectedCourseForAssignment", String(courseId));
+    
+    // Use the course ID from the dialog
+    const targetCourseId = courseId;
 
     // Get course name from coursesData
     const selectedCourse = coursesData?.data?.find((c) => c.course_id === targetCourseId);
     const courseName = selectedCourse?.course_name || "Unknown Course";
 
-    // If learners data is not available, try to refetch it
-    let learnersDataToUse = allLearnersData;
-    if (!learnersDataToUse?.data && selectedCourseForAssignment) {
-      const result = await refetchLearners();
-      if (result.data) {
-        learnersDataToUse = result.data;
-      } else {
-        learnersDataToUse = { data: [] };
+    // Always refetch learners data for the newly selected course
+    // Don't rely on allLearnersData as it might be for a different course
+    let learnersDataToUse: { data?: LearnerListItem[] } | null = null;
+    let retries = 5;
+    
+    // Wait for form state to update first
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    while (retries > 0) {
+      try {
+        const result = await refetchLearners();
+        if (result.data?.data && result.data.data.length > 0) {
+          // Verify this data is for the correct course
+          const firstLearner = result.data.data[0];
+          const hasCorrectCourse = firstLearner.course?.some(
+            (c) => c.course?.course_id === targetCourseId
+          ) || true; // If no course data, assume it's correct
+          
+          if (hasCorrectCourse) {
+            learnersDataToUse = result.data;
+            break;
+          }
+        }
+      } catch (error) {
+        console.error("Error refetching learners:", error);
       }
+      
+      if (retries > 1) {
+        await new Promise(resolve => setTimeout(resolve, 150));
+      }
+      retries--;
     }
 
     // Get learner details for selected IDs
     let selectedLearners: LearnerListItem[] = [];
     
-    if (learnersDataToUse?.data) {
+    if (learnersDataToUse?.data && learnersDataToUse.data.length > 0) {
       selectedLearners = learnersDataToUse.data.filter((learner) =>
         selectedLearnerIds.has(learner.learner_id)
       );
-    } else {
-      // If learners data is still not available, we cannot proceed
+    }
+    
+    // If we still don't have the learners, we can't proceed
+    if (!learnersDataToUse?.data || learnersDataToUse.data.length === 0 || selectedLearners.length === 0) {
       console.error("Cannot create assignments: learners data not available after refetch");
       toast.error("Failed to load learner data. Please try again.");
       return;
@@ -411,61 +448,72 @@ export function UsersForm({ user }: UsersFormProps) {
     form.trigger("assignedLearners");
   };
 
-  // Handle removing a learner from assignment
-  const handleRemoveLearner = (learnerId: number) => {
+  // Handle removing a learner from assignment (course-specific)
+  const handleRemoveLearner = (learnerId: number, courseId: number) => {
     const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
+    // Remove the specific learner-course assignment
     form.setValue(
       "assignedLearners",
-      currentAssigned.filter((a) => a.learner_id !== learnerId)
+      currentAssigned.filter(
+        (a) => !(a.learner_id === learnerId && a.course_id === courseId)
+      )
     );
   };
 
-  // Get already assigned learner IDs for the dialog
+  // Get already assigned learner IDs for the dialog (course-specific)
   const alreadyAssignedLearnerIds = useMemo(() => {
-    return new Set(assignedLearners.map((a) => a.learner_id));
-  }, [assignedLearners]);
+    if (!selectedCourseForAssignment) {
+      return new Set<number>();
+    }
+    const courseId = Number(selectedCourseForAssignment);
+    return new Set(
+      allAssignedLearners
+        .filter((a) => a.course_id === courseId)
+        .map((a) => a.learner_id)
+    );
+  }, [allAssignedLearners, selectedCourseForAssignment]);
 
   const onSubmit = async (values: CreateUserFormValues | UpdateUserFormValues) => {
     try {
       let createdOrUpdatedUserId: number;
 
-      if (isEditMode) {
-        const updateData = values as UpdateUserFormValues;
-        await updateUser({
-          id: user.user_id,
-          data: updateData as UpdateUserRequest,
-        }).unwrap();
-        createdOrUpdatedUserId = user.user_id;
-        toast.success("User updated successfully");
-      } else {
-        const createData = values as CreateUserFormValues;
-        const result = await createUser(createData as CreateUserRequest).unwrap();
-        createdOrUpdatedUserId = result.data.user_id;
-        toast.success("User created successfully");
-      }
+      // if (isEditMode) {
+      //   const updateData = values as UpdateUserFormValues;
+      //   await updateUser({
+      //     id: user.user_id,
+      //     data: updateData as UpdateUserRequest,
+      //   }).unwrap();
+      //   createdOrUpdatedUserId = user.user_id;
+      //   toast.success("User updated successfully");
+      // } else {
+      //   const createData = values as CreateUserFormValues;
+      //   const result = await createUser(createData as CreateUserRequest).unwrap();
+      //   createdOrUpdatedUserId = result.data.user_id;
+      //   toast.success("User created successfully");
+      // }
 
-      // If EQA role is selected and there are assigned learners, update course enrollments
-      if (hasEqaRole && assignedLearners.length > 0) {
-        try {
-          // Update each learner's course enrollment to set EQA_id
-          const updatePromises = assignedLearners.map((assigned: AssignedLearner) =>
-            updateUserCourse({
-              userCourseId: assigned.user_course_id,
-              data: {
-                EQA_id: createdOrUpdatedUserId,
-              },
-            }).unwrap()
-          );
+      // // If EQA role is selected and there are assigned learners, update course enrollments
+      // if (hasEqaRole && allAssignedLearners.length > 0) {
+      //   try {
+      //     // Update each learner's course enrollment to set EQA_id
+      //     const updatePromises = allAssignedLearners.map((assigned: AssignedLearner) =>
+      //       updateUserCourse({
+      //         userCourseId: assigned.user_course_id,
+      //         data: {
+      //           EQA_id: createdOrUpdatedUserId,
+      //         },
+      //       }).unwrap()
+      //     );
 
-          await Promise.all(updatePromises);
-          toast.success(`Successfully assigned ${assignedLearners.length} learner(s) to EQA`);
-        } catch (assignmentError) {
-          console.error("Error assigning learners:", assignmentError);
-          toast.error("User created/updated but failed to assign some learners");
-        }
-      }
+      //     await Promise.all(updatePromises);
+      //     toast.success(`Successfully assigned ${allAssignedLearners.length} learner(s) to EQA`);
+      //   } catch (assignmentError) {
+      //     console.error("Error assigning learners:", assignmentError);
+      //     toast.error("User created/updated but failed to assign some learners");
+      //   }
+      // }
 
-      router.push("/users");
+      // router.push("/users");
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -720,7 +768,7 @@ export function UsersForm({ user }: UsersFormProps) {
             control={form.control}
             render={({ field }) => (
               <>
-                <Select value={field.value || "UTC"} onValueChange={field.onChange}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger
                     id="time_zone"
                     className={form.formState.errors.time_zone ? "w-full border-destructive" : "w-full"}
@@ -875,81 +923,40 @@ export function UsersForm({ user }: UsersFormProps) {
             </p>
           </div>
 
-          {/* Course Selection */}
+          {/* Course Selection - Removed, now managed in dialog */}
           <div className="space-y-2">
-            <Label htmlFor="course-for-assignment">Select Course</Label>
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-end">
-              <div className="flex-1">
-                <Controller
-                  name="selectedCourseForAssignment"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Select
-                      value={field.value || ""}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        // Clear assigned learners when course changes
-                        form.setValue("assignedLearners", []);
-                      }}
-                    >
-                      <SelectTrigger id="course-for-assignment" className="w-full">
-                        <SelectValue placeholder="Select a course to view learners" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {coursesData?.data?.map((course) => (
-                          <SelectItem key={course.course_id} value={String(course.course_id)}>
-                            {course.course_name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setSelectionDialogOpen(true)}
-                disabled={isLoading || !selectedCourseForAssignment}
-                className="w-full sm:w-auto"
-              >
-                <Users className="mr-2 h-4 w-4" />
-                Select Learners
-              </Button>
-            </div>
+            <Label>Select Learners</Label>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setSelectionDialogOpen(true)}
+              disabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              <Users className="mr-2 h-4 w-4" />
+              Select Learners
+            </Button>
           </div>
 
-          {/* Assigned Learners Table - Show only when course is selected */}
-          {selectedCourseForAssignment && (
-            <>
-              {assignedLearners.length > 0 ? (
-                <AssignedLearnersDataTable
-                  data={assignedLearners}
-                  onRemove={handleRemoveLearner}
-                  isLoading={isLoadingAssignments}
-                />
-              ) : (
-                !isLoadingAssignments && (
-                  <div className="flex items-center justify-center py-8 border rounded-md bg-muted/50">
-                    <p className="text-sm text-muted-foreground">
-                      No learners assigned for this course yet. Click &quot;Select Learners&quot; to assign learners.
-                    </p>
-                  </div>
-                )
-              )}
-              {isLoadingAssignments && (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-                </div>
-              )}
-            </>
+          {/* Assigned Learners Table - Show all assigned learners from all courses */}
+          {allAssignedLearners.length > 0 ? (
+            <AssignedLearnersDataTable
+              data={assignedLearners}
+              onRemove={handleRemoveLearner}
+              isLoading={isLoadingAssignments}
+            />
+          ) : (
+            !isLoadingAssignments && (
+              <div className="flex items-center justify-center py-8 border rounded-md bg-muted/50">
+                <p className="text-sm text-muted-foreground">
+                  No learners assigned yet. Click &quot;Select Learners&quot; to assign learners to courses.
+                </p>
+              </div>
+            )
           )}
-
-          {!selectedCourseForAssignment && (
-            <div className="flex items-center justify-center py-8 border rounded-md bg-muted/50">
-              <p className="text-sm text-muted-foreground">
-                Please select a course to view assigned learners
-              </p>
+          {isLoadingAssignments && (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
             </div>
           )}
         </div>

@@ -54,7 +54,7 @@ import type { AssignedLearner } from "@/store/api/user/types";
 
 interface AssignedLearnersDataTableProps {
   data: AssignedLearner[];
-  onRemove: (learnerId: number) => void;
+  onRemove: (learnerId: number, courseId: number) => void;
   isLoading?: boolean;
 }
 
@@ -91,7 +91,7 @@ export function AssignedLearnersDataTable({
 
   const handleRemoveConfirm = () => {
     if (!learnerToRemove) return;
-    onRemove(learnerToRemove.learner_id);
+    onRemove(learnerToRemove.learner_id, learnerToRemove.course_id);
     setRemoveDialogOpen(false);
     setLearnerToRemove(null);
     toast.success("Learner removed from assignment");

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useFormContext, Controller } from "react-hook-form";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,8 +52,8 @@ export function EqaLearnerSelectionDialog({
   currentEqaId,
   alreadyAssignedLearnerIds = new Set(),
 }: EqaLearnerSelectionDialogProps) {
-  const form = useFormContext();
-  const selectedCourseForAssignment = form.watch("selectedCourseForAssignment") || "";
+  // Use internal state for course selection instead of form state
+  const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   
   const [selectedLearnerIds, setSelectedLearnerIds] = useState<Set<number>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,42 +74,47 @@ export function EqaLearnerSelectionDialog({
       page,
       page_size: pageSize,
       keyword: debouncedSearch || undefined,
-      course_id: selectedCourseForAssignment ? Number(selectedCourseForAssignment) : undefined,
+      course_id: selectedCourseId ? Number(selectedCourseId) : undefined,
     },
     {
-      skip: !open || !selectedCourseForAssignment,
+      skip: !open || !selectedCourseId,
     }
   );
 
   // Filter out already assigned learners
   const unassignedLearners = useMemo(() => {
     const learners = (learnersData?.data || []) as UnassignedLearner[];
+    const courseId = selectedCourseId ? Number(selectedCourseId) : null;
+    
     return learners.filter((learner) => {
-      // Filter out if already in the assigned list
+      // Filter out if already in the assigned list for this course
       if (alreadyAssignedLearnerIds.has(learner.learner_id)) {
         return false;
       }
       // Filter out if already assigned to this EQA (when editing)
-      if (currentEqaId && learner.course && Array.isArray(learner.course)) {
-        return !learner.course.some((course) => course.EQA_id === currentEqaId);
+      if (currentEqaId && learner.course && Array.isArray(learner.course) && courseId) {
+        return !learner.course.some(
+          (course) => course.EQA_id === currentEqaId && course.course?.course_id === courseId
+        );
       }
       return true;
     });
-  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId]);
+  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId, selectedCourseId]);
 
   const handleSave = () => {
     if (selectedLearnerIds.size === 0) {
       return;
     }
-    if (!selectedCourseForAssignment) {
+    if (!selectedCourseId) {
       return;
     }
-    onSave(selectedLearnerIds, Number(selectedCourseForAssignment));
+    onSave(selectedLearnerIds, Number(selectedCourseId));
     handleClose();
   };
 
   const handleClose = () => {
     setSelectedLearnerIds(new Set());
+    setSelectedCourseId(""); // Reset course selection
     setSearchTerm("");
     setPage(1);
     setPageSize(10);
@@ -146,29 +150,23 @@ export function EqaLearnerSelectionDialog({
             {isLoadingCourses ? (
               <Skeleton className="h-10 w-full" />
             ) : (
-              <Controller
-                name="selectedCourseForAssignment"
-                control={form.control}
-                render={({ field }) => (
-                  <Select value={field.value || ""} onValueChange={field.onChange}>
-                    <SelectTrigger id="course-select" className="w-full">
-                      <SelectValue placeholder="Select a course" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {courses.map((course) => (
-                        <SelectItem key={course.course_id} value={String(course.course_id)}>
-                          {course.course_name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
+              <Select value={selectedCourseId} onValueChange={setSelectedCourseId}>
+                <SelectTrigger id="course-select" className="w-full">
+                  <SelectValue placeholder="Select a course" />
+                </SelectTrigger>
+                <SelectContent>
+                  {courses.map((course) => (
+                    <SelectItem key={course.course_id} value={String(course.course_id)}>
+                      {course.course_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
           </div>
 
           {/* Search */}
-          {selectedCourseForAssignment && (
+          {selectedCourseId && (
             <div className="space-y-2">
               <Label htmlFor="learner-search">Search Learners</Label>
               <Input
@@ -184,7 +182,7 @@ export function EqaLearnerSelectionDialog({
           )}
 
           {/* Learners Table */}
-          {selectedCourseForAssignment && (
+          {selectedCourseId && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label>Unassigned Learners</Label>
@@ -230,7 +228,7 @@ export function EqaLearnerSelectionDialog({
             </div>
           )}
 
-          {!selectedCourseForAssignment && (
+          {!selectedCourseId && (
             <div className="flex items-center justify-center py-8 text-sm text-muted-foreground">
               Please select a course to view learners
             </div>
@@ -244,7 +242,7 @@ export function EqaLearnerSelectionDialog({
           <Button
           type="button"
             onClick={handleSave}
-            disabled={selectedLearnerIds.size === 0 || !selectedCourseForAssignment}
+            disabled={selectedLearnerIds.size === 0 || !selectedCourseId}
           >
             <Users className="mr-2 h-4 w-4" />
             Save ({selectedLearnerIds.size})

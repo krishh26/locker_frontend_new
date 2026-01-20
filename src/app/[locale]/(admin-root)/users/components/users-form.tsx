@@ -259,18 +259,18 @@ export function UsersForm({ user }: UsersFormProps) {
   // Load existing assignments from API when editing EQA user
   useEffect(() => {
     if (isEditMode && hasEqaRole && eqaAssignedLearnersData?.data) {
-      const assigned: AssignedLearner[] = eqaAssignedLearnersData.data.map((learner) => ({
-        learner_id: learner.learner_id,
-        first_name: learner.first_name,
-        last_name: learner.last_name,
-        user_name: learner.user_name,
-        email: learner.email,
-        course_id: learner.course_id,
-        course_name: learner.course_name,
-        user_course_id: learner.user_course_id,
-        course_status: learner.course_status,
-        start_date: learner.start_date,
-        end_date: learner.end_date,
+      const assigned: AssignedLearner[] = eqaAssignedLearnersData.data.map((item) => ({
+        learner_id: item.learner_id?.learner_id || 0,
+        first_name: item.learner_id?.first_name || "",
+        last_name: item.learner_id?.last_name || "",
+        user_name: item.learner_id?.user_name || "",
+        email: item.learner_id?.email || "",
+        course_id: item.course?.course_id || 0,
+        course_name: item.course?.course_name || "",
+        user_course_id: item.user_course_id || 0,
+        course_status: item.course_status || "",
+        start_date: item.start_date || "",
+        end_date: item.end_date || "",
       }));
 
       form.setValue("assignedLearners", assigned);

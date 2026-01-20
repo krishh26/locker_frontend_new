@@ -228,17 +228,24 @@ export interface AssignedLearnerResponse {
   status: boolean;
   message?: string;
   data?: Array<{
-    learner_id: number;
-    first_name: string;
-    last_name: string;
-    user_name: string;
-    email: string;
-    course_id: number;
-    course_name: string;
     user_course_id: number;
-    course_status: string;
+    course: {
+      course_id: number;
+      course_name: string;
+      [key: string]: unknown;
+    };
     start_date: string;
     end_date: string;
+    course_status: string;
+    learner_id: {
+      learner_id: number;
+      first_name: string;
+      last_name: string;
+      user_name: string;
+      email: string;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
   }>;
   error?: string;
 }

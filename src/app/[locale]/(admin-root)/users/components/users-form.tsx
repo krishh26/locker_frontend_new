@@ -477,22 +477,22 @@ export function UsersForm({ user }: UsersFormProps) {
     try {
       let createdOrUpdatedUserId: number;
 
-      // if (isEditMode) {
-      //   const updateData = values as UpdateUserFormValues;
-      //   await updateUser({
-      //     id: user.user_id,
-      //     data: updateData as UpdateUserRequest,
-      //   }).unwrap();
-      //   createdOrUpdatedUserId = user.user_id;
-      //   toast.success("User updated successfully");
-      // } else {
-      //   const createData = values as CreateUserFormValues;
-      //   const result = await createUser(createData as CreateUserRequest).unwrap();
-      //   createdOrUpdatedUserId = result.data.user_id;
-      //   toast.success("User created successfully");
-      // }
+      if (isEditMode) {
+        const updateData = values as UpdateUserFormValues;
+        await updateUser({
+          id: user.user_id,
+          data: updateData as UpdateUserRequest,
+        }).unwrap();
+        createdOrUpdatedUserId = user.user_id;
+        toast.success("User updated successfully");
+      } else {
+        const createData = values as CreateUserFormValues;
+        const result = await createUser(createData as CreateUserRequest).unwrap();
+        createdOrUpdatedUserId = result.data.user_id;
+        toast.success("User created successfully");
+      }
 
-      // // If EQA role is selected and there are assigned learners, update course enrollments
+      // If EQA role is selected and there are assigned learners, update course enrollments
       // if (hasEqaRole && allAssignedLearners.length > 0) {
       //   try {
       //     // Update each learner's course enrollment to set EQA_id
@@ -513,7 +513,7 @@ export function UsersForm({ user }: UsersFormProps) {
       //   }
       // }
 
-      // router.push("/users");
+      router.push("/users");
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error

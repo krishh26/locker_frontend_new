@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageSquare, Upload, X, Download, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,11 +35,11 @@ import {
 const fileTypes = ["PDF", "CSV", "DOC", "DOCX"];
 const maxFileSize = 10 * 1024 * 1024; // 10MB
 
-const acknowledgementSchema = z.object({
+const acknowledgementSchema = (t: (key: string) => string) => z.object({
   message: z
     .string()
-    .min(1, "Message is required")
-    .max(1000, "Message must be at most 1000 characters"),
+    .min(1, t("form.messageRequired"))
+    .max(1000, t("form.messageMaxLength")),
   file: z
     .instanceof(File)
     .optional()
@@ -47,7 +48,7 @@ const acknowledgementSchema = z.object({
         if (!file) return true;
         return file.size <= maxFileSize;
       },
-      { message: "File size must be less than 10MB" }
+      { message: t("form.fileSizeError") }
     )
     .refine(
       (file) => {
@@ -55,13 +56,15 @@ const acknowledgementSchema = z.object({
         const extension = file.name.split(".").pop()?.toUpperCase();
         return extension && fileTypes.includes(extension);
       },
-      { message: "Only PDF, CSV, DOC, DOCX files are allowed" }
+      { message: t("form.fileTypeError") }
     ),
 });
 
-type AcknowledgementFormData = z.infer<typeof acknowledgementSchema>;
+type AcknowledgementFormData = z.infer<ReturnType<typeof acknowledgementSchema>>;
 
 export function AcknowledgeMessagePageContent() {
+  const t = useTranslations("acknowledgeMessage");
+  const common = useTranslations("common");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [existingFileUrl, setExistingFileUrl] = useState<string | null>(null);
@@ -82,7 +85,7 @@ export function AcknowledgeMessagePageContent() {
     data?.data && data.data.length > 0 ? data.data[0] : null;
 
   const form = useForm<AcknowledgementFormData>({
-    resolver: zodResolver(acknowledgementSchema),
+    resolver: zodResolver(acknowledgementSchema(t)),
     mode: "onChange",
     defaultValues: {
       message: "",
@@ -116,11 +119,11 @@ export function AcknowledgeMessagePageContent() {
       // Validate file
       const extension = file.name.split(".").pop()?.toUpperCase();
       if (!extension || !fileTypes.includes(extension)) {
-        toast.error("Only PDF, CSV, DOC, DOCX files are allowed");
+        toast.error(t("form.fileTypeError"));
         return;
       }
       if (file.size > maxFileSize) {
-        toast.error("File size must be less than 10MB");
+        toast.error(t("form.fileSizeError"));
         return;
       }
       setSelectedFile(file);
@@ -150,11 +153,11 @@ export function AcknowledgeMessagePageContent() {
     if (file) {
       const extension = file.name.split(".").pop()?.toUpperCase();
       if (!extension || !fileTypes.includes(extension)) {
-        toast.error("Only PDF, CSV, DOC, DOCX files are allowed");
+        toast.error(t("form.fileTypeError"));
         return;
       }
       if (file.size > maxFileSize) {
-        toast.error("File size must be less than 10MB");
+        toast.error(t("form.fileSizeError"));
         return;
       }
       setSelectedFile(file);
@@ -179,7 +182,7 @@ export function AcknowledgeMessagePageContent() {
           data: submitFormData,
         }).unwrap();
 
-        toast.success("Message updated successfully!");
+        toast.success(t("toast.messageUpdated"));
       } else {
         // Create new acknowledgement
         if (selectedFile) {
@@ -188,7 +191,7 @@ export function AcknowledgeMessagePageContent() {
 
         await createAcknowledgement(submitFormData).unwrap();
 
-        toast.success("Message acknowledged successfully!");
+        toast.success(t("toast.messageAcknowledged"));
       }
 
       refetch();
@@ -200,7 +203,7 @@ export function AcknowledgeMessagePageContent() {
       const errorMessage =
         error?.data?.message ||
         error?.message ||
-        "Failed to acknowledge message. Please try again.";
+        t("toast.saveFailed");
       toast.error(errorMessage);
     }
   };
@@ -213,7 +216,7 @@ export function AcknowledgeMessagePageContent() {
 
     try {
       await deleteAcknowledgement({ id: latestAcknowledgement.id }).unwrap();
-      toast.success("Acknowledgement deleted successfully!");
+      toast.success(t("toast.acknowledgementDeleted"));
       form.reset();
       setSelectedFile(null);
       setExistingFileUrl(null);
@@ -225,7 +228,7 @@ export function AcknowledgeMessagePageContent() {
       const errorMessage =
         error?.data?.message ||
         error?.message ||
-        "Failed to delete acknowledgement. Please try again.";
+        t("toast.deleteFailed");
       toast.error(errorMessage);
     }
     setDeleteDialogOpen(false);
@@ -234,7 +237,7 @@ export function AcknowledgeMessagePageContent() {
   const handleClearAll = async () => {
     try {
       await clearAllAcknowledgements().unwrap();
-      toast.success("All learner acknowledgments cleared successfully!");
+      toast.success(t("toast.allCleared"));
       form.reset();
       setSelectedFile(null);
       setExistingFileUrl(null);
@@ -246,7 +249,7 @@ export function AcknowledgeMessagePageContent() {
       const errorMessage =
         error?.data?.message ||
         error?.message ||
-        "Failed to clear acknowledgments. Please try again.";
+        t("toast.clearFailed");
       toast.error(errorMessage);
     }
     setClearAllDialogOpen(false);
@@ -260,8 +263,8 @@ export function AcknowledgeMessagePageContent() {
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Acknowledge Message"
-        subtitle="Create and manage acknowledgement messages for learners"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={MessageSquare}
       />
 
@@ -286,11 +289,11 @@ export function AcknowledgeMessagePageContent() {
               {/* Message Field */}
               <div className="space-y-2">
                 <Label htmlFor="message">
-                  Message <span className="text-destructive">*</span>
+                  {t("form.message")} <span className="text-destructive">{t("form.required")}</span>
                 </Label>
                 <Textarea
                   id="message"
-                  placeholder="Enter your acknowledgement message..."
+                  placeholder={t("form.messagePlaceholder")}
                   rows={6}
                   maxLength={1000}
                   {...form.register("message")}
@@ -303,7 +306,7 @@ export function AcknowledgeMessagePageContent() {
                     </p>
                   )}
                   <p className="text-sm text-muted-foreground ml-auto">
-                    {form.watch("message")?.length || 0} / 1000 characters
+                    {t("form.charactersCount", { count: form.watch("message")?.length || 0 })}
                   </p>
                 </div>
               </div>
@@ -312,7 +315,7 @@ export function AcknowledgeMessagePageContent() {
 
               {/* File Upload Section */}
               <div className="space-y-2">
-                <Label>Upload File</Label>
+                <Label>{t("form.uploadFile")}</Label>
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -359,7 +362,7 @@ export function AcknowledgeMessagePageContent() {
                             }}
                           >
                             <X className="h-4 w-4 mr-0" />
-                            Remove
+                            {t("form.remove")}
                           </Button>
                         )}
                       </div>
@@ -368,11 +371,11 @@ export function AcknowledgeMessagePageContent() {
                     <div className="text-center space-y-2">
                       <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                       <p className="text-sm text-muted-foreground">
-                        Drag and drop your files here or{" "}
-                        <span className="text-primary underline">Browse</span>
+                        {t("form.dragDrop")}{" "}
+                        <span className="text-primary underline">{t("form.browse")}</span>
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Max 10MB files are allowed (PDF, CSV, DOC, DOCX)
+                        {t("form.maxFileSize")}
                       </p>
                     </div>
                   )}
@@ -399,7 +402,7 @@ export function AcknowledgeMessagePageContent() {
                         disabled={isLoadingState}
                       >
                         <Download className="h-4 w-4 mr-0" />
-                        View Current File
+                        {t("form.viewCurrentFile")}
                       </Button>
                     </div>
                   )}
@@ -414,7 +417,7 @@ export function AcknowledgeMessagePageContent() {
                   disabled={isLoadingState || !latestAcknowledgement}
                 >
                   <Trash2 className="h-4 w-4 mr-0" />
-                  Clear
+                  {t("form.clear")}
                 </Button>
 
                 <Button
@@ -426,12 +429,12 @@ export function AcknowledgeMessagePageContent() {
                   {isClearing ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-0 animate-spin" />
-                      Clearing...
+                      {t("form.clearing")}
                     </>
                   ) : (
                     <>
                       <AlertTriangle className="h-4 w-4 mr-0" />
-                      Clear all learner acknowledgment
+                      {t("form.clearAll")}
                     </>
                   )}
                 </Button>
@@ -443,12 +446,12 @@ export function AcknowledgeMessagePageContent() {
                   {isCreating || isUpdating ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-0 animate-spin" />
-                      Saving...
+                      {t("form.saving")}
                     </>
                   ) : (
                     <>
                       <MessageSquare className="h-4 w-4 mr-0" />
-                      Save
+                      {common("save")}
                     </>
                   )}
                 </Button>
@@ -462,19 +465,18 @@ export function AcknowledgeMessagePageContent() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Acknowledgement</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this acknowledgement? This action
-              cannot be undone.
+              {t("dialogs.deleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("dialogs.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteCurrent}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              {t("dialogs.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -484,20 +486,18 @@ export function AcknowledgeMessagePageContent() {
       <AlertDialog open={clearAllDialogOpen} onOpenChange={setClearAllDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Clear All Learner Acknowledgments</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.clearAllTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to clear all learner acknowledgments? This
-              action will remove all acknowledgments from all learners and cannot
-              be undone.
+              {t("dialogs.clearAllDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("dialogs.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleClearAll}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Clear All
+              {t("dialogs.clearAll")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

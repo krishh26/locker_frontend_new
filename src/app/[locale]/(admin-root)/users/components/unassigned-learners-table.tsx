@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
@@ -39,6 +40,7 @@ export function UnassignedLearnersTable({
   isLoading = false,
   currentEqaId,
 }: UnassignedLearnersTableProps) {
+  const t = useTranslations("users.learnerSelection");
   // Filter out learners already assigned to this EQA (when editing)
   const filteredData = useMemo(() => {
     if (!currentEqaId) return data;
@@ -148,11 +150,11 @@ export function UnassignedLearnersTable({
               <TableHead className="w-12">
                 <Skeleton className="h-4 w-4" />
               </TableHead>
-              <TableHead>Learner Name</TableHead>
-              <TableHead>Portfolio</TableHead>
-              <TableHead>Course Status</TableHead>
-              <TableHead>Start Date</TableHead>
-              <TableHead>End Date</TableHead>
+              <TableHead>{t("learnerName")}</TableHead>
+              <TableHead>{t("portfolio")}</TableHead>
+              <TableHead>{t("courseStatus")}</TableHead>
+              <TableHead>{t("startDate")}</TableHead>
+              <TableHead>{t("endDate")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -187,7 +189,7 @@ export function UnassignedLearnersTable({
   if (filteredData.length === 0) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-sm text-muted-foreground">No unassigned learners found</div>
+        <div className="text-sm text-muted-foreground">{t("noUnassignedLearners")}</div>
       </div>
     );
   }
@@ -201,17 +203,17 @@ export function UnassignedLearnersTable({
               <Checkbox
                 checked={allSelected}
                 onCheckedChange={handleSelectAll}
-                aria-label="Select all"
+                aria-label={t("selectAll")}
                 className={
                   someSelected && !allSelected ? "data-[state=checked]:bg-primary/50" : ""
                 }
               />
             </TableHead>
-            <TableHead>Learner Name</TableHead>
-            <TableHead>Portfolio</TableHead>
-            <TableHead>Course Status</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
+            <TableHead>{t("learnerName")}</TableHead>
+            <TableHead>{t("portfolio")}</TableHead>
+            <TableHead>{t("courseStatus")}</TableHead>
+            <TableHead>{t("startDate")}</TableHead>
+            <TableHead>{t("endDate")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -241,7 +243,7 @@ export function UnassignedLearnersTable({
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      aria-label={`View portfolio for ${learnerName}`}
+                      aria-label={`${t("viewPortfolio")} ${learnerName}`}
                     >
                       <Folder className="h-4 w-4" />
                     </Button>

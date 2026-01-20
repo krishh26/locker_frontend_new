@@ -5,9 +5,11 @@ import { UserPlus } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { UsersForm } from "../../components/users-form";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 export default function AddUserPage() {
   const router = useRouter();
+  const t = useTranslations("users.pages");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
 
@@ -24,8 +26,8 @@ export default function AddUserPage() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Create New User"
-        subtitle="Fill in the form below to create a new user"
+        title={t("createTitle")}
+        subtitle={t("createSubtitle")}
         icon={UserPlus}
         showBackButton
         backButtonHref="/users"

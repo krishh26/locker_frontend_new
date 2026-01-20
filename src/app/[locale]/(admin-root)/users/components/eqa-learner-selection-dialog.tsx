@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -52,6 +53,8 @@ export function EqaLearnerSelectionDialog({
   currentEqaId,
   alreadyAssignedLearnerIds = new Set(),
 }: EqaLearnerSelectionDialogProps) {
+  const t = useTranslations("users.learnerSelection");
+  const common = useTranslations("common");
   // Use internal state for course selection instead of form state
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   
@@ -155,22 +158,22 @@ export function EqaLearnerSelectionDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-6xl! max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Select Learners</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Select a course and choose learners to assign to this EQA user.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           {/* Course Selection */}
           <div className="space-y-2">
-            <Label htmlFor="course-select">Course</Label>
+            <Label htmlFor="course-select">{t("course")}</Label>
             {isLoadingCourses ? (
               <Skeleton className="h-10 w-full" />
             ) : (
               <Select value={selectedCourseId} onValueChange={setSelectedCourseId}>
                 <SelectTrigger id="course-select" className="w-full">
-                  <SelectValue placeholder="Select a course" />
+                  <SelectValue placeholder={t("coursePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {courses.map((course) => (
@@ -186,10 +189,10 @@ export function EqaLearnerSelectionDialog({
           {/* Search */}
           {selectedCourseId && (
             <div className="space-y-2">
-              <Label htmlFor="learner-search">Search Learners</Label>
+              <Label htmlFor="learner-search">{t("searchLearners")}</Label>
               <Input
                 id="learner-search"
-                placeholder="Search by name or email..."
+                placeholder={t("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -203,10 +206,10 @@ export function EqaLearnerSelectionDialog({
           {selectedCourseId && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label>Unassigned Learners</Label>
+                <Label>{t("unassignedLearners")}</Label>
                 {selectedLearners.size > 0 && (
                   <div className="text-sm text-muted-foreground">
-                    {selectedLearners.size} learner{selectedLearners.size !== 1 ? "s" : ""} selected
+                    {selectedLearners.size} {selectedLearners.size !== 1 ? t("learnersSelectedPlural") : t("learnersSelected")}
                   </div>
                 )}
               </div>
@@ -248,14 +251,14 @@ export function EqaLearnerSelectionDialog({
 
           {!selectedCourseId && (
             <div className="flex items-center justify-center py-8 text-sm text-muted-foreground">
-              Please select a course to view learners
+              {t("pleaseSelectCourse")}
             </div>
           )}
         </div>
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={handleClose}>
-            Cancel
+            {common("cancel")}
           </Button>
           <Button
           type="button"
@@ -263,7 +266,7 @@ export function EqaLearnerSelectionDialog({
             disabled={selectedLearners.size === 0 || !selectedCourseId}
           >
             <Users className="mr-2 h-4 w-4" />
-            Save ({selectedLearners.size})
+            {common("save")} ({selectedLearners.size})
           </Button>
         </DialogFooter>
       </DialogContent>

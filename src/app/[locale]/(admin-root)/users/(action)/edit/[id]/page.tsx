@@ -13,10 +13,12 @@ import { PageHeader } from "@/components/dashboard/page-header";
 
 import { UsersForm } from "../../../components/users-form";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 export default function EditUserPage() {
   const params = useParams();
   const router = useRouter();
+  const t = useTranslations("users.pages");
   const userId = params.id as string;
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
@@ -42,8 +44,8 @@ export default function EditUserPage() {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader
-          title="Edit User"
-          subtitle="Update user information below"
+          title={t("editTitle")}
+          subtitle={t("editSubtitle")}
           icon={UserCog}
           showBackButton
           backButtonHref="/users"
@@ -66,15 +68,15 @@ export default function EditUserPage() {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader
-          title="Edit User"
-          subtitle="Update user information below"
+          title={t("editTitle")}
+          subtitle={t("editSubtitle")}
           icon={UserCog}
           showBackButton
           backButtonHref="/users"
         />
         <div className="">
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center">
-            <p className="text-destructive">User not found</p>
+            <p className="text-destructive">{t("userNotFound")}</p>
           </div>
         </div>
       </div>

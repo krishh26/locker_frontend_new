@@ -7,8 +7,10 @@ import { CalendarView } from "./calendar-view";
 import { CalendarFilters } from "./calendar-filters";
 import { useGetSessionsQuery } from "@/store/api/session/sessionApi";
 import type { SessionFilters } from "@/store/api/session/types";
+import { useTranslations } from "next-intl";
 
 export function CalendarPageContent() {
+  const t = useTranslations("calendar");
   const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
   const [filters, setFilters] = useState<SessionFilters>({
     page: 1,
@@ -46,8 +48,8 @@ export function CalendarPageContent() {
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
       <PageHeader
-        title="Calendar"
-        subtitle="Manage sessions and appointments"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={CalendarIcon}
       />
 

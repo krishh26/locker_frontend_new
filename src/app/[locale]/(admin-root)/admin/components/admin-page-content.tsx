@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 
-import { Building2, BookOpen, GraduationCap, Megaphone, Settings, Users } from "lucide-react";
+import { Building2, GraduationCap, Megaphone, Settings, Users } from "lucide-react";
 
 import { PageHeader } from "@/components/dashboard/page-header";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface AdminModule {
   title: string;
@@ -17,44 +18,46 @@ interface AdminModule {
   color?: string;
 }
 
-const adminModules: AdminModule[] = [
-  {
-    title: "User Management",
-    description: "Efficiently manage users with streamlined operations including add, delete, and update functionalities.",
-    href: "/users",
-    icon: Users,
-    color: "text-blue-600",
-  },
-  {
-    title: "Learner Management",
-    description: "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs.",
-    href: "/learners",
-    icon: GraduationCap,
-    color: "text-green-600",
-  },
-  {
-    title: "Employer Management",
-    description: "Manage employer information, add, update, and delete employer records, and assign learners to employers.",
-    href: "/employers",
-    icon: Building2,
-    color: "text-purple-600",
-  },
-  {
-    title: "Broadcast Management",
-    description: "Create and manage broadcast messages, send notifications to users, learners, or specific courses.",
-    href: "/broadcast",
-    icon: Megaphone,
-    color: "text-orange-600",
-  },
-];
-
 export function AdminPageContent() {
+  const t = useTranslations("admin");
+  
+  const adminModules: AdminModule[] = [
+    {
+      title: t("modules.userManagement.title"),
+      description: t("modules.userManagement.description"),
+      href: "/users",
+      icon: Users,
+      color: "text-blue-600",
+    },
+    {
+      title: t("modules.learnerManagement.title"),
+      description: t("modules.learnerManagement.description"),
+      href: "/learners",
+      icon: GraduationCap,
+      color: "text-green-600",
+    },
+    {
+      title: t("modules.employerManagement.title"),
+      description: t("modules.employerManagement.description"),
+      href: "/employers",
+      icon: Building2,
+      color: "text-purple-600",
+    },
+    {
+      title: t("modules.broadcastManagement.title"),
+      description: t("modules.broadcastManagement.description"),
+      href: "/broadcast",
+      icon: Megaphone,
+      color: "text-orange-600",
+    },
+  ];
+
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="Admin Modules"
-        subtitle="Manage all administrative functions and system configurations"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={Settings}
       />
 
@@ -89,7 +92,7 @@ export function AdminPageContent() {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="flex items-center justify-center text-sm text-muted-foreground group-hover:text-primary transition-colors">
-                    <span>View Details</span>
+                    <span>{t("viewDetails")}</span>
                     <svg
                       className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                       fill="none"

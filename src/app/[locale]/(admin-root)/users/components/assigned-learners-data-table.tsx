@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import {
   type ColumnDef,
   type SortingState,
@@ -63,6 +64,7 @@ export function AssignedLearnersDataTable({
   onRemove,
   isLoading = false,
 }: AssignedLearnersDataTableProps) {
+  const t = useTranslations("users.assignedLearners");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -98,16 +100,16 @@ export function AssignedLearnersDataTable({
 
   const handleExportCsv = () => {
     if (!data || data.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("noDataToExport"));
       return;
     }
 
     const headers = [
-      "Learner Name",
-      "Course Name",
-      "Course Status",
-      "Start Date",
-      "End Date",
+      t("learnerName"),
+      t("courseName"),
+      t("courseStatus"),
+      t("startDate"),
+      t("endDate"),
     ];
     const rows = data.map((learner) => [
       `${learner.first_name} ${learner.last_name}`,
@@ -129,11 +131,11 @@ export function AssignedLearnersDataTable({
     link.download = `assigned_learners_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("csvExported"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("pdfExportInfo"));
   };
 
   const formatDate = (dateString: string) => {
@@ -154,7 +156,7 @@ export function AssignedLearnersDataTable({
     () => [
       {
         accessorKey: "learner_name",
-        header: "Learner Name",
+        header: t("learnerName"),
         cell: ({ row }) => {
           const learner = row.original;
           return `${learner.first_name} ${learner.last_name}`;
@@ -162,7 +164,7 @@ export function AssignedLearnersDataTable({
       },
       {
         accessorKey: "portfolio",
-        header: "Portfolio",
+        header: t("portfolio"),
         cell: ({ row }) => {
           const learner = row.original;
           return (
@@ -174,7 +176,7 @@ export function AssignedLearnersDataTable({
                 variant="ghost"
                 size="icon"
                 className="h-8 w-8"
-                aria-label={`View portfolio for ${learner.first_name} ${learner.last_name}`}
+                aria-label={`${t("viewPortfolio")} ${learner.first_name} ${learner.last_name}`}
               >
                 <Folder className="h-4 w-4" />
               </Button>
@@ -184,27 +186,27 @@ export function AssignedLearnersDataTable({
       },
       {
         accessorKey: "course_name",
-        header: "Course Name",
+        header: t("courseName"),
         cell: ({ row }) => row.original.course_name,
       },
       {
         accessorKey: "course_status",
-        header: "Course Status",
+        header: t("courseStatus"),
         cell: ({ row }) => row.original.course_status,
       },
       {
         accessorKey: "start_date",
-        header: "Start Date",
+        header: t("startDate"),
         cell: ({ row }) => formatDate(row.original.start_date),
       },
       {
         accessorKey: "end_date",
-        header: "End Date",
+        header: t("endDate"),
         cell: ({ row }) => formatDate(row.original.end_date),
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("actions"),
         cell: ({ row }) => {
           const learner = row.original;
           return (
@@ -221,7 +223,7 @@ export function AssignedLearnersDataTable({
         },
       },
     ],
-    []
+    [t]
   );
 
   const table = useReactTable({
@@ -270,7 +272,7 @@ export function AssignedLearnersDataTable({
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by name or course..."
+              placeholder={t("searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -284,7 +286,7 @@ export function AssignedLearnersDataTable({
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {t("clear")}
             </Button>
           )}
         </div>
@@ -293,15 +295,15 @@ export function AssignedLearnersDataTable({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -352,7 +354,7 @@ export function AssignedLearnersDataTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No assigned learners.
+                  {t("noAssignedLearners")}
                 </TableCell>
               </TableRow>
             )}
@@ -378,22 +380,22 @@ export function AssignedLearnersDataTable({
       <AlertDialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove Learner?</AlertDialogTitle>
+            <AlertDialogTitle>{t("removeDialogTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to remove{" "}
+              {t("removeDialogDescription")}{" "}
               <strong>
                 {learnerToRemove?.first_name} {learnerToRemove?.last_name}
               </strong>{" "}
-              from this EQA assignment? This will unassign the learner from this EQA user.
+              {t("removeDialogDescriptionEnd")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("removeDialogCancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleRemoveConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Remove
+              {t("removeDialogConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

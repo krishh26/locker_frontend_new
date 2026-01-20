@@ -64,11 +64,10 @@ export interface LearnerListItem {
   course?: LearnerCourse[];
   comment?: string;
   status?: string;
-  employer_id?: number;
   funding_body?: string;
   national_ins_no?: string;
   job_title?: string;
-  employer?: {
+  employer_id?: {
     employer_id: number;
     employer_name: string;
   };

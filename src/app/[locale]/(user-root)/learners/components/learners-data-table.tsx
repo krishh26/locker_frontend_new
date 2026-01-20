@@ -163,21 +163,7 @@ export function LearnersDataTable() {
       };
     }
     return baseFilters;
-  }, [
-    isAdmin,
-    isTrainer,
-    isEmployer,
-    user?.id,
-    user?.role,
-    user?.user_id,
-    user?.assigned_employers,
-    filters.page,
-    filters.page_size,
-    filters.keyword,
-    filters.course_id,
-    filters.status,
-    filters.employer_id,
-  ]);
+  }, [isAdmin, isTrainer, isEmployer, user?.id, user?.role, user?.assigned_employers, filters.page, filters.page_size, filters.keyword, filters.course_id, filters.status, filters.employer_id]);
   // Single unified API query for all roles with meta=true (handled by API)
   const { data, isLoading, refetch } = useGetLearnersListQuery(unifiedFilters, {
     skip: (!isAdmin && !isTrainer && !isEmployer) || 
@@ -195,7 +181,7 @@ export function LearnersDataTable() {
   // Build status filter string from checkboxes (for server-side filtering)
   const statusFilterString = useMemo(() => {
     const selectedStatuses = Object.entries(statusFilters)
-      .filter(([_, checked]) => checked)
+      .filter(([, checked]) => checked)
       .map(([status]) => status);
     return selectedStatuses.length > 0 ? selectedStatuses.join(", ") : "";
   }, [statusFilters]);
@@ -356,13 +342,22 @@ export function LearnersDataTable() {
         cell: ({ row }) => {
           const learner = row.original;
           const learnerName = `${learner.first_name} ${learner.last_name}`;
+          const employerName = learner.employer_id?.employer_name;
+          
           return (
-            <Link
-              href={`/learner-profile?learner_id=${learner.learner_id}`}
-              className="text-primary hover:underline cursor-pointer font-medium"
-            >
-              {learnerName}
-            </Link>
+            <div className="flex flex-col">
+              <Link
+                href={`/learner-profile?learner_id=${learner.learner_id}`}
+                className="text-primary hover:underline cursor-pointer font-medium"
+              >
+                {learnerName}
+              </Link>
+              {isEmployer && employerName && (
+                <span className="text-xs text-muted-foreground mt-0.5">
+                  {employerName}
+                </span>
+              )}
+            </div>
           );
         },
       },
@@ -495,7 +490,7 @@ export function LearnersDataTable() {
         },
       },
     ],
-    [canEditComments, isAdmin]
+    [canEditComments, isAdmin, isEmployer]
   );
 
   // Determine table data - all roles now use server-side data

@@ -50,6 +50,7 @@ interface TransformedDocument {
 
 export function LearnersDocumentsToSignDataTable() {
   const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   const userId = user?.id || "";
   const [selectedDocument, setSelectedDocument] =
     useState<TransformedDocument | null>(null);
@@ -277,14 +278,15 @@ export function LearnersDocumentsToSignDataTable() {
               size="sm"
               onClick={() => handleSignDocument(document)}
               className="text-primary hover:text-primary"
-            >
+              disabled={isEmployer}
+              >
               Sign
             </Button>
           );
         },
       },
     ],
-    []
+    [isEmployer]
   );
 
   const table = useReactTable({

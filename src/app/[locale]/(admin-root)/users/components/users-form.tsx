@@ -27,6 +27,7 @@ import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
 import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
 import { toast } from "sonner";
+import { useAppSelector } from "@/store/hooks";
 
 const roles = [
   { value: "Admin", label: "Admin" },
@@ -124,6 +125,10 @@ interface UsersFormProps {
 
 export function UsersForm({ user }: UsersFormProps) {
   const router = useRouter();
+  const authUser = useAppSelector((state) => state.auth.user);
+  const userRole = authUser?.role;
+  const isEmployer = userRole === "Employer";
+  
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const isEditMode = !!user;
@@ -982,10 +987,12 @@ export function UsersForm({ user }: UsersFormProps) {
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isEditMode ? "Update User" : "Create User"}
-        </Button>
+        {!isEmployer && (
+          <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isEditMode ? "Update User" : "Create User"}
+          </Button>
+        )}
       </div>
       </form>
     </FormProvider>

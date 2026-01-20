@@ -66,6 +66,8 @@ const reviewPhases = [
 export function SkillsScanTnaQuestionnaire({
   onTabChange,
 }: SkillsScanTnaQuestionnaireProps) {
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   const dispatch = useAppDispatch();
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const courseData = useAppSelector(selectCourseData);
@@ -395,6 +397,7 @@ export function SkillsScanTnaQuestionnaire({
                                   onValueChange={(value) =>
                                     handleSelectChange(selectedUnit.id as string, phase.key, value)
                                   }
+                                  disabled={isEmployer}
                                 >
                                   <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Select rating" />
@@ -443,6 +446,7 @@ export function SkillsScanTnaQuestionnaire({
                                       onValueChange={(value) =>
                                         handleSelectChange(subUnit.id, phase.key, value)
                                       }
+                                      disabled={isEmployer}
                                     >
                                       <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select rating" />

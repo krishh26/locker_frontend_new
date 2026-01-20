@@ -54,6 +54,7 @@ import { InnovationsViewChatDrawer } from "./innovations-view-chat-drawer"
 export function ProposeYourInnovationsDataTable() {
   const user = useAppSelector((state) => state.auth.user)
   const isAdmin = user?.role === "Admin"
+  const isEmployer = user?.role === "Employer"
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -209,26 +210,30 @@ export function ProposeYourInnovationsDataTable() {
                 <Eye className="mr-2 h-4 w-4" />
                 View & Chat
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleEdit(row.original)}
-                disabled={!isAdmin && row.original.status === "Closed"}
-              >
-                <Pencil className="mr-2 h-4 w-4" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleDeleteClick(row.original)}
-                className="text-destructive"
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
+              {!isEmployer && (
+                <DropdownMenuItem
+                  onClick={() => handleEdit(row.original)}
+                  disabled={!isAdmin && row.original.status === "Closed"}
+                >
+                  <Pencil className="mr-2 h-4 w-4" />
+                  Edit
+                </DropdownMenuItem>
+              )}
+              {!isEmployer && (
+                <DropdownMenuItem
+                  onClick={() => handleDeleteClick(row.original)}
+                  className="text-destructive"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         ),
       },
     ],
-    [isAdmin, handleView, handleEdit, handleDeleteClick]
+    [isAdmin, isEmployer, handleView, handleEdit, handleDeleteClick]
   )
 
   const table = useReactTable({
@@ -379,26 +384,30 @@ export function ProposeYourInnovationsDataTable() {
       />
 
       {/* Delete Dialog */}
-      <InnovationsDeleteDialog
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        innovation={selectedInnovation}
-        onConfirm={handleDeleteConfirm}
-        isLoading={isDeleting}
-      />
+      {!isEmployer && (
+        <InnovationsDeleteDialog
+          open={deleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+          innovation={selectedInnovation}
+          onConfirm={handleDeleteConfirm}
+          isLoading={isDeleting}
+        />
+      )}
 
       {/* Add/Edit Dialog */}
-      <InnovationsAddEditDialog
-        open={addEditDialogOpen}
-        onOpenChange={setAddEditDialogOpen}
-        innovation={selectedInnovation}
-        mode={dialogMode}
-        onSuccess={() => {
-          setAddEditDialogOpen(false)
-          setSelectedInnovation(null)
-          refetch()
-        }}
-      />
+      {!isEmployer && (
+        <InnovationsAddEditDialog
+          open={addEditDialogOpen}
+          onOpenChange={setAddEditDialogOpen}
+          innovation={selectedInnovation}
+          mode={dialogMode}
+          onSuccess={() => {
+            setAddEditDialogOpen(false)
+            setSelectedInnovation(null)
+            refetch()
+          }}
+        />
+      )}
 
       {/* View & Chat Drawer */}
       <InnovationsViewChatDrawer

@@ -60,9 +60,14 @@ import { AssignUsersDialog } from "./assign-users-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import { useAppSelector } from "@/store/hooks";
 
 export function FormsDataTable() {
   const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isEmployer = userRole === "Employer";
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -228,28 +233,32 @@ export function FormsDataTable() {
                   <Eye className="mr-2 h-4 w-4" />
                   View
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleEdit(form)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleAssignUsers(form)}>
-                  <Users className="mr-2 h-4 w-4" />
-                  Assign Users
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(form)}
-                  className="text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuItem onClick={() => handleEdit(form)}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleAssignUsers(form)}>
+                      <Users className="mr-2 h-4 w-4" />
+                      Assign Users
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDeleteClick(form)}
+                      className="text-destructive"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [handleEdit, handleView]
+    [handleEdit, handleView, isEmployer]
   );
 
   const table = useReactTable({
@@ -330,10 +339,12 @@ export function FormsDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddNew} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New Form
-          </Button>
+          {!isEmployer && (
+            <Button onClick={handleAddNew} className="cursor-pointer">
+              <Plus className="mr-2 size-4" />
+              Add New Form
+            </Button>
+          )}
         </div>
       </div>
 

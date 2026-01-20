@@ -158,6 +158,7 @@ export function EvidenceLibraryDataTable() {
   // Get user role
   const userRole = user?.role || "";
   const isLearner = userRole === "Learner";
+  const isEmployer = userRole === "Employer";
 
   // Get selected course details for unit columns
   const selectedCourseDetails = useMemo(() => {
@@ -799,7 +800,6 @@ export function EvidenceLibraryDataTable() {
           <ActionMenu
             evidence={evidence}
             onReupload={handleReupload}
-            onView={handleView}
             onDownload={() => handleDownload(evidence)}
             onDelete={() => {
               setSelectedEvidence(evidence);
@@ -811,17 +811,7 @@ export function EvidenceLibraryDataTable() {
     });
 
     return baseColumns;
-  }, [
-    selectedCourseFilter,
-    selectedCourseDetails,
-    courses,
-    handleView,
-    handleDownload,
-    handleReupload,
-    router,
-    isLearner,
-    learnerSelectedUnits,
-  ]);
+  }, [selectedCourseFilter, selectedCourseDetails, courses, handleDownload, handleReupload, router, isLearner, learnerSelectedUnits]);
 
   const table = useReactTable({
     data: tableData,
@@ -914,13 +904,15 @@ export function EvidenceLibraryDataTable() {
             <Download className="mr-2 size-4" />
             Download Evidence Files
           </Button>
-          <Button
-            onClick={() => router.push("/evidence-library/new")}
-            className="cursor-pointer"
-          >
-            <Plus className="mr-2 size-4" />
-            Add Evidence
-          </Button>
+          {!isEmployer && (
+            <Button
+              onClick={() => router.push("/evidence-library/new")}
+              className="cursor-pointer"
+            >
+              <Plus className="mr-2 size-4" />
+              Add Evidence
+            </Button>
+          )}
         </div>
       </div>
 
@@ -1021,7 +1013,8 @@ export function EvidenceLibraryDataTable() {
       </div>
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      {!isEmployer && (
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Evidence?</AlertDialogTitle>
@@ -1042,6 +1035,7 @@ export function EvidenceLibraryDataTable() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      )}
 
       {/* Download Dialog */}
       <DownloadDialog

@@ -71,6 +71,7 @@ export function TimeLogDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const courses = useAppSelector(selectCourses);
   const userId = user?.id || "";
+  const isEmployer = user?.role === "Employer";
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -341,32 +342,38 @@ export function TimeLogDataTable() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => handleEdit(timeLog)}
-                >
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  className="cursor-pointer text-destructive"
-                  onClick={() => {
-                    setSelectedTimeLog(timeLog);
-                    setDeleteDialogOpen(true);
-                  }}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => handleEdit(timeLog)}
+                  >
+                    <Edit className="mr-2 h-4 w-4" />
+                    Edit
+                  </DropdownMenuItem>
+                )}
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant="destructive"
+                      className="cursor-pointer text-destructive"
+                      onClick={() => {
+                        setSelectedTimeLog(timeLog);
+                        setDeleteDialogOpen(true);
+                      }}
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [user?.role, userId, handleVerifyChange, handleEdit]
+    [user?.role, userId, isEmployer, handleVerifyChange, handleEdit]
   );
 
   const table = useReactTable({
@@ -472,10 +479,12 @@ export function TimeLogDataTable() {
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <Button onClick={handleAdd} className="cursor-pointer">
-          <Plus className="mr-2 h-4 w-4" />
-          Add New Timelog Entry
-        </Button>
+        {!isEmployer && (
+          <Button onClick={handleAdd} className="cursor-pointer">
+            <Plus className="mr-2 h-4 w-4" />
+            Add New Timelog Entry
+          </Button>
+        )}
         <div className="space-y-2">
           <Label htmlFor="column-visibility" className="text-sm font-medium">
             Column Visibility
@@ -579,7 +588,8 @@ export function TimeLogDataTable() {
       )}
 
       {/* Delete Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      {!isEmployer && (
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Time Log?</AlertDialogTitle>
@@ -600,20 +610,23 @@ export function TimeLogDataTable() {
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+        </AlertDialog>
+      )}
 
       {/* Form Dialog */}
-      <TimeLogFormDialog
-        open={formDialogOpen}
-        onOpenChange={setFormDialogOpen}
-        timeLog={selectedTimeLog}
-        editMode={editMode}
-        onSuccess={() => {
-          refetch();
-          setFormDialogOpen(false);
-          setSelectedTimeLog(null);
-        }}
-      />
+      {!isEmployer && (
+        <TimeLogFormDialog
+          open={formDialogOpen}
+          onOpenChange={setFormDialogOpen}
+          timeLog={selectedTimeLog}
+          editMode={editMode}
+          onSuccess={() => {
+            refetch();
+            setFormDialogOpen(false);
+            setSelectedTimeLog(null);
+          }}
+        />
+      )}
     </div>
   );
 }

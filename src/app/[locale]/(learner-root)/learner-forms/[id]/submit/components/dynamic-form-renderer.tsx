@@ -126,7 +126,7 @@ export function DynamicFormRenderer({
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
-
+  const isEmployer = user?.role === "Employer";
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDraftLoading, setIsDraftLoading] = useState(false)
 
@@ -755,7 +755,7 @@ export function DynamicFormRenderer({
               type="button"
               variant="outline"
               onClick={onClear}
-              disabled={isLocked || isSubmitting || isDraftLoading}
+              disabled={isLocked || isSubmitting || isDraftLoading || isEmployer}
             >
               Clear Form
             </Button>
@@ -765,7 +765,7 @@ export function DynamicFormRenderer({
                 type="button"
                 variant="outline"
                 onClick={onSaveAsDraft}
-                disabled={isDraftLoading || isLocked || isSubmitting}
+                disabled={isDraftLoading || isLocked || isSubmitting || isEmployer}
               >
                 {isDraftLoading ? (
                   <>
@@ -780,7 +780,7 @@ export function DynamicFormRenderer({
 
             <Button
               type="submit"
-              disabled={isSubmitting || isLocked || isDraftLoading}
+              disabled={isSubmitting || isLocked || isDraftLoading || isEmployer}
             >
               {isSubmitting ? (
                 <>

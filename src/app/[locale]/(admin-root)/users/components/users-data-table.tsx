@@ -60,6 +60,7 @@ import type { User, UserFilters } from "@/store/api/user/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import { useAppSelector } from "@/store/hooks";
 
 const roles = [
   { value: "Admin", label: "Admin" },
@@ -71,6 +72,10 @@ const roles = [
 
 export function UsersDataTable() {
   const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+  const userRole = user?.role;
+  const isEmployer = userRole === "Employer";
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -247,24 +252,28 @@ export function UsersDataTable() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEdit(user)}>
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(user)}
-                  className="text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuItem onClick={() => handleEdit(user)}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDeleteClick(user)}
+                      className="text-destructive"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           );
         },
       },
     ],
-    [handleEdit]
+    [handleEdit, isEmployer]
   );
 
   const table = useReactTable({
@@ -358,10 +367,12 @@ export function UsersDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddNew} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New
-          </Button>
+          {!isEmployer && (
+            <Button onClick={handleAddNew} className="cursor-pointer">
+              <Plus className="mr-2 size-4" />
+              Add New
+            </Button>
+          )}
         </div>
       </div>
 

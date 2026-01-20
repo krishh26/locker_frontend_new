@@ -309,7 +309,7 @@ export function LearningPlanDataTable() {
                   Attended: value || null,
                 })
               }}
-              disabled={user?.role === 'Learner'}
+              disabled={user?.role === 'Learner' || user?.role === 'Employer'}
             >
               <SelectTrigger className='w-[150px]'>
                 <SelectValue placeholder='Select' />
@@ -317,7 +317,7 @@ export function LearningPlanDataTable() {
               <SelectContent>
                 <SelectItem value='Attended'>Attended</SelectItem>
                 <SelectItem value='Cancelled'>Cancelled</SelectItem>
-                <SelectItem value='Cancelled by Trainer'>
+                <SelectItem value='Cancelled by Trainer'> 
                   Cancelled by Trainer
                 </SelectItem>
                 <SelectItem value='Cancelled by Learner'>
@@ -358,7 +358,7 @@ export function LearningPlanDataTable() {
                 variant={feedback === 'Good' ? 'default' : 'ghost'}
                 size='icon'
                 className='h-8 w-8'
-                disabled={isAdminOrTrainer}
+                disabled={isAdminOrTrainer || user?.role === 'Employer'}
                 onClick={() => {
                   if (isAdminOrTrainer) return
                   handleUpdateSubmit({
@@ -373,7 +373,7 @@ export function LearningPlanDataTable() {
                 variant={feedback === 'Neutral' ? 'default' : 'ghost'}
                 size='icon'
                 className='h-8 w-8'
-                disabled={isAdminOrTrainer}
+                disabled={isAdminOrTrainer || user?.role === 'Employer'}
                 onClick={() => {
                   if (isAdminOrTrainer) return
                   handleUpdateSubmit({
@@ -388,7 +388,7 @@ export function LearningPlanDataTable() {
                 variant={feedback === 'Bad' ? 'destructive' : 'ghost'}
                 size='icon'
                 className='h-8 w-8'
-                disabled={isAdminOrTrainer}
+                disabled={isAdminOrTrainer || user?.role === 'Employer'}
                 onClick={() => {
                   if (isAdminOrTrainer) return
                   handleUpdateSubmit({

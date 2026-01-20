@@ -415,14 +415,16 @@ export function LearnersDataTable() {
               ) : (
                 <span className="text-muted-foreground text-sm">-</span>
               )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={() => handleCommentClick(learner)}
-              >
-                <Edit className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
-              </Button>
+              {!isEmployer && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => handleCommentClick(learner)}
+                >
+                  <Edit className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                </Button>
+              )}
             </div>
           );
         },
@@ -595,8 +597,8 @@ export function LearnersDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* Only show Upload and Add New for Admin */}
-          {isAdmin && (
+          {/* Only show Upload and Add New for Admin (not Employer) */}
+          {isAdmin && !isEmployer && (
             <>
               <Button variant="outline" onClick={() => setCsvUploadOpen(true)} className="cursor-pointer">
                 <Upload className="mr-2 size-4" />

@@ -57,7 +57,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const user = useAppSelector((state) => state.auth.user)
   const courses = useAppSelector(selectCourses)
   const userRole = user?.role || 'Learner'
-  const isEditMode = !!evidenceId
+  const isEmployer = user?.role === "Employer";
+  const isEditMode = !!evidenceId && !isEmployer
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fileTab, setFileTab] = useState('upload')

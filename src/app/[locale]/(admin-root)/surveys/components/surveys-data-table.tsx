@@ -74,9 +74,14 @@ import {
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
 import { UserPlus } from "lucide-react"
+import { useAppSelector } from "@/store/hooks"
 
 export function SurveysDataTable() {
   const router = useRouter()
+  const user = useAppSelector((state) => state.auth.user)
+  const userRole = user?.role
+  const isEmployer = userRole === "Employer"
+  
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [surveyToDelete, setSurveyToDelete] = useState<string | null>(null)
   const [editingSurvey, setEditingSurvey] = useState<Survey | null>(null)
@@ -256,15 +261,17 @@ export function SurveysDataTable() {
               <Eye className="size-4" />
               <span className="sr-only">View survey</span>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 cursor-pointer"
-              onClick={() => handleEdit(survey)}
-            >
-              <Pencil className="size-4" />
-              <span className="sr-only">Edit survey</span>
-            </Button>
+            {!isEmployer && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 cursor-pointer"
+                onClick={() => handleEdit(survey)}
+              >
+                <Pencil className="size-4" />
+                <span className="sr-only">Edit survey</span>
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8 cursor-pointer">
@@ -290,17 +297,21 @@ export function SurveysDataTable() {
                   <ExternalLink className="mr-2 size-4" />
                   Open Public Form
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setSurveyToAllocate(survey)
-                    setAllocateDialogOpen(true)
-                  }}
-                >
-                  <UserPlus className="mr-2 size-4" />
-                  Allocate Form
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setSurveyToAllocate(survey)
+                        setAllocateDialogOpen(true)
+                      }}
+                    >
+                      <UserPlus className="mr-2 size-4" />
+                      Allocate Form
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
                   <FileDown className="mr-2 size-4" />
@@ -310,22 +321,26 @@ export function SurveysDataTable() {
                   <FileDown className="mr-2 size-4" />
                   Export PDF
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  className="cursor-pointer"
-                  onClick={() => handleDelete(survey.id)}
-                >
-                  <Trash2 className="mr-2 size-4" />
-                  Delete Survey
-                </DropdownMenuItem>
+                {!isEmployer && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant="destructive"
+                      className="cursor-pointer"
+                      onClick={() => handleDelete(survey.id)}
+                    >
+                      <Trash2 className="mr-2 size-4" />
+                      Delete Survey
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         )
       },
     },
-  ], [getStatusColor, handleView, handleEdit, handleDelete, exactFilter, router])
+  ], [getStatusColor, handleView, handleEdit, handleDelete, exactFilter, router, isEmployer])
 
   const table = useReactTable({
     data: surveys,
@@ -392,9 +407,11 @@ export function SurveysDataTable() {
               onOpenChange={setFormOpen}
               survey={editingSurvey}
             />
-            <Button className="cursor-pointer" onClick={handleAdd}>
-              Create Survey
-            </Button>
+            {!isEmployer && (
+              <Button className="cursor-pointer" onClick={handleAdd}>
+                Create Survey
+              </Button>
+            )}
           </div>
         </div>
 

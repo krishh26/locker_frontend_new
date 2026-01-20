@@ -75,6 +75,7 @@ function createEmptyRow(userId: string): CpdEntry {
 export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
   const user = useAppSelector((state) => state.auth.user);
   const userId = user?.id || "temp";
+  const isEmployer = user?.role === "Employer";
   const { data, isLoading } = useGetCpdEntriesQuery();
   const [tableData, setTableData] = useState<CpdEntry[]>([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -271,10 +272,12 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddNewRow} className="cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Add New Entry
-          </Button>
+          {!isEmployer && (
+            <Button onClick={handleAddNewRow} className="cursor-pointer">
+              <Plus className="mr-2 size-4" />
+              Add New Entry
+            </Button>
+          )}
         </div>
       </div>
 

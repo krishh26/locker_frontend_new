@@ -70,6 +70,7 @@ import type { Resource } from '@/store/api/resources/types'
 export function ResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === 'Learner'
+  const isEmployer = user?.role === 'Employer'
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(25)
   const [searchKeyword, setSearchKeyword] = useState('')
@@ -281,56 +282,60 @@ export function ResourcesDataTable() {
                   <span className='sr-only'>View resource</span>
                 </Button>
               )}
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-8 w-8 cursor-pointer'
-                onClick={() => {
-                  // TODO: Implement edit functionality
-                  toast.info('Edit functionality coming soon')
-                }}
-              >
-                <Pencil className='size-4' />
-                <span className='sr-only'>Edit resource</span>
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant='ghost'
-                    size='icon'
-                    className='h-8 w-8 cursor-pointer'
-                  >
-                    <EllipsisVertical className='size-4' />
-                    <span className='sr-only'>More actions</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align='end'>
-                  {resourceUrl && (
-                    <DropdownMenuItem
-                      className='cursor-pointer'
-                      onClick={() => window.open(resourceUrl, '_blank')}
+              {!isEmployer && (
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  className='h-8 w-8 cursor-pointer'
+                  onClick={() => {
+                    // TODO: Implement edit functionality
+                    toast.info('Edit functionality coming soon')
+                  }}
+                >
+                  <Pencil className='size-4' />
+                  <span className='sr-only'>Edit resource</span>
+                </Button>
+              )}
+              {!isEmployer && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      className='h-8 w-8 cursor-pointer'
                     >
-                      <Download className='mr-2 size-4' />
-                      Download
+                      <EllipsisVertical className='size-4' />
+                      <span className='sr-only'>More actions</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='end'>
+                    {resourceUrl && (
+                      <DropdownMenuItem
+                        className='cursor-pointer'
+                        onClick={() => window.open(resourceUrl, '_blank')}
+                      >
+                        <Download className='mr-2 size-4' />
+                        Download
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant='destructive'
+                      className='cursor-pointer'
+                      onClick={() => handleDelete(resourceId)}
+                    >
+                      <Trash2 className='mr-2 size-4' />
+                      Delete Resource
                     </DropdownMenuItem>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    variant='destructive'
-                    className='cursor-pointer'
-                    onClick={() => handleDelete(resourceId)}
-                  >
-                    <Trash2 className='mr-2 size-4' />
-                    Delete Resource
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
           )
         },
       },
     ],
-    [handleDelete, user?.role]
+    [handleDelete, user?.role, isEmployer]
   )
 
   const table = useReactTable({
@@ -430,7 +435,7 @@ export function ResourcesDataTable() {
               </SelectContent>
             </Select>
           </div>
-          {!isLearner && (
+          {!isLearner && !isEmployer && (
             <ResourceFormDialog
               open={dialogOpen}
               onOpenChange={setDialogOpen}

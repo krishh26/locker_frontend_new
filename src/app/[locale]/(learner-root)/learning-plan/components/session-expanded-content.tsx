@@ -24,6 +24,7 @@ import { FileText, Plus, Pencil, Trash2, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import type { LearningPlanSession, SessionActionDetail } from "@/store/api/learner-plan/types";
+import { useAppSelector } from "@/store/hooks";
 
 interface SessionExpandedContentProps {
   session: LearningPlanSession;
@@ -45,6 +46,8 @@ export function SessionExpandedContent({
   userRole,
   onRefresh,
 }: SessionExpandedContentProps) {
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   const [isFilesDialogOpen, setIsFilesDialogOpen] = useState(false);
   const [isActionDialogOpen, setIsActionDialogOpen] = useState(false);
   const [editingAction, setEditingAction] = useState<SessionActionDetail | null>(null);
@@ -69,6 +72,7 @@ export function SessionExpandedContent({
             variant="default"
             size="sm"
             onClick={() => setIsFilesDialogOpen(true)}
+            disabled={isEmployer}
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Files
@@ -80,6 +84,7 @@ export function SessionExpandedContent({
               setEditingAction(null);
               setIsActionDialogOpen(true);
             }}
+            disabled={isEmployer}
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Action
@@ -198,7 +203,7 @@ export function SessionExpandedContent({
                                 variant="ghost"
                                 size="icon"
                                 className="h-8 w-8"
-                                disabled
+                                disabled={isEmployer}
                               >
                                 <AlertCircle className="h-4 w-4 text-muted-foreground" />
                               </Button>
@@ -225,6 +230,7 @@ export function SessionExpandedContent({
                                   setEditingAction(action);
                                   setIsActionDialogOpen(true);
                                 }}
+                                disabled={isEmployer}
                               >
                                 <Pencil className="h-4 w-4" />
                               </Button>
@@ -242,6 +248,7 @@ export function SessionExpandedContent({
                                 onClick={() => {
                                   setActionFileDialogOpen(action.action_id);
                                 }}
+                                disabled={isEmployer}
                               >
                                 <Plus className="h-4 w-4" />
                               </Button>
@@ -264,6 +271,7 @@ export function SessionExpandedContent({
                                       "Delete action functionality will be implemented"
                                     );
                                   }}
+                                  disabled={isEmployer}
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>

@@ -7,6 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 
 export function ResourcesPageContent() {
   const isLearner = useAppSelector((state) => state.auth.user?.role === 'Learner')
+  const isEmployer = useAppSelector((state) => state.auth.user?.role === 'Employer')
   return (
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
@@ -15,7 +16,7 @@ export function ResourcesPageContent() {
         subtitle="Manage learning resources and materials"
         icon={FileText}
         backButtonHref="/dashboard"
-        showBackButton={isLearner}
+        showBackButton={isLearner || isEmployer}
       />
 
       {/* Data Table */}

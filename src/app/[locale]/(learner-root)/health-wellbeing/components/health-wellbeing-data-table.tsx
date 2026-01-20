@@ -39,6 +39,7 @@ import {
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { FeedbackDialog } from "./feedback-dialog";
+import { useAppSelector } from "@/store/hooks";
 
 const feedbackDisplayMapping = {
   very_helpful: "Very Helpful",
@@ -48,6 +49,8 @@ const feedbackDisplayMapping = {
 };
 
 export function HealthWellbeingDataTable() {
+  const user = useAppSelector((state) => state.auth.user);
+  const isEmployer = user?.role === "Employer";
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
@@ -197,6 +200,7 @@ export function HealthWellbeingDataTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => handleOpenFeedback(resource)}
+                disabled={isEmployer}
                 className="cursor-pointer"
               >
                 Feedback
@@ -206,7 +210,7 @@ export function HealthWellbeingDataTable() {
         },
       },
     ],
-    [handleResourceAction, handleOpenFeedback, isTracking]
+    [handleResourceAction, handleOpenFeedback, isTracking, isEmployer]
   );
 
   const table = useReactTable({

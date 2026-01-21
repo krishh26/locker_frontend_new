@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { IVReportForm } from "./iv-report-form";
 import { UnitTabs } from "./unit-tabs";
 import { InlineEditSampleContent } from "./inline-edit-sample-content";
-import { useIVReportData, type UnitWithHistory } from "../hooks/use-iv-report-data";
+import { useIVReportData} from "../hooks/use-iv-report-data";
 import { useEditSampleState } from "../hooks/use-edit-sample-state";
 
 export function IVReportPageContent() {

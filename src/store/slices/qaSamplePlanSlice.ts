@@ -17,6 +17,8 @@ interface QASamplePlanState {
   selectedCourse: string;
   selectedPlan: string;
   plans: Plan[];
+  plansLoading: boolean;
+  plansError: string | null;
 
   // Filter state
   selectedMethods: string[];
@@ -53,6 +55,8 @@ const initialState: QASamplePlanState = {
   selectedCourse: "",
   selectedPlan: "",
   plans: [],
+  plansLoading: false,
+  plansError: null,
   selectedMethods: assessmentMethods.map((method) => method.code),
   selectedStatus: qaStatuses[0],
   sampleType: "",
@@ -97,6 +101,12 @@ const qaSamplePlanSlice = createSlice({
         state.selectedPlan = "";
         state.filterApplied = false;
       }
+    },
+    setPlansLoading: (state, action: PayloadAction<boolean>) => {
+      state.plansLoading = action.payload;
+    },
+    setPlansError: (state, action: PayloadAction<string | null>) => {
+      state.plansError = action.payload;
     },
     setSelectedMethods: (state, action: PayloadAction<string[]>) => {
       state.selectedMethods = action.payload;
@@ -216,6 +226,8 @@ export const {
   setSelectedCourse,
   setSelectedPlan,
   setPlans,
+  setPlansLoading,
+  setPlansError,
   setSelectedMethods,
   toggleMethod,
   setSelectedStatus,
@@ -245,6 +257,8 @@ export const selectQASamplePlanState = (state: RootState) => state.qaSamplePlan;
 export const selectSelectedCourse = (state: RootState) => state.qaSamplePlan.selectedCourse;
 export const selectSelectedPlan = (state: RootState) => state.qaSamplePlan.selectedPlan;
 export const selectPlans = (state: RootState) => state.qaSamplePlan.plans;
+export const selectPlansLoading = (state: RootState) => state.qaSamplePlan.plansLoading;
+export const selectPlansError = (state: RootState) => state.qaSamplePlan.plansError;
 
 export const selectFilterState = (state: RootState) => ({
   selectedMethods: state.qaSamplePlan.selectedMethods,

@@ -245,7 +245,56 @@ export interface AssignedLearnerResponse {
       email: string;
       [key: string]: unknown;
     };
+    trainer_id?: {
+      user_id: number;
+      user_name: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      mobile?: string;
+      roles?: string[];
+      avatar?: {
+        key: string;
+        url: string;
+      };
+      password_changed?: boolean;
+      time_zone?: string;
+      status?: string;
+      deleted_at?: string | null;
+      created_at?: string;
+      updated_at?: string;
+      [key: string]: unknown;
+    };
+    IQA_id?: {
+      user_id: number;
+      user_name: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      mobile?: string;
+      roles?: string[];
+      avatar?: {
+        key: string;
+        url: string;
+      };
+      password_changed?: boolean;
+      time_zone?: string;
+      status?: string;
+      deleted_at?: string | null;
+      created_at?: string;
+      updated_at?: string;
+      [key: string]: unknown;
+    };
+    learner_created?: string;
+    course_registered?: string;
+    iqa_report?: string;
     [key: string]: unknown;
   }>;
+  meta_data?: {
+    page: number;
+    page_size: number;
+    pages: number;
+    total: number;
+  };
   error?: string;
 }

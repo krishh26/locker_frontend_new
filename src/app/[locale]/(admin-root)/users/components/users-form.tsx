@@ -273,7 +273,12 @@ export function UsersForm({ user }: UsersFormProps) {
     data: eqaAssignedLearnersData, 
     isLoading: isLoadingEqaAssignedLearners 
   } = useGetEqaAssignedLearnersQuery(
-    user?.user_id || 0,
+    {
+      eqaId: user?.user_id || 0,
+      page: 1,
+      page_size: 1000, // Large page size to get all assigned learners
+      meta: true,
+    },
     { skip: !isEditMode || !hasEqaRole || !user?.user_id }
   );
 

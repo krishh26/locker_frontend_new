@@ -251,8 +251,17 @@ export const learnerApi = createApi({
         return response;
       },
     }),
-    getEqaAssignedLearners: builder.query<AssignedLearnerResponse, number>({
-      query: (eqaId) => `/course/eqa/${eqaId}/assigned-learners`,
+    getEqaAssignedLearners: builder.query<
+      AssignedLearnerResponse,
+      { eqaId: number; page?: number; page_size?: number; meta?: boolean }
+    >({
+      query: ({ eqaId, page = 1, page_size = 10, meta = true }) => {
+        let url = `/course/eqa/${eqaId}/assigned-learners?page=${page}&limit=${page_size}`;
+        if (meta) {
+          url += `&meta=true`;
+        }
+        return url;
+      },
       providesTags: ["Learner"],
       transformResponse: (response: AssignedLearnerResponse) => {
         if (!response?.status) {

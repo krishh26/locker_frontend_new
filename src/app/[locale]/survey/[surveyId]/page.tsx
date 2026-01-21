@@ -33,6 +33,7 @@ import {
   useSubmitResponseMutation,
   type Question,
 } from "@/store/api/survey/surveyApi"
+import { toast } from "sonner"
 
 interface PublicFormPageProps {
   params: Promise<{ surveyId: string }>
@@ -75,15 +76,22 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
         : z.date().nullable().optional()
     } else if (question.type === "likert") {
       // Likert responses are stored as objects: { "0": "option1", "1": "option2" }
+      // Use union to handle undefined, then transform to empty object
+      const baseRecordSchema = z.union([
+        z.record(z.string(), z.string()),
+        z.undefined(),
+        z.null(),
+      ]).transform((val) => val === undefined || val === null ? {} : val)
+      
       schemaFields[question.id] = question.required
-        ? z.record(z.string(), z.string()).refine(
+        ? baseRecordSchema.refine(
             (obj) => {
               // Ensure all statements have a selected option
               return question.statements && question.statements.every((_, idx) => obj[String(idx)])
             },
             { message: "Please select an option for all statements" }
           )
-        : z.record(z.string(), z.string()).nullable().optional()
+        : baseRecordSchema
     } else {
       schemaFields[question.id] = question.required
         ? z.string().min(1, "This field is required")
@@ -104,13 +112,15 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
     } else if (question.type === "likert") {
       defaultValues[question.id] = {}
     } else {
-      defaultValues[question.id] = undefined
+      // Use empty string for text inputs to keep them controlled
+      defaultValues[question.id] = ""
     }
   })
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
+    mode: "onChange", // Validate on change to catch issues early
   })
 
   // Loading state
@@ -171,6 +181,39 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
     )
   }
 
+  // Check if survey has expired
+  if (survey?.expirationDate) {
+    const expirationDate = new Date(survey.expirationDate)
+    const now = new Date()
+    
+    if (now > expirationDate) {
+      const backgroundStyle = survey.background
+        ? survey.background.type === "gradient"
+          ? { background: survey.background.value }
+          : { backgroundImage: `url(${survey.background.value})`, backgroundSize: "cover", backgroundPosition: "center" }
+        : {}
+
+      return (
+        <div
+          className="min-h-screen flex items-center justify-center p-4"
+          style={backgroundStyle}
+        >
+          <Card className="w-full max-w-md bg-background/95 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>Survey Expired</CardTitle>
+              <CardDescription>
+                This survey has expired and is no longer accepting responses.
+                <span className="block mt-2 text-sm">
+                  Expired on: {format(expirationDate, "PPP 'at' p")}
+                </span>
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      )
+    }
+  }
+
   const onSubmit = async (data: FormValues) => {
     const answers: Record<string, string | string[] | Record<string, string> | null> = {}
     
@@ -202,6 +245,7 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
     } catch (error) {
       // Handle error - could show toast or error message
       console.error("Failed to submit response:", error)
+      toast.error("Failed to submit response")
     }
   }
 
@@ -331,7 +375,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
               <FormDescription>{question.description}</FormDescription>
             )}
             <FormControl>
-              <Input placeholder="Enter your answer" {...field} />
+              <Input placeholder="Enter your answer" {...field} value={field.value || ""} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -359,6 +403,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                 placeholder="Enter your answer"
                 rows={4}
                 {...field}
+                value={field.value || ""}
               />
             </FormControl>
             <FormMessage />
@@ -385,7 +430,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                value={field.value}
+                value={field.value || ""}
                 className="flex flex-col space-y-1"
               >
                 {question.options?.map((option) => (
@@ -479,7 +524,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                value={field.value}
+                value={field.value || ""}
                 className="flex flex-row space-x-2"
               >
                 {[1, 2, 3, 4, 5].map((rating) => (
@@ -555,7 +600,13 @@ function QuestionField({ question, form }: QuestionFieldProps) {
       <FormField
         control={form.control}
         name={question.id}
-        render={({ field }) => (
+        render={({ field }) => {
+          // Ensure field value is always an object - normalize undefined/null to {}
+          const fieldValue = (field.value === undefined || field.value === null) 
+            ? {} 
+            : (field.value as Record<string, string>)
+          
+          return (
           <FormItem>
             <FormLabel className="flex items-center gap-1" htmlFor={question.id}>
               <label>{question.title}</label>
@@ -585,7 +636,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                   <tbody>
                     {question.statements!.map((statement, stmtIndex) => {
                       const statementKey = String(stmtIndex)
-                      const currentValue = (field.value as Record<string, string>)?.[statementKey] || ""
+                      const currentValue = fieldValue[statementKey] || ""
                       return (
                         <tr
                           key={stmtIndex}
@@ -594,31 +645,32 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                           <td className="border border-border p-2 font-medium">
                             {statement}
                           </td>
-                          <RadioGroup
-                            value={currentValue}
-                            onValueChange={(value) => {
-                              const currentObj = (field.value as Record<string, string>) || {}
-                              field.onChange({
-                                ...currentObj,
-                                [statementKey]: value,
-                              })
-                            }}
-                            className="contents"
-                          >
-                            {question.options!.map((option) => (
+                          {question.options!.map((option) => {
+                            const isChecked = currentValue === option
+                            return (
                               <td
                                 key={option}
                                 className="border border-border p-2 text-center"
                               >
                                 <div className="flex justify-center">
-                                  <RadioGroupItem
+                                  <input
+                                    type="radio"
+                                    name={`${question.id}-${stmtIndex}`}
                                     value={option}
                                     id={`${question.id}-${stmtIndex}-${option}`}
+                                    checked={isChecked}
+                                    onChange={() => {
+                                      field.onChange({
+                                        ...fieldValue,
+                                        [statementKey]: option,
+                                      })
+                                    }}
+                                    className="h-4 w-4 cursor-pointer rounded-full border border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50"
                                   />
                                 </div>
                               </td>
-                            ))}
-                          </RadioGroup>
+                            )
+                          })}
                         </tr>
                       )
                     })}
@@ -628,7 +680,8 @@ function QuestionField({ question, form }: QuestionFieldProps) {
             </FormControl>
             <FormMessage />
           </FormItem>
-        )}
+          )
+        }}
       />
     )
   }

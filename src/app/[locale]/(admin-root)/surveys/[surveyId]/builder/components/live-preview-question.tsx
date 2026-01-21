@@ -220,12 +220,16 @@ export function LivePreviewQuestion({
                         key={option}
                         className="border border-border p-2 text-center"
                       >
-                        <RadioGroupItem
-                          value={option}
-                          id={`${question.id}-${stmtIndex}-${option}`}
-                          disabled
-                          className="mx-auto"
-                        />
+                        <div className="flex justify-center">
+                          <input
+                            type="radio"
+                            name={`${question.id}-${stmtIndex}`}
+                            value={option}
+                            id={`${question.id}-${stmtIndex}-${option}`}
+                            disabled
+                            className="h-4 w-4 cursor-not-allowed rounded-full border border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50"
+                          />
+                        </div>
                       </td>
                     ))}
                   </tr>

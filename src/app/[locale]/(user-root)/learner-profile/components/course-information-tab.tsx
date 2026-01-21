@@ -50,7 +50,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import {
   useGetUsersQuery,
 } from "@/store/api/user/userApi";
@@ -121,7 +121,7 @@ export function CourseInformationTab({
 
   // Fetch courses list for dropdown
   const { data: coursesResponse, isLoading: isLoadingCourses } =
-    useGetCoursesQuery({ page: 1, page_size: 500 });
+    useCachedCoursesList();
 
   // Fetch users by role
   const { data: trainersData } = useGetUsersQuery({

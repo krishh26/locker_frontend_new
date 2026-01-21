@@ -26,7 +26,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { FilterPanel } from "../filter-panel";
 import { LearnersTable } from "../learners-table";
 import { QASamplePlanLayout } from "./components/qa-sample-plan-layout";
@@ -56,10 +56,8 @@ export function QASamplePlanPageContent() {
   const unitSelection = useAppSelector(selectUnitSelection);
 
   // Get courses data for validation
-  const { data: coursesData } = useGetCoursesQuery(
-    { page: 1, page_size: 500 },
-    { skip: false }
-  );
+  const { data: coursesData } = useCachedCoursesList();
+  console.log("🚀 ~ QASamplePlanPageContent ~ coursesData:", coursesData)
 
   const courses = useMemo(() => {
     if (!coursesData?.data) return [];

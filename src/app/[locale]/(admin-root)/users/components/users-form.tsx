@@ -21,7 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useCreateUserMutation, useUpdateUserMutation } from "@/store/api/user/userApi";
 import type { User, CreateUserRequest, UpdateUserRequest, AssignedLearner } from "@/store/api/user/types";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useAssignEqaToCourseMutation, useGetEqaAssignedLearnersQuery } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem } from "@/store/api/learner/types";
 import MultipleSelector, { type Option } from "@/components/ui/multi-select";
@@ -263,10 +263,9 @@ export function UsersForm({ user }: UsersFormProps) {
     })) || [];
 
   // Fetch all courses for the course selection dropdown
-  const { data: coursesData } = useGetCoursesQuery(
-    { page: 1, page_size: 1000 },
-    { skip: !hasEqaRole }
-  );
+  const { data: coursesData } = useCachedCoursesList({
+    skip: !hasEqaRole
+  });
 
   // Fetch assigned learners for EQA when in edit mode
   const { 

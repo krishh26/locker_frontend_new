@@ -26,7 +26,7 @@ import { Badge } from "@/components/ui/badge"
 import { UserSelectionTable } from "./user-selection-table"
 import { useGetLearnersListQuery } from "@/store/api/learner/learnerApi"
 import { useGetUsersQuery } from "@/store/api/user/userApi"
-import { useGetCoursesQuery } from "@/store/api/course/courseApi"
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList"
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi"
 import type { Survey, AllocationRole } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
@@ -97,8 +97,8 @@ export function AllocateSurveyDialog({
   const pageSize = 10
 
   // Fetch courses and employers for filters
-  const { data: coursesData } = useGetCoursesQuery({ page: 1, page_size: 500 },{
-    skip:!open
+  const { data: coursesData } = useCachedCoursesList({
+    skip: !open
   })
   const { data: employersData } = useGetEmployersQuery({ page: 1, page_size: 100 },{
     skip:!open

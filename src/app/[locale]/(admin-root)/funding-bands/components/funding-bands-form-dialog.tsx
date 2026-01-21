@@ -27,7 +27,7 @@ import {
   useCreateFundingBandMutation,
   useUpdateFundingBandMutation,
 } from "@/store/api/funding-band/fundingBandApi";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import type { FundingBand } from "@/store/api/funding-band/types";
 import { toast } from "sonner";
 
@@ -83,10 +83,9 @@ export function FundingBandsFormDialog({
     useUpdateFundingBandMutation();
 
   // Fetch courses for dropdown
-  const { data: coursesData, isLoading: isLoadingCourses } = useGetCoursesQuery(
-    { page: 1, page_size: 100 },
-    { skip: !open }
-  );
+  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({
+    skip: !open
+  });
 
   const form = useForm<CreateFundingBandFormValues | UpdateFundingBandFormValues>({
     resolver: zodResolver(isEditMode ? updateFundingBandSchema : createFundingBandSchema),

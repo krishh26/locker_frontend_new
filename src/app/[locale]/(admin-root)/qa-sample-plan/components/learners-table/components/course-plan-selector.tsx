@@ -2,7 +2,6 @@
 
 import { memo, useCallback, useMemo, useRef, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -20,6 +19,7 @@ import {
   setSelectedCourse,
   setSelectedPlan,
 } from "@/store/slices/qaSamplePlanSlice";
+import { CourseAutocomplete } from "@/components/ui/course-autocomplete";
 
 interface CoursePlanSelectorProps {
   disabled?: boolean;
@@ -32,20 +32,6 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
   const plans = useAppSelector(selectPlans);
   const plansLoading = useAppSelector(selectPlansLoading);
   const plansError = useAppSelector(selectPlansError);
-
-  // RTK Query - Courses
-  const { data: coursesData, isLoading: coursesLoading } = useGetCoursesQuery(
-    { page: 1, page_size: 500 },
-    { skip: false }
-  );
-
-  const courses = useMemo(() => {
-    if (!coursesData?.data) return [];
-    return coursesData.data.map((course) => ({
-      id: course.course_id.toString(),
-      name: course.course_name || "Untitled Course",
-    }));
-  }, [coursesData]);
 
   const isPlanListLoading = plansLoading;
 
@@ -81,12 +67,17 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
 
   // Stable handlers - use refs to check current value without creating dependencies
   const handleCourseChange = useCallback(
-    (value: string) => {
+    (value: string | string[]) => {
       const currentValue = selectedCourseRef.current;
-      if (value !== currentValue && value !== undefined && value !== "") {
-        dispatch(setSelectedCourse(value));
+      // Handle single-select: value should be a string, not an array
+      const courseId = Array.isArray(value) ? value[0] || "" : value || "";
+      if (courseId && courseId !== currentValue && courseId.trim() !== "") {
+        dispatch(setSelectedCourse(courseId));
+      } else if (!courseId && currentValue) {
+        // Handle clearing selection
+        dispatch(setSelectedCourse(""));
       }
-    },
+    },  
     [dispatch]
   );
 
@@ -104,22 +95,11 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="space-y-2">
         <Label>Select Course</Label>
-        <Select
-          value={courseValue}
-          onValueChange={handleCourseChange}
-          disabled={coursesLoading || disabled}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder={coursesLoading ? "Loading courses..." : "Select a course"} />
-          </SelectTrigger>
-          <SelectContent>
-            {courses.map((course) => (
-              <SelectItem key={course.id} value={course.id}>
-                {course.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <CourseAutocomplete 
+          value={courseValue} 
+          onValueChange={handleCourseChange} 
+          disabled={disabled} 
+        />
       </div>
 
       <div className="space-y-2">

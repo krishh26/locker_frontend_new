@@ -9,6 +9,7 @@ import type {
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
+import { clearCoursesList } from "@/store/slices/cacheSlice";
 
 export const courseApi = createApi({
   reducerPath: "courseApi",
@@ -52,6 +53,15 @@ export const courseApi = createApi({
         body: data,
       }),
       invalidatesTags: ["Course"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Clear courses cache after successful creation
+          dispatch(clearCoursesList());
+        } catch {
+          // Do nothing on error, let the error be handled by the mutation
+        }
+      },
       transformResponse: (response: CourseCreateResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
@@ -69,6 +79,15 @@ export const courseApi = createApi({
         { type: "Course", id: arg.id },
         "Course",
       ],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Clear courses cache after successful update
+          dispatch(clearCoursesList());
+        } catch {
+          // Do nothing on error, let the error be handled by the mutation
+        }
+      },
       transformResponse: (response: CourseUpdateResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);

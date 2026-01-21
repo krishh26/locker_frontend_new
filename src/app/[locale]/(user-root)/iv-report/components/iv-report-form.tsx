@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -66,10 +66,7 @@ export function IVReportForm() {
   const [answers, setAnswers] = useState<Record<string, AssessmentAnswer>>({});
 
   // Fetch courses
-  const { data: coursesData } = useGetCoursesQuery(
-    { page: 1, page_size: 500 },
-    { skip: false }
-  );
+  const { data: coursesData } = useCachedCoursesList();
 
   // Get the course from URL parameter
   const selectedCourse = coursesData?.data?.find(

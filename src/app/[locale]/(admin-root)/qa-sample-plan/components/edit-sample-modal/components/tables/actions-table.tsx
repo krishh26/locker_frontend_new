@@ -22,6 +22,7 @@ interface ActionsTableProps {
   onAddAction: () => void
   onEditAction: (action: SampleAction) => void
   onDeleteAction: (actionId: number) => void
+  isReadOnly?: boolean
 }
 
 const getActionSummary = (action: SampleAction) => {
@@ -40,6 +41,7 @@ export function ActionsTable({
   onAddAction,
   onEditAction,
   onDeleteAction,
+  isReadOnly = false,
 }: ActionsTableProps) {
   return (
     <div className='flex-1'>
@@ -51,7 +53,7 @@ export function ActionsTable({
           </Button>
           <Button
             onClick={onAddAction}
-            disabled={!planDetailId}
+            disabled={!planDetailId || isReadOnly}
             className='bg-green-600 hover:bg-green-700'
           >
             <Plus className='mr-2 h-4 w-4' />
@@ -104,14 +106,19 @@ export function ActionsTable({
                     <TableCell>{formatDisplayDate(action.target_date)}</TableCell>
                     <TableCell>
                       <div className='flex gap-2'>
-                        <Button variant='ghost' size='sm' onClick={() => onEditAction(action)}>
+                        <Button 
+                          variant='ghost' 
+                          size='sm' 
+                          onClick={() => onEditAction(action)}
+                          disabled={isReadOnly}
+                        >
                           <Edit className='h-4 w-4' />
                         </Button>
                         <Button
                           variant='ghost'
                           size='sm'
                           onClick={() => onDeleteAction(action.id)}
-                          disabled={isDeletingAction && deleteActionId === action.id}
+                          disabled={(isDeletingAction && deleteActionId === action.id) || isReadOnly}
                         >
                           <Trash2 className='h-4 w-4 text-destructive' />
                         </Button>

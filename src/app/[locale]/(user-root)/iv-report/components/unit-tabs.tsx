@@ -1,41 +1,83 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { formatDate } from "@/app/[locale]/(admin-root)/qa-sample-plan/utils/constants";
 import type { UnitWithHistory } from "../hooks/use-iv-report-data";
 
 interface UnitTabsProps {
-  unit: UnitWithHistory;
-  activeTab: number;
-  onTabChange: (value: number) => void;
-  onBack: () => void;
+  units: UnitWithHistory[];
+  selectedUnitIndex: number;
+  activeTabIndex: number;
+  onUnitSelect: (unitIndex: number) => void;
+  onTabChange: (tabIndex: number) => void;
 }
 
-export function UnitTabs({ unit, activeTab, onTabChange, onBack }: UnitTabsProps) {
-  const sampleHistory = Array.isArray(unit.sample_history) ? unit.sample_history : [];
-  const activeTabString = String(activeTab);
+export function UnitTabs({
+  units,
+  selectedUnitIndex,
+  activeTabIndex,
+  onUnitSelect,
+  onTabChange,
+}: UnitTabsProps) {
+  const selectedUnit = units[selectedUnitIndex] || null;
+  const sampleHistory = selectedUnit && Array.isArray(selectedUnit.sample_history)
+    ? selectedUnit.sample_history
+    : [];
 
-  const handleTabChange = (value: string) => {
+  const activeUnitTabString = String(selectedUnitIndex);
+  const activeSampleTabString = String(activeTabIndex);
+
+  const handleUnitTabChange = (value: string) => {
+    const unitIndex = Number(value);
+    onUnitSelect(unitIndex);
+  };
+
+  const handleSampleTabChange = (value: string) => {
     onTabChange(Number(value));
   };
 
+  if (units.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="flex items-center justify-between px-6 pb-4 border-b gap-4">
-      <div className="flex items-center gap-4 flex-1">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onBack}
-          className="shrink-0"
+    <div className="space-y-4">
+      {/* Top-level Unit Tabs */}
+      <div className="border-b">
+        <Tabs
+          value={activeUnitTabString}
+          onValueChange={handleUnitTabChange}
+          className="w-full"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
-        <div className="flex-1">
+          <TabsList className="w-full justify-start overflow-x-auto">
+            {units.map((unit, index) => {
+              const unitCode = String(unit.unit_code || unit.code || "");
+              const unitName = String(unit.unit_name || "");
+              const displayLabel = unitCode || unitName || `Unit ${index + 1}`;
+              
+              return (
+                <TabsTrigger
+                  key={`unit-${index}-${unitCode || index}`}
+                  value={String(index)}
+                  className="whitespace-nowrap"
+                >
+                  {displayLabel}
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+        </Tabs>
+      </div>
+
+      {/* Nested Sample History Tabs (only shown when unit is selected) */}
+      {selectedUnit && (
+        <div className="border-b px-6 pb-4">
           {sampleHistory.length > 0 ? (
-            <Tabs value={activeTabString} onValueChange={handleTabChange} className="w-full">
+            <Tabs
+              value={activeSampleTabString}
+              onValueChange={handleSampleTabChange}
+              className="w-full"
+            >
               <TabsList className="overflow-x-auto">
                 {sampleHistory.map((item, index) => {
                   const plannedDate = item.planned_date || "";
@@ -54,10 +96,12 @@ export function UnitTabs({ unit, activeTab, onTabChange, onBack }: UnitTabsProps
               </TabsList>
             </Tabs>
           ) : (
-            <div className="text-sm text-muted-foreground">No sample history available</div>
+            <div className="text-sm text-muted-foreground py-2">
+              No sample history available for this unit
+            </div>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

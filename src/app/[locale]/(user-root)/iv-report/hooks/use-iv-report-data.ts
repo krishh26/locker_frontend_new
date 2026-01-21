@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { useLazyGetSamplePlanLearnersQuery, useGetSamplePlansQuery } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import type { SamplePlanLearner, SamplePlanLearnerUnit, SamplePlanQueryParams } from "@/store/api/qa-sample-plan/types";
@@ -47,11 +47,34 @@ export function useIVReportData(courseId: string | null): UseIVReportDataReturn 
     { skip: !samplePlanQueryArgs }
   );
 
-  // Get first plan ID from plans response
+  // Get plan ID from plans response
   useEffect(() => {
     if (!samplePlanResponse) return;
 
-    const rawPlanDataSource = (samplePlanResponse as { data?: unknown })?.data ?? samplePlanResponse ?? null;
+    // New API response structure:
+    // {
+    //   "message": "Sampling plans fetched successfully",
+    //   "data": {
+    //     "id": 14,
+    //     "planName": "Highfiled",
+    //     ...
+    //   },
+    //   "status": true
+    // }
+    const responseData = (samplePlanResponse as { data?: unknown })?.data;
+    
+    if (responseData && typeof responseData === "object") {
+      const planData = responseData as Record<string, unknown>;
+      // Try to get plan ID from the new structure (data.id)
+      const planIdValue = planData.id ?? planData.plan_id ?? planData.planId;
+      if (planIdValue) {
+        setPlanId(String(planIdValue));
+        return;
+      }
+    }
+
+    // Fallback: Handle old response structure (array or object with plans array)
+    const rawPlanDataSource = responseData ?? samplePlanResponse ?? null;
     let rawPlans: Array<Record<string, unknown>> = [];
 
     if (Array.isArray(rawPlanDataSource)) {
@@ -138,15 +161,22 @@ export function useIVReportData(courseId: string | null): UseIVReportDataReturn 
     //     "learners": [...]
     //   }
     // }
+    const responseData = learnersResponse as {
+      data?: {
+        learners?: SamplePlanLearner[];
+        plan_id?: string | number;
+      };
+    };
+
     const learnersData: SamplePlanLearner[] =
-      Array.isArray((learnersResponse as any)?.data?.learners)
-        ? ((learnersResponse as any).data.learners as SamplePlanLearner[])
+      Array.isArray(responseData?.data?.learners)
+        ? responseData.data.learners
         : [];
 
     setLearners(learnersData);
 
     // Also update planId from response if available
-    const responsePlanId = (learnersResponse as any)?.data?.plan_id;
+    const responsePlanId = responseData?.data?.plan_id;
     if (responsePlanId && !planId) {
       setPlanId(String(responsePlanId));
     }

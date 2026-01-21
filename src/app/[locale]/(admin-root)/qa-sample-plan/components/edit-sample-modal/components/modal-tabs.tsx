@@ -9,6 +9,7 @@ interface ModalTabsProps {
   onTabChange: (value: number) => void
   onCreateNew?: () => void
   isCreating?: boolean
+  isReadOnly?: boolean
 }
 
 export function ModalTabs({
@@ -17,6 +18,7 @@ export function ModalTabs({
   onTabChange,
   onCreateNew,
   isCreating = false,
+  isReadOnly = false,
 }: ModalTabsProps) {
   const activeTabString = String(activeTab)
   const handleTabChange = (value: string) => {
@@ -44,7 +46,7 @@ export function ModalTabs({
       {onCreateNew && (
         <Button
           onClick={onCreateNew}
-          disabled={isCreating}
+          disabled={isCreating || isReadOnly}
           className='ml-4 bg-[#e91e63] hover:bg-[#c2185b]'
         >
           <Plus className='mr-2 h-4 w-4' />

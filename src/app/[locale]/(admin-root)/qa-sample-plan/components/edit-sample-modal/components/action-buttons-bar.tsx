@@ -7,6 +7,7 @@ interface ActionButtonsBarProps {
   onClose: () => void
   onDelete: () => void
   onSave?: () => void
+  isReadOnly?: boolean
 }
 
 export function ActionButtonsBar({
@@ -15,6 +16,7 @@ export function ActionButtonsBar({
   onClose,
   onDelete,
   onSave,
+  isReadOnly = false,
 }: ActionButtonsBarProps) {
   return (
     <div className='flex justify-end flex-wrap gap-2 px-6 py-4 border-b'>
@@ -28,7 +30,7 @@ export function ActionButtonsBar({
       <Button
         variant='outline'
         onClick={onDelete}
-        disabled={!planDetailId}
+        disabled={!planDetailId || isReadOnly}
         className='border-red-500 text-red-500 hover:bg-red-50'
       >
         Delete
@@ -37,7 +39,7 @@ export function ActionButtonsBar({
         <>
           <Button
             onClick={onSave}
-            disabled={isSaving}
+            disabled={isSaving || isReadOnly}
             className='bg-green-600 hover:bg-green-700'
           >
             {isSaving ? (
@@ -54,7 +56,7 @@ export function ActionButtonsBar({
               onSave()
               onClose()
             }}
-            disabled={isSaving}
+            disabled={isSaving || isReadOnly}
             className='bg-green-600 hover:bg-green-700'
           >
             {isSaving ? (

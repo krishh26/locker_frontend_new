@@ -575,7 +575,6 @@ export function LearnersDataTable() {
                   <TooltipTrigger asChild>
                     <a
                       href={`/iv-report?course_id=${learner.course?.[0]?.course?.course_id}`}
-                      target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center cursor-pointer"
                     >

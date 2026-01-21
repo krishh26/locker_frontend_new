@@ -7,11 +7,13 @@ import { iqaConclusionOptions } from '../../../../utils/constants'
 interface IqaConclusionSectionProps {
   modalFormData: ModalFormData
   onIqaConclusionToggle: (option: string) => void
+  isReadOnly?: boolean
 }
 
 export function IqaConclusionSection({
   modalFormData,
   onIqaConclusionToggle,
+  isReadOnly = false,
 }: IqaConclusionSectionProps) {
   return (
     <div className='md:col-span-4 space-y-2'>
@@ -25,6 +27,7 @@ export function IqaConclusionSection({
                   id={`iqa-${option}`}
                   checked={modalFormData.iqaConclusion.includes(option)}
                   onCheckedChange={() => onIqaConclusionToggle(option)}
+                  disabled={isReadOnly}
                 />
                 <Label htmlFor={`iqa-${option}`} className='text-sm cursor-pointer'>
                   {option}

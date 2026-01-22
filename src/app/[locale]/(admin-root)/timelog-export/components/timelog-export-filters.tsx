@@ -14,7 +14,7 @@ import { AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useGetTimeLogExportMutation } from "@/store/api/time-log/timeLogApi";
 import { useCachedUsersByRole } from "@/store/hooks/useCachedUsersByRole";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import type { User } from "@/store/api/user/types";
 import type { Course } from "@/store/api/course/types";
 import { exportTimelogToCSV, downloadCSV, generateTimelogFilename } from "../utils/csv-export";
@@ -53,10 +53,7 @@ export function TimelogExportFilters() {
   // Fetch dropdown data using cached hooks
   const { data: adminUsers, isLoading: loadingAdmins } = useCachedUsersByRole("Admin");
   const { data: employerUsers, isLoading: loadingEmployers } = useCachedUsersByRole("Employer");
-  const { data: coursesData, isLoading: loadingCourses } = useGetCoursesQuery({
-    page: 1,
-    page_size: 1000, // Get all courses for dropdown
-  });
+  const { data: coursesData, isLoading: loadingCourses } = useCachedCoursesList();
 
   const [getTimeLogExport, { isLoading: isTimelogLoading }] = useGetTimeLogExportMutation();
 

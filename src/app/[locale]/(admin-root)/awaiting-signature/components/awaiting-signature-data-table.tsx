@@ -36,7 +36,7 @@ import type {
   Signature,
 } from '@/store/api/awaiting-signature/types'
 import { useCachedUsersByRole } from '@/store/hooks/useCachedUsersByRole'
-import { useGetCoursesQuery } from '@/store/api/course/courseApi'
+import { useCachedCoursesList } from '@/store/hooks/useCachedCoursesList'
 import { useDebounce } from '@/hooks/use-debounce'
 import {
   exportAwaitingSignatureToCSV,
@@ -97,10 +97,7 @@ export function AwaitingSignatureDataTable() {
   // Fetch dropdown data
   const { data: trainerUsers, isLoading: loadingTrainers } =
     useCachedUsersByRole('Trainer')
-  const { data: coursesData, isLoading: loadingCourses } = useGetCoursesQuery({
-    page: 1,
-    page_size: 1000,
-  })
+  const { data: coursesData, isLoading: loadingCourses } = useCachedCoursesList()
 
   // Transform API data for dropdowns
   const trainers =

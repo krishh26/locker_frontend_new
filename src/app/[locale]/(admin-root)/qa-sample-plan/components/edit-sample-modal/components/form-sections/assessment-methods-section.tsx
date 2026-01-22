@@ -7,11 +7,13 @@ import { assessmentMethods } from '../../../../utils/constants'
 interface AssessmentMethodsSectionProps {
   modalFormData: ModalFormData
   onAssessmentMethodToggle: (code: string) => void
+  isReadOnly?: boolean
 }
 
 export function AssessmentMethodsSection({
   modalFormData,
   onAssessmentMethodToggle,
+  isReadOnly = false,
 }: AssessmentMethodsSectionProps) {
   return (
     <div className='md:col-span-4 space-y-2'>
@@ -25,6 +27,7 @@ export function AssessmentMethodsSection({
                   id={`method-${method.code}`}
                   checked={modalFormData.assessmentMethods.includes(method.code)}
                   onCheckedChange={() => onAssessmentMethodToggle(method.code)}
+                  disabled={isReadOnly}
                 />
                 <Label htmlFor={`method-${method.code}`} className='text-sm cursor-pointer'>
                   {method.code}

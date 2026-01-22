@@ -69,8 +69,10 @@ import { DataTablePagination } from "@/components/data-table-pagination"
 import {
   useGetSurveysQuery,
   useDeleteSurveyMutation,
+  useAllocateSurveyMutation,
   type Survey,
   type SurveyStatus,
+  type AllocationRole,
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
 import { UserPlus } from "lucide-react"
@@ -109,6 +111,7 @@ export function SurveysDataTable() {
     refetchOnMountOrArgChange: true,
   })
   const [deleteSurvey, { isLoading: isDeleting }] = useDeleteSurveyMutation()
+  const [allocateSurvey] = useAllocateSurveyMutation()
 
   // Memoize surveys to prevent dependency issues
   const surveys = useMemo(() => surveysResponse?.data?.surveys || [], [surveysResponse?.data?.surveys])
@@ -173,6 +176,73 @@ export function SurveysDataTable() {
   const handleView = useCallback((surveyId: string) => {
     router.push(`/surveys/${surveyId}/builder`)
   }, [router])
+
+  const handleAllocate = useCallback(
+    async (
+      allocations: Array<{
+        user_id: number
+        role: AllocationRole
+        user_type: "user" | "learner"
+      }>
+    ) => {
+      if (!surveyToAllocate) {
+        toast.error("Please select a survey to allocate")
+        return
+      }
+
+      try {
+        // Map UI roles (AllocationRole) to API roles (lowercase)
+        const roleMapping: Record<AllocationRole, string> = {
+          Trainer: "trainer",
+          IQA: "iqa",
+          Learner: "learner",
+          EQA: "eqa",
+        }
+
+        const apiAllocations = allocations.map((allocation) => ({
+          user_id: allocation.user_id,
+          role: roleMapping[allocation.role],
+          user_type: allocation.user_type,
+        }))
+
+        const response = await allocateSurvey({
+          survey_id: surveyToAllocate.id,
+          // Cast here because the backend expects lowercase roles while
+          // AllocationRole is defined with capitalized variants for the UI.
+          allocations: apiAllocations as unknown as typeof allocations,
+        }).unwrap()
+
+        const allocatedCount = response.data?.allocated_count ?? allocations.length
+        toast.success(
+          `Successfully allocated survey to ${allocatedCount} user${
+            allocatedCount === 1 ? "" : "s"
+          }`
+        )
+        setAllocateDialogOpen(false)
+      } catch (error: unknown) {
+        const typedError = error as {
+          data?: { error?: { message?: string }; message?: string | Array<{ field: string; message: string }> }
+          message?: string
+        }
+
+        let message: string
+
+        // Handle array of field errors (e.g. Zod validation errors)
+        if (Array.isArray(typedError.data?.message) && typedError.data.message.length > 0) {
+          message = typedError.data.message[0]?.message ?? "Failed to allocate survey. Please try again."
+        } else {
+          message =
+            typedError.data?.error?.message ||
+            (typeof typedError.data?.message === "string" ? typedError.data.message : undefined) ||
+            typedError.message ||
+            "Failed to allocate survey. Please try again."
+        }
+
+        toast.error(message)
+      }
+    },
+    [allocateSurvey, surveyToAllocate]
+  )
 
   const columns: ColumnDef<Survey>[] = useMemo(() => [
     {
@@ -580,6 +650,7 @@ export function SurveysDataTable() {
         open={allocateDialogOpen}
         onOpenChange={setAllocateDialogOpen}
         survey={surveyToAllocate}
+        onAllocate={handleAllocate}
       />
     </>
   )

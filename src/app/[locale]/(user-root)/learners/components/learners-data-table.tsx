@@ -23,6 +23,9 @@ import {
   MessageSquare,
   Upload,
   BookOpen,
+  Folder,
+  FileText,
+  ClipboardList,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -67,8 +70,9 @@ import {
 import {
   useGetLearnersListQuery,
   useDeleteLearnerMutation,
+  useGetEqaAssignedLearnersQuery,
 } from "@/store/api/learner/learnerApi";
-import type { LearnerListItem, LearnerFilters } from "@/store/api/learner/types";
+import type { LearnerListItem, LearnerFilters, LearnerCourse } from "@/store/api/learner/types";
 import { LearnersFormDialog } from "./learners-form-dialog";
 import { LearnerCommentDialog } from "./learner-comment-dialog";
 import { LearnersCsvUploadDialog } from "./learners-csv-upload-dialog";
@@ -92,12 +96,29 @@ const statusOptions = [
   "Show only archived users",
 ];
 
+// Date formatting helper
+const formatDate = (dateString?: string | null): string => {
+  if (!dateString) return "-";
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  } catch {
+    return "-";
+  }
+};
+
 export function LearnersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isAdmin = userRole === "Admin";
   const isTrainer = userRole === "Trainer";
   const isEmployer = userRole === "Employer";
+  const isEqa = userRole === "EQA";
+  
   const canEditComments = isAdmin || isTrainer;
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -166,10 +187,22 @@ export function LearnersDataTable() {
   }, [isAdmin, isTrainer, isEmployer, user?.id, user?.role, user?.assigned_employers, filters.page, filters.page_size, filters.keyword, filters.course_id, filters.status, filters.employer_id]);
   // Single unified API query for all roles with meta=true (handled by API)
   const { data, isLoading, refetch } = useGetLearnersListQuery(unifiedFilters, {
-    skip: (!isAdmin && !isTrainer && !isEmployer) || 
+    skip: isEqa || (!isAdmin && !isTrainer && !isEmployer) || 
           (isTrainer && (!user?.id || !user?.role)) || 
           (isEmployer && !user?.user_id),
   });
+
+  // EQA API query for assigned learners with pagination
+  const eqaUserId = user?.user_id ? Number(user.user_id) : 0;
+  const { data: eqaData, isLoading: isEqaLoading, refetch: refetchEqa } = useGetEqaAssignedLearnersQuery(
+    {
+      eqaId: eqaUserId,
+      page: filters.page,
+      page_size: filters.page_size,
+      meta: true,
+    },
+    { skip: !isEqa || !user?.user_id }
+  );
 
   const [deleteLearner, { isLoading: isDeleting }] = useDeleteLearnerMutation();
 
@@ -177,6 +210,51 @@ export function LearnersDataTable() {
   const filteredLearners = useMemo<LearnerListItem[]>(() => {
     return Array.isArray(data?.data) ? data.data : [];
   }, [data]);
+
+  // Transform EQA data to match table structure
+  const eqaLearners = useMemo((): EqaLearnerItem[] => {
+    if (!isEqa || !eqaData?.data) return [];
+    return eqaData.data.map((item) => ({
+      learner_id: item.learner_id?.learner_id || 0,
+      first_name: item.learner_id?.first_name || "",
+      last_name: item.learner_id?.last_name || "",
+      user_name: item.learner_id?.user_name || "",
+      email: item.learner_id?.email || "",
+      mobile: "",
+      course: [{
+        user_course_id: item.user_course_id,
+        course: {
+          course_code: "",
+          level: "",
+          sector: "",
+          recommended_minimum_age: "",
+          total_credits: "",
+          operational_start_date: "",
+          guided_learning_hours: "",
+          brand_guidelines: "",
+          course_type: null,
+          course_core_type: null,
+          ...item.course,
+        } as LearnerCourse["course"],
+        start_date: item.start_date,
+        end_date: item.end_date,
+        course_status: item.course_status,
+        is_main_course: false,
+      }],
+      status: item.course_status,
+      // EQA-specific fields
+      trainer_id: item.trainer_id,
+      IQA_id: item.IQA_id,
+      learner_created: item.learner_created || (item.learner_id?.created_at as string | undefined),
+      course_registered: item.start_date,
+      iqa_report: item.iqa_report,
+    } as EqaLearnerItem));
+  }, [isEqa, eqaData]);
+
+  // Determine which data source to use
+  const tableData: (LearnerListItem | EqaLearnerItem)[] = isEqa ? eqaLearners : filteredLearners;
+  const isLoadingData = isEqa ? isEqaLoading : isLoading;
+  const refetchData = isEqa ? refetchEqa : refetch;
 
   // Build status filter string from checkboxes (for server-side filtering)
   const statusFilterString = useMemo(() => {
@@ -186,9 +264,9 @@ export function LearnersDataTable() {
     return selectedStatuses.length > 0 ? selectedStatuses.join(", ") : "";
   }, [statusFilters]);
 
-  // Update filters when any filter changes (all roles use server-side filtering)
+  // Update filters when any filter changes (all roles use server-side filtering, except EQA)
   useEffect(() => {
-    if (isAdmin || isEmployer || isTrainer) {
+    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
@@ -204,10 +282,10 @@ export function LearnersDataTable() {
         status: statusFilterString || undefined,
       }));
     }
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, user?.user_id]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isEqa, user?.user_id]);
 
   const handleSearch = useCallback(() => {
-    if (isAdmin || isEmployer || isTrainer) {
+    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
@@ -223,7 +301,7 @@ export function LearnersDataTable() {
         status: statusFilterString || undefined,
       }));
     }
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, user?.user_id]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isEqa, user?.user_id]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -238,7 +316,7 @@ export function LearnersDataTable() {
     setStatusFilters(
       statusOptions.reduce((acc, status) => ({ ...acc, [status]: false }), {})
     );
-    if (isAdmin || isEmployer || isTrainer) {
+    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
@@ -273,7 +351,7 @@ export function LearnersDataTable() {
       toast.success("Learner deleted successfully");
       setDeleteDialogOpen(false);
       setLearnerToDelete(null);
-      refetch();
+      refetchData();
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -298,44 +376,242 @@ export function LearnersDataTable() {
   };
 
   const handleExportCsv = () => {
-    // All roles now use server-side data
-    const exportData = data?.data || [];
+    const exportData = isEqa ? eqaLearners : (data?.data || []);
     if (!exportData || exportData.length === 0) {
       toast.info("No data to export");
       return;
     }
 
-    const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
-    const rows = exportData.map((learner) => [
-      `${learner.first_name} ${learner.last_name}`,
-      learner.user_name,
-      learner.email,
-      learner.mobile || "",
-      learner.course?.map((c) => c.course.course_name).join(", ") || "",
-      learner.status || "",
-    ]);
+    if (isEqa) {
+      const headers = ["Learner Name", "Course", "Employer", "IQA", "Status", "IQA Report", "Learner Created", "Course Registered"];
+      const rows = exportData.map((learner) => {
+        const eqaLerner = learner as EqaLearnerItem;
+        return [
+          `${eqaLerner.first_name} ${eqaLerner.last_name}`,
+          eqaLerner.course?.map((c) => c.course?.course_name).join(", ") || "",
+          eqaLerner.employer_id?.employer_name || "-",
+          eqaLerner.IQA_id ? `${eqaLerner.IQA_id.first_name} ${eqaLerner.IQA_id.last_name}` : "-",
+          eqaLerner.status || "",
+          eqaLerner.iqa_report || "-",
+          formatDate(eqaLerner.learner_created),
+          formatDate(eqaLerner.course_registered),
+        ];
+      });
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
-    ].join("\n");
+      const csvContent = [
+        headers.join(","),
+        ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+      ].join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `learners_export_${new Date().toISOString().split("T")[0]}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `learners_export_${new Date().toISOString().split("T")[0]}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+      toast.success("CSV exported successfully");
+    } else {
+      const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
+      const rows = exportData.map((learner) => [
+        `${learner.first_name} ${learner.last_name}`,
+        learner.user_name,
+        learner.email,
+        learner.mobile || "",
+        learner.course?.map((c) => c.course.course_name).join(", ") || "",
+        learner.status || "",
+      ]);
+
+      const csvContent = [
+        headers.join(","),
+        ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+      ].join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `learners_export_${new Date().toISOString().split("T")[0]}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+      toast.success("CSV exported successfully");
+    }
   };
 
   const handleExportPdf = () => {
     toast.info("PDF export functionality will be implemented");
   };
 
-  const columns: ColumnDef<LearnerListItem>[] = useMemo(
-    () => [
+  // Extended type for EQA learners
+  type EqaLearnerItem = LearnerListItem & {
+    IQA_id?: { first_name: string; last_name: string; [key: string]: unknown };
+    trainer_id?: { first_name: string; last_name: string; [key: string]: unknown };
+    iqa_report?: string;
+    learner_created?: string;
+    course_registered?: string;
+  };
+
+  const columns: ColumnDef<LearnerListItem | EqaLearnerItem>[] = useMemo(() => {
+    // EQA-specific columns
+    if (isEqa) {
+      return [
+        {
+          accessorKey: "name",
+          header: "Name",
+          cell: ({ row }) => {
+            const learner = row.original;
+            const learnerName = `${learner.first_name} ${learner.last_name}`;
+            return (
+              <Link
+                href={`/learner-profile?learner_id=${learner.learner_id}`}
+                className="text-primary hover:underline cursor-pointer font-medium"
+              >
+                {learnerName}
+              </Link>
+            );
+          },
+        },
+        {
+          accessorKey: "course",
+          header: "Course",
+          cell: ({ row }) => {
+            const learner = row.original;
+            const courses = learner.course;
+            if (!courses || courses.length === 0) return "-";
+            return (
+              <div className="flex items-center gap-1">
+                {courses.map((c, index: number) => {
+                  const courseName = c.course?.course_name || "Unknown Course";
+                  return (
+                    <div key={index} className="flex items-center gap-3">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/learner-dashboard/${learner.learner_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center cursor-pointer"
+                          >
+                            <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="max-w-xs">{courseName}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/qa-sample-plan${c.course?.course_id ? `?course_id=${c.course.course_id}` : ''}`}
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center cursor-pointer"
+                          >
+                            <ClipboardList className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>QA Sample Plan</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          },
+        },
+        {
+          accessorKey: "trainer",
+          header: "Trainer",
+          cell: ({ row }) => {
+            const learner = row.original;
+            if (!isEqa || !('trainer_id' in learner)) return "-";
+            const trainer = learner.trainer_id;
+            if (!trainer) return "-";
+            return `${trainer.first_name} ${trainer.last_name}`;
+          },
+        },
+        {
+          accessorKey: "iqa",
+          header: "IQA",
+          cell: ({ row }) => {
+            const learner = row.original;
+            if (!isEqa || !('IQA_id' in learner)) return "-";
+            const iqa = learner.IQA_id;
+            if (!iqa) return "-";
+            return `${iqa.first_name} ${iqa.last_name}`;
+          },
+        },
+        {
+          accessorKey: "status",
+          header: "Status",
+          cell: ({ row }) => {
+            const status = row.original.status;
+            if (!status) return "-";
+            return (
+              <span
+                className={cn(
+                  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+                  status === "Completed" || status === "Certificated"
+                    ? "bg-green-100 text-green-800"
+                    : status === "Early Leaver" || status === "Training Suspended"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-blue-100 text-blue-800"
+                )}
+              >
+                {status}
+              </span>
+            );
+          },
+        },
+        {
+          accessorKey: "iqa_report",
+          header: "IQA Report",
+          cell: ({ row }) => {
+            const learner = row.original;
+            return (
+              <div className="flex items-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a
+                      href={`/iv-report?course_id=${learner.course?.[0]?.course?.course_id}`}
+                      rel="noopener noreferrer"
+                      className="flex items-center cursor-pointer"
+                    >
+                      <FileText className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>View IQA Report</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            );
+          },
+        },
+        {
+          accessorKey: "learner_created",
+          header: "Learner Created",
+          cell: ({ row }) => {
+            const learner = row.original;
+            if (!isEqa || !('learner_created' in learner)) return "-";
+            return formatDate(learner.learner_created);
+          },
+        },
+        {
+          accessorKey: "course_registered",
+          header: "Course Registered",
+          cell: ({ row }) => {
+            const learner = row.original;
+            if (!isEqa || !('course_registered' in learner)) return "-";
+            return formatDate(learner.course_registered);
+          },
+        },
+      ];
+    }
+
+    // Default columns for Admin, Trainer, Employer
+    return [
       {
         accessorKey: "name",
         header: "Learner Name",
@@ -491,12 +767,11 @@ export function LearnersDataTable() {
           );
         },
       },
-    ],
-    [canEditComments, isAdmin, isEmployer]
-  );
+    ];
+  }, [canEditComments, isAdmin, isEmployer, isEqa]);
 
   // Determine table data - all roles now use server-side data
-  const tableData = filteredLearners;
+  // tableData is already defined above with conditional logic
 
   const table = useReactTable({
     data: tableData,
@@ -516,10 +791,10 @@ export function LearnersDataTable() {
       globalFilter,
     },
     manualPagination: true, // All roles now use server-side pagination
-    pageCount: data?.meta_data?.pages || 0,
+    pageCount: isEqa ? (eqaData?.meta_data?.pages || 0) : (data?.meta_data?.pages || 0),
   });
 
-  if (isLoading) {
+  if (isLoadingData) {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
@@ -548,17 +823,19 @@ export function LearnersDataTable() {
               className="pl-9"
             />
           </div>
-          <Select value={courseFilter} onValueChange={setCourseFilter}>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Filter by course" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Courses</SelectItem>
-              {/* TODO: Add course options from API */}
-            </SelectContent>
-          </Select>
-          {/* Only show employer filter for Admin */}
-          {isAdmin && (
+          {!isEqa && (
+            <Select value={courseFilter} onValueChange={setCourseFilter}>
+              <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectValue placeholder="Filter by course" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Courses</SelectItem>
+                {/* TODO: Add course options from API */}
+              </SelectContent>
+            </Select>
+          )}
+          {/* Only show employer filter for Admin (not EQA) */}
+          {isAdmin && !isEqa && (
             <Select value={employerFilter} onValueChange={setEmployerFilter}>
               <SelectTrigger className="w-full sm:w-[200px]">
                 <SelectValue placeholder="Filter by employer" />
@@ -569,7 +846,7 @@ export function LearnersDataTable() {
               </SelectContent>
             </Select>
           )}
-          {(globalFilter || courseFilter !== "all" || (isAdmin && employerFilter !== "all") || Object.values(statusFilters).some(Boolean)) && (
+          {!isEqa && (globalFilter || courseFilter !== "all" || (isAdmin && employerFilter !== "all") || Object.values(statusFilters).some(Boolean)) && (
             <Button
               variant="ghost"
               size="sm"
@@ -613,29 +890,31 @@ export function LearnersDataTable() {
         </div>
       </div>
 
-      {/* Status Filter Checkboxes */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium">Status Filters</Label>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {statusOptions.map((status) => (
-            <div key={status} className="flex items-center space-x-2">
-              <Checkbox
-                id={`status-${status}`}
-                checked={statusFilters[status] || false}
-                onCheckedChange={(checked) =>
-                  handleStatusFilterChange(status, checked as boolean)
-                }
-              />
-              <Label
-                htmlFor={`status-${status}`}
-                className="text-sm font-normal cursor-pointer"
-              >
-                {status}
-              </Label>
-            </div>
-          ))}
+      {/* Status Filter Checkboxes - Hide for EQA */}
+      {!isEqa && (
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Status Filters</Label>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {statusOptions.map((status) => (
+              <div key={status} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`status-${status}`}
+                  checked={statusFilters[status] || false}
+                  onCheckedChange={(checked) =>
+                    handleStatusFilterChange(status, checked as boolean)
+                  }
+                />
+                <Label
+                  htmlFor={`status-${status}`}
+                  className="text-sm font-normal cursor-pointer"
+                >
+                  {status}
+                </Label>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Table */}
       <div className="rounded-md border overflow-x-auto">
@@ -690,14 +969,14 @@ export function LearnersDataTable() {
       </div>
 
       {/* Pagination - All roles now use server-side pagination */}
-      {data?.meta_data && (
+      {((!isEqa && data?.meta_data) || (isEqa && eqaData?.meta_data)) && (
         <DataTablePagination
           table={table}
           manualPagination={true}
-          currentPage={data.meta_data.page}
-          totalPages={data.meta_data.pages}
-          totalItems={data.meta_data.items}
-          pageSize={data.meta_data.page_size}
+          currentPage={isEqa ? (eqaData?.meta_data?.page || 1) : (data?.meta_data?.page || 1)}
+          totalPages={isEqa ? (eqaData?.meta_data?.pages || 0) : (data?.meta_data?.pages || 0)}
+          totalItems={isEqa ? (eqaData?.meta_data?.total || 0) : (data?.meta_data?.items || 0)}
+          pageSize={isEqa ? (eqaData?.meta_data?.page_size || 10) : (data?.meta_data?.page_size || 10)}
           onPageChange={handlePageChange}
           onPageSizeChange={(newPageSize) => {
             setFilters((prev) => ({
@@ -718,7 +997,7 @@ export function LearnersDataTable() {
           onSuccess={() => {
             setIsFormOpen(false);
             setEditingLearner(null);
-            refetch();
+            refetchData();
           }}
         />
       )}
@@ -732,7 +1011,7 @@ export function LearnersDataTable() {
           onSuccess={() => {
             setCommentDialogOpen(false);
             setLearnerForComment(null);
-            refetch();
+            refetchData();
           }}
         />
       )}
@@ -772,7 +1051,7 @@ export function LearnersDataTable() {
           onOpenChange={setCsvUploadOpen}
           onSuccess={() => {
             setCsvUploadOpen(false);
-            refetch();
+            refetchData();
           }}
         />
       )}

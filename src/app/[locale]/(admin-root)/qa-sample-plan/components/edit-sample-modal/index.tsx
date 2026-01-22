@@ -53,6 +53,8 @@ export function EditSampleModal({
 }: EditSampleModalProps) {
   const user = useAppSelector((state) => state.auth.user)
   const iqaId = user?.user_id
+  const userRole = user?.role
+  const isEQA = userRole === 'EQA' || userRole === 'eqa'
 
   // Action modal state
   const [actionModalOpen, setActionModalOpen] = useState(false)
@@ -147,6 +149,7 @@ export function EditSampleModal({
           onTabChange={onTabChange}
           onCreateNew={onCreateNew}
           isCreating={isCreating}
+          isReadOnly={isEQA}
         />
 
         <ActionButtonsBar
@@ -155,6 +158,7 @@ export function EditSampleModal({
           onClose={onClose}
           onDelete={() => setShowDeleteConfirmation(true)}
           onSave={onSave}
+          isReadOnly={isEQA}
         />
 
         {/* Content */}
@@ -163,22 +167,27 @@ export function EditSampleModal({
             <BasicDetailsSection
               modalFormData={modalFormData}
               onFormDataChange={onFormDataChange}
+              isReadOnly={isEQA}
             />
             <AssessmentMethodsSection
               modalFormData={modalFormData}
               onAssessmentMethodToggle={onAssessmentMethodToggle}
+              isReadOnly={isEQA}
             />
             <IqaConclusionSection
               modalFormData={modalFormData}
               onIqaConclusionToggle={onIqaConclusionToggle}
+              isReadOnly={isEQA}
             />
             <AssessorDecisionSection
               modalFormData={modalFormData}
               onFormDataChange={onFormDataChange}
+              isReadOnly={isEQA}
             />
             <AssessmentProcessesSection
               modalFormData={modalFormData}
               onFormDataChange={onFormDataChange}
+              isReadOnly={isEQA}
             />
             <FeedbackSection
               modalFormData={modalFormData}
@@ -187,6 +196,7 @@ export function EditSampleModal({
               unitName={unitName}
               unitType={unitType}
               onFormDataChange={onFormDataChange}
+              isReadOnly={isEQA}
             />
           </div>
 
@@ -196,6 +206,7 @@ export function EditSampleModal({
               isLoadingEvidence={isLoadingEvidence}
               unitCode={unitCode}
               onRefresh={fetchEvidence}
+              isReadOnly={isEQA}
             />
             <ActionsTable
               actions={actions}
@@ -207,6 +218,7 @@ export function EditSampleModal({
               onAddAction={handleOpenActionModal}
               onEditAction={handleEditAction}
               onDeleteAction={(id) => setDeleteActionId(id)}
+              isReadOnly={isEQA}
             />
           </div>
 
@@ -215,6 +227,7 @@ export function EditSampleModal({
             onAnswerChange={onAnswerChange}
             onDeleteQuestion={onDeleteQuestion}
             onSaveQuestions={onSaveQuestions}
+            isReadOnly={isEQA}
           />
         </div>
       </DialogContent>

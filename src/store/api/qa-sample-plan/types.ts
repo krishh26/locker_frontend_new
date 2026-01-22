@@ -20,7 +20,8 @@ export interface SamplePlanResponse {
 
 export interface SamplePlanQueryParams {
   course_id: string | number;
-  iqa_id: string | number;
+  iqa_id?: string | number;
+  eqaId?: string | number;
 }
 
 export interface SamplePlanLearnerUnit {

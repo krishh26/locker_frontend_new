@@ -13,6 +13,7 @@ import {
   selectSelectedCourse,
   selectSelectedPlan,
   selectPlans,
+  selectPlansLoading,
   selectFilterState,
   selectUnitSelection,
   setDateFrom,
@@ -22,7 +23,6 @@ import {
   resetFilters,
   resetSelectedUnits,
 } from "@/store/slices/qaSamplePlanSlice";
-import { useGetSamplePlansQuery } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import { useLearnersData } from "../../qa-sample-plan-page-content/hooks/use-learners-data";
 import { filterVisibleRows } from "../../qa-sample-plan-page-content/utils/filter-utils";
 import { sanitizeText, formatDisplayDate, getLearnerPlannedDate } from "../../../utils/utils";
@@ -39,28 +39,11 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const selectedPlan = useAppSelector(selectSelectedPlan);
   const plans = useAppSelector(selectPlans);
+  const plansLoading = useAppSelector(selectPlansLoading);
   const filterState = useAppSelector(selectFilterState);
   const unitSelection = useAppSelector(selectUnitSelection);
 
-  // Get current user for plans query
-  const user = useAppSelector((state) => state.auth.user);
-  const iqaId = user?.user_id as string | number | undefined;
-
-  // RTK Query - Plans loading state
-  const samplePlanQueryArgs = useMemo(() => {
-    if (!selectedCourse || !iqaId) return undefined;
-    return { course_id: selectedCourse, iqa_id: iqaId };
-  }, [selectedCourse, iqaId]);
-
-  const {
-    isFetching: isPlansFetching,
-    isLoading: isPlansLoading,
-  } = useGetSamplePlansQuery(
-    samplePlanQueryArgs as { course_id: string; iqa_id: number },
-    { skip: !samplePlanQueryArgs }
-  );
-
-  const isPlanListLoading = isPlansFetching || isPlansLoading;
+  const isPlanListLoading = plansLoading;
 
   // Learners data - Use parent's trigger if provided, otherwise create own hook instance
   const learnersData = useLearnersData(

@@ -11,6 +11,7 @@ interface FeedbackSectionProps {
   unitName: string | null
   unitType: string | null
   onFormDataChange: (field: string, value: unknown) => void
+  isReadOnly?: boolean
 }
 
 export function FeedbackSection({
@@ -20,6 +21,7 @@ export function FeedbackSection({
   unitName,
   unitType,
   onFormDataChange,
+  isReadOnly = false,
 }: FeedbackSectionProps) {
   const router = useRouter()
 
@@ -33,6 +35,8 @@ export function FeedbackSection({
           onChange={(e) => onFormDataChange('feedback', e.target.value)}
           placeholder='Please type in feedback. Max 4400 characters.'
           maxLength={4400}
+          disabled={isReadOnly}
+          readOnly={isReadOnly}
         />
       </div>
 
@@ -48,7 +52,7 @@ export function FeedbackSection({
               router.push(`/qa-sample-plan/${planDetailId}/evidence?${params.toString()}`)
             }
           }}
-          disabled={!planDetailId}
+          disabled={!planDetailId || isReadOnly}
           className='bg-[#e91e63] hover:bg-[#c2185b] text-white'
         >
           Examine Evidence

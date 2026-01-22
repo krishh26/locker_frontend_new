@@ -86,7 +86,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/qa-sample-plan(?:\/|$)/,
-    roles: R.adminWith("IQA"),
+    roles: R.adminWith("IQA" ,"EQA"),
   },
   {
     pattern: /^\/caseload(?:\/|$)/,
@@ -251,6 +251,11 @@ const routeRoleRules: RouteRule[] = [
   // Main dashboard (accessible to all roles - content is role-based)
   {
     pattern: /^\/dashboard\/?$/,
+    roles: R.all(),
+  },
+  // IV Report (accessible to all roles)
+  {
+    pattern: /^\/iv-report(?:\/|$)/,
     roles: R.all(),
   },
 ]

@@ -23,7 +23,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import {
   useGetProgressExclusionQuery,
   useUpdateProgressExclusionMutation,
@@ -49,10 +49,7 @@ export function ProgressExclusionForm() {
   const [excludedStatuses, setExcludedStatuses] = useState<Set<string>>(new Set());
 
   // Fetch courses
-  const { data: coursesData, isLoading: coursesLoading } = useGetCoursesQuery({
-    page: 1,
-    page_size: 1000, // Get all courses
-  });
+  const { data: coursesData, isLoading: coursesLoading } = useCachedCoursesList();
 
   // Fetch exclusion settings when course is selected
   const {

@@ -14,11 +14,13 @@ import type { ModalFormData } from '../../types'
 interface BasicDetailsSectionProps {
   modalFormData: ModalFormData
   onFormDataChange: (field: string, value: unknown) => void
+  isReadOnly?: boolean
 }
 
 export function BasicDetailsSection({
   modalFormData,
   onFormDataChange,
+  isReadOnly = false,
 }: BasicDetailsSectionProps) {
   const handleTypeChange = useCallback(
     (value: string) => {
@@ -51,8 +53,12 @@ export function BasicDetailsSection({
       <div className='md:col-span-4 space-y-4'>
         <div className='space-y-2'>
           <Label>Type</Label>
-          <Select value={modalFormData.type || undefined} onValueChange={handleTypeChange}>
-            <SelectTrigger className='w-full'>
+          <Select 
+            value={modalFormData.type || undefined} 
+            onValueChange={handleTypeChange}
+            disabled={isReadOnly}
+          >
+            <SelectTrigger className='w-full' disabled={isReadOnly}>
               <SelectValue placeholder='Select type' />
             </SelectTrigger>
             <SelectContent>
@@ -68,8 +74,9 @@ export function BasicDetailsSection({
           <Select
             value={modalFormData.sampleType || undefined}
             onValueChange={handleSampleTypeChange}
+            disabled={isReadOnly}
           >
-            <SelectTrigger className='w-full'>
+            <SelectTrigger className='w-full' disabled={isReadOnly}>
               <SelectValue placeholder='Select sample type' />
             </SelectTrigger>
             <SelectContent>
@@ -95,6 +102,8 @@ export function BasicDetailsSection({
           type='date'
           value={formatDateForInput(modalFormData.plannedDate)}
           onChange={(e) => onFormDataChange('plannedDate', e.target.value)}
+          disabled={isReadOnly}
+          readOnly={isReadOnly}
         />
       </div>
       <div className='md:col-span-6 space-y-2'>
@@ -103,6 +112,8 @@ export function BasicDetailsSection({
           type='date'
           value={formatDateForInput(modalFormData.completedDate)}
           onChange={(e) => onFormDataChange('completedDate', e.target.value)}
+          disabled={isReadOnly}
+          readOnly={isReadOnly}
         />
       </div>
     </>

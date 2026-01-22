@@ -16,6 +16,7 @@ interface EvidenceLinksTableProps {
   isLoadingEvidence: boolean
   unitCode: string | null
   onRefresh: () => void
+  isReadOnly?: boolean
 }
 
 export function EvidenceLinksTable({
@@ -23,6 +24,7 @@ export function EvidenceLinksTable({
   isLoadingEvidence,
   unitCode,
   onRefresh,
+  isReadOnly = false,
 }: EvidenceLinksTableProps) {
   return (
     <div className='flex-1'>
@@ -33,7 +35,7 @@ export function EvidenceLinksTable({
             variant='ghost'
             size='sm'
             onClick={onRefresh}
-            disabled={isLoadingEvidence || !unitCode}
+            disabled={isLoadingEvidence || !unitCode || isReadOnly}
           >
             <RefreshCw className={`h-4 w-4 ${isLoadingEvidence ? 'animate-spin' : ''}`} />
           </Button>

@@ -16,9 +16,10 @@ import type { UseLearnersDataReturn } from "../qa-sample-plan-page-content/hooks
 
 interface LearnersTableProps {
   learnersData: UseLearnersDataReturn;
+  disableCourseSelector?: boolean;
 }
 
-export function LearnersTable({ learnersData }: LearnersTableProps) {
+export function LearnersTable({ learnersData, disableCourseSelector = false }: LearnersTableProps) {
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   // Redux state
@@ -56,7 +57,7 @@ export function LearnersTable({ learnersData }: LearnersTableProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Course and Plan Selection */}
-        <CoursePlanSelector />
+        <CoursePlanSelector disabled={disableCourseSelector} />
 
         {/* Filter Controls */}
         <FilterControls />

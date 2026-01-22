@@ -4,6 +4,7 @@ import {
   useApplySamplePlanLearnersMutation,
   useGetSamplePlansQuery,
 } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
+import type { SamplePlanQueryParams } from "@/store/api/qa-sample-plan/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import type { Plan } from "@/store/slices/qaSamplePlanSlice";
 import {
@@ -11,15 +12,21 @@ import {
   selectFilterState,
   selectQASamplePlanState,
   selectSelectedCourse,
-  selectSelectedPlan,
   selectUnitSelection,
   setFilterError,
   setPlans,
+  setPlansLoading,
+  setPlansError,
   setSelectedPlan,
-  setSelectedUnitsMap
+  setSelectedUnitsMap,
+  setSelectedCourse,
+  setFilterApplied,
 } from "@/store/slices/qaSamplePlanSlice";
 import { useCallback, useEffect, useMemo } from "react";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { FilterPanel } from "../filter-panel";
 import { LearnersTable } from "../learners-table";
 import { QASamplePlanLayout } from "./components/qa-sample-plan-layout";
@@ -29,10 +36,17 @@ import { EditSampleModalWrapper } from "../edit-sample-modal/edit-sample-modal-w
 
 export function QASamplePlanPageContent() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   
   // Get current user
   const user = useAppSelector((state) => state.auth.user);
-  const iqaId = user?.user_id as string | number | undefined;
+  const userRole = user?.role;
+  const isEqa = userRole === "EQA";
+  const userId = user?.user_id as string | number | undefined;
+
+  // Read course_id from URL params
+  const courseIdFromUrl = searchParams.get("course_id");
 
   // Redux state
   const selectedCourse = useAppSelector(selectSelectedCourse);
@@ -41,23 +55,60 @@ export function QASamplePlanPageContent() {
   const filterState = useAppSelector(selectFilterState);
   const unitSelection = useAppSelector(selectUnitSelection);
 
+  // Get courses data for validation
+  const { data: coursesData } = useCachedCoursesList();
+  console.log("🚀 ~ QASamplePlanPageContent ~ coursesData:", coursesData)
+
+  const courses = useMemo(() => {
+    if (!coursesData?.data) return [];
+    return coursesData.data.map((course) => ({
+      id: course.course_id.toString(),
+      name: course.course_name || "Untitled Course",
+    }));
+  }, [coursesData]);
+
   // RTK Query - Plans (conditional)
   const samplePlanQueryArgs = useMemo(() => {
-    if (!selectedCourse || !iqaId) return undefined;
-    return { course_id: selectedCourse, iqa_id: iqaId };
-  }, [selectedCourse, iqaId]);
+    if (!selectedCourse || !userId) return undefined;
+    if (isEqa) {
+      return { course_id: selectedCourse, eqaId: userId };
+    }
+    return { course_id: selectedCourse, iqa_id: userId };
+  }, [selectedCourse, userId, isEqa]);
 
   const {
     data: samplePlanResponse,
     isFetching: isPlansFetching,
     isLoading: isPlansLoading,
     isError: isPlansError,
+    error: plansError,
   } = useGetSamplePlansQuery(
-    samplePlanQueryArgs as { course_id: string; iqa_id: number },
+    samplePlanQueryArgs as SamplePlanQueryParams,
     { skip: !samplePlanQueryArgs }
   );
 
   const isPlanListLoading = isPlansFetching || isPlansLoading;
+
+  // Sync loading and error states to Redux
+  useEffect(() => {
+    dispatch(setPlansLoading(isPlanListLoading));
+  }, [isPlanListLoading, dispatch]);
+
+  useEffect(() => {
+    if (isPlansError) {
+      const errorMessage = plansError && typeof plansError === 'object' && 'data' in plansError
+        ? (plansError.data as { error?: string; message?: string })?.error || 
+          (plansError.data as { error?: string; message?: string })?.message
+        : plansError instanceof Error
+        ? plansError.message
+        : typeof plansError === 'string'
+        ? plansError
+        : "Failed to load plans";
+      dispatch(setPlansError(errorMessage || null));
+    } else {
+      dispatch(setPlansError(null));
+    }
+  }, [isPlansError, plansError, dispatch]);
 
   // Normalize and store plans in Redux
   useEffect(() => {
@@ -110,12 +161,62 @@ export function QASamplePlanPageContent() {
     dispatch(setSelectedPlan(""));
   }, [isPlanListLoading, isPlansError, samplePlanResponse, selectedCourse, selectedPlan, dispatch]);
 
+  // EQA course validation and auto-set
+  useEffect(() => {
+    if (!isEqa || !courseIdFromUrl || courses.length === 0) return;
+
+    // Validate course_id exists in courses data
+    const courseExists = courses.some((course) => course.id === courseIdFromUrl);
+
+    if (!courseExists) {
+      // Invalid course_id, redirect back
+      toast.error("Invalid course. Redirecting...");
+      // router.push("/learners");
+      return;
+    }
+
+    // Valid course_id, set it as selected course if not already set
+    if (selectedCourse !== courseIdFromUrl) {
+      dispatch(setSelectedCourse(courseIdFromUrl));
+    }
+  }, [isEqa, courseIdFromUrl, courses, selectedCourse, dispatch, router]);
+
   // Learners data hook (keeps API logic, dispatches Redux actions)
   const learnersData = useLearnersData(
     selectedPlan,
     filterState.filterApplied,
     filterState.searchText
   );
+
+  // Auto-trigger filter for EQA users when course and plan are ready
+  useEffect(() => {
+    if (!isEqa || !courseIdFromUrl || !selectedCourse || selectedCourse !== courseIdFromUrl) return;
+    if (isPlanListLoading || !qaState.plans.length) return;
+    if (filterState.filterApplied) return; // Already applied
+
+    // Auto-select first plan if no plan is selected
+    if (!selectedPlan && qaState.plans.length > 0) {
+      dispatch(setSelectedPlan(qaState.plans[0].id));
+      return; // Will trigger again when selectedPlan is set
+    }
+
+    // If plan is selected, auto-trigger filter
+    if (selectedPlan && qaState.plans.some((plan) => plan.id === selectedPlan)) {
+      dispatch(setFilterError(""));
+      dispatch(setFilterApplied(true));
+      learnersData.triggerSamplePlanLearners(selectedPlan);
+    }
+  }, [
+    isEqa,
+    courseIdFromUrl,
+    selectedCourse,
+    selectedPlan,
+    isPlanListLoading,
+    qaState.plans,
+    filterState.filterApplied,
+    dispatch,
+    learnersData,
+  ]);
 
   // Apply samples mutation
   const [applySamplePlanLearners, { isLoading: isApplySamplesLoading }] = useApplySamplePlanLearnersMutation();
@@ -169,7 +270,7 @@ export function QASamplePlanPageContent() {
       return;
     }
 
-    if (!iqaId) {
+    if (!userId) {
       dispatch(setFilterError("Unable to determine current user. Please re-login and try again."));
       return;
     }
@@ -197,7 +298,7 @@ export function QASamplePlanPageContent() {
     const payload = buildApplySamplesPayload({
       selectedPlan,
       sampleType: filterState.sampleType,
-      iqaId,
+      iqaId: userId,
       learnersData: learnersData.learnersData,
       selectedUnitsMap: selectedUnitsMapForPayload,
       dateFrom: filterState.plannedSampleDate,
@@ -231,7 +332,7 @@ export function QASamplePlanPageContent() {
     filterState.sampleType,
     filterState.plannedSampleDate,
     filterState.selectedMethods,
-    iqaId,
+    userId,
     learnersData,
     unitSelection.selectedUnitsMap,
     applySamplePlanLearners,
@@ -251,7 +352,7 @@ export function QASamplePlanPageContent() {
       return;
     }
 
-    if (!iqaId) {
+    if (!userId) {
       dispatch(setFilterError("Unable to determine current user. Please re-login and try again."));
       return;
     }
@@ -329,7 +430,7 @@ export function QASamplePlanPageContent() {
     const payload = buildApplySamplesPayload({
       selectedPlan,
       sampleType: filterState.sampleType,
-      iqaId,
+      iqaId: userId,
       learnersData: learnersData.learnersData,
       selectedUnitsMap: selectedUnitsMapForPayload,
       dateFrom: filterState.plannedSampleDate,
@@ -363,7 +464,7 @@ export function QASamplePlanPageContent() {
     filterState.sampleType,
     filterState.plannedSampleDate,
     filterState.selectedMethods,
-    iqaId,
+    userId,
     learnersData,
     isApplySamplesDisabled,
     applySamplePlanLearners,
@@ -385,7 +486,10 @@ export function QASamplePlanPageContent() {
         </div>
 
         <div className="lg:col-span-8">
-          <LearnersTable learnersData={learnersData} />
+          <LearnersTable 
+            learnersData={learnersData} 
+            disableCourseSelector={isEqa && !!courseIdFromUrl}
+          />
         </div>
       </QASamplePlanLayout>
       <EditSampleModalWrapper />

@@ -16,6 +16,7 @@ interface IqaQuestionsSectionProps {
   onAnswerChange: (id: string, answer: 'Yes' | 'No') => void
   onDeleteQuestion: (id: string) => void
   onSaveQuestions: () => void
+  isReadOnly?: boolean
 }
 
 export function IqaQuestionsSection({
@@ -23,6 +24,7 @@ export function IqaQuestionsSection({
   onAnswerChange,
   onDeleteQuestion,
   onSaveQuestions,
+  isReadOnly = false,
 }: IqaQuestionsSectionProps) {
   return (
     <div className='mt-6'>
@@ -32,6 +34,7 @@ export function IqaQuestionsSection({
           onClick={onSaveQuestions}
           className='bg-green-600 hover:bg-green-700'
           size='sm'
+          disabled={isReadOnly}
         >
           Save
         </Button>
@@ -61,6 +64,7 @@ export function IqaQuestionsSection({
                     question={question}
                     onAnswerChange={onAnswerChange}
                     onDeleteQuestion={onDeleteQuestion}
+                    isReadOnly={isReadOnly}
                   />
                 ))
               )}

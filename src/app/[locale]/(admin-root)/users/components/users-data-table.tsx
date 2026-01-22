@@ -62,6 +62,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
+import { CourseAutocomplete } from "@/components/ui/course-autocomplete";
 
 // Roles will be translated in component
 const roleValues = [
@@ -79,7 +80,7 @@ export function UsersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
-
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
   // Create roles with translated labels
   const roles = useMemo(() => {
     const roleKeyMap: Record<string, string> = {

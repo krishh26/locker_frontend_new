@@ -33,7 +33,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateResourceMutation } from "@/store/api/resources/resourcesApi";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -79,10 +79,7 @@ export function ResourceFormDialog({
   const [createResource, { isLoading }] = useCreateResourceMutation();
   
   // Fetch courses for dropdown
-  const { data: coursesResponse, isLoading: isLoadingCourses } = useGetCoursesQuery({
-    page: 1,
-    page_size: 500,
-  });
+  const { data: coursesResponse, isLoading: isLoadingCourses } = useCachedCoursesList();
   
   const courses = coursesResponse?.data || [];
 

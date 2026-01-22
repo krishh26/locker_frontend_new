@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UnassignedLearnersTable } from "./unassigned-learners-table";
-import { useGetCoursesQuery } from "@/store/api/course/courseApi";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetLearnersListQuery } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem } from "@/store/api/learner/types";
 import { Loader2, Users } from "lucide-react";
@@ -66,10 +66,9 @@ export function EqaLearnerSelectionDialog({
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   // Fetch courses
-  const { data: coursesData, isLoading: isLoadingCourses } = useGetCoursesQuery(
-    { page: 1, page_size: 1000 },
-    { skip: !open }
-  );
+  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({
+    skip: !open
+  });
 
   // Fetch learners for selected course
   const { data: learnersData, isLoading: isLoadingLearners, isFetching: isFetchingLearners } = useGetLearnersListQuery(

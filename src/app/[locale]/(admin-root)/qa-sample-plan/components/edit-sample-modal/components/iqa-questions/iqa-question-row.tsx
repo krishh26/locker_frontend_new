@@ -12,12 +12,14 @@ interface IqaQuestionRowProps {
   question: SampleQuestion
   onAnswerChange: (id: string, answer: 'Yes' | 'No') => void
   onDeleteQuestion: (id: string) => void
+  isReadOnly?: boolean
 }
 
 export function IqaQuestionRow({
   question,
   onAnswerChange,
   onDeleteQuestion,
+  isReadOnly = false,
 }: IqaQuestionRowProps) {
   const answer = question.answer || ''
 
@@ -35,16 +37,17 @@ export function IqaQuestionRow({
           value={answer}
           onValueChange={(value) => handleAnswerSelect(value as 'Yes' | 'No')}
           className='flex flex-row justify-center gap-8'
+          disabled={isReadOnly}
         >
           <div className='flex items-center space-x-2'>
-            <RadioGroupItem value='Yes' id={`yes-${question.id}`} />
-            <Label htmlFor={`yes-${question.id}`} className='cursor-pointer'>
+            <RadioGroupItem value='Yes' id={`yes-${question.id}`} disabled={isReadOnly} />
+            <Label htmlFor={`yes-${question.id}`} className={isReadOnly ? '' : 'cursor-pointer'}>
               Yes
             </Label>
           </div>
           <div className='flex items-center space-x-2'>
-            <RadioGroupItem value='No' id={`no-${question.id}`} />
-            <Label htmlFor={`no-${question.id}`} className='cursor-pointer'>
+            <RadioGroupItem value='No' id={`no-${question.id}`} disabled={isReadOnly} />
+            <Label htmlFor={`no-${question.id}`} className={isReadOnly ? '' : 'cursor-pointer'}>
               No
             </Label>
           </div>
@@ -55,6 +58,7 @@ export function IqaQuestionRow({
           variant='ghost'
           size='sm'
           onClick={() => onDeleteQuestion(String(question.id))}
+          disabled={isReadOnly}
         >
           <Trash2 className='h-4 w-4 text-destructive' />
         </Button>

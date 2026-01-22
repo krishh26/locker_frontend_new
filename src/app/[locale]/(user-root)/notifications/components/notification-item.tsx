@@ -5,6 +5,48 @@ import { Check, X, Bell, BellRing, Newspaper, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { Notification, NotificationType } from "@/store/api/notification/types"
+import { useMemo } from "react"
+
+// URL regex pattern
+const URL_REGEX = /(https?:\/\/[^\s]+)/g
+
+// Function to parse message and convert URLs to clickable links
+const parseMessageWithLinks = (message: string) => {
+  const parts: Array<{ text: string; isUrl: boolean }> = []
+  let lastIndex = 0
+  let match
+
+  while ((match = URL_REGEX.exec(message)) !== null) {
+    // Add text before URL
+    if (match.index > lastIndex) {
+      parts.push({
+        text: message.substring(lastIndex, match.index),
+        isUrl: false,
+      })
+    }
+    // Add URL
+    parts.push({
+      text: match[0],
+      isUrl: true,
+    })
+    lastIndex = URL_REGEX.lastIndex
+  }
+
+  // Add remaining text after last URL
+  if (lastIndex < message.length) {
+    parts.push({
+      text: message.substring(lastIndex),
+      isUrl: false,
+    })
+  }
+
+  // If no URLs found, return original message
+  if (parts.length === 0) {
+    parts.push({ text: message, isUrl: false })
+  }
+
+  return parts
+}
 
 interface NotificationItemProps {
   notification: Notification
@@ -45,6 +87,12 @@ export function NotificationItem({
 }: NotificationItemProps) {
   const Icon = getNotificationIcon(notification.type)
 
+  // Parse message to extract URLs
+  const messageParts = useMemo(
+    () => parseMessageWithLinks(notification.message || ""),
+    [notification.message]
+  )
+
   return (
     <div
       className={`flex items-start gap-4 p-4 rounded-lg border transition-colors ${
@@ -77,7 +125,28 @@ export function NotificationItem({
               </Badge>
             </div>
             <p className="text-sm text-muted-foreground">
-              {notification.message}
+              {messageParts.map((part, index) => {
+                if (part.isUrl) {
+                  return (
+                    <a
+                      key={index}
+                      href={part.text}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-medium break-all"
+                      onClick={() => {
+                        // Mark notification as read when link is clicked
+                        if (onRead && !notification.read) {
+                          onRead(notification.notification_id)
+                        }
+                      }}
+                    >
+                      {part.text}
+                    </a>
+                  )
+                }
+                return <span key={index}>{part.text}</span>
+              })}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
               {format(new Date(notification.created_at), "MMM d, yyyy 'at' h:mm a")}

@@ -26,10 +26,22 @@ export function UserSelectionTable({
   onSelectionChange,
   isLoading = false,
 }: UserSelectionTableProps) {
+
+  const getItemId = (item: User | LearnerListItem): number => {
+    // Check if item has user_id (User type always has it)
+    if ("user_id" in item) {
+      return item.user_id
+    }
+    // For learners, check if user_id exists in the object (might not be in type definition)
+    const learner = item as LearnerListItem & { user_id?: number }
+    return learner.user_id || 0
+  }
+
+
   const allSelected = useMemo(() => {
     if (data.length === 0) return false
     return data.every((item) => {
-      const id = "learner_id" in item ? item.learner_id : item.user_id
+      const id = getItemId(item)
       return selectedIds.has(id)
     })
   }, [data, selectedIds])
@@ -37,7 +49,7 @@ export function UserSelectionTable({
   const someSelected = useMemo(() => {
     if (data.length === 0) return false
     return data.some((item) => {
-      const id = "learner_id" in item ? item.learner_id : item.user_id
+      const id = getItemId(item)
       return selectedIds.has(id)
     })
   }, [data, selectedIds])
@@ -46,12 +58,12 @@ export function UserSelectionTable({
     const newSelection = new Set(selectedIds)
     if (checked) {
       data.forEach((item) => {
-        const id = "learner_id" in item ? item.learner_id : item.user_id
+        const id = getItemId(item)
         newSelection.add(id)
       })
     } else {
       data.forEach((item) => {
-        const id = "learner_id" in item ? item.learner_id : item.user_id
+        const id = getItemId(item)
         newSelection.delete(id)
       })
     }
@@ -68,14 +80,7 @@ export function UserSelectionTable({
     onSelectionChange(newSelection)
   }
 
-  const getItemId = (item: User | LearnerListItem): number => {
-    return "learner_id" in item ? item.learner_id : item.user_id
-  }
-
   const getItemName = (item: User | LearnerListItem): string => {
-    if ("learner_id" in item) {
-      return `${item.first_name} ${item.last_name}`.trim() || item.user_name
-    }
     return `${item.first_name} ${item.last_name}`.trim() || item.user_name
   }
 

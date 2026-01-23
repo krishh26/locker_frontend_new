@@ -22,6 +22,7 @@ import {
   Save,
   Briefcase,
   ArrowRight,
+  KeyRound,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StudentIdSection } from './sections/student-id-section'
@@ -33,6 +34,7 @@ import { AdditionalInfoSection } from './sections/additional-info-section'
 import { FundingBandsSection } from './sections/funding-bands-section'
 import { CourseInformationTab } from './course-information-tab'
 import { ContractedWorkHoursTab } from './contracted-work-hours-tab'
+import { ResetPasswordDialog } from './reset-password-dialog'
 import { toast } from 'sonner'
 import type {
   LearnerData,
@@ -236,6 +238,7 @@ export function LearnerProfilePageContent({
   const learner = learnerResponse?.data
   const [activeTab, setActiveTab] = useState('personal')
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation()
+  const [isResetPasswordDialogOpen, setIsResetPasswordDialogOpen] = useState(false)
 
   // Set up form
   const form = useForm<LearnerProfileFormValues>({
@@ -365,19 +368,28 @@ export function LearnerProfilePageContent({
           backButtonHref={backButtonHref}
         />
 
-        {/* Access Profile Button */}
-        {!isLearner && (
-          <Button
-            variant='outline'
-            onClick={() =>
-              router.push(`/learner-dashboard/${learner.learner_id}`)
-            }
-          >
-            <User className='h-4 w-4' />
-            Access Profile
-            <ArrowRight className='h-4 w-4' />
-          </Button>
+        {/* Action Buttons */}
+          <div className='flex gap-2'>
+            <Button
+              variant='outline'
+              onClick={() => setIsResetPasswordDialogOpen(true)}
+              >
+              <KeyRound className='h-4 w-4' />
+              Reset Password
+            </Button>
+              {!isLearner && (
+            <Button
+              variant='outline'
+              onClick={() =>
+                router.push(`/learner-dashboard/${learner.learner_id}`)
+              }
+            >
+              <User className='h-4 w-4' />
+              Access Profile
+              <ArrowRight className='h-4 w-4' />
+            </Button>
         )}
+          </div>
       </div>
       {/* Profile Content with Tabs */}
       <Tabs
@@ -448,6 +460,20 @@ export function LearnerProfilePageContent({
           )}
         </CardContent>
       </Tabs>
+
+      {/* Reset Password Dialog */}
+      {learner?.email && (
+        <ResetPasswordDialog
+          open={isResetPasswordDialogOpen}
+          onOpenChange={setIsResetPasswordDialogOpen}
+          learnerEmail={learner.email}
+          learnerName={
+            learner.first_name && learner.last_name
+              ? `${learner.first_name} ${learner.last_name}`
+              : learner.user_name || undefined
+          }
+        />
+      )}
     </div>
   )
 }

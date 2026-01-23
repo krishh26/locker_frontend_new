@@ -93,6 +93,18 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
+  // Require authentication for change-password page
+  if (!token && pathname === '/auth/change-password') {
+    const redirectUrl = new URL('/auth/sign-in', request.url)
+    redirectUrl.searchParams.set("from", pathname)
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  // Allow authenticated users to access change-password page
+  if (token && pathname === '/auth/change-password') {
+    return response
+  }
+
   if (token && isAuthRoute(pathname)) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }

@@ -258,6 +258,11 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/iv-report(?:\/|$)/,
     roles: R.all(),
   },
+  // Change Password (accessible to all authenticated users)
+  {
+    pattern: /^\/auth\/change-password(?:\/|$)/,
+    roles: R.all(),
+  },
 ]
 
 export function getAllowedRolesForPath(pathname: string): AllowedRoles {

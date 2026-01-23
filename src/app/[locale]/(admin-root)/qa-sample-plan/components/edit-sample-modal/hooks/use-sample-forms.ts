@@ -41,13 +41,13 @@ export function useSampleForms(planDetailId: string | number | null, iqaId: stri
         allocated_by_id: iqaId,
         description: formDescription || undefined,
       }).unwrap()
-      toast.success('Form allocated successfully')
+      toast.success('Survey allocated successfully')
       setFormDescription('')
       setSelectedFormId('')
       fetchAllocatedForms()
     } catch (error: unknown) {
       toast.error(
-        (error as { data?: { message?: string } })?.data?.message || 'Failed to allocate form'
+        (error as { data?: { message?: string } })?.data?.message || 'Failed to allocate survey'
       )
     }
   }, [planDetailId, iqaId, selectedFormId, formDescription, createSampleForm, fetchAllocatedForms])

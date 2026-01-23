@@ -312,7 +312,7 @@ export function AllocateSurveyDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-6xl! max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Allocate Form</DialogTitle>
+          <DialogTitle>Allocate Survey</DialogTitle>
           <DialogDescription>
             Assign &quot;{survey?.name}&quot; to users by selecting roles and users below.
           </DialogDescription>

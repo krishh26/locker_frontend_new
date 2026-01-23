@@ -37,6 +37,7 @@ import { awaitingSignatureApi } from "@/store/api/awaiting-signature/awaitingSig
 import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExclusionApi"
 import { notificationApi } from "@/store/api/notification/notificationApi"
 import { contractedWorkApi } from "@/store/api/contracted-work/contractedWorkApi"
+import { masterAdminApi } from "@/store/api/master-admin/masterAdminApi"
 
 
 // Import all slices here
@@ -134,5 +135,6 @@ export const concatMiddleware: Middleware[] = [
   progressExclusionApi.middleware,
   notificationApi.middleware,
   contractedWorkApi.middleware,
+  masterAdminApi.middleware,
   cacheSyncMiddleware,
 ]

@@ -13,16 +13,46 @@ type RouteRule = {
 
 // Role helper for creating reusable role combinations
 const R = {
+  masterAdmin: (): readonly Role[] => authRoles.MasterAdmin,
   admin: (): readonly Role[] => authRoles.Admin,
   with: (...roles: Role[]): readonly Role[] => roles as readonly Role[],
   adminWith: (...roles: Role[]): readonly Role[] => {
     const uniqueRoles = new Set<Role>(["Admin", ...roles])
     return Array.from(uniqueRoles) as readonly Role[]
   },
+  masterAdminWith: (...roles: Role[]): readonly Role[] => {
+    const uniqueRoles = new Set<Role>(["MasterAdmin", ...roles])
+    return Array.from(uniqueRoles) as readonly Role[]
+  },
   all: (): readonly Role[] => ALL_ROLES,
 } as const
 
 const routeRoleRules: RouteRule[] = [
+  // Master Admin routes (MasterAdmin only)
+  {
+    pattern: /^\/master-admin(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
+  {
+    pattern: /^\/master-admin\/admins(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
+  {
+    pattern: /^\/master-admin\/system-settings(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
+  {
+    pattern: /^\/master-admin\/audit-logs(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
+  {
+    pattern: /^\/master-admin\/role-permissions(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
+  {
+    pattern: /^\/master-admin\/data-export(?:\/|$)/,
+    roles: R.masterAdmin(),
+  },
   // Admin-only routes
   {
     pattern: /^\/admin(?:\/|$)/,
@@ -271,7 +301,25 @@ export function getAllowedRolesForPath(pathname: string): AllowedRoles {
 }
 
 export function canAccess(pathname: string, role: string | null): boolean {
+  // MasterAdmin has access to everything (including all Admin routes)
+  if (role === "MasterAdmin") {
+    return true
+  }
+  // Admin has access to all routes except MasterAdmin routes
   if (role === "Admin") {
+    // Check if this is a MasterAdmin-only route
+    const masterAdminRoutes = [
+      /^\/master-admin(?:\/|$)/,
+      /^\/master-admin\/admins(?:\/|$)/,
+      /^\/master-admin\/system-settings(?:\/|$)/,
+      /^\/master-admin\/audit-logs(?:\/|$)/,
+      /^\/master-admin\/role-permissions(?:\/|$)/,
+      /^\/master-admin\/data-export(?:\/|$)/,
+    ]
+    const isMasterAdminRoute = masterAdminRoutes.some((pattern) => pattern.test(pathname))
+    if (isMasterAdminRoute) {
+      return false
+    }
     return true
   }
   const allowedRoles = getAllowedRolesForPath(pathname)

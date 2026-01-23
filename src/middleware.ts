@@ -40,6 +40,7 @@ const PROTECTED_PATH_PREFIXES = [
   "/dashboard-2",
   "/propose-your-innovations",
   "/support",
+  "/master-admin",
 ]
 
 const AUTH_PATH_PREFIXES = ["/auth"]

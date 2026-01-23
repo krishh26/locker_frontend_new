@@ -80,8 +80,10 @@ export function UsersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
+  const isMasterAdmin = userRole === "MasterAdmin";
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   // Create roles with translated labels
+  // MasterAdmin can see Admin role in filter, regular Admin cannot
   const roles = useMemo(() => {
     const roleKeyMap: Record<string, string> = {
       "Admin": "admin",
@@ -90,11 +92,15 @@ export function UsersDataTable() {
       "EQA": "eqa",
       "LIQA": "liqa",
     };
-    return roleValues.map(value => ({
+    // Filter out Admin role if current user is not MasterAdmin
+    const filteredRoleValues = isMasterAdmin
+      ? roleValues
+      : roleValues.filter((value) => value !== "Admin");
+    return filteredRoleValues.map(value => ({
       value,
       label: t(`roles.${roleKeyMap[value]}`) || value,
     }));
-  }, [t]);
+  }, [t, isMasterAdmin]);
   
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

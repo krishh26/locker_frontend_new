@@ -1,4 +1,5 @@
 const baseRoles = [
+  "MasterAdmin",
   "Admin",
   "Learner",
   "Trainer",
@@ -11,6 +12,7 @@ const baseRoles = [
 export type Role = (typeof baseRoles)[number]
 
 export const authRoles = {
+  MasterAdmin: ["MasterAdmin"] as const satisfies readonly Role[],
   Admin: ["Admin"] as const satisfies readonly Role[],
   Learner: ["Learner"] as const satisfies readonly Role[],
   Trainer: ["Trainer"] as const satisfies readonly Role[],
@@ -75,5 +77,27 @@ export function getRolesWithAdmin(
 
   // Otherwise, add Admin to the array
   return ["Admin", ...roles] as const satisfies readonly Role[]
+}
+
+/**
+ * Helper function to ensure MasterAdmin role is always included in allowed roles.
+ * MasterAdmin should have access to all routes that other roles can access.
+ * @param roles - Array of roles to include MasterAdmin with
+ * @returns Array of roles with MasterAdmin included
+ */
+export function getRolesWithMasterAdmin(
+  roles: readonly Role[] | null | undefined,
+): readonly Role[] {
+  if (roles === null || roles === undefined) {
+    return authRoles.MasterAdmin
+  }
+
+  // If MasterAdmin is already in the array, return as is
+  if (roles.includes("MasterAdmin")) {
+    return roles
+  }
+
+  // Otherwise, add MasterAdmin to the array
+  return ["MasterAdmin", ...roles] as const satisfies readonly Role[]
 }
 

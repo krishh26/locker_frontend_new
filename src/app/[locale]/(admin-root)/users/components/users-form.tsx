@@ -139,6 +139,8 @@ export function UsersForm({ user }: UsersFormProps) {
   const isEditMode = !!user;
 
   // Create roles with translated labels
+  // MasterAdmin can assign Admin role, regular Admin cannot
+  const isMasterAdmin = userRole === "MasterAdmin";
   const roles = useMemo(() => {
     const roleKeyMap: Record<string, string> = {
       "Admin": "admin",
@@ -149,11 +151,15 @@ export function UsersForm({ user }: UsersFormProps) {
       "Line Manager": "lineManager",
       "Employer": "employer",
     };
-    return roleValues.map(value => ({
+    // Filter out Admin role if current user is not MasterAdmin
+    const filteredRoleValues = isMasterAdmin
+      ? roleValues
+      : roleValues.filter((value) => value !== "Admin");
+    return filteredRoleValues.map(value => ({
       value,
       label: t(`roles.${roleKeyMap[value]}`) || value,
     }));
-  }, [t]);
+  }, [t, isMasterAdmin]);
 
   // EQA learner assignment state
   const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);

@@ -378,7 +378,7 @@ export function SurveysDataTable() {
                       }}
                     >
                       <UserPlus className="mr-2 size-4" />
-                      Allocate Form
+                      Allocate Survey
                     </DropdownMenuItem>
                   </>
                 )}

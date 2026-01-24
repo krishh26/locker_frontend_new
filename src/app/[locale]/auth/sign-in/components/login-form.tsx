@@ -69,12 +69,6 @@ export function LoginForm({
       dispatch(setCredentials(result))
       toast.success("Signed in successfully")
 
-      if (result.passwordChanged === false) {
-        toast.info("Please update your password to continue.")
-        router.push("/auth/forgot-password-2")
-        return
-      }
-
       // Fetch learner details if user role is "Learner"
       if (result.user?.role === "Learner" && result.user?.learner_id) {
         try {
@@ -86,6 +80,11 @@ export function LoginForm({
         } catch (learnerErr) {
           // Log error but don't block login
           console.error("Failed to fetch learner details:", learnerErr)
+        }
+        if (result.passwordChanged === false) {
+          toast.info("Please update your password to continue.")
+          router.push("/auth/change-password")
+          return
         }
         router.push("/dashboard")
       } else {
@@ -116,6 +115,11 @@ export function LoginForm({
           userEmployers: userData.userEmployers,
         }
         dispatch(updateUser(authUser))
+        if (result.passwordChanged === false) {
+          toast.info("Please update your password to continue.")
+          router.push("/auth/change-password")
+          return
+        }
         router.push("/dashboard")
       }
 

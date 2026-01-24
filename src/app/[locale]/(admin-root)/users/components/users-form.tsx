@@ -65,8 +65,8 @@ const createUserSchema = (t: (key: string) => string) => z
     email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")),
     password: z.string().min(6, t("validation.passwordMinLength")),
     confirmPassword: z.string(),
-    mobile: z.string().min(1, t("validation.mobileRequired")),
-    time_zone: z.string().min(1, t("validation.timezoneRequired")),
+    mobile: z.string().optional(),
+    time_zone: z.string().optional(),
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
@@ -97,8 +97,8 @@ const updateUserSchema = (t: (key: string) => string) => z
     last_name: z.string().min(1, t("validation.lastNameRequired")).optional(),
     user_name: z.string().min(1, t("validation.usernameRequired")).optional(),
     email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")).optional(),
-    mobile: z.string().min(1, t("validation.mobileRequired")).optional(),
-    time_zone: z.string().min(1, t("validation.timezoneRequired")).optional(),
+    mobile: z.string().optional(),
+    time_zone: z.string().optional(),
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")).optional(),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
@@ -492,8 +492,8 @@ export function UsersForm({ user }: UsersFormProps) {
       {/* First Name & Last Name */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="first_name">
-            {t("form.firstName")} <span className="text-destructive">{t("form.required")}</span>
+          <Label htmlFor="first_name"> 
+            {t("form.firstName")}<span className="text-destructive">{t("form.required")}</span>
           </Label>
           <Controller
             name="first_name"
@@ -517,7 +517,7 @@ export function UsersForm({ user }: UsersFormProps) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="last_name">
-            {t("form.lastName")} <span className="text-destructive">{t("form.required")}</span>
+            {t("form.lastName")}<span className="text-destructive">{t("form.required")}</span>
           </Label>
           <Controller
             name="last_name"
@@ -545,7 +545,7 @@ export function UsersForm({ user }: UsersFormProps) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="user_name">
-            {t("form.username")} <span className="text-destructive">{t("form.required")}</span>
+            {t("form.username")}<span className="text-destructive">{t("form.required")}</span>
           </Label>
           <Controller
             name="user_name"
@@ -569,7 +569,7 @@ export function UsersForm({ user }: UsersFormProps) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">
-            {t("form.email")} <span className="text-destructive">{t("form.required")}</span>
+            {t("form.email")}<span className="text-destructive">{t("form.required")}</span>
           </Label>
           <Controller
             name="email"
@@ -599,7 +599,7 @@ export function UsersForm({ user }: UsersFormProps) {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="password">
-              {t("form.password")} <span className="text-destructive">{t("form.required")}</span>
+              {t("form.password")}<span className="text-destructive">{t("form.required")}</span>
             </Label>
             <Controller
               name="password"
@@ -646,7 +646,7 @@ export function UsersForm({ user }: UsersFormProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">
-              {t("form.confirmPassword")} <span className="text-destructive">{t("form.required")}</span>
+              {t("form.confirmPassword")}<span className="text-destructive">{t("form.required")}</span>
             </Label>
             <Controller
               name="confirmPassword"
@@ -697,7 +697,7 @@ export function UsersForm({ user }: UsersFormProps) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="mobile">
-            {t("form.mobile")} <span className="text-destructive">{t("form.required")}</span>
+            {t("form.mobile")}
           </Label>
           <Controller
             name="mobile"
@@ -721,7 +721,7 @@ export function UsersForm({ user }: UsersFormProps) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="time_zone">
-            {t("form.timeZone")} <span className="text-destructive">{t("form.required")}</span>
+            {t("form.timeZone")}
           </Label>
           <Controller
             name="time_zone"

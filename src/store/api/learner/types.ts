@@ -18,6 +18,13 @@ export type LearnerCourse = {
   end_date: string;
   course_status: string;
   is_main_course: boolean;
+  // Progress fields
+  unitsNotStarted?: number;
+  unitsFullyCompleted?: number;
+  unitsPartiallyCompleted?: number;
+  totalUnits?: number;
+  course_core_type?: string | null;
+  questions?: Array<{ achieved?: boolean }>;
   [key: string]: unknown;
 };
 
@@ -71,6 +78,12 @@ export interface LearnerListItem {
     employer_id: number;
     employer_name: string;
   };
+  avatar?: Avatar | null;
+  user_id?: {
+    avatar?: Avatar;
+  };
+  next_visit_date?: string | null;
+  updated_at?: string | null;
 }
 
 export interface LearnerFilters {

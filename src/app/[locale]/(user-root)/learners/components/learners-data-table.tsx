@@ -76,8 +76,11 @@ import type { LearnerListItem, LearnerFilters, LearnerCourse } from "@/store/api
 import { LearnersFormDialog } from "./learners-form-dialog";
 import { LearnerCommentDialog } from "./learner-comment-dialog";
 import { LearnersCsvUploadDialog } from "./learners-csv-upload-dialog";
+import { EmployerLearnerRow } from "./employer-learner-row";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
+import { Users } from "lucide-react";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
@@ -916,57 +919,82 @@ export function LearnersDataTable() {
         </div>
       )}
 
-      {/* Table */}
-      <div className="rounded-md border overflow-x-auto">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} className="min-w-[150px]">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+      {/* Table or Card Layout based on role */}
+      {isEmployer ? (
+        /* Card-style layout for Employer */
+        <div className="space-y-4">
+          {tableData.length > 0 ? (
+            tableData.map((learner) => (
+              <EmployerLearnerRow
+                key={learner.learner_id}
+                learner={learner as LearnerListItem}
+              />
+            ))
+          ) : (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
+                <h3 className="text-lg font-semibold mb-2">No Learners Found</h3>
+                <p className="text-muted-foreground">
+                  No learners match your current filters
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      ) : (
+        /* Standard table layout for other roles */
+        <div className="rounded-md border overflow-x-auto">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} className="min-w-[150px]">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       {/* Pagination - All roles now use server-side pagination */}
       {((!isEqa && data?.meta_data) || (isEqa && eqaData?.meta_data)) && (

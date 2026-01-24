@@ -290,24 +290,6 @@ export function AssignedLearnersDataTable({
             </Button>
           )}
         </div>
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="cursor-pointer">
-                <Download className="mr-2 size-4" />
-                {t("export")}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                {t("exportCsv")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                {t("exportPdf")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
       </div>
 
       {/* Table */}

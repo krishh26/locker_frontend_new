@@ -4,6 +4,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./src/i18n/config.ts');
 
 const nextConfig: NextConfig = {
+  // Allow dev origins for cross-origin requests
+  allowedDevOrigins: [
+    'new.yourlockerroom.co.uk',
+    'localhost',
+    '127.0.0.1',
+  ],
+  
   experimental: {
     optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
   },

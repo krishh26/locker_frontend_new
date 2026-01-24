@@ -25,6 +25,7 @@ const PROTECTED_PATH_PREFIXES = [
   "/pricing",
   "/evidence-library",
   "/module-unit-progress",
+  "/gap-analysis",
   "/learning-plan",
   "/course-resources",
   "/learners-documents-to-sign",

@@ -7,7 +7,7 @@ import { ModuleUnitProgressDataTable } from "./module-unit-progress-data-table";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 
-export function ModuleUnitProgressPageContent() {
+export function GapAnalysisPageContent() {
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   return (
     <div className="space-y-6 px-4 lg:px-6">

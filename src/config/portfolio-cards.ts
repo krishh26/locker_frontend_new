@@ -9,7 +9,7 @@ export type PortfolioCard = MetricCard
 export const portfolioCards: PortfolioCard[] = [
   { id: 1, name: "Evidence Library", color: "#FCA14E", route: "/evidence-library" },
   { id: 2, name: "Unit Progress", color: "#8F78F4", route: "/module-unit-progress" },
-  { id: 3, name: "Gap Analysis", color: "#F44771", route: "/cpd" },
+  { id: 3, name: "Gap Analysis", color: "#F44771", route: "/gap-analysis" },
   { id: 4, name: "Actions and Activities", color: "#009FB7", route: "/resources" },
   { id: 5, name: "Health and Wellbeing", color: "#E95ACB", route: "/health-wellbeing" },
   { id: 6, name: "Choose Units", color: "#489E20", route: "/choose-units" },

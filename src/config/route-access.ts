@@ -187,6 +187,10 @@ const routeRoleRules: RouteRule[] = [
     roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {
+    pattern: /^\/gap-analysis(?:\/|$)/,
+    roles: R.adminWith("Learner", "Trainer","Employer"),
+  },
+  {
     pattern: /^\/learning-plan(?:\/|$)/,
     roles: R.adminWith("Learner", "Trainer","Employer"),
   },

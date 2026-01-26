@@ -1,17 +1,29 @@
 "use client";
 
+import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { LearnerUnitProgressData } from "@/store/api/module-unit-progress/types";
+import { useAppSelector } from "@/store/hooks";
+import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import type { LearnerData } from "@/store/api/learner/types";
 
 interface ModuleUnitProgressLearnerInfoCardProps {
-  data?: LearnerUnitProgressData;
   isLoading?: boolean;
 }
 
 export function ModuleUnitProgressLearnerInfoCard({
-  data,
   isLoading,
 }: ModuleUnitProgressLearnerInfoCardProps) {
+  const learner = useAppSelector((state) => state.auth.learner);
+  const currentCourseId = useAppSelector(selectCurrentCourseId);
+
+  const courseName = useMemo(() => {
+    if (!learner?.course || !currentCourseId) return "-";
+    const course = learner.course.find(
+      (c) => c.course?.course_id === currentCourseId
+    );
+    return course?.course?.course_name || "-";
+  }, [learner?.course, currentCourseId]);
+
   if (isLoading) {
     return (
       <Card>
@@ -29,7 +41,7 @@ export function ModuleUnitProgressLearnerInfoCard({
     );
   }
 
-  if (!data) {
+  if (!learner) {
     return (
       <Card>
         <CardContent className="p-6">
@@ -39,12 +51,17 @@ export function ModuleUnitProgressLearnerInfoCard({
     );
   }
 
+  const learnerName = `${learner.first_name || ""} ${learner.last_name || ""}`.trim() || "-";
+  const uln = (learner as LearnerData & { uln?: string }).uln || "-";
+  const registrationNumber = (learner as LearnerData & { registration_number?: string }).registration_number || "-";
+  const trainingProvider = (learner as LearnerData & { training_provider?: string }).training_provider || "-";
+
   const infoItems = [
-    { label: "Learner", value: data.learner_name || "-" },
-    { label: "ULN", value: data.uln || "-" },
-    { label: "Registration Number", value: data.registration_number || "-" },
-    { label: "Training Provider", value: data.training_provider || "-" },
-    { label: "Course Name", value: data.course_name || "-" },
+    { label: "Learner", value: learnerName },
+    { label: "ULN", value: uln },
+    { label: "Registration Number", value: registrationNumber },
+    { label: "Training Provider", value: trainingProvider },
+    { label: "Course Name", value: courseName },
   ];
 
   return (

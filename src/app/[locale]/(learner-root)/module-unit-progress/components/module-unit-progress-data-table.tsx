@@ -61,8 +61,12 @@ export function ModuleUnitProgressDataTable({
         id: "signed_off_awaiting",
         header: "% Signed Off / Awaiting Sign Off",
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
-          const signedOff = row.original.signed_off_percentage ?? 0;
-          const awaitingSignOff = row.original.awaiting_sign_off_percentage ?? 0;
+          const learnerProgress = row.original.learner_progress_percent ?? 0;
+          const trainerProgress = row.original.trainer_progress_percent ?? 0;
+          // Signed off is when trainer has completed (trainer_progress_percent)
+          // Awaiting sign off is the difference or learner progress
+          const signedOff = trainerProgress;
+          const awaitingSignOff = Math.max(0, learnerProgress - trainerProgress);
           return (
             <div className="space-y-2 min-w-[200px]">
               <div className="space-y-1">
@@ -84,53 +88,54 @@ export function ModuleUnitProgressDataTable({
         },
       },
       {
-        accessorKey: "completed",
+        accessorKey: "fully_completed",
         header: "Completed",
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
-          const completed = row.getValue("completed");
-          if (completed === true || completed === "Yes" || completed === "yes") {
+          const completed = row.original.fully_completed;
+          if (completed === true) {
             return <span className="text-green-600 dark:text-green-400">Yes</span>;
           }
-          if (completed === false || completed === "No" || completed === "no") {
-            return <span className="text-muted-foreground">No</span>;
-          }
-          return <span className="text-muted-foreground">{String(completed) || "-"}</span>;
+          return <span className="text-muted-foreground">No</span>;
         },
       },
       {
-        accessorKey: "assessed",
+        accessorKey: "assessed_date",
         header: "Assessed",
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
-          const assessed = row.getValue("assessed");
-          if (assessed === true || assessed === "Yes" || assessed === "yes") {
+          const assessedDate = row.original.assessed_date;
+          if (assessedDate) {
             return <span className="text-green-600 dark:text-green-400">Yes</span>;
           }
-          if (assessed === false || assessed === "No" || assessed === "no") {
-            return <span className="text-muted-foreground">No</span>;
-          }
-          return <span className="text-muted-foreground">{String(assessed) || "-"}</span>;
+          return <span className="text-muted-foreground">No</span>;
         },
       },
       {
         accessorKey: "iqa_sign_off",
         header: "IQA Sign-off",
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
-          const iqaSignOff = row.getValue("iqa_sign_off");
+          const iqaSignOff = row.original.iqa_sign_off;
           if (iqaSignOff === true || iqaSignOff === "Yes" || iqaSignOff === "yes") {
             return <span className="text-green-600 dark:text-green-400">Yes</span>;
           }
-          if (iqaSignOff === false || iqaSignOff === "No" || iqaSignOff === "no") {
+          if (iqaSignOff === false || iqaSignOff === "No" || iqaSignOff === "no" || iqaSignOff === null) {
             return <span className="text-muted-foreground">No</span>;
           }
           return <span className="text-muted-foreground">{String(iqaSignOff) || "-"}</span>;
         },
       },
       {
-        accessorKey: "claimable_status",
+        id: "claimable_status",
         header: "Claimable Status",
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
-          const status = row.getValue("claimable_status");
-          return <span className="text-sm">{String(status) || "-"}</span>;
+          // Derive claimable status from unit completion and sign-off
+          const fullyCompleted = row.original.fully_completed;
+          const iqaSignOff = row.original.iqa_sign_off;
+          const assessedDate = row.original.assessed_date;
+          
+          if (fullyCompleted && iqaSignOff && assessedDate) {
+            return <span className="text-sm text-green-600 dark:text-green-400">Claimable</span>;
+          }
+          return <span className="text-sm text-muted-foreground">Not Claimable</span>;
         },
       },
     ],

@@ -47,27 +47,32 @@ export type ModuleUnitProgressResponse = {
 };
 
 export type UnitProgress = {
+  id: number | string;
   title: string;
-  signed_off_percentage?: number;
-  awaiting_sign_off_percentage?: number;
-  completed?: boolean | string;
-  assessed?: boolean | string;
-  iqa_sign_off?: boolean | string;
-  claimable_status?: string;
-};
-
-export type LearnerUnitProgressData = {
-  learner_name: string;
-  uln?: string;
-  registration_number?: string;
-  training_provider?: string;
-  course_name: string;
-  units: UnitProgress[];
+  code?: string;
+  type?: string;
+  mandatory?: boolean;
+  unit_id?: number | string;
+  learner_progress_percent?: number;
+  trainer_progress_percent?: number;
+  learner_done?: boolean;
+  trainer_done?: boolean;
+  fully_completed?: boolean;
+  partially_completed?: boolean;
+  assessed_date?: string | null;
+  iqa_sign_off?: boolean | string | null;
+  quarter_review?: {
+    induction?: number;
+    first?: number;
+    second?: number;
+    third?: number;
+  };
+  [key: string]: unknown;
 };
 
 export type LearnerUnitProgressResponse = {
   status: boolean;
   message?: string;
   error?: string;
-  data?: LearnerUnitProgressData;
+  units?: UnitProgress[];
 };

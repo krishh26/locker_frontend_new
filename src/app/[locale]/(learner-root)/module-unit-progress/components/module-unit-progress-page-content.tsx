@@ -12,7 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export function ModuleUnitProgressPageContent() {
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const learner = useAppSelector((state) => state.auth.learner);
-  const learnerId = learner?.user_id as number;
+  const learnerId = learner?.learner_id;
 
   const {
     data: progressData,
@@ -20,7 +20,7 @@ export function ModuleUnitProgressPageContent() {
     error,
   } = useGetLearnerUnitsProgressQuery(
     {
-      learner_id: learnerId,
+      learner_id: learnerId!,
       course_id: currentCourseId!,
     },
     {
@@ -51,15 +51,12 @@ export function ModuleUnitProgressPageContent() {
       )}
 
       {/* Learner Information Card */}
-      <ModuleUnitProgressLearnerInfoCard
-        data={progressData?.data}
-        isLoading={isLoading}
-      />
+      <ModuleUnitProgressLearnerInfoCard isLoading={isLoading} />
 
       {/* Data Table */}
       <div className="@container/main">
         <ModuleUnitProgressDataTable
-          units={progressData?.data?.units}
+          units={progressData?.units}
           isLoading={isLoading}
         />
       </div>

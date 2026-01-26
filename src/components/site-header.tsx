@@ -79,7 +79,11 @@ export function SiteHeader() {
           toast.success(response.message || "Role changed successfully")
 
           // Navigate to dashboard
-          router.push("/dashboard")
+          if (role === "EQA") {
+            router.push("/learners")
+          } else {
+            router.push("/dashboard")
+          }
         }
       } catch (error) {
         const errorMessage =

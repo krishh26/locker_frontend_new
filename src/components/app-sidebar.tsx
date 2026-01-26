@@ -528,9 +528,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     // Filter groups based on user role
     const filteredGroups = data.navGroups.filter((group) => {
-      // Always show "Dashboards" group
+      // Show "Dashboards" group, but not for EQA role
       if (group.label === 'Dashboards') {
-        return true
+        return userRole !== 'EQA'
       }
       // Show "Admin" group only for Admin role
       if (group.label === 'Admin') {

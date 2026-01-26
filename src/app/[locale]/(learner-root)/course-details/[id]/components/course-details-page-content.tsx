@@ -64,7 +64,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
   }, [courseData])
 
   const handleBack = () => {
-    if (userRole === 'Learner') {
+    if (userRole === 'Learner' || userRole === 'Admin') {
       router.push("/dashboard")
     } else {
       router.push('/learner-overview')
@@ -79,7 +79,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
             title="Course information not found"
             icon={BookOpen}
             showBackButton
-            backButtonHref={userRole === 'Learner' ? '/dashboard' : '/learner-overview'}
+            backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}
           />
         </div>
         <div className="px-4 lg:px-6 py-12 text-center">
@@ -103,7 +103,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
           subtitle="Course information"
           icon={BookOpen}
           showBackButton
-          backButtonHref={userRole === 'Learner' ? '/dashboard' : '/learner-overview'}
+          backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}
         />
       </div>
 

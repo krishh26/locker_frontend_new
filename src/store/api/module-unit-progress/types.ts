@@ -46,3 +46,28 @@ export type ModuleUnitProgressResponse = {
   data?: ModuleUnitProgressData;
 };
 
+export type UnitProgress = {
+  title: string;
+  signed_off_percentage?: number;
+  awaiting_sign_off_percentage?: number;
+  completed?: boolean | string;
+  assessed?: boolean | string;
+  iqa_sign_off?: boolean | string;
+  claimable_status?: string;
+};
+
+export type LearnerUnitProgressData = {
+  learner_name: string;
+  uln?: string;
+  registration_number?: string;
+  training_provider?: string;
+  course_name: string;
+  units: UnitProgress[];
+};
+
+export type LearnerUnitProgressResponse = {
+  status: boolean;
+  message?: string;
+  error?: string;
+  data?: LearnerUnitProgressData;
+};

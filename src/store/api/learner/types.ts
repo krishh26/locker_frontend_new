@@ -40,6 +40,7 @@ export type LearnerData = {
   user_name: string;
   email: string;
   mobile: string;
+  role?: string;
   national_ins_no: string;
   funding_body: string;
   avatar?: Avatar | null;

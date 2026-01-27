@@ -389,8 +389,8 @@
     "viewDetails": "View Details"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "ملفات ومستندات معلقة التوقيع",
+    "pageSubtitle": "ملفات ومستندات معلقة التوقيع من المدرب والمتعلمين"
   },
   "calendar": {
     "pageTitle": "Calendar",

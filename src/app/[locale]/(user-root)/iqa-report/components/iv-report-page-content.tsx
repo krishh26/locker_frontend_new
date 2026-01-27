@@ -66,8 +66,8 @@ export function IVReportPageContent() {
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="IV Report"
-        subtitle="Complete the IV report form for learner units"
+        title="IQA Report"
+        subtitle="Complete the IQA report form for learner units"
         icon={FileText}
         showBackButton
       />

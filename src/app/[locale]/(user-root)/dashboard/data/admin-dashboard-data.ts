@@ -1,19 +1,19 @@
-// Mapping of card titles to API types
+// Mapping of card titles to API types (CardApiType format - used in query parameters)
 export const cardTypeMapping: { [key: string]: string } = {
-  "Active learner": "active_learners_count",
-  "Learners on bil": "learners_suspended_count",
-  "Overdue learners": "learnersOverDue_count",
-  "Overdue progress review": "learnerPlanDue_count",
-  "Learners due complete in next 30 days": "learnersCourseDueInNext30Days_count",
-  "Learners off track": "assignmentsWithoutMapped_count",
-  "Unmapped evidences": "assignmentsWithoutMapped_count",
-  "Due IQA action in next 30 days": "sessionLearnerActionDue_count",
-  "Due session in next 7 days": "sessionLearnerActionDueInNext7Days_count",
-  "Overdue IQA action": "sessionLearnerActionOverdue_count",
-  "Outstanding IQA actions": "sessionLearnerActionOverdue_count",
-  "Actions due in the next 7 days": "sessionLearnerActionDueInNext7Days_count",
-  "Learner all a sampling plan": "learnerPlanDueInNext7Days_count",
-  "Learner not all a sampling plan": "learnerPlanDueInNext7Days_count",
+  "Active learner": "active_learners",
+  "Learners on bil": "suspended_learners",
+  "Overdue learners": "learners_over_due",
+  "Overdue progress review": "learner_plan_due",
+  "Learners due complete in next 30 days": "learners_course_due_in_next_30_days",
+  "Learners off track": "assignments_without_mapped",
+  "Unmapped evidences": "assignments_without_mapped",
+  "Due IQA action in next 30 days": "session_learner_action_due",
+  "Due session in next 7 days": "session_action_due_in_next_7_days",
+  "Overdue IQA action": "session_learner_action_overdue",
+  "Outstanding IQA actions": "session_learner_action_overdue",
+  "Actions due in the next 7 days": "session_action_due_in_next_7_days",
+  "Learner all a sampling plan": "learner_plan_due_in_next_7_days",
+  "Learner not all a sampling plan": "learner_plan_due_in_next_7_days",
 }
 
 export interface AdminDashboardCardData {
@@ -32,7 +32,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "30",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
-    apiType: "active_learners_count",
+    apiType: "active_learners",
   },
   {
     id: "learners_on_bil",
@@ -40,7 +40,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "20",
     textColor: "rgba(195, 66, 63, 1)",
     radiusColor: "rgba(195, 66, 63, 0.1)",
-    apiType: "learners_suspended_count",
+    apiType: "suspended_learners",
   },
   {
     id: "overdue_learners",
@@ -48,7 +48,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
-    apiType: "learnersOverDue_count",
+    apiType: "learners_over_due",
   },
   {
     id: "overdue_progress_review",
@@ -56,7 +56,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
-    apiType: "learnerPlanDue_count",
+    apiType: "learner_plan_due",
   },
   {
     id: "learners_due_complete_30_days",
@@ -64,7 +64,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "30",
     textColor: "rgba(63, 102, 52, 1)",
     radiusColor: "rgba(63, 102, 52, 0.1)",
-    apiType: "learnersCourseDueInNext30Days_count",
+    apiType: "learners_course_due_in_next_30_days",
   },
   {
     id: "learners_off_track",
@@ -72,7 +72,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
-    apiType: "assignmentsWithoutMapped_count",
+    apiType: "assignments_without_mapped",
   },
   {
     id: "unmapped_evidences",
@@ -80,7 +80,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
-    apiType: "assignmentsWithoutMapped_count",
+    apiType: "assignments_without_mapped",
   },
   {
     id: "learners_assigned_by_qual",
@@ -102,7 +102,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
-    apiType: "sessionLearnerActionOverdue_count",
+    apiType: "session_learner_action_overdue",
   },
   {
     id: "outstanding_iqa_actions",
@@ -110,7 +110,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
-    apiType: "sessionLearnerActionOverdue_count",
+    apiType: "session_learner_action_overdue",
   },
   {
     id: "due_iqa_action_30_days",
@@ -118,7 +118,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "10",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
-    apiType: "sessionLearnerActionDue_count",
+    apiType: "session_learner_action_due",
   },
   {
     id: "due_session_7_days",
@@ -126,7 +126,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "20",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
-    apiType: "sessionLearnerActionDueInNext7Days_count",
+    apiType: "session_action_due_in_next_7_days",
   },
   {
     id: "learner_all_sampling_plan",
@@ -134,7 +134,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "20",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
-    apiType: "learnerPlanDueInNext7Days_count",
+    apiType: "learner_plan_due_in_next_7_days",
   },
   {
     id: "learner_not_all_sampling_plan",
@@ -142,7 +142,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "20",
     textColor: "rgba(63, 102, 52, 1)",
     radiusColor: "rgba(63, 102, 52, 0.1)",
-    apiType: "learnerPlanDueInNext7Days_count",
+    apiType: "learner_plan_due_in_next_7_days",
   },
   {
     id: "trainer_rag_report",
@@ -178,7 +178,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
-    apiType: "sessionLearnerActionDueInNext7Days_count",
+    apiType: "session_action_due_in_next_7_days",
   },
   {
     id: "due_session",

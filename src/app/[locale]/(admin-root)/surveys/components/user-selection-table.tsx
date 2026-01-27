@@ -30,7 +30,7 @@ export function UserSelectionTable({
   const getItemId = (item: User | LearnerListItem): number => {
     // Check if item has user_id (User type always has it)
     if ("user_id" in item) {
-      return item.user_id
+      return item.user_id as number
     }
     // For learners, check if user_id exists in the object (might not be in type definition)
     const learner = item as LearnerListItem & { user_id?: number }

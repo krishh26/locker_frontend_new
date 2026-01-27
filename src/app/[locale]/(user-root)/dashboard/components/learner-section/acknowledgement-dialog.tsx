@@ -66,7 +66,10 @@ export function AcknowledgementDialog({
         // Fetch updated learner data and store in Redux
         const learnerResponse = await getLearnerDetails(learnerId).unwrap();
         if (learnerResponse?.data) {
-          dispatch(setLearnerData(learnerResponse.data));
+          dispatch(setLearnerData({
+            ...learnerResponse.data,
+            role: 'Learner',
+          }));
         }
         
         // Close dialog after store is updated
@@ -101,7 +104,10 @@ export function AcknowledgementDialog({
         // Fetch updated learner data and store in Redux
         const learnerResponse = await getLearnerDetails(learnerId).unwrap();
         if (learnerResponse?.data) {
-          dispatch(setLearnerData(learnerResponse.data));
+          dispatch(setLearnerData({
+            ...learnerResponse.data,
+            role: 'Learner',
+          }));
         }
         
         // Close dialog after store is updated

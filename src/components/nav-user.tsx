@@ -93,7 +93,12 @@ export function NavUser() {
         toast.success(response.message || "Role changed successfully")
         
         // Navigate to dashboard
+       if (role === "EQA") {
+        router.push("/learners")
+       } else {
         router.push("/dashboard")
+       }
+
       }
     } catch (error) {
       const errorMessage =
@@ -151,20 +156,8 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {/* <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/settings/account">
-                  <CircleUser />
-                  Account
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/settings/billing">
-                  <CreditCard />
-                  Billing
-                </Link>
-              </DropdownMenuItem> */}
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/settings/notifications">
+                <Link href="/notifications">
                   <BellDot />
                   Notifications
                 </Link>
@@ -206,7 +199,6 @@ export function NavUser() {
               </DropdownMenuSub>
             )}
             <DropdownMenuSeparator />
-            <LanguageSwitcher />
             <DropdownMenuItem asChild className="cursor-pointer">
               <Link href="/auth/sign-in">
                 <LogOut className="mr-1" />

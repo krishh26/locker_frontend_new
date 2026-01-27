@@ -136,36 +136,33 @@ export function InlineEditSampleContent({
 
   return (
     <div className="flex flex-col h-full">
-      <ActionButtonsBar
-        planDetailId={planDetailId}
-        isSaving={isSaving}
-        onClose={() => {}}
-        onDelete={() => {}}
-        onSave={onSave}
-      />
-
       {/* Content */}
       <div className="flex-1 overflow-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <BasicDetailsSection
             modalFormData={modalFormData}
             onFormDataChange={onFormDataChange}
+            isReadOnly={true}
           />
           <AssessmentMethodsSection
             modalFormData={modalFormData}
             onAssessmentMethodToggle={onAssessmentMethodToggle}
+            isReadOnly={true}
           />
           <IqaConclusionSection
             modalFormData={modalFormData}
             onIqaConclusionToggle={onIqaConclusionToggle}
+            isReadOnly={true}
           />
           <AssessorDecisionSection
             modalFormData={modalFormData}
             onFormDataChange={onFormDataChange}
+            isReadOnly={true}
           />
           <AssessmentProcessesSection
             modalFormData={modalFormData}
             onFormDataChange={onFormDataChange}
+            isReadOnly={true}
           />
           <FeedbackSection
             modalFormData={modalFormData}
@@ -174,6 +171,7 @@ export function InlineEditSampleContent({
             unitName={unitName}
             unitType={unitType}
             onFormDataChange={onFormDataChange}
+            isReadOnly={true}
           />
         </div>
 
@@ -183,6 +181,7 @@ export function InlineEditSampleContent({
             isLoadingEvidence={isLoadingEvidence}
             unitCode={unitCode !== null && unitCode !== undefined ? String(unitCode) : null}
             onRefresh={fetchEvidence}
+            isReadOnly={true}
           />
           <ActionsTable
             actions={actions}
@@ -194,6 +193,7 @@ export function InlineEditSampleContent({
             onAddAction={handleOpenActionModal}
             onEditAction={handleEditAction}
             onDeleteAction={(id) => setDeleteActionId(id)}
+            isReadOnly={true}
           />
         </div>
 
@@ -202,6 +202,7 @@ export function InlineEditSampleContent({
           onAnswerChange={onAnswerChange}
           onDeleteQuestion={onDeleteQuestion}
           onSaveQuestions={onSaveQuestions}
+          isReadOnly={true}
         />
       </div>
 

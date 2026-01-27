@@ -40,7 +40,7 @@ export function FeedbackSection({
         />
       </div>
 
-      <div className='col-span-12 mt-4'>
+      {/* <div className='col-span-12 mt-4'>
         <Button
           onClick={() => {
             // Navigate to examine evidence page with searchParams
@@ -57,7 +57,7 @@ export function FeedbackSection({
         >
           Examine Evidence
         </Button>
-      </div>
+      </div> */}
     </>
   )
 }

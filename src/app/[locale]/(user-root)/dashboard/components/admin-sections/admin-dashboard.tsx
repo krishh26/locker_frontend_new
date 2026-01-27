@@ -11,7 +11,8 @@ import {
   useGetDashboardCountsQuery,
   useLazyGetCardDataQuery,
 } from "@/store/api/dashboard/dashboardApi"
-import type { DashboardCounts } from "@/store/api/dashboard/types"
+import type { DashboardCounts, CardApiType } from "@/store/api/dashboard/types"
+import { cardApiTypeToCountKey } from "@/store/api/dashboard/types"
 import { useAppSelector } from "@/store/hooks"
 
 export function AdminDashboard() {
@@ -127,14 +128,18 @@ export function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {dashboardCards.map((card) => {
             // Get count from API or use default name
-            const apiType = card.apiType || cardTypeMapping[card.title]
-            const count = apiType && counts[apiType] !== undefined
-              ? counts[apiType]?.toString()
+            const apiType: CardApiType | string | undefined = card.apiType || cardTypeMapping[card.title]
+            // Map CardApiType to DashboardCounts key if it's a valid CardApiType
+            const countKey = apiType && apiType in cardApiTypeToCountKey 
+              ? cardApiTypeToCountKey[apiType as CardApiType]
+              : apiType
+            const count = apiType && countKey && counts[countKey] !== undefined
+              ? counts[countKey]?.toString()
               : (card.name || "0")
             const displayCount = loading ? "..." : count
             const isExporting = apiType ? exporting[apiType] || false : false
             const isFetching = apiType ? fetchingData[apiType] || false : false
-            const showExport = !!apiType && counts[apiType] !== undefined && counts[apiType]! > 0
+            const showExport = Boolean(apiType && countKey && counts[countKey] !== undefined && counts[countKey]! > 0)
 
             return (
               <AdminDashboardCard

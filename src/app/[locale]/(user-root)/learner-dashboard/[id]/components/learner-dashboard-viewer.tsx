@@ -38,7 +38,10 @@ export function LearnerDashboardViewer({
   // Store learner data in Redux when fetched
   useEffect(() => {
     if (learnerResponse?.data) {
-      dispatch(setLearnerData(learnerResponse.data))
+      dispatch(setLearnerData({
+        ...learnerResponse.data,
+        role: 'Learner',
+      }))
     }
   }, [learnerResponse, dispatch])
 

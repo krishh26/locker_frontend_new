@@ -120,10 +120,10 @@ function selectionReducer(
 
 export function EvidenceLibraryDataTable() {
   const router = useRouter();
-  const user = useAppSelector((state) => state.auth.user);
+  const learner = useAppSelector((state) => state.auth.learner);
   const courses = useAppSelector(selectCourses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
-  const userId = user?.user_id || "";
+  const userId = learner?.user_id || "";
 
   // State
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -156,7 +156,7 @@ export function EvidenceLibraryDataTable() {
   >(new Map());
 
   // Get user role
-  const userRole = user?.role || "";
+  const userRole = learner?.role || "";
   const isLearner = userRole === "Learner";
   const isEmployer = userRole === "Employer";
 

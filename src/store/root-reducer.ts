@@ -37,6 +37,7 @@ import { awaitingSignatureApi } from "@/store/api/awaiting-signature/awaitingSig
 import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExclusionApi"
 import { notificationApi } from "@/store/api/notification/notificationApi"
 import { contractedWorkApi } from "@/store/api/contracted-work/contractedWorkApi"
+import { moduleUnitProgressApi } from "@/store/api/module-unit-progress/moduleUnitProgressApi"
 
 
 // Import all slices here
@@ -87,14 +88,15 @@ export const rootReducer = combineReducers({
     [progressExclusionApi.reducerPath]: progressExclusionApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
     [contractedWorkApi.reducerPath]: contractedWorkApi.reducer,
+    [moduleUnitProgressApi.reducerPath]: moduleUnitProgressApi.reducer,
     auth: authReducer,
   skillsScan: skillsScanReducer,
   survey: surveyReducer,
   response: responseReducer,
   cache: cacheReducer,
-  courseBuilder: courseBuilderReducer,
-  qaSamplePlan: qaSamplePlanReducer,
-  course: courseReducer,
+    courseBuilder: courseBuilderReducer,
+    qaSamplePlan: qaSamplePlanReducer,
+    course: courseReducer,
 })
 
 // Middleware - Extend this array with necessary middleware
@@ -134,5 +136,6 @@ export const concatMiddleware: Middleware[] = [
   progressExclusionApi.middleware,
   notificationApi.middleware,
   contractedWorkApi.middleware,
+  moduleUnitProgressApi.middleware,
   cacheSyncMiddleware,
 ]

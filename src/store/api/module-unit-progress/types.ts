@@ -46,3 +46,33 @@ export type ModuleUnitProgressResponse = {
   data?: ModuleUnitProgressData;
 };
 
+export type UnitProgress = {
+  id: number | string;
+  title: string;
+  code?: string;
+  type?: string;
+  mandatory?: boolean;
+  unit_id?: number | string;
+  learner_progress_percent?: number;
+  trainer_progress_percent?: number;
+  learner_done?: boolean;
+  trainer_done?: boolean;
+  fully_completed?: boolean;
+  partially_completed?: boolean;
+  assessed_date?: string | null;
+  iqa_sign_off?: boolean | string | null;
+  quarter_review?: {
+    induction?: number;
+    first?: number;
+    second?: number;
+    third?: number;
+  };
+  [key: string]: unknown;
+};
+
+export type LearnerUnitProgressResponse = {
+  status: boolean;
+  message?: string;
+  error?: string;
+  units?: UnitProgress[];
+};

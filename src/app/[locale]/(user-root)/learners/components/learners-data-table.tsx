@@ -577,7 +577,7 @@ export function LearnersDataTable() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a
-                      href={`/iv-report?course_id=${learner.course?.[0]?.course?.course_id}`}
+                      href={`/iqa-report?course_id=${learner.course?.[0]?.course?.course_id}`}
                       rel="noopener noreferrer"
                       className="flex items-center cursor-pointer"
                     >

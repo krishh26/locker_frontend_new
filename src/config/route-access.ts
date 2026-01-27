@@ -252,14 +252,14 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/learners-forms(?:\/|$)/,
     roles: R.adminWith("Trainer"),
   },
-  // Main dashboard (accessible to all roles - content is role-based)
+  // Main dashboard (accessible to all roles except EQA - content is role-based)
   {
     pattern: /^\/dashboard\/?$/,
-    roles: R.all(),
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer"),
   },
   // IV Report (accessible to all roles)
   {
-    pattern: /^\/iv-report(?:\/|$)/,
+    pattern: /^\/iqa-report(?:\/|$)/,
     roles: R.all(),
   },
   // Change Password (accessible to all authenticated users)

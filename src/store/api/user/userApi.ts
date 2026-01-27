@@ -8,6 +8,7 @@ import type {
   ChangeUserRoleRequest,
   ChangeUserRoleResponse,
 } from "./types";
+import type { ApiResponse } from "../auth/types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 
@@ -115,6 +116,19 @@ export const userApi = createApi({
         return response;
       },
     }),
+    sendPasswordResetEmail: builder.mutation<ApiResponse, { email: string }>({
+      query: (body) => ({
+        url: "/user/password-mail",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: ApiResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -127,5 +141,6 @@ export const {
   useChangeUserRoleMutation,
   useGetUserQuery,
   useLazyGetUserQuery,
+  useSendPasswordResetEmailMutation,
 } = userApi;
 

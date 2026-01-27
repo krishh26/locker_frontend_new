@@ -9,7 +9,7 @@ import { DotPattern } from '@/components/dot-pattern'
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative overflow-hidden bg-gradient-to-b from-background to-background/80 pt-20 sm:pt-32 pb-16">
+    <section id="hero" className="relative overflow-hidden bg-linear-to-b from-background to-background/80 pt-20 sm:pt-32 pb-16">
       {/* Background Pattern */}
       <div className="absolute inset-0">
         {/* Dot pattern overlay using reusable component */}
@@ -30,7 +30,7 @@ export function HeroSection() {
           {/* Main Headline */}
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
             Build Better
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
               {" "}Web Applications{" "}
             </span>
             with Ready-Made Components
@@ -87,7 +87,7 @@ export function HeroSection() {
               />
 
               {/* Bottom fade effect - gradient overlay that fades the image to background */}
-              <div className="absolute bottom-0 left-0 w-full h-32 md:h-40 lg:h-48 bg-gradient-to-b from-background/0 via-background/70 to-background rounded-b-xl"></div>
+              <div className="absolute bottom-0 left-0 w-full h-32 md:h-40 lg:h-48 bg-linear-to-b from-background/0 via-background/70 to-background rounded-b-xl"></div>
 
               {/* Overlay play button for demo */}
               <div className="absolute inset-0 flex items-center justify-center">

@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import type { ModuleUnitProgressResponse } from "./types";
+import type { ModuleUnitProgressResponse, LearnerUnitProgressResponse } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 
@@ -18,9 +18,26 @@ export const moduleUnitProgressApi = createApi({
         return response;
       },
     }),
+    getLearnerUnitsProgress: builder.query<
+      LearnerUnitProgressResponse,
+      { learner_id: number; course_id: number }
+    >({
+      query: ({ learner_id, course_id }) =>
+        `/learner-units/${learner_id}/${course_id}`,
+      providesTags: ["ModuleUnitProgress"],
+      transformResponse: (response: LearnerUnitProgressResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
-export const { useGetModuleUnitProgressQuery, useLazyGetModuleUnitProgressQuery } =
-  moduleUnitProgressApi;
+export const {
+  useGetModuleUnitProgressQuery,
+  useLazyGetModuleUnitProgressQuery,
+  useGetLearnerUnitsProgressQuery,
+} = moduleUnitProgressApi;
 

@@ -75,7 +75,10 @@ export function LoginForm({
           const learnerId = Number(result.user.learner_id)
           const learnerResponse = await getLearnerDetails(learnerId).unwrap()
           if (learnerResponse?.data) {
-            dispatch(setLearnerData(learnerResponse.data))
+            dispatch(setLearnerData({
+              ...learnerResponse.data,
+              role: 'Learner',
+            }))
           }
         } catch (learnerErr) {
           // Log error but don't block login

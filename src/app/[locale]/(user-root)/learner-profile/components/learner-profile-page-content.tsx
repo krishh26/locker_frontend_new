@@ -23,6 +23,7 @@ import {
   Briefcase,
   ArrowRight,
   KeyRound,
+  Mail,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StudentIdSection } from './sections/student-id-section'
@@ -35,6 +36,7 @@ import { FundingBandsSection } from './sections/funding-bands-section'
 import { CourseInformationTab } from './course-information-tab'
 import { ContractedWorkHoursTab } from './contracted-work-hours-tab'
 import { ResetPasswordDialog } from './reset-password-dialog'
+import { EmailPasswordResetDialog } from './email-password-reset-dialog'
 import { toast } from 'sonner'
 import type {
   LearnerData,
@@ -221,7 +223,6 @@ export function LearnerProfilePageContent({
   const isLearner = userRole === 'Learner'
   const isAdmin = userRole === 'Admin'
   const isTrainer = userRole === 'Trainer'
-  const isEmployer = userRole === 'Employer'
   const canEdit = isAdmin || isTrainer
 
   const learnerIdNum = learnerId ? parseInt(learnerId, 10) : NaN
@@ -239,6 +240,7 @@ export function LearnerProfilePageContent({
   const [activeTab, setActiveTab] = useState('personal')
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation()
   const [isResetPasswordDialogOpen, setIsResetPasswordDialogOpen] = useState(false)
+  const [isEmailPasswordResetDialogOpen, setIsEmailPasswordResetDialogOpen] = useState(false)
 
   // Set up form
   const form = useForm<LearnerProfileFormValues>({
@@ -295,7 +297,7 @@ export function LearnerProfilePageContent({
   })
 
   // Determine back button href based on role
-  const backButtonHref = isLearner || isEmployer ? '/dashboard' : '/learner-overview'
+  const backButtonHref = isLearner || isAdmin ? '/dashboard' : '/learner-overview'
 
   // Handle loading state
   if (isLoading) {
@@ -377,6 +379,15 @@ export function LearnerProfilePageContent({
               <KeyRound className='h-4 w-4' />
               Reset Password
             </Button>
+            
+              <Button
+                variant='outline'
+                onClick={() => setIsEmailPasswordResetDialogOpen(true)}
+              >
+                <Mail className='h-4 w-4' />
+                Email Password Reset
+              </Button>
+            
               {!isLearner && (
             <Button
               variant='outline'
@@ -466,6 +477,20 @@ export function LearnerProfilePageContent({
         <ResetPasswordDialog
           open={isResetPasswordDialogOpen}
           onOpenChange={setIsResetPasswordDialogOpen}
+          learnerEmail={learner.email}
+          learnerName={
+            learner.first_name && learner.last_name
+              ? `${learner.first_name} ${learner.last_name}`
+              : learner.user_name || undefined
+          }
+        />
+      )}
+
+      {/* Email Password Reset Dialog */}
+      {learner?.email && (
+        <EmailPasswordResetDialog
+          open={isEmailPasswordResetDialogOpen}
+          onOpenChange={setIsEmailPasswordResetDialogOpen}
           learnerEmail={learner.email}
           learnerName={
             learner.first_name && learner.last_name

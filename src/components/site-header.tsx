@@ -121,7 +121,7 @@ export function SiteHeader() {
             className="mx-2 data-[orientation=vertical]:h-4"
           />
           <div className="flex-1 max-w-sm">
-            <SearchTrigger onClick={() => setSearchOpen(true)} />
+            {/* <SearchTrigger onClick={() => setSearchOpen(true)} /> */}
           </div>
           <div className="ml-auto flex items-center gap-2">
             <ModeToggle variant="outline" />
@@ -183,7 +183,7 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-      <CommandSearch open={searchOpen} onOpenChange={setSearchOpen} />
+      {/* <CommandSearch open={searchOpen} onOpenChange={setSearchOpen} /> */}
     </>
   )
 }

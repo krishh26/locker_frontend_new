@@ -3,6 +3,8 @@
  * These functions help enforce subscription limits and feature access in the UI
  */
 
+import { isFeatureFree } from "@/config/feature-mapping"
+
 export interface Subscription {
   plan: string
   userLimit: number
@@ -14,7 +16,11 @@ export interface Subscription {
 
 /**
  * Check if a feature is enabled for the subscription
- * Basic plans have limited features, Premium/Enterprise have all features
+ * 
+ * NOTE: This function uses hardcoded plan features for backward compatibility.
+ * For new code, use the Feature Control API via useFeatureAccess hook instead.
+ * 
+ * @deprecated Use Feature Control API (useFeatureAccess hook) for feature checking
  */
 export function isFeatureEnabled(
   subscription: Subscription | null | undefined,
@@ -24,12 +30,18 @@ export function isFeatureEnabled(
     return false
   }
 
+  // Free features are always enabled
+  if (isFeatureFree(feature)) {
+    return true
+  }
+
   // If subscription has explicit features list, check it
   if (subscription.features) {
     return subscription.features.includes(feature)
   }
 
-  // Default feature mapping based on plan
+  // Default feature mapping based on plan (backward compatibility)
+  // NOTE: This is a fallback. The Feature Control system should be used instead.
   const planFeatures: Record<string, string[]> = {
     Basic: ["basic_features"],
     Standard: ["basic_features", "standard_features", "advanced_reporting"],

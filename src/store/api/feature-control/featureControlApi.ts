@@ -92,7 +92,7 @@ export const featureControlApi = createApi({
         return response
       },
     }),
-    // Check Feature Access - "Runtime check"
+    // Check Feature Access - "Runtime check" (Mutation version)
     checkFeatureAccess: builder.mutation<
       CheckFeatureAccessResponse,
       CheckFeatureAccessRequest
@@ -102,6 +102,28 @@ export const featureControlApi = createApi({
         method: "POST",
         body,
       }),
+      transformResponse: (response: CheckFeatureAccessResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    // Check Feature Access - Query version (for caching)
+    // Note: Using POST in query requires custom baseQuery handling
+    // For now, we'll use the mutation with lazy pattern
+    getFeatureAccess: builder.query<
+      CheckFeatureAccessResponse,
+      CheckFeatureAccessRequest
+    >({
+      query: (body) => ({
+        url: "/feature-control/check-access",
+        method: "POST",
+        body,
+      }),
+      providesTags: (result, error, arg) => [
+        { type: "Feature", id: `access-${arg.featureCode}-${arg.organisationId || 'all'}` },
+      ],
       transformResponse: (response: CheckFeatureAccessResponse) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
@@ -171,6 +193,8 @@ export const {
   useMapFeatureToPlanMutation,
   useUpdateFeatureLimitsMutation,
   useCheckFeatureAccessMutation,
+  useGetFeatureAccessQuery,
+  useLazyGetFeatureAccessQuery,
   useCheckUsageCountMutation,
   useBlockRestrictedActionMutation,
   useEnableReadOnlyModeMutation,

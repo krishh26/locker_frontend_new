@@ -48,12 +48,15 @@ import {
 import { useAppSelector } from '@/store/hooks'
 import { getAllowedRolesForPath } from '@/config/route-access'
 import { isRoleAllowed } from '@/config/auth-roles'
+import { isMasterAdmin } from '@/utils/permissions'
 
 type SidebarItem = {
   title: string
   url: string
   icon?: LucideIcon
   items?: SidebarItem[]
+  featureCode?: string  // Feature code required for subscription-based access
+  isFree?: boolean      // If true, always visible regardless of subscription
 }
 
 type SidebarGroup = {
@@ -61,6 +64,18 @@ type SidebarGroup = {
   items: SidebarItem[]
 }
 
+/**
+ * NOTE: All menu items are currently set to isFree: true
+ * This means all features are visible to all users regardless of subscription.
+ * 
+ * To make a feature paid later:
+ * 1. Remove isFree: true
+ * 2. Add featureCode: 'YOUR_FEATURE_CODE'
+ * 3. Create the feature in Feature Control admin panel
+ * 4. Map the feature to subscription plans
+ * 
+ * See FEATURE_VISIBILITY_GUIDE.md for detailed instructions.
+ */
 const data: {
   learner: null
   navGroups: SidebarGroup[]
@@ -74,6 +89,7 @@ const data: {
           title: 'Dashboard',
           url: '/dashboard',
           icon: LayoutDashboard,
+          isFree: true, // Always visible
         },
         // {
         //   title: "Dashboard 2",
@@ -114,31 +130,37 @@ const data: {
           title: 'CPD',
           url: '/cpd',
           icon: GraduationCap,
+          isFree: true, // TODO: Configure later if needed
         },
         {
           title: 'Forum',
           url: '/forum',
           icon: MessageCircle,
+          isFree: true, // TODO: Configure later if needed
         },
         {
           title: 'Skills Scan',
           url: '/skills-scan',
           icon: FileBarChart,
+          isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'SKILLS_SCAN'
         },
         {
           title: 'Forms',
           url: '/learner-forms',
           icon: FileText,
+          isFree: true, // Basic forms are free
         },
         {
           title: 'Propose Your Innovations',
           url: '/propose-your-innovations',
           icon: Lightbulb,
+          isFree: true, // TODO: Configure later if needed
         },
         {
           title: 'Support',
           url: '/support',
           icon: HelpCircle,
+          isFree: true, // Basic support is free
         },
         // {
         //   title: "Evidence Library",
@@ -279,6 +301,7 @@ const data: {
           title: 'Timelog Data Export',
           url: '/timelog-export',
           icon: Download,
+          isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'DATA_EXPORT'
         },
         {
           title: 'Awaiting Signature',
@@ -289,6 +312,7 @@ const data: {
           title: 'Gateway Report',
           url: '/gateway-report',
           icon: FileBarChart,
+          isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'ADVANCED_REPORTS'
         },
         {
           title: 'Exclude From Overall Progress',
@@ -536,10 +560,15 @@ const data: {
   ],
 }
 
+
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const learner = useAppSelector((state) => state.auth.learner)
+
+  // MasterAdmin bypasses all feature checks
+  const isMasterAdminUser = isMasterAdmin(user)
 
   const filteredNavGroups = React.useMemo(() => {
     const filterItems = (items: SidebarItem[]): SidebarItem[] => {
@@ -556,15 +585,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           ? isRoleAllowed(userRole, routeRoles)
           : false
 
+        // Check feature access if item has featureCode
+        // For now, we'll pass items with featureCode through
+        // and filter them in the NavMain component using FeatureAccessWrapper
+        // MasterAdmin bypasses all checks
+        let hasFeatureAccess = true
+        if (item.featureCode && authorized && !isMasterAdminUser) {
+          // Items with featureCode will be filtered by FeatureAccessWrapper
+          // We'll pass them through here and filter in the render
+          hasFeatureAccess = true // Will be checked in render
+        }
+
         if (hasChildren) {
-          results.push({
-            ...item,
-            items: childItems,
-          })
+          const hasAccessibleChildren = childItems && childItems.length > 0
+          if (hasAccessibleChildren && authorized) {
+            results.push({
+              ...item,
+              items: childItems,
+            })
+          }
           continue
         }
 
-        if (routeRoles && authorized) {
+        if (routeRoles && authorized && hasFeatureAccess) {
           results.push({
             ...item,
             items: undefined,
@@ -619,7 +662,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       })
       .filter((group) => group.items.length > 0)
-  }, [userRole])
+  }, [userRole, isMasterAdminUser, user])
 
   return (
     <Sidebar {...props}>

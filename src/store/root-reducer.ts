@@ -38,6 +38,16 @@ import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExc
 import { notificationApi } from "@/store/api/notification/notificationApi"
 import { contractedWorkApi } from "@/store/api/contracted-work/contractedWorkApi"
 import { moduleUnitProgressApi } from "@/store/api/module-unit-progress/moduleUnitProgressApi"
+import { organisationApi } from "@/store/api/organisations/organisationApi"
+import { centreApi } from "@/store/api/centres/centreApi"
+import { paymentApi } from "@/store/api/payments/paymentApi"
+import { subscriptionApi } from "@/store/api/subscriptions/subscriptionApi"
+import { auditLogApi } from "@/store/api/audit-logs/auditLogApi"
+
+import { accessControlApi } from "@/store/api/access-control/accessControlApi"
+import { accountManagerApi } from "@/store/api/account-manager/accountManagerApi"
+import { featureControlApi } from "@/store/api/feature-control/featureControlApi"
+import { systemAdminApi } from "@/store/api/system-admin/systemAdminApi"
 
 
 // Import all slices here
@@ -89,6 +99,16 @@ export const rootReducer = combineReducers({
     [notificationApi.reducerPath]: notificationApi.reducer,
     [contractedWorkApi.reducerPath]: contractedWorkApi.reducer,
     [moduleUnitProgressApi.reducerPath]: moduleUnitProgressApi.reducer,
+    [organisationApi.reducerPath]: organisationApi.reducer,
+    [centreApi.reducerPath]: centreApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
+    [subscriptionApi.reducerPath]: subscriptionApi.reducer,
+    [auditLogApi.reducerPath]: auditLogApi.reducer,
+    // New modules from CSV
+    [accessControlApi.reducerPath]: accessControlApi.reducer,
+    [accountManagerApi.reducerPath]: accountManagerApi.reducer,
+    [featureControlApi.reducerPath]: featureControlApi.reducer,
+    [systemAdminApi.reducerPath]: systemAdminApi.reducer,
     auth: authReducer,
   skillsScan: skillsScanReducer,
   survey: surveyReducer,
@@ -137,5 +157,15 @@ export const concatMiddleware: Middleware[] = [
   notificationApi.middleware,
   contractedWorkApi.middleware,
   moduleUnitProgressApi.middleware,
+  organisationApi.middleware,
+  centreApi.middleware,
+  paymentApi.middleware,
+  subscriptionApi.middleware,
+  auditLogApi.middleware,
+  // New modules from CSV
+  accessControlApi.middleware,
+  accountManagerApi.middleware,
+  featureControlApi.middleware,
+  systemAdminApi.middleware,
   cacheSyncMiddleware,
 ]

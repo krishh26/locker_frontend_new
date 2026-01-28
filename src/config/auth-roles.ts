@@ -6,6 +6,8 @@ const baseRoles = [
   "LIQA",
   "IQA",
   "EQA",
+  "MasterAdmin",
+  "AccountManager",
 ] as const
 
 export type Role = (typeof baseRoles)[number]
@@ -18,8 +20,13 @@ export const authRoles = {
   LIQA: ["LIQA"] as const satisfies readonly Role[],
   IQA: ["IQA"] as const satisfies readonly Role[],
   EQA: ["EQA"] as const satisfies readonly Role[],
+  MasterAdmin: ["MasterAdmin"] as const satisfies readonly Role[],
+  AccountManager: ["AccountManager"] as const satisfies readonly Role[],
   all: [...baseRoles] as const satisfies readonly Role[],
   onlyGuest: null,
+  // Role groups for Master Admin and Account Manager
+  masterAdminOnly: ["MasterAdmin"] as const satisfies readonly Role[],
+  masterAdminAndAccountManager: ["MasterAdmin", "AccountManager"] as const satisfies readonly Role[],
 } as const
 
 export function normalizeRole(role: unknown): Role | null {

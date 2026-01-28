@@ -3,8 +3,7 @@ import type { NextRequest } from "next/server"
 import createMiddleware from 'next-intl/middleware';
 
 import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY } from "@/store/api/auth/api"
-import { getAllowedRolesForPath } from "@/config/route-access"
-import { isRoleAllowed } from "@/config/auth-roles"
+import { canAccess } from "@/config/route-access"
 import { routing } from "@/i18n/navigation"
 
 // Create the i18n middleware using the routing configuration
@@ -41,6 +40,11 @@ const PROTECTED_PATH_PREFIXES = [
   "/dashboard-2",
   "/propose-your-innovations",
   "/support",
+  "/organisations",
+  "/centres",
+  "/subscriptions",
+  "/payments",
+  "/audit-logs",
 ]
 
 const AUTH_PATH_PREFIXES = ["/auth"]
@@ -123,11 +127,8 @@ export function middleware(request: NextRequest) {
   }
 
   if (token && isProtectedRoute(pathname)) {
-    const allowedRoles = getAllowedRolesForPath(pathname)
-
-    // Check if user's role is allowed for this route
-    // Admin role is included in all learner routes via route-access.ts
-    if (!isRoleAllowed(userRole, allowedRoles)) {
+    // Use canAccess which properly handles Admin, MasterAdmin, and AccountManager
+    if (!canAccess(pathname, userRole)) {
       return NextResponse.redirect(new URL('/errors/unauthorized', request.url))
     }
   }

@@ -25,6 +25,10 @@ import {
   PoundSterling,
   TrendingUp,
   Heart,
+  Building2,
+  MapPin,
+  CreditCard,
+  DollarSign,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
@@ -305,6 +309,51 @@ const data: {
           title: 'Support',
           url: '/support',
           icon: HelpCircle,
+        },
+      ],
+    },
+    {
+      label: 'Master Admin',
+      items: [
+        {
+          title: 'Organisations',
+          url: '/organisations',
+          icon: Building2,
+        },
+        {
+          title: 'Centres',
+          url: '/centres',
+          icon: MapPin,
+        },
+        {
+          title: 'Subscriptions',
+          url: '/subscriptions',
+          icon: CreditCard,
+        },
+        {
+          title: 'Payments',
+          url: '/payments',
+          icon: DollarSign,
+        },
+        {
+          title: 'Audit Logs',
+          url: '/audit-logs',
+          icon: FileText,
+        },
+        {
+          title: 'System Admins',
+          url: '/system-admin',
+          icon: Shield,
+        },
+        {
+          title: 'Account Managers',
+          url: '/account-manager',
+          icon: Users,
+        },
+        {
+          title: 'Feature Control',
+          url: '/feature-control',
+          icon: Settings,
         },
       ],
     },

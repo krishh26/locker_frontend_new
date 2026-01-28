@@ -19,6 +19,8 @@ const R = {
     const uniqueRoles = new Set<Role>(["Admin", ...roles])
     return Array.from(uniqueRoles) as readonly Role[]
   },
+  masterAdminOnly: (): readonly Role[] => authRoles.masterAdminOnly,
+  masterAdminAndAccountManager: (): readonly Role[] => authRoles.masterAdminAndAccountManager,
   all: (): readonly Role[] => ALL_ROLES,
 } as const
 
@@ -255,7 +257,7 @@ const routeRoleRules: RouteRule[] = [
   // Main dashboard (accessible to all roles except EQA - content is role-based)
   {
     pattern: /^\/dashboard\/?$/,
-    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer"),
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "MasterAdmin", "AccountManager"),
   },
   // IV Report (accessible to all roles)
   {
@@ -267,6 +269,44 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/auth\/change-password(?:\/|$)/,
     roles: R.all(),
   },
+  // Master Admin & Account Manager routes
+  {
+    pattern: /^\/organisations(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  {
+    pattern: /^\/organisations\/\d+(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  {
+    pattern: /^\/centres(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  {
+    pattern: /^\/subscriptions(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  {
+    pattern: /^\/payments(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  {
+    pattern: /^\/audit-logs(?:\/|$)/,
+    roles: R.masterAdminAndAccountManager(),
+  },
+  // Master Admin only routes
+  {
+    pattern: /^\/system-admin(?:\/|$)/,
+    roles: R.masterAdminOnly(),
+  },
+  {
+    pattern: /^\/account-manager(?:\/|$)/,
+    roles: R.masterAdminOnly(),
+  },
+  {
+    pattern: /^\/feature-control(?:\/|$)/,
+    roles: R.masterAdminOnly(),
+  },
 ]
 
 export function getAllowedRolesForPath(pathname: string): AllowedRoles {
@@ -275,7 +315,8 @@ export function getAllowedRolesForPath(pathname: string): AllowedRoles {
 }
 
 export function canAccess(pathname: string, role: string | null): boolean {
-  if (role === "Admin") {
+  // Admin and MasterAdmin have access to all routes
+  if (role === "Admin" || role === "MasterAdmin") {
     return true
   }
   const allowedRoles = getAllowedRolesForPath(pathname)

@@ -33,6 +33,7 @@ export type AuthUser = {
   lastName?: string;
   role?: string;
   roles?: string[];
+  assignedOrganisationIds?: number[];
   [key: string]: unknown;
 };
 

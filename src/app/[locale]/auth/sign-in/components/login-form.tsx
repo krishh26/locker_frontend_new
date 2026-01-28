@@ -116,6 +116,9 @@ export function LoginForm({
           number_of_active_learners: userData.number_of_active_learners,
           assigned_employers: userData.assigned_employers,
           userEmployers: userData.userEmployers,
+          // Include assignedOrganisationIds if present (for MasterAdmin/AccountManager)
+          // Type assertion needed because assignedOrganisationIds is not in User type
+          assignedOrganisationIds: (userData as unknown as Record<string, unknown>).assignedOrganisationIds as number[] | undefined ?? result.user?.assignedOrganisationIds,
         }
         dispatch(updateUser(authUser))
         if (result.passwordChanged === false) {

@@ -3,14 +3,26 @@
 import { useParams, useRouter } from "next/navigation"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
-import { canAccessOrganisation } from "@/utils/permissions"
-import { useGetOrganisationQuery } from "@/store/api/organisations/organisationApi"
+import { canAccessOrganisation, isMasterAdmin } from "@/utils/permissions"
+import {
+  useGetOrganisationQuery,
+  useActivateOrganisationMutation,
+  useSuspendOrganisationMutation,
+} from "@/store/api/organisations/organisationApi"
 import { useGetCentresQuery } from "@/store/api/centres/centreApi"
 import { useGetSubscriptionQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import {
   Table,
   TableBody,
@@ -20,8 +32,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, MapPin, CreditCard, DollarSign, Users } from "lucide-react"
-import { useEffect } from "react"
+import { Building2, MapPin, CreditCard, DollarSign, Users, Edit, CheckCircle, XCircle, Plus } from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { toast } from "sonner"
+import { EditOrganisationForm } from "../components/edit-organisation-form"
+import { AssignAdminDialog } from "../components/assign-admin-dialog"
+import { useGetUsersByRoleQuery } from "@/store/api/user/userApi"
 
 export default function OrganisationDetailPage() {
   const params = useParams()
@@ -36,25 +52,77 @@ export default function OrganisationDetailPage() {
     }
   }, [user, organisationId, router])
 
-  const { data: orgData, isLoading: isLoadingOrg } = useGetOrganisationQuery(organisationId)
+  const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
   const { data: centresData, isLoading: isLoadingCentres } = useGetCentresQuery({ organisationId })
   const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
   const { data: paymentsData, isLoading: isLoadingPayments } = useGetPaymentsQuery({ organisationId })
+  const { data: adminsData, isLoading: isLoadingAdmins } = useGetUsersByRoleQuery("Admin")
+  const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
+  const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
 
   const organisation = orgData?.data
   const centres = centresData?.data || []
   const subscription = subscriptionData?.data
   const payments = paymentsData?.data || []
+  const allAdmins = adminsData?.data || []
 
-  // Placeholder for admins - API not yet implemented
-  interface Admin {
-    id: number
-    name: string
-    email: string
-    role: string
-  }
-  const admins: Admin[] = []
-  const isAPILoading = isLoadingOrg || isLoadingCentres || isLoadingSubscription || isLoadingPayments
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [isAssignAdminDialogOpen, setIsAssignAdminDialogOpen] = useState(false)
+  const canEdit = isMasterAdmin(user)
+
+  const isAPILoading = isLoadingOrg || isLoadingCentres || isLoadingSubscription || isLoadingPayments || isLoadingAdmins
+
+  const handleEditSuccess = useCallback(() => {
+    setIsEditDialogOpen(false)
+    refetchOrg()
+  }, [refetchOrg])
+
+  const handleEditCancel = useCallback(() => {
+    setIsEditDialogOpen(false)
+  }, [])
+
+  const handleActivate = useCallback(async () => {
+    if (!organisation) return
+    try {
+      await activateOrganisation(organisation.id).unwrap()
+      toast.success("Organisation activated successfully")
+      refetchOrg()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to activate organisation"
+      toast.error(errorMessage)
+    }
+  }, [organisation, activateOrganisation, refetchOrg])
+
+  const handleSuspend = useCallback(async () => {
+    if (!organisation) return
+    try {
+      await suspendOrganisation(organisation.id).unwrap()
+      toast.success("Organisation suspended successfully")
+      refetchOrg()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to suspend organisation"
+      toast.error(errorMessage)
+    }
+  }, [organisation, suspendOrganisation, refetchOrg])
+
+  const handleAssignAdminSuccess = useCallback(() => {
+    setIsAssignAdminDialogOpen(false)
+    refetchOrg()
+  }, [refetchOrg])
+
+  const handleAssignAdminCancel = useCallback(() => {
+    setIsAssignAdminDialogOpen(false)
+  }, [])
 
   if (!canAccessOrganisation(user, organisationId)) {
     return null // Will redirect in useEffect
@@ -85,10 +153,45 @@ export default function OrganisationDetailPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader
-        title={organisation.name}
-        subtitle={`Organisation ID: ${organisation.id}`}
-      />
+      <div className="flex items-center justify-between">
+        <PageHeader
+          title={organisation.name}
+          subtitle={`Organisation ID: ${organisation.id}`}
+        />
+        {canEdit && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsEditDialogOpen(true)}
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Edit
+            </Button>
+            {organisation.status === "suspended" ? (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleActivate}
+                disabled={isActivating}
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Activate
+              </Button>
+            ) : (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleSuspend}
+                disabled={isSuspending}
+              >
+                <XCircle className="h-4 w-4 mr-2" />
+                Suspend
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList>
@@ -201,32 +304,66 @@ export default function OrganisationDetailPage() {
         <TabsContent value="admins">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Organisation Admins
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Organisation Admins
+                </CardTitle>
+                {canEdit && (
+                  <Button
+                    size="sm"
+                    onClick={() => setIsAssignAdminDialogOpen(true)}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Assign Admin
+                  </Button>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Role</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {admins.map((admin) => (
-                    <TableRow key={admin.id}>
-                      <TableCell className="font-medium">{admin.name}</TableCell>
-                      <TableCell>{admin.email}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">{admin.role}</Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              {isLoadingAdmins ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  Loading admins...
+                </div>
+              ) : allAdmins.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  No admin users found. Create admin users first.
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Manage which admins can access this organisation. Use the dialog to assign or remove admins.
+                  </p>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Roles</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {allAdmins.map((admin) => (
+                        <TableRow key={admin.user_id}>
+                          <TableCell className="font-medium">
+                            {admin.first_name} {admin.last_name}
+                          </TableCell>
+                          <TableCell>{admin.email}</TableCell>
+                          <TableCell>
+                            <div className="flex gap-1 flex-wrap">
+                              {admin.roles.map((role) => (
+                                <Badge key={role} variant="secondary">
+                                  {role}
+                                </Badge>
+                              ))}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -333,6 +470,45 @@ export default function OrganisationDetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Edit Organisation Dialog */}
+      {organisation && (
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Edit Organisation</DialogTitle>
+              <DialogDescription>
+                Update organisation details. Only MasterAdmin can edit organisations.
+              </DialogDescription>
+            </DialogHeader>
+            <EditOrganisationForm
+              organisation={organisation}
+              onSuccess={handleEditSuccess}
+              onCancel={handleEditCancel}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Assign Admin Dialog */}
+      {organisation && (
+        <Dialog open={isAssignAdminDialogOpen} onOpenChange={setIsAssignAdminDialogOpen}>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Assign Admins to Organisation</DialogTitle>
+              <DialogDescription>
+                Select which admins can manage this organisation. Click to assign or remove.
+              </DialogDescription>
+            </DialogHeader>
+            <AssignAdminDialog
+              organisationId={organisation.id}
+              currentAdmins={organisation.admins || []}
+              onSuccess={handleAssignAdminSuccess}
+              onCancel={handleAssignAdminCancel}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

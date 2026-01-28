@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Search, Download, Eye, Plus } from "lucide-react"
+import { Search, Download, Eye, Plus, Edit, MoreVertical, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -39,7 +39,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { DataTablePagination } from "@/components/data-table-pagination"
-import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
+import {
+  useGetOrganisationsQuery,
+  useUpdateOrganisationMutation,
+  useActivateOrganisationMutation,
+  useSuspendOrganisationMutation,
+} from "@/store/api/organisations/organisationApi"
 import type { Organisation } from "@/store/api/organisations/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -47,17 +52,24 @@ import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
 import { isMasterAdmin } from "@/utils/permissions"
 import { CreateOrganisationForm } from "./create-organisation-form"
+import { EditOrganisationForm } from "./edit-organisation-form"
 
 export function OrganisationsDataTable() {
   const router = useRouter()
   const user = useAppSelector(selectAuthUser)
   const { data, isLoading, refetch } = useGetOrganisationsQuery()
+  const [updateOrganisation] = useUpdateOrganisationMutation()
+  const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
+  const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
   const canCreateOrganisation = isMasterAdmin(user)
+  const canEditOrganisation = isMasterAdmin(user)
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [selectedOrganisation, setSelectedOrganisation] = useState<Organisation | null>(null)
 
   const organisations = data?.data || []
 
@@ -71,6 +83,56 @@ export function OrganisationsDataTable() {
   const handleCreateCancel = useCallback(() => {
     setIsCreateDialogOpen(false)
   }, [])
+
+  // Stable callback for edit form success
+  const handleEditSuccess = useCallback(() => {
+    setIsEditDialogOpen(false)
+    setSelectedOrganisation(null)
+    refetch()
+  }, [refetch])
+
+  // Stable callback for edit form cancel
+  const handleEditCancel = useCallback(() => {
+    setIsEditDialogOpen(false)
+    setSelectedOrganisation(null)
+  }, [])
+
+  const handleEdit = useCallback((org: Organisation) => {
+    setSelectedOrganisation(org)
+    setIsEditDialogOpen(true)
+  }, [])
+
+  const handleActivate = useCallback(async (org: Organisation) => {
+    try {
+      await activateOrganisation(org.id).unwrap()
+      toast.success("Organisation activated successfully")
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to activate organisation"
+      toast.error(errorMessage)
+    }
+  }, [activateOrganisation, refetch])
+
+  const handleSuspend = useCallback(async (org: Organisation) => {
+    try {
+      await suspendOrganisation(org.id).unwrap()
+      toast.success("Organisation suspended successfully")
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to suspend organisation"
+      toast.error(errorMessage)
+    }
+  }, [suspendOrganisation, refetch])
 
   const handleExportCsv = () => {
     if (organisations.length === 0) {
@@ -132,19 +194,59 @@ export function OrganisationsDataTable() {
         cell: ({ row }) => {
           const org = row.original
           return (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => router.push(`/organisations/${org.id}`)}
-            >
-              <Eye className="h-4 w-4 mr-2" />
-              View
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push(`/organisations/${org.id}`)}
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View
+              </Button>
+              {canEditOrganisation && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleEdit(org)}
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" disabled={isActivating || isSuspending}>
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      {org.status === "suspended" ? (
+                        <DropdownMenuItem
+                          onClick={() => handleActivate(org)}
+                          disabled={isActivating}
+                        >
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Activate
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem
+                          onClick={() => handleSuspend(org)}
+                          disabled={isSuspending}
+                        >
+                          <XCircle className="h-4 w-4 mr-2" />
+                          Suspend
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              )}
+            </div>
           )
         },
       },
     ],
-    [router]
+    [router, canEditOrganisation, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
   )
 
   const table = useReactTable({
@@ -288,6 +390,25 @@ export function OrganisationsDataTable() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* Edit Organisation Dialog */}
+      {selectedOrganisation && (
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Edit Organisation</DialogTitle>
+              <DialogDescription>
+                Update organisation details. Only MasterAdmin can edit organisations.
+              </DialogDescription>
+            </DialogHeader>
+            <EditOrganisationForm
+              organisation={selectedOrganisation}
+              onSuccess={handleEditSuccess}
+              onCancel={handleEditCancel}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

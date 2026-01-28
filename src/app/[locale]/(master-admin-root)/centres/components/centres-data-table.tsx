@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { useRouter } from "@/i18n/navigation"
 import {
   type ColumnDef,
@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Search, Download, Building2, MapPin } from "lucide-react"
+import { Search, Download, Building2, MapPin, Plus, Edit, MoreVertical, CheckCircle, XCircle, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -31,21 +31,39 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { DataTablePagination } from "@/components/data-table-pagination"
-import { useGetCentresQuery } from "@/store/api/centres/centreApi"
+import {
+  useGetCentresQuery,
+  useActivateCentreMutation,
+  useSuspendCentreMutation,
+} from "@/store/api/centres/centreApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import type { Centre } from "@/store/api/centres/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { CreateCentreForm } from "./create-centre-form"
+import { EditCentreForm } from "./edit-centre-form"
 
 export function CentresDataTable() {
   const router = useRouter()
-  const { data: centresData, isLoading: centresLoading } = useGetCentresQuery()
+  const { data: centresData, isLoading: centresLoading, refetch } = useGetCentresQuery()
   const { data: orgsData } = useGetOrganisationsQuery()
+  const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
+  const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [selectedCentre, setSelectedCentre] = useState<Centre | null>(null)
 
   const centres = centresData?.data || []
   const organisations = useMemo(() => orgsData?.data || [], [orgsData])
@@ -82,6 +100,63 @@ export function CentresDataTable() {
   const handleExportPdf = () => {
     toast.info("PDF export coming soon")
   }
+
+  const handleCreateSuccess = useCallback(() => {
+    setIsCreateDialogOpen(false)
+    refetch()
+  }, [refetch])
+
+  const handleCreateCancel = useCallback(() => {
+    setIsCreateDialogOpen(false)
+  }, [])
+
+  const handleEditSuccess = useCallback(() => {
+    setIsEditDialogOpen(false)
+    setSelectedCentre(null)
+    refetch()
+  }, [refetch])
+
+  const handleEditCancel = useCallback(() => {
+    setIsEditDialogOpen(false)
+    setSelectedCentre(null)
+  }, [])
+
+  const handleEdit = useCallback((centre: Centre) => {
+    setSelectedCentre(centre)
+    setIsEditDialogOpen(true)
+  }, [])
+
+  const handleActivate = useCallback(async (centre: Centre) => {
+    try {
+      await activateCentre(centre.id).unwrap()
+      toast.success("Centre activated successfully")
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to activate centre"
+      toast.error(errorMessage)
+    }
+  }, [activateCentre, refetch])
+
+  const handleSuspend = useCallback(async (centre: Centre) => {
+    try {
+      await suspendCentre(centre.id).unwrap()
+      toast.success("Centre suspended successfully")
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to suspend centre"
+      toast.error(errorMessage)
+    }
+  }, [suspendCentre, refetch])
 
   const columns: ColumnDef<Centre>[] = useMemo(
     () => [
@@ -128,8 +203,61 @@ export function CentresDataTable() {
           )
         },
       },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const centre = row.original
+          return (
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push(`/centres/${centre.id}`)}
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleEdit(centre)}
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Edit
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" disabled={isActivating || isSuspending}>
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {centre.status === "suspended" ? (
+                    <DropdownMenuItem
+                      onClick={() => handleActivate(centre)}
+                      disabled={isActivating}
+                    >
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Activate
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem
+                      onClick={() => handleSuspend(centre)}
+                      disabled={isSuspending}
+                    >
+                      <XCircle className="h-4 w-4 mr-2" />
+                      Suspend
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )
+        },
+      },
     ],
-    [orgMap, router]
+    [orgMap, router, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
   )
 
   const table = useReactTable({
@@ -177,6 +305,13 @@ export function CentresDataTable() {
           />
         </div>
         <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            onClick={() => setIsCreateDialogOpen(true)}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Centre
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
@@ -248,6 +383,41 @@ export function CentresDataTable() {
 
       {/* Pagination */}
       <DataTablePagination table={table} />
+
+      {/* Create Centre Dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Create Centre</DialogTitle>
+            <DialogDescription>
+              Add a new centre to an organisation.
+            </DialogDescription>
+          </DialogHeader>
+          <CreateCentreForm
+            onSuccess={handleCreateSuccess}
+            onCancel={handleCreateCancel}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Centre Dialog */}
+      {selectedCentre && (
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Edit Centre</DialogTitle>
+              <DialogDescription>
+                Update centre details.
+              </DialogDescription>
+            </DialogHeader>
+            <EditCentreForm
+              centre={selectedCentre}
+              onSuccess={handleEditSuccess}
+              onCancel={handleEditCancel}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

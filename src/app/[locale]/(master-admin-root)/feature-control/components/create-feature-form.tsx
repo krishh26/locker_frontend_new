@@ -8,14 +8,23 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useCreateFeatureMutation } from "@/store/api/feature-control/featureControlApi"
 import type { CreateFeatureRequest } from "@/store/api/feature-control/types"
+import { FeatureType } from "@/store/api/feature-control/types"
 import { toast } from "sonner"
 
 const createFeatureSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   code: z.string().regex(/^[a-zA-Z0-9_]+$/, "Code must be alphanumeric with underscores only"),
   description: z.string().optional(),
+  type: z.nativeEnum(FeatureType).optional(),
   maxUsers: z
     .string()
     .optional()
@@ -59,6 +68,7 @@ export function CreateFeatureForm({
       name: "",
       code: "",
       description: "",
+      type: FeatureType.Limit,
       maxUsers: "",
       maxCentres: "",
       maxOrganisations: "",
@@ -82,6 +92,7 @@ export function CreateFeatureForm({
         name: values.name,
         code: values.code,
         description: values.description || undefined,
+        type: values.type,
         limits: Object.keys(limits).length > 0 ? limits : undefined,
       }
 
@@ -176,6 +187,44 @@ export function CreateFeatureForm({
               disabled={isLoading}
               rows={3}
             />
+          )}
+        />
+      </div>
+
+      {/* Type */}
+      <div className="space-y-2">
+        <Label htmlFor="type">Type</Label>
+        <Controller
+          name="type"
+          control={form.control}
+          render={({ field }) => (
+            <>
+              <Select
+                value={field.value}
+                onValueChange={(value) => field.onChange(value as FeatureType)}
+                disabled={isLoading}
+              >
+                <SelectTrigger
+                  id="type"
+                  className={form.formState.errors.type ? "w-full border-destructive" : "w-full"}
+                >
+                  <SelectValue placeholder="Select feature type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={FeatureType.Limit}>Limit</SelectItem>
+                  <SelectItem value={FeatureType.Toggle}>Toggle</SelectItem>
+                  <SelectItem value={FeatureType.Usage}>Usage</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.formState.errors.type && (
+                <p className="text-sm text-destructive">
+                  {form.formState.errors.type.message}
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Limit: Numeric constraint, Toggle: On/Off feature, Usage: Usage tracking
+              </p>
+            </>
           )}
         />
       </div>

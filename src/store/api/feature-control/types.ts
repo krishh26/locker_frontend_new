@@ -3,11 +3,18 @@
  * Based on CSV: Feature Control Module (7 APIs)
  */
 
+export enum FeatureType {
+  Limit = 'limit',
+  Toggle = 'toggle',
+  Usage = 'usage'
+}
+
 export interface Feature {
   id: number
   name: string
   code: string
   description?: string
+  type?: FeatureType
   isActive: boolean
   limits?: {
     maxUsers?: number
@@ -33,6 +40,7 @@ export interface CreateFeatureRequest {
   name: string
   code: string
   description?: string
+  type?: FeatureType
   limits?: {
     maxUsers?: number
     maxCentres?: number

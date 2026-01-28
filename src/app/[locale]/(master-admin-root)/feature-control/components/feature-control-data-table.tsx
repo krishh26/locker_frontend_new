@@ -51,6 +51,7 @@ import {
 import { DataTablePagination } from "@/components/data-table-pagination"
 import { useGetFeaturesQuery } from "@/store/api/feature-control/featureControlApi"
 import type { Feature } from "@/store/api/feature-control/types"
+import { FeatureType } from "@/store/api/feature-control/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAppSelector } from "@/store/hooks"
@@ -195,6 +196,24 @@ export function FeatureControlDataTable() {
         header: "Code",
         cell: ({ row }) => {
           return <code className="text-sm bg-muted px-2 py-1 rounded">{row.original.code}</code>
+        },
+      },
+      {
+        accessorKey: "type",
+        header: "Type",
+        cell: ({ row }) => {
+          const type = row.original.type
+          if (!type) return <span className="text-muted-foreground">—</span>
+          const typeLabels: Record<FeatureType, string> = {
+            [FeatureType.Limit]: "Limit",
+            [FeatureType.Toggle]: "Toggle",
+            [FeatureType.Usage]: "Usage",
+          }
+          return (
+            <Badge variant="outline">
+              {typeLabels[type] || type}
+            </Badge>
+          )
         },
       },
       {

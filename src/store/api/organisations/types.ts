@@ -3,6 +3,14 @@
  * These match the expected backend response structure
  */
 
+export interface AdminUser {
+  user_id: number
+  first_name: string
+  last_name: string
+  email: string
+  roles: string[]
+}
+
 export interface Organisation {
   id: number
   name: string
@@ -10,6 +18,7 @@ export interface Organisation {
   email?: string
   createdAt?: string
   updatedAt?: string
+  admins?: AdminUser[]
 }
 
 export interface OrganisationListResponse {
@@ -28,4 +37,14 @@ export interface CreateOrganisationRequest {
   name: string
   email?: string
   status: "active" | "suspended"
+}
+
+export interface UpdateOrganisationRequest {
+  name?: string
+  email?: string
+  status?: "active" | "suspended"
+}
+
+export interface AssignAdminRequest {
+  user_id: number
 }

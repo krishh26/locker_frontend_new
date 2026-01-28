@@ -3,6 +3,8 @@ import type {
   OrganisationResponse,
   OrganisationListResponse,
   CreateOrganisationRequest,
+  UpdateOrganisationRequest,
+  AssignAdminRequest,
 } from "./types"
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api"
 import { baseQuery } from "@/store/api/baseQuery"
@@ -68,6 +70,83 @@ export const organisationApi = createApi({
         return response
       },
     }),
+    updateOrganisation: builder.mutation<
+      OrganisationResponse,
+      { id: number; data: UpdateOrganisationRequest }
+    >({
+      query: ({ id, data }) => ({
+        url: `/organisations/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    activateOrganisation: builder.mutation<OrganisationResponse, number>({
+      query: (id) => ({
+        url: `/organisations/${id}/activate`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    suspendOrganisation: builder.mutation<OrganisationResponse, number>({
+      query: (id) => ({
+        url: `/organisations/${id}/suspend`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    assignAdminToOrganisation: builder.mutation<
+      OrganisationResponse,
+      { id: number; user_id: number }
+    >({
+      query: ({ id, user_id }) => ({
+        url: `/organisations/${id}/assign-admin`,
+        method: "POST",
+        body: { user_id },
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    removeAdminFromOrganisation: builder.mutation<
+      OrganisationResponse,
+      { id: number; user_id: number }
+    >({
+      query: ({ id, user_id }) => ({
+        url: `/organisations/${id}/remove-admin`,
+        method: "POST",
+        body: { user_id },
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
   }),
 })
 
@@ -75,4 +154,9 @@ export const {
   useGetOrganisationsQuery,
   useGetOrganisationQuery,
   useCreateOrganisationMutation,
+  useUpdateOrganisationMutation,
+  useActivateOrganisationMutation,
+  useSuspendOrganisationMutation,
+  useAssignAdminToOrganisationMutation,
+  useRemoveAdminFromOrganisationMutation,
 } = organisationApi

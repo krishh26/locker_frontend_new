@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
 import type {
+  Centre,
   CentreListResponse,
   CentreResponse,
   CreateCentreRequest,
@@ -39,21 +40,32 @@ export const centreApi = createApi({
         return url
       },
       providesTags: ["Centre"],
-      transformResponse: (response: CentreListResponse) => {
+      transformResponse: (response: CentreListResponse & { data?: (Centre & { organisation_id?: number })[] }) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
         }
-        return response
+        const rawList = response.data ?? []
+        const data: Centre[] = rawList.map((raw: Centre & { organisation_id?: number }) => ({
+          ...raw,
+          organisationId: raw.organisationId ?? raw.organisation_id ?? 0,
+        }))
+        return { ...response, data }
       },
     }),
     getCentre: builder.query<CentreResponse, number>({
       query: (id) => `/centres/${id}`,
       providesTags: ["Centre"],
-      transformResponse: (response: CentreResponse) => {
+      transformResponse: (response: CentreResponse & { data?: Centre & { organisation_id?: number } }) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
         }
-        return response
+        const raw = response.data as (Centre & { organisation_id?: number }) | undefined
+        if (!raw) return response
+        const data: Centre = {
+          ...raw,
+          organisationId: raw.organisationId ?? raw.organisation_id ?? 0,
+        }
+        return { ...response, data }
       },
     }),
     createCentre: builder.mutation<CentreResponse, CreateCentreRequest>({

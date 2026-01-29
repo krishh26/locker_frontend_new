@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useCallback, useRef } from "react"
 import { useRouter } from "@/i18n/navigation"
 import {
   type ColumnDef,
@@ -9,7 +9,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -41,7 +40,6 @@ import {
 import { DataTablePagination } from "@/components/data-table-pagination"
 import {
   useGetOrganisationsQuery,
-  useUpdateOrganisationMutation,
   useActivateOrganisationMutation,
   useSuspendOrganisationMutation,
 } from "@/store/api/organisations/organisationApi"
@@ -54,16 +52,15 @@ import { isMasterAdmin } from "@/utils/permissions"
 import { CreateOrganisationForm } from "./create-organisation-form"
 import { EditOrganisationForm } from "./edit-organisation-form"
 
+const DEFAULT_PAGE_SIZE = 10
+
 export function OrganisationsDataTable() {
   const router = useRouter()
+  const routerRef = useRef(router)
+  routerRef.current = router
   const user = useAppSelector(selectAuthUser)
-  const { data, isLoading, refetch } = useGetOrganisationsQuery()
-  const [updateOrganisation] = useUpdateOrganisationMutation()
-  const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
-  const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
-  const canCreateOrganisation = isMasterAdmin(user)
-  const canEditOrganisation = isMasterAdmin(user)
-
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE)
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
@@ -71,25 +68,34 @@ export function OrganisationsDataTable() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [selectedOrganisation, setSelectedOrganisation] = useState<Organisation | null>(null)
 
-  const organisations = data?.data || []
+  const queryArgs = useMemo(
+    () => ({ page, limit: pageSize }),
+    [page, pageSize]
+  )
+  const { data, isLoading } = useGetOrganisationsQuery(queryArgs)
+  const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
+  const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
+  const canCreateOrganisation = isMasterAdmin(user)
+  const canEditOrganisation = isMasterAdmin(user)
 
-  // Stable callback for form success
+  const organisations = useMemo(() => data?.data ?? [], [data?.data])
+  const meta = data?.meta_data
+  const totalItems = meta?.items ?? 0
+  const totalPages = meta?.pages ?? 0
+
+  // Stable callbacks; list refetches via RTK Query cache invalidation (invalidatesTags: ["Organisation"])
   const handleCreateSuccess = useCallback(() => {
     setIsCreateDialogOpen(false)
-    refetch()
-  }, [refetch])
+  }, [])
 
-  // Stable callback for form cancel
   const handleCreateCancel = useCallback(() => {
     setIsCreateDialogOpen(false)
   }, [])
 
-  // Stable callback for edit form success
   const handleEditSuccess = useCallback(() => {
     setIsEditDialogOpen(false)
     setSelectedOrganisation(null)
-    refetch()
-  }, [refetch])
+  }, [])
 
   // Stable callback for edit form cancel
   const handleEditCancel = useCallback(() => {
@@ -106,7 +112,6 @@ export function OrganisationsDataTable() {
     try {
       await activateOrganisation(org.id).unwrap()
       toast.success("Organisation activated successfully")
-      refetch()
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -116,13 +121,12 @@ export function OrganisationsDataTable() {
           : "Failed to activate organisation"
       toast.error(errorMessage)
     }
-  }, [activateOrganisation, refetch])
+  }, [activateOrganisation])
 
   const handleSuspend = useCallback(async (org: Organisation) => {
     try {
       await suspendOrganisation(org.id).unwrap()
       toast.success("Organisation suspended successfully")
-      refetch()
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -132,7 +136,7 @@ export function OrganisationsDataTable() {
           : "Failed to suspend organisation"
       toast.error(errorMessage)
     }
-  }, [suspendOrganisation, refetch])
+  }, [suspendOrganisation])
 
   const handleExportCsv = () => {
     if (organisations.length === 0) {
@@ -198,7 +202,7 @@ export function OrganisationsDataTable() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => router.push(`/organisations/${org.id}`)}
+                onClick={() => routerRef.current.push(`/organisations/${org.id}`)}
               >
                 <Eye className="h-4 w-4 mr-2" />
                 View
@@ -246,7 +250,7 @@ export function OrganisationsDataTable() {
         },
       },
     ],
-    [router, canEditOrganisation, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
+    [canEditOrganisation, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
   )
 
   const table = useReactTable({
@@ -255,16 +259,26 @@ export function OrganisationsDataTable() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFilter,
+    manualPagination: true,
+    pageCount: totalPages,
     state: {
       sorting,
       columnFilters,
       globalFilter,
     },
   })
+
+  const handlePageChange = useCallback((newPage: number) => {
+    setPage(newPage)
+  }, [])
+
+  const handlePageSizeChange = useCallback((newPageSize: number) => {
+    setPageSize(newPageSize)
+    setPage(1)
+  }, [])
 
   if (isLoading) {
     return (
@@ -372,8 +386,17 @@ export function OrganisationsDataTable() {
         </Table>
       </div>
 
-      {/* Pagination */}
-      <DataTablePagination table={table} />
+      {/* Pagination - manual (server-side) */}
+      <DataTablePagination
+        table={table}
+        manualPagination
+        currentPage={page}
+        totalPages={totalPages}
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
 
       {/* Create Organisation Dialog */}
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>

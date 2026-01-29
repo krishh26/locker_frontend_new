@@ -11,6 +11,15 @@ export interface AdminUser {
   roles: string[]
 }
 
+/** Minimal centre shape when embedded in organisation response (avoids circular import from centres) */
+export interface OrganisationCentre {
+  id: number
+  name: string
+  organisation_id?: number
+  organisationId?: number
+  status: "active" | "suspended"
+}
+
 export interface Organisation {
   id: number
   name: string
@@ -19,12 +28,21 @@ export interface Organisation {
   createdAt?: string
   updatedAt?: string
   admins?: AdminUser[]
+  centres?: OrganisationCentre[]
+}
+
+export interface OrganisationListMetaData {
+  page: number
+  page_size: number
+  pages: number
+  items: number
 }
 
 export interface OrganisationListResponse {
   status: boolean
   message?: string
   data: Organisation[]
+  meta_data?: OrganisationListMetaData
 }
 
 export interface OrganisationResponse {

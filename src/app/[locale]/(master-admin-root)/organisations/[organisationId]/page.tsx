@@ -9,7 +9,6 @@ import {
   useActivateOrganisationMutation,
   useSuspendOrganisationMutation,
 } from "@/store/api/organisations/organisationApi"
-import { useGetCentresQuery } from "@/store/api/centres/centreApi"
 import { useGetSubscriptionQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
 import { PageHeader } from "@/components/dashboard/page-header"
@@ -53,7 +52,6 @@ export default function OrganisationDetailPage() {
   }, [user, organisationId, router])
 
   const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
-  const { data: centresData, isLoading: isLoadingCentres } = useGetCentresQuery({ organisationId })
   const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
   const { data: paymentsData, isLoading: isLoadingPayments } = useGetPaymentsQuery({ organisationId })
   const { data: adminsData, isLoading: isLoadingAdmins } = useGetUsersByRoleQuery("Admin")
@@ -61,7 +59,7 @@ export default function OrganisationDetailPage() {
   const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
 
   const organisation = orgData?.data
-  const centres = centresData?.data || []
+  const centres = organisation?.centres ?? []
   const subscription = subscriptionData?.data
   const payments = paymentsData?.data || []
   const allAdmins = adminsData?.data || []
@@ -70,7 +68,7 @@ export default function OrganisationDetailPage() {
   const [isAssignAdminDialogOpen, setIsAssignAdminDialogOpen] = useState(false)
   const canEdit = isMasterAdmin(user)
 
-  const isAPILoading = isLoadingOrg || isLoadingCentres || isLoadingSubscription || isLoadingPayments || isLoadingAdmins
+  const isAPILoading = isLoadingOrg || isLoadingSubscription || isLoadingPayments || isLoadingAdmins
 
   const handleEditSuccess = useCallback(() => {
     setIsEditDialogOpen(false)
@@ -131,7 +129,7 @@ export default function OrganisationDetailPage() {
   // Show loading state while fetching organisation data
   if (isAPILoading) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader title="Loading..." />
         <div className="text-center py-8 text-muted-foreground">
           Loading organisation details...
@@ -142,7 +140,7 @@ export default function OrganisationDetailPage() {
 
   if (!organisation) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader title="Organisation Not Found" />
         <div className="text-center py-8 text-muted-foreground">
           The organisation you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
@@ -152,11 +150,12 @@ export default function OrganisationDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <div className="flex items-center justify-between">
         <PageHeader
           title={organisation.name}
           subtitle={`Organisation ID: ${organisation.id}`}
+          showBackButton
         />
         {canEdit && (
           <div className="flex items-center gap-2">

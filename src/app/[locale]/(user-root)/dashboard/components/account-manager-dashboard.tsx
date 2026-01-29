@@ -69,7 +69,7 @@ export function AccountManagerDashboard() {
   ]
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
         title="Account Manager Dashboard"
         subtitle={`Managing ${totalOrgs} assigned organisation${totalOrgs !== 1 ? "s" : ""}`}

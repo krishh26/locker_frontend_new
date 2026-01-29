@@ -5,7 +5,7 @@ import { FeatureControlDataTable } from "./components/feature-control-data-table
 
 export default function FeatureControlPage() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
         title="Feature Control"
         subtitle="Manage features and their plan mappings"

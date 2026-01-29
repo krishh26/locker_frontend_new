@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { useRouter } from "@/i18n/navigation"
 import {
   type ColumnDef,
@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Search, Download, Building2, CreditCard, AlertCircle } from "lucide-react"
+import { Search, Download, Building2, CreditCard, AlertCircle, Plus, MoreVertical, RefreshCw, Ban } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -31,24 +31,32 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { DataTablePagination } from "@/components/data-table-pagination"
-import { useAppSelector } from "@/store/hooks"
-import { selectAuthUser } from "@/store/slices/authSlice"
-import { getAccessibleOrganisationIds } from "@/utils/permissions"
 import { useGetSubscriptionsQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import type { Subscription } from "@/store/api/subscriptions/types"
 import { toast } from "sonner"
+import { AssignPlanDialog } from "./assign-plan-dialog"
+import { ChangePlanDialog } from "./change-plan-dialog"
+import { SuspendAccessDialog } from "./suspend-access-dialog"
 
 export function SubscriptionsDataTable() {
   const router = useRouter()
-  const user = useAppSelector(selectAuthUser)
-
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
+  const [isAssignPlanOpen, setIsAssignPlanOpen] = useState(false)
+  const [changePlanSub, setChangePlanSub] = useState<Subscription | null>(null)
+  const [suspendAccessSub, setSuspendAccessSub] = useState<Subscription | null>(null)
 
-  const { data: subscriptionsData } = useGetSubscriptionsQuery()
+  const { data: subscriptionsData, refetch } = useGetSubscriptionsQuery()
   const { data: orgsData } = useGetOrganisationsQuery()
 
   const subscriptions = useMemo(() => subscriptionsData?.data || [], [subscriptionsData])
@@ -101,6 +109,21 @@ export function SubscriptionsDataTable() {
   const handleExportPdf = () => {
     toast.info("PDF export coming soon")
   }
+
+  const handleAssignPlanSuccess = useCallback(() => {
+    setIsAssignPlanOpen(false)
+    refetch()
+  }, [refetch])
+
+  const handleChangePlanSuccess = useCallback(() => {
+    setChangePlanSub(null)
+    refetch()
+  }, [refetch])
+
+  const handleSuspendAccessSuccess = useCallback(() => {
+    setSuspendAccessSub(null)
+    refetch()
+  }, [refetch])
 
   const columns: ColumnDef<Subscription>[] = useMemo(
     () => [
@@ -172,6 +195,32 @@ export function SubscriptionsDataTable() {
           return new Date(row.original.expiryDate).toLocaleDateString()
         },
       },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const sub = row.original
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setChangePlanSub(sub)}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Change Plan
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSuspendAccessSub(sub)}>
+                  <Ban className="h-4 w-4 mr-2" />
+                  Suspend Access
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )
+        },
+      },
     ],
     [orgMap, router]
   )
@@ -207,6 +256,10 @@ export function SubscriptionsDataTable() {
           />
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="default" size="sm" onClick={() => setIsAssignPlanOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            Assign Plan
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
@@ -278,6 +331,59 @@ export function SubscriptionsDataTable() {
 
       {/* Pagination */}
       <DataTablePagination table={table} />
+
+      {/* Assign Plan Dialog */}
+      <Dialog open={isAssignPlanOpen} onOpenChange={setIsAssignPlanOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Assign Plan to Organisation</DialogTitle>
+            <DialogDescription>
+              Select an organisation and a plan to assign.
+            </DialogDescription>
+          </DialogHeader>
+          <AssignPlanDialog onSuccess={handleAssignPlanSuccess} onCancel={() => setIsAssignPlanOpen(false)} />
+        </DialogContent>
+      </Dialog>
+
+      {/* Change Plan Dialog */}
+      {changePlanSub && (
+        <Dialog open={!!changePlanSub} onOpenChange={(open) => !open && setChangePlanSub(null)}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Change Plan</DialogTitle>
+              <DialogDescription>
+                Select a new plan for this organisation.
+              </DialogDescription>
+            </DialogHeader>
+            <ChangePlanDialog
+              organisationId={changePlanSub.organisationId}
+              organisationName={orgMap.get(changePlanSub.organisationId)}
+              onSuccess={handleChangePlanSuccess}
+              onCancel={() => setChangePlanSub(null)}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Suspend Access Dialog */}
+      {suspendAccessSub && (
+        <Dialog open={!!suspendAccessSub} onOpenChange={(open) => !open && setSuspendAccessSub(null)}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Suspend Organisation Access</DialogTitle>
+              <DialogDescription>
+                Restrict usage for this organisation. Optionally provide a reason.
+              </DialogDescription>
+            </DialogHeader>
+            <SuspendAccessDialog
+              organisationId={suspendAccessSub.organisationId}
+              organisationName={orgMap.get(suspendAccessSub.organisationId)}
+              onSuccess={handleSuspendAccessSuccess}
+              onCancel={() => setSuspendAccessSub(null)}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

@@ -14,6 +14,7 @@ export interface OrganisationFilters {
   search?: string
   page?: number
   limit?: number
+  meta?: "true"
 }
 
 export const organisationApi = createApi({
@@ -28,8 +29,9 @@ export const organisationApi = createApi({
           search = "",
           page = 1,
           limit = 10,
+          meta = "true",
         } = filters as OrganisationFilters
-        let url = `/organisations?page=${page}&limit=${limit}`
+        let url = `/organisations?page=${page}&limit=${limit}&meta=${meta}`
         if (status) {
           url += `&status=${encodeURIComponent(status)}`
         }

@@ -5,7 +5,7 @@ import { PaymentsDataTable } from "./components/payments-data-table"
 
 export default function PaymentsPage() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
         title="Payments"
         subtitle="View payment history and transactions"

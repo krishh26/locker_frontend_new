@@ -3,13 +3,25 @@
  * These match the expected backend response structure
  */
 
+export interface AuditLogDetails {
+  action?: string
+  [key: string]: unknown
+}
+
 export interface AuditLog {
   id: number
-  timestamp: string
-  organisationId: number
-  action: string
-  user: string
-  details?: string
+  userId: number
+  userName: string
+  userEmail: string
+  actionType: string
+  entityType: string
+  entityId: number
+  organisationId: number | null
+  organisationName: string | null
+  centreId: number | null
+  details?: AuditLogDetails | string
+  ipAddress?: string
+  createdAt: string
 }
 
 export interface AuditLogListResponse {

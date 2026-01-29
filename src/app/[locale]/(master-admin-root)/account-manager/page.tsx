@@ -5,7 +5,7 @@ import { AccountManagerDataTable } from "./components/account-manager-data-table
 
 export default function AccountManagerPage() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
         title="Account Managers"
         subtitle="Manage account manager users and their organisation assignments"

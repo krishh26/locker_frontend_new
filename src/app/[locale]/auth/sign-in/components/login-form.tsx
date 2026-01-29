@@ -66,6 +66,7 @@ export function LoginForm({
     dispatch(setAuthError(null))
     try {
       const result = await login(values).unwrap()
+      console.log("🚀 ~ LoginForm ~ result:", result)
       dispatch(setCredentials(result))
       toast.success("Signed in successfully")
 

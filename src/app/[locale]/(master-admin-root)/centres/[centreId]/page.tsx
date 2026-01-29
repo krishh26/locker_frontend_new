@@ -9,7 +9,6 @@ import {
   useActivateCentreMutation,
   useSuspendCentreMutation,
 } from "@/store/api/centres/centreApi"
-import { useGetOrganisationQuery } from "@/store/api/organisations/organisationApi"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
@@ -43,16 +42,13 @@ export default function CentreDetailPage() {
   const user = useAppSelector(selectAuthUser)
 
   const { data: centreData, isLoading: isLoadingCentre, refetch: refetchCentre } = useGetCentreQuery(centreId)
-  const { data: orgData, isLoading: isLoadingOrg } = useGetOrganisationQuery(
-    centreData?.data?.organisationId || 0,
-    { skip: !centreData?.data?.organisationId }
-  )
   const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
   const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
 
   const centre = centreData?.data
-  const organisation = orgData?.data
+  const organisation = centre?.organisation
   const assignedAdmins = centre?.admins || []
+  console.log("🚀 ~ CentreDetailPage ~ assignedAdmins:", assignedAdmins)
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isAssignAdminDialogOpen, setIsAssignAdminDialogOpen] = useState(false)
@@ -110,11 +106,11 @@ export default function CentreDetailPage() {
     setIsAssignAdminDialogOpen(false)
   }, [])
 
-  const isAPILoading = isLoadingCentre || isLoadingOrg || isLoadingOrg
+  const isAPILoading = isLoadingCentre
 
   if (isAPILoading) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader title="Loading..." />
         <div className="text-center py-8 text-muted-foreground">
           Loading centre details...
@@ -125,7 +121,7 @@ export default function CentreDetailPage() {
 
   if (!centre) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="space-y-6 px-4 lg:px-6 pb-8">
         <PageHeader title="Centre Not Found" />
         <div className="text-center py-8 text-muted-foreground">
           The centre you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
@@ -135,10 +131,11 @@ export default function CentreDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <div className="flex items-center justify-between">
         <PageHeader
           title={centre.name}
+          showBackButton
           subtitle={`Centre ID: ${centre.id}`}
         />
         {canEdit && (
@@ -272,11 +269,7 @@ export default function CentreDetailPage() {
               </div>
             </CardHeader>
             <CardContent>
-              {isLoadingOrg ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  Loading admins...
-                </div>
-              ) : assignedAdmins.length === 0 ? (
+              {assignedAdmins.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   No admins assigned to this centre. Click &quot;Assign Admin&quot; to add admins.
                 </div>

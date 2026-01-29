@@ -45,6 +45,28 @@ import type { AuditLog } from "@/store/api/audit-logs/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 
+/** Format details for display (backend may return an object or string) */
+function formatDetails(details: AuditLog["details"]): string {
+  if (details == null) return "N/A"
+  if (typeof details === "string") return details
+  return JSON.stringify(details, null, 2)
+}
+
+/** Map backend AuditActionType enum to human-readable labels */
+const ACTION_TYPE_LABELS: Record<string, string> = {
+  system_action: "System Action",
+  account_manager_action: "Account Manager Action",
+  organisation_change: "Organisation Change",
+  access_change: "Access Change",
+  centre_change: "Centre Change",
+  subscription_change: "Subscription Change",
+  feature_change: "Feature Change",
+}
+
+function getActionTypeLabel(value: string): string {
+  return ACTION_TYPE_LABELS[value] ?? value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 export function AuditLogsDataTable() {
   const router = useRouter()
   const [sorting, setSorting] = useState<SortingState>([])
@@ -64,22 +86,21 @@ export function AuditLogsDataTable() {
   const organisations = useMemo(() => orgsData?.data || [], [orgsData])
   const orgMap = useMemo(() => new Map(organisations.map((org: { id: number; name: string }) => [org.id, org.name])), [organisations])
 
-  // Get unique actions for filter
+  // Get unique actions for filter (use actionType from backend)
   const uniqueActions = useMemo(() => {
-    return Array.from(new Set(logs.map((log: AuditLog) => log.action))) as string[]
+    return Array.from(new Set(logs.map((log: AuditLog) => log.actionType))) as string[]
   }, [logs])
 
   // Apply client-side filters (for user/details search)
   const filteredLogs = useMemo(() => {
     return logs.filter((log: AuditLog) => {
-      if (
-        globalFilter &&
-        !log.user.toLowerCase().includes(globalFilter.toLowerCase()) &&
-        !log.details?.toLowerCase().includes(globalFilter.toLowerCase())
-      ) {
-        return false
-      }
-      return true
+      if (!globalFilter) return true
+      const search = globalFilter.toLowerCase()
+      const detailsStr = formatDetails(log.details).toLowerCase()
+      return (
+        log.userName.toLowerCase().includes(search) ||
+        detailsStr.includes(search)
+      )
     })
   }, [logs, globalFilter])
 
@@ -91,11 +112,11 @@ export function AuditLogsDataTable() {
 
     const headers = ["Timestamp", "Organisation", "Action", "User", "Details"]
     const rows = filteredLogs.map((log: AuditLog) => [
-      new Date(log.timestamp).toLocaleString(),
-      orgMap.get(log.organisationId) || "Unknown",
-      log.action,
-      log.user,
-      log.details || "N/A",
+      new Date(log.createdAt).toLocaleString(),
+      log.organisationName ?? orgMap.get(log.organisationId ?? 0) ?? "—",
+      getActionTypeLabel(log.actionType),
+      log.userName,
+      formatDetails(log.details),
     ])
 
     const csvContent = [
@@ -120,13 +141,13 @@ export function AuditLogsDataTable() {
   const columns: ColumnDef<AuditLog>[] = useMemo(
     () => [
       {
-        accessorKey: "timestamp",
+        accessorKey: "createdAt",
         header: "Timestamp",
         cell: ({ row }) => {
           return (
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
-              {new Date(row.original.timestamp).toLocaleString()}
+              {new Date(row.original.createdAt).toLocaleString()}
             </div>
           )
         },
@@ -135,42 +156,58 @@ export function AuditLogsDataTable() {
         accessorKey: "organisationId",
         header: "Organisation",
         cell: ({ row }) => {
-          const orgName = orgMap.get(row.original.organisationId) || "Unknown"
+          const orgName =
+            row.original.organisationName ??
+            (row.original.organisationId != null
+              ? orgMap.get(row.original.organisationId)
+              : null) ??
+            "—"
+          const orgId = row.original.organisationId
+          if (orgId != null) {
+            return (
+              <Button
+                variant="link"
+                className="h-auto p-0 font-normal"
+                onClick={() => router.push(`/organisations/${orgId}`)}
+              >
+                <Building2 className="h-4 w-4 mr-2" />
+                {orgName}
+              </Button>
+            )
+          }
           return (
-            <Button
-              variant="link"
-              className="h-auto p-0 font-normal"
-              onClick={() =>
-                router.push(`/organisations/${row.original.organisationId}`)
-              }
-            >
-              <Building2 className="h-4 w-4 mr-2" />
+            <span className="text-muted-foreground">
+              <Building2 className="h-4 w-4 mr-2 inline" />
               {orgName}
-            </Button>
+            </span>
           )
         },
       },
       {
-        accessorKey: "action",
+        accessorKey: "actionType",
         header: "Action",
         cell: ({ row }) => {
           return (
             <Badge variant="outline" className="flex items-center gap-1">
               <FileText className="h-3 w-3" />
-              {row.original.action}
+              {getActionTypeLabel(row.original.actionType)}
             </Badge>
           )
         },
       },
       {
-        accessorKey: "user",
+        accessorKey: "userName",
         header: "User",
         cell: ({ row }) => {
           const log = row.original
           return (
             <div>
-              <div className="font-medium">{log.user}</div>
-              {/* TODO: Add userRole to AuditLog type if backend provides it */}
+              <div className="font-medium">{log.userName}</div>
+              {log.userEmail && (
+                <div className="text-muted-foreground text-xs">
+                  {log.userEmail}
+                </div>
+              )}
             </div>
           )
         },
@@ -180,8 +217,8 @@ export function AuditLogsDataTable() {
         header: "Details",
         cell: ({ row }) => {
           return (
-            <div className="max-w-md truncate">
-              {row.original.details || "N/A"}
+            <div className="max-w-md truncate font-mono text-xs">
+              {formatDetails(row.original.details)}
             </div>
           )
         },
@@ -244,7 +281,7 @@ export function AuditLogsDataTable() {
                 <SelectItem value="all">All Actions</SelectItem>
                 {uniqueActions.map((action: string) => (
                   <SelectItem key={action} value={action}>
-                    {action}
+                    {getActionTypeLabel(action)}
                   </SelectItem>
                 ))}
               </SelectContent>

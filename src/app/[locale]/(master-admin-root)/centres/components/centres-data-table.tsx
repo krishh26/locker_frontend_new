@@ -44,7 +44,6 @@ import {
   useActivateCentreMutation,
   useSuspendCentreMutation,
 } from "@/store/api/centres/centreApi"
-import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import type { Centre } from "@/store/api/centres/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -54,7 +53,6 @@ import { EditCentreForm } from "./edit-centre-form"
 export function CentresDataTable() {
   const router = useRouter()
   const { data: centresData, isLoading: centresLoading, refetch } = useGetCentresQuery()
-  const { data: orgsData } = useGetOrganisationsQuery()
   const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
   const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
 
@@ -66,8 +64,6 @@ export function CentresDataTable() {
   const [selectedCentre, setSelectedCentre] = useState<Centre | null>(null)
 
   const centres = centresData?.data || []
-  const organisations = useMemo(() => orgsData?.data || [], [orgsData])
-  const orgMap = useMemo(() => new Map(organisations.map((org: { id: number; name: string }) => [org.id, org.name])), [organisations])
 
   const handleExportCsv = () => {
     if (centres.length === 0) {
@@ -78,7 +74,7 @@ export function CentresDataTable() {
     const headers = ["Name", "Organisation", "Status"]
     const rows = centres.map((centre: Centre) => [
       centre.name,
-      orgMap.get(centre.organisationId) || "Unknown",
+      centre.organisation?.name ?? "Unknown",
       centre.status,
     ])
 
@@ -176,14 +172,15 @@ export function CentresDataTable() {
         accessorKey: "organisationId",
         header: "Organisation",
         cell: ({ row }) => {
-          const orgName = orgMap.get(row.original.organisationId) || "Unknown"
+          const org = row.original.organisation
+          const orgName = org?.name ?? "Unknown"
+          const orgId = row.original.organisationId ?? org?.id
+          if (orgId == null) return <span className="text-muted-foreground">{orgName}</span>
           return (
             <Button
               variant="link"
               className="h-auto p-0 font-normal"
-              onClick={() =>
-                router.push(`/organisations/${row.original.organisationId}`)
-              }
+              onClick={() => router.push(`/organisations/${orgId}`)}
             >
               <Building2 className="h-4 w-4 mr-2" />
               {orgName}
@@ -257,7 +254,7 @@ export function CentresDataTable() {
         },
       },
     ],
-    [orgMap, router, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
+    [router, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
   )
 
   const table = useReactTable({

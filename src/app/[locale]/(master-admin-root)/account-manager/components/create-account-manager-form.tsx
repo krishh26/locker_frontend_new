@@ -13,7 +13,7 @@ import { toast } from "sonner"
 
 const createAccountManagerSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
 })
@@ -112,7 +112,7 @@ export function CreateAccountManagerForm({
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter password (min 8 characters)"
+                placeholder="Enter password (min 6 characters)"
                 {...field}
                 className={form.formState.errors.password ? "border-destructive" : ""}
                 disabled={isLoading}

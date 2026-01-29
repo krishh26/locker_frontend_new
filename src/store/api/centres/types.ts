@@ -3,6 +3,8 @@
  * These match the expected backend response structure
  */
 
+import type { Organisation } from "@/store/api/organisations/types"
+
 export interface AdminUser {
   user_id: number
   first_name: string
@@ -17,6 +19,7 @@ export interface Centre {
   organisationId: number
   status: "active" | "suspended"
   address?: string
+  organisation?: Organisation
   admins?: AdminUser[]
 }
 

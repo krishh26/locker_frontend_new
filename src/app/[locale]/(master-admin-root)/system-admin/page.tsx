@@ -5,7 +5,7 @@ import { SystemAdminDataTable } from "./components/system-admin-data-table"
 
 export default function SystemAdminPage() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
         title="System Admins"
         subtitle="Manage master admin users"

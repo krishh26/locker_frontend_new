@@ -57,3 +57,103 @@ export interface CardDataResponse {
 
 export type CardData = Record<string, unknown>
 
+// New types based on CSV: Dashboard Module (6 APIs)
+export interface SystemSummary {
+  totalOrganisations: number
+  totalCentres: number
+  totalUsers: number
+  totalAccountManagers: number
+  activeSubscriptions: number
+  totalRevenue?: number
+}
+
+export interface SystemSummaryResponse {
+  status: boolean
+  message?: string
+  data: SystemSummary
+}
+
+export interface OrganisationMetrics {
+  total: number
+  active: number
+  suspended: number
+  byStatus: Record<string, number>
+}
+
+export interface OrganisationMetricsResponse {
+  status: boolean
+  message?: string
+  data: OrganisationMetrics
+}
+
+export interface UserMetrics {
+  total: number
+  byRole: {
+    MasterAdmin: number
+    AccountManager: number
+    Learner: number
+    [key: string]: number
+  }
+}
+
+export interface UserMetricsResponse {
+  status: boolean
+  message?: string
+  data: UserMetrics
+}
+
+export interface AccountManagerMetrics {
+  total: number
+  active: number
+  totalAssignedOrganisations: number
+  averageOrganisationsPerManager: number
+}
+
+export interface AccountManagerMetricsResponse {
+  status: boolean
+  message?: string
+  data: AccountManagerMetrics
+}
+
+export interface ActivityMetrics {
+  recentActions: number
+  actionsLast24Hours: number
+  actionsLast7Days: number
+  actionsLast30Days: number
+  topActions: Array<{
+    action: string
+    count: number
+  }>
+}
+
+export interface ActivityMetricsResponse {
+  status: boolean
+  message?: string
+  data: ActivityMetrics
+}
+
+export interface StatusOverview {
+  organisations: {
+    active: number
+    suspended: number
+  }
+  centres: {
+    active: number
+    suspended: number
+  }
+  users: {
+    active: number
+    inactive: number
+  }
+  subscriptions: {
+    active: number
+    expired: number
+  }
+}
+
+export interface StatusOverviewResponse {
+  status: boolean
+  message?: string
+  data: StatusOverview
+}
+

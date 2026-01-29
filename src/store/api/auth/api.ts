@@ -66,6 +66,8 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     (data.decoded as Record<string, unknown> | undefined) ??
     data
 
+  const assignedOrgIds = (user.assignedOrganisationIds as number[] | null | undefined) ?? null;
+
   const tokenUser: AuthUser = {
     id: (user.id as string | undefined) ?? (user.user_id as string | undefined),
     email: user.email as string | undefined,
@@ -78,12 +80,13 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     role: user.role as string | undefined,
     roles: user.roles as string[] | undefined,
     learner_id: (user.learner_id as number | undefined) ?? (user.learner_id as string | undefined),
+    assignedOrganisationIds: assignedOrgIds,
   }
 
   return {
     ...user,
     ...tokenUser,
-  }
+  } as AuthUser
 }
 
 export function toLoginResult(payload: LoginSuccessPayload): LoginResult {

@@ -70,6 +70,7 @@ const createUserSchema = (t: (key: string) => string) => z
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
+    organisation_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -102,6 +103,7 @@ const updateUserSchema = (t: (key: string) => string) => z
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")).optional(),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
+    organisation_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -177,6 +179,7 @@ export function UsersForm({ user }: UsersFormProps) {
           roles: [],
           line_manager_id: "",
           employer_ids: [],
+          organisation_ids: [],
           selectedCourseForAssignment: "",
           assignedLearners: [],
         }
@@ -192,6 +195,7 @@ export function UsersForm({ user }: UsersFormProps) {
           roles: [],
           line_manager_id: "",
           employer_ids: [],
+          organisation_ids: [],
           selectedCourseForAssignment: "",
           assignedLearners: [],
         },
@@ -209,6 +213,7 @@ export function UsersForm({ user }: UsersFormProps) {
         roles: user.roles,
         line_manager_id: user.line_manager?.user_id?.toString() || "",
         employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
+        organisation_ids: user.assigned_organisations?.map((org) => org.id) || [],
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -225,6 +230,7 @@ export function UsersForm({ user }: UsersFormProps) {
         roles: [],
         line_manager_id: "",
         employer_ids: [],
+        organisation_ids: [],
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -424,6 +430,11 @@ export function UsersForm({ user }: UsersFormProps) {
     try {
       let createdOrUpdatedUserId: number ;
 
+      // For Admin users, auto-populate organisation_ids from assigned_organisations if editing
+      // Admin organizations are managed via "Assign Admin to Organisation" API, not through this form
+      if (user?.assigned_organisations) {
+        values.organisation_ids = user.assigned_organisations.map(org => org.id);
+      } 
       if (isEditMode) {
         const updateData = values as UpdateUserFormValues;
         await updateUser({

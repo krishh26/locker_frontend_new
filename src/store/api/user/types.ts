@@ -54,6 +54,10 @@ export interface User {
       [key: string]: unknown;
     };
   }>;
+  assigned_organisations?: Array<{
+    id: number;
+    name: string;
+  }>;
 }
 
 export interface UserListResponse {
@@ -101,6 +105,7 @@ export interface CreateUserRequest {
   roles: string[];
   line_manager_id?: string;
   assigned_learner_ids?: number[];
+  organisation_ids?: number[];
 }
 
 export interface UpdateUserRequest {
@@ -113,6 +118,7 @@ export interface UpdateUserRequest {
   roles?: string[];
   line_manager_id?: string;
   assigned_learner_ids?: number[];
+  organisation_ids?: number[];
 }
 
 export interface UserResponse {

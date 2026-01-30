@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
-import { canAccessOrganisation, isMasterAdmin } from "@/utils/permissions"
+import { canAccessOrganisation, isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   useGetOrganisationQuery,
   useActivateOrganisationMutation,
@@ -45,7 +45,7 @@ export default function OrganisationDetailPage() {
 
   // Check access before rendering
   useEffect(() => {
-    if (!canAccessOrganisation(user, organisationId)) {
+    if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
       router.push("/errors/unauthorized")
     }
   }, [user, organisationId, router])
@@ -63,7 +63,7 @@ export default function OrganisationDetailPage() {
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isAssignOrgAdminDialogOpen, setIsAssignOrgAdminDialogOpen] = useState(false)
-  const canEdit = isMasterAdmin(user)
+  const canEdit = isMasterAdmin(user as unknown as UserWithOrganisations | null)
 
   const isAPILoading = isLoadingOrg || isLoadingSubscription || isLoadingPayments
 
@@ -119,7 +119,7 @@ export default function OrganisationDetailPage() {
     setIsAssignOrgAdminDialogOpen(false)
   }, [])
 
-  if (!canAccessOrganisation(user, organisationId)) {
+  if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
     return null // Will redirect in useEffect
   }
 

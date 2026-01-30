@@ -48,7 +48,7 @@ import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
-import { isMasterAdmin } from "@/utils/permissions"
+import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import { CreateOrganisationForm } from "./create-organisation-form"
 import { EditOrganisationForm } from "./edit-organisation-form"
 
@@ -75,8 +75,7 @@ export function OrganisationsDataTable() {
   const { data, isLoading } = useGetOrganisationsQuery(queryArgs)
   const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
   const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
-  const canCreateOrganisation = isMasterAdmin(user)
-  const canEditOrganisation = isMasterAdmin(user)
+  const canManageOrganisations = isMasterAdmin(user as UserWithOrganisations | null)
 
   const organisations = useMemo(() => data?.data ?? [], [data?.data])
   const meta = data?.meta_data
@@ -207,7 +206,7 @@ export function OrganisationsDataTable() {
                 <Eye className="h-4 w-4 mr-2" />
                 View
               </Button>
-              {canEditOrganisation && (
+              {canManageOrganisations && (
                 <>
                   <Button
                     variant="ghost"
@@ -250,7 +249,7 @@ export function OrganisationsDataTable() {
         },
       },
     ],
-    [canEditOrganisation, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
+    [canManageOrganisations, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
   )
 
   const table = useReactTable({
@@ -308,7 +307,7 @@ export function OrganisationsDataTable() {
           />
         </div>
         <div className="flex items-center gap-2">
-          {canCreateOrganisation && (
+          {canManageOrganisations && (
             <Button
               size="sm"
               onClick={() => setIsCreateDialogOpen(true)}

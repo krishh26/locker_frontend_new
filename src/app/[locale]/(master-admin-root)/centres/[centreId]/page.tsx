@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
-import { isMasterAdmin } from "@/utils/permissions"
+import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   useGetCentreQuery,
   useActivateCentreMutation,
@@ -48,11 +48,10 @@ export default function CentreDetailPage() {
   const centre = centreData?.data
   const organisation = centre?.organisation
   const assignedAdmins = centre?.admins || []
-  console.log("🚀 ~ CentreDetailPage ~ assignedAdmins:", assignedAdmins)
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isAssignAdminDialogOpen, setIsAssignAdminDialogOpen] = useState(false)
-  const canEdit = isMasterAdmin(user)
+  const canEdit = isMasterAdmin(user as unknown as UserWithOrganisations | null)
 
   const handleEditSuccess = useCallback(() => {
     setIsEditDialogOpen(false)

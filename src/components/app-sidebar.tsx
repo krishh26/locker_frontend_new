@@ -375,6 +375,11 @@ const data: {
           icon: Users,
         },
         {
+          title: 'Users',
+          url: '/users',
+          icon: Users,
+        },
+        {
           title: 'Feature Control',
           url: '/feature-control',
           icon: Settings,

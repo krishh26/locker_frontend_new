@@ -32,15 +32,15 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/users(?:\/|$)/,
-    roles: R.admin(),
+    roles: R.adminWith("AccountManager"),
   },
   {
     pattern: /^\/users\/add(?:\/|$)/,
-    roles: R.admin(),
+    roles: R.adminWith("AccountManager"),
   },
   {
     pattern: /^\/users\/edit\/\d+(?:\/|$)/,
-    roles: R.admin(),
+    roles: R.adminWith("AccountManager"),
   },
   {
     pattern: /^\/learners(?:\/|$)/,

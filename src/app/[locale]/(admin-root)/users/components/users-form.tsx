@@ -29,6 +29,8 @@ import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
 import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
+import { isAccountManager } from "@/utils/permissions";
+import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
 
 // Roles will be translated in component
 const roleValues = [
@@ -135,12 +137,13 @@ export function UsersForm({ user }: UsersFormProps) {
   const authUser = useAppSelector((state) => state.auth.user);
   const userRole = authUser?.role;
   const isEmployer = userRole === "Employer";
-  
+  const isAccountManagerUser = isAccountManager(authUser);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const isEditMode = !!user;
 
-  // Create roles with translated labels
+  // Create roles with translated labels; for Account Manager exclude MasterAdmin and AccountManager
   const roles = useMemo(() => {
     const roleKeyMap: Record<string, string> = {
       "Admin": "admin",
@@ -151,11 +154,14 @@ export function UsersForm({ user }: UsersFormProps) {
       "Line Manager": "lineManager",
       "Employer": "employer",
     };
-    return roleValues.map(value => ({
+    const values = isAccountManagerUser
+      ? roleValues.filter((r) => !["MasterAdmin", "AccountManager"].includes(r))
+      : roleValues;
+    return values.map((value) => ({
       value,
       label: t(`roles.${roleKeyMap[value]}`) || value,
     }));
-  }, [t]);
+  }, [t, isAccountManagerUser]);
 
   // EQA learner assignment state
   const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);
@@ -267,6 +273,24 @@ export function UsersForm({ user }: UsersFormProps) {
       value: employer.employer_id.toString(),
       label: employer.employer_name,
     })) || [];
+
+  // Organisations for Account Manager (create/edit user with org assignment)
+  const { data: organisationsData, isLoading: isLoadingOrganisations } = useGetOrganisationsQuery(
+    { page: 1, limit: 500, meta: "true" },
+    { skip: !isAccountManagerUser }
+  );
+  const organisationOptions: Option[] = useMemo(() => {
+    const list = organisationsData?.data ?? [];
+    const assignedIds = authUser?.assignedOrganisationIds;
+    const filtered =
+      assignedIds?.length && list.length
+        ? list.filter((org) => assignedIds.includes(org.id))
+        : list;
+    return filtered.map((org) => ({
+      value: org.id.toString(),
+      label: org.name,
+    }));
+  }, [organisationsData?.data, authUser?.assignedOrganisationIds]);
 
   // Fetch all courses for the course selection dropdown
   const { data: coursesData } = useCachedCoursesList({
@@ -875,6 +899,65 @@ export function UsersForm({ user }: UsersFormProps) {
                   {form.formState.errors.employer_ids && (
                     <p className="text-sm text-destructive">
                       {form.formState.errors.employer_ids.message}
+                    </p>
+                  )}
+                </>
+              );
+            }}
+          />
+        </div>
+      )}
+
+      {/* Organisations - Only show for Account Manager (create/edit) */}
+      {isAccountManagerUser && (
+        <div className="space-y-2">
+          <Label htmlFor="organisation_ids">{t("form.organisations")}</Label>
+          <Controller
+            name="organisation_ids"
+            control={form.control}
+            render={({ field }) => {
+              const selectedOptions: Option[] =
+                field.value?.map((id) => {
+                  const org = organisationsData?.data?.find((o) => o.id === Number(id));
+                  return {
+                    value: id.toString(),
+                    label: org?.name ?? id.toString(),
+                  };
+                }) ?? [];
+
+              return (
+                <>
+                  <MultipleSelector
+                    value={selectedOptions}
+                    options={organisationOptions}
+                    placeholder={
+                      isLoadingOrganisations
+                        ? t("form.loadingOrganisations")
+                        : t("form.organisationsPlaceholder")
+                    }
+                    onChange={(options: Option[]) => {
+                      const ids = options.map((opt: Option) => Number(opt.value));
+                      field.onChange(ids);
+                    }}
+                    disabled={isLoadingOrganisations}
+                    loadingIndicator={
+                      <div className="flex items-center justify-center p-2">
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      </div>
+                    }
+                    emptyIndicator={
+                      <p className="text-center text-sm text-muted-foreground">
+                        {t("form.noOrganisationsFound")}
+                      </p>
+                    }
+                    className={`w-full ${
+                      form.formState.errors.organisation_ids ? "border-destructive" : ""
+                    }`}
+                    direction="up"
+                  />
+                  {form.formState.errors.organisation_ids && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.organisation_ids.message}
                     </p>
                   )}
                 </>

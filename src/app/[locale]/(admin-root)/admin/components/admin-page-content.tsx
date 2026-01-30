@@ -61,7 +61,7 @@ export function AdminPageContent() {
         icon={Settings}
       />
 
-      {/* Admin Modules Grid */}
+      {/* Admin Management Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {adminModules.map((module) => {
           const Icon = module.icon;

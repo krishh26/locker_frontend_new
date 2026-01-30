@@ -213,7 +213,7 @@ const data: {
       label: 'Admin',
       items: [
         {
-          title: 'Admin Modules',
+          title: 'Admin Management',
           url: '/admin',
           icon: Settings,
         },

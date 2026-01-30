@@ -23,7 +23,7 @@ import { clearCredentials, setCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
-import { LanguageSwitcher } from "./language-switcher"
+// import { LanguageSwitcher } from "./language-switcher" // Hidden for now - CLIENT_FEEDBACK_AND_SOLUTIONS.md #24
 
 export function SiteHeader() {
   const [searchOpen, setSearchOpen] = React.useState(false)
@@ -126,7 +126,8 @@ export function SiteHeader() {
           <div className="ml-auto flex items-center gap-2">
             <ModeToggle variant="outline" />
             {isAuthenticated && <NotificationBell />}
-            <LanguageSwitcher />
+            {/* Language switcher hidden for now - see CLIENT_FEEDBACK_AND_SOLUTIONS.md #24 */}
+            {/* <LanguageSwitcher /> */}
             {/* Change Role - Only show for non-Learner users */}
             {isAuthenticated &&
               user &&

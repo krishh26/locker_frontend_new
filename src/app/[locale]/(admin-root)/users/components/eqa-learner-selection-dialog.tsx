@@ -66,12 +66,17 @@ export function EqaLearnerSelectionDialog({
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   // Fetch courses
-  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({
-    skip: !open
+  const { data: coursesData, isLoading: isLoadingCourses, isError: isCoursesError } = useCachedCoursesList({
+    skip: !open,
   });
 
   // Fetch learners for selected course
-  const { data: learnersData, isLoading: isLoadingLearners, isFetching: isFetchingLearners } = useGetLearnersListQuery(
+  const {
+    data: learnersData,
+    isLoading: isLoadingLearners,
+    isFetching: isFetchingLearners,
+    isError: isLearnersError,
+  } = useGetLearnersListQuery(
     {
       page,
       page_size: pageSize,
@@ -169,6 +174,10 @@ export function EqaLearnerSelectionDialog({
             <Label htmlFor="course-select">{t("course")}</Label>
             {isLoadingCourses ? (
               <Skeleton className="h-10 w-full" />
+            ) : isCoursesError ? (
+              <p className="text-sm text-destructive">{t("errorLoadingLearners")}</p>
+            ) : courses.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{t("noCoursesAvailable")}</p>
             ) : (
               <Select value={selectedCourseId} onValueChange={setSelectedCourseId}>
                 <SelectTrigger id="course-select" className="w-full">
@@ -216,6 +225,14 @@ export function EqaLearnerSelectionDialog({
               {isLoadingLearners || isFetchingLearners ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : isLearnersError ? (
+                <div className="flex items-center justify-center py-8 text-sm text-destructive">
+                  {t("errorLoadingLearners")}
+                </div>
+              ) : unassignedLearners.length === 0 && (totalItems === 0 || (learnersData?.data?.length ?? 0) === 0) ? (
+                <div className="flex items-center justify-center py-8 text-sm text-muted-foreground">
+                  {t("noLearnersInCourse")}
                 </div>
               ) : (
                 <>

@@ -22,6 +22,9 @@ import {
   MoreHorizontal,
   Edit,
   Trash2,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -213,20 +216,72 @@ export function UsersDataTable() {
   const columns: ColumnDef<User>[] = useMemo(
     () => [
       {
-        accessorKey: "name",
-        header: t("table.name"),
+        id: "name",
+        accessorFn: (row) => `${(row.first_name || "").trim()} ${(row.last_name || "").trim()}`.trim(),
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {t("table.name")}
+            {column.getIsSorted() === "desc" ? (
+              <ArrowDown className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowUp className="ml-2 h-4 w-4" />
+            ) : (
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        ),
         cell: ({ row }) => {
           const user = row.original;
           return `${user.first_name} ${user.last_name}`;
         },
+        enableSorting: true,
       },
       {
         accessorKey: "user_name",
-        header: t("table.username"),
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {t("table.username")}
+            {column.getIsSorted() === "desc" ? (
+              <ArrowDown className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowUp className="ml-2 h-4 w-4" />
+            ) : (
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        ),
+        enableSorting: true,
       },
       {
         accessorKey: "email",
-        header: t("table.email"),
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 cursor-pointer"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {t("table.email")}
+            {column.getIsSorted() === "desc" ? (
+              <ArrowDown className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowUp className="ml-2 h-4 w-4" />
+            ) : (
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        ),
+        enableSorting: true,
       },
       {
         accessorKey: "mobile",
@@ -346,14 +401,24 @@ export function UsersDataTable() {
               className="pl-9"
             />
           </div>
-          <Select value={roleFilter} onValueChange={setRoleFilter}>
+          <Select
+            value={roleFilter}
+            onValueChange={(value) => {
+              setRoleFilter(value);
+              setFilters((prev) => ({
+                ...prev,
+                page: 1,
+                role: value && value !== "all" ? value : undefined,
+              }));
+            }}
+          >
             <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder={t("table.filterByRole")} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("table.allRoles")}</SelectItem>
               {roles.map((role) => (
-                <SelectItem key={role.value} value={role.label}>
+                <SelectItem key={role.value} value={role.value}>
                   {role.label}
                 </SelectItem>
               ))}

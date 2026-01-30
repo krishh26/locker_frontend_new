@@ -119,14 +119,13 @@ export function AdminDashboard() {
       <div className="px-4 lg:px-6">
         <PageHeader
           title={dashboardTitle}
-          subtitle="Manage users, learners, courses, and system settings"
           icon={ShieldCheck}
         />
       </div>
 
       <div className="px-4 lg:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {dashboardCards.map((card) => {
+          {dashboardCards.filter((card) => card.id !== "overall_progress").map((card) => {
             // Get count from API or use default name
             const apiType: CardApiType | string | undefined = card.apiType || cardTypeMapping[card.title]
             // Map CardApiType to DashboardCounts key if it's a valid CardApiType

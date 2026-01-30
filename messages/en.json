@@ -208,6 +208,9 @@
       "learnersSelected": "learner selected",
       "learnersSelectedPlural": "learners selected",
       "pleaseSelectCourse": "Please select a course to view learners",
+      "noCoursesAvailable": "No courses available",
+      "noLearnersInCourse": "No learners in this course",
+      "errorLoadingLearners": "Error loading learners. Please try again.",
       "cancel": "Cancel",
       "save": "Save",
       "selectAll": "Select all",
@@ -370,7 +373,7 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Modules",
+    "pageTitle": "Admin Management",
     "pageSubtitle": "Manage all administrative functions and system configurations",
     "modules": {
       "userManagement": {

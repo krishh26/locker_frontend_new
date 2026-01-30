@@ -1,19 +1,20 @@
 // Mapping of card titles to API types (CardApiType format - used in query parameters)
 export const cardTypeMapping: { [key: string]: string } = {
-  "Active learner": "active_learners",
-  "Learners on bil": "suspended_learners",
-  "Overdue learners": "learners_over_due",
-  "Overdue progress review": "learner_plan_due",
-  "Learners due complete in next 30 days": "learners_course_due_in_next_30_days",
+  "Active Learner": "active_learners",
+  "Learners on BIL": "suspended_learners",
+  "Overdue Learners": "learners_over_due",
+  "Overdue Progress Reviews": "learner_plan_due",
+  "Learners due to complete within 30 days": "learners_course_due_in_next_30_days",
   "Learners off track": "assignments_without_mapped",
   "Unmapped evidences": "assignments_without_mapped",
-  "Due IQA action in next 30 days": "session_learner_action_due",
+  "Due IQA actions within 30 days": "session_learner_action_due",
   "Due session in next 7 days": "session_action_due_in_next_7_days",
-  "Overdue IQA action": "session_learner_action_overdue",
+  "Sessions due in next 7 days": "session_action_due_in_next_7_days",
+  "Overdue IQA Actions": "session_learner_action_overdue",
   "Outstanding IQA actions": "session_learner_action_overdue",
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
-  "Learner all a sampling plan": "learner_plan_due_in_next_7_days",
-  "Learner not all a sampling plan": "learner_plan_due_in_next_7_days",
+  "Learners on a Sampling Plan": "learner_plan_due_in_next_7_days",
+  "Learners not on a Sampling Plan": "learner_plan_due_in_next_7_days",
 }
 
 export interface AdminDashboardCardData {
@@ -28,7 +29,7 @@ export interface AdminDashboardCardData {
 export const dashboardCards: AdminDashboardCardData[] = [
   {
     id: "active_learner",
-    title: "Active learner",
+    title: "Active Learner",
     name: "30",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
@@ -36,7 +37,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "learners_on_bil",
-    title: "Learners on bil",
+    title: "Learners on BIL",
     name: "20",
     textColor: "rgba(195, 66, 63, 1)",
     radiusColor: "rgba(195, 66, 63, 0.1)",
@@ -44,7 +45,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "overdue_learners",
-    title: "Overdue learners",
+    title: "Overdue Learners",
     name: "10",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
@@ -52,7 +53,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "overdue_progress_review",
-    title: "Overdue progress review",
+    title: "Overdue Progress Reviews",
     name: "10",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
@@ -60,7 +61,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "learners_due_complete_30_days",
-    title: "Learners due complete in next 30 days",
+    title: "Learners due to complete within 30 days",
     name: "30",
     textColor: "rgba(63, 102, 52, 1)",
     radiusColor: "rgba(63, 102, 52, 0.1)",
@@ -98,7 +99,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "overdue_iqa_action",
-    title: "Overdue IQA action",
+    title: "Overdue IQA Actions",
     name: "10",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
@@ -114,7 +115,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "due_iqa_action_30_days",
-    title: "Due IQA action in next 30 days",
+    title: "Due IQA actions within 30 days",
     name: "10",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
@@ -122,7 +123,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "due_session_7_days",
-    title: "Due session in next 7 days",
+    title: "Sessions due in next 7 days",
     name: "20",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
@@ -130,7 +131,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "learner_all_sampling_plan",
-    title: "Learner all a sampling plan",
+    title: "Learners on a Sampling Plan",
     name: "20",
     textColor: "rgba(201, 100, 128, 1)",
     radiusColor: "rgba(201, 100, 128, 0.1)",
@@ -138,7 +139,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "learner_not_all_sampling_plan",
-    title: "Learner not all a sampling plan",
+    title: "Learners not on a Sampling Plan",
     name: "20",
     textColor: "rgba(63, 102, 52, 1)",
     radiusColor: "rgba(63, 102, 52, 0.1)",
@@ -146,7 +147,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "trainer_rag_report",
-    title: "Trainer rag report",
+    title: "Trainer RAG rating",
     name: "0",
     textColor: "rgba(3, 181, 170, 1)",
     radiusColor: "rgba(3, 181, 170, 0.1)",
@@ -182,14 +183,14 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "due_session",
-    title: "Due session",
+    title: "Sessions due today",
     name: "0",
     textColor: "rgba(195, 66, 63, 1)",
     radiusColor: "rgba(195, 66, 63, 0.1)",
   },
   {
     id: "sampling_due",
-    title: "Sampling due",
+    title: "Sampling due this month",
     name: "0",
     textColor: "rgba(155, 197, 61, 1)",
     radiusColor: "rgba(155, 197, 61, 0.1)",
@@ -210,7 +211,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
   },
   {
     id: "otj_up_to_date",
-    title: "OTJ up to date against expected",
+    title: "OTJ Off Track",
     name: "0",
     textColor: "rgba(63, 102, 52, 1)",
     radiusColor: "rgba(63, 102, 52, 0.1)",

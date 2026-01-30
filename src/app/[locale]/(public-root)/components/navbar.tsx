@@ -18,7 +18,7 @@ import {
 import { useTheme } from '@/hooks/use-theme'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { clearCredentials } from '@/store/slices/authSlice'
-import { LanguageSwitcher } from '@/components/language-switcher'
+// import { LanguageSwitcher } from '@/components/language-switcher' // Hidden for now - CLIENT_FEEDBACK_AND_SOLUTIONS.md #24
 
 const navigationItems = [
   { name: 'Home', href: '/' },
@@ -128,7 +128,8 @@ export function LandingNavbar() {
         {/* Desktop CTA */}
         <div className="hidden xl:flex items-center space-x-2">
           <ModeToggle variant="outline" />
-          <LanguageSwitcher />
+          {/* Language switcher hidden for now - see CLIENT_FEEDBACK_AND_SOLUTIONS.md #24 */}
+          {/* <LanguageSwitcher /> */}
           {isAuthenticated ? (
             <>
               <Button variant="outline" asChild className="cursor-pointer">
@@ -259,7 +260,8 @@ export function LandingNavbar() {
                           Dashboard
                         </Link>
                       </Button>
-                      <LanguageSwitcher />
+                      {/* Language switcher hidden for now - see CLIENT_FEEDBACK_AND_SOLUTIONS.md #24 */}
+                      {/* <LanguageSwitcher /> */}
                       <Button
                         variant="destructive"
                         size="lg"

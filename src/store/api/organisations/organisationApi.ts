@@ -4,7 +4,6 @@ import type {
   OrganisationListResponse,
   CreateOrganisationRequest,
   UpdateOrganisationRequest,
-  AssignAdminRequest,
 } from "./types"
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api"
 import { baseQuery } from "@/store/api/baseQuery"
@@ -149,6 +148,23 @@ export const organisationApi = createApi({
         return response
       },
     }),
+    setOrganisationAdmins: builder.mutation<
+      OrganisationResponse,
+      { id: number; user_ids: number[] }
+    >({
+      query: ({ id, user_ids }) => ({
+        url: `/organisations/${id}/admins`,
+        method: "PUT",
+        body: { user_ids },
+      }),
+      invalidatesTags: ["Organisation"],
+      transformResponse: (response: OrganisationResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
   }),
 })
 
@@ -161,4 +177,5 @@ export const {
   useSuspendOrganisationMutation,
   useAssignAdminToOrganisationMutation,
   useRemoveAdminFromOrganisationMutation,
+  useSetOrganisationAdminsMutation,
 } = organisationApi

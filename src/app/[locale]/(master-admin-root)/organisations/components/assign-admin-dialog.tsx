@@ -1,16 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Loader2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-  useAssignAdminToOrganisationMutation,
-  useRemoveAdminFromOrganisationMutation,
-} from "@/store/api/organisations/organisationApi"
+import { useSetOrganisationAdminsMutation } from "@/store/api/organisations/organisationApi"
 import { useGetUsersByRoleQuery } from "@/store/api/user/userApi"
 import type { AdminUser } from "@/store/api/organisations/types"
 import { toast } from "sonner"
@@ -30,34 +27,40 @@ export function AssignAdminDialog({
   onCancel,
 }: AssignAdminDialogProps) {
   const { data: usersData, isLoading: isLoadingUsers } = useGetUsersByRoleQuery("Admin")
-  const [assignAdmin, { isLoading: isAssigning }] = useAssignAdminToOrganisationMutation()
-  const [removeAdmin, { isLoading: isRemoving }] = useRemoveAdminFromOrganisationMutation()
+  const [setOrganisationAdmins, { isLoading: isSaving }] = useSetOrganisationAdminsMutation()
 
   const allAdmins = usersData?.data || []
-  const currentAdminIds = currentAdmins.map((admin) => admin.user_id)
+  const currentAdminIds = useMemo(
+    () => currentAdmins.map((admin) => admin.user_id),
+    [currentAdmins]
+  )
   const [selectedAdminIds, setSelectedAdminIds] = useState<number[]>(currentAdminIds)
-  const [processingIds, setProcessingIds] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     setSelectedAdminIds(currentAdminIds)
   }, [currentAdminIds])
 
-  const handleToggleAdmin = async (adminId: number) => {
-    const isCurrentlySelected = selectedAdminIds.includes(adminId)
-    setProcessingIds((prev) => new Set(prev).add(adminId))
+  const handleToggleAdmin = (adminId: number) => {
+    setSelectedAdminIds((prev) =>
+      prev.includes(adminId)
+        ? prev.filter((id) => id !== adminId)
+        : [...prev, adminId]
+    )
+  }
 
+  const hasChanges = useMemo(() => {
+    if (selectedAdminIds.length !== currentAdminIds.length) return true
+    const setCurrent = new Set(currentAdminIds)
+    return selectedAdminIds.some((id) => !setCurrent.has(id))
+  }, [selectedAdminIds, currentAdminIds])
+
+  const handleSave = async () => {
     try {
-      if (isCurrentlySelected) {
-        // Remove admin
-        await removeAdmin({ id: organisationId, user_id: adminId }).unwrap()
-        setSelectedAdminIds((prev) => prev.filter((id) => id !== adminId))
-        toast.success("Admin removed successfully")
-      } else {
-        // Assign admin
-        await assignAdmin({ id: organisationId, user_id: adminId }).unwrap()
-        setSelectedAdminIds((prev) => [...prev, adminId])
-        toast.success("Admin assigned successfully")
-      }
+      await setOrganisationAdmins({
+        id: organisationId,
+        user_ids: selectedAdminIds,
+      }).unwrap()
+      toast.success("Admins saved successfully")
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -65,20 +68,12 @@ export function AssignAdminDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : isCurrentlySelected
-          ? "Failed to remove admin"
-          : "Failed to assign admin"
+          : "Failed to save admins"
       toast.error(errorMessage)
-    } finally {
-      setProcessingIds((prev) => {
-        const next = new Set(prev)
-        next.delete(adminId)
-        return next
-      })
     }
   }
 
-  const isLoading = isLoadingUsers || isAssigning || isRemoving
+  const isLoading = isLoadingUsers || isSaving
 
   if (isLoadingUsers) {
     return (
@@ -94,7 +89,7 @@ export function AssignAdminDialog({
       <div className="space-y-2">
         <Label>Select Admins</Label>
         <p className="text-sm text-muted-foreground">
-          Choose which admins can manage this organisation. Click to assign or remove.
+          Choose which admins can manage this organisation. Click Save when done.
         </p>
       </div>
 
@@ -107,18 +102,16 @@ export function AssignAdminDialog({
           <div className="space-y-3">
             {allAdmins.map((admin) => {
               const isSelected = selectedAdminIds.includes(admin.user_id)
-              const isProcessing = processingIds.has(admin.user_id)
               return (
                 <div
                   key={admin.user_id}
                   className="flex items-center space-x-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer"
-                  onClick={() => !isProcessing && handleToggleAdmin(admin.user_id)}
+                  onClick={() => handleToggleAdmin(admin.user_id)}
                 >
                   <Checkbox
                     checked={isSelected}
-                    onCheckedChange={() => !isProcessing && handleToggleAdmin(admin.user_id)}
+                    onCheckedChange={() => handleToggleAdmin(admin.user_id)}
                     id={`admin-${admin.user_id}`}
-                    disabled={isProcessing}
                   />
                   <Label
                     htmlFor={`admin-${admin.user_id}`}
@@ -126,10 +119,7 @@ export function AssignAdminDialog({
                   >
                     {admin.first_name} {admin.last_name}
                   </Label>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">{admin.email}</span>
-                    {isProcessing && <Loader2 className="h-4 w-4 animate-spin" />}
-                  </div>
+                  <span className="text-sm text-muted-foreground">{admin.email}</span>
                 </div>
               )
             })}
@@ -139,12 +129,11 @@ export function AssignAdminDialog({
 
       {selectedAdminIds.length > 0 && (
         <div className="space-y-2">
-          <Label>Assigned Admins ({selectedAdminIds.length})</Label>
+          <Label>Selected Admins ({selectedAdminIds.length})</Label>
           <div className="flex flex-wrap gap-2">
             {selectedAdminIds.map((adminId) => {
               const admin = allAdmins.find((a) => a.user_id === adminId)
               if (!admin) return null
-              const isProcessing = processingIds.has(adminId)
               return (
                 <Badge
                   key={adminId}
@@ -152,17 +141,15 @@ export function AssignAdminDialog({
                   className="flex items-center gap-1"
                 >
                   {admin.first_name} {admin.last_name}
-                  {!isProcessing && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleToggleAdmin(adminId)
-                      }}
-                      className="ml-1 hover:bg-destructive/20 rounded-full p-0.5"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleToggleAdmin(adminId)
+                    }}
+                    className="ml-1 hover:bg-destructive/20 rounded-full p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
                 </Badge>
               )
             })}
@@ -179,6 +166,21 @@ export function AssignAdminDialog({
           className="w-full sm:w-auto"
         >
           Close
+        </Button>
+        <Button
+          type="button"
+          onClick={handleSave}
+          disabled={isLoading || !hasChanges}
+          className="w-full sm:w-auto"
+        >
+          {isSaving ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            "Save"
+          )}
         </Button>
       </div>
     </div>

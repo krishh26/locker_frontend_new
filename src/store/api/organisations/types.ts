@@ -18,6 +18,7 @@ export interface OrganisationCentre {
   organisation_id?: number
   organisationId?: number
   status: "active" | "suspended"
+  admins?: AdminUser[]
 }
 
 export interface Organisation {

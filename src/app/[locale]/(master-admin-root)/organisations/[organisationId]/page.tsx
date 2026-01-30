@@ -36,7 +36,6 @@ import { useEffect, useState, useCallback } from "react"
 import { toast } from "sonner"
 import { EditOrganisationForm } from "../components/edit-organisation-form"
 import { AssignAdminDialog } from "../components/assign-admin-dialog"
-import { useGetUsersByRoleQuery } from "@/store/api/user/userApi"
 
 export default function OrganisationDetailPage() {
   const params = useParams()
@@ -54,7 +53,6 @@ export default function OrganisationDetailPage() {
   const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
   const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
   const { data: paymentsData, isLoading: isLoadingPayments } = useGetPaymentsQuery({ organisationId })
-  const { data: adminsData, isLoading: isLoadingAdmins } = useGetUsersByRoleQuery("Admin")
   const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
   const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
 
@@ -62,13 +60,12 @@ export default function OrganisationDetailPage() {
   const centres = organisation?.centres ?? []
   const subscription = subscriptionData?.data
   const payments = paymentsData?.data || []
-  const allAdmins = adminsData?.data || []
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [isAssignAdminDialogOpen, setIsAssignAdminDialogOpen] = useState(false)
+  const [isAssignOrgAdminDialogOpen, setIsAssignOrgAdminDialogOpen] = useState(false)
   const canEdit = isMasterAdmin(user)
 
-  const isAPILoading = isLoadingOrg || isLoadingSubscription || isLoadingPayments || isLoadingAdmins
+  const isAPILoading = isLoadingOrg || isLoadingSubscription || isLoadingPayments
 
   const handleEditSuccess = useCallback(() => {
     setIsEditDialogOpen(false)
@@ -113,13 +110,13 @@ export default function OrganisationDetailPage() {
     }
   }, [organisation, suspendOrganisation, refetchOrg])
 
-  const handleAssignAdminSuccess = useCallback(() => {
-    setIsAssignAdminDialogOpen(false)
+  const handleAssignOrgAdminSuccess = useCallback(() => {
+    setIsAssignOrgAdminDialogOpen(false)
     refetchOrg()
   }, [refetchOrg])
 
-  const handleAssignAdminCancel = useCallback(() => {
-    setIsAssignAdminDialogOpen(false)
+  const handleAssignOrgAdminCancel = useCallback(() => {
+    setIsAssignOrgAdminDialogOpen(false)
   }, [])
 
   if (!canAccessOrganisation(user, organisationId)) {
@@ -311,38 +308,34 @@ export default function OrganisationDetailPage() {
                 {canEdit && (
                   <Button
                     size="sm"
-                    onClick={() => setIsAssignAdminDialogOpen(true)}
+                    onClick={() => setIsAssignOrgAdminDialogOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Assign Admin
+                    Assign Admins to Organisation
                   </Button>
                 )}
               </div>
             </CardHeader>
             <CardContent>
-              {isLoadingAdmins ? (
+              {!organisation?.admins?.length ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  Loading admins...
-                </div>
-              ) : allAdmins.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  No admin users found. Create admin users first.
+                  No admins assigned to this organisation.
                 </div>
               ) : (
                 <>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Manage which admins can access this organisation. Use the dialog to assign or remove admins.
+                    Admins assigned to this organisation.
                   </p>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Name</TableHead>
+                        <TableHead>Admin Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Roles</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {allAdmins.map((admin) => (
+                      {(organisation.admins ?? []).map((admin) => (
                         <TableRow key={admin.user_id}>
                           <TableCell className="font-medium">
                             {admin.first_name} {admin.last_name}
@@ -350,7 +343,7 @@ export default function OrganisationDetailPage() {
                           <TableCell>{admin.email}</TableCell>
                           <TableCell>
                             <div className="flex gap-1 flex-wrap">
-                              {admin.roles.map((role) => (
+                              {(admin.roles ?? []).map((role) => (
                                 <Badge key={role} variant="secondary">
                                   {role}
                                 </Badge>
@@ -489,21 +482,21 @@ export default function OrganisationDetailPage() {
         </Dialog>
       )}
 
-      {/* Assign Admin Dialog */}
+      {/* Assign Admins to Organisation Dialog */}
       {organisation && (
-        <Dialog open={isAssignAdminDialogOpen} onOpenChange={setIsAssignAdminDialogOpen}>
+        <Dialog open={isAssignOrgAdminDialogOpen} onOpenChange={setIsAssignOrgAdminDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Assign Admins to Organisation</DialogTitle>
               <DialogDescription>
-                Select which admins can manage this organisation. Click to assign or remove.
+                Select which admins can manage this organisation. Click Save when done.
               </DialogDescription>
             </DialogHeader>
             <AssignAdminDialog
               organisationId={organisation.id}
               currentAdmins={organisation.admins || []}
-              onSuccess={handleAssignAdminSuccess}
-              onCancel={handleAssignAdminCancel}
+              onSuccess={handleAssignOrgAdminSuccess}
+              onCancel={handleAssignOrgAdminCancel}
             />
           </DialogContent>
         </Dialog>

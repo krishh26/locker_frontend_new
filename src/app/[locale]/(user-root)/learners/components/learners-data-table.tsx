@@ -85,6 +85,8 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
+import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 
 const statusOptions = [
   "Awaiting Induction",
@@ -146,6 +148,18 @@ export function LearnersDataTable() {
   const [csvUploadOpen, setCsvUploadOpen] = useState(false);
 
   // Client-side pagination state removed - all roles now use server-side pagination
+
+  // Fetch courses and employers for filters
+  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({
+    skip: isEqa, // Skip for EQA role
+  });
+  const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
+    { page: 1, page_size: 1000 },
+    { skip: !isAdmin || isEqa } // Only fetch for Admin, not EQA
+  );
+
+  const courseOptions = coursesData?.data ?? [];
+  const employerOptions = employersData?.data ?? [];
 
   // Unified filters for all roles using the same API with server-side pagination and meta=true
   const unifiedFilters: LearnerFilters = useMemo(() => {
@@ -833,7 +847,17 @@ export function LearnersDataTable() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Courses</SelectItem>
-                {/* TODO: Add course options from API */}
+                {isLoadingCourses ? (
+                  <SelectItem value="loading" disabled>
+                    Loading courses...
+                  </SelectItem>
+                ) : (
+                  courseOptions.map((course) => (
+                    <SelectItem key={course.course_id} value={String(course.course_id)}>
+                      {course.course_name}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           )}
@@ -845,7 +869,17 @@ export function LearnersDataTable() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Employers</SelectItem>
-                {/* TODO: Add employer options from API */}
+                {isLoadingEmployers ? (
+                  <SelectItem value="loading" disabled>
+                    Loading employers...
+                  </SelectItem>
+                ) : (
+                  employerOptions.map((employer) => (
+                    <SelectItem key={employer.employer_id} value={String(employer.employer_id)}>
+                      {employer.employer_name}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           )}

@@ -95,6 +95,28 @@ export const courseApi = createApi({
         return response;
       },
     }),
+    deleteCourse: builder.mutation<{ message: string; status: boolean }, number>({
+      query: (id) => ({
+        url: `/course/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Course"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Clear courses cache after successful deletion
+          dispatch(clearCoursesList());
+        } catch {
+          // Do nothing on error, let the error be handled by the mutation
+        }
+      },
+      transformResponse: (response: { message: string; status: boolean }) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
     getGatewayCourses: builder.query<CourseListResponse, void>({
       query: () => `/course/list?limit=100&core_type=Gateway`,
       providesTags: ["Course"],
@@ -130,6 +152,7 @@ export const {
   useGetCourseQuery,
   useCreateCourseMutation,
   useUpdateCourseMutation,
+  useDeleteCourseMutation,
   useGetGatewayCoursesQuery,
   useGetStandardCoursesQuery,
 } = courseApi;

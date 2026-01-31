@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail } from "lucide-react"
 import { toast } from "sonner"
+import { useSendEmailMutation } from "@/store/api/user/userApi"
+import { useAppSelector } from "@/store/hooks"
 
 interface EmailDialogProps {
   open: boolean
@@ -29,9 +31,10 @@ export function EmailDialog({
   learnerEmail,
   learnerName,
 }: EmailDialogProps) {
+  const user = useAppSelector((state) => state.auth.user)
   const [subject, setSubject] = useState("")
   const [message, setMessage] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [sendEmail, { isLoading }] = useSendEmailMutation()
 
   useEffect(() => {
     if (open) {
@@ -46,20 +49,28 @@ export function EmailDialog({
       return
     }
 
-    setIsLoading(true)
+    if (!learnerEmail) {
+      toast.error("Learner email is not available")
+      return
+    }
+
     try {
-      // TODO: Implement actual email sending API call
-      // await dispatch(sendMail({ email: learnerEmail, subject, message }))
+      await sendEmail({
+        email: learnerEmail,
+        subject,
+        message,
+        adminName: user?.user_name || `${user?.first_name} ${user?.last_name}` || "Admin",
+      }).unwrap()
       
       toast.success("Email sent successfully")
       onOpenChange(false)
       setSubject("")
       setMessage("")
-    } catch (error) {
-      toast.error("Failed to send email")
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string; error?: string } }
+      const errorMessage = err?.data?.message ?? err?.data?.error
+      toast.error(errorMessage || "Failed to send email")
       console.error("Failed to send email:", error)
-    } finally {
-      setIsLoading(false)
     }
   }
 

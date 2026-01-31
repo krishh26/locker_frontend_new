@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCourseType } from "@/store/slices/courseBuilderSlice";
+import { useGetCoursesQuery, useDeleteCourseMutation } from "@/store/api/course/courseApi";
 import {
   type ColumnDef,
   type SortingState,
@@ -60,9 +61,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  useGetCoursesQuery,
-} from "@/store/api/course/courseApi";
 import type { Course, CourseFilters } from "@/store/api/course/types";
 import { CourseUploadDialog } from "./course-upload-dialog";
 import { toast } from "sonner";
@@ -104,6 +102,7 @@ export function CourseBuilderDataTable() {
   const [createCourseMenuOpen, setCreateCourseMenuOpen] = useState(false);
 
   const { data, isLoading } = useGetCoursesQuery(filters);
+  const [deleteCourse,] = useDeleteCourseMutation();
 
   const handleSearch = useCallback(() => {
     setFilters((prev) => ({
@@ -161,10 +160,16 @@ export function CourseBuilderDataTable() {
 
   const handleDeleteConfirm = async () => {
     if (!courseToDelete) return;
-    // TODO: Implement delete mutation when available
-    toast.info("Delete functionality will be implemented");
-    setDeleteDialogOpen(false);
-    setCourseToDelete(null);
+    try {
+      await deleteCourse(courseToDelete.course_id).unwrap();
+      toast.success("Course deleted successfully");
+      setDeleteDialogOpen(false);
+      setCourseToDelete(null);
+    } catch (error: unknown) {
+      const err = error as { data?: { message?: string; error?: string } };
+      const errorMessage = err?.data?.message ?? err?.data?.error;
+      toast.error(errorMessage || "Failed to delete course");
+    }
   };
 
   const handlePageChange = (page: number) => {

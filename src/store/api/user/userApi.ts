@@ -129,6 +129,19 @@ export const userApi = createApi({
         return response;
       },
     }),
+    sendEmail: builder.mutation<ApiResponse, { email: string; subject: string; message: string; adminName: string }>({
+      query: (body) => ({
+        url: "/user/mail",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: ApiResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
   }),
 });
 
@@ -142,5 +155,6 @@ export const {
   useGetUserQuery,
   useLazyGetUserQuery,
   useSendPasswordResetEmailMutation,
+  useSendEmailMutation,
 } = userApi;
 

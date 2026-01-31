@@ -38,6 +38,8 @@ import {
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
 import type { TimeLogEntry, TimeLogCreateRequest } from "@/store/api/time-log/types";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
+import { useGetUsersQuery } from "@/store/api/user/userApi";
 
 const timeLogFormSchema = z.object({
   activity_date: z.string().min(1, "Activity date is required"),
@@ -103,6 +105,16 @@ export function TimeLogFormDialog({
 
   const [createTimeLog, { isLoading: isCreating }] = useCreateTimeLogMutation();
   const [updateTimeLog, { isLoading: isUpdating }] = useUpdateTimeLogMutation();
+
+  // Fetch courses and trainers
+  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({ skip: !open });
+  const { data: usersData, isLoading: isLoadingUsers } = useGetUsersQuery(
+    { page: 1, page_size: 1000, role: "Trainer" },
+    { skip: !open }
+  );
+
+  const courses = coursesData?.data || [];
+  const trainers = usersData?.data || [];
 
   const isLoading = isCreating || isUpdating;
 
@@ -240,18 +252,8 @@ export function TimeLogFormDialog({
     "Furloughed",
   ];
 
-  // TODO: Fetch courses and trainers from API
-  const courses = [
-    { id: "1", course_id: "1", course_name: "Course 1", units: [] },
-    { id: "2", course_id: "2", course_name: "Course 2", units: [] },
-  ];
-  const trainers = [
-    { id: "1", user_id: "1", user_name: "Trainer 1" },
-    { id: "2", user_id: "2", user_name: "Trainer 2" },
-  ];
-
   const selectedCourse = courses.find(
-    (c) => c.course_id === form.watch("course_id")
+    (c) => String(c.course_id) === form.watch("course_id")
   );
   const selectedUnits = form.watch("unit") || [];
 
@@ -329,11 +331,17 @@ export function TimeLogFormDialog({
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="none">None</SelectItem>
-                        {courses.map((course) => (
-                          <SelectItem key={course.course_id} value={course.course_id}>
-                            {course.course_name}
+                        {isLoadingCourses ? (
+                          <SelectItem value="loading" disabled>
+                            Loading courses...
                           </SelectItem>
-                        ))}
+                        ) : (
+                          courses.map((course) => (
+                            <SelectItem key={course.course_id} value={String(course.course_id)}>
+                              {course.course_name}
+                            </SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -420,11 +428,17 @@ export function TimeLogFormDialog({
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="none">None</SelectItem>
-                        {trainers.map((trainer) => (
-                          <SelectItem key={trainer.user_id} value={trainer.user_id}>
-                            {trainer.user_name}
+                        {isLoadingUsers ? (
+                          <SelectItem value="loading" disabled>
+                            Loading trainers...
                           </SelectItem>
-                        ))}
+                        ) : (
+                          trainers.map((trainer) => (
+                            <SelectItem key={trainer.user_id} value={String(trainer.user_id)}>
+                              {trainer.user_name || `${trainer.first_name} ${trainer.last_name}`}
+                            </SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />

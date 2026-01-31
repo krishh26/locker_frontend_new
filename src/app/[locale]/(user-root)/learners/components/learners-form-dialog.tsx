@@ -32,6 +32,7 @@ import type {
   CreateLearnerRequest,
   UpdateLearnerRequest,
 } from "@/store/api/learner/types";
+import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 import { toast } from "sonner";
 
 // Funding body options from constants
@@ -61,6 +62,8 @@ const fundingBodies = [
   "Student Loan",
 ];
 
+const EMPLOYER_PLACEHOLDER_VALUE = "__none__";
+
 const createLearnerSchema = z
   .object({
     first_name: z.string().min(1, "First name is required"),
@@ -70,7 +73,9 @@ const createLearnerSchema = z
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
     mobile: z.string().min(1, "Mobile number is required"),
-    employer_id: z.string().min(1, "Employer is required"),
+    employer_id: z.string().refine((v) => v && v !== EMPLOYER_PLACEHOLDER_VALUE, {
+      message: "Employer is required",
+    }),
     funding_body: z.string().min(1, "Funding body is required"),
     national_ins_no: z.string().optional(),
     job_title: z.string().min(1, "Job title is required"),
@@ -87,7 +92,12 @@ const updateLearnerSchema = z.object({
   user_name: z.string().min(1, "Username is required").optional(),
   email: z.string().email("Invalid email address").min(1, "Email is required").optional(),
   mobile: z.string().min(1, "Mobile number is required").optional(),
-  employer_id: z.string().min(1, "Employer is required").optional(),
+  employer_id: z
+    .string()
+    .optional()
+    .refine((v) => !v || v !== EMPLOYER_PLACEHOLDER_VALUE, {
+      message: "Employer is required",
+    }),
   funding_body: z.string().min(1, "Funding body is required").optional(),
   national_ins_no: z.string().optional(),
   job_title: z.string().min(1, "Job title is required").optional(),
@@ -117,6 +127,12 @@ export function LearnersFormDialog({
   const [createLearner, { isLoading: isCreating }] = useCreateLearnerMutation();
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation();
 
+  const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
+    { page: 1, page_size: 100 },
+    { skip: !open }
+  );
+  const employerOptions = employersData?.data ?? [];
+
   const form = useForm<CreateLearnerFormValues | UpdateLearnerFormValues>({
     resolver: zodResolver(isEditMode ? updateLearnerSchema : createLearnerSchema),
     mode: "onChange",
@@ -127,7 +143,7 @@ export function LearnersFormDialog({
           user_name: "",
           email: "",
           mobile: "",
-          employer_id: "",
+          employer_id: EMPLOYER_PLACEHOLDER_VALUE,
           funding_body: "",
           national_ins_no: "",
           job_title: "",
@@ -141,7 +157,7 @@ export function LearnersFormDialog({
           password: "",
           confirmPassword: "",
           mobile: "",
-          employer_id: "",
+          employer_id: EMPLOYER_PLACEHOLDER_VALUE,
           funding_body: "",
           national_ins_no: "",
           job_title: "",
@@ -157,7 +173,12 @@ export function LearnersFormDialog({
         user_name: learner.user_name,
         email: learner.email,
         mobile: learner.mobile || "",
-        employer_id: learner.employer_id?.toString() || "",
+        employer_id:
+          learner.employer_id != null
+            ? typeof learner.employer_id === "object"
+              ? String(learner.employer_id.employer_id)
+              : String(learner.employer_id)
+            : EMPLOYER_PLACEHOLDER_VALUE,
         funding_body: learner.funding_body || "",
         national_ins_no: learner.national_ins_no || "",
         job_title: learner.job_title || "",
@@ -172,7 +193,7 @@ export function LearnersFormDialog({
         password: "",
         confirmPassword: "",
         mobile: "",
-        employer_id: "",
+        employer_id: EMPLOYER_PLACEHOLDER_VALUE,
         funding_body: "",
         national_ins_no: "",
         job_title: "",
@@ -462,16 +483,33 @@ export function LearnersFormDialog({
                 control={form.control}
                 render={({ field }) => (
                   <>
-                    <Select value={field.value} onValueChange={field.onChange}>
+                    <Select
+                      value={field.value || EMPLOYER_PLACEHOLDER_VALUE}
+                      onValueChange={field.onChange}
+                      disabled={isLoadingEmployers}
+                    >
                       <SelectTrigger
                         id="employer_id"
                         className={form.formState.errors.employer_id ? "border-destructive" : ""}
                       >
-                        <SelectValue placeholder="Select employer" />
+                        <SelectValue
+                          placeholder={
+                            isLoadingEmployers ? "Loading employers..." : "Select employer"
+                          }
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">Select Employer</SelectItem>
-                        {/* TODO: Add employer options from API */}
+                        <SelectItem value={EMPLOYER_PLACEHOLDER_VALUE}>
+                          Select employer
+                        </SelectItem>
+                        {employerOptions.map((employer) => (
+                          <SelectItem
+                            key={employer.employer_id}
+                            value={String(employer.employer_id)}
+                          >
+                            {employer.employer_name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     {form.formState.errors.employer_id && (

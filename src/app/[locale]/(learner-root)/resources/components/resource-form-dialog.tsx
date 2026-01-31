@@ -32,10 +32,11 @@ import { Upload } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateResourceMutation } from "@/store/api/resources/resourcesApi";
+import { useCreateResourceMutation, useUpdateResourceMutation } from "@/store/api/resources/resourcesApi";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import type { Resource } from "@/store/api/resources/types";
 
 const resourceFormSchema = z.object({
   course_id: z.string().min(1, {
@@ -55,6 +56,18 @@ const resourceFormSchema = z.object({
     })
     .refine((file) => file.size <= 10 * 1024 * 1024, {
       message: "File size must be less than 10MB.",
+    })
+    .optional(),
+});
+
+// Create mode requires file, edit mode doesn't
+const createResourceSchema = resourceFormSchema.extend({
+  file: z
+    .instanceof(File, {
+      message: "Please upload a file.",
+    })
+    .refine((file) => file.size <= 10 * 1024 * 1024, {
+      message: "File size must be less than 10MB.",
     }),
 });
 
@@ -65,6 +78,8 @@ interface ResourceFormDialogProps {
   trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  resource?: Resource | null;
+  mode?: "create" | "edit";
 }
 
 export function ResourceFormDialog({ 
@@ -72,11 +87,16 @@ export function ResourceFormDialog({
   trigger,
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
+  resource,
+  mode = "create",
 }: ResourceFormDialogProps) {
+  const isEditMode = mode === "edit" && !!resource;
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = controlledOnOpenChange || setInternalOpen;
-  const [createResource, { isLoading }] = useCreateResourceMutation();
+  const [createResource, { isLoading: isCreating }] = useCreateResourceMutation();
+  const [updateResource, { isLoading: isUpdating }] = useUpdateResourceMutation();
+  const isLoading = isCreating || isUpdating;
   
   // Fetch courses for dropdown
   const { data: coursesResponse, isLoading: isLoadingCourses } = useCachedCoursesList();
@@ -84,36 +104,85 @@ export function ResourceFormDialog({
   const courses = coursesResponse?.data || [];
 
   const form = useForm<ResourceFormValues>({
-    resolver: zodResolver(resourceFormSchema),
+    resolver: zodResolver(isEditMode ? resourceFormSchema : createResourceSchema),
     defaultValues: {
-      course_id: "",
-      name: "",
-      description: "",
-      job_type: "On",
-      resource_type: "PDF",
-      hours: 0,
-      minute: 0,
+      course_id: (resource?.course_id ? String(resource.course_id) : "") as string,
+      name: resource?.name ?? "",
+      description: resource?.description ?? "",
+      job_type: (resource?.job_type as "On" | "Off") ?? "On",
+      resource_type: (resource?.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
+      hours: Number(resource?.hours ?? 0),
+      minute: Number(resource?.minute ?? 0),
     },
+  });
+
+  // Reset form when resource changes or dialog opens
+  useState(() => {
+    if (open && isEditMode && resource) {
+      form.reset({
+        course_id: String(resource.course_id ?? ""),
+        name: resource.name ?? "",
+        description: resource.description ?? "",
+        job_type: (resource.job_type as "On" | "Off") ?? "On",
+        resource_type: (resource.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
+        hours: Number(resource.hours ?? 0),
+        minute: Number(resource.minute ?? 0),
+      });
+    }
   });
 
   const fileRef = form.register("file");
 
   async function onSubmit(data: ResourceFormValues) {
     try {
-      const formData = new FormData();
-      formData.append("course_id", data.course_id);
-      formData.append("name", data.name || data.file.name);
-      if (data.description) {
-        formData.append("description", data.description);
-      }
-      formData.append("job_type", data.job_type);
-      formData.append("resource_type", data.resource_type);
-      formData.append("hours", String(data.hours ?? 0));
-      formData.append("minute", String(data.minute ?? 0));
-      formData.append("file", data.file);
+      if (isEditMode && resource) {
+        // Update existing resource
+        const updateData: Record<string, unknown> = {
+          course_id: data.course_id,
+          name: data.name,
+          description: data.description || "",
+          job_type: data.job_type,
+          resource_type: data.resource_type,
+          hours: String(data.hours ?? 0),
+          minute: String(data.minute ?? 0),
+        };
+        
+        // If a new file is provided, use FormData
+        if (data.file) {
+          const formData = new FormData();
+          Object.entries(updateData).forEach(([key, value]) => {
+            formData.append(key, String(value));
+          });
+          formData.append("file", data.file);
+          await updateResource({ 
+            id: String(resource.resource_id || resource.id), 
+            data: formData as unknown as Record<string, unknown> 
+          }).unwrap();
+        } else {
+          await updateResource({ 
+            id: String(resource.resource_id || resource.id), 
+            data: updateData 
+          }).unwrap();
+        }
+        toast.success("Resource updated successfully");
+      } else {
+        // Create new resource
+        const formData = new FormData();
+        formData.append("course_id", data.course_id);
+        formData.append("name", data.name || data.file!.name);
+        if (data.description) {
+          formData.append("description", data.description);
+        }
+        formData.append("job_type", data.job_type);
+        formData.append("resource_type", data.resource_type);
+        formData.append("hours", String(data.hours ?? 0));
+        formData.append("minute", String(data.minute ?? 0));
+        formData.append("file", data.file!);
 
-      await createResource(formData as FormData).unwrap();
-      toast.success("Resource created successfully");
+        await createResource(formData as FormData).unwrap();
+        toast.success("Resource created successfully");
+      }
+      
       form.reset({
         course_id: "",
         name: "",
@@ -130,7 +199,7 @@ export function ResourceFormDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { error?: string } }).data?.error
           : undefined;
-      toast.error(errorMessage || "Failed to create resource");
+      toast.error(errorMessage || `Failed to ${isEditMode ? "update" : "create"} resource`);
     }
   }
 
@@ -139,9 +208,11 @@ export function ResourceFormDialog({
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create New Resource</DialogTitle>
+          <DialogTitle>{isEditMode ? "Edit Resource" : "Create New Resource"}</DialogTitle>
           <DialogDescription>
-            Upload a new learning resource. Click save when you&apos;re done.
+            {isEditMode 
+              ? "Update the resource details. Click save when you're done." 
+              : "Upload a new learning resource. Click save when you're done."}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -189,22 +260,29 @@ export function ResourceFormDialog({
                 name="file"
                 render={({ field: { onChange } }) => (
                 <FormItem>
-                  <FormLabel>File <span className="text-red-500">*</span></FormLabel>
+                  <FormLabel>File {!isEditMode && <span className="text-red-500">*</span>}</FormLabel>
                   <FormControl>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="file"
-                        {...fileRef}
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            onChange(file);
-                            form.setValue("name", file.name);
-                          }
-                        }}
-                        className="cursor-pointer"
-                      />
-                      <Upload className="h-4 w-4 text-muted-foreground" />
+                    <div className="flex flex-col gap-2">
+                      {isEditMode && resource?.url?.url && (
+                        <div className="text-sm text-muted-foreground mb-2">
+                          Current file: <a href={resource.url.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{resource.url?.key || "View file"}</a>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2">
+                        <Input
+                          type="file"
+                          {...fileRef}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              onChange(file);
+                              form.setValue("name", file.name);
+                            }
+                          }}
+                          className="cursor-pointer"
+                        />
+                        <Upload className="h-4 w-4 text-muted-foreground" />
+                      </div>
                     </div>
                   </FormControl>
                   <p className="text-sm text-muted-foreground">

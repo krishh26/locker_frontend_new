@@ -510,10 +510,10 @@ export function UsersForm({ user }: UsersFormProps) {
 
       router.push("/users");
     } catch (error: unknown) {
+      const err = error as { data?: { message?: string; error?: string } };
       const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? (error as { data?: { message?: string } }).data?.message
-          : undefined;
+        err?.data?.message ??
+        (typeof err?.data?.error === "string" ? err.data.error : undefined);
       toast.error(errorMessage || (isEditMode ? t("toast.updateFailed") : t("toast.createFailed")));
     }
   };

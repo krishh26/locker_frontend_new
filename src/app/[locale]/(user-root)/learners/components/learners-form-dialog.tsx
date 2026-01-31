@@ -213,9 +213,7 @@ export function LearnersFormDialog({
         toast.success("Learner updated successfully");
       } else {
         const createData = values as CreateLearnerFormValues;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { confirmPassword, ...userData } = createData;
-        await createLearner(userData as CreateLearnerRequest).unwrap();
+        await createLearner(createData as CreateLearnerRequest).unwrap();
         toast.success("Learner created successfully");
       }
       onSuccess();

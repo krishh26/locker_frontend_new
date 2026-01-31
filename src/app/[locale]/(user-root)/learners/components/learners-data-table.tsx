@@ -174,7 +174,7 @@ export function LearnersDataTable() {
     if (isAdmin) {
       return {
         ...baseFilters,
-        employer_id: filters.employer_id,
+        employer_ids: filters.employer_id,
       };
     }
     if (isTrainer) {

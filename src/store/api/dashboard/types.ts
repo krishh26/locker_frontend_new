@@ -55,6 +55,29 @@ export interface CardDataResponse {
   error?: string
 }
 
+/**
+ * Active learners report – extended metrics (FE ready; BE to implement).
+ * When GET /learner/list-with-count?type=active_learners returns summary,
+ * the Active Learner card detail modal and CSV export will show these fields.
+ *
+ * BE TODO: Add to active_learners response (e.g. under `summary` or top level):
+ * - sa_unmapped_evidence_count, outstanding_iqa_actions_count
+ * - orange_percent_last_month, orange_percent_current_month
+ * - green_percent_last_month, green_percent_current_month
+ */
+export interface ActiveLearnersSummary {
+  sa_unmapped_evidence_count?: number
+  outstanding_iqa_actions_count?: number
+  orange_percent_last_month?: number
+  orange_percent_current_month?: number
+  green_percent_last_month?: number
+  green_percent_current_month?: number
+}
+
+export interface ActiveLearnersCardDataResponse extends CardDataResponse {
+  summary?: ActiveLearnersSummary
+}
+
 export type CardData = Record<string, unknown>
 
 // New types based on CSV: Dashboard Module (6 APIs)

@@ -22,7 +22,7 @@ import type { EvidenceEntry } from "@/store/api/evidence/types";
 
 interface ActionMenuProps {
   evidence: EvidenceEntry;
-  onReupload: () => void;
+  onReupload: (evidence: EvidenceEntry) => void;
   onDownload: () => void;
   onDelete: () => void;
 }
@@ -41,6 +41,10 @@ export const ActionMenu: FC<ActionMenuProps> = ({
     router.push(`/evidence-library/${evidence.assignment_id}`);
   };
 
+  const handleReuploadClick = () => {
+    onReupload(evidence);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -51,7 +55,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
       <DropdownMenuContent align="end" className="w-48">
         {!isEmployer && (
           <>
-            <DropdownMenuItem onClick={onReupload} className="cursor-pointer">
+            <DropdownMenuItem onClick={handleReuploadClick} className="cursor-pointer">
               <CloudUpload className="mr-2 h-4 w-4" />
               Reupload
             </DropdownMenuItem>

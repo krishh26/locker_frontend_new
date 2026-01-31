@@ -35,8 +35,6 @@ import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import { toast } from "sonner"
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
-import { LanguageSwitcher } from "./language-switcher"
-
 export function NavUser() {
   const { isMobile } = useSidebar()
   const router = useRouter()

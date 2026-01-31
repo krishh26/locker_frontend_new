@@ -228,8 +228,34 @@ export function CourseResourcesDataTable() {
   });
 
   const handleExportCsv = () => {
-    // TODO: Implement CSV export
-    toast.info("CSV export functionality will be implemented");
+    if (resources.length === 0) {
+      toast.info("No data to export");
+      return;
+    }
+
+    const headers = ["Name", "Description", "Hours", "Minutes", "Job Type", "Access Status"];
+    const rows = resources.map((resource) => [
+      resource.name || "-",
+      resource.description || "-",
+      resource.hours ?? "-",
+      resource.minute ?? "-",
+      resource.job_type || "-",
+      resource.isAccessed ? "Opened" : "Not Opened",
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `course_resources_export_${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success("CSV exported successfully");
   };
 
   const handleExportPdf = () => {

@@ -213,7 +213,7 @@ const data: {
       label: 'Admin',
       items: [
         {
-          title: 'Admin Modules',
+          title: 'Admin Management',
           url: '/admin',
           icon: Settings,
         },
@@ -372,6 +372,11 @@ const data: {
         {
           title: 'Account Managers',
           url: '/account-manager',
+          icon: Users,
+        },
+        {
+          title: 'Users',
+          url: '/users',
           icon: Users,
         },
         {

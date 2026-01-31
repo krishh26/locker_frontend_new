@@ -365,7 +365,7 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Modules",
+    "pageTitle": "Admin Management",
     "pageSubtitle": "Manage all administrative functions and system configurations",
     "modules": {
       "userManagement": {

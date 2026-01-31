@@ -106,6 +106,10 @@
       "employersPlaceholder": "Select employers",
       "loadingEmployers": "Loading employers...",
       "noEmployersFound": "No employers found",
+      "organisations": "Organisations",
+      "organisationsPlaceholder": "Select organisations",
+      "loadingOrganisations": "Loading organisations...",
+      "noOrganisationsFound": "No organisations found",
       "assignedLearners": "Assigned Learners",
       "assignedLearnersDescription": "Select a course to view and manage assigned learners for this EQA user",
       "selectLearners": "Select Learners",
@@ -204,6 +208,9 @@
       "learnersSelected": "learner selected",
       "learnersSelectedPlural": "learners selected",
       "pleaseSelectCourse": "Please select a course to view learners",
+      "noCoursesAvailable": "No courses available",
+      "noLearnersInCourse": "No learners in this course",
+      "errorLoadingLearners": "Error loading learners. Please try again.",
       "cancel": "Cancel",
       "save": "Save",
       "selectAll": "Select all",
@@ -366,7 +373,7 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Modules",
+    "pageTitle": "Admin Management",
     "pageSubtitle": "Manage all administrative functions and system configurations",
     "modules": {
       "userManagement": {

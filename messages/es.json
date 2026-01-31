@@ -359,7 +359,7 @@
     }
   },
   "admin": {
-    "pageTitle": "Módulos de Administración",
+    "pageTitle": "Admin Management",
     "pageSubtitle": "Gestione todas las funciones administrativas y configuraciones del sistema",
     "modules": {
       "userManagement": {

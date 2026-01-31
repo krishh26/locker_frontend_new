@@ -49,6 +49,7 @@ import {
 import {
   useGetEvidenceListQuery,
   useDeleteEvidenceMutation,
+  useReuploadEvidenceMutation,
 } from "@/store/api/evidence/evidenceApi";
 import { useAppSelector } from "@/store/hooks";
 import { selectCourses } from "@/store/slices/authSlice";
@@ -143,6 +144,9 @@ export function EvidenceLibraryDataTable() {
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
   const [selectedCourseForDownload, setSelectedCourseForDownload] =
     useState<number | null>(null);
+  const [reuploadDialogOpen, setReuploadDialogOpen] = useState(false);
+  const [reuploadEvidence, setReuploadEvidence] = useState<EvidenceEntry | null>(null);
+  const [reuploadFile, setReuploadFile] = useState<File | null>(null);
 
   // Selection state
   const [selectionState, dispatchSelection] = useReducer(selectionReducer, {
@@ -211,6 +215,8 @@ export function EvidenceLibraryDataTable() {
 
   const [deleteEvidence, { isLoading: isDeleteLoading }] =
     useDeleteEvidenceMutation();
+  const [reuploadEvidenceMutation, { isLoading: isReuploadLoading }] =
+    useReuploadEvidenceMutation();
 
   // Handle errors is handled by RTK Query error handling
 
@@ -255,17 +261,40 @@ export function EvidenceLibraryDataTable() {
     toast.success(`Downloading ${fileName}`);
   }, []);
 
-  // Handle view
-  const handleView = useCallback(() => {
-    // TODO: Implement view/edit functionality
-    toast.info("View/Edit functionality will be implemented");
-  }, []);
+  // Handle view/edit
+  const handleView = useCallback((evidence: EvidenceEntry) => {
+    // Navigate to evidence detail/edit page
+    router.push(`/evidence-library/create?id=${evidence.assignment_id}`);
+  }, [router]);
 
   // Handle reupload
-  const handleReupload = useCallback(() => {
-    // TODO: Implement reupload functionality
-    toast.info("Reupload functionality will be implemented");
+  const handleReuploadClick = useCallback((evidence: EvidenceEntry) => {
+    setReuploadEvidence(evidence);
+    setReuploadFile(null);
+    setReuploadDialogOpen(true);
   }, []);
+
+  const handleReuploadSubmit = useCallback(async () => {
+    if (!reuploadEvidence || !reuploadFile) {
+      toast.error("Please select a file to upload");
+      return;
+    }
+
+    try {
+      await reuploadEvidenceMutation({
+        id: reuploadEvidence.assignment_id,
+        data: { file: reuploadFile },
+      }).unwrap();
+      toast.success("Evidence file replaced successfully");
+      setReuploadDialogOpen(false);
+      setReuploadEvidence(null);
+      setReuploadFile(null);
+      refetch();
+    } catch (error) {
+      const err = error as { data?: { error?: string; message?: string } };
+      toast.error(err?.data?.error || err?.data?.message || "Failed to reupload evidence");
+    }
+  }, [reuploadEvidence, reuploadFile, reuploadEvidenceMutation, refetch]);
 
 
   // Handle download all
@@ -799,7 +828,7 @@ export function EvidenceLibraryDataTable() {
         return (
           <ActionMenu
             evidence={evidence}
-            onReupload={handleReupload}
+            onReupload={handleReuploadClick}
             onDownload={() => handleDownload(evidence)}
             onDelete={() => {
               setSelectedEvidence(evidence);
@@ -1069,6 +1098,48 @@ export function EvidenceLibraryDataTable() {
             : undefined
         }
       />
+
+      {/* Reupload Dialog */}
+      <AlertDialog open={reuploadDialogOpen} onOpenChange={setReuploadDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Reupload Evidence</AlertDialogTitle>
+            <AlertDialogDescription>
+              Select a new file to replace the existing evidence file for &quot;{reuploadEvidence?.title}&quot;.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="py-4">
+            <input
+              type="file"
+              onChange={(e) => setReuploadFile(e.target.files?.[0] || null)}
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif"
+            />
+            {reuploadFile && (
+              <p className="mt-2 text-sm text-muted-foreground">
+                Selected: {reuploadFile.name}
+              </p>
+            )}
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setReuploadDialogOpen(false);
+                setReuploadEvidence(null);
+                setReuploadFile(null);
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleReuploadSubmit}
+              disabled={!reuploadFile || isReuploadLoading}
+            >
+              {isReuploadLoading ? "Uploading..." : "Upload"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

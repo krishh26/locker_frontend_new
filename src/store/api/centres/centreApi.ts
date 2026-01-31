@@ -163,6 +163,23 @@ export const centreApi = createApi({
         return response
       },
     }),
+    setCentreAdmins: builder.mutation<
+      CentreResponse,
+      { id: number; user_ids: number[] }
+    >({
+      query: ({ id, user_ids }) => ({
+        url: `/centres/${id}/admins`,
+        method: "PUT",
+        body: { user_ids },
+      }),
+      invalidatesTags: ["Centre"],
+      transformResponse: (response: CentreResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
   }),
 })
 
@@ -175,4 +192,5 @@ export const {
   useSuspendCentreMutation,
   useAssignAdminToCentreMutation,
   useRemoveAdminFromCentreMutation,
+  useSetCentreAdminsMutation,
 } = centreApi

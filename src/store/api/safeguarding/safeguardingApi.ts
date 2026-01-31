@@ -13,6 +13,16 @@ export const safeguardingApi = createApi({
   tagTypes: ["SafeguardingContact"],
   endpoints: (builder) => ({
     getSafeguardingContacts: builder.query<SafeguardingContactListResponse, void>({
+      query: () => "/safeguarding-contact/contacts",
+      providesTags: ["SafeguardingContact"],
+      transformResponse: (response: SafeguardingContactListResponse) => {
+        if (response.status === false) {
+          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    getAdminSafeguardingContacts: builder.query<SafeguardingContactListResponse, void>({
       query: () => "/safeguarding-contact/admin/contacts",
       providesTags: ["SafeguardingContact"],
       transformResponse: (response: SafeguardingContactListResponse) => {
@@ -57,6 +67,7 @@ export const safeguardingApi = createApi({
 
 export const {
   useGetSafeguardingContactsQuery,
+  useGetAdminSafeguardingContactsQuery,
   useGetSafeguardingContactByIdQuery,
   useSaveSafeguardingContactMutation,
 } = safeguardingApi;

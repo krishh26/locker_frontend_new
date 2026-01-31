@@ -36,10 +36,19 @@ function MetricCard({ title, value, icon: Icon, className }: MetricCardProps) {
 
 export function CpdLearnerInfoCard() {
   const user = useAppSelector((state) => state.auth.user);
+  const learner = useAppSelector((state) => state.auth.learner);
 
   const learnerName = user
     ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Not specified"
     : "Not specified";
+
+  // Get job title and employer from learner data
+  const jobTitle = learner?.job_title || "Not specified";
+  
+  const employerName = 
+    learner?.employer_id && typeof learner.employer_id === "object" && "employer_name" in learner.employer_id
+      ? learner.employer_id.employer_name
+      : "Not specified";
 
   const learnerInfo = [
     {
@@ -49,12 +58,12 @@ export function CpdLearnerInfoCard() {
     },
     {
       title: "Job Title",
-      value: "Not specified", // TODO: Get from learner data when available
+      value: jobTitle,
       icon: Briefcase,
     },
     {
       title: "Employer",
-      value: "Not specified", // TODO: Get from learner data when available
+      value: employerName,
       icon: Building2,
     },
   ];

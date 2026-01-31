@@ -95,6 +95,8 @@ export function ResourcesDataTable() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [editResource, setEditResource] = useState<Resource | null>(null)
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
 
   const resources = resourcesResponse?.data ?? []
   const metaData = resourcesResponse?.meta_data
@@ -288,8 +290,8 @@ export function ResourcesDataTable() {
                   size='icon'
                   className='h-8 w-8 cursor-pointer'
                   onClick={() => {
-                    // TODO: Implement edit functionality
-                    toast.info('Edit functionality coming soon')
+                    setEditResource(resource)
+                    setEditDialogOpen(true)
                   }}
                 >
                   <Pencil className='size-4' />
@@ -520,6 +522,22 @@ export function ResourcesDataTable() {
           }}
         />
       )}
+
+      {/* Edit Resource Dialog */}
+      <ResourceFormDialog
+        open={editDialogOpen}
+        onOpenChange={(open) => {
+          setEditDialogOpen(open)
+          if (!open) setEditResource(null)
+        }}
+        onSuccess={() => {
+          setEditDialogOpen(false)
+          setEditResource(null)
+          refetch()
+        }}
+        resource={editResource}
+        mode="edit"
+      />
     </div>
   )
 }

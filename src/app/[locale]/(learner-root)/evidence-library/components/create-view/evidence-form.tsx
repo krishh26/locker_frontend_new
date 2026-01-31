@@ -683,14 +683,20 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     trigger: form.trigger,
   })
 
-  // getEvidenceCount placeholder - implement based on your evidence count logic
+  // getEvidenceCount - Returns count of evidence submissions for a unit/topic
+  // Note: For accurate counts, this would require a backend API endpoint like:
+  // GET /evidence/count?course_id={courseId}&unit_id={unitId}&topic_id={topicId}
+  // Or implementing a caching layer that tracks mappings after evidence creation.
+  // For now, returns 0 as the count would require fetching all evidence to compute.
 
   const getEvidenceCount = (
     _courseId: number,
     _unitId: string | number,
     _topicId?: string | number
   ) => {
-    // TODO: Implement evidence count logic
+    // Backend TODO: Implement GET /assignment/count endpoint that returns count of
+    // evidence mappings for a given course/unit/topic combination.
+    // Example: { status: true, data: { count: 5 } }
     return 0
   }
 

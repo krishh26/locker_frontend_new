@@ -23,6 +23,7 @@ import { useGetUsersQuery } from "@/store/api/user/userApi";
 import type { Broadcast } from "@/store/api/broadcast/types";
 import { toast } from "sonner";
 import MultipleSelector, { type Option } from "@/components/ui/multi-select";
+import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 
 const broadcastMessageSchema = z
   .object({
@@ -65,12 +66,6 @@ interface BroadcastMessageDialogProps {
   onSuccess: () => void;
 }
 
-// Placeholder course interface - update when course API is available
-interface Course {
-  course_id: number;
-  course_name: string;
-}
-
 export function BroadcastMessageDialog({
   open,
   onOpenChange,
@@ -80,8 +75,6 @@ export function BroadcastMessageDialog({
   const [selectedTarget, setSelectedTarget] = useState<string>("");
   const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
   const [selectedCourseIds, setSelectedCourseIds] = useState<number[]>([]);
-  const [courses] = useState<Course[]>([]);
-  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
 
   const [sendBroadcastMessage, { isLoading: isSending }] =
     useSendBroadcastMessageMutation();
@@ -92,17 +85,10 @@ export function BroadcastMessageDialog({
     page_size: 1000, // Large page size to get all users
   });
 
-  // Fetch courses - placeholder for now, update when course API is available
-  useEffect(() => {
-    if (open && selectedTarget === "qualification") {
-      // TODO: Replace with actual course API call
-      // For now, using a placeholder
-      setIsLoadingCourses(true);
-      // TODO: Replace with actual course API call
-      // For now, courses array remains empty
-      setIsLoadingCourses(false);
-    }
-  }, [open, selectedTarget]);
+  // Fetch courses for qualification selection
+  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({
+    skip: selectedTarget !== "qualification",
+  });
 
   const form = useForm<BroadcastMessageFormValues>({
     resolver: zodResolver(broadcastMessageSchema),
@@ -145,11 +131,12 @@ export function BroadcastMessageDialog({
   }, [usersData]);
 
   const courseOptions: Option[] = useMemo(() => {
-    return courses.map((course) => ({
+    if (!coursesData?.data) return [];
+    return coursesData.data.map((course) => ({
       value: course.course_id.toString(),
       label: course.course_name,
     }));
-  }, [courses]);
+  }, [coursesData]);
 
   const handleUserSelection = (options: Option[]) => {
     const ids = options.map((opt) => parseInt(opt.value));

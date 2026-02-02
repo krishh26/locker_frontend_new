@@ -44,6 +44,7 @@ import { useGetOrganisationsQuery } from "@/store/api/organisations/organisation
 import type { AuditLog } from "@/store/api/audit-logs/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { exportTableToPdf } from "@/utils/pdfExport"
 
 /** Format details for display (backend may return an object or string) */
 function formatDetails(details: AuditLog["details"]): string {
@@ -135,7 +136,20 @@ export function AuditLogsDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    const headers = ["Timestamp", "Organisation", "Action", "User", "Details"]
+    const rows = filteredLogs.map((log: AuditLog) => [
+      new Date(log.createdAt).toLocaleString(),
+      log.organisationName ?? orgMap.get(log.organisationId ?? 0) ?? "—",
+      getActionTypeLabel(log.actionType),
+      log.userName,
+      formatDetails(log.details),
+    ])
+    if (rows.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    exportTableToPdf({ title: "Audit Logs", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const columns: ColumnDef<AuditLog>[] = useMemo(

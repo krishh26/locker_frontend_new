@@ -58,6 +58,7 @@ import {
 import type { SystemAdmin } from "@/store/api/system-admin/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { exportTableToPdf } from "@/utils/pdfExport"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
 import { isMasterAdmin } from "@/utils/permissions"
@@ -204,7 +205,21 @@ export function SystemAdminDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    const headers = ["Email", "First Name", "Last Name", "Status", "Protected", "Created At"]
+    const rows = systemAdmins.map((admin: SystemAdmin) => [
+      admin.email,
+      admin.firstName || "",
+      admin.lastName || "",
+      admin.isActive ? "Active" : "Inactive",
+      admin.isProtected ? "Yes" : "No",
+      admin.createdAt ? format(new Date(admin.createdAt), "yyyy-MM-dd") : "",
+    ])
+    if (rows.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    exportTableToPdf({ title: "System Admins", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const columns: ColumnDef<SystemAdmin>[] = useMemo(

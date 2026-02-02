@@ -46,6 +46,7 @@ import {
   useTrackResourceAccessMutation,
 } from "@/store/api/resources/resourcesApi";
 import { toast } from "sonner";
+import { exportTableToPdf } from "@/utils/pdfExport";
 import type { CourseResource } from "@/store/api/resources/types";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
@@ -259,8 +260,21 @@ export function CourseResourcesDataTable() {
   };
 
   const handleExportPdf = () => {
-    // TODO: Implement PDF export
-    toast.info("PDF export functionality will be implemented");
+    if (resources.length === 0) {
+      toast.info("No data to export");
+      return;
+    }
+    const headers = ["Name", "Description", "Hours", "Minutes", "Job Type", "Access Status"];
+    const rows = resources.map((resource) => [
+      resource.name || "-",
+      resource.description || "-",
+      String(resource.hours ?? "-"),
+      String(resource.minute ?? "-"),
+      resource.job_type || "-",
+      resource.isAccessed ? "Opened" : "Not Opened",
+    ]);
+    exportTableToPdf({ title: "Course Resources", headers, rows });
+    toast.success("PDF exported successfully");
   };
 
   return (

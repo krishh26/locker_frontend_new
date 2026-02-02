@@ -57,9 +57,11 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
 import { isMasterAdmin } from "@/utils/permissions"
+import { exportTableToPdf } from "@/utils/pdfExport"
 import { CreateFeatureForm } from "./create-feature-form"
 import { EditFeatureForm } from "./edit-feature-form"
 import { MapFeatureToPlanDialog } from "./map-feature-to-plan-dialog"
+import { ViewMappedPlansDialog } from "./view-mapped-plans-dialog"
 
 export function FeatureControlDataTable() {
   const user = useAppSelector(selectAuthUser)
@@ -72,8 +74,11 @@ export function FeatureControlDataTable() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false)
+  const [isViewMappedDialogOpen, setIsViewMappedDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null)
+  const [selectedFeatureForView, setSelectedFeatureForView] =
+    useState<Feature | null>(null)
 
   const features = data?.data || []
 
@@ -117,6 +122,24 @@ export function FeatureControlDataTable() {
     setSelectedFeature(feature)
     setIsMapDialogOpen(true)
   }, [])
+
+  const handleViewMappedPlans = useCallback((feature: Feature) => {
+    setSelectedFeatureForView(feature)
+    setIsViewMappedDialogOpen(true)
+  }, [])
+
+  const handleViewMappedDialogClose = useCallback(() => {
+    setIsViewMappedDialogOpen(false)
+    setSelectedFeatureForView(null)
+  }, [])
+
+  const handleViewMappedThenMap = useCallback(() => {
+    if (!selectedFeatureForView) return
+    setSelectedFeature(selectedFeatureForView)
+    setIsViewMappedDialogOpen(false)
+    setSelectedFeatureForView(null)
+    setIsMapDialogOpen(true)
+  }, [selectedFeatureForView])
 
   const handleDeleteClick = useCallback((feature: Feature) => {
     setSelectedFeature(feature)
@@ -170,7 +193,29 @@ export function FeatureControlDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    if (features.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    const headers = ["Name", "Code", "Description", "Status", "Limits"]
+    const rows = features.map((feature: Feature) => {
+      const limits = feature.limits
+        ? Object.entries(feature.limits)
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .filter(([_, v]) => v !== undefined)
+            .map(([k, v]) => `${k}:${v}`)
+            .join("; ")
+        : "None"
+      return [
+        feature.name,
+        feature.code,
+        feature.description || "",
+        feature.isActive ? "Active" : "Inactive",
+        limits,
+      ]
+    })
+    exportTableToPdf({ title: "Features", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const formatLimits = (limits?: Feature["limits"]) => {
@@ -254,9 +299,14 @@ export function FeatureControlDataTable() {
       {
         id: "mappedPlans",
         header: "Mapped Plans",
-        cell: () => {
+        cell: ({ row }) => {
           return (
-            <Badge variant="outline" className="cursor-pointer">
+            <Badge
+              variant="outline"
+              className="cursor-pointer"
+              role="button"
+              onClick={() => handleViewMappedPlans(row.original)}
+            >
               View
             </Badge>
           )
@@ -297,7 +347,7 @@ export function FeatureControlDataTable() {
         },
       },
     ],
-    [handleEdit, handleMap, handleDeleteClick]
+    [handleEdit, handleMap, handleViewMappedPlans, handleDeleteClick]
   )
 
   const table = useReactTable({
@@ -475,6 +525,30 @@ export function FeatureControlDataTable() {
               feature={selectedFeature}
               onSuccess={handleMapSuccess}
               onCancel={handleMapCancel}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* View Mapped Plans Dialog */}
+      <Dialog
+        open={isViewMappedDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) handleViewMappedDialogClose()
+        }}
+      >
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Mapped Plans</DialogTitle>
+            <DialogDescription>
+              Plans this feature is mapped to. Use Map to Plan to add or change mappings.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedFeatureForView && (
+            <ViewMappedPlansDialog
+              feature={selectedFeatureForView}
+              onClose={handleViewMappedDialogClose}
+              onMapToPlan={handleViewMappedThenMap}
             />
           )}
         </DialogContent>

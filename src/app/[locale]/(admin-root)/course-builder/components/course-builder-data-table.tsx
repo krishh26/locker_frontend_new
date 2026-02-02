@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCourseType } from "@/store/slices/courseBuilderSlice";
+import { exportTableToPdf } from "@/utils/pdfExport"
 import { useGetCoursesQuery, useDeleteCourseMutation } from "@/store/api/course/courseApi";
 import {
   type ColumnDef,
@@ -208,7 +209,21 @@ export function CourseBuilderDataTable() {
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    if (!data?.data || data.data.length === 0) {
+      toast.info("No data to export");
+      return;
+    }
+    const headers = ["Course Name", "Code", "Core Type", "Level", "Sector", "Learning Hours"];
+    const rows = data.data.map((course) => [
+      course.course_name,
+      course.course_code,
+      course.course_core_type,
+      course.level,
+      course.sector,
+      String(course.guided_learning_hours ?? ""),
+    ]);
+    exportTableToPdf({ title: "Courses", headers, rows });
+    toast.success("PDF exported successfully");
   };
 
   const columns: ColumnDef<Course>[] = useMemo(

@@ -44,6 +44,7 @@ import { useGetOrganisationsQuery } from "@/store/api/organisations/organisation
 import type { Payment } from "@/store/api/payments/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { exportTableToPdf } from "@/utils/pdfExport"
 
 export function PaymentsDataTable() {
   const router = useRouter()
@@ -109,7 +110,21 @@ export function PaymentsDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    const headers = ["Date", "Organisation", "Amount", "Status", "Invoice Number", "Payment Method"]
+    const rows = filteredPayments.map((payment: Payment) => [
+      new Date(payment.date).toLocaleDateString(),
+      orgMap.get(payment.organisationId) || "Unknown",
+      `£${payment.amount.toLocaleString()}`,
+      payment.status,
+      payment.invoiceNumber || "N/A",
+      payment.paymentMethod || "N/A",
+    ])
+    if (rows.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    exportTableToPdf({ title: "Payments", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const columns: ColumnDef<Payment>[] = useMemo(

@@ -41,6 +41,7 @@ import {
 import { DataTablePagination } from "@/components/data-table-pagination"
 import { useGetSubscriptionsQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
+import { exportTableToPdf } from "@/utils/pdfExport"
 import type { Subscription } from "@/store/api/subscriptions/types"
 import { toast } from "sonner"
 import { AssignPlanDialog } from "./assign-plan-dialog"
@@ -107,7 +108,20 @@ export function SubscriptionsDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    if (filteredSubscriptions.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    const headers = ["Organisation", "Plan", "Users", "Status", "Expiry Date"]
+    const rows = filteredSubscriptions.map((sub) => [
+      orgMap.get(sub.organisationId) || "Unknown",
+      sub.plan,
+      `${sub.usedUsers}/${sub.userLimit}`,
+      sub.isExpired ? "Expired" : "Active",
+      new Date(sub.expiryDate).toLocaleDateString(),
+    ])
+    exportTableToPdf({ title: "Subscriptions", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const handleAssignPlanSuccess = useCallback(() => {

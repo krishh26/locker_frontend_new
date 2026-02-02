@@ -84,6 +84,7 @@ import { Users } from "lucide-react";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import { exportTableToPdf } from "@/utils/pdfExport";
 import Link from "next/link";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
@@ -456,7 +457,40 @@ export function LearnersDataTable() {
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    const exportData = isEqa ? eqaLearners : (data?.data || []);
+    if (!exportData || exportData.length === 0) {
+      toast.info("No data to export");
+      return;
+    }
+    if (isEqa) {
+      const headers = ["Learner Name", "Course", "Employer", "IQA", "Status", "IQA Report", "Learner Created", "Course Registered"];
+      const rows = exportData.map((learner) => {
+        const eqaLerner = learner as LearnerListItem & { IQA_id?: { first_name: string; last_name: string }; learner_created?: string; course_registered?: string; iqa_report?: string };
+        return [
+          `${eqaLerner.first_name} ${eqaLerner.last_name}`,
+          eqaLerner.course?.map((c) => c.course?.course_name).join(", ") || "",
+          (learner as { employer_id?: { employer_name?: string } }).employer_id?.employer_name || "-",
+          eqaLerner.IQA_id ? `${eqaLerner.IQA_id.first_name} ${eqaLerner.IQA_id.last_name}` : "-",
+          eqaLerner.status || "",
+          eqaLerner.iqa_report || "-",
+          formatDate(eqaLerner.learner_created),
+          formatDate(eqaLerner.course_registered),
+        ];
+      });
+      exportTableToPdf({ title: "Learners", headers, rows });
+    } else {
+      const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
+      const rows = exportData.map((learner) => [
+        `${learner.first_name} ${learner.last_name}`,
+        learner.user_name,
+        learner.email,
+        learner.mobile || "",
+        learner.course?.map((c) => c.course.course_name).join(", ") || "",
+        learner.status || "",
+      ]);
+      exportTableToPdf({ title: "Learners", headers, rows });
+    }
+    toast.success("PDF exported successfully");
   };
 
   // Extended type for EQA learners

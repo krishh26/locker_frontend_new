@@ -43,6 +43,7 @@ import {
   useActivateOrganisationMutation,
   useSuspendOrganisationMutation,
 } from "@/store/api/organisations/organisationApi"
+import { exportTableToPdf } from "@/utils/pdfExport"
 import type { Organisation } from "@/store/api/organisations/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -165,7 +166,14 @@ export function OrganisationsDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    if (organisations.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    const headers = ["Name", "Status"]
+    const rows = organisations.map((org: Organisation) => [org.name, org.status])
+    exportTableToPdf({ title: "Organisations", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const columns: ColumnDef<Organisation>[] = useMemo(

@@ -40,6 +40,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
+import { exportTableToPdf } from "@/utils/pdfExport";
 import { LearnerCourse } from "@/store/api/learner/types";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 
@@ -421,7 +422,32 @@ export function ModuleUnitProgressDataTable() {
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    const headers = isStandardCourse
+      ? ["Title", "Code", "Learner Map", "Trainer Map", "Gap"]
+      : ["Sub Unit Title", "Learner Map", "Trainer Map", "Gap", "Comment"];
+    const rows = filteredData.map((row) =>
+      isStandardCourse
+        ? [
+            row.subTitle,
+            row.comment,
+            row.learnerMap ? "Yes" : "No",
+            row.trainerMap ? "Yes" : "No",
+            row.gap,
+          ]
+        : [
+            row.subTitle,
+            row.learnerMap ? "Yes" : "No",
+            row.trainerMap ? "Yes" : "No",
+            row.gap,
+            row.comment,
+          ]
+    );
+    if (rows.length === 0) {
+      toast.info("No data to export");
+      return;
+    }
+    exportTableToPdf({ title: "Module Unit Progress", headers, rows });
+    toast.success("PDF exported successfully");
   };
 
   return (

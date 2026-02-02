@@ -47,6 +47,7 @@ import {
 import type { Centre } from "@/store/api/centres/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { exportTableToPdf } from "@/utils/pdfExport"
 import { CreateCentreForm } from "./create-centre-form"
 import { EditCentreForm } from "./edit-centre-form"
 
@@ -94,7 +95,18 @@ export function CentresDataTable() {
   }
 
   const handleExportPdf = () => {
-    toast.info("PDF export coming soon")
+    const headers = ["Name", "Organisation", "Status"]
+    const rows = centres.map((centre: Centre) => [
+      centre.name,
+      centre.organisation?.name ?? "Unknown",
+      centre.status,
+    ])
+    if (rows.length === 0) {
+      toast.info("No data to export")
+      return
+    }
+    exportTableToPdf({ title: "Centres", headers, rows })
+    toast.success("PDF exported successfully")
   }
 
   const handleCreateSuccess = useCallback(() => {

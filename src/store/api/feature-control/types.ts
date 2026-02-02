@@ -36,6 +36,19 @@ export interface FeatureListResponse {
   data: Feature[]
 }
 
+export interface MappedPlanItem {
+  planId: number
+  planName: string
+  enabled: boolean
+  limitValue: number | null
+}
+
+export interface FeaturePlansResponse {
+  status: boolean
+  message?: string
+  data: MappedPlanItem[]
+}
+
 export interface CreateFeatureRequest {
   name: string
   code: string

@@ -10,10 +10,8 @@ export interface AdminDashboardCardProps {
   count?: number | string
   textColor: string
   radiusColor: string
-  onClick?: () => void
   onExport?: () => void
   isExporting?: boolean
-  isFetching?: boolean
   showExport?: boolean
   className?: string
 }
@@ -23,10 +21,8 @@ export function AdminDashboardCard({
   count,
   textColor,
   radiusColor,
-  onClick,
   onExport,
   isExporting = false,
-  isFetching = false,
   showExport = false,
   className,
 }: AdminDashboardCardProps) {
@@ -41,19 +37,17 @@ export function AdminDashboardCard({
     <Card
       className={cn(
         "relative h-full border border-border/60 shadow-sm transition-all hover:shadow-md hover:scale-[1.02] cursor-pointer group w-full",
-        isFetching && "opacity-60 pointer-events-none",
         className
       )}
-      onClick={onClick}
     >
       <CardContent>
         {showExport && onExport && (
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            className="absolute top-2 right-2 h-8 w-8 z-10"
             onClick={handleExportClick}
-            disabled={isExporting || isFetching}
+            disabled={isExporting}
           >
             {isExporting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -61,12 +55,6 @@ export function AdminDashboardCard({
               <Download className="h-4 w-4" />
             )}
           </Button>
-        )}
-
-        {isFetching && (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-20 rounded-lg">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
-          </div>
         )}
 
         <div className="flex flex-col items-center justify-center text-center space-y-4">

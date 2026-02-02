@@ -59,6 +59,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { exportTableToPdf } from "@/utils/pdfExport";
 import { useGetUsersQuery, useDeleteUserMutation } from "@/store/api/user/userApi";
 import type { User, UserFilters } from "@/store/api/user/types";
 import { toast } from "sonner";
@@ -210,7 +211,21 @@ export function UsersDataTable() {
   };
 
   const handleExportPdf = () => {
-    toast.info(t("table.pdfExportInfo"));
+    if (!data?.data || data.data.length === 0) {
+      toast.info(t("table.noDataToExport"));
+      return;
+    }
+    const headers = [t("table.name"), t("table.username"), t("table.email"), t("table.mobile"), t("table.roles"), t("table.status")];
+    const rows = data.data.map((user) => [
+      `${user.first_name} ${user.last_name}`,
+      user.user_name,
+      user.email,
+      user.mobile,
+      user.roles.join(", "),
+      user.status,
+    ]);
+    exportTableToPdf({ title: "Users", headers, rows });
+    toast.success(t("table.csvExported"));
   };
 
   const columns: ColumnDef<User>[] = useMemo(

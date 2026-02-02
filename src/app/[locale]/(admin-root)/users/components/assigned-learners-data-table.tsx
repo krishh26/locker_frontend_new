@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { exportTableToPdf } from "@/utils/pdfExport";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import Link from "next/link";
 import type { AssignedLearner } from "@/store/api/user/types";
@@ -135,7 +136,26 @@ export function AssignedLearnersDataTable({
   };
 
   const handleExportPdf = () => {
-    toast.info(t("pdfExportInfo"));
+    const headers = [
+      t("learnerName"),
+      t("courseName"),
+      t("courseStatus"),
+      t("startDate"),
+      t("endDate"),
+    ]
+    const rows = data.map((learner) => [
+      `${learner.first_name} ${learner.last_name}`,
+      learner.course_name,
+      learner.course_status,
+      learner.start_date,
+      learner.end_date,
+    ])
+    if (rows.length === 0) {
+      toast.info(t("noDataToExport"))
+      return
+    }
+    exportTableToPdf({ title: "Assigned Learners", headers, rows })
+    toast.success(t("csvExported"))
   };
 
   const formatDate = (dateString: string) => {

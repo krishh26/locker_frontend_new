@@ -23,7 +23,7 @@ export interface MetricCardsProps {
 
 export function MetricCards({
   cards,
-  countData,
+  countData = {},
   courseId,
   variant = "default",
 }: MetricCardsProps) {

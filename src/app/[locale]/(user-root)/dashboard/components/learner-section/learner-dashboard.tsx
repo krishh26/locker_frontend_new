@@ -1,7 +1,13 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from "@/i18n/navigation"
+import { useGetPendingSignaturesQuery } from '@/store/api/documents-to-sign/documentsToSignApi'
+import { useGetEvidenceListQuery } from '@/store/api/evidence/evidenceApi'
+import { useGetCpdEntriesQuery } from '@/store/api/cpd/cpdApi'
+import { useGetLearnerPlanListQuery } from '@/store/api/learner-plan/learnerPlanApi'
+import { useGetResourcesByCourseQuery } from '@/store/api/resources/resourcesApi'
+import type { PortfolioCountData } from '@/store/api/dashboard/types'
 import { LayoutDashboard, Mail, Calendar, FileSignature } from 'lucide-react'
 import { PageHeader } from '@/components/dashboard/page-header'
 import { PortfolioMetricCards } from './portfolio-metric-cards'
@@ -48,14 +54,84 @@ export function LearnerDashboard() {
     }
   }, [learnerId, learnerIsShowMessage, isAcknowledgementOpen, userRole])
 
+  const firstCourse = learner?.course?.[0]
+  const firstCourseId = firstCourse?.course?.course_id
 
-  // Get count data for portfolio cards
-  const countData = useMemo(() => {
-    // TODO: Fetch actual count data from API
+  // Portfolio counts from RTK Query
+  const { data: pendingSignaturesData } = useGetPendingSignaturesQuery(
+    { id: String(user?.id) },
+    { skip: !user?.id }
+  )
+  const { data: evidenceData } = useGetEvidenceListQuery(
+    { user_id: user?.id, page: 1, limit: 1, meta: true },
+    { skip: !user?.id }
+  )
+  const { data: cpdData } = useGetCpdEntriesQuery(undefined, {
+    skip: user?.role !== 'Learner',
+  })
+  const { data: learnerPlanData } = useGetLearnerPlanListQuery(
+    { learners: String(learnerId ?? ''), meta: true },
+    { skip: !learnerId }
+  )
+  const { data: resourcesData } = useGetResourcesByCourseQuery(
+    {
+      course_id: firstCourseId ?? 0,
+      user_id: user?.id ?? '',
+    },
+    { skip: !firstCourseId || !user?.id }
+  )
+
+  const countData: PortfolioCountData = useMemo(() => {
+    const newDocTotal = pendingSignaturesData?.data?.length ?? 0
+    const evidenceTotal =
+      evidenceData?.meta_data?.items ?? evidenceData?.data?.length ?? 0
+    const gapsTotal = cpdData?.data?.length ?? 0
+    const sessionsTotal =
+      learnerPlanData?.meta_data?.items ?? learnerPlanData?.data?.length ?? 0
+    const resourcesTotal = resourcesData?.data?.length ?? 0
+
+    const uc = firstCourse as
+      | {
+          unitsNotStarted?: number
+          unitsFullyCompleted?: number
+          unitsPartiallyCompleted?: number
+          totalUnits?: number
+          available_units?: number
+        }
+      | undefined
+    const unitsSum =
+      Number(uc?.unitsNotStarted ?? 0) +
+      Number(uc?.unitsFullyCompleted ?? 0) +
+      Number(uc?.unitsPartiallyCompleted ?? 0)
+    const unitsTotal = (uc?.totalUnits ?? unitsSum) || 0
+    const unitsCompleted = Number(uc?.unitsFullyCompleted ?? 0)
+    const progressPercentage =
+      unitsTotal > 0 ? Math.round((unitsCompleted / unitsTotal) * 100) : 0
+    const availableUnits = Number(uc?.available_units ?? 0)
+    const selectedUnits = unitsTotal || 0
+
     return {
-      newDocTotal: 0,
+      evidenceTotal,
+      unitsTotal: unitsTotal || undefined,
+      unitsCompleted: unitsCompleted || undefined,
+      progressPercentage: progressPercentage || undefined,
+      gapsTotal: gapsTotal || undefined,
+      availableUnits: availableUnits || undefined,
+      selectedUnits: selectedUnits || undefined,
+      sessionsTotal: sessionsTotal || undefined,
+      resourcesTotal: resourcesTotal || undefined,
+      newDocTotal,
     }
-  }, [])
+  }, [
+    pendingSignaturesData?.data?.length,
+    evidenceData?.meta_data?.items,
+    evidenceData?.data?.length,
+    cpdData?.data?.length,
+    learnerPlanData?.meta_data?.items,
+    learnerPlanData?.data?.length,
+    resourcesData?.data?.length,
+    firstCourse,
+  ])
 
   return (
     <>

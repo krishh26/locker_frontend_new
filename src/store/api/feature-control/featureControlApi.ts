@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react"
 import type {
   FeatureResponse,
   FeatureListResponse,
+  FeaturePlansResponse,
   CreateFeatureRequest,
   UpdateFeatureLimitsRequest,
   MapFeatureToPlanRequest,
@@ -50,6 +51,19 @@ export const featureControlApi = createApi({
       query: (id) => `/feature-control/features/${id}`,
       providesTags: ["Feature"],
       transformResponse: (response: FeatureResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
+    // Get Feature Mapped Plans
+    getFeaturePlans: builder.query<FeaturePlansResponse, number>({
+      query: (featureId) => `/feature-control/features/${featureId}/plans`,
+      providesTags: (result, error, featureId) => [
+        { type: "FeaturePlan", id: featureId },
+      ],
+      transformResponse: (response: FeaturePlansResponse) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
         }
@@ -190,6 +204,7 @@ export const {
   useCreateFeatureMutation,
   useGetFeaturesQuery,
   useGetFeatureQuery,
+  useGetFeaturePlansQuery,
   useMapFeatureToPlanMutation,
   useUpdateFeatureLimitsMutation,
   useCheckFeatureAccessMutation,

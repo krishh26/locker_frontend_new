@@ -57,7 +57,6 @@ export function AdminDashboard() {
   })
   const [getCardData] = useLazyGetCardDataQuery()
   const [exporting, setExporting] = useState<Record<string, boolean>>({})
-  const [fetchingData, setFetchingData] = useState<Record<string, boolean>>({})
   const [activeLearnersDialog, setActiveLearnersDialog] = useState<{
     open: boolean
     summary?: ActiveLearnersSummary | null
@@ -156,19 +155,6 @@ export function AdminDashboard() {
     }
   }
 
-  const handleActiveLearnerClick = async () => {
-    setFetchingData((prev) => ({ ...prev, active_learners: true }))
-    try {
-      const response = await getCardData("active_learners").unwrap()
-      const res = response as ActiveLearnersCardDataResponse
-      setActiveLearnersDialog({ open: true, summary: res.summary ?? null })
-    } catch (error) {
-      console.error("Failed to fetch Active learners data:", error)
-    } finally {
-      setFetchingData((prev) => ({ ...prev, active_learners: false }))
-    }
-  }
-
 
   const dashboardTitle = userRole === "Admin" ? t("adminDashboard") : t("dashboard")
 
@@ -196,7 +182,6 @@ export function AdminDashboard() {
               : (card.name || "0")
             const displayCount = loading ? "..." : count
             const isExporting = apiType ? exporting[apiType] || false : false
-            const isFetching = apiType ? fetchingData[apiType] || false : false
             const showExport = Boolean(apiType && countKey && counts[countKey] !== undefined && counts[countKey]! > 0)
 
             return (
@@ -206,12 +191,8 @@ export function AdminDashboard() {
                 count={displayCount}
                 textColor={card.textColor}
                 radiusColor={card.radiusColor}
-                onClick={
-                  card.id === "active_learner" ? handleActiveLearnerClick : undefined
-                }
                 onExport={apiType ? () => handleExport(apiType, card.title) : undefined}
                 isExporting={isExporting}
-                isFetching={isFetching}
                 showExport={showExport}
               />
             )

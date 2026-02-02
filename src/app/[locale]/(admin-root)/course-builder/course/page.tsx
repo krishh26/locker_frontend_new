@@ -19,6 +19,8 @@ export default function CoursePage() {
     const [courseType, setCourseType] = useState<CourseCoreType | null>(null);
     const router = useRouter();
     const courseId = searchParams.get("id");
+    const stepParam = searchParams.get("step");
+    const initialStep = stepParam === "1" ? 1 : 0;
     const courseIdNumber = courseId ? Number(courseId) : undefined;
 
     // Fetch course data in edit mode to determine course type
@@ -98,6 +100,7 @@ export default function CoursePage() {
                 <CourseForm
                     courseType={courseType}
                     courseId={courseId}
+                    initialStep={initialStep}
                 />
             )}
         </div>

@@ -180,3 +180,16 @@ export interface StatusOverviewResponse {
   data: StatusOverview
 }
 
+/** Portfolio card count data (learner/course overview) */
+export interface PortfolioCountData {
+  evidenceTotal?: number
+  unitsTotal?: number
+  unitsCompleted?: number
+  progressPercentage?: number
+  gapsTotal?: number
+  availableUnits?: number
+  selectedUnits?: number
+  sessionsTotal?: number
+  resourcesTotal?: number
+  newDocTotal?: number
+}

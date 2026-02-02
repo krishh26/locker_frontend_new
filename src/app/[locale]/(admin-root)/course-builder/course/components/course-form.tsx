@@ -37,6 +37,7 @@ import { removeEmptyStrings } from "../constants/course-constants";
 interface CourseFormProps {
   courseType: CourseCoreType;
   courseId?: string | null;
+  initialStep?: number;
 }
 
 const getSteps = (courseType: CourseCoreType) => {
@@ -46,9 +47,16 @@ const getSteps = (courseType: CourseCoreType) => {
   return ["Course Details", "Units/Modules"];
 };
 
-export function CourseForm({ courseType, courseId }: CourseFormProps) {
+function getInitialStep(courseType: CourseCoreType, initialStep?: number): number {
+  if (courseType === "Gateway") return 0;
+  return initialStep === 1 ? 1 : 0;
+}
+
+export function CourseForm({ courseType, courseId, initialStep }: CourseFormProps) {
   const router = useRouter();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(() =>
+    getInitialStep(courseType, initialStep)
+  );
   const [currentCourseId, setCurrentCourseId] = useState<string | null>(courseId || null);
   const isEditMode = !!currentCourseId;
   const courseIdNumber = currentCourseId ? Number(currentCourseId) : undefined;
@@ -351,11 +359,25 @@ export function CourseForm({ courseType, courseId }: CourseFormProps) {
               toast.success("Course details saved successfully!");
               clearErrors(); // Clear all errors before moving to next step
               setActiveStep((prev) => prev + 1);
+              queueMicrotask(() => {
+                if (currentCourseId) {
+                  router.replace(
+                    `/course-builder/course?id=${currentCourseId}&step=1`
+                  );
+                }
+              });
             }
           } else {
             // No changes, just move to next step
             clearErrors();
             setActiveStep((prev) => prev + 1);
+            queueMicrotask(() => {
+              if (currentCourseId) {
+                router.replace(
+                  `/course-builder/course?id=${currentCourseId}&step=1`
+                );
+              }
+            });
           }
         } else {
           // Create new course
@@ -364,11 +386,13 @@ export function CourseForm({ courseType, courseId }: CourseFormProps) {
           if (result.status && result.data?.course_id) {
             const newCourseId = String(result.data.course_id);
             setCurrentCourseId(newCourseId);
-            // Update URL to include courseId
-            router.replace(`/course-builder/course?id=${newCourseId}`);
-            toast.success("Course created successfully!");
             clearErrors(); // Clear all errors before moving to next step
             setActiveStep((prev) => prev + 1);
+            toast.success("Course created successfully!");
+            // Defer URL update so React commits state first; avoids step reset on re-render
+            queueMicrotask(() => {
+              router.replace(`/course-builder/course?id=${newCourseId}&step=1`);
+            });
           }
         }
       } catch (error: any) {
@@ -420,6 +444,16 @@ export function CourseForm({ courseType, courseId }: CourseFormProps) {
     // Clear errors when going back (no validation)
     clearErrors();
     setActiveStep((prev) => Math.max(0, prev - 1));
+    // Keep URL in sync so step survives remount
+    const nextStep = Math.max(0, activeStep - 1);
+    queueMicrotask(() => {
+      const base = "/course-builder/course";
+      if (currentCourseId) {
+        router.replace(`${base}?id=${currentCourseId}&step=${nextStep}`);
+      } else {
+        router.replace(`${base}?step=${nextStep}`);
+      }
+    });
   };
 
   // Render step content

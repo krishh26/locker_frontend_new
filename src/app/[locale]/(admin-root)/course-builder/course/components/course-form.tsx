@@ -158,13 +158,11 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
 
   const {
     control,
-    handleSubmit,
     formState: { errors, isDirty },
     reset,
     watch,
     setValue,
     trigger,
-    setError,
     clearErrors,
   } = form;
 

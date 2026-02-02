@@ -310,28 +310,28 @@ export function CaseloadManagerCards({
           return (
             <Card key={managerId} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <Avatar className="h-12 w-12 shrink-0">
                       <AvatarFallback className="bg-primary text-primary-foreground">
                         {getInitials(manager.line_manager.full_name)}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 min-w-0">
+                    <div className="min-w-0 flex-1">
                       <h3 className="font-semibold text-lg truncate">
                         {manager.line_manager.full_name}
                       </h3>
                       <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
-                        <Mail className="h-3 w-3" />
+                        <Mail className="h-3 w-3 shrink-0" />
                         <span className="truncate">{manager.line_manager.email}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center flex-wrap gap-1 shrink-0">
                     {manager.statistics.total_managed_users > 0 && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                             <Download className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -354,7 +354,7 @@ export function CaseloadManagerCards({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8"
+                      className="h-8 w-8 shrink-0"
                       onClick={() => handleManagerToggle(managerId)}
                     >
                       {isExpanded ? (

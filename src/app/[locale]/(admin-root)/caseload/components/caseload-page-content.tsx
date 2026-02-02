@@ -30,7 +30,7 @@ export function CaseloadPageContent() {
   const totalPages = Math.ceil(totalCount / rowsPerPage);
 
   return (
-    <div className="space-y-6 px-4 lg:px-6 pb-8">
+    <div className="space-y-4 sm:space-y-6 px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8 max-w-full min-w-0">
       {/* Page Header */}
       <PageHeader
         title={t("pageTitle")}
@@ -39,9 +39,9 @@ export function CaseloadPageContent() {
       />
 
       {/* Search and Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex-1 w-full sm:max-w-md">
-          <div className="relative">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-between">
+        <div className="w-full min-w-0 sm:max-w-md sm:flex-1">
+          <div className="relative w-full">
             <Input
               placeholder={t("searchPlaceholder")}
               value={filterName}
@@ -49,19 +49,20 @@ export function CaseloadPageContent() {
                 setPage(1);
                 setFilterName(e.target.value);
               }}
-              className="pl-10"
+              className="pl-10 w-full min-w-0"
             />
-            <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto shrink-0">
           <Button
             variant="outline"
             size="sm"
             onClick={() => refetch()}
             disabled={isLoading}
+            className="flex-1 sm:flex-initial min-w-0"
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
+            <RefreshCw className={`h-4 w-4 mr-2 shrink-0 ${isLoading ? "animate-spin" : ""}`} />
             {t("refresh")}
           </Button>
           {filterName && (
@@ -72,6 +73,7 @@ export function CaseloadPageContent() {
                 setFilterName("");
                 setPage(1);
               }}
+              className="flex-1 sm:flex-initial min-w-0"
             >
               {t("clear")}
             </Button>
@@ -81,15 +83,15 @@ export function CaseloadPageContent() {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="border rounded-lg p-6 space-y-4">
-              <Skeleton className="h-12 w-12 rounded-full" />
-              <Skeleton className="h-4 w-3/4" />
+            <div key={i} className="border rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4">
+              <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-full" />
+              <Skeleton className="h-4 w-2/3 sm:w-3/4" />
               <Skeleton className="h-4 w-1/2" />
               <div className="flex gap-2">
-                <Skeleton className="h-16 flex-1" />
-                <Skeleton className="h-16 flex-1" />
+                <Skeleton className="h-14 sm:h-16 flex-1 min-w-0" />
+                <Skeleton className="h-14 sm:h-16 flex-1 min-w-0" />
               </div>
             </div>
           ))}
@@ -98,9 +100,9 @@ export function CaseloadPageContent() {
 
       {/* Error State */}
       {isError && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
+        <Alert variant="destructive" className="w-full">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          <AlertDescription className="min-w-0">
             {t("failedToLoad")}
           </AlertDescription>
         </Alert>
@@ -118,10 +120,10 @@ export function CaseloadPageContent() {
 
       {/* No Data State */}
       {!isLoading && !isError && lineManagers.length === 0 && (
-        <div className="border rounded-lg p-12 text-center">
-          <Users className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">{t("noLineManagersFound")}</h3>
-          <p className="text-muted-foreground">
+        <div className="border rounded-lg p-6 sm:p-8 md:p-12 text-center w-full min-w-0">
+          <Users className="h-12 w-12 sm:h-16 sm:w-16 mx-auto text-muted-foreground mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold mb-2 px-2">{t("noLineManagersFound")}</h3>
+          <p className="text-muted-foreground text-sm sm:text-base px-2">
             {filterName
               ? `${t("noLineManagersMatch")} "${filterName}"`
               : t("noLineManagersInSystem")}

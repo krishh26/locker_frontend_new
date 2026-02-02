@@ -840,7 +840,7 @@ export function EvidenceLibraryDataTable() {
     });
 
     return baseColumns;
-  }, [selectedCourseFilter, selectedCourseDetails, courses, handleDownload, handleReupload, router, isLearner, learnerSelectedUnits]);
+  }, [selectedCourseFilter, selectedCourseDetails, learnerSelectedUnits, router, courses, isLearner, handleReuploadClick, handleDownload]);
 
   const table = useReactTable({
     data: tableData,

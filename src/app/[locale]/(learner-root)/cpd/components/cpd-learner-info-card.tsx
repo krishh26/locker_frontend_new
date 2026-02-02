@@ -74,7 +74,7 @@ export function CpdLearnerInfoCard() {
         <MetricCard
           key={info.title}
           title={info.title}
-          value={info.value}
+          value={String(info.value ?? "")}
           icon={info.icon}
         />
       ))}

@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export interface CourseUnit {
+  id: string;
+  title: string;
+}
+
 export interface Course {
   course_id: number;
   course_name: string;
@@ -18,6 +23,7 @@ export interface Course {
   active?: boolean;
   created_at?: string;
   updated_at?: string;
+  units?: CourseUnit[];
 }
 
 export interface CourseFilters {

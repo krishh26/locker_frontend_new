@@ -378,8 +378,10 @@ export function TimeLogFormDialog({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {selectedCourse?.units && selectedCourse.units.length > 0 ? (
-                          selectedCourse.units.map((unit: { id: string; title: string }) => (
+                        {(() => {
+                          const units = (selectedCourse as { units?: { id: string; title: string }[] } | undefined)?.units;
+                          return units && units.length > 0 ? (
+                          units.map((unit) => (
                             <div key={unit.id} className="flex items-center space-x-2 p-2">
                               <Checkbox
                                 checked={selectedUnits.includes(unit.title)}
@@ -397,11 +399,12 @@ export function TimeLogFormDialog({
                               <label className="text-sm">{unit.title}</label>
                             </div>
                           ))
-                        ) : (
-                          <div className="p-2 text-sm text-muted-foreground">
-                            No units available for selected course
-                          </div>
-                        )}
+                          ) : (
+                            <div className="p-2 text-sm text-muted-foreground">
+                              No units available for selected course
+                            </div>
+                          );
+                        })()}
                       </SelectContent>
                     </Select>
                     <FormMessage />

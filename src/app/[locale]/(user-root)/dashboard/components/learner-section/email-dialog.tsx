@@ -59,7 +59,9 @@ export function EmailDialog({
         email: learnerEmail,
         subject,
         message,
-        adminName: user?.user_name || `${user?.first_name} ${user?.last_name}` || "Admin",
+        adminName: String(
+          user?.user_name || `${user?.first_name ?? ""} ${user?.last_name ?? ""}`.trim() || "Admin"
+        ),
       }).unwrap()
       
       toast.success("Email sent successfully")

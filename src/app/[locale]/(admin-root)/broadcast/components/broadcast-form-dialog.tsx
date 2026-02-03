@@ -58,7 +58,6 @@ export function BroadcastFormDialog({
 
   const form = useForm<CreateBroadcastFormValues | UpdateBroadcastFormValues>({
     resolver: zodResolver(isEditMode ? updateBroadcastSchema : createBroadcastSchema),
-    mode: "onChange",
     defaultValues: {
       title: "",
       description: "",

@@ -55,7 +55,6 @@ export function CreateCentreForm({
 
   const form = useForm<CreateCentreFormValues>({
     resolver: zodResolver(createCentreSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: "",
       organisationId: defaultOrganisationId || undefined,

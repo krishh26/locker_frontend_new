@@ -35,7 +35,6 @@ export function EditAccountManagerForm({
 
   const form = useForm<EditAccountManagerFormValues>({
     resolver: zodResolver(editAccountManagerSchema),
-    mode: "onChange",
     defaultValues: {
       email: accountManager.email,
       firstName: accountManager.firstName || "",

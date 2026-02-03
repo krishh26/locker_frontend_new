@@ -53,7 +53,6 @@ export function ChooseUnitsForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
-    mode: "onChange",
   });
 
   // Update form when units load

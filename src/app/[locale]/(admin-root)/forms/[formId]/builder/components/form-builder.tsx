@@ -170,7 +170,6 @@ export function FormBuilder({ formId }: FormBuilderProps) {
 
   const form = useForm<MetadataFormValues>({
     resolver: zodResolver(metadataSchema),
-    mode: "onChange",
     defaultValues: {
       form_name: "",
       type: "",

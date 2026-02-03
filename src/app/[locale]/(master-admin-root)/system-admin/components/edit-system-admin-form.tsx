@@ -35,7 +35,6 @@ export function EditSystemAdminForm({
 
   const form = useForm<EditSystemAdminFormValues>({
     resolver: zodResolver(editSystemAdminSchema),
-    mode: "onChange",
     defaultValues: {
       email: systemAdmin.email,
       firstName: systemAdmin.firstName || "",

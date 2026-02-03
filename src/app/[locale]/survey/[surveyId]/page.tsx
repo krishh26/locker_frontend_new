@@ -120,7 +120,6 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
-    mode: "onChange", // Validate on change to catch issues early
   })
 
   // Loading state

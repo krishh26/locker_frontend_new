@@ -89,7 +89,6 @@ export function FundingBandsFormDialog({
 
   const form = useForm<CreateFundingBandFormValues | UpdateFundingBandFormValues>({
     resolver: zodResolver(isEditMode ? updateFundingBandSchema : createFundingBandSchema),
-    mode: "onChange",
     defaultValues: isEditMode
       ? {
           amount: "",

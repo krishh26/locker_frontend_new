@@ -173,7 +173,6 @@ export function UsersForm({ user }: UsersFormProps) {
 
   const form = useForm<CreateUserFormValues | UpdateUserFormValues>({
     resolver: zodResolver(isEditMode ? updateUserSchema(t) : createUserSchema(t)),
-    mode: "onChange",
         defaultValues: isEditMode
       ? {
           first_name: "",

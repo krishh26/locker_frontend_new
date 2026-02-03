@@ -33,7 +33,6 @@ export function CreateSystemAdminForm({
 
   const form = useForm<CreateSystemAdminFormValues>({
     resolver: zodResolver(createSystemAdminSchema),
-    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",

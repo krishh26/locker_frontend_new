@@ -44,7 +44,6 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
 
   const form = useForm<EditPlanFormValues>({
     resolver: zodResolver(editPlanSchema) as unknown as Resolver<EditPlanFormValues>,
-    mode: "onChange",
     defaultValues: {
       name: plan.name,
       description: plan.description ?? "",

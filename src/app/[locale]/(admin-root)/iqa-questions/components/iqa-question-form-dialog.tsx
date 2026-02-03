@@ -55,7 +55,6 @@ export function IQAQuestionFormDialog({
 
   const form = useForm<IQAQuestionFormData>({
     resolver: zodResolver(iqaQuestionSchema),
-    mode: "onChange",
     defaultValues: {
       question: "",
     },

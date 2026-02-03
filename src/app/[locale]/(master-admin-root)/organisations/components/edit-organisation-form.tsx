@@ -46,7 +46,6 @@ export function EditOrganisationForm({
 
   const form = useForm<EditOrganisationFormValues>({
     resolver: zodResolver(editOrganisationSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: organisation.name,
       email: organisation.email || "",

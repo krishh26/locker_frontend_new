@@ -80,7 +80,6 @@ export function ActionModal({
 
   const form = useForm<ActionFormValues>({
     resolver: zodResolver(actionFormSchema),
-    mode: "onChange",
     defaultValues: {
       action_with_id: "",
       action_required: "",

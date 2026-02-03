@@ -246,7 +246,6 @@ export function LearnerProfilePageContent({
   const form = useForm<LearnerProfileFormValues>({
     resolver: zodResolver(learnerProfileSchema),
     defaultValues: getDefaultValues(learner),
-    mode: 'onChange',
   })
 
   // Reset form when learner data loads

@@ -61,7 +61,6 @@ export function WellbeingResourceFormDialog({
 
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(resourceFormSchema),
-    mode: "onChange",
     defaultValues: {
       resource_name: "",
       description: "",

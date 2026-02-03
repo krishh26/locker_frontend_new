@@ -43,7 +43,6 @@ export function CreateOrganisationForm({
 
   const form = useForm<CreateOrganisationFormValues>({
     resolver: zodResolver(createOrganisationSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: "",
       email: "",

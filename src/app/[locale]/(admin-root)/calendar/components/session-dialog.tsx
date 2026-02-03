@@ -99,7 +99,6 @@ export function SessionDialog({
       Duration: '0:0',
       type: '',
     },
-    mode: 'onChange',
   })
 
   // Convert learners data to Option format for MultipleSelector

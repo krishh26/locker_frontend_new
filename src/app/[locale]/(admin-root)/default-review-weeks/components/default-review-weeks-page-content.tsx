@@ -53,7 +53,6 @@ export function DefaultReviewWeeksPageContent() {
 
     const form = useForm<DefaultReviewWeeksFormData>({
         resolver: zodResolver(defaultReviewWeeksSchema(t)),
-        mode: "onChange",
         defaultValues: {
             noReviewWeeks: 5,
             noInductionWeeks: 2,

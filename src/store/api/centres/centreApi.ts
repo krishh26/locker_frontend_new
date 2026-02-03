@@ -15,6 +15,7 @@ export interface CentreFilters {
   status?: "active" | "suspended"
   page?: number
   limit?: number
+  meta?: boolean
 }
 
 export const centreApi = createApi({
@@ -29,8 +30,12 @@ export const centreApi = createApi({
           status = "",
           page = 1,
           limit = 10,
+          meta= true,
         } = filters as CentreFilters
         let url = `/centres?page=${page}&limit=${limit}`
+        if (meta) {
+          url += `&meta=true`
+        }
         if (organisationId) {
           url += `&organisationId=${organisationId}`
         }

@@ -9,7 +9,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -22,6 +21,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -51,12 +57,13 @@ import { exportTableToPdf } from "@/utils/pdfExport"
 import { CreateCentreForm } from "./create-centre-form"
 import { EditCentreForm } from "./edit-centre-form"
 
+const DEFAULT_PAGE_SIZE = 10
+
 export function CentresDataTable() {
   const router = useRouter()
-  const { data: centresData, isLoading: centresLoading, refetch } = useGetCentresQuery()
-  const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
-  const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
-
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE)
+  const [statusFilter, setStatusFilter] = useState<string>("all")
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
@@ -64,7 +71,23 @@ export function CentresDataTable() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [selectedCentre, setSelectedCentre] = useState<Centre | null>(null)
 
-  const centres = centresData?.data || []
+  const queryArgs = useMemo(
+    () => ({
+      page,
+      limit: pageSize,
+      status: statusFilter === "all" ? undefined : (statusFilter as "active" | "suspended"),
+      meta: true,
+    }),
+    [page, pageSize, statusFilter]
+  )
+  const { data: centresData, isLoading: centresLoading, refetch } = useGetCentresQuery(queryArgs)
+  const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
+  const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
+
+  const centres = centresData?.data ?? []
+  const meta = centresData?.meta_data
+  const totalItems = meta?.items ?? 0
+  const totalPages = meta?.pages ?? 0
 
   const handleExportCsv = () => {
     if (centres.length === 0) {
@@ -275,16 +298,31 @@ export function CentresDataTable() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFilter,
+    manualPagination: true,
+    pageCount: totalPages,
     state: {
       sorting,
       columnFilters,
       globalFilter,
     },
   })
+
+  const handlePageChange = useCallback((newPage: number) => {
+    setPage(newPage)
+  }, [])
+
+  const handlePageSizeChange = useCallback((newPageSize: number) => {
+    setPageSize(newPageSize)
+    setPage(1)
+  }, [])
+
+  const handleStatusFilterChange = useCallback((value: string) => {
+    setStatusFilter(value)
+    setPage(1)
+  }, [])
 
   if (centresLoading) {
     return (
@@ -302,16 +340,28 @@ export function CentresDataTable() {
 
   return (
     <div className="w-full space-y-4">
-      {/* Search and Actions Bar */}
+      {/* Search, filters and Actions Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search centres..."
-            value={globalFilter ?? ""}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            className="pl-9"
-          />
+        <div className="flex flex-1 flex-wrap items-center gap-2">
+          <div className="relative max-w-sm">
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search centres..."
+              value={globalFilter ?? ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+          <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
+            <SelectTrigger className="w-[140px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All statuses</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="suspended">Suspended</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -391,7 +441,16 @@ export function CentresDataTable() {
       </div>
 
       {/* Pagination */}
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        manualPagination
+        currentPage={page}
+        totalPages={totalPages}
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
 
       {/* Create Centre Dialog */}
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>

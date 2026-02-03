@@ -68,7 +68,6 @@ export function CpdEditableRow({
       learning: row.learning || "",
       impact: row.impact || "",
     },
-    mode: "onChange",
   });
 
   const rowId = String(row.id || "");

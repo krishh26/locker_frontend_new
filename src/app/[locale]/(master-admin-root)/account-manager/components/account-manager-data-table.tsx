@@ -53,6 +53,7 @@ import {
   useGetAccountManagersQuery,
   useActivateAccountManagerMutation,
   useDeactivateAccountManagerMutation,
+  useDeleteAccountManagerMutation,
 } from "@/store/api/account-manager/accountManagerApi"
 import type { AccountManager } from "@/store/api/account-manager/types"
 import { toast } from "sonner"
@@ -71,6 +72,7 @@ export function AccountManagerDataTable() {
   const { data, isLoading, refetch } = useGetAccountManagersQuery()
   const [activateManager, { isLoading: isActivating }] = useActivateAccountManagerMutation()
   const [deactivateManager, { isLoading: isDeactivating }] = useDeactivateAccountManagerMutation()
+  const [deleteManager, { isLoading: isDeleting }] = useDeleteAccountManagerMutation()
   const canCreateManager = isMasterAdmin(user)
 
   const [sorting, setSorting] = useState<SortingState>([])
@@ -164,10 +166,22 @@ export function AccountManagerDataTable() {
 
   const handleDeleteConfirm = useCallback(async () => {
     if (!selectedManager) return
-    toast.info("Delete functionality to be implemented")
-    setIsDeleteDialogOpen(false)
-    setSelectedManager(null)
-  }, [selectedManager])
+    try {
+      await deleteManager(selectedManager.id).unwrap()
+      toast.success("Account manager deleted successfully")
+      setIsDeleteDialogOpen(false)
+      setSelectedManager(null)
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+            ? error.message
+            : "Failed to delete account manager"
+      toast.error(errorMessage)
+    }
+  }, [selectedManager, deleteManager, refetch])
 
   const handleExportCsv = () => {
     if (accountManagers.length === 0) {
@@ -515,9 +529,10 @@ export function AccountManagerDataTable() {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
+              disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -24,7 +24,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 // Schema creation function that accepts translation function
 const createCentreSchema = (t: (key: string) => string) => z.object({
   name: z.string().min(1, t("validation.nameRequired")),
-  organisationId: z.number().min(1, t("validation.organisationRequired")),
+  organisationId: z
+    .union([z.number().min(1, t("validation.organisationRequired")), z.undefined()])
+    .refine((v) => v !== undefined && v >= 1, { message: t("validation.organisationRequired") }),
   status: z.enum(["active", "suspended"]),
 })
 
@@ -55,7 +57,6 @@ export function CreateCentreForm({
 
   const form = useForm<CreateCentreFormValues>({
     resolver: zodResolver(createCentreSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: "",
       organisationId: defaultOrganisationId || undefined,
@@ -64,6 +65,7 @@ export function CreateCentreForm({
   })
 
   const onSubmit = async (values: CreateCentreFormValues) => {
+    if (values.organisationId == null) return
     try {
       const createData: CreateCentreRequest = {
         name: values.name,
@@ -113,8 +115,8 @@ export function CreateCentreForm({
           render={({ field }) => (
             <>
               <Select
-                value={field.value?.toString()}
-                onValueChange={(value) => field.onChange(parseInt(value))}
+                value={field.value != null ? field.value.toString() : ""}
+                onValueChange={(value) => field.onChange(value ? parseInt(value, 10) : undefined)}
                 disabled={isLoading}
               >
                 <SelectTrigger
@@ -173,7 +175,6 @@ export function CreateCentreForm({
       <div className="space-y-2">
         <Label htmlFor="status">
           {t("form.status")}
-          <span className="text-destructive">*</span>
         </Label>
         <Controller
           name="status"

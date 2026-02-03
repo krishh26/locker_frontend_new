@@ -92,7 +92,6 @@ export function BroadcastMessageDialog({
 
   const form = useForm<BroadcastMessageFormValues>({
     resolver: zodResolver(broadcastMessageSchema),
-    mode: "onChange",
     defaultValues: {
       target: "All",
       user_ids: [],

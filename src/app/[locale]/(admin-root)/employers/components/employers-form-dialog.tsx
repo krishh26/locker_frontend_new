@@ -111,7 +111,6 @@ export function EmployersFormDialog({
 
   const form = useForm<CreateEmployerFormValues | UpdateEmployerFormValues>({
     resolver: zodResolver(isEditMode ? updateEmployerSchema : createEmployerSchema),
-    mode: "onChange",
     defaultValues: {
       employer_name: "",
       msi_employer_id: "",

@@ -55,7 +55,6 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
 
   const form = useForm<CreatePlanFormValues>({
     resolver: zodResolver(createPlanSchema) as unknown as Resolver<CreatePlanFormValues>,
-    mode: "onChange",
     defaultValues: {
       name: "",
       code: "",

@@ -43,7 +43,6 @@ export function CreateOrganisationForm({
 
   const form = useForm<CreateOrganisationFormValues>({
     resolver: zodResolver(createOrganisationSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
@@ -135,7 +134,6 @@ export function CreateOrganisationForm({
       <div className="space-y-2">
         <Label htmlFor="status">
           {t("form.status")}
-          <span className="text-destructive">{t("form.required")}</span>
         </Label>
         <Controller
           name="status"

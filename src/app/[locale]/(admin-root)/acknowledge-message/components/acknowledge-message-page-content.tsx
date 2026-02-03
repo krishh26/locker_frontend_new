@@ -86,7 +86,6 @@ export function AcknowledgeMessagePageContent() {
 
   const form = useForm<AcknowledgementFormData>({
     resolver: zodResolver(acknowledgementSchema(t)),
-    mode: "onChange",
     defaultValues: {
       message: "",
       file: undefined,

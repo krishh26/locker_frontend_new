@@ -63,7 +63,6 @@ export function CreateFeatureForm({
 
   const form = useForm<CreateFeatureFormValues>({
     resolver: zodResolver(createFeatureSchema),
-    mode: "onChange",
     defaultValues: {
       name: "",
       code: "",

@@ -66,7 +66,6 @@ export function AssignUsersDialog({
 
   const form = useForm<AssignUsersFormValues>({
     resolver: zodResolver(assignUsersSchema),
-    mode: "onChange",
     defaultValues: {
       assignType: "",
       user_ids: [],

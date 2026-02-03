@@ -102,7 +102,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
 
   const form = useForm<EvidenceFormValues>({
     resolver: zodResolver(schema) as any,
-    mode: 'onChange',
     defaultValues: {
       title: '',
       description: '',

@@ -39,7 +39,6 @@ export function SafeguardingPageContent() {
 
   const form = useForm<SafeguardingFormData>({
     resolver: zodResolver(safeguardingSchema(t)),
-    mode: "onChange",
     defaultValues: {
       telNumber: "",
       mobileNumber: "",

@@ -101,6 +101,23 @@ export const accountManagerApi = createApi({
         return response
       },
     }),
+    // Delete Account Manager
+    deleteAccountManager: builder.mutation<
+      { status: boolean; message?: string },
+      number
+    >({
+      query: (id) => ({
+        url: `/account-manager/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AccountManager"],
+      transformResponse: (response: { status: boolean; message?: string }) => {
+        if (!response?.status) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
+        }
+        return response
+      },
+    }),
     // Assign Organisations - "Assign companies to manager"
     assignOrganisations: builder.mutation<
       AccountManagerResponse,
@@ -166,6 +183,7 @@ export const {
   useUpdateAccountManagerMutation,
   useActivateAccountManagerMutation,
   useDeactivateAccountManagerMutation,
+  useDeleteAccountManagerMutation,
   useAssignOrganisationsMutation,
   useRemoveOrganisationAssignmentMutation,
   useGetAssignedOrganisationsQuery,

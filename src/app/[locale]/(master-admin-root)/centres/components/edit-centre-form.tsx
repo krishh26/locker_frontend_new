@@ -45,7 +45,6 @@ export function EditCentreForm({
 
   const form = useForm<EditCentreFormValues>({
     resolver: zodResolver(editCentreSchema(t)),
-    mode: "onChange",
     defaultValues: {
       name: centre.name,
       status: centre.status,

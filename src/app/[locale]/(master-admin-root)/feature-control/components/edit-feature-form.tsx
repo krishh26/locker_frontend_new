@@ -54,7 +54,6 @@ export function EditFeatureForm({
 
   const form = useForm<EditFeatureFormValues>({
     resolver: zodResolver(editFeatureSchema),
-    mode: "onChange",
     defaultValues: {
       maxUsers: feature.limits?.maxUsers?.toString() || "",
       maxCentres: feature.limits?.maxCentres?.toString() || "",

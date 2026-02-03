@@ -33,7 +33,6 @@ export function CreateAccountManagerForm({
 
   const form = useForm<CreateAccountManagerFormValues>({
     resolver: zodResolver(createAccountManagerSchema),
-    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",

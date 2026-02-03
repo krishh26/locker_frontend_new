@@ -55,7 +55,6 @@ export function SessionTypeFormDialog({
 
   const form = useForm<SessionTypeFormData>({
     resolver: zodResolver(sessionTypeSchema),
-    mode: "onChange",
     defaultValues: {
       name: "",
       isOffTheJob: false,
@@ -100,10 +99,14 @@ export function SessionTypeFormDialog({
         toast.success("Session Type created successfully");
       }
       onSuccess();
-    } catch (error: any) {
-      toast.error(
-        error?.data?.message || "Failed to save Session Type"
-      );
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : undefined
+      toast.error(errorMessage ?? "Failed to save Session Type");
     }
   };
 

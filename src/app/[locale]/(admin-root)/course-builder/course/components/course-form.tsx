@@ -153,7 +153,6 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
   const form = useForm<CourseFormData>({
     resolver: zodResolver(stepValidationSchema as any) as any,
     defaultValues: defaultFormValues,
-    mode: "onChange",
   });
 
   const {

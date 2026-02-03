@@ -135,7 +135,6 @@ export function LearnersFormDialog({
 
   const form = useForm<CreateLearnerFormValues | UpdateLearnerFormValues>({
     resolver: zodResolver(isEditMode ? updateLearnerSchema : createLearnerSchema),
-    mode: "onChange",
     defaultValues: isEditMode
       ? {
           first_name: "",

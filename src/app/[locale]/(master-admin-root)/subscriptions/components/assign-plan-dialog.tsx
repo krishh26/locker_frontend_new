@@ -25,7 +25,12 @@ interface AssignPlanDialogProps {
 }
 
 export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps) {
-  const { data: orgsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery()
+  const { data: orgsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery({
+    status: "active",
+    page: 1,
+    limit: 500,
+    meta: "true",
+  })
   const { data: plansData, isLoading: isLoadingPlans } = useGetPlansQuery()
   const [assignPlanMutation, { isLoading: isAssigning }] = useAssignPlanToOrganisationMutation()
 

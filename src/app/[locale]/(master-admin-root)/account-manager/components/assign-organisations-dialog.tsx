@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Loader2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -33,9 +33,20 @@ export function AssignOrganisationsDialog({
   )
   const [assignOrganisations, { isLoading: isAssigning }] = useAssignOrganisationsMutation()
 
-  const organisations = organisationsData?.data || []
-  const assignedOrgIds = assignedData?.data || accountManager.assignedOrganisationIds
+  const organisations = organisationsData?.data ?? []
+  const assignedOrgIds = assignedData?.data ?? accountManager.assignedOrganisationIds
   const [selectedOrgIds, setSelectedOrgIds] = useState<number[]>(assignedOrgIds)
+
+  // Show only active orgs as assignable; keep already-assigned orgs (including suspended) visible
+  const displayList = useMemo(() => {
+    const list = organisationsData?.data ?? []
+    const assignedSet = new Set(assignedOrgIds)
+    const assignedOrgs = list.filter((o) => assignedSet.has(o.id))
+    const activeNotAssigned = list.filter(
+      (o) => o.status === "active" && !assignedSet.has(o.id)
+    )
+    return [...assignedOrgs, ...activeNotAssigned]
+  }, [organisationsData?.data, assignedOrgIds])
 
   useEffect(() => {
     if (assignedOrgIds.length > 0) {
@@ -90,13 +101,13 @@ export function AssignOrganisationsDialog({
       </div>
 
       <ScrollArea className="h-[300px] w-full rounded-md border p-4">
-        {organisations.length === 0 ? (
+        {displayList.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
             No organisations available
           </div>
         ) : (
           <div className="space-y-3">
-            {organisations.map((org) => {
+            {displayList.map((org) => {
               const isSelected = selectedOrgIds.includes(org.id)
               return (
                 <div
@@ -130,7 +141,7 @@ export function AssignOrganisationsDialog({
           <Label>Selected ({selectedOrgIds.length})</Label>
           <div className="flex flex-wrap gap-2">
             {selectedOrgIds.map((orgId) => {
-              const org = organisations.find((o) => o.id === orgId)
+              const org = displayList.find((o) => o.id === orgId) ?? organisations.find((o) => o.id === orgId)
               if (!org) return null
               return (
                 <Badge key={orgId} variant="secondary" className="flex items-center gap-1">

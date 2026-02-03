@@ -636,6 +636,7 @@
       "statusActive": "Active",
       "statusSuspended": "Suspended",
       "createOrganisation": "Create Organisation",
+      "updateOrganisation": "Update Organisation",
       "required": "*"
     },
     "validation": {
@@ -645,7 +646,9 @@
     },
     "toast": {
       "createSuccess": "Organisation created successfully",
-      "createFailed": "Failed to create organisation"
+      "createFailed": "Failed to create organisation",
+      "updateSuccess": "Organisation updated successfully",
+      "updateFailed": "Failed to update organisation"
     }
   },
   "centres": {

@@ -44,7 +44,12 @@ export function CreateCentreForm({
   const t = useTranslations("centres")
   const common = useTranslations("common")
   const [createCentre, { isLoading: isCreating }] = useCreateCentreMutation()
-  const { data: organisationsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery()
+  const { data: organisationsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery({
+    status: "active",
+    page: 1,
+    limit: 500,
+    meta: "true",
+  })
 
   const organisations = organisationsData?.data || []
 

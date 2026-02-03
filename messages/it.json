@@ -617,28 +617,54 @@
     "pageTitle": "Broadcast Management",
     "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
   },
-  "centres": {
+  "organisations": {
     "form": {
-      "organisation": "Organisation",
-      "organisationPlaceholder": "Select organisation",
       "name": "Name",
-      "namePlaceholder": "Enter centre name",
+      "namePlaceholder": "Enter organisation name",
+      "email": "Email",
+      "emailPlaceholder": "Enter organisation email (optional)",
       "status": "Status",
       "statusPlaceholder": "Select status",
       "statusActive": "Active",
       "statusSuspended": "Suspended",
-      "createCentre": "Create Centre",
-      "updateCentre": "Update Centre"
+      "createOrganisation": "Create Organisation",
+      "updateOrganisation": "Update Organisation",
+      "required": "*"
     },
     "validation": {
-      "nameRequired": "Name is required",
-      "organisationRequired": "Organisation is required"
+      "nameRequired": "Organisation name is required",
+      "emailInvalid": "Invalid email address",
+      "statusRequired": "Status is required"
     },
     "toast": {
-      "createSuccess": "Centre created successfully",
-      "createFailed": "Failed to create centre",
-      "updateSuccess": "Centre updated successfully",
-      "updateFailed": "Failed to update centre"
+      "createSuccess": "Organisation created successfully",
+      "createFailed": "Failed to create organisation",
+      "updateSuccess": "Organisation updated successfully",
+      "updateFailed": "Failed to update organisation"
+    }
+  },
+  "centres": {
+    "form": {
+      "organisation": "Organizzazione",
+      "organisationPlaceholder": "Seleziona organizzazione",
+      "name": "Nome",
+      "namePlaceholder": "Inserisci il nome del centro",
+      "status": "Stato",
+      "statusPlaceholder": "Seleziona stato",
+      "statusActive": "Attivo",
+      "statusSuspended": "Sospeso",
+      "createCentre": "Crea centro",
+      "updateCentre": "Aggiorna centro"
+    },
+    "validation": {
+      "nameRequired": "Il nome è obbligatorio",
+      "organisationRequired": "L'organizzazione è obbligatoria"
+    },
+    "toast": {
+      "createSuccess": "Centro creato con successo",
+      "createFailed": "Impossibile creare il centro",
+      "updateSuccess": "Centro aggiornato con successo",
+      "updateFailed": "Impossibile aggiornare il centro"
     }
   }
 }

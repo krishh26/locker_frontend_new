@@ -611,6 +611,32 @@
     "pageTitle": "Gestión de Difusión",
     "pageSubtitle": "Cree y gestione mensajes de difusión, envíe notificaciones a usuarios, aprendices o cursos específicos"
   },
+  "organisations": {
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Ingrese el nombre de la organización",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingrese el correo de la organización (opcional)",
+      "status": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusActive": "Activo",
+      "statusSuspended": "Suspendido",
+      "createOrganisation": "Crear Organización",
+      "updateOrganisation": "Actualizar Organización",
+      "required": "*"
+    },
+    "validation": {
+      "nameRequired": "El nombre de la organización es obligatorio",
+      "emailInvalid": "Dirección de correo no válida",
+      "statusRequired": "El estado es obligatorio"
+    },
+    "toast": {
+      "createSuccess": "Organización creada correctamente",
+      "createFailed": "Error al crear la organización",
+      "updateSuccess": "Organización actualizada correctamente",
+      "updateFailed": "Error al actualizar la organización"
+    }
+  },
   "centres": {
     "form": {
       "organisation": "Organización",

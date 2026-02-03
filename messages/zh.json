@@ -616,5 +616,55 @@
   "broadcast": {
     "pageTitle": "Broadcast Management",
     "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+  },
+  "organisations": {
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Enter organisation name",
+      "email": "Email",
+      "emailPlaceholder": "Enter organisation email (optional)",
+      "status": "Status",
+      "statusPlaceholder": "Select status",
+      "statusActive": "Active",
+      "statusSuspended": "Suspended",
+      "createOrganisation": "Create Organisation",
+      "updateOrganisation": "Update Organisation",
+      "required": "*"
+    },
+    "validation": {
+      "nameRequired": "Organisation name is required",
+      "emailInvalid": "Invalid email address",
+      "statusRequired": "Status is required"
+    },
+    "toast": {
+      "createSuccess": "Organisation created successfully",
+      "createFailed": "Failed to create organisation",
+      "updateSuccess": "Organisation updated successfully",
+      "updateFailed": "Failed to update organisation"
+    }
+  },
+  "centres": {
+    "form": {
+      "organisation": "组织",
+      "organisationPlaceholder": "选择组织",
+      "name": "名称",
+      "namePlaceholder": "输入中心名称",
+      "status": "状态",
+      "statusPlaceholder": "选择状态",
+      "statusActive": "活跃",
+      "statusSuspended": "已暂停",
+      "createCentre": "创建中心",
+      "updateCentre": "更新中心"
+    },
+    "validation": {
+      "nameRequired": "名称为必填项",
+      "organisationRequired": "组织为必填项"
+    },
+    "toast": {
+      "createSuccess": "中心创建成功",
+      "createFailed": "创建中心失败",
+      "updateSuccess": "中心更新成功",
+      "updateFailed": "更新中心失败"
+    }
   }
 }

@@ -66,7 +66,6 @@ export function LoginForm({
     dispatch(setAuthError(null))
     try {
       const result = await login(values).unwrap()
-      console.log("🚀 ~ LoginForm ~ result:", result)
       dispatch(setCredentials(result))
       toast.success("Signed in successfully")
 
@@ -121,7 +120,7 @@ export function LoginForm({
           assignedOrganisationIds: result.user?.assignedOrganisationIds ?? null,
         }
         dispatch(updateUser(authUser))
-        if (result.passwordChanged === false) {
+        if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {
           toast.info("Please update your password to continue.")
           router.push("/auth/change-password")
           return

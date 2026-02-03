@@ -23,8 +23,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 // Schema creation function that accepts translation function
 const createCentreSchema = (t: (key: string) => string) => z.object({
-  name: z.string().min(1, t("validation.nameRequired") || "Name is required"),
-  organisationId: z.number().min(1, t("validation.organisationRequired") || "Organisation is required"),
+  name: z.string().min(1, t("validation.nameRequired")),
+  organisationId: z.number().min(1, t("validation.organisationRequired")),
   status: z.enum(["active", "suspended"]),
 })
 
@@ -44,7 +44,12 @@ export function CreateCentreForm({
   const t = useTranslations("centres")
   const common = useTranslations("common")
   const [createCentre, { isLoading: isCreating }] = useCreateCentreMutation()
-  const { data: organisationsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery()
+  const { data: organisationsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery({
+    status: "active",
+    page: 1,
+    limit: 500,
+    meta: "true",
+  })
 
   const organisations = organisationsData?.data || []
 
@@ -67,7 +72,7 @@ export function CreateCentreForm({
       }
 
       await createCentre(createData).unwrap()
-      toast.success(t("toast.createSuccess") || "Centre created successfully")
+      toast.success(t("toast.createSuccess"))
       form.reset()
       onSuccess?.()
     } catch (error: unknown) {
@@ -77,7 +82,7 @@ export function CreateCentreForm({
           : error instanceof Error
           ? error.message
           : undefined
-      toast.error(errorMessage || t("toast.createFailed") || "Failed to create centre")
+      toast.error(errorMessage ?? t("toast.createFailed"))
     }
   }
 
@@ -99,7 +104,7 @@ export function CreateCentreForm({
       {/* Organisation */}
       <div className="space-y-2">
         <Label htmlFor="organisationId">
-          {t("form.organisation") || "Organisation"}
+          {t("form.organisation")}
           <span className="text-destructive">*</span>
         </Label>
         <Controller
@@ -116,7 +121,7 @@ export function CreateCentreForm({
                   id="organisationId"
                   className={form.formState.errors.organisationId ? "w-full border-destructive" : "w-full"}
                 >
-                  <SelectValue placeholder={t("form.organisationPlaceholder") || "Select organisation"} />
+                  <SelectValue placeholder={t("form.organisationPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {organisations.map((org) => (
@@ -139,7 +144,7 @@ export function CreateCentreForm({
       {/* Name */}
       <div className="space-y-2">
         <Label htmlFor="name">
-          {t("form.name") || "Name"}
+          {t("form.name")}
           <span className="text-destructive">*</span>
         </Label>
         <Controller
@@ -149,7 +154,7 @@ export function CreateCentreForm({
             <>
               <Input
                 id="name"
-                placeholder={t("form.namePlaceholder") || "Enter centre name"}
+                placeholder={t("form.namePlaceholder")}
                 {...field}
                 className={form.formState.errors.name ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -167,7 +172,7 @@ export function CreateCentreForm({
       {/* Status */}
       <div className="space-y-2">
         <Label htmlFor="status">
-          {t("form.status") || "Status"}
+          {t("form.status")}
           <span className="text-destructive">*</span>
         </Label>
         <Controller
@@ -180,11 +185,11 @@ export function CreateCentreForm({
                   id="status"
                   className={form.formState.errors.status ? "w-full border-destructive" : "w-full"}
                 >
-                  <SelectValue placeholder={t("form.statusPlaceholder") || "Select status"} />
+                  <SelectValue placeholder={t("form.statusPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="active">{t("form.statusActive") || "Active"}</SelectItem>
-                  <SelectItem value="suspended">{t("form.statusSuspended") || "Suspended"}</SelectItem>
+                  <SelectItem value="active">{t("form.statusActive")}</SelectItem>
+                  <SelectItem value="suspended">{t("form.statusSuspended")}</SelectItem>
                 </SelectContent>
               </Select>
               {form.formState.errors.status && (
@@ -210,7 +215,7 @@ export function CreateCentreForm({
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {t("form.createCentre") || "Create Centre"}
+          {t("form.createCentre")}
         </Button>
       </div>
     </form>

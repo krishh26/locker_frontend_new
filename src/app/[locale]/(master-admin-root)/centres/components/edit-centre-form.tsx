@@ -22,7 +22,7 @@ import { useEffect } from "react"
 
 // Schema creation function that accepts translation function
 const editCentreSchema = (t: (key: string) => string) => z.object({
-  name: z.string().min(1, t("validation.nameRequired") || "Name is required").optional(),
+  name: z.string().min(1, t("validation.nameRequired")).optional(),
   status: z.enum(["active", "suspended"]).optional(),
 })
 
@@ -67,7 +67,7 @@ export function EditCentreForm({
       }
 
       await updateCentre({ id: centre.id, data: updateData }).unwrap()
-      toast.success(t("toast.updateSuccess") || "Centre updated successfully")
+      toast.success(t("toast.updateSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -76,7 +76,7 @@ export function EditCentreForm({
           : error instanceof Error
           ? error.message
           : undefined
-      toast.error(errorMessage || t("toast.updateFailed") || "Failed to update centre")
+      toast.error(errorMessage ?? t("toast.updateFailed"))
     }
   }
 
@@ -88,7 +88,7 @@ export function EditCentreForm({
       {/* Name */}
       <div className="space-y-2">
         <Label htmlFor="name">
-          {t("form.name") || "Name"}
+          {t("form.name")}
           <span className="text-destructive">*</span>
         </Label>
         <Controller
@@ -98,7 +98,7 @@ export function EditCentreForm({
             <>
               <Input
                 id="name"
-                placeholder={t("form.namePlaceholder") || "Enter centre name"}
+                placeholder={t("form.namePlaceholder")}
                 {...field}
                 className={form.formState.errors.name ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -116,7 +116,7 @@ export function EditCentreForm({
       {/* Status */}
       <div className="space-y-2">
         <Label htmlFor="status">
-          {t("form.status") || "Status"}
+          {t("form.status")}
           <span className="text-destructive">*</span>
         </Label>
         <Controller
@@ -129,11 +129,11 @@ export function EditCentreForm({
                   id="status"
                   className={form.formState.errors.status ? "w-full border-destructive" : "w-full"}
                 >
-                  <SelectValue placeholder={t("form.statusPlaceholder") || "Select status"} />
+                  <SelectValue placeholder={t("form.statusPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="active">{t("form.statusActive") || "Active"}</SelectItem>
-                  <SelectItem value="suspended">{t("form.statusSuspended") || "Suspended"}</SelectItem>
+                  <SelectItem value="active">{t("form.statusActive")}</SelectItem>
+                  <SelectItem value="suspended">{t("form.statusSuspended")}</SelectItem>
                 </SelectContent>
               </Select>
               {form.formState.errors.status && (
@@ -159,7 +159,7 @@ export function EditCentreForm({
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {t("form.updateCentre") || "Update Centre"}
+          {t("form.updateCentre")}
         </Button>
       </div>
     </form>

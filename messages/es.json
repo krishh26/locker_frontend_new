@@ -610,5 +610,55 @@
   "broadcast": {
     "pageTitle": "Gestión de Difusión",
     "pageSubtitle": "Cree y gestione mensajes de difusión, envíe notificaciones a usuarios, aprendices o cursos específicos"
+  },
+  "organisations": {
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Ingrese el nombre de la organización",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "Ingrese el correo de la organización (opcional)",
+      "status": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusActive": "Activo",
+      "statusSuspended": "Suspendido",
+      "createOrganisation": "Crear Organización",
+      "updateOrganisation": "Actualizar Organización",
+      "required": "*"
+    },
+    "validation": {
+      "nameRequired": "El nombre de la organización es obligatorio",
+      "emailInvalid": "Dirección de correo no válida",
+      "statusRequired": "El estado es obligatorio"
+    },
+    "toast": {
+      "createSuccess": "Organización creada correctamente",
+      "createFailed": "Error al crear la organización",
+      "updateSuccess": "Organización actualizada correctamente",
+      "updateFailed": "Error al actualizar la organización"
+    }
+  },
+  "centres": {
+    "form": {
+      "organisation": "Organización",
+      "organisationPlaceholder": "Seleccionar organización",
+      "name": "Nombre",
+      "namePlaceholder": "Ingrese el nombre del centro",
+      "status": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusActive": "Activo",
+      "statusSuspended": "Suspendido",
+      "createCentre": "Crear Centro",
+      "updateCentre": "Actualizar Centro"
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio",
+      "organisationRequired": "La organización es obligatoria"
+    },
+    "toast": {
+      "createSuccess": "Centro creado correctamente",
+      "createFailed": "Error al crear el centro",
+      "updateSuccess": "Centro actualizado correctamente",
+      "updateFailed": "Error al actualizar el centro"
+    }
   }
 }

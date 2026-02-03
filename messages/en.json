@@ -636,6 +636,7 @@
       "statusActive": "Active",
       "statusSuspended": "Suspended",
       "createOrganisation": "Create Organisation",
+      "updateOrganisation": "Update Organisation",
       "required": "*"
     },
     "validation": {
@@ -645,7 +646,33 @@
     },
     "toast": {
       "createSuccess": "Organisation created successfully",
-      "createFailed": "Failed to create organisation"
+      "createFailed": "Failed to create organisation",
+      "updateSuccess": "Organisation updated successfully",
+      "updateFailed": "Failed to update organisation"
+    }
+  },
+  "centres": {
+    "form": {
+      "organisation": "Organisation",
+      "organisationPlaceholder": "Select organisation",
+      "name": "Name",
+      "namePlaceholder": "Enter centre name",
+      "status": "Status",
+      "statusPlaceholder": "Select status",
+      "statusActive": "Active",
+      "statusSuspended": "Suspended",
+      "createCentre": "Create Centre",
+      "updateCentre": "Update Centre"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "organisationRequired": "Organisation is required"
+    },
+    "toast": {
+      "createSuccess": "Centre created successfully",
+      "createFailed": "Failed to create centre",
+      "updateSuccess": "Centre updated successfully",
+      "updateFailed": "Failed to update centre"
     }
   }
 }

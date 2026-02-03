@@ -71,7 +71,7 @@ export function EditOrganisationForm({
       }
 
       await updateOrganisation({ id: organisation.id, data: updateData }).unwrap()
-      toast.success(t("toast.updateSuccess") || "Organisation updated successfully")
+      toast.success(t("toast.updateSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -80,7 +80,7 @@ export function EditOrganisationForm({
           : error instanceof Error
           ? error.message
           : undefined
-      toast.error(errorMessage || t("toast.updateFailed") || "Failed to update organisation")
+      toast.error(errorMessage ?? t("toast.updateFailed"))
     }
   }
 
@@ -189,7 +189,7 @@ export function EditOrganisationForm({
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {t("form.updateOrganisation") || "Update Organisation"}
+          {t("form.updateOrganisation")}
         </Button>
       </div>
     </form>

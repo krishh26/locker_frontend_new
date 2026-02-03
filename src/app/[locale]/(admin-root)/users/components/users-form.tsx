@@ -276,7 +276,7 @@ export function UsersForm({ user }: UsersFormProps) {
 
   // Organisations for Account Manager (create/edit user with org assignment)
   const { data: organisationsData, isLoading: isLoadingOrganisations } = useGetOrganisationsQuery(
-    { page: 1, limit: 500, meta: "true" },
+    { page: 1, limit: 500, meta: "true", status: "active" },
     { skip: !isAccountManagerUser }
   );
   const organisationOptions: Option[] = useMemo(() => {

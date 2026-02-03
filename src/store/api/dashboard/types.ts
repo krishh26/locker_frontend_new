@@ -81,13 +81,17 @@ export interface ActiveLearnersCardDataResponse extends CardDataResponse {
 export type CardData = Record<string, unknown>
 
 // New types based on CSV: Dashboard Module (6 APIs)
+// Backend returns totalSubscriptions, activeOrganisations, activeSubscriptions (no totalRevenue)
 export interface SystemSummary {
   totalOrganisations: number
   totalCentres: number
   totalUsers: number
-  totalAccountManagers: number
+  totalAccountManagers?: number
   activeSubscriptions: number
   totalRevenue?: number
+  /** Backend system-summary response */
+  totalSubscriptions?: number
+  activeOrganisations?: number
 }
 
 export interface SystemSummaryResponse {

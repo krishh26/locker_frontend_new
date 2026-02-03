@@ -23,10 +23,18 @@ export interface Centre {
   admins?: AdminUser[]
 }
 
+export interface CentreListMetaData {
+  page: number
+  page_size: number
+  pages: number
+  items: number
+}
+
 export interface CentreListResponse {
   status: boolean
   message?: string
   data: Centre[]
+  meta_data?: CentreListMetaData
 }
 
 export interface CentreResponse {

@@ -320,7 +320,7 @@ const data: {
           icon: Ban,
         },
         {
-          title: 'Learner Mangement',
+          title: 'Learner Management',
           url: '/learners',
           icon: Users,
         },

@@ -610,5 +610,29 @@
   "broadcast": {
     "pageTitle": "Gestión de Difusión",
     "pageSubtitle": "Cree y gestione mensajes de difusión, envíe notificaciones a usuarios, aprendices o cursos específicos"
+  },
+  "centres": {
+    "form": {
+      "organisation": "Organización",
+      "organisationPlaceholder": "Seleccionar organización",
+      "name": "Nombre",
+      "namePlaceholder": "Ingrese el nombre del centro",
+      "status": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusActive": "Activo",
+      "statusSuspended": "Suspendido",
+      "createCentre": "Crear Centro",
+      "updateCentre": "Actualizar Centro"
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio",
+      "organisationRequired": "La organización es obligatoria"
+    },
+    "toast": {
+      "createSuccess": "Centro creado correctamente",
+      "createFailed": "Error al crear el centro",
+      "updateSuccess": "Centro actualizado correctamente",
+      "updateFailed": "Error al actualizar el centro"
+    }
   }
 }

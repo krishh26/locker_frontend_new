@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Search, Download, Building2, DollarSign } from "lucide-react"
+import { Search, Download, Building2, DollarSign, Plus, MoreHorizontal, Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -57,7 +57,7 @@ export function PaymentsDataTable() {
   // API queries with filters
   const { data: paymentsData, isLoading } = useGetPaymentsQuery({
     organisationId: orgFilter !== "all" ? Number(orgFilter) : undefined,
-    status: statusFilter !== "all" ? statusFilter as "completed" | "pending" | "failed" | "refunded" : undefined,
+    status: statusFilter !== "all" ? (statusFilter as "draft" | "sent" | "failed" | "refunded") : undefined,
   })
   const { data: orgsData } = useGetOrganisationsQuery()
 
@@ -84,12 +84,16 @@ export function PaymentsDataTable() {
       return
     }
 
-    const headers = ["Date", "Organisation", "Amount", "Status", "Invoice Number", "Payment Method"]
+    const headers = ["Date", "Organisation", "Plan", "Subtotal", "Discount", "Tax", "Amount/Total", "Status", "Invoice Number", "Payment Method"]
     const rows = filteredPayments.map((payment: Payment) => [
       new Date(payment.date).toLocaleDateString(),
       orgMap.get(payment.organisationId) || "Unknown",
-      `£${payment.amount.toLocaleString()}`,
-      payment.status,
+      payment.planName ?? "—",
+      payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
+      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : "—",
+      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : "—",
+      payment.total != null ? `£${Number(payment.total).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
+      payment.status === "sent" ? "Sent" : payment.status === "failed" ? "Failed" : payment.status === "refunded" ? "Refunded" : "Draft",
       payment.invoiceNumber || "N/A",
       payment.paymentMethod || "N/A",
     ])
@@ -110,12 +114,16 @@ export function PaymentsDataTable() {
   }
 
   const handleExportPdf = () => {
-    const headers = ["Date", "Organisation", "Amount", "Status", "Invoice Number", "Payment Method"]
+    const headers = ["Date", "Organisation", "Plan", "Subtotal", "Discount", "Tax", "Amount/Total", "Status", "Invoice Number", "Payment Method"]
     const rows = filteredPayments.map((payment: Payment) => [
       new Date(payment.date).toLocaleDateString(),
       orgMap.get(payment.organisationId) || "Unknown",
-      `£${payment.amount.toLocaleString()}`,
-      payment.status,
+      payment.planName ?? "—",
+      payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
+      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : "—",
+      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : "—",
+      payment.total != null ? `£${Number(payment.total).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
+      payment.status === "sent" ? "Sent" : payment.status === "failed" ? "Failed" : payment.status === "refunded" ? "Refunded" : "Draft",
       payment.invoiceNumber || "N/A",
       payment.paymentMethod || "N/A",
     ])
@@ -156,13 +164,48 @@ export function PaymentsDataTable() {
         },
       },
       {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey: "planName",
+        header: "Plan",
+        cell: ({ row }) => row.original.planName ?? "—",
+      },
+      {
+        accessorKey: "subtotal",
+        header: "Subtotal",
         cell: ({ row }) => {
+          const v = row.original.subtotal
+          if (v != null) return `£${Number(v).toLocaleString()}`
+          return "—"
+        },
+      },
+      {
+        accessorKey: "discountValue",
+        header: "Discount",
+        cell: ({ row }) => {
+          const v = row.original.discountValue
+          if (v == null) return "—"
+          return `£${Number(v).toLocaleString()}`
+        },
+      },
+      {
+        accessorKey: "taxValue",
+        header: "Tax",
+        cell: ({ row }) => {
+          const v = row.original.taxValue
+          if (v == null) return "—"
+          return `£${Number(v).toLocaleString()}`
+        },
+      },
+      {
+        accessorKey: "amount",
+        header: "Amount / Total",
+        cell: ({ row }) => {
+          const total = row.original.total
+          const amount = row.original.amount
+          const display = total != null ? Number(total) : amount
           return (
             <div className="font-medium flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-muted-foreground" />
-              £{row.original.amount.toLocaleString()}
+              £{display.toLocaleString()}
             </div>
           )
         },
@@ -172,17 +215,11 @@ export function PaymentsDataTable() {
         header: "Status",
         cell: ({ row }) => {
           const status = row.original.status
+          const label = status === "sent" ? "Sent" : status === "failed" ? "Failed" : status === "refunded" ? "Refunded" : "Draft"
+          const variant = status === "sent" ? "default" : status === "failed" || status === "refunded" ? "destructive" : "secondary"
           return (
-            <Badge
-              variant={
-                status === "completed"
-                  ? "default"
-                  : status === "pending"
-                  ? "secondary"
-                  : "destructive"
-              }
-            >
-              {status}
+            <Badge variant={variant}>
+              {label}
             </Badge>
           )
         },
@@ -200,6 +237,28 @@ export function PaymentsDataTable() {
         cell: ({ row }) => {
           return row.original.paymentMethod || "N/A"
         },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="h-4 w-4" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => router.push(`/payments/${row.original.id}/edit`)}
+              >
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
       },
     ],
     [orgMap, router]
@@ -251,14 +310,18 @@ export function PaymentsDataTable() {
             />
           </div>
           <div className="flex items-center gap-2">
+            <Button size="sm" onClick={() => router.push("/payments/add")}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add invoice
+            </Button>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="draft">Draft</SelectItem>
+                <SelectItem value="sent">Sent</SelectItem>
                 <SelectItem value="failed">Failed</SelectItem>
                 <SelectItem value="refunded">Refunded</SelectItem>
               </SelectContent>

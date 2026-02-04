@@ -132,7 +132,7 @@
       "trainer": "Trainer",
       "iqa": "IQA",
       "eqa": "EQA",
-      "liqa": "Lead IQA",
+      "liqa": "LIQA",
       "lineManager": "Linienmanager",
       "employer": "Arbeitgeber"
     },

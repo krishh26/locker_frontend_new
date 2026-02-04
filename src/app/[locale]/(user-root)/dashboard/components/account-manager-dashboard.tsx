@@ -57,12 +57,12 @@ export function AccountManagerDashboard() {
   const revenueFromPayments = useMemo(() => {
     const payments = paymentsData?.data ?? []
     return payments
-      .filter((p) => p.status === "completed")
+      .filter((p) => p.status === "sent")
       .reduce((sum, p) => sum + p.amount, 0)
   }, [paymentsData?.data])
   const recentPaymentCount = paymentsData?.data?.length ?? 0
 
-  const recentLogs = useMemo(() => (auditLogsData?.data ?? []) as AuditLog[], [auditLogsData?.data])
+  const recentLogs = useMemo(() => (auditLogsData?.data ?? []) as AuditLog[], [auditLogsData?.data]).slice(0, 5)
 
   const stats = [
     {

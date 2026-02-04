@@ -1,32 +1,37 @@
-import { ForgotPasswordForm } from "./components/forgot-password-form"
-import { Lock } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+import { ForgotPasswordForm } from './components/forgot-password-form'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
-              <Lock className="h-5 w-5" />
-            </div>
-            Locker
+    <div className='grid min-h-svh lg:grid-cols-2'>
+      <div className='flex flex-col gap-4 p-6 md:p-10'>
+        <div className='flex justify-center gap-2 md:justify-start'>
+          <Link
+            href='/'
+            className='flex items-center gap-2 font-medium cursor-pointer'
+          >
+            <Image
+              src='/logo-text.png'
+              alt='Locker'
+              width={100}
+              height={100}
+              className='h-8 w-auto'
+            />
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-md">
+        <div className='flex flex-1 items-center justify-center'>
+          <div className='w-full max-w-md'>
             <ForgotPasswordForm />
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
+      <div className='bg-muted relative hidden lg:block'>
         <Image
-          src="https://ui.shadcn.com/placeholder.svg"
-          alt="Image"
+          src='/forgot-password.jpg'
+          alt='Image'
           fill
-          className="object-cover dark:brightness-[0.95] dark:invert"
+          className='object-cover dark:brightness-[0.95] dark:invert'
         />
       </div>
     </div>

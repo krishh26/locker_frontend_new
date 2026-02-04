@@ -803,20 +803,20 @@ export function UsersForm({ user }: UsersFormProps) {
                   <div key={role.value} className="flex items-center space-x-2">
                     <Checkbox
                       id={`role-${role.value}`}
-                      checked={field.value?.includes(role.label)}
+                      checked={field.value?.includes(role.value)}
                       onCheckedChange={(checked) => {
                         const currentRoles = field.value || [];
                         if (checked) {
-                          field.onChange([...currentRoles, role.label]);
+                          field.onChange([...currentRoles, role.value]);
                         } else {
-                          const newRoles = currentRoles.filter((r) => r !== role.label);
+                          const newRoles = currentRoles.filter((r) => r !== role.value);
                           field.onChange(newRoles);
                           // Clear employer_ids if Employer role is removed
-                          if (role.label === "Employer") {
+                          if (role.value === "Employer") {
                             form.setValue("employer_ids", []);
                           }
                           // Clear assigned learners if EQA role is removed
-                          if (role.label === "EQA") {
+                          if (role.value === "EQA") {
                             form.setValue("assignedLearners", []);
                             form.setValue("selectedCourseForAssignment", "");
                           }
@@ -853,15 +853,14 @@ export function UsersForm({ user }: UsersFormProps) {
             control={form.control}
             render={({ field }) => {
               const selectedOptions: Option[] =
-                field.value?.map((id) => {
-                  const employer = employersData?.data?.find(
-                    (e) => e.employer_id === Number(id)
+                (field.value ?? []).map((id) => {
+                  const opt = employerOptions.find(
+                    (o) => o.value === String(id)
                   );
-                  return {
-                    value: id.toString(),
-                    label: employer?.employer_name || id.toString(),
-                  };
-                }) || [];
+                  return (
+                    opt ?? { value: String(id), label: String(id) }
+                  );
+                });
 
               return (
                 <>
@@ -893,7 +892,6 @@ export function UsersForm({ user }: UsersFormProps) {
                         ? "border-destructive"
                         : ""
                     }`}
-                    direction="up"
                   />
                   {form.formState.errors.employer_ids && (
                     <p className="text-sm text-destructive">
@@ -916,13 +914,12 @@ export function UsersForm({ user }: UsersFormProps) {
             control={form.control}
             render={({ field }) => {
               const selectedOptions: Option[] =
-                field.value?.map((id) => {
-                  const org = organisationsData?.data?.find((o) => o.id === Number(id));
-                  return {
-                    value: id.toString(),
-                    label: org?.name ?? id.toString(),
-                  };
-                }) ?? [];
+                (field.value ?? []).map((id) => {
+                  const opt = organisationOptions.find(
+                    (o) => o.value === String(id)
+                  );
+                  return opt ?? { value: String(id), label: String(id) };
+                });
 
               return (
                 <>

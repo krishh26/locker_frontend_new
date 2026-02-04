@@ -1,5 +1,4 @@
 import { LoginForm } from "./components/login-form"
-import { Lock } from "lucide-react"
 import { Link } from "@/i18n/navigation"
 import Image from "next/image"
 
@@ -8,11 +7,8 @@ export default function LoginPage() {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
-              <Lock className="h-5 w-5" />
-            </div>
-            Locker
+          <Link href="/" className="flex items-center gap-2 font-medium cursor-pointer">
+            <Image src="/logo-text.png" alt="Locker" width={100} height={100} className="h-8 w-auto" />
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -23,7 +19,7 @@ export default function LoginPage() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <Image
-          src="https://ui.shadcn.com/placeholder.svg"
+          src="/online-eduction.jpg"
           alt="Image"
           fill
           className="object-cover dark:brightness-[0.95] dark:invert"

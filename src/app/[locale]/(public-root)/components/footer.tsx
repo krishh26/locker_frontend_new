@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Github, Twitter, Linkedin, Youtube, Heart, Lock } from 'lucide-react'
+import Image from "next/image"
 
 const newsletterSchema = z.object({
   email: z.string().email({
@@ -110,8 +111,13 @@ export function LandingFooter() {
           <div className="col-span-4 lg:col-span-2 max-w-2xl">
             <div className="flex items-center space-x-2 mb-4 max-lg:justify-center">
               <a href="/" target='_blank' className="flex items-center space-x-2 cursor-pointer">
-                <Lock className="h-6 w-6 text-primary" />
-                <span className="font-bold text-xl">Locker</span>
+              <Image
+              src="/logo-text.png"
+              alt="Locker"
+              width={100}
+              height={100}
+              className="h-8 w-auto"
+            />
               </a>
             </div>
             <p className="text-muted-foreground mb-6 max-lg:text-center max-lg:flex max-lg:justify-center">

@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutDashboard, Lock, LogOut, Menu, Moon, Sun, X } from 'lucide-react'
+import { LayoutDashboard, LogOut, Menu, Moon, Sun, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from "@/i18n/navigation"
 import { useCallback, useState } from 'react'
@@ -12,12 +12,12 @@ import {
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
 import { useTheme } from '@/hooks/use-theme'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { clearCredentials } from '@/store/slices/authSlice'
+import Image from 'next/image'
 // import { LanguageSwitcher } from '@/components/language-switcher' // Hidden for now - CLIENT_FEEDBACK_AND_SOLUTIONS.md #24
 
 const navigationItems = [
@@ -84,10 +84,13 @@ export function LandingNavbar() {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Link href="/" className="flex items-center space-x-2 cursor-pointer">
-            <Lock className="h-6 w-6 text-primary" />
-            <span className="font-bold">
-              Locker
-            </span>
+            <Image
+              src="/logo-text.png"
+              alt="Locker"
+              width={100}
+              height={100}
+              className="h-8 w-auto"
+            />
           </Link>
         </div>
 
@@ -166,11 +169,14 @@ export function LandingNavbar() {
             <div className="flex flex-col h-full">
               {/* Header */}
               <SheetHeader className="space-y-0 p-4 pb-2 border-b">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Lock className="h-8 w-8 text-primary" />
-                  </div>
-                  <SheetTitle className="text-lg font-semibold">Locker</SheetTitle>
+                <div className="flex items-center justify-center gap-2">
+                  <Image
+                    src="/logo-text.png"
+                    alt="Locker"
+                    width={100}
+                    height={100}
+                    className="h-8 w-auto"
+                  />
                   <div className="ml-auto flex items-center gap-2">
                     <Button
                       variant="ghost"

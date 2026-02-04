@@ -625,7 +625,6 @@ const data: {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
-  console.log("🚀 ~ AppSidebar ~ userRole:", userRole)
   const learner = useAppSelector((state) => state.auth.learner)
 
   // MasterAdmin bypasses all feature checks
@@ -716,7 +715,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }
       // Show "Master Admin" group only for Master Admin role
       if (group.label === 'Master Admin') {
-        return userRole === 'Master Admin'
+        return userRole === 'MasterAdmin'
       }
       // For other groups, show based on role access
       return true
@@ -731,7 +730,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       })
       .filter((group) => group.items.length > 0)
-  }, [userRole, isMasterAdminUser, user])
+  }, [userRole, isMasterAdminUser])
 
   return (
     <Sidebar {...props}>

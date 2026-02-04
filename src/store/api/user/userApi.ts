@@ -35,8 +35,7 @@ export const userApi = createApi({
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
         if (role) {
-          const roleParam = role === "Lead IQA" ? "LIQA" : role;
-          url += `&role=${encodeURIComponent(roleParam)}`;
+          url += `&role=${encodeURIComponent(role)}`;
         }
         return url;
       },

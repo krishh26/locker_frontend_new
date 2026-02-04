@@ -440,11 +440,13 @@ export default function OrganisationDetailPage() {
                         <TableCell>
                           <Badge
                             variant={
-                              payment.status === "completed"
+                              payment.status === "sent"
                                 ? "default"
-                                : payment.status === "pending"
+                                : payment.status === "draft"
                                 ? "secondary"
-                                : "destructive"
+                                : payment.status === "failed"
+                                ? "destructive"
+                                : "secondary"
                             }
                           >
                             {payment.status}

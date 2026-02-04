@@ -137,7 +137,7 @@ export function CourseInformationTab({
   const { data: liqaData } = useGetUsersQuery({
     page: 1,
     page_size: 500,
-    role: "Lead IQA",
+    role: "LIQA",
   });
   const { data: eqaData } = useGetUsersQuery({
     page: 1,

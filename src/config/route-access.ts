@@ -64,7 +64,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/course-builder(?:\/|$)/,
-    roles: R.admin(),
+    roles: R.adminWith("MasterAdmin"),
   },
   {
     pattern: /^\/settings(?:\/|$)/,

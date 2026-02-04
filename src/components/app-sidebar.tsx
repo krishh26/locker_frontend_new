@@ -350,6 +350,11 @@ const data: {
           icon: MapPin,
         },
         {
+          title: 'Course Builder',
+          url: '/course-builder',
+          icon: BookOpen,
+        },
+        {
           title: 'Subscriptions',
           url: '/subscriptions',
           icon: CreditCard,

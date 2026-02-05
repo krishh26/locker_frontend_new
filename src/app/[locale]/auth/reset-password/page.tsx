@@ -13,7 +13,7 @@ export default function ResetPasswordPage() {
               alt='Locker'
               width={100}
               height={100}
-              className='h-8 w-auto'
+              className='h-14 w-auto'
             />
           </Link>
         </div>

@@ -81,7 +81,7 @@ export function LandingNavbar() {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Link href="/" className="flex items-center space-x-2 cursor-pointer">
-            <Image src="/logo-text.png" alt="Locker" width={100} height={100} className="h-8 w-auto" />
+            <Image src="/logo-text.png" alt="Locker" width={100} height={100} className="h-14 w-auto" />
           </Link>
         </div>
 
@@ -154,7 +154,7 @@ export function LandingNavbar() {
               {/* Header */}
               <SheetHeader className="space-y-0 p-4 pb-2 border-b">
                 <div className="flex items-center justify-center gap-2">
-                  <Image src="/logo-text.png" alt="Locker" width={100} height={100} className="h-8 w-auto" />
+                  <Image src="/logo-text.png" alt="Locker" width={100} height={100} className="h-14 w-auto" />
                   <div className="ml-auto flex items-center gap-2">
                     <Button
                       variant="ghost"

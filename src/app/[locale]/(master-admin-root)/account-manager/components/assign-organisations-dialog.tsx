@@ -80,7 +80,7 @@ export function AssignOrganisationsDialog({
   }
 
   const isLoading = isLoadingOrgs || isLoadingAssigned || isAssigning
-  const hasChanges = JSON.stringify(selectedOrgIds.sort()) !== JSON.stringify(assignedOrgIds.sort())
+  const hasChanges = JSON.stringify([...selectedOrgIds].sort()) !== JSON.stringify([...assignedOrgIds].sort())
 
   if (isLoadingOrgs || isLoadingAssigned) {
     return (

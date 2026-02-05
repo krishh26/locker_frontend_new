@@ -89,7 +89,7 @@ export function LandingNavbar() {
               alt="Locker"
               width={100}
               height={100}
-              className="h-8 w-auto"
+              className="h-14 w-auto"
             />
           </Link>
         </div>
@@ -175,7 +175,7 @@ export function LandingNavbar() {
                     alt="Locker"
                     width={100}
                     height={100}
-                    className="h-8 w-auto"
+                    className="h-14 w-auto"
                   />
                   <div className="ml-auto flex items-center gap-2">
                     <Button

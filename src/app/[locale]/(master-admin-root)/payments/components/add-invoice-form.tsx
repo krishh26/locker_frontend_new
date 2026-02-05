@@ -136,11 +136,30 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
   const organisations = orgsData?.data ?? []
   const allPlans = (plansData?.data ?? []).filter((p) => p.isActive)
   const assignedPlanName = subscriptionData?.data?.plan ?? ''
+  
+  // When editing, include the payment's plan in available options even if subscription changed
+  const editingPlanId = paymentData?.data?.planId
   const plans = useMemo(() => {
     if (!organisationId) return []
+    
+    // When editing, always include the current payment's plan
+    if (paymentId && editingPlanId) {
+      const editingPlan = allPlans.find((p) => p.id === editingPlanId)
+      const subscriptionPlans = assignedPlanName 
+        ? allPlans.filter((p) => p.name === assignedPlanName)
+        : []
+      
+      // Combine: subscription plans + editing plan (avoid duplicates)
+      const combined = [...subscriptionPlans]
+      if (editingPlan && !combined.find((p) => p.id === editingPlan.id)) {
+        combined.push(editingPlan)
+      }
+      return combined.length > 0 ? combined : allPlans
+    }
+    
     if (!assignedPlanName) return []
     return allPlans.filter((p) => p.name === assignedPlanName)
-  }, [organisationId, assignedPlanName, allPlans])
+  }, [organisationId, assignedPlanName, allPlans, paymentId, editingPlanId])
   const selectedPlan =
     plans.find((p) => String(p.id) === planId) ??
     allPlans.find((p) => String(p.id) === planId)
@@ -261,38 +280,38 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
       toast.error('Please add at least one row')
       return
     }
-    // const payload: CreatePaymentRequest = {
-    //   organisationId: Number(organisationId),
-    //   planId: Number(planId),
-    //   date: invoiceDate,
-    //   numberOfPeriods: lineItems.length,
-    //   currency,
-    //   status,
-    //   paymentMethod: paymentMethod || undefined,
-    //   notes: notes || undefined,
-    //   lineItems: lineItems.map((item) => ({
-    //     periodIndex: item.periodIndex,
-    //     periodLabel: item.periodLabel,
-    //     dueDate: item.dueDate,
-    //     amount: item.amount,
-    //     discountPercent: item.discountPercent ?? 0,
-    //     taxPercent: item.taxPercent ?? 0,
-    //     status: item.status,
-    //     paidDate: item.paidDate,
-    //   })),
-    // }
+    const payload: CreatePaymentRequest = {
+      organisationId: Number(organisationId),
+      planId: Number(planId),
+      date: invoiceDate,
+      numberOfPeriods: lineItems.length,
+      currency,
+      status,
+      paymentMethod: paymentMethod || undefined,
+      notes: notes || undefined,
+      lineItems: lineItems.map((item) => ({
+        periodIndex: item.periodIndex,
+        periodLabel: item.periodLabel,
+        dueDate: item.dueDate,
+        amount: item.amount,
+        discountPercent: item.discountPercent ?? 0,
+        taxPercent: item.taxPercent ?? 0,
+        status: item.status,
+        paidDate: item.paidDate,
+      })),
+    }
     try {
-      const invoiceNumber = ''
+      let invoiceNumber = ''
       if (paymentId) {
-        // const response = await updatePaymentMutation({
-        //   id: paymentId,
-        //   data: payload,
-        // }).unwrap()
-        // invoiceNumber = response?.data?.invoiceNumber ?? ''
+        const response = await updatePaymentMutation({
+          id: paymentId,
+          data: payload,
+        }).unwrap()
+        invoiceNumber = response?.data?.invoiceNumber ?? ''
         toast.success('Invoice updated successfully')
       } else {
-        // const response = await createPaymentMutation(payload).unwrap()
-        // invoiceNumber = response?.data?.invoiceNumber ?? ''
+        const response = await createPaymentMutation(payload).unwrap()
+        invoiceNumber = response?.data?.invoiceNumber ?? ''
         toast.success('Invoice created successfully')
       }
       // Auto-generate and download invoice PDF after create
@@ -365,7 +384,10 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
             value={organisationId}
             onValueChange={(v) => {
               setOrganisationId(v)
-              setPlanId('')
+              // Only clear planId when creating new invoice, not when editing
+              if (!paymentId) {
+                setPlanId('')
+              }
             }}
             required
           >
@@ -388,7 +410,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
             onValueChange={handlePlanChange}
             required
             disabled={
-              !organisationId || isLoadingSubscription || plans.length === 0
+              !organisationId || isLoadingSubscription || (plans.length === 0 && !paymentId)
             }
           >
             <SelectTrigger className='w-full'>
@@ -398,7 +420,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
                     ? 'Select organisation first'
                     : isLoadingSubscription
                     ? 'Loading...'
-                    : plans.length === 0
+                    : plans.length === 0 && !paymentId
                     ? 'No plan assigned to this organisation'
                     : 'Select plan'
                 }
@@ -658,7 +680,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           }
         >
           {isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-          Create invoice
+          {paymentId ? 'Update invoice' : 'Create invoice'}
         </Button>
       </div>
     </form>

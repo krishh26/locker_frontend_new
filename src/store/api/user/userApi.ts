@@ -115,6 +115,19 @@ export const userApi = createApi({
         return response;
       },
     }),
+    getUserById: builder.query<UserResponse, number>({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, id) => [{ type: "User", id }],
+      transformResponse: (response: UserResponse) => {
+        if (!response?.status || !response?.data) {
+          throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
     sendPasswordResetEmail: builder.mutation<ApiResponse, { email: string }>({
       query: (body) => ({
         url: "/user/password-mail",
@@ -153,6 +166,8 @@ export const {
   useChangeUserRoleMutation,
   useGetUserQuery,
   useLazyGetUserQuery,
+  useGetUserByIdQuery,
+  useLazyGetUserByIdQuery,
   useSendPasswordResetEmailMutation,
   useSendEmailMutation,
 } = userApi;

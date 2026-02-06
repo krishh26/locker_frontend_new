@@ -97,6 +97,10 @@ export function LoginForm({
         // Trigger user fetch - the query will run automatically via useEffect
         const userResponse = await getUser().unwrap()
         const userData = userResponse.data
+        
+        // Extract assignedOrganisationIds from assigned_organisations array
+        const assignedOrganisationIds = userData.assigned_organisations?.map(org => org.id) ?? null
+        
         const authUser: AuthUser = {
           id: userData.user_id?.toString(),
           email: userData.email,
@@ -116,8 +120,9 @@ export function LoginForm({
           number_of_active_learners: userData.number_of_active_learners,
           assigned_employers: userData.assigned_employers,
           userEmployers: userData.userEmployers,
-          // Include assignedOrganisationIds from login response
-          assignedOrganisationIds: result.user?.assignedOrganisationIds ?? null,
+          assigned_organisations: userData.assigned_organisations,
+          // Extract assignedOrganisationIds from assigned_organisations
+          assignedOrganisationIds: assignedOrganisationIds,
         }
         dispatch(updateUser(authUser))
         if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {

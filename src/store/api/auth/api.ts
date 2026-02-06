@@ -66,7 +66,17 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     (data.decoded as Record<string, unknown> | undefined) ??
     data
 
-  const assignedOrgIds = (user.assignedOrganisationIds as number[] | null | undefined) ?? null;
+  // Extract assignedOrganisationIds from assignedOrganisationIds or assigned_organisations
+  let assignedOrgIds: number[] | null = null;
+  if (user.assignedOrganisationIds) {
+    assignedOrgIds = user.assignedOrganisationIds as number[] | null;
+  } else if (user.assigned_organisations) {
+    // Extract IDs from assigned_organisations array
+    const orgs = user.assigned_organisations as Array<{ id: number; [key: string]: unknown }> | undefined;
+    if (Array.isArray(orgs) && orgs.length > 0) {
+      assignedOrgIds = orgs.map(org => org.id);
+    }
+  }
 
   const tokenUser: AuthUser = {
     id: (user.id as string | undefined) ?? (user.user_id as string | undefined),

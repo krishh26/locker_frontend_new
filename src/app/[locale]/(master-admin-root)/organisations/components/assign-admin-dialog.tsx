@@ -87,10 +87,7 @@ export function AssignAdminDialog({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <Label>Select Admins</Label>
-        <p className="text-sm text-muted-foreground">
-          Choose which admins can manage this organisation. Click Save when done.
-        </p>
+        <Label>Select Admins to assign</Label>
       </div>
 
       <ScrollArea className="h-[300px] w-full rounded-md border p-4">

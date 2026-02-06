@@ -49,6 +49,7 @@ import { useAppSelector } from '@/store/hooks'
 import { getAllowedRolesForPath } from '@/config/route-access'
 import { isRoleAllowed } from '@/config/auth-roles'
 import { isMasterAdmin } from '@/utils/permissions'
+import Image from 'next/image'
 
 type SidebarItem = {
   title: string
@@ -739,23 +740,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size='lg' asChild>
               <Link href='/dashboard'>
-                <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground'>
-                  <Lock className='h-5 w-5' />
-                </div>
-                <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>Locker</span>
-                  <span className='truncate text-xs'>
-                    {userRole === 'Admin'
-                      ? 'Admin Dashboard'
-                      : userRole === 'Trainer'
-                      ? 'Trainer Dashboard'
-                      : userRole === 'IQA'
-                      ? 'IQA Dashboard'
-                      : userRole === 'Employer'
-                      ? 'Employer Dashboard'
-                      : 'Learner Dashboard'}
-                  </span>
-                </div>
+                <Image
+                  src="/logo-text.png"
+                  alt="Locker"
+                  width={100}
+                  height={100}
+                  className="h-14 w-auto"
+                />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

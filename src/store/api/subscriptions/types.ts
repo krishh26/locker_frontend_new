@@ -72,6 +72,8 @@ export interface UpdatePlanRequest {
   name?: string
   description?: string
   price?: number
+  currency?: string
+  billingCycle?: "monthly" | "yearly"
   userLimit?: number
   centreLimit?: number
   organisationLimit?: number

@@ -3,6 +3,7 @@ import { getMessages } from 'next-intl/server';
 import type { Metadata } from "next";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeInitializer } from "@/components/theme-initializer";
 import { Toaster } from "@/components/ui/sonner";
 import { SidebarConfigProvider } from "@/contexts/sidebar-context";
 import { ReduxProvider } from "@/store/provider";
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <ThemeProvider defaultTheme="light" storageKey="nextjs-ui-theme">
+        <ThemeInitializer />
         <ReduxProvider>
           <SidebarConfigProvider>
             {children}

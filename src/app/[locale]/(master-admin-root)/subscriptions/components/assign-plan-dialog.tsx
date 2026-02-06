@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -14,6 +14,7 @@ import {
 import {
   useAssignPlanToOrganisationMutation,
   useGetPlansQuery,
+  useGetSubscriptionsQuery,
 } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import { toast } from "sonner"
@@ -32,12 +33,24 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     meta: "true",
   })
   const { data: plansData, isLoading: isLoadingPlans } = useGetPlansQuery()
+  const { data: subscriptionsData, isLoading: isLoadingSubscriptions } = useGetSubscriptionsQuery()
   const [assignPlanMutation, { isLoading: isAssigning }] = useAssignPlanToOrganisationMutation()
 
   const [organisationId, setOrganisationId] = useState<string>("")
   const [planId, setPlanId] = useState<string>("")
 
-  const organisations = orgsData?.data ?? []
+  // Get organisation IDs that already have a subscription/plan
+  const orgsWithPlan = useMemo(() => {
+    const subscriptions = subscriptionsData?.data ?? []
+    return new Set(subscriptions.map((s) => s.organisationId))
+  }, [subscriptionsData])
+
+  // Filter out organisations that already have a plan assigned
+  const organisations = useMemo(() => {
+    const allOrgs = orgsData?.data ?? []
+    return allOrgs.filter((org) => !orgsWithPlan.has(org.id))
+  }, [orgsData, orgsWithPlan])
+
   const plans = (plansData?.data ?? []).filter((p) => p.isActive)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,13 +79,29 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     }
   }
 
-  const isLoading = isLoadingOrgs || isLoadingPlans
+  const isLoading = isLoadingOrgs || isLoadingPlans || isLoadingSubscriptions
 
   if (isLoading) {
     return (
       <div className="space-y-4">
         <Skeleton className="h-10 w-full" />
         <Skeleton className="h-10 w-full" />
+      </div>
+    )
+  }
+
+  // Show message if no organisations available
+  if (organisations.length === 0) {
+    return (
+      <div className="space-y-4">
+        <p className="text-muted-foreground text-center py-4">
+          All active organisations already have a plan assigned.
+        </p>
+        <div className="flex justify-end">
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Close
+          </Button>
+        </div>
       </div>
     )
   }
@@ -93,6 +122,9 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
             ))}
           </SelectContent>
         </Select>
+        <p className="text-xs text-muted-foreground">
+          Only organisations without a plan are shown.
+        </p>
       </div>
       <div className="space-y-2">
         <Label>Plan *</Label>

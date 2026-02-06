@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { useForm, type Resolver } from "react-hook-form"
+import { useForm, Controller, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Loader2 } from "lucide-react"
@@ -9,6 +9,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useUpdatePlanMutation } from "@/store/api/subscriptions/subscriptionApi"
 import type { Plan, UpdatePlanRequest } from "@/store/api/subscriptions/types"
 import { toast } from "sonner"
@@ -17,6 +24,8 @@ interface EditPlanFormValues {
   name: string
   description?: string
   price: number
+  currency: string
+  billingCycle: "monthly" | "yearly"
   userLimit?: number
   centreLimit?: number
   organisationLimit?: number
@@ -27,6 +36,8 @@ const editPlanSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
   price: z.coerce.number().min(0, "Price must be ≥ 0"),
+  currency: z.string().min(1, "Currency is required"),
+  billingCycle: z.enum(["monthly", "yearly"]),
   userLimit: z.optional(z.coerce.number().min(0)),
   centreLimit: z.optional(z.coerce.number().min(0)),
   organisationLimit: z.optional(z.coerce.number().min(0)),
@@ -48,6 +59,8 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
       name: plan.name,
       description: plan.description ?? "",
       price: plan.price,
+      currency: plan.currency ?? "GBP",
+      billingCycle: plan.billingCycle ?? "monthly",
       userLimit: plan.userLimit,
       centreLimit: plan.centreLimit,
       organisationLimit: plan.organisationLimit,
@@ -60,6 +73,8 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
       name: plan.name,
       description: plan.description ?? "",
       price: plan.price,
+      currency: plan.currency ?? "GBP",
+      billingCycle: plan.billingCycle ?? "monthly",
       userLimit: plan.userLimit ?? undefined,
       centreLimit: plan.centreLimit ?? undefined,
       organisationLimit: plan.organisationLimit ?? undefined,
@@ -76,6 +91,8 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
         name: values.name,
         description: values.description || undefined,
         price: values.price,
+        currency: values.currency,
+        billingCycle: values.billingCycle,
         userLimit: values.userLimit,
         centreLimit: values.centreLimit,
         organisationLimit: values.organisationLimit,
@@ -128,20 +145,63 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
         />
       </div>
 
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="price">Price *</Label>
+          <Input
+            id="price"
+            type="number"
+            step="0.01"
+            min={0}
+            {...form.register("price")}
+            className={form.formState.errors.price ? "border-destructive" : ""}
+            disabled={isLoading}
+          />
+          {form.formState.errors.price && (
+            <p className="text-sm text-destructive">{form.formState.errors.price.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="currency">Currency *</Label>
+          <Controller
+            name="currency"
+            control={form.control}
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange} disabled={isLoading}>
+                <SelectTrigger id="currency" className={form.formState.errors.currency ? "border-destructive" : ""}>
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="GBP">GBP</SelectItem>
+                  <SelectItem value="USD">USD</SelectItem>
+                  <SelectItem value="EUR">EUR</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {form.formState.errors.currency && (
+            <p className="text-sm text-destructive">{form.formState.errors.currency.message}</p>
+          )}
+        </div>
+      </div>
+
       <div className="space-y-2">
-        <Label htmlFor="price">Price *</Label>
-        <Input
-          id="price"
-          type="number"
-          step="0.01"
-          min={0}
-          {...form.register("price")}
-          className={form.formState.errors.price ? "border-destructive" : ""}
-          disabled={isLoading}
+        <Label>Billing cycle *</Label>
+        <Controller
+          name="billingCycle"
+          control={form.control}
+          render={({ field }) => (
+            <Select value={field.value} onValueChange={field.onChange} disabled={isLoading}>
+              <SelectTrigger className={form.formState.errors.billingCycle ? "border-destructive" : ""}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
         />
-        {form.formState.errors.price && (
-          <p className="text-sm text-destructive">{form.formState.errors.price.message}</p>
-        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

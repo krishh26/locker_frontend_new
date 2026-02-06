@@ -49,14 +49,14 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
   const { config: sidebarConfig, updateConfig: updateSidebarConfig } = useSidebarConfig()
 
   const [activeTab, setActiveTab] = React.useState("theme")
-  const [selectedTheme, setSelectedTheme] = React.useState("default")
-  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("")
+  const [selectedTheme, setSelectedTheme] = React.useState("")
+  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("theme-Locker")
   const [selectedRadius, setSelectedRadius] = React.useState("0.5rem")
   const [importModalOpen, setImportModalOpen] = React.useState(false)
   const [importedTheme, setImportedTheme] = React.useState<ImportedTheme | null>(null)
   const [hasRestoredPreset, setHasRestoredPreset] = React.useState(false)
 
-  // Hydrate from localStorage so (master-admin-root) and (user-root) share the same theme; avoid applying "default" on first paint
+  // Hydrate from localStorage so (master-admin-root) and (user-root) share the same theme; apply theme-Locker as default
   React.useEffect(() => {
     const stored = getStoredPreset()
     if (stored) {
@@ -66,31 +66,44 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
         setSelectedRadius(stored.selectedRadius)
         applyRadius(stored.selectedRadius)
       }
+    } else {
+      // No stored preset - apply default theme-Locker
+      const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker")?.preset
+      if (defaultPreset) {
+        applyTweakcnTheme(defaultPreset, isDarkMode)
+      }
+      storePreset("", "theme-Locker", "0.5rem")
     }
     setHasRestoredPreset(true)
   // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount to restore preset only
   }, [])
 
   const handleReset = () => {
-    // Complete reset to application defaults
+    // Complete reset to application defaults (theme-Locker)
 
     // 1. Reset all state variables to initial values
-    setSelectedTheme("default")
-    setSelectedTweakcnTheme("")
+    setSelectedTheme("")
+    setSelectedTweakcnTheme("theme-Locker")
     setSelectedRadius("0.5rem")
     setImportedTheme(null) // Clear imported theme
     setBrandColorsValues({}) // Clear brand colors state
 
     // 2. Persist default so other dashboards (user-root / master-admin-root) also show default
-    storePreset("default", "", "0.5rem")
+    storePreset("", "theme-Locker", "0.5rem")
 
     // 3. Completely remove all custom CSS variables
     resetTheme()
 
-    // 4. Reset the radius to default
+    // 4. Apply the theme-Locker theme
+    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker")?.preset
+    if (defaultPreset) {
+      applyTweakcnTheme(defaultPreset, isDarkMode)
+    }
+
+    // 5. Reset the radius to default
     applyRadius("0.5rem")
 
-    // 5. Reset sidebar to defaults
+    // 6. Reset sidebar to defaults
     updateSidebarConfig({ variant: "inset", collapsible: "offcanvas", side: "left" })
   }
 

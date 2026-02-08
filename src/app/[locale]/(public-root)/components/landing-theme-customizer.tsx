@@ -39,7 +39,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
   const { toggleTheme } = useCircularTransition()
 
   const [selectedTheme, setSelectedTheme] = React.useState("")
-  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("theme-Locker")
+  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("theme-Locker-Pro")
   const [selectedRadius, setSelectedRadius] = React.useState("0.5rem")
   const [importModalOpen, setImportModalOpen] = React.useState(false)
   const [importedTheme, setImportedTheme] = React.useState<ImportedTheme | null>(null)
@@ -47,14 +47,14 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
   const handleReset = () => {
     // Reset all state variables to initial values (theme-Locker)
     setSelectedTheme("")
-    setSelectedTweakcnTheme("theme-Locker")
+    setSelectedTweakcnTheme("theme-Locker-Pro")
     setSelectedRadius("0.5rem")
     setImportedTheme(null)
     setBrandColorsValues({})
 
     // Reset theme and apply theme-Locker
     resetTheme()
-    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker")?.preset
+    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker-Pro")?.preset
     if (defaultPreset) {
       applyTweakcnTheme(defaultPreset, isDarkMode)
     }
@@ -112,7 +112,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
   // Apply theme-Locker on initial mount
   React.useEffect(() => {
-    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker")?.preset
+    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker-Pro")?.preset
     if (defaultPreset) {
       applyTweakcnTheme(defaultPreset, isDarkMode)
     }

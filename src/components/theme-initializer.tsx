@@ -5,7 +5,7 @@ import { tweakcnPresets } from "@/utils/tweakcn-theme-presets"
 import { useTheme } from "@/hooks/use-theme"
 
 const THEME_PRESET_STORAGE_KEY = "nextjs-ui-theme-preset"
-const DEFAULT_THEME = "theme-Locker"
+const DEFAULT_THEME = "theme-Locker-Pro"
 
 function getStoredPreset() {
   if (typeof window === "undefined") return null

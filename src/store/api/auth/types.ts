@@ -44,3 +44,7 @@ export type LoginResult = {
   raw?: unknown;
 };
 
+export type GetTokenByEmailRequest = {
+  email: string;
+};
+

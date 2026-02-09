@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
+import { useIsImpersonated } from "@/hooks/use-impersonation"
 import { clearCredentials, setCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import type { AuthUser } from "@/store/api/auth/types"
@@ -32,6 +33,7 @@ export function SiteHeader() {
   const { token, user } = useAppSelector((state) => state.auth)
   const isAuthenticated = Boolean(token && user)
   const [changeUserRole, { isLoading: isChangingRole }] = useChangeUserRoleMutation()
+  const isImpersonated = useIsImpersonated()
 
   // Get available roles from user object
   const availableRoles = (user?.roles as string[] | undefined) || []
@@ -167,15 +169,17 @@ export function SiteHeader() {
                 </DropdownMenu>
               )}
             {isAuthenticated ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="cursor-pointer gap-2"
-                onClick={handleLogout}
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </Button>
+              !isImpersonated && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="cursor-pointer gap-2"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </Button>
+              )
             ) : (
               <Button variant="outline" size="sm" asChild className="cursor-pointer">
                 <Link href="/auth/sign-in">Sign In</Link>

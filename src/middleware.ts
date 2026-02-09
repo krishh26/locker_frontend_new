@@ -110,6 +110,11 @@ export function middleware(request: NextRequest) {
     return response
   }
 
+  // Allow access to impersonate page (MasterAdmin login-as-admin flow)
+  if (pathname === '/auth/impersonate') {
+    return response
+  }
+
   if (token && isAuthRoute(pathname)) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }

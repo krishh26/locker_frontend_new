@@ -38,22 +38,26 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
   const { toggleTheme } = useCircularTransition()
 
-  const [selectedTheme, setSelectedTheme] = React.useState("default")
-  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("")
+  const [selectedTheme, setSelectedTheme] = React.useState("")
+  const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("theme-Locker-Pro")
   const [selectedRadius, setSelectedRadius] = React.useState("0.5rem")
   const [importModalOpen, setImportModalOpen] = React.useState(false)
   const [importedTheme, setImportedTheme] = React.useState<ImportedTheme | null>(null)
 
   const handleReset = () => {
-    // Reset all state variables to initial values
+    // Reset all state variables to initial values (theme-Locker)
     setSelectedTheme("")
-    setSelectedTweakcnTheme("")
+    setSelectedTweakcnTheme("theme-Locker-Pro")
     setSelectedRadius("0.5rem")
     setImportedTheme(null)
     setBrandColorsValues({})
 
-    // Reset theme and radius to defaults
+    // Reset theme and apply theme-Locker
     resetTheme()
+    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker-Pro")?.preset
+    if (defaultPreset) {
+      applyTweakcnTheme(defaultPreset, isDarkMode)
+    }
     applyRadius("0.5rem")
   }
 
@@ -105,6 +109,15 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
     if (isDarkMode === true) return
     toggleTheme(event)
   }
+
+  // Apply theme-Locker on initial mount
+  React.useEffect(() => {
+    const defaultPreset = tweakcnThemes.find(t => t.value === "theme-Locker-Pro")?.preset
+    if (defaultPreset) {
+      applyTweakcnTheme(defaultPreset, isDarkMode)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
+  }, [])
 
   // Re-apply themes when theme mode changes
   React.useEffect(() => {
@@ -238,7 +251,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
             {/* Tweakcn Theme Presets */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium">Tweakcn Theme Presets</Label>
+                <Label className="text-sm font-medium">Theme</Label>
                 <Button variant="outline" size="sm" onClick={handleRandomTweakcn} className="cursor-pointer">
                   <Dices className="h-3.5 w-3.5 mr-1.5" />
                   Random

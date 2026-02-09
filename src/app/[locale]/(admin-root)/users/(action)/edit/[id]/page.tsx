@@ -2,11 +2,11 @@
 import { useEffect } from "react";
 
 import { useRouter } from "@/i18n/navigation";
-import { useParams } from "next/navigation";;
+import { useParams } from "next/navigation";
 
 import { UserCog } from "lucide-react";
 
-import { useGetUsersQuery } from "@/store/api/user/userApi";
+import { useGetUserByIdQuery } from "@/store/api/user/userApi";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -20,25 +20,35 @@ export default function EditUserPage() {
   const router = useRouter();
   const t = useTranslations("users.pages");
   const userId = params.id as string;
-  const user = useAppSelector((state) => state.auth.user);
-  const isEmployer = user?.role === "Employer";
+  const authUser = useAppSelector((state) => state.auth.user);
+  const isEmployer = authUser?.role === "Employer";
 
-  // Fetch users and find the one with matching ID
-  const { data, isLoading, error } = useGetUsersQuery({
-    page: 1,
-    page_size: 1000,
+  // Parse userId to number
+  const userIdNumber = parseInt(userId, 10);
+  const isValidUserId = !isNaN(userIdNumber) && userIdNumber > 0;
+
+  // Fetch user by ID
+  const { data, isLoading, error } = useGetUserByIdQuery(userIdNumber, {
+    skip: !isValidUserId || isEmployer,
   });
 
-  const userToEdit = data?.data?.find((u) => u.user_id.toString() === userId);
+  const userToEdit = data?.data;
 
   useEffect(() => {
     if (isEmployer) {
       router.push("/users");
-    } else if (!isLoading && !userToEdit && data) {
-      // User not found, redirect to users page
+    } else if (!isValidUserId) {
+      // Invalid user ID, redirect to users page
+      router.push("/users");
+    } else if (!isLoading && error) {
+      // Error fetching user, redirect to users page
       router.push("/users");
     }
-  }, [isEmployer, isLoading, userToEdit, data, router]);
+  }, [isEmployer, isLoading, error, isValidUserId, router]);
+
+  if (isEmployer || !isValidUserId) {
+    return null;
+  }
 
   if (isLoading) {
     return (
@@ -60,10 +70,6 @@ export default function EditUserPage() {
     );
   }
 
-  if (isEmployer) {
-    return null;
-  }
-
   if (error || !userToEdit) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
@@ -76,7 +82,9 @@ export default function EditUserPage() {
         />
         <div className="">
           <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center">
-            <p className="text-destructive">{t("userNotFound")}</p>
+            <p className="text-destructive">
+              {error ? "Failed to load user" : t("userNotFound")}
+            </p>
           </div>
         </div>
       </div>
@@ -86,8 +94,8 @@ export default function EditUserPage() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Edit User"
-        subtitle="Update user information below"
+        title={t("editTitle")}
+        subtitle={t("editSubtitle")}
         icon={UserCog}
         showBackButton
         backButtonHref="/users"

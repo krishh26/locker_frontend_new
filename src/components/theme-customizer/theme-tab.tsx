@@ -90,7 +90,7 @@ export function ThemeTab({
       {/* Shadcn UI Theme Presets */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Shadcn UI Theme Presets</Label>
+          <Label className="text-sm font-medium">Theme</Label>
           <Button variant="outline" size="sm" onClick={handleRandomShadcn} className="cursor-pointer">
             <Dices className="h-3.5 w-3.5 mr-1.5" />
             Random
@@ -105,7 +105,7 @@ export function ThemeTab({
           applyTheme(value, isDarkMode)
         }}>
           <SelectTrigger className="w-full cursor-pointer">
-            <SelectValue placeholder="Choose Shadcn Theme" />
+            <SelectValue placeholder="Choose Theme" />
           </SelectTrigger>
           <SelectContent className="max-h-60">
             <div className="p-2">
@@ -144,7 +144,7 @@ export function ThemeTab({
       {/* Tweakcn Theme Presets */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Tweakcn Theme Presets</Label>
+          <Label className="text-sm font-medium">Theme</Label>
           <Button variant="outline" size="sm" onClick={handleRandomTweakcn} className="cursor-pointer">
             <Dices className="h-3.5 w-3.5 mr-1.5" />
             Random
@@ -162,7 +162,7 @@ export function ThemeTab({
           }
         }}>
           <SelectTrigger className="w-full cursor-pointer">
-            <SelectValue placeholder="Choose Tweakcn Theme" />
+            <SelectValue placeholder="Choose Theme" />
           </SelectTrigger>
           <SelectContent className="max-h-60">
             <div className="p-2">
@@ -196,10 +196,10 @@ export function ThemeTab({
         </Select>
       </div>
 
-      <Separator />
+      {/* <Separator /> */}
 
       {/* Radius Selection */}
-      <div className="space-y-3">
+      {/* <div className="space-y-3">
         <Label className="text-sm font-medium">Radius</Label>
         <div className="grid grid-cols-5 gap-2">
           {radiusOptions.map((option) => (
@@ -218,7 +218,7 @@ export function ThemeTab({
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <Separator />
 
@@ -250,7 +250,7 @@ export function ThemeTab({
       <Separator />
 
       {/* Import Theme Button */}
-      <div className="space-y-3">
+      {/* <div className="space-y-3">
         <Button
           variant="outline"
           size="lg"
@@ -260,10 +260,10 @@ export function ThemeTab({
           <Upload className="h-3.5 w-3.5 mr-1.5" />
           Import Theme
         </Button>
-      </div>
+      </div> */}
 
       {/* Brand Colors Section */}
-      <Accordion type="single" collapsible className="w-full border-b rounded-lg">
+      {/* <Accordion type="single" collapsible className="w-full border-b rounded-lg">
         <AccordionItem value="brand-colors" className="border border-border rounded-lg overflow-hidden">
           <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/50 transition-colors">
             <Label className="text-sm font-medium cursor-pointer">Brand Colors</Label>
@@ -281,7 +281,7 @@ export function ThemeTab({
             ))}
           </AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion> */}
 
       {/* Tweakcn */}
       {/* <div className="p-4 bg-muted rounded-lg space-y-3">

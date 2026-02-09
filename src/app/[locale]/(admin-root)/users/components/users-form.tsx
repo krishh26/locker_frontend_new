@@ -247,6 +247,9 @@ export function UsersForm({ user }: UsersFormProps) {
   const hasEmployerRole = selectedRoles?.includes("Employer") || false;
   const hasEqaRole = selectedRoles?.includes("EQA") || false;
   
+  // Watch time_zone to ensure Select component updates
+  const watchedTimeZone = form.watch("time_zone");
+  
   // Watch form values for EQA assignment
   const selectedCourseForAssignment = form.watch("selectedCourseForAssignment") || "";
   const assignedLearnersValue = form.watch("assignedLearners");
@@ -455,8 +458,8 @@ export function UsersForm({ user }: UsersFormProps) {
 
       // For Admin users, auto-populate organisation_ids from assigned_organisations if editing
       // Admin organizations are managed via "Assign Admin to Organisation" API, not through this form
-      if (user?.assigned_organisations) {
-        values.organisation_ids = user.assigned_organisations.map(org => org.id);
+      if (authUser?.assignedOrganisationIds) {
+        values.organisation_ids = authUser.assignedOrganisationIds.map(id => Number(id)) as number[];
       } 
       if (isEditMode) {
         const updateData = values as UpdateUserFormValues;
@@ -760,30 +763,41 @@ export function UsersForm({ user }: UsersFormProps) {
           <Controller
             name="time_zone"
             control={form.control}
-            render={({ field }) => (
-              <>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger
-                    id="time_zone"
-                    className={form.formState.errors.time_zone ? "w-full border-destructive" : "w-full"}
+            render={({ field }) => {
+              // Use watched value or field value, ensuring it's a valid timezone
+              const timeZoneValue = watchedTimeZone || field.value || "";
+              const isValidTimezone = timeZoneValue && timezones.includes(timeZoneValue);
+              
+              return (
+                <>
+                  <Select 
+                    value={isValidTimezone ? timeZoneValue : undefined} 
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
                   >
-                    <SelectValue placeholder={t("form.timeZonePlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {timezones.map((tz) => (
-                      <SelectItem key={tz} value={tz}>
-                        {tz}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {form.formState.errors.time_zone && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.time_zone.message}
-                  </p>
-                )}
-              </>
-            )}
+                    <SelectTrigger
+                      id="time_zone"
+                      className={form.formState.errors.time_zone ? "w-full border-destructive" : "w-full"}
+                    >
+                      <SelectValue placeholder={t("form.timeZonePlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {timezones.map((tz) => (
+                        <SelectItem key={tz} value={tz}>
+                          {tz}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.time_zone && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.time_zone.message}
+                    </p>
+                  )}
+                </>
+              );
+            }}
           />
         </div>
       </div>

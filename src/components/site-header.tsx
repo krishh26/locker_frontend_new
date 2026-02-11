@@ -140,7 +140,7 @@ export function SiteHeader() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="cursor-pointer"
+                      className="cursor-pointer bg-linear-to-br from-violet-100 to-purple-100 dark:from-violet-900/60 dark:to-purple-900/50 border-violet-300/60 dark:border-violet-700/50 hover:from-violet-200 hover:to-purple-200 dark:hover:from-violet-800/70 dark:hover:to-purple-800/60 text-violet-700 dark:text-violet-300 shadow-sm hover:shadow-md transition-all duration-200"
                       disabled={isChangingRole}
                     >
                       {isChangingRole ? (
@@ -172,8 +172,7 @@ export function SiteHeader() {
               !isImpersonated && (
                 <Button
                   variant="ghost"
-                  size="sm"
-                  className="cursor-pointer gap-2"
+                  className="cursor-pointer gap-2 bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-900/60 dark:to-pink-900/50 border border-rose-300/60 dark:border-rose-700/50 hover:from-rose-200 hover:to-pink-200 dark:hover:from-rose-800/70 dark:hover:to-pink-800/60 text-rose-700 dark:text-rose-300 shadow-sm hover:shadow-md transition-all duration-200"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4" />

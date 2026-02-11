@@ -41,7 +41,7 @@ export function TemplateSelector({
           {surveyTemplates.map((template) => (
             <Card
               key={template.id}
-              className="group relative overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+              className="group relative overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-200 hover:scale-[1.02] hover:ring-2 hover:ring-primary/20"
               onClick={() => handleSelectTemplate(template)}
             >
               <div

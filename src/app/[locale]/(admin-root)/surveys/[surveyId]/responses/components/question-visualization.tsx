@@ -44,6 +44,17 @@ const COLORS = [
   "#FF6B6B",
 ]
 
+const questionCardColors = [
+  "bg-linear-to-br from-sky-100/60 to-blue-100/60 dark:from-sky-950/30 dark:to-blue-950/20 border-sky-300/40 dark:border-sky-800/30",
+  "bg-linear-to-br from-rose-100/60 to-pink-100/60 dark:from-rose-950/30 dark:to-pink-950/20 border-rose-300/40 dark:border-rose-800/30",
+  "bg-linear-to-br from-emerald-100/60 to-teal-100/60 dark:from-emerald-950/30 dark:to-teal-950/20 border-emerald-300/40 dark:border-emerald-800/30",
+  "bg-linear-to-br from-violet-100/60 to-purple-100/60 dark:from-violet-950/30 dark:to-purple-950/20 border-violet-300/40 dark:border-violet-800/30",
+  "bg-linear-to-br from-amber-100/60 to-orange-100/60 dark:from-amber-950/30 dark:to-orange-950/20 border-amber-300/40 dark:border-amber-800/30",
+  "bg-linear-to-br from-cyan-100/60 to-teal-100/60 dark:from-cyan-950/30 dark:to-teal-950/20 border-cyan-300/40 dark:border-cyan-800/30",
+  "bg-linear-to-br from-fuchsia-100/60 to-pink-100/60 dark:from-fuchsia-950/30 dark:to-pink-950/20 border-fuchsia-300/40 dark:border-fuchsia-800/30",
+  "bg-linear-to-br from-indigo-100/60 to-blue-100/60 dark:from-indigo-950/30 dark:to-blue-950/20 border-indigo-300/40 dark:border-indigo-800/30",
+]
+
 export function QuestionVisualization({
   question,
   responses,
@@ -360,7 +371,7 @@ export function QuestionVisualization({
   }
 
   return (
-    <Card>
+    <Card className={questionCardColors[questionIndex % questionCardColors.length]}>
       <CardHeader>
         <CardTitle className="text-base">
           {questionIndex + 1}. {question.title}

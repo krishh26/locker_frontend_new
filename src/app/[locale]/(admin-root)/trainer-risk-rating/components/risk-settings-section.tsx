@@ -99,14 +99,19 @@ export function RiskSettingsSection({
   };
 
   return (
-    <Card>
+    <Card className="bg-linear-to-br from-amber-100/60 to-orange-100/60 dark:from-amber-950/30 dark:to-orange-950/20 border-amber-300/40 dark:border-amber-800/30">
       <CardHeader>
-        <CardTitle>Risk Settings Configuration</CardTitle>
+        <div className="flex items-center gap-2">
+          <div className="rounded-lg p-1.5 bg-amber-200/70 dark:bg-amber-800/40">
+            <Save className="h-4 w-4 text-amber-700 dark:text-amber-300" />
+          </div>
+          <CardTitle>Risk Settings Configuration</CardTitle>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
-          <div className="space-y-2">
-            <Label htmlFor="high-risk">High Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-red-50/60 dark:bg-red-950/20 p-3 border border-red-200/40 dark:border-red-800/30">
+            <Label htmlFor="high-risk" className="text-red-700 dark:text-red-400 font-semibold">High Risk %</Label>
             <Input
               id="high-risk"
               type="number"
@@ -120,8 +125,8 @@ export function RiskSettingsSection({
               <p className="text-sm text-destructive">{riskSettingsErrors.high}</p>
             )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="medium-risk">Medium Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-yellow-50/60 dark:bg-yellow-950/20 p-3 border border-yellow-200/40 dark:border-yellow-800/30">
+            <Label htmlFor="medium-risk" className="text-yellow-700 dark:text-yellow-400 font-semibold">Medium Risk %</Label>
             <Input
               id="medium-risk"
               type="number"
@@ -135,8 +140,8 @@ export function RiskSettingsSection({
               <p className="text-sm text-destructive">{riskSettingsErrors.medium}</p>
             )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="low-risk">Low Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-green-50/60 dark:bg-green-950/20 p-3 border border-green-200/40 dark:border-green-800/30">
+            <Label htmlFor="low-risk" className="text-green-700 dark:text-green-400 font-semibold">Low Risk %</Label>
             <Input
               id="low-risk"
               type="number"

@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useGetMessagesQuery } from "@/store/api/forum/forumApi";
 import { useAppSelector } from "@/store/hooks";
-import { getRandomColor } from "../utils/randomColor";
 import { ForumMessageInput } from "./forum-message-input";
 import { format } from "date-fns";
 import type { ForumChat } from "@/store/api/forum/types";
@@ -39,12 +38,6 @@ export function ForumMessageThread({
   }, [data?.data]);
 
   const messages = useMemo(() => data?.data || [], [data?.data]);
-  const initials = chat.course_course_name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
 
   // Helper function to get ordinal suffix (1st, 2nd, 3rd, 4th, etc.)
   const getOrdinalSuffix = (day: number): string => {
@@ -100,7 +93,7 @@ export function ForumMessageThread({
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b p-4">
+      <div className="flex items-center gap-3 border-b p-4 bg-linear-to-r from-primary/5 via-primary/3 to-transparent dark:from-primary/10 dark:via-primary/5 dark:to-transparent">
         {onClose && (
           <Button
             variant="ghost"
@@ -111,9 +104,9 @@ export function ForumMessageThread({
             <ArrowLeft className="h-4 w-4" />
           </Button>
         )}
-        <Avatar className="h-10 w-10 cursor-pointer">
+        <Avatar className="h-10 w-10 cursor-pointer shadow-sm ring-2 ring-primary/20">
           <AvatarImage src={chat.course_course_name.toLowerCase().charAt(0)} alt={chat.course_course_name} />
-          <AvatarFallback>
+          <AvatarFallback className="bg-linear-to-br from-primary to-primary/70 text-primary-foreground font-semibold">
               {chat.course_course_name.split(' ').map(n => n[0]).join('').slice(0, 2)}
           </AvatarFallback>
         </Avatar>
@@ -131,8 +124,11 @@ export function ForumMessageThread({
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto p-4">
         {messages.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
-            <div className="text-center">
-              <p className="text-muted-foreground">No messages yet</p>
+            <div className="text-center space-y-2">
+              <div className="mx-auto rounded-full bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/40 dark:to-teal-900/30 p-4 w-fit">
+                <span className="text-2xl">💬</span>
+              </div>
+              <p className="text-muted-foreground font-medium">No messages yet</p>
               <p className="text-muted-foreground text-sm">
                 Start the conversation
               </p>
@@ -147,8 +143,8 @@ export function ForumMessageThread({
                   key={`date-${item.date}`}
                   className="flex items-center justify-center py-4"
                 >
-                  <div className="rounded-full bg-muted px-4 py-1.5">
-                    <span className="text-muted-foreground text-xs font-medium">
+                  <div className="rounded-full bg-linear-to-r from-violet-100 to-indigo-100 dark:from-violet-900/40 dark:to-indigo-900/30 px-4 py-1.5 shadow-sm">
+                    <span className="text-violet-700 dark:text-violet-300 text-xs font-medium">
                       {item.date}
                     </span>
                   </div>
@@ -171,26 +167,26 @@ export function ForumMessageThread({
                 )}
               >
                 {!isSent && (
-                  <Avatar className="size-8 shrink-0">
+                  <Avatar className="size-8 shrink-0 shadow-sm">
                     <AvatarImage
                       src={message.sender.avatar?.url}
                       alt={message.sender.user_name}
                     />
-                    <AvatarFallback>
+                    <AvatarFallback className="bg-linear-to-br from-emerald-400 to-teal-500 dark:from-emerald-500 dark:to-teal-600 text-white text-xs font-semibold">
                       {message.sender.user_name[0]?.toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 )}
                 <div
                   className={cn(
-                    "flex max-w-[75%] flex-col gap-1 rounded-lg px-4 py-2",
+                    "flex max-w-[75%] flex-col gap-1 rounded-2xl px-4 py-2 shadow-sm",
                     isSent
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                      ? "bg-linear-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md"
+                      : "bg-linear-to-br from-sky-50 to-blue-50 dark:from-sky-950/50 dark:to-blue-950/40 rounded-bl-md"
                   )}
                 >
                   {!isSent && (
-                    <span className="text-xs font-semibold">
+                    <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                       {message.sender.user_name}
                     </span>
                   )}
@@ -228,8 +224,8 @@ export function ForumMessageThread({
                   </div>
                 </div>
                 {isSent && (
-                  <Avatar className="size-8 shrink-0">
-                    <AvatarFallback className="bg-primary/20 text-primary">
+                  <Avatar className="size-8 shrink-0 shadow-sm">
+                    <AvatarFallback className="bg-linear-to-br from-primary/80 to-primary text-primary-foreground text-xs font-semibold">
                       {user?.firstName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -242,7 +238,7 @@ export function ForumMessageThread({
       </div>
 
       {/* Message Input */}
-      <div className="border-t p-4">
+      <div className="border-t p-4 bg-linear-to-r from-muted/30 to-transparent">
         <ForumMessageInput courseId={chat.course_course_id} />
       </div>
     </div>

@@ -84,18 +84,20 @@ export function AssessmentMethodsTable({
   };
 
   const getRiskColor = (riskLevel: string) => {
-    if (riskLevel === "Low") return "bg-green-100 text-green-800 border-green-200";
-    if (riskLevel === "Medium") return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    if (riskLevel === "High") return "bg-red-100 text-red-800 border-red-200";
-    return "bg-gray-100 text-gray-800 border-gray-200";
+    if (riskLevel === "Low") return "bg-emerald-100 text-emerald-800 border-emerald-300/60 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700/40";
+    if (riskLevel === "Medium") return "bg-amber-100 text-amber-800 border-amber-300/60 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700/40";
+    if (riskLevel === "High") return "bg-red-100 text-red-800 border-red-300/60 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700/40";
+    return "bg-gray-100 text-gray-800 border-gray-300/60 dark:bg-gray-900/30 dark:text-gray-300 dark:border-gray-700/40";
   };
 
   return (
-    <Card>
+    <Card className="bg-linear-to-br from-violet-100/60 to-purple-100/60 dark:from-violet-950/30 dark:to-purple-950/20 border-violet-300/40 dark:border-violet-800/30">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-5 w-5 text-primary" />
+            <div className="rounded-lg p-1.5 bg-violet-200/70 dark:bg-violet-800/40">
+              <ClipboardList className="h-4 w-4 text-violet-700 dark:text-violet-300" />
+            </div>
             <CardTitle>Assessment Method Risk ({assessmentMethods.length})</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -144,7 +146,7 @@ export function AssessmentMethodsTable({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="border rounded-lg overflow-hidden">
+        <div className="border rounded-lg overflow-hidden shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>

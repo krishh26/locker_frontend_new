@@ -26,7 +26,7 @@ export function SafeguardingCard() {
 
   if (isLoading) {
     return (
-      <Card className="h-full border border-border/60 shadow-sm">
+      <Card className="h-full shadow-sm bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30">
         <CardHeader className="flex flex-row items-start justify-between gap-3">
           <div className="w-full space-y-2">
             <Skeleton className="h-6 w-48" />
@@ -42,7 +42,7 @@ export function SafeguardingCard() {
     )
   }
   return (
-    <Card className="h-full border border-border/60 shadow-sm">
+    <Card className="h-full shadow-sm bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30">
       <CardHeader className="flex flex-row items-start justify-between gap-3">
         <div>
           <CardTitle className="text-xl">Safeguarding contact</CardTitle>
@@ -50,44 +50,46 @@ export function SafeguardingCard() {
             Reach out immediately if you have any concerns
           </CardDescription>
         </div>
-        <Badge variant="secondary" className="rounded-full">
+        <Badge variant="secondary" className="rounded-full shadow-sm bg-rose-200/80 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">
           Priority support
         </Badge>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-start gap-3 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
-          <ShieldAlert className="mt-1 size-5 text-primary" />
+        <div className="flex items-start gap-3 rounded-lg border border-dashed border-rose-200/60 dark:border-rose-800/30 bg-rose-50/60 dark:bg-rose-950/30 p-4">
+          <div className="rounded-full p-2 bg-linear-to-br from-rose-400 to-pink-500 text-white shadow-sm mt-0.5">
+            <ShieldAlert className="size-4" />
+          </div>
           <div className="space-y-1">
             <p className="text-base font-semibold text-foreground">Safeguarding Lead</p>
             <p className="text-sm text-muted-foreground">Designated Safeguarding Lead</p>
           </div>
         </div>
 
-        <Separator />
+        <Separator className="bg-rose-200/60 dark:bg-rose-800/30" />
 
         <div className="grid gap-3 text-sm">
           {safeguardingContact.telNumber && (
-            <div className="flex items-center gap-2 rounded-md border border-border/60 p-3">
-              <Phone className="size-4 text-primary" />
+            <div className="flex items-center gap-2 rounded-md border border-rose-200/60 dark:border-rose-800/30 bg-white/60 dark:bg-white/5 p-3">
+              <Phone className="size-4 text-rose-600 dark:text-rose-400" />
               <span className="font-medium text-foreground">Tel:</span>
               <span>{safeguardingContact.telNumber}</span>
             </div>
           )}
 
           {safeguardingContact.mobileNumber && (
-            <div className="flex items-center gap-2 rounded-md border border-border/60 p-3">
-              <Phone className="size-4 text-primary" />
+            <div className="flex items-center gap-2 rounded-md border border-rose-200/60 dark:border-rose-800/30 bg-white/60 dark:bg-white/5 p-3">
+              <Phone className="size-4 text-rose-600 dark:text-rose-400" />
               <span className="font-medium text-foreground">Mobile:</span>
               <span>{safeguardingContact.mobileNumber}</span>
             </div>
           )}
 
           {safeguardingContact.emailAddress && (
-            <div className="flex items-center gap-2 rounded-md border border-border/60 p-3">
-              <Mail className="size-4 text-primary" />
+            <div className="flex items-center gap-2 rounded-md border border-rose-200/60 dark:border-rose-800/30 bg-white/60 dark:bg-white/5 p-3">
+              <Mail className="size-4 text-rose-600 dark:text-rose-400" />
               <span className="font-medium text-foreground">Email:</span>
               <a
-                className="text-primary underline-offset-4 hover:underline"
+                className="text-rose-600 dark:text-rose-400 underline-offset-4 hover:underline"
                 href={`mailto:${safeguardingContact.emailAddress}`}
               >
                 {safeguardingContact.emailAddress}
@@ -98,8 +100,8 @@ export function SafeguardingCard() {
 
         {safeguardingContact.additionalInfo && (
           <>
-            <Separator />
-            <div className="rounded-lg border border-dashed border-border/60 bg-muted/30 p-4 text-sm">
+            <Separator className="bg-rose-200/60 dark:bg-rose-800/30" />
+            <div className="rounded-lg border border-dashed border-rose-200/60 dark:border-rose-800/30 bg-rose-50/50 dark:bg-rose-950/20 p-4 text-sm">
               <p className="text-muted-foreground whitespace-pre-line">{safeguardingContact.additionalInfo}</p>
             </div>
           </>

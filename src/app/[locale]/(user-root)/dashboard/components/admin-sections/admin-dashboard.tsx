@@ -48,6 +48,30 @@ const CSV_HEADER_NAMES: Record<string, string> = {
   target_date: "Target Date",
 }
 
+// Beautiful gradient backgrounds for cards – cycles across all cards
+const cardBgColors = [
+  // Emerald / Mint
+  "bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
+  // Rose / Coral
+  "bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30",
+  // Sky / Azure
+  "bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-950/50 dark:to-blue-950/40 border-sky-300/60 dark:border-sky-800/30",
+  // Violet / Lavender
+  "bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
+  // Amber / Warm
+  "bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950/50 dark:to-orange-950/40 border-amber-300/60 dark:border-amber-800/30",
+  // Cyan / Ocean
+  "bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-950/50 dark:to-teal-950/40 border-cyan-300/60 dark:border-cyan-800/30",
+  // Fuchsia / Berry
+  "bg-gradient-to-br from-fuchsia-100 to-pink-100 dark:from-fuchsia-950/50 dark:to-pink-950/40 border-fuchsia-300/60 dark:border-fuchsia-800/30",
+  // Indigo / Deep Blue
+  "bg-gradient-to-br from-indigo-100 to-blue-100 dark:from-indigo-950/50 dark:to-blue-950/40 border-indigo-300/60 dark:border-indigo-800/30",
+  // Lime / Fresh
+  "bg-gradient-to-br from-lime-100 to-green-100 dark:from-lime-950/50 dark:to-green-950/40 border-lime-300/60 dark:border-lime-800/30",
+  // Orange / Sunset
+  "bg-gradient-to-br from-orange-100 to-amber-100 dark:from-orange-950/50 dark:to-amber-950/40 border-orange-300/60 dark:border-orange-800/30",
+]
+
 export function AdminDashboard() {
   const t = useTranslations("dashboard")
   const userRole = useAppSelector((state) => state.auth.user?.role)
@@ -170,7 +194,7 @@ export function AdminDashboard() {
 
       <div className="px-4 lg:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {dashboardCards.filter((card) => card.id !== "overall_progress").map((card) => {
+          {dashboardCards.filter((card) => card.id !== "overall_progress").map((card, index) => {
             // Get count from API or use default name
             const apiType: CardApiType | string | undefined = card.apiType || cardTypeMapping[card.title]
             // Map CardApiType to DashboardCounts key if it's a valid CardApiType
@@ -194,6 +218,7 @@ export function AdminDashboard() {
                 onExport={apiType ? () => handleExport(apiType, card.title) : undefined}
                 isExporting={isExporting}
                 showExport={showExport}
+                className={cardBgColors[index % cardBgColors.length]}
               />
             )
           })}

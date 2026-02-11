@@ -120,13 +120,13 @@ export function SurveysDataTable() {
   const getStatusColor = useCallback((status: string) => {
     switch (status) {
       case "Published":
-        return "text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20"
+        return "text-emerald-700 bg-emerald-100 border-emerald-300/60 dark:text-emerald-300 dark:bg-emerald-900/30 dark:border-emerald-700/40"
       case "Draft":
-        return "text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20"
+        return "text-amber-700 bg-amber-100 border-amber-300/60 dark:text-amber-300 dark:bg-amber-900/30 dark:border-amber-700/40"
       case "Archived":
-        return "text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20"
+        return "text-slate-600 bg-slate-100 border-slate-300/60 dark:text-slate-400 dark:bg-slate-900/30 dark:border-slate-700/40"
       default:
-        return "text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20"
+        return "text-slate-600 bg-slate-100 border-slate-300/60 dark:text-slate-400 dark:bg-slate-900/30 dark:border-slate-700/40"
     }
   }, [])
 
@@ -485,7 +485,7 @@ export function SurveysDataTable() {
           </div>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 bg-linear-to-br from-slate-50/80 to-gray-50/80 dark:from-slate-950/40 dark:to-gray-950/30">
           <div className="space-y-2">
             <Label htmlFor="status-filter" className="text-sm font-medium">
               Status
@@ -543,7 +543,7 @@ export function SurveysDataTable() {
           </div> */}
         </div>
 
-        <div className="rounded-md border overflow-x-auto">
+        <div className="rounded-lg border overflow-x-auto shadow-sm">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

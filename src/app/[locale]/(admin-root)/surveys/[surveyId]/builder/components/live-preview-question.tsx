@@ -34,6 +34,17 @@ import {
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
 
+const questionAccentColors = [
+  "border-l-sky-500 dark:border-l-sky-400",
+  "border-l-rose-500 dark:border-l-rose-400",
+  "border-l-emerald-500 dark:border-l-emerald-400",
+  "border-l-violet-500 dark:border-l-violet-400",
+  "border-l-amber-500 dark:border-l-amber-400",
+  "border-l-cyan-500 dark:border-l-cyan-400",
+  "border-l-fuchsia-500 dark:border-l-fuchsia-400",
+  "border-l-indigo-500 dark:border-l-indigo-400",
+]
+
 interface LivePreviewQuestionProps {
   question: Question
   surveyId: string
@@ -259,7 +270,7 @@ export function LivePreviewQuestion({
           <GripVertical className="h-6 w-6" />
         </div>
 
-        <div className="relative flex-1 rounded-lg border-2 border-transparent hover:border-primary/50 transition-colors bg-background p-4">
+        <div className={`relative flex-1 rounded-lg border-2 border-l-4 border-transparent hover:border-primary/30 ${questionAccentColors[index % questionAccentColors.length]} transition-colors bg-background p-4 shadow-sm hover:shadow-md`}>
           {/* 3-dot Menu - always visible but more prominent on hover */}
           <div className="absolute right-2 top-2 opacity-40 group-hover:opacity-100 transition-opacity z-10">
             <DropdownMenu>

@@ -54,7 +54,7 @@ export function CalendarFilters({
   }
 
   return (
-    <Card className='p-4'>
+    <Card className='p-4 bg-linear-to-br from-emerald-50/40 to-teal-50/40 dark:from-emerald-950/20 dark:to-teal-950/15 border-emerald-200/40 dark:border-emerald-800/20'>
       <div className='flex flex-col md:flex-row gap-4 items-start md:items-center justify-between'>
         {/* Filter Controls */}
         <div className='flex flex-col sm:flex-row gap-3 flex-1 w-full md:w-auto'>

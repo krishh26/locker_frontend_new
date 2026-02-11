@@ -74,8 +74,11 @@ export function ResponsesOverview({ surveyId }: ResponsesOverviewProps) {
     return (
       <div className="space-y-6">
         <ResponseStatistics responses={responses} />
-        <Card>
-          <CardHeader>
+        <Card className="bg-linear-to-br from-slate-50/80 to-gray-50/80 dark:from-slate-950/40 dark:to-gray-950/30">
+          <CardHeader className="text-center">
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-linear-to-br from-sky-100 to-indigo-100 dark:from-sky-900/40 dark:to-indigo-900/30 flex items-center justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            </div>
             <CardTitle>No Responses Yet</CardTitle>
             <CardDescription>
               Share the survey link to start collecting responses.

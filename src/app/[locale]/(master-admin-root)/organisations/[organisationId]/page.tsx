@@ -9,6 +9,7 @@ import {
   useActivateOrganisationMutation,
   useSuspendOrganisationMutation,
 } from "@/store/api/organisations/organisationApi"
+import { useGetTokenByEmailMutation } from "@/store/api/auth/authApi"
 import { useGetSubscriptionQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
 import { PageHeader } from "@/components/dashboard/page-header"
@@ -31,7 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, MapPin, CreditCard, DollarSign, Users, Edit, CheckCircle, XCircle, Plus } from "lucide-react"
+import { Building2, MapPin, CreditCard, DollarSign, Users, Edit, CheckCircle, XCircle, Plus, LogIn } from "lucide-react"
 import { useEffect, useState, useCallback } from "react"
 import { toast } from "sonner"
 import { EditOrganisationForm } from "../components/edit-organisation-form"
@@ -55,6 +56,7 @@ export default function OrganisationDetailPage() {
   const { data: paymentsData, isLoading: isLoadingPayments } = useGetPaymentsQuery({ organisationId })
   const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
   const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
+  const [getTokenByEmail, { isLoading: isLoggingInAs }] = useGetTokenByEmailMutation()
 
   const organisation = orgData?.data
   const centres = organisation?.centres ?? []
@@ -118,6 +120,25 @@ export default function OrganisationDetailPage() {
   const handleAssignOrgAdminCancel = useCallback(() => {
     setIsAssignOrgAdminDialogOpen(false)
   }, [])
+
+  const handleLoginAsAdmin = useCallback(async (email: string, adminName: string) => {
+    try {
+      const result = await getTokenByEmail({ email }).unwrap()
+      const key = crypto.randomUUID()
+      const storageKey = `locker.impersonate.${key}`
+      localStorage.setItem(storageKey, JSON.stringify(result))
+      window.open(`/auth/impersonate?key=${key}`, "_blank")
+      toast.success(`Opening dashboard as ${adminName} in a new tab`)
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error as { data?: { message?: string } }).data?.message
+          : error instanceof Error
+          ? error.message
+          : "Failed to login as admin"
+      toast.error(errorMessage)
+    }
+  }, [getTokenByEmail])
 
   if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
     return null // Will redirect in useEffect
@@ -332,26 +353,48 @@ export default function OrganisationDetailPage() {
                         <TableHead>Admin Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Roles</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {(organisation.admins ?? []).map((admin) => (
-                        <TableRow key={admin.user_id}>
-                          <TableCell className="font-medium">
-                            {admin.first_name} {admin.last_name}
-                          </TableCell>
-                          <TableCell>{admin.email}</TableCell>
-                          <TableCell>
-                            <div className="flex gap-1 flex-wrap">
-                              {(admin.roles ?? []).map((role) => (
-                                <Badge key={role} variant="secondary">
-                                  {role}
-                                </Badge>
-                              ))}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {(organisation.admins ?? []).map((admin) => {
+                        const adminName = `${admin.first_name} ${admin.last_name}`
+                        return (
+                          <TableRow key={admin.user_id}>
+                            <TableCell className="font-medium">
+                              <button
+                                type="button"
+                                className="text-primary hover:underline cursor-pointer font-medium"
+                                disabled={isLoggingInAs}
+                                onClick={() => handleLoginAsAdmin(admin.email, adminName)}
+                              >
+                                {adminName}
+                              </button>
+                            </TableCell>
+                            <TableCell>{admin.email}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-1 flex-wrap">
+                                {(admin.roles ?? []).map((role) => (
+                                  <Badge key={role} variant="secondary">
+                                    {role}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                disabled={isLoggingInAs}
+                                onClick={() => handleLoginAsAdmin(admin.email, adminName)}
+                              >
+                                <LogIn className="h-4 w-4 mr-2" />
+                                Login As
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
                     </TableBody>
                   </Table>
                 </>

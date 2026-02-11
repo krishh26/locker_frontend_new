@@ -196,13 +196,13 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
 
  
   return (
-    <Card className='overflow-hidden border border-border/60 shadow-sm'>
+    <Card className='overflow-hidden border border-border/60 shadow-sm bg-linear-to-br from-indigo-50/60 to-sky-50/60 dark:from-indigo-950/40 dark:to-sky-950/30'>
       <div className='grid lg:grid-cols-[1fr_1fr]'>
         {/* Left Section - Dark Background with Learner Info */}
         <div className='px-4'>
           <div className='flex flex-col gap-4'>
             <div className='flex items-start gap-4'>
-              <Avatar className='size-16 border'>
+              <Avatar className='size-16 border-2 border-indigo-200 dark:border-indigo-800 shadow-md'>
                 {avatarUrl ? (
                   <Image
                     src={avatarUrl}
@@ -212,7 +212,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
                     className='rounded-full object-cover'
                   />
                 ) : (
-                  <AvatarFallback className='bg-primary/10 text-base font-semibold text-primary'>
+                  <AvatarFallback className='bg-linear-to-br from-indigo-400 to-violet-500 text-base font-semibold text-white'>
                     {initials}
                   </AvatarFallback>
                 )}
@@ -238,19 +238,19 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
             </div>
 
             <div className='space-y-2 text-sm'>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 rounded-md bg-white/60 dark:bg-white/5 px-3 py-1.5'>
                 <span className='text-muted-foreground'>Trainer:</span>
-                <span className='text-foreground'>{trainerName}</span>
+                <span className='text-foreground font-medium'>{trainerName}</span>
               </div>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 rounded-md bg-white/60 dark:bg-white/5 px-3 py-1.5'>
                 <span className='text-muted-foreground'>IQA:</span>
-                <span className='text-foreground'>{iqaName}</span>
+                <span className='text-foreground font-medium'>{iqaName}</span>
               </div>
             </div>
 
             <Badge
               variant='outline'
-              className='w-fit rounded-full px-4 py-2'
+              className='w-fit rounded-full px-4 py-2 shadow-sm border-indigo-300/60 bg-indigo-50/60 text-indigo-700 dark:border-indigo-800/30 dark:bg-indigo-900/30 dark:text-indigo-300'
             >
               Next Visit: {learner?.nextvisitdate || 'N/A'}
             </Badge>
@@ -260,16 +260,16 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
         {/* Right Section - Overall Progress and Time Log */}
         <div className='flex flex-col lg:flex-row gap-4 px-4'>
           {/* Overall Progress Card */}
-          <div className='flex-1 min-w-[280px] rounded-lg border border-border/60 bg-card p-4 shadow-sm'>
+          <div className='flex-1 min-w-[280px] rounded-lg border border-emerald-200/60 dark:border-emerald-800/30 bg-linear-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/30 p-4 shadow-sm'>
             <div className='flex items-center justify-between mb-3'>
               <h3 className='text-sm font-semibold text-foreground'>Overall Progress</h3>
               <Badge
                 variant='outline'
                 className={cn(
-                  'rounded-full px-3 py-1 text-sm font-semibold',
+                  'rounded-full px-3 py-1 text-sm font-semibold shadow-sm',
                   completion >= 70
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
-                    : 'border-amber-500 bg-amber-50 text-amber-600'
+                    ? 'border-emerald-500 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
+                    : 'border-amber-500 bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
                 )}
               >
                 {completion.toFixed(0)}%
@@ -277,20 +277,20 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
             </div>
             <Progress value={completion} className='h-2 mb-4' />
             <div className='grid grid-cols-3 gap-2 text-center'>
-              <div className='space-y-1'>
-                <p className='text-xs text-green-500'>✓ Completed</p>
+              <div className='space-y-1 rounded-lg bg-green-50/80 dark:bg-green-950/30 p-2'>
+                <p className='text-xs text-green-600 dark:text-green-400 font-medium'>✓ Completed</p>
                 <p className='text-lg font-bold text-foreground'>
                   {overallProgressData.fullyCompleted}
                 </p>
               </div>
-              <div className='space-y-1'>
-                <p className='text-xs text-yellow-500'>◐ In Progress</p>
+              <div className='space-y-1 rounded-lg bg-yellow-50/80 dark:bg-yellow-950/30 p-2'>
+                <p className='text-xs text-yellow-600 dark:text-yellow-400 font-medium'>◐ In Progress</p>
                 <p className='text-lg font-bold text-foreground'>
                   {overallProgressData.workInProgress}
                 </p>
               </div>
-              <div className='space-y-1'>
-                <p className='text-xs text-red-500'>○ Pending</p>
+              <div className='space-y-1 rounded-lg bg-red-50/80 dark:bg-red-950/30 p-2'>
+                <p className='text-xs text-red-600 dark:text-red-400 font-medium'>○ Pending</p>
                 <p className='text-lg font-bold text-foreground'>
                   {overallProgressData.yetToComplete}
                 </p>
@@ -303,15 +303,15 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
           </div>
 
           {/* Time Log Card - Compact Version */}
-          <div className='flex-1 rounded-lg border border-border/60 bg-card p-4 shadow-sm flex flex-col justify-center'>
+          <div className='flex-1 rounded-lg border border-amber-200/60 dark:border-amber-800/30 bg-linear-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30 p-4 shadow-sm flex flex-col justify-center'>
             <div className='flex items-center justify-between mb-3'>
               <h3 className='text-sm font-semibold text-foreground'>Time Log</h3>
-              <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold'>
+              <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 shadow-sm'>
                 24h 57m
               </Badge>
             </div>
             <div className='grid grid-cols-2 gap-4 flex-1 items-center'>
-              <div className='text-center space-y-1 border-r border-border/60'>
+              <div className='text-center space-y-1 border-r border-amber-200/60 dark:border-amber-800/30'>
                 <p className='text-xs text-muted-foreground'>On The Job Total</p>
                 <p className='text-lg font-bold text-foreground'>02h 00m</p>
               </div>

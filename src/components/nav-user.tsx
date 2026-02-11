@@ -30,6 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useAppSelector, useAppDispatch } from "@/store/hooks"
+import { useIsImpersonated } from "@/hooks/use-impersonation"
 import { setCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import { toast } from "sonner"
@@ -42,6 +43,7 @@ export function NavUser() {
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
   const [changeUserRole, { isLoading: isChangingRole }] = useChangeUserRoleMutation()
+  const isImpersonated = useIsImpersonated()
 
   // Get display name and email - prefer user, fallback to learner
   const displayName = user
@@ -196,13 +198,17 @@ export function NavUser() {
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
             )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href="/auth/sign-in">
-                <LogOut className="mr-1" />
-                Log out
-              </Link>
-            </DropdownMenuItem>
+            {!isImpersonated && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link href="/auth/sign-in">
+                    <LogOut className="mr-1" />
+                    Log out
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

@@ -91,8 +91,8 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
     <div className="relative space-y-2">
       {/* File Preview */}
       {file && (
-        <div className="flex items-center gap-2 rounded-lg border bg-muted p-2">
-          <FileText className="h-4 w-4" />
+        <div className="flex items-center gap-2 rounded-lg border bg-linear-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30 border-amber-200/60 dark:border-amber-800/30 p-2">
+          <FileText className="h-4 w-4 text-amber-600 dark:text-amber-400" />
           <span className="flex-1 truncate text-sm">{file.name}</span>
           <Button
             variant="ghost"
@@ -150,7 +150,7 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
           onClick={handleSendMessage}
           disabled={!canSend}
           size="icon"
-          className="h-[60px] w-[60px]"
+          className="h-[60px] w-[60px] bg-linear-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-md transition-all duration-200 hover:shadow-lg"
         >
           <Send className="h-5 w-5" />
         </Button>

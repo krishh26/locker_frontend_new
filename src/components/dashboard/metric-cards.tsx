@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 export interface MetricCard {
   id: number
@@ -21,6 +22,20 @@ export interface MetricCardsProps {
   variant?: "default" | "compact"
 }
 
+const metricCardBgColors = [
+  "bg-linear-to-br from-orange-100 to-amber-100 dark:from-orange-950/50 dark:to-amber-950/40 border-orange-300/60 dark:border-orange-800/30",
+  "bg-linear-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
+  "bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30",
+  "bg-linear-to-br from-cyan-100 to-teal-100 dark:from-cyan-950/50 dark:to-teal-950/40 border-cyan-300/60 dark:border-cyan-800/30",
+  "bg-linear-to-br from-fuchsia-100 to-pink-100 dark:from-fuchsia-950/50 dark:to-pink-950/40 border-fuchsia-300/60 dark:border-fuchsia-800/30",
+  "bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
+  "bg-linear-to-br from-sky-100 to-blue-100 dark:from-sky-950/50 dark:to-blue-950/40 border-sky-300/60 dark:border-sky-800/30",
+  "bg-linear-to-br from-indigo-100 to-blue-100 dark:from-indigo-950/50 dark:to-blue-950/40 border-indigo-300/60 dark:border-indigo-800/30",
+  "bg-linear-to-br from-lime-100 to-green-100 dark:from-lime-950/50 dark:to-green-950/40 border-lime-300/60 dark:border-lime-800/30",
+  "bg-linear-to-br from-amber-100 to-yellow-100 dark:from-amber-950/50 dark:to-yellow-950/40 border-amber-300/60 dark:border-amber-800/30",
+  "bg-linear-to-br from-teal-100 to-emerald-100 dark:from-teal-950/50 dark:to-emerald-950/40 border-teal-300/60 dark:border-teal-800/30",
+]
+
 export function MetricCards({
   cards,
   countData = {},
@@ -37,7 +52,7 @@ export function MetricCards({
 
   return (
     <div className={gridClasses}>
-      {cards.map((card) => {
+      {cards.map((card, index) => {
         // Build route with optional courseId
         let route = card.route || "#"
         if (courseId && card.route) {
@@ -50,14 +65,17 @@ export function MetricCards({
 
         return (
           <Link key={card.id} href={route} className="group">
-            <Card className="h-full border border-border/60 shadow-sm transition-all hover:shadow-md hover:scale-[1.02]">
+            <Card className={cn(
+              "h-full shadow-sm transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
+              metricCardBgColors[index % metricCardBgColors.length]
+            )}>
               <CardContent>
                 <div className="flex flex-col items-center justify-center text-center space-y-3">
                   <div
-                    className={`${iconSize} rounded-lg flex items-center justify-center transition-transform group-hover:scale-110`}
+                    className={`${iconSize} rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-md`}
                     style={{ backgroundColor: card.color }}
                   >
-                    <span className={`${textSize} font-bold text-white`}>
+                    <span className={`${textSize} font-bold text-white drop-shadow-sm`}>
                       {card.name.charAt(0)}
                     </span>
                   </div>
@@ -66,7 +84,7 @@ export function MetricCards({
                       {card.name}
                     </h3>
                     {hasCount && (
-                      <Badge variant="secondary" className="rounded-full">
+                      <Badge variant="secondary" className="rounded-full shadow-sm">
                         {count} {count === 1 ? "item" : "items"}
                       </Badge>
                     )}

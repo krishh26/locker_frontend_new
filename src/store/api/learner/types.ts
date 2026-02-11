@@ -94,6 +94,7 @@ export interface LearnerFilters {
   course_id?: number;
   employer_id?: number;
   employer_ids?: string | number;
+  centre_id?: number;
   status?: string;
   user_id?: number;
   role?: string;

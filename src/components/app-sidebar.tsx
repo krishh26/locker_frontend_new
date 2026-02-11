@@ -739,15 +739,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size='lg' asChild>
+                <span className="logo-wrapper">
               <Link href='/dashboard'>
-                <Image
-                  src="/logo-text.png"
-                  alt="Locker"
-                  width={100}
-                  height={100}
-                  className="h-14 w-auto"
-                />
+                  <Image
+                    src="/logo-text.png"
+                    alt="Locker"
+                    width={100}
+                    height={100}
+                    className="h-14 w-auto"
+                  />
               </Link>
+                </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

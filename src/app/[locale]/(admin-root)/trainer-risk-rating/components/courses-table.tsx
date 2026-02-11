@@ -121,18 +121,20 @@ export function CoursesTable({
   };
 
   const getRiskColor = (riskLevel: string) => {
-    if (riskLevel === "Low") return "bg-green-100 text-green-800 border-green-200";
-    if (riskLevel === "Medium") return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    if (riskLevel === "High") return "bg-red-100 text-red-800 border-red-200";
-    return "bg-gray-100 text-gray-800 border-gray-200";
+    if (riskLevel === "Low") return "bg-emerald-100 text-emerald-800 border-emerald-300/60 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700/40";
+    if (riskLevel === "Medium") return "bg-amber-100 text-amber-800 border-amber-300/60 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700/40";
+    if (riskLevel === "High") return "bg-red-100 text-red-800 border-red-300/60 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700/40";
+    return "bg-gray-100 text-gray-800 border-gray-300/60 dark:bg-gray-900/30 dark:text-gray-300 dark:border-gray-700/40";
   };
 
   return (
-    <Card>
+    <Card className="bg-linear-to-br from-emerald-100/60 to-teal-100/60 dark:from-emerald-950/30 dark:to-teal-950/20 border-emerald-300/40 dark:border-emerald-800/30">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <School className="h-5 w-5 text-primary" />
+            <div className="rounded-lg p-1.5 bg-emerald-200/70 dark:bg-emerald-800/40">
+              <School className="h-4 w-4 text-emerald-700 dark:text-emerald-300" />
+            </div>
             <CardTitle>Courses ({courses.length})</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -182,11 +184,11 @@ export function CoursesTable({
       </CardHeader>
       <CardContent>
         {courses.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-muted-foreground rounded-lg bg-white/40 dark:bg-white/5 border border-dashed border-emerald-300/40 dark:border-emerald-800/30">
             <p>No courses found</p>
           </div>
         ) : (
-          <div className="border rounded-lg overflow-hidden">
+          <div className="border rounded-lg overflow-hidden shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -258,7 +260,7 @@ export function CoursesTable({
                         <TableCell colSpan={3} className="p-0">
                           <Collapsible open={isExpanded} onOpenChange={(open) => onExpandedRowChange(open ? index : null)}>
                             <CollapsibleContent>
-                              <div className="p-6 bg-muted/30 border-t">
+                              <div className="p-6 bg-linear-to-br from-slate-50/80 to-gray-50/80 dark:from-slate-950/40 dark:to-gray-950/30 border-t">
                                 <Label className="text-base font-semibold mb-4 block">
                                   Add Comment for {course.course_name}
                                 </Label>

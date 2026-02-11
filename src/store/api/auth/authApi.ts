@@ -8,6 +8,7 @@ import {
 import type {
   ApiResponse,
   ForgotPasswordRequest,
+  GetTokenByEmailRequest,
   LoginCredentials,
   LoginResult,
   ResetPasswordRequest,
@@ -75,6 +76,20 @@ export const authApi = createApi({
         return response
       },
     }),
+    getTokenByEmail: builder.mutation<LoginResult, GetTokenByEmailRequest>({
+      query: (payload) => ({
+        url: "/user/token",
+        method: "POST",
+        body: payload,
+      }),
+      transformResponse: (response: LoginResponseEnvelope) => {
+        if (!response?.status || !response?.data) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE)
+        }
+
+        return toLoginResult(response.data)
+      },
+    }),
   }),
 })
 
@@ -83,5 +98,6 @@ export const {
   useSendForgotPasswordOtpMutation,
   useVerifyForgotPasswordOtpMutation,
   useResetPasswordMutation,
+  useGetTokenByEmailMutation,
 } = authApi
 

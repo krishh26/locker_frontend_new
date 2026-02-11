@@ -16,6 +16,7 @@ interface AdminModule {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   color?: string;
+  bgClass?: string;
 }
 
 export function AdminPageContent() {
@@ -28,6 +29,7 @@ export function AdminPageContent() {
       href: "/users",
       icon: Users,
       color: "text-blue-600",
+      bgClass: "bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-950/50 dark:to-blue-950/40 border-sky-300/60 dark:border-sky-800/30",
     },
     {
       title: t("modules.learnerManagement.title"),
@@ -35,6 +37,7 @@ export function AdminPageContent() {
       href: "/learners",
       icon: GraduationCap,
       color: "text-green-600",
+      bgClass: "bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
     },
     {
       title: t("modules.employerManagement.title"),
@@ -42,6 +45,7 @@ export function AdminPageContent() {
       href: "/employers",
       icon: Building2,
       color: "text-purple-600",
+      bgClass: "bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
     },
     {
       title: t("modules.broadcastManagement.title"),
@@ -49,6 +53,7 @@ export function AdminPageContent() {
       href: "/broadcast",
       icon: Megaphone,
       color: "text-orange-600",
+      bgClass: "bg-gradient-to-br from-orange-100 to-amber-100 dark:from-orange-950/50 dark:to-amber-950/40 border-orange-300/60 dark:border-orange-800/30",
     },
   ];
 
@@ -71,7 +76,7 @@ export function AdminPageContent() {
               href={module.href}
               className="group transition-all duration-200 hover:scale-[1.02]"
             >
-              <Card className="h-full transition-all duration-200 hover:shadow-lg hover:border-primary/50">
+              <Card className={cn("h-full transition-all duration-200 hover:shadow-lg hover:border-primary/50", module.bgClass)}>
                 <CardHeader className="flex flex-col items-center text-center space-y-4 pb-4">
                   <div
                     className={cn(

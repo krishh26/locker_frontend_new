@@ -179,7 +179,7 @@ export function NotificationBell() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="relative cursor-pointer">
+        <Button variant="outline" size="icon" className="relative cursor-pointer bg-linear-to-br from-sky-100 to-blue-100 dark:from-sky-900/60 dark:to-blue-900/50 border-sky-300/60 dark:border-sky-700/50 hover:from-sky-200 hover:to-blue-200 dark:hover:from-sky-800/70 dark:hover:to-blue-800/60 text-sky-700 dark:text-sky-300 shadow-sm hover:shadow-md transition-all duration-200">
           {unreadCount > 0 ? (
             <BellRing className="h-5 w-5" />
           ) : (
@@ -188,7 +188,7 @@ export function NotificationBell() {
           {unreadCount > 0 && (
             <Badge
               variant="destructive"
-              className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+              className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs shadow-sm"
             >
               {unreadCount > 9 ? "9+" : unreadCount}
             </Badge>

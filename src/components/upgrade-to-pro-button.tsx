@@ -18,7 +18,7 @@ export function UpgradeToProButton() {
         <HoverCardTrigger asChild>
           <Button
             size="lg"
-            className="px-6 py-3 bg-gradient-to-br shadow-lg from-slate-900 cursor-pointer to-slate-400 text-white font-bold"
+            className="px-6 py-3 bg-primary shadow-lg cursor-pointer text-primary-foreground font-bold"
             style={{ minWidth: 180 }} onClick={() => typeof window !== "undefined" && window.open(SHADCN_BLOCKS_URL, "_blank")}
           >
             Upgrade to Pro
@@ -54,7 +54,7 @@ export function UpgradeToProButton() {
                   Pro Dashboards
                 </Button>
                 <span className="absolute -top-5 -right-1">
-                  <Badge variant="outline" className="bg-yellow-400 text-yellow-900 border-yellow-400 text-xs px-2 py-0.5 rounded-full shadow">Coming soon</Badge>
+                  <Badge variant="outline" className="bg-secondary/20 text-secondary border-secondary/40 text-xs px-2 py-0.5 rounded-full shadow">Coming soon</Badge>
                 </span>
               </div>
             </div>

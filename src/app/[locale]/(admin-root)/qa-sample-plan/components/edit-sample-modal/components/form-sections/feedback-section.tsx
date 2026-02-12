@@ -53,7 +53,7 @@ export function FeedbackSection({
             }
           }}
           disabled={!planDetailId || isReadOnly}
-          className='bg-[#e91e63] hover:bg-[#c2185b] text-white'
+          className='bg-destructive hover:bg-destructive/90 text-white'
         >
           Examine Evidence
         </Button>

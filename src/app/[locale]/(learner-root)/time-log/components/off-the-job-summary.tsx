@@ -108,7 +108,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-5 w-5 text-orange-500 cursor-help" />
+                        <Info className="h-5 w-5 text-secondary cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p>
@@ -124,7 +124,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               </Card>
 
               {/* Contracted Work Hours Card */}
-              <Card className="p-4 border-l-4 border-l-purple-500 bg-purple-500/5">
+              <Card className="p-4 border-l-4 border-l-secondary bg-secondary/10">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-muted-foreground">
                     Contracted Work Hours
@@ -132,7 +132,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-5 w-5 text-orange-500 cursor-help" />
+                        <Info className="h-5 w-5 text-secondary cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p>
@@ -147,7 +147,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               </Card>
 
               {/* Holiday Entitlement Card */}
-              <Card className="p-4 border-l-4 border-l-blue-500 bg-blue-500/5">
+              <Card className="p-4 border-l-4 border-l-primary bg-primary/10">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-muted-foreground">
                     Holiday Entitlement
@@ -155,7 +155,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-5 w-5 text-orange-500 cursor-help" />
+                        <Info className="h-5 w-5 text-secondary cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p>
@@ -170,7 +170,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               </Card>
 
               {/* Off the Job Hours Required Card */}
-              <Card className="p-4 border-l-4 border-l-green-500 bg-green-500/5">
+              <Card className="p-4 border-l-4 border-l-accent bg-accent/10">
                 <div className="mb-2">
                   <span className="text-sm text-muted-foreground">
                     Off the Job Hours Required
@@ -184,7 +184,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               </Card>
 
               {/* Off the Job Hours Required to Date Card */}
-              <Card className="p-4 border-l-4 border-l-orange-500 bg-orange-500/5">
+              <Card className="p-4 border-l-4 border-l-secondary bg-secondary/10">
                 <div className="mb-2">
                   <span className="text-sm text-muted-foreground">
                     Required to Date
@@ -201,10 +201,10 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
 
           {/* Warnings Section */}
           {summaryData.warnings && summaryData.warnings.length > 0 && (
-            <Card className="border-orange-500 bg-orange-50 dark:bg-orange-950/20">
+            <Card className="border-secondary bg-secondary/10">
               <div className="p-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-orange-500 mt-0.5" />
+                  <AlertTriangle className="h-5 w-5 text-secondary mt-0.5" />
                   <div className="flex-1">
                     <h5 className="text-lg font-semibold mb-2">Warnings</h5>
                     <ul className="list-disc list-inside space-y-1">
@@ -246,14 +246,14 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
 
               {/* Hours This Week Card */}
               {summaryData.hoursThisWeek !== undefined && (
-                <Card className="p-5 bg-green-500/10 border-green-500/30">
+                <Card className="p-5 bg-accent/10 border-accent/30">
                   <div className="flex items-center gap-2 mb-3">
-                    <Calendar className="h-5 w-5 text-green-600" />
+                    <Calendar className="h-5 w-5 text-accent" />
                     <span className="text-sm font-medium text-muted-foreground">
                       Hours This Week
                     </span>
                   </div>
-                  <p className="text-xl font-bold text-green-600 mb-1">
+                  <p className="text-xl font-bold text-accent mb-1">
                     {summaryData.hoursThisWeek.toFixed(2)} hours
                   </p>
                   <p className="text-xs text-muted-foreground">
@@ -264,14 +264,14 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
 
               {/* Hours This Month Card */}
               {summaryData.hoursThisMonth !== undefined && (
-                <Card className="p-5 bg-blue-500/10 border-blue-500/30">
+                <Card className="p-5 bg-primary/10 border-primary/30">
                   <div className="flex items-center gap-2 mb-3">
-                    <Calendar className="h-5 w-5 text-blue-600" />
+                    <Calendar className="h-5 w-5 text-primary" />
                     <span className="text-sm font-medium text-muted-foreground">
                       Hours This Month
                     </span>
                   </div>
-                  <p className="text-xl font-bold text-blue-600 mb-1">
+                  <p className="text-xl font-bold text-primary mb-1">
                     {summaryData.hoursThisMonth.toFixed(2)} hours
                   </p>
                   <p className="text-xs text-muted-foreground">
@@ -281,9 +281,9 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               )}
 
               {/* Percentage Card */}
-              <Card className="p-5 bg-orange-500/10 border-orange-500/30">
+              <Card className="p-5 bg-secondary/10 border-secondary/30">
                 <div className="flex items-center gap-2 mb-3">
-                  <TrendingUp className="h-5 w-5 text-orange-600" />
+                  <TrendingUp className="h-5 w-5 text-secondary" />
                   <span className="text-sm font-medium text-muted-foreground">
                     Percentage To Date
                   </span>
@@ -291,7 +291,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <Info className="h-4 w-4 text-orange-500 cursor-help ml-auto" />
+                          <Info className="h-4 w-4 text-secondary cursor-help ml-auto" />
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs">
                           <p>
@@ -305,7 +305,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                     </TooltipProvider>
                   )}
                 </div>
-                <p className="text-xl font-bold text-orange-600">
+                <p className="text-xl font-bold text-secondary">
                   {actualPercentage !== null ? `${actualPercentage}%` : "N/A"}
                 </p>
               </Card>
@@ -363,7 +363,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                                   }
                                   className={
                                     course.status.toLowerCase() === "active"
-                                      ? "bg-green-50 text-green-700"
+                                      ? "bg-accent/10 text-accent"
                                       : ""
                                   }
                                 >

@@ -84,9 +84,9 @@ export function ChatHeader({
 
     switch (primaryUser?.status) {
       case "online":
-        return "text-green-600"
+        return "text-accent"
       case "away":
-        return "text-yellow-600"
+        return "text-secondary"
       case "offline":
         return "text-muted-foreground"
       default:

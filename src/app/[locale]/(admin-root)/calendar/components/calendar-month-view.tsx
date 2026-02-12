@@ -77,10 +77,10 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
       {/* Status Legend */}
       <CalendarStatusLegend />
 
-      <Card className="p-6 bg-linear-to-br from-sky-50/40 to-indigo-50/40 dark:from-sky-950/20 dark:to-indigo-950/15 border-sky-200/40 dark:border-sky-800/20">
+      <Card className="p-6 bg-primary/5 border-primary/15">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex flex-col flex-wrap gap-4 pb-4 border-b border-sky-200/40 dark:border-sky-800/20 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col flex-wrap gap-4 pb-4 border-b border-primary/15 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={() => navigateMonth("prev")}>
                 <ChevronLeft className="w-4 h-4" />
@@ -100,9 +100,9 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
           {/* Calendar Grid */}
           <div className="flex-1 bg-background mt-4">
             {/* Calendar Header */}
-            <div className="grid grid-cols-7 border-b bg-linear-to-r from-indigo-50/50 to-sky-50/50 dark:from-indigo-950/30 dark:to-sky-950/20 rounded-t-lg">
+            <div className="grid grid-cols-7 border-b bg-primary/10 rounded-t-lg">
               {weekDays.map(day => (
-                <div key={day} className="p-4 text-center font-semibold text-sm text-indigo-700 dark:text-indigo-300 border-r last:border-r-0">
+                <div key={day} className="p-4 text-center font-semibold text-sm text-primary border-r last:border-r-0">
                   {day}
                 </div>
               ))}
@@ -125,7 +125,7 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
                         ? "bg-background/80 hover:bg-linear-to-br hover:from-primary/5 hover:to-primary/10"
                         : "bg-muted/20 text-muted-foreground",
                       isSelected && "ring-2 ring-primary ring-inset bg-primary/5",
-                      isDayToday && "bg-linear-to-br from-amber-50/70 to-orange-50/70 dark:from-amber-950/30 dark:to-orange-950/20"
+                      isDayToday && "bg-accent/10"
                     )}
                     onClick={() => setSelectedDate(day)}
                   >

@@ -75,32 +75,32 @@ export function CourseInfoCards({ course, courseData }: CourseInfoCardsProps) {
         </Card>
 
         {/* Card 2 - Qualification Details */}
-        <Card className="border-l-4 border-l-violet-500 shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-l-4 border-l-secondary shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg text-violet-600">
+            <CardTitle className="flex items-center gap-2 text-lg text-secondary">
               <FileText className="h-5 w-5" />
               Qualification Details
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-2 text-sm">
-              <FileCheck className="h-4 w-4 text-violet-500" />
+              <FileCheck className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">Qualification Type:</span>
-              <span className="font-semibold text-violet-600">
+              <span className="font-semibold text-secondary">
                 {course.qualification_type || "N/A"}
               </span>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <Calendar className="h-4 w-4 text-violet-500" />
+              <Calendar className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">Min. Age:</span>
-              <span className="font-semibold text-violet-600">
+              <span className="font-semibold text-secondary">
                 {course.recommended_minimum_age || "N/A"}
               </span>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <Star className="h-4 w-4 text-violet-500" />
+              <Star className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">Total Credits:</span>
-              <span className="font-semibold text-violet-600">
+              <span className="font-semibold text-secondary">
                 {course.total_credits || "N/A"}
               </span>
             </div>
@@ -108,32 +108,32 @@ export function CourseInfoCards({ course, courseData }: CourseInfoCardsProps) {
         </Card>
 
         {/* Card 3 - Key Dates */}
-        <Card className="border-l-4 border-l-amber-500 shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-l-4 border-l-secondary shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg text-amber-600">
+            <CardTitle className="flex items-center gap-2 text-lg text-secondary">
               <Clock className="h-5 w-5" />
               Key Dates & Hours
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-2 text-sm">
-              <Calendar className="h-4 w-4 text-amber-500" />
+              <Calendar className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">Start Date:</span>
-              <span className="font-semibold text-amber-600">
+              <span className="font-semibold text-secondary">
                 {formatDate(courseData.start_date)}
               </span>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <Calendar className="h-4 w-4 text-amber-500" />
+              <Calendar className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">End Date:</span>
-              <span className="font-semibold text-amber-600">
+              <span className="font-semibold text-secondary">
                 {formatDate(courseData.end_date)}
               </span>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <Clock className="h-4 w-4 text-amber-500" />
+              <Clock className="h-4 w-4 text-secondary" />
               <span className="text-muted-foreground">Learning Hours:</span>
-              <span className="font-semibold text-amber-600">
+              <span className="font-semibold text-secondary">
                 {course.guided_learning_hours || "N/A"}
               </span>
             </div>

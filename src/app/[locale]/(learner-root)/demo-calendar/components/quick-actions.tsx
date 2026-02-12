@@ -29,9 +29,9 @@ export function QuickActions({
   onSettings 
 }: QuickActionsProps) {
   const quickStats = [
-    { label: "Today's Events", value: "3", color: "bg-blue-500" },
-    { label: "This Week", value: "12", color: "bg-green-500" },
-    { label: "Pending", value: "2", color: "bg-orange-500" }
+    { label: "Today's Events", value: "3", color: "bg-primary" },
+    { label: "This Week", value: "12", color: "bg-accent" },
+    { label: "Pending", value: "2", color: "bg-secondary" }
   ]
 
   return (
@@ -130,7 +130,7 @@ export function QuickActions({
         <CardContent className="space-y-3">
           <div className="space-y-2">
             <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2" />
+              <div className="w-2 h-2 bg-primary rounded-full mt-2" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">Team Standup</p>
                 <p className="text-xs text-muted-foreground">9:00 AM • Conference Room A</p>
@@ -138,7 +138,7 @@ export function QuickActions({
             </div>
             
             <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-purple-500 rounded-full mt-2" />
+              <div className="w-2 h-2 bg-secondary rounded-full mt-2" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">Design Review</p>
                 <p className="text-xs text-muted-foreground">2:00 PM • Virtual</p>

@@ -48,7 +48,7 @@ export function FormsUnlockDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
-            <LockOpen className="h-5 w-5 text-green-600" />
+            <LockOpen className="h-5 w-5 text-accent" />
             Unlock Form
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -75,7 +75,7 @@ export function FormsUnlockDialog({
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isLoading}
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-accent text-accent-foreground hover:bg-accent/90"
           >
             {isLoading ? "Unlocking..." : "Unlock Form"}
           </AlertDialogAction>

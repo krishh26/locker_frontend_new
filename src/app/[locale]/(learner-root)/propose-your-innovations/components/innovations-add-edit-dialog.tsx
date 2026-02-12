@@ -147,7 +147,7 @@ export function InnovationsAddEditDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="topic">Topic <span className="text-red-500">*</span></Label>
+            <Label htmlFor="topic">Topic <span className="text-destructive">*</span></Label>
             <Input
               id="topic"
               placeholder="Add your topic"
@@ -160,7 +160,7 @@ export function InnovationsAddEditDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description <span className="text-red-500">*</span></Label>
+            <Label htmlFor="description">Description <span className="text-destructive">*</span></Label>
             <Textarea
               id="description"
               placeholder="Add your description"

@@ -149,10 +149,10 @@ export function AddTaskModal({ onAddTask, trigger }: AddTaskModalProps) {
               placeholder="Enter task title..."
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className={errors.title ? "border-red-500" : ""}
+              className={errors.title ? "border-destructive" : ""}
             />
             {errors.title && (
-              <p className="text-sm text-red-500">{errors.title}</p>
+              <p className="text-sm text-destructive">{errors.title}</p>
             )}
           </div>
 

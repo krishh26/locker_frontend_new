@@ -54,7 +54,7 @@ export function ModeToggle({ variant = "outline" }: ModeToggleProps) {
       variant={variant}
       size="icon"
       onClick={handleToggle}
-      className="cursor-pointer mode-toggle-button relative overflow-hidden bg-linear-to-br from-amber-100 to-orange-100 dark:from-indigo-900/60 dark:to-violet-900/50 border-amber-300/60 dark:border-indigo-700/50 hover:from-amber-200 hover:to-orange-200 dark:hover:from-indigo-800/70 dark:hover:to-violet-800/60 text-amber-700 dark:text-indigo-300 shadow-sm hover:shadow-md transition-all duration-200"
+      className="cursor-pointer mode-toggle-button relative overflow-hidden bg-accent/10 border-accent/30 hover:bg-accent/20 text-accent hover:text-accent shadow-sm hover:shadow-md transition-all duration-200"
     >
       {/* Show the icon for the mode you can switch TO */}
       {isDarkMode ? (

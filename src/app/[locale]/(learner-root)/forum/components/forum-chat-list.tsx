@@ -10,28 +10,28 @@ import { useAppSelector } from "@/store/hooks"
 import { timeAgo } from "../utils/timeAgo"
 import type { ForumChat } from "@/store/api/forum/types"
 
-// Beautiful avatar gradient colors that cycle through chat items
+// Theme-adaptive avatar colors that cycle through chat items
 const avatarColors = [
-  "bg-linear-to-br from-rose-400 to-pink-500 dark:from-rose-500 dark:to-pink-600",
-  "bg-linear-to-br from-sky-400 to-blue-500 dark:from-sky-500 dark:to-blue-600",
-  "bg-linear-to-br from-emerald-400 to-teal-500 dark:from-emerald-500 dark:to-teal-600",
-  "bg-linear-to-br from-violet-400 to-purple-500 dark:from-violet-500 dark:to-purple-600",
-  "bg-linear-to-br from-amber-400 to-orange-500 dark:from-amber-500 dark:to-orange-600",
-  "bg-linear-to-br from-cyan-400 to-teal-500 dark:from-cyan-500 dark:to-teal-600",
-  "bg-linear-to-br from-fuchsia-400 to-pink-500 dark:from-fuchsia-500 dark:to-pink-600",
-  "bg-linear-to-br from-indigo-400 to-blue-500 dark:from-indigo-500 dark:to-blue-600",
+  "bg-primary",
+  "bg-secondary",
+  "bg-accent",
+  "bg-primary/80",
+  "bg-secondary/80",
+  "bg-accent/80",
+  "bg-primary/60",
+  "bg-secondary/60",
 ]
 
-// Beautiful card background colors that cycle – light & dark mode friendly
+// Theme-adaptive chat item backgrounds – follows active theme automatically
 const chatItemBgColors = [
-  "bg-linear-to-br from-rose-100/60 to-pink-50/60 dark:from-rose-950/30 dark:to-pink-950/20",
-  "bg-linear-to-br from-sky-100/60 to-blue-50/60 dark:from-sky-950/30 dark:to-blue-950/20",
-  "bg-linear-to-br from-emerald-100/60 to-teal-50/60 dark:from-emerald-950/30 dark:to-teal-950/20",
-  "bg-linear-to-br from-violet-100/60 to-purple-50/60 dark:from-violet-950/30 dark:to-purple-950/20",
-  "bg-linear-to-br from-amber-100/60 to-orange-50/60 dark:from-amber-950/30 dark:to-orange-950/20",
-  "bg-linear-to-br from-cyan-100/60 to-teal-50/60 dark:from-cyan-950/30 dark:to-teal-950/20",
-  "bg-linear-to-br from-fuchsia-100/60 to-pink-50/60 dark:from-fuchsia-950/30 dark:to-pink-950/20",
-  "bg-linear-to-br from-indigo-100/60 to-blue-50/60 dark:from-indigo-950/30 dark:to-blue-950/20",
+  "bg-primary/5",
+  "bg-secondary/5",
+  "bg-accent/5",
+  "bg-primary/8",
+  "bg-muted/50",
+  "bg-secondary/8",
+  "bg-accent/8",
+  "bg-primary/10",
 ]
 
 interface ForumChatListProps {

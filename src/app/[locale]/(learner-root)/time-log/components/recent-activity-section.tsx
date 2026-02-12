@@ -40,12 +40,12 @@ export function RecentActivitySection({
     if (lowerType.includes("off"))
       return {
         variant: "outline" as const,
-        className: "border-orange-500 text-orange-700 bg-orange-50",
+        className: "border-secondary text-secondary bg-secondary/10",
       };
     if (lowerType.includes("on"))
       return {
         variant: "default" as const,
-        className: "bg-green-50 text-green-700",
+        className: "bg-accent/10 text-accent",
       };
     return { variant: "default" as const, className: "" };
   };

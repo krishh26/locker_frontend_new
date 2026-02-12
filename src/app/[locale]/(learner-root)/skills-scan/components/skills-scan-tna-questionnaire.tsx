@@ -389,7 +389,7 @@ export function SkillsScanTnaQuestionnaire({
                                   "text-center",
                                   highlightBlanks &&
                                     !hasValue &&
-                                    "bg-yellow-50 dark:bg-yellow-950/20 border-2 border-yellow-500"
+                                    "bg-secondary/10 border-2 border-secondary"
                                 )}
                               >
                                 <Select
@@ -522,7 +522,7 @@ export function SkillsScanTnaQuestionnaire({
                     onClick={handleSave}
                     disabled={isSaving}
                     variant="default"
-                    className="gap-2 bg-green-600 hover:bg-green-700"
+                    className="gap-2 bg-accent hover:bg-accent/90"
                   >
                     <Save className="size-4" />
                     {isSaving ? "Saving..." : "Save Progress"}

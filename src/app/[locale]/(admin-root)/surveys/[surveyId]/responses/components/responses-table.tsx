@@ -370,9 +370,9 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
           </div>
 
           {responses.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-primary/30 p-12 text-center bg-linear-to-br from-slate-50/60 to-gray-50/60 dark:from-slate-950/30 dark:to-gray-950/20">
-              <div className="mx-auto w-14 h-14 rounded-2xl bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-900/40 dark:to-pink-900/30 flex items-center justify-center mb-4">
-                <Search className="h-7 w-7 text-rose-600 dark:text-rose-400" />
+            <div className="rounded-xl border border-dashed border-primary/30 p-12 text-center bg-muted/30">
+              <div className="mx-auto w-14 h-14 rounded-2xl bg-destructive/5 border-destructive/15 flex items-center justify-center mb-4">
+                <Search className="h-7 w-7 text-destructive" />
               </div>
               <p className="text-muted-foreground">
                 No responses yet. Share the survey link to collect responses.

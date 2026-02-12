@@ -46,24 +46,24 @@ const enhancedCalendars: CalendarGroup[] = [
   {
     name: "My Calendars",
     items: [
-      { id: "personal", name: "Personal", color: "bg-blue-500", visible: true, type: "personal" },
-      { id: "work", name: "Work", color: "bg-green-500", visible: true, type: "work" },
-      { id: "family", name: "Family", color: "bg-pink-500", visible: true, type: "personal" }
+      { id: "personal", name: "Personal", color: "bg-primary", visible: true, type: "personal" },
+      { id: "work", name: "Work", color: "bg-accent", visible: true, type: "work" },
+      { id: "family", name: "Family", color: "bg-secondary", visible: true, type: "personal" }
     ]
   },
   {
     name: "Favorites",
     items: [
-      { id: "holidays", name: "Holidays", color: "bg-red-500", visible: true, type: "shared" },
-      { id: "birthdays", name: "Birthdays", color: "bg-purple-500", visible: true, type: "personal" }
+      { id: "holidays", name: "Holidays", color: "bg-destructive", visible: true, type: "shared" },
+      { id: "birthdays", name: "Birthdays", color: "bg-secondary", visible: true, type: "personal" }
     ]
   },
   {
     name: "Other",
     items: [
-      { id: "travel", name: "Travel", color: "bg-orange-500", visible: false, type: "personal" },
-      { id: "reminders", name: "Reminders", color: "bg-yellow-500", visible: true, type: "personal" },
-      { id: "deadlines", name: "Deadlines", color: "bg-red-600", visible: true, type: "work" }
+      { id: "travel", name: "Travel", color: "bg-secondary", visible: false, type: "personal" },
+      { id: "reminders", name: "Reminders", color: "bg-secondary", visible: true, type: "personal" },
+      { id: "deadlines", name: "Deadlines", color: "bg-destructive", visible: true, type: "work" }
     ]
   }
 ]

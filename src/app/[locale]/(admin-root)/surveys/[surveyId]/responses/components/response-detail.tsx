@@ -161,7 +161,7 @@ export function ResponseDetail({
         </DialogHeader>
 
         <div className="space-y-4">
-          <Card className="bg-linear-to-br from-indigo-100/60 to-violet-100/60 dark:from-indigo-950/40 dark:to-violet-950/30 border-indigo-300/40 dark:border-indigo-800/30">
+          <Card className="bg-primary/5 border-primary/15">
             <CardHeader>
               <CardTitle className="text-lg">{survey.name}</CardTitle>
             </CardHeader>

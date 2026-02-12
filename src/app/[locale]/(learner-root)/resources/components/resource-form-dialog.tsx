@@ -222,7 +222,7 @@ export function ResourceFormDialog({
               name="course_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course <span className="text-red-500">*</span></FormLabel>
+                  <FormLabel>Course <span className="text-destructive">*</span></FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="cursor-pointer w-full">
@@ -260,7 +260,7 @@ export function ResourceFormDialog({
                 name="file"
                 render={({ field: { onChange } }) => (
                 <FormItem>
-                  <FormLabel>File {!isEditMode && <span className="text-red-500">*</span>}</FormLabel>
+                  <FormLabel>File {!isEditMode && <span className="text-destructive">*</span>}</FormLabel>
                   <FormControl>
                     <div className="flex flex-col gap-2">
                       {isEditMode && resource?.url?.url && (

@@ -93,7 +93,7 @@ export function ModuleUnitProgressDataTable({
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const completed = row.original.fully_completed;
           if (completed === true) {
-            return <span className="text-green-600 dark:text-green-400">Yes</span>;
+            return <span className="text-accent">Yes</span>;
           }
           return <span className="text-muted-foreground">No</span>;
         },
@@ -104,7 +104,7 @@ export function ModuleUnitProgressDataTable({
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const assessedDate = row.original.assessed_date;
           if (assessedDate) {
-            return <span className="text-green-600 dark:text-green-400">Yes</span>;
+            return <span className="text-accent">Yes</span>;
           }
           return <span className="text-muted-foreground">No</span>;
         },
@@ -115,7 +115,7 @@ export function ModuleUnitProgressDataTable({
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const iqaSignOff = row.original.iqa_sign_off;
           if (iqaSignOff === true || iqaSignOff === "Yes" || iqaSignOff === "yes") {
-            return <span className="text-green-600 dark:text-green-400">Yes</span>;
+            return <span className="text-accent">Yes</span>;
           }
           if (iqaSignOff === false || iqaSignOff === "No" || iqaSignOff === "no" || iqaSignOff === null) {
             return <span className="text-muted-foreground">No</span>;
@@ -133,7 +133,7 @@ export function ModuleUnitProgressDataTable({
           const assessedDate = row.original.assessed_date;
           
           if (fullyCompleted && iqaSignOff && assessedDate) {
-            return <span className="text-sm text-green-600 dark:text-green-400">Claimable</span>;
+            return <span className="text-sm text-accent">Claimable</span>;
           }
           return <span className="text-sm text-muted-foreground">Not Claimable</span>;
         },

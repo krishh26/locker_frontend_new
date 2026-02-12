@@ -171,7 +171,7 @@ export function CourseResourcesDataTable() {
           return (
             <div className="text-sm">
               {isAccessed ? (
-                <span className="text-green-600">Opened</span>
+                <span className="text-accent">Opened</span>
               ) : (
                 <span className="text-muted-foreground">Not Opened</span>
               )}

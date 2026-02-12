@@ -96,28 +96,28 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
           {learner?.course && learner.course.length > 0 && (
             <div className="hidden md:flex items-center gap-2 shrink-0">
               <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-green-600">{percentages.completedPercent}%</span>
-                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <span className="text-xs font-medium text-accent">{percentages.completedPercent}%</span>
+                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-green-500 rounded-full"
+                    className="h-full bg-accent rounded-full"
                     style={{ width: `${percentages.completedPercent}%` }}
                   />
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-blue-600">{percentages.inProgressPercent}%</span>
-                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <span className="text-xs font-medium text-primary">{percentages.inProgressPercent}%</span>
+                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-blue-500 rounded-full"
+                    className="h-full bg-primary rounded-full"
                     style={{ width: `${percentages.inProgressPercent}%` }}
                   />
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-gray-500">{percentages.notStartedPercent}%</span>
-                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <span className="text-xs font-medium text-muted-foreground">{percentages.notStartedPercent}%</span>
+                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gray-400 rounded-full"
+                    className="h-full bg-muted-foreground/40 rounded-full"
                     style={{ width: `${percentages.notStartedPercent}%` }}
                   />
                 </div>

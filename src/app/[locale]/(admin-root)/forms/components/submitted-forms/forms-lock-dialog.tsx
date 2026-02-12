@@ -48,7 +48,7 @@ export function FormsLockDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
-            <Lock className="h-5 w-5 text-orange-600" />
+            <Lock className="h-5 w-5 text-secondary" />
             Lock Form
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -73,7 +73,7 @@ export function FormsLockDialog({
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isLoading}
-            className="bg-orange-600 hover:bg-orange-700"
+            className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
           >
             {isLoading ? "Locking..." : "Lock Form"}
           </AlertDialogAction>

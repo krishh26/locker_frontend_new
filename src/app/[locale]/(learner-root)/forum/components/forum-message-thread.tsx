@@ -125,7 +125,7 @@ export function ForumMessageThread({
         {messages.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
             <div className="text-center space-y-2">
-              <div className="mx-auto rounded-full bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/40 dark:to-teal-900/30 p-4 w-fit">
+              <div className="mx-auto rounded-full bg-accent/10 p-4 w-fit">
                 <span className="text-2xl">💬</span>
               </div>
               <p className="text-muted-foreground font-medium">No messages yet</p>
@@ -143,8 +143,8 @@ export function ForumMessageThread({
                   key={`date-${item.date}`}
                   className="flex items-center justify-center py-4"
                 >
-                  <div className="rounded-full bg-linear-to-r from-violet-100 to-indigo-100 dark:from-violet-900/40 dark:to-indigo-900/30 px-4 py-1.5 shadow-sm">
-                    <span className="text-violet-700 dark:text-violet-300 text-xs font-medium">
+                  <div className="rounded-full bg-primary/10 px-4 py-1.5 shadow-sm">
+                    <span className="text-primary text-xs font-medium">
                       {item.date}
                     </span>
                   </div>
@@ -172,7 +172,7 @@ export function ForumMessageThread({
                       src={message.sender.avatar?.url}
                       alt={message.sender.user_name}
                     />
-                    <AvatarFallback className="bg-linear-to-br from-emerald-400 to-teal-500 dark:from-emerald-500 dark:to-teal-600 text-white text-xs font-semibold">
+                    <AvatarFallback className="bg-accent text-white text-xs font-semibold">
                       {message.sender.user_name[0]?.toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -181,12 +181,12 @@ export function ForumMessageThread({
                   className={cn(
                     "flex max-w-[75%] flex-col gap-1 rounded-2xl px-4 py-2 shadow-sm",
                     isSent
-                      ? "bg-linear-to-br from-primary to-primary/90 text-primary-foreground rounded-br-md"
-                      : "bg-linear-to-br from-sky-50 to-blue-50 dark:from-sky-950/50 dark:to-blue-950/40 rounded-bl-md"
+                      ? "bg-primary text-primary-foreground rounded-br-md"
+                      : "bg-muted/60 rounded-bl-md"
                   )}
                 >
                   {!isSent && (
-                    <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                    <span className="text-xs font-semibold text-accent-foreground dark:text-accent">
                       {message.sender.user_name}
                     </span>
                   )}

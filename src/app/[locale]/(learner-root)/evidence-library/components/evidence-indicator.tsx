@@ -47,7 +47,7 @@ export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
     >
       {evidenceCount === 1 ? (
         <div
-          className={`${boxSize} bg-blue-500 rounded-sm border border-blue-700`}
+          className={`${boxSize} bg-primary rounded-sm border border-primary`}
           title="1 evidence submission"
           aria-label={`${evidenceCount} evidence submission`}
         />
@@ -57,7 +57,7 @@ export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
             (_, idx) => (
               <div
                 key={idx}
-                className={`${boxSize} bg-blue-500 rounded-sm border border-blue-700`}
+                className={`${boxSize} bg-primary rounded-sm border border-primary`}
                 title={`${evidenceCount} evidence submissions`}
                 aria-label={`${evidenceCount} evidence submissions`}
               />
@@ -65,7 +65,7 @@ export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
           )}
           {evidenceCount > 3 && (
             <span
-              className={`${textSize} text-blue-600 font-semibold ml-1`}
+              className={`${textSize} text-primary font-semibold ml-1`}
               title={`${evidenceCount} total evidence submissions`}
             >
               {evidenceCount}

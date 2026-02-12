@@ -435,7 +435,7 @@ export function AddActionDialog({
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-6">
           {/* Action Name */}
           <div className="space-y-2">
-            <Label htmlFor="actionName">Action name <span className="text-red-500">*</span></Label>
+            <Label htmlFor="actionName">Action name <span className="text-destructive">*</span></Label>
             <Controller
               name="actionName"
               control={control}
@@ -486,7 +486,7 @@ export function AddActionDialog({
 
           {/* Target Date */}
           <div className="space-y-2">
-            <Label>Target Date <span className="text-red-500">*</span></Label>
+            <Label>Target Date <span className="text-destructive">*</span></Label>
             <Controller
               name="targetDate"
               control={control}

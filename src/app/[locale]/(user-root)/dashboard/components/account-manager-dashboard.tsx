@@ -70,28 +70,28 @@ export function AccountManagerDashboard() {
       value: totalOrgs,
       subtitle: `${activeOrgs} active`,
       icon: Building2,
-      color: "text-blue-600",
+      color: "text-primary",
     },
     {
       title: "Managed Centres",
       value: totalCentres,
       subtitle: status ? `${status.centres?.active ?? 0} active / ${status.centres?.suspended ?? 0} suspended` : "Across assigned organisations",
       icon: MapPin,
-      color: "text-green-600",
+      color: "text-accent",
     },
     {
       title: "Active Subscriptions",
       value: activeSubscriptions,
       subtitle: totalSubscriptions ? `${totalSubscriptions} total` : "Active plans",
       icon: CreditCard,
-      color: "text-purple-600",
+      color: "text-secondary",
     },
     {
       title: "Total Revenue",
       value: `£${revenueFromPayments.toLocaleString()}`,
       subtitle: recentPaymentCount ? `From ${recentPaymentCount} recent payments` : "From recent payments",
       icon: DollarSign,
-      color: "text-orange-600",
+      color: "text-secondary",
     },
   ]
 

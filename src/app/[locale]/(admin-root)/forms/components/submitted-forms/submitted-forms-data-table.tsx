@@ -230,7 +230,7 @@ export function SubmittedFormsDataTable() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-orange-600 hover:text-orange-700"
+                className="h-8 w-8 text-secondary hover:text-secondary/90"
                 onClick={() => handleLockClick(row.original)}
               >
                 <Lock className="h-4 w-4" />
@@ -240,7 +240,7 @@ export function SubmittedFormsDataTable() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-green-600 hover:text-green-700"
+                className="h-8 w-8 text-accent hover:text-accent/90"
                 onClick={() => handleUnlockClick(row.original)}
               >
                 <LockOpen className="h-4 w-4" />

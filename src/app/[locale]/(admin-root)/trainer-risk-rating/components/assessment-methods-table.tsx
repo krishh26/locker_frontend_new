@@ -84,19 +84,19 @@ export function AssessmentMethodsTable({
   };
 
   const getRiskColor = (riskLevel: string) => {
-    if (riskLevel === "Low") return "bg-emerald-100 text-emerald-800 border-emerald-300/60 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-700/40";
-    if (riskLevel === "Medium") return "bg-amber-100 text-amber-800 border-amber-300/60 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700/40";
-    if (riskLevel === "High") return "bg-red-100 text-red-800 border-red-300/60 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700/40";
-    return "bg-gray-100 text-gray-800 border-gray-300/60 dark:bg-gray-900/30 dark:text-gray-300 dark:border-gray-700/40";
+    if (riskLevel === "Low") return "bg-accent/10 text-accent border-accent/30";
+    if (riskLevel === "Medium") return "bg-secondary/10 text-secondary border-secondary/30";
+    if (riskLevel === "High") return "bg-destructive/10 text-destructive border-destructive/30";
+    return "bg-muted text-muted-foreground border-border";
   };
 
   return (
-    <Card className="bg-linear-to-br from-violet-100/60 to-purple-100/60 dark:from-violet-950/30 dark:to-purple-950/20 border-violet-300/40 dark:border-violet-800/30">
+    <Card className="bg-secondary/5 border-secondary/15">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-violet-200/70 dark:bg-violet-800/40">
-              <ClipboardList className="h-4 w-4 text-violet-700 dark:text-violet-300" />
+            <div className="rounded-lg p-1.5 bg-secondary/15">
+              <ClipboardList className="h-4 w-4 text-secondary" />
             </div>
             <CardTitle>Assessment Method Risk ({assessmentMethods.length})</CardTitle>
           </div>
@@ -105,7 +105,7 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Low")}
-              className="border-green-500 text-green-700 hover:bg-green-50"
+              className="border-accent/50 text-accent hover:bg-accent/10"
             >
               Set All Low
             </Button>
@@ -113,7 +113,7 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
-              className="border-yellow-500 text-yellow-700 hover:bg-yellow-50"
+              className="border-secondary/50 text-secondary hover:bg-secondary/10"
             >
               Set All Medium
             </Button>
@@ -121,7 +121,7 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
-              className="border-red-500 text-red-700 hover:bg-red-50"
+              className="border-destructive/50 text-destructive hover:bg-destructive/10"
             >
               Set All High
             </Button>

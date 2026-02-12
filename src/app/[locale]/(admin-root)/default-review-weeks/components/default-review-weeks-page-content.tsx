@@ -208,7 +208,7 @@ export function DefaultReviewWeeksPageContent() {
             <Card className="bg-muted/50">
                 <CardHeader>
                     <div className="flex items-center gap-2">
-                        <AlertTriangle className="h-5 w-5 text-amber-600" />
+                        <AlertTriangle className="h-5 w-5 text-secondary" />
                         <CardTitle>{t("info.title")}</CardTitle>
                     </div>
                 </CardHeader>

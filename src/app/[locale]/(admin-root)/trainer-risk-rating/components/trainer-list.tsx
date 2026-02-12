@@ -38,27 +38,27 @@ export function TrainerList({
   }
 
   const avatarColors = [
-    "bg-linear-to-br from-rose-400 to-pink-500 dark:from-rose-500 dark:to-pink-600",
-    "bg-linear-to-br from-sky-400 to-blue-500 dark:from-sky-500 dark:to-blue-600",
-    "bg-linear-to-br from-emerald-400 to-teal-500 dark:from-emerald-500 dark:to-teal-600",
-    "bg-linear-to-br from-violet-400 to-purple-500 dark:from-violet-500 dark:to-purple-600",
-    "bg-linear-to-br from-amber-400 to-orange-500 dark:from-amber-500 dark:to-orange-600",
-    "bg-linear-to-br from-cyan-400 to-teal-500 dark:from-cyan-500 dark:to-teal-600",
-    "bg-linear-to-br from-fuchsia-400 to-pink-500 dark:from-fuchsia-500 dark:to-pink-600",
-    "bg-linear-to-br from-indigo-400 to-blue-500 dark:from-indigo-500 dark:to-blue-600",
+    "bg-primary",
+    "bg-secondary",
+    "bg-accent",
+    "bg-primary/80",
+    "bg-secondary/80",
+    "bg-accent/80",
+    "bg-primary/60",
+    "bg-secondary/60",
   ];
 
   return (
-    <Card className="bg-linear-to-br from-sky-100/60 to-indigo-100/60 dark:from-sky-950/30 dark:to-indigo-950/20 border-sky-300/40 dark:border-sky-800/30">
+    <Card className="bg-primary/5 border-primary/15">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-sky-200/70 dark:bg-sky-800/40">
-              <User className="h-4 w-4 text-sky-700 dark:text-sky-300" />
+            <div className="rounded-lg p-1.5 bg-primary/15">
+              <User className="h-4 w-4 text-primary" />
             </div>
             <CardTitle>Trainers</CardTitle>
           </div>
-          <Badge variant="secondary" className="ml-auto bg-sky-200/70 dark:bg-sky-800/40 text-sky-800 dark:text-sky-200">
+          <Badge variant="secondary" className="ml-auto bg-primary/15 text-primary">
             {trainers.length}
           </Badge>
         </div>
@@ -81,7 +81,7 @@ export function TrainerList({
               >
                 <Avatar className={cn("h-10 w-10", isSelected && "ring-2 ring-primary-foreground/30")}>
                   <AvatarImage src={trainer.avatar?.url || ""} alt={trainer.first_name} />
-                  <AvatarFallback className={cn("text-white font-semibold text-sm", avatarColors[index % avatarColors.length])}>
+                  <AvatarFallback className={cn("text-primary-foreground font-semibold text-sm", avatarColors[index % avatarColors.length])}>
                     {trainer.first_name[0]}
                     {trainer.last_name[0]}
                   </AvatarFallback>

@@ -66,8 +66,8 @@ export function CaseloadManagerCards({
   };
 
   const getStatusColor = (count: number) => {
-    if (count === 0) return "secondary";
-    if (count < 5) return "destructive";
+    if (count === 0) return "destructive";
+    if (count < 5) return "default";
     if (count < 10) return "default";
     return "default";
   };
@@ -308,7 +308,7 @@ export function CaseloadManagerCards({
           const isExpanded = expandedManager === managerId;
 
           return (
-            <Card key={managerId} className="hover:shadow-lg transition-shadow">
+            <Card key={managerId} className="bg-primary/5 border-primary/15 hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -377,8 +377,8 @@ export function CaseloadManagerCards({
                     </div>
                     <div className="text-xs text-muted-foreground">Users</div>
                   </div>
-                  <div className="bg-secondary/10 rounded-lg p-3 text-center">
-                    <GraduationCap className="h-5 w-5 mx-auto mb-1 text-secondary-foreground" />
+                  <div className="bg-accent/10 rounded-lg p-3 text-center">
+                    <GraduationCap className="h-5 w-5 mx-auto mb-1 text-accent" />
                     <div className="text-2xl font-bold">
                       {manager.statistics.total_managed_learners}
                     </div>
@@ -395,8 +395,8 @@ export function CaseloadManagerCards({
 
                 {/* Expandable User List */}
                 {isExpanded && (
-                  <div className="pt-4 border-t">
-                    <h4 className="text-sm font-semibold mb-3">
+                  <div className="pt-4 border-t border-primary/15">
+                    <h4 className="text-sm font-semibold mb-3 text-primary">
                       Managed Users ({manager.managed_users?.length || 0})
                     </h4>
                     {manager.managed_users && manager.managed_users.length > 0 ? (
@@ -405,7 +405,7 @@ export function CaseloadManagerCards({
                           {manager.managed_users.map((user) => (
                             <div
                               key={user.user_id}
-                              className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                              className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary/5 transition-colors"
                             >
                               <Avatar className="h-8 w-8">
                                 <AvatarFallback className="bg-primary/10 text-primary text-xs">
@@ -430,8 +430,8 @@ export function CaseloadManagerCards({
                         </div>
                       </ScrollArea>
                     ) : (
-                      <div className="text-center py-6 text-muted-foreground">
-                        <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                      <div className="text-center py-6 text-muted-foreground rounded-lg bg-muted/30">
+                        <Users className="h-8 w-8 mx-auto mb-2 text-primary/40" />
                         <p className="text-sm">No users assigned yet</p>
                       </div>
                     )}

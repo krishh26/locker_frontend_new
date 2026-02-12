@@ -36,7 +36,7 @@ export function ForumPageContent() {
         icon={MessageSquare}
       />
 
-      <div className="flex h-[calc(100vh-12rem)] gap-0 overflow-hidden rounded-xl border shadow-sm bg-gradient-to-br from-background via-background to-muted/30">
+      <div className="flex h-[calc(100vh-12rem)] gap-0 overflow-hidden rounded-xl border shadow-sm bg-linear-to-br from-background via-background to-muted/30">
         {/* Chat List - Show on desktop or when no chat selected on mobile */}
         {(!isMobile || !selectedChat) && (
           <div className="w-full border-r md:w-[30%] bg-linear-to-b from-muted/20 to-background">
@@ -57,8 +57,8 @@ export function ForumPageContent() {
               />
             ) : (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
-                <div className="rounded-full bg-linear-to-br from-violet-100 to-indigo-100 dark:from-violet-900/40 dark:to-indigo-900/30 p-6">
-                  <MessageSquare className="h-12 w-12 text-violet-500 dark:text-violet-400" />
+                <div className="rounded-full bg-primary/10 p-6">
+                  <MessageSquare className="h-12 w-12 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">No chat selected</h3>

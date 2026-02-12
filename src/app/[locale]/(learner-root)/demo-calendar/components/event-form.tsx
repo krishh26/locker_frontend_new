@@ -43,11 +43,11 @@ interface EventFormProps {
 }
 
 const eventTypes = [
-  { value: "meeting", label: "Meeting", color: "bg-blue-500" },
-  { value: "event", label: "Event", color: "bg-green-500" },
-  { value: "personal", label: "Personal", color: "bg-pink-500" },
-  { value: "task", label: "Task", color: "bg-orange-500" },
-  { value: "reminder", label: "Reminder", color: "bg-purple-500" }
+  { value: "meeting", label: "Meeting", color: "bg-primary" },
+  { value: "event", label: "Event", color: "bg-accent" },
+  { value: "personal", label: "Personal", color: "bg-secondary" },
+  { value: "task", label: "Task", color: "bg-secondary" },
+  { value: "reminder", label: "Reminder", color: "bg-secondary" }
 ]
 
 const timeSlots = [
@@ -82,7 +82,7 @@ export function EventForm({ event, open, onOpenChange, onSave, onDelete }: Event
     const eventData: Partial<CalendarEvent> = {
       ...formData,
       id: event?.id,
-      color: eventTypes.find(t => t.value === formData.type)?.color || "bg-blue-500"
+      color: eventTypes.find(t => t.value === formData.type)?.color || "bg-primary"
     }
     onSave(eventData)
     onOpenChange(false)

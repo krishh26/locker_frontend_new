@@ -1,18 +1,31 @@
-const colors = [
-  "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8",
-  "#F7DC6F", "#BB8FCE", "#85C1E2", "#F8B739", "#52BE80",
-  "#EC7063", "#5DADE2", "#58D68D", "#F4D03F", "#AF7AC5",
+// Blue theme palette colors (Cobalt, Bright Blue, Teal, Aqua, Light Blue + shades)
+// Theme CSS variable names to pick from (resolved at runtime)
+const cssVars = [
+  "--primary",
+  "--secondary",
+  "--accent",
+  "--ring",
+  "--chart-1",
+  "--chart-2",
+  "--chart-3",
+  "--chart-4",
+  "--chart-5",
 ];
 
 export const getRandomColor = (seed: string | undefined): string => {
-  if (!seed) return colors[0];
+  if (typeof window === "undefined") return "#004aad"; // SSR fallback
 
   let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+  const s = seed || "default";
+  for (let i = 0; i < s.length; i++) {
+    hash = s.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  const index = Math.abs(hash) % colors.length;
-  return colors[index];
+  const index = Math.abs(hash) % cssVars.length;
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(cssVars[index])
+    .trim();
+
+  return value || "#004aad";
 };
 

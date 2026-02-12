@@ -252,17 +252,17 @@ export function SkillsScanTnaUnits({
                       {!isStandardType ? (
                         <>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                            <Badge variant="outline" className="bg-primary/10 text-primary">
                               {unit.glh ?? "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                            <Badge variant="outline" className="bg-accent/10 text-accent">
                               {unit.credit_value ?? "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300">
+                            <Badge variant="outline" className="bg-secondary/10 text-secondary">
                               {unit.level ? `Level ${unit.level}` : "N/A"}
                             </Badge>
                           </TableCell>
@@ -270,17 +270,17 @@ export function SkillsScanTnaUnits({
                       ) : (
                         <>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                            <Badge variant="outline" className="bg-primary/10 text-primary">
                               {unit.code || "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                            <Badge variant="outline" className="bg-accent/10 text-accent">
                               {unit.type || "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className={unit.mandatory ? "bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300" : "bg-gray-50 text-gray-700 dark:bg-gray-950 dark:text-gray-300"}>
+                            <Badge variant="outline" className={unit.mandatory ? "bg-secondary/10 text-secondary" : "bg-muted text-muted-foreground"}>
                               {unit.mandatory ? "Yes" : "No"}
                             </Badge>
                           </TableCell>

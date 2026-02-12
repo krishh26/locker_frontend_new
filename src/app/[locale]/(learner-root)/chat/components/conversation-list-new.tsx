@@ -129,13 +129,13 @@ export function ConversationList({
 
                 {/* Online indicator for direct messages */}
                 {conversation.type === "direct" && getOnlineStatus(conversation) && (
-                  <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 border-2 border-background rounded-full" />
+                  <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-accent border-2 border-background rounded-full" />
                 )}
 
                 {/* Group indicator */}
                 {conversation.type === "group" && (
-                  <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-blue-500 border-2 border-background rounded-full flex items-center justify-center">
-                    <Hash className="h-2 w-2 text-white" />
+                  <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-primary border-2 border-background rounded-full flex items-center justify-center">
+                    <Hash className="h-2 w-2 text-primary-foreground" />
                   </div>
                 )}
               </div>

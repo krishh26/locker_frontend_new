@@ -122,16 +122,16 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <div className="flex h-8 w-8 items-center justify-center rounded-lg">
-                <Lock className="h-6 w-6 text-primary" />
+                <Lock className="h-6 w-6 text-sidebar-primary" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{displayName}</span>
-                <span className="text-muted-foreground truncate text-xs">
+                <span className="truncate font-medium text-sidebar-foreground">{displayName}</span>
+                <span className="truncate text-xs text-sidebar-foreground/70">
                   {displayEmail}
                   {currentRole && ` • ${currentRole}`}
                 </span>
               </div>
-              <EllipsisVertical className="ml-auto size-4" />
+              <EllipsisVertical className="ml-auto size-4 text-sidebar-foreground/70" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

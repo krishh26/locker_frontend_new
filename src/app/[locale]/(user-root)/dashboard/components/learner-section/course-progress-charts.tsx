@@ -39,14 +39,14 @@ interface CourseProgressChartsProps {
 }
 
 const cardBgColors = [
-  "bg-primary/5 border-primary/15",
-  "bg-accent/5 border-accent/15",
-  "bg-secondary/5 border-secondary/15",
-  "bg-primary/10 border-primary/20",
+  "bg-primary/15 border-primary/30",
+  "bg-accent/15 border-accent/30",
+  "bg-secondary/15 border-secondary/30",
+  "bg-primary/20 border-primary/35",
   "bg-muted border-border",
-  "bg-accent/10 border-accent/20",
-  "bg-secondary/10 border-secondary/20",
-  "bg-primary/8 border-primary/12",
+  "bg-accent/20 border-accent/35",
+  "bg-secondary/20 border-secondary/35",
+  "bg-primary/18 border-primary/25",
 ]
 
 // Helper to get theme color from CSS variable
@@ -73,14 +73,14 @@ const getDonutColors = (index: number) => {
 }
 
 const statsBgColors = [
-  "border-primary/20 bg-primary/5",
-  "border-accent/20 bg-accent/5",
-  "border-secondary/20 bg-secondary/5",
-  "border-primary/15 bg-primary/8",
-  "border-border bg-muted/50",
-  "border-accent/15 bg-accent/8",
-  "border-secondary/15 bg-secondary/8",
-  "border-primary/12 bg-primary/5",
+  "border-primary/30 bg-primary/15",
+  "border-accent/30 bg-accent/15",
+  "border-secondary/30 bg-secondary/15",
+  "border-primary/25 bg-primary/18",
+  "border-border bg-muted/60",
+  "border-accent/25 bg-accent/18",
+  "border-secondary/25 bg-secondary/18",
+  "border-primary/25 bg-primary/15",
 ]
 
 // Convert incoming data to progress format
@@ -218,7 +218,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         </div>
         <h2 className="text-xl font-semibold">Progress Overview</h2>
       </div>
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-4">
         {courses.map((course, index) => {
           const progressData = convertToProgressData(course)
           const courseName = course?.course?.course_name || `Course ${index + 1}`
@@ -228,8 +228,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
             <Card
               key={index}
               className={cn(
-                "shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]",
-                cardBgColors[colorIdx]
+                "relative shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]",
+                // cardBgColors[colorIdx]
               )}
               onClick={() => {
                 const courseId = course.course?.course_id
@@ -239,8 +239,17 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                 }
               }}
             >
-              <CardHeader className="space-y-1">
-                <CardTitle className="text-base font-semibold">{courseName}</CardTitle>
+              <Badge
+                variant={progressData.isGateway ? "default" : "outline"}
+                className="absolute top-3 right-3 gap-1 rounded-full shadow-sm text-xs"
+              >
+                <Flag className="size-3" />
+                {progressData.isGateway
+                  ? "Gateway"
+                  : "Core"}
+              </Badge>
+              <CardHeader className="space-y-1 pr-24">
+                <CardTitle className="text-base font-semibold line-clamp-2" title={courseName}>{courseName}</CardTitle>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <CalendarDays className="size-4" />
                   <span>Next milestone: Review</span>
@@ -277,17 +286,6 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                       {progressData.totalUnits}
                     </p>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <Badge
-                    variant={progressData.isGateway ? "default" : "outline"}
-                    className="gap-1 rounded-full shadow-sm"
-                  >
-                    <Flag className="size-3.5" />
-                    {progressData.isGateway
-                      ? "Gateway preparation"
-                      : "Core module"}
-                  </Badge>
                 </div>
               </CardContent>
             </Card>

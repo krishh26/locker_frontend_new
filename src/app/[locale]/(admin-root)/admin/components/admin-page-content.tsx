@@ -29,7 +29,7 @@ export function AdminPageContent() {
       href: "/users",
       icon: Users,
       color: "text-primary",
-      bgClass: "bg-primary/5 border-primary/15",
+      bgClass: "bg-primary/15 border-primary/30",
     },
     {
       title: t("modules.learnerManagement.title"),
@@ -37,7 +37,7 @@ export function AdminPageContent() {
       href: "/learners",
       icon: GraduationCap,
       color: "text-secondary",
-      bgClass: "bg-secondary/5 border-secondary/15",
+      bgClass: "bg-secondary/15 border-secondary/30",
     },
     {
       title: t("modules.employerManagement.title"),
@@ -45,7 +45,7 @@ export function AdminPageContent() {
       href: "/employers",
       icon: Building2,
       color: "text-accent",
-      bgClass: "bg-accent/5 border-accent/15",
+      bgClass: "bg-accent/15 border-accent/30",
     },
     {
       title: t("modules.broadcastManagement.title"),

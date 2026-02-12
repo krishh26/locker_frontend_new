@@ -196,7 +196,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
 
  
   return (
-    <Card className='overflow-hidden border border-border/60 shadow-sm bg-primary/5'>
+    <Card className='overflow-hidden border border-border/60 shadow-sm'>
       <div className='grid lg:grid-cols-[1fr_1fr]'>
         {/* Left Section - Dark Background with Learner Info */}
         <div className='px-4'>

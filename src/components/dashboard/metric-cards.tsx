@@ -23,17 +23,17 @@ export interface MetricCardsProps {
 }
 
 const metricCardBgColors = [
-  "bg-primary/5 border-primary/15",
-  "bg-secondary/5 border-secondary/15",
-  "bg-accent/5 border-accent/15",
-  "bg-primary/10 border-primary/20",
+  "bg-primary/15 border-primary/30",
+  "bg-secondary/15 border-secondary/30",
+  "bg-accent/15 border-accent/30",
+  "bg-primary/20 border-primary/35",
   "bg-muted border-border",
-  "bg-secondary/10 border-secondary/20",
-  "bg-accent/10 border-accent/20",
-  "bg-primary/8 border-primary/12",
-  "bg-secondary/8 border-secondary/12",
-  "bg-accent/8 border-accent/12",
-  "bg-muted/50 border-border/80",
+  "bg-secondary/20 border-secondary/35",
+  "bg-accent/20 border-accent/35",
+  "bg-primary/18 border-primary/25",
+  "bg-secondary/18 border-secondary/25",
+  "bg-accent/18 border-accent/25",
+  "bg-muted/60 border-border",
 ]
 
 export function MetricCards({

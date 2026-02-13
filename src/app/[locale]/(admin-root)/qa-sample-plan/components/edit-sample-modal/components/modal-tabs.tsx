@@ -47,7 +47,7 @@ export function ModalTabs({
         <Button
           onClick={onCreateNew}
           disabled={isCreating || isReadOnly}
-          className='ml-4 bg-[#e91e63] hover:bg-[#c2185b]'
+          className='ml-4 bg-destructive hover:bg-destructive/90'
         >
           <Plus className='mr-2 h-4 w-4' />
           {isCreating ? 'Creating...' : 'Create New'}

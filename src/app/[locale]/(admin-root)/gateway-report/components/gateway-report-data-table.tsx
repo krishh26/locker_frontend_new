@@ -382,10 +382,10 @@ export function GatewayReportDataTable() {
                   className={cn(
                     "h-full transition-all",
                     progress >= 80
-                      ? "bg-green-500"
+                      ? "bg-accent"
                       : progress >= 60
-                      ? "bg-orange-500"
-                      : "bg-red-500"
+                      ? "bg-secondary"
+                      : "bg-destructive"
                   )}
                   style={{ width: `${progress}%` }}
                 />

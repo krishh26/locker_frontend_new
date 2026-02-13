@@ -39,36 +39,48 @@ interface CourseProgressChartsProps {
 }
 
 const cardBgColors = [
-  "bg-linear-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
-  "bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
-  "bg-linear-to-br from-sky-100 to-blue-100 dark:from-sky-950/50 dark:to-blue-950/40 border-sky-300/60 dark:border-sky-800/30",
-  "bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30",
-  "bg-linear-to-br from-amber-100 to-orange-100 dark:from-amber-950/50 dark:to-orange-950/40 border-amber-300/60 dark:border-amber-800/30",
-  "bg-linear-to-br from-cyan-100 to-teal-100 dark:from-cyan-950/50 dark:to-teal-950/40 border-cyan-300/60 dark:border-cyan-800/30",
-  "bg-linear-to-br from-fuchsia-100 to-pink-100 dark:from-fuchsia-950/50 dark:to-pink-950/40 border-fuchsia-300/60 dark:border-fuchsia-800/30",
-  "bg-linear-to-br from-indigo-100 to-blue-100 dark:from-indigo-950/50 dark:to-blue-950/40 border-indigo-300/60 dark:border-indigo-800/30",
+  "bg-primary/15 border-primary/30",
+  "bg-accent/15 border-accent/30",
+  "bg-secondary/15 border-secondary/30",
+  "bg-primary/20 border-primary/35",
+  "bg-muted border-border",
+  "bg-accent/20 border-accent/35",
+  "bg-secondary/20 border-secondary/35",
+  "bg-primary/18 border-primary/25",
 ]
 
-const donutColors = [
-  { completed: "#8B5CF6", remaining: "rgba(139, 92, 246, 0.15)" }, // violet
-  { completed: "#10B981", remaining: "rgba(16, 185, 129, 0.15)" }, // emerald
-  { completed: "#0EA5E9", remaining: "rgba(14, 165, 233, 0.15)" }, // sky
-  { completed: "#F43F5E", remaining: "rgba(244, 63, 94, 0.15)" },  // rose
-  { completed: "#F59E0B", remaining: "rgba(245, 158, 11, 0.15)" }, // amber
-  { completed: "#06B6D4", remaining: "rgba(6, 182, 212, 0.15)" },  // cyan
-  { completed: "#D946EF", remaining: "rgba(217, 70, 239, 0.15)" }, // fuchsia
-  { completed: "#6366F1", remaining: "rgba(99, 102, 241, 0.15)" }, // indigo
-]
+// Helper to get theme color from CSS variable
+const getThemeColor = (cssVar: string, fallback: string): string => {
+  if (typeof window === "undefined") return fallback
+  const value = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim()
+  return value || fallback
+}
+
+const getDonutColors = (index: number) => {
+  const colorVars = [
+    { cssVar: "--primary", fallback: "#004aad" },
+    { cssVar: "--accent", fallback: "#00a86b" },
+    { cssVar: "--secondary", fallback: "#f59e0b" },
+    { cssVar: "--chart-1", fallback: "#004aad" },
+    { cssVar: "--chart-2", fallback: "#0077cc" },
+    { cssVar: "--chart-3", fallback: "#00a86b" },
+    { cssVar: "--chart-4", fallback: "#f59e0b" },
+    { cssVar: "--chart-5", fallback: "#00bfff" },
+  ]
+  const color = colorVars[index % colorVars.length]
+  const hex = getThemeColor(color.cssVar, color.fallback)
+  return { completed: hex, remaining: `color-mix(in srgb, ${hex} 15%, transparent)` }
+}
 
 const statsBgColors = [
-  "border-violet-200/60 bg-violet-50/50 dark:border-violet-800/30 dark:bg-violet-950/30",
-  "border-emerald-200/60 bg-emerald-50/50 dark:border-emerald-800/30 dark:bg-emerald-950/30",
-  "border-sky-200/60 bg-sky-50/50 dark:border-sky-800/30 dark:bg-sky-950/30",
-  "border-rose-200/60 bg-rose-50/50 dark:border-rose-800/30 dark:bg-rose-950/30",
-  "border-amber-200/60 bg-amber-50/50 dark:border-amber-800/30 dark:bg-amber-950/30",
-  "border-cyan-200/60 bg-cyan-50/50 dark:border-cyan-800/30 dark:bg-cyan-950/30",
-  "border-fuchsia-200/60 bg-fuchsia-50/50 dark:border-fuchsia-800/30 dark:bg-fuchsia-950/30",
-  "border-indigo-200/60 bg-indigo-50/50 dark:border-indigo-800/30 dark:bg-indigo-950/30",
+  "border-primary/30 bg-primary/15",
+  "border-accent/30 bg-accent/15",
+  "border-secondary/30 bg-secondary/15",
+  "border-primary/25 bg-primary/18",
+  "border-border bg-muted/60",
+  "border-accent/25 bg-accent/18",
+  "border-secondary/25 bg-secondary/18",
+  "border-primary/25 bg-primary/15",
 ]
 
 // Convert incoming data to progress format
@@ -127,7 +139,7 @@ function CourseProgressDonut({
   colorIndex?: number
 }) {
   const safeCompletion = Math.min(Math.max(completion, 0), 100)
-  const colors = donutColors[colorIndex % donutColors.length]
+  const colors = getDonutColors(colorIndex)
   const data = [
     { name: "Completed", value: safeCompletion, color: colors.completed },
     {
@@ -206,7 +218,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         </div>
         <h2 className="text-xl font-semibold">Progress Overview</h2>
       </div>
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-4">
         {courses.map((course, index) => {
           const progressData = convertToProgressData(course)
           const courseName = course?.course?.course_name || `Course ${index + 1}`
@@ -216,8 +228,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
             <Card
               key={index}
               className={cn(
-                "shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]",
-                cardBgColors[colorIdx]
+                "relative shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]",
+                // cardBgColors[colorIdx]
               )}
               onClick={() => {
                 const courseId = course.course?.course_id
@@ -227,8 +239,17 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                 }
               }}
             >
-              <CardHeader className="space-y-1">
-                <CardTitle className="text-base font-semibold">{courseName}</CardTitle>
+              <Badge
+                variant={progressData.isGateway ? "default" : "outline"}
+                className="absolute top-3 right-3 gap-1 rounded-full shadow-sm text-xs"
+              >
+                <Flag className="size-3" />
+                {progressData.isGateway
+                  ? "Gateway"
+                  : "Core"}
+              </Badge>
+              <CardHeader className="space-y-1 pr-24">
+                <CardTitle className="text-base font-semibold line-clamp-2" title={courseName}>{courseName}</CardTitle>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <CalendarDays className="size-4" />
                   <span>Next milestone: Review</span>
@@ -265,17 +286,6 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                       {progressData.totalUnits}
                     </p>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <Badge
-                    variant={progressData.isGateway ? "default" : "outline"}
-                    className="gap-1 rounded-full shadow-sm"
-                  >
-                    <Flag className="size-3.5" />
-                    {progressData.isGateway
-                      ? "Gateway preparation"
-                      : "Core module"}
-                  </Badge>
                 </div>
               </CardContent>
             </Card>

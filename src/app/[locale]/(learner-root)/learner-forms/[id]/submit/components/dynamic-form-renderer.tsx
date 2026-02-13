@@ -419,10 +419,10 @@ export function DynamicFormRenderer({
     <Card>
       <CardHeader>
         {isLocked && (
-          <div className="mt-4 rounded-md border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-950">
+          <div className="mt-4 rounded-md border border-secondary bg-secondary/10 p-4">
             <div className="flex items-start gap-2">
-              <Lock className="h-4 w-4 text-yellow-600 dark:text-yellow-400 mt-0.5" />
-              <p className="text-sm text-yellow-800 dark:text-yellow-200">
+              <Lock className="h-4 w-4 text-secondary mt-0.5" />
+              <p className="text-sm text-secondary">
                 This form is currently locked and cannot be edited. If you need
                 to make changes, please contact your trainer or administrator
                 for assistance.

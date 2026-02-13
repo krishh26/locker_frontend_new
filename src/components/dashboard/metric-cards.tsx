@@ -23,17 +23,17 @@ export interface MetricCardsProps {
 }
 
 const metricCardBgColors = [
-  "bg-linear-to-br from-orange-100 to-amber-100 dark:from-orange-950/50 dark:to-amber-950/40 border-orange-300/60 dark:border-orange-800/30",
-  "bg-linear-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
-  "bg-linear-to-br from-rose-100 to-pink-100 dark:from-rose-950/50 dark:to-pink-950/40 border-rose-300/60 dark:border-rose-800/30",
-  "bg-linear-to-br from-cyan-100 to-teal-100 dark:from-cyan-950/50 dark:to-teal-950/40 border-cyan-300/60 dark:border-cyan-800/30",
-  "bg-linear-to-br from-fuchsia-100 to-pink-100 dark:from-fuchsia-950/50 dark:to-pink-950/40 border-fuchsia-300/60 dark:border-fuchsia-800/30",
-  "bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
-  "bg-linear-to-br from-sky-100 to-blue-100 dark:from-sky-950/50 dark:to-blue-950/40 border-sky-300/60 dark:border-sky-800/30",
-  "bg-linear-to-br from-indigo-100 to-blue-100 dark:from-indigo-950/50 dark:to-blue-950/40 border-indigo-300/60 dark:border-indigo-800/30",
-  "bg-linear-to-br from-lime-100 to-green-100 dark:from-lime-950/50 dark:to-green-950/40 border-lime-300/60 dark:border-lime-800/30",
-  "bg-linear-to-br from-amber-100 to-yellow-100 dark:from-amber-950/50 dark:to-yellow-950/40 border-amber-300/60 dark:border-amber-800/30",
-  "bg-linear-to-br from-teal-100 to-emerald-100 dark:from-teal-950/50 dark:to-emerald-950/40 border-teal-300/60 dark:border-teal-800/30",
+  "bg-primary/15 border-primary/30",
+  "bg-secondary/15 border-secondary/30",
+  "bg-accent/15 border-accent/30",
+  "bg-primary/20 border-primary/35",
+  "bg-muted border-border",
+  "bg-secondary/20 border-secondary/35",
+  "bg-accent/20 border-accent/35",
+  "bg-primary/18 border-primary/25",
+  "bg-secondary/18 border-secondary/25",
+  "bg-accent/18 border-accent/25",
+  "bg-muted/60 border-border",
 ]
 
 export function MetricCards({

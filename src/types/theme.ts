@@ -31,6 +31,12 @@ export type ThemeStyleProps = {
   "sidebar-accent-foreground": string;
   "sidebar-border": string;
   "sidebar-ring": string;
+  success?: string;
+  "success-foreground"?: string;
+  warning?: string;
+  "warning-foreground"?: string;
+  info?: string;
+  "info-foreground"?: string;
   "font-sans": string;
   "font-serif": string;
   "font-mono": string;

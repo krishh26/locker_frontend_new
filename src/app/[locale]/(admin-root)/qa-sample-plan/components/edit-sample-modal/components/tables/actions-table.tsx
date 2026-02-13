@@ -54,7 +54,7 @@ export function ActionsTable({
           <Button
             onClick={onAddAction}
             disabled={!planDetailId || isReadOnly}
-            className='bg-green-600 hover:bg-green-700'
+            className='bg-accent hover:bg-accent/90'
           >
             <Plus className='mr-2 h-4 w-4' />
             Add Action

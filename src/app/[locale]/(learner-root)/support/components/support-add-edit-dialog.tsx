@@ -147,7 +147,7 @@ export function SupportAddEditDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Title <span className="text-red-500">*</span></Label>
+            <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
             <Input
               id="title"
               placeholder="Add your title"
@@ -159,7 +159,7 @@ export function SupportAddEditDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description <span className="text-red-500">*</span></Label>
+            <Label htmlFor="description">Description <span className="text-destructive">*</span></Label>
             <Textarea
               id="description"
               placeholder="Add your description"

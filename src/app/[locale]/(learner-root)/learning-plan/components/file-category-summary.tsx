@@ -81,7 +81,7 @@ export function FileCategorySummary({ data }: FileCategorySummaryProps) {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              <File className="h-4 w-4 text-red-600" />
+                              <File className="h-4 w-4 text-destructive" />
                             </a>
                           </Button>
                         </TooltipTrigger>

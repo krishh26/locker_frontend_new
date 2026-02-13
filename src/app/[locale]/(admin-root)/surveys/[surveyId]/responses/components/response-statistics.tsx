@@ -11,19 +11,19 @@ interface ResponseStatisticsProps {
 
 const statCards = [
   {
-    bg: "bg-linear-to-br from-violet-100 to-purple-100 dark:from-violet-950/50 dark:to-purple-950/40 border-violet-300/60 dark:border-violet-800/30",
-    iconBg: "bg-violet-200/70 dark:bg-violet-800/40",
-    iconColor: "text-violet-600 dark:text-violet-400",
+    bg: "bg-secondary/5 border-secondary/15",
+    iconBg: "bg-secondary/15",
+    iconColor: "text-secondary",
   },
   {
-    bg: "bg-linear-to-br from-amber-100 to-orange-100 dark:from-amber-950/50 dark:to-orange-950/40 border-amber-300/60 dark:border-amber-800/30",
-    iconBg: "bg-amber-200/70 dark:bg-amber-800/40",
-    iconColor: "text-amber-600 dark:text-amber-400",
+    bg: "bg-secondary/5 border-secondary/15",
+    iconBg: "bg-secondary/15",
+    iconColor: "text-secondary",
   },
   {
-    bg: "bg-linear-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/40 border-emerald-300/60 dark:border-emerald-800/30",
-    iconBg: "bg-emerald-200/70 dark:bg-emerald-800/40",
-    iconColor: "text-emerald-600 dark:text-emerald-400",
+    bg: "bg-accent/5 border-accent/15",
+    iconBg: "bg-accent/15",
+    iconColor: "text-accent",
   },
 ]
 

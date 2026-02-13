@@ -8,8 +8,6 @@ import type {
   AdminResourcesRequest,
   AdminResourcesResponse,
   ResourceResponse,
-  AddResourcePayload,
-  UpdateResourcePayload,
   ToggleResourceRequest,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
@@ -37,11 +35,12 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    addResource: builder.mutation<ResourceResponse, AddResourcePayload>({
+    addResource: builder.mutation<ResourceResponse, FormData>({
       query: (body) => ({
         url: "/wellbeing/admin/resources",
         method: "POST",
         body,
+        formData: true,
       }),
       invalidatesTags: ["WellbeingResource"],
       transformResponse: (response: ResourceResponse) => {
@@ -51,11 +50,12 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    updateResource: builder.mutation<ResourceResponse, { id: string; payload: UpdateResourcePayload }>({
+    updateResource: builder.mutation<ResourceResponse, { id: string; payload: FormData }>({
       query: ({ id, payload }) => ({
         url: `/wellbeing/admin/resources/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: payload,
+        formData: true,
       }),
       invalidatesTags: ["WellbeingResource"],
       transformResponse: (response: ResourceResponse) => {

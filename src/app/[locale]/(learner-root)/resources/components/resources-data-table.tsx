@@ -135,26 +135,26 @@ export function ResourcesDataTable() {
   const getJobTypeColor = (jobType: string | undefined) => {
     switch (jobType) {
       case 'On':
-        return 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20'
+        return 'text-primary bg-primary/10'
       case 'Off':
-        return 'text-purple-600 bg-purple-50 dark:text-purple-400 dark:bg-purple-900/20'
+        return 'text-secondary bg-secondary/10'
       default:
-        return 'text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20'
+        return 'text-muted-foreground bg-muted'
     }
   }
 
   const getResourceTypeColor = (resourceType: string | undefined) => {
     switch (resourceType?.toUpperCase()) {
       case 'PDF':
-        return 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20'
+        return 'text-destructive bg-destructive/10'
       case 'WORD':
-        return 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20'
+        return 'text-primary bg-primary/10'
       case 'PPT':
-        return 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20'
+        return 'text-secondary bg-secondary/10'
       case 'IMAGE':
-        return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20'
+        return 'text-accent bg-accent/10'
       default:
-        return 'text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20'
+        return 'text-muted-foreground bg-muted'
     }
   }
 

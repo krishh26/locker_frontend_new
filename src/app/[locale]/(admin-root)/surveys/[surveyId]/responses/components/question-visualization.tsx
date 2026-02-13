@@ -60,6 +60,8 @@ export function QuestionVisualization({
   responses,
   questionIndex,
 }: QuestionVisualizationProps) {
+  const chartColors = getChartColors()
+
   const renderVisualization = () => {
     switch (question.type) {
       case "multiple-choice":
@@ -99,11 +101,11 @@ export function QuestionVisualization({
             cy="50%"
             outerRadius={80}
             innerRadius={40}
-            fill="#8884d8"
+            fill={chartColors[0]}
             dataKey="count"
           >
             {filteredData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
             ))}
           </Pie>
           <Tooltip
@@ -167,7 +169,7 @@ export function QuestionVisualization({
               return null
             }}
           />
-          <Bar dataKey="count" fill="#0088FE">
+          <Bar dataKey="count" fill={chartColors[0]}>
             <LabelList dataKey="count" position="right" />
           </Bar>
         </BarChart>
@@ -198,11 +200,11 @@ export function QuestionVisualization({
               cy="50%"
               outerRadius={80}
               innerRadius={40}
-              fill="#8884d8"
+              fill={chartColors[0]}
               dataKey="count"
             >
               {filteredDistribution.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[entry.rating - 1] || COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={chartColors[entry.rating - 1] ?? chartColors[index % chartColors.length]} />
               ))}
             </Pie>
             <Tooltip
@@ -277,7 +279,7 @@ export function QuestionVisualization({
                       return null
                     }}
                   />
-                  <Bar dataKey="percentage" fill="#0088FE">
+                  <Bar dataKey="percentage" fill={chartColors[0]}>
                     <LabelList
                       dataKey="percentage"
                       position="right"
@@ -326,7 +328,7 @@ export function QuestionVisualization({
               return null
             }}
           />
-          <Bar dataKey="count" fill="#0088FE">
+          <Bar dataKey="count" fill={chartColors[0]}>
             <LabelList dataKey="count" position="top" />
           </Bar>
         </BarChart>

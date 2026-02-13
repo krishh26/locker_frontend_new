@@ -264,6 +264,11 @@ const data: {
           icon: Heart,
         },
         {
+          title: 'Supplementary Training',
+          url: '/sup-training',
+          icon: BookOpen,
+        },
+        {
           title: 'QA Sample Plan',
           url: '/qa-sample-plan',
           icon: ClipboardList,

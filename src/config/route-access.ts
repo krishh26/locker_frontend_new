@@ -165,6 +165,10 @@ const routeRoleRules: RouteRule[] = [
     roles: R.admin(),
   },
   {
+    pattern: /^\/sup-training(?:\/|$)/,
+    roles: R.admin(),
+  },
+  {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
     roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA"),
   },
@@ -210,6 +214,10 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
+    roles: R.adminWith("Learner", "Trainer","Employer"),
+  },
+  {
+    pattern: /^\/supplementary-training(?:\/|$)/,
     roles: R.adminWith("Learner", "Trainer","Employer"),
   },
   {

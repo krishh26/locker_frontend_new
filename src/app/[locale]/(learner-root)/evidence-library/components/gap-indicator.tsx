@@ -36,14 +36,14 @@ export const GapIndicator: React.FC<GapIndicatorProps> = ({
   const isClickable = !disabled && learnerMap && onClick;
   const backgroundColor =
     learnerMap && trainerMap && signedOff
-      ? "bg-green-500"
+      ? "bg-accent"
       : learnerMap && trainerMap
-      ? "bg-orange-500"
+      ? "bg-secondary"
       : "";
 
   return (
     <div
-      className={`border-2 border-gray-500 w-4 h-4 mt-3 p-px flex items-center justify-center ${className}`}
+      className={`border-2 border-muted-foreground w-4 h-4 mt-3 p-px flex items-center justify-center ${className}`}
       style={{
         cursor: isClickable ? "pointer" : "default",
         opacity: isClickable ? 1 : 0.8,

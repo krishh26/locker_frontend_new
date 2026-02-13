@@ -388,12 +388,12 @@ export function EvidenceLibraryDataTable() {
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                 color === "success"
-                  ? "bg-green-100 text-green-800"
+                  ? "bg-accent/10 text-accent"
                   : color === "warning"
-                  ? "bg-yellow-100 text-yellow-800"
+                  ? "bg-secondary/10 text-secondary"
                   : color === "info"
-                  ? "bg-blue-100 text-blue-800"
-                  : "bg-gray-100 text-gray-800"
+                  ? "bg-primary/10 text-primary"
+                  : "bg-muted text-muted-foreground"
               }`}
             >
               {displayValue(status)}
@@ -592,9 +592,9 @@ export function EvidenceLibraryDataTable() {
 
               let checkboxColor = "text-muted-foreground";
               if (mappingStatus.signedOff) {
-                checkboxColor = "text-green-600";
+                checkboxColor = "text-accent";
               } else if (mappingStatus.trainerMap) {
-                checkboxColor = "text-orange-600";
+                checkboxColor = "text-secondary";
               } else if (mappingStatus.learnerMap || isLearnerSelected) {
                 checkboxColor = "text-foreground";
               }
@@ -750,9 +750,9 @@ export function EvidenceLibraryDataTable() {
 
                 let checkboxColor = "text-muted-foreground";
                 if (mappingStatus.signedOff) {
-                  checkboxColor = "text-green-600";
+                  checkboxColor = "text-accent";
                 } else if (mappingStatus.trainerMap) {
-                  checkboxColor = "text-orange-600";
+                  checkboxColor = "text-secondary";
                 } else if (mappingStatus.learnerMap || isLearnerSelected) {
                   checkboxColor = "text-foreground";
                 }
@@ -1112,7 +1112,7 @@ export function EvidenceLibraryDataTable() {
             <input
               type="file"
               onChange={(e) => setReuploadFile(e.target.files?.[0] || null)}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif"
             />
             {reuploadFile && (

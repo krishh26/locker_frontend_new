@@ -147,15 +147,15 @@ export function TrainerRiskRatingPageContent() {
           {selectedUser ? (
             <div className="space-y-6">
               {/* Trainer Header */}
-              <Card className="bg-linear-to-br from-indigo-100 to-violet-100 dark:from-indigo-950/50 dark:to-violet-950/40 border-indigo-300/60 dark:border-indigo-800/30">
+              <Card className="bg-primary/5 border-primary/15">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16 ring-2 ring-indigo-300/60 dark:ring-indigo-700/40 shadow-md">
+                    <Avatar className="h-16 w-16 ring-2 ring-primary/20 shadow-md">
                       <AvatarImage
                         src={selectedUser.avatar?.url || ""}
                         alt={selectedUser.first_name}
                       />
-                      <AvatarFallback className="bg-linear-to-br from-indigo-400 to-violet-500 dark:from-indigo-500 dark:to-violet-600 text-white font-semibold text-lg">
+                      <AvatarFallback className="bg-primary text-primary-foreground font-semibold text-lg">
                         {selectedUser.first_name[0]}
                         {selectedUser.last_name[0]}
                       </AvatarFallback>
@@ -219,11 +219,11 @@ export function TrainerRiskRatingPageContent() {
               />
             </div>
           ) : (
-            <Card className="bg-linear-to-br from-slate-50/80 to-gray-50/80 dark:from-slate-950/40 dark:to-gray-950/30 border-dashed border-primary/30">
+            <Card className="bg-muted/30 border-border border-dashed">
               <CardContent className="p-12">
                 <div className="flex flex-col items-center justify-center text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-sky-100 to-indigo-100 dark:from-sky-900/40 dark:to-indigo-900/30 flex items-center justify-center mb-4 shadow-sm">
-                    <UserIcon className="h-10 w-10 text-sky-600 dark:text-sky-400" />
+                  <div className="w-20 h-20 rounded-2xl bg-primary/5 flex items-center justify-center mb-4 shadow-sm">
+                    <UserIcon className="h-10 w-10 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">{t("selectTrainer")}</h3>
                   <p className="text-muted-foreground">

@@ -21,7 +21,7 @@ export function CTASection() {
 
                 <div className='text-muted-foreground flex items-center gap-4 text-sm'>
                   <span className='flex items-center gap-1'>
-                    <div className='size-2 rounded-full bg-green-500' />
+                    <div className='size-2 rounded-full bg-accent' />
                     150+ Blocks
                   </span>
                   <Separator orientation='vertical' className='!h-4' />
@@ -72,12 +72,12 @@ export function CTASection() {
               {/* Trust Indicators */}
               <div className='text-muted-foreground flex flex-wrap items-center justify-center gap-6 text-sm'>
                 <div className='flex items-center gap-2'>
-                    <div className='size-2 rounded-full bg-green-600 dark:bg-green-400 me-1' />
+                    <div className='size-2 rounded-full bg-accent me-1' />
 
                   <span>Free components available</span>
                 </div>
                 <div className='flex items-center gap-2'>
-                    <div className='size-2 rounded-full bg-blue-600 dark:bg-blue-400 me-1' />
+                    <div className='size-2 rounded-full bg-primary me-1' />
 
                   <span>Commercial license included</span>
                 </div>

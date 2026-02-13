@@ -28,19 +28,19 @@ export function convertDurationToMinutes(duration?: string): number {
 export function getEventColorByStatus(status?: string): string {
   switch (status) {
     case "Attended":
-      return "bg-blue-500";
+      return "bg-primary";
     case "Cancelled":
     case "Cancelled by Assessor":
     case "Cancelled by Learner":
     case "Cancelled by Employer":
-      return "bg-red-500";
+      return "bg-destructive";
     case "Learner Late":
     case "Assessor Late":
-      return "bg-orange-500";
+      return "bg-accent";
     case "Learner not Attended":
-      return "bg-gray-500";
+      return "bg-muted-foreground";
     default:
-      return "bg-slate-400";
+      return "bg-muted-foreground/50";
   }
 }
 

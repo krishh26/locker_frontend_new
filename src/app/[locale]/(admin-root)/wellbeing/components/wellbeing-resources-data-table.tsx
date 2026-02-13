@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   type ColumnDef,
   type SortingState,
@@ -76,6 +76,7 @@ export function WellbeingResourcesDataTable() {
   const {
     data: resourcesData,
     isLoading,
+    error,
     refetch,
   } = useGetAdminResourcesQuery(
     {
@@ -87,6 +88,12 @@ export function WellbeingResourcesDataTable() {
       refetchOnMountOrArgChange: true,
     }
   );
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Failed to load wellbeing resources. Please try again.");
+    }
+  }, [error]);
 
   const [toggleResource, { isLoading: isToggling }] = useToggleResourceMutation();
   const [deleteResource, { isLoading: isDeleting }] = useDeleteResourceMutation();
@@ -253,8 +260,8 @@ export function WellbeingResourcesDataTable() {
                 variant={resource.isActive ? "default" : "secondary"}
                 className={
                   resource.isActive
-                    ? "bg-green-100 text-green-800 hover:bg-green-100"
-                    : ""
+                    ? "bg-accent/10 text-accent hover:bg-accent/10"
+                    : "bg-muted text-muted-foreground"
                 }
               >
                 {resource.isActive ? "Active" : "Inactive"}

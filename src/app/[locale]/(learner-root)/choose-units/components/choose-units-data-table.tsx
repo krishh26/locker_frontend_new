@@ -57,8 +57,8 @@ interface ChooseUnitsDataTableProps {
 
 function getTypeColor(mandatory: boolean) {
   return mandatory
-    ? "text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20"
-    : "text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20";
+    ? "text-primary bg-primary/10"
+    : "text-muted-foreground bg-muted";
 }
 
 export function ChooseUnitsDataTable({

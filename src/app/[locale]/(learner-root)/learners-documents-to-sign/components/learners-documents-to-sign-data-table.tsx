@@ -228,7 +228,7 @@ export function LearnersDocumentsToSignDataTable() {
                     <Badge
                       key={`signed-${index}`}
                       variant="default"
-                      className="text-[10px] h-5 bg-green-600 hover:bg-green-700"
+                      className="text-[10px] h-5 bg-accent/10 text-accent border-accent/30 hover:bg-accent/20"
                     >
                       {role}
                     </Badge>
@@ -245,7 +245,7 @@ export function LearnersDocumentsToSignDataTable() {
                       <Badge
                         key={`pending-${index}`}
                         variant="outline"
-                        className="text-[9px] h-[18px] border-yellow-500 text-yellow-700 dark:text-yellow-400"
+                        className="text-[9px] h-[18px] bg-secondary/10 text-secondary border-secondary/30"
                       >
                         {reqSig.role} (Pending)
                       </Badge>

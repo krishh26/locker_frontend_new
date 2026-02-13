@@ -299,9 +299,9 @@ export function EvidenceTable({
                                   disabled={isDisabled}
                                   className={
                                     isTrainerMappedOnly
-                                      ? "data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                                      ? "data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                                       : isIqaChecked
-                                        ? "data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                                        ? "data-[state=checked]:bg-accent data-[state=checked]:border-accent"
                                         : ""
                                   }
                                 />

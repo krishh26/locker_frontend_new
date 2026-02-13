@@ -138,7 +138,7 @@ export function CommentModal({
                           <span
                             className={`text-xs font-medium ${
                               reviewData.completed
-                                ? "text-green-600 dark:text-green-400"
+                                ? "text-accent"
                                 : "text-muted-foreground"
                             }`}
                           >

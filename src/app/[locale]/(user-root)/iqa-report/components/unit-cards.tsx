@@ -71,10 +71,10 @@ export function UnitCards({ units, onUnitSelect, isLoading }: UnitCardsProps) {
                 <span
                   className={
                     status === "Completed"
-                      ? "px-2 py-1 rounded bg-green-100 text-green-800"
+                      ? "px-2 py-1 rounded bg-accent/10 text-accent"
                       : status === "In Progress"
-                      ? "px-2 py-1 rounded bg-blue-100 text-blue-800"
-                      : "px-2 py-1 rounded bg-gray-100 text-gray-800"
+                      ? "px-2 py-1 rounded bg-primary/10 text-primary"
+                      : "px-2 py-1 rounded bg-muted text-muted-foreground"
                   }
                 >
                   {status}

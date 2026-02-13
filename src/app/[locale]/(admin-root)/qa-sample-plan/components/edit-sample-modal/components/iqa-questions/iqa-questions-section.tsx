@@ -29,10 +29,10 @@ export function IqaQuestionsSection({
   return (
     <div className='mt-6'>
       <div className='flex items-center justify-between mb-4'>
-        <h3 className='text-lg font-semibold text-[#e91e63]'>IQA Questions</h3>
+        <h3 className='text-lg font-semibold text-destructive'>IQA Questions</h3>
         <Button
           onClick={onSaveQuestions}
-          className='bg-green-600 hover:bg-green-700'
+          className='bg-accent hover:bg-accent/90'
           size='sm'
           disabled={isReadOnly}
         >

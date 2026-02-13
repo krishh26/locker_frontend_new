@@ -491,6 +491,10 @@
     "pageTitle": "Gestión de Recursos de Bienestar",
     "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos"
   },
+  "supplementaryTraining": {
+    "pageTitle": "Gestión de Recursos de Formación Complementaria",
+    "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos"
+  },
   "acknowledgeMessage": {
     "pageTitle": "Mensaje de Reconocimiento",
     "pageSubtitle": "Cree y gestione mensajes de reconocimiento para aprendices",

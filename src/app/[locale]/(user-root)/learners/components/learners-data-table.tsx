@@ -604,10 +604,10 @@ export function LearnersDataTable() {
                 className={cn(
                   "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
                   status === "Completed" || status === "Certificated"
-                    ? "bg-green-100 text-green-800"
+                    ? "bg-accent/10 text-accent"
                     : status === "Early Leaver" || status === "Training Suspended"
-                    ? "bg-red-100 text-red-800"
-                    : "bg-blue-100 text-blue-800"
+                    ? "bg-destructive/10 text-destructive"
+                    : "bg-primary/10 text-primary"
                 )}
               >
                 {status}
@@ -767,10 +767,10 @@ export function LearnersDataTable() {
               className={cn(
                 "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
                 status === "Completed" || status === "Certificated"
-                  ? "bg-green-100 text-green-800"
+                  ? "bg-accent/10 text-accent"
                   : status === "Early Leaver" || status === "Training Suspended"
-                  ? "bg-red-100 text-red-800"
-                  : "bg-blue-100 text-blue-800"
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-primary/10 text-primary"
               )}
             >
               {status}

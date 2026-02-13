@@ -318,7 +318,7 @@ export function ModuleUnitProgressDataTable() {
           return (
             <div className="text-center">
               {learnerMap ? (
-                <span className="text-green-600 dark:text-green-400">Yes</span>
+                <span className="text-accent">Yes</span>
               ) : (
                 <span className="text-muted-foreground">No</span>
               )}
@@ -338,7 +338,7 @@ export function ModuleUnitProgressDataTable() {
           return (
             <div className="text-center">
               {trainerMap ? (
-                <span className="text-green-600 dark:text-green-400">Yes</span>
+                <span className="text-accent">Yes</span>
               ) : (
                 <span className="text-muted-foreground">No</span>
               )}
@@ -358,13 +358,13 @@ export function ModuleUnitProgressDataTable() {
           const getGapColor = () => {
             switch (gap) {
               case "complete":
-                return "bg-green-500";
+                return "bg-accent";
               case "partial":
-                return "bg-orange-500";
+                return "bg-secondary";
               case "none":
-                return "bg-red-800";
+                return "bg-destructive";
               default:
-                return "bg-gray-300";
+                return "bg-muted-foreground/30";
             }
           };
 

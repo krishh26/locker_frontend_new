@@ -13,21 +13,21 @@ import type {
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 
-export const healthWellbeingApi = createApi({
-  reducerPath: "healthWellbeingApi",
+export const supplementaryTrainingApi = createApi({
+  reducerPath: "supplementaryTrainingApi",
   baseQuery,
-  tagTypes: ["WellbeingResource", "LearnerResourceActivity"],
+  tagTypes: ["SupplementaryTrainingResource", "LearnerSupplementaryTrainingActivity"],
   endpoints: (builder) => ({
     // Admin Resource Management Endpoints
-    getAdminResources: builder.query<AdminResourcesResponse, AdminResourcesRequest>({
+    getAdminSupTrainingResources: builder.query<AdminResourcesResponse, AdminResourcesRequest>({
       query: ({ search, page = 1, limit = 10 }) => {
         const params = new URLSearchParams();
         if (search) params.append("search", search);
         params.append("page", page.toString());
         params.append("limit", limit.toString());
-        return `/wellbeing/admin/resources?${params.toString()}`;
+        return `/supplementary-training/admin/resources?${params.toString()}`;
       },
-      providesTags: ["WellbeingResource"],
+      providesTags: ["SupplementaryTrainingResource"],
       transformResponse: (response: AdminResourcesResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -35,14 +35,14 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    addResource: builder.mutation<ResourceResponse, FormData>({
+    addSupTrainingResource: builder.mutation<ResourceResponse, FormData>({
       query: (body) => ({
-        url: "/wellbeing/admin/resources",
+        url: "/supplementary-training/admin/resources",
         method: "POST",
         body,
         formData: true,
       }),
-      invalidatesTags: ["WellbeingResource"],
+      invalidatesTags: ["SupplementaryTrainingResource"],
       transformResponse: (response: ResourceResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -50,14 +50,14 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    updateResource: builder.mutation<ResourceResponse, { id: string; payload: FormData }>({
+    updateSupTrainingResource: builder.mutation<ResourceResponse, { id: string; payload: FormData }>({
       query: ({ id, payload }) => ({
-        url: `/wellbeing/admin/resources/${id}`,
+        url: `/supplementary-training/admin/resources/${id}`,
         method: "PATCH",
         body: payload,
         formData: true,
       }),
-      invalidatesTags: ["WellbeingResource"],
+      invalidatesTags: ["SupplementaryTrainingResource"],
       transformResponse: (response: ResourceResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -65,13 +65,13 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    toggleResource: builder.mutation<ResourceResponse, ToggleResourceRequest>({
+    toggleSupTrainingResource: builder.mutation<ResourceResponse, ToggleResourceRequest>({
       query: ({ id, isActive }) => ({
-        url: `/wellbeing/admin/resources/${id}`,
+        url: `/supplementary-training/admin/resources/${id}`,
         method: "PATCH",
         body: { isActive },
       }),
-      invalidatesTags: ["WellbeingResource"],
+      invalidatesTags: ["SupplementaryTrainingResource"],
       transformResponse: (response: ResourceResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -79,12 +79,12 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    deleteResource: builder.mutation<{ status: boolean; message: string }, string>({
+    deleteSupTrainingResource: builder.mutation<{ status: boolean; message: string }, string>({
       query: (id) => ({
-        url: `/wellbeing/admin/resources/${id}`,
+        url: `/supplementary-training/admin/resources/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["WellbeingResource"],
+      invalidatesTags: ["SupplementaryTrainingResource"],
       transformResponse: (response: { status: boolean; message: string }) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
@@ -92,9 +92,9 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    getLearnerResources: builder.query<LearnerResourcesResponse, void>({
-      query: () => "/wellbeing/learner/resources",
-      providesTags: ["WellbeingResource", "LearnerResourceActivity"],
+    getLearnerSupTrainingResources: builder.query<LearnerResourcesResponse, void>({
+      query: () => "/supplementary-training/learner/resources",
+      providesTags: ["SupplementaryTrainingResource", "LearnerSupplementaryTrainingActivity"],
       transformResponse: (response: LearnerResourcesResponse) => {
         if (response.status === false) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -102,13 +102,13 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    trackResourceOpen: builder.mutation<TrackResourceOpenResponse, TrackResourceOpenRequest>({
+    trackSupTrainingResourceOpen: builder.mutation<TrackResourceOpenResponse, TrackResourceOpenRequest>({
       query: (body) => ({
-        url: "/wellbeing/learner/resources/track",
+        url: "/supplementary-training/learner/resources/track",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["LearnerResourceActivity"],
+      invalidatesTags: ["LearnerSupplementaryTrainingActivity"],
       transformResponse: (response: TrackResourceOpenResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -116,16 +116,16 @@ export const healthWellbeingApi = createApi({
         return response;
       },
     }),
-    submitFeedback: builder.mutation<SubmitFeedbackResponse, SubmitFeedbackRequest>({
+    submitSupTrainingFeedback: builder.mutation<SubmitFeedbackResponse, SubmitFeedbackRequest>({
       query: (body) => ({
-        url: "/wellbeing/learner/resources/feedback",
+        url: "/supplementary-training/learner/resources/feedback",
         method: "POST",
         body: {
           resourceId: typeof body.resourceId === 'string' ? parseInt(body.resourceId) : body.resourceId,
           feedback: body.feedback,
         },
       }),
-      invalidatesTags: ["LearnerResourceActivity"],
+      invalidatesTags: ["LearnerSupplementaryTrainingActivity"],
       transformResponse: (response: SubmitFeedbackResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
@@ -137,12 +137,12 @@ export const healthWellbeingApi = createApi({
 });
 
 export const {
-  useGetLearnerResourcesQuery,
-  useTrackResourceOpenMutation,
-  useSubmitFeedbackMutation,
-  useGetAdminResourcesQuery,
-  useAddResourceMutation,
-  useUpdateResourceMutation,
-  useToggleResourceMutation,
-  useDeleteResourceMutation,
-} = healthWellbeingApi;
+  useGetLearnerSupTrainingResourcesQuery,
+  useTrackSupTrainingResourceOpenMutation,
+  useSubmitSupTrainingFeedbackMutation,
+  useGetAdminSupTrainingResourcesQuery,
+  useAddSupTrainingResourceMutation,
+  useUpdateSupTrainingResourceMutation,
+  useToggleSupTrainingResourceMutation,
+  useDeleteSupTrainingResourceMutation,
+} = supplementaryTrainingApi;

@@ -26,10 +26,10 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
-  useAddResourceMutation,
-  useUpdateResourceMutation,
-} from "@/store/api/health-wellbeing/healthWellbeingApi";
-import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+  useAddSupTrainingResourceMutation,
+  useUpdateSupTrainingResourceMutation,
+} from "@/store/api/supplementary-training/supplementaryTrainingApi";
+import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -60,22 +60,22 @@ const resourceFormSchema = z.object({
 
 type ResourceFormValues = z.infer<typeof resourceFormSchema>;
 
-interface WellbeingResourceFormDialogProps {
+interface SupplementaryTrainingResourceFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  resource: WellbeingResource | null;
+  resource: SupplementaryTrainingResource | null;
   onSuccess: () => void;
 }
 
-export function WellbeingResourceFormDialog({
+export function SupplementaryTrainingResourceFormDialog({
   open,
   onOpenChange,
   resource,
   onSuccess,
-}: WellbeingResourceFormDialogProps) {
+}: SupplementaryTrainingResourceFormDialogProps) {
   const isEditMode = !!resource;
-  const [addResource, { isLoading: isAdding }] = useAddResourceMutation();
-  const [updateResource, { isLoading: isUpdating }] = useUpdateResourceMutation();
+  const [addResource, { isLoading: isAdding }] = useAddSupTrainingResourceMutation();
+  const [updateResource, { isLoading: isUpdating }] = useUpdateSupTrainingResourceMutation();
 
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string>("");
@@ -223,7 +223,7 @@ export function WellbeingResourceFormDialog({
           <DialogDescription>
             {isEditMode
               ? "Update the resource information below."
-              : "Fill in the details to add a new wellbeing resource."}
+              : "Fill in the details to add a new supplementary training resource."}
           </DialogDescription>
         </DialogHeader>
 

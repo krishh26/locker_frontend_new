@@ -51,17 +51,17 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import {
-  useGetAdminResourcesQuery,
-  useToggleResourceMutation,
-  useDeleteResourceMutation,
-} from "@/store/api/health-wellbeing/healthWellbeingApi";
-import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+  useGetAdminSupTrainingResourcesQuery,
+  useToggleSupTrainingResourceMutation,
+  useDeleteSupTrainingResourceMutation,
+} from "@/store/api/supplementary-training/supplementaryTrainingApi";
+import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
-import { WellbeingResourceFormDialog } from "./wellbeing-resource-form-dialog";
+import { SupplementaryTrainingResourceFormDialog } from "./supplementary-training-resource-form-dialog";
 
-export function WellbeingResourcesDataTable() {
+export function SupplementaryTrainingResourcesDataTable() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -69,16 +69,16 @@ export function WellbeingResourcesDataTable() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [resourceToDelete, setResourceToDelete] = useState<WellbeingResource | null>(null);
+  const [resourceToDelete, setResourceToDelete] = useState<SupplementaryTrainingResource | null>(null);
   const [formDialogOpen, setFormDialogOpen] = useState(false);
-  const [editingResource, setEditingResource] = useState<WellbeingResource | null>(null);
+  const [editingResource, setEditingResource] = useState<SupplementaryTrainingResource | null>(null);
 
   const {
     data: resourcesData,
     isLoading,
     error,
     refetch,
-  } = useGetAdminResourcesQuery(
+  } = useGetAdminSupTrainingResourcesQuery(
     {
       search: searchKeyword || undefined,
       page,
@@ -91,12 +91,12 @@ export function WellbeingResourcesDataTable() {
 
   useEffect(() => {
     if (error) {
-      toast.error("Failed to load wellbeing resources. Please try again.");
+      toast.error("Failed to load supplementary training resources. Please try again.");
     }
   }, [error]);
 
-  const [toggleResource, { isLoading: isToggling }] = useToggleResourceMutation();
-  const [deleteResource, { isLoading: isDeleting }] = useDeleteResourceMutation();
+  const [toggleResource, { isLoading: isToggling }] = useToggleSupTrainingResourceMutation();
+  const [deleteResource, { isLoading: isDeleting }] = useDeleteSupTrainingResourceMutation();
 
   const handleSearch = useCallback(() => {
     setPage(1);
@@ -118,7 +118,7 @@ export function WellbeingResourcesDataTable() {
   };
 
   const handleToggleActive = useCallback(
-    async (resource: WellbeingResource) => {
+    async (resource: SupplementaryTrainingResource) => {
       try {
         await toggleResource({
           id: resource.id,
@@ -137,7 +137,7 @@ export function WellbeingResourcesDataTable() {
     [toggleResource, refetch]
   );
 
-  const handleDeleteClick = (resource: WellbeingResource) => {
+  const handleDeleteClick = (resource: SupplementaryTrainingResource) => {
     setResourceToDelete(resource);
     setDeleteDialogOpen(true);
   };
@@ -166,7 +166,7 @@ export function WellbeingResourcesDataTable() {
     setFormDialogOpen(true);
   };
 
-  const handleEditClick = (resource: WellbeingResource) => {
+  const handleEditClick = (resource: SupplementaryTrainingResource) => {
     setEditingResource(resource);
     setFormDialogOpen(true);
   };
@@ -208,7 +208,7 @@ export function WellbeingResourcesDataTable() {
     link.setAttribute("href", url);
     link.setAttribute(
       "download",
-      `wellbeing-feedbacks-${format(new Date(), "yyyy-MM-dd")}.csv`
+      `supplementary-training-feedbacks-${format(new Date(), "yyyy-MM-dd")}.csv`
     );
     link.style.visibility = "hidden";
     document.body.appendChild(link);
@@ -225,7 +225,7 @@ export function WellbeingResourcesDataTable() {
     }
   };
 
-  const columns = useMemo<ColumnDef<WellbeingResource>[]>(
+  const columns = useMemo<ColumnDef<SupplementaryTrainingResource>[]>(
     () => [
       {
         accessorKey: "resource_name",
@@ -451,7 +451,7 @@ export function WellbeingResourcesDataTable() {
       )}
 
       {/* Form Dialog */}
-      <WellbeingResourceFormDialog
+      <SupplementaryTrainingResourceFormDialog
         open={formDialogOpen}
         onOpenChange={setFormDialogOpen}
         resource={editingResource}
@@ -485,4 +485,3 @@ export function WellbeingResourcesDataTable() {
     </div>
   );
 }
-

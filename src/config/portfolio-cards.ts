@@ -16,7 +16,7 @@ export const portfolioCards: PortfolioCard[] = [
   { id: 7, name: "Learning Plan", color: "#1E72AE", route: "/learning-plan" },
   { id: 8, name: "Resources", color: "#A847F4", route: "/course-resources" },
   { id: 9, name: "Time Log", color: "#B7B000", route: "/time-log" },
-  { id: 10, name: "Supplementary Training", color: "#4564D0", route: "/health-wellbeing" },
+  { id: 10, name: "Supplementary Training", color: "#4564D0", route: "/supplementary-training" },
   { id: 11, name: "New Doc to Sign", color: "#007E84", route: "/learners-documents-to-sign" },
 ]
 

@@ -12,6 +12,7 @@ import { innovationsApi } from "@/store/api/innovations/innovationsApi"
 import { supportApi } from "@/store/api/support/supportApi"
 import { resourcesApi } from "@/store/api/resources/resourcesApi"
 import { healthWellbeingApi } from "@/store/api/health-wellbeing/healthWellbeingApi"
+import { supplementaryTrainingApi } from "@/store/api/supplementary-training/supplementaryTrainingApi"
 import { timeLogApi } from "@/store/api/time-log/timeLogApi"
 import { documentsToSignApi } from "@/store/api/documents-to-sign/documentsToSignApi"
 import { evidenceApi } from "@/store/api/evidence/evidenceApi"
@@ -73,6 +74,7 @@ export const rootReducer = combineReducers({
   [supportApi.reducerPath]: supportApi.reducer,
   [resourcesApi.reducerPath]: resourcesApi.reducer,
   [healthWellbeingApi.reducerPath]: healthWellbeingApi.reducer,
+  [supplementaryTrainingApi.reducerPath]: supplementaryTrainingApi.reducer,
   [timeLogApi.reducerPath]: timeLogApi.reducer,
   [documentsToSignApi.reducerPath]: documentsToSignApi.reducer,
   [evidenceApi.reducerPath]: evidenceApi.reducer,
@@ -131,6 +133,7 @@ export const concatMiddleware: Middleware[] = [
   supportApi.middleware,
   resourcesApi.middleware,
   healthWellbeingApi.middleware,
+  supplementaryTrainingApi.middleware,
   timeLogApi.middleware,
   documentsToSignApi.middleware,
   evidenceApi.middleware,

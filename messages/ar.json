@@ -498,6 +498,10 @@
     "pageTitle": "Wellbeing Resources Management",
     "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
   },
+  "supplementaryTraining": {
+    "pageTitle": "Supplementary Training Resources Management",
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+  },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",
     "pageSubtitle": "Create and manage acknowledgement messages for learners",

@@ -30,6 +30,8 @@ const PROTECTED_PATH_PREFIXES = [
   "/learners-documents-to-sign",
   "/resources",
   "/health-wellbeing",
+  "/supplementary-training",
+  "/sup-training",
   "/time-log",
   "/choose-units",
   "/course-details",

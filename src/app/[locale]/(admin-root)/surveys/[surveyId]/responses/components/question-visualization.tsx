@@ -33,16 +33,22 @@ interface QuestionVisualizationProps {
   questionIndex: number
 }
 
-const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#8884D8",
-  "#82CA9D",
-  "#FFC658",
-  "#FF6B6B",
-]
+function getChartColors(): string[] {
+  if (typeof window === "undefined") {
+    return ["#004aad", "#0081cc", "#1cabb0", "#0cc0df", "#5b6cf9", "#4f7df3", "#4c3daa", "#3f5bd8"]
+  }
+  const style = getComputedStyle(document.documentElement)
+  const colors: string[] = []
+  for (let i = 1; i <= 5; i++) {
+    const value = style.getPropertyValue(`--chart-${i}`).trim()
+    if (value) colors.push(value)
+  }
+  // Fallback in case CSS variables aren't set
+  if (colors.length === 0) {
+    return ["#004aad", "#0081cc", "#1cabb0", "#0cc0df", "#5b6cf9", "#4f7df3", "#4c3daa", "#3f5bd8"]
+  }
+  return colors
+}
 
 const questionCardColors = [
   "bg-linear-to-br from-sky-100/60 to-blue-100/60 dark:from-sky-950/30 dark:to-blue-950/20 border-sky-300/40 dark:border-sky-800/30",

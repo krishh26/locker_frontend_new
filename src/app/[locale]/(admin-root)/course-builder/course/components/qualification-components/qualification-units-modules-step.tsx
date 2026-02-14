@@ -101,8 +101,8 @@ export function QualificationUnitsModulesStep({
       </div>
 
       {errors?.units && fields.length === 0 && (
-        <div className="rounded-lg border border-destructive bg-destructive/10 p-3">
-          <p className="text-sm text-destructive font-medium">
+        <div className="rounded-lg border border-destructive bg-destructive p-3">
+          <p className="text-sm text-white font-medium">
             {errors.units.message || "At least one unit is required"}
           </p>
         </div>

@@ -41,24 +41,24 @@ export function TrainerList({
     "bg-primary",
     "bg-secondary",
     "bg-accent",
-    "bg-primary/80",
-    "bg-secondary/80",
-    "bg-accent/80",
-    "bg-primary/60",
-    "bg-secondary/60",
+    "bg-primary",
+    "bg-secondary",
+    "bg-accent",
+    "bg-primary",
+    "bg-secondary",
   ];
 
   return (
-    <Card className="bg-primary/5 border-primary/15">
+    <Card className="bg-primary border-primary">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-primary/15">
-              <User className="h-4 w-4 text-primary" />
+            <div className="rounded-lg p-1.5 bg-white/10">
+              <User className="h-4 w-4 text-white" />
             </div>
-            <CardTitle>Trainers</CardTitle>
+            <CardTitle className="text-white">Trainers</CardTitle>
           </div>
-          <Badge variant="secondary" className="ml-auto bg-primary/15 text-primary">
+          <Badge variant="secondary" className="ml-auto bg-white/10 text-white">
             {trainers.length}
           </Badge>
         </div>

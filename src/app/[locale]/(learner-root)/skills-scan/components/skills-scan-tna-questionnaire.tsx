@@ -302,7 +302,7 @@ export function SkillsScanTnaQuestionnaire({
       <div className="flex flex-col gap-6 lg:flex-row">
         {/* Topics Sidebar */}
         <Card className="w-full border shadow-sm lg:w-[300px] lg:sticky lg:top-6 lg:h-fit">
-          <CardHeader className="bg-muted/50">
+          <CardHeader className="bg-muted">
             <CardTitle className="text-base">Assessment Topics</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
@@ -314,7 +314,7 @@ export function SkillsScanTnaQuestionnaire({
                   className={cn(
                     "cursor-pointer border-b p-4 transition-colors hover:bg-muted",
                     selectedUnit?.id === unit.id &&
-                      "bg-primary/10 border-l-4 border-l-primary"
+                      "bg-primary text-white border-l-4 border-l-white"
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -355,7 +355,7 @@ export function SkillsScanTnaQuestionnaire({
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-muted/50">
+                      <TableRow className="bg-muted">
                         <TableHead className="min-w-[250px] font-semibold">
                           Skill To Be Demonstrated
                         </TableHead>
@@ -389,7 +389,7 @@ export function SkillsScanTnaQuestionnaire({
                                   "text-center",
                                   highlightBlanks &&
                                     !hasValue &&
-                                    "bg-secondary/10 border-2 border-secondary"
+                                    "bg-secondary border-2 border-secondary"
                                 )}
                               >
                                 <Select

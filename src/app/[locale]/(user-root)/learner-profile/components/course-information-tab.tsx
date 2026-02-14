@@ -423,7 +423,7 @@ export function CourseInformationTab({
                           className={cn(
                             course.course_status === "Completed" ||
                               course.course_status === "Certificated"
-                              ? "bg-accent/10 text-accent hover:bg-accent/10"
+                              ? "bg-accent text-white hover:bg-accent"
                               : course.course_status === "Early Leaver" ||
                                 course.course_status === "Training Suspended"
                               ? "bg-destructive/10 text-destructive hover:bg-destructive/10"

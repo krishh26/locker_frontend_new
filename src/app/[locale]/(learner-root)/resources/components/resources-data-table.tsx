@@ -135,9 +135,9 @@ export function ResourcesDataTable() {
   const getJobTypeColor = (jobType: string | undefined) => {
     switch (jobType) {
       case 'On':
-        return 'text-primary bg-primary/10'
+        return 'text-white bg-primary'
       case 'Off':
-        return 'text-secondary bg-secondary/10'
+        return 'text-white bg-secondary'
       default:
         return 'text-muted-foreground bg-muted'
     }
@@ -146,13 +146,13 @@ export function ResourcesDataTable() {
   const getResourceTypeColor = (resourceType: string | undefined) => {
     switch (resourceType?.toUpperCase()) {
       case 'PDF':
-        return 'text-destructive bg-destructive/10'
+        return 'text-white bg-destructive'
       case 'WORD':
-        return 'text-primary bg-primary/10'
+        return 'text-white bg-primary'
       case 'PPT':
-        return 'text-secondary bg-secondary/10'
+        return 'text-white bg-secondary'
       case 'IMAGE':
-        return 'text-accent bg-accent/10'
+        return 'text-white bg-accent'
       default:
         return 'text-muted-foreground bg-muted'
     }

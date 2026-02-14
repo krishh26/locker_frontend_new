@@ -81,8 +81,8 @@ export default function EditUserPage() {
           backButtonHref="/users"
         />
         <div className="">
-          <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center">
-            <p className="text-destructive">
+          <div className="rounded-lg border border-destructive bg-destructive p-4 text-center">
+            <p className="text-white">
               {error ? "Failed to load user" : t("userNotFound")}
             </p>
           </div>

@@ -49,7 +49,7 @@ export function LayoutTab() {
               key={variant.value}
               className={`relative p-4 border rounded-md cursor-pointer transition-colors ${
                 sidebarConfig.variant === variant.value
-                  ? "border-primary bg-primary/10"
+                  ? "border-primary bg-primary text-white"
                   : "border-border hover:border-border/60"
               }`}
               onClick={() => handleSidebarVariantSelect(variant.value as "sidebar" | "floating" | "inset")}
@@ -102,7 +102,7 @@ export function LayoutTab() {
               key={option.value}
               className={`relative p-4 border rounded-md cursor-pointer transition-colors ${
                 sidebarConfig.collapsible === option.value
-                  ? "border-primary bg-primary/10"
+                  ? "border-primary bg-primary text-white"
                   : "border-border hover:border-border/60"
               }`}
               onClick={() => handleSidebarCollapsibleSelect(option.value as "offcanvas" | "icon" | "none")}
@@ -169,7 +169,7 @@ export function LayoutTab() {
               key={side.value}
               className={`relative p-4 border rounded-md cursor-pointer transition-colors ${
                 sidebarConfig.side === side.value
-                  ? "border-primary bg-primary/10"
+                  ? "border-primary bg-primary text-white"
                   : "border-border hover:border-border/60"
               }`}
               onClick={() => handleSidebarSideSelect(side.value as "left" | "right")}

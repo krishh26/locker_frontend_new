@@ -99,19 +99,19 @@ export function RiskSettingsSection({
   };
 
   return (
-    <Card className="bg-secondary/5 border-secondary/15">
+    <Card className="bg-secondary border-secondary">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <div className="rounded-lg p-1.5 bg-secondary/15">
-            <Save className="h-4 w-4 text-secondary" />
+          <div className="rounded-lg p-1.5 bg-white/10">
+            <Save className="h-4 w-4 text-white" />
           </div>
           <CardTitle>Risk Settings Configuration</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
-          <div className="space-y-2 rounded-lg bg-destructive/5 p-3 border border-destructive/20">
-            <Label htmlFor="high-risk" className="text-destructive font-semibold">High Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-destructive p-3 border border-destructive">
+            <Label htmlFor="high-risk" className="text-white font-semibold">High Risk %</Label>
             <Input
               id="high-risk"
               type="number"
@@ -125,8 +125,8 @@ export function RiskSettingsSection({
               <p className="text-sm text-destructive">{riskSettingsErrors.high}</p>
             )}
           </div>
-          <div className="space-y-2 rounded-lg bg-secondary/5 p-3 border border-secondary/20">
-            <Label htmlFor="medium-risk" className="text-secondary font-semibold">Medium Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-white/10 p-3 border border-white/20">
+            <Label htmlFor="medium-risk" className="text-white font-semibold">Medium Risk %</Label>
             <Input
               id="medium-risk"
               type="number"
@@ -140,8 +140,8 @@ export function RiskSettingsSection({
               <p className="text-sm text-destructive">{riskSettingsErrors.medium}</p>
             )}
           </div>
-          <div className="space-y-2 rounded-lg bg-accent/5 p-3 border border-accent/20">
-            <Label htmlFor="low-risk" className="text-accent font-semibold">Low Risk %</Label>
+          <div className="space-y-2 rounded-lg bg-accent p-3 border border-accent">
+            <Label htmlFor="low-risk" className="text-white font-semibold">Low Risk %</Label>
             <Input
               id="low-risk"
               type="number"

@@ -45,7 +45,7 @@ export function SupervisorCards({ supervisors }: SupervisorCardsProps) {
                       src={supervisor.avatar?.url}
                       alt={displayName}
                     />
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                    <AvatarFallback className="bg-primary text-white font-semibold">
                       {initialsFromName(supervisor.first_name, supervisor.last_name)}
                     </AvatarFallback>
                   </Avatar>

@@ -210,7 +210,7 @@ export function LearnerPortfolioCard({
         <CardContent className="p-0">
           <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 px-4">
             {/* Section 1: Learner Info */}
-            <div className="flex-1 md:flex-2 flex items-center gap-4 p-4 rounded-lg bg-muted/50 border">
+            <div className="flex-1 md:flex-2 flex items-center gap-4 p-4 rounded-lg bg-muted border">
               <Avatar
                 className="h-12 w-12 md:h-14 md:w-14 shrink-0"
                 style={{ backgroundColor: avatarColor }}
@@ -267,7 +267,7 @@ export function LearnerPortfolioCard({
 
             {/* Section 2: Overall Progress */}
             {learner?.course && learner.course.length > 0 && (
-              <div className="flex-1 md:flex-[1.5] p-4 rounded-lg bg-primary/5 border border-primary/20 flex flex-col justify-center">
+              <div className="flex-1 md:flex-[1.5] p-4 rounded-lg bg-primary border border-primary flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm md:text-base font-bold text-primary">
                     Overall Progress

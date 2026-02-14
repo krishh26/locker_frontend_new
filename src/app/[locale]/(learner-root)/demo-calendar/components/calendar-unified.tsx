@@ -131,9 +131,9 @@ export function CalendarMain({ eventDates = [] }: CalendarMainProps) {
                 key={day.toISOString()}
                 className={cn(
                   "relative border-r border-b last:border-r-0 p-2 min-h-[120px] hover:bg-muted/50 cursor-pointer transition-colors",
-                  !isCurrentMonth && "text-muted-foreground bg-muted/20",
-                  isDayToday && "bg-primary/10",
-                  isSelected && "bg-primary/20"
+                  !isCurrentMonth && "text-muted-foreground bg-muted",
+                  isDayToday && "bg-primary text-white",
+                  isSelected && "bg-primary text-white"
                 )}
                 onClick={() => handleDateSelect(day)}
               >

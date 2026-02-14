@@ -57,8 +57,8 @@ export function ForumPageContent() {
               />
             ) : (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
-                <div className="rounded-full bg-primary/10 p-6">
-                  <MessageSquare className="h-12 w-12 text-primary" />
+                <div className="rounded-full bg-primary p-6">
+                  <MessageSquare className="h-12 w-12 text-white" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">No chat selected</h3>

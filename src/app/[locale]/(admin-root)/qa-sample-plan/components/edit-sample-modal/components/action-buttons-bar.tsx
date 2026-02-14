@@ -23,7 +23,7 @@ export function ActionButtonsBar({
       <Button
         variant='outline'
         onClick={onClose}
-        className='border-secondary text-secondary hover:bg-secondary/10'
+        className='border-secondary text-secondary hover:bg-secondary'
       >
         Cancel / Close
       </Button>
@@ -31,7 +31,7 @@ export function ActionButtonsBar({
         variant='outline'
         onClick={onDelete}
         disabled={!planDetailId || isReadOnly}
-        className='border-destructive text-destructive hover:bg-destructive/10'
+        className='border-destructive text-destructive hover:bg-destructive'
       >
         Delete
       </Button>

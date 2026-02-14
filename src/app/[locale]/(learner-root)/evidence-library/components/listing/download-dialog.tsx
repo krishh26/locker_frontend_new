@@ -310,7 +310,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                     onClick={() => onCourseSelect(course.course_id)}
                     className={`w-full text-left p-3 rounded-lg transition-colors cursor-pointer ${
                       selectedCourseForDownload === course.course_id
-                        ? "bg-primary/10 border border-primary"
+                        ? "bg-primary border border-primary text-white"
                         : "hover:bg-accent"
                     }`}
                   >
@@ -354,7 +354,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                           onClick={() => onFileSelection(evidence.assignment_id)}
                           className={`p-3 rounded-lg mb-2 cursor-pointer transition-colors ${
                             selectedFiles.has(evidence.assignment_id)
-                              ? "bg-primary/10 border border-primary"
+                              ? "bg-primary border border-primary text-white"
                               : "hover:bg-accent border border-transparent"
                           }`}
                         >

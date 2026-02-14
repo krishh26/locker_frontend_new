@@ -74,7 +74,7 @@ const FaqSection = () => {
                   <AccordionItem key={item.value} value={item.value} className='rounded-md !border bg-transparent'>
                     <AccordionTrigger className='cursor-pointer items-center gap-4 rounded-none bg-transparent py-2 ps-3 pe-4 hover:no-underline data-[state=open]:border-b'>
                       <div className='flex items-center gap-4'>
-                        <div className='bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full'>
+                        <div className='bg-primary text-white flex size-9 shrink-0 items-center justify-center rounded-full'>
                           <CircleHelp className='size-5' />
                         </div>
                         <span className='text-start font-semibold'>{item.question}</span>

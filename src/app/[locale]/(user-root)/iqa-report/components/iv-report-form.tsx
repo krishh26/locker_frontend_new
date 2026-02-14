@@ -187,7 +187,7 @@ export function IVReportForm() {
                   <TableRow
                     key={question.id}
                     className={cn(
-                      index % 2 === 0 && "bg-muted/50"
+                      index % 2 === 0 && "bg-muted"
                     )}
                   >
                     <TableCell className="font-medium">

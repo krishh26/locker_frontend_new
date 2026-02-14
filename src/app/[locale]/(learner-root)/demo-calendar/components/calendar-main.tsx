@@ -122,9 +122,9 @@ export function CalendarMain({ selectedDate, onDateSelect, onMenuClick, events, 
                 key={day.toISOString()}
                 className={cn(
                   "min-h-[120px] border-r border-b last:border-r-0 p-2 cursor-pointer transition-colors",
-                  isCurrentMonth ? "bg-background hover:bg-accent/50" : "bg-muted/30 text-muted-foreground",
+                  isCurrentMonth ? "bg-background hover:bg-accent" : "bg-muted text-muted-foreground",
                   isSelected && "ring-2 ring-primary ring-inset",
-                  isDayToday && "bg-accent/20"
+                  isDayToday && "bg-accent text-white"
                 )}
                 onClick={() => onDateSelect?.(day)}
               >

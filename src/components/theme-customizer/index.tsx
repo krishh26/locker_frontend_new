@@ -155,7 +155,7 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
         >
           <SheetHeader className="space-y-0 p-4 pb-2">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-primary rounded-lg">
                 <Settings className="h-4 w-4" />
               </div>
               <SheetTitle className="text-lg font-semibold">Customizer</SheetTitle>

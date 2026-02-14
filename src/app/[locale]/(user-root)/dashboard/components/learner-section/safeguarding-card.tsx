@@ -26,7 +26,7 @@ export function SafeguardingCard() {
 
   if (isLoading) {
     return (
-      <Card className="h-full shadow-sm bg-destructive/5 border-destructive/15">
+      <Card className="h-full shadow-sm bg-destructive border-destructive">
         <CardHeader className="flex flex-row items-start justify-between gap-3">
           <div className="w-full space-y-2">
             <Skeleton className="h-6 w-48" />
@@ -42,7 +42,7 @@ export function SafeguardingCard() {
     )
   }
   return (
-    <Card className="h-full shadow-sm bg-destructive/5 border-destructive/15">
+    <Card className="h-full shadow-sm bg-destructive border-destructive">
       <CardHeader className="flex flex-row items-start justify-between gap-3">
         <div>
           <CardTitle className="text-xl">Safeguarding contact</CardTitle>
@@ -50,12 +50,12 @@ export function SafeguardingCard() {
             Reach out immediately if you have any concerns
           </CardDescription>
         </div>
-        <Badge variant="secondary" className="rounded-full shadow-sm bg-destructive/10 text-destructive">
+        <Badge variant="secondary" className="rounded-full shadow-sm bg-white/10 text-white">
           Priority support
         </Badge>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-start gap-3 rounded-lg border border-dashed border-destructive/20 bg-destructive/5 p-4">
+        <div className="flex items-start gap-3 rounded-lg border border-dashed border-white/20 bg-white/10 p-4">
           <div className="rounded-full p-2 bg-destructive text-destructive-foreground shadow-sm mt-0.5">
             <ShieldAlert className="size-4" />
           </div>
@@ -65,7 +65,7 @@ export function SafeguardingCard() {
           </div>
         </div>
 
-        <Separator className="bg-destructive/20" />
+        <Separator className="bg-white/20" />
 
         <div className="grid gap-3 text-sm">
           {safeguardingContact.telNumber && (
@@ -100,8 +100,8 @@ export function SafeguardingCard() {
 
         {safeguardingContact.additionalInfo && (
           <>
-            <Separator className="bg-destructive/20" />
-            <div className="rounded-lg border border-dashed border-destructive/20 bg-destructive/5 p-4 text-sm">
+            <Separator className="bg-white/20" />
+            <div className="rounded-lg border border-dashed border-white/20 bg-white/10 p-4 text-sm">
               <p className="text-muted-foreground whitespace-pre-line">{safeguardingContact.additionalInfo}</p>
             </div>
           </>

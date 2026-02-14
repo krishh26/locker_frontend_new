@@ -40,12 +40,12 @@ export function RecentActivitySection({
     if (lowerType.includes("off"))
       return {
         variant: "outline" as const,
-        className: "border-secondary text-secondary bg-secondary/10",
+        className: "border-secondary bg-secondary text-white",
       };
     if (lowerType.includes("on"))
       return {
         variant: "default" as const,
-        className: "bg-accent/10 text-accent",
+        className: "bg-accent text-white",
       };
     return { variant: "default" as const, className: "" };
   };
@@ -53,10 +53,10 @@ export function RecentActivitySection({
   return (
     <div className="w-full space-y-4">
       {/* Header Card */}
-      <div className="rounded-t-lg border border-b-0 bg-primary/10 p-4">
+      <div className="rounded-t-lg border border-b-0 bg-primary p-4">
         <div className="flex items-center gap-3">
-          <Calendar className="h-6 w-6 text-primary" />
-          <h3 className="text-xl font-semibold">Recent Activity</h3>
+          <Calendar className="h-6 w-6 text-white" />
+          <h3 className="text-xl font-semibold text-white">Recent Activity</h3>
         </div>
       </div>
 

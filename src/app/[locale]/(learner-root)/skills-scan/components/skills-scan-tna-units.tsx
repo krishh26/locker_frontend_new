@@ -207,7 +207,7 @@ export function SkillsScanTnaUnits({
         </Card>
       ) : selectedCourse && units.length > 0 ? (
         <Card className="border shadow-sm">
-          <CardHeader className="bg-muted/50">
+          <CardHeader className="bg-muted">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ClipboardList className="size-5 text-primary" />
@@ -223,7 +223,7 @@ export function SkillsScanTnaUnits({
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-primary/10">
+                  <TableRow className="bg-primary text-white">
                     <TableHead className="font-semibold">
                       {isStandardType ? "Standards" : "Standard Units"}
                     </TableHead>
@@ -252,17 +252,17 @@ export function SkillsScanTnaUnits({
                       {!isStandardType ? (
                         <>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-primary/10 text-primary">
+                            <Badge variant="outline" className="bg-primary text-white">
                               {unit.glh ?? "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-accent/10 text-accent">
+                            <Badge variant="outline" className="bg-accent text-white">
                               {unit.credit_value ?? "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-secondary/10 text-secondary">
+                            <Badge variant="outline" className="bg-secondary text-white">
                               {unit.level ? `Level ${unit.level}` : "N/A"}
                             </Badge>
                           </TableCell>
@@ -270,17 +270,17 @@ export function SkillsScanTnaUnits({
                       ) : (
                         <>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-primary/10 text-primary">
+                            <Badge variant="outline" className="bg-primary text-white">
                               {unit.code || "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className="bg-accent/10 text-accent">
+                            <Badge variant="outline" className="bg-accent text-white">
                               {unit.type || "N/A"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
-                            <Badge variant="outline" className={unit.mandatory ? "bg-secondary/10 text-secondary" : "bg-muted text-muted-foreground"}>
+                            <Badge variant="outline" className={unit.mandatory ? "bg-secondary text-white" : "bg-muted text-muted-foreground"}>
                               {unit.mandatory ? "Yes" : "No"}
                             </Badge>
                           </TableCell>

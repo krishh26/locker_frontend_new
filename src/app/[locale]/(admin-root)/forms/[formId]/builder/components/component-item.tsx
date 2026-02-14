@@ -32,7 +32,7 @@ export function ComponentItem({
       draggable
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      className="p-3 cursor-grab active:cursor-grabbing transition-all hover:bg-primary/5 hover:border-primary"
+      className="p-3 cursor-grab active:cursor-grabbing transition-all hover:bg-primary hover:border-primary"
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{component.icon}</span>

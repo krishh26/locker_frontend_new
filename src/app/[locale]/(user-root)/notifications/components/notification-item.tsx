@@ -98,7 +98,7 @@ export function NotificationItem({
       className={`flex items-start gap-4 p-4 rounded-lg border transition-colors ${
         notification.read
           ? "bg-background border-border"
-          : "bg-primary/5 dark:bg-primary/10 border-primary/20"
+          : "bg-primary border-primary text-white"
       }`}
     >
       <div className="mt-1">

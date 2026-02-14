@@ -54,7 +54,7 @@ export function ModeToggle({ variant = "outline" }: ModeToggleProps) {
       variant={variant}
       size="icon"
       onClick={handleToggle}
-      className="cursor-pointer mode-toggle-button relative overflow-hidden bg-accent/10 border-accent/30 hover:bg-accent/20 text-accent hover:text-accent shadow-sm hover:shadow-md transition-all duration-200"
+      className="cursor-pointer mode-toggle-button relative overflow-hidden bg-accent border-accent hover:bg-accent/90 text-white hover:text-white shadow-sm hover:shadow-md transition-all duration-200"
     >
       {/* Show the icon for the mode you can switch TO */}
       {isDarkMode ? (

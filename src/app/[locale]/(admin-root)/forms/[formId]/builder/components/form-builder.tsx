@@ -405,8 +405,8 @@ export function FormBuilder({ formId }: FormBuilderProps) {
   if (isFormDetailsError && isEditMode) {
     return (
       <div className="space-y-6 px-4 lg:px-6">
-        <div className="rounded-lg border border-destructive bg-destructive/10 p-4">
-          <p className="text-sm text-destructive">
+        <div className="rounded-lg border border-destructive bg-destructive p-4">
+          <p className="text-sm text-white">
             Failed to load form details. Please try again.
           </p>
         </div>

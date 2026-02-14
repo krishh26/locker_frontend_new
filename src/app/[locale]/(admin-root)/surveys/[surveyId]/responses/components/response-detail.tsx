@@ -38,11 +38,11 @@ const questionTypeLabels: Record<Question["type"], string> = {
 }
 
 const questionDetailColors = [
-  "bg-linear-to-br from-sky-50/50 to-blue-50/50 dark:from-sky-950/20 dark:to-blue-950/15 border-sky-200/50 dark:border-sky-800/30",
-  "bg-linear-to-br from-rose-50/50 to-pink-50/50 dark:from-rose-950/20 dark:to-pink-950/15 border-rose-200/50 dark:border-rose-800/30",
-  "bg-linear-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-950/20 dark:to-teal-950/15 border-emerald-200/50 dark:border-emerald-800/30",
-  "bg-linear-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/15 border-violet-200/50 dark:border-violet-800/30",
-  "bg-linear-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/15 border-amber-200/50 dark:border-amber-800/30",
+  "bg-primary border-primary",
+  "bg-secondary border-secondary",
+  "bg-accent border-accent",
+  "bg-primary border-primary",
+  "bg-secondary border-secondary",
   "bg-linear-to-br from-cyan-50/50 to-teal-50/50 dark:from-cyan-950/20 dark:to-teal-950/15 border-cyan-200/50 dark:border-cyan-800/30",
 ]
 
@@ -161,13 +161,13 @@ export function ResponseDetail({
         </DialogHeader>
 
         <div className="space-y-4">
-          <Card className="bg-primary/5 border-primary/15">
+          <Card className="bg-primary border-primary">
             <CardHeader>
-              <CardTitle className="text-lg">{survey.name}</CardTitle>
+              <CardTitle className="text-lg text-white">{survey.name}</CardTitle>
             </CardHeader>
             <CardContent>
               {survey.description && (
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-white/70 mb-4">
                   {survey.description}
                 </p>
               )}

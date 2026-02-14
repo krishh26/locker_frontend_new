@@ -23,7 +23,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b bg-primary/5", className)}
+      className={cn("[&_tr]:border-b bg-primary text-white", className)}
       {...props}
     />
   )
@@ -34,7 +34,7 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
     <tbody
       data-slot="table-body"
       className={cn(
-        "[&_tr:last-child]:border-0 [&_tr:nth-child(even)]:bg-primary/5",
+        "[&_tr:last-child]:border-0 [&_tr:nth-child(even)]:bg-muted",
         className
       )}
       {...props}
@@ -60,7 +60,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-primary/5 data-[state=selected]:bg-primary/10 border-b transition-colors duration-150",
+        "hover:bg-muted data-[state=selected]:bg-primary border-b transition-colors duration-150",
         className
       )}
       {...props}

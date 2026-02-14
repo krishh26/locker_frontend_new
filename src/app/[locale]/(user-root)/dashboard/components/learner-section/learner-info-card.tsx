@@ -250,7 +250,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
 
             <Badge
               variant='outline'
-              className='w-fit rounded-full px-4 py-2 shadow-sm border-primary/30 bg-primary/10 text-primary'
+              className='w-fit rounded-full px-4 py-2 shadow-sm border-primary bg-primary text-white'
             >
               Next Visit: {learner?.nextvisitdate || 'N/A'}
             </Badge>
@@ -260,16 +260,16 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
         {/* Right Section - Overall Progress and Time Log */}
         <div className='flex flex-col lg:flex-row gap-4 px-4'>
           {/* Overall Progress Card */}
-          <div className='flex-1 min-w-[280px] rounded-lg border border-accent/30 bg-accent/5 p-4 shadow-sm'>
+          <div className='flex-1 min-w-[280px] rounded-lg border border-accent bg-accent p-4 shadow-sm'>
             <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-foreground'>Overall Progress</h3>
+              <h3 className='text-sm font-semibold text-white'>Overall Progress</h3>
               <Badge
                 variant='outline'
                 className={cn(
                   'rounded-full px-3 py-1 text-sm font-semibold shadow-sm',
                   completion >= 70
-                    ? 'border-accent/50 bg-accent/10 text-accent'
-                    : 'border-secondary/50 bg-secondary/10 text-secondary'
+                    ? 'border-white/30 bg-white/10 text-white'
+                    : 'border-white/30 bg-white/10 text-white'
                 )}
               >
                 {completion.toFixed(0)}%
@@ -277,47 +277,47 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
             </div>
             <Progress value={completion} className='h-2 mb-4' />
             <div className='grid grid-cols-3 gap-2 text-center'>
-              <div className='space-y-1 rounded-lg bg-accent/10 p-2'>
-                <p className='text-xs text-accent font-medium'>✓ Completed</p>
-                <p className='text-lg font-bold text-foreground'>
+              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
+                <p className='text-xs text-white font-medium'>✓ Completed</p>
+                <p className='text-lg font-bold text-white'>
                   {overallProgressData.fullyCompleted}
                 </p>
               </div>
-              <div className='space-y-1 rounded-lg bg-secondary/10 p-2'>
-                <p className='text-xs text-secondary font-medium'>◐ In Progress</p>
-                <p className='text-lg font-bold text-foreground'>
+              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
+                <p className='text-xs text-white font-medium'>◐ In Progress</p>
+                <p className='text-lg font-bold text-white'>
                   {overallProgressData.workInProgress}
                 </p>
               </div>
-              <div className='space-y-1 rounded-lg bg-destructive/10 p-2'>
-                <p className='text-xs text-destructive font-medium'>○ Pending</p>
-                <p className='text-lg font-bold text-foreground'>
+              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
+                <p className='text-xs text-white font-medium'>○ Pending</p>
+                <p className='text-lg font-bold text-white'>
                   {overallProgressData.yetToComplete}
                 </p>
               </div>
             </div>
-            <p className='text-xs text-muted-foreground mt-3 text-center'>
+            <p className='text-xs text-white/70 mt-3 text-center'>
               Total: {overallProgressData.totalUnits} units across {learner?.course?.length || 0} course
               {(learner?.course?.length || 0) !== 1 ? 's' : ''}
             </p>
           </div>
 
           {/* Time Log Card - Compact Version */}
-          <div className='flex-1 rounded-lg border border-secondary/30 bg-secondary/5 p-4 shadow-sm flex flex-col justify-center'>
+          <div className='flex-1 rounded-lg border border-secondary bg-secondary p-4 shadow-sm flex flex-col justify-center'>
             <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-foreground'>Time Log</h3>
-              <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-secondary/10 text-secondary shadow-sm'>
+              <h3 className='text-sm font-semibold text-white'>Time Log</h3>
+              <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-white/10 text-white shadow-sm'>
                 24h 57m
               </Badge>
             </div>
             <div className='grid grid-cols-2 gap-4 flex-1 items-center'>
-              <div className='text-center space-y-1 border-r border-secondary/30'>
-                <p className='text-xs text-muted-foreground'>On The Job Total</p>
-                <p className='text-lg font-bold text-foreground'>02h 00m</p>
+              <div className='text-center space-y-1 border-r border-white/30'>
+                <p className='text-xs text-white/70'>On The Job Total</p>
+                <p className='text-lg font-bold text-white'>02h 00m</p>
               </div>
               <div className='text-center space-y-1'>
-                <p className='text-xs text-muted-foreground'>Off The Job Total</p>
-                <p className='text-lg font-bold text-foreground'>22h 57m</p>
+                <p className='text-xs text-white/70'>Off The Job Total</p>
+                <p className='text-lg font-bold text-white'>22h 57m</p>
               </div>
             </div>
           </div>

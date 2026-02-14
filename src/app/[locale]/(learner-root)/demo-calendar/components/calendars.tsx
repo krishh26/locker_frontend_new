@@ -122,7 +122,7 @@ export function Calendars({
               <div className="mt-2 space-y-1">
                 {calendar.items.map((item) => (
                   <div key={item.id} className="group/calendar-item">
-                    <div className="flex items-center justify-between p-2 hover:bg-accent/50 rounded-md">
+                    <div className="flex items-center justify-between p-2 hover:bg-accent rounded-md">
                       <div className="flex items-center gap-3 flex-1">
                         {/* Calendar Color & Visibility Toggle */}
                         <button

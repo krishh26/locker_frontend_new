@@ -156,7 +156,7 @@ export function EvidenceTable({
                   const mappedSubUnits = evidence.mappedSubUnits || [];
 
                   return (
-                    <TableRow key={evidence.assignment_id} className="hover:bg-muted/50">
+                    <TableRow key={evidence.assignment_id} className="hover:bg-muted">
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-2">
                           {refNo}

@@ -57,7 +57,7 @@ interface ChooseUnitsDataTableProps {
 
 function getTypeColor(mandatory: boolean) {
   return mandatory
-    ? "text-primary bg-primary/10"
+    ? "text-white bg-primary"
     : "text-muted-foreground bg-muted";
 }
 

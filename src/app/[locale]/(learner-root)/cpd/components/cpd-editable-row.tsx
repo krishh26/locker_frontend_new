@@ -166,7 +166,7 @@ export function CpdEditableRow({
     : undefined;
 
   return (
-    <TableRow className={cn(isSaving && "bg-primary/5", hasErrors && "bg-destructive/5")}>
+    <TableRow className={cn(isSaving && "bg-primary", hasErrors && "bg-destructive")}>
       {headers.map((header) => {
         const fieldName = header.id as keyof CpdEntryFormValues;
         const error = form.formState.errors[fieldName];

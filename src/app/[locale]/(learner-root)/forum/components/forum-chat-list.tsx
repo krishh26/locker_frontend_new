@@ -15,23 +15,23 @@ const avatarColors = [
   "bg-primary",
   "bg-secondary",
   "bg-accent",
-  "bg-primary/80",
-  "bg-secondary/80",
-  "bg-accent/80",
-  "bg-primary/60",
-  "bg-secondary/60",
+  "bg-primary",
+  "bg-secondary",
+  "bg-accent",
+  "bg-primary",
+  "bg-secondary",
 ]
 
 // Theme-adaptive chat item backgrounds – follows active theme automatically
 const chatItemBgColors = [
-  "bg-primary/5",
-  "bg-secondary/5",
-  "bg-accent/5",
-  "bg-primary/8",
-  "bg-muted/50",
-  "bg-secondary/8",
-  "bg-accent/8",
-  "bg-primary/10",
+  "bg-primary",
+  "bg-secondary",
+  "bg-accent",
+  "bg-primary",
+  "bg-muted",
+  "bg-secondary",
+  "bg-accent",
+  "bg-primary",
 ]
 
 interface ForumChatListProps {

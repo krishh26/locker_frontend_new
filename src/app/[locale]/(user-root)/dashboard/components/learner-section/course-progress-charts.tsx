@@ -39,14 +39,14 @@ interface CourseProgressChartsProps {
 }
 
 const cardBgColors = [
-  "bg-primary/15 border-primary/30",
-  "bg-accent/15 border-accent/30",
-  "bg-secondary/15 border-secondary/30",
-  "bg-primary/20 border-primary/35",
+  "bg-primary border-primary",
+  "bg-accent border-accent",
+  "bg-secondary border-secondary",
+  "bg-primary border-primary",
   "bg-muted border-border",
-  "bg-accent/20 border-accent/35",
-  "bg-secondary/20 border-secondary/35",
-  "bg-primary/18 border-primary/25",
+  "bg-accent border-accent",
+  "bg-secondary border-secondary",
+  "bg-primary border-primary",
 ]
 
 // Helper to get theme color from CSS variable
@@ -73,14 +73,14 @@ const getDonutColors = (index: number) => {
 }
 
 const statsBgColors = [
-  "border-primary/30 bg-primary/15",
-  "border-accent/30 bg-accent/15",
-  "border-secondary/30 bg-secondary/15",
-  "border-primary/25 bg-primary/18",
-  "border-border bg-muted/60",
-  "border-accent/25 bg-accent/18",
-  "border-secondary/25 bg-secondary/18",
-  "border-primary/25 bg-primary/15",
+  "border-white/30 bg-white/10",
+  "border-white/30 bg-white/10",
+  "border-white/30 bg-white/10",
+  "border-white/30 bg-white/10",
+  "border-border bg-muted",
+  "border-white/30 bg-white/10",
+  "border-white/30 bg-white/10",
+  "border-white/30 bg-white/10",
 ]
 
 // Convert incoming data to progress format
@@ -181,13 +181,13 @@ function CourseProgressDonut({
         </PieChart>
       </ResponsiveContainer>
       <div className="absolute flex flex-col items-center justify-center text-center">
-        <span className="text-2xl font-semibold text-foreground">
+        <span className="text-2xl font-semibold text-white">
           {safeCompletion.toFixed(0)}%
         </span>
         <span
           className={cn(
             "text-xs font-medium",
-            isGateway ? "text-primary" : "text-muted-foreground"
+            isGateway ? "text-white" : "text-white/70"
           )}
         >
           {isGateway ? "Gateway prep" : "Course progress"}
@@ -213,8 +213,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <div className="rounded-lg p-1.5 bg-linear-to-br from-primary/20 to-primary/10">
-          <TrendingUp className="h-5 w-5 text-primary" />
+        <div className="rounded-lg p-1.5 bg-primary">
+          <TrendingUp className="h-5 w-5 text-white" />
         </div>
         <h2 className="text-xl font-semibold">Progress Overview</h2>
       </div>
@@ -249,8 +249,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                   : "Core"}
               </Badge>
               <CardHeader className="space-y-1 pr-24">
-                <CardTitle className="text-base font-semibold line-clamp-2" title={courseName}>{courseName}</CardTitle>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <CardTitle className="text-base font-semibold text-white line-clamp-2" title={courseName}>{courseName}</CardTitle>
+                <div className="flex items-center gap-2 text-xs text-white/70">
                   <CalendarDays className="size-4" />
                   <span>Next milestone: Review</span>
                 </div>
@@ -263,8 +263,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                 />
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Progress</span>
-                    <span className="font-semibold text-foreground">
+                    <span className="text-white/70">Progress</span>
+                    <span className="font-semibold text-white">
                       {progressData.completion.toFixed(0)}%
                     </span>
                   </div>
@@ -275,14 +275,14 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                   statsBgColors[colorIdx]
                 )}>
                   <div>
-                    <p className="text-muted-foreground">Completed units</p>
-                    <p className="font-semibold text-foreground">
+                    <p className="text-white/70">Completed units</p>
+                    <p className="font-semibold text-white">
                       {progressData.completedUnits}/{progressData.totalUnits}
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground">Total units</p>
-                    <p className="font-semibold text-foreground">
+                    <p className="text-white/70">Total units</p>
+                    <p className="font-semibold text-white">
                       {progressData.totalUnits}
                     </p>
                   </div>

@@ -140,7 +140,7 @@ export function SiteHeader() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="cursor-pointer bg-secondary/10 border-secondary/30 hover:bg-secondary/20 text-secondary hover:text-secondary shadow-sm hover:shadow-md transition-all duration-200"
+                      className="cursor-pointer bg-secondary border-secondary hover:bg-secondary/90 text-white hover:text-white shadow-sm hover:shadow-md transition-all duration-200"
                       disabled={isChangingRole}
                     >
                       {isChangingRole ? (
@@ -172,7 +172,7 @@ export function SiteHeader() {
               !isImpersonated && (
                 <Button
                   variant="ghost"
-                  className="cursor-pointer gap-2 bg-destructive/10 border border-destructive/30 hover:bg-destructive/20 text-destructive hover:text-destructive shadow-sm hover:shadow-md transition-all duration-200"
+                  className="cursor-pointer gap-2 bg-destructive border border-destructive hover:bg-destructive/90 text-white hover:text-white shadow-sm hover:shadow-md transition-all duration-200"
                   onClick={handleLogout}
                 >
                   <LogOut className="h-4 w-4" />

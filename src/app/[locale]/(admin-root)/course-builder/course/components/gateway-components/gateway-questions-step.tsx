@@ -241,8 +241,8 @@ export function GatewayQuestionsStep({
               className={cn(
                 "p-6 border-2 border-dashed rounded-lg text-center",
                 errors?.questions
-                  ? "border-destructive bg-destructive/5"
-                  : "border-border bg-muted/50"
+                  ? "border-destructive bg-destructive"
+                  : "border-border bg-muted"
               )}
             >
               <p

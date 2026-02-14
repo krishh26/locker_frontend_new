@@ -125,7 +125,7 @@ export function ForumMessageThread({
         {messages.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
             <div className="text-center space-y-2">
-              <div className="mx-auto rounded-full bg-accent/10 p-4 w-fit">
+              <div className="mx-auto rounded-full bg-accent p-4 w-fit">
                 <span className="text-2xl">💬</span>
               </div>
               <p className="text-muted-foreground font-medium">No messages yet</p>
@@ -143,8 +143,8 @@ export function ForumMessageThread({
                   key={`date-${item.date}`}
                   className="flex items-center justify-center py-4"
                 >
-                  <div className="rounded-full bg-primary/10 px-4 py-1.5 shadow-sm">
-                    <span className="text-primary text-xs font-medium">
+                  <div className="rounded-full bg-primary px-4 py-1.5 shadow-sm">
+                    <span className="text-white text-xs font-medium">
                       {item.date}
                     </span>
                   </div>
@@ -182,7 +182,7 @@ export function ForumMessageThread({
                     "flex max-w-[75%] flex-col gap-1 rounded-2xl px-4 py-2 shadow-sm",
                     isSent
                       ? "bg-primary text-primary-foreground rounded-br-md"
-                      : "bg-muted/60 rounded-bl-md"
+                      : "bg-muted rounded-bl-md"
                   )}
                 >
                   {!isSent && (

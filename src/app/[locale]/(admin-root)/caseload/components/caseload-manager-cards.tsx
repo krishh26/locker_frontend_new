@@ -308,7 +308,7 @@ export function CaseloadManagerCards({
           const isExpanded = expandedManager === managerId;
 
           return (
-            <Card key={managerId} className="bg-primary border-primary hover:shadow-lg transition-shadow">
+            <Card key={managerId} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -318,10 +318,10 @@ export function CaseloadManagerCards({
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-lg truncate text-white">
+                      <h3 className="font-semibold text-lg truncate text-foreground">
                         {manager.line_manager.full_name}
                       </h3>
-                      <div className="flex items-center gap-1 text-sm text-white/70 mt-1">
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                         <Mail className="h-3 w-3 shrink-0" />
                         <span className="truncate">{manager.line_manager.email}</span>
                       </div>
@@ -331,7 +331,7 @@ export function CaseloadManagerCards({
                     {manager.statistics.total_managed_users > 0 && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 text-white hover:text-white/80 hover:bg-white/10">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                             <Download className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -354,7 +354,7 @@ export function CaseloadManagerCards({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 shrink-0 text-white hover:text-white/80 hover:bg-white/10"
+                      className="h-8 w-8 shrink-0"
                       onClick={() => handleManagerToggle(managerId)}
                     >
                       {isExpanded ? (
@@ -370,19 +370,19 @@ export function CaseloadManagerCards({
               <CardContent className="space-y-4">
                 {/* Statistics Cards */}
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-white/10 rounded-lg p-3 text-center">
-                    <Users className="h-5 w-5 mx-auto mb-1 text-white" />
-                    <div className="text-2xl font-bold text-white">
+                  <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+                    <Users className="h-5 w-5 mx-auto mb-1 text-primary" />
+                    <div className="text-2xl font-bold text-foreground">
                       {manager.statistics.total_managed_users}
                     </div>
-                    <div className="text-xs text-white/70">Users</div>
+                    <div className="text-xs text-muted-foreground">Users</div>
                   </div>
-                  <div className="bg-white/10 rounded-lg p-3 text-center">
-                    <GraduationCap className="h-5 w-5 mx-auto mb-1 text-white" />
-                    <div className="text-2xl font-bold text-white">
+                  <div className="bg-accent/10 border border-accent/20 rounded-lg p-3 text-center">
+                    <GraduationCap className="h-5 w-5 mx-auto mb-1 text-accent" />
+                    <div className="text-2xl font-bold text-foreground">
                       {manager.statistics.total_managed_learners}
                     </div>
-                    <div className="text-xs text-white/70">Learners</div>
+                    <div className="text-xs text-muted-foreground">Learners</div>
                   </div>
                 </div>
 
@@ -395,8 +395,8 @@ export function CaseloadManagerCards({
 
                 {/* Expandable User List */}
                 {isExpanded && (
-                  <div className="pt-4 border-t border-white/20">
-                    <h4 className="text-sm font-semibold mb-3 text-white">
+                  <div className="pt-4 border-t border-border">
+                    <h4 className="text-sm font-semibold mb-3 text-foreground">
                       Managed Users ({manager.managed_users?.length || 0})
                     </h4>
                     {manager.managed_users && manager.managed_users.length > 0 ? (
@@ -405,18 +405,18 @@ export function CaseloadManagerCards({
                           {manager.managed_users.map((user) => (
                             <div
                               key={user.user_id}
-                              className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors"
+                              className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
                             >
                               <Avatar className="h-8 w-8">
-                                <AvatarFallback className="bg-white/10 text-white text-xs">
+                                <AvatarFallback className="bg-primary/10 text-primary text-xs">
                                   {getInitials(`${user.first_name} ${user.last_name}`)}
                                 </AvatarFallback>
                               </Avatar>
                               <div className="flex-1 min-w-0">
-                                <div className="font-medium text-sm truncate text-white">
+                                <div className="font-medium text-sm truncate text-foreground">
                                   {user.first_name} {user.last_name}
                                 </div>
-                                <div className="text-xs text-white/70 truncate">
+                                <div className="text-xs text-muted-foreground truncate">
                                   {user.email}
                                 </div>
                               </div>
@@ -430,8 +430,8 @@ export function CaseloadManagerCards({
                         </div>
                       </ScrollArea>
                     ) : (
-                      <div className="text-center py-6 text-white/70 rounded-lg bg-white/10">
-                        <Users className="h-8 w-8 mx-auto mb-2 text-white/40" />
+                      <div className="text-center py-6 text-muted-foreground rounded-lg border border-dashed border-border">
+                        <Users className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
                         <p className="text-sm">No users assigned yet</p>
                       </div>
                     )}

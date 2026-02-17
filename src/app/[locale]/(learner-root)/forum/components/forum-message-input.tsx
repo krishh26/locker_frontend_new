@@ -113,7 +113,7 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="min-h-[60px] resize-none pr-20"
+            className="min-h-[60px] resize-none pr-20 border border-primary/30 focus-visible:ring-primary/30"
             disabled={isLoading}
           />
           <div className="absolute bottom-2 right-2 flex items-center gap-1">

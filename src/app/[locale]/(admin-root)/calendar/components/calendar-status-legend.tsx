@@ -13,8 +13,8 @@ const statusItems = [
 
 export function CalendarStatusLegend() {
   return (
-    <Card className="p-4 bg-primary border-primary">
-      <h3 className="text-lg font-semibold mb-3 text-white">Status Legend</h3>
+    <Card className="p-4">
+      <h3 className="text-lg font-semibold mb-3 text-foreground">Status Legend</h3>
       <div className="flex flex-wrap gap-2">
         {statusItems.map((item) => (
           <Badge

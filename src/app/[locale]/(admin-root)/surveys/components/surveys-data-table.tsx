@@ -485,7 +485,7 @@ export function SurveysDataTable() {
           </div>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 bg-muted border-border">
+        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 border-border">
           <div className="space-y-2">
             <Label htmlFor="status-filter" className="text-sm font-medium">
               Status

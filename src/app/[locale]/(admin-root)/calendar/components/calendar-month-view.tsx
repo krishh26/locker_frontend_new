@@ -77,10 +77,10 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
       {/* Status Legend */}
       <CalendarStatusLegend />
 
-      <Card className="p-6 bg-primary border-primary">
+      <Card className="p-6">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex flex-col flex-wrap gap-4 pb-4 border-b border-primary/15 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col flex-wrap gap-4 pb-4 border-b border-border/60 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={() => navigateMonth("prev")}>
                 <ChevronLeft className="w-4 h-4" />

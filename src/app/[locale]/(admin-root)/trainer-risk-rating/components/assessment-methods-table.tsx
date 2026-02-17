@@ -91,21 +91,20 @@ export function AssessmentMethodsTable({
   };
 
   return (
-    <Card className="bg-secondary border-secondary">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-white/10">
+            <div className="rounded-lg p-1.5 bg-secondary">
               <ClipboardList className="h-4 w-4 text-white" />
             </div>
-            <CardTitle>Assessment Method Risk ({assessmentMethods.length})</CardTitle>
+            <CardTitle className="text-foreground">Assessment Method Risk ({assessmentMethods.length})</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Low")}
-              className="border-white/50 text-white hover:bg-white/10"
             >
               Set All Low
             </Button>
@@ -113,7 +112,6 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
-              className="border-white/50 text-white hover:bg-white/10"
             >
               Set All Medium
             </Button>
@@ -121,7 +119,6 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
-              className="border-white/50 text-white hover:bg-white/10"
             >
               Set All High
             </Button>

@@ -131,16 +131,16 @@ export function ForumChatList({
               </Avatar>
               <div className="flex flex-1 flex-col gap-1 overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <h3 className={cn("truncate font-semibold", isSelected && "text-primary")}>
+                  <h3 className={cn("truncate font-semibold", isSelected ? "text-primary" : "text-white")}>
                     {chat.course_course_name}
                   </h3>
                   {chat.latest_forum_created_at && (
-                    <span className="text-muted-foreground text-xs">
+                    <span className={cn("text-xs", isSelected ? "text-muted-foreground" : "text-white/70")}>
                       {timeAgo(chat.latest_forum_created_at)}
                     </span>
                   )}
                 </div>
-                <p className="truncate text-sm text-muted-foreground">
+                <p className={cn("truncate text-sm", isSelected ? "text-muted-foreground" : "text-white/70")}>
                   {chat.course_course_code}
                 </p>
               </div>

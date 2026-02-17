@@ -128,7 +128,7 @@ export function CalendarListView({
 
   return (
     <>
-      <Card className="bg-secondary border-secondary">
+      <Card>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>

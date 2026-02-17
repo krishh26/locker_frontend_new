@@ -147,10 +147,10 @@ export function TrainerRiskRatingPageContent() {
           {selectedUser ? (
             <div className="space-y-6">
               {/* Trainer Header */}
-              <Card className="bg-primary border-primary">
+              <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16 ring-2 ring-white/20 shadow-md">
+                    <Avatar className="h-16 w-16 ring-2 ring-primary/20 shadow-md">
                       <AvatarImage
                         src={selectedUser.avatar?.url || ""}
                         alt={selectedUser.first_name}
@@ -161,10 +161,10 @@ export function TrainerRiskRatingPageContent() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h2 className="text-2xl font-bold text-white">
+                      <h2 className="text-2xl font-bold text-foreground">
                         {selectedUser.first_name} {selectedUser.last_name}
                       </h2>
-                      <p className="text-white/70">{selectedUser.email}</p>
+                      <p className="text-muted-foreground">{selectedUser.email}</p>
                     </div>
                   </div>
                   {isLoadingDetails && (
@@ -219,7 +219,7 @@ export function TrainerRiskRatingPageContent() {
               />
             </div>
           ) : (
-            <Card className="bg-muted border-border border-dashed">
+            <Card className="border-border border-dashed">
               <CardContent className="p-12">
                 <div className="flex flex-col items-center justify-center text-center">
                   <div className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center mb-4 shadow-sm">

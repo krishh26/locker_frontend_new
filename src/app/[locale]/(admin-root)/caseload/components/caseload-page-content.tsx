@@ -85,7 +85,7 @@ export function CaseloadPageContent() {
       {isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="border border-primary bg-primary rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4">
+            <div key={i} className="border rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4">
               <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-full" />
               <Skeleton className="h-4 w-2/3 sm:w-3/4" />
               <Skeleton className="h-4 w-1/2" />
@@ -120,11 +120,11 @@ export function CaseloadPageContent() {
 
       {/* No Data State */}
       {!isLoading && !isError && lineManagers.length === 0 && (
-        <div className="border border-primary bg-primary rounded-lg p-6 sm:p-8 md:p-12 text-center w-full min-w-0">
-          <div className="inline-flex items-center justify-center rounded-full bg-white/10 p-3 mb-3 sm:mb-4">
-            <Users className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+        <div className="border border-dashed border-border rounded-lg p-6 sm:p-8 md:p-12 text-center w-full min-w-0">
+          <div className="inline-flex items-center justify-center rounded-full bg-primary p-3 mb-3 sm:mb-4">
+            <Users className="h-8 w-8 sm:h-10 sm:w-10 text-primary-foreground" />
           </div>
-          <h3 className="text-base sm:text-lg font-semibold mb-2 px-2">{t("noLineManagersFound")}</h3>
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 px-2">{t("noLineManagersFound")}</h3>
           <p className="text-muted-foreground text-sm sm:text-base px-2">
             {filterName
               ? `${t("noLineManagersMatch")} "${filterName}"`

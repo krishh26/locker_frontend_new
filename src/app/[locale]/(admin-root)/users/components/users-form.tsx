@@ -1101,7 +1101,7 @@ export function UsersForm({ user }: UsersFormProps) {
             />
           ) : (
             !isLoadingAssignments && (
-              <div className="flex items-center justify-center py-8 border rounded-md bg-muted/50">
+              <div className="flex items-center justify-center py-8 border rounded-md bg-muted">
                 <p className="text-sm text-muted-foreground">
                   {t("form.noLearnersAssigned")}
                 </p>

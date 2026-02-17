@@ -41,24 +41,24 @@ export function TrainerList({
     "bg-primary",
     "bg-secondary",
     "bg-accent",
-    "bg-primary/80",
-    "bg-secondary/80",
-    "bg-accent/80",
-    "bg-primary/60",
-    "bg-secondary/60",
+    "bg-primary",
+    "bg-secondary",
+    "bg-accent",
+    "bg-primary",
+    "bg-secondary",
   ];
 
   return (
-    <Card className="bg-primary/5 border-primary/15">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-primary/15">
-              <User className="h-4 w-4 text-primary" />
+            <div className="rounded-lg p-1.5 bg-primary">
+              <User className="h-4 w-4 text-primary-foreground" />
             </div>
-            <CardTitle>Trainers</CardTitle>
+            <CardTitle className="text-foreground">Trainers</CardTitle>
           </div>
-          <Badge variant="secondary" className="ml-auto bg-primary/15 text-primary">
+          <Badge variant="default" className="ml-auto">
             {trainers.length}
           </Badge>
         </div>
@@ -75,7 +75,7 @@ export function TrainerList({
                   "w-full justify-start gap-3 h-auto py-3 rounded-lg transition-all duration-150",
                   isSelected
                     ? "bg-primary text-primary-foreground shadow-md"
-                    : "hover:bg-white/60 dark:hover:bg-white/5"
+                    : "hover:bg-muted/50"
                 )}
                 onClick={() => onUserSelect(trainer)}
               >

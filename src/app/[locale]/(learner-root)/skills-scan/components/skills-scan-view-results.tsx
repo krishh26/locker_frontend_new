@@ -195,7 +195,7 @@ export function SkillsScanViewResults() {
         {/* Chart Section */}
         <div className="flex-1">
           <Card className="border shadow-sm">
-            <CardHeader className="bg-muted/50">
+            <CardHeader className="bg-muted">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <CardTitle className="text-base">Progress Chart</CardTitle>
                 {units.length > 0 && (
@@ -231,7 +231,7 @@ export function SkillsScanViewResults() {
 
         {/* Legend Section */}
         <Card className="w-full border shadow-sm lg:w-[300px]">
-          <CardHeader className="bg-muted/50">
+          <CardHeader className="bg-muted">
             <CardTitle className="text-base">Legend</CardTitle>
           </CardHeader>
           <CardContent className="p-4">

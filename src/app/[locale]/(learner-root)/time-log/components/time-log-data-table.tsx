@@ -199,12 +199,12 @@ export function TimeLogDataTable() {
     if (lowerType.includes("off"))
       return {
         variant: "outline" as const,
-        className: "bg-secondary/10 text-secondary border-secondary/30",
+        className: "bg-secondary text-white border-secondary",
       };
     if (lowerType.includes("on"))
       return {
         variant: "default" as const,
-        className: "bg-accent/10 text-accent border-accent/30",
+        className: "bg-accent text-white border-accent",
       };
     return { variant: "default" as const, className: "" };
   };

@@ -301,8 +301,8 @@ export function SupplementaryTrainingResourceFormDialog({
                 onClick={() => fileInputRef.current?.click()}
                 className={cn(
                   "relative cursor-pointer rounded-lg border-2 border-dashed p-6 text-center transition-all hover:border-primary/50 hover:bg-muted/50",
-                  isDragOver && "border-primary bg-primary/5",
-                  fileError && "border-destructive bg-destructive/5",
+                  isDragOver && "border-primary bg-primary",
+                  fileError && "border-destructive bg-destructive",
                   !isDragOver && !fileError && "border-border"
                 )}
               >

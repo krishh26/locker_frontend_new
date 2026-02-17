@@ -120,28 +120,27 @@ export function CoursesTable({
   };
 
   const getRiskColor = (riskLevel: string) => {
-    if (riskLevel === "Low") return "bg-accent/10 text-accent border-accent/30";
-    if (riskLevel === "Medium") return "bg-secondary/10 text-secondary border-secondary/30";
-    if (riskLevel === "High") return "bg-destructive/10 text-destructive border-destructive/30";
+    if (riskLevel === "Low") return "bg-accent text-white border-accent";
+    if (riskLevel === "Medium") return "bg-secondary text-white border-secondary";
+    if (riskLevel === "High") return "bg-destructive text-white border-destructive";
     return "bg-muted text-muted-foreground border-border";
   };
 
   return (
-    <Card className="bg-accent/5 border-accent/15">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-accent/15">
-              <School className="h-4 w-4 text-accent" />
+            <div className="rounded-lg p-1.5 bg-accent">
+              <School className="h-4 w-4 text-white" />
             </div>
-            <CardTitle>Courses ({courses.length})</CardTitle>
+            <CardTitle className="text-foreground">Courses ({courses.length})</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Low")}
-              className="border-accent/50 text-accent hover:bg-accent/10"
             >
               Set All Low
             </Button>
@@ -149,7 +148,6 @@ export function CoursesTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
-              className="border-secondary/50 text-secondary hover:bg-secondary/10"
             >
               Set All Medium
             </Button>
@@ -157,7 +155,6 @@ export function CoursesTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
-              className="border-destructive/50 text-destructive hover:bg-destructive/10"
             >
               Set All High
             </Button>
@@ -183,7 +180,7 @@ export function CoursesTable({
       </CardHeader>
       <CardContent>
         {courses.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground rounded-lg bg-muted/30 border border-dashed border-border">
+          <div className="text-center py-8 text-muted-foreground rounded-lg border border-dashed border-border">
             <p>No courses found</p>
           </div>
         ) : (

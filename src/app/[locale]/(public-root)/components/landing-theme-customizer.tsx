@@ -148,7 +148,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
         >
           <SheetHeader className="space-y-0 p-4 pb-2">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-primary rounded-lg">
                 <Settings className="h-4 w-4" />
               </div>
               <SheetTitle className="text-lg font-semibold">Theme Customizer</SheetTitle>
@@ -410,7 +410,8 @@ export function LandingThemeCustomizerTrigger({ onClick }: { onClick: () => void
       onClick={onClick}
       size="icon"
       className={cn(
-        "fixed top-1/2 -translate-y-1/2 h-12 w-12 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer right-4"
+        "fixed top-1/2 -translate-y-1/2 h-12 w-12 rounded-full shadow-lg z-50 bg-background hover:bg-background/90 text-foreground border border-border cursor-pointer",
+        "right-4"
       )}
     >
       <Settings className="h-5 w-5" />

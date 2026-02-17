@@ -98,7 +98,7 @@ export function FeaturesSection() {
 
             <ul className="grid gap-4 sm:grid-cols-2">
               {mainFeatures.map((feature, index) => (
-                <li key={index} className="group hover:bg-accent/5 flex items-start gap-3 p-2 rounded-lg transition-colors">
+                <li key={index} className="group hover:bg-accent flex items-start gap-3 p-2 rounded-lg transition-colors">
                   <div className="mt-0.5 flex shrink-0 items-center justify-center">
                     <feature.icon className="size-5 text-primary" aria-hidden="true" />
                   </div>
@@ -141,7 +141,7 @@ export function FeaturesSection() {
 
             <ul className="grid gap-4 sm:grid-cols-2">
               {secondaryFeatures.map((feature, index) => (
-                <li key={index} className="group hover:bg-accent/5 flex items-start gap-3 p-2 rounded-lg transition-colors">
+                <li key={index} className="group hover:bg-accent flex items-start gap-3 p-2 rounded-lg transition-colors">
                   <div className="mt-0.5 flex shrink-0 items-center justify-center">
                     <feature.icon className="size-5 text-primary" aria-hidden="true" />
                   </div>

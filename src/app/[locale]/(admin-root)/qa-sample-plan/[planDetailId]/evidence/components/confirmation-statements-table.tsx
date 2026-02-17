@@ -126,7 +126,7 @@ export function ConfirmationStatementsTable({
                 const canAccess = currentUserRole === row.role;
 
                 return (
-                  <TableRow key={index} className="hover:bg-muted/50">
+                  <TableRow key={index} className="hover:bg-muted">
                     {/* Role */}
                     <TableCell className="font-medium align-top">
                       {row.role}
@@ -152,7 +152,7 @@ export function ConfirmationStatementsTable({
                           disabled={!canAccess}
                           className={`h-7 w-7 ${
                             canAccess
-                              ? "text-primary hover:bg-primary/10"
+                              ? "text-primary hover:bg-primary"
                               : "text-muted-foreground cursor-not-allowed"
                           }`}
                         >
@@ -185,7 +185,7 @@ export function ConfirmationStatementsTable({
                               size="icon"
                               onClick={() => onDeleteFile(index)}
                               disabled={isDeletingFile}
-                              className="h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+                              className="h-6 w-6 text-destructive hover:text-white hover:bg-destructive"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>

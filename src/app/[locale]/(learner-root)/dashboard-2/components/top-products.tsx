@@ -75,7 +75,7 @@ export function TopProducts() {
       <CardContent className="space-y-4">
         {products.map((product, index) => (
           <div key={product.id} className="flex items-center p-3 rounded-lg border gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-semibold text-sm">
                 #{index + 1}
               </div>
             <div className="flex gap-2 items-center justify-between space-x-3 flex-1 flex-wrap">

@@ -112,9 +112,9 @@ export function CalendarListView({
 
   if (!sessions || sessions.length === 0) {
     return (
-      <Card className="p-12 bg-muted/30 border-border">
+      <Card className="p-12 bg-muted border-border">
         <div className="flex flex-col items-center justify-center text-muted-foreground space-y-2">
-          <div className="rounded-full bg-primary/10 p-4">
+          <div className="rounded-full bg-primary p-4">
             <span className="text-2xl">📅</span>
           </div>
           <p className="text-lg font-semibold">No data found</p>
@@ -128,11 +128,11 @@ export function CalendarListView({
 
   return (
     <>
-      <Card className="bg-secondary/5 border-secondary/15">
+      <Card>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="bg-secondary/10">
+              <TableRow className="bg-white/10">
                 <TableHead>Title</TableHead>
                 <TableHead>Learners</TableHead>
                 <TableHead>Trainer</TableHead>

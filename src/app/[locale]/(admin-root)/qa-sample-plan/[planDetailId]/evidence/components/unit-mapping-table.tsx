@@ -51,7 +51,7 @@ export function UnitMappingTable({
 
                 return (
                   <Fragment key={unit.unit_code}>
-                    <TableRow className="hover:bg-muted/50">
+                    <TableRow className="hover:bg-muted">
                       <TableCell className="w-[50px]">
                         {hasSubUnits && (
                           <Button
@@ -76,7 +76,7 @@ export function UnitMappingTable({
                       unit.subUnits?.map((subUnit) => (
                         <TableRow
                           key={subUnit.id}
-                          className="bg-muted/30 hover:bg-muted/50"
+                          className="bg-muted hover:bg-muted"
                         >
                           <TableCell className="w-[50px] pl-8"></TableCell>
                           <TableCell>{subUnit.code || String(subUnit.id)}</TableCell>

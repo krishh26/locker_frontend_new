@@ -50,16 +50,16 @@ const CSV_HEADER_NAMES: Record<string, string> = {
 
 // Theme-adaptive card backgrounds – follows active theme automatically
 const cardBgColors = [
-  "bg-primary/15 border-primary/30",
-  "bg-secondary/15 border-secondary/30",
-  "bg-accent/15 border-accent/30",
-  "bg-primary/20 border-primary/35",
-  "bg-muted border-border",
-  "bg-secondary/20 border-secondary/35",
-  "bg-accent/20 border-accent/35",
-  "bg-primary/18 border-primary/25",
-  "bg-secondary/18 border-secondary/25",
-  "bg-accent/18 border-accent/25",
+  "border bg-primary",
+  "border bg-secondary",
+  "border bg-accent",
+  "border bg-primary",
+  "border bg-muted-foreground",
+  "border bg-secondary",
+  "border bg-accent",
+  "border bg-primary",
+  "border bg-secondary",
+  "border bg-accent",
 ]
 
 export function AdminDashboard() {
@@ -231,4 +231,5 @@ export function AdminDashboard() {
     </div>
   )
 }
+
 

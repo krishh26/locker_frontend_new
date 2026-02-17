@@ -45,7 +45,7 @@ export function AdminDashboardCard({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-2 right-2 h-8 w-8 z-10"
+            className="absolute top-2 right-2 h-8 w-8 z-10 text-white hover:text-white/80 hover:bg-white/10"
             onClick={handleExportClick}
             disabled={isExporting}
           >
@@ -68,7 +68,7 @@ export function AdminDashboardCard({
           </div>
 
           <div className="space-y-2 w-full">
-            <h3 className="font-medium text-base text-foreground group-hover:text-primary transition-colors truncate line-clamp-1" title={title}>
+            <h3 className="font-medium text-base text-white group-hover:text-white/80 transition-colors truncate line-clamp-1" title={title}>
               {title}
             </h3>
           </div>

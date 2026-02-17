@@ -26,7 +26,7 @@ export function SafeguardingCard() {
 
   if (isLoading) {
     return (
-      <Card className="h-full shadow-sm bg-destructive/5 border-destructive/15">
+      <Card className="h-full shadow-sm bg-primary/10 border-primary/20">
         <CardHeader className="flex flex-row items-start justify-between gap-3">
           <div className="w-full space-y-2">
             <Skeleton className="h-6 w-48" />
@@ -42,21 +42,21 @@ export function SafeguardingCard() {
     )
   }
   return (
-    <Card className="h-full shadow-sm bg-destructive/5 border-destructive/15">
+    <Card className="h-full shadow-sm bg-primary/10 border-primary/20">
       <CardHeader className="flex flex-row items-start justify-between gap-3">
         <div>
-          <CardTitle className="text-xl">Safeguarding contact</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-xl text-foreground">Safeguarding contact</CardTitle>
+          <CardDescription className="text-muted-foreground">
             Reach out immediately if you have any concerns
           </CardDescription>
         </div>
-        <Badge variant="secondary" className="rounded-full shadow-sm bg-destructive/10 text-destructive">
+        <Badge variant="secondary" className="rounded-full shadow-sm bg-primary text-primary-foreground">
           Priority support
         </Badge>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-start gap-3 rounded-lg border border-dashed border-destructive/20 bg-destructive/5 p-4">
-          <div className="rounded-full p-2 bg-destructive text-destructive-foreground shadow-sm mt-0.5">
+        <div className="flex items-start gap-3 rounded-lg border border-dashed border-primary/20 bg-primary/5 p-4">
+          <div className="rounded-full p-2 bg-primary text-primary-foreground shadow-sm mt-0.5">
             <ShieldAlert className="size-4" />
           </div>
           <div className="space-y-1">
@@ -65,31 +65,31 @@ export function SafeguardingCard() {
           </div>
         </div>
 
-        <Separator className="bg-destructive/20" />
+        <Separator className="bg-primary/20" />
 
         <div className="grid gap-3 text-sm">
           {safeguardingContact.telNumber && (
-            <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-white/60 dark:bg-white/5 p-3">
-              <Phone className="size-4 text-destructive" />
+            <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
+              <Phone className="size-4 text-primary" />
               <span className="font-medium text-foreground">Tel:</span>
-              <span>{safeguardingContact.telNumber}</span>
+              <span className="text-foreground">{safeguardingContact.telNumber}</span>
             </div>
           )}
 
           {safeguardingContact.mobileNumber && (
-            <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-white/60 dark:bg-white/5 p-3">
-              <Phone className="size-4 text-destructive" />
+            <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
+              <Phone className="size-4 text-primary" />
               <span className="font-medium text-foreground">Mobile:</span>
-              <span>{safeguardingContact.mobileNumber}</span>
+              <span className="text-foreground">{safeguardingContact.mobileNumber}</span>
             </div>
           )}
 
           {safeguardingContact.emailAddress && (
-            <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-white/60 dark:bg-white/5 p-3">
-              <Mail className="size-4 text-destructive" />
+            <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
+              <Mail className="size-4 text-primary" />
               <span className="font-medium text-foreground">Email:</span>
               <a
-                className="text-destructive underline-offset-4 hover:underline"
+                className="text-primary underline-offset-4 hover:underline"
                 href={`mailto:${safeguardingContact.emailAddress}`}
               >
                 {safeguardingContact.emailAddress}
@@ -100,8 +100,8 @@ export function SafeguardingCard() {
 
         {safeguardingContact.additionalInfo && (
           <>
-            <Separator className="bg-destructive/20" />
-            <div className="rounded-lg border border-dashed border-destructive/20 bg-destructive/5 p-4 text-sm">
+            <Separator className="bg-primary/20" />
+            <div className="rounded-lg border border-dashed border-primary/20 bg-primary/5 p-4 text-sm">
               <p className="text-muted-foreground whitespace-pre-line">{safeguardingContact.additionalInfo}</p>
             </div>
           </>

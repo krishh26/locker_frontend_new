@@ -260,7 +260,7 @@ export function WellbeingResourcesDataTable() {
                 variant={resource.isActive ? "default" : "secondary"}
                 className={
                   resource.isActive
-                    ? "bg-accent/10 text-accent hover:bg-accent/10"
+                    ? "bg-accent text-white hover:bg-accent"
                     : "bg-muted text-muted-foreground"
                 }
               >

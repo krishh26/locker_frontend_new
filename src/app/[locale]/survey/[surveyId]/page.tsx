@@ -262,8 +262,8 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
       >
         <Card className="w-full max-w-md bg-background/95 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10">
-              <CheckCircle2 className="h-6 w-6 text-accent" />
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent">
+              <CheckCircle2 className="h-6 w-6 text-white" />
             </div>
             <CardTitle>Thank You!</CardTitle>
             <CardDescription>
@@ -639,7 +639,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                       return (
                         <tr
                           key={stmtIndex}
-                          className={stmtIndex % 2 === 0 ? "bg-muted/30" : ""}
+                          className={stmtIndex % 2 === 0 ? "bg-muted" : ""}
                         >
                           <td className="border border-border p-2 font-medium">
                             {statement}

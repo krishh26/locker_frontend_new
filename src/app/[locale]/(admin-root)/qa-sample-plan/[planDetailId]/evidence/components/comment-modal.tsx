@@ -120,7 +120,7 @@ export function CommentModal({
 
               {/* Existing Reviews */}
               {sortedReviews.length > 0 && (
-                <div className="rounded-lg border bg-muted/50 p-4 space-y-3">
+                <div className="rounded-lg border bg-muted p-4 space-y-3">
                   <h4 className="text-sm font-semibold">Existing Reviews:</h4>
                   <div className="space-y-2">
                     {sortedReviews.map(([role, reviewData]) => (

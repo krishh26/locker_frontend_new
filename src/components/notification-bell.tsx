@@ -57,7 +57,7 @@ function NotificationItem({ notification, onRead, onDelete }: NotificationItemPr
       className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
         notification.read
           ? "bg-transparent"
-          : "bg-primary/5 dark:bg-primary/10"
+          : "bg-primary text-white"
       }`}
     >
       <div className="mt-0.5">
@@ -179,7 +179,7 @@ export function NotificationBell() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="relative cursor-pointer bg-primary/10 border-primary/30 hover:bg-primary/20 text-primary hover:text-primary shadow-sm hover:shadow-md transition-all duration-200">
+        <Button variant="outline" size="icon" className="relative cursor-pointer bg-primary border-primary hover:bg-primary/90 text-white hover:text-white shadow-sm hover:shadow-md transition-all duration-200">
           {unreadCount > 0 ? (
             <BellRing className="h-5 w-5" />
           ) : (

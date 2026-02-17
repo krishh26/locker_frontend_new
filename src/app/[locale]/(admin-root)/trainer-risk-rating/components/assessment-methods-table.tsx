@@ -84,28 +84,27 @@ export function AssessmentMethodsTable({
   };
 
   const getRiskColor = (riskLevel: string) => {
-    if (riskLevel === "Low") return "bg-accent/10 text-accent border-accent/30";
-    if (riskLevel === "Medium") return "bg-secondary/10 text-secondary border-secondary/30";
-    if (riskLevel === "High") return "bg-destructive/10 text-destructive border-destructive/30";
+    if (riskLevel === "Low") return "bg-accent text-white border-accent";
+    if (riskLevel === "Medium") return "bg-secondary text-white border-secondary";
+    if (riskLevel === "High") return "bg-destructive text-white border-destructive";
     return "bg-muted text-muted-foreground border-border";
   };
 
   return (
-    <Card className="bg-secondary/5 border-secondary/15">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg p-1.5 bg-secondary/15">
-              <ClipboardList className="h-4 w-4 text-secondary" />
+            <div className="rounded-lg p-1.5 bg-secondary">
+              <ClipboardList className="h-4 w-4 text-white" />
             </div>
-            <CardTitle>Assessment Method Risk ({assessmentMethods.length})</CardTitle>
+            <CardTitle className="text-foreground">Assessment Method Risk ({assessmentMethods.length})</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Low")}
-              className="border-accent/50 text-accent hover:bg-accent/10"
             >
               Set All Low
             </Button>
@@ -113,7 +112,6 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
-              className="border-secondary/50 text-secondary hover:bg-secondary/10"
             >
               Set All Medium
             </Button>
@@ -121,7 +119,6 @@ export function AssessmentMethodsTable({
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
-              className="border-destructive/50 text-destructive hover:bg-destructive/10"
             >
               Set All High
             </Button>

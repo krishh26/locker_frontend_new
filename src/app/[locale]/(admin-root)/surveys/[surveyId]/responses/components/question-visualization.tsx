@@ -360,7 +360,7 @@ export function QuestionVisualization({
           {textResponses.slice(0, 10).map((response, index) => (
             <div
               key={index}
-              className="p-3 border rounded-lg bg-muted/30 text-sm"
+              className="p-3 border rounded-lg bg-muted text-sm"
             >
               <div className="mb-1">{response.text}</div>
               <div className="text-xs text-muted-foreground">

@@ -140,8 +140,8 @@ export function AcknowledgementDialog({
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="space-y-3 pb-4 border-b">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-              <Info className="h-5 w-5 text-primary" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
+              <Info className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1">
               <DialogTitle className="text-xl font-semibold">

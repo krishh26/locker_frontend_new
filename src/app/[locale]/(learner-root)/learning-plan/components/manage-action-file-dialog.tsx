@@ -159,8 +159,8 @@ export function ManageActionFileDialog({
                     onDrop={(e) => handleDrop(e, onChange)}
                     className={`relative border-2 border-dashed rounded-lg p-12 cursor-pointer transition-all ${
                       dragActive
-                        ? "border-primary bg-primary/5"
-                        : "border-muted-foreground/25 hover:border-primary/50"
+                        ? "border-primary bg-primary"
+                        : "border-muted-foreground/25 hover:border-primary"
                     } ${
                       errors.file
                         ? "border-destructive"

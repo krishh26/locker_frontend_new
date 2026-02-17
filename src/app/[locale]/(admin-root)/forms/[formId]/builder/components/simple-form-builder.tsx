@@ -347,8 +347,8 @@ function FormArea({
         onDragOver={onDragOver}
         className={`h-full min-h-0 rounded-lg border-2 border-dashed p-12 flex flex-col items-center justify-center transition-colors ${
           isDraggingFromPalette
-            ? 'border-primary bg-primary/5'
-            : 'border-muted bg-muted/20'
+            ? 'border-primary bg-primary'
+            : 'border-muted bg-muted'
         }`}
       >
         <div className='text-6xl mb-4'>🎯</div>
@@ -372,7 +372,7 @@ function FormArea({
           onDragOver={onDragOver}
           className={`h-full min-h-0 rounded-lg border-2 border-dashed p-6 pb-24 space-y-4 transition-colors overflow-y-auto ${
             snapshot.isDraggingOver || isDraggingFromPalette
-              ? 'border-primary bg-primary/5'
+              ? 'border-primary bg-primary'
               : 'border-muted'
           }`}
         >

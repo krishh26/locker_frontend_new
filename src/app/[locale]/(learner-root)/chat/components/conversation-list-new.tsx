@@ -104,7 +104,7 @@ export function ConversationList({
             <div
               key={conversation.id}
               className={cn(
-                "flex items-center gap-3 p-3 rounded-lg cursor-pointer relative group overflow-hidden hover:bg-accent/50 transition-colors",
+                "flex items-center gap-3 p-3 rounded-lg cursor-pointer relative group overflow-hidden hover:bg-accent transition-colors",
                 selectedConversation === conversation.id
                   ? "bg-accent text-accent-foreground"
                   : ""

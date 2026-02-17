@@ -96,7 +96,7 @@ export function SkillsScanPageContent() {
       {/* Tabs Navigation */}
       <Card className="border shadow-sm">
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 rounded-none border-b bg-muted/50 p-0">
+          <TabsList className="grid w-full grid-cols-3 rounded-none border-b bg-muted p-0">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (

@@ -215,9 +215,9 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
         </div>
 
         {sortedQuestions.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-primary/30 p-12 text-center space-y-4 bg-primary/5">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-secondary/5 border-secondary/15 flex items-center justify-center mb-4">
-              <FileText className="h-8 w-8 text-secondary" />
+          <div className="rounded-xl border border-dashed border-primary p-12 text-center space-y-4 bg-primary">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-white/10 border-white/20 flex items-center justify-center mb-4">
+              <FileText className="h-8 w-8 text-white" />
             </div>
             <p className="text-muted-foreground">
               No questions yet. Get started by using a template or adding your own questions.

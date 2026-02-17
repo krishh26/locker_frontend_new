@@ -125,7 +125,7 @@ export function IQAQuestionsDataTable({
         cell: ({ row, table }) => {
           const index = table.getRowModel().rows.findIndex((r) => r.id === row.id);
           return (
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-semibold text-sm">
               {index + 1}
             </div>
           );

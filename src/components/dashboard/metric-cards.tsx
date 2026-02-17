@@ -23,17 +23,17 @@ export interface MetricCardsProps {
 }
 
 const metricCardBgColors = [
-  "bg-primary/15 border-primary/30",
-  "bg-secondary/15 border-secondary/30",
-  "bg-accent/15 border-accent/30",
-  "bg-primary/20 border-primary/35",
+  "bg-primary border-primary text-white",
+  "bg-secondary border-secondary text-white",
+  "bg-accent border-accent text-white",
+  "bg-primary border-primary text-white",
   "bg-muted border-border",
-  "bg-secondary/20 border-secondary/35",
-  "bg-accent/20 border-accent/35",
-  "bg-primary/18 border-primary/25",
-  "bg-secondary/18 border-secondary/25",
-  "bg-accent/18 border-accent/25",
-  "bg-muted/60 border-border",
+  "bg-secondary border-secondary text-white",
+  "bg-accent border-accent text-white",
+  "bg-primary border-primary text-white",
+  "bg-secondary border-secondary text-white",
+  "bg-accent border-accent text-white",
+  "bg-muted border-border",
 ]
 
 export function MetricCards({
@@ -80,7 +80,7 @@ export function MetricCards({
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-semibold text-sm group-hover:text-white/80 transition-colors">
                       {card.name}
                     </h3>
                     {hasCount && (

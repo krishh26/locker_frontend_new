@@ -283,11 +283,11 @@ export function EmployersCsvUploadDialog({
 
         <div className="space-y-6">
           {/* Sample CSV Download */}
-          <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
+          <div className="bg-primary border border-primary rounded-xl p-6 text-white">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-4 flex-1">
-                <div className="bg-primary/10 p-3 rounded-lg">
-                  <Download className="w-5 h-5 text-primary" />
+                <div className="bg-white/20 p-3 rounded-lg">
+                  <Download className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-lg mb-2">
@@ -318,8 +318,8 @@ export function EmployersCsvUploadDialog({
               onDrop={handleDrop}
               className={`border-2 border-dashed rounded-xl p-10 text-center transition-all cursor-pointer ${
                 isDragging
-                  ? "border-primary/40 bg-primary/5"
-                  : "border-border hover:border-primary/40"
+                  ? "border-primary bg-primary"
+                  : "border-border hover:border-primary"
               }`}
               onClick={() => fileInputRef.current?.click()}
             >
@@ -342,8 +342,8 @@ export function EmployersCsvUploadDialog({
               </div>
               {file ? (
                 <div className="space-y-3">
-                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20">
-                    <p className="text-lg font-semibold text-accent">
+                  <div className="bg-accent p-4 rounded-lg border border-accent">
+                    <p className="text-lg font-semibold text-white">
                       {file.name}
                     </p>
                   </div>
@@ -366,10 +366,10 @@ export function EmployersCsvUploadDialog({
 
           {/* Error Display */}
           {error && (
-            <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-5">
+            <div className="bg-destructive border border-destructive rounded-xl p-5">
             <div className="flex items-center gap-3">
-              <div className="bg-destructive/10 p-2 rounded-lg">
-                <X className="w-5 h-5 text-destructive" />
+              <div className="bg-white/20 p-2 rounded-lg">
+                <X className="w-5 h-5 text-white" />
               </div>
               <p className="text-destructive text-sm font-medium">
                 {error}
@@ -380,10 +380,10 @@ export function EmployersCsvUploadDialog({
 
           {/* File Info */}
           {file && parsedData.length > 0 && (
-            <div className="bg-accent/10 border border-accent/20 rounded-xl p-5">
+            <div className="bg-accent border border-accent rounded-xl p-5">
             <div className="flex items-center gap-3">
-              <div className="bg-accent/10 p-2 rounded-lg">
-                <Download className="w-5 h-5 text-accent" />
+              <div className="bg-white/20 p-2 rounded-lg">
+                <Download className="w-5 h-5 text-white" />
               </div>
               <div>
                 <p className="text-accent text-sm font-medium">

@@ -47,7 +47,7 @@ export function FileUpload({
             className={cn(
               "relative border-2 border-dashed rounded-lg p-8 transition-colors",
               error
-                ? "border-destructive bg-destructive/5"
+                ? "border-destructive bg-destructive"
                 : "border-muted-foreground/25 hover:border-muted-foreground/50",
               disabled && "opacity-50 cursor-not-allowed"
             )}

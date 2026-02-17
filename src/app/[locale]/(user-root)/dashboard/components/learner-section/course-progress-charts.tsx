@@ -39,14 +39,14 @@ interface CourseProgressChartsProps {
 }
 
 const cardBgColors = [
-  "bg-primary/15 border-primary/30",
-  "bg-accent/15 border-accent/30",
-  "bg-secondary/15 border-secondary/30",
-  "bg-primary/20 border-primary/35",
+  "bg-primary border-primary",
+  "bg-accent border-accent",
+  "bg-secondary border-secondary",
+  "bg-primary border-primary",
   "bg-muted border-border",
-  "bg-accent/20 border-accent/35",
-  "bg-secondary/20 border-secondary/35",
-  "bg-primary/18 border-primary/25",
+  "bg-accent border-accent",
+  "bg-secondary border-secondary",
+  "bg-primary border-primary",
 ]
 
 // Helper to get theme color from CSS variable
@@ -73,14 +73,14 @@ const getDonutColors = (index: number) => {
 }
 
 const statsBgColors = [
-  "border-primary/30 bg-primary/15",
-  "border-accent/30 bg-accent/15",
-  "border-secondary/30 bg-secondary/15",
-  "border-primary/25 bg-primary/18",
-  "border-border bg-muted/60",
-  "border-accent/25 bg-accent/18",
-  "border-secondary/25 bg-secondary/18",
-  "border-primary/25 bg-primary/15",
+  "border-primary/20 bg-primary/5",
+  "border-accent/20 bg-accent/5",
+  "border-secondary/20 bg-secondary/5",
+  "border-primary/20 bg-primary/5",
+  "border-border bg-muted/50",
+  "border-accent/20 bg-accent/5",
+  "border-secondary/20 bg-secondary/5",
+  "border-primary/20 bg-primary/5",
 ]
 
 // Convert incoming data to progress format
@@ -187,7 +187,7 @@ function CourseProgressDonut({
         <span
           className={cn(
             "text-xs font-medium",
-            isGateway ? "text-primary" : "text-muted-foreground"
+            isGateway ? "text-foreground" : "text-muted-foreground"
           )}
         >
           {isGateway ? "Gateway prep" : "Course progress"}
@@ -213,8 +213,8 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <div className="rounded-lg p-1.5 bg-linear-to-br from-primary/20 to-primary/10">
-          <TrendingUp className="h-5 w-5 text-primary" />
+        <div className="rounded-lg p-1.5 bg-primary">
+          <TrendingUp className="h-5 w-5 text-white" />
         </div>
         <h2 className="text-xl font-semibold">Progress Overview</h2>
       </div>
@@ -249,7 +249,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                   : "Core"}
               </Badge>
               <CardHeader className="space-y-1 pr-24">
-                <CardTitle className="text-base font-semibold line-clamp-2" title={courseName}>{courseName}</CardTitle>
+                <CardTitle className="text-base font-semibold text-foreground line-clamp-2" title={courseName}>{courseName}</CardTitle>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <CalendarDays className="size-4" />
                   <span>Next milestone: Review</span>

@@ -319,7 +319,7 @@ export function UsersDataTable() {
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                 status === "active"
-                  ? "bg-accent/10 text-accent"
+                  ? "bg-accent text-white"
                   : "bg-muted text-muted-foreground"
               }`}
             >

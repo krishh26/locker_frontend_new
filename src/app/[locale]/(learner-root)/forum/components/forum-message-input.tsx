@@ -91,8 +91,8 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
     <div className="relative space-y-2">
       {/* File Preview */}
       {file && (
-        <div className="flex items-center gap-2 rounded-lg border bg-accent/5 border-accent/20 p-2">
-          <FileText className="h-4 w-4 text-accent" />
+        <div className="flex items-center gap-2 rounded-lg border bg-accent border-accent p-2">
+          <FileText className="h-4 w-4 text-white" />
           <span className="flex-1 truncate text-sm">{file.name}</span>
           <Button
             variant="ghost"
@@ -113,7 +113,7 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="min-h-[60px] resize-none pr-20"
+            className="min-h-[60px] resize-none pr-20 border border-primary/30 focus-visible:ring-primary/30"
             disabled={isLoading}
           />
           <div className="absolute bottom-2 right-2 flex items-center gap-1">

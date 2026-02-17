@@ -20,8 +20,8 @@ function MetricCard({ title, value, icon: Icon, className }: MetricCardProps) {
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-4">
-            <div className="rounded-lg bg-primary/10 p-2">
-              <Icon className="h-5 w-5 text-primary" />
+            <div className="rounded-lg bg-primary p-2">
+              <Icon className="h-5 w-5 text-white" />
             </div>
             <div className="space-y-1">
               <p className="text-sm font-medium text-muted-foreground">

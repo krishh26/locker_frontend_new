@@ -120,9 +120,9 @@ export function SurveysDataTable() {
   const getStatusColor = useCallback((status: string) => {
     switch (status) {
       case "Published":
-        return "text-accent bg-accent/10 border-accent/30"
+        return "text-white bg-accent border-accent"
       case "Draft":
-        return "text-secondary bg-secondary/10 border-secondary/30"
+        return "text-white bg-secondary border-secondary"
       case "Archived":
         return "text-muted-foreground bg-muted border-border"
       default:
@@ -485,7 +485,7 @@ export function SurveysDataTable() {
           </div>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 bg-muted/30 border-border">
+        <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 border-border">
           <div className="space-y-2">
             <Label htmlFor="status-filter" className="text-sm font-medium">
               Status

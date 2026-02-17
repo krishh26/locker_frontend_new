@@ -223,7 +223,7 @@ export function UnassignedLearnersTable({
             const courseInfo = getLearnerCourseInfo(learner);
 
             return (
-              <TableRow key={learner.learner_id} className={isSelected ? "bg-muted/50" : ""}>
+              <TableRow key={learner.learner_id} className={isSelected ? "bg-muted" : ""}>
                 <TableCell>
                   <Checkbox
                     checked={isSelected}

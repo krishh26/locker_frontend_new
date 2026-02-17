@@ -951,7 +951,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                         {course.course_name} - Units
                       </h3>
                       {unitsError?.message && (
-                        <p className='text-sm text-destructive font-medium p-2 bg-destructive/10 border border-destructive rounded'>
+                        <p className='text-sm text-white font-medium p-2 bg-destructive border border-destructive rounded'>
                           {unitsError?.message}
                         </p>
                       )}

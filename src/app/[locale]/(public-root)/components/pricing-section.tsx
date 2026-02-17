@@ -145,8 +145,8 @@ export function PricingSection() {
                     <Button
                       className={`w-full cursor-pointer my-2 ${
                         plan.popular
-                          ? 'shadow-md border-[0.5px] border-white/25 shadow-black/20 bg-primary ring-1 ring-primary/15 text-primary-foreground hover:bg-primary/90'
-                          : 'shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 hover:bg-muted/50'
+                          ? 'shadow-md border-[0.5px] border-white/25 shadow-black/20 bg-primary ring-1 ring-primary text-primary-foreground hover:bg-primary/90'
+                          : 'shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 hover:bg-muted'
                       }`}
                       variant={plan.popular ? 'default' : 'secondary'}
                     >

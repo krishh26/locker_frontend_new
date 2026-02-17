@@ -388,11 +388,11 @@ export function EvidenceLibraryDataTable() {
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                 color === "success"
-                  ? "bg-accent/10 text-accent"
+                  ? "bg-accent text-white"
                   : color === "warning"
-                  ? "bg-secondary/10 text-secondary"
+                  ? "bg-secondary text-white"
                   : color === "info"
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-primary text-white"
                   : "bg-muted text-muted-foreground"
               }`}
             >

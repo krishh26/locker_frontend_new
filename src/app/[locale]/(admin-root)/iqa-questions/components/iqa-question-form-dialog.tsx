@@ -114,8 +114,8 @@ export function IQAQuestionFormDialog({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <HelpCircle className="h-6 w-6 text-primary" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary">
+              <HelpCircle className="h-6 w-6 text-white" />
             </div>
             <div>
               <DialogTitle>
@@ -131,7 +131,7 @@ export function IQAQuestionFormDialog({
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="space-y-4 py-4">
             {errorMessage && (
-              <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+              <div className="rounded-md bg-destructive p-3 text-sm text-white">
                 {errorMessage}
               </div>
             )}

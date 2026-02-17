@@ -228,7 +228,7 @@ export function LearnersDocumentsToSignDataTable() {
                     <Badge
                       key={`signed-${index}`}
                       variant="default"
-                      className="text-[10px] h-5 bg-accent/10 text-accent border-accent/30 hover:bg-accent/20"
+                      className="text-[10px] h-5 bg-accent text-white border-accent hover:bg-accent"
                     >
                       {role}
                     </Badge>
@@ -245,7 +245,7 @@ export function LearnersDocumentsToSignDataTable() {
                       <Badge
                         key={`pending-${index}`}
                         variant="outline"
-                        className="text-[9px] h-[18px] bg-secondary/10 text-secondary border-secondary/30"
+                        className="text-[9px] h-[18px] bg-secondary text-white border-secondary"
                       >
                         {reqSig.role} (Pending)
                       </Badge>
@@ -387,7 +387,7 @@ export function LearnersDocumentsToSignDataTable() {
       <DataTablePagination table={table} showSelectedRows={false} />
 
       {/* Summary */}
-      <div className="rounded-lg border bg-muted/50 p-4">
+      <div className="rounded-lg border bg-muted p-4">
         <div className="text-sm text-muted-foreground">
           Total documents: <strong className="text-foreground">{documents.length}</strong>
         </div>

@@ -57,8 +57,8 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
         />
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center gap-2 rounded-md border border-destructive bg-destructive/10 p-4">
-              <AlertCircle className="h-4 w-4 text-destructive" />
+            <div className="flex items-center gap-2 rounded-md border border-destructive bg-destructive p-4 text-white">
+              <AlertCircle className="h-4 w-4 text-white" />
               <p className="text-sm text-destructive">
                 {error
                   ? "Failed to load form. Please try again."

@@ -419,7 +419,7 @@ export function DynamicFormRenderer({
     <Card>
       <CardHeader>
         {isLocked && (
-          <div className="mt-4 rounded-md border border-secondary bg-secondary/10 p-4">
+          <div className="mt-4 rounded-md border border-secondary bg-secondary p-4 text-white">
             <div className="flex items-start gap-2">
               <Lock className="h-4 w-4 text-secondary mt-0.5" />
               <p className="text-sm text-secondary">

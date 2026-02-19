@@ -314,9 +314,9 @@ export function ChooseUnitsDataTable({
         </DropdownMenu>
       </div>
 
-      {/* Table */}
-      <div className="rounded-md border overflow-x-auto">
-        <Table>
+      {/* Table - overrides: no header/row background */}
+      <div className="rounded-md border overflow-x-auto [&_thead]:bg-transparent [&_thead_th]:text-foreground [&_tbody_tr[data-state=selected]]:bg-muted/50">
+        <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

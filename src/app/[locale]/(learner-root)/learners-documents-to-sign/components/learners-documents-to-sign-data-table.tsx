@@ -387,7 +387,7 @@ export function LearnersDocumentsToSignDataTable() {
       <DataTablePagination table={table} showSelectedRows={false} />
 
       {/* Summary */}
-      <div className="rounded-lg border bg-muted p-4">
+      <div className="rounded-lg border p-4">
         <div className="text-sm text-muted-foreground">
           Total documents: <strong className="text-foreground">{documents.length}</strong>
         </div>

@@ -3,28 +3,28 @@
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { CardDecorator } from '@/components/ui/card-decorator'
-import { Code, Crown, Layout, Palette } from 'lucide-react'
+import { Users, Shield, BookOpen, Heart } from 'lucide-react'
 
 const values = [
   {
-    icon: Code,
-    title: 'Developer First',
-    description: 'Every component is built with the developer experience in mind, ensuring clean code and easy integration.'
+    icon: Users,
+    title: 'Learner-focused',
+    description: 'Everything is designed so learners can easily add evidence, see progress and complete assessments.'
   },
   {
-    icon: Palette,
-    title: 'Design Excellence',
-    description: 'We maintain the highest design standards, following shadcn/ui principles and modern UI patterns.'
+    icon: BookOpen,
+    title: 'Assessor-friendly',
+    description: 'Tutors and assessors can review work, give feedback and mark assessments without extra complexity.'
   },
   {
-    icon: Layout,
-    title: 'Production Ready',
-    description: 'Battle-tested components used in real applications with proven performance and reliability across different environments.'
+    icon: Shield,
+    title: 'Safe and compliant',
+    description: 'Your data is stored securely and we follow good practice for privacy and compliance.'
   },
   {
-    icon: Crown,
-    title: 'Premium Quality',
-    description: 'Hand-crafted with attention to detail and performance optimization, ensuring exceptional user experience and accessibility.'
+    icon: Heart,
+    title: 'Built for the learning community',
+    description: 'Locker is made to support real learning journeys—for centres, employers and learners alike.'
   }
 ]
 
@@ -41,8 +41,7 @@ export function AboutSection() {
             Built for learners, by learners
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            We&apos;re passionate about creating the best platform for learning and development.
-            Our mission is to accelerate learning and help learners learn faster.
+            We believe learning and assessment should be simple for everyone. Locker helps learners show what they know, and helps centres and employers manage it all in one place.
           </p>
         </div>
 

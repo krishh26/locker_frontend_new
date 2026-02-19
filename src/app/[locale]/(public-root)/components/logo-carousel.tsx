@@ -65,16 +65,16 @@ export function LogoCarousel() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-sm font-medium text-muted-foreground mb-8">
-            Trusted by leading companies worldwide
+            Used by centres and learners nationwide
           </p>
 
           {/* Logo Carousel with Fade Effect */}
           <div className="relative">
             {/* Left Fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
 
             {/* Right Fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 
             {/* Logo Container */}
             <div className="overflow-hidden">
@@ -83,7 +83,7 @@ export function LogoCarousel() {
                 {techCompanies.map((company, index) => (
                   <Card
                     key={`first-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center h-16 w-40 opacity-60 hover:opacity-100 transition-opacity duration-300 border-0 shadow-none bg-transparent"
+                    className="shrink-0 flex items-center justify-center h-16 w-40 opacity-60 hover:opacity-100 transition-opacity duration-300 border-0 shadow-none bg-transparent"
                   >
                     <div className="flex items-center gap-3">
                       <SimpleIcon iconSlug={company.id} size={28} />
@@ -97,7 +97,7 @@ export function LogoCarousel() {
                 {techCompanies.map((company, index) => (
                   <Card
                     key={`second-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center h-16 w-40 opacity-60 hover:opacity-100 transition-opacity duration-300 border-0 shadow-none bg-transparent"
+                    className="shrink-0 flex items-center justify-center h-16 w-40 opacity-60 hover:opacity-100 transition-opacity duration-300 border-0 shadow-none bg-transparent"
                   >
                     <div className="flex items-center gap-3">
                       <SimpleIcon iconSlug={company.id} size={28} />

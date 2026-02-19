@@ -16,7 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Mail, MessageCircle, Github, BookOpen } from 'lucide-react'
+import { Mail, MessageCircle, BookOpen, Building2 } from 'lucide-react'
+import Link from "next/link"
 
 const contactFormSchema = z.object({
   firstName: z.string().min(2, {
@@ -64,7 +65,7 @@ export function ContactSection() {
             Need help or have questions?
           </h2>
           <p className="text-lg text-muted-foreground">
-            Our team is here to help you get the most out of locker. Choose the best way to reach out to us.
+            Our team is here to help you get the most out of Locker. Send us a message or use the options below.
           </p>
         </div>
 
@@ -75,16 +76,16 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MessageCircle className="h-5 w-5 text-primary" />
-                  Discord Community
+                  Get help
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-3">
-                  Join our active community for quick help and discussions with other developers.
+                  Have a question about signing in, assessments or your e-portfolio? We are here to help.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
-                  <a href="https://discord.com/invite/XEQhPc9a6p" target="_blank" rel="noopener noreferrer">
-                    Join Discord
+                  <a href="#contact">
+                    Contact us
                   </a>
                 </Button>
               </CardContent>
@@ -93,17 +94,17 @@ export function ContactSection() {
             <Card className="hover:shadow-md transition-shadow cursor-pointer">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Github className="h-5 w-5 text-primary" />
-                  GitHub Issues
+                  <Building2 className="h-5 w-5 text-primary" />
+                  For centres and employers
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-3">
-                  Report bugs, request features, or contribute to our open source repository.
+                  Interested in using Locker for your organisation? Get in touch for pricing and a demo.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
-                  <a href="https://github.com/silicondeck/shadcn-dashboard-landing-template/issues" target="_blank" rel="noopener noreferrer">
-                    View on GitHub
+                  <a href="#contact">
+                    Contact us
                   </a>
                 </Button>
               </CardContent>
@@ -113,17 +114,17 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BookOpen className="h-5 w-5 text-primary" />
-                  Documentation
+                  Sign in
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-3">
-                  Browse our comprehensive guides, tutorials, and component documentation.
+                  Already have an account? Sign in to access your e-portfolio and assessments.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
-                  <a href="#">
-                    View Docs
-                  </a>
+                  <Link href="/auth/sign-in">
+                    Sign in
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -189,7 +190,7 @@ export function ContactSection() {
                         <FormItem>
                           <FormLabel>Subject</FormLabel>
                           <FormControl>
-                            <Input placeholder="Component request, bug report, general inquiry..." {...field} />
+                            <Input placeholder="e.g. Sign in help, pricing, general question..." {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -203,7 +204,7 @@ export function ContactSection() {
                           <FormLabel>Message</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Tell us how we can help you with locker components..."
+                              placeholder="Tell us how we can help you with Locker..."
                               rows={10}
                               className="min-h-50"
                               {...field}

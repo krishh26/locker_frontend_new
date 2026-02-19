@@ -26,26 +26,18 @@ const footerLinks = {
   product: [
     { name: 'Features', href: '#features' },
     { name: 'Pricing', href: '#pricing' },
-    { name: 'API', href: '#api' },
-    { name: 'Documentation', href: '#docs' },
   ],
   company: [
     { name: 'About', href: '#about' },
     { name: 'Blog', href: '#blog' },
-    { name: 'Careers', href: '#careers' },
-    { name: 'Press', href: '#press' },
   ],
   resources: [
-    { name: 'Help Center', href: '#help' },
-    { name: 'Community', href: '#community' },
-    { name: 'Guides', href: '#guides' },
-    { name: 'Webinars', href: '#webinars' },
+    { name: 'Help', href: '#contact' },
+    { name: 'Contact', href: '#contact' },
   ],
   legal: [
     { name: 'Privacy', href: '#privacy' },
     { name: 'Terms', href: '#terms' },
-    { name: 'Security', href: '#security' },
-    { name: 'Status', href: '#status' },
   ],
 }
 
@@ -121,7 +113,7 @@ export function LandingFooter() {
               </a>
             </div>
             <p className="text-muted-foreground mb-6 max-lg:text-center max-lg:flex max-lg:justify-center">
-              Accelerating web development with curated blocks, templates, landing pages, and admin dashboards designed for modern developers.
+              Platform for learning and development, e-portfolios and assessments. Simple for learners, tutors and centres.
             </p>
             <div className="flex space-x-4 max-lg:justify-center">
               {socialLinks.map((social) => (
@@ -215,7 +207,7 @@ export function LandingFooter() {
               <Heart className="h-4 w-4 text-destructive fill-current" />
               <span>by</span>
               <a href="/" target='_blank' className="font-semibold text-foreground hover:text-primary transition-colors cursor-pointer">
-                Lonke
+                Locker
               </a>
             </div>
             <span className="hidden sm:inline">•</span>

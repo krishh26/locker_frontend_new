@@ -3,105 +3,66 @@
 import { Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { useState } from 'react'
 
 const plans = [
   {
-    name: 'Free',
-    description: 'Perfect for getting started with essential components',
+    name: 'Learners',
+    description: 'For individual learners using Locker',
     monthlyPrice: 0,
     yearlyPrice: 0,
     features: [
-      'Access to 50+ free components',
-      'Basic dashboard templates',
-      'Community support',
-      'GitHub repository access',
-      'Documentation and guides'
+      'Your own e-portfolio',
+      'Add evidence and track progress',
+      'Complete assessments and get feedback',
+      'See your results in one place'
     ],
-    cta: 'Get Started',
+    cta: 'Sign in',
     popular: false
   },
   {
-    name: 'Pro',
-    description: 'For developers who need premium templates and components',
-    monthlyPrice: 19,
-    yearlyPrice: 15,
+    name: 'Centres & employers',
+    description: 'For training centres and employers',
+    monthlyPrice: -1,
+    yearlyPrice: -1,
     features: [
-      'Premium template collection',
-      'Advanced dashboard layouts',
-      'Priority support',
-      'Commercial use license',
-      'Early access to new releases',
-      'Figma design files',
-      'Custom component requests',
-      'Direct developer access',
-      'Exclusive design resources'
+      'Manage learners and courses',
+      'Set and run assessments',
+      'View reports and progress',
+      'Support for tutors and assessors'
     ],
-    cta: 'Get Started',
+    cta: 'Contact for pricing',
     popular: true,
-    includesPrevious: 'All Free features, plus'
+    includesPrevious: undefined
   },
   {
-    name: 'Lifetime',
-    description: 'One-time payment for lifetime access to everything',
-    monthlyPrice: 299,
-    yearlyPrice: 299,
+    name: 'Custom',
+    description: 'Tailored for your organisation',
+    monthlyPrice: -1,
+    yearlyPrice: -1,
     features: [
-      'Lifetime updates and support',
-      'Private Discord channel',
-      'No recurring fees ever',
-      'Future template access',
-      'VIP support priority',
-      'Exclusive beta features'
+      'Everything in Centres & employers',
+      'Custom setup and training',
+      'Dedicated support',
+      'Fits your processes'
     ],
-    cta: 'Get Started',
+    cta: 'Contact us',
     popular: false,
-    includesPrevious: 'All Pro features, plus'
+    includesPrevious: undefined
   }
 ]
 
 export function PricingSection() {
-  const [isYearly, setIsYearly] = useState(false)
-
   return (
     <section id="pricing" className="py-24 sm:py-32 bg-muted/40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <Badge variant="outline" className="mb-4">Pricing Plans</Badge>
+          <Badge variant="outline" className="mb-4">Pricing</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Choose your plan
+            Simple options for everyone
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Start building with our free components or upgrade to Pro for access to premium templates and advanced features.
-          </p>
-
-          {/* Billing Toggle */}
-          <div className="flex items-center justify-center mb-2">
-            <ToggleGroup
-              type="single"
-              value={isYearly ? "yearly" : "monthly"}
-              onValueChange={(value) => setIsYearly(value === "yearly")}
-              className="bg-secondary text-secondary-foreground border-none rounded-full p-1 cursor-pointer shadow-none"
-            >
-              <ToggleGroupItem
-                value="monthly"
-                className="data-[state=on]:bg-background data-[state=on]:border-border border-transparent border px-6 !rounded-full data-[state=on]:text-foreground hover:bg-transparent cursor-pointer transition-colors"
-              >
-                Monthly
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="yearly"
-                className="data-[state=on]:bg-background data-[state=on]:border-border border-transparent border px-6 !rounded-full data-[state=on]:text-foreground hover:bg-transparent cursor-pointer transition-colors"
-              >
-                Annually
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </div>
-
-          <p className="text-sm text-muted-foreground">
-            <span className="text-primary font-semibold">Save 20%</span> On Annual Billing
+            Learners can use Locker for free. Centres and employers—contact us for pricing that fits your organisation.
           </p>
         </div>
 
@@ -127,16 +88,16 @@ export function PricingSection() {
                   {/* Pricing */}
                   <div>
                     <div className="text-4xl font-bold mb-1">
-                      {plan.name === 'Lifetime' ? (
-                        `$${plan.monthlyPrice}`
-                      ) : plan.name === 'Free' ? (
-                        '$0'
+                      {plan.monthlyPrice === -1 ? (
+                        'Contact us'
+                      ) : plan.monthlyPrice === 0 ? (
+                        'Free'
                       ) : (
-                        `$${isYearly ? plan.yearlyPrice : plan.monthlyPrice}`
+                        `$${plan.monthlyPrice}`
                       )}
                     </div>
                     <div className="text-muted-foreground text-sm">
-                      {plan.name === 'Lifetime' ? 'One-time payment' : 'Per month'}
+                      {plan.monthlyPrice === -1 ? 'We will get in touch' : 'For learners'}
                     </div>
                   </div>
 
@@ -146,11 +107,12 @@ export function PricingSection() {
                       className={`w-full cursor-pointer my-2 ${
                         plan.popular
                           ? 'shadow-md border-[0.5px] border-white/25 shadow-black/20 bg-primary ring-1 ring-primary text-primary-foreground hover:bg-primary/90'
-                          : 'shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 hover:bg-muted'
+                          : 'shadow-sm shadow-black/15 border border-transparent bg-background ring-1 ring-foreground/10 hover:bg-muted text-black'
                       }`}
                       variant={plan.popular ? 'default' : 'secondary'}
+                      asChild
                     >
-                      {plan.cta}
+                      <a href={plan.cta === 'Sign in' ? '/auth/sign-in' : '#contact'}>{plan.cta}</a>
                     </Button>
                   </div>
 
@@ -159,12 +121,12 @@ export function PricingSection() {
                     <ul role="list" className="space-y-3 text-sm">
                       {plan.includesPrevious && (
                         <li className="flex items-center gap-3 font-medium">
-                          {plan.includesPrevious}:
+                          {plan.includesPrevious}
                         </li>
                       )}
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center gap-3">
-                          <Check className="text-muted-foreground size-4 flex-shrink-0" strokeWidth={2.5} />
+                          <Check className="text-muted-foreground size-4 shrink-0" strokeWidth={2.5} />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -176,13 +138,12 @@ export function PricingSection() {
           </div>
         </div>
 
-        {/* Enterprise Note */}
         <div className="mt-16 text-center">
           <p className="text-muted-foreground">
-            Need custom components or have questions? {' '}
+            Have questions about pricing? {' '}
             <Button variant="link" className="p-0 h-auto cursor-pointer" asChild>
               <a href="#contact">
-                Contact our team
+                Contact us
               </a>
             </Button>
           </p>

@@ -9,26 +9,26 @@ const blogs = [
     {
       id: 1,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Technology',
-      title: 'AI Development Catalysts',
+      category: 'Learning',
+      title: 'Getting started with your e-portfolio',
       description:
-        'Exploring how AI-driven tools are transforming software development workflows and accelerating innovation.',
+        'A simple guide to adding evidence and tracking your progress in Locker.',
     },
     {
       id: 2,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Lifestyle',
-      title: 'Minimalist Living Guide',
+      category: 'For centres',
+      title: 'Managing learners and assessments',
       description:
-        'Minimalist living approaches that can help reduce stress and create more meaningful daily experiences.',
+        'How centres and employers can use Locker to manage learning and see reports.',
     },
     {
       id: 3,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Design',
-      title: 'Accessible UI Trends',
+      category: 'Updates',
+      title: 'What’s new in Locker',
       description:
-        'How modern UI trends are embracing accessibility while maintaining sleek, intuitive user experiences.',
+        'Latest updates and improvements to make learning and assessment even simpler.',
     },
   ]
 
@@ -38,12 +38,12 @@ export function BlogSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Latest Insights</Badge>
+          <Badge variant="outline" className="mb-4">Resources</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            From our blog
+            Guides and updates
           </h2>
           <p className="text-lg text-muted-foreground">
-            Stay updated with the latest trends, best practices, and insights from our team of experts.
+            Simple guides and news about Locker—for learners, tutors and centres.
           </p>
         </div>
 

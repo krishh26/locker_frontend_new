@@ -12,28 +12,28 @@ import { DotPattern } from '@/components/dot-pattern'
 
 const stats = [
   {
-    icon: Package,
-    value: '500+',
-    label: 'Components',
-    description: 'Ready-to-use blocks'
-  },
-  {
-    icon: Download,
-    value: '25K+',
-    label: 'Downloads',
-    description: 'Trusted worldwide'
-  },
-  {
     icon: Users,
-    value: '10K+',
-    label: 'Developers',
-    description: 'Active community'
+    value: 'Learners',
+    label: 'Track progress',
+    description: 'All in one place'
+  },
+  {
+    icon: Package,
+    value: 'E-portfolio',
+    label: 'Evidence & work',
+    description: 'Keep everything together'
   },
   {
     icon: Star,
-    value: '4.9',
-    label: 'Rating',
-    description: 'User satisfaction'
+    value: 'Assessments',
+    label: 'Get feedback',
+    description: 'From your tutors'
+  },
+  {
+    icon: Download,
+    value: 'Centres',
+    label: 'Manage simply',
+    description: 'Used nationwide'
   }
 ]
 
@@ -41,7 +41,7 @@ export function StatsSection() {
   return (
     <section className="py-12 sm:py-16 relative">
       {/* Background with transparency */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-transparent to-secondary/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-primary/8 via-transparent to-secondary/20" />
       <DotPattern className="opacity-75" size="md" fadeStyle="circle" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -59,7 +59,7 @@ export function StatsSection() {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground">
                     {stat.value}
                   </h3>
                   <p className="font-semibold text-foreground">{stat.label}</p>

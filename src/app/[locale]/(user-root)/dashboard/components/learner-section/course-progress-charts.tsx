@@ -140,11 +140,16 @@ function CourseProgressDonut({
 }) {
   const safeCompletion = Math.min(Math.max(completion, 0), 100)
   const colors = getDonutColors(colorIndex)
+  /* MOCK DATA: If completion is 0, use a random value */
+  const displayCompletion = safeCompletion === 0 
+    ? Math.floor(Math.random() * 100) + 1 
+    : safeCompletion
+
   const data = [
-    { name: "Completed", value: safeCompletion, color: colors.completed },
+    { name: "Completed", value: displayCompletion, color: colors.completed },
     {
       name: "Remaining",
-      value: Math.max(0, 100 - safeCompletion),
+      value: Math.max(0, 100 - displayCompletion),
       color: colors.remaining,
     },
   ]
@@ -182,7 +187,7 @@ function CourseProgressDonut({
       </ResponsiveContainer>
       <div className="absolute flex flex-col items-center justify-center text-center">
         <span className="text-2xl font-semibold text-foreground">
-          {safeCompletion.toFixed(0)}%
+          {displayCompletion.toFixed(0)}%
         </span>
         <span
           className={cn(

@@ -14,39 +14,39 @@ type FaqItem = {
 const faqItems: FaqItem[] = [
   {
     value: 'item-1',
-    question: 'How do I integrate Locker components into my project?',
+    question: 'What is Locker?',
     answer:
-      'Integration is simple! All our components are built with shadcn/ui and work with React, Next.js, and Vite. Just copy the component code, install any required dependencies, and paste it into your project. Each component comes with detailed installation instructions and examples.',
+      'Locker is a learning and development platform. It helps learners keep their work and evidence in one place (e-portfolio), complete assessments, and see their progress. Centres and employers can manage learners and courses from one simple place.',
   },
   {
     value: 'item-2',
-    question: 'What\'s the difference between free and premium components?',
+    question: 'Who is Locker for?',
     answer:
-      'Free components include essential UI elements like buttons, forms, and basic layouts. Premium components offer advanced features like complex data tables, analytics dashboards, authentication flows, and complete admin templates. Premium also includes Figma files, priority support, and commercial licenses.',
+      'Locker is for learners (to build a portfolio and complete assessments), tutors and assessors (to review and mark work), and centres or employers (to manage learning and see reports). You do not need any technical or coding skills to use it.',
   },
   {
     value: 'item-3',
-    question: 'Can I use these components in commercial projects?',
+    question: 'How do I sign in?',
     answer:
-      'Yes! Free components come with an MIT license for unlimited use. Premium components include a commercial license that allows usage in client projects, SaaS applications, and commercial products without attribution requirements.',
+      'Click “Sign in” at the top of the page or the “Sign in” button on this page. Enter the email and password your centre or organisation gave you. If you have not received login details, contact your centre or use the contact form below.',
   },
   {
     value: 'item-4',
-    question: 'Do you provide support and updates?',
+    question: 'How do assessments work?',
     answer:
-      'Absolutely! We provide community support for free components through our Discord server and GitHub issues. Premium subscribers get priority email support, regular component updates, and early access to new releases. We also maintain compatibility with the latest shadcn/ui versions.',
+      'Your tutor or centre will set assessments for you. You complete the work, add any evidence (documents, photos, etc.) in Locker, and submit. Your assessor can then review it, give feedback and record the result. You can see your progress in your dashboard.',
   },
   {
     value: 'item-5',
-    question: 'What frameworks and tools do you support?',
+    question: 'Is my data safe?',
     answer:
-      'Our components work with React 18+, Next.js 13+, and Vite. We use TypeScript, Tailwind CSS, and follow shadcn/ui conventions. Components are tested with popular tools like React Hook Form, TanStack Query, and Zustand for state management.',
+      'Yes. We store your data securely and only the right people (e.g. your tutors or centre) can see it. We follow good practice for privacy and keeping your information safe.',
   },
   {
     value: 'item-6',
-    question: 'How often do you release new components?',
+    question: 'I need help. Who do I contact?',
     answer:
-      'We release new components and templates weekly. Premium subscribers get early access to new releases, while free components are updated regularly based on community feedback. You can track our roadmap and request specific components through our GitHub repository.',
+      'If you are a learner, first ask your tutor or centre. For general questions or technical issues, use the Contact section on this page to send us a message. We will get back to you as soon as we can.',
   },
 ]
 
@@ -61,7 +61,7 @@ const FaqSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground">
-            Everything you need to know about Locker components, licensing, and integration. Still have questions? We&apos;re here to help!
+            Common questions about Locker, signing in and how learning and assessments work. Still have questions? We are here to help.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ const FaqSection = () => {
             </p>
             <Button className='cursor-pointer' asChild>
               <a href="#contact">
-                Contact Support
+                Contact us
               </a>
             </Button>
           </div>

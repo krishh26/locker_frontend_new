@@ -14,50 +14,51 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Image3D } from '@/components/image-3d'
+import Link from 'next/link'
 
 const mainFeatures = [
   {
     icon: Package,
-    title: 'Curated Component Library',
-    description: 'Hand-picked blocks and templates for quality and reliability.'
+    title: 'E-portfolio',
+    description: 'Keep all your work, evidence and achievements in one place that you can access anytime.'
   },
   {
     icon: Crown,
-    title: 'Free & Premium Options',
-    description: 'Start free, upgrade to premium collections when you need more.'
+    title: 'Assessments',
+    description: 'Complete assessments and get feedback from your tutors in a clear, simple way.'
   },
   {
     icon: Layout,
-    title: 'Ready-to-Use Templates',
-    description: 'Copy-paste components that just work out of the box.'
+    title: 'Progress tracking',
+    description: 'See how you are doing and what is left to complete—no guesswork.'
   },
   {
     icon: Zap,
-    title: 'Regular Updates',
-    description: 'New blocks and templates added weekly to keep you current.'
+    title: 'Evidence and documents',
+    description: 'Add documents, photos or other evidence to show what you have learned.'
   }
 ]
 
 const secondaryFeatures = [
   {
     icon: BarChart3,
-    title: 'Multiple Frameworks',
-    description: 'React, Next.js, and Vite compatibility for flexible development.'
+    title: 'Reports',
+    description: 'View reports on progress and completion for learners and centres.'
   },
   {
     icon: Palette,
-    title: 'Modern Tech Stack',
-    description: 'Built with shadcn/ui, Tailwind CSS, and TypeScript.'
+    title: 'For centres and employers',
+    description: 'Manage learners, courses and assessments from one place.'
   },
   {
     icon: Users,
-    title: 'Responsive Design',
-    description: 'Mobile-first components for all screen sizes and devices.'
+    title: 'Tutor and assessor tools',
+    description: 'Review work, give feedback and mark assessments easily.'
   },
   {
     icon: Database,
-    title: 'Developer-Friendly',
-    description: 'Clean code, well-documented, easy integration and customization.'
+    title: 'Safe and secure',
+    description: 'Your data is stored securely and only the right people can see it.'
   }
 ]
 
@@ -67,12 +68,12 @@ export function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Marketplace Features</Badge>
+          <Badge variant="outline" className="mb-4">What Locker offers</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Everything you need to build amazing web applications
+            Everything you need for learning and assessment
           </h2>
           <p className="text-lg text-muted-foreground">
-            Our marketplace provides curated blocks, templates, landing pages, and admin dashboards to help you build professional applications faster than ever.
+            Whether you are a learner, a tutor or a centre—Locker helps you manage learning, evidence and assessments in one simple platform.
           </p>
         </div>
 
@@ -80,7 +81,7 @@ export function FeaturesSection() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8 xl:gap-16 mb-24">
           {/* Left Image */}
           <Image3D
-            lightSrc="/feature-1-light.png"
+            lightSrc="/feature-1.png"
             darkSrc="/feature-1-dark.png"
             alt="Analytics dashboard"
             direction="left"
@@ -89,10 +90,10 @@ export function FeaturesSection() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                Components that accelerate development
+                Built for how you learn and assess
               </h3>
               <p className="text-muted-foreground text-base text-pretty">
-                Our curated marketplace offers premium blocks and templates designed to save time and ensure consistency across your admin projects.
+                Locker brings together your e-portfolio, assessments and progress in one place. Add evidence, get feedback and see your journey clearly.
               </p>
             </div>
 
@@ -103,7 +104,7 @@ export function FeaturesSection() {
                     <feature.icon className="size-5 text-primary" aria-hidden="true" />
                   </div>
                   <div>
-                    <h3 className="text-foreground font-medium">{feature.title}</h3>
+                    <h3 className="text-foreground font-medium text-balance">{feature.title}</h3>
                     <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
                   </div>
                 </li>
@@ -111,16 +112,14 @@ export function FeaturesSection() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4 pe-4 pt-2">
-              <Button size="lg" className="cursor-pointer">
-                <a href="https://shadcnstore.com/templates" className='flex items-center'>
-                  Browse Templates
+              <Button size="lg" className="cursor-pointer" asChild>
+                <Link href="/auth/sign-in" className='flex items-center'>
+                  Sign in
                   <ArrowRight className="ms-2 size-4" aria-hidden="true" />
-                </a>
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" className="cursor-pointer">
-                <a href="https://shadcnstore.com/blocks">
-                  View Components
-                </a>
+              <Button size="lg" variant="outline" className="cursor-pointer" asChild>
+                <Link href="#pricing">See pricing</Link>
               </Button>
             </div>
           </div>
@@ -132,10 +131,10 @@ export function FeaturesSection() {
           <div className="space-y-6 order-2 lg:order-1">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                Built for modern development workflows
+                Simple for everyone—no technical skills needed
               </h3>
               <p className="text-muted-foreground text-base text-pretty">
-                Every component follows best practices with TypeScript, responsive design, and clean code architecture that integrates seamlessly into your projects.
+                Locker is easy to use. Learners can add evidence and track progress; tutors can review and assess; centres can manage courses and reports—all in plain language.
               </p>
             </div>
 
@@ -146,7 +145,7 @@ export function FeaturesSection() {
                     <feature.icon className="size-5 text-primary" aria-hidden="true" />
                   </div>
                   <div>
-                    <h3 className="text-foreground font-medium">{feature.title}</h3>
+                    <h3 className="text-foreground font-medium text-balance">{feature.title}</h3>
                     <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
                   </div>
                 </li>
@@ -154,24 +153,22 @@ export function FeaturesSection() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4 pe-4 pt-2">
-              <Button size="lg" className="cursor-pointer">
-                <a href="#" className='flex items-center'>
-                  View Documentation
+              <Button size="lg" className="cursor-pointer" asChild>
+                <Link href="/auth/sign-in" className='flex items-center'>
+                  Get started
                   <ArrowRight className="ms-2 size-4" aria-hidden="true" />
-                </a>
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" className="cursor-pointer">
-                <a href="https://github.com/silicondeck/shadcn-dashboard-landing-template" target="_blank" rel="noopener noreferrer">
-                  GitHub Repository
-                </a>
+              <Button size="lg" variant="outline" className="cursor-pointer" asChild>
+                <Link href="#contact">Contact us</Link>
               </Button>
             </div>
           </div>
 
           {/* Right Image */}
           <Image3D
-            lightSrc="/feature-2-light.png"
-            darkSrc="/feature-2-dark.png"
+            lightSrc="/feature-1.png"
+            darkSrc="/feature-1-dark.png"
             alt="Performance dashboard"
             direction="right"
             className="order-1 lg:order-2"

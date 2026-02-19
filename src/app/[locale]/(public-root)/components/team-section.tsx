@@ -122,13 +122,13 @@ export function TeamSection() {
         {/* Section Header */}
         <div className="mx-auto max-w-4xl text-center mb-16">
           <Badge variant="outline" className="mb-4">
-            Our Team
+            Our team
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-            Meet our team
+            The people behind Locker
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            We are a passionate team of innovators, builders, and problem-solvers dedicated to creating exceptional digital experiences that make a difference.
+            We build Locker so that learning and assessment are simple for everyone—learners, tutors, centres and employers.
           </p>
         </div>
 

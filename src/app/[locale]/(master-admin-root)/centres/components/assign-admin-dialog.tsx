@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import { Loader2, X } from "lucide-react"
+import { Loader2, X, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Input } from "@/components/ui/input"
 import { useSetCentreAdminsMutation } from "@/store/api/centres/centreApi"
 import { useGetUsersByRoleQuery } from "@/store/api/user/userApi"
 import type { AdminUser } from "@/store/api/centres/types"
@@ -35,10 +36,34 @@ export function AssignAdminDialog({
     [currentAdmins]
   )
   const [selectedAdminIds, setSelectedAdminIds] = useState<number[]>(currentAdminIds)
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
     setSelectedAdminIds(currentAdminIds)
   }, [currentAdminIds])
+
+  const filteredAdmins = useMemo(() => {
+    let admins = allAdmins
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      admins = allAdmins.filter(
+        (admin) =>
+          admin.first_name.toLowerCase().includes(query) ||
+          admin.last_name.toLowerCase().includes(query) ||
+          admin.email.toLowerCase().includes(query)
+      )
+    }
+
+    return [...admins].sort((a, b) => {
+      const aSelected = selectedAdminIds.includes(a.user_id)
+      const bSelected = selectedAdminIds.includes(b.user_id)
+
+      if (aSelected && !bSelected) return -1
+      if (!aSelected && bSelected) return 1
+      return 0
+    })
+  }, [allAdmins, searchQuery, selectedAdminIds])
 
   const handleToggleAdmin = (adminId: number) => {
     setSelectedAdminIds((prev) =>
@@ -88,16 +113,25 @@ export function AssignAdminDialog({
         <p className="text-sm text-muted-foreground">
           Choose which admins can manage this centre. Click Save when done.
         </p>
+        <div className="relative">
+          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-8"
+          />
+        </div>
       </div>
 
       <ScrollArea className="h-[300px] w-full rounded-md border p-4">
-        {allAdmins.length === 0 ? (
+        {filteredAdmins.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
-            No admin users available
+            {searchQuery ? "No admins found matching your search" : "No admin users available"}
           </div>
         ) : (
           <div className="space-y-3">
-            {allAdmins.map((admin) => {
+            {filteredAdmins.map((admin) => {
               const isSelected = selectedAdminIds.includes(admin.user_id)
               return (
                 <div

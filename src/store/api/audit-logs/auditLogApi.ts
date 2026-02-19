@@ -8,6 +8,7 @@ import { baseQuery } from "@/store/api/baseQuery"
 
 export interface AuditLogFilters {
   organisationId?: number
+  centreId?: number
   action?: string
   user?: string
   dateFrom?: string
@@ -25,6 +26,7 @@ export const auditLogApi = createApi({
       query: (filters = {}) => {
         const {
           organisationId,
+          centreId,
           action = "",
           user = "",
           dateFrom = "",
@@ -35,6 +37,9 @@ export const auditLogApi = createApi({
         let url = `/audit-logs?page=${page}&limit=${limit}`
         if (organisationId) {
           url += `&organisationId=${organisationId}`
+        }
+        if (centreId) {
+          url += `&centreId=${centreId}`
         }
         if (action) {
           url += `&action=${encodeURIComponent(action)}`

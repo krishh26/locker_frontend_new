@@ -43,6 +43,7 @@ export const learnerApi = createApi({
           course_id = "",
           employer_id = "",
           employer_ids = "",
+          centre_id,
           status = "",
           user_id = "",
           role = "",
@@ -56,6 +57,9 @@ export const learnerApi = createApi({
         }
         if (employer_id) {
           url += `&employer_id=${encodeURIComponent(employer_id)}`;
+        }
+        if (centre_id) {
+          url += `&centre_id=${encodeURIComponent(centre_id)}`;
         }
         if (status) {
           url += `&status=${encodeURIComponent(status)}`;

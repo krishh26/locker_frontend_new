@@ -122,7 +122,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <div className="flex h-8 w-8 items-center justify-center rounded-lg">
-                <Lock className="h-6 w-6 text-sidebar-primary" />
+                <Lock className="h-6 w-6 text-white" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium text-sidebar-foreground">{displayName}</span>

@@ -124,6 +124,8 @@
   /* --sidebar-ring: #0cc0df; */
   --sidebar-ring: #0cc0df;
   --success: var(--accent);
+  --sidebar-scrollbar: #028090;
+  --sidebar-scrollbar-track: var(--accent-foreground);
   --success-foreground: var(--accent-foreground);
   --warning: var(--secondary);
   --warning-foreground: var(--secondary-foreground);
@@ -336,4 +338,28 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0; 
+}
+/* Webkit Browsers (Chrome, Edge, Safari) */
+[data-sidebar="content"]::-webkit-scrollbar {
+  width: 4px;
+}
+
+[data-sidebar="content"]::-webkit-scrollbar-track {
+  background: var(--sidebar-scrollbar-track);
+  border-radius: 10px;
+}
+
+[data-sidebar="content"]::-webkit-scrollbar-thumb {
+  background: var(--sidebar-scrollbar);
+  border-radius: 10px;
+}
+
+[data-sidebar="content"]::-webkit-scrollbar-thumb:hover {
+  background: #00a8b5;
+}
+
+/* Firefox */
+[data-sidebar="content"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sidebar-scrollbar) var(--sidebar-scrollbar-track);
 }

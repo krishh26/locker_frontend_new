@@ -1021,7 +1021,7 @@ export function UsersForm({ user }: UsersFormProps) {
       )}
 
       {/* Centres */}
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <Label htmlFor="centre_ids">Centres</Label>
         <Controller
           name="centre_ids"
@@ -1065,7 +1065,7 @@ export function UsersForm({ user }: UsersFormProps) {
             );
           }}
         />
-      </div>
+      </div> */}
 
       {/* EQA Learner Assignment Section */}
       {hasEqaRole && (

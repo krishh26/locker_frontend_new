@@ -13,6 +13,7 @@ import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { filterRolesFromApi } from "@/config/auth-roles"
 import { useLoginMutation } from "@/store/api/auth/authApi"
 import type { AuthUser } from "@/store/api/auth/types"
 import { useLazyGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi"
@@ -126,13 +127,14 @@ export function LoginForm({
           assignedOrganisationIds = orgIds.length > 0 ? orgIds : null
         }
 
+        const filteredRoles = filterRolesFromApi(userData.roles)
         const authUser: AuthUser = {
           id: userData.user_id?.toString(),
           email: userData.email,
           firstName: userData.first_name,
           lastName: userData.last_name,
-          role: userData.roles?.[0],
-          roles: userData.roles,
+          role: filteredRoles[0],
+          roles: filteredRoles.length > 0 ? filteredRoles : undefined,
           user_id: userData.user_id,
           user_name: userData.user_name,
           mobile: userData.mobile,

@@ -1,6 +1,7 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation"
+import { filterRolesFromApi } from "@/config/auth-roles"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
 import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
@@ -294,7 +295,7 @@ export default function CentreDetailPage() {
                           <TableCell>{admin.email}</TableCell>
                           <TableCell>
                             <div className="flex gap-1 flex-wrap">
-                              {admin.roles.map((role) => (
+                              {filterRolesFromApi(admin.roles ?? []).map((role) => (
                                 <Badge key={role} variant="secondary">
                                   {role}
                                 </Badge>

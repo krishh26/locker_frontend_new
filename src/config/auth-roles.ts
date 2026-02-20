@@ -10,7 +10,21 @@ const baseRoles = [
   "AccountManager",
 ] as const
 
+/** Roles returned by API that we strip from auth/display (not used in app) */
+export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin"] as const
+
 export type Role = (typeof baseRoles)[number]
+
+/**
+ * Filter out CentreAdmin and OrganisationAdmin from role arrays (e.g. from API).
+ * Use when setting user.roles or displaying roles so these two are never shown or used.
+ */
+export function filterRolesFromApi(roles: string[] | null | undefined): string[] {
+  if (!Array.isArray(roles) || roles.length === 0) return []
+  return roles.filter(
+    (r) => !ROLES_STRIPPED_FROM_API.includes(r as (typeof ROLES_STRIPPED_FROM_API)[number])
+  )
+}
 
 export const authRoles = {
   Admin: ["Admin"] as const satisfies readonly Role[],
@@ -31,6 +45,9 @@ export const authRoles = {
 
 export function normalizeRole(role: unknown): Role | null {
   if (typeof role !== "string") {
+    return null
+  }
+  if (ROLES_STRIPPED_FROM_API.includes(role as (typeof ROLES_STRIPPED_FROM_API)[number])) {
     return null
   }
   return (baseRoles as readonly string[]).includes(role)

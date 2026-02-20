@@ -1,3 +1,4 @@
+import { filterRolesFromApi } from "@/config/auth-roles"
 import { AuthUser, LoginResult } from "./types"
 
 export const DEFAULT_ERROR_MESSAGE =
@@ -84,6 +85,7 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
   const assignedCenterIds: number[] | null =
     assignedCenters?.length ? assignedCenters.map((c) => c.id) : null;
 
+  const filteredRoles = filterRolesFromApi(user.roles as string[] | undefined)
   const tokenUser: AuthUser = {
     id: (user.id as string | undefined) ?? (user.user_id as string | undefined),
     email: user.email as string | undefined,
@@ -93,8 +95,8 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     lastName:
       (user.last_name as string | undefined) ??
       (user.lastName as string | undefined),
-    role: user.role as string | undefined,
-    roles: user.roles as string[] | undefined,
+    role: filteredRoles[0] ?? (user.role as string | undefined),
+    roles: filteredRoles.length > 0 ? filteredRoles : undefined,
     learner_id: (user.learner_id as number | undefined) ?? (user.learner_id as string | undefined),
     assignedOrganisationIds: assignedOrgIds,
     assigned_centers: assignedCenters,

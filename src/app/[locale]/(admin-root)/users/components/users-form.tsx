@@ -28,6 +28,7 @@ import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
 import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
 import { toast } from "sonner";
+import { filterRolesFromApi } from "@/config/auth-roles";
 import { useAppSelector } from "@/store/hooks";
 import { isAccountManager } from "@/utils/permissions";
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
@@ -215,7 +216,7 @@ export function UsersForm({ user }: UsersFormProps) {
         email: user.email,
         mobile: user.mobile,
         time_zone: user.time_zone || "UTC",
-        roles: user.roles,
+        roles: filterRolesFromApi(user.roles),
         line_manager_id: user.line_manager?.user_id?.toString() || "",
         employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
         organisation_ids: user.assigned_organisations?.map((org) => org.id) || [],

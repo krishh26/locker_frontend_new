@@ -31,7 +31,6 @@ import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
 import { isAccountManager } from "@/utils/permissions";
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
-import { useGetCentresQuery } from "@/store/api/centres/centreApi";
 
 // Roles will be translated in component
 const roleValues = [
@@ -74,7 +73,6 @@ const createUserSchema = (t: (key: string) => string) => z
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
     organisation_ids: z.array(z.number()).optional(),
-    centre_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -108,7 +106,6 @@ const updateUserSchema = (t: (key: string) => string) => z
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
     organisation_ids: z.array(z.number()).optional(),
-    centre_ids: z.array(z.number()).optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -188,7 +185,6 @@ export function UsersForm({ user }: UsersFormProps) {
           line_manager_id: "",
           employer_ids: [],
           organisation_ids: [],
-          centre_ids: [],
           selectedCourseForAssignment: "",
           assignedLearners: [],
         }
@@ -205,7 +201,6 @@ export function UsersForm({ user }: UsersFormProps) {
           line_manager_id: "",
           employer_ids: [],
           organisation_ids: [],
-          centre_ids: [],
           selectedCourseForAssignment: "",
           assignedLearners: [],
         },
@@ -224,7 +219,6 @@ export function UsersForm({ user }: UsersFormProps) {
         line_manager_id: user.line_manager?.user_id?.toString() || "",
         employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
         organisation_ids: user.assigned_organisations?.map((org) => org.id) || [],
-        centre_ids: user.assigned_centres?.map((c) => c.id) || [],
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -242,7 +236,6 @@ export function UsersForm({ user }: UsersFormProps) {
         line_manager_id: "",
         employer_ids: [],
         organisation_ids: [],
-        centre_ids: [],
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -300,42 +293,6 @@ export function UsersForm({ user }: UsersFormProps) {
       label: org.name,
     }));
   }, [organisationsData?.data, authUser?.assignedOrganisationIds]);
-
-  // Centres for user assignment
-  const { data: centresData, isLoading: isLoadingCentres } = useGetCentresQuery(
-    { page: 1, limit: 500, meta: true, status: "active" }
-  );
-  const centreOptions: Option[] = useMemo(() => {
-    const list = centresData?.data ?? [];
-    return list.map((centre) => ({
-      value: centre.id.toString(),
-      label: centre.name,
-      organisationId: centre.organisationId,  // keep for filtering
-    }));
-  }, [centresData?.data]);
-
-  // Auto-remove orphan centres when organisation_ids changes
-  const watchedOrgIds = form.watch("organisation_ids");
-
-  useEffect(() => {
-    const currentCentreIds = form.getValues("centre_ids") ?? [];
-    if (!currentCentreIds.length) return;
-
-    const selectedOrgIds = new Set(watchedOrgIds ?? []);
-    // If no orgs selected, no filtering needed (show all is allowed)
-    if (selectedOrgIds.size === 0) return;
-
-    // Remove centres whose org is NOT in the selected orgs
-    const validCentreIds = currentCentreIds.filter((cId) => {
-      const centreOpt = centresData?.data?.find((c) => c.id === cId);
-      if (!centreOpt) return false;
-      return selectedOrgIds.has(centreOpt.organisationId);
-    });
-
-    if (validCentreIds.length !== currentCentreIds.length) {
-      form.setValue("centre_ids", validCentreIds);
-    }
-  }, [watchedOrgIds, centresData?.data, form]);
 
   // Fetch all courses for the course selection dropdown
   const { data: coursesData } = useCachedCoursesList({
@@ -1019,53 +976,6 @@ export function UsersForm({ user }: UsersFormProps) {
           />
         </div>
       )}
-
-      {/* Centres */}
-      {/* <div className="space-y-2">
-        <Label htmlFor="centre_ids">Centres</Label>
-        <Controller
-          name="centre_ids"
-          control={form.control}
-          render={({ field }) => {
-            const selectedOptions: Option[] =
-              (field.value ?? []).map((id) => {
-                const opt = centreOptions.find(
-                  (o) => o.value === String(id)
-                );
-                return opt ?? { value: String(id), label: String(id) };
-              });
-
-            return (
-              <MultipleSelector
-                value={selectedOptions}
-                options={centreOptions}
-                placeholder={
-                  isLoadingCentres
-                    ? "Loading centres..."
-                    : "Select centres..."
-                }
-                onChange={(options: Option[]) => {
-                  const ids = options.map((opt: Option) => Number(opt.value));
-                  field.onChange(ids);
-                }}
-                disabled={isLoadingCentres}
-                loadingIndicator={
-                  <div className="flex items-center justify-center p-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  </div>
-                }
-                emptyIndicator={
-                  <p className="text-center text-sm text-muted-foreground">
-                    No centres found
-                  </p>
-                }
-                className="w-full"
-                direction="up"
-              />
-            );
-          }}
-        />
-      </div> */}
 
       {/* EQA Learner Assignment Section */}
       {hasEqaRole && (

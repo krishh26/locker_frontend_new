@@ -78,6 +78,12 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     }
   }
 
+  // Extract assigned_centers / assigned_centres and assignedCenterIds
+  const rawCenters = (user.assigned_centers ?? user.assigned_centres) as Array<{ id: number; name: string; organisation_id?: number }> | undefined;
+  const assignedCenters = Array.isArray(rawCenters) ? rawCenters : undefined;
+  const assignedCenterIds: number[] | null =
+    assignedCenters?.length ? assignedCenters.map((c) => c.id) : null;
+
   const tokenUser: AuthUser = {
     id: (user.id as string | undefined) ?? (user.user_id as string | undefined),
     email: user.email as string | undefined,
@@ -91,6 +97,8 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     roles: user.roles as string[] | undefined,
     learner_id: (user.learner_id as number | undefined) ?? (user.learner_id as string | undefined),
     assignedOrganisationIds: assignedOrgIds,
+    assigned_centers: assignedCenters,
+    assignedCenterIds,
   }
 
   return {

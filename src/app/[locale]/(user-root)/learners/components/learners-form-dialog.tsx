@@ -205,20 +205,21 @@ export function LearnersFormDialog({
 
   const onSubmit = async (values: CreateLearnerFormValues | UpdateLearnerFormValues) => {
     try {
+      const payload = values as CreateLearnerRequest & UpdateLearnerRequest;
       if (authUser?.assignedOrganisationIds?.length) {
-        (values as CreateLearnerRequest & UpdateLearnerRequest).organisation_ids =
-          authUser.assignedOrganisationIds.map((id) => Number(id));
+        payload.organisation_id = authUser.assignedOrganisationIds[0];
+      }
+      if (authUser?.assignedCenterIds?.length) {
+        payload.centre_id = authUser.assignedCenterIds[0];
       }
       if (isEditMode) {
-        const updateData = values as UpdateLearnerFormValues;
         await updateLearner({
           id: learner.learner_id,
-          data: updateData as UpdateLearnerRequest,
+          data: payload as UpdateLearnerRequest,
         }).unwrap();
         toast.success("Learner updated successfully");
       } else {
-        const createData = values as CreateLearnerFormValues;
-        await createLearner(createData as CreateLearnerRequest).unwrap();
+        await createLearner(payload as CreateLearnerRequest).unwrap();
         toast.success("Learner created successfully");
       }
       onSuccess();

@@ -26,6 +26,12 @@ export type ApiResponse = {
   [key: string]: unknown;
 };
 
+export type AssignedCentre = {
+  id: number;
+  name: string;
+  organisation_id?: number;
+};
+
 export type AuthUser = {
   id?: string;
   email?: string;
@@ -34,6 +40,8 @@ export type AuthUser = {
   role?: string;
   roles?: string[];
   assignedOrganisationIds?: number[] | null;
+  assigned_centers?: AssignedCentre[];
+  assignedCenterIds?: number[] | null;
   [key: string]: unknown;
 };
 

@@ -8,6 +8,7 @@
 export type UserWithOrganisations = {
   role?: string
   assignedOrganisationIds?: number[] | null
+  assignedCenterIds?: number[] | null
 }
 
 /**

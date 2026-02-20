@@ -97,10 +97,35 @@ export function LoginForm({
         // Trigger user fetch - the query will run automatically via useEffect
         const userResponse = await getUser().unwrap()
         const userData = userResponse.data
-        
-        // Extract assignedOrganisationIds from assigned_organisations array
-        const assignedOrganisationIds = userData.assigned_organisations?.map(org => org.id) ?? null
-        
+
+        // Centres: support both assigned_centers (API) and assigned_centres
+        const assignedCenters =
+          userData.assigned_centers ?? userData.assigned_centres ?? []
+        const assignedCenterIds =
+          assignedCenters.length > 0
+            ? assignedCenters.map((c: { id: number }) => c.id)
+            : null
+
+        // Organisations: from assigned_organisations, or for centre admin derive from userCentres
+        let assignedOrganisationIds =
+          userData.assigned_organisations?.map((org: { id: number }) => org.id) ??
+          null
+        if (
+          (!assignedOrganisationIds || assignedOrganisationIds.length === 0) &&
+          userData.userCentres?.length
+        ) {
+          const orgIds = [
+            ...new Set(
+              userData.userCentres
+                .map((uc: { centre?: { organisation_id?: number } }) =>
+                  uc.centre?.organisation_id
+                )
+                .filter((id): id is number => typeof id === "number")
+            ),
+          ]
+          assignedOrganisationIds = orgIds.length > 0 ? orgIds : null
+        }
+
         const authUser: AuthUser = {
           id: userData.user_id?.toString(),
           email: userData.email,
@@ -108,7 +133,6 @@ export function LoginForm({
           lastName: userData.last_name,
           role: userData.roles?.[0],
           roles: userData.roles,
-          // Include all other user data
           user_id: userData.user_id,
           user_name: userData.user_name,
           mobile: userData.mobile,
@@ -121,8 +145,9 @@ export function LoginForm({
           assigned_employers: userData.assigned_employers,
           userEmployers: userData.userEmployers,
           assigned_organisations: userData.assigned_organisations,
-          // Extract assignedOrganisationIds from assigned_organisations
-          assignedOrganisationIds: assignedOrganisationIds,
+          assignedOrganisationIds,
+          assigned_centers: assignedCenters.length > 0 ? assignedCenters : undefined,
+          assignedCenterIds,
         }
         dispatch(updateUser(authUser))
         if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {

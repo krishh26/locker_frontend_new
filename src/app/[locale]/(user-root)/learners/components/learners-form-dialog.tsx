@@ -33,6 +33,7 @@ import type {
   UpdateLearnerRequest,
 } from "@/store/api/learner/types";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
+import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 
 // Funding body options from constants
@@ -124,6 +125,7 @@ export function LearnersFormDialog({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const isEditMode = !!learner;
 
+  const authUser = useAppSelector((state) => state.auth.user);
   const [createLearner, { isLoading: isCreating }] = useCreateLearnerMutation();
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation();
 
@@ -203,6 +205,10 @@ export function LearnersFormDialog({
 
   const onSubmit = async (values: CreateLearnerFormValues | UpdateLearnerFormValues) => {
     try {
+      if (authUser?.assignedOrganisationIds?.length) {
+        (values as CreateLearnerRequest & UpdateLearnerRequest).organisation_ids =
+          authUser.assignedOrganisationIds.map((id) => Number(id));
+      }
       if (isEditMode) {
         const updateData = values as UpdateLearnerFormValues;
         await updateLearner({

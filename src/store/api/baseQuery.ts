@@ -10,14 +10,14 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
  * Centralized baseQuery for all RTK Query APIs
  * - Validates API_BASE_URL before making requests
  * - Adds Authorization header with Bearer token
- * - Handles 401/403 responses by clearing credentials (logout)
+ * - Handles 401 responses by clearing credentials (logout)
+ * - 403 responses are passed through so components can show "Access Denied"
  */
 export const baseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  // Check if API_BASE_URL is configured
   if (!API_BASE_URL || API_BASE_URL.trim() === "") {
     return {
       error: {
@@ -27,7 +27,6 @@ export const baseQuery: BaseQueryFn<
     }
   }
 
-  // Create base query with auth headers
   const baseQueryWithAuth = fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -41,18 +40,23 @@ export const baseQuery: BaseQueryFn<
     },
   })
 
-  // Execute the query
   const result = await baseQueryWithAuth(args, api, extraOptions)
 
-  // Handle 401 (Unauthorized) and 403 (Forbidden) responses
   if (result.error) {
     const status = result.error.status
-    if (status === 401 || status === 403) {
-      // Clear credentials (logout) on authentication failure
+    if (status === 401) {
       api.dispatch(clearCredentials())
       window.location.href = "/"
     }
+    // 403 is NOT auto-logout; centre/org scoped users get 403 when accessing
+    // resources outside their scope. Components handle this with AccessDenied UI.
   }
 
   return result
+}
+
+/** Type guard to check if an RTK Query error is a 403 Forbidden response */
+export function isForbiddenError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false
+  return (error as FetchBaseQueryError).status === 403
 }

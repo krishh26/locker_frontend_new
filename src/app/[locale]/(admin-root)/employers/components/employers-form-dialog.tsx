@@ -34,6 +34,7 @@ import type {
   CreateEmployerRequest,
   UpdateEmployerRequest,
 } from "@/store/api/employer/types";
+import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 
 const businessCategories = [
@@ -105,6 +106,7 @@ export function EmployersFormDialog({
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const authUser = useAppSelector((state) => state.auth.user);
   const [createEmployer, { isLoading: isCreating }] = useCreateEmployerMutation();
   const [updateEmployer, { isLoading: isUpdating }] = useUpdateEmployerMutation();
   const [uploadFile] = useUploadEmployerFileMutation();
@@ -258,6 +260,9 @@ export function EmployersFormDialog({
             }
           : employer?.file || null,
       };
+      if (authUser?.assignedOrganisationIds?.length) {
+        payload.organisation_ids = authUser.assignedOrganisationIds.map((id) => Number(id));
+      }
 
       if (isEditMode) {
         await updateEmployer({

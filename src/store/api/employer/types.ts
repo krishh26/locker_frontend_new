@@ -76,6 +76,7 @@ export interface CreateEmployerRequest {
   assessment_renewal_date?: string;
   insurance_renewal_date?: string;
   file?: EmployerFile | null;
+  organisation_ids?: number[];
 }
 
 export interface UpdateEmployerRequest {
@@ -103,6 +104,7 @@ export interface UpdateEmployerRequest {
   assessment_renewal_date?: string;
   insurance_renewal_date?: string;
   file?: EmployerFile | null;
+  organisation_ids?: number[];
 }
 
 export interface EmployerResponse {

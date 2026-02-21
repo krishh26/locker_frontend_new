@@ -72,11 +72,11 @@ export interface CreateEmployerRequest {
   email: string;
   business_description?: string;
   comments?: string;
-  assessment_date?: string;
-  assessment_renewal_date?: string;
-  insurance_renewal_date?: string;
+  assessment_date?: string | null;
+  assessment_renewal_date?: string | null;
+  insurance_renewal_date?: string | null;
   file?: EmployerFile | null;
-  organisation_ids?: number[];
+  organisation_id?: number;
 }
 
 export interface UpdateEmployerRequest {
@@ -100,11 +100,11 @@ export interface UpdateEmployerRequest {
   email?: string;
   business_description?: string;
   comments?: string;
-  assessment_date?: string;
-  assessment_renewal_date?: string;
-  insurance_renewal_date?: string;
+  assessment_date?: string | null;
+  assessment_renewal_date?: string | null;
+  insurance_renewal_date?: string | null;
   file?: EmployerFile | null;
-  organisation_ids?: number[];
+  organisation_id?: number;
 }
 
 export interface EmployerResponse {

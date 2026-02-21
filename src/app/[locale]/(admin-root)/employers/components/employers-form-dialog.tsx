@@ -253,6 +253,13 @@ export function EmployersFormDialog({
     try {
       const payload: CreateEmployerRequest | UpdateEmployerRequest = {
         ...values,
+        assessment_date: values.assessment_date?.trim() ? values.assessment_date : null,
+        assessment_renewal_date: values.assessment_renewal_date?.trim()
+          ? values.assessment_renewal_date
+          : null,
+        insurance_renewal_date: values.insurance_renewal_date?.trim()
+          ? values.insurance_renewal_date
+          : null,
         file: uploadedFileUrl
           ? {
               url: uploadedFileUrl,
@@ -261,7 +268,7 @@ export function EmployersFormDialog({
           : employer?.file || null,
       };
       if (authUser?.assignedOrganisationIds?.length) {
-        payload.organisation_ids = authUser.assignedOrganisationIds.map((id) => Number(id));
+        payload.organisation_id = authUser.assignedOrganisationIds[0];
       }
 
       if (isEditMode) {

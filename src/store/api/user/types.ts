@@ -62,6 +62,24 @@ export interface User {
     id: number;
     name: string;
   }>;
+  /** API may send assigned_centers (American spelling) */
+  assigned_centers?: Array<{
+    id: number;
+    name: string;
+  }>;
+  /** Used to derive organisation_id for centre admin when assigned_organisations is empty */
+  userCentres?: Array<{
+    id: number;
+    user_id: number;
+    centre_id: number;
+    centre?: {
+      id: number;
+      name: string;
+      organisation_id: number;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  }>;
 }
 
 export interface UserListResponse {
@@ -110,7 +128,7 @@ export interface CreateUserRequest {
   line_manager_id?: string;
   assigned_learner_ids?: number[];
   organisation_ids?: number[];
-  centre_ids?: number[];
+  centre_id?: number;
 }
 
 export interface UpdateUserRequest {
@@ -124,7 +142,7 @@ export interface UpdateUserRequest {
   line_manager_id?: string;
   assigned_learner_ids?: number[];
   organisation_ids?: number[];
-  centre_ids?: number[];
+  centre_id?: number;
 }
 
 export interface UserResponse {

@@ -126,7 +126,8 @@ export interface CreateLearnerRequest {
   national_ins_no?: string;
   job_title: string;
   comment?: string;
-  organisation_ids?: number[];
+  organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface UpdateLearnerRequest {
@@ -141,7 +142,8 @@ export interface UpdateLearnerRequest {
   job_title?: string;
   comment?: string;
   isShowMessage?: boolean;
-  organisation_ids?: number[];
+  organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface UpdateLearnerCommentRequest {

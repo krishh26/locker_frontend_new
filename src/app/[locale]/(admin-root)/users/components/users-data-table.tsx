@@ -26,6 +26,7 @@ import {
   ArrowUp,
   ArrowDown,
 } from "lucide-react";
+import { filterRolesFromApi } from "@/config/auth-roles";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -191,7 +192,7 @@ export function UsersDataTable() {
       user.user_name,
       user.email,
       user.mobile,
-      user.roles.join(", "),
+      filterRolesFromApi(user.roles).join(", "),
       user.status,
     ]);
 
@@ -221,7 +222,7 @@ export function UsersDataTable() {
       user.user_name,
       user.email,
       user.mobile,
-      user.roles.join(", "),
+      filterRolesFromApi(user.roles).join(", "),
       user.status,
     ]);
     exportTableToPdf({ title: "Users", headers, rows });
@@ -306,7 +307,7 @@ export function UsersDataTable() {
         accessorKey: "roles",
         header: t("table.roles"),
         cell: ({ row }) => {
-          const roles = row.original.roles;
+          const roles = filterRolesFromApi(row.original.roles);
           return roles.join(", ");
         },
       },

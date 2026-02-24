@@ -210,13 +210,17 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         ?.split(",")
         .map((role) => role.trim().replace(/^'(.*)'$/, "$1"));
 
-      const completionRolesArray = completion_roles
-        ?.split(",")
-        .map((role) => role.trim().replace(/^'(.*)'$/, "$1"));
+      const completionRolesArray = Array.isArray(completion_roles)
+        ? completion_roles
+        : typeof completion_roles === 'string'
+        ? completion_roles.split(",").map((role) => role.trim().replace(/^'(.*)'$/, "$1"))
+        : [];
 
-      const emailRolesArray = email_roles
-        ?.split(",")
-        .map((role) => role.trim().replace(/^'(.*)'$/, "$1"));
+      const emailRolesArray = Array.isArray(email_roles)
+        ? email_roles
+        : typeof email_roles === 'string'
+        ? email_roles.split(",").map((role) => role.trim().replace(/^'(.*)'$/, "$1"))
+        : [];
 
       form.reset({
         form_name,

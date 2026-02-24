@@ -111,7 +111,7 @@ export const sessionTypeApi = createApi({
       query: ({ id, isActive }) => {
         const encodedId = encodeURIComponent(String(id));
         return {
-          url: `/user-defined-lists/session-types/${encodedId}`,
+          url: `/sessionType/update/${encodedId}`,
           method: "PATCH",
           body: { isActive },
         };
@@ -162,7 +162,7 @@ export const sessionTypeApi = createApi({
       query: (id) => {
         const encodedId = encodeURIComponent(String(id));
         return {
-          url: `/user-defined-lists/session-types/${encodedId}`,
+          url: `/sessionType/delete/${encodedId}`,
           method: "DELETE",
         };
       },

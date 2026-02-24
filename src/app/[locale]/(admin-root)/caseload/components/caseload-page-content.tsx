@@ -99,17 +99,17 @@ export function CaseloadPageContent() {
       )}
 
       {/* Error State */}
-      {isError && (
+      {/* {isError && (
         <Alert variant="destructive" className="w-full">
           <AlertCircle className="h-4 w-4 shrink-0" />
           <AlertDescription className="min-w-0">
             {t("failedToLoad")}
           </AlertDescription>
         </Alert>
-      )}
+      )} */}
 
       {/* Manager Cards */}
-      {!isLoading && !isError && (
+      {!isLoading && (
         <CaseloadManagerCards
           lineManagers={lineManagers}
           currentPage={page}
@@ -119,7 +119,7 @@ export function CaseloadPageContent() {
       )}
 
       {/* No Data State */}
-      {!isLoading && !isError && lineManagers.length === 0 && (
+      {!isLoading && lineManagers.length === 0 && (
         <div className="border border-dashed border-border rounded-lg p-6 sm:p-8 md:p-12 text-center w-full min-w-0">
           <div className="inline-flex items-center justify-center rounded-full bg-primary p-3 mb-3 sm:mb-4">
             <Users className="h-8 w-8 sm:h-10 sm:w-10 text-primary-foreground" />

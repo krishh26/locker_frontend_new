@@ -243,7 +243,7 @@ export function SafeguardingPageContent() {
                 </Button>
                 <Button
                   type="submit"
-                  disabled={isSaving || !form.formState.isValid}
+                  disabled={isSaving}
                 >
                   {isSaving ? (
                     <>

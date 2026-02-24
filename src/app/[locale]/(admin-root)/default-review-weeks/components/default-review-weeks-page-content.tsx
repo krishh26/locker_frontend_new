@@ -54,8 +54,8 @@ export function DefaultReviewWeeksPageContent() {
     const form = useForm<DefaultReviewWeeksFormData>({
         resolver: zodResolver(defaultReviewWeeksSchema(t)),
         defaultValues: {
-            noReviewWeeks: 5,
-            noInductionWeeks: 2,
+            noReviewWeeks: 0,
+            noInductionWeeks: 0,
             requireFileUpload: true,
         },
     }) as ReturnType<typeof useForm<DefaultReviewWeeksFormData>>;
@@ -119,7 +119,9 @@ export function DefaultReviewWeeksPageContent() {
                 <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription>
-                        {t("toast.loadFailed")}
+                        {(error as { data?: { message?: string }; message?: string }).data?.message ||
+                            (error as { message?: string }).message ||
+                            t("toast.loadFailed")}
                     </AlertDescription>
                 </Alert>
             )}

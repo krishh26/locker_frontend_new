@@ -78,6 +78,18 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
       assignedOrgIds = orgs.map(org => org.id);
     }
   }
+  // When assigned_organisations is empty (e.g. CentreAdmin), derive from userCentres -> centre.organisation_id
+  if ((!assignedOrgIds || assignedOrgIds.length === 0) && user.userCentres) {
+    const userCentres = user.userCentres as Array<{ centre?: { organisation_id?: number } }> | undefined;
+    if (Array.isArray(userCentres) && userCentres.length > 0) {
+      const orgIds = [...new Set(
+        userCentres
+          .map((uc) => uc.centre?.organisation_id)
+          .filter((id): id is number => typeof id === "number"),
+      )];
+      assignedOrgIds = orgIds.length > 0 ? orgIds : null;
+    }
+  }
 
   // Extract assigned_centers / assigned_centres and assignedCenterIds
   const rawCenters = (user.assigned_centers ?? user.assigned_centres) as Array<{ id: number; name: string; organisation_id?: number }> | undefined;

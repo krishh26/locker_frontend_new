@@ -505,9 +505,16 @@ export function UsersForm({ user }: UsersFormProps) {
 
           await Promise.all(assignmentPromises);
           toast.success(t("toast.learnersAssigned", { count: allAssignedLearners.length }));
-        } catch (assignmentError) {
+        } catch (assignmentError: unknown) {
           console.error("Error assigning learners:", assignmentError);
-          toast.error(t("toast.assignmentFailed"));
+          const err = assignmentError as { status?: number; data?: { message?: string } };
+          if (err?.status === 400) {
+            toast.error(err?.data?.message ?? "Learner and course must belong to the same organisation.");
+          } else if (err?.status === 403) {
+            toast.error(err?.data?.message ?? "You do not have access to assign this course.");
+          } else {
+            toast.error(t("toast.assignmentFailed"));
+          }
         }
       }
 

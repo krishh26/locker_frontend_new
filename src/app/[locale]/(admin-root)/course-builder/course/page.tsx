@@ -7,8 +7,10 @@ import { useSearchParams } from "next/navigation";;
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectCourseType, clearCourseType } from "@/store/slices/courseBuilderSlice";
 import { useGetCourseQuery } from "@/store/api/course/courseApi";
+import { isForbiddenError } from "@/store/api/baseQuery";
 import { BookOpen, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { Button } from "@/components/ui/button";
 import { CourseForm } from "./components/course-form";
 import type { CourseCoreType } from "@/store/api/course/types";
 
@@ -24,7 +26,7 @@ export default function CoursePage() {
     const courseIdNumber = courseId ? Number(courseId) : undefined;
 
     // Fetch course data in edit mode to determine course type
-    const { data: courseData, isLoading: isLoadingCourse } = useGetCourseQuery(
+    const { data: courseData, isLoading: isLoadingCourse, isError: isGetCourseError, error: getCourseError } = useGetCourseQuery(
         courseIdNumber!,
         { skip: !courseId || !courseIdNumber }
     );
@@ -81,6 +83,37 @@ export default function CoursePage() {
                 />
                 <div className="flex items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+            </div>
+        );
+    }
+
+    // Handle 403 (no access) or other errors when fetching course in edit mode
+    if (isEditMode && isGetCourseError && getCourseError) {
+        return (
+            <div className="space-y-6 px-4 lg:px-6 pb-8">
+                <PageHeader
+                    title="Edit Course"
+                    icon={BookOpen}
+                    showBackButton
+                    backButtonHref="/course-builder"
+                />
+                <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6 text-center">
+                    <p className="font-medium text-destructive">
+                        {isForbiddenError(getCourseError)
+                            ? "You do not have access to this course."
+                            : "Course not found or an error occurred."}
+                    </p>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        {(getCourseError as { data?: { message?: string } })?.data?.message}
+                    </p>
+                    <Button
+                        variant="link"
+                        className="mt-4"
+                        onClick={() => router.push("/course-builder")}
+                    >
+                        Back to course list
+                    </Button>
                 </div>
             </div>
         );

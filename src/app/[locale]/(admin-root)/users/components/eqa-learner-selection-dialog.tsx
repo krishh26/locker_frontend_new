@@ -70,7 +70,13 @@ export function EqaLearnerSelectionDialog({
     skip: !open,
   });
 
-  // Fetch learners for selected course
+  const courses = coursesData?.data || [];
+  const selectedCourse = selectedCourseId
+    ? courses.find((c) => String(c.course_id) === selectedCourseId)
+    : undefined;
+  const selectedCourseOrganisationId = selectedCourse?.organisation_id;
+
+  // Fetch learners for selected course (filter by course's organisation when available)
   const {
     data: learnersData,
     isLoading: isLoadingLearners,
@@ -82,6 +88,7 @@ export function EqaLearnerSelectionDialog({
       page_size: pageSize,
       keyword: debouncedSearch || undefined,
       course_id: selectedCourseId ? Number(selectedCourseId) : undefined,
+      organisation_id: selectedCourseOrganisationId,
     },
     {
       skip: !open || !selectedCourseId,
@@ -110,6 +117,14 @@ export function EqaLearnerSelectionDialog({
     
     // Verify that learners belong to the selected course
     const filteredLearners = learners.filter((learner) => {
+      // Filter by course's organisation when both are present (multi-tenant)
+      if (
+        selectedCourseOrganisationId != null &&
+        learner.organisation_id != null &&
+        learner.organisation_id !== selectedCourseOrganisationId
+      ) {
+        return false;
+      }
       // Filter out if already in the assigned list for this course
       if (alreadyAssignedLearnerIds.has(learner.learner_id)) {
         return false;
@@ -124,7 +139,7 @@ export function EqaLearnerSelectionDialog({
     });
     
     return filteredLearners;
-  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId, selectedCourseId, isFetchingLearners]);
+  }, [learnersData?.data, alreadyAssignedLearnerIds, currentEqaId, selectedCourseId, selectedCourseOrganisationId, isFetchingLearners]);
 
   const handleSave = () => {
     if (selectedLearners.size === 0) {
@@ -146,7 +161,6 @@ export function EqaLearnerSelectionDialog({
     onOpenChange(false);
   };
 
-  const courses = coursesData?.data || [];
   const totalPages = learnersData?.meta_data?.pages || 0;
   const totalItems = learnersData?.meta_data?.items || 0;
 

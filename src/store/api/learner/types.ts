@@ -52,6 +52,7 @@ export type LearnerData = {
     updated_at: string;
   };
   course: LearnerCourse[];
+  organisation_id?: number;
   [key: string]: unknown;
 };
 
@@ -85,6 +86,7 @@ export interface LearnerListItem {
   };
   next_visit_date?: string | null;
   updated_at?: string | null;
+  organisation_id?: number;
 }
 
 export interface LearnerFilters {
@@ -92,6 +94,7 @@ export interface LearnerFilters {
   page_size?: number;
   keyword?: string;
   course_id?: number;
+  organisation_id?: number;
   employer_id?: number;
   employer_ids?: string | number;
   centre_id?: number;

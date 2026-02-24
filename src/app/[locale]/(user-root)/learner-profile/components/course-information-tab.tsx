@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -169,7 +169,16 @@ export function CourseInformationTab({
     },
   });
 
-  const coursesList = coursesResponse?.data || [];
+  // Filter courses by learner's organisation when present (multi-tenant: avoid cross-org enrolment)
+  const coursesList = useMemo(() => {
+    const list = coursesResponse?.data || [];
+    const learnerOrgId = learner.organisation_id;
+    if (learnerOrgId == null) return list;
+    return list.filter(
+      (c: { organisation_id?: number }) =>
+        c.organisation_id == null || c.organisation_id === learnerOrgId
+    );
+  }, [coursesResponse?.data, learner.organisation_id]);
   const trainers = trainersData?.data || [];
   const iqas = iqaData?.data || [];
   const liqas = liqaData?.data || [];
@@ -317,9 +326,16 @@ export function CourseInformationTab({
       handleCloseDialog();
     } catch (error) {
       console.error("Failed to save course:", error);
-      toast.error(
-        `Failed to ${isEditMode ? "update" : "add"} course. Please try again.`
-      );
+      const err = error as { status?: number; data?: { message?: string } };
+      if (!isEditMode && err?.status === 400) {
+        toast.error(err?.data?.message ?? "Learner and course must belong to the same organisation.");
+      } else if (!isEditMode && err?.status === 403) {
+        toast.error(err?.data?.message ?? "You do not have access to assign this course.");
+      } else {
+        toast.error(
+          `Failed to ${isEditMode ? "update" : "add"} course. Please try again.`
+        );
+      }
     }
   });
 

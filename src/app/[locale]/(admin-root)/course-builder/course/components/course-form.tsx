@@ -18,6 +18,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
+import { selectAuthUser } from "@/store/slices/authSlice";
+import { isMasterAdmin } from "@/utils/permissions";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import {
   useCreateCourseMutation,
@@ -33,6 +36,7 @@ import { COURSE_TYPE_CONFIG, type GatewayCourse } from "../constants/course-cons
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { removeEmptyStrings } from "../constants/course-constants";
+import { isForbiddenError } from "@/store/api/baseQuery";
 
 interface CourseFormProps {
   courseType: CourseCoreType;
@@ -54,6 +58,7 @@ function getInitialStep(courseType: CourseCoreType, initialStep?: number): numbe
 
 export function CourseForm({ courseType, courseId, initialStep }: CourseFormProps) {
   const router = useRouter();
+  const authUser = useAppSelector(selectAuthUser);
   const [activeStep, setActiveStep] = useState(() =>
     getInitialStep(courseType, initialStep)
   );
@@ -115,6 +120,12 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
           ]
         : [];
 
+      // MasterAdmin: no prefill (backend gets organisation_id null). AccountManager/single-org: prefill first assigned org.
+      const prefilledOrgId = isMasterAdmin(authUser)
+        ? undefined
+        : authUser?.assignedOrganisationIds?.length
+          ? authUser.assignedOrganisationIds[0]
+          : undefined;
       return {
         course_name: "",
         course_code: "",
@@ -135,12 +146,13 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         awarding_body: "No Awarding Body",
         assigned_gateway_id: null,
         assigned_gateway_name: "",
+        organisation_id: prefilledOrgId,
         questions: [],
         assigned_standards: [],
         units: defaultUnits,
       };
     },
-    [courseType]
+    [courseType, authUser]
   );
 
   // Get step-aware validation schema - dynamically changes based on active step
@@ -202,6 +214,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         awarding_body: data.awarding_body || "No Awarding Body",
         assigned_gateway_id: data.assigned_gateway_id || null,
         assigned_gateway_name: data.assigned_gateway_name || "",
+        organisation_id: data.organisation_id != null ? Number(data.organisation_id) : undefined,
         questions: data.questions || [],
         assigned_standards: data.assigned_standards || [],
         units: data.units || [],
@@ -221,10 +234,14 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       "course_core_type",
       "level",
     ];
+    // Require organisation_id only for non–MasterAdmin create (MasterAdmin sends null)
+    const orgField: (keyof CourseFormData)[] =
+      !isEditMode && !isMasterAdmin(authUser) ? ["organisation_id"] : [];
 
     if (courseCoreType === "Qualification") {
       return [
         ...baseFields,
+        ...orgField,
         "course_type",
         "brand_guidelines",
         "total_credits",
@@ -240,6 +257,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
     } else if (courseCoreType === "Standard") {
       return [
         ...baseFields,
+        ...orgField,
         "duration_period",
         "duration_value",
         "two_page_standard_link",
@@ -258,6 +276,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       // Gateway
       return [
         ...baseFields,
+        ...orgField,
         "guided_learning_hours",
         "operational_start_date",
         "sector",
@@ -308,13 +327,25 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             router.push("/course-builder");
           }
         } else {
-          const result = await createCourse(finalStep0Data).unwrap();
+          if (!isMasterAdmin(authUser) && (finalStep0Data.organisation_id == null || finalStep0Data.organisation_id === undefined)) {
+            toast.error("Organisation is required when creating a course.");
+            return;
+          }
+          const createPayload: CourseFormData = { ...finalStep0Data };
+          if (isMasterAdmin(authUser)) {
+            (createPayload as Record<string, unknown>).organisation_id = null;
+          }
+          const result = await createCourse(createPayload).unwrap();
           if (result.status) {
             toast.success("Course created successfully!");
             router.push("/course-builder");
           }
         }
       } catch (error: any) {
+        if (isForbiddenError(error)) {
+          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          return;
+        }
         const errorMessage =
           error?.data?.error || error?.data?.message || "Failed to save course. Please try again.";
         toast.error(errorMessage);
@@ -378,7 +409,15 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
           }
         } else {
           // Create new course
-          const result = await createCourse(finalStep0Data).unwrap();
+          if (!isMasterAdmin(authUser) && (finalStep0Data.organisation_id == null || finalStep0Data.organisation_id === undefined)) {
+            toast.error("Organisation is required when creating a course.");
+            return;
+          }
+          const createPayload: CourseFormData = { ...finalStep0Data };
+          if (isMasterAdmin(authUser)) {
+            (createPayload as Record<string, unknown>).organisation_id = null;
+          }
+          const result = await createCourse(createPayload).unwrap();
 
           if (result.status && result.data?.course_id) {
             const newCourseId = String(result.data.course_id);
@@ -393,6 +432,10 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
           }
         }
       } catch (error: any) {
+        if (isForbiddenError(error)) {
+          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          return;
+        }
         const errorMessage =
           error?.data?.error || error?.data?.message || "Failed to save course. Please try again.";
         toast.error(errorMessage);
@@ -430,6 +473,10 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
           router.push("/course-builder");
         }
       } catch (error: any) {
+        if (isForbiddenError(error)) {
+          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          return;
+        }
         const errorMessage =
           error?.data?.error || error?.data?.message || "Failed to update course. Please try again.";
         toast.error(errorMessage);

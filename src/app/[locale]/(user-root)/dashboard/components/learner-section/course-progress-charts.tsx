@@ -205,11 +205,6 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
     return null
   }
 
-  // Only show if there are multiple courses
-  if (courses.length <= 1) {
-    return null
-  }
-
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -220,6 +215,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
       </div>
       <div className="grid gap-4 lg:grid-cols-4">
         {courses.map((course, index) => {
+          console.log("🚀 ~ CourseProgressCharts ~ course:", course)
           const progressData = convertToProgressData(course)
           const courseName = course?.course?.course_name || `Course ${index + 1}`
           const colorIdx = index % cardBgColors.length

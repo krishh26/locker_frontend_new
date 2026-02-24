@@ -63,6 +63,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { Course, CourseFilters } from "@/store/api/course/types";
+import { isForbiddenError } from "@/store/api/baseQuery";
 import { CourseUploadDialog } from "./course-upload-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -167,7 +168,11 @@ export function CourseBuilderDataTable() {
       setDeleteDialogOpen(false);
       setCourseToDelete(null);
     } catch (error: unknown) {
-      const err = error as { data?: { message?: string; error?: string } };
+      const err = error as { status?: number; data?: { message?: string; error?: string } };
+      if (isForbiddenError(err)) {
+        toast.error(err?.data?.message ?? "You do not have access to delete this course.");
+        return;
+      }
       const errorMessage = err?.data?.message ?? err?.data?.error;
       toast.error(errorMessage || "Failed to delete course");
     }

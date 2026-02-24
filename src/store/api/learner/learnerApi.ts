@@ -41,6 +41,7 @@ export const learnerApi = createApi({
           page_size = 10,
           keyword = "",
           course_id = "",
+          organisation_id,
           employer_id = "",
           employer_ids = "",
           centre_id,
@@ -54,6 +55,9 @@ export const learnerApi = createApi({
         }
         if (course_id) {
           url += `&course_id=${encodeURIComponent(course_id)}`;
+        }
+        if (organisation_id != null && organisation_id !== undefined) {
+          url += `&organisation_id=${encodeURIComponent(organisation_id)}`;
         }
         if (employer_id) {
           url += `&employer_id=${encodeURIComponent(employer_id)}`;

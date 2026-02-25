@@ -111,7 +111,7 @@ export function AssignAdminDialog({
       <div className="space-y-2">
         <Label>Select Admins</Label>
         <p className="text-sm text-muted-foreground">
-          Choose which admins can manage this centre. Click Save when done.
+          Choose which admins can manage this centre. Each admin can be assigned to only one centre; assigning them here will set this as their centre.
         </p>
         <div className="relative">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />

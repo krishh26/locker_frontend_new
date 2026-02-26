@@ -73,7 +73,7 @@ const createUserSchema = (t: (key: string) => string) => z
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
-    organisation_ids: z.array(z.number()).optional(),
+    organisation_ids: z.array(z.number()).max(1, "At most one organisation can be assigned").optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -106,7 +106,7 @@ const updateUserSchema = (t: (key: string) => string) => z
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")).optional(),
     line_manager_id: z.string().optional(),
     employer_ids: z.array(z.number()).optional(),
-    organisation_ids: z.array(z.number()).optional(),
+    organisation_ids: z.array(z.number()).max(1, "At most one organisation can be assigned").optional(),
     selectedCourseForAssignment: z.string().optional(),
     assignedLearners: z.array(z.any()).optional(),
   })
@@ -219,7 +219,7 @@ export function UsersForm({ user }: UsersFormProps) {
         roles: filterRolesFromApi(user.roles),
         line_manager_id: user.line_manager?.user_id?.toString() || "",
         employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
-        organisation_ids: user.assigned_organisations?.map((org) => org.id) || [],
+        organisation_ids: (user.assigned_organisations?.map((org) => org.id) || []).slice(0, 1),
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
@@ -455,15 +455,21 @@ export function UsersForm({ user }: UsersFormProps) {
 
   const onSubmit = async (values: CreateUserFormValues | UpdateUserFormValues) => {
     try {
+      // One org per user: backend accepts at most one organisation
+      const organisationIds = values.organisation_ids?.length
+        ? [values.organisation_ids[0]]
+        : [];
+      const payload = { ...values, organisation_ids: organisationIds };
+
       let createdOrUpdatedUserId: number ;
 
       // For Admin users, auto-populate organisation_ids from assigned_organisations if editing
       // Admin organizations are managed via "Assign Admin to Organisation" API, not through this form
       if (authUser?.assignedOrganisationIds) {
-        values.organisation_ids = authUser.assignedOrganisationIds.map(id => Number(id)) as number[];
-      } 
+        payload.organisation_ids = authUser.assignedOrganisationIds.slice(0, 1).map(id => Number(id));
+      }
       if (isEditMode) {
-        const updateData = values as UpdateUserFormValues;
+        const updateData = payload as UpdateUserFormValues;
         await updateUser({
           id: user.user_id,
           data: updateData as UpdateUserRequest,
@@ -471,7 +477,7 @@ export function UsersForm({ user }: UsersFormProps) {
         createdOrUpdatedUserId = user.user_id;
         toast.success("User updated successfully");
       } else {
-        const createData = values as CreateUserFormValues;
+        const createData = payload as CreateUserFormValues;
         const result = await createUser(createData as CreateUserRequest).unwrap();
         createdOrUpdatedUserId = result.data.user_id;
         toast.success("User created successfully");
@@ -948,6 +954,7 @@ export function UsersForm({ user }: UsersFormProps) {
                   <MultipleSelector
                     value={selectedOptions}
                     options={organisationOptions}
+                    maxSelected={1}
                     placeholder={
                       isLoadingOrganisations
                         ? t("form.loadingOrganisations")

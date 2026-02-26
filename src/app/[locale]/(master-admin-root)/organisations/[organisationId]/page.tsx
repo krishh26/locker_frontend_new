@@ -2,8 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation"
 import { filterRolesFromApi } from "@/config/auth-roles"
-import { useAppSelector } from "@/store/hooks"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
+import { setMasterAdminOrganisationId, clearMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
 import { canAccessOrganisation, isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   useGetOrganisationQuery,
@@ -42,8 +43,20 @@ import { AssignAdminDialog } from "../components/assign-admin-dialog"
 export default function OrganisationDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const organisationId = Number(params.organisationId)
   const user = useAppSelector(selectAuthUser)
+
+  // Set MasterAdmin org context when viewing this organisation; clear on leave
+  useEffect(() => {
+    const isMaster = isMasterAdmin(user as unknown as UserWithOrganisations | null)
+    if (isMaster && Number.isInteger(organisationId) && organisationId > 0) {
+      dispatch(setMasterAdminOrganisationId(organisationId))
+      return () => {
+        dispatch(clearMasterAdminOrganisationId())
+      }
+    }
+  }, [user, organisationId, dispatch])
 
   // Check access before rendering
   useEffect(() => {

@@ -3,6 +3,7 @@ import type { FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 import { clearCredentials } from "@/store/slices/authSlice"
 import type { RootState } from "@/store"
+import { isMasterAdmin } from "@/utils/permissions"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -34,6 +35,12 @@ export const baseQuery: BaseQueryFn<
       const token = state.auth?.token
       if (token) {
         headers.set("Authorization", `Bearer ${token}`)
+      }
+      // MasterAdmin org mode: send X-Organisation-Id when viewing as one org
+      const user = state.auth?.user
+      const orgId = state.orgContext?.masterAdminOrganisationId
+      if (user && isMasterAdmin(user) && orgId != null && !Number.isNaN(Number(orgId))) {
+        headers.set("X-Organisation-Id", String(orgId))
       }
       headers.set('ngrok-skip-browser-warning', 'true')
       return headers

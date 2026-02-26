@@ -12,7 +12,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { selectAuthUser } from "@/store/slices/authSlice";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { isMasterAdmin } from "@/utils/permissions";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import {
@@ -28,12 +29,20 @@ import {
   useGetCourseQuery,
   useGetGatewayCoursesQuery,
 } from "@/store/api/course/courseApi";
+import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
 import { getStepValidationSchema } from "../schemas/course-validation";
 import { CourseDetailsForm } from "./course-details-form";
 import { CourseUnitsModulesStep } from "./course-units-modules-step";
 import { GatewayQuestionsStep } from "./gateway-components/gateway-questions-step";
 import { COURSE_TYPE_CONFIG, type GatewayCourse } from "../constants/course-constants";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { removeEmptyStrings } from "../constants/course-constants";
 import { isForbiddenError } from "@/store/api/baseQuery";
@@ -59,6 +68,7 @@ function getInitialStep(courseType: CourseCoreType, initialStep?: number): numbe
 export function CourseForm({ courseType, courseId, initialStep }: CourseFormProps) {
   const router = useRouter();
   const authUser = useAppSelector(selectAuthUser);
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
   const [activeStep, setActiveStep] = useState(() =>
     getInitialStep(courseType, initialStep)
   );
@@ -74,6 +84,11 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
   const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
   const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
   const { data: gatewayCoursesData } = useGetGatewayCoursesQuery();
+  const { data: organisationsData } = useGetOrganisationsQuery(
+    { page: 1, limit: 500 },
+    { skip: !isMasterAdmin(authUser) || isEditMode }
+  );
+  const organisations = organisationsData?.data ?? [];
 
   // Transform gateway courses data to match GatewayCourse interface
   const gatewayCourses: GatewayCourse[] = gatewayCoursesData?.data?.map((course) => ({
@@ -120,9 +135,10 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
           ]
         : [];
 
-      // MasterAdmin: no prefill (backend gets organisation_id null). AccountManager/single-org: prefill first assigned org.
+      // MasterAdmin: use org context when viewing an org; else no prefill (must select via dropdown).
+      // Non-MasterAdmin: prefill first assigned org.
       const prefilledOrgId = isMasterAdmin(authUser)
-        ? undefined
+        ? (masterAdminOrgId ?? authUser?.assignedOrganisationIds?.[0])
         : authUser?.assignedOrganisationIds?.length
           ? authUser.assignedOrganisationIds[0]
           : undefined;
@@ -152,7 +168,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         units: defaultUnits,
       };
     },
-    [courseType, authUser]
+    [courseType, authUser, masterAdminOrgId]
   );
 
   // Get step-aware validation schema - dynamically changes based on active step
@@ -234,9 +250,9 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       "course_core_type",
       "level",
     ];
-    // Require organisation_id only for non–MasterAdmin create (MasterAdmin sends null)
+    // Require organisation_id for create for all roles (backend requires it; MasterAdmin uses org context or dropdown).
     const orgField: (keyof CourseFormData)[] =
-      !isEditMode && !isMasterAdmin(authUser) ? ["organisation_id"] : [];
+      !isEditMode ? ["organisation_id"] : [];
 
     if (courseCoreType === "Qualification") {
       return [
@@ -327,14 +343,19 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             router.push("/course-builder");
           }
         } else {
-          if (!isMasterAdmin(authUser) && (finalStep0Data.organisation_id == null || finalStep0Data.organisation_id === undefined)) {
+          // Create: MasterAdmin can send organisation_id null (all orgs); others must send an org
+          const orgId =
+            finalStep0Data.organisation_id != null
+              ? Number(finalStep0Data.organisation_id)
+              : isMasterAdmin(authUser)
+                ? (masterAdminOrgId ?? null)
+                : undefined;
+          if (!isMasterAdmin(authUser) && (orgId == null || orgId === undefined)) {
             toast.error("Organisation is required when creating a course.");
             return;
           }
           const createPayload: CourseFormData = { ...finalStep0Data };
-          if (isMasterAdmin(authUser)) {
-            (createPayload as Record<string, unknown>).organisation_id = null;
-          }
+          (createPayload as Record<string, unknown>).organisation_id = orgId ?? null;
           const result = await createCourse(createPayload).unwrap();
           if (result.status) {
             toast.success("Course created successfully!");
@@ -408,15 +429,19 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             });
           }
         } else {
-          // Create new course
-          if (!isMasterAdmin(authUser) && (finalStep0Data.organisation_id == null || finalStep0Data.organisation_id === undefined)) {
+          // Create: MasterAdmin can send organisation_id null (all orgs); others must send an org
+          const orgId =
+            finalStep0Data.organisation_id != null
+              ? Number(finalStep0Data.organisation_id)
+              : isMasterAdmin(authUser)
+                ? (masterAdminOrgId ?? null)
+                : undefined;
+          if (!isMasterAdmin(authUser) && (orgId == null || orgId === undefined)) {
             toast.error("Organisation is required when creating a course.");
             return;
           }
           const createPayload: CourseFormData = { ...finalStep0Data };
-          if (isMasterAdmin(authUser)) {
-            (createPayload as Record<string, unknown>).organisation_id = null;
-          }
+          (createPayload as Record<string, unknown>).organisation_id = orgId ?? null;
           const result = await createCourse(createPayload).unwrap();
 
           if (result.status && result.data?.course_id) {
@@ -533,6 +558,39 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
                 Enter the basic information for your {courseCoreType.toLowerCase()} course
               </p>
             </div>
+            {isMasterAdmin(authUser) && !isEditMode && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Organisation
+                </label>
+                <Controller
+                  name="organisation_id"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      value={field.value != null ? String(field.value) : "all"}
+                      onValueChange={(v) => field.onChange(v === "all" ? null : (v ? Number(v) : null))}
+                    >
+                      <SelectTrigger className={cn(errors.organisation_id && "border-destructive")}>
+                        <SelectValue placeholder="Select organisation" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All organisations</SelectItem>
+                        {organisations.map((org: { id: number; name: string }) => (
+                          <SelectItem key={org.id} value={String(org.id)}>
+                            {org.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <p className="text-xs text-muted-foreground">Choose &quot;All organisations&quot; to make this course available to every organisation.</p>
+                {errors.organisation_id && (
+                  <p className="text-sm text-destructive">{errors.organisation_id.message}</p>
+                )}
+              </div>
+            )}
             <CourseDetailsForm
               control={control}
               errors={errors}

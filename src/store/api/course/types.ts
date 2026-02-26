@@ -21,7 +21,7 @@ export interface Course {
   brand_guidelines?: string;
   overall_grading_type?: string;
   active?: boolean;
-  organisation_id?: number;
+  organisation_id?: number | null;
   created_at?: string;
   updated_at?: string;
   units?: CourseUnit[];
@@ -82,7 +82,7 @@ export interface CourseFormData {
   awarding_body?: string;
   assigned_gateway_id?: number | null;
   assigned_gateway_name?: string;
-  organisation_id?: number;
+  organisation_id?: number | null;
   questions?: any[];
   assigned_standards?: number[];
   units?: any[];

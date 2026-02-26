@@ -1,7 +1,11 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "@/i18n/navigation"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
+import { selectAuthUser } from "@/store/slices/authSlice"
+import { clearMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
+import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   type ColumnDef,
   type SortingState,
@@ -48,13 +52,22 @@ import { exportTableToPdf } from "@/utils/pdfExport"
 
 export function PaymentsDataTable() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(selectAuthUser)
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [orgFilter, setOrgFilter] = useState<string>("all")
 
-  // API queries with filters
+  // Clear global org context on this page so list uses only query param (avoids stale header when changing org filter)
+  useEffect(() => {
+    if (isMasterAdmin(user as unknown as UserWithOrganisations | null)) {
+      dispatch(clearMasterAdminOrganisationId())
+    }
+  }, [user, dispatch])
+
+  // API queries with filters (organisationId in query only)
   const { data: paymentsData, isLoading } = useGetPaymentsQuery({
     organisationId: orgFilter !== "all" ? Number(orgFilter) : undefined,
     status: statusFilter !== "all" ? (statusFilter as "draft" | "sent" | "failed" | "refunded") : undefined,

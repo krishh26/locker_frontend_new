@@ -1,7 +1,11 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useCallback, useEffect } from "react"
 import { useRouter } from "@/i18n/navigation"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
+import { selectAuthUser } from "@/store/slices/authSlice"
+import { clearMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
+import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   type ColumnDef,
   type SortingState,
@@ -50,6 +54,7 @@ import {
   useActivateCentreMutation,
   useSuspendCentreMutation,
 } from "@/store/api/centres/centreApi"
+import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import type { Centre } from "@/store/api/centres/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -61,9 +66,12 @@ const DEFAULT_PAGE_SIZE = 10
 
 export function CentresDataTable() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(selectAuthUser)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE)
   const [statusFilter, setStatusFilter] = useState<string>("all")
+  const [orgFilter, setOrgFilter] = useState<string>("all")
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
@@ -71,16 +79,26 @@ export function CentresDataTable() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [selectedCentre, setSelectedCentre] = useState<Centre | null>(null)
 
+  // Clear global org context on this page so list uses only query param (avoids stale header when changing org filter)
+  useEffect(() => {
+    if (isMasterAdmin(user as unknown as UserWithOrganisations | null)) {
+      dispatch(clearMasterAdminOrganisationId())
+    }
+  }, [user, dispatch])
+
   const queryArgs = useMemo(
     () => ({
       page,
       limit: pageSize,
+      organisationId: orgFilter !== "all" ? Number(orgFilter) : undefined,
       status: statusFilter === "all" ? undefined : (statusFilter as "active" | "suspended"),
       meta: true,
     }),
-    [page, pageSize, statusFilter]
+    [page, pageSize, statusFilter, orgFilter]
   )
   const { data: centresData, isLoading: centresLoading, refetch } = useGetCentresQuery(queryArgs)
+  const { data: organisationsData } = useGetOrganisationsQuery()
+
   const [activateCentre, { isLoading: isActivating }] = useActivateCentreMutation()
   const [suspendCentre, { isLoading: isSuspending }] = useSuspendCentreMutation()
 
@@ -324,6 +342,11 @@ export function CentresDataTable() {
     setPage(1)
   }, [])
 
+  const handleOrgFilterChange = useCallback((value: string) => {
+    setOrgFilter(value)
+    setPage(1)
+  }, [])
+
   if (centresLoading) {
     return (
       <div className="w-full space-y-4">
@@ -360,6 +383,19 @@ export function CentresDataTable() {
               <SelectItem value="all">All statuses</SelectItem>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="suspended">Suspended</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={orgFilter} onValueChange={handleOrgFilterChange}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Filter by organisation" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All organisations</SelectItem>
+              {(organisationsData?.data ?? []).map((org: { id: number; name: string }) => (
+                <SelectItem key={org.id} value={String(org.id)}>
+                  {org.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

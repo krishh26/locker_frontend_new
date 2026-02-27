@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -32,6 +32,7 @@ import type {
   CreateLearnerRequest,
   UpdateLearnerRequest,
 } from "@/store/api/learner/types";
+import type { AuthUser } from "@/store/api/auth/types";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
@@ -108,6 +109,18 @@ const updateLearnerSchema = z.object({
 type CreateLearnerFormValues = z.infer<typeof createLearnerSchema>;
 type UpdateLearnerFormValues = z.infer<typeof updateLearnerSchema>;
 
+type AssignedCentreOption = {
+  id: number;
+  name: string;
+  status?: string;
+};
+
+type AssignedOrganisationOption = {
+  id: number;
+  name: string;
+  centres?: AssignedCentreOption[];
+};
+
 interface LearnersFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -128,6 +141,38 @@ export function LearnersFormDialog({
   const authUser = useAppSelector((state) => state.auth.user);
   const [createLearner, { isLoading: isCreating }] = useCreateLearnerMutation();
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation();
+
+  // Organisation and centre options derived from auth user (backend /user/get response)
+  const assignedOrganisations: AssignedOrganisationOption[] = useMemo(() => {
+    const typed = authUser as AuthUser & {
+      assigned_organisations?: AssignedOrganisationOption[];
+    };
+    return typed?.assigned_organisations ?? [];
+  }, [authUser]);
+
+  const [selectedOrgId, setSelectedOrgId] = useState<number | undefined>(() =>
+    assignedOrganisations.length ? assignedOrganisations[0].id : undefined,
+  );
+
+  const getInitialCentreId = useCallback(
+    (orgId?: number) => {
+      if (!orgId) return undefined;
+      const org = assignedOrganisations.find((o) => o.id === orgId);
+      const centres = org?.centres ?? [];
+      const active = centres.filter(
+        (c) =>
+          (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
+      );
+      return active.length ? active[0].id : centres[0]?.id;
+    },
+    [assignedOrganisations],
+  );
+
+  const [selectedCentreId, setSelectedCentreId] = useState<number | undefined>(() =>
+    getInitialCentreId(
+      assignedOrganisations.length ? assignedOrganisations[0].id : undefined,
+    ),
+  );
 
   const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
     { page: 1, page_size: 100 },
@@ -201,16 +246,54 @@ export function LearnersFormDialog({
         comment: "",
       });
     }
-  }, [learner, open, form]);
+
+    // Reset org/centre defaults when dialog opens
+    if (open && assignedOrganisations.length) {
+      const initialOrgId = assignedOrganisations[0].id;
+      setSelectedOrgId(initialOrgId);
+      setSelectedCentreId(getInitialCentreId(initialOrgId));
+    }
+  }, [learner, open, form, assignedOrganisations, getInitialCentreId]);
+
+  const currentOrg =
+    assignedOrganisations.find((o) => o.id === selectedOrgId) ??
+    assignedOrganisations[0];
+  const centreOptions: AssignedCentreOption[] = currentOrg?.centres ?? [];
 
   const onSubmit = async (values: CreateLearnerFormValues | UpdateLearnerFormValues) => {
     try {
-      const payload = values as CreateLearnerRequest & UpdateLearnerRequest;
-      if (authUser?.assignedOrganisationIds?.length) {
-        payload.organisation_id = authUser.assignedOrganisationIds[0];
+      // Build payload and normalise ID fields
+      const payload: CreateLearnerRequest | UpdateLearnerRequest = {
+        ...(values as CreateLearnerFormValues | UpdateLearnerFormValues),
+      } as CreateLearnerRequest | UpdateLearnerRequest;
+
+      // employer_id comes from select as string
+      if (
+        "employer_id" in payload &&
+        payload.employer_id &&
+        (payload.employer_id as unknown) !== EMPLOYER_PLACEHOLDER_VALUE
+      ) {
+        payload.employer_id = Number(String(payload.employer_id));
       }
-      if (authUser?.assignedCenterIds?.length) {
-        payload.centre_id = authUser.assignedCenterIds[0];
+
+      // Prefer explicit org/centre selection when available
+      if (assignedOrganisations.length) {
+        const orgId = selectedOrgId ?? assignedOrganisations[0].id;
+        payload.organisation_id = orgId;
+
+        if (centreOptions.length) {
+          const centreId =
+            selectedCentreId ?? getInitialCentreId(orgId) ?? centreOptions[0].id;
+          payload.centre_id = centreId;
+        }
+      } else {
+        // Fallback to old behaviour (e.g. CentreAdmin) when no org tree present
+        if (authUser?.assignedOrganisationIds?.length) {
+          payload.organisation_id = authUser.assignedOrganisationIds[0];
+        }
+        if (authUser?.assignedCenterIds?.length) {
+          payload.centre_id = authUser.assignedCenterIds[0];
+        }
       }
       if (isEditMode) {
         await updateLearner({
@@ -449,6 +532,37 @@ export function LearnersFormDialog({
                   )}
                 />
               </div>
+            </div>
+          )}
+
+          {/* Centre (organisation fixed from auth / backend) */}
+          {assignedOrganisations.length > 0 && (
+            <div className="space-y-2">
+              <Label htmlFor="centre_id">Centre</Label>
+              <Select
+                value={selectedCentreId ? String(selectedCentreId) : ""}
+                onValueChange={(value) => {
+                  setSelectedCentreId(Number(value));
+                }}
+                disabled={!centreOptions.length}
+              >
+                <SelectTrigger id="centre_id">
+                  <SelectValue
+                    placeholder={
+                      centreOptions.length
+                        ? "Select centre"
+                        : "No centres available for this organisation"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {centreOptions.map((centre) => (
+                    <SelectItem key={centre.id} value={String(centre.id)}>
+                      {centre.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           )}
 

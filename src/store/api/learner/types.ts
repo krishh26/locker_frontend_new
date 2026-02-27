@@ -124,7 +124,7 @@ export interface CreateLearnerRequest {
   password: string;
   confirmPassword?: string;
   mobile: string;
-  employer_id: string;
+  employer_id: number;
   funding_body: string;
   national_ins_no?: string;
   job_title: string;
@@ -139,7 +139,7 @@ export interface UpdateLearnerRequest {
   user_name?: string;
   email?: string;
   mobile?: string;
-  employer_id?: string;
+  employer_id?: number;
   funding_body?: string;
   national_ins_no?: string;
   job_title?: string;

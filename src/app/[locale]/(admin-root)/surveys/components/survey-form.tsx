@@ -35,6 +35,8 @@ import {
   useUpdateSurveyMutation,
   type Survey,
 } from "@/store/api/survey/surveyApi"
+import { useAppSelector } from "@/store/hooks"
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
 import { toast } from "sonner"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -79,6 +81,15 @@ interface SurveyFormProps {
 export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
   const [createSurvey, { isLoading: isCreating }] = useCreateSurveyMutation()
   const [updateSurvey, { isLoading: isUpdating }] = useUpdateSurveyMutation()
+  const authUser = useAppSelector((state) => state.auth.user)
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId)
+
+  // Organisation for payload: MasterAdmin uses org context when set, else first assigned org; Org Admin uses first assigned org
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.length
+      ? authUser.assignedOrganisationIds[0]
+      : undefined)
 
   const form = useForm<SurveyFormValues>({
     resolver: zodResolver(surveyFormSchema),
@@ -133,6 +144,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
             ...(expirationDateUTC !== undefined && {
               expirationDate: expirationDateUTC,
             }),
+            ...(organisationId !== undefined && { organizationId: organisationId }),
           },
         }).unwrap()
         toast.success("Survey updated successfully")
@@ -144,6 +156,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
           ...(expirationDateUTC !== undefined && {
             expirationDate: expirationDateUTC,
           }),
+          ...(organisationId !== undefined && { organizationId: organisationId }),
         }).unwrap()
         toast.success("Survey created successfully")
       }

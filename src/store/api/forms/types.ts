@@ -224,6 +224,7 @@ export type CreateFormRequest = {
   set_request_signature?: boolean;
   email_roles: string; // Comma-separated roles wrapped in single quotes
   other_emails?: string | null;
+  organisation_id?: number;
 };
 
 // Update Form Request
@@ -238,6 +239,7 @@ export type UpdateFormRequest = {
   set_request_signature?: boolean;
   email_roles?: string;
   other_emails?: string | null;
+  organisation_id?: number;
 };
 
 // Form Template Types
@@ -271,6 +273,7 @@ export type FormTemplateResponse = {
 export type CreateFormTemplateRequest = {
   template_name: string;
   form_data: SimpleFormField[];
+  organisation_id?: number;
 };
 
 export type DeleteFormTemplateRequest = {

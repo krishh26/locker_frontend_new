@@ -30,6 +30,7 @@ import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
 import { toast } from "sonner";
 import { filterRolesFromApi } from "@/config/auth-roles";
 import { useAppSelector } from "@/store/hooks";
+import type { AuthUser } from "@/store/api/auth/types";
 import { isAccountManager } from "@/utils/permissions";
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
 
@@ -127,6 +128,18 @@ const updateUserSchema = (t: (key: string) => string) => z
 type CreateUserFormValues = z.infer<ReturnType<typeof createUserSchema>>;
 type UpdateUserFormValues = z.infer<ReturnType<typeof updateUserSchema>>;
 
+type AssignedCentreOption = {
+  id: number;
+  name: string;
+  status?: string;
+};
+
+type AssignedOrganisationOption = {
+  id: number;
+  name: string;
+  centres?: AssignedCentreOption[];
+};
+
 interface UsersFormProps {
   user: User | null;
 }
@@ -143,6 +156,48 @@ export function UsersForm({ user }: UsersFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const isEditMode = !!user;
+
+  // Organisation / centre options for the currently logged-in admin (from /user/get)
+  const assignedOrganisations: AssignedOrganisationOption[] = useMemo(() => {
+    const typed = authUser as (AuthUser & {
+      assigned_organisations?: AssignedOrganisationOption[];
+    }) | null;
+    return typed?.assigned_organisations ?? [];
+  }, [authUser]);
+
+  const [selectedCentreId, setSelectedCentreId] = useState<number | undefined>(() => {
+    const org = assignedOrganisations[0];
+    const centres = org?.centres ?? [];
+    const active = centres.filter(
+      (c) =>
+        (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
+    );
+    return active[0]?.id ?? centres[0]?.id;
+  });
+
+  const centreOptions: AssignedCentreOption[] = useMemo(() => {
+    const org = assignedOrganisations[0];
+    const centres = org?.centres ?? [];
+    return centres.filter(
+      (c) =>
+        (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
+    );
+  }, [assignedOrganisations]);
+
+  useEffect(() => {
+    // Whenever logged-in user's org tree changes, reset centre to first active centre
+    if (assignedOrganisations.length) {
+      const org = assignedOrganisations[0];
+      const centres = org?.centres ?? [];
+      const active = centres.filter(
+        (c) =>
+          (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
+      );
+      setSelectedCentreId(active[0]?.id ?? centres[0]?.id);
+    } else {
+      setSelectedCentreId(undefined);
+    }
+  }, [assignedOrganisations]);
 
   // Create roles with translated labels; for Account Manager exclude MasterAdmin and AccountManager
   const roles = useMemo(() => {
@@ -459,14 +514,25 @@ export function UsersForm({ user }: UsersFormProps) {
       const organisationIds = values.organisation_ids?.length
         ? [values.organisation_ids[0]]
         : [];
-      const payload = { ...values, organisation_ids: organisationIds };
+      const payload: (CreateUserFormValues | UpdateUserFormValues) & {
+        centre_id?: number;
+        centre_ids?: number[];
+      } = { ...values, organisation_ids: organisationIds };
 
-      let createdOrUpdatedUserId: number ;
+      let createdOrUpdatedUserId: number;
 
-      // For Admin users, auto-populate organisation_ids from assigned_organisations if editing
-      // Admin organizations are managed via "Assign Admin to Organisation" API, not through this form
+      // For Admin users, auto-populate organisation_ids from logged-in user's orgs
+      // Admin organisations are managed via "Assign Admin to Organisation" API, not through this form
       if (authUser?.assignedOrganisationIds) {
-        payload.organisation_ids = authUser.assignedOrganisationIds.slice(0, 1).map(id => Number(id));
+        payload.organisation_ids = authUser.assignedOrganisationIds
+          .slice(0, 1)
+          .map((id) => Number(id));
+      }
+
+      // Centre selection (same pattern as learner form):
+      // if logged-in admin has centres tree, send centre_ids array for created/updated user
+      if (!isAccountManagerUser && centreOptions.length && selectedCentreId) {
+        payload.centre_ids = [selectedCentreId];
       }
       if (isEditMode) {
         const updateData = payload as UpdateUserFormValues;
@@ -869,6 +935,39 @@ export function UsersForm({ user }: UsersFormProps) {
           )}
         />
       </div>
+
+      {/* Centre (for logged-in admins with organisation → centres tree, e.g. Org Admin) */}
+      {!isAccountManagerUser && assignedOrganisations.length > 0 && (
+        <div className="space-y-2">
+          <Label htmlFor="centre_id">
+            {t("form.centre")}
+          </Label>
+          <Select
+            value={selectedCentreId ? String(selectedCentreId) : ""}
+            onValueChange={(value) => {
+              setSelectedCentreId(Number(value));
+            }}
+            disabled={!centreOptions.length}
+          >
+            <SelectTrigger id="centre_id">
+              <SelectValue
+                placeholder={
+                  centreOptions.length
+                    ? t("form.centrePlaceholder")
+                    : t("form.noCentresAvailable")
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {centreOptions.map((centre) => (
+                <SelectItem key={centre.id} value={String(centre.id)}>
+                  {centre.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       {/* Employees - Only show when Employer role is selected */}
       {hasEmployerRole && (

@@ -4,7 +4,10 @@ import { useParams, useRouter } from "next/navigation"
 import { filterRolesFromApi } from "@/config/auth-roles"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
-import { setMasterAdminOrganisationId, clearMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
+import {
+  setMasterAdminOrganisationId,
+  clearMasterAdminOrganisationId,
+} from "@/store/slices/orgContextSlice"
 import { canAccessOrganisation, isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   useGetOrganisationQuery,
@@ -43,20 +46,8 @@ import { AssignAdminDialog } from "../components/assign-admin-dialog"
 export default function OrganisationDetailPage() {
   const params = useParams()
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const organisationId = Number(params.organisationId)
   const user = useAppSelector(selectAuthUser)
-
-  // Set MasterAdmin org context when viewing this organisation; clear on leave
-  useEffect(() => {
-    const isMaster = isMasterAdmin(user as unknown as UserWithOrganisations | null)
-    if (isMaster && Number.isInteger(organisationId) && organisationId > 0) {
-      dispatch(setMasterAdminOrganisationId(organisationId))
-      return () => {
-        dispatch(clearMasterAdminOrganisationId())
-      }
-    }
-  }, [user, organisationId, dispatch])
 
   // Check access before rendering
   useEffect(() => {
@@ -64,6 +55,14 @@ export default function OrganisationDetailPage() {
       router.push("/errors/unauthorized")
     }
   }, [user, organisationId, router])
+
+  const dispatch = useAppDispatch()
+  // Clear org context when leaving this page
+  useEffect(() => {
+    return () => {
+      dispatch(clearMasterAdminOrganisationId())
+    }
+  }, [dispatch])
 
   const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
   const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
@@ -141,6 +140,9 @@ export default function OrganisationDetailPage() {
       const key = crypto.randomUUID()
       const storageKey = `locker.impersonate.${key}`
       localStorage.setItem(storageKey, JSON.stringify(result))
+      if (Number.isFinite(organisationId) && organisationId > 0) {
+        dispatch(setMasterAdminOrganisationId(organisationId))
+      }
       window.open(`/auth/impersonate?key=${key}`, "_blank")
       toast.success(`Opening dashboard as ${adminName} in a new tab`)
     } catch (error: unknown) {
@@ -152,7 +154,7 @@ export default function OrganisationDetailPage() {
           : "Failed to login as admin"
       toast.error(errorMessage)
     }
-  }, [getTokenByEmail])
+  }, [getTokenByEmail, organisationId, dispatch])
 
   if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
     return null // Will redirect in useEffect

@@ -23,6 +23,8 @@ import {
   useUpdateSessionTypeMutation,
 } from "@/store/api/session-type/sessionTypeApi";
 import type { SessionType } from "@/store/api/session-type/types";
+import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { toast } from "sonner";
 
 const sessionTypeSchema = z.object({
@@ -52,6 +54,14 @@ export function SessionTypeFormDialog({
     useCreateSessionTypeMutation();
   const [updateSessionType, { isLoading: isUpdating }] =
     useUpdateSessionTypeMutation();
+  const authUser = useAppSelector((state) => state.auth.user);
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.length
+      ? authUser.assignedOrganisationIds[0]
+      : undefined);
 
   const form = useForm<SessionTypeFormData>({
     resolver: zodResolver(sessionTypeSchema),
@@ -87,6 +97,7 @@ export function SessionTypeFormDialog({
             name: data.name,
             is_off_the_job: data.isOffTheJob,
             active: data.isActive,
+            ...(organisationId !== undefined && { organisation_id: organisationId }),
           },
         }).unwrap();
         toast.success("Session Type updated successfully");
@@ -95,6 +106,7 @@ export function SessionTypeFormDialog({
           name: data.name,
           is_off_the_job: data.isOffTheJob,
           active: data.isActive,
+          ...(organisationId !== undefined && { organisation_id: organisationId }),
         }).unwrap();
         toast.success("Session Type created successfully");
       }

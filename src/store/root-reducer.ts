@@ -60,6 +60,7 @@ import cacheReducer from "@/store/slices/cacheSlice"
 import courseBuilderReducer from "@/store/slices/courseBuilderSlice"
 import qaSamplePlanReducer from "@/store/slices/qaSamplePlanSlice"
 import courseReducer from "@/store/slices/courseSlice"
+import orgContextReducer from "@/store/slices/orgContextSlice"
 
 
 // Root Reducer - Combine all slices here
@@ -119,6 +120,7 @@ export const rootReducer = combineReducers({
     courseBuilder: courseBuilderReducer,
     qaSamplePlan: qaSamplePlanReducer,
     course: courseReducer,
+    orgContext: orgContextReducer,
 })
 
 // Middleware - Extend this array with necessary middleware

@@ -107,7 +107,9 @@
       "loadingEmployers": "Loading employers...",
       "noEmployersFound": "No employers found",
       "organisations": "Organisations",
+      "organisation": "Organisation",
       "organisationsPlaceholder": "Select organisations",
+      "organisationPlaceholder": "Select organisation",
       "loadingOrganisations": "Loading organisations...",
       "noOrganisationsFound": "No organisations found",
       "assignedLearners": "Assigned Learners",
@@ -116,6 +118,9 @@
       "noLearnersAssigned": "No learners assigned yet. Click \"Select Learners\" to assign learners to courses.",
       "createUser": "Create User",
       "updateUser": "Update User",
+      "centre": "Centre",
+      "centrePlaceholder": "Select centre",
+      "noCentresAvailable": "No centres available",
       "required": "*"
     },
     "validation": {
@@ -350,7 +355,10 @@
       "insuranceRenewalDate": "Insurance Renewal Date",
       "required": "*",
       "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "updateEmployer": "Update Employer",
+      "centre": "Centre",
+      "centrePlaceholder": "Select centre",
+      "noCentresAvailable": "No centres available"
     },
     "validation": {
       "companyNameRequired": "Company Name is required",

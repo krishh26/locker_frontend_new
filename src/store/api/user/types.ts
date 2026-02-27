@@ -129,6 +129,7 @@ export interface CreateUserRequest {
   assigned_learner_ids?: number[];
   organisation_ids?: number[];
   centre_id?: number;
+  centre_ids?: number[];
 }
 
 export interface UpdateUserRequest {
@@ -143,6 +144,7 @@ export interface UpdateUserRequest {
   assigned_learner_ids?: number[];
   organisation_ids?: number[];
   centre_id?: number;
+  centre_ids?: number[];
 }
 
 export interface UserResponse {

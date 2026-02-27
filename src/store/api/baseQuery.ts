@@ -3,6 +3,8 @@ import type { FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 import { clearCredentials } from "@/store/slices/authSlice"
 import type { RootState } from "@/store"
+import { isMasterAdmin } from "@/utils/permissions"
+import { AuthUser } from "../api/auth/types"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -34,6 +36,37 @@ export const baseQuery: BaseQueryFn<
       const token = state.auth?.token
       if (token) {
         headers.set("Authorization", `Bearer ${token}`)
+      }
+      // MasterAdmin / OrgAdmin org mode:
+      // - MasterAdmin: use orgContext.masterAdminOrganisationId when "viewing as" one org
+      // - OrganisationAdmin: always send their single assigned organisation id
+      const user = state.auth?.user
+      const orgContextOrgId = state.orgContext?.masterAdminOrganisationId
+
+      let organisationIdToSend: number | null = null
+
+      // 1) MasterAdmin → respect selected org context (global vs specific org)
+      if (
+        user &&
+        isMasterAdmin(user) &&
+        orgContextOrgId != null &&
+        !Number.isNaN(Number(orgContextOrgId))
+      ) {
+        organisationIdToSend = Number(orgContextOrgId)
+      }
+
+      // 2) Org Admin → always send their single assigned org
+      if (
+        !organisationIdToSend && 
+        user &&
+        Array.isArray((user as AuthUser)["assignedOrganisationIds"] ?? []) &&
+        (user as AuthUser)["assignedOrganisationIds"]?.length === 1
+      ) {
+        organisationIdToSend = Number((user as AuthUser)["assignedOrganisationIds"]?.[0])
+      }
+
+      if (organisationIdToSend != null && !Number.isNaN(organisationIdToSend)) {
+        headers.set("X-Organisation-Id", String(organisationIdToSend))
       }
       headers.set('ngrok-skip-browser-warning', 'true')
       return headers

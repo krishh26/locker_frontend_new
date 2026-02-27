@@ -34,7 +34,7 @@ export interface CreateSurveyRequest {
   status?: SurveyStatus;
   background?: SurveyBackground;
   expirationDate?: string; // ISO 8601 format (UTC)
-  organizationId?: string;
+  organizationId?: number | string;
 }
 
 export interface UpdateSurveyRequest {
@@ -43,6 +43,7 @@ export interface UpdateSurveyRequest {
   status?: SurveyStatus;
   background?: SurveyBackground;
   expirationDate?: string; // ISO 8601 format (UTC)
+  organizationId?: number | string;
 }
 
 export interface GetSurveysQueryParams {

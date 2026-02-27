@@ -2,8 +2,12 @@
 
 import { useParams, useRouter } from "next/navigation"
 import { filterRolesFromApi } from "@/config/auth-roles"
-import { useAppSelector } from "@/store/hooks"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
+import {
+  setMasterAdminOrganisationId,
+  clearMasterAdminOrganisationId,
+} from "@/store/slices/orgContextSlice"
 import { canAccessOrganisation, isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
 import {
   useGetOrganisationQuery,
@@ -51,6 +55,14 @@ export default function OrganisationDetailPage() {
       router.push("/errors/unauthorized")
     }
   }, [user, organisationId, router])
+
+  const dispatch = useAppDispatch()
+  // Clear org context when leaving this page
+  useEffect(() => {
+    return () => {
+      dispatch(clearMasterAdminOrganisationId())
+    }
+  }, [dispatch])
 
   const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
   const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
@@ -128,6 +140,9 @@ export default function OrganisationDetailPage() {
       const key = crypto.randomUUID()
       const storageKey = `locker.impersonate.${key}`
       localStorage.setItem(storageKey, JSON.stringify(result))
+      if (Number.isFinite(organisationId) && organisationId > 0) {
+        dispatch(setMasterAdminOrganisationId(organisationId))
+      }
       window.open(`/auth/impersonate?key=${key}`, "_blank")
       toast.success(`Opening dashboard as ${adminName} in a new tab`)
     } catch (error: unknown) {
@@ -139,7 +154,7 @@ export default function OrganisationDetailPage() {
           : "Failed to login as admin"
       toast.error(errorMessage)
     }
-  }, [getTokenByEmail])
+  }, [getTokenByEmail, organisationId, dispatch])
 
   if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
     return null // Will redirect in useEffect

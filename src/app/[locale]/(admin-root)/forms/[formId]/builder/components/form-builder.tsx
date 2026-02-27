@@ -32,6 +32,7 @@ import { FormPreview } from "./form-preview";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 
 const roles = [
   "Master Admin",
@@ -167,6 +168,13 @@ export function FormBuilder({ formId }: FormBuilderProps) {
 
   const [createForm, { isLoading: isCreating }] = useCreateFormMutation();
   const [updateForm, { isLoading: isUpdating }] = useUpdateFormMutation();
+  const authUser = useAppSelector((state) => state.auth.user);
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.length
+      ? authUser.assignedOrganisationIds[0]
+      : undefined);
 
   const form = useForm<MetadataFormValues>({
     resolver: zodResolver(metadataSchema),
@@ -290,6 +298,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         .map(([key]) => `'${key}'`)
         .join(","),
       other_emails: values.otherEmail || null,
+      ...(organisationId !== undefined && { organisation_id: organisationId }),
     };
 
     try {
@@ -363,6 +372,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         .map(([key]) => `'${key}'`)
         .join(","),
       other_emails: values.otherEmail || null,
+      ...(organisationId !== undefined && { organisation_id: organisationId }),
     };
 
     try {

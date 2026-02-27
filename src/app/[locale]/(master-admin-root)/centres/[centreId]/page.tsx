@@ -339,7 +339,7 @@ export default function CentreDetailPage() {
             <DialogHeader>
               <DialogTitle>Assign Admins to Centre</DialogTitle>
               <DialogDescription>
-                Select which admins can manage this centre. Click to assign or remove.
+                Select which admins can manage this centre. Each admin can be assigned to only one centre; assigning them here will set this as their centre.
               </DialogDescription>
             </DialogHeader>
             <AssignAdminDialog

@@ -59,7 +59,7 @@ const baseCourseSchema = z.object({
   assessment_plan_link: z.string().optional(),
   assigned_gateway_id: z.number().nullable().optional(),
   assigned_gateway_name: z.string().optional(),
-  organisation_id: z.number().optional(),
+  organisation_id: z.number().nullable().optional(),
   questions: z.array(z.any()).optional(),
   assigned_standards: z.array(z.number()).optional(),
 });

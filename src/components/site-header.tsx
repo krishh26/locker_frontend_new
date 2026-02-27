@@ -42,8 +42,10 @@ export function SiteHeader() {
   const handleLogout = React.useCallback(() => {
     dispatch(clearCredentials())
     toast.success("You have been logged out")
-    router.push("/")
-  }, [dispatch, router])
+    // Full page navigation so protected pages (e.g. organisations/[id]) don't
+    // run their auth useEffects with null user and redirect to /errors/unauthorized
+    window.location.href = "/"
+  }, [dispatch])
 
   // Handle role change
   const handleRoleChange = React.useCallback(

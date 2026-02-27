@@ -12,12 +12,14 @@ export interface CreateSessionTypePayload {
   name: string;
   is_off_the_job: boolean;
   active: boolean;
+  organisation_id?: number;
 }
 
 export interface UpdateSessionTypePayload {
   name: string;
   is_off_the_job: boolean;
   active: boolean;
+  organisation_id?: number;
 }
 
 export interface ReorderSessionTypePayload {

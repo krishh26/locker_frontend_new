@@ -51,6 +51,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
+import type { Course } from "@/store/api/course/types";
 import {
   useGetUsersQuery,
 } from "@/store/api/user/userApi";
@@ -171,11 +172,11 @@ export function CourseInformationTab({
 
   // Filter courses by learner's organisation when present (multi-tenant: avoid cross-org enrolment)
   const coursesList = useMemo(() => {
-    const list = coursesResponse?.data || [];
+    const list: Course[] = coursesResponse?.data || [];
     const learnerOrgId = learner.organisation_id;
     if (learnerOrgId == null) return list;
     return list.filter(
-      (c: { organisation_id?: number }) =>
+      (c: Course) =>
         c.organisation_id == null || c.organisation_id === learnerOrgId
     );
   }, [coursesResponse?.data, learner.organisation_id]);

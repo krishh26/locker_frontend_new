@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "@/i18n/navigation"
 import {
   Bell,
@@ -47,19 +47,14 @@ interface NotificationItemProps {
   notification: Notification
   onRead?: (id: number) => void
   onDelete?: (id: number) => void
+  onClickContent?: () => void
 }
 
-function NotificationItem({ notification, onRead, onDelete }: NotificationItemProps) {
+function NotificationItem({ notification, onRead, onDelete, onClickContent }: NotificationItemProps) {
   const Icon = getNotificationIcon(notification.type)
 
-  return (
-    <div
-      className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-        notification.read
-          ? "bg-transparent"
-          : "bg-primary text-white"
-      }`}
-    >
+  const content = (
+    <>
       <div className="mt-0.5">
         <Icon className="h-5 w-5 text-primary" />
       </div>
@@ -90,7 +85,7 @@ function NotificationItem({ notification, onRead, onDelete }: NotificationItemPr
             variant="ghost"
             size="icon"
             className="h-6 w-6"
-            onClick={() => onRead(notification.notification_id)}
+            onClick={(e) => { e.stopPropagation(); onRead(notification.notification_id) }}
             title="Mark as read"
           >
             <Check className="h-3 w-3" />
@@ -101,13 +96,27 @@ function NotificationItem({ notification, onRead, onDelete }: NotificationItemPr
             variant="ghost"
             size="icon"
             className="h-6 w-6"
-            onClick={() => onDelete(notification.notification_id)}
+            onClick={(e) => { e.stopPropagation(); onDelete(notification.notification_id) }}
             title="Delete"
           >
             <X className="h-3 w-3" />
           </Button>
         )}
       </div>
+    </>
+  )
+
+  return (
+    <div
+      className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+        notification.read
+          ? "bg-transparent"
+          : "bg-primary text-white"
+      } ${onClickContent ? "cursor-pointer" : ""}`}
+      onClick={onClickContent}
+      role={onClickContent ? "button" : undefined}
+    >
+      {content}
     </div>
   )
 }
@@ -116,7 +125,7 @@ export function NotificationBell() {
   const router = useRouter()
   const [open, setOpen] = useState(false)
 
-  const { data, isLoading, error } = useGetNotificationsQuery(
+  const { data, isLoading, error, refetch } = useGetNotificationsQuery(
     {
       page: 1,
       page_size: NOTIFICATION_ITEMS_TO_SHOW,
@@ -127,6 +136,11 @@ export function NotificationBell() {
       refetchOnReconnect: true,
     }
   )
+
+  // Refetch when user opens the bell so ticket (and other) notifications appear immediately
+  useEffect(() => {
+    if (open) refetch()
+  }, [open, refetch])
 
   const [readAll, { isLoading: isReadingAll }] = useReadAllNotificationsMutation()
   const [deleteAll, { isLoading: isDeletingAll }] = useDeleteAllNotificationsMutation()
@@ -174,6 +188,17 @@ export function NotificationBell() {
   const handleViewAll = () => {
     setOpen(false)
     router.push("/notifications")
+  }
+
+  const isTicketNotification = (n: Notification) => {
+    const t = (n.title ?? "").toLowerCase()
+    const m = (n.message ?? "").toLowerCase()
+    return t.includes("ticket") || m.includes("ticket")
+  }
+
+  const handleTicketNotificationClick = () => {
+    setOpen(false)
+    router.push("/tickets")
   }
 
   return (
@@ -240,6 +265,7 @@ export function NotificationBell() {
                   notification={notification}
                   onRead={handleRead}
                   onDelete={handleDelete}
+                  onClickContent={isTicketNotification(notification) ? handleTicketNotificationClick : undefined}
                 />
               ))}
             </div>

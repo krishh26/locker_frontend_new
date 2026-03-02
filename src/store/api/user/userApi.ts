@@ -112,7 +112,15 @@ export const userApi = createApi({
         if (!response?.data) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        // Normalise: backend returns assigned_centers; ensure both spellings exist for compatibility
+        const data = response.data as typeof response.data & { assigned_centres?: typeof response.data.assigned_centers };
+        if (data.assigned_centers != null && data.assigned_centres == null) {
+          data.assigned_centres = data.assigned_centers;
+        }
+        if (data.assigned_centres != null && data.assigned_centers == null) {
+          data.assigned_centers = data.assigned_centres;
+        }
+        return { ...response, data };
       },
     }),
     getUserById: builder.query<UserResponse, number>({

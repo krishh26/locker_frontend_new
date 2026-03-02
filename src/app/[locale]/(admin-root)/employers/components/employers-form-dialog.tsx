@@ -34,7 +34,9 @@ import type {
   CreateEmployerRequest,
   UpdateEmployerRequest,
 } from "@/store/api/employer/types";
+import { useGetCentresQuery } from "@/store/api/centres/centreApi";
 import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { toast } from "sonner";
 
 const businessCategories = [
@@ -57,6 +59,8 @@ const businessCategories = [
 ];
 
 const createEmployerSchema = z.object({
+  organisation_id: z.number().min(1, "Organisation is required"),
+  centre_id: z.number().min(1, "Centre is required"),
   employer_name: z.string().min(1, "Company Name is required"),
   msi_employer_id: z.string().min(1, "MIS ID is required"),
   business_department: z.string().optional(),
@@ -107,6 +111,16 @@ export function EmployersFormDialog({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const authUser = useAppSelector((state) => state.auth.user);
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.length ? authUser.assignedOrganisationIds[0] : undefined);
+  const { data: centresResponse } = useGetCentresQuery(
+    organisationId != null ? { organisationId } : undefined,
+    { skip: organisationId == null }
+  );
+  const centres = centresResponse?.data ?? [];
+
   const [createEmployer, { isLoading: isCreating }] = useCreateEmployerMutation();
   const [updateEmployer, { isLoading: isUpdating }] = useUpdateEmployerMutation();
   const [uploadFile] = useUploadEmployerFileMutation();
@@ -114,6 +128,8 @@ export function EmployersFormDialog({
   const form = useForm<CreateEmployerFormValues | UpdateEmployerFormValues>({
     resolver: zodResolver(isEditMode ? updateEmployerSchema : createEmployerSchema),
     defaultValues: {
+      organisation_id: organisationId ?? 0,
+      centre_id: 0,
       employer_name: "",
       msi_employer_id: "",
       business_department: "",
@@ -143,6 +159,8 @@ export function EmployersFormDialog({
   useEffect(() => {
     if (employer && open) {
       form.reset({
+        organisation_id: employer.organisation_id ?? organisationId ?? 0,
+        centre_id: employer.centre_id ?? 0,
         employer_name: employer.employer_name || "",
         msi_employer_id: employer.msi_employer_id || "",
         business_department: employer.business_department || "",
@@ -178,6 +196,8 @@ export function EmployersFormDialog({
       }
     } else if (!employer && open) {
       form.reset({
+        organisation_id: organisationId ?? 0,
+        centre_id: 0,
         employer_name: "",
         msi_employer_id: "",
         business_department: "",
@@ -251,6 +271,18 @@ export function EmployersFormDialog({
 
   const onSubmit = async (values: CreateEmployerFormValues | UpdateEmployerFormValues) => {
     try {
+      const orgId =
+        values.organisation_id && values.organisation_id > 0
+          ? values.organisation_id
+          : organisationId ?? authUser?.assignedOrganisationIds?.[0];
+      const centreId =
+        values.centre_id && values.centre_id > 0 ? values.centre_id : employer?.centre_id;
+
+      if (!isEditMode && (!orgId || !centreId)) {
+        toast.error("Organisation and Centre are required to create an employer.");
+        return;
+      }
+
       const payload: CreateEmployerRequest | UpdateEmployerRequest = {
         ...values,
         assessment_date: values.assessment_date?.trim() ? values.assessment_date : null,
@@ -267,9 +299,8 @@ export function EmployersFormDialog({
             }
           : employer?.file || null,
       };
-      if (authUser?.assignedOrganisationIds?.length) {
-        payload.organisation_id = authUser.assignedOrganisationIds[0];
-      }
+      payload.organisation_id = orgId;
+      if (centreId) payload.centre_id = centreId;
 
       if (isEditMode) {
         await updateEmployer({
@@ -308,6 +339,47 @@ export function EmployersFormDialog({
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Organisation & Centre (required for multi-tenant scope) */}
+          {organisationId != null && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Organisation & Centre</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="centre_id">
+                    Centre <span className="text-destructive">*</span>
+                  </Label>
+                  <Select
+                    value={
+                      form.watch("centre_id") ? String(form.watch("centre_id")) : ""
+                    }
+                    onValueChange={(v) => form.setValue("centre_id", v ? Number(v) : 0)}
+                  >
+                    <SelectTrigger id="centre_id">
+                      <SelectValue placeholder="Select centre" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {centres.map((c) => (
+                        <SelectItem key={c.id} value={String(c.id)}>
+                          {c.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.centre_id && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.centre_id.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          {organisationId == null && !isEditMode && (
+            <p className="text-sm text-muted-foreground">
+              Select an organisation (from the header or context) to create an employer.
+            </p>
+          )}
+
           {/* Company Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold border-b pb-2">Company</h3>

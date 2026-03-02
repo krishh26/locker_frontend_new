@@ -278,6 +278,12 @@ export function UsersForm({ user }: UsersFormProps) {
         selectedCourseForAssignment: "",
         assignedLearners: [],
       });
+      // Set centre from user's assigned centres (API returns assigned_centers; we support both spellings)
+      const assignedCentres = (user as { assigned_centers?: Array<{ id: number }>; assigned_centres?: Array<{ id: number }> }).assigned_centers
+        ?? (user as { assigned_centres?: Array<{ id: number }> }).assigned_centres;
+      if (Array.isArray(assignedCentres) && assignedCentres.length > 0) {
+        setSelectedCentreId(assignedCentres[0].id);
+      }
     } else {
       form.reset({
         first_name: "",
@@ -529,10 +535,21 @@ export function UsersForm({ user }: UsersFormProps) {
           .map((id) => Number(id));
       }
 
-      // Centre selection (same pattern as learner form):
-      // if logged-in admin has centres tree, send centre_ids array for created/updated user
-      if (!isAccountManagerUser && centreOptions.length && selectedCentreId) {
+      // Trainer must have exactly one centre (backend requirement). Send centre_ids and assigned_centers (same shape as user/get).
+      const roles = values.roles ?? [];
+      const hasTrainerRole = roles.includes("Trainer");
+      if (hasTrainerRole && selectedCentreId) {
         payload.centre_ids = [selectedCentreId];
+        const centre = centreOptions.find((c) => c.id === selectedCentreId);
+        if (centre) {
+          (payload as Record<string, unknown>).assigned_centers = [{ id: centre.id, name: centre.name }];
+        }
+      } else if (!isAccountManagerUser && centreOptions.length && selectedCentreId) {
+        payload.centre_ids = [selectedCentreId];
+        const centre = centreOptions.find((c) => c.id === selectedCentreId);
+        if (centre) {
+          (payload as Record<string, unknown>).assigned_centers = [{ id: centre.id, name: centre.name }];
+        }
       }
       if (isEditMode) {
         const updateData = payload as UpdateUserFormValues;

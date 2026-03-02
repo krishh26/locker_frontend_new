@@ -19,10 +19,13 @@ export const employerApi = createApi({
   endpoints: (builder) => ({
     getEmployers: builder.query<EmployerListResponse, EmployerFilters>({
       query: (filters = {}) => {
-        const { page = 1, page_size = 10, keyword = "" } = filters;
+        const { page = 1, page_size = 10, keyword = "", organisation_id } = filters;
         let url = `/employer/list?page=${page}&limit=${page_size}&meta=true`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
+        }
+        if (organisation_id != null && organisation_id !== undefined) {
+          url += `&organisation_id=${encodeURIComponent(organisation_id)}`;
         }
         return url;
       },

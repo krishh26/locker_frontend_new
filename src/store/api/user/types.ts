@@ -130,6 +130,8 @@ export interface CreateUserRequest {
   organisation_ids?: number[];
   centre_id?: number;
   centre_ids?: number[];
+  /** Same shape as user/get response; optional, for consistency with API response */
+  assigned_centers?: Array<{ id: number; name: string }>;
 }
 
 export interface UpdateUserRequest {
@@ -145,6 +147,8 @@ export interface UpdateUserRequest {
   organisation_ids?: number[];
   centre_id?: number;
   centre_ids?: number[];
+  /** Same shape as user/get response; optional */
+  assigned_centers?: Array<{ id: number; name: string }>;
 }
 
 export interface UserResponse {

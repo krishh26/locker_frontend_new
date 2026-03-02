@@ -16,6 +16,9 @@ import {
   useDeleteAcknowledgementMutation,
   useClearAllAcknowledgementsMutation,
 } from "@/store/api/acknowledgement/acknowledgementApi";
+import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
+import type { AuthUser } from "@/store/api/auth/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -71,7 +74,16 @@ export function AcknowledgeMessagePageContent() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [clearAllDialogOpen, setClearAllDialogOpen] = useState(false);
 
-  const { data, isLoading, refetch } = useGetAcknowledgementsQuery();
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const authUser = useAppSelector((state) => state.auth.user) as AuthUser | undefined;
+  const organisationId = masterAdminOrgId ?? (authUser?.assignedOrganisationIds?.[0] != null ? Number(authUser.assignedOrganisationIds[0]) : undefined);
+  const authUserCentres = authUser && "centre_ids" in authUser ? (authUser as { centre_ids?: number[] }).centre_ids : undefined;
+  const authUserCentreId = authUser && "centre_id" in authUser ? (authUser as { centre_id?: number }).centre_id : undefined;
+  const centreId = authUserCentres?.[0] ?? authUserCentreId;
+
+  const queryFilters = organisationId != null ? { organisation_id: organisationId, centre_id: centreId } : undefined;
+
+  const { data, isLoading, refetch } = useGetAcknowledgementsQuery(queryFilters);
   const [createAcknowledgement, { isLoading: isCreating }] =
     useCreateAcknowledgementMutation();
   const [updateAcknowledgement, { isLoading: isUpdating }] =
@@ -169,6 +181,12 @@ export function AcknowledgeMessagePageContent() {
     try {
       const submitFormData = new FormData();
       submitFormData.append("message", formData.message);
+      if (organisationId != null) {
+        submitFormData.append("organisation_id", String(organisationId));
+      }
+      if (centreId != null && !Number.isNaN(Number(centreId))) {
+        submitFormData.append("centre_id", String(centreId));
+      }
 
       if (latestAcknowledgement) {
         // Update existing acknowledgement
@@ -179,6 +197,8 @@ export function AcknowledgeMessagePageContent() {
         await updateAcknowledgement({
           id: latestAcknowledgement.id,
           data: submitFormData,
+          organisation_id: organisationId,
+          centre_id: centreId != null ? Number(centreId) : undefined,
         }).unwrap();
 
         toast.success(t("toast.messageUpdated"));
@@ -214,7 +234,11 @@ export function AcknowledgeMessagePageContent() {
     }
 
     try {
-      await deleteAcknowledgement({ id: latestAcknowledgement.id }).unwrap();
+      await deleteAcknowledgement({
+        id: latestAcknowledgement.id,
+        organisation_id: organisationId,
+        centre_id: centreId != null ? Number(centreId) : undefined,
+      }).unwrap();
       toast.success(t("toast.acknowledgementDeleted"));
       form.reset();
       setSelectedFile(null);
@@ -235,7 +259,7 @@ export function AcknowledgeMessagePageContent() {
 
   const handleClearAll = async () => {
     try {
-      await clearAllAcknowledgements().unwrap();
+      await clearAllAcknowledgements(queryFilters).unwrap();
       toast.success(t("toast.allCleared"));
       form.reset();
       setSelectedFile(null);

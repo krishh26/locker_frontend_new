@@ -172,7 +172,7 @@ export function CourseInformationTab({
 
   // Filter courses by learner's organisation when present (multi-tenant: avoid cross-org enrolment)
   const coursesList = useMemo(() => {
-    const list: Course[] = coursesResponse?.data || [];
+    const list = coursesResponse?.data || [];
     const learnerOrgId = learner.organisation_id;
     if (learnerOrgId == null) return list;
     return list.filter(

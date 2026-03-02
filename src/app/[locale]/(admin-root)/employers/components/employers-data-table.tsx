@@ -451,6 +451,8 @@ export function EmployersDataTable() {
           setIsCsvUploadOpen(false);
           refetch();
         }}
+        organisationId={Number(organisationId) || 0}
+        centreId={0}
       />
 
       {/* Delete Confirmation Dialog */}

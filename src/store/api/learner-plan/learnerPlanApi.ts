@@ -4,6 +4,8 @@ import type {
   LearningPlanListRequest,
   LearningPlanListResponse,
   UpdateSessionRequest,
+  CreateLearnerPlanRequest,
+  CreateLearnerPlanResponse,
   AddActionRequest,
   EditActionRequest,
 } from "./types";
@@ -60,6 +62,35 @@ export const learnerPlanApi = createApi({
         body: data,
       }),
       invalidatesTags: ["LearnerPlanList"],
+    }),
+    deleteLearnerPlan: builder.mutation<
+      { status: boolean; message?: string; error?: string },
+      number
+    >({
+      query: (id) => ({
+        url: `/learner-plan/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["LearnerPlanList"],
+    }),
+    createLearnerPlan: builder.mutation<
+      CreateLearnerPlanResponse,
+      CreateLearnerPlanRequest
+    >({
+      query: (body) => ({
+        url: "/learner-plan/create",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["LearnerPlanList"],
+      transformResponse: (response: { status: boolean; message?: string; error?: string; data?: unknown }) => {
+        if (response.status === false) {
+          throw new Error(
+            response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE
+          );
+        }
+        return response as CreateLearnerPlanResponse;
+      },
     }),
     addAction: builder.mutation<
       { status: boolean; message?: string; error?: string },
@@ -120,6 +151,8 @@ export const {
   useGetLearnerPlanListQuery,
   useLazyGetLearnerPlanListQuery,
   useUpdateSessionMutation,
+  useCreateLearnerPlanMutation,
+  useDeleteLearnerPlanMutation,
   useAddActionMutation,
   useEditActionMutation,
   useAddFormToLearnerMutation,

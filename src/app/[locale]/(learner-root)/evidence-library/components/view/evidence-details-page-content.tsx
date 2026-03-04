@@ -31,6 +31,8 @@ export function EvidenceDetailsPageContent() {
   const searchParams = useSearchParams();
   const evidenceId = params?.id as string;
   const courses = useAppSelector(selectCourses);
+  const user = useAppSelector((state) => state.auth.user);
+  const isTrainer = user?.role === "Trainer" || (user as { roles?: string[] })?.roles?.includes("Trainer");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Read selected units from URL params
@@ -594,7 +596,8 @@ export function EvidenceDetailsPageContent() {
                 {...form.register("trainer_feedback")}
                 placeholder="Enter trainer feedback"
                 rows={4}
-                className="resize-none"
+                className="resize-none disabled:bg-slate-100 disabled:text-slate-600 disabled:cursor-not-allowed"
+                disabled={!isTrainer}
               />
             </div>
 
@@ -607,6 +610,8 @@ export function EvidenceDetailsPageContent() {
                 courses={courses}
                 setValue={form.setValue}
                 trigger={form.trigger}
+                canEditLearnerFields={isTrainer}
+                canEditTrainerFields={isTrainer}
               />
             </div>
           </CardContent>

@@ -18,7 +18,7 @@ export const userApi = createApi({
   tagTypes: ["User"],
   endpoints: (builder) => ({
     getUsersByRole: builder.query<UserListResponse, string>({
-      query: (role) => `/user/list?role=${role}`,
+      query: (role) => `/user/list?role=${encodeURIComponent(role)}`,
       providesTags: ["User"],
       transformResponse: (response: UserListResponse) => {
         if (!response?.status) {

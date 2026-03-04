@@ -63,6 +63,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fileTab, setFileTab] = useState('upload')
   const [sessions, setSessions] = useState<Array<{ id: string | number; label: string }>>([])
+  /** Roles that already have is_requested true from API – "Signature req" is checked and disabled in edit */
+  const [requestedRoles, setRequestedRoles] = useState<string[]>([])
 
   // Get learner ID - for learners, use their own ID; for trainers/admins, might need to get from context
   const learnerId = user?.learner_id ? String(user.learner_id) : null
@@ -239,6 +241,26 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         reconstructedUnits = reconstructed.units
       }
 
+      // Build signatures from API: match by role, set signature_required = is_requested, signed = is_signed, date = signed_at
+      const formSignatureRoles = ['Trainer', 'Learner', 'Employer', 'IQA']
+      const apiSigs = (evidence as { signatures?: Array<{ role: string; is_signed?: boolean; is_requested?: boolean; signed_at?: string | null }> }).signatures ?? []
+      const defaultSigs = form.getValues('signatures')
+      const signatures = formSignatureRoles.map((role, idx) => {
+        const def = defaultSigs[idx] || { role, name: '', signed: false, es: '', date: '', signature_required: false }
+        const api = apiSigs.find((s) => s.role === role)
+        const dateFromApi = api?.signed_at ? new Date(api.signed_at).toISOString().slice(0, 10) : ''
+        return {
+          ...def,
+          role,
+          name: def.name ?? '',
+          signed: api?.is_signed ?? false,
+          es: def.es ?? '',
+          date: (dateFromApi || def.date) ?? '',
+          signature_required: api?.is_requested ?? false,
+        }
+      })
+      setRequestedRoles(apiSigs.filter((s) => s.is_requested).map((s) => s.role))
+
       form.reset({
         title: evidence.title || '',
         description: evidence.description || '',
@@ -256,10 +278,14 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           reconstructedCourses.length > 0 ? reconstructedCourses : [],
         courseSelectedTypes: courseSelectedTypes,
         units: reconstructedUnits.length > 0 ? reconstructedUnits : [],
-        signatures: form.getValues('signatures'),
+        signatures,
       })
     }
   }, [evidenceDetails, isEditMode, form, courses])
+
+  useEffect(() => {
+    if (!isEditMode) setRequestedRoles([])
+  }, [isEditMode])
 
   const onSubmit = async (data: EvidenceFormValues) => {
     // Validate course selections before submitting
@@ -1179,6 +1205,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             errors={form.formState.errors as any}
             watch={form.watch}
             disabled={!canEditLearnerFields}
+            requestedRoles={requestedRoles}
           />
         </CardContent>
       </Card>

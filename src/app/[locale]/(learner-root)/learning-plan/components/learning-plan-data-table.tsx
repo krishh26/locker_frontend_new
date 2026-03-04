@@ -48,6 +48,8 @@ import { toast } from 'sonner'
 import type { LearningPlanSession } from '@/store/api/learner-plan/types'
 import { DataTablePagination } from '@/components/data-table-pagination'
 import { SessionExpandedContent } from './session-expanded-content'
+import { AddSessionDialog } from './add-session-dialog'
+import { selectCurrentCourseId } from '@/store/slices/courseSlice'
 
 export type SessionRow = {
   id: number
@@ -101,6 +103,9 @@ export function LearningPlanDataTable() {
   const [attendedFilter, setAttendedFilter] = useState<string>('')
   const [globalFilter, setGlobalFilter] = useState('')
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set())
+  const [addSessionDialogOpen, setAddSessionDialogOpen] = useState(false)
+
+  const currentCourseId = useAppSelector(selectCurrentCourseId)
 
   const learnerId = learner?.learner_id || user?.id
 
@@ -569,13 +574,32 @@ export function LearningPlanDataTable() {
             </DropdownMenuContent>
           </DropdownMenu>
           {(user?.role === 'Admin' || user?.role === 'Trainer') && (
-            <Button className='cursor-pointer'>
-              <Plus className='mr-2 size-4' />
+            <Button
+              type="button"
+              className="cursor-pointer"
+              onClick={() => setAddSessionDialogOpen(true)}
+            >
+              <Plus className="mr-2 size-4" />
               Add Session
             </Button>
           )}
         </div>
       </div>
+
+      {learnerId && (user?.role === 'Admin' || user?.role === 'Trainer') && (
+        <AddSessionDialog
+          open={addSessionDialogOpen}
+          onOpenChange={setAddSessionDialogOpen}
+          learnerId={Number(learnerId)}
+          assessorId={
+            (user as { user_id?: number })?.user_id ??
+            (user as { id?: number })?.id ??
+            0
+          }
+          defaultCourseIds={currentCourseId ? [currentCourseId] : []}
+          onSuccess={() => setAddSessionDialogOpen(false)}
+        />
+      )}
 
       {/* Table */}
       {filteredData.length > 0 ? (
@@ -620,7 +644,7 @@ export function LearningPlanDataTable() {
                           <TableRow>
                             <TableCell
                               colSpan={columns.length}
-                              className='bg-muted/50 p-0'
+                              className='p-0'
                             >
                               <SessionExpandedContent
                                 session={row.original.rawData}

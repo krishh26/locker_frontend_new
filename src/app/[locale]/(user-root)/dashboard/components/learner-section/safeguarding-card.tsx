@@ -1,6 +1,6 @@
 "use client"
 
-import { Mail, Phone, ShieldAlert, User2 } from "lucide-react"
+import { Mail, Phone, ShieldAlert } from "lucide-react"
 import {
   Card,
   CardContent,
@@ -17,12 +17,7 @@ export function SafeguardingCard() {
   const { data, isLoading, isError } = useGetSafeguardingContactsQuery()
   
   // Get the first active contact or use placeholder
-  const safeguardingContact = data?.data?.[0] || {
-    telNumber: "020 7946 0144",
-    mobileNumber: "07945 221 890",
-    emailAddress: "safeguarding@locker.edu",
-    additionalInfo: "Available Mon - Fri, 08:30 - 18:00. Response within 2 working hours.",
-  }
+  const safeguardingContact = data?.data?.[0] || null
 
   if (isLoading) {
     return (
@@ -41,6 +36,11 @@ export function SafeguardingCard() {
       </Card>
     )
   }
+
+  if (!safeguardingContact) {
+    return null
+  }
+
   return (
     <Card className="h-full shadow-sm bg-primary/10 border-primary/20">
       <CardHeader className="flex flex-row items-start justify-between gap-3">

@@ -121,6 +121,10 @@
       "centre": "Centre",
       "centrePlaceholder": "Select centre",
       "noCentresAvailable": "No centres available",
+      "lineManager": "Line Manager",
+      "lineManagerPlaceholder": "Select line manager",
+      "noLineManagersAvailable": "No line managers available",
+      "noLineManager": "No line manager",
       "required": "*"
     },
     "validation": {

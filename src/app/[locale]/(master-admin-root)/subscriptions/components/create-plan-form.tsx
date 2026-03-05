@@ -24,12 +24,7 @@ interface CreatePlanFormValues {
   code: string
   description?: string
   price: number
-  currency: string
   billingCycle: "monthly" | "yearly"
-  userLimit?: number
-  centreLimit?: number
-  organisationLimit?: number
-  featuresStr?: string
 }
 
 const createPlanSchema = z.object({
@@ -37,12 +32,7 @@ const createPlanSchema = z.object({
   code: z.string().min(1, "Code is required"),
   description: z.string().optional(),
   price: z.coerce.number().min(0, "Price must be ≥ 0"),
-  currency: z.string().min(1, "Currency is required"),
   billingCycle: z.enum(["monthly", "yearly"]),
-  userLimit: z.optional(z.coerce.number().min(0)),
-  centreLimit: z.optional(z.coerce.number().min(0)),
-  organisationLimit: z.optional(z.coerce.number().min(0)),
-  featuresStr: z.string().optional(),
 })
 
 interface CreatePlanFormProps {
@@ -60,31 +50,20 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
       code: "",
       description: "",
       price: 0,
-      currency: "GBP",
       billingCycle: "monthly",
-      userLimit: undefined,
-      centreLimit: undefined,
-      organisationLimit: undefined,
-      featuresStr: "",
     },
   })
 
   const onSubmit = async (values: CreatePlanFormValues) => {
     try {
-      const features = values.featuresStr
-        ? values.featuresStr.split(",").map((s) => s.trim()).filter(Boolean)
-        : []
       const body: CreatePlanRequest = {
         name: values.name,
         code: values.code,
         description: values.description || undefined,
         price: values.price,
-        currency: values.currency,
+        currency: "GBP",
         billingCycle: values.billingCycle,
-        userLimit: values.userLimit,
-        centreLimit: values.centreLimit,
-        organisationLimit: values.organisationLimit,
-        features,
+        features: [],
       }
       await createPlanMutation(body).unwrap()
       toast.success("Plan created successfully")
@@ -147,7 +126,7 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="price">Price *</Label>
+          <Label htmlFor="price">Price * (GBP)</Label>
           <Input
             id="price"
             type="number"
@@ -159,28 +138,6 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
           />
           {form.formState.errors.price && (
             <p className="text-sm text-destructive">{form.formState.errors.price.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="currency">Currency *</Label>
-          <Controller
-            name="currency"
-            control={form.control}
-            render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange} disabled={isLoading}>
-                <SelectTrigger id="currency" className={form.formState.errors.currency ? "border-destructive" : ""}>
-                  <SelectValue placeholder="Select currency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="GBP">GBP</SelectItem>
-                  <SelectItem value="USD">USD</SelectItem>
-                  <SelectItem value="EUR">EUR</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {form.formState.errors.currency && (
-            <p className="text-sm text-destructive">{form.formState.errors.currency.message}</p>
           )}
         </div>
       </div>
@@ -201,49 +158,6 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
               </SelectContent>
             </Select>
           )}
-        />
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="space-y-2">
-          <Label htmlFor="userLimit">User limit</Label>
-          <Input
-            id="userLimit"
-            type="number"
-            min={0}
-            {...form.register("userLimit")}
-            disabled={isLoading}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="centreLimit">Centre limit</Label>
-          <Input
-            id="centreLimit"
-            type="number"
-            min={0}
-            {...form.register("centreLimit")}
-            disabled={isLoading}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="organisationLimit">Organisation limit</Label>
-          <Input
-            id="organisationLimit"
-            type="number"
-            min={0}
-            {...form.register("organisationLimit")}
-            disabled={isLoading}
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="featuresStr">Features (comma-separated)</Label>
-        <Input
-          id="featuresStr"
-          placeholder="e.g. Lockers, Reports, API"
-          {...form.register("featuresStr")}
-          disabled={isLoading}
         />
       </div>
 

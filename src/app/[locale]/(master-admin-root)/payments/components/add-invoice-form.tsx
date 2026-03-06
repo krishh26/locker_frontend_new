@@ -87,7 +87,6 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
   const [invoiceDate, setInvoiceDate] = useState<string>(
     () => new Date().toISOString().split('T')[0]
   )
-  const [currency, setCurrency] = useState<string>('GBP')
   const [status, setStatus] = useState<PaymentStatus>('draft')
   const [paymentMethod, setPaymentMethod] = useState<string>('')
   const [notes, setNotes] = useState<string>('')
@@ -101,7 +100,6 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
     setOrganisationId(String(p.organisationId))
     setPlanId(p.planId != null ? String(p.planId) : '')
     setInvoiceDate(p.date.includes('T') ? p.date.split('T')[0] : p.date)
-    setCurrency(p.currency ?? 'GBP')
     setStatus(
         (['draft', 'sent', 'failed', 'refunded'].includes(p.status)
           ? p.status
@@ -228,9 +226,6 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
     const plan =
       plans.find((p) => String(p.id) === newValue) ??
       allPlans.find((p) => String(p.id) === newValue)
-    if (plan?.currency) {
-      setCurrency(plan.currency)
-    }
     if (plan?.billingCycle === 'yearly' && notes === '') {
       setNotes('Month 1 of 12 - yearly plan')
     }
@@ -270,6 +265,8 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
     [rowCalculations]
   )
 
+  const CURRENCY = 'GBP'
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!organisationId || !planId) {
@@ -285,7 +282,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
       planId: Number(planId),
       date: invoiceDate,
       numberOfPeriods: lineItems.length,
-      currency,
+      currency: CURRENCY,
       status,
       paymentMethod: paymentMethod || undefined,
       notes: notes || undefined,
@@ -324,7 +321,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
         planName,
         invoiceDate,
         invoiceNumber,
-        currency,
+        currency: CURRENCY,
         lineItems: lineItems.map((item, i) => ({
           periodLabel: item.periodLabel,
           dueDate: item.dueDate,
@@ -432,19 +429,6 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
                   {plan.name} ({plan.currency} {plan.price}/{plan.billingCycle})
                 </SelectItem>
               ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className='space-y-2'>
-          <Label>Currency</Label>
-          <Select value={currency} onValueChange={setCurrency}>
-            <SelectTrigger className='w-full'>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='GBP'>GBP</SelectItem>
-              <SelectItem value='USD'>USD</SelectItem>
-              <SelectItem value='EUR'>EUR</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -559,7 +543,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
                     />
                   </TableCell>
                   <TableCell className='font-medium tabular-nums'>
-                    {currency}{' '}
+                    {CURRENCY}{' '}
                     {rowCalculations[index]?.rowTotal.toFixed(2) ?? '0.00'}
                   </TableCell>
                   <TableCell>
@@ -610,14 +594,14 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           <div className='flex justify-between gap-2'>
             <span>Subtotal</span>
             <span>
-              {currency} {subtotal.toFixed(2)}
+              {CURRENCY} {subtotal.toFixed(2)}
             </span>
           </div>
           {totalDiscount > 0 && (
             <div className='flex justify-between gap-2 text-muted-foreground'>
               <span>Total discount</span>
               <span>
-                -{currency} {totalDiscount.toFixed(2)}
+                -{CURRENCY} {totalDiscount.toFixed(2)}
               </span>
             </div>
           )}
@@ -625,14 +609,14 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
             <div className='flex justify-between gap-2 text-muted-foreground'>
               <span>Total tax</span>
               <span>
-                +{currency} {totalTax.toFixed(2)}
+                +{CURRENCY} {totalTax.toFixed(2)}
               </span>
             </div>
           )}
           <div className='flex justify-between gap-2 font-semibold mt-2 pt-2 border-t'>
             <span>Total</span>
             <span>
-              {currency} {total.toFixed(2)}
+              {CURRENCY} {total.toFixed(2)}
             </span>
           </div>
         </div>

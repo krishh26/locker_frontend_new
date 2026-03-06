@@ -213,7 +213,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         </div>
         <h2 className="text-xl font-semibold">Progress Overview</h2>
       </div>
-      <div className="grid gap-4 lg:grid-cols-4">
+      <div className="grid gap-4 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-1 ">
         {courses.map((course, index) => {
           console.log("🚀 ~ CourseProgressCharts ~ course:", course)
           const progressData = convertToProgressData(course)

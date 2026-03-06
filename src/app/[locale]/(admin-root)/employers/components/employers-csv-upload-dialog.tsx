@@ -110,12 +110,16 @@ interface EmployersCsvUploadDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess: () => void;
+  organisationId: number;
+  centreId?: number;
 }
 
 export function EmployersCsvUploadDialog({
   open,
   onOpenChange,
   onSuccess,
+  organisationId,
+  centreId = 0,
 }: EmployersCsvUploadDialogProps) {
   const [file, setFile] = useState<File | null>(null);
   const [parsedData, setParsedData] = useState<Omit<CreateEmployerRequest, "file">[]>([]);
@@ -193,6 +197,8 @@ export function EmployersCsvUploadDialog({
           assessment_date: convertDateFormat(row["AssessmentDate"] || ""),
           assessment_renewal_date: convertDateFormat(row["AssessmentRenewalDate"] || ""),
           insurance_renewal_date: convertDateFormat(row["InsuranceRenewalDate"] || ""),
+          organisation_id: organisationId,
+          centre_id: centreId,
         });
       }
 

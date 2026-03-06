@@ -53,6 +53,7 @@ export type LearnerData = {
   };
   course: LearnerCourse[];
   organisation_id?: number;
+  centre_id?: number;
   [key: string]: unknown;
 };
 

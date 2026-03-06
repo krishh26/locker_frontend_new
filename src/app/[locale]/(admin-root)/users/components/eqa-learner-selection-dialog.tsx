@@ -88,8 +88,7 @@ export function EqaLearnerSelectionDialog({
       page_size: pageSize,
       keyword: debouncedSearch || undefined,
       course_id: selectedCourseId ? Number(selectedCourseId) : undefined,
-      organisation_id:
-        selectedCourseOrganisationId != null ? selectedCourseOrganisationId : undefined,
+      organisation_id: selectedCourseOrganisationId ?? undefined,
     },
     {
       skip: !open || !selectedCourseId,

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Controller, Control, FieldErrors, UseFormWatch } from "react-hook-form";
 import {
   Table,
@@ -19,6 +20,8 @@ interface SignatureTableProps {
   errors: FieldErrors<EvidenceFormValues>;
   watch: UseFormWatch<EvidenceFormValues>;
   disabled?: boolean;
+  /** When a role has been requested for signature, "Signature req" is checked and cannot be changed */
+  requestedRoles?: string[];
 }
 
 const signatureRoles = [
@@ -33,7 +36,9 @@ export function SignatureTable({
   errors,
   watch,
   disabled = false,
+  requestedRoles = [],
 }: SignatureTableProps) {
+  const requestedSet = useMemo(() => new Set(requestedRoles), [requestedRoles]);
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
@@ -51,6 +56,7 @@ export function SignatureTable({
           <TableBody>
             {signatureRoles.map((item, index) => {
               const isSigned = watch(`signatures.${index}.signed`);
+              const isRequested = requestedSet.has(item.role);
               return (
                 <TableRow key={item.role}>
                   <TableCell>
@@ -65,7 +71,7 @@ export function SignatureTable({
                           {...field}
                           placeholder="Enter name"
                           disabled={true}
-                          className="w-full"
+                          className="w-full disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
                         />
                       )}
                     />
@@ -79,6 +85,7 @@ export function SignatureTable({
                           checked={field.value || false}
                           onCheckedChange={field.onChange}
                           disabled={true}
+                          className="border-slate-500 disabled:border-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                       )}
                     />
@@ -92,7 +99,7 @@ export function SignatureTable({
                           {...field}
                           placeholder="ES"
                           disabled={true}
-                          className="w-full"
+                          className="w-full disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
                         />
                       )}
                     />
@@ -106,7 +113,7 @@ export function SignatureTable({
                           {...field}
                           type="date"
                           disabled={true}
-                          className="w-full"
+                          className="w-full disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
                         />
                       )}
                     />
@@ -119,7 +126,8 @@ export function SignatureTable({
                         <Checkbox
                           checked={field.value || false}
                           onCheckedChange={field.onChange}
-                          disabled={disabled || isSigned}
+                          disabled={disabled || isSigned || isRequested}
+                          className="border-slate-500 disabled:border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                       )}
                     />

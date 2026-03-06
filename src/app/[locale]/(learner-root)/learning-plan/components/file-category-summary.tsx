@@ -49,7 +49,7 @@ export function FileCategorySummary({ data }: FileCategorySummaryProps) {
   }
 
   return (
-    <div className="border rounded-lg p-4 w-full max-w-[250px] bg-muted/50">
+    <div className="border rounded-lg p-4 w-full max-w-[250px]">
       <TooltipProvider>
         {categories.map((category, idx) => {
           const categoryDocs = data.filter((doc) => doc.file_type === category);

@@ -65,6 +65,17 @@ export const baseQuery: BaseQueryFn<
         organisationIdToSend = Number((user as AuthUser)["assignedOrganisationIds"]?.[0])
       }
 
+      // 3) Learner → send organisation_id from stored learner profile (from /learner response)
+      const learner = state.auth?.learner
+      if (
+        !organisationIdToSend &&
+        user?.role === "Learner" &&
+        learner?.organisation_id != null &&
+        !Number.isNaN(Number(learner.organisation_id))
+      ) {
+        organisationIdToSend = Number(learner.organisation_id)
+      }
+
       if (organisationIdToSend != null && !Number.isNaN(organisationIdToSend)) {
         headers.set("X-Organisation-Id", String(organisationIdToSend))
       }

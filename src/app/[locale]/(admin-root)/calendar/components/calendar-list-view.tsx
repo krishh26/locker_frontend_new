@@ -26,7 +26,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Session, SessionMetaData } from "@/store/api/session/types";
-import { useUpdateSessionMutation, useDeleteSessionMutation } from "@/store/api/session/sessionApi";
+import { useUpdateSessionMutation, useDeleteLearnerPlanMutation } from "@/store/api/learner-plan/learnerPlanApi";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -55,7 +55,7 @@ export function CalendarListView({
   onPageChange,
 }: CalendarListViewProps) {
   const [updateSession] = useUpdateSessionMutation();
-  const [deleteSession] = useDeleteSessionMutation();
+  const [deleteLearnerPlan] = useDeleteLearnerPlanMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState<Session | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -70,7 +70,7 @@ export function CalendarListView({
     try {
       await updateSession({
         id: sessionId,
-        data: { Attended: newStatus },
+        Attended: newStatus,
       }).unwrap();
       toast.success("Session status updated successfully");
     } catch (error: unknown) {
@@ -88,7 +88,7 @@ export function CalendarListView({
     if (!sessionToDelete) return;
 
     try {
-      await deleteSession(sessionToDelete.session_id).unwrap();
+      await deleteLearnerPlan(sessionToDelete.session_id).unwrap();
       toast.success("Session deleted successfully");
       setDeleteDialogOpen(false);
       setSessionToDelete(null);

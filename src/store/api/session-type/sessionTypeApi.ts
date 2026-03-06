@@ -9,6 +9,36 @@ import type {
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 
+type RawSessionType = {
+  id: number;
+  name: string;
+  is_off_the_job?: boolean;
+  isOffTheJob?: boolean;
+  active?: boolean;
+  isActive?: boolean;
+  order: number;
+  centre_id?: number | null;
+  centreId?: number | null;
+  created_at?: string;
+  createdAt?: string;
+  updated_at?: string;
+  updatedAt?: string;
+};
+
+type RawSessionTypeListResponse = {
+  status: boolean;
+  message?: string;
+  error?: string;
+  data?: RawSessionType[];
+};
+
+type RawSessionTypeSingleResponse = {
+  status: boolean;
+  message?: string;
+  error?: string;
+  data?: RawSessionType;
+};
+
 export const sessionTypeApi = createApi({
   reducerPath: "sessionTypeApi",
   baseQuery,
@@ -17,26 +47,29 @@ export const sessionTypeApi = createApi({
     getSessionTypes: builder.query<SessionTypesResponse, void>({
       query: () => "/sessionType/list",
       providesTags: ["SessionType"],
-      transformResponse: (response: any) => {
-        if (response?.status === false) {
-          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+      transformResponse: (response: unknown): SessionTypesResponse => {
+        const raw = response as RawSessionTypeListResponse;
+
+        if (raw?.status === false) {
+          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
         }
         // Transform snake_case to camelCase
-        if (response?.data && Array.isArray(response.data)) {
+        if (raw?.data && Array.isArray(raw.data)) {
           return {
-            ...response,
-            data: response.data.map((item: any) => ({
+            ...(raw as Omit<RawSessionTypeListResponse, "data">),
+            data: raw.data.map((item: RawSessionType) => ({
               id: item.id,
               name: item.name,
-              isOffTheJob: item.is_off_the_job ?? item.isOffTheJob,
-              isActive: item.active ?? item.isActive,
+              isOffTheJob: item.is_off_the_job ?? item.isOffTheJob ?? false,
+              isActive: item.active ?? item.isActive ?? true,
               order: item.order,
+              centreId: item.centre_id ?? item.centreId ?? null,
               createdAt: item.created_at ?? item.createdAt,
               updatedAt: item.updated_at ?? item.updatedAt,
             })),
           };
         }
-        return response;
+        return raw as SessionTypesResponse;
       },
     }),
     createSessionType: builder.mutation<
@@ -49,25 +82,28 @@ export const sessionTypeApi = createApi({
         body: payload,
       }),
       invalidatesTags: ["SessionType"],
-      transformResponse: (response: any) => {
-        if (response?.status === false) {
-          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+      transformResponse: (response: unknown): SessionTypeResponse => {
+        const raw = response as RawSessionTypeSingleResponse;
+
+        if (raw?.status === false) {
+          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        if (response?.data) {
+        if (raw?.data) {
           return {
-            ...response,
+            ...(raw as Omit<RawSessionTypeSingleResponse, "data">),
             data: {
-              id: response.data.id,
-              name: response.data.name,
-              isOffTheJob: response.data.is_off_the_job ?? response.data.isOffTheJob,
-              isActive: response.data.active ?? response.data.isActive,
-              order: response.data.order,
-              createdAt: response.data.created_at ?? response.data.createdAt,
-              updatedAt: response.data.updated_at ?? response.data.updatedAt,
+              id: raw.data.id,
+              name: raw.data.name,
+              isOffTheJob: raw.data.is_off_the_job ?? raw.data.isOffTheJob ?? false,
+              isActive: raw.data.active ?? raw.data.isActive ?? true,
+              order: raw.data.order,
+              centreId: raw.data.centre_id ?? raw.data.centreId ?? null,
+              createdAt: raw.data.created_at ?? raw.data.createdAt,
+              updatedAt: raw.data.updated_at ?? raw.data.updatedAt,
             },
           };
         }
-        return response;
+        return raw as SessionTypeResponse;
       },
     }),
     updateSessionType: builder.mutation<
@@ -83,25 +119,28 @@ export const sessionTypeApi = createApi({
         };
       },
       invalidatesTags: ["SessionType"],
-      transformResponse: (response: any) => {
-        if (response?.status === false) {
-          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+      transformResponse: (response: unknown): SessionTypeResponse => {
+        const raw = response as RawSessionTypeSingleResponse;
+
+        if (raw?.status === false) {
+          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        if (response?.data) {
+        if (raw?.data) {
           return {
-            ...response,
+            ...(raw as Omit<RawSessionTypeSingleResponse, "data">),
             data: {
-              id: response.data.id,
-              name: response.data.name,
-              isOffTheJob: response.data.is_off_the_job ?? response.data.isOffTheJob,
-              isActive: response.data.active ?? response.data.isActive,
-              order: response.data.order,
-              createdAt: response.data.created_at ?? response.data.createdAt,
-              updatedAt: response.data.updated_at ?? response.data.updatedAt,
+              id: raw.data.id,
+              name: raw.data.name,
+              isOffTheJob: raw.data.is_off_the_job ?? raw.data.isOffTheJob ?? false,
+              isActive: raw.data.active ?? raw.data.isActive ?? true,
+              order: raw.data.order,
+              centreId: raw.data.centre_id ?? raw.data.centreId ?? null,
+              createdAt: raw.data.created_at ?? raw.data.createdAt,
+              updatedAt: raw.data.updated_at ?? raw.data.updatedAt,
             },
           };
         }
-        return response;
+        return raw as SessionTypeResponse;
       },
     }),
     toggleSessionType: builder.mutation<
@@ -117,11 +156,13 @@ export const sessionTypeApi = createApi({
         };
       },
       invalidatesTags: ["SessionType"],
-      transformResponse: (response: any) => {
-        if (response?.status === false) {
-          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+      transformResponse: (response: unknown): SessionTypeResponse => {
+        const raw = response as SessionTypeResponse;
+
+        if (raw?.status === false) {
+          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        return raw;
       },
     }),
     reorderSessionType: builder.mutation<
@@ -134,25 +175,27 @@ export const sessionTypeApi = createApi({
         body: payload,
       }),
       invalidatesTags: ["SessionType"],
-      transformResponse: (response: any) => {
-        if (response?.status === false) {
-          throw new Error(response.error ?? response.message ?? DEFAULT_ERROR_MESSAGE);
+      transformResponse: (response: unknown): SessionTypesResponse => {
+        const raw = response as RawSessionTypeListResponse;
+
+        if (raw?.status === false) {
+          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        if (response?.data && Array.isArray(response.data)) {
+        if (raw?.data && Array.isArray(raw.data)) {
           return {
-            ...response,
-            data: response.data.map((item: any) => ({
+            ...(raw as Omit<RawSessionTypeListResponse, "data">),
+            data: raw.data.map((item: RawSessionType) => ({
               id: item.id,
               name: item.name,
-              isOffTheJob: item.is_off_the_job ?? item.isOffTheJob,
-              isActive: item.active ?? item.isActive,
+              isOffTheJob: item.is_off_the_job ?? item.isOffTheJob ?? false,
+              isActive: item.active ?? item.isActive ?? true,
               order: item.order,
               createdAt: item.created_at ?? item.createdAt,
               updatedAt: item.updated_at ?? item.updatedAt,
             })),
           };
         }
-        return response;
+        return raw as SessionTypesResponse;
       },
     }),
     deleteSessionType: builder.mutation<

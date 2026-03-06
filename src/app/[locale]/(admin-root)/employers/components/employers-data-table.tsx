@@ -53,6 +53,8 @@ import {
   useDeleteEmployerMutation,
 } from "@/store/api/employer/employerApi";
 import type { Employer, EmployerFilters } from "@/store/api/employer/types";
+import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { EmployersFormDialog } from "./employers-form-dialog";
 import { EmployersCsvUploadDialog } from "./employers-csv-upload-dialog";
 import { toast } from "sonner";
@@ -74,7 +76,20 @@ export function EmployersDataTable() {
   const [employerToDelete, setEmployerToDelete] = useState<Employer | null>(null);
   const [isCsvUploadOpen, setIsCsvUploadOpen] = useState(false);
 
-  const { data, isLoading, refetch } = useGetEmployersQuery(filters);
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const authUser = useAppSelector((state) => state.auth.user);
+  const organisationId =
+    masterAdminOrgId ?? authUser?.assignedOrganisationIds?.[0];
+
+  const effectiveFilters: EmployerFilters = useMemo(
+    () => ({
+      ...filters,
+      ...(organisationId != null && { organisation_id: organisationId }),
+    }),
+    [filters, organisationId]
+  );
+
+  const { data, isLoading, refetch } = useGetEmployersQuery(effectiveFilters);
   const [deleteEmployer, { isLoading: isDeleting }] = useDeleteEmployerMutation();
 
   const handleSearch = useCallback(() => {
@@ -436,6 +451,8 @@ export function EmployersDataTable() {
           setIsCsvUploadOpen(false);
           refetch();
         }}
+        organisationId={Number(organisationId) || 0}
+        centreId={0}
       />
 
       {/* Delete Confirmation Dialog */}

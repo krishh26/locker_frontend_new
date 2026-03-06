@@ -43,6 +43,7 @@ export function QASamplePlanPageContent() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEqa = userRole === "EQA";
+  const isIqa = userRole === "IQA";
   const userId = user?.user_id as string | number | undefined;
 
   // Read course_id from URL params
@@ -57,7 +58,6 @@ export function QASamplePlanPageContent() {
 
   // Get courses data for validation
   const { data: coursesData } = useCachedCoursesList();
-  console.log("🚀 ~ QASamplePlanPageContent ~ coursesData:", coursesData)
 
   const courses = useMemo(() => {
     if (!coursesData?.data) return [];
@@ -70,11 +70,20 @@ export function QASamplePlanPageContent() {
   // RTK Query - Plans (conditional)
   const samplePlanQueryArgs = useMemo(() => {
     if (!selectedCourse || !userId) return undefined;
+
+    // EQA: backend does not filter by EQA, only by course_id
     if (isEqa) {
-      return { course_id: selectedCourse, eqaId: userId };
+      return { course_id: selectedCourse };
     }
-    return { course_id: selectedCourse, iqa_id: userId };
-  }, [selectedCourse, userId, isEqa]);
+
+    // IQA: backend supports filtering by iqa_id (plan.iqa.user_id)
+    if (isIqa) {
+      return { course_id: selectedCourse, iqa_id: userId };
+    }
+
+    // Other roles: filter only by course
+    return { course_id: selectedCourse };
+  }, [selectedCourse, userId, isEqa, isIqa]);
 
   const {
     data: samplePlanResponse,

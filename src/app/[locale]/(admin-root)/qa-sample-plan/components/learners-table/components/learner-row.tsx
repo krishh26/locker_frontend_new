@@ -119,7 +119,7 @@ export const LearnerRow = memo(function LearnerRow({
             }}
           >
             <CollapsibleContent>
-              <div className="p-4 bg-muted border-t">
+              <div className="p-4 border-t">
                 <LearnerUnitsTable
                   learner={learner}
                   learnerIndex={learnerIndex}

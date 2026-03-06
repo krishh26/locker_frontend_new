@@ -54,11 +54,7 @@ function NotificationItem({ notification, onRead, onDelete }: NotificationItemPr
 
   return (
     <div
-      className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-        notification.read
-          ? "bg-transparent"
-          : "bg-primary text-white"
-      }`}
+      className="flex items-start gap-3 p-3 rounded-lg transition-colors"
     >
       <div className="mt-0.5">
         <Icon className="h-5 w-5 text-primary" />

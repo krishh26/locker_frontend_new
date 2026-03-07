@@ -10,6 +10,7 @@ import { learnerApi } from "@/store/api/learner/learnerApi"
 import { formsApi } from "@/store/api/forms/formsApi"
 import { innovationsApi } from "@/store/api/innovations/innovationsApi"
 import { supportApi } from "@/store/api/support/supportApi"
+import { ticketApi } from "@/store/api/ticket/ticketApi"
 import { resourcesApi } from "@/store/api/resources/resourcesApi"
 import { healthWellbeingApi } from "@/store/api/health-wellbeing/healthWellbeingApi"
 import { supplementaryTrainingApi } from "@/store/api/supplementary-training/supplementaryTrainingApi"
@@ -72,6 +73,7 @@ export const rootReducer = combineReducers({
   [formsApi.reducerPath]: formsApi.reducer,
   [innovationsApi.reducerPath]: innovationsApi.reducer,
   [supportApi.reducerPath]: supportApi.reducer,
+  [ticketApi.reducerPath]: ticketApi.reducer,
   [resourcesApi.reducerPath]: resourcesApi.reducer,
   [healthWellbeingApi.reducerPath]: healthWellbeingApi.reducer,
   [supplementaryTrainingApi.reducerPath]: supplementaryTrainingApi.reducer,
@@ -131,6 +133,7 @@ export const concatMiddleware: Middleware[] = [
   formsApi.middleware,
   innovationsApi.middleware,
   supportApi.middleware,
+  ticketApi.middleware,
   resourcesApi.middleware,
   healthWellbeingApi.middleware,
   supplementaryTrainingApi.middleware,

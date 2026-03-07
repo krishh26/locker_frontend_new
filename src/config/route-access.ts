@@ -181,6 +181,10 @@ const routeRoleRules: RouteRule[] = [
     roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA"),
   },
   {
+    pattern: /^\/tickets(?:\/|$)/,
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA" ,'MasterAdmin'),
+  },
+  {
     pattern: /^\/surveys(?:\/|$)/,
     roles: R.adminWith("Learner", "Trainer"),
   },

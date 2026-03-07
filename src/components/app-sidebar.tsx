@@ -18,6 +18,7 @@ import {
   FileText,
   Lightbulb,
   HelpCircle,
+  Ticket,
   ClipboardList,
   Calendar,
   Settings,
@@ -161,6 +162,12 @@ const data: {
           url: '/support',
           icon: HelpCircle,
           isFree: true, // Basic support is free
+        },
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+          isFree: true,
         },
         // {
         //   title: "Evidence Library",
@@ -339,6 +346,11 @@ const data: {
           url: '/support',
           icon: HelpCircle,
         },
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+        },
       ],
     },
     {
@@ -373,6 +385,11 @@ const data: {
           title: 'Audit Logs',
           url: '/audit-logs',
           icon: FileText,
+        },
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
         },
         {
           title: 'System Admins',
@@ -484,6 +501,11 @@ const data: {
           url: '/support',
           icon: HelpCircle,
         },
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+        },
       ],
     },
     {
@@ -540,6 +562,11 @@ const data: {
           icon: HelpCircle,
         },
         {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+        },
+        {
           title: 'Propose Your Innovations',
           url: '/propose-your-innovations',
           icon: Lightbulb,
@@ -558,6 +585,11 @@ const data: {
           title: 'Support',
           url: '/support',
           icon: HelpCircle,
+        },
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
         },
         {
           title: 'Propose Your Innovations',

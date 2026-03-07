@@ -42,6 +42,7 @@ const PROTECTED_PATH_PREFIXES = [
   "/dashboard-2",
   "/propose-your-innovations",
   "/support",
+  "/tickets",
   "/organisations",
   "/centres",
   "/subscriptions",

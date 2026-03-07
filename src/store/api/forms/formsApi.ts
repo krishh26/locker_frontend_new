@@ -81,15 +81,18 @@ export const formsApi = createApi({
     }),
     getFormsList: builder.query<
       FormListResponse,
-      { page?: number; page_size?: number; search_keyword?: string; user_id?: string | number }
+      { page?: number; page_size?: number; search_keyword?: string; user_id?: string | number; organisation_id?: number }
     >({
-      query: ({ page = 1, page_size = 10, search_keyword = "", user_id }) => {
+      query: ({ page = 1, page_size = 10, search_keyword = "", user_id, organisation_id }) => {
         let url = `/form/list?meta=true&page=${page}&limit=${page_size}`;
         if (search_keyword) {
           url = `${url}&keyword=${search_keyword}`;
         }
         if (user_id) {
           url = `${url}&user_id=${user_id}`;
+        }
+        if (organisation_id != null) {
+          url = `${url}&organisation_id=${organisation_id}`;
         }
         return url;
       },
@@ -217,12 +220,15 @@ export const formsApi = createApi({
     }),
     getFormTemplateList: builder.query<
       FormTemplateListResponse,
-      { page?: number; page_size?: number; keyword?: string }
+      { page?: number; page_size?: number; keyword?: string; organisation_id?: number }
     >({
-      query: ({ page = 1, page_size = 10, keyword = "" }) => {
+      query: ({ page = 1, page_size = 10, keyword = "", organisation_id }) => {
         let url = `/form-template/list?page=${page}&limit=${page_size}&meta=true`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
+        }
+        if (organisation_id != null) {
+          url += `&organisation_id=${organisation_id}`;
         }
         return {
           url,

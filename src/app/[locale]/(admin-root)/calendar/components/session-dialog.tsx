@@ -29,9 +29,9 @@ import { format } from 'date-fns'
 import { useCachedUsersByRole } from '@/store/hooks/useCachedUsersByRole'
 import { useCachedLearnersList } from '@/store/hooks/useCachedLearnersList'
 import {
-  useCreateSessionMutation,
+  useCreateLearnerPlanMutation,
   useUpdateSessionMutation,
-} from '@/store/api/session/sessionApi'
+} from '@/store/api/learner-plan/learnerPlanApi'
 import type { Session } from '@/store/api/session/types'
 import { toast } from 'sonner'
 import MultipleSelector, { type Option } from '@/components/ui/multi-select'
@@ -82,7 +82,7 @@ export function SessionDialog({
   const { data: trainersData, isLoading: isTrainersLoading } =
     useCachedUsersByRole('Trainer', { skip: !open })
   const { data: learnersData, isLoading: isLearnersLoading } = useCachedLearnersList({ skip: !open })
-  const [createSession, { isLoading: isCreating }] = useCreateSessionMutation()
+  const [createLearnerPlan, { isLoading: isCreating }] = useCreateLearnerPlanMutation()
   const [updateSession, { isLoading: isUpdating }] = useUpdateSessionMutation()
 
   const isLoading = isCreating || isUpdating
@@ -189,25 +189,31 @@ export function SessionDialog({
 
   const onSubmit = async (values: SessionFormValues) => {
     try {
-      const payload = {
-        trainer_id: parseInt(values.trainer_id, 10),
-        learners: values.learners.map((id) => parseInt(id, 10)),
-        title: values.title,
-        description: values.description || '',
-        location: values.location,
-        startDate: values.startDate,
-        Duration: values.Duration,
-        type: values.type,
-      }
-
       if (isEdit && session) {
         await updateSession({
           id: session.session_id,
-          data: payload,
+          title: values.title,
+          description: values.description || undefined,
+          location: values.location,
+          startDate: values.startDate,
+          Duration: values.Duration,
+          type: values.type,
         }).unwrap()
         toast.success('Session updated successfully')
       } else {
-        await createSession(payload).unwrap()
+        await createLearnerPlan({
+          assessor_id: parseInt(values.trainer_id, 10),
+          participants: values.learners.map((id) => ({
+            learner_id: parseInt(id, 10),
+            courses: [],
+          })),
+          title: values.title,
+          description: values.description || '',
+          location: values.location,
+          startDate: values.startDate,
+          Duration: values.Duration,
+          type: values.type,
+        }).unwrap()
         toast.success('Session created successfully')
       }
 

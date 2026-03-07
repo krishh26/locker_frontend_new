@@ -5,8 +5,10 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { CalendarView } from "./calendar-view";
 import { CalendarFilters } from "./calendar-filters";
-import { useGetSessionsQuery } from "@/store/api/session/sessionApi";
+import { useGetLearnerPlanListQuery } from "@/store/api/learner-plan/learnerPlanApi";
 import type { SessionFilters } from "@/store/api/session/types";
+import type { LearningPlanListRequest } from "@/store/api/learner-plan/types";
+import { mapLearnerPlansToSessions } from "../utils/session-transform";
 import { useTranslations } from "next-intl";
 
 export function CalendarPageContent() {
@@ -17,7 +19,18 @@ export function CalendarPageContent() {
     page_size: 10,
   });
 
-  const { data, isLoading } = useGetSessionsQuery(filters);
+  const request: LearningPlanListRequest = {
+    page: filters.page,
+    limit: filters.page_size,
+    meta: true,
+    ...(filters.trainer_id && { assessor_id: filters.trainer_id }),
+    ...(filters.Attended && { Attended: filters.Attended }),
+    ...(filters.sortBy && { sortBy: filters.sortBy }),
+  };
+  const { data, isLoading } = useGetLearnerPlanListQuery(request);
+
+  const sessions = data?.data ? mapLearnerPlansToSessions(data.data) : [];
+  const metaData = data?.meta_data;
 
   const handleFilterChange = (newFilters: Partial<SessionFilters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
@@ -28,13 +41,13 @@ export function CalendarPageContent() {
   };
 
   const handleExportCSV = () => {
-    if (!data?.data || data.data.length === 0) {
+    if (!sessions.length) {
       return;
     }
 
     // Import CSV export functions
     import("../utils/csv-export").then(({ exportSessionsToCSV, downloadCSV, generateFilename }) => {
-      const csvContent = exportSessionsToCSV(data.data);
+      const csvContent = exportSessionsToCSV(sessions);
       const filename = generateFilename("sessions_export");
       downloadCSV(csvContent, filename);
     });
@@ -63,12 +76,12 @@ export function CalendarPageContent() {
         isLoading={isLoading}
       />
 
-      {/* Calendar/List View */}
+      {/* Calendar/List View - shows learner plans as sessions */}
       <CalendarView
         viewMode={viewMode}
-        sessions={data?.data || []}
+        sessions={sessions}
         isLoading={isLoading}
-        metaData={data?.meta_data}
+        metaData={metaData}
         onPageChange={handlePageChange}
       />
     </div>

@@ -33,6 +33,17 @@ export type EvidenceMapping = {
   };
 };
 
+export type EvidenceSignature = {
+  id?: number;
+  role: string;
+  is_signed?: boolean;
+  is_requested?: boolean;
+  signed_at?: string | null;
+  requested_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
+};
+
 export type EvidenceEntry = {
   assignment_id: number;
   file: EvidenceFile | null;
@@ -47,6 +58,7 @@ export type EvidenceEntry = {
   session: string | null;
   grade: string | null;
   mappings?: EvidenceMapping[];
+  signatures?: EvidenceSignature[];
   status: string;
   evidence_time_log: boolean;
   created_at: string;

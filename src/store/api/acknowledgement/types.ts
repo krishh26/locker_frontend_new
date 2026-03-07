@@ -24,10 +24,17 @@ export interface AcknowledgementListResponse {
 export interface CreateAcknowledgementPayload {
   message: string;
   file?: File;
+  organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface UpdateAcknowledgementPayload {
   id: string;
   message: string;
   file?: File;
+}
+
+export interface AcknowledgementFilters {
+  organisation_id?: number;
+  centre_id?: number;
 }

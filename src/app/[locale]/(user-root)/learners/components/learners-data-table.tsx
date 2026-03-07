@@ -124,8 +124,9 @@ export function LearnersDataTable() {
   const isTrainer = userRole === "Trainer";
   const isEmployer = userRole === "Employer";
   const isEqa = userRole === "EQA";
-  
-  const canEditComments = isAdmin || isTrainer;
+  const isIqa = userRole === "IQA";
+
+  const canEditComments = isAdmin || isTrainer || isIqa;
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -201,13 +202,21 @@ export function LearnersDataTable() {
           : undefined,
       };
     }
+    if (isIqa) {
+      return {
+        ...baseFilters,
+        user_id: user?.user_id ? Number(user.user_id) : user?.id ? Number(user.id) : undefined,
+        role: "IQA",
+      };
+    }
     return baseFilters;
-  }, [isAdmin, isTrainer, isEmployer, user?.id, user?.role, user?.assigned_employers, filters.page, filters.page_size, filters.keyword, filters.course_id, filters.status, filters.employer_id]);
+  }, [isAdmin, isTrainer, isEmployer, isIqa, user?.id, user?.role, user?.user_id, user?.assigned_employers, filters.page, filters.page_size, filters.keyword, filters.course_id, filters.status, filters.employer_id]);
   // Single unified API query for all roles with meta=true (handled by API)
   const { data, isLoading, refetch } = useGetLearnersListQuery(unifiedFilters, {
-    skip: isEqa || (!isAdmin && !isTrainer && !isEmployer) || 
-          (isTrainer && (!user?.id || !user?.role)) || 
-          (isEmployer && !user?.user_id),
+    skip: isEqa || (!isAdmin && !isTrainer && !isEmployer && !isIqa) ||
+          (isTrainer && (!user?.id || !user?.role)) ||
+          (isEmployer && !user?.user_id) ||
+          (isIqa && !user?.user_id && !user?.id),
   });
 
   // EQA API query for assigned learners with pagination
@@ -284,7 +293,7 @@ export function LearnersDataTable() {
 
   // Update filters when any filter changes (all roles use server-side filtering, except EQA)
   useEffect(() => {
-    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
+    if ((isAdmin || isEmployer || isTrainer || isIqa) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
@@ -300,10 +309,10 @@ export function LearnersDataTable() {
         status: statusFilterString || undefined,
       }));
     }
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isEqa, user?.user_id]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isIqa, isEqa, user?.user_id]);
 
   const handleSearch = useCallback(() => {
-    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
+    if ((isAdmin || isEmployer || isTrainer || isIqa) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,
@@ -319,7 +328,7 @@ export function LearnersDataTable() {
         status: statusFilterString || undefined,
       }));
     }
-  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isEqa, user?.user_id]);
+  }, [globalFilter, courseFilter, employerFilter, statusFilterString, isAdmin, isEmployer, isTrainer, isIqa, isEqa, user?.user_id]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -334,7 +343,7 @@ export function LearnersDataTable() {
     setStatusFilters(
       statusOptions.reduce((acc, status) => ({ ...acc, [status]: false }), {})
     );
-    if ((isAdmin || isEmployer || isTrainer) && !isEqa) {
+    if ((isAdmin || isEmployer || isTrainer || isIqa) && !isEqa) {
       setFilters((prev) => ({
         ...prev,
         page: 1,

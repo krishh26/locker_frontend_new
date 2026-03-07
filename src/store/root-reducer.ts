@@ -48,7 +48,6 @@ import { auditLogApi } from "@/store/api/audit-logs/auditLogApi"
 
 import { accessControlApi } from "@/store/api/access-control/accessControlApi"
 import { accountManagerApi } from "@/store/api/account-manager/accountManagerApi"
-import { featureControlApi } from "@/store/api/feature-control/featureControlApi"
 import { systemAdminApi } from "@/store/api/system-admin/systemAdminApi"
 
 
@@ -112,7 +111,6 @@ export const rootReducer = combineReducers({
     // New modules from CSV
     [accessControlApi.reducerPath]: accessControlApi.reducer,
     [accountManagerApi.reducerPath]: accountManagerApi.reducer,
-    [featureControlApi.reducerPath]: featureControlApi.reducer,
     [systemAdminApi.reducerPath]: systemAdminApi.reducer,
     auth: authReducer,
   skillsScan: skillsScanReducer,
@@ -173,7 +171,6 @@ export const concatMiddleware: Middleware[] = [
   // New modules from CSV
   accessControlApi.middleware,
   accountManagerApi.middleware,
-  featureControlApi.middleware,
   systemAdminApi.middleware,
   cacheSyncMiddleware,
 ]

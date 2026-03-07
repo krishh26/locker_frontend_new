@@ -123,10 +123,11 @@ export function ChangePasswordForm({
 
       toast.success(message)
 
+      const defaultRedirect = user?.role === "EQA" ? "/learners" : "/dashboard"
       const redirect =
         typeof response?.redirectTo === "string" && response.redirectTo.length > 0
           ? response.redirectTo
-          : "/dashboard"
+          : defaultRedirect
 
       router.push(redirect)
     } catch (error) {

@@ -199,7 +199,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
     <Card className='overflow-hidden border border-border/60 shadow-sm'>
       <div className='grid lg:grid-cols-[1fr_1fr]'>
         {/* Left Section - Dark Background with Learner Info */}
-        <div className='px-4'>
+        <div className='px-4 mb-4'>
           <div className='flex flex-col gap-4'>
             <div className='flex items-start gap-4'>
               <Avatar className='size-16 border-2 border-primary/30 shadow-md'>

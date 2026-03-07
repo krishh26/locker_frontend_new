@@ -4,6 +4,7 @@ export interface SessionType {
   isOffTheJob: boolean;
   isActive: boolean;
   order: number;
+  centreId?: number | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -13,6 +14,7 @@ export interface CreateSessionTypePayload {
   is_off_the_job: boolean;
   active: boolean;
   organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface UpdateSessionTypePayload {
@@ -20,6 +22,7 @@ export interface UpdateSessionTypePayload {
   is_off_the_job: boolean;
   active: boolean;
   organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface ReorderSessionTypePayload {

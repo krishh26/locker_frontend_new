@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Clock, Loader2 } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +30,7 @@ import {
   useUpdateSessionTypeMutation,
 } from "@/store/api/session-type/sessionTypeApi";
 import type { SessionType } from "@/store/api/session-type/types";
+import { useGetCentresQuery } from "@/store/api/centres/centreApi";
 import { useAppSelector } from "@/store/hooks";
 import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { toast } from "sonner";
@@ -63,6 +71,57 @@ export function SessionTypeFormDialog({
       ? authUser.assignedOrganisationIds[0]
       : undefined);
 
+  const { data: centresResponse } = useGetCentresQuery(
+    organisationId != null ? { organisationId, limit: 500 } : undefined
+  );
+  const centres = useMemo(
+    () => centresResponse?.data ?? [],
+    [centresResponse]
+  );
+
+  type AuthUserWithCentres = {
+    centre_ids?: number[];
+    centre_id?: number;
+  };
+
+  const authUserWithCentres = authUser as AuthUserWithCentres | null;
+
+  const authUserCentres = authUserWithCentres?.centre_ids;
+  const authUserCentreId = authUserWithCentres?.centre_id;
+  const singleCentreId = authUserCentres?.[0] ?? authUserCentreId;
+
+  // Show centre selector when there are multiple centres, or when
+  // there is at least one centre but we can't auto-resolve a single centre.
+  const isOrgOrMultiCentre =
+    centres.length > 1 || (centres.length >= 1 && singleCentreId == null);
+  const [selectedCentreId, setSelectedCentreId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    // Edit mode – prefill from existing session type if it has a centre
+    if (sessionType?.centreId != null) {
+      setSelectedCentreId(sessionType.centreId);
+      return;
+    }
+
+    // Auto-select centre when we can safely infer a single option
+    if (!isOrgOrMultiCentre && singleCentreId != null) {
+      setSelectedCentreId(Number(singleCentreId));
+    } else if (isOrgOrMultiCentre && centres.length > 0) {
+      setSelectedCentreId((prev) => prev ?? centres[0].id);
+    }
+  }, [open, sessionType?.centreId, singleCentreId, centres, isOrgOrMultiCentre]);
+
+  // Use the user's single centre when we don't show the selector,
+  // otherwise rely on the explicitly selected centre.
+  const centreId =
+    isOrgOrMultiCentre
+      ? selectedCentreId ?? undefined
+      : singleCentreId != null
+        ? Number(singleCentreId)
+        : undefined;
+
   const form = useForm<SessionTypeFormData>({
     resolver: zodResolver(sessionTypeSchema),
     defaultValues: {
@@ -98,6 +157,9 @@ export function SessionTypeFormDialog({
             is_off_the_job: data.isOffTheJob,
             active: data.isActive,
             ...(organisationId !== undefined && { organisation_id: organisationId }),
+            ...(centreId !== undefined && centreId !== null && {
+              centre_id: Number(centreId),
+            }),
           },
         }).unwrap();
         toast.success("Session Type updated successfully");
@@ -107,6 +169,9 @@ export function SessionTypeFormDialog({
           is_off_the_job: data.isOffTheJob,
           active: data.isActive,
           ...(organisationId !== undefined && { organisation_id: organisationId }),
+          ...(centreId !== undefined && centreId !== null && {
+            centre_id: Number(centreId),
+          }),
         }).unwrap();
         toast.success("Session Type created successfully");
       }
@@ -140,6 +205,31 @@ export function SessionTypeFormDialog({
 
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="space-y-4 py-4">
+            {isOrgOrMultiCentre && (
+              <div className="space-y-2">
+                <Label htmlFor="centre">
+                  Centre <span className="text-destructive">*</span>
+                </Label>
+                <Select
+                  value={selectedCentreId != null ? String(selectedCentreId) : ""}
+                  onValueChange={(v) => setSelectedCentreId(v ? Number(v) : null)}
+                >
+                  <SelectTrigger id="centre">
+                    <SelectValue placeholder="Select centre" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {centres.map((c) => (
+                      <SelectItem key={c.id} value={String(c.id)}>
+                        {c.name ?? `Centre ${c.id}`}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  Session type will be created for the selected centre. Centre admins see only their centre; org admins see all.
+                </p>
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="name">
                 Session Type Name <span className="text-destructive">*</span>
@@ -198,7 +288,14 @@ export function SessionTypeFormDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading || !form.formState.isValid}>
+            <Button
+              type="submit"
+              disabled={
+                isLoading ||
+                !form.formState.isValid ||
+                (isOrgOrMultiCentre && selectedCentreId == null)
+              }
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

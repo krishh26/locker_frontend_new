@@ -218,6 +218,8 @@ export function LearnerDashboard() {
           onOpenChange={setIsAcknowledgementOpen}
           learnerId={learner.learner_id}
           learnerName={`${learner.first_name} ${learner.last_name}`}
+          organisationId={(learner as { organisation_id?: number }).organisation_id}
+          centreId={(learner as { centre_id?: number }).centre_id}
         />
       )}
     </>

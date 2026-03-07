@@ -97,9 +97,13 @@ export interface LearningPlanSession {
 }
 
 export interface LearningPlanListRequest {
-  learners: string | number;
+  learners?: string | number;
+  assessor_id?: string | number;
   type?: string;
   Attended?: string;
+  sortBy?: "asc" | "desc";
+  page?: number;
+  limit?: number;
   meta?: boolean;
 }
 
@@ -133,10 +137,64 @@ export interface CreateSessionRequest {
   end_date?: string;
 }
 
+/** Request body for POST /learner-plan/create */
+export interface CreateLearnerPlanRequest {
+  assessor_id: number;
+  participants: Array<{ learner_id: number; courses: number[] }>;
+  title: string;
+  description?: string;
+  location: string;
+  startDate: string;
+  Duration: string;
+  type: string;
+  Attended?: string;
+  number_of_participants?: number;
+  repeatSession?: boolean;
+  repeat_frequency?: string;
+  repeat_every?: string;
+  include_holidays?: boolean;
+  include_weekends?: boolean;
+  repeat_end_date?: string;
+  feedback?: string;
+}
+
+/** Successful response from POST /learner-plan/create */
+export interface CreateLearnerPlanResponse {
+  message: string;
+  status: true;
+  data: {
+    learner_plan_id: number;
+    title: string;
+    description?: string | null;
+    location: string;
+    startDate: string;
+    Duration: string;
+    type: string;
+    numberOfParticipants?: number;
+    repeatSession?: boolean;
+    participant_course_mapping: ParticipantCourseMapping[];
+    assessor_id: number;
+    learners?: unknown[];
+    courses?: unknown[];
+    Attended?: string | null;
+    status?: boolean;
+    created_at: string;
+    updated_at: string;
+    assessor_details?: unknown;
+    [key: string]: unknown;
+  };
+}
+
 export interface UpdateSessionRequest {
   id: number;
   learner_plan_id?: number;
   Attended?: string | null;
+  title?: string;
+  description?: string;
+  location?: string;
+  startDate?: string;
+  Duration?: string;
+  type?: string;
   feedback?: string;
   trainer_feedback?: string;
   learner_feedback?: string;

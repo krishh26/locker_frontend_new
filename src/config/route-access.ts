@@ -315,10 +315,6 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/account-manager(?:\/|$)/,
     roles: R.masterAdminOnly(),
   },
-  {
-    pattern: /^\/feature-control(?:\/|$)/,
-    roles: R.masterAdminOnly(),
-  },
 ]
 
 export function getAllowedRolesForPath(pathname: string): AllowedRoles {

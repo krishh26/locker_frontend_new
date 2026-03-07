@@ -337,7 +337,7 @@ export function AwaitingSignatureDataTable() {
       </CardHeader>
       <CardContent className='space-y-4'>
         {/* Filters */}
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4'>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-start'>
           <div className='space-y-2'>
             <label className='text-sm font-medium'>Filter by Trainer</label>
             <Select
@@ -345,7 +345,7 @@ export function AwaitingSignatureDataTable() {
               onValueChange={(value) => handleFilterChange('trainer', value)}
               disabled={loadingTrainers}
             >
-              <SelectTrigger>
+              <SelectTrigger className='w-full'>
                 <SelectValue placeholder='All' />
               </SelectTrigger>
               <SelectContent>
@@ -366,7 +366,7 @@ export function AwaitingSignatureDataTable() {
               onValueChange={(value) => handleFilterChange('course', value)}
               disabled={loadingCourses}
             >
-              <SelectTrigger>
+              <SelectTrigger className='w-full'>
                 <SelectValue placeholder='All' />
               </SelectTrigger>
               <SelectContent>
@@ -396,15 +396,15 @@ export function AwaitingSignatureDataTable() {
             </div>
           </div>
 
-          <div className='flex items-end gap-2'>
-            <Button variant='outline' onClick={clearFilters} className='w-full'>
+          <div className='flex mt-6 flex-row items-end justify-end gap-2'>
+            <Button variant='outline' onClick={clearFilters} className='w-full sm:w-auto'>
               <X className='mr-2 h-4 w-4' />
               Clear
             </Button>
             <Button
               onClick={exportToCSV}
               disabled={!data || data.length === 0}
-              className='w-full'
+              className='w-full sm:w-auto'
             >
               <Download className='mr-2 h-4 w-4' />
               Export CSV

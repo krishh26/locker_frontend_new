@@ -73,8 +73,7 @@ type SidebarGroup = {
  * To make a feature paid later:
  * 1. Remove isFree: true
  * 2. Add featureCode: 'YOUR_FEATURE_CODE'
- * 3. Create the feature in Feature Control admin panel
- * 4. Map the feature to subscription plans
+ * 3. Map the feature to subscription plans (if feature gating is re-enabled)
  * 
  * See FEATURE_VISIBILITY_GUIDE.md for detailed instructions.
  */
@@ -407,11 +406,6 @@ const data: {
           url: '/users',
           icon: Users,
         },
-        {
-          title: 'Feature Control',
-          url: '/feature-control',
-          icon: Settings,
-        },
       ],
     },
     {
@@ -456,11 +450,6 @@ const data: {
           title: 'Users',
           url: '/users',
           icon: Users,
-        },
-        {
-          title: 'Feature Control',
-          url: '/feature-control',
-          icon: Settings,
         },
       ],
     },

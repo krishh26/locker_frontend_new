@@ -29,6 +29,8 @@ export interface Employer {
   assessment_renewal_date?: string;
   insurance_renewal_date?: string;
   file?: EmployerFile | null;
+  organisation_id?: number;
+  centre_id?: number;
   created_at?: string;
   updated_at?: string;
 }
@@ -49,6 +51,8 @@ export interface EmployerFilters {
   page?: number;
   page_size?: number;
   keyword?: string;
+  /** MasterAdmin: filter by organisation. Otherwise org from token/header. */
+  organisation_id?: number;
 }
 
 export interface CreateEmployerRequest {
@@ -76,7 +80,8 @@ export interface CreateEmployerRequest {
   assessment_renewal_date?: string | null;
   insurance_renewal_date?: string | null;
   file?: EmployerFile | null;
-  organisation_id?: number;
+  organisation_id: number;
+  centre_id: number;
 }
 
 export interface UpdateEmployerRequest {
@@ -105,6 +110,7 @@ export interface UpdateEmployerRequest {
   insurance_renewal_date?: string | null;
   file?: EmployerFile | null;
   organisation_id?: number;
+  centre_id?: number;
 }
 
 export interface EmployerResponse {

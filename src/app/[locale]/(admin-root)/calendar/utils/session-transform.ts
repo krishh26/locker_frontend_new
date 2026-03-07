@@ -1,5 +1,40 @@
 import { CalendarEvent } from "@/app/[locale]/(learner-root)/demo-calendar/types";
 import { type Session } from "@/store/api/session/types";
+import type { LearningPlanSession } from "@/store/api/learner-plan/types";
+
+/**
+ * Map learner-plan list response to Session[] shape for calendar/list reuse.
+ * Calendar shows learner plans but uses Session type and session transform for events.
+ */
+export function mapLearnerPlansToSessions(
+  plans: LearningPlanSession[]
+): Session[] {
+  return plans.map((plan) => ({
+    session_id: plan.learner_plan_id,
+    title: plan.title ?? "",
+    description: plan.description,
+    location: plan.location,
+    startDate: plan.startDate,
+    Duration: plan.Duration,
+    type: plan.type,
+    Attended: plan.Attended ?? undefined,
+    trainer_id: plan.assessor_id
+      ? {
+          user_id: plan.assessor_id.user_id ?? 0,
+          user_name: plan.assessor_id.user_name ?? "",
+          email: plan.assessor_id.email ?? "",
+        }
+      : { user_id: 0, user_name: "", email: "" },
+    learners:
+      plan.learners?.map((l) => ({
+        learner_id: l.learner_id,
+        user_name:
+          l.user_name ??
+          ([l.first_name, l.last_name].filter(Boolean).join(" ").trim() || "-"),
+        email: "",
+      })) ?? [],
+  }));
+}
 
 /**
  * Parse duration string ("0:30" or "1:30") to hours and minutes

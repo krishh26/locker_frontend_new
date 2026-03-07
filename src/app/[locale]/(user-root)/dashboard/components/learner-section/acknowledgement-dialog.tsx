@@ -23,6 +23,8 @@ interface AcknowledgementDialogProps {
   onOpenChange: (open: boolean) => void;
   learnerId: number | undefined;
   learnerName: string;
+  organisationId?: number;
+  centreId?: number;
 }
 
 export function AcknowledgementDialog({
@@ -30,9 +32,15 @@ export function AcknowledgementDialog({
   onOpenChange,
   learnerId,
   learnerName,
+  organisationId,
+  centreId,
 }: AcknowledgementDialogProps) {
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetAcknowledgementsQuery(undefined as unknown as void, {
+  const queryFilters =
+    organisationId != null
+      ? { organisation_id: organisationId, centre_id: centreId }
+      : undefined;
+  const { data, isLoading } = useGetAcknowledgementsQuery(queryFilters ?? undefined, {
     skip: !open,
   });
   const [updateLearner, { isLoading: isUpdating }] = useUpdateLearnerMutation();

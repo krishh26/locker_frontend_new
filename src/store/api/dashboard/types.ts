@@ -10,6 +10,14 @@ export type CardApiType =
   | "session_action_due_in_next_7_days"
   | "session_learner_action_overdue"
   | "learners_course_due_in_next_30_days"
+  | "default_review_overdue"
+  | "iqa_actions_overdue"
+  | "all_iqa_actions"
+  | "iqa_actions_due_in_30_days"
+  | "session_due_today"
+  | "session_due_in_7_days"
+  | "sample_due_in_month"
+  | "sampling_plan_overdue"
 
 // Mapping from CardApiType (query param) to DashboardCounts key (API response)
 export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> = {
@@ -23,6 +31,14 @@ export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> =
   session_action_due_in_next_7_days: "sessionLearnerActionDueInNext7Days_count",
   session_learner_action_overdue: "sessionLearnerActionOverdue_count",
   learners_course_due_in_next_30_days: "learnersCourseDueInNext30Days_count",
+  default_review_overdue: "defaultReviewOverdue_count",
+  iqa_actions_overdue: "iqaActionsOverdue_count",
+  all_iqa_actions: "allIqaActions_count",
+  iqa_actions_due_in_30_days: "iqaActionsDueIn30Days_count",
+  session_due_today: "sessionDueToday_count",
+  session_due_in_7_days: "sessionDueIn7Days_count",
+  sample_due_in_month: "sampleDueInMonth_count",
+  sampling_plan_overdue: "samplingPlanOverdue_count",
 }
 
 export interface DashboardCounts {
@@ -36,6 +52,14 @@ export interface DashboardCounts {
   sessionLearnerActionDueInNext7Days_count: number
   sessionLearnerActionOverdue_count: number
   learnersCourseDueInNext30Days_count: number
+  defaultReviewOverdue_count: number
+  iqaActionsOverdue_count: number
+  allIqaActions_count: number
+  iqaActionsDueIn30Days_count: number
+  sessionDueToday_count: number
+  sessionDueIn7Days_count: number
+  sampleDueInMonth_count: number
+  samplingPlanOverdue_count: number
   totalCourses: number
   [key: string]: number
 }

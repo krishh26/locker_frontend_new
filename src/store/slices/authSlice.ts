@@ -2,9 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import type { LoginResult, AuthUser } from "@/store/api/auth/types"
 import type { LearnerData, LearnerCourse } from "@/store/api/learner/types"
-import type { RootState } from "@/store"
 
-type AuthState = {
+export type AuthState = {
   token: string | null
   user: AuthUser | null
   passwordChanged: boolean
@@ -12,6 +11,9 @@ type AuthState = {
   learner: LearnerData | null
   courses: LearnerCourse[]
 }
+
+/** State shape expected by auth selectors (avoids PersistPartial typing issues) */
+type StateWithAuth = { auth: AuthState }
 
 const initialState: AuthState = {
   token: null,
@@ -78,12 +80,12 @@ export const {
   setCourses,
 } = authSlice.actions
 
-export const selectAuth = (state: RootState) => state.auth
-export const selectAuthToken = (state: RootState) => state.auth.token
-export const selectAuthUser = (state: RootState) => state.auth.user
-export const selectAuthError = (state: RootState) => state.auth.error
-export const selectLearner = (state: RootState) => state.auth.learner
-export const selectCourses = (state: RootState) => state.auth.courses || []
+export const selectAuth = (state: StateWithAuth) => state.auth
+export const selectAuthToken = (state: StateWithAuth) => state.auth.token
+export const selectAuthUser = (state: StateWithAuth) => state.auth.user
+export const selectAuthError = (state: StateWithAuth) => state.auth.error
+export const selectLearner = (state: StateWithAuth) => state.auth.learner
+export const selectCourses = (state: StateWithAuth) => state.auth.courses || []
 
 export default authSlice.reducer
 

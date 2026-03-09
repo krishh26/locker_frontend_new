@@ -36,9 +36,7 @@ export function ComponentItem({
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{component.icon}</span>
-        <span className="text-sm font-medium">
-          {component.label.replace(/^[^\s]+ /, "")}
-        </span>
+        <span className="text-sm font-medium">{component.label}</span>
       </div>
     </Card>
   );

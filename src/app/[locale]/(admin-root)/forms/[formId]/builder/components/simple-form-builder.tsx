@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import {
   DragDropContext,
   Droppable,
@@ -16,24 +17,13 @@ import { ComponentItem } from './component-item'
 import { PresetItem } from './preset-item'
 import { FormFieldCard } from './form-field-card'
 
-// Simple UUID generator
 function uuidv4(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 }
 
-const SIMPLE_COMPONENTS = [
-  { type: 'text', label: '📝 Text Input', icon: '📝' },
-  { type: 'email', label: '📧 Email', icon: '📧' },
-  { type: 'phone', label: '📞 Phone', icon: '📞' },
-  { type: 'number', label: '🔢 Number', icon: '🔢' },
-  { type: 'textarea', label: '📄 Long Text', icon: '📄' },
-  { type: 'select', label: '📋 Dropdown', icon: '📋' },
-  { type: 'radio', label: '🔘 Multiple Choice', icon: '🔘' },
-  { type: 'checkbox', label: '☑️ Checkboxes', icon: '☑️' },
-  { type: 'date', label: '📅 Date', icon: '📅' },
-  { type: 'file', label: '📎 File Upload', icon: '📎' },
-  { type: 'signature', label: '✍️ Signature', icon: '✍️' },
-]
+const COMPONENT_TYPES = [
+  'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature',
+] as const
 
 interface SimpleFormBuilderProps {
   initialFields?: SimpleFormField[]
@@ -104,33 +94,21 @@ export function SimpleFormBuilder({
       const presetData = e.dataTransfer.getData('application/preset-field')
 
       const getDefaultLabel = (type: string): string => {
-        const labels: Record<string, string> = {
-          text: 'Full Name',
-          email: 'Email Address',
-          phone: 'Phone Number',
-          number: 'Age',
-          textarea: 'Comments',
-          select: 'Select Option',
-          radio: 'Choose One',
-          checkbox: 'Select All That Apply',
-          date: 'Date',
-          file: 'Upload File',
-          signature: 'Signature',
+        const key = `defaultLabels.${type}` as const
+        try {
+          return t(key)
+        } catch {
+          return t('defaultLabels.default')
         }
-        return labels[type] || 'Field Label'
       }
 
       const getDefaultPlaceholder = (type: string): string => {
-        const placeholders: Record<string, string> = {
-          text: 'Enter your full name',
-          email: 'your.email@example.com',
-          phone: '+1 (555) 123-4567',
-          number: 'Enter a number',
-          textarea: 'Type your message here...',
-          date: 'Select date',
-          file: 'Choose file to upload',
+        const key = `defaultPlaceholders.${type}` as const
+        try {
+          return t(key)
+        } catch {
+          return t('defaultPlaceholders.default')
         }
-        return placeholders[type] || 'Enter value'
       }
 
       const needsOptions = (type: string): boolean =>
@@ -159,9 +137,9 @@ export function SimpleFormBuilder({
           width: 'full',
           ...(needsOptions(componentType) && {
             options: [
-              { label: 'Option 1', value: 'option_1' },
-              { label: 'Option 2', value: 'option_2' },
-              { label: 'Option 3', value: 'option_3' },
+              { label: t('optionLabel', { n: 1 }), value: 'option_1' },
+              { label: t('optionLabel', { n: 2 }), value: 'option_2' },
+              { label: t('optionLabel', { n: 3 }), value: 'option_3' },
             ],
           }),
         }
@@ -174,7 +152,7 @@ export function SimpleFormBuilder({
         setEditingField(newField.id)
       }
     },
-    [formFields, onChange]
+    [formFields, onChange, t]
   )
 
   const handleFormAreaDragOver = useCallback(
@@ -213,7 +191,7 @@ export function SimpleFormBuilder({
         const newField: SimpleFormField = {
           ...fieldToDuplicate,
           id: uuidv4(),
-          label: `${fieldToDuplicate.label} (Copy)`,
+          label: `${fieldToDuplicate.label} ${t('copySuffix')}`,
         }
         const fieldIndex = formFields.findIndex((f) => f.id === fieldId)
         const updatedFields = [
@@ -225,7 +203,7 @@ export function SimpleFormBuilder({
         onChange?.(updatedFields)
       }
     },
-    [formFields, onChange]
+    [formFields, onChange, t]
   )
 
   return (
@@ -245,7 +223,7 @@ export function SimpleFormBuilder({
                 <ChevronLeft className='h-4 w-4' />
               </Button>
               <h3 className='text-sm font-semibold'>
-                {activeTab === 'components' ? '📦 Components' : '✨ Presets'}
+                {activeTab === 'components' ? `📦 ${t('components')}` : `✨ ${t('presets')}`}
               </h3>
               <Button
                 variant='ghost'
@@ -259,14 +237,14 @@ export function SimpleFormBuilder({
 
             <p className='text-xs text-muted-foreground mb-4 text-center'>
               {activeTab === 'components'
-                ? 'Drag components to build your form'
-                : 'Choose from saved presets'}
+                ? t('dragComponents')
+                : t('choosePresets')}
             </p>
 
             <ScrollArea className='h-full'>
               <div className='space-y-2'>
                 {activeTab === 'components' ? (
-                  SIMPLE_COMPONENTS.map((item) => (
+                  simpleComponents.map((item) => (
                     <ComponentItem
                       key={item.type}
                       component={item}
@@ -290,9 +268,9 @@ export function SimpleFormBuilder({
           <Card className='h-full flex flex-col'>
             <CardContent className='p-6 flex flex-col flex-1 min-h-0'>
               <div className='mb-4 shrink-0'>
-                <h3 className='text-lg font-semibold'>🎨 Form Builder</h3>
+                <h3 className='text-lg font-semibold'>🎨 {t('formBuilderTitle')}</h3>
                 <p className='text-sm text-muted-foreground'>
-                  Drag components here to create your form
+                  {t('formBuilderHint')}
                 </p>
               </div>
 
@@ -307,6 +285,8 @@ export function SimpleFormBuilder({
                   onDrop={handleFormAreaDrop}
                   onDragOver={handleFormAreaDragOver}
                   isDraggingFromPalette={isDraggingFromPalette}
+                  dropHere={t('dropHere')}
+                  dropHint={t('dropHint')}
                 />
               </div>
             </CardContent>
@@ -327,6 +307,8 @@ interface FormAreaProps {
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
   isDraggingFromPalette: boolean
+  dropHere: string
+  dropHint: string
 }
 
 function FormArea({
@@ -339,6 +321,8 @@ function FormArea({
   onDrop,
   onDragOver,
   isDraggingFromPalette,
+  dropHere,
+  dropHint,
 }: FormAreaProps) {
   if (fields.length === 0) {
     return (
@@ -353,10 +337,10 @@ function FormArea({
       >
         <div className='text-6xl mb-4'>🎯</div>
         <h4 className='text-lg font-semibold mb-2'>
-          Drop form components here
+          {dropHere}
         </h4>
         <p className='text-sm text-muted-foreground text-center max-w-md'>
-          Drag any component from the left panel to start building your form.
+          {dropHint}
         </p>
       </div>
     )

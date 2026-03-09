@@ -617,6 +617,166 @@
         "delete": "Eliminar",
         "deleting": "Eliminando..."
       }
+    },
+    "builder": {
+      "back": "Volver",
+      "backToForms": "Volver a formularios",
+      "editForm": "Editar formulario",
+      "createNewForm": "Crear nuevo formulario",
+      "dragComponentsHint": "Arrastre componentes para crear su formulario",
+      "field": "campo",
+      "fields": "campos",
+      "preview": "Vista previa",
+      "edit": "Editar",
+      "saving": "Guardando...",
+      "saveAsForm": "Guardar como formulario",
+      "saveForm": "Guardar formulario",
+      "formInformation": "Información del formulario",
+      "formName": "Nombre del formulario",
+      "formType": "Tipo de formulario",
+      "formNamePlaceholder": "p. ej., Formulario de comentarios",
+      "descriptionOptional": "Descripción (opcional)",
+      "descriptionPlaceholder": "Describa para qué es este formulario...",
+      "formStatistics": "Estadísticas del formulario:",
+      "typeField": "{count} {type} campo",
+      "typeFields": "{count} {type} campos",
+      "accessRights": "Derechos de acceso",
+      "enableCompleteFunction": "Habilitar función completar",
+      "completionRoles": "Roles de finalización",
+      "setRequestSignature": "Solicitar firma",
+      "emailRecipients": "Destinatarios de correo",
+      "otherEmailsPlaceholder": "Correos separados por coma (,)",
+      "selectFormType": "Seleccione tipo de formulario",
+      "loadFormError": "Error al cargar el formulario. Inténtelo de nuevo.",
+      "validation": {
+        "formNameRequired": "El nombre del formulario es obligatorio",
+        "formTypeRequired": "El tipo de formulario es obligatorio",
+        "selectAccessRight": "Seleccione al menos un derecho de acceso",
+        "selectCompletionRole": "Seleccione al menos un rol de finalización",
+        "selectEmailRecipient": "Seleccione al menos un destinatario de correo",
+        "enterOtherEmails": "Introduzca otros correos",
+        "validEmails": "Introduzca correos válidos separados por comas"
+      },
+      "toast": {
+        "enterFormName": "Introduzca un nombre para el formulario",
+        "addOneField": "Añada al menos un campo al formulario",
+        "formUpdated": "Formulario actualizado correctamente",
+        "formCreated": "Formulario creado correctamente",
+        "saveFailed": "Error al guardar el formulario",
+        "duplicateName": "Ya existe un formulario con este nombre. Elija otro.",
+        "saveAsSuccess": "Formulario guardado como nuevo correctamente",
+        "saveAsFailed": "Error al guardar como nuevo formulario"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "Revisión",
+        "Enrolment": "Matrícula",
+        "Survey": "Encuesta",
+        "Workbook": "Cuaderno",
+        "testExams": "Test/Exámenes",
+        "Others": "Otros"
+      },
+      "roles": {
+        "Master Admin": "Administrador principal",
+        "Basic Admin": "Administrador básico",
+        "Assessor": "Evaluador",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "Gestor de currículo",
+        "Employer Overview": "Resumen empleador",
+        "Employer Manager": "Gestor de empleador",
+        "Partner": "Socio",
+        "Custom Manager": "Gestor personalizado",
+        "Learner": "Aprendiz",
+        "Other": "Otro"
+      },
+      "palette": {
+        "components": "Componentes",
+        "presets": "Plantillas",
+        "dragComponents": "Arrastre componentes para crear su formulario",
+        "choosePresets": "Elija entre plantillas guardadas",
+        "formBuilderTitle": "Constructor de formularios",
+        "formBuilderHint": "Arrastre componentes aquí para crear su formulario",
+        "dropHere": "Suelte aquí los componentes del formulario",
+        "dropHint": "Arrastre cualquier componente del panel izquierdo para empezar.",
+        "componentLabels": {
+          "text": "Texto",
+          "email": "Correo",
+          "phone": "Teléfono",
+          "number": "Número",
+          "textarea": "Texto largo",
+          "select": "Lista desplegable",
+          "radio": "Opción múltiple",
+          "checkbox": "Casillas",
+          "date": "Fecha",
+          "file": "Subir archivo",
+          "signature": "Firma"
+        },
+        "defaultLabels": {
+          "text": "Nombre completo",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "number": "Edad",
+          "textarea": "Comentarios",
+          "select": "Seleccionar opción",
+          "radio": "Elegir uno",
+          "checkbox": "Seleccione todos los que apliquen",
+          "date": "Fecha",
+          "file": "Subir archivo",
+          "signature": "Firma",
+          "default": "Etiqueta del campo"
+        },
+        "defaultPlaceholders": {
+          "text": "Introduzca su nombre completo",
+          "email": "su.correo@ejemplo.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "Introduzca un número",
+          "textarea": "Escriba su mensaje aquí...",
+          "date": "Seleccionar fecha",
+          "file": "Elegir archivo para subir",
+          "default": "Introduzca un valor"
+        },
+        "optionLabel": "Opción {n}",
+        "copySuffix": "(Copia)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "Aprendiz",
+          "trainer": "Formador",
+          "employee": "Empleado"
+        },
+        "fields": {
+          "learner-name": "Nombre del aprendiz",
+          "learner-email": "Correo del aprendiz",
+          "learner-phone": "Teléfono del aprendiz",
+          "date_of_birth": "Fecha de nacimiento",
+          "employer": "Empleador",
+          "trainer-name": "Nombre del formador",
+          "email": "Correo",
+          "employee-name": "Nombre del empleado"
+        }
+      },
+      "preview": {
+        "noFields": "No se han añadido campos al formulario.",
+        "untitledForm": "Formulario sin título",
+        "clearForm": "Limpiar formulario",
+        "submitPreview": "Enviar (solo vista previa)"
+      },
+      "fieldCard": {
+        "selectOption": "Seleccione una opción",
+        "fileUploadArea": "Área de subida de archivos",
+        "signaturePad": "Cuadro de firma",
+        "editField": "Editar campo",
+        "fieldLabel": "Etiqueta del campo",
+        "placeholder": "Marcador de posición",
+        "requiredField": "Campo obligatorio",
+        "fieldWidth": "Ancho del campo",
+        "fullWidth": "Ancho completo",
+        "halfWidth": "Mitad de ancho",
+        "oneThird": "Un tercio",
+        "options": "Opciones",
+        "addOption": "Añadir opción"
+      }
     }
   },
   "iqaQuestions": {

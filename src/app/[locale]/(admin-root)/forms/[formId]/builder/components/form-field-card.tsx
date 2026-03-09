@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +46,7 @@ export function FormFieldCard({
   onDelete,
   onDuplicate,
 }: FormFieldCardProps) {
+  const t = useTranslations("forms.builder.fieldCard");
   const [localField, setLocalField] = useState(field);
 
   const handleSave = () => {
@@ -61,7 +63,7 @@ export function FormFieldCard({
     const currentOptions = localField.options || [];
     const newIndex = currentOptions.length + 1;
     const newOption = {
-      label: `Option ${newIndex}`,
+      label: t("optionLabel", { n: newIndex }),
       value: `option_${newIndex}`,
     };
     setLocalField({
@@ -125,7 +127,7 @@ export function FormFieldCard({
         return (
           <Select disabled>
             <SelectTrigger className="bg-muted">
-              <SelectValue placeholder="Select an option" />
+              <SelectValue placeholder={t("selectOption")} />
             </SelectTrigger>
             <SelectContent>
               {field.options?.map((option, index) => (
@@ -170,14 +172,14 @@ export function FormFieldCard({
         return (
           <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center bg-muted/50">
             <p className="text-sm text-muted-foreground">
-              File upload area
+              {t("fileUploadArea")}
             </p>
           </div>
         );
       case "signature":
         return (
           <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center bg-muted/50 h-32 flex items-center justify-center">
-            <p className="text-sm text-muted-foreground">Signature pad</p>
+            <p className="text-sm text-muted-foreground">{t("signaturePad")}</p>
           </div>
         );
       default:
@@ -196,7 +198,7 @@ export function FormFieldCard({
       <Card className="border-primary">
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold">✏️ Edit Field</h4>
+            <h4 className="font-semibold">✏️ {t("editField")}</h4>
             <div className="flex gap-2">
               <Button size="sm" variant="outline" onClick={handleCancel}>
                 <X className="h-4 w-4" />
@@ -209,7 +211,7 @@ export function FormFieldCard({
 
           <div className="space-y-3">
             <div>
-              <Label>Field Label</Label>
+              <Label>{t("fieldLabel")}</Label>
               <Input
                 value={localField.label}
                 onChange={(e) =>
@@ -222,7 +224,7 @@ export function FormFieldCard({
               field.type
             ) && (
               <div>
-                <Label>Placeholder</Label>
+                <Label>{t("placeholder")}</Label>
                 <Input
                   value={localField.placeholder || ""}
                   onChange={(e) =>
@@ -246,12 +248,12 @@ export function FormFieldCard({
                   })
                 }
               />
-              <Label htmlFor={`required-${field.id}`}>Required field</Label>
+              <Label htmlFor={`required-${field.id}`}>{t("requiredField")}</Label>
             </div>
 
             {!["file"].includes(field.type) && (
               <div>
-                <Label>Field Width</Label>
+                <Label>{t("fieldWidth")}</Label>
                 <Select
                   value={localField.width || "full"}
                   onValueChange={(value: "full" | "half" | "third") =>
@@ -262,9 +264,9 @@ export function FormFieldCard({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="full">Full Width</SelectItem>
-                    <SelectItem value="half">Half Width</SelectItem>
-                    <SelectItem value="third">One Third</SelectItem>
+                    <SelectItem value="full">{t("fullWidth")}</SelectItem>
+                    <SelectItem value="half">{t("halfWidth")}</SelectItem>
+                    <SelectItem value="third">{t("oneThird")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -272,7 +274,7 @@ export function FormFieldCard({
 
             {["select", "radio", "checkbox"].includes(field.type) && (
               <div>
-                <Label>Options</Label>
+                <Label>{t("options")}</Label>
                 <div className="space-y-2 mt-2">
                   {(localField.options || []).map((option, index) => (
                     <div key={index} className="flex gap-2">
@@ -296,7 +298,7 @@ export function FormFieldCard({
                     className="w-full"
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Option
+                    {t("addOption")}
                   </Button>
                 </div>
               </div>

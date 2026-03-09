@@ -777,6 +777,166 @@
       "delete": "حذف",
       "deleting": "جاري الحذف..."
     }
+  },
+  "builder": {
+    "back": "رجوع",
+    "backToForms": "العودة إلى النماذج",
+    "editForm": "تعديل النموذج",
+    "createNewForm": "إنشاء نموذج جديد",
+    "dragComponentsHint": "اسحب المكونات لبناء النموذج",
+    "field": "حقل",
+    "fields": "حقول",
+    "preview": "معاينة",
+    "edit": "تعديل",
+    "saving": "جاري الحفظ...",
+    "saveAsForm": "حفظ كنموذج",
+    "saveForm": "حفظ النموذج",
+    "formInformation": "معلومات النموذج",
+    "formName": "اسم النموذج",
+    "formType": "نوع النموذج",
+    "formNamePlaceholder": "مثال: نموذج التعليقات",
+    "descriptionOptional": "الوصف (اختياري)",
+    "descriptionPlaceholder": "صف الغرض من هذا النموذج...",
+    "formStatistics": "إحصائيات النموذج:",
+    "typeField": "{count} {type} حقل",
+    "typeFields": "{count} {type} حقول",
+    "accessRights": "صلاحيات الوصول",
+    "enableCompleteFunction": "تفعيل وظيفة الإكمال",
+    "completionRoles": "أدوار الإكمال",
+    "setRequestSignature": "طلب التوقيع",
+    "emailRecipients": "مستلمو البريد",
+    "otherEmailsPlaceholder": "البريد مفصول بفاصلة (،)",
+    "selectFormType": "اختر نوع النموذج",
+    "loadFormError": "فشل تحميل النموذج. يرجى المحاولة مرة أخرى.",
+    "validation": {
+      "formNameRequired": "اسم النموذج مطلوب",
+      "formTypeRequired": "نوع النموذج مطلوب",
+      "selectAccessRight": "اختر صلاحية وصول واحدة على الأقل",
+      "selectCompletionRole": "اختر دور إكمال واحداً على الأقل",
+      "selectEmailRecipient": "اختر مستلماً واحداً على الأقل",
+      "enterOtherEmails": "يرجى إدخال بريد آخر",
+      "validEmails": "أدخل بريداً صالحاً مفصولاً بفواصل"
+    },
+    "toast": {
+      "enterFormName": "يرجى إدخال اسم النموذج",
+      "addOneField": "أضف حقل واحداً على الأقل",
+      "formUpdated": "تم تحديث النموذج بنجاح",
+      "formCreated": "تم إنشاء النموذج بنجاح",
+      "saveFailed": "فشل حفظ النموذج",
+      "duplicateName": "يوجد نموذج بهذا الاسم. اختر اسماً آخر.",
+      "saveAsSuccess": "تم حفظ النموذج كنموذج جديد بنجاح",
+      "saveAsFailed": "فشل الحفظ كنموذج جديد"
+    },
+    "formTypes": {
+      "ILP": "ILP",
+      "Review": "مراجعة",
+      "Enrolment": "التسجيل",
+      "Survey": "استبيان",
+      "Workbook": "دفتر العمل",
+      "testExams": "اختبار/امتحانات",
+      "Others": "أخرى"
+    },
+    "roles": {
+      "Master Admin": "المشرف الرئيسي",
+      "Basic Admin": "مشرف أساسي",
+      "Assessor": "مقيّم",
+      "IQA": "IQA",
+      "EQA": "EQA",
+      "Curriculum Manager": "مدير المنهج",
+      "Employer Overview": "نظرة عامة على صاحب العمل",
+      "Employer Manager": "مدير صاحب العمل",
+      "Partner": "شريك",
+      "Custom Manager": "مدير مخصص",
+      "Learner": "متعلم",
+      "Other": "آخر"
+    },
+    "palette": {
+      "components": "مكونات",
+      "presets": "قوالب",
+      "dragComponents": "اسحب المكونات لبناء النموذج",
+      "choosePresets": "اختر من القوالب المحفوظة",
+      "formBuilderTitle": "منشئ النماذج",
+      "formBuilderHint": "اسحب المكونات هنا لإنشاء النموذج",
+      "dropHere": "أفلت مكونات النموذج هنا",
+      "dropHint": "اسحب أي مكون من اللوحة اليسرى للبدء.",
+      "componentLabels": {
+        "text": "نص",
+        "email": "بريد",
+        "phone": "هاتف",
+        "number": "رقم",
+        "textarea": "نص طويل",
+        "select": "قائمة منسدلة",
+        "radio": "اختيار متعدد",
+        "checkbox": "خانات اختيار",
+        "date": "تاريخ",
+        "file": "رفع ملف",
+        "signature": "توقيع"
+      },
+      "defaultLabels": {
+        "text": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "number": "العمر",
+        "textarea": "تعليقات",
+        "select": "اختر خياراً",
+        "radio": "اختر واحداً",
+        "checkbox": "حدد كل ما ينطبق",
+        "date": "تاريخ",
+        "file": "رفع ملف",
+        "signature": "توقيع",
+        "default": "تسمية الحقل"
+      },
+      "defaultPlaceholders": {
+        "text": "أدخل اسمك الكامل",
+        "email": "بريدك@مثال.com",
+        "phone": "+1 (555) 123-4567",
+        "number": "أدخل رقماً",
+        "textarea": "اكتب رسالتك هنا...",
+        "date": "اختر التاريخ",
+        "file": "اختر ملفاً للرفع",
+        "default": "أدخل قيمة"
+      },
+      "optionLabel": "خيار {n}",
+      "copySuffix": "(نسخة)"
+    },
+    "presets": {
+      "roles": {
+        "learner": "متعلم",
+        "trainer": "مدرب",
+        "employee": "موظف"
+      },
+      "fields": {
+        "learner-name": "اسم المتعلم",
+        "learner-email": "بريد المتعلم",
+        "learner-phone": "هاتف المتعلم",
+        "date_of_birth": "تاريخ الميلاد",
+        "employer": "صاحب العمل",
+        "trainer-name": "اسم المدرب",
+        "email": "بريد",
+        "employee-name": "اسم الموظف"
+      }
+    },
+    "preview": {
+      "noFields": "لم تتم إضافة حقول إلى النموذج.",
+      "untitledForm": "نموذج بدون عنوان",
+      "clearForm": "مسح النموذج",
+      "submitPreview": "إرسال (معاينة فقط)"
+    },
+    "fieldCard": {
+      "selectOption": "اختر خياراً",
+      "fileUploadArea": "منطقة رفع الملفات",
+      "signaturePad": "لوحة التوقيع",
+      "editField": "تعديل الحقل",
+      "fieldLabel": "تسمية الحقل",
+      "placeholder": "النص التوضيحي",
+      "requiredField": "حقل مطلوب",
+      "fieldWidth": "عرض الحقل",
+      "fullWidth": "عرض كامل",
+      "halfWidth": "نصف العرض",
+      "oneThird": "الثلث",
+      "options": "خيارات",
+      "addOption": "إضافة خيار"
+    }
   }
   },
   "iqaQuestions": {

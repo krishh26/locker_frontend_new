@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Accordion,
   AccordionContent,
@@ -12,12 +13,14 @@ import { PRESET_FIELDS, roleIcons, type PresetField } from "../utils/preset-data
 
 interface DraggablePresetFieldProps {
   preset: PresetField;
+  label: string;
   onDragStart?: () => void;
   onDragEnd?: () => void;
 }
 
 function DraggablePresetField({
   preset,
+  label,
   onDragStart,
   onDragEnd,
 }: DraggablePresetFieldProps) {
@@ -41,17 +44,13 @@ function DraggablePresetField({
       onDragEnd={handleDragEnd}
       className="p-2 cursor-grab active:cursor-grabbing transition-all hover:bg-primary hover:border-primary"
     >
-      <span className="text-sm font-medium">{preset.label}</span>
+      <span className="text-sm font-medium">{label}</span>
     </Card>
   );
 }
 
-interface PresetItemProps {
-  onDragStart?: () => void;
-  onDragEnd?: () => void;
-}
-
 export function PresetItem({ onDragStart, onDragEnd }: PresetItemProps) {
+  const t = useTranslations("forms.builder.presets");
   return (
     <Accordion type="multiple" className="w-full">
       {Object.entries(PRESET_FIELDS).map(([role, fields]) => (
@@ -59,7 +58,7 @@ export function PresetItem({ onDragStart, onDragEnd }: PresetItemProps) {
           <AccordionTrigger className="capitalize">
             <div className="flex items-center gap-2">
               <span>{roleIcons[role]}</span>
-              <span className="font-semibold">{role}</span>
+              <span className="font-semibold">{t(`roles.${role}`)}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
@@ -69,6 +68,7 @@ export function PresetItem({ onDragStart, onDragEnd }: PresetItemProps) {
                   <DraggablePresetField
                     key={preset.type}
                     preset={preset}
+                    label={t(`fields.${preset.type}`)}
                     onDragStart={onDragStart}
                     onDragEnd={onDragEnd}
                   />

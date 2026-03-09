@@ -529,6 +529,166 @@
         "delete": "Löschen",
         "deleting": "Wird gelöscht..."
       }
+    },
+    "builder": {
+      "back": "Zurück",
+      "backToForms": "Zurück zu Formularen",
+      "editForm": "Formular bearbeiten",
+      "createNewForm": "Neues Formular erstellen",
+      "dragComponentsHint": "Komponenten ziehen, um das Formular zu erstellen",
+      "field": "Feld",
+      "fields": "Felder",
+      "preview": "Vorschau",
+      "edit": "Bearbeiten",
+      "saving": "Wird gespeichert...",
+      "saveAsForm": "Als Formular speichern",
+      "saveForm": "Formular speichern",
+      "formInformation": "Formularinformationen",
+      "formName": "Formularname",
+      "formType": "Formulartyp",
+      "formNamePlaceholder": "z. B. Kundenfeedback-Formular",
+      "descriptionOptional": "Beschreibung (optional)",
+      "descriptionPlaceholder": "Beschreiben Sie den Zweck dieses Formulars...",
+      "formStatistics": "Formularstatistik:",
+      "typeField": "{count} {type} Feld",
+      "typeFields": "{count} {type} Felder",
+      "accessRights": "Zugriffsrechte",
+      "enableCompleteFunction": "Abschlussfunktion aktivieren",
+      "completionRoles": "Abschlussrollen",
+      "setRequestSignature": "Unterschrift anfordern",
+      "emailRecipients": "E-Mail-Empfänger",
+      "otherEmailsPlaceholder": "E-Mails durch Komma (,) getrennt",
+      "selectFormType": "Formulartyp auswählen",
+      "loadFormError": "Formular konnte nicht geladen werden. Bitte erneut versuchen.",
+      "validation": {
+        "formNameRequired": "Formularname ist erforderlich",
+        "formTypeRequired": "Formulartyp ist erforderlich",
+        "selectAccessRight": "Wählen Sie mindestens ein Zugriffsrecht",
+        "selectCompletionRole": "Wählen Sie mindestens eine Abschlussrolle",
+        "selectEmailRecipient": "Wählen Sie mindestens einen E-Mail-Empfänger",
+        "enterOtherEmails": "Bitte geben Sie weitere E-Mail-Adressen ein",
+        "validEmails": "Gültige E-Mail-Adressen durch Kommas getrennt eingeben"
+      },
+      "toast": {
+        "enterFormName": "Bitte geben Sie einen Formularnamen ein",
+        "addOneField": "Bitte fügen Sie mindestens ein Feld hinzu",
+        "formUpdated": "Formular erfolgreich aktualisiert",
+        "formCreated": "Formular erfolgreich erstellt",
+        "saveFailed": "Formular konnte nicht gespeichert werden",
+        "duplicateName": "Ein Formular mit diesem Namen existiert bereits. Bitte anderen Namen wählen.",
+        "saveAsSuccess": "Formular erfolgreich als neues Formular gespeichert",
+        "saveAsFailed": "Speichern als neues Formular fehlgeschlagen"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "Überprüfung",
+        "Enrolment": "Einschreibung",
+        "Survey": "Umfrage",
+        "Workbook": "Arbeitsheft",
+        "testExams": "Test/Prüfung",
+        "Others": "Sonstige"
+      },
+      "roles": {
+        "Master Admin": "Hauptadministrator",
+        "Basic Admin": "Basis-Administrator",
+        "Assessor": "Bewerter",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "Lehrplan-Manager",
+        "Employer Overview": "Arbeitgeber-Übersicht",
+        "Employer Manager": "Arbeitgeber-Manager",
+        "Partner": "Partner",
+        "Custom Manager": "Benutzerdefinierter Manager",
+        "Learner": "Lernender",
+        "Other": "Sonstige"
+      },
+      "palette": {
+        "components": "Komponenten",
+        "presets": "Vorlagen",
+        "dragComponents": "Komponenten ziehen, um das Formular zu erstellen",
+        "choosePresets": "Aus gespeicherten Vorlagen wählen",
+        "formBuilderTitle": "Formular-Editor",
+        "formBuilderHint": "Komponenten hierher ziehen, um das Formular zu erstellen",
+        "dropHere": "Formularkomponenten hier ablegen",
+        "dropHint": "Ziehen Sie eine Komponente aus dem linken Bereich.",
+        "componentLabels": {
+          "text": "Text",
+          "email": "E-Mail",
+          "phone": "Telefon",
+          "number": "Zahl",
+          "textarea": "Langer Text",
+          "select": "Dropdown",
+          "radio": "Mehrfachauswahl",
+          "checkbox": "Kontrollkästchen",
+          "date": "Datum",
+          "file": "Datei hochladen",
+          "signature": "Unterschrift"
+        },
+        "defaultLabels": {
+          "text": "Vollständiger Name",
+          "email": "E-Mail-Adresse",
+          "phone": "Telefonnummer",
+          "number": "Alter",
+          "textarea": "Kommentare",
+          "select": "Option auswählen",
+          "radio": "Eine auswählen",
+          "checkbox": "Alle zutreffenden auswählen",
+          "date": "Datum",
+          "file": "Datei hochladen",
+          "signature": "Unterschrift",
+          "default": "Feldbezeichnung"
+        },
+        "defaultPlaceholders": {
+          "text": "Vollständigen Namen eingeben",
+          "email": "ihre.email@beispiel.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "Zahl eingeben",
+          "textarea": "Nachricht hier eingeben...",
+          "date": "Datum auswählen",
+          "file": "Datei zum Hochladen auswählen",
+          "default": "Wert eingeben"
+        },
+        "optionLabel": "Option {n}",
+        "copySuffix": "(Kopie)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "Lernender",
+          "trainer": "Trainer",
+          "employee": "Mitarbeiter"
+        },
+        "fields": {
+          "learner-name": "Name des Lernenden",
+          "learner-email": "E-Mail des Lernenden",
+          "learner-phone": "Telefon des Lernenden",
+          "date_of_birth": "Geburtsdatum",
+          "employer": "Arbeitgeber",
+          "trainer-name": "Name des Trainers",
+          "email": "E-Mail",
+          "employee-name": "Name des Mitarbeiters"
+        }
+      },
+      "preview": {
+        "noFields": "Dem Formular wurden keine Felder hinzugefügt.",
+        "untitledForm": "Formular ohne Titel",
+        "clearForm": "Formular zurücksetzen",
+        "submitPreview": "Senden (nur Vorschau)"
+      },
+      "fieldCard": {
+        "selectOption": "Option auswählen",
+        "fileUploadArea": "Bereich für Datei-Upload",
+        "signaturePad": "Unterschriftsfeld",
+        "editField": "Feld bearbeiten",
+        "fieldLabel": "Feldbezeichnung",
+        "placeholder": "Platzhalter",
+        "requiredField": "Pflichtfeld",
+        "fieldWidth": "Feldbreite",
+        "fullWidth": "Volle Breite",
+        "halfWidth": "Halbe Breite",
+        "oneThird": "Ein Drittel",
+        "options": "Optionen",
+        "addOption": "Option hinzufügen"
+      }
     }
   },
   "iqaQuestions": {

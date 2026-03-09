@@ -776,6 +776,166 @@
       "delete": "हटाएं",
       "deleting": "हट रहा है..."
     }
+  },
+  "builder": {
+    "back": "वापस",
+    "backToForms": "फ़ॉर्म पर वापस",
+    "editForm": "फ़ॉर्म संपादित करें",
+    "createNewForm": "नया फ़ॉर्म बनाएं",
+    "dragComponentsHint": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
+    "field": "फ़ील्ड",
+    "fields": "फ़ील्ड",
+    "preview": "पूर्वावलोकन",
+    "edit": "संपादित करें",
+    "saving": "सहेज रहा है...",
+    "saveAsForm": "फ़ॉर्म के रूप में सहेजें",
+    "saveForm": "फ़ॉर्म सहेजें",
+    "formInformation": "फ़ॉर्म जानकारी",
+    "formName": "फ़ॉर्म का नाम",
+    "formType": "फ़ॉर्म प्रकार",
+    "formNamePlaceholder": "जैसे, ग्राहक प्रतिक्रिया फ़ॉर्म",
+    "descriptionOptional": "विवरण (वैकल्पिक)",
+    "descriptionPlaceholder": "बताएं कि यह फ़ॉर्म किस लिए है...",
+    "formStatistics": "फ़ॉर्म आंकड़े:",
+    "typeField": "{count} {type} फ़ील्ड",
+    "typeFields": "{count} {type} फ़ील्ड",
+    "accessRights": "एक्सेस अधिकार",
+    "enableCompleteFunction": "पूर्ण फ़ंक्शन सक्षम करें",
+    "completionRoles": "पूर्णता भूमिकाएं",
+    "setRequestSignature": "हस्ताक्षर अनुरोध करें",
+    "emailRecipients": "ईमेल प्राप्तकर्ता",
+    "otherEmailsPlaceholder": "ईमेल अल्पविराम(,) से अलग",
+    "selectFormType": "फ़ॉर्म प्रकार चुनें",
+    "loadFormError": "फ़ॉर्म लोड करने में विफल। कृपया पुनः प्रयास करें।",
+    "validation": {
+      "formNameRequired": "फ़ॉर्म का नाम आवश्यक है",
+      "formTypeRequired": "फ़ॉर्म प्रकार आवश्यक है",
+      "selectAccessRight": "कम से कम एक एक्सेस अधिकार चुनें",
+      "selectCompletionRole": "कम से कम एक पूर्णता भूमिका चुनें",
+      "selectEmailRecipient": "कम से कम एक ईमेल प्राप्तकर्ता चुनें",
+      "enterOtherEmails": "कृपया अन्य ईमेल दर्ज करें",
+      "validEmails": "अल्पविराम से अलग वैध ईमेल दर्ज करें"
+    },
+    "toast": {
+      "enterFormName": "कृपया फ़ॉर्म का नाम दर्ज करें",
+      "addOneField": "कृपया फ़ॉर्म में कम से कम एक फ़ील्ड जोड़ें",
+      "formUpdated": "फ़ॉर्म सफलतापूर्वक अपडेट हुआ",
+      "formCreated": "फ़ॉर्म सफलतापूर्वक बनाया गया",
+      "saveFailed": "फ़ॉर्म सहेजने में विफल",
+      "duplicateName": "इस नाम का फ़ॉर्म पहले से मौजूद है। कोई अन्य नाम चुनें।",
+      "saveAsSuccess": "फ़ॉर्म नए के रूप में सफलतापूर्वक सहेजा गया",
+      "saveAsFailed": "फ़ॉर्म को नए के रूप में सहेजने में विफल"
+    },
+    "formTypes": {
+      "ILP": "ILP",
+      "Review": "समीक्षा",
+      "Enrolment": "नामांकन",
+      "Survey": "सर्वेक्षण",
+      "Workbook": "कार्यपुस्तिका",
+      "testExams": "टेस्ट/परीक्षा",
+      "Others": "अन्य"
+    },
+    "roles": {
+      "Master Admin": "मास्टर व्यवस्थापक",
+      "Basic Admin": "बेसिक व्यवस्थापक",
+      "Assessor": "मूल्यांकनकर्ता",
+      "IQA": "IQA",
+      "EQA": "EQA",
+      "Curriculum Manager": "पाठ्यक्रम प्रबंधक",
+      "Employer Overview": "नियोक्ता अवलोकन",
+      "Employer Manager": "नियोक्ता प्रबंधक",
+      "Partner": "साझेदार",
+      "Custom Manager": "कस्टम प्रबंधक",
+      "Learner": "सीखने वाला",
+      "Other": "अन्य"
+    },
+    "palette": {
+      "components": "कंपोनेंट",
+      "presets": "प्रीसेट",
+      "dragComponents": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
+      "choosePresets": "सहेजे गए प्रीसेट में से चुनें",
+      "formBuilderTitle": "फ़ॉर्म बिल्डर",
+      "formBuilderHint": "अपना फ़ॉर्म बनाने के लिए यहां कंपोनेंट खींचें",
+      "dropHere": "फ़ॉर्म कंपोनेंट यहां छोड़ें",
+      "dropHint": "शुरू करने के लिए बाएं पैनल से कोई कंपोनेंट खींचें।",
+      "componentLabels": {
+        "text": "टेक्स्ट",
+        "email": "ईमेल",
+        "phone": "फ़ोन",
+        "number": "नंबर",
+        "textarea": "लंबा टेक्स्ट",
+        "select": "ड्रॉपडाउन",
+        "radio": "बहुविकल्प",
+        "checkbox": "चेकबॉक्स",
+        "date": "तारीख",
+        "file": "फ़ाइल अपलोड",
+        "signature": "हस्ताक्षर"
+      },
+      "defaultLabels": {
+        "text": "पूरा नाम",
+        "email": "ईमेल पता",
+        "phone": "फ़ोन नंबर",
+        "number": "उम्र",
+        "textarea": "टिप्पणियां",
+        "select": "विकल्प चुनें",
+        "radio": "एक चुनें",
+        "checkbox": "सभी लागू चुनें",
+        "date": "तारीख",
+        "file": "फ़ाइल अपलोड करें",
+        "signature": "हस्ताक्षर",
+        "default": "फ़ील्ड लेबल"
+      },
+      "defaultPlaceholders": {
+        "text": "अपना पूरा नाम दर्ज करें",
+        "email": "your.email@example.com",
+        "phone": "+1 (555) 123-4567",
+        "number": "नंबर दर्ज करें",
+        "textarea": "अपना संदेश यहां लिखें...",
+        "date": "तारीख चुनें",
+        "file": "अपलोड के लिए फ़ाइल चुनें",
+        "default": "मान दर्ज करें"
+      },
+      "optionLabel": "विकल्प {n}",
+      "copySuffix": "(कॉपी)"
+    },
+    "presets": {
+      "roles": {
+        "learner": "सीखने वाला",
+        "trainer": "प्रशिक्षक",
+        "employee": "कर्मचारी"
+      },
+      "fields": {
+        "learner-name": "सीखने वाले का नाम",
+        "learner-email": "सीखने वाले का ईमेल",
+        "learner-phone": "सीखने वाले का फ़ोन",
+        "date_of_birth": "जन्म तिथि",
+        "employer": "नियोक्ता",
+        "trainer-name": "प्रशिक्षक का नाम",
+        "email": "ईमेल",
+        "employee-name": "कर्मचारी का नाम"
+      }
+    },
+    "preview": {
+      "noFields": "फ़ॉर्म में कोई फ़ील्ड नहीं जोड़ा गया।",
+      "untitledForm": "बिना शीर्षक फ़ॉर्म",
+      "clearForm": "फ़ॉर्म साफ़ करें",
+      "submitPreview": "जमा करें (केवल पूर्वावलोकन)"
+    },
+    "fieldCard": {
+      "selectOption": "एक विकल्प चुनें",
+      "fileUploadArea": "फ़ाइल अपलोड क्षेत्र",
+      "signaturePad": "हस्ताक्षर पैड",
+      "editField": "फ़ील्ड संपादित करें",
+      "fieldLabel": "फ़ील्ड लेबल",
+      "placeholder": "प्लेसहोल्डर",
+      "requiredField": "आवश्यक फ़ील्ड",
+      "fieldWidth": "फ़ील्ड चौड़ाई",
+      "fullWidth": "पूरी चौड़ाई",
+      "halfWidth": "आधी चौड़ाई",
+      "oneThird": "एक तिहाई",
+      "options": "विकल्प",
+      "addOption": "विकल्प जोड़ें"
+    }
   }
   },
   "iqaQuestions": {

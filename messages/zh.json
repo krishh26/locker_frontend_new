@@ -776,6 +776,166 @@
       "delete": "删除",
       "deleting": "正在删除..."
     }
+  },
+  "builder": {
+    "back": "返回",
+    "backToForms": "返回表单列表",
+    "editForm": "编辑表单",
+    "createNewForm": "创建新表单",
+    "dragComponentsHint": "拖放组件以构建表单",
+    "field": "字段",
+    "fields": "字段",
+    "preview": "预览",
+    "edit": "编辑",
+    "saving": "保存中...",
+    "saveAsForm": "另存为表单",
+    "saveForm": "保存表单",
+    "formInformation": "表单信息",
+    "formName": "表单名称",
+    "formType": "表单类型",
+    "formNamePlaceholder": "例如：客户反馈表单",
+    "descriptionOptional": "描述（可选）",
+    "descriptionPlaceholder": "描述此表单的用途...",
+    "formStatistics": "表单统计：",
+    "typeField": "{count} 个 {type} 字段",
+    "typeFields": "{count} 个 {type} 字段",
+    "accessRights": "访问权限",
+    "enableCompleteFunction": "启用完成功能",
+    "completionRoles": "完成角色",
+    "setRequestSignature": "请求签名",
+    "emailRecipients": "邮件收件人",
+    "otherEmailsPlaceholder": "多个邮箱用逗号(,)分隔",
+    "selectFormType": "选择表单类型",
+    "loadFormError": "加载表单失败，请重试。",
+    "validation": {
+      "formNameRequired": "请输入表单名称",
+      "formTypeRequired": "请选择表单类型",
+      "selectAccessRight": "请至少选择一项访问权限",
+      "selectCompletionRole": "请至少选择一个完成角色",
+      "selectEmailRecipient": "请至少选择一个邮件收件人",
+      "enterOtherEmails": "请输入其他邮箱",
+      "validEmails": "请输入有效的邮箱，用逗号分隔"
+    },
+    "toast": {
+      "enterFormName": "请输入表单名称",
+      "addOneField": "请至少添加一个字段",
+      "formUpdated": "表单更新成功",
+      "formCreated": "表单创建成功",
+      "saveFailed": "保存表单失败",
+      "duplicateName": "已存在同名表单，请使用其他名称。",
+      "saveAsSuccess": "已成功另存为新表单",
+      "saveAsFailed": "另存为新表单失败"
+    },
+    "formTypes": {
+      "ILP": "ILP",
+      "Review": "审查",
+      "Enrolment": "入学",
+      "Survey": "调查",
+      "Workbook": "工作簿",
+      "testExams": "测试/考试",
+      "Others": "其他"
+    },
+    "roles": {
+      "Master Admin": "主管理员",
+      "Basic Admin": "基础管理员",
+      "Assessor": "评估员",
+      "IQA": "IQA",
+      "EQA": "EQA",
+      "Curriculum Manager": "课程经理",
+      "Employer Overview": "雇主概览",
+      "Employer Manager": "雇主经理",
+      "Partner": "合作伙伴",
+      "Custom Manager": "自定义经理",
+      "Learner": "学员",
+      "Other": "其他"
+    },
+    "palette": {
+      "components": "组件",
+      "presets": "预设",
+      "dragComponents": "拖放组件以构建表单",
+      "choosePresets": "从已保存的预设中选择",
+      "formBuilderTitle": "表单构建器",
+      "formBuilderHint": "将组件拖放到此处以创建表单",
+      "dropHere": "将表单组件放到此处",
+      "dropHint": "从左侧面板拖动任意组件开始构建表单。",
+      "componentLabels": {
+        "text": "文本",
+        "email": "邮箱",
+        "phone": "电话",
+        "number": "数字",
+        "textarea": "长文本",
+        "select": "下拉选择",
+        "radio": "单选",
+        "checkbox": "多选",
+        "date": "日期",
+        "file": "文件上传",
+        "signature": "签名"
+      },
+      "defaultLabels": {
+        "text": "姓名",
+        "email": "邮箱地址",
+        "phone": "电话号码",
+        "number": "年龄",
+        "textarea": "评论",
+        "select": "选择选项",
+        "radio": "选择一项",
+        "checkbox": "选择所有适用的",
+        "date": "日期",
+        "file": "上传文件",
+        "signature": "签名",
+        "default": "字段标签"
+      },
+      "defaultPlaceholders": {
+        "text": "请输入您的姓名",
+        "email": "your.email@example.com",
+        "phone": "+1 (555) 123-4567",
+        "number": "请输入数字",
+        "textarea": "在此输入您的消息...",
+        "date": "选择日期",
+        "file": "选择要上传的文件",
+        "default": "输入值"
+      },
+      "optionLabel": "选项 {n}",
+      "copySuffix": "（副本）"
+    },
+    "presets": {
+      "roles": {
+        "learner": "学员",
+        "trainer": "培训师",
+        "employee": "员工"
+      },
+      "fields": {
+        "learner-name": "学员姓名",
+        "learner-email": "学员邮箱",
+        "learner-phone": "学员电话",
+        "date_of_birth": "出生日期",
+        "employer": "雇主",
+        "trainer-name": "培训师姓名",
+        "email": "邮箱",
+        "employee-name": "员工姓名"
+      }
+    },
+    "preview": {
+      "noFields": "表单中尚未添加字段。",
+      "untitledForm": "未命名表单",
+      "clearForm": "清空表单",
+      "submitPreview": "提交（仅预览）"
+    },
+    "fieldCard": {
+      "selectOption": "选择选项",
+      "fileUploadArea": "文件上传区域",
+      "signaturePad": "签名板",
+      "editField": "编辑字段",
+      "fieldLabel": "字段标签",
+      "placeholder": "占位符",
+      "requiredField": "必填字段",
+      "fieldWidth": "字段宽度",
+      "fullWidth": "全宽",
+      "halfWidth": "半宽",
+      "oneThird": "三分之一",
+      "options": "选项",
+      "addOption": "添加选项"
+    }
   }
   },
   "iqaQuestions": {

@@ -796,6 +796,166 @@
         "delete": "Delete",
         "deleting": "Deleting..."
       }
+    },
+    "builder": {
+      "back": "Back",
+      "backToForms": "Back to Forms",
+      "editForm": "Edit Form",
+      "createNewForm": "Create New Form",
+      "dragComponentsHint": "Drag components to build your form",
+      "field": "field",
+      "fields": "fields",
+      "preview": "Preview",
+      "edit": "Edit",
+      "saving": "Saving...",
+      "saveAsForm": "Save As Form",
+      "saveForm": "Save Form",
+      "formInformation": "Form Information",
+      "formName": "Form Name",
+      "formType": "Form Type",
+      "formNamePlaceholder": "e.g., Customer Feedback Form",
+      "descriptionOptional": "Description (Optional)",
+      "descriptionPlaceholder": "Describe what this form is for...",
+      "formStatistics": "Form Statistics:",
+      "typeField": "{count} {type} field",
+      "typeFields": "{count} {type} fields",
+      "accessRights": "Access Rights",
+      "enableCompleteFunction": "Enable Complete Function",
+      "completionRoles": "Completion Roles",
+      "setRequestSignature": "Set Request Signature",
+      "emailRecipients": "Email Recipients",
+      "otherEmailsPlaceholder": "Emails separated by comma(,)",
+      "selectFormType": "Select form type",
+      "loadFormError": "Failed to load form details. Please try again.",
+      "validation": {
+        "formNameRequired": "Form name is required",
+        "formTypeRequired": "Form type is required",
+        "selectAccessRight": "Select at least one access right",
+        "selectCompletionRole": "Select at least one completion role",
+        "selectEmailRecipient": "Select at least one email recipient",
+        "enterOtherEmails": "Please enter other emails",
+        "validEmails": "Enter valid email(s) separated by commas"
+      },
+      "toast": {
+        "enterFormName": "Please enter a form name",
+        "addOneField": "Please add at least one field to the form",
+        "formUpdated": "Form updated successfully",
+        "formCreated": "Form created successfully",
+        "saveFailed": "Failed to save form",
+        "duplicateName": "A form with this name already exists. Please choose a different name.",
+        "saveAsSuccess": "Form saved as new form successfully",
+        "saveAsFailed": "Failed to save form as new"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "Review",
+        "Enrolment": "Enrolment",
+        "Survey": "Survey",
+        "Workbook": "Workbook",
+        "testExams": "Test/Exams",
+        "Others": "Others"
+      },
+      "roles": {
+        "Master Admin": "Master Admin",
+        "Basic Admin": "Basic Admin",
+        "Assessor": "Assessor",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "Curriculum Manager",
+        "Employer Overview": "Employer Overview",
+        "Employer Manager": "Employer Manager",
+        "Partner": "Partner",
+        "Custom Manager": "Custom Manager",
+        "Learner": "Learner",
+        "Other": "Other"
+      },
+      "palette": {
+        "components": "Components",
+        "presets": "Presets",
+        "dragComponents": "Drag components to build your form",
+        "choosePresets": "Choose from saved presets",
+        "formBuilderTitle": "Form Builder",
+        "formBuilderHint": "Drag components here to create your form",
+        "dropHere": "Drop form components here",
+        "dropHint": "Drag any component from the left panel to start building your form.",
+        "componentLabels": {
+          "text": "Text Input",
+          "email": "Email",
+          "phone": "Phone",
+          "number": "Number",
+          "textarea": "Long Text",
+          "select": "Dropdown",
+          "radio": "Multiple Choice",
+          "checkbox": "Checkboxes",
+          "date": "Date",
+          "file": "File Upload",
+          "signature": "Signature"
+        },
+        "defaultLabels": {
+          "text": "Full Name",
+          "email": "Email Address",
+          "phone": "Phone Number",
+          "number": "Age",
+          "textarea": "Comments",
+          "select": "Select Option",
+          "radio": "Choose One",
+          "checkbox": "Select All That Apply",
+          "date": "Date",
+          "file": "Upload File",
+          "signature": "Signature",
+          "default": "Field Label"
+        },
+        "defaultPlaceholders": {
+          "text": "Enter your full name",
+          "email": "your.email@example.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "Enter a number",
+          "textarea": "Type your message here...",
+          "date": "Select date",
+          "file": "Choose file to upload",
+          "default": "Enter value"
+        },
+        "optionLabel": "Option {n}",
+        "copySuffix": "(Copy)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "Learner",
+          "trainer": "Trainer",
+          "employee": "Employee"
+        },
+        "fields": {
+          "learner-name": "Learner Name",
+          "learner-email": "Learner Email",
+          "learner-phone": "Learner Phone",
+          "date_of_birth": "Date of Birth",
+          "employer": "Employer",
+          "trainer-name": "Trainer Name",
+          "email": "Email",
+          "employee-name": "Employee Name"
+        }
+      },
+      "preview": {
+        "noFields": "No fields added to the form.",
+        "untitledForm": "Untitled Form",
+        "clearForm": "Clear Form",
+        "submitPreview": "Submit (Preview Only)"
+      },
+      "fieldCard": {
+        "selectOption": "Select an option",
+        "fileUploadArea": "File upload area",
+        "signaturePad": "Signature pad",
+        "editField": "Edit Field",
+        "fieldLabel": "Field Label",
+        "placeholder": "Placeholder",
+        "requiredField": "Required field",
+        "fieldWidth": "Field Width",
+        "fullWidth": "Full Width",
+        "halfWidth": "Half Width",
+        "oneThird": "One Third",
+        "options": "Options",
+        "addOption": "Add Option"
+      }
     }
   },
   "iqaQuestions": {

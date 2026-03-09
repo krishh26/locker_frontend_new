@@ -529,6 +529,166 @@
         "delete": "Elimina",
         "deleting": "Eliminazione..."
       }
+    },
+    "builder": {
+      "back": "Indietro",
+      "backToForms": "Torna ai moduli",
+      "editForm": "Modifica modulo",
+      "createNewForm": "Crea nuovo modulo",
+      "dragComponentsHint": "Trascina i componenti per creare il modulo",
+      "field": "campo",
+      "fields": "campi",
+      "preview": "Anteprima",
+      "edit": "Modifica",
+      "saving": "Salvataggio...",
+      "saveAsForm": "Salva come modulo",
+      "saveForm": "Salva modulo",
+      "formInformation": "Informazioni modulo",
+      "formName": "Nome modulo",
+      "formType": "Tipo di modulo",
+      "formNamePlaceholder": "es. Modulo feedback clienti",
+      "descriptionOptional": "Descrizione (facoltativo)",
+      "descriptionPlaceholder": "Descrivi a cosa serve questo modulo...",
+      "formStatistics": "Statistiche modulo:",
+      "typeField": "{count} {type} campo",
+      "typeFields": "{count} {type} campi",
+      "accessRights": "Diritti di accesso",
+      "enableCompleteFunction": "Abilita funzione completa",
+      "completionRoles": "Ruoli di completamento",
+      "setRequestSignature": "Richiedi firma",
+      "emailRecipients": "Destinatari e-mail",
+      "otherEmailsPlaceholder": "E-mail separate da virgola (,)",
+      "selectFormType": "Seleziona tipo di modulo",
+      "loadFormError": "Caricamento modulo non riuscito. Riprova.",
+      "validation": {
+        "formNameRequired": "Il nome del modulo è obbligatorio",
+        "formTypeRequired": "Il tipo di modulo è obbligatorio",
+        "selectAccessRight": "Seleziona almeno un diritto di accesso",
+        "selectCompletionRole": "Seleziona almeno un ruolo di completamento",
+        "selectEmailRecipient": "Seleziona almeno un destinatario",
+        "enterOtherEmails": "Inserisci altre e-mail",
+        "validEmails": "Inserisci e-mail valide separate da virgole"
+      },
+      "toast": {
+        "enterFormName": "Inserisci un nome per il modulo",
+        "addOneField": "Aggiungi almeno un campo al modulo",
+        "formUpdated": "Modulo aggiornato con successo",
+        "formCreated": "Modulo creato con successo",
+        "saveFailed": "Salvataggio modulo non riuscito",
+        "duplicateName": "Esiste già un modulo con questo nome. Scegline un altro.",
+        "saveAsSuccess": "Modulo salvato come nuovo con successo",
+        "saveAsFailed": "Salvataggio come nuovo modulo non riuscito"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "Revisione",
+        "Enrolment": "Iscrizione",
+        "Survey": "Sondaggio",
+        "Workbook": "Quaderno",
+        "testExams": "Test/Esami",
+        "Others": "Altri"
+      },
+      "roles": {
+        "Master Admin": "Amministratore principale",
+        "Basic Admin": "Amministratore base",
+        "Assessor": "Valutatore",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "Responsabile curriculum",
+        "Employer Overview": "Panoramica datore",
+        "Employer Manager": "Responsabile datore",
+        "Partner": "Partner",
+        "Custom Manager": "Responsabile personalizzato",
+        "Learner": "Apprendista",
+        "Other": "Altro"
+      },
+      "palette": {
+        "components": "Componenti",
+        "presets": "Modelli",
+        "dragComponents": "Trascina i componenti per creare il modulo",
+        "choosePresets": "Scegli tra i modelli salvati",
+        "formBuilderTitle": "Editor moduli",
+        "formBuilderHint": "Trascina i componenti qui per creare il modulo",
+        "dropHere": "Rilascia qui i componenti del modulo",
+        "dropHint": "Trascina un componente dal pannello sinistro per iniziare.",
+        "componentLabels": {
+          "text": "Testo",
+          "email": "E-mail",
+          "phone": "Telefono",
+          "number": "Numero",
+          "textarea": "Testo lungo",
+          "select": "Menu a discesa",
+          "radio": "Scelta multipla",
+          "checkbox": "Caselle di controllo",
+          "date": "Data",
+          "file": "Carica file",
+          "signature": "Firma"
+        },
+        "defaultLabels": {
+          "text": "Nome completo",
+          "email": "Indirizzo e-mail",
+          "phone": "Numero di telefono",
+          "number": "Età",
+          "textarea": "Commenti",
+          "select": "Seleziona opzione",
+          "radio": "Scegline una",
+          "checkbox": "Seleziona tutti quelli applicabili",
+          "date": "Data",
+          "file": "Carica file",
+          "signature": "Firma",
+          "default": "Etichetta campo"
+        },
+        "defaultPlaceholders": {
+          "text": "Inserisci il tuo nome completo",
+          "email": "tua.email@esempio.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "Inserisci un numero",
+          "textarea": "Scrivi qui il tuo messaggio...",
+          "date": "Seleziona data",
+          "file": "Scegli file da caricare",
+          "default": "Inserisci valore"
+        },
+        "optionLabel": "Opzione {n}",
+        "copySuffix": "(Copia)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "Apprendista",
+          "trainer": "Formatore",
+          "employee": "Dipendente"
+        },
+        "fields": {
+          "learner-name": "Nome apprendista",
+          "learner-email": "E-mail apprendista",
+          "learner-phone": "Telefono apprendista",
+          "date_of_birth": "Data di nascita",
+          "employer": "Datore di lavoro",
+          "trainer-name": "Nome formatore",
+          "email": "E-mail",
+          "employee-name": "Nome dipendente"
+        }
+      },
+      "preview": {
+        "noFields": "Nessun campo aggiunto al modulo.",
+        "untitledForm": "Modulo senza titolo",
+        "clearForm": "Svuota modulo",
+        "submitPreview": "Invia (solo anteprima)"
+      },
+      "fieldCard": {
+        "selectOption": "Seleziona un'opzione",
+        "fileUploadArea": "Area caricamento file",
+        "signaturePad": "Campo firma",
+        "editField": "Modifica campo",
+        "fieldLabel": "Etichetta campo",
+        "placeholder": "Segnaposto",
+        "requiredField": "Campo obbligatorio",
+        "fieldWidth": "Larghezza campo",
+        "fullWidth": "Larghezza piena",
+        "halfWidth": "Metà larghezza",
+        "oneThird": "Un terzo",
+        "options": "Opzioni",
+        "addOption": "Aggiungi opzione"
+      }
     }
   },
   "iqaQuestions": {

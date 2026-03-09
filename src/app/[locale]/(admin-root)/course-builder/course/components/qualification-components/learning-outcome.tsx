@@ -8,6 +8,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Controller, Control, useFieldArray, useWatch, UseFormSetValue } from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,7 @@ export function AssessmentCriteriaForm({
   setValue,
   readOnly = false,
 }: AssessmentCriteriaFormProps) {
+  const t = useTranslations("courseBuilder");
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   const { fields, append, remove } = useFieldArray({
@@ -105,12 +107,14 @@ export function AssessmentCriteriaForm({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-semibold">
-          Learning Outcome {assessmentCriteria.length > 0 && `(${assessmentCriteria.length})`}
+          {assessmentCriteria.length > 0
+            ? t("course.qualification.learningOutcomeCount", { count: assessmentCriteria.length })
+            : t("course.qualification.learningOutcome")}
         </h4>
         {!readOnly && (
           <Button onClick={handleAddCriterion} size="sm" className="gap-2" type="button">
             <Plus className="h-4 w-4" />
-            Add Learning Outcome
+            {t("course.qualification.addLearningOutcome")}
           </Button>
         )}
       </div>
@@ -123,15 +127,15 @@ export function AssessmentCriteriaForm({
                 <TableRow>
                   <TableHead className="w-[50px]"></TableHead>
                   <TableHead>
-                    Type <span className="text-destructive">*</span>
+                    {t("course.qualification.type")} <span className="text-destructive">*</span>
                   </TableHead>
-                  <TableHead>Code</TableHead>
-                  <TableHead>Show Order</TableHead>
+                  <TableHead>{t("course.qualification.code")}</TableHead>
+                  <TableHead>{t("course.qualification.showOrder")}</TableHead>
                   <TableHead>
-                    Title <span className="text-destructive">*</span>
+                    {t("course.qualification.title")} <span className="text-destructive">*</span>
                   </TableHead>
                   {!readOnly && (
-                    <TableHead className="w-[100px] text-center">Actions</TableHead>
+                    <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                   )}
                 </TableRow>
               </TableHeader>
@@ -171,9 +175,9 @@ export function AssessmentCriteriaForm({
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="to-do">To Do</SelectItem>
-                                    <SelectItem value="to-know">To Know</SelectItem>
-                                    <SelectItem value="req">Required</SelectItem>
+                                    <SelectItem value="to-do">{t("course.qualification.typeToDo")}</SelectItem>
+                                    <SelectItem value="to-know">{t("course.qualification.typeToKnow")}</SelectItem>
+                                    <SelectItem value="req">{t("course.qualification.typeRequired")}</SelectItem>
                                   </SelectContent>
                                 </Select>
                                 {error && (
@@ -190,7 +194,7 @@ export function AssessmentCriteriaForm({
                             render={({ field: formField }) => (
                               <Input
                                 {...formField}
-                                placeholder="Code"
+                                placeholder={t("course.qualification.placeholderCode")}
                                 className="w-[100px]"
                                 disabled={readOnly}
                               />
@@ -205,7 +209,7 @@ export function AssessmentCriteriaForm({
                               <Input
                                 {...formField}
                                 type="number"
-                                placeholder="Auto"
+                                placeholder={t("course.qualification.placeholderAuto")}
                                 className="w-[80px]"
                                 value={formField.value ?? index + 1}
                                 disabled={readOnly}
@@ -224,7 +228,7 @@ export function AssessmentCriteriaForm({
                               <div className="space-y-1">
                                 <Input
                                   {...formField}
-                                  placeholder="Criterion title"
+                                  placeholder={t("course.qualification.placeholderCriterionTitle")}
                                   className={cn(error && "border-destructive")}
                                   disabled={readOnly}
                                 />

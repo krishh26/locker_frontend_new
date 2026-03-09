@@ -9,6 +9,7 @@
 
 import { useEffect, useState } from "react";
 import { useFieldArray, Controller, useWatch, Control, UseFormSetValue, FieldErrors, UseFormTrigger } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,7 @@ export function GatewayQuestionsStep({
   trigger,
   edit = "create",
 }: GatewayQuestionsStepProps) {
+  const t = useTranslations("courseBuilder");
   const isViewMode = edit === "view";
   const [removingQuestionId, setRemovingQuestionId] = useState<string | number | null>(null);
 
@@ -121,9 +123,9 @@ export function GatewayQuestionsStep({
       // Simulate async operation (in case of API call in future)
       await new Promise((resolve) => setTimeout(resolve, 100));
       removeQuestion(index);
-      toast.success("Question removed successfully");
+      toast.success(t("course.gateway.toastQuestionRemoved"));
     } catch {
-      toast.error("Failed to remove question");
+      toast.error(t("course.gateway.toastQuestionRemoveFailed"));
     } finally {
       setRemovingQuestionId(null);
     }
@@ -134,13 +136,13 @@ export function GatewayQuestionsStep({
       {/* Course Details Section */}
       <Card>
         <CardHeader>
-          <CardTitle>Course Details</CardTitle>
+          <CardTitle>{t("course.gateway.courseDetails")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="course_name">
-                Course Name <span className="text-destructive">*</span>
+                {t("course.form.courseName")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="course_name"
@@ -150,7 +152,7 @@ export function GatewayQuestionsStep({
                     <Input
                       {...field}
                       id="course_name"
-                      placeholder="Enter Course Name"
+                      placeholder={t("course.form.courseNamePlaceholder")}
                       disabled={isViewMode}
                       className={cn(error && "border-destructive")}
                     />
@@ -164,7 +166,7 @@ export function GatewayQuestionsStep({
 
             <div className="space-y-2">
               <Label htmlFor="course_code">
-                Course Code <span className="text-destructive">*</span>
+                {t("course.form.courseCode")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="course_code"
@@ -174,7 +176,7 @@ export function GatewayQuestionsStep({
                     <Input
                       {...field}
                       id="course_code"
-                      placeholder="Enter Course Code"
+                      placeholder={t("course.form.courseCodePlaceholder")}
                       disabled={isViewMode}
                       className={cn(error && "border-destructive")}
                     />
@@ -187,7 +189,7 @@ export function GatewayQuestionsStep({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="active">Active Course (Yes or No)</Label>
+              <Label htmlFor="active">{t("course.gateway.activeCourseLabel")}</Label>
               <Controller
                 name="active"
                 control={control}
@@ -207,11 +209,11 @@ export function GatewayQuestionsStep({
                       disabled={isViewMode}
                     >
                     <SelectTrigger id="active" className="w-full">
-                      <SelectValue placeholder="Please select" />
+                      <SelectValue placeholder={t("course.gateway.pleaseSelect")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Yes">Yes</SelectItem>
-                      <SelectItem value="No">No</SelectItem>
+                      <SelectItem value="Yes">{t("course.gateway.yes")}</SelectItem>
+                      <SelectItem value="No">{t("course.gateway.no")}</SelectItem>
                     </SelectContent>
                   </Select>
                   );
@@ -226,11 +228,11 @@ export function GatewayQuestionsStep({
       <Card>
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle>Checklist Questions</CardTitle>
+            <CardTitle>{t("course.gateway.checklistQuestions")}</CardTitle>
             {!isViewMode && (
               <Button onClick={handleAddQuestion} size="sm" className="gap-2" type="button">
                 <Plus className="h-4 w-4" />
-                Add Question
+                {t("course.gateway.addQuestion")}
               </Button>
             )}
           </div>
@@ -255,12 +257,12 @@ export function GatewayQuestionsStep({
                 typeof errors.questions === "object" &&
                 "message" in errors.questions
                   ? (errors.questions.message as string)
-                  : "No questions added yet."}
+                  : t("course.gateway.noQuestionsYet")}
               </p>
               {!isViewMode && (
                 <Button variant="outline" onClick={handleAddQuestion} className="gap-2" type="button">
                   <Plus className="h-4 w-4" />
-                  Add First Question
+                  {t("course.gateway.addFirstQuestion")}
                 </Button>
               )}
             </div>
@@ -269,11 +271,11 @@ export function GatewayQuestionsStep({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Question</TableHead>
-                    <TableHead>Evidence Required?</TableHead>
-                    <TableHead>Is Dropdown</TableHead>
-                    <TableHead>Dropdown Options</TableHead>
-                    {!isViewMode && <TableHead>Actions</TableHead>}
+                    <TableHead>{t("course.gateway.tableQuestion")}</TableHead>
+                    <TableHead>{t("course.gateway.evidenceRequired")}</TableHead>
+                    <TableHead>{t("course.gateway.isDropdown")}</TableHead>
+                    <TableHead>{t("course.gateway.dropdownOptions")}</TableHead>
+                    {!isViewMode && <TableHead>{t("course.gateway.actions")}</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -287,7 +289,7 @@ export function GatewayQuestionsStep({
                             <div>
                               <Input
                                 {...field}
-                                placeholder="Enter question"
+                                placeholder={t("course.gateway.enterQuestion")}
                                 disabled={isViewMode}
                                 className={cn(error && "border-destructive")}
                               />
@@ -314,8 +316,8 @@ export function GatewayQuestionsStep({
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="Yes">Yes</SelectItem>
-                                <SelectItem value="No">No</SelectItem>
+                                <SelectItem value="Yes">{t("course.gateway.yes")}</SelectItem>
+                                <SelectItem value="No">{t("course.gateway.no")}</SelectItem>
                               </SelectContent>
                             </Select>
                           )}
@@ -348,8 +350,8 @@ export function GatewayQuestionsStep({
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="Yes">Yes</SelectItem>
-                                <SelectItem value="No">No</SelectItem>
+                                <SelectItem value="Yes">{t("course.gateway.yes")}</SelectItem>
+                                <SelectItem value="No">{t("course.gateway.no")}</SelectItem>
                               </SelectContent>
                             </Select>
                           )}
@@ -363,7 +365,7 @@ export function GatewayQuestionsStep({
                             <div>
                               <Input
                                 {...field}
-                                placeholder="Comma separated options"
+                                placeholder={t("course.gateway.commaSeparatedOptions")}
                                 disabled={!(questions && questions[index]?.isDropdown) || isViewMode}
                                 className={cn(error && "border-destructive")}
                               />
@@ -404,13 +406,13 @@ export function GatewayQuestionsStep({
       {/* Assign Gateway to Standard Courses Section */}
       <Card>
         <CardHeader>
-          <CardTitle>Assign Gateway to Standard Courses</CardTitle>
+          <CardTitle>{t("course.gateway.assignGatewayToStandard")}</CardTitle>
         </CardHeader>
         <CardContent>
           {loadingCourses ? (
             <div className="flex items-center justify-center h-[300px] gap-3">
               <LoadingSpinner />
-              <p className="text-sm text-muted-foreground">Loading standard courses...</p>
+              <p className="text-sm text-muted-foreground">{t("course.gateway.loadingStandardCourses")}</p>
             </div>
           ) : (
             <CourseTransferList
@@ -418,8 +420,8 @@ export function GatewayQuestionsStep({
               setValue={setValue}
               allStandardCourses={allStandardCourses}
               disabled={isViewMode}
-              leftTitle="Unassigned Standard (Active) Courses"
-              rightTitle="Assigned Standard (Active) Courses"
+              leftTitle={t("course.gateway.unassignedStandardCourses")}
+              rightTitle={t("course.gateway.assignedStandardCourses")}
               error={
                 !!(
                   errors?.assigned_standards &&

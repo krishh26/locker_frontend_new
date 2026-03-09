@@ -34,7 +34,17 @@
     "confirm": "Confirmar",
     "yes": "Sí",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "pagination": {
+      "rowsPerPage": "Filas por página",
+      "showingRange": "Mostrando {from} a {to} de {count} elemento(s).",
+      "selectedRows": "{selected} de {total} fila(s) seleccionadas.",
+      "morePages": "Más páginas",
+      "ariaFirst": "Ir a la primera página",
+      "ariaPrevious": "Ir a la página anterior",
+      "ariaNext": "Ir a la página siguiente",
+      "ariaLast": "Ir a la última página"
+    }
   },
   "navigation": {
     "home": "Inicio",
@@ -518,7 +528,218 @@
   },
   "surveys": {
     "pageTitle": "Encuestas",
-    "pageSubtitle": "Cree y gestione formularios de encuestas"
+    "pageSubtitle": "Cree y gestione formularios de encuestas",
+    "table": {
+      "headers": {
+        "name": "Nombre",
+        "status": "Estado",
+        "questions": "Preguntas",
+        "responses": "Respuestas",
+        "created": "Creado",
+        "updated": "Actualizado",
+        "actions": "Acciones"
+      },
+      "searchPlaceholder": "Buscar encuestas...",
+      "createButton": "Crear encuesta",
+      "loading": "Cargando encuestas...",
+      "error": "Error al cargar encuestas. Inténtelo de nuevo.",
+      "noResults": "Sin resultados.",
+      "actions": {
+        "viewSurvey": "Ver encuesta",
+        "editSurvey": "Editar encuesta",
+        "more": "Más acciones",
+        "viewResponses": "Ver respuestas",
+        "openPublicForm": "Abrir formulario público",
+        "allocateSurvey": "Asignar encuesta",
+        "exportCsv": "Exportar CSV",
+        "exportPdf": "Exportar PDF",
+        "deleteSurvey": "Eliminar encuesta"
+      }
+    },
+    "filters": {
+      "statusLabel": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusAll": "Todos los estados"
+    },
+    "status": {
+      "Draft": "Borrador",
+      "Published": "Publicado",
+      "Archived": "Archivado"
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar encuesta?",
+      "description": "Esta acción no se puede deshacer. Se eliminará permanentemente la encuesta y todas sus preguntas y respuestas.",
+      "deleting": "Eliminando..."
+    },
+    "toast": {
+      "deleteSuccess": "Encuesta eliminada correctamente",
+      "deleteFailed": "Error al eliminar la encuesta",
+      "allocateSelectSurvey": "Seleccione una encuesta para asignar",
+      "allocateSuccess": "Encuesta asignada correctamente a {count} usuario(s)",
+      "allocateFailed": "Error al asignar la encuesta. Inténtelo de nuevo."
+    },
+    "form": {
+      "titleEdit": "Editar encuesta",
+      "titleCreate": "Crear encuesta",
+      "descriptionEdit": "Actualice los detalles de la encuesta. Guarde cuando termine.",
+      "descriptionCreate": "Cree un nuevo formulario de encuesta. Guarde cuando termine.",
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Introduzca el nombre de la encuesta",
+      "descriptionLabel": "Descripción",
+      "descriptionPlaceholder": "Introduzca la descripción de la encuesta (opcional)",
+      "expirationLabel": "Fecha de caducidad",
+      "pickDate": "Elegir fecha",
+      "statusLabel": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "statusDraft": "Borrador",
+      "statusPublished": "Publicado",
+      "cancel": "Cancelar",
+      "update": "Actualizar encuesta",
+      "create": "Crear encuesta",
+      "updating": "Actualizando...",
+      "creating": "Creando...",
+      "toastUpdateSuccess": "Encuesta actualizada correctamente",
+      "toastCreateSuccess": "Encuesta creada correctamente",
+      "toastUpdateFailed": "Error al actualizar la encuesta",
+      "toastCreateFailed": "Error al crear la encuesta",
+      "validation": {
+        "nameMin": "El nombre debe tener al menos 2 caracteres.",
+        "expirationFuture": "La fecha de caducidad debe ser futura"
+      }
+    },
+    "allocate": {
+      "title": "Asignar encuesta",
+      "description": "Asignar \"{name}\" a usuarios seleccionando roles y usuarios a continuación.",
+      "selectRoles": "Seleccionar roles",
+      "selectUsers": "Seleccionar usuarios",
+      "usersSelected": "{count} usuario(s) seleccionado(s)",
+      "course": "Curso",
+      "employer": "Empleador",
+      "search": "Buscar",
+      "allCourses": "Todos los cursos",
+      "allEmployers": "Todos los empleadores",
+      "searchPlaceholder": "Buscar por nombre o correo...",
+      "statusFilters": "Filtros de estado",
+      "pageOf": "Página {page} de {pages}",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "cancel": "Cancelar",
+      "assign": "Asignar ({count})",
+      "toastSelectOne": "Seleccione al menos un usuario para asignar",
+      "toastSuccess": "Encuesta asignada correctamente a {count} usuario(s)",
+      "toastFailed": "Error al asignar la encuesta. Inténtelo de nuevo.",
+      "roles": {
+        "Trainer": "Formador",
+        "IQA": "IQA",
+        "Learner": "Aprendiz",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "Pendiente de inducción",
+        "Certificated": "Certificado",
+        "Completed": "Completado",
+        "Early Leaver": "Baja anticipada",
+        "Exempt": "Exento",
+        "In Training": "En formación",
+        "IQA Approved": "Aprobado IQA",
+        "Training Suspended": "Formación suspendida",
+        "Transferred": "Transferido",
+        "Show only archived users": "Mostrar solo usuarios archivados"
+      },
+      "tableLoading": "Cargando...",
+      "noUsersFound": "No se encontraron usuarios",
+      "tableName": "Nombre",
+      "tableEmail": "Correo",
+      "selectAll": "Seleccionar todo",
+      "selectUser": "Seleccionar {name}"
+    },
+    "builder": {
+      "loadingTitle": "Cargando encuesta...",
+      "loadingSubtitle": "Espere mientras cargamos la encuesta.",
+      "notFoundTitle": "Encuesta no encontrada",
+      "notFoundSubtitleError": "No se pudo cargar la encuesta. Inténtelo de nuevo.",
+      "notFoundSubtitleMissing": "La encuesta que busca no existe.",
+      "headerFallbackDescription": "Cree las preguntas de su encuesta.",
+      "questionsTitle": "Preguntas",
+      "questionsCount": "{count} pregunta(s)",
+      "templateUse": "Usar plantilla",
+      "templateApplying": "Aplicando...",
+      "addQuestion": "Agregar pregunta",
+      "emptyDescription": "Aún no hay preguntas. Comience usando una plantilla o agregando sus propias preguntas.",
+      "submitPreview": "Enviar",
+      "reorderToastSuccess": "Preguntas reordenadas correctamente",
+      "reorderToastFailed": "Error al reordenar las preguntas",
+      "templateApplySuccess": "¡Plantilla aplicada correctamente!",
+      "templateApplyFailed": "Error al aplicar la plantilla. Inténtelo de nuevo.",
+      "templateDialogTitle": "Crear desde plantillas destacadas",
+      "templateDialogDescription": "Elija una plantilla para comenzar rápidamente con preguntas predefinidas.",
+      "templateQuestionsCount": "{count} preguntas",
+      "previewShortTextPlaceholder": "Respuesta de texto corto",
+      "previewLongTextPlaceholder": "Respuesta de texto largo",
+      "previewLikertStatementsHeader": "Afirmaciones",
+      "previewLikertHelp": "Agregue afirmaciones y opciones para ver la matriz de escala Likert.",
+      "alertDeleteTitle": "¿Está seguro?",
+      "alertDeleteDescription": "Esta acción no se puede deshacer. Esta pregunta se eliminará permanentemente.",
+      "alertDeleting": "Eliminando...",
+      "questionMenuMore": "Más opciones",
+      "questionMenuEdit": "Editar",
+      "questionMenuDuplicate": "Duplicar",
+      "questionMenuDelete": "Eliminar",
+      "questionDuplicateSuccess": "Pregunta duplicada correctamente",
+      "questionDuplicateFailed": "Error al duplicar la pregunta",
+      "questionDeleteSuccess": "Pregunta eliminada correctamente",
+      "questionDeleteFailed": "Error al eliminar la pregunta",
+      "questionTypeShortText": "Texto corto",
+      "questionTypeLongText": "Texto largo",
+      "questionTypeMultipleChoice": "Opción múltiple",
+      "questionTypeCheckbox": "Casillas de verificación",
+      "questionTypeRating": "Valoración",
+      "questionTypeDate": "Fecha",
+      "questionTypeLikert": "Escala Likert",
+      "untitledQuestion": "Pregunta sin título",
+      "requiredLabel": "Obligatoria",
+      "optionsLabel": "Opciones:",
+      "formTitleRequired": "El título es obligatorio.",
+      "formOptionsRequiredForType": "Se requiere al menos una opción para este tipo de pregunta.",
+      "formStatementsRequiredForLikert": "Se requiere al menos una afirmación para preguntas de escala Likert.",
+      "formStatementsInlineRequired": "Se requiere al menos una afirmación.",
+      "formOptionsInlineRequired": "Se requiere al menos una opción.",
+      "formDialogTitleEdit": "Editar pregunta",
+      "formDialogTitleCreate": "Agregar pregunta",
+      "formDialogDescriptionEdit": "Actualice los detalles de la pregunta.",
+      "formDialogDescriptionCreate": "Cree una nueva pregunta para su encuesta.",
+      "formTitleLabel": "Título",
+      "formTitlePlaceholder": "Introduzca el título de la pregunta",
+      "formDescriptionLabel": "Descripción",
+      "formDescriptionPlaceholder": "Introduzca la descripción de la pregunta (opcional)",
+      "formTypeLabel": "Tipo de pregunta",
+      "formTypePlaceholder": "Seleccione el tipo de pregunta",
+      "formTypeShortText": "Texto corto",
+      "formTypeLongText": "Texto largo",
+      "formTypeMultipleChoice": "Opción múltiple",
+      "formTypeCheckbox": "Casillas de verificación",
+      "formTypeRating": "Valoración (1–5)",
+      "formTypeDate": "Fecha",
+      "formTypeLikert": "Escala Likert",
+      "formStatementsLabel": "Afirmaciones (filas)",
+      "formStatementsAdd": "Agregar afirmación",
+      "formStatementsHelp": "Agregue afirmaciones para la escala Likert (una por fila).",
+      "formOptionsLabel": "Opciones",
+      "formOptionsAdd": "Agregar opción",
+      "formOptionsHelpLikert": "Agregue opciones de escala para la escala Likert (columnas).",
+      "formOptionsHelpMultipleChoice": "Agregue opciones para preguntas de opción múltiple.",
+      "formOptionsHelpCheckbox": "Agregue opciones para preguntas de casillas de verificación.",
+      "formRequiredLabel": "Obligatoria",
+      "formRequiredDescription": "Hacer que esta pregunta sea obligatoria para los encuestados.",
+      "formSubmitUpdating": "Actualizando...",
+      "formSubmitCreating": "Creando...",
+      "formSubmitUpdate": "Actualizar pregunta",
+      "formSubmitCreate": "Agregar pregunta",
+      "formToastUpdateSuccess": "Pregunta actualizada correctamente",
+      "formToastCreateSuccess": "Pregunta creada correctamente",
+      "formToastUpdateFailed": "Error al actualizar la pregunta",
+      "formToastCreateFailed": "Error al crear la pregunta"
+    }
   },
   "timelogExport": {
     "pageTitle": "Exportación de Datos de Registro de Tiempo",
@@ -692,8 +913,68 @@
     "pageSubtitle": "Gestione bandas de financiamiento para cursos con operaciones simplificadas incluyendo funcionalidades de agregar y actualizar"
   },
   "courseBuilder": {
-    "pageTitle": "Constructor de Cursos",
-    "pageSubtitle": "Cree, gestione y organice sus cursos con facilidad"
+    "pageTitle": "Constructor de cursos",
+    "pageSubtitle": "Cree, gestione y organice sus cursos con facilidad",
+    "filters": {
+      "searchPlaceholder": "Buscar por palabra clave...",
+      "courseTypePlaceholder": "Tipo de curso",
+      "courseTypes": {
+        "all": "Todos los tipos",
+        "Qualification": "Cualificación",
+        "Standard": "Estándar",
+        "Gateway": "Gateway"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "Nombre del curso",
+        "code": "Código",
+        "coreType": "Tipo principal",
+        "level": "Nivel",
+        "sector": "Sector",
+        "learningHours": "Horas de aprendizaje"
+      },
+      "actions": {
+        "view": "Ver"
+      }
+    },
+    "export": {
+      "pdfTitle": "Cursos",
+      "pdfExported": "PDF exportado correctamente"
+    },
+    "upload": {
+      "button": "Subir archivo"
+    },
+    "create": {
+      "button": "Crear curso",
+      "types": {
+        "Qualification": {
+          "label": "Cualificación",
+          "description": "Cree un curso de cualificación con unidades y criterios"
+        },
+        "Standard": {
+          "label": "Estándar",
+          "description": "Cree un curso estándar con módulos y temas"
+        },
+        "Gateway": {
+          "label": "Gateway",
+          "description": "Cree un curso Gateway para evaluaciones"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "Subir archivo de curso",
+      "description": "La funcionalidad de subida de cursos se implementará."
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar curso?",
+      "description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el curso \"{name}\"."
+    },
+    "toast": {
+      "deleteSuccess": "Curso eliminado correctamente",
+      "forbiddenDelete": "No tiene acceso para eliminar este curso.",
+      "deleteFailed": "Error al eliminar el curso"
+    }
   },
   "broadcast": {
     "pageTitle": "Gestión de Difusión",

@@ -34,7 +34,17 @@
     "confirm": "पुष्टि करें",
     "yes": "हाँ",
     "no": "नहीं",
-    "ok": "ठीक है"
+    "ok": "ठीक है",
+    "pagination": {
+      "rowsPerPage": "प्रति पेज पंक्तियाँ",
+      "showingRange": "{from} से {to} तक, कुल {count} आइटम दिखा रहे हैं।",
+      "selectedRows": "{total} में से {selected} पंक्ति(याँ) चयनित।",
+      "morePages": "और पेज",
+      "ariaFirst": "पहले पेज पर जाएँ",
+      "ariaPrevious": "पिछले पेज पर जाएँ",
+      "ariaNext": "अगले पेज पर जाएँ",
+      "ariaLast": "आखिरी पेज पर जाएँ"
+    }
   },
   "navigation": {
     "home": "होम",
@@ -676,8 +686,219 @@
     "pageSubtitle": "Manage session type configurations"
   },
   "surveys": {
-    "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageTitle": "सर्वेक्षण",
+    "pageSubtitle": "सर्वेक्षण बनाएं और प्रबंधित करें",
+    "table": {
+      "headers": {
+        "name": "नाम",
+        "status": "स्थिति",
+        "questions": "प्रश्न",
+        "responses": "जवाब",
+        "created": "बनाया गया",
+        "updated": "अपडेट किया गया",
+        "actions": "कार्रवाइयाँ"
+      },
+      "searchPlaceholder": "सर्वेक्षण खोजें...",
+      "createButton": "सर्वेक्षण बनाएं",
+      "loading": "सर्वेक्षण लोड हो रहे हैं...",
+      "error": "सर्वेक्षण लोड करने में त्रुटि। कृपया पुनः प्रयास करें।",
+      "noResults": "कोई परिणाम नहीं।",
+      "actions": {
+        "viewSurvey": "सर्वेक्षण देखें",
+        "editSurvey": "सर्वेक्षण संपादित करें",
+        "more": "अधिक कार्रवाइयाँ",
+        "viewResponses": "जवाब देखें",
+        "openPublicForm": "सार्वजनिक फॉर्म खोलें",
+        "allocateSurvey": "सर्वेक्षण आवंटित करें",
+        "exportCsv": "CSV निर्यात करें",
+        "exportPdf": "PDF निर्यात करें",
+        "deleteSurvey": "सर्वेक्षण हटाएं"
+      }
+    },
+    "filters": {
+      "statusLabel": "स्थिति",
+      "statusPlaceholder": "स्थिति चुनें",
+      "statusAll": "सभी स्थितियाँ"
+    },
+    "status": {
+      "Draft": "ड्राफ्ट",
+      "Published": "प्रकाशित",
+      "Archived": "संग्रहित"
+    },
+    "deleteDialog": {
+      "title": "सर्वेक्षण हटाएं?",
+      "description": "इस क्रिया को पूर्ववत नहीं किया जा सकता। सर्वेक्षण और उसके सभी प्रश्न और जवाब स्थायी रूप से हटा दिए जाएंगे।",
+      "deleting": "हटाया जा रहा है..."
+    },
+    "toast": {
+      "deleteSuccess": "सर्वेक्षण सफलतापूर्वक हटाया गया",
+      "deleteFailed": "सर्वेक्षण हटाने में विफल",
+      "allocateSelectSurvey": "आवंटित करने के लिए कृपया एक सर्वेक्षण चुनें",
+      "allocateSuccess": "सर्वेक्षण {count} उपयोगकर्ता(ओं) को सफलतापूर्वक आवंटित किया गया",
+      "allocateFailed": "सर्वेक्षण आवंटित करने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "form": {
+      "titleEdit": "सर्वेक्षण संपादित करें",
+      "titleCreate": "सर्वेक्षण बनाएं",
+      "descriptionEdit": "सर्वेक्षण विवरण अपडेट करें। हो जाने पर सहेजें पर क्लिक करें।",
+      "descriptionCreate": "नया सर्वेक्षण फॉर्म बनाएं। हो जाने पर सहेजें पर क्लिक करें।",
+      "nameLabel": "नाम",
+      "namePlaceholder": "सर्वेक्षण का नाम दर्ज करें",
+      "descriptionLabel": "विवरण",
+      "descriptionPlaceholder": "सर्वेक्षण विवरण दर्ज करें (वैकल्पिक)",
+      "expirationLabel": "समाप्ति तिथि",
+      "pickDate": "तिथि चुनें",
+      "statusLabel": "स्थिति",
+      "statusPlaceholder": "स्थिति चुनें",
+      "statusDraft": "ड्राफ्ट",
+      "statusPublished": "प्रकाशित",
+      "cancel": "रद्द करें",
+      "update": "सर्वेक्षण अपडेट करें",
+      "create": "सर्वेक्षण बनाएं",
+      "updating": "अपडेट हो रहा है...",
+      "creating": "बनाया जा रहा है...",
+      "toastUpdateSuccess": "सर्वेक्षण सफलतापूर्वक अपडेट किया गया",
+      "toastCreateSuccess": "सर्वेक्षण सफलतापूर्वक बनाया गया",
+      "toastUpdateFailed": "सर्वेक्षण अपडेट करने में विफल",
+      "toastCreateFailed": "सर्वेक्षण बनाने में विफल",
+      "validation": {
+        "nameMin": "नाम में कम से कम 2 अक्षर होने चाहिए।",
+        "expirationFuture": "समाप्ति तिथि भविष्य में होनी चाहिए"
+      }
+    },
+    "allocate": {
+      "title": "सर्वेक्षण आवंटित करें",
+      "description": "नीचे भूमिकाओं और उपयोगकर्ताओं को चुनकर \"{name}\" को उपयोगकर्ताओं को आवंटित करें।",
+      "selectRoles": "भूमिकाएँ चुनें",
+      "selectUsers": "उपयोगकर्ता चुनें",
+      "usersSelected": "{count} उपयोगकर्ता(ओं) का चयन किया गया",
+      "course": "कोर्स",
+      "employer": "नियोक्ता",
+      "search": "खोजें",
+      "allCourses": "सभी कोर्स",
+      "allEmployers": "सभी नियोक्ता",
+      "searchPlaceholder": "नाम या ईमेल से खोजें...",
+      "statusFilters": "स्थिति फ़िल्टर",
+      "pageOf": "पृष्ठ {page} / {pages}",
+      "previous": "पिछला",
+      "next": "अगला",
+      "cancel": "रद्द करें",
+      "assign": "आवंटित करें ({count})",
+      "toastSelectOne": "आवंटित करने के लिए कम से कम एक उपयोगकर्ता चुनें",
+      "toastSuccess": "सर्वेक्षण {count} उपयोगकर्ता(ओं) को सफलतापूर्वक आवंटित किया गया",
+      "toastFailed": "सर्वेक्षण आवंटित करने में विफल। कृपया पुनः प्रयास करें।",
+      "roles": {
+        "Trainer": "प्रशिक्षक",
+        "IQA": "IQA",
+        "Learner": "सीखने वाला",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "इंडक्शन की प्रतीक्षा",
+        "Certificated": "प्रमाणित",
+        "Completed": "पूर्ण",
+        "Early Leaver": "जल्दी छोड़ने वाला",
+        "Exempt": "छूट",
+        "In Training": "प्रशिक्षण में",
+        "IQA Approved": "IQA अनुमोदित",
+        "Training Suspended": "प्रशिक्षण निलंबित",
+        "Transferred": "स्थानांतरित",
+        "Show only archived users": "केवल संग्रहित उपयोगकर्ता दिखाएं"
+      },
+      "tableLoading": "लोड हो रहा है...",
+      "noUsersFound": "कोई उपयोगकर्ता नहीं मिला",
+      "tableName": "नाम",
+      "tableEmail": "ईमेल",
+      "selectAll": "सभी चुनें",
+      "selectUser": "{name} चुनें"
+    },
+    "builder": {
+      "loadingTitle": "सर्वेक्षण लोड हो रहा है...",
+      "loadingSubtitle": "कृपया प्रतीक्षा करें, हम सर्वेक्षण लोड कर रहे हैं।",
+      "notFoundTitle": "सर्वेक्षण नहीं मिला",
+      "notFoundSubtitleError": "सर्वेक्षण लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "notFoundSubtitleMissing": "जिस सर्वेक्षण को आप ढूंढ रहे हैं वह मौजूद नहीं है।",
+      "headerFallbackDescription": "अपने सर्वेक्षण के प्रश्न बनाएं।",
+      "questionsTitle": "प्रश्न",
+      "questionsCount": "{count} प्रश्न",
+      "templateUse": "टेम्पलेट उपयोग करें",
+      "templateApplying": "लागू किया जा रहा है...",
+      "addQuestion": "प्रश्न जोड़ें",
+      "emptyDescription": "अभी तक कोई प्रश्न नहीं हैं। टेम्पलेट का उपयोग करके या अपने प्रश्न जोड़कर शुरू करें।",
+      "submitPreview": "सबमिट करें",
+      "reorderToastSuccess": "प्रश्नों का क्रम सफलतापूर्वक बदला गया",
+      "reorderToastFailed": "प्रश्नों का क्रम बदलने में विफल",
+      "templateApplySuccess": "टेम्पलेट सफलतापूर्वक लागू किया गया!",
+      "templateApplyFailed": "टेम्पलेट लागू करने में विफल। कृपया पुनः प्रयास करें।",
+      "templateDialogTitle": "फ़ीचर्ड टेम्पलेट से बनाएँ",
+      "templateDialogDescription": "पहले से भरे प्रश्नों के साथ जल्दी शुरू करने के लिए एक टेम्पलेट चुनें।",
+      "templateQuestionsCount": "{count} प्रश्न",
+      "previewShortTextPlaceholder": "संक्षिप्त टेक्स्ट उत्तर",
+      "previewLongTextPlaceholder": "लंबा टेक्स्ट उत्तर",
+      "previewLikertStatementsHeader": "कथन",
+      "previewLikertHelp": "लिकर्ट स्केल मैट्रिक्स देखने के लिए कथन और विकल्प जोड़ें।",
+      "alertDeleteTitle": "क्या आप सुनिश्चित हैं?",
+      "alertDeleteDescription": "इस क्रिया को पूर्ववत नहीं किया जा सकता। यह प्रश्न स्थायी रूप से हटा दिया जाएगा।",
+      "alertDeleting": "हटाया जा रहा है...",
+      "questionMenuMore": "अधिक विकल्प",
+      "questionMenuEdit": "संपादित करें",
+      "questionMenuDuplicate": "डुप्लिकेट करें",
+      "questionMenuDelete": "हटाएँ",
+      "questionDuplicateSuccess": "प्रश्न सफलतापूर्वक डुप्लिकेट किया गया",
+      "questionDuplicateFailed": "प्रश्न डुप्लिकेट करने में विफल",
+      "questionDeleteSuccess": "प्रश्न सफलतापूर्वक हटाया गया",
+      "questionDeleteFailed": "प्रश्न हटाने में विफल",
+      "questionTypeShortText": "संक्षिप्त टेक्स्ट",
+      "questionTypeLongText": "लंबा टेक्स्ट",
+      "questionTypeMultipleChoice": "बहुविकल्पी",
+      "questionTypeCheckbox": "चेकबॉक्स",
+      "questionTypeRating": "रेटिंग",
+      "questionTypeDate": "तिथि",
+      "questionTypeLikert": "लिकर्ट स्केल",
+      "untitledQuestion": "शीर्षकहीन प्रश्न",
+      "requiredLabel": "अनिवार्य",
+      "optionsLabel": "विकल्प:",
+      "formTitleRequired": "शीर्षक आवश्यक है।",
+      "formOptionsRequiredForType": "इस प्रश्न प्रकार के लिए कम से कम एक विकल्प आवश्यक है।",
+      "formStatementsRequiredForLikert": "लिकर्ट स्केल प्रश्नों के लिए कम से कम एक कथन आवश्यक है।",
+      "formStatementsInlineRequired": "कम से कम एक कथन आवश्यक है।",
+      "formOptionsInlineRequired": "कम से कम एक विकल्प आवश्यक है।",
+      "formDialogTitleEdit": "प्रश्न संपादित करें",
+      "formDialogTitleCreate": "प्रश्न जोड़ें",
+      "formDialogDescriptionEdit": "प्रश्न विवरण अपडेट करें।",
+      "formDialogDescriptionCreate": "अपने सर्वेक्षण के लिए नया प्रश्न बनाएँ।",
+      "formTitleLabel": "शीर्षक",
+      "formTitlePlaceholder": "प्रश्न शीर्षक दर्ज करें",
+      "formDescriptionLabel": "विवरण",
+      "formDescriptionPlaceholder": "प्रश्न विवरण दर्ज करें (वैकल्पिक)",
+      "formTypeLabel": "प्रश्न प्रकार",
+      "formTypePlaceholder": "प्रश्न प्रकार चुनें",
+      "formTypeShortText": "संक्षिप्त टेक्स्ट",
+      "formTypeLongText": "लंबा टेक्स्ट",
+      "formTypeMultipleChoice": "बहुविकल्पी",
+      "formTypeCheckbox": "चेकबॉक्स",
+      "formTypeRating": "रेटिंग (1–5)",
+      "formTypeDate": "तिथि",
+      "formTypeLikert": "लिकर्ट स्केल",
+      "formStatementsLabel": "कथन (पंक्तियाँ)",
+      "formStatementsAdd": "कथन जोड़ें",
+      "formStatementsHelp": "लिकर्ट स्केल के लिए कथन जोड़ें (हर पंक्ति में एक)।",
+      "formOptionsLabel": "विकल्प",
+      "formOptionsAdd": "विकल्प जोड़ें",
+      "formOptionsHelpLikert": "लिकर्ट स्केल के लिए रेटिंग विकल्प जोड़ें (स्तम्भों में)।",
+      "formOptionsHelpMultipleChoice": "बहुविकल्पी प्रश्नों के लिए विकल्प जोड़ें।",
+      "formOptionsHelpCheckbox": "चेकबॉक्स प्रश्नों के लिए विकल्प जोड़ें।",
+      "formRequiredLabel": "अनिवार्य",
+      "formRequiredDescription": "इस प्रश्न को उत्तरदाताओं के लिए अनिवार्य बनाएं।",
+      "formSubmitUpdating": "अपडेट हो रहा है...",
+      "formSubmitCreating": "बनाया जा रहा है...",
+      "formSubmitUpdate": "प्रश्न अपडेट करें",
+      "formSubmitCreate": "प्रश्न जोड़ें",
+      "formToastUpdateSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "formToastCreateSuccess": "प्रश्न सफलतापूर्वक बनाया गया",
+      "formToastUpdateFailed": "प्रश्न अपडेट करने में विफल",
+      "formToastCreateFailed": "प्रश्न बनाने में विफल"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -851,8 +1072,68 @@
     "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
   },
   "courseBuilder": {
-    "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageTitle": "कोर्स बिल्डर",
+    "pageSubtitle": "अपने कोर्स को आसानी से बनाएँ, प्रबंधित करें और व्यवस्थित करें",
+    "filters": {
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "courseTypePlaceholder": "कोर्स प्रकार",
+      "courseTypes": {
+        "all": "सभी प्रकार",
+        "Qualification": "क्वालिफिकेशन",
+        "Standard": "स्टैंडर्ड",
+        "Gateway": "गेटवे"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "कोर्स नाम",
+        "code": "कोड",
+        "coreType": "कोर प्रकार",
+        "level": "स्तर",
+        "sector": "सेक्टर",
+        "learningHours": "लर्निंग आवर्स"
+      },
+      "actions": {
+        "view": "देखें"
+      }
+    },
+    "export": {
+      "pdfTitle": "कोर्सेस",
+      "pdfExported": "PDF सफलतापूर्वक एक्सपोर्ट हुआ"
+    },
+    "upload": {
+      "button": "फ़ाइल अपलोड करें"
+    },
+    "create": {
+      "button": "कोर्स बनाएँ",
+      "types": {
+        "Qualification": {
+          "label": "क्वालिफिकेशन",
+          "description": "यूनिट्स और क्राइटेरिया के साथ क्वालिफिकेशन कोर्स बनाएँ"
+        },
+        "Standard": {
+          "label": "स्टैंडर्ड",
+          "description": "मॉड्यूल और टॉपिक्स के साथ स्टैंडर्ड कोर्स बनाएँ"
+        },
+        "Gateway": {
+          "label": "गेटवे",
+          "description": "असेसमेंट के लिए गेटवे कोर्स बनाएँ"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "कोर्स फ़ाइल अपलोड करें",
+      "description": "कोर्स अपलोड फ़ंक्शनलिटी जोड़ी जाएगी।"
+    },
+    "deleteDialog": {
+      "title": "कोर्स हटाएँ?",
+      "description": "इस क्रिया को वापस नहीं लिया जा सकता। यह कोर्स \"{name}\" को स्थायी रूप से हटा देगा।"
+    },
+    "toast": {
+      "deleteSuccess": "कोर्स सफलतापूर्वक हटाया गया",
+      "forbiddenDelete": "आपको यह कोर्स हटाने की अनुमति नहीं है।",
+      "deleteFailed": "कोर्स हटाने में विफल"
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",

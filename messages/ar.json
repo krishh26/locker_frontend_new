@@ -34,7 +34,17 @@
     "confirm": "تأكيد",
     "yes": "نعم",
     "no": "لا",
-    "ok": "موافق"
+    "ok": "موافق",
+    "pagination": {
+      "rowsPerPage": "صفوف لكل صفحة",
+      "showingRange": "يتم عرض {from} إلى {to} من أصل {count} عنصر.",
+      "selectedRows": "تم تحديد {selected} من {total} صف.",
+      "morePages": "مزيد من الصفحات",
+      "ariaFirst": "الانتقال إلى الصفحة الأولى",
+      "ariaPrevious": "الانتقال إلى الصفحة السابقة",
+      "ariaNext": "الانتقال إلى الصفحة التالية",
+      "ariaLast": "الانتقال إلى الصفحة الأخيرة"
+    }
   },
   "navigation": {
     "home": "الرئيسية",
@@ -677,8 +687,219 @@
     "pageSubtitle": "Manage session type configurations"
   },
   "surveys": {
-    "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageTitle": "الاستبيانات",
+    "pageSubtitle": "إنشاء وإدارة الاستبيانات",
+    "table": {
+      "headers": {
+        "name": "الاسم",
+        "status": "الحالة",
+        "questions": "الأسئلة",
+        "responses": "الردود",
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث",
+        "actions": "إجراءات"
+      },
+      "searchPlaceholder": "البحث في الاستبيانات...",
+      "createButton": "إنشاء استبيان",
+      "loading": "جاري تحميل الاستبيانات...",
+      "error": "خطأ في تحميل الاستبيانات. يرجى المحاولة مرة أخرى.",
+      "noResults": "لا توجد نتائج.",
+      "actions": {
+        "viewSurvey": "عرض الاستبيان",
+        "editSurvey": "تعديل الاستبيان",
+        "more": "المزيد من الإجراءات",
+        "viewResponses": "عرض الردود",
+        "openPublicForm": "فتح النموذج العام",
+        "allocateSurvey": "تخصيص الاستبيان",
+        "exportCsv": "تصدير CSV",
+        "exportPdf": "تصدير PDF",
+        "deleteSurvey": "حذف الاستبيان"
+      }
+    },
+    "filters": {
+      "statusLabel": "الحالة",
+      "statusPlaceholder": "اختر الحالة",
+      "statusAll": "جميع الحالات"
+    },
+    "status": {
+      "Draft": "مسودة",
+      "Published": "منشور",
+      "Archived": "مؤرشف"
+    },
+    "deleteDialog": {
+      "title": "حذف الاستبيان؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الاستبيان وجميع أسئلته وردوده نهائياً.",
+      "deleting": "جاري الحذف..."
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الاستبيان بنجاح",
+      "deleteFailed": "فشل حذف الاستبيان",
+      "allocateSelectSurvey": "يرجى اختيار استبيان للتخصيص",
+      "allocateSuccess": "تم تخصيص الاستبيان بنجاح لـ {count} مستخدم(ين)",
+      "allocateFailed": "فشل تخصيص الاستبيان. يرجى المحاولة مرة أخرى."
+    },
+    "form": {
+      "titleEdit": "تعديل الاستبيان",
+      "titleCreate": "إنشاء استبيان",
+      "descriptionEdit": "قم بتحديث تفاصيل الاستبيان. انقر حفظ عند الانتهاء.",
+      "descriptionCreate": "إنشاء نموذج استبيان جديد. انقر حفظ عند الانتهاء.",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "أدخل اسم الاستبيان",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "أدخل وصف الاستبيان (اختياري)",
+      "expirationLabel": "تاريخ الانتهاء",
+      "pickDate": "اختر تاريخاً",
+      "statusLabel": "الحالة",
+      "statusPlaceholder": "اختر الحالة",
+      "statusDraft": "مسودة",
+      "statusPublished": "منشور",
+      "cancel": "إلغاء",
+      "update": "تحديث الاستبيان",
+      "create": "إنشاء الاستبيان",
+      "updating": "جاري التحديث...",
+      "creating": "جاري الإنشاء...",
+      "toastUpdateSuccess": "تم تحديث الاستبيان بنجاح",
+      "toastCreateSuccess": "تم إنشاء الاستبيان بنجاح",
+      "toastUpdateFailed": "فشل تحديث الاستبيان",
+      "toastCreateFailed": "فشل إنشاء الاستبيان",
+      "validation": {
+        "nameMin": "يجب أن يكون الاسم حرفين على الأقل.",
+        "expirationFuture": "يجب أن يكون تاريخ الانتهاء في المستقبل"
+      }
+    },
+    "allocate": {
+      "title": "تخصيص الاستبيان",
+      "description": "خصص \"{name}\" للمستخدمين باختيار الأدوار والمستخدمين أدناه.",
+      "selectRoles": "اختر الأدوار",
+      "selectUsers": "اختر المستخدمين",
+      "usersSelected": "تم اختيار {count} مستخدم(ين)",
+      "course": "الدورة",
+      "employer": "صاحب العمل",
+      "search": "بحث",
+      "allCourses": "جميع الدورات",
+      "allEmployers": "جميع أصحاب العمل",
+      "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني...",
+      "statusFilters": "فلاتر الحالة",
+      "pageOf": "صفحة {page} من {pages}",
+      "previous": "السابق",
+      "next": "التالي",
+      "cancel": "إلغاء",
+      "assign": "تخصيص ({count})",
+      "toastSelectOne": "يرجى اختيار مستخدم واحد على الأقل للتخصيص",
+      "toastSuccess": "تم تخصيص الاستبيان بنجاح لـ {count} مستخدم(ين)",
+      "toastFailed": "فشل تخصيص الاستبيان. يرجى المحاولة مرة أخرى.",
+      "roles": {
+        "Trainer": "مدرب",
+        "IQA": "IQA",
+        "Learner": "متعلم",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "في انتظار التعريف",
+        "Certificated": "معتمد",
+        "Completed": "مكتمل",
+        "Early Leaver": "مغادر مبكر",
+        "Exempt": "معفى",
+        "In Training": "قيد التدريب",
+        "IQA Approved": "معتمد من IQA",
+        "Training Suspended": "التدريب معلق",
+        "Transferred": "منقول",
+        "Show only archived users": "إظهار المستخدمين المؤرشفين فقط"
+      },
+      "tableLoading": "جاري التحميل...",
+      "noUsersFound": "لم يتم العثور على مستخدمين",
+      "tableName": "الاسم",
+      "tableEmail": "البريد الإلكتروني",
+      "selectAll": "تحديد الكل",
+      "selectUser": "تحديد {name}"
+    },
+    "builder": {
+      "loadingTitle": "جاري تحميل الاستبيان...",
+      "loadingSubtitle": "يرجى الانتظار أثناء تحميل الاستبيان.",
+      "notFoundTitle": "الاستبيان غير موجود",
+      "notFoundSubtitleError": "فشل تحميل الاستبيان. يرجى المحاولة مرة أخرى.",
+      "notFoundSubtitleMissing": "الاستبيان الذي تبحث عنه غير موجود.",
+      "headerFallbackDescription": "قم ببناء أسئلة الاستبيان الخاص بك.",
+      "questionsTitle": "الأسئلة",
+      "questionsCount": "{count} سؤال/أسئلة",
+      "templateUse": "استخدام قالب",
+      "templateApplying": "جارٍ التطبيق...",
+      "addQuestion": "إضافة سؤال",
+      "emptyDescription": "لا توجد أسئلة بعد. ابدأ باستخدام قالب أو بإضافة أسئلتك الخاصة.",
+      "submitPreview": "إرسال",
+      "reorderToastSuccess": "تم إعادة ترتيب الأسئلة بنجاح",
+      "reorderToastFailed": "فشل في إعادة ترتيب الأسئلة",
+      "templateApplySuccess": "تم تطبيق القالب بنجاح!",
+      "templateApplyFailed": "فشل في تطبيق القالب. يرجى المحاولة مرة أخرى.",
+      "templateDialogTitle": "إنشاء من القوالب المميزة",
+      "templateDialogDescription": "اختر قالباً للبدء بسرعة باستخدام أسئلة جاهزة.",
+      "templateQuestionsCount": "{count} سؤال/أسئلة",
+      "previewShortTextPlaceholder": "إجابة نصية قصيرة",
+      "previewLongTextPlaceholder": "إجابة نصية طويلة",
+      "previewLikertStatementsHeader": "العبارات",
+      "previewLikertHelp": "أضف عبارات وخيارات لعرض مصفوفة مقياس ليكرت.",
+      "alertDeleteTitle": "هل أنت متأكد؟",
+      "alertDeleteDescription": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف هذا السؤال نهائياً.",
+      "alertDeleting": "جارٍ الحذف...",
+      "questionMenuMore": "المزيد من الخيارات",
+      "questionMenuEdit": "تعديل",
+      "questionMenuDuplicate": "تكرار",
+      "questionMenuDelete": "حذف",
+      "questionDuplicateSuccess": "تم تكرار السؤال بنجاح",
+      "questionDuplicateFailed": "فشل تكرار السؤال",
+      "questionDeleteSuccess": "تم حذف السؤال بنجاح",
+      "questionDeleteFailed": "فشل حذف السؤال",
+      "questionTypeShortText": "نص قصير",
+      "questionTypeLongText": "نص طويل",
+      "questionTypeMultipleChoice": "اختيار من متعدد",
+      "questionTypeCheckbox": "خانات اختيار",
+      "questionTypeRating": "تقييم",
+      "questionTypeDate": "تاريخ",
+      "questionTypeLikert": "مقياس ليكرت",
+      "untitledQuestion": "سؤال بدون عنوان",
+      "requiredLabel": "إلزامي",
+      "optionsLabel": "الخيارات:",
+      "formTitleRequired": "العنوان مطلوب.",
+      "formOptionsRequiredForType": "يلزم خيار واحد على الأقل لهذا النوع من الأسئلة.",
+      "formStatementsRequiredForLikert": "يلزم عبارة واحدة على الأقل لأسئلة مقياس ليكرت.",
+      "formStatementsInlineRequired": "يلزم عبارة واحدة على الأقل.",
+      "formOptionsInlineRequired": "يلزم خيار واحد على الأقل.",
+      "formDialogTitleEdit": "تعديل السؤال",
+      "formDialogTitleCreate": "إضافة سؤال",
+      "formDialogDescriptionEdit": "قم بتحديث تفاصيل السؤال.",
+      "formDialogDescriptionCreate": "أنشئ سؤالاً جديداً لاستبيانك.",
+      "formTitleLabel": "العنوان",
+      "formTitlePlaceholder": "أدخل عنوان السؤال",
+      "formDescriptionLabel": "الوصف",
+      "formDescriptionPlaceholder": "أدخل وصف السؤال (اختياري)",
+      "formTypeLabel": "نوع السؤال",
+      "formTypePlaceholder": "اختر نوع السؤال",
+      "formTypeShortText": "نص قصير",
+      "formTypeLongText": "نص طويل",
+      "formTypeMultipleChoice": "اختيار من متعدد",
+      "formTypeCheckbox": "خانات اختيار",
+      "formTypeRating": "تقييم (1–5)",
+      "formTypeDate": "تاريخ",
+      "formTypeLikert": "مقياس ليكرت",
+      "formStatementsLabel": "العبارات (صفوف)",
+      "formStatementsAdd": "إضافة عبارة",
+      "formStatementsHelp": "أضف عبارات لمقياس ليكرت (واحدة في كل صف).",
+      "formOptionsLabel": "الخيارات",
+      "formOptionsAdd": "إضافة خيار",
+      "formOptionsHelpLikert": "أضف خيارات تقييم لمقياس ليكرت (أعمدة).",
+      "formOptionsHelpMultipleChoice": "أضف خيارات لأسئلة الاختيار من متعدد.",
+      "formOptionsHelpCheckbox": "أضف خيارات لأسئلة خانات الاختيار.",
+      "formRequiredLabel": "إلزامي",
+      "formRequiredDescription": "اجعل هذا السؤال إلزامياً للمجيبين.",
+      "formSubmitUpdating": "جارٍ التحديث...",
+      "formSubmitCreating": "جارٍ الإنشاء...",
+      "formSubmitUpdate": "تحديث السؤال",
+      "formSubmitCreate": "إضافة السؤال",
+      "formToastUpdateSuccess": "تم تحديث السؤال بنجاح",
+      "formToastCreateSuccess": "تم إنشاء السؤال بنجاح",
+      "formToastUpdateFailed": "فشل تحديث السؤال",
+      "formToastCreateFailed": "فشل إنشاء السؤال"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -852,8 +1073,68 @@
     "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
   },
   "courseBuilder": {
-    "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageTitle": "منشئ الدورات",
+    "pageSubtitle": "أنشئ وأدِر ونظّم دوراتك بسهولة",
+    "filters": {
+      "searchPlaceholder": "البحث حسب الكلمة الرئيسية...",
+      "courseTypePlaceholder": "نوع الدورة",
+      "courseTypes": {
+        "all": "جميع الأنواع",
+        "Qualification": "مؤهل",
+        "Standard": "قياسية",
+        "Gateway": "Gateway"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "اسم الدورة",
+        "code": "الرمز",
+        "coreType": "النوع الأساسي",
+        "level": "المستوى",
+        "sector": "القطاع",
+        "learningHours": "ساعات التعلم"
+      },
+      "actions": {
+        "view": "عرض"
+      }
+    },
+    "export": {
+      "pdfTitle": "الدورات",
+      "pdfExported": "تم تصدير ملف PDF بنجاح"
+    },
+    "upload": {
+      "button": "رفع ملف"
+    },
+    "create": {
+      "button": "إنشاء دورة",
+      "types": {
+        "Qualification": {
+          "label": "مؤهل",
+          "description": "إنشاء دورة مؤهل تحتوي على وحدات ومعايير"
+        },
+        "Standard": {
+          "label": "قياسية",
+          "description": "إنشاء دورة قياسية تحتوي على وحدات وموضوعات"
+        },
+        "Gateway": {
+          "label": "Gateway",
+          "description": "إنشاء دورة Gateway للتقييمات"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "رفع ملف دورة",
+      "description": "سيتم تنفيذ وظيفة رفع الدورات لاحقًا."
+    },
+    "deleteDialog": {
+      "title": "حذف الدورة؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيؤدي إلى حذف الدورة \"{name}\" نهائيًا."
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الدورة بنجاح",
+      "forbiddenDelete": "ليست لديك صلاحية لحذف هذه الدورة.",
+      "deleteFailed": "فشل حذف الدورة"
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",

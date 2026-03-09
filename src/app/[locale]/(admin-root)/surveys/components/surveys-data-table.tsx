@@ -77,12 +77,15 @@ import {
 import { toast } from "sonner"
 import { UserPlus } from "lucide-react"
 import { useAppSelector } from "@/store/hooks"
+import { useTranslations } from "next-intl"
 
 export function SurveysDataTable() {
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const userRole = user?.role
   const isEmployer = userRole === "Employer"
+  const t = useTranslations("surveys")
+  const tCommon = useTranslations("common")
   
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [surveyToDelete, setSurveyToDelete] = useState<string | null>(null)
@@ -143,13 +146,13 @@ export function SurveysDataTable() {
     if (surveyToDelete) {
       try {
         await deleteSurvey(surveyToDelete).unwrap()
-        toast.success("Survey deleted successfully")
+        toast.success(t("toast.deleteSuccess"))
         setDeleteDialogOpen(false)
         setSurveyToDelete(null)
       } catch (error: unknown) {
         // Handle RTK Query error format
         // Error structure: { status: 403, data: { message: "...", status: false } }
-        let errorMessage = "Failed to delete survey"
+        let errorMessage = t("toast.deleteFailed")
         
         if (error && typeof error === 'object' && 'data' in error) {
           const errorData = error.data
@@ -161,7 +164,7 @@ export function SurveysDataTable() {
         toast.error(errorMessage)
       }
     }
-  }, [surveyToDelete, deleteSurvey])
+  }, [surveyToDelete, deleteSurvey, t])
 
   const handleEdit = useCallback((survey: Survey) => {
     setEditingSurvey(survey)
@@ -186,7 +189,7 @@ export function SurveysDataTable() {
       }>
     ) => {
       if (!surveyToAllocate) {
-        toast.error("Please select a survey to allocate")
+        toast.error(t("toast.allocateSelectSurvey"))
         return
       }
 
@@ -213,11 +216,7 @@ export function SurveysDataTable() {
         }).unwrap()
 
         const allocatedCount = response.data?.allocated_count ?? allocations.length
-        toast.success(
-          `Successfully allocated survey to ${allocatedCount} user${
-            allocatedCount === 1 ? "" : "s"
-          }`
-        )
+        toast.success(t("toast.allocateSuccess", { count: allocatedCount }))
         setAllocateDialogOpen(false)
       } catch (error: unknown) {
         const typedError = error as {
@@ -229,25 +228,25 @@ export function SurveysDataTable() {
 
         // Handle array of field errors (e.g. Zod validation errors)
         if (Array.isArray(typedError.data?.message) && typedError.data.message.length > 0) {
-          message = typedError.data.message[0]?.message ?? "Failed to allocate survey. Please try again."
+          message = typedError.data.message[0]?.message ?? t("toast.allocateFailed")
         } else {
           message =
             typedError.data?.error?.message ||
             (typeof typedError.data?.message === "string" ? typedError.data.message : undefined) ||
             typedError.message ||
-            "Failed to allocate survey. Please try again."
+            t("toast.allocateFailed")
         }
 
         toast.error(message)
       }
     },
-    [allocateSurvey, surveyToAllocate]
+    [allocateSurvey, surveyToAllocate, t]
   )
 
   const columns: ColumnDef<Survey>[] = useMemo(() => [
     {
       accessorKey: "name",
-      header: "Name",
+      header: t("table.headers.name"),
       cell: ({ row }) => {
         const survey = row.original
         return (
@@ -264,7 +263,7 @@ export function SurveysDataTable() {
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: t("table.headers.status"),
       cell: ({ row }) => {
         const status = row.getValue("status") as string
         return (
@@ -277,7 +276,7 @@ export function SurveysDataTable() {
     },
     {
       accessorKey: "totalQuestions",
-      header: "Questions",
+      header: t("table.headers.questions"),
       cell: ({ row }) => {
         const count = (row.getValue("totalQuestions") as number | undefined) ?? 0
         return <span className="font-medium">{count}</span>
@@ -285,7 +284,7 @@ export function SurveysDataTable() {
     },
     {
       accessorKey: "totalResponses",
-      header: "Responses",
+      header: t("table.headers.responses"),
       cell: ({ row }) => {
         const count = (row.getValue("totalResponses") as number | undefined) ?? 0
         return <span className="font-medium">{count}</span>
@@ -293,7 +292,7 @@ export function SurveysDataTable() {
     },
     {
       accessorKey: "createdAt",
-      header: "Created",
+      header: t("table.headers.created"),
       cell: ({ row }) => {
         const date = row.getValue("createdAt") as string
         return (
@@ -305,7 +304,7 @@ export function SurveysDataTable() {
     },
     {
       accessorKey: "updatedAt",
-      header: "Updated",
+      header: t("table.headers.updated"),
       cell: ({ row }) => {
         const date = row.getValue("updatedAt") as string
         return (
@@ -317,45 +316,45 @@ export function SurveysDataTable() {
     },
     {
       id: "actions",
-      header: "Actions",
+      header: t("table.headers.actions"),
       cell: ({ row }) => {
         const survey = row.original
         return (
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 cursor-pointer"
-              onClick={() => handleView(survey.id)}
-            >
-              <Eye className="size-4" />
-              <span className="sr-only">View survey</span>
-            </Button>
-            {!isEmployer && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 cursor-pointer"
-                onClick={() => handleEdit(survey)}
-              >
-                <Pencil className="size-4" />
-                <span className="sr-only">Edit survey</span>
-              </Button>
-            )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8 cursor-pointer">
-                  <MoreVertical className="size-4" />
-                  <span className="sr-only">More actions</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 cursor-pointer"
+                  onClick={() => handleView(survey.id)}
+                >
+                  <Eye className="size-4" />
+                  <span className="sr-only">{t("table.actions.viewSurvey")}</span>
                 </Button>
-              </DropdownMenuTrigger>
+              {!isEmployer && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 cursor-pointer"
+                  onClick={() => handleEdit(survey)}
+                >
+                  <Pencil className="size-4" />
+                  <span className="sr-only">{t("table.actions.editSurvey")}</span>
+                </Button>
+              )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 cursor-pointer">
+                    <MoreVertical className="size-4" />
+                    <span className="sr-only">{t("table.actions.more")}</span>
+                  </Button>
+                </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   className="cursor-pointer"
                   onClick={() => router.push(`/surveys/${survey.id}/responses`)}
                 >
                   <FileText className="mr-2 size-4" />
-                  View Responses
+                  {t("table.actions.viewResponses")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="cursor-pointer"
@@ -365,7 +364,7 @@ export function SurveysDataTable() {
                   }}
                 >
                   <ExternalLink className="mr-2 size-4" />
-                  Open Public Form
+                  {t("table.actions.openPublicForm")}
                 </DropdownMenuItem>
                 {!isEmployer && (
                   <>
@@ -378,18 +377,18 @@ export function SurveysDataTable() {
                       }}
                     >
                       <UserPlus className="mr-2 size-4" />
-                      Allocate Survey
+                      {t("table.actions.allocateSurvey")}
                     </DropdownMenuItem>
                   </>
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
                   <FileDown className="mr-2 size-4" />
-                  Export CSV
+                  {t("table.actions.exportCsv")}
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
                   <FileDown className="mr-2 size-4" />
-                  Export PDF
+                  {t("table.actions.exportPdf")}
                 </DropdownMenuItem>
                 {!isEmployer && (
                   <>
@@ -400,7 +399,7 @@ export function SurveysDataTable() {
                       onClick={() => handleDelete(survey.id)}
                     >
                       <Trash2 className="mr-2 size-4" />
-                      Delete Survey
+                      {t("table.actions.deleteSurvey")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -410,7 +409,7 @@ export function SurveysDataTable() {
         )
       },
     },
-  ], [getStatusColor, handleView, handleEdit, handleDelete, exactFilter, router, isEmployer])
+  ], [getStatusColor, handleView, handleEdit, handleDelete, exactFilter, router, isEmployer, t])
 
   const table = useReactTable({
     data: surveys,
@@ -442,7 +441,7 @@ export function SurveysDataTable() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search surveys..."
+                placeholder={t("table.searchPlaceholder")}
                 value={globalFilter ?? ""}
                 onChange={(event) => {
                   setGlobalFilter(String(event.target.value))
@@ -479,7 +478,7 @@ export function SurveysDataTable() {
             />
             {!isEmployer && (
               <Button className="cursor-pointer" onClick={handleAdd}>
-                Create Survey
+                {t("table.createButton")}
               </Button>
             )}
           </div>
@@ -488,7 +487,7 @@ export function SurveysDataTable() {
         <div className="grid gap-2 sm:grid-cols-2 sm:gap-4 rounded-lg border p-4 border-border">
           <div className="space-y-2">
             <Label htmlFor="status-filter" className="text-sm font-medium">
-              Status
+              {t("filters.statusLabel")}
             </Label>
             <Select
               value={statusFilter || ""}
@@ -500,13 +499,13 @@ export function SurveysDataTable() {
               }}
             >
               <SelectTrigger className="cursor-pointer w-full" id="status-filter">
-                <SelectValue placeholder="Select Status" />
+                <SelectValue placeholder={t("filters.statusPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="Draft">Draft</SelectItem>
-                <SelectItem value="Published">Published</SelectItem>
-                <SelectItem value="Archived">Archived</SelectItem>
+                <SelectItem value="all">{t("filters.statusAll")}</SelectItem>
+                <SelectItem value="Draft">{t("status.Draft")}</SelectItem>
+                <SelectItem value="Published">{t("status.Published")}</SelectItem>
+                <SelectItem value="Archived">{t("status.Archived")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -570,7 +569,7 @@ export function SurveysDataTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Loading surveys...
+                    {t("table.loading")}
                   </TableCell>
                 </TableRow>
               ) : error ? (
@@ -579,7 +578,7 @@ export function SurveysDataTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    Error loading surveys. Please try again.
+                    {t("table.error")}
                   </TableCell>
                 </TableRow>
               ) : table.getRowModel().rows?.length ? (
@@ -604,7 +603,7 @@ export function SurveysDataTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {t("table.noResults")}
                   </TableCell>
                 </TableRow>
               )}
@@ -627,20 +626,19 @@ export function SurveysDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the survey
-              and all its questions and responses.
+              {t("deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("deleteDialog.deleting") : tCommon("delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

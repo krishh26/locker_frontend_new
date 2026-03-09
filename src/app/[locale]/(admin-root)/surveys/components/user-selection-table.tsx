@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Table,
@@ -26,7 +27,7 @@ export function UserSelectionTable({
   onSelectionChange,
   isLoading = false,
 }: UserSelectionTableProps) {
-
+  const t = useTranslations("surveys")
   const getItemId = (item: User | LearnerListItem): number => {
     // Check if item has user_id (User type always has it)
     if ("user_id" in item) {
@@ -91,7 +92,7 @@ export function UserSelectionTable({
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-sm text-muted-foreground">Loading...</div>
+        <div className="text-sm text-muted-foreground">{t("allocate.tableLoading")}</div>
       </div>
     )
   }
@@ -99,7 +100,7 @@ export function UserSelectionTable({
   if (data.length === 0) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-sm text-muted-foreground">No users found</div>
+        <div className="text-sm text-muted-foreground">{t("allocate.noUsersFound")}</div>
       </div>
     )
   }
@@ -113,12 +114,12 @@ export function UserSelectionTable({
               <Checkbox
                 checked={allSelected}
                 onCheckedChange={handleSelectAll}
-                aria-label="Select all"
+                aria-label={t("allocate.selectAll")}
                 className={someSelected && !allSelected ? "data-[state=checked]:bg-primary/50" : ""}
               />
             </TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
+            <TableHead>{t("allocate.tableName")}</TableHead>
+            <TableHead>{t("allocate.tableEmail")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -131,7 +132,7 @@ export function UserSelectionTable({
                   <Checkbox
                     checked={isSelected}
                     onCheckedChange={(checked) => handleSelectItem(id, checked === true)}
-                    aria-label={`Select ${getItemName(item)}`}
+                    aria-label={t("allocate.selectUser", { name: getItemName(item) })}
                   />
                 </TableCell>
                 <TableCell className="font-medium">{getItemName(item)}</TableCell>

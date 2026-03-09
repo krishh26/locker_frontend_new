@@ -34,7 +34,17 @@
     "confirm": "Confirmer",
     "yes": "Oui",
     "no": "Non",
-    "ok": "OK"
+    "ok": "OK",
+    "pagination": {
+      "rowsPerPage": "Lignes par page",
+      "showingRange": "Affichage de {from} à {to} sur {count} élément(s).",
+      "selectedRows": "{selected} ligne(s) sélectionnée(s) sur {total}.",
+      "morePages": "Plus de pages",
+      "ariaFirst": "Aller à la première page",
+      "ariaPrevious": "Aller à la page précédente",
+      "ariaNext": "Aller à la page suivante",
+      "ariaLast": "Aller à la dernière page"
+    }
   },
   "navigation": {
     "home": "Accueil",
@@ -676,8 +686,219 @@
     "pageSubtitle": "Manage session type configurations"
   },
   "surveys": {
-    "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageTitle": "Sondages",
+    "pageSubtitle": "Créer et gérer les sondages",
+    "table": {
+      "headers": {
+        "name": "Nom",
+        "status": "Statut",
+        "questions": "Questions",
+        "responses": "Réponses",
+        "created": "Créé",
+        "updated": "Mis à jour",
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Rechercher des sondages...",
+      "createButton": "Créer un sondage",
+      "loading": "Chargement des sondages...",
+      "error": "Erreur lors du chargement des sondages. Veuillez réessayer.",
+      "noResults": "Aucun résultat.",
+      "actions": {
+        "viewSurvey": "Voir le sondage",
+        "editSurvey": "Modifier le sondage",
+        "more": "Plus d'actions",
+        "viewResponses": "Voir les réponses",
+        "openPublicForm": "Ouvrir le formulaire public",
+        "allocateSurvey": "Attribuer le sondage",
+        "exportCsv": "Exporter CSV",
+        "exportPdf": "Exporter PDF",
+        "deleteSurvey": "Supprimer le sondage"
+      }
+    },
+    "filters": {
+      "statusLabel": "Statut",
+      "statusPlaceholder": "Sélectionner le statut",
+      "statusAll": "Tous les statuts"
+    },
+    "status": {
+      "Draft": "Brouillon",
+      "Published": "Publié",
+      "Archived": "Archivé"
+    },
+    "deleteDialog": {
+      "title": "Supprimer le sondage ?",
+      "description": "Cette action est irréversible. Le sondage et toutes ses questions et réponses seront définitivement supprimés.",
+      "deleting": "Suppression..."
+    },
+    "toast": {
+      "deleteSuccess": "Sondage supprimé avec succès",
+      "deleteFailed": "Échec de la suppression du sondage",
+      "allocateSelectSurvey": "Veuillez sélectionner un sondage à attribuer",
+      "allocateSuccess": "Sondage attribué avec succès à {count} utilisateur(s)",
+      "allocateFailed": "Échec de l'attribution du sondage. Veuillez réessayer."
+    },
+    "form": {
+      "titleEdit": "Modifier le sondage",
+      "titleCreate": "Créer un sondage",
+      "descriptionEdit": "Mettez à jour les détails du sondage. Cliquez sur Enregistrer lorsque vous avez terminé.",
+      "descriptionCreate": "Créez un nouveau formulaire de sondage. Cliquez sur Enregistrer lorsque vous avez terminé.",
+      "nameLabel": "Nom",
+      "namePlaceholder": "Saisir le nom du sondage",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Saisir la description du sondage (facultatif)",
+      "expirationLabel": "Date d'expiration",
+      "pickDate": "Choisir une date",
+      "statusLabel": "Statut",
+      "statusPlaceholder": "Sélectionner le statut",
+      "statusDraft": "Brouillon",
+      "statusPublished": "Publié",
+      "cancel": "Annuler",
+      "update": "Mettre à jour le sondage",
+      "create": "Créer le sondage",
+      "updating": "Mise à jour...",
+      "creating": "Création...",
+      "toastUpdateSuccess": "Sondage mis à jour avec succès",
+      "toastCreateSuccess": "Sondage créé avec succès",
+      "toastUpdateFailed": "Échec de la mise à jour du sondage",
+      "toastCreateFailed": "Échec de la création du sondage",
+      "validation": {
+        "nameMin": "Le nom doit contenir au moins 2 caractères.",
+        "expirationFuture": "La date d'expiration doit être dans le futur"
+      }
+    },
+    "allocate": {
+      "title": "Attribuer le sondage",
+      "description": "Attribuez « {name} » aux utilisateurs en sélectionnant les rôles et les utilisateurs ci-dessous.",
+      "selectRoles": "Sélectionner les rôles",
+      "selectUsers": "Sélectionner les utilisateurs",
+      "usersSelected": "{count} utilisateur(s) sélectionné(s)",
+      "course": "Formation",
+      "employer": "Employeur",
+      "search": "Rechercher",
+      "allCourses": "Toutes les formations",
+      "allEmployers": "Tous les employeurs",
+      "searchPlaceholder": "Rechercher par nom ou e-mail...",
+      "statusFilters": "Filtres de statut",
+      "pageOf": "Page {page} sur {pages}",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "cancel": "Annuler",
+      "assign": "Attribuer ({count})",
+      "toastSelectOne": "Veuillez sélectionner au moins un utilisateur à attribuer",
+      "toastSuccess": "Sondage attribué avec succès à {count} utilisateur(s)",
+      "toastFailed": "Échec de l'attribution du sondage. Veuillez réessayer.",
+      "roles": {
+        "Trainer": "Formateur",
+        "IQA": "IQA",
+        "Learner": "Apprenant",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "En attente d'induction",
+        "Certificated": "Certifié",
+        "Completed": "Terminé",
+        "Early Leaver": "Départ anticipé",
+        "Exempt": "Dispensé",
+        "In Training": "En formation",
+        "IQA Approved": "Approuvé IQA",
+        "Training Suspended": "Formation suspendue",
+        "Transferred": "Transféré",
+        "Show only archived users": "Afficher uniquement les utilisateurs archivés"
+      },
+      "tableLoading": "Chargement...",
+      "noUsersFound": "Aucun utilisateur trouvé",
+      "tableName": "Nom",
+      "tableEmail": "E-mail",
+      "selectAll": "Tout sélectionner",
+      "selectUser": "Sélectionner {name}"
+    },
+    "builder": {
+      "loadingTitle": "Chargement du sondage…",
+      "loadingSubtitle": "Veuillez patienter pendant le chargement du sondage.",
+      "notFoundTitle": "Sondage introuvable",
+      "notFoundSubtitleError": "Échec du chargement du sondage. Veuillez réessayer.",
+      "notFoundSubtitleMissing": "Le sondage que vous recherchez n'existe pas.",
+      "headerFallbackDescription": "Créez les questions de votre sondage.",
+      "questionsTitle": "Questions",
+      "questionsCount": "{count} question(s)",
+      "templateUse": "Utiliser un modèle",
+      "templateApplying": "Application…",
+      "addQuestion": "Ajouter une question",
+      "emptyDescription": "Aucune question pour le moment. Commencez en utilisant un modèle ou en ajoutant vos propres questions.",
+      "submitPreview": "Envoyer",
+      "reorderToastSuccess": "Questions réordonnées avec succès",
+      "reorderToastFailed": "Échec du réordonnancement des questions",
+      "templateApplySuccess": "Modèle appliqué avec succès !",
+      "templateApplyFailed": "Échec de l'application du modèle. Veuillez réessayer.",
+      "templateDialogTitle": "Créer à partir de modèles en vedette",
+      "templateDialogDescription": "Choisissez un modèle pour démarrer rapidement avec des questions préremplies.",
+      "templateQuestionsCount": "{count} questions",
+      "previewShortTextPlaceholder": "Réponse texte court",
+      "previewLongTextPlaceholder": "Réponse texte long",
+      "previewLikertStatementsHeader": "Énoncés",
+      "previewLikertHelp": "Ajoutez des énoncés et des options pour voir la matrice de l'échelle de Likert.",
+      "alertDeleteTitle": "Êtes-vous sûr ?",
+      "alertDeleteDescription": "Cette action est irréversible. Cette question sera définitivement supprimée.",
+      "alertDeleting": "Suppression…",
+      "questionMenuMore": "Plus d'options",
+      "questionMenuEdit": "Modifier",
+      "questionMenuDuplicate": "Dupliquer",
+      "questionMenuDelete": "Supprimer",
+      "questionDuplicateSuccess": "Question dupliquée avec succès",
+      "questionDuplicateFailed": "Échec de la duplication de la question",
+      "questionDeleteSuccess": "Question supprimée avec succès",
+      "questionDeleteFailed": "Échec de la suppression de la question",
+      "questionTypeShortText": "Texte court",
+      "questionTypeLongText": "Texte long",
+      "questionTypeMultipleChoice": "Choix multiple",
+      "questionTypeCheckbox": "Cases à cocher",
+      "questionTypeRating": "Évaluation",
+      "questionTypeDate": "Date",
+      "questionTypeLikert": "Échelle de Likert",
+      "untitledQuestion": "Question sans titre",
+      "requiredLabel": "Obligatoire",
+      "optionsLabel": "Options :",
+      "formTitleRequired": "Le titre est obligatoire.",
+      "formOptionsRequiredForType": "Au moins une option est requise pour ce type de question.",
+      "formStatementsRequiredForLikert": "Au moins un énoncé est requis pour les questions à échelle de Likert.",
+      "formStatementsInlineRequired": "Au moins un énoncé est requis.",
+      "formOptionsInlineRequired": "Au moins une option est requise.",
+      "formDialogTitleEdit": "Modifier la question",
+      "formDialogTitleCreate": "Ajouter une question",
+      "formDialogDescriptionEdit": "Mettez à jour les détails de la question.",
+      "formDialogDescriptionCreate": "Créez une nouvelle question pour votre sondage.",
+      "formTitleLabel": "Titre",
+      "formTitlePlaceholder": "Saisir le titre de la question",
+      "formDescriptionLabel": "Description",
+      "formDescriptionPlaceholder": "Saisir la description de la question (facultatif)",
+      "formTypeLabel": "Type de question",
+      "formTypePlaceholder": "Sélectionner le type de question",
+      "formTypeShortText": "Texte court",
+      "formTypeLongText": "Texte long",
+      "formTypeMultipleChoice": "Choix multiple",
+      "formTypeCheckbox": "Cases à cocher",
+      "formTypeRating": "Évaluation (1–5)",
+      "formTypeDate": "Date",
+      "formTypeLikert": "Échelle de Likert",
+      "formStatementsLabel": "Énoncés (lignes)",
+      "formStatementsAdd": "Ajouter un énoncé",
+      "formStatementsHelp": "Ajoutez des énoncés pour l'échelle de Likert (un par ligne).",
+      "formOptionsLabel": "Options",
+      "formOptionsAdd": "Ajouter une option",
+      "formOptionsHelpLikert": "Ajoutez des options d'échelle pour l'échelle de Likert (colonnes).",
+      "formOptionsHelpMultipleChoice": "Ajoutez des options pour les questions à choix multiple.",
+      "formOptionsHelpCheckbox": "Ajoutez des options pour les questions à cases à cocher.",
+      "formRequiredLabel": "Obligatoire",
+      "formRequiredDescription": "Rendre cette question obligatoire pour les répondants.",
+      "formSubmitUpdating": "Mise à jour…",
+      "formSubmitCreating": "Création…",
+      "formSubmitUpdate": "Mettre à jour la question",
+      "formSubmitCreate": "Ajouter la question",
+      "formToastUpdateSuccess": "Question mise à jour avec succès",
+      "formToastCreateSuccess": "Question créée avec succès",
+      "formToastUpdateFailed": "Échec de la mise à jour de la question",
+      "formToastCreateFailed": "Échec de la création de la question"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -851,8 +1072,68 @@
     "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
   },
   "courseBuilder": {
-    "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageTitle": "Générateur de cours",
+    "pageSubtitle": "Créez, gérez et organisez vos cours facilement",
+    "filters": {
+      "searchPlaceholder": "Rechercher par mot-clé...",
+      "courseTypePlaceholder": "Type de cours",
+      "courseTypes": {
+        "all": "Tous les types",
+        "Qualification": "Qualification",
+        "Standard": "Standard",
+        "Gateway": "Gateway"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "Nom du cours",
+        "code": "Code",
+        "coreType": "Type principal",
+        "level": "Niveau",
+        "sector": "Secteur",
+        "learningHours": "Heures d'apprentissage"
+      },
+      "actions": {
+        "view": "Voir"
+      }
+    },
+    "export": {
+      "pdfTitle": "Cours",
+      "pdfExported": "PDF exporté avec succès"
+    },
+    "upload": {
+      "button": "Téléverser un fichier"
+    },
+    "create": {
+      "button": "Créer un cours",
+      "types": {
+        "Qualification": {
+          "label": "Qualification",
+          "description": "Créer un cours de qualification avec unités et critères"
+        },
+        "Standard": {
+          "label": "Standard",
+          "description": "Créer un cours standard avec modules et sujets"
+        },
+        "Gateway": {
+          "label": "Gateway",
+          "description": "Créer un cours Gateway pour les évaluations"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "Téléverser un fichier de cours",
+      "description": "La fonctionnalité de téléversement de cours sera implémentée."
+    },
+    "deleteDialog": {
+      "title": "Supprimer le cours ?",
+      "description": "Cette action est irréversible. Elle supprimera définitivement le cours « {name} »."
+    },
+    "toast": {
+      "deleteSuccess": "Cours supprimé avec succès",
+      "forbiddenDelete": "Vous n'avez pas accès pour supprimer ce cours.",
+      "deleteFailed": "Échec de la suppression du cours"
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",

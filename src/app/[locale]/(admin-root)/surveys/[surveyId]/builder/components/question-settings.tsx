@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -40,62 +41,64 @@ import {
 } from "@/store/api/survey/surveyApi"
 import { toast } from "sonner"
 
-const questionFormSchema = z
-  .object({
-    title: z.string().min(1, {
-      message: "Title is required.",
-    }),
-    description: z.string().optional(),
-    type: z.enum([
-      "short-text",
-      "long-text",
-      "multiple-choice",
-      "checkbox",
-      "rating",
-      "date",
-      "likert",
-    ]),
-    required: z.boolean(),
-    options: z.array(z.object({ value: z.string().min(1) })).optional(),
-    statements: z.array(z.object({ value: z.string().min(1) })).optional(),
-  })
-  .refine(
-    (data) => {
-      if (
-        (data.type === "multiple-choice" || data.type === "checkbox") &&
-        (!data.options || data.options.length === 0)
-      ) {
-        return false
-      }
-      if (data.type === "likert") {
-        if (!data.options || data.options.length === 0) {
+function getQuestionFormSchema(t: (key: string) => string) {
+  return z
+    .object({
+      title: z.string().min(1, {
+        message: t("builder.formTitleRequired"),
+      }),
+      description: z.string().optional(),
+      type: z.enum([
+        "short-text",
+        "long-text",
+        "multiple-choice",
+        "checkbox",
+        "rating",
+        "date",
+        "likert",
+      ]),
+      required: z.boolean(),
+      options: z.array(z.object({ value: z.string().min(1) })).optional(),
+      statements: z.array(z.object({ value: z.string().min(1) })).optional(),
+    })
+    .refine(
+      (data) => {
+        if (
+          (data.type === "multiple-choice" || data.type === "checkbox") &&
+          (!data.options || data.options.length === 0)
+        ) {
           return false
         }
-        if (!data.statements || data.statements.length === 0) {
+        if (data.type === "likert") {
+          if (!data.options || data.options.length === 0) {
+            return false
+          }
+          if (!data.statements || data.statements.length === 0) {
+            return false
+          }
+        }
+        return true
+      },
+      {
+        message: t("builder.formOptionsRequiredForType"),
+        path: ["options"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.type === "likert" && (!data.statements || data.statements.length === 0)) {
           return false
         }
+        return true
+      },
+      {
+        message: t("builder.formStatementsRequiredForLikert"),
+        path: ["statements"],
       }
-      return true
-    },
-    {
-      message: "At least one option is required for this question type.",
-      path: ["options"],
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.type === "likert" && (!data.statements || data.statements.length === 0)) {
-        return false
-      }
-      return true
-    },
-    {
-      message: "At least one statement is required for Likert scale questions.",
-      path: ["statements"],
-    }
-  )
+    )
+}
 
-type QuestionFormValues = z.infer<typeof questionFormSchema>
+type QuestionFormValues = z.infer<ReturnType<typeof getQuestionFormSchema>>
 
 interface QuestionSettingsProps {
   open: boolean
@@ -110,6 +113,8 @@ export function QuestionSettings({
   surveyId,
   question,
 }: QuestionSettingsProps) {
+  const t = useTranslations("surveys")
+  const questionFormSchema = useMemo(() => getQuestionFormSchema(t), [t])
   const [createQuestion, { isLoading: isCreating }] = useCreateQuestionMutation()
   const [updateQuestion, { isLoading: isUpdating }] = useUpdateQuestionMutation()
 
@@ -199,18 +204,20 @@ export function QuestionSettings({
           questionId: question.id,
           updates: questionData,
         }).unwrap()
-        toast.success("Question updated successfully")
+        toast.success(t("builder.formToastUpdateSuccess"))
       } else {
         await createQuestion({
           surveyId,
           question: questionData,
         }).unwrap()
-        toast.success("Question created successfully")
+        toast.success(t("builder.formToastCreateSuccess"))
       }
       form.reset()
       onOpenChange(false)
     } catch (error: unknown) {
-      let errorMessage = question ? "Failed to update question" : "Failed to create question"
+      let errorMessage = question
+        ? t("builder.formToastUpdateFailed")
+        : t("builder.formToastCreateFailed")
       if (error && typeof error === 'object' && 'data' in error) {
         const errorData = error.data
         if (errorData && typeof errorData === 'object' && 'message' in errorData) {
@@ -226,12 +233,12 @@ export function QuestionSettings({
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {question ? "Edit Question" : "Add Question"}
+            {question ? t("builder.formDialogTitleEdit") : t("builder.formDialogTitleCreate")}
           </DialogTitle>
           <DialogDescription>
             {question
-              ? "Update the question details."
-              : "Create a new question for your survey."}
+              ? t("builder.formDialogDescriptionEdit")
+              : t("builder.formDialogDescriptionCreate")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -241,9 +248,12 @@ export function QuestionSettings({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>{t("builder.formTitleLabel")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter question title" {...field} />
+                    <Input
+                      placeholder={t("builder.formTitlePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -255,10 +265,10 @@ export function QuestionSettings({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("builder.formDescriptionLabel")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter question description (optional)"
+                      placeholder={t("builder.formDescriptionPlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -272,26 +282,38 @@ export function QuestionSettings({
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Question Type</FormLabel>
+                  <FormLabel>{t("builder.formTypeLabel")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger className="cursor-pointer w-full">
-                        <SelectValue placeholder="Select question type" />
+                        <SelectValue placeholder={t("builder.formTypePlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="short-text">Short Text</SelectItem>
-                      <SelectItem value="long-text">Long Text</SelectItem>
-                      <SelectItem value="multiple-choice">
-                        Multiple Choice
+                      <SelectItem value="short-text">
+                        {t("builder.formTypeShortText")}
                       </SelectItem>
-                      <SelectItem value="checkbox">Checkbox</SelectItem>
-                      <SelectItem value="rating">Rating (1-5)</SelectItem>
-                      <SelectItem value="date">Date</SelectItem>
-                      <SelectItem value="likert">Likert Scale</SelectItem>
+                      <SelectItem value="long-text">
+                        {t("builder.formTypeLongText")}
+                      </SelectItem>
+                      <SelectItem value="multiple-choice">
+                        {t("builder.formTypeMultipleChoice")}
+                      </SelectItem>
+                      <SelectItem value="checkbox">
+                        {t("builder.formTypeCheckbox")}
+                      </SelectItem>
+                      <SelectItem value="rating">
+                        {t("builder.formTypeRating")}
+                      </SelectItem>
+                      <SelectItem value="date">
+                        {t("builder.formTypeDate")}
+                      </SelectItem>
+                      <SelectItem value="likert">
+                        {t("builder.formTypeLikert")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -306,7 +328,7 @@ export function QuestionSettings({
                 render={() => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel>Statements (Rows)</FormLabel>
+                      <FormLabel>{t("builder.formStatementsLabel")}</FormLabel>
                       <Button
                         type="button"
                         variant="outline"
@@ -315,11 +337,11 @@ export function QuestionSettings({
                         className="cursor-pointer"
                       >
                         <Plus className="mr-2 h-4 w-4" />
-                        Add Statement
+                        {t("builder.formStatementsAdd")}
                       </Button>
                     </div>
                     <FormDescription>
-                      Add statements for the Likert scale (one per row).
+                      {t("builder.formStatementsHelp")}
                     </FormDescription>
                     <div className="space-y-2">
                       {statementFields.map((field, index) => (
@@ -353,7 +375,7 @@ export function QuestionSettings({
                     </div>
                     {statementFields.length === 0 && (
                       <p className="text-sm text-destructive">
-                        At least one statement is required.
+                        {t("builder.formStatementsInlineRequired")}
                       </p>
                     )}
                     <FormMessage />
@@ -369,7 +391,7 @@ export function QuestionSettings({
                 render={() => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel>Options</FormLabel>
+                      <FormLabel>{t("builder.formOptionsLabel")}</FormLabel>
                       <Button
                         type="button"
                         variant="outline"
@@ -378,15 +400,15 @@ export function QuestionSettings({
                         className="cursor-pointer"
                       >
                         <Plus className="mr-2 h-4 w-4" />
-                        Add Option
+                        {t("builder.formOptionsAdd")}
                       </Button>
                     </div>
                     <FormDescription>
                       {questionType === "likert"
-                        ? "Add rating scale options for the Likert scale (columns)."
+                        ? t("builder.formOptionsHelpLikert")
                         : questionType === "multiple-choice"
-                        ? "Add options for multiple choice questions."
-                        : "Add options for checkbox questions."}
+                        ? t("builder.formOptionsHelpMultipleChoice")
+                        : t("builder.formOptionsHelpCheckbox")}
                     </FormDescription>
                     <div className="space-y-2">
                       {optionFields.map((field, index) => (
@@ -420,7 +442,7 @@ export function QuestionSettings({
                     </div>
                     {optionFields.length === 0 && (
                       <p className="text-sm text-destructive">
-                        At least one option is required.
+                        {t("builder.formOptionsInlineRequired")}
                       </p>
                     )}
                     <FormMessage />
@@ -435,9 +457,11 @@ export function QuestionSettings({
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">Required</FormLabel>
+                    <FormLabel className="text-base">
+                      {t("builder.formRequiredLabel")}
+                    </FormLabel>
                     <FormDescription>
-                      Make this question mandatory for respondents.
+                      {t("builder.formRequiredDescription")}
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -456,7 +480,7 @@ export function QuestionSettings({
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                Cancel
+                {t("form.cancel")}
               </Button>
               <Button
                 type="submit"
@@ -464,8 +488,8 @@ export function QuestionSettings({
                 disabled={!form.formState.isValid || isCreating || isUpdating}
               >
                 {isCreating || isUpdating
-                  ? (question ? "Updating..." : "Creating...")
-                  : (question ? "Update Question" : "Add Question")}
+                  ? (question ? t("builder.formSubmitUpdating") : t("builder.formSubmitCreating"))
+                  : (question ? t("builder.formSubmitUpdate") : t("builder.formSubmitCreate"))}
               </Button>
             </DialogFooter>
           </form>

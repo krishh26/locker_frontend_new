@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import {
   DndContext,
   closestCenter,
@@ -37,6 +38,7 @@ interface SurveyBuilderProps {
 }
 
 export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
+  const t = useTranslations("surveys")
   // Fetch survey from API
   const { data: surveyResponse, isLoading: isLoadingSurvey, error: surveyError } = useGetSurveyByIdQuery(surveyId)
   const survey = surveyResponse?.data?.survey
@@ -63,8 +65,8 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
     return (
       <div className="space-y-6 px-4 lg:px-6">
         <PageHeader
-          title="Loading Survey..."
-          subtitle="Please wait while we load the survey"
+          title={t("builder.loadingTitle")}
+          subtitle={t("builder.loadingSubtitle")}
           showBackButton
           backButtonHref="/surveys"
         />
@@ -77,8 +79,12 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
     return (
       <div className="space-y-6 px-4 lg:px-6">
         <PageHeader
-          title="Survey Not Found"
-          subtitle={surveyError ? "Failed to load the survey. Please try again." : "The survey you're looking for doesn't exist"}
+          title={t("builder.notFoundTitle")}
+          subtitle={
+            surveyError
+              ? t("builder.notFoundSubtitleError")
+              : t("builder.notFoundSubtitleMissing")
+          }
           showBackButton
           backButtonHref="/surveys"
         />
@@ -114,9 +120,9 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
           surveyId,
           questionIds,
         }).unwrap()
-        toast.success("Questions reordered successfully")
+        toast.success(t("builder.reorderToastSuccess"))
       } catch (error: unknown) {
-        let errorMessage = "Failed to reorder questions"
+        let errorMessage = t("builder.reorderToastFailed")
         if (error && typeof error === 'object' && 'data' in error) {
           const errorData = error.data
           if (errorData && typeof errorData === 'object' && 'message' in errorData) {
@@ -167,9 +173,9 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
 
       // Close template selector on success
       setTemplateSelectorOpen(false)
-      toast.success("Template applied successfully!")
+      toast.success(t("builder.templateApplySuccess"))
     } catch (error: unknown) {
-      let errorMessage = "Failed to apply template. Please try again."
+      let errorMessage = t("builder.templateApplyFailed")
       if (error && typeof error === 'object' && 'data' in error) {
         const errorData = error.data
         if (errorData && typeof errorData === 'object' && 'message' in errorData) {
@@ -184,7 +190,7 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
     <div className="space-y-6 px-4 lg:px-6">
       <PageHeader
         title={survey.name}
-        subtitle={survey.description || "Build your survey questions"}
+        subtitle={survey.description || t("builder.headerFallbackDescription")}
         showBackButton
         backButtonHref="/surveys"
       />
@@ -192,9 +198,11 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold">Questions</h2>
+            <h2 className="text-xl font-semibold">
+              {t("builder.questionsTitle")}
+            </h2>
             <p className="text-sm text-muted-foreground">
-              {sortedQuestions.length} question{sortedQuestions.length !== 1 ? "s" : ""}
+              {t("builder.questionsCount", { count: sortedQuestions.length })}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -205,11 +213,13 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
               disabled={isApplyingTemplate}
             >
               <FileText className="mr-2 h-4 w-4" />
-              {isApplyingTemplate ? "Applying..." : "Use Template"}
+              {isApplyingTemplate
+                ? t("builder.templateApplying")
+                : t("builder.templateUse")}
             </Button>
             <Button onClick={handleAddQuestion} className="cursor-pointer">
               <Plus className="mr-2 h-4 w-4" />
-              Add Question
+              {t("builder.addQuestion")}
             </Button>
           </div>
         </div>
@@ -220,7 +230,7 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
               <FileText className="h-8 w-8 text-white" />
             </div>
             <p className="text-muted-foreground">
-              No questions yet. Get started by using a template or adding your own questions.
+              {t("builder.emptyDescription")}
             </p>
             <div className="flex items-center justify-center gap-2">
               <Button
@@ -284,7 +294,7 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
                       disabled
                       className="w-full cursor-not-allowed"
                     >
-                      Submit
+                      {t("builder.submitPreview")}
                     </Button>
                   </div>
                 )}

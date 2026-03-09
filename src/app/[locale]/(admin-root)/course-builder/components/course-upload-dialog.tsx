@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface CourseUploadDialogProps {
   open: boolean;
@@ -19,18 +20,21 @@ export function CourseUploadDialog({
   open,
   onOpenChange,
 }: CourseUploadDialogProps) {
+  const t = useTranslations("courseBuilder");
+  const tCommon = useTranslations("common");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Upload Course File</DialogTitle>
+          <DialogTitle>{t("uploadDialog.title")}</DialogTitle>
           <DialogDescription>
-            Course upload functionality will be implemented.
+            {t("uploadDialog.description")}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
+            {tCommon("close")}
           </Button>
         </DialogFooter>
       </DialogContent>

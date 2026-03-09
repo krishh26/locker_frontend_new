@@ -34,7 +34,17 @@
     "confirm": "确认",
     "yes": "是",
     "no": "否",
-    "ok": "确定"
+    "ok": "确定",
+    "pagination": {
+      "rowsPerPage": "每页行数",
+      "showingRange": "显示第 {from} 条到第 {to} 条，共 {count} 条。",
+      "selectedRows": "已选 {selected} 行，共 {total} 行。",
+      "morePages": "更多页面",
+      "ariaFirst": "跳转到第一页",
+      "ariaPrevious": "跳转到上一页",
+      "ariaNext": "跳转到下一页",
+      "ariaLast": "跳转到最后一页"
+    }
   },
   "navigation": {
     "home": "首页",
@@ -676,8 +686,219 @@
     "pageSubtitle": "Manage session type configurations"
   },
   "surveys": {
-    "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageTitle": "调查",
+    "pageSubtitle": "创建和管理调查",
+    "table": {
+      "headers": {
+        "name": "名称",
+        "status": "状态",
+        "questions": "问题",
+        "responses": "回复",
+        "created": "创建时间",
+        "updated": "更新时间",
+        "actions": "操作"
+      },
+      "searchPlaceholder": "搜索调查...",
+      "createButton": "创建调查",
+      "loading": "加载调查中...",
+      "error": "加载调查失败，请重试。",
+      "noResults": "暂无结果。",
+      "actions": {
+        "viewSurvey": "查看调查",
+        "editSurvey": "编辑调查",
+        "more": "更多操作",
+        "viewResponses": "查看回复",
+        "openPublicForm": "打开公开表单",
+        "allocateSurvey": "分配调查",
+        "exportCsv": "导出 CSV",
+        "exportPdf": "导出 PDF",
+        "deleteSurvey": "删除调查"
+      }
+    },
+    "filters": {
+      "statusLabel": "状态",
+      "statusPlaceholder": "选择状态",
+      "statusAll": "全部状态"
+    },
+    "status": {
+      "Draft": "草稿",
+      "Published": "已发布",
+      "Archived": "已归档"
+    },
+    "deleteDialog": {
+      "title": "删除调查？",
+      "description": "此操作无法撤销。将永久删除该调查及其所有问题和回复。",
+      "deleting": "删除中..."
+    },
+    "toast": {
+      "deleteSuccess": "调查已成功删除",
+      "deleteFailed": "删除调查失败",
+      "allocateSelectSurvey": "请先选择要分配的调查",
+      "allocateSuccess": "已成功将调查分配给 {count} 位用户",
+      "allocateFailed": "分配调查失败，请重试。"
+    },
+    "form": {
+      "titleEdit": "编辑调查",
+      "titleCreate": "创建调查",
+      "descriptionEdit": "更新调查详情。完成后点击保存。",
+      "descriptionCreate": "创建新的调查表单。完成后点击保存。",
+      "nameLabel": "名称",
+      "namePlaceholder": "输入调查名称",
+      "descriptionLabel": "描述",
+      "descriptionPlaceholder": "输入调查描述（选填）",
+      "expirationLabel": "过期日期",
+      "pickDate": "选择日期",
+      "statusLabel": "状态",
+      "statusPlaceholder": "选择状态",
+      "statusDraft": "草稿",
+      "statusPublished": "已发布",
+      "cancel": "取消",
+      "update": "更新调查",
+      "create": "创建调查",
+      "updating": "更新中...",
+      "creating": "创建中...",
+      "toastUpdateSuccess": "调查已成功更新",
+      "toastCreateSuccess": "调查已成功创建",
+      "toastUpdateFailed": "更新调查失败",
+      "toastCreateFailed": "创建调查失败",
+      "validation": {
+        "nameMin": "名称至少需要 2 个字符。",
+        "expirationFuture": "过期日期必须是将来的日期"
+      }
+    },
+    "allocate": {
+      "title": "分配调查",
+      "description": "通过下方选择角色和用户，将「{name}」分配给用户。",
+      "selectRoles": "选择角色",
+      "selectUsers": "选择用户",
+      "usersSelected": "已选 {count} 位用户",
+      "course": "课程",
+      "employer": "雇主",
+      "search": "搜索",
+      "allCourses": "全部课程",
+      "allEmployers": "全部雇主",
+      "searchPlaceholder": "按姓名或邮箱搜索...",
+      "statusFilters": "状态筛选",
+      "pageOf": "第 {page} 页，共 {pages} 页",
+      "previous": "上一页",
+      "next": "下一页",
+      "cancel": "取消",
+      "assign": "分配（{count}）",
+      "toastSelectOne": "请至少选择一位用户进行分配",
+      "toastSuccess": "已成功将调查分配给 {count} 位用户",
+      "toastFailed": "分配调查失败，请重试。",
+      "roles": {
+        "Trainer": "培训师",
+        "IQA": "IQA",
+        "Learner": "学员",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "等待入职",
+        "Certificated": "已获证",
+        "Completed": "已完成",
+        "Early Leaver": "提前离开",
+        "Exempt": "豁免",
+        "In Training": "培训中",
+        "IQA Approved": "IQA 已批准",
+        "Training Suspended": "培训暂停",
+        "Transferred": "已转出",
+        "Show only archived users": "仅显示已归档用户"
+      },
+      "tableLoading": "加载中...",
+      "noUsersFound": "未找到用户",
+      "tableName": "姓名",
+      "tableEmail": "邮箱",
+      "selectAll": "全选",
+      "selectUser": "选择 {name}"
+    },
+    "builder": {
+      "loadingTitle": "正在加载调查…",
+      "loadingSubtitle": "请稍候，我们正在加载调查。",
+      "notFoundTitle": "未找到调查",
+      "notFoundSubtitleError": "加载调查失败，请重试。",
+      "notFoundSubtitleMissing": "您要查找的调查不存在。",
+      "headerFallbackDescription": "构建您的调查问题。",
+      "questionsTitle": "问题",
+      "questionsCount": "{count} 个问题",
+      "templateUse": "使用模板",
+      "templateApplying": "正在应用…",
+      "addQuestion": "添加问题",
+      "emptyDescription": "尚无问题。请先使用模板或添加您自己的问题。",
+      "submitPreview": "提交",
+      "reorderToastSuccess": "问题排序已更新",
+      "reorderToastFailed": "更新问题排序失败",
+      "templateApplySuccess": "模板已成功应用！",
+      "templateApplyFailed": "应用模板失败，请重试。",
+      "templateDialogTitle": "从精选模板创建",
+      "templateDialogDescription": "选择一个模板，通过预填问题快速开始。",
+      "templateQuestionsCount": "{count} 个问题",
+      "previewShortTextPlaceholder": "简短文本回答",
+      "previewLongTextPlaceholder": "长文本回答",
+      "previewLikertStatementsHeader": "陈述",
+      "previewLikertHelp": "添加陈述和选项以查看李克特量表矩阵。",
+      "alertDeleteTitle": "确定要继续吗？",
+      "alertDeleteDescription": "此操作无法撤销。该问题将被永久删除。",
+      "alertDeleting": "正在删除…",
+      "questionMenuMore": "更多选项",
+      "questionMenuEdit": "编辑",
+      "questionMenuDuplicate": "复制",
+      "questionMenuDelete": "删除",
+      "questionDuplicateSuccess": "问题复制成功",
+      "questionDuplicateFailed": "复制问题失败",
+      "questionDeleteSuccess": "问题删除成功",
+      "questionDeleteFailed": "删除问题失败",
+      "questionTypeShortText": "简短文本",
+      "questionTypeLongText": "长文本",
+      "questionTypeMultipleChoice": "多选题",
+      "questionTypeCheckbox": "复选框",
+      "questionTypeRating": "评分",
+      "questionTypeDate": "日期",
+      "questionTypeLikert": "李克特量表",
+      "untitledQuestion": "未命名问题",
+      "requiredLabel": "必填",
+      "optionsLabel": "选项：",
+      "formTitleRequired": "标题为必填项。",
+      "formOptionsRequiredForType": "此题型至少需要一个选项。",
+      "formStatementsRequiredForLikert": "李克特量表问题至少需要一个陈述。",
+      "formStatementsInlineRequired": "至少需要一个陈述。",
+      "formOptionsInlineRequired": "至少需要一个选项。",
+      "formDialogTitleEdit": "编辑问题",
+      "formDialogTitleCreate": "添加问题",
+      "formDialogDescriptionEdit": "更新问题详细信息。",
+      "formDialogDescriptionCreate": "为调查创建一个新问题。",
+      "formTitleLabel": "标题",
+      "formTitlePlaceholder": "输入问题标题",
+      "formDescriptionLabel": "描述",
+      "formDescriptionPlaceholder": "输入问题描述（可选）",
+      "formTypeLabel": "问题类型",
+      "formTypePlaceholder": "选择问题类型",
+      "formTypeShortText": "简短文本",
+      "formTypeLongText": "长文本",
+      "formTypeMultipleChoice": "多选题",
+      "formTypeCheckbox": "复选框",
+      "formTypeRating": "评分（1–5）",
+      "formTypeDate": "日期",
+      "formTypeLikert": "李克特量表",
+      "formStatementsLabel": "陈述（行）",
+      "formStatementsAdd": "添加陈述",
+      "formStatementsHelp": "为李克特量表添加陈述（每行一条）。",
+      "formOptionsLabel": "选项",
+      "formOptionsAdd": "添加选项",
+      "formOptionsHelpLikert": "为李克特量表添加评分选项（列）。",
+      "formOptionsHelpMultipleChoice": "为多选题添加选项。",
+      "formOptionsHelpCheckbox": "为复选框题添加选项。",
+      "formRequiredLabel": "必填",
+      "formRequiredDescription": "将此问题设为受访者必须回答的问题。",
+      "formSubmitUpdating": "正在更新…",
+      "formSubmitCreating": "正在创建…",
+      "formSubmitUpdate": "更新问题",
+      "formSubmitCreate": "添加问题",
+      "formToastUpdateSuccess": "问题更新成功",
+      "formToastCreateSuccess": "问题创建成功",
+      "formToastUpdateFailed": "更新问题失败",
+      "formToastCreateFailed": "创建问题失败"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -851,8 +1072,68 @@
     "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
   },
   "courseBuilder": {
-    "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageTitle": "课程构建器",
+    "pageSubtitle": "轻松创建、管理和组织课程",
+    "filters": {
+      "searchPlaceholder": "按关键字搜索...",
+      "courseTypePlaceholder": "课程类型",
+      "courseTypes": {
+        "all": "所有类型",
+        "Qualification": "资格证书",
+        "Standard": "标准课程",
+        "Gateway": "Gateway 课程"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "课程名称",
+        "code": "代码",
+        "coreType": "核心类型",
+        "level": "级别",
+        "sector": "行业",
+        "learningHours": "学习时长"
+      },
+      "actions": {
+        "view": "查看"
+      }
+    },
+    "export": {
+      "pdfTitle": "课程",
+      "pdfExported": "PDF 导出成功"
+    },
+    "upload": {
+      "button": "上传文件"
+    },
+    "create": {
+      "button": "创建课程",
+      "types": {
+        "Qualification": {
+          "label": "资格证书",
+          "description": "创建包含单元和标准的资格证书课程"
+        },
+        "Standard": {
+          "label": "标准课程",
+          "description": "创建包含模块和主题的标准课程"
+        },
+        "Gateway": {
+          "label": "Gateway 课程",
+          "description": "创建用于评估的 Gateway 课程"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "上传课程文件",
+      "description": "课程上传功能即将上线。"
+    },
+    "deleteDialog": {
+      "title": "删除课程？",
+      "description": "此操作无法撤销，将永久删除课程“{name}”。"
+    },
+    "toast": {
+      "deleteSuccess": "课程删除成功",
+      "forbiddenDelete": "您无权删除此课程。",
+      "deleteFailed": "删除课程失败"
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",

@@ -34,7 +34,17 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "pagination": {
+      "rowsPerPage": "Rows per page",
+      "showingRange": "Showing {from} to {to} of {count} item(s).",
+      "selectedRows": "{selected} of {total} row(s) selected.",
+      "morePages": "More pages",
+      "ariaFirst": "Go to first page",
+      "ariaPrevious": "Go to previous page",
+      "ariaNext": "Go to next page",
+      "ariaLast": "Go to last page"
+    }
   },
   "navigation": {
     "home": "Home",
@@ -697,7 +707,218 @@
   },
   "surveys": {
     "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageSubtitle": "Create and manage surveys",
+    "table": {
+      "headers": {
+        "name": "Name",
+        "status": "Status",
+        "questions": "Questions",
+        "responses": "Responses",
+        "created": "Created",
+        "updated": "Updated",
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Search surveys...",
+      "createButton": "Create survey",
+      "loading": "Loading surveys...",
+      "error": "Error loading surveys. Please try again.",
+      "noResults": "No results.",
+      "actions": {
+        "viewSurvey": "View survey",
+        "editSurvey": "Edit survey",
+        "more": "More actions",
+        "viewResponses": "View responses",
+        "openPublicForm": "Open public form",
+        "allocateSurvey": "Allocate survey",
+        "exportCsv": "Export CSV",
+        "exportPdf": "Export PDF",
+        "deleteSurvey": "Delete survey"
+      }
+    },
+    "filters": {
+      "statusLabel": "Status",
+      "statusPlaceholder": "Select status",
+      "statusAll": "All status values"
+    },
+    "status": {
+      "Draft": "Draft",
+      "Published": "Published",
+      "Archived": "Archived"
+    },
+    "deleteDialog": {
+      "title": "Delete survey?",
+      "description": "This action cannot be undone. This will permanently delete the survey and all its questions and responses.",
+      "deleting": "Deleting..."
+    },
+    "toast": {
+      "deleteSuccess": "Survey deleted successfully",
+      "deleteFailed": "Failed to delete survey",
+      "allocateSelectSurvey": "Please select a survey to allocate",
+      "allocateSuccess": "Successfully allocated survey to {count} user(s)",
+      "allocateFailed": "Failed to allocate survey. Please try again."
+    },
+    "form": {
+      "titleEdit": "Edit Survey",
+      "titleCreate": "Create Survey",
+      "descriptionEdit": "Update the survey details. Click save when you're done.",
+      "descriptionCreate": "Create a new survey form. Click save when you're done.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter survey name",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter survey description (optional)",
+      "expirationLabel": "Expiration Date",
+      "pickDate": "Pick a date",
+      "statusLabel": "Status",
+      "statusPlaceholder": "Select status",
+      "statusDraft": "Draft",
+      "statusPublished": "Published",
+      "cancel": "Cancel",
+      "update": "Update Survey",
+      "create": "Create Survey",
+      "updating": "Updating...",
+      "creating": "Creating...",
+      "toastUpdateSuccess": "Survey updated successfully",
+      "toastCreateSuccess": "Survey created successfully",
+      "toastUpdateFailed": "Failed to update survey",
+      "toastCreateFailed": "Failed to create survey",
+      "validation": {
+        "nameMin": "Name must be at least 2 characters.",
+        "expirationFuture": "Expiration date must be in the future"
+      }
+    },
+    "allocate": {
+      "title": "Allocate Survey",
+      "description": "Assign \"{name}\" to users by selecting roles and users below.",
+      "selectRoles": "Select Roles",
+      "selectUsers": "Select Users",
+      "usersSelected": "{count} user(s) selected",
+      "course": "Course",
+      "employer": "Employer",
+      "search": "Search",
+      "allCourses": "All courses",
+      "allEmployers": "All employers",
+      "searchPlaceholder": "Search by name or email...",
+      "statusFilters": "Status Filters",
+      "pageOf": "Page {page} of {pages}",
+      "previous": "Previous",
+      "next": "Next",
+      "cancel": "Cancel",
+      "assign": "Assign ({count})",
+      "toastSelectOne": "Please select at least one user to allocate",
+      "toastSuccess": "Successfully allocated survey to {count} user(s)",
+      "toastFailed": "Failed to allocate survey. Please try again.",
+      "roles": {
+        "Trainer": "Trainer",
+        "IQA": "IQA",
+        "Learner": "Learner",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "Awaiting Induction",
+        "Certificated": "Certificated",
+        "Completed": "Completed",
+        "Early Leaver": "Early Leaver",
+        "Exempt": "Exempt",
+        "In Training": "In Training",
+        "IQA Approved": "IQA Approved",
+        "Training Suspended": "Training Suspended",
+        "Transferred": "Transferred",
+        "Show only archived users": "Show only archived users"
+      },
+      "tableLoading": "Loading...",
+      "noUsersFound": "No users found",
+      "tableName": "Name",
+      "tableEmail": "Email",
+      "selectAll": "Select all",
+      "selectUser": "Select {name}"
+    },
+    "builder": {
+      "loadingTitle": "Loading survey...",
+      "loadingSubtitle": "Please wait while we load the survey.",
+      "notFoundTitle": "Survey not found",
+      "notFoundSubtitleError": "Failed to load the survey. Please try again.",
+      "notFoundSubtitleMissing": "The survey you're looking for doesn't exist.",
+      "headerFallbackDescription": "Build your survey questions.",
+      "questionsTitle": "Questions",
+      "questionsCount": "{count} question(s)",
+      "templateUse": "Use template",
+      "templateApplying": "Applying...",
+      "addQuestion": "Add question",
+      "emptyDescription": "No questions yet. Get started by using a template or adding your own questions.",
+      "submitPreview": "Submit",
+      "reorderToastSuccess": "Questions reordered successfully",
+      "reorderToastFailed": "Failed to reorder questions",
+      "templateApplySuccess": "Template applied successfully!",
+      "templateApplyFailed": "Failed to apply template. Please try again.",
+      "templateDialogTitle": "Create from featured templates",
+      "templateDialogDescription": "Choose a template to quickly get started with pre-filled questions.",
+      "templateQuestionsCount": "{count} questions",
+      "previewShortTextPlaceholder": "Short text answer",
+      "previewLongTextPlaceholder": "Long text answer",
+      "previewLikertStatementsHeader": "Statements",
+      "previewLikertHelp": "Add statements and options to see the Likert scale matrix.",
+      "alertDeleteTitle": "Are you sure?",
+      "alertDeleteDescription": "This action cannot be undone. This will permanently delete the question.",
+      "alertDeleting": "Deleting...",
+      "questionMenuMore": "More options",
+      "questionMenuEdit": "Edit",
+      "questionMenuDuplicate": "Duplicate",
+      "questionMenuDelete": "Delete",
+      "questionDuplicateSuccess": "Question duplicated successfully",
+      "questionDuplicateFailed": "Failed to duplicate question",
+      "questionDeleteSuccess": "Question deleted successfully",
+      "questionDeleteFailed": "Failed to delete question",
+      "questionTypeShortText": "Short text",
+      "questionTypeLongText": "Long text",
+      "questionTypeMultipleChoice": "Multiple choice",
+      "questionTypeCheckbox": "Checkbox",
+      "questionTypeRating": "Rating",
+      "questionTypeDate": "Date",
+      "questionTypeLikert": "Likert scale",
+      "untitledQuestion": "Untitled question",
+      "requiredLabel": "Required",
+      "optionsLabel": "Options:",
+      "formTitleRequired": "Title is required.",
+      "formOptionsRequiredForType": "At least one option is required for this question type.",
+      "formStatementsRequiredForLikert": "At least one statement is required for Likert scale questions.",
+      "formStatementsInlineRequired": "At least one statement is required.",
+      "formOptionsInlineRequired": "At least one option is required.",
+      "formDialogTitleEdit": "Edit question",
+      "formDialogTitleCreate": "Add question",
+      "formDialogDescriptionEdit": "Update the question details.",
+      "formDialogDescriptionCreate": "Create a new question for your survey.",
+      "formTitleLabel": "Title",
+      "formTitlePlaceholder": "Enter question title",
+      "formDescriptionLabel": "Description",
+      "formDescriptionPlaceholder": "Enter question description (optional)",
+      "formTypeLabel": "Question type",
+      "formTypePlaceholder": "Select question type",
+      "formTypeShortText": "Short text",
+      "formTypeLongText": "Long text",
+      "formTypeMultipleChoice": "Multiple choice",
+      "formTypeCheckbox": "Checkbox",
+      "formTypeRating": "Rating (1–5)",
+      "formTypeDate": "Date",
+      "formTypeLikert": "Likert scale",
+      "formStatementsLabel": "Statements (rows)",
+      "formStatementsAdd": "Add statement",
+      "formStatementsHelp": "Add statements for the Likert scale (one per row).",
+      "formOptionsLabel": "Options",
+      "formOptionsAdd": "Add option",
+      "formOptionsHelpLikert": "Add rating scale options for the Likert scale (columns).",
+      "formOptionsHelpMultipleChoice": "Add options for multiple choice questions.",
+      "formOptionsHelpCheckbox": "Add options for checkbox questions.",
+      "formRequiredLabel": "Required",
+      "formRequiredDescription": "Make this question mandatory for respondents.",
+      "formSubmitUpdating": "Updating...",
+      "formSubmitCreating": "Creating...",
+      "formSubmitUpdate": "Update question",
+      "formSubmitCreate": "Add question",
+      "formToastUpdateSuccess": "Question updated successfully",
+      "formToastCreateSuccess": "Question created successfully",
+      "formToastUpdateFailed": "Failed to update question",
+      "formToastCreateFailed": "Failed to create question"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -872,7 +1093,67 @@
   },
   "courseBuilder": {
     "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageSubtitle": "Create, manage, and organize your courses with ease",
+    "filters": {
+      "searchPlaceholder": "Search by keyword...",
+      "courseTypePlaceholder": "Course type",
+      "courseTypes": {
+        "all": "All types",
+        "Qualification": "Qualification",
+        "Standard": "Standard",
+        "Gateway": "Gateway"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "Course name",
+        "code": "Code",
+        "coreType": "Core type",
+        "level": "Level",
+        "sector": "Sector",
+        "learningHours": "Learning hours"
+      },
+      "actions": {
+        "view": "View"
+      }
+    },
+    "export": {
+      "pdfTitle": "Courses",
+      "pdfExported": "PDF exported successfully"
+    },
+    "upload": {
+      "button": "Upload file"
+    },
+    "create": {
+      "button": "Create course",
+      "types": {
+        "Qualification": {
+          "label": "Qualification",
+          "description": "Create a qualification course with units and criteria"
+        },
+        "Standard": {
+          "label": "Standard",
+          "description": "Create a standard course with modules and topics"
+        },
+        "Gateway": {
+          "label": "Gateway",
+          "description": "Create a gateway course for assessments"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "Upload course file",
+      "description": "Course upload functionality will be implemented."
+    },
+    "deleteDialog": {
+      "title": "Delete course?",
+      "description": "This action cannot be undone. This will permanently delete the course \"{name}\"."
+    },
+    "toast": {
+      "deleteSuccess": "Course deleted successfully",
+      "forbiddenDelete": "You do not have access to delete this course.",
+      "deleteFailed": "Failed to delete course"
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",

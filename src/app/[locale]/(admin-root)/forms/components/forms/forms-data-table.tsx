@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import {
   type ColumnDef,
@@ -63,6 +64,7 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 
 export function FormsDataTable() {
+  const t = useTranslations("forms");
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
@@ -126,7 +128,7 @@ export function FormsDataTable() {
 
     try {
       await deleteForm({ formId: formToDelete.id }).unwrap();
-      toast.success("Form deleted successfully");
+      toast.success(t("table.toastDeleteSuccess"));
       setDeleteDialogOpen(false);
       setFormToDelete(null);
       refetch();
@@ -135,7 +137,7 @@ export function FormsDataTable() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to delete form");
+      toast.error(errorMessage || t("table.toastDeleteFailed"));
     }
   };
 
@@ -150,11 +152,11 @@ export function FormsDataTable() {
 
   const handleExportCsv = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.toastNoData"));
       return;
     }
 
-    const headers = ["Form Name", "Description", "Type", "Created At"];
+    const headers = [t("table.formName"), t("table.description"), t("table.type"), t("table.createdAt")];
     const rows = data.data.map((form) => [
       form.form_name,
       form.description || "",
@@ -174,11 +176,11 @@ export function FormsDataTable() {
     link.download = `forms_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("table.toastCsvSuccess"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("table.toastPdfInfo"));
   };
 
   const handleEdit = useCallback((form: FormListItem) => {
@@ -193,22 +195,22 @@ export function FormsDataTable() {
     () => [
       {
         accessorKey: "form_name",
-        header: "Form Name",
+        header: t("table.formName"),
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.description"),
         cell: ({ row }) => {
           return row.original.description || "-";
         },
       },
       {
         accessorKey: "type",
-        header: "Type",
+        header: t("table.type"),
       },
       {
         accessorKey: "created_at",
-        header: "Created At",
+        header: t("table.createdAt"),
         cell: ({ row }) => {
           return row.original.created_at
             ? format(new Date(row.original.created_at), "MMM dd, yyyy")
@@ -217,38 +219,38 @@ export function FormsDataTable() {
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.actions"),
         cell: ({ row }) => {
           const form = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{t("table.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleView(form)}>
                   <Eye className="mr-2 h-4 w-4" />
-                  View
+                  {t("table.view")}
                 </DropdownMenuItem>
                 {!isEmployer && (
                   <>
                     <DropdownMenuItem onClick={() => handleEdit(form)}>
                       <Edit className="mr-2 h-4 w-4" />
-                      Edit
+                      {t("table.edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleAssignUsers(form)}>
                       <Users className="mr-2 h-4 w-4" />
-                      Assign Users
+                      {t("table.assignUsers")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleDeleteClick(form)}
                       className="text-destructive"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
+                      {t("table.delete")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -258,7 +260,7 @@ export function FormsDataTable() {
         },
       },
     ],
-    [handleEdit, handleView, isEmployer]
+    [handleEdit, handleView, isEmployer, t]
   );
 
   const table = useReactTable({
@@ -304,7 +306,7 @@ export function FormsDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -318,7 +320,7 @@ export function FormsDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {t("table.clear")}
             </Button>
           )}
         </div>
@@ -327,22 +329,22 @@ export function FormsDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("table.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("table.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("table.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           {!isEmployer && (
             <Button onClick={handleAddNew} className="cursor-pointer">
               <Plus className="mr-2 size-4" />
-              Add New Form
+              {t("table.addNewForm")}
             </Button>
           )}
         </div>
@@ -395,7 +397,7 @@ export function FormsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -427,20 +429,19 @@ export function FormsDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the form{" "}
-              <strong>{formToDelete?.form_name}</strong> and all associated data.
+              {t("deleteDialog.description", { name: formToDelete?.form_name ?? "" })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>{t("deleteDialog.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("deleteDialog.deleting") : t("deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

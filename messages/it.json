@@ -407,12 +407,64 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
+    "pageTitle": "Generatore di moduli",
+    "pageSubtitle": "Crea e gestisci moduli dinamici con il builder drag-and-drop",
     "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
+      "formList": "Elenco moduli",
+      "templateList": "Elenco modelli",
+      "response": "Risposte"
+    },
+    "table": {
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "addNewForm": "Aggiungi modulo",
+      "formName": "Nome modulo",
+      "description": "Descrizione",
+      "type": "Tipo",
+      "createdAt": "Creato il",
+      "actions": "Azioni",
+      "view": "Visualizza",
+      "edit": "Modifica",
+      "assignUsers": "Assegna utenti",
+      "delete": "Elimina",
+      "openMenu": "Apri menu",
+      "noResults": "Nessun risultato.",
+      "toastNoData": "Nessun dato da esportare",
+      "toastCsvSuccess": "CSV esportato con successo",
+      "toastPdfInfo": "L'export PDF sarà disponibile a breve",
+      "toastDeleteSuccess": "Modulo eliminato con successo",
+      "toastDeleteFailed": "Impossibile eliminare il modulo"
+    },
+    "deleteDialog": {
+      "title": "Sei sicuro?",
+      "description": "Questa azione non può essere annullata. Il modulo {name} e tutti i dati associati saranno eliminati definitivamente.",
+      "cancel": "Annulla",
+      "delete": "Elimina",
+      "deleting": "Eliminazione..."
+    },
+    "assignUsers": {
+      "dialogTitle": "Assegna utenti al modulo",
+      "dialogDescription": "Assegna utenti al modulo: {formName}",
+      "selectAssignmentType": "Seleziona tipo di assegnazione",
+      "selectUsers": "Seleziona utenti",
+      "cancel": "Annulla",
+      "submit": "Assegna utenti",
+      "validationSelectType": "Seleziona un tipo di assegnazione",
+      "validationSelectOneUser": "Seleziona almeno un utente",
+      "toastSelectOneUser": "Seleziona almeno un utente",
+      "toastSuccess": "Utenti assegnati con successo",
+      "toastFailed": "Impossibile assegnare gli utenti",
+      "optionAll": "Tutti",
+      "optionAllLearner": "Tutti i discenti",
+      "optionAllEQA": "Tutti EQA",
+      "optionAllTrainer": "Tutti i formatori",
+      "optionAllEmployer": "Tutti i datori di lavoro",
+      "optionAllIQA": "Tutti IQA",
+      "optionAllLIQA": "Tutti LIQA",
+      "optionIndividual": "Singolo"
     }
   },
   "iqaQuestions": {

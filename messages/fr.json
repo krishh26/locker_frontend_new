@@ -274,6 +274,59 @@
         "subscription_change": "Changement d'abonnement",
         "feature_change": "Changement de fonctionnalité"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "Apprenant actif",
+        "learners_on_bil": "Apprenants en BIL",
+        "overdue_learners": "Apprenants en retard",
+        "overdue_progress_review": "Revues de progression en retard",
+        "learners_due_complete_30_days": "Apprenants à terminer sous 30 jours",
+        "learners_off_track": "Apprenants hors cible",
+        "unmapped_evidences": "Preuves non mappées",
+        "session_learner_action_due_today": "Action apprenant due (aujourd'hui)",
+        "session_learner_actions_due_next_7_days": "Actions apprenant dans les 7 jours",
+        "session_learner_action_overdue": "Action apprenant en retard",
+        "learner_all_sampling_plan": "Apprenants avec plan d'échantillonnage",
+        "learner_not_all_sampling_plan": "Apprenants sans plan d'échantillonnage",
+        "default_review_overdue": "Revue par défaut en retard",
+        "due_actions": "Actions dues",
+        "overdue_actions": "Actions en retard",
+        "actions_due_7_days": "Actions dans les 7 jours",
+        "otj_up_to_date": "OTJ hors cible",
+        "iqa_actions_overdue": "Actions IQA en retard",
+        "all_iqa_actions": "Toutes les actions IQA",
+        "iqa_actions_due_in_30_days": "Actions IQA dans 30 jours",
+        "session_due_today": "Sessions dues aujourd'hui",
+        "session_due_in_7_days": "Sessions dans 7 jours",
+        "sample_due_in_month": "Échantillon dans le mois",
+        "sampling_plan_overdue": "Plan d'échantillonnage en retard",
+        "trainer_rag_report": "Note RAG formateur",
+        "outstanding_eqa_actions": "Actions EQA en attente",
+        "overall_progress": "Progression globale"
+      },
+      "csvHeaders": {
+        "learner_id": "ID apprenant",
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "email": "E-mail",
+        "course_name": "Cours",
+        "start_date": "Date début",
+        "planned_end_date": "Date fin prévue",
+        "overall_progress": "Progression (%)",
+        "timeline_progress": "Progression temporelle (%)",
+        "overdue": "En retard",
+        "on_track": "Dans les temps",
+        "course_status": "État du cours"
+      },
+      "csvNoData": "Aucune donnée",
+      "summarySaUnmapped": "SA + preuves non mappées",
+      "summaryOutstandingIqa": "Actions IQA en attente",
+      "orangePercent": "Orange %",
+      "greenPercent": "Vert %",
+      "lastMonth": "Mois dernier",
+      "current": "Actuel",
+      "metricsFallback": "Les métriques supplémentaires apparaîtront ici lorsque fournies par le serveur."
     }
   },
   "adminCommon": {
@@ -396,27 +449,27 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "Gestion de l'administration",
+    "pageSubtitle": "Gérer toutes les fonctions administratives et la configuration du système",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "Gestion des utilisateurs",
+        "description": "Gérez efficacement les utilisateurs avec des opérations simplifiées d’ajout, de suppression et de mise à jour."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "Gestion des apprenants",
+        "description": "Optimisez l’administration des apprenants en ajoutant, mettant à jour et supprimant les profils, et en attribuant cours, formateurs, employeurs, IQA et EQA."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "Gestion des employeurs",
+        "description": "Gérez les informations des employeurs, ajoutez, mettez à jour et supprimez des fiches, et assignez des apprenants aux employeurs."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "Gestion des diffusions",
+        "description": "Créez et gérez des messages de diffusion, envoyez des notifications aux utilisateurs, apprenants ou cours ciblés."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "Voir les détails"
   },
   "awaitingSignature": {
     "pageTitle": "Awaiting Signature",
@@ -425,6 +478,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "Forum",
+    "pageSubtitle": "Échanger et communiquer autour de vos cours",
+    "chatList": {
+      "loading": "Chargement des conversations...",
+      "searchPlaceholder": "Rechercher des cours...",
+      "noCourses": "Aucun cours trouvé"
+    },
+    "messageInput": {
+      "placeholder": "Tapez votre message...",
+      "toastSuccess": "Message envoyé avec succès",
+      "toastError": "Échec de l'envoi du message"
+    },
+    "thread": {
+      "loading": "Chargement des messages...",
+      "empty": "Aucun message pour le moment",
+      "emptyDescription": "Commencez la conversation"
+    },
+    "empty": {
+      "noChatSelected": "Aucune conversation sélectionnée",
+      "noChatSelectedDescription": "Sélectionnez un cours dans la liste pour commencer à échanger"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -438,13 +514,13 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
-    }
+  "pageTitle": "Générateur de formulaires",
+  "pageSubtitle": "Créer et gérer des formulaires dynamiques avec un concepteur par glisser-déposer",
+  "tabs": {
+  "formList": "Liste des formulaires",
+  "templateList": "Liste des modèles",
+  "response": "Réponses"
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",

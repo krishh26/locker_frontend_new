@@ -291,6 +291,59 @@
         "subscription_change": "Subscription Change",
         "feature_change": "Feature Change"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "Active Learner",
+        "learners_on_bil": "Learners on BIL",
+        "overdue_learners": "Overdue Learners",
+        "overdue_progress_review": "Overdue Progress Reviews",
+        "learners_due_complete_30_days": "Learners due to complete within 30 days",
+        "learners_off_track": "Learners off track",
+        "unmapped_evidences": "Unmapped evidences",
+        "session_learner_action_due_today": "Session learner action due (today)",
+        "session_learner_actions_due_next_7_days": "Session learner actions due in next 7 days",
+        "session_learner_action_overdue": "Session learner action overdue",
+        "learner_all_sampling_plan": "Learners on a Sampling Plan",
+        "learner_not_all_sampling_plan": "Learners not on a Sampling Plan",
+        "default_review_overdue": "Default review overdue",
+        "due_actions": "Due actions",
+        "overdue_actions": "Overdue actions",
+        "actions_due_7_days": "Actions due in the next 7 days",
+        "otj_up_to_date": "OTJ Off Track",
+        "iqa_actions_overdue": "IQA actions overdue",
+        "all_iqa_actions": "All IQA actions",
+        "iqa_actions_due_in_30_days": "IQA actions due in 30 days",
+        "session_due_today": "Sessions due today",
+        "session_due_in_7_days": "Sessions due in 7 days",
+        "sample_due_in_month": "Sample due in month",
+        "sampling_plan_overdue": "Sampling plan overdue",
+        "trainer_rag_report": "Trainer RAG rating",
+        "outstanding_eqa_actions": "Outstanding EQA actions",
+        "overall_progress": "Overall progress"
+      },
+      "csvHeaders": {
+        "learner_id": "Learner ID",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "email": "Email",
+        "course_name": "Course Name",
+        "start_date": "Start Date",
+        "planned_end_date": "Planned End Date",
+        "overall_progress": "Overall Progress (%)",
+        "timeline_progress": "Timeline Progress (%)",
+        "overdue": "Overdue",
+        "on_track": "On Track",
+        "course_status": "Course Status"
+      },
+      "csvNoData": "No data",
+      "summarySaUnmapped": "SA + unmapped evidence",
+      "summaryOutstandingIqa": "Outstanding IQA actions",
+      "orangePercent": "Orange %",
+      "greenPercent": "Green %",
+      "lastMonth": "Last month",
+      "current": "Current",
+      "metricsFallback": "Additional metrics (SA + unmapped evidence, outstanding IQA actions, orange and green %) will appear here when provided by the server."
     }
   },
   "adminCommon": {
@@ -445,6 +498,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "Forum",
+    "pageSubtitle": "Connect and communicate with your courses",
+    "chatList": {
+      "loading": "Loading chats...",
+      "searchPlaceholder": "Search courses...",
+      "noCourses": "No courses found"
+    },
+    "messageInput": {
+      "placeholder": "Type your message...",
+      "toastSuccess": "Message sent successfully",
+      "toastError": "Failed to send message"
+    },
+    "thread": {
+      "loading": "Loading messages...",
+      "empty": "No messages yet",
+      "emptyDescription": "Start the conversation"
+    },
+    "empty": {
+      "noChatSelected": "No chat selected",
+      "noChatSelectedDescription": "Select a course from the list to start messaging"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",

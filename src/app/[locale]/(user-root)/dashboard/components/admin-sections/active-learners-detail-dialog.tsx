@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import {
   Dialog,
   DialogContent,
@@ -24,6 +25,7 @@ export function ActiveLearnersDetailDialog({
   count,
   summary,
 }: ActiveLearnersDetailDialogProps) {
+  const t = useTranslations("dashboard.admin")
   const hasSummary =
     summary &&
     (summary.sa_unmapped_evidence_count !== undefined ||
@@ -47,7 +49,7 @@ export function ActiveLearnersDetailDialog({
             <div className="grid gap-3 text-sm">
               {summary.sa_unmapped_evidence_count !== undefined && (
                 <div className="flex justify-between gap-2">
-                  <span className="text-muted-foreground">SA + unmapped evidence</span>
+                  <span className="text-muted-foreground">{t("summarySaUnmapped")}</span>
                   <span className="font-medium tabular-nums">
                     {summary.sa_unmapped_evidence_count}
                   </span>
@@ -55,7 +57,7 @@ export function ActiveLearnersDetailDialog({
               )}
               {summary.outstanding_iqa_actions_count !== undefined && (
                 <div className="flex justify-between gap-2">
-                  <span className="text-muted-foreground">Outstanding IQA actions</span>
+                  <span className="text-muted-foreground">{t("summaryOutstandingIqa")}</span>
                   <span className="font-medium tabular-nums">
                     {summary.outstanding_iqa_actions_count}
                   </span>
@@ -64,16 +66,16 @@ export function ActiveLearnersDetailDialog({
               {(summary.orange_percent_last_month !== undefined ||
                 summary.orange_percent_current_month !== undefined) && (
                 <div className="space-y-1">
-                  <span className="text-muted-foreground">Orange %</span>
+                  <span className="text-muted-foreground">{t("orangePercent")}</span>
                   <div className="flex gap-4 pl-2">
                     {summary.orange_percent_last_month !== undefined && (
                       <span className="tabular-nums">
-                        Last month: {summary.orange_percent_last_month}%
+                        {t("lastMonth")}: {summary.orange_percent_last_month}%
                       </span>
                     )}
                     {summary.orange_percent_current_month !== undefined && (
                       <span className="tabular-nums">
-                        Current: {summary.orange_percent_current_month}%
+                        {t("current")}: {summary.orange_percent_current_month}%
                       </span>
                     )}
                   </div>
@@ -82,16 +84,16 @@ export function ActiveLearnersDetailDialog({
               {(summary.green_percent_last_month !== undefined ||
                 summary.green_percent_current_month !== undefined) && (
                 <div className="space-y-1">
-                  <span className="text-muted-foreground">Green %</span>
+                  <span className="text-muted-foreground">{t("greenPercent")}</span>
                   <div className="flex gap-4 pl-2">
                     {summary.green_percent_last_month !== undefined && (
                       <span className="tabular-nums">
-                        Last month: {summary.green_percent_last_month}%
+                        {t("lastMonth")}: {summary.green_percent_last_month}%
                       </span>
                     )}
                     {summary.green_percent_current_month !== undefined && (
                       <span className="tabular-nums">
-                        Current: {summary.green_percent_current_month}%
+                        {t("current")}: {summary.green_percent_current_month}%
                       </span>
                     )}
                   </div>
@@ -101,8 +103,7 @@ export function ActiveLearnersDetailDialog({
           )}
           {!hasSummary && (
             <p className="text-muted-foreground text-sm">
-              Additional metrics (SA + unmapped evidence, outstanding IQA actions,
-              orange and green %) will appear here when provided by the server.
+              {t("metricsFallback")}
             </p>
           )}
         </div>

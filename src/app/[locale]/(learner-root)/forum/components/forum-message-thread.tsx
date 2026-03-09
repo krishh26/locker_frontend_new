@@ -11,6 +11,7 @@ import { ForumMessageInput } from "./forum-message-input";
 import { format } from "date-fns";
 import type { ForumChat } from "@/store/api/forum/types";
 import type { ForumMessage } from "@/store/api/forum/types";
+import { useTranslations } from "next-intl";
 
 interface ForumMessageThreadProps {
   chat: ForumChat;
@@ -22,6 +23,7 @@ export function ForumMessageThread({
   onClose,
 }: ForumMessageThreadProps) {
   const user = useAppSelector((state) => state.auth.user);
+  const t = useTranslations("forum");
   const chatEndRef = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useGetMessagesQuery({
     page: 1,
@@ -85,7 +87,9 @@ export function ForumMessageThread({
   if (isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p className="text-muted-foreground">Loading messages...</p>
+        <p className="text-muted-foreground">
+          {t("thread.loading")}
+        </p>
       </div>
     );
   }
@@ -128,9 +132,11 @@ export function ForumMessageThread({
               <div className="mx-auto rounded-full bg-accent p-4 w-fit">
                 <span className="text-2xl">💬</span>
               </div>
-              <p className="text-muted-foreground font-medium">No messages yet</p>
+              <p className="text-muted-foreground font-medium">
+                {t("thread.empty")}
+              </p>
               <p className="text-muted-foreground text-sm">
-                Start the conversation
+                {t("thread.emptyDescription")}
               </p>
             </div>
           </div>

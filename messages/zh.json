@@ -274,6 +274,59 @@
         "subscription_change": "订阅变更",
         "feature_change": "功能变更"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "活跃学员",
+        "learners_on_bil": "BIL 学员",
+        "overdue_learners": "逾期学员",
+        "overdue_progress_review": "逾期进度审查",
+        "learners_due_complete_30_days": "30 天内将完成的学员",
+        "learners_off_track": "偏离进度学员",
+        "unmapped_evidences": "未映射证据",
+        "session_learner_action_due_today": "今日到期学员操作",
+        "session_learner_actions_due_next_7_days": "未来 7 天内到期学员操作",
+        "session_learner_action_overdue": "逾期学员操作",
+        "learner_all_sampling_plan": "在抽样计划中的学员",
+        "learner_not_all_sampling_plan": "未在抽样计划中的学员",
+        "default_review_overdue": "默认审查逾期",
+        "due_actions": "到期操作",
+        "overdue_actions": "逾期操作",
+        "actions_due_7_days": "未来 7 天内到期操作",
+        "otj_up_to_date": "OTJ 偏离",
+        "iqa_actions_overdue": "IQA 操作逾期",
+        "all_iqa_actions": "所有 IQA 操作",
+        "iqa_actions_due_in_30_days": "30 天内到期 IQA 操作",
+        "session_due_today": "今日到期会议",
+        "session_due_in_7_days": "7 天内到期会议",
+        "sample_due_in_month": "本月到期样本",
+        "sampling_plan_overdue": "抽样计划逾期",
+        "trainer_rag_report": "培训师 RAG 评级",
+        "outstanding_eqa_actions": "待处理 EQA 操作",
+        "overall_progress": "总体进度"
+      },
+      "csvHeaders": {
+        "learner_id": "学员 ID",
+        "first_name": "名",
+        "last_name": "姓",
+        "email": "邮箱",
+        "course_name": "课程",
+        "start_date": "开始日期",
+        "planned_end_date": "计划结束日期",
+        "overall_progress": "总体进度 (%)",
+        "timeline_progress": "时间线进度 (%)",
+        "overdue": "逾期",
+        "on_track": "正常",
+        "course_status": "课程状态"
+      },
+      "csvNoData": "无数据",
+      "summarySaUnmapped": "SA + 未映射证据",
+      "summaryOutstandingIqa": "待处理 IQA 操作",
+      "orangePercent": "橙色 %",
+      "greenPercent": "绿色 %",
+      "lastMonth": "上月",
+      "current": "当月",
+      "metricsFallback": "当服务器提供时，其他指标将显示在此处。"
     }
   },
   "adminCommon": {
@@ -396,27 +449,27 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "管理员管理",
+    "pageSubtitle": "管理所有管理功能和系统配置",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "用户管理",
+        "description": "通过添加、删除和更新等操作，高效管理系统用户。"
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "学员管理",
+        "description": "无缝添加、更新和删除学员，并为其分配课程、培训师、雇主、IQA 和 EQA。"
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "雇主管理",
+        "description": "管理雇主信息，添加、更新和删除雇主记录，并为学员分配雇主。"
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "公告管理",
+        "description": "创建和管理公告消息，向用户、学员或指定课程发送通知。"
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "查看详情"
   },
   "awaitingSignature": {
     "pageTitle": "Awaiting Signature",
@@ -425,6 +478,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "论坛",
+    "pageSubtitle": "与课程中的学习者交流沟通",
+    "chatList": {
+      "loading": "正在加载聊天...",
+      "searchPlaceholder": "搜索课程...",
+      "noCourses": "未找到课程"
+    },
+    "messageInput": {
+      "placeholder": "输入消息...",
+      "toastSuccess": "消息发送成功",
+      "toastError": "消息发送失败"
+    },
+    "thread": {
+      "loading": "正在加载消息...",
+      "empty": "暂无消息",
+      "emptyDescription": "开始第一条对话吧"
+    },
+    "empty": {
+      "noChatSelected": "尚未选择聊天",
+      "noChatSelectedDescription": "从列表中选择一个课程以开始聊天"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -438,13 +514,13 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
-    }
+  "pageTitle": "表单构建器",
+  "pageSubtitle": "使用拖放构建器创建和管理动态表单",
+  "tabs": {
+  "formList": "表单列表",
+  "templateList": "模板列表",
+  "response": "回复"
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",

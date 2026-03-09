@@ -275,6 +275,59 @@
         "subscription_change": "تغيير الاشتراك",
         "feature_change": "تغيير الميزة"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "المتعلم النشط",
+        "learners_on_bil": "المتعلمون في BIL",
+        "overdue_learners": "المتعلمون المتأخرون",
+        "overdue_progress_review": "مراجعات التقدم المتأخرة",
+        "learners_due_complete_30_days": "المتعلمون المقرر إكمالهم خلال 30 يومًا",
+        "learners_off_track": "المتعلمون خارج المسار",
+        "unmapped_evidences": "الأدلة غير المعينة",
+        "session_learner_action_due_today": "إجراء المتعلم المستحق (اليوم)",
+        "session_learner_actions_due_next_7_days": "إجراءات المتعلم المستحقة في 7 أيام",
+        "session_learner_action_overdue": "إجراء المتعلم المتأخر",
+        "learner_all_sampling_plan": "المتعلمون في خطة المعاينة",
+        "learner_not_all_sampling_plan": "المتعلمون خارج خطة المعاينة",
+        "default_review_overdue": "المراجعة الافتراضية متأخرة",
+        "due_actions": "الإجراءات المستحقة",
+        "overdue_actions": "الإجراءات المتأخرة",
+        "actions_due_7_days": "الإجراءات في 7 أيام",
+        "otj_up_to_date": "OTJ خارج المسار",
+        "iqa_actions_overdue": "إجراءات IQA المتأخرة",
+        "all_iqa_actions": "جميع إجراءات IQA",
+        "iqa_actions_due_in_30_days": "إجراءات IQA في 30 يومًا",
+        "session_due_today": "الجلسات المستحقة اليوم",
+        "session_due_in_7_days": "الجلسات في 7 أيام",
+        "sample_due_in_month": "العينة في الشهر",
+        "sampling_plan_overdue": "خطة المعاينة متأخرة",
+        "trainer_rag_report": "تقييم RAG للمدرب",
+        "outstanding_eqa_actions": "إجراءات EQA المعلقة",
+        "overall_progress": "التقدم الإجمالي"
+      },
+      "csvHeaders": {
+        "learner_id": "معرف المتعلم",
+        "first_name": "الاسم الأول",
+        "last_name": "اسم العائلة",
+        "email": "البريد",
+        "course_name": "الدورة",
+        "start_date": "تاريخ البدء",
+        "planned_end_date": "تاريخ الانتهاء المخطط",
+        "overall_progress": "التقدم (%)",
+        "timeline_progress": "التقدم الزمني (%)",
+        "overdue": "متأخر",
+        "on_track": "على المسار",
+        "course_status": "حالة الدورة"
+      },
+      "csvNoData": "لا توجد بيانات",
+      "summarySaUnmapped": "SA + أدلة غير معينة",
+      "summaryOutstandingIqa": "إجراءات IQA المعلقة",
+      "orangePercent": "برتقالي %",
+      "greenPercent": "أخضر %",
+      "lastMonth": "الشهر الماضي",
+      "current": "الحالي",
+      "metricsFallback": "ستظهر المقاييس الإضافية هنا عند توفيرها من الخادم."
     }
   },
   "adminCommon": {
@@ -397,27 +450,27 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "إدارة لوحة التحكم",
+    "pageSubtitle": "إدارة جميع الوظائف الإدارية وإعدادات النظام",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "إدارة المستخدمين",
+        "description": "إدارة المستخدمين بكفاءة من خلال عمليات مبسطة تشمل الإضافة والحذف والتحديث."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "إدارة المتعلمين",
+        "description": "إضافة المتعلمين وتحديثهم وحذفهم بسهولة، مع تعيين الدورات والمدربين وأصحاب العمل و‑IQA و‑EQA."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "إدارة أصحاب العمل",
+        "description": "إدارة بيانات أصحاب العمل، وإضافة وتحديث وحذف سجلاتهم، وتعيين المتعلمين لهم."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "إدارة الإشعارات",
+        "description": "إنشاء وإدارة رسائل البث، وإرسال الإشعارات إلى المستخدمين والمتعلمين أو إلى دورات محددة."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "عرض التفاصيل"
   },
   "awaitingSignature": {
     "pageTitle": "ملفات ومستندات معلقة التوقيع",
@@ -426,6 +479,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "المنتدى",
+    "pageSubtitle": "تواصل وتحدّث حول دوراتك",
+    "chatList": {
+      "loading": "جارٍ تحميل المحادثات...",
+      "searchPlaceholder": "ابحث عن الدورات...",
+      "noCourses": "لم يتم العثور على دورات"
+    },
+    "messageInput": {
+      "placeholder": "اكتب رسالتك...",
+      "toastSuccess": "تم إرسال الرسالة بنجاح",
+      "toastError": "فشل في إرسال الرسالة"
+    },
+    "thread": {
+      "loading": "جارٍ تحميل الرسائل...",
+      "empty": "لا توجد رسائل بعد",
+      "emptyDescription": "ابدأ المحادثة الآن"
+    },
+    "empty": {
+      "noChatSelected": "لم يتم اختيار محادثة",
+      "noChatSelectedDescription": "اختر دورة من القائمة لبدء المراسلة"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -439,13 +515,13 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
-    }
+  "pageTitle": "منشئ النماذج",
+  "pageSubtitle": "إنشاء وإدارة النماذج الديناميكية باستخدام أداة سحب وإفلات",
+  "tabs": {
+  "formList": "قائمة النماذج",
+  "templateList": "قائمة القوالب",
+  "response": "الاستجابات"
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",

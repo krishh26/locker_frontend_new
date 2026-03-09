@@ -274,6 +274,59 @@
         "subscription_change": "सदस्यता परिवर्तन",
         "feature_change": "फ़ीचर परिवर्तन"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "सक्रिय शिक्षार्थी",
+        "learners_on_bil": "BIL पर शिक्षार्थी",
+        "overdue_learners": "अतिदेय शिक्षार्थी",
+        "overdue_progress_review": "अतिदेय प्रगति समीक्षा",
+        "learners_due_complete_30_days": "30 दिनों में पूर्ण होने वाले शिक्षार्थी",
+        "learners_off_track": "ट्रैक से बाहर शिक्षार्थी",
+        "unmapped_evidences": "अनमैप्ड साक्ष्य",
+        "session_learner_action_due_today": "सत्र शिक्षार्थी कार्रवाई (आज)",
+        "session_learner_actions_due_next_7_days": "अगले 7 दिनों में सत्र कार्रवाई",
+        "session_learner_action_overdue": "सत्र शिक्षार्थी कार्रवाई अतिदेय",
+        "learner_all_sampling_plan": "सैंपलिंग प्लान पर शिक्षार्थी",
+        "learner_not_all_sampling_plan": "सैंपलिंग प्लान के बाहर शिक्षार्थी",
+        "default_review_overdue": "डिफ़ॉल्ट समीक्षा अतिदेय",
+        "due_actions": "देय कार्रवाई",
+        "overdue_actions": "अतिदेय कार्रवाई",
+        "actions_due_7_days": "अगले 7 दिनों में कार्रवाई",
+        "otj_up_to_date": "OTJ ऑफ ट्रैक",
+        "iqa_actions_overdue": "IQA कार्रवाई अतिदेय",
+        "all_iqa_actions": "सभी IQA कार्रवाई",
+        "iqa_actions_due_in_30_days": "30 दिनों में IQA कार्रवाई",
+        "session_due_today": "आज देय सत्र",
+        "session_due_in_7_days": "7 दिनों में सत्र",
+        "sample_due_in_month": "महीने में नमूना",
+        "sampling_plan_overdue": "सैंपलिंग प्लान अतिदेय",
+        "trainer_rag_report": "ट्रेनर RAG रेटिंग",
+        "outstanding_eqa_actions": "बकाया EQA कार्रवाई",
+        "overall_progress": "समग्र प्रगति"
+      },
+      "csvHeaders": {
+        "learner_id": "शिक्षार्थी ID",
+        "first_name": "नाम",
+        "last_name": "उपनाम",
+        "email": "ईमेल",
+        "course_name": "कोर्स",
+        "start_date": "प्रारंभ तिथि",
+        "planned_end_date": "नियोजित समाप्ति",
+        "overall_progress": "समग्र प्रगति (%)",
+        "timeline_progress": "टाइमलाइन प्रगति (%)",
+        "overdue": "अतिदेय",
+        "on_track": "ट्रैक पर",
+        "course_status": "कोर्स स्थिति"
+      },
+      "csvNoData": "कोई डेटा नहीं",
+      "summarySaUnmapped": "SA + अनमैप्ड साक्ष्य",
+      "summaryOutstandingIqa": "बकाया IQA कार्रवाई",
+      "orangePercent": "नारंगी %",
+      "greenPercent": "हरा %",
+      "lastMonth": "पिछला महीना",
+      "current": "वर्तमान",
+      "metricsFallback": "सर्वर द्वारा प्रदान किए जाने पर अतिरिक्त मेट्रिक्स यहां दिखाई देंगे।"
     }
   },
   "adminCommon": {
@@ -396,27 +449,27 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "एडमिन प्रबंधन",
+    "pageSubtitle": "सभी प्रशासनिक फ़ंक्शनों और सिस्टम कॉन्फ़िगरेशन का प्रबंधन करें",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "यूज़र प्रबंधन",
+        "description": "जोड़ने, हटाने और अपडेट करने जैसी सरल प्रक्रियाओं के साथ उपयोगकर्ताओं को प्रभावी ढंग से प्रबंधित करें।"
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "लर्नर प्रबंधन",
+        "description": "लर्नरों को आसानी से जोड़ें, अपडेट करें और हटाएँ, और उनके लिए कोर्स, ट्रेनर, नियोक्ता, IQA और EQA असाइन करें।"
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "एम्प्लॉयर प्रबंधन",
+        "description": "एम्प्लॉयर की जानकारी प्रबंधित करें, रिकॉर्ड जोड़ें, अपडेट करें और हटाएँ, तथा लर्नरों को एम्प्लॉयर से लिंक करें।"
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "ब्रॉडकास्ट प्रबंधन",
+        "description": "ब्रॉडकास्ट संदेश बनाएँ और प्रबंधित करें, तथा यूज़र्स, लर्नर्स या चुने हुए कोर्स को नोटिफिकेशन भेजें।"
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "विवरण देखें"
   },
   "awaitingSignature": {
     "pageTitle": "Awaiting Signature",
@@ -425,6 +478,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "फ़ोरम",
+    "pageSubtitle": "अपने कोर्स के साथ कनेक्ट रहें और बातचीत करें",
+    "chatList": {
+      "loading": "चैट लोड हो रही हैं...",
+      "searchPlaceholder": "कोर्स खोजें...",
+      "noCourses": "कोई कोर्स नहीं मिला"
+    },
+    "messageInput": {
+      "placeholder": "अपना संदेश लिखें...",
+      "toastSuccess": "संदेश सफलतापूर्वक भेजा गया",
+      "toastError": "संदेश भेजने में विफल"
+    },
+    "thread": {
+      "loading": "संदेश लोड हो रहे हैं...",
+      "empty": "अभी तक कोई संदेश नहीं",
+      "emptyDescription": "बातचीत शुरू करें"
+    },
+    "empty": {
+      "noChatSelected": "कोई चैट चयनित नहीं है",
+      "noChatSelectedDescription": "मैसेजिंग शुरू करने के लिए सूची से कोई कोर्स चुनें"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -438,13 +514,13 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
-    }
+  "pageTitle": "फ़ॉर्म प्रबंधन",
+  "pageSubtitle": "ड्रैग‑एंड‑ड्रॉप बिल्डर के साथ डायनेमिक फ़ॉर्म बनाएँ और मैनेज करें",
+  "tabs": {
+  "formList": "फ़ॉर्म सूची",
+  "templateList": "टेम्पलेट सूची",
+  "response": "प्रतिक्रियाएँ"
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",

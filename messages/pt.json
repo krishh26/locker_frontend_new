@@ -274,6 +274,59 @@
         "subscription_change": "Alteração de assinatura",
         "feature_change": "Alteração de recurso"
       }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "Aprendiz ativo",
+        "learners_on_bil": "Aprendizes em BIL",
+        "overdue_learners": "Aprendizes em atraso",
+        "overdue_progress_review": "Revisões de progresso em atraso",
+        "learners_due_complete_30_days": "Aprendizes a concluir em 30 dias",
+        "learners_off_track": "Aprendizes fora do plano",
+        "unmapped_evidences": "Evidências não mapeadas",
+        "session_learner_action_due_today": "Ação do aprendiz (hoje)",
+        "session_learner_actions_due_next_7_days": "Ações do aprendiz nos próximos 7 dias",
+        "session_learner_action_overdue": "Ação do aprendiz em atraso",
+        "learner_all_sampling_plan": "Aprendizes em plano de amostragem",
+        "learner_not_all_sampling_plan": "Aprendizes sem plano de amostragem",
+        "default_review_overdue": "Revisão padrão em atraso",
+        "due_actions": "Ações pendentes",
+        "overdue_actions": "Ações em atraso",
+        "actions_due_7_days": "Ações nos próximos 7 dias",
+        "otj_up_to_date": "OTJ fora do plano",
+        "iqa_actions_overdue": "Ações IQA em atraso",
+        "all_iqa_actions": "Todas as ações IQA",
+        "iqa_actions_due_in_30_days": "Ações IQA em 30 dias",
+        "session_due_today": "Sessões hoje",
+        "session_due_in_7_days": "Sessões em 7 dias",
+        "sample_due_in_month": "Amostra no mês",
+        "sampling_plan_overdue": "Plano de amostragem em atraso",
+        "trainer_rag_report": "Avaliação RAG do formador",
+        "outstanding_eqa_actions": "Ações EQA pendentes",
+        "overall_progress": "Progresso geral"
+      },
+      "csvHeaders": {
+        "learner_id": "ID do aprendiz",
+        "first_name": "Nome",
+        "last_name": "Apelido",
+        "email": "E-mail",
+        "course_name": "Curso",
+        "start_date": "Data início",
+        "planned_end_date": "Data fim prevista",
+        "overall_progress": "Progresso (%)",
+        "timeline_progress": "Progresso temporal (%)",
+        "overdue": "Em atraso",
+        "on_track": "No plano",
+        "course_status": "Estado do curso"
+      },
+      "csvNoData": "Sem dados",
+      "summarySaUnmapped": "SA + evidências não mapeadas",
+      "summaryOutstandingIqa": "Ações IQA pendentes",
+      "orangePercent": "Laranja %",
+      "greenPercent": "Verde %",
+      "lastMonth": "Mês passado",
+      "current": "Atual",
+      "metricsFallback": "Métricas adicionais aparecerão aqui quando fornecidas pelo servidor."
     }
   },
   "adminCommon": {
@@ -396,27 +449,27 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "Gestão administrativa",
+    "pageSubtitle": "Gerir todas as funções administrativas e configurações do sistema",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "Gestão de utilizadores",
+        "description": "Gerencie utilizadores de forma eficiente com operações simplificadas de adicionar, remover e atualizar."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "Gestão de alunos",
+        "description": "Otimize a gestão de alunos adicionando, atualizando e removendo perfis e atribuindo cursos, formadores, empregadores, IQAs e EQAs."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "Gestão de empregadores",
+        "description": "Gerir informações de empregadores, adicionar, atualizar e remover registos e atribuir alunos a empregadores."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "Gestão de avisos",
+        "description": "Criar e gerir mensagens de broadcast, enviando notificações para utilizadores, alunos ou cursos específicos."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "Ver detalhes"
   },
   "awaitingSignature": {
     "pageTitle": "Awaiting Signature",
@@ -425,6 +478,29 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
+  },
+  "forum": {
+    "pageTitle": "Fórum",
+    "pageSubtitle": "Conecte-se e comunique-se com os seus cursos",
+    "chatList": {
+      "loading": "A carregar conversas...",
+      "searchPlaceholder": "Procurar cursos...",
+      "noCourses": "Nenhum curso encontrado"
+    },
+    "messageInput": {
+      "placeholder": "Escreva a sua mensagem...",
+      "toastSuccess": "Mensagem enviada com sucesso",
+      "toastError": "Falha ao enviar a mensagem"
+    },
+    "thread": {
+      "loading": "A carregar mensagens...",
+      "empty": "Ainda não há mensagens",
+      "emptyDescription": "Comece a conversa"
+    },
+    "empty": {
+      "noChatSelected": "Nenhum chat selecionado",
+      "noChatSelectedDescription": "Selecione um curso na lista para começar a conversar"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -438,13 +514,13 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
-    }
+  "pageTitle": "Gestão de formulários",
+  "pageSubtitle": "Criar e gerir formulários dinâmicos com um construtor de arrastar e largar",
+  "tabs": {
+  "formList": "Lista de formulários",
+  "templateList": "Lista de modelos",
+  "response": "Respostas"
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",

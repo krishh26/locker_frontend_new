@@ -9,6 +9,7 @@ import { useSendMessageMutation } from "@/store/api/forum/forumApi";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 // Dynamically import emoji picker to avoid SSR issues
 // Note: Install emoji-picker-react: npm install emoji-picker-react
@@ -26,6 +27,7 @@ interface ForumMessageInputProps {
 
 export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
   const user = useAppSelector((state) => state.auth.user);
+  const t = useTranslations("forum");
   const [message, setMessage] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -53,9 +55,9 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
         fileInputRef.current.value = "";
       }
       setShowEmojiPicker(false);
-      toast.success("Message sent successfully");
+      toast.success(t("messageInput.toastSuccess"));
     } catch (error) {
-      toast.error("Failed to send message");
+      toast.error(t("messageInput.toastError"));
     }
   };
 
@@ -112,7 +114,7 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
+            placeholder={t("messageInput.placeholder")}
             className="min-h-[60px] resize-none pr-20 border border-primary/30 focus-visible:ring-primary/30"
             disabled={isLoading}
           />

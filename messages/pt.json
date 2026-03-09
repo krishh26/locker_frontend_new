@@ -476,8 +476,138 @@
     "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "Calendário",
+    "pageSubtitle": "Gerir sessões e marcações",
+    "filters": {
+      "trainerPlaceholder": "Filtrar por formador",
+      "allTrainers": "Todos os formadores",
+      "loading": "A carregar...",
+      "attendedPlaceholder": "Filtrar por estado de presença",
+      "allStatus": "Todos os estados",
+      "view": {
+        "calendar": "Calendário",
+        "list": "Lista"
+      },
+      "exportCsv": "Exportar CSV"
+    },
+    "status": {
+      "notSet": "Não definido",
+      "attended": "Presente",
+      "cancelled": "Cancelado",
+      "cancelledByAssessor": "Cancelado pelo formador",
+      "cancelledByLearner": "Cancelado pelo aluno",
+      "cancelledByEmployer": "Cancelado pelo empregador",
+      "learnerLate": "Aluno atrasado",
+      "assessorLate": "Formador atrasado",
+      "learnerNotAttended": "Aluno não compareceu",
+      "lateGeneric": "Atraso",
+      "notAttendedGeneric": "Não compareceu"
+    },
+    "legend": {
+      "title": "Legenda de estados"
+    },
+    "month": {
+      "today": "Hoje",
+      "weekdays": {
+        "sun": "Dom",
+        "mon": "Seg",
+        "tue": "Ter",
+        "wed": "Qua",
+        "thu": "Qui",
+        "fri": "Sex",
+        "sat": "Sáb"
+      }
+    },
+    "sort": {
+      "byVisitDate": "Ordenar por data da visita",
+      "latestFirst": "Mais recentes primeiro",
+      "oldestFirst": "Mais antigas primeiro"
+    },
+    "list": {
+      "headers": {
+        "title": "Título",
+        "learners": "Alunos",
+        "trainer": "Formador",
+        "location": "Local",
+        "visitDate": "Data da visita",
+        "duration": "Duração",
+        "attended": "Presença",
+        "action": "Ação"
+      },
+      "untitledSession": "Sessão sem título",
+      "emptyTitle": "Nenhum dado encontrado",
+      "emptyDescription": "Ainda não existem sessões marcadas. Quando forem criadas, aparecerão aqui.",
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "pagination": {
+        "pageOf": "Página {page} de {pages}",
+        "totalItems": "{count} registo(s) ao todo",
+        "previous": "Anterior",
+        "next": "Seguinte"
+      },
+      "deleteDialog": {
+        "title": "Eliminar sessão?",
+        "description": "Eliminar esta sessão irá remover também todos os dados e relações associadas. Pretende continuar?",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar sessão"
+      },
+      "toastStatusUpdated": "Estado da sessão atualizado com sucesso",
+      "toastStatusUpdateFailed": "Falha ao atualizar o estado da sessão",
+      "toastDeleteSuccess": "Sessão eliminada com sucesso",
+      "toastDeleteFailed": "Falha ao eliminar a sessão"
+    },
+    "sessionDialog": {
+      "titleCreate": "Marcar nova sessão",
+      "subtitleCreate": "Preencha os detalhes abaixo para criar uma nova sessão.",
+      "titleEdit": "Editar sessão",
+      "subtitleEdit": "Atualize os detalhes da sessão abaixo.",
+      "trainerLabel": "Selecionar formador",
+      "trainerPlaceholder": "Escolha o formador",
+      "learnersLabel": "Selecionar aluno(s)",
+      "learnersPlaceholder": "Escolha os alunos...",
+      "noLearners": "Nenhum aluno encontrado",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Introduza o título da sessão",
+      "descriptionLabel": "Descrição",
+      "descriptionPlaceholder": "Introduza a descrição da sessão",
+      "locationLabel": "Local da sessão",
+      "locationPlaceholder": "Introduza o local",
+      "startLabel": "Selecionar data e hora da sessão",
+      "durationLabel": "Selecionar duração da sessão",
+      "durationHours": "Horas",
+      "durationMinutes": "Minutos",
+      "typeLabel": "Selecionar tipo de sessão",
+      "typePlaceholder": "Escolha o tipo de sessão",
+      "typeOptions": {
+        "General": "Geral",
+        "Induction": "Indução",
+        "Formal Review": "Revisão formal",
+        "Telephone": "Telefone",
+        "Exit Session": "Sessão de saída",
+        "Out Of the Workplace": "Fora do local de trabalho",
+        "Tests/Exams": "Testes/Exames",
+        "Learner Support": "Suporte ao aluno",
+        "Initial Session": "Sessão inicial",
+        "Gateway Ready": "Pronto para Gateway",
+        "EPA": "EPA",
+        "Furloughed": "Em lay‑off"
+      },
+      "loading": "A carregar...",
+      "toastCreateSuccess": "Sessão criada com sucesso",
+      "toastUpdateSuccess": "Sessão atualizada com sucesso",
+      "toastSaveFailed": "Falha ao guardar a sessão",
+      "validation": {
+        "trainerRequired": "O formador é obrigatório",
+        "learnersRequired": "Pelo menos um aluno é obrigatório",
+        "titleRequired": "O título é obrigatório",
+        "locationRequired": "O local é obrigatório",
+        "startDateRequired": "A data de início é obrigatória",
+        "durationRequired": "A duração é obrigatória",
+        "typeRequired": "O tipo de sessão é obrigatório"
+      }
+    }
   },
   "forum": {
     "pageTitle": "Fórum",

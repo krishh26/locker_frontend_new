@@ -16,6 +16,7 @@ import { transformSessionsToCalendarEvents } from "../utils/session-transform";
 import { CalendarStatusLegend } from "./calendar-status-legend";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CalendarEvent } from "@/app/[locale]/(learner-root)/demo-calendar/types";
+import { useTranslations } from "next-intl";
 
 interface CalendarMonthViewProps {
   sessions: Session[];
@@ -23,6 +24,7 @@ interface CalendarMonthViewProps {
 }
 
 export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProps) {
+  const t = useTranslations("calendar");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -70,7 +72,15 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
     );
   }
 
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekDays = [
+    t("month.weekdays.sun"),
+    t("month.weekdays.mon"),
+    t("month.weekdays.tue"),
+    t("month.weekdays.wed"),
+    t("month.weekdays.thu"),
+    t("month.weekdays.fri"),
+    t("month.weekdays.sat"),
+  ];
 
   return (
     <div className="space-y-4">
@@ -93,7 +103,7 @@ export function CalendarMonthView({ sessions, isLoading }: CalendarMonthViewProp
               </h2>
             </div>
             <Button variant="outline" size="sm" onClick={goToToday}>
-              Today
+              {t("month.today")}
             </Button>
           </div>
 

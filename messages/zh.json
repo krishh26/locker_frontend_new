@@ -476,8 +476,138 @@
     "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "日历",
+    "pageSubtitle": "管理会话与预约",
+    "filters": {
+      "trainerPlaceholder": "按培训师筛选",
+      "allTrainers": "所有培训师",
+      "loading": "加载中...",
+      "attendedPlaceholder": "按出勤状态筛选",
+      "allStatus": "全部状态",
+      "view": {
+        "calendar": "日历",
+        "list": "列表"
+      },
+      "exportCsv": "导出 CSV"
+    },
+    "status": {
+      "notSet": "未设置",
+      "attended": "已出勤",
+      "cancelled": "已取消",
+      "cancelledByAssessor": "评估师取消",
+      "cancelledByLearner": "学员取消",
+      "cancelledByEmployer": "雇主取消",
+      "learnerLate": "学员迟到",
+      "assessorLate": "评估师迟到",
+      "learnerNotAttended": "学员未出勤",
+      "lateGeneric": "迟到",
+      "notAttendedGeneric": "未出勤"
+    },
+    "legend": {
+      "title": "状态说明"
+    },
+    "month": {
+      "today": "今天",
+      "weekdays": {
+        "sun": "日",
+        "mon": "一",
+        "tue": "二",
+        "wed": "三",
+        "thu": "四",
+        "fri": "五",
+        "sat": "六"
+      }
+    },
+    "sort": {
+      "byVisitDate": "按拜访日期排序",
+      "latestFirst": "最新优先",
+      "oldestFirst": "最早优先"
+    },
+    "list": {
+      "headers": {
+        "title": "标题",
+        "learners": "学员",
+        "trainer": "培训师",
+        "location": "地点",
+        "visitDate": "拜访日期",
+        "duration": "时长",
+        "attended": "出勤",
+        "action": "操作"
+      },
+      "untitledSession": "未命名会话",
+      "emptyTitle": "暂无数据",
+      "emptyDescription": "当前没有安排会话。创建后会显示在这里。",
+      "actions": {
+        "edit": "编辑",
+        "delete": "删除"
+      },
+      "pagination": {
+        "pageOf": "第 {page} 页，共 {pages} 页",
+        "totalItems": "共 {count} 条记录",
+        "previous": "上一页",
+        "next": "下一页"
+      },
+      "deleteDialog": {
+        "title": "删除会话？",
+        "description": "删除此会话将一并移除所有相关数据和关系。是否继续？",
+        "cancel": "取消",
+        "confirm": "删除会话"
+      },
+      "toastStatusUpdated": "会话状态更新成功",
+      "toastStatusUpdateFailed": "会话状态更新失败",
+      "toastDeleteSuccess": "会话删除成功",
+      "toastDeleteFailed": "会话删除失败"
+    },
+    "sessionDialog": {
+      "titleCreate": "创建新会话",
+      "subtitleCreate": "填写下方信息以创建新会话。",
+      "titleEdit": "编辑会话",
+      "subtitleEdit": "在下方更新会话详情。",
+      "trainerLabel": "选择培训师",
+      "trainerPlaceholder": "选择培训师",
+      "learnersLabel": "选择学员",
+      "learnersPlaceholder": "选择学员...",
+      "noLearners": "未找到学员",
+      "titleLabel": "标题",
+      "titlePlaceholder": "输入会话标题",
+      "descriptionLabel": "描述",
+      "descriptionPlaceholder": "输入会话描述",
+      "locationLabel": "会话地点",
+      "locationPlaceholder": "输入地点",
+      "startLabel": "选择会话日期和时间",
+      "durationLabel": "选择会话时长",
+      "durationHours": "小时",
+      "durationMinutes": "分钟",
+      "typeLabel": "选择会话类型",
+      "typePlaceholder": "选择会话类型",
+      "typeOptions": {
+        "General": "常规",
+        "Induction": "入职",
+        "Formal Review": "正式评审",
+        "Telephone": "电话",
+        "Exit Session": "离岗会话",
+        "Out Of the Workplace": "离岗培训",
+        "Tests/Exams": "测试/考试",
+        "Learner Support": "学员支持",
+        "Initial Session": "初始会话",
+        "Gateway Ready": "Gateway 准备",
+        "EPA": "EPA",
+        "Furloughed": "停薪留职"
+      },
+      "loading": "加载中...",
+      "toastCreateSuccess": "会话创建成功",
+      "toastUpdateSuccess": "会话更新成功",
+      "toastSaveFailed": "保存会话失败",
+      "validation": {
+        "trainerRequired": "培训师为必填项",
+        "learnersRequired": "至少选择一名学员",
+        "titleRequired": "标题为必填项",
+        "locationRequired": "地点为必填项",
+        "startDateRequired": "开始时间为必填项",
+        "durationRequired": "时长为必填项",
+        "typeRequired": "会话类型为必填项"
+      }
+    }
   },
   "forum": {
     "pageTitle": "论坛",

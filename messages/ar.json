@@ -477,8 +477,138 @@
     "pageSubtitle": "ملفات ومستندات معلقة التوقيع من المدرب والمتعلمين"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "التقويم",
+    "pageSubtitle": "إدارة الجلسات والمواعيد",
+    "filters": {
+      "trainerPlaceholder": "تصفية حسب المدرب",
+      "allTrainers": "كل المدربين",
+      "loading": "جارٍ التحميل...",
+      "attendedPlaceholder": "تصفية حسب حالة الحضور",
+      "allStatus": "جميع الحالات",
+      "view": {
+        "calendar": "تقويم",
+        "list": "قائمة"
+      },
+      "exportCsv": "تصدير CSV"
+    },
+    "status": {
+      "notSet": "غير محددة",
+      "attended": "حضر",
+      "cancelled": "ألغيت",
+      "cancelledByAssessor": "ألغيت من قبل المدرب",
+      "cancelledByLearner": "ألغيت من قبل المتعلم",
+      "cancelledByEmployer": "ألغيت من قبل صاحب العمل",
+      "learnerLate": "تأخر المتعلم",
+      "assessorLate": "تأخر المدرب",
+      "learnerNotAttended": "المتعلم لم يحضر",
+      "lateGeneric": "متأخر",
+      "notAttendedGeneric": "لم يحضر"
+    },
+    "legend": {
+      "title": "دليل حالات الجلسة"
+    },
+    "month": {
+      "today": "اليوم",
+      "weekdays": {
+        "sun": "أحد",
+        "mon": "اثنين",
+        "tue": "ثلاثاء",
+        "wed": "أربعاء",
+        "thu": "خميس",
+        "fri": "جمعة",
+        "sat": "سبت"
+      }
+    },
+    "sort": {
+      "byVisitDate": "ترتيب حسب تاريخ الزيارة",
+      "latestFirst": "الأحدث أولاً",
+      "oldestFirst": "الأقدم أولاً"
+    },
+    "list": {
+      "headers": {
+        "title": "العنوان",
+        "learners": "المتعلمون",
+        "trainer": "المدرب",
+        "location": "الموقع",
+        "visitDate": "تاريخ الزيارة",
+        "duration": "المدة",
+        "attended": "الحضور",
+        "action": "الإجراء"
+      },
+      "untitledSession": "جلسة بدون عنوان",
+      "emptyTitle": "لا توجد بيانات",
+      "emptyDescription": "لا توجد جلسات مجدولة حالياً. ستظهر هنا بعد إنشائها.",
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "pagination": {
+        "pageOf": "الصفحة {page} من {pages}",
+        "totalItems": "{count} عنصر إجماليًا",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "deleteDialog": {
+        "title": "حذف الجلسة؟",
+        "description": "سيتم حذف هذه الجلسة وجميع البيانات المرتبطة بها. هل تريد المتابعة؟",
+        "cancel": "إلغاء",
+        "confirm": "حذف الجلسة"
+      },
+      "toastStatusUpdated": "تم تحديث حالة الجلسة بنجاح",
+      "toastStatusUpdateFailed": "فشل في تحديث حالة الجلسة",
+      "toastDeleteSuccess": "تم حذف الجلسة بنجاح",
+      "toastDeleteFailed": "فشل في حذف الجلسة"
+    },
+    "sessionDialog": {
+      "titleCreate": "حجز جلسة جديدة",
+      "subtitleCreate": "املأ التفاصيل أدناه لإنشاء جلسة جديدة.",
+      "titleEdit": "تعديل الجلسة",
+      "subtitleEdit": "قم بتحديث تفاصيل الجلسة أدناه.",
+      "trainerLabel": "اختيار المدرب",
+      "trainerPlaceholder": "اختر المدرب",
+      "learnersLabel": "اختيار المتعلمين",
+      "learnersPlaceholder": "اختر المتعلمين...",
+      "noLearners": "لم يتم العثور على متعلمين",
+      "titleLabel": "العنوان",
+      "titlePlaceholder": "أدخل عنوان الجلسة",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "أدخل وصف الجلسة",
+      "locationLabel": "مكان الجلسة",
+      "locationPlaceholder": "أدخل المكان",
+      "startLabel": "اختيار تاريخ ووقت الجلسة",
+      "durationLabel": "اختيار مدة الجلسة",
+      "durationHours": "الساعات",
+      "durationMinutes": "الدقائق",
+      "typeLabel": "اختيار نوع الجلسة",
+      "typePlaceholder": "اختر نوع الجلسة",
+      "typeOptions": {
+        "General": "عام",
+        "Induction": "تعريفي",
+        "Formal Review": "مراجعة رسمية",
+        "Telephone": "هاتف",
+        "Exit Session": "جلسة خروج",
+        "Out Of the Workplace": "خارج مكان العمل",
+        "Tests/Exams": "اختبارات/امتحانات",
+        "Learner Support": "دعم المتعلم",
+        "Initial Session": "جلسة أولية",
+        "Gateway Ready": "جاهز للـ Gateway",
+        "EPA": "EPA",
+        "Furloughed": "موقوف عن العمل مؤقتًا"
+      },
+      "loading": "جارٍ التحميل...",
+      "toastCreateSuccess": "تم إنشاء الجلسة بنجاح",
+      "toastUpdateSuccess": "تم تحديث الجلسة بنجاح",
+      "toastSaveFailed": "فشل في حفظ الجلسة",
+      "validation": {
+        "trainerRequired": "اسم المدرب مطلوب",
+        "learnersRequired": "يجب اختيار متعلم واحد على الأقل",
+        "titleRequired": "العنوان مطلوب",
+        "locationRequired": "الموقع مطلوب",
+        "startDateRequired": "تاريخ البدء مطلوب",
+        "durationRequired": "المدة مطلوبة",
+        "typeRequired": "نوع الجلسة مطلوب"
+      }
+    }
   },
   "forum": {
     "pageTitle": "المنتدى",

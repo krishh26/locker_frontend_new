@@ -497,7 +497,137 @@
   },
   "calendar": {
     "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageSubtitle": "Manage sessions and appointments",
+    "filters": {
+      "trainerPlaceholder": "Search by trainer",
+      "allTrainers": "All trainers",
+      "loading": "Loading...",
+      "attendedPlaceholder": "Filter by attendance status",
+      "allStatus": "All status values",
+      "view": {
+        "calendar": "Calendar",
+        "list": "List"
+      },
+      "exportCsv": "Export CSV"
+    },
+    "status": {
+      "notSet": "Not set",
+      "attended": "Attended",
+      "cancelled": "Cancelled",
+      "cancelledByAssessor": "Cancelled by assessor",
+      "cancelledByLearner": "Cancelled by learner",
+      "cancelledByEmployer": "Cancelled by employer",
+      "learnerLate": "Learner late",
+      "assessorLate": "Assessor late",
+      "learnerNotAttended": "Learner not attended",
+      "lateGeneric": "Late",
+      "notAttendedGeneric": "Not attended"
+    },
+    "legend": {
+      "title": "Status legend"
+    },
+    "month": {
+      "today": "Today",
+      "weekdays": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      }
+    },
+    "sort": {
+      "byVisitDate": "Sort by visit date",
+      "latestFirst": "Latest first",
+      "oldestFirst": "Oldest first"
+    },
+    "list": {
+      "headers": {
+        "title": "Title",
+        "learners": "Learners",
+        "trainer": "Trainer",
+        "location": "Location",
+        "visitDate": "Visit date",
+        "duration": "Duration",
+        "attended": "Attended",
+        "action": "Action"
+      },
+      "untitledSession": "Untitled session",
+      "emptyTitle": "No data found",
+      "emptyDescription": "No sessions scheduled. Sessions will appear here once they are created.",
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "pagination": {
+        "pageOf": "Page {page} of {pages}",
+        "totalItems": "{count} total items",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "deleteDialog": {
+        "title": "Delete session?",
+        "description": "Deleting this session will also remove all associated data and relationships. Proceed with deletion?",
+        "cancel": "Cancel",
+        "confirm": "Delete session"
+      },
+      "toastStatusUpdated": "Session status updated successfully",
+      "toastStatusUpdateFailed": "Failed to update session status",
+      "toastDeleteSuccess": "Session deleted successfully",
+      "toastDeleteFailed": "Failed to delete session"
+    },
+    "sessionDialog": {
+      "titleCreate": "Book a new session",
+      "subtitleCreate": "Fill in the details to create a new session.",
+      "titleEdit": "Edit session",
+      "subtitleEdit": "Update the session details below.",
+      "trainerLabel": "Select trainer",
+      "trainerPlaceholder": "Select trainer",
+      "learnersLabel": "Select learner(s)",
+      "learnersPlaceholder": "Select learners...",
+      "noLearners": "No learners found",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Enter session title",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter session description",
+      "locationLabel": "Enter session location",
+      "locationPlaceholder": "Enter location",
+      "startLabel": "Select session date and time",
+      "durationLabel": "Select session duration",
+      "durationHours": "Hours",
+      "durationMinutes": "Minutes",
+      "typeLabel": "Select session type",
+      "typePlaceholder": "Select session type",
+      "typeOptions": {
+        "General": "General",
+        "Induction": "Induction",
+        "Formal Review": "Formal review",
+        "Telephone": "Telephone",
+        "Exit Session": "Exit session",
+        "Out Of the Workplace": "Out of the workplace",
+        "Tests/Exams": "Tests/exams",
+        "Learner Support": "Learner support",
+        "Initial Session": "Initial session",
+        "Gateway Ready": "Gateway ready",
+        "EPA": "EPA",
+        "Furloughed": "Furloughed"
+      },
+      "loading": "Loading...",
+      "toastCreateSuccess": "Session created successfully",
+      "toastUpdateSuccess": "Session updated successfully",
+      "toastSaveFailed": "Failed to save session",
+      "validation": {
+        "trainerRequired": "Trainer is required",
+        "learnersRequired": "At least one learner is required",
+        "titleRequired": "Title is required",
+        "locationRequired": "Location is required",
+        "startDateRequired": "Start date is required",
+        "durationRequired": "Duration is required",
+        "typeRequired": "Session type is required"
+      }
+    }
   },
   "forum": {
     "pageTitle": "Forum",

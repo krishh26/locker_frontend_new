@@ -476,8 +476,138 @@
     "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "कैलेंडर",
+    "pageSubtitle": "सेशन और अपॉइंटमेंट मैनेज करें",
+    "filters": {
+      "trainerPlaceholder": "ट्रेनर से फ़िल्टर करें",
+      "allTrainers": "सभी ट्रेनर",
+      "loading": "लोड हो रहा है...",
+      "attendedPlaceholder": "उपस्थिति स्टेटस से फ़िल्टर करें",
+      "allStatus": "सभी स्टेटस",
+      "view": {
+        "calendar": "कैलेंडर",
+        "list": "लिस्ट"
+      },
+      "exportCsv": "CSV निर्यात करें"
+    },
+    "status": {
+      "notSet": "सेट नहीं",
+      "attended": "उपस्थित",
+      "cancelled": "रद्द",
+      "cancelledByAssessor": "ट्रेनर ने रद्द किया",
+      "cancelledByLearner": "शिक्षार्थी ने रद्द किया",
+      "cancelledByEmployer": "नियोक्ता ने रद्द किया",
+      "learnerLate": "शिक्षार्थी देर से",
+      "assessorLate": "ट्रेनर देर से",
+      "learnerNotAttended": "शिक्षार्थी उपस्थित नहीं",
+      "lateGeneric": "देर से",
+      "notAttendedGeneric": "उपस्थित नहीं"
+    },
+    "legend": {
+      "title": "स्टेटस लेजेंड"
+    },
+    "month": {
+      "today": "आज",
+      "weekdays": {
+        "sun": "रवि",
+        "mon": "सोम",
+        "tue": "मंगल",
+        "wed": "बुध",
+        "thu": "गुरु",
+        "fri": "शुक्र",
+        "sat": "शनि"
+      }
+    },
+    "sort": {
+      "byVisitDate": "विज़िट डेट से सॉर्ट करें",
+      "latestFirst": "नए पहले",
+      "oldestFirst": "पुराने पहले"
+    },
+    "list": {
+      "headers": {
+        "title": "टाइटल",
+        "learners": "शिक्षार्थी",
+        "trainer": "ट्रेनर",
+        "location": "स्थान",
+        "visitDate": "विज़िट डेट",
+        "duration": "अवधि",
+        "attended": "उपस्थिति",
+        "action": "एक्शन"
+      },
+      "untitledSession": "बिना शीर्षक वाला सेशन",
+      "emptyTitle": "कोई डेटा नहीं मिला",
+      "emptyDescription": "अभी तक कोई सेशन शेड्यूल नहीं है। सेशन बनने पर वे यहाँ दिखेंगे।",
+      "actions": {
+        "edit": "एडिट",
+        "delete": "डिलीट"
+      },
+      "pagination": {
+        "pageOf": "पेज {page} / {pages}",
+        "totalItems": "कुल {count} आइटम",
+        "previous": "पिछला",
+        "next": "अगला"
+      },
+      "deleteDialog": {
+        "title": "सेशन डिलीट करें?",
+        "description": "इस सेशन को डिलीट करने पर इससे जुड़ा सारा डेटा और रिलेशन हट जाएगा। क्या आप जारी रखना चाहते हैं?",
+        "cancel": "रद्द करें",
+        "confirm": "सेशन डिलीट करें"
+      },
+      "toastStatusUpdated": "सेशन स्टेटस सफलतापूर्वक अपडेट हुआ",
+      "toastStatusUpdateFailed": "सेशन स्टेटस अपडेट करने में विफल",
+      "toastDeleteSuccess": "सेशन सफलतापूर्वक डिलीट हुआ",
+      "toastDeleteFailed": "सेशन डिलीट करने में विफल"
+    },
+    "sessionDialog": {
+      "titleCreate": "नया सेशन बुक करें",
+      "subtitleCreate": "नया सेशन बनाने के लिए नीचे डिटेल भरें।",
+      "titleEdit": "सेशन एडिट करें",
+      "subtitleEdit": "नीचे सेशन की डिटेल अपडेट करें।",
+      "trainerLabel": "ट्रेनर चुनें",
+      "trainerPlaceholder": "ट्रेनर चुनें",
+      "learnersLabel": "शिक्षार्थी चुनें",
+      "learnersPlaceholder": "शिक्षार्थी चुनें...",
+      "noLearners": "कोई शिक्षार्थी नहीं मिला",
+      "titleLabel": "टाइटल",
+      "titlePlaceholder": "सेशन टाइटल दर्ज करें",
+      "descriptionLabel": "डिस्क्रिप्शन",
+      "descriptionPlaceholder": "सेशन डिस्क्रिप्शन दर्ज करें",
+      "locationLabel": "सेशन लोकेशन",
+      "locationPlaceholder": "स्थान दर्ज करें",
+      "startLabel": "सेशन की तारीख और समय चुनें",
+      "durationLabel": "सेशन की अवधि चुनें",
+      "durationHours": "घंटे",
+      "durationMinutes": "मिनट",
+      "typeLabel": "सेशन टाइप चुनें",
+      "typePlaceholder": "सेशन टाइप चुनें",
+      "typeOptions": {
+        "General": "जनरल",
+        "Induction": "इंडक्शन",
+        "Formal Review": "फ़ॉर्मल रिव्यू",
+        "Telephone": "टेलीफोन",
+        "Exit Session": "एग्ज़िट सेशन",
+        "Out Of the Workplace": "वर्कप्लेस के बाहर",
+        "Tests/Exams": "टेस्ट/एग्ज़ाम",
+        "Learner Support": "लर्नर सपोर्ट",
+        "Initial Session": "इनिशियल सेशन",
+        "Gateway Ready": "गेटवे रेडी",
+        "EPA": "EPA",
+        "Furloughed": "फ़रलो"
+      },
+      "loading": "लोड हो रहा है...",
+      "toastCreateSuccess": "सेशन सफलतापूर्वक बनाया गया",
+      "toastUpdateSuccess": "सेशन सफलतापूर्वक अपडेट हुआ",
+      "toastSaveFailed": "सेशन सेव करने में विफल",
+      "validation": {
+        "trainerRequired": "ट्रेनर आवश्यक है",
+        "learnersRequired": "कम से कम एक शिक्षार्थी चुनना ज़रूरी है",
+        "titleRequired": "टाइटल आवश्यक है",
+        "locationRequired": "स्थान आवश्यक है",
+        "startDateRequired": "स्टार्ट डेट आवश्यक है",
+        "durationRequired": "अवधि आवश्यक है",
+        "typeRequired": "सेशन टाइप आवश्यक है"
+      }
+    }
   },
   "forum": {
     "pageTitle": "फ़ोरम",

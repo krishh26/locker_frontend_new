@@ -476,8 +476,138 @@
     "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "Calendrier",
+    "pageSubtitle": "Gérer les sessions et les rendez-vous",
+    "filters": {
+      "trainerPlaceholder": "Filtrer par formateur",
+      "allTrainers": "Tous les formateurs",
+      "loading": "Chargement...",
+      "attendedPlaceholder": "Filtrer par statut de présence",
+      "allStatus": "Tous les statuts",
+      "view": {
+        "calendar": "Calendrier",
+        "list": "Liste"
+      },
+      "exportCsv": "Exporter en CSV"
+    },
+    "status": {
+      "notSet": "Non défini",
+      "attended": "Présent",
+      "cancelled": "Annulé",
+      "cancelledByAssessor": "Annulé par le formateur",
+      "cancelledByLearner": "Annulé par l'apprenant",
+      "cancelledByEmployer": "Annulé par l'employeur",
+      "learnerLate": "Apprenant en retard",
+      "assessorLate": "Formateur en retard",
+      "learnerNotAttended": "Apprenant absent",
+      "lateGeneric": "En retard",
+      "notAttendedGeneric": "Absent"
+    },
+    "legend": {
+      "title": "Légende des statuts"
+    },
+    "month": {
+      "today": "Aujourd'hui",
+      "weekdays": {
+        "sun": "Dim",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mer",
+        "thu": "Jeu",
+        "fri": "Ven",
+        "sat": "Sam"
+      }
+    },
+    "sort": {
+      "byVisitDate": "Trier par date de visite",
+      "latestFirst": "Plus récentes d'abord",
+      "oldestFirst": "Plus anciennes d'abord"
+    },
+    "list": {
+      "headers": {
+        "title": "Titre",
+        "learners": "Apprenants",
+        "trainer": "Formateur",
+        "location": "Lieu",
+        "visitDate": "Date de visite",
+        "duration": "Durée",
+        "attended": "Présence",
+        "action": "Action"
+      },
+      "untitledSession": "Session sans titre",
+      "emptyTitle": "Aucune donnée",
+      "emptyDescription": "Aucune session planifiée pour le moment. Elles apparaîtront ici une fois créées.",
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "pagination": {
+        "pageOf": "Page {page} sur {pages}",
+        "totalItems": "{count} élément(s) au total",
+        "previous": "Précédent",
+        "next": "Suivant"
+      },
+      "deleteDialog": {
+        "title": "Supprimer la session ?",
+        "description": "La suppression de cette session supprimera également toutes les données associées. Continuer la suppression ?",
+        "cancel": "Annuler",
+        "confirm": "Supprimer la session"
+      },
+      "toastStatusUpdated": "Statut de la session mis à jour",
+      "toastStatusUpdateFailed": "Échec de la mise à jour du statut de la session",
+      "toastDeleteSuccess": "Session supprimée avec succès",
+      "toastDeleteFailed": "Échec de la suppression de la session"
+    },
+    "sessionDialog": {
+      "titleCreate": "Planifier une nouvelle session",
+      "subtitleCreate": "Renseignez les informations ci-dessous pour créer une nouvelle session.",
+      "titleEdit": "Modifier la session",
+      "subtitleEdit": "Mettez à jour les détails de la session ci-dessous.",
+      "trainerLabel": "Sélectionner un formateur",
+      "trainerPlaceholder": "Choisissez un formateur",
+      "learnersLabel": "Sélectionner des apprenants",
+      "learnersPlaceholder": "Choisissez des apprenants...",
+      "noLearners": "Aucun apprenant trouvé",
+      "titleLabel": "Titre",
+      "titlePlaceholder": "Entrez le titre de la session",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Entrez la description de la session",
+      "locationLabel": "Lieu de la session",
+      "locationPlaceholder": "Entrez le lieu",
+      "startLabel": "Sélectionner la date et l'heure",
+      "durationLabel": "Sélectionner la durée",
+      "durationHours": "Heures",
+      "durationMinutes": "Minutes",
+      "typeLabel": "Sélectionner le type de session",
+      "typePlaceholder": "Choisissez un type de session",
+      "typeOptions": {
+        "General": "Général",
+        "Induction": "Induction",
+        "Formal Review": "Revue formelle",
+        "Telephone": "Téléphone",
+        "Exit Session": "Session de sortie",
+        "Out Of the Workplace": "Hors lieu de travail",
+        "Tests/Exams": "Tests/Examens",
+        "Learner Support": "Support apprenant",
+        "Initial Session": "Session initiale",
+        "Gateway Ready": "Prêt pour Gateway",
+        "EPA": "EPA",
+        "Furloughed": "En chômage technique"
+      },
+      "loading": "Chargement...",
+      "toastCreateSuccess": "Session créée avec succès",
+      "toastUpdateSuccess": "Session mise à jour avec succès",
+      "toastSaveFailed": "Échec de l'enregistrement de la session",
+      "validation": {
+        "trainerRequired": "Le formateur est requis",
+        "learnersRequired": "Au moins un apprenant est requis",
+        "titleRequired": "Le titre est requis",
+        "locationRequired": "Le lieu est requis",
+        "startDateRequired": "La date de début est requise",
+        "durationRequired": "La durée est requise",
+        "typeRequired": "Le type de session est requis"
+      }
+    }
   },
   "forum": {
     "pageTitle": "Forum",

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useEffect } from "react"
+import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
@@ -65,6 +66,7 @@ import { EditCentreForm } from "./edit-centre-form"
 const DEFAULT_PAGE_SIZE = 10
 
 export function CentresDataTable() {
+  const t = useTranslations("centres.dataTable")
   const router = useRouter()
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectAuthUser)
@@ -109,14 +111,14 @@ export function CentresDataTable() {
 
   const handleExportCsv = () => {
     if (centres.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("noDataToExport"))
       return
     }
 
-    const headers = ["Name", "Organisation", "Status"]
+    const headers = [t("name"), t("organisation"), t("status")]
     const rows = centres.map((centre: Centre) => [
       centre.name,
-      centre.organisation?.name ?? "Unknown",
+      centre.organisation?.name ?? t("unknown"),
       centre.status,
     ])
 
@@ -132,22 +134,22 @@ export function CentresDataTable() {
     link.download = `centres_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("csvExported"))
   }
 
   const handleExportPdf = () => {
-    const headers = ["Name", "Organisation", "Status"]
+    const headers = [t("name"), t("organisation"), t("status")]
     const rows = centres.map((centre: Centre) => [
       centre.name,
-      centre.organisation?.name ?? "Unknown",
+      centre.organisation?.name ?? t("unknown"),
       centre.status,
     ])
     if (rows.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "Centres", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("pdfTitle"), headers, rows })
+    toast.success(t("pdfExported"))
   }
 
   const handleCreateSuccess = useCallback(() => {
@@ -178,7 +180,7 @@ export function CentresDataTable() {
   const handleActivate = useCallback(async (centre: Centre) => {
     try {
       await activateCentre(centre.id).unwrap()
-      toast.success("Centre activated successfully")
+      toast.success(t("toastActivated"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -186,15 +188,15 @@ export function CentresDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to activate centre"
+          : t("toastActivateFailed")
       toast.error(errorMessage)
     }
-  }, [activateCentre, refetch])
+  }, [activateCentre, refetch, t])
 
   const handleSuspend = useCallback(async (centre: Centre) => {
     try {
       await suspendCentre(centre.id).unwrap()
-      toast.success("Centre suspended successfully")
+      toast.success(t("toastSuspended"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -202,16 +204,16 @@ export function CentresDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to suspend centre"
+          : t("toastSuspendFailed")
       toast.error(errorMessage)
     }
-  }, [suspendCentre, refetch])
+  }, [suspendCentre, refetch, t])
 
   const columns: ColumnDef<Centre>[] = useMemo(
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: t("name"),
         cell: ({ row }) => {
           return (
             <div className="font-medium flex items-center gap-2">
@@ -223,10 +225,10 @@ export function CentresDataTable() {
       },
       {
         accessorKey: "organisationId",
-        header: "Organisation",
+        header: t("organisation"),
         cell: ({ row }) => {
           const org = row.original.organisation
-          const orgName = org?.name ?? "Unknown"
+          const orgName = org?.name ?? t("unknown")
           const orgId = row.original.organisationId ?? org?.id
           if (orgId == null) return <span className="text-muted-foreground">{orgName}</span>
           return (
@@ -243,19 +245,19 @@ export function CentresDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("status"),
         cell: ({ row }) => {
           const status = row.original.status
           return (
             <Badge variant={status === "active" ? "default" : "destructive"}>
-              {status === "active" ? "Active" : "Disabled"}
+              {status === "active" ? t("active") : t("disabled")}
             </Badge>
           )
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("actions"),
         cell: ({ row }) => {
           const centre = row.original
           return (
@@ -266,7 +268,7 @@ export function CentresDataTable() {
                 onClick={() => router.push(`/centres/${centre.id}`)}
               >
                 <Eye className="h-4 w-4 mr-2" />
-                View
+                {t("view")}
               </Button>
               <Button
                 variant="ghost"
@@ -274,7 +276,7 @@ export function CentresDataTable() {
                 onClick={() => handleEdit(centre)}
               >
                 <Edit className="h-4 w-4 mr-2" />
-                Edit
+                {t("edit")}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -289,7 +291,7 @@ export function CentresDataTable() {
                       disabled={isActivating}
                     >
                       <CheckCircle className="h-4 w-4 mr-2" />
-                      Activate
+                      {t("activate")}
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem
@@ -297,7 +299,7 @@ export function CentresDataTable() {
                       disabled={isSuspending}
                     >
                       <XCircle className="h-4 w-4 mr-2" />
-                      Suspend
+                      {t("suspend")}
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
@@ -307,7 +309,7 @@ export function CentresDataTable() {
         },
       },
     ],
-    [router, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
+    [router, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending, t]
   )
 
   const table = useReactTable({
@@ -369,7 +371,7 @@ export function CentresDataTable() {
           <div className="relative max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search centres..."
+              placeholder={t("searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               className="pl-9"
@@ -377,20 +379,20 @@ export function CentresDataTable() {
           </div>
           <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Status" />
+              <SelectValue placeholder={t("statusPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="suspended">Suspended</SelectItem>
+              <SelectItem value="all">{t("allStatuses")}</SelectItem>
+              <SelectItem value="active">{t("active")}</SelectItem>
+              <SelectItem value="suspended">{t("suspended")}</SelectItem>
             </SelectContent>
           </Select>
           <Select value={orgFilter} onValueChange={handleOrgFilterChange}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Filter by organisation" />
+              <SelectValue placeholder={t("filterByOrganisation")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All organisations</SelectItem>
+              <SelectItem value="all">{t("allOrganisations")}</SelectItem>
               {(organisationsData?.data ?? []).map((org: { id: number; name: string }) => (
                 <SelectItem key={org.id} value={String(org.id)}>
                   {org.name}
@@ -405,21 +407,21 @@ export function CentresDataTable() {
             onClick={() => setIsCreateDialogOpen(true)}
           >
             <Plus className="mr-2 h-4 w-4" />
-            Add Centre
+            {t("addCentre")}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                {t("export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv}>
-                Export CSV
+                {t("exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf}>
-                Export PDF
+                {t("exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -468,7 +470,7 @@ export function CentresDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No centres found.
+                  {t("noCentresFound")}
                 </TableCell>
               </TableRow>
             )}
@@ -492,9 +494,9 @@ export function CentresDataTable() {
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create Centre</DialogTitle>
+            <DialogTitle>{t("createTitle")}</DialogTitle>
             <DialogDescription>
-              Add a new centre to an organisation.
+              {t("createDescription")}
             </DialogDescription>
           </DialogHeader>
           <CreateCentreForm
@@ -509,9 +511,9 @@ export function CentresDataTable() {
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Edit Centre</DialogTitle>
+              <DialogTitle>{t("editTitle")}</DialogTitle>
               <DialogDescription>
-                Update centre details.
+                {t("editDescription")}
               </DialogDescription>
             </DialogHeader>
             <EditCentreForm

@@ -34,12 +34,19 @@ export function SimpleFormBuilder({
   initialFields = [],
   onChange,
 }: SimpleFormBuilderProps) {
+  const t = useTranslations('forms.builder.palette')
   const [formFields, setFormFields] = useState<SimpleFormField[]>(initialFields)
   const [editingField, setEditingField] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'components' | 'presets'>(
     'components'
   )
   const [isDraggingFromPalette, setIsDraggingFromPalette] = useState(false)
+
+  const simpleComponents = (COMPONENT_TYPES as readonly string[]).map((type) => ({
+    type,
+    label: t(`componentLabels.${type}` as 'componentLabels.text'),
+    icon: type === 'text' ? '📝' : type === 'email' ? '📧' : type === 'phone' ? '📞' : type === 'number' ? '🔢' : type === 'textarea' ? '📄' : type === 'select' ? '📋' : type === 'radio' ? '🔘' : type === 'checkbox' ? '☑️' : type === 'date' ? '📅' : type === 'file' ? '📎' : '✍️',
+  }))
 
   useEffect(() => {
     setFormFields(initialFields)
@@ -93,22 +100,21 @@ export function SimpleFormBuilder({
       const componentType = e.dataTransfer.getData('application/component-type')
       const presetData = e.dataTransfer.getData('application/preset-field')
 
+      const DEFAULT_LABEL_TYPES = ['text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature'] as const
+      const DEFAULT_PLACEHOLDER_TYPES = ['text', 'email', 'phone', 'number', 'textarea', 'date', 'file'] as const
+
       const getDefaultLabel = (type: string): string => {
-        const key = `defaultLabels.${type}` as const
-        try {
-          return t(key)
-        } catch {
-          return t('defaultLabels.default')
+        if (DEFAULT_LABEL_TYPES.includes(type as (typeof DEFAULT_LABEL_TYPES)[number])) {
+          return t(`defaultLabels.${type}` as 'defaultLabels.text')
         }
+        return t('defaultLabels.default')
       }
 
       const getDefaultPlaceholder = (type: string): string => {
-        const key = `defaultPlaceholders.${type}` as const
-        try {
-          return t(key)
-        } catch {
-          return t('defaultPlaceholders.default')
+        if (DEFAULT_PLACEHOLDER_TYPES.includes(type as (typeof DEFAULT_PLACEHOLDER_TYPES)[number])) {
+          return t(`defaultPlaceholders.${type}` as 'defaultPlaceholders.text')
         }
+        return t('defaultPlaceholders.default')
       }
 
       const needsOptions = (type: string): boolean =>

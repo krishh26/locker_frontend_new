@@ -49,7 +49,7 @@ function DraggablePresetField({
   );
 }
 
-export function PresetItem({ onDragStart, onDragEnd }: PresetItemProps) {
+export function PresetItem({ onDragStart, onDragEnd }: { onDragStart: () => void; onDragEnd: () => void }) {
   const t = useTranslations("forms.builder.presets");
   return (
     <Accordion type="multiple" className="w-full">

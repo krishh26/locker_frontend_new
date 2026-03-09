@@ -553,6 +553,49 @@
       "optionAllIQA": "Todos IQA",
       "optionAllLIQA": "Todos LIQA",
       "optionIndividual": "Individual"
+    },
+    "submittedForms": {
+      "pageTitle": "Formularios enviados",
+      "pageSubtitle": "Ver y gestionar todos los formularios enviados",
+      "table": {
+        "searchPlaceholder": "Buscar por nombre de formulario, usuario o email...",
+        "export": "Exportar",
+        "exportCsv": "Exportar CSV",
+        "formName": "Nombre del formulario",
+        "type": "Tipo",
+        "userName": "Nombre de usuario",
+        "email": "Email",
+        "status": "Estado",
+        "submitDate": "Fecha de envío",
+        "actions": "Acciones",
+        "locked": "Bloqueado",
+        "unlocked": "Desbloqueado",
+        "loading": "Cargando...",
+        "noFormsFound": "No se encontraron formularios.",
+        "toastCsvSuccess": "CSV exportado correctamente",
+        "toastLockSuccess": "¡Formulario bloqueado correctamente!",
+        "toastLockFailed": "Error al bloquear el formulario. Inténtelo de nuevo.",
+        "toastUnlockSuccess": "¡Formulario desbloqueado correctamente!",
+        "toastUnlockFailed": "Error al desbloquear el formulario. Inténtelo de nuevo."
+      },
+      "lockDialog": {
+        "title": "Bloquear formulario",
+        "description": "Está a punto de bloquear el formulario: {formName} para el usuario {userName}",
+        "reasonLabel": "Motivo del bloqueo (opcional)",
+        "reasonPlaceholder": "Indique el motivo del bloqueo de este formulario...",
+        "cancel": "Cancelar",
+        "submit": "Bloquear formulario",
+        "submitting": "Bloqueando..."
+      },
+      "unlockDialog": {
+        "title": "Desbloquear formulario",
+        "description": "Está a punto de desbloquear el formulario: {formName} para el usuario {userName}",
+        "reasonLabel": "Motivo del desbloqueo (opcional)",
+        "reasonPlaceholder": "Indique el motivo del desbloqueo de este formulario...",
+        "cancel": "Cancelar",
+        "submit": "Desbloquear formulario",
+        "submitting": "Desbloqueando..."
+      }
     }
   },
   "iqaQuestions": {

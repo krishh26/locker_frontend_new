@@ -712,6 +712,49 @@
     "optionAllIQA": "Todos IQA",
     "optionAllLIQA": "Todos LIQA",
     "optionIndividual": "Individual"
+  },
+  "submittedForms": {
+    "pageTitle": "Formulários submetidos",
+    "pageSubtitle": "Ver e gerir todos os formulários submetidos",
+    "table": {
+      "searchPlaceholder": "Pesquisar por nome do formulário, utilizador ou email...",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "formName": "Nome do formulário",
+      "type": "Tipo",
+      "userName": "Nome do utilizador",
+      "email": "Email",
+      "status": "Estado",
+      "submitDate": "Data de submissão",
+      "actions": "Ações",
+      "locked": "Bloqueado",
+      "unlocked": "Desbloqueado",
+      "loading": "A carregar...",
+      "noFormsFound": "Nenhum formulário encontrado.",
+      "toastCsvSuccess": "CSV exportado com sucesso",
+      "toastLockSuccess": "Formulário bloqueado com sucesso!",
+      "toastLockFailed": "Falha ao bloquear o formulário. Tente novamente.",
+      "toastUnlockSuccess": "Formulário desbloqueado com sucesso!",
+      "toastUnlockFailed": "Falha ao desbloquear o formulário. Tente novamente."
+    },
+    "lockDialog": {
+      "title": "Bloquear formulário",
+      "description": "Está prestes a bloquear o formulário: {formName} para o utilizador {userName}",
+      "reasonLabel": "Motivo do bloqueio (opcional)",
+      "reasonPlaceholder": "Indique o motivo do bloqueio deste formulário...",
+      "cancel": "Cancelar",
+      "submit": "Bloquear formulário",
+      "submitting": "A bloquear..."
+    },
+    "unlockDialog": {
+      "title": "Desbloquear formulário",
+      "description": "Está prestes a desbloquear o formulário: {formName} para o utilizador {userName}",
+      "reasonLabel": "Motivo do desbloqueio (opcional)",
+      "reasonPlaceholder": "Indique o motivo do desbloqueio deste formulário...",
+      "cancel": "Cancelar",
+      "submit": "Desbloquear formulário",
+      "submitting": "A desbloquear..."
+    }
   }
   },
   "iqaQuestions": {

@@ -732,6 +732,49 @@
       "optionAllIQA": "All IQA",
       "optionAllLIQA": "All LIQA",
       "optionIndividual": "Individual"
+    },
+    "submittedForms": {
+      "pageTitle": "Submitted Forms",
+      "pageSubtitle": "View and manage all submitted forms",
+      "table": {
+        "searchPlaceholder": "Search by form name, user, or email...",
+        "export": "Export",
+        "exportCsv": "Export CSV",
+        "formName": "Form Name",
+        "type": "Type",
+        "userName": "User Name",
+        "email": "Email",
+        "status": "Status",
+        "submitDate": "Submit Date",
+        "actions": "Actions",
+        "locked": "Locked",
+        "unlocked": "Unlocked",
+        "loading": "Loading...",
+        "noFormsFound": "No forms found.",
+        "toastCsvSuccess": "CSV exported successfully",
+        "toastLockSuccess": "Form locked successfully!",
+        "toastLockFailed": "Failed to lock form. Please try again.",
+        "toastUnlockSuccess": "Form unlocked successfully!",
+        "toastUnlockFailed": "Failed to unlock form. Please try again."
+      },
+      "lockDialog": {
+        "title": "Lock Form",
+        "description": "You are about to lock the form: {formName} for user {userName}",
+        "reasonLabel": "Reason for Locking (Optional)",
+        "reasonPlaceholder": "Please provide a reason for locking this form...",
+        "cancel": "Cancel",
+        "submit": "Lock Form",
+        "submitting": "Locking..."
+      },
+      "unlockDialog": {
+        "title": "Unlock Form",
+        "description": "You are about to unlock the form: {formName} for user {userName}",
+        "reasonLabel": "Reason for Unlocking (Optional)",
+        "reasonPlaceholder": "Please provide a reason for unlocking this form...",
+        "cancel": "Cancel",
+        "submit": "Unlock Form",
+        "submitting": "Unlocking..."
+      }
     }
   },
   "iqaQuestions": {

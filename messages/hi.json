@@ -712,6 +712,49 @@
     "optionAllIQA": "सभी IQA",
     "optionAllLIQA": "सभी LIQA",
     "optionIndividual": "व्यक्तिगत"
+  },
+  "submittedForms": {
+    "pageTitle": "जमा किए गए फ़ॉर्म",
+    "pageSubtitle": "सभी जमा किए गए फ़ॉर्म देखें और प्रबंधित करें",
+    "table": {
+      "searchPlaceholder": "फ़ॉर्म नाम, उपयोगकर्ता या ईमेल से खोजें...",
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट करें",
+      "formName": "फ़ॉर्म का नाम",
+      "type": "प्रकार",
+      "userName": "उपयोगकर्ता का नाम",
+      "email": "ईमेल",
+      "status": "स्थिति",
+      "submitDate": "जमा तारीख",
+      "actions": "क्रियाएँ",
+      "locked": "लॉक किया गया",
+      "unlocked": "अनलॉक किया गया",
+      "loading": "लोड हो रहा है...",
+      "noFormsFound": "कोई फ़ॉर्म नहीं मिला।",
+      "toastCsvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+      "toastLockSuccess": "फ़ॉर्म सफलतापूर्वक लॉक हो गया!",
+      "toastLockFailed": "फ़ॉर्म लॉक करने में विफल। कृपया पुनः प्रयास करें।",
+      "toastUnlockSuccess": "फ़ॉर्म सफलतापूर्वक अनलॉक हो गया!",
+      "toastUnlockFailed": "फ़ॉर्म अनलॉक करने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "lockDialog": {
+      "title": "फ़ॉर्म लॉक करें",
+      "description": "आप फ़ॉर्म लॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
+      "reasonLabel": "लॉक करने का कारण (वैकल्पिक)",
+      "reasonPlaceholder": "कृपया इस फ़ॉर्म को लॉक करने का कारण बताएं...",
+      "cancel": "रद्द करें",
+      "submit": "फ़ॉर्म लॉक करें",
+      "submitting": "लॉक हो रहा है..."
+    },
+    "unlockDialog": {
+      "title": "फ़ॉर्म अनलॉक करें",
+      "description": "आप फ़ॉर्म अनलॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
+      "reasonLabel": "अनलॉक करने का कारण (वैकल्पिक)",
+      "reasonPlaceholder": "कृपया इस फ़ॉर्म को अनलॉक करने का कारण बताएं...",
+      "cancel": "रद्द करें",
+      "submit": "फ़ॉर्म अनलॉक करें",
+      "submitting": "अनलॉक हो रहा है..."
+    }
   }
   },
   "iqaQuestions": {

@@ -712,6 +712,49 @@
     "optionAllIQA": "Tous IQA",
     "optionAllLIQA": "Tous LIQA",
     "optionIndividual": "Individuel"
+  },
+  "submittedForms": {
+    "pageTitle": "Formulaires soumis",
+    "pageSubtitle": "Voir et gérer tous les formulaires soumis",
+    "table": {
+      "searchPlaceholder": "Rechercher par nom de formulaire, utilisateur ou email...",
+      "export": "Exporter",
+      "exportCsv": "Exporter en CSV",
+      "formName": "Nom du formulaire",
+      "type": "Type",
+      "userName": "Nom d'utilisateur",
+      "email": "Email",
+      "status": "Statut",
+      "submitDate": "Date de soumission",
+      "actions": "Actions",
+      "locked": "Verrouillé",
+      "unlocked": "Déverrouillé",
+      "loading": "Chargement...",
+      "noFormsFound": "Aucun formulaire trouvé.",
+      "toastCsvSuccess": "CSV exporté avec succès",
+      "toastLockSuccess": "Formulaire verrouillé avec succès !",
+      "toastLockFailed": "Échec du verrouillage du formulaire. Veuillez réessayer.",
+      "toastUnlockSuccess": "Formulaire déverrouillé avec succès !",
+      "toastUnlockFailed": "Échec du déverrouillage du formulaire. Veuillez réessayer."
+    },
+    "lockDialog": {
+      "title": "Verrouiller le formulaire",
+      "description": "Vous êtes sur le point de verrouiller le formulaire : {formName} pour l'utilisateur {userName}",
+      "reasonLabel": "Raison du verrouillage (facultatif)",
+      "reasonPlaceholder": "Veuillez indiquer la raison du verrouillage de ce formulaire...",
+      "cancel": "Annuler",
+      "submit": "Verrouiller le formulaire",
+      "submitting": "Verrouillage..."
+    },
+    "unlockDialog": {
+      "title": "Déverrouiller le formulaire",
+      "description": "Vous êtes sur le point de déverrouiller le formulaire : {formName} pour l'utilisateur {userName}",
+      "reasonLabel": "Raison du déverrouillage (facultatif)",
+      "reasonPlaceholder": "Veuillez indiquer la raison du déverrouillage de ce formulaire...",
+      "cancel": "Annuler",
+      "submit": "Déverrouiller le formulaire",
+      "submitting": "Déverrouillage..."
+    }
   }
   },
   "iqaQuestions": {

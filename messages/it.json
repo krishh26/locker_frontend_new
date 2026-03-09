@@ -465,6 +465,49 @@
       "optionAllIQA": "Tutti IQA",
       "optionAllLIQA": "Tutti LIQA",
       "optionIndividual": "Singolo"
+    },
+    "submittedForms": {
+      "pageTitle": "Moduli inviati",
+      "pageSubtitle": "Visualizza e gestisci tutti i moduli inviati",
+      "table": {
+        "searchPlaceholder": "Cerca per nome modulo, utente o email...",
+        "export": "Esporta",
+        "exportCsv": "Esporta CSV",
+        "formName": "Nome modulo",
+        "type": "Tipo",
+        "userName": "Nome utente",
+        "email": "Email",
+        "status": "Stato",
+        "submitDate": "Data invio",
+        "actions": "Azioni",
+        "locked": "Bloccato",
+        "unlocked": "Sbloccato",
+        "loading": "Caricamento...",
+        "noFormsFound": "Nessun modulo trovato.",
+        "toastCsvSuccess": "CSV esportato con successo",
+        "toastLockSuccess": "Modulo bloccato con successo!",
+        "toastLockFailed": "Impossibile bloccare il modulo. Riprova.",
+        "toastUnlockSuccess": "Modulo sbloccato con successo!",
+        "toastUnlockFailed": "Impossibile sbloccare il modulo. Riprova."
+      },
+      "lockDialog": {
+        "title": "Blocca modulo",
+        "description": "Stai per bloccare il modulo: {formName} per l'utente {userName}",
+        "reasonLabel": "Motivo del blocco (facoltativo)",
+        "reasonPlaceholder": "Fornisci un motivo per il blocco di questo modulo...",
+        "cancel": "Annulla",
+        "submit": "Blocca modulo",
+        "submitting": "Blocco in corso..."
+      },
+      "unlockDialog": {
+        "title": "Sblocca modulo",
+        "description": "Stai per sbloccare il modulo: {formName} per l'utente {userName}",
+        "reasonLabel": "Motivo dello sblocco (facoltativo)",
+        "reasonPlaceholder": "Fornisci un motivo per lo sblocco di questo modulo...",
+        "cancel": "Annulla",
+        "submit": "Sblocca modulo",
+        "submitting": "Sblocco in corso..."
+      }
     }
   },
   "iqaQuestions": {

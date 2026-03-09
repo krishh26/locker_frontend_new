@@ -713,6 +713,49 @@
     "optionAllIQA": "جميع IQA",
     "optionAllLIQA": "جميع LIQA",
     "optionIndividual": "فردي"
+  },
+  "submittedForms": {
+    "pageTitle": "النماذج المُرسلة",
+    "pageSubtitle": "عرض وإدارة جميع النماذج المُرسلة",
+    "table": {
+      "searchPlaceholder": "البحث باسم النموذج أو المستخدم أو البريد...",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "formName": "اسم النموذج",
+      "type": "النوع",
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "status": "الحالة",
+      "submitDate": "تاريخ الإرسال",
+      "actions": "إجراءات",
+      "locked": "مقفل",
+      "unlocked": "مفتوح",
+      "loading": "جاري التحميل...",
+      "noFormsFound": "لم يتم العثور على نماذج.",
+      "toastCsvSuccess": "تم تصدير CSV بنجاح",
+      "toastLockSuccess": "تم قفل النموذج بنجاح!",
+      "toastLockFailed": "فشل قفل النموذج. يرجى المحاولة مرة أخرى.",
+      "toastUnlockSuccess": "تم فتح النموذج بنجاح!",
+      "toastUnlockFailed": "فشل فتح النموذج. يرجى المحاولة مرة أخرى."
+    },
+    "lockDialog": {
+      "title": "قفل النموذج",
+      "description": "أنت على وشك قفل النموذج: {formName} للمستخدم {userName}",
+      "reasonLabel": "سبب القفل (اختياري)",
+      "reasonPlaceholder": "يرجى تقديم سبب لقفل هذا النموذج...",
+      "cancel": "إلغاء",
+      "submit": "قفل النموذج",
+      "submitting": "جاري القفل..."
+    },
+    "unlockDialog": {
+      "title": "فتح النموذج",
+      "description": "أنت على وشك فتح النموذج: {formName} للمستخدم {userName}",
+      "reasonLabel": "سبب الفتح (اختياري)",
+      "reasonPlaceholder": "يرجى تقديم سبب لفتح هذا النموذج...",
+      "cancel": "إلغاء",
+      "submit": "فتح النموذج",
+      "submitting": "جاري الفتح..."
+    }
   }
   },
   "iqaQuestions": {

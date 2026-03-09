@@ -712,6 +712,49 @@
     "optionAllIQA": "全部 IQA",
     "optionAllLIQA": "全部 LIQA",
     "optionIndividual": "个人"
+  },
+  "submittedForms": {
+    "pageTitle": "已提交表单",
+    "pageSubtitle": "查看和管理所有已提交的表单",
+    "table": {
+      "searchPlaceholder": "按表单名称、用户或邮箱搜索...",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "formName": "表单名称",
+      "type": "类型",
+      "userName": "用户名",
+      "email": "邮箱",
+      "status": "状态",
+      "submitDate": "提交日期",
+      "actions": "操作",
+      "locked": "已锁定",
+      "unlocked": "已解锁",
+      "loading": "加载中...",
+      "noFormsFound": "未找到表单。",
+      "toastCsvSuccess": "CSV 导出成功",
+      "toastLockSuccess": "表单已成功锁定！",
+      "toastLockFailed": "锁定表单失败，请重试。",
+      "toastUnlockSuccess": "表单已成功解锁！",
+      "toastUnlockFailed": "解锁表单失败，请重试。"
+    },
+    "lockDialog": {
+      "title": "锁定表单",
+      "description": "您即将锁定表单：{formName}，用户：{userName}",
+      "reasonLabel": "锁定原因（选填）",
+      "reasonPlaceholder": "请说明锁定此表单的原因...",
+      "cancel": "取消",
+      "submit": "锁定表单",
+      "submitting": "正在锁定..."
+    },
+    "unlockDialog": {
+      "title": "解锁表单",
+      "description": "您即将解锁表单：{formName}，用户：{userName}",
+      "reasonLabel": "解锁原因（选填）",
+      "reasonPlaceholder": "请说明解锁此表单的原因...",
+      "cancel": "取消",
+      "submit": "解锁表单",
+      "submitting": "正在解锁..."
+    }
   }
   },
   "iqaQuestions": {

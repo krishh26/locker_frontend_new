@@ -465,6 +465,49 @@
       "optionAllIQA": "Alle IQA",
       "optionAllLIQA": "Alle LIQA",
       "optionIndividual": "Einzeln"
+    },
+    "submittedForms": {
+      "pageTitle": "Eingereichte Formulare",
+      "pageSubtitle": "Alle eingereichten Formulare anzeigen und verwalten",
+      "table": {
+        "searchPlaceholder": "Nach Formularname, Benutzer oder E-Mail suchen...",
+        "export": "Exportieren",
+        "exportCsv": "Als CSV exportieren",
+        "formName": "Formularname",
+        "type": "Typ",
+        "userName": "Benutzername",
+        "email": "E-Mail",
+        "status": "Status",
+        "submitDate": "Einreichungsdatum",
+        "actions": "Aktionen",
+        "locked": "Gesperrt",
+        "unlocked": "Entsperrt",
+        "loading": "Laden...",
+        "noFormsFound": "Keine Formulare gefunden.",
+        "toastCsvSuccess": "CSV erfolgreich exportiert",
+        "toastLockSuccess": "Formular erfolgreich gesperrt!",
+        "toastLockFailed": "Formular konnte nicht gesperrt werden. Bitte erneut versuchen.",
+        "toastUnlockSuccess": "Formular erfolgreich entsperrt!",
+        "toastUnlockFailed": "Formular konnte nicht entsperrt werden. Bitte erneut versuchen."
+      },
+      "lockDialog": {
+        "title": "Formular sperren",
+        "description": "Sie sind dabei, das Formular {formName} für Benutzer {userName} zu sperren",
+        "reasonLabel": "Grund für die Sperrung (optional)",
+        "reasonPlaceholder": "Bitte geben Sie einen Grund für die Sperrung dieses Formulars an...",
+        "cancel": "Abbrechen",
+        "submit": "Formular sperren",
+        "submitting": "Wird gesperrt..."
+      },
+      "unlockDialog": {
+        "title": "Formular entsperren",
+        "description": "Sie sind dabei, das Formular {formName} für Benutzer {userName} zu entsperren",
+        "reasonLabel": "Grund für die Entsperrung (optional)",
+        "reasonPlaceholder": "Bitte geben Sie einen Grund für die Entsperrung dieses Formulars an...",
+        "cancel": "Abbrechen",
+        "submit": "Formular entsperren",
+        "submitting": "Wird entsperrt..."
+      }
     }
   },
   "iqaQuestions": {

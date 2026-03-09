@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import {
   type ColumnDef,
@@ -53,6 +54,7 @@ import type { SubmittedForm } from "@/store/api/forms/types"
 import { DataTablePagination } from "@/components/data-table-pagination"
 
 export function SubmittedFormsDataTable() {
+  const t = useTranslations("forms")
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [searchKeyword, setSearchKeyword] = useState("")
@@ -104,12 +106,12 @@ export function SubmittedFormsDataTable() {
         userId: selectedForm.user.user_id,
         reason,
       }).unwrap()
-      toast.success("Form locked successfully!")
+      toast.success(t("submittedForms.table.toastLockSuccess"))
       setLockDialogOpen(false)
       setSelectedForm(null)
       refetch()
     } catch {
-      toast.error("Failed to lock form. Please try again.")
+      toast.error(t("submittedForms.table.toastLockFailed"))
     }
   }
 
@@ -122,12 +124,12 @@ export function SubmittedFormsDataTable() {
         userId: selectedForm.user.user_id,
         reason,
       }).unwrap()
-      toast.success("Form unlocked successfully!")
+      toast.success(t("submittedForms.table.toastUnlockSuccess"))
       setUnlockDialogOpen(false)
       setSelectedForm(null)
       refetch()
     } catch {
-      toast.error("Failed to unlock form. Please try again.")
+      toast.error(t("submittedForms.table.toastUnlockFailed"))
     }
   }
 
@@ -164,31 +166,31 @@ export function SubmittedFormsDataTable() {
     () => [
       {
         accessorKey: "form.form_name",
-        header: "Form Name",
+        header: t("submittedForms.table.formName"),
         cell: ({ row }) => (
           <div className="font-medium">{row.original.form.form_name}</div>
         ),
       },
       {
         accessorKey: "form.type",
-        header: "Type",
+        header: t("submittedForms.table.type"),
         cell: ({ row }) => (
           <Badge variant="outline">{row.original.form.type}</Badge>
         ),
       },
       {
         accessorKey: "user.user_name",
-        header: "User Name",
+        header: t("submittedForms.table.userName"),
         cell: ({ row }) => row.original.user.user_name,
       },
       {
         accessorKey: "user.email",
-        header: "Email",
+        header: t("submittedForms.table.email"),
         cell: ({ row }) => row.original.user.email,
       },
       {
         accessorKey: "is_locked",
-        header: "Status",
+        header: t("submittedForms.table.status"),
         cell: ({ row }) => (
           <Badge
             variant={row.original.is_locked ? "destructive" : "default"}
@@ -197,12 +199,12 @@ export function SubmittedFormsDataTable() {
             {row.original.is_locked ? (
               <>
                 <Lock className="h-3 w-3" />
-                Locked
+                {t("submittedForms.table.locked")}
               </>
             ) : (
               <>
                 <LockOpen className="h-3 w-3" />
-                Unlocked
+                {t("submittedForms.table.unlocked")}
               </>
             )}
           </Badge>
@@ -210,12 +212,12 @@ export function SubmittedFormsDataTable() {
       },
       {
         accessorKey: "created_at",
-        header: "Submit Date",
+        header: t("submittedForms.table.submitDate"),
         cell: ({ row }) => formatDate(row.original.created_at),
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("submittedForms.table.actions"),
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <Button
@@ -250,7 +252,7 @@ export function SubmittedFormsDataTable() {
         ),
       },
     ],
-    []
+    [t]
   )
 
   const table = useReactTable({
@@ -279,19 +281,19 @@ export function SubmittedFormsDataTable() {
   const handleExportCSV = () => {
     const data = formsData?.data || []
     const headers = [
-      "Form Name",
-      "Type",
-      "User Name",
-      "Email",
-      "Status",
-      "Submit Date",
+      t("submittedForms.table.formName"),
+      t("submittedForms.table.type"),
+      t("submittedForms.table.userName"),
+      t("submittedForms.table.email"),
+      t("submittedForms.table.status"),
+      t("submittedForms.table.submitDate"),
     ]
     const rows = data.map((form) => [
       form.form.form_name,
       form.form.type,
       form.user.user_name,
       form.user.email,
-      form.is_locked ? "Locked" : "Unlocked",
+      form.is_locked ? t("submittedForms.table.locked") : t("submittedForms.table.unlocked"),
       formatDate(form.created_at),
     ])
 
@@ -312,7 +314,7 @@ export function SubmittedFormsDataTable() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-    toast.success("CSV exported successfully")
+    toast.success(t("submittedForms.table.toastCsvSuccess"))
   }
 
   return (
@@ -322,7 +324,7 @@ export function SubmittedFormsDataTable() {
         <div className="relative flex-1 sm:max-w-sm">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search by form name, user, or email..."
+            placeholder={t("submittedForms.table.searchPlaceholder")}
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             onKeyDown={handleSearchKeyDown}
@@ -343,12 +345,12 @@ export function SubmittedFormsDataTable() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="gap-2">
               <Download className="h-4 w-4" />
-              Export
+              {t("submittedForms.table.export")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={handleExportCSV}>
-              Export CSV
+              {t("submittedForms.table.exportCsv")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -380,7 +382,7 @@ export function SubmittedFormsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  {t("submittedForms.table.loading")}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -405,7 +407,7 @@ export function SubmittedFormsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No forms found.
+                  {t("submittedForms.table.noFormsFound")}
                 </TableCell>
               </TableRow>
             )}

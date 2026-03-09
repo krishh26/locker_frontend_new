@@ -775,6 +775,27 @@
         "submit": "Unlock Form",
         "submitting": "Unlocking..."
       }
+    },
+    "templates": {
+      "sectionTitle": "Form Templates",
+      "searchPlaceholder": "Search templates...",
+      "clear": "Clear",
+      "createTemplate": "Create Template",
+      "noTemplatesFound": "No templates found",
+      "noTemplatesDescription": "Create a template to reuse form structures",
+      "templateName": "Template Name",
+      "createDate": "Create Date",
+      "actions": "Actions",
+      "useTemplate": "Use Template",
+      "toastDeleteSuccess": "Template deleted successfully",
+      "toastDeleteFailed": "Failed to delete template",
+      "deleteDialog": {
+        "title": "Are you sure?",
+        "description": "This action cannot be undone. This will permanently delete the template {name}.",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleting": "Deleting..."
+      }
     }
   },
   "iqaQuestions": {

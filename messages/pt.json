@@ -755,6 +755,27 @@
       "submit": "Desbloquear formulário",
       "submitting": "A desbloquear..."
     }
+  },
+  "templates": {
+    "sectionTitle": "Modelos de formulários",
+    "searchPlaceholder": "Pesquisar modelos...",
+    "clear": "Limpar",
+    "createTemplate": "Criar modelo",
+    "noTemplatesFound": "Nenhum modelo encontrado",
+    "noTemplatesDescription": "Crie um modelo para reutilizar estruturas de formulários",
+    "templateName": "Nome do modelo",
+    "createDate": "Data de criação",
+    "actions": "Ações",
+    "useTemplate": "Usar modelo",
+    "toastDeleteSuccess": "Modelo eliminado com sucesso",
+    "toastDeleteFailed": "Falha ao eliminar o modelo",
+    "deleteDialog": {
+      "title": "Tem a certeza?",
+      "description": "Esta ação não pode ser anulada. O modelo {name} será eliminado permanentemente.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "deleting": "A eliminar..."
+    }
   }
   },
   "iqaQuestions": {

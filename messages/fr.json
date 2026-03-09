@@ -755,6 +755,27 @@
       "submit": "Déverrouiller le formulaire",
       "submitting": "Déverrouillage..."
     }
+  },
+  "templates": {
+    "sectionTitle": "Modèles de formulaires",
+    "searchPlaceholder": "Rechercher des modèles...",
+    "clear": "Effacer",
+    "createTemplate": "Créer un modèle",
+    "noTemplatesFound": "Aucun modèle trouvé",
+    "noTemplatesDescription": "Créez un modèle pour réutiliser les structures de formulaires",
+    "templateName": "Nom du modèle",
+    "createDate": "Date de création",
+    "actions": "Actions",
+    "useTemplate": "Utiliser le modèle",
+    "toastDeleteSuccess": "Modèle supprimé avec succès",
+    "toastDeleteFailed": "Échec de la suppression du modèle",
+    "deleteDialog": {
+      "title": "Êtes-vous sûr ?",
+      "description": "Cette action est irréversible. Le modèle {name} sera définitivement supprimé.",
+      "cancel": "Annuler",
+      "delete": "Supprimer",
+      "deleting": "Suppression..."
+    }
   }
   },
   "iqaQuestions": {

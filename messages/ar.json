@@ -756,6 +756,27 @@
       "submit": "فتح النموذج",
       "submitting": "جاري الفتح..."
     }
+  },
+  "templates": {
+    "sectionTitle": "قوالب النماذج",
+    "searchPlaceholder": "البحث في القوالب...",
+    "clear": "مسح",
+    "createTemplate": "إنشاء قالب",
+    "noTemplatesFound": "لم يتم العثور على قوالب",
+    "noTemplatesDescription": "أنشئ قالباً لإعادة استخدام هياكل النماذج",
+    "templateName": "اسم القالب",
+    "createDate": "تاريخ الإنشاء",
+    "actions": "إجراءات",
+    "useTemplate": "استخدام القالب",
+    "toastDeleteSuccess": "تم حذف القالب بنجاح",
+    "toastDeleteFailed": "فشل حذف القالب",
+    "deleteDialog": {
+      "title": "هل أنت متأكد؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف القالب {name} نهائياً.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    }
   }
   },
   "iqaQuestions": {

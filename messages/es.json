@@ -596,6 +596,27 @@
         "submit": "Desbloquear formulario",
         "submitting": "Desbloqueando..."
       }
+    },
+    "templates": {
+      "sectionTitle": "Plantillas de formularios",
+      "searchPlaceholder": "Buscar plantillas...",
+      "clear": "Limpiar",
+      "createTemplate": "Crear plantilla",
+      "noTemplatesFound": "No se encontraron plantillas",
+      "noTemplatesDescription": "Cree una plantilla para reutilizar estructuras de formularios",
+      "templateName": "Nombre de plantilla",
+      "createDate": "Fecha de creación",
+      "actions": "Acciones",
+      "useTemplate": "Usar plantilla",
+      "toastDeleteSuccess": "Plantilla eliminada correctamente",
+      "toastDeleteFailed": "Error al eliminar la plantilla",
+      "deleteDialog": {
+        "title": "¿Está seguro?",
+        "description": "Esta acción no se puede deshacer. Se eliminará permanentemente la plantilla {name}.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "deleting": "Eliminando..."
+      }
     }
   },
   "iqaQuestions": {

@@ -755,6 +755,27 @@
       "submit": "解锁表单",
       "submitting": "正在解锁..."
     }
+  },
+  "templates": {
+    "sectionTitle": "表单模板",
+    "searchPlaceholder": "搜索模板...",
+    "clear": "清除",
+    "createTemplate": "创建模板",
+    "noTemplatesFound": "未找到模板",
+    "noTemplatesDescription": "创建模板以重复使用表单结构",
+    "templateName": "模板名称",
+    "createDate": "创建日期",
+    "actions": "操作",
+    "useTemplate": "使用模板",
+    "toastDeleteSuccess": "模板已成功删除",
+    "toastDeleteFailed": "删除模板失败",
+    "deleteDialog": {
+      "title": "确定吗？",
+      "description": "此操作无法撤销。将永久删除模板 {name}。",
+      "cancel": "取消",
+      "delete": "删除",
+      "deleting": "正在删除..."
+    }
   }
   },
   "iqaQuestions": {

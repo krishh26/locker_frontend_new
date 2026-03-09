@@ -755,6 +755,27 @@
       "submit": "फ़ॉर्म अनलॉक करें",
       "submitting": "अनलॉक हो रहा है..."
     }
+  },
+  "templates": {
+    "sectionTitle": "फ़ॉर्म टेम्पलेट",
+    "searchPlaceholder": "टेम्पलेट खोजें...",
+    "clear": "साफ़ करें",
+    "createTemplate": "टेम्पलेट बनाएं",
+    "noTemplatesFound": "कोई टेम्पलेट नहीं मिला",
+    "noTemplatesDescription": "फ़ॉर्म संरचनाओं को पुन: उपयोग करने के लिए टेम्पलेट बनाएं",
+    "templateName": "टेम्पलेट का नाम",
+    "createDate": "बनाने की तारीख",
+    "actions": "कार्रवाइयाँ",
+    "useTemplate": "टेम्पलेट उपयोग करें",
+    "toastDeleteSuccess": "टेम्पलेट सफलतापूर्वक हटाया गया",
+    "toastDeleteFailed": "टेम्पलेट हटाने में विफल",
+    "deleteDialog": {
+      "title": "क्या आप सुनिश्चित हैं?",
+      "description": "यह क्रिया पूर्ववत नहीं की जा सकती। टेम्पलेट {name} स्थायी रूप से हटा दिया जाएगा।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "deleting": "हट रहा है..."
+    }
   }
   },
   "iqaQuestions": {

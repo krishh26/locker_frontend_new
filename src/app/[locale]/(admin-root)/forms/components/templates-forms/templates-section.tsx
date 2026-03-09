@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -31,6 +32,7 @@ import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function TemplatesSection() {
+  const t = useTranslations("forms.templates");
   const router = useRouter();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState<{
@@ -54,7 +56,7 @@ export function TemplatesSection() {
 
     try {
       await deleteTemplate({ templateId: templateToDelete.id }).unwrap();
-      toast.success("Template deleted successfully");
+      toast.success(t("toastDeleteSuccess"));
       setDeleteDialogOpen(false);
       setTemplateToDelete(null);
       refetch();
@@ -63,7 +65,7 @@ export function TemplatesSection() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to delete template");
+      toast.error(errorMessage || t("toastDeleteFailed"));
     }
   };
 
@@ -90,7 +92,7 @@ export function TemplatesSection() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          <h3 className="text-lg font-semibold">Form Templates</h3>
+          <h3 className="text-lg font-semibold">{t("sectionTitle")}</h3>
         </div>
         <Button
           variant="outline"
@@ -98,24 +100,24 @@ export function TemplatesSection() {
           onClick={() => router.push("/forms/new/builder")}
         >
           <Plus className="mr-2 h-4 w-4" />
-          Create Template
+          {t("createTemplate")}
         </Button>
       </div>
 
       {templates.length === 0 ? (
         <div className="text-center py-8 text-muted-foreground">
           <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>No templates found</p>
-          <p className="text-sm">Create a template to reuse form structures</p>
+          <p>{t("noTemplatesFound")}</p>
+          <p className="text-sm">{t("noTemplatesDescription")}</p>
         </div>
       ) : (
         <div className="rounded-md border overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Template Name</TableHead>
-                <TableHead>Create Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>{t("templateName")}</TableHead>
+                <TableHead>{t("createDate")}</TableHead>
+                <TableHead className="text-right">{t("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -136,7 +138,7 @@ export function TemplatesSection() {
                         size="sm"
                         onClick={() => handleCreateFromTemplate(template.id)}
                       >
-                        Use Template
+                        {t("useTemplate")}
                       </Button>
                       <Button
                         variant="ghost"
@@ -171,20 +173,19 @@ export function TemplatesSection() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              template <strong>{templateToDelete?.name}</strong>.
+              {t("deleteDialog.description", { name: templateToDelete?.name ?? "" })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>{t("deleteDialog.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("deleteDialog.deleting") : t("deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

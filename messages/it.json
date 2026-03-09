@@ -508,6 +508,27 @@
         "submit": "Sblocca modulo",
         "submitting": "Sblocco in corso..."
       }
+    },
+    "templates": {
+      "sectionTitle": "Modelli di moduli",
+      "searchPlaceholder": "Cerca modelli...",
+      "clear": "Cancella",
+      "createTemplate": "Crea modello",
+      "noTemplatesFound": "Nessun modello trovato",
+      "noTemplatesDescription": "Crea un modello per riutilizzare le strutture dei moduli",
+      "templateName": "Nome modello",
+      "createDate": "Data di creazione",
+      "actions": "Azioni",
+      "useTemplate": "Usa modello",
+      "toastDeleteSuccess": "Modello eliminato con successo",
+      "toastDeleteFailed": "Impossibile eliminare il modello",
+      "deleteDialog": {
+        "title": "Sei sicuro?",
+        "description": "Questa azione non può essere annullata. Il modello {name} verrà eliminato definitivamente.",
+        "cancel": "Annulla",
+        "delete": "Elimina",
+        "deleting": "Eliminazione..."
+      }
     }
   },
   "iqaQuestions": {

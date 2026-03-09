@@ -508,6 +508,27 @@
         "submit": "Formular entsperren",
         "submitting": "Wird entsperrt..."
       }
+    },
+    "templates": {
+      "sectionTitle": "Formularvorlagen",
+      "searchPlaceholder": "Vorlagen suchen...",
+      "clear": "Löschen",
+      "createTemplate": "Vorlage erstellen",
+      "noTemplatesFound": "Keine Vorlagen gefunden",
+      "noTemplatesDescription": "Erstellen Sie eine Vorlage zur Wiederverwendung von Formularstrukturen",
+      "templateName": "Vorlagenname",
+      "createDate": "Erstellungsdatum",
+      "actions": "Aktionen",
+      "useTemplate": "Vorlage verwenden",
+      "toastDeleteSuccess": "Vorlage erfolgreich gelöscht",
+      "toastDeleteFailed": "Vorlage konnte nicht gelöscht werden",
+      "deleteDialog": {
+        "title": "Sind Sie sicher?",
+        "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die Vorlage {name} wird dauerhaft gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "deleting": "Wird gelöscht..."
+      }
     }
   },
   "iqaQuestions": {

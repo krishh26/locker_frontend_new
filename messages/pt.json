@@ -1068,8 +1068,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "Bandas de financiamento",
+    "pageSubtitle": "Gerir bandas de financiamento para cursos com operações simplificadas, incluindo adicionar e atualizar",
+    "form": {
+      "titleCreate": "Criar nova banda de financiamento",
+      "titleEdit": "Editar banda de financiamento",
+      "descriptionCreate": "Preencha o formulário para criar uma nova banda de financiamento.",
+      "descriptionEdit": "Atualize o valor da banda de financiamento abaixo.",
+      "selectCourse": "Selecionar curso",
+      "selectCoursePlaceholder": "Selecione um curso",
+      "loadingCourses": "A carregar cursos...",
+      "bandName": "Nome da banda",
+      "bandNamePlaceholder": "Nome da banda (preenchido automaticamente)",
+      "course": "Curso",
+      "amount": "Valor (£)",
+      "amountPlaceholder": "Introduza o valor",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "update": "Atualizar",
+      "validation": {
+        "courseRequired": "O curso é obrigatório",
+        "bandNameRequired": "O nome da banda é obrigatório",
+        "amountRequired": "O valor é obrigatório",
+        "amountPositive": "O valor deve ser um número positivo"
+      },
+      "toast": {
+        "createSuccess": "Banda de financiamento criada com sucesso",
+        "updateSuccess": "Banda de financiamento atualizada com sucesso",
+        "selectValidCourse": "Selecione um curso válido",
+        "createFailed": "Falha ao criar banda de financiamento",
+        "updateFailed": "Falha ao atualizar banda de financiamento"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar por palavra-chave...",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "addNew": "Adicionar",
+      "courseName": "Nome do curso",
+      "level": "Nível",
+      "amount": "Valor (£)",
+      "actions": "Ações",
+      "edit": "Editar",
+      "openMenu": "Abrir menu",
+      "noResults": "Sem resultados.",
+      "toastNoData": "Sem dados para exportar",
+      "toastCsvSuccess": "CSV exportado com sucesso",
+      "toastPdfInfo": "A exportação PDF estará disponível em breve"
+    }
   },
   "courseBuilder": {
     "pageTitle": "Construtor de cursos",

@@ -1068,8 +1068,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "फंडिंग बैंड्स",
+    "pageSubtitle": "कोर्स के लिए फंडिंग बैंड्स का प्रबंधन करें, जिसमें जोड़ने और अपडेट करने जैसी प्रक्रियाएँ सरल और सुगम हों",
+    "form": {
+      "titleCreate": "नया फंडिंग बैंड बनाएं",
+      "titleEdit": "फंडिंग बैंड संपादित करें",
+      "descriptionCreate": "नया फंडिंग बैंड बनाने के लिए नीचे फॉर्म भरें।",
+      "descriptionEdit": "नीचे फंडिंग बैंड राशि अपडेट करें।",
+      "selectCourse": "कोर्स चुनें",
+      "selectCoursePlaceholder": "कोर्स चुनें",
+      "loadingCourses": "कोर्स लोड हो रहे हैं...",
+      "bandName": "बैंड का नाम",
+      "bandNamePlaceholder": "बैंड का नाम (कोर्स से स्वतः भर जाएगा)",
+      "course": "कोर्स",
+      "amount": "राशि (£)",
+      "amountPlaceholder": "राशि दर्ज करें",
+      "cancel": "रद्द करें",
+      "create": "बनाएं",
+      "update": "अपडेट करें",
+      "validation": {
+        "courseRequired": "कोर्स आवश्यक है",
+        "bandNameRequired": "बैंड का नाम आवश्यक है",
+        "amountRequired": "राशि आवश्यक है",
+        "amountPositive": "राशि एक धनात्मक संख्या होनी चाहिए"
+      },
+      "toast": {
+        "createSuccess": "फंडिंग बैंड सफलतापूर्वक बनाया गया",
+        "updateSuccess": "फंडिंग बैंड सफलतापूर्वक अपडेट किया गया",
+        "selectValidCourse": "कृपया एक वैध कोर्स चुनें",
+        "createFailed": "फंडिंग बैंड बनाने में विफल",
+        "updateFailed": "फंडिंग बैंड अपडेट करने में विफल"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "clear": "साफ़ करें",
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV के रूप में एक्सपोर्ट",
+      "exportPdf": "PDF के रूप में एक्सपोर्ट",
+      "addNew": "नया जोड़ें",
+      "courseName": "कोर्स का नाम",
+      "level": "स्तर",
+      "amount": "राशि (£)",
+      "actions": "क्रियाएँ",
+      "edit": "संपादित करें",
+      "openMenu": "मेन्यू खोलें",
+      "noResults": "कोई परिणाम नहीं।",
+      "toastNoData": "एक्सपोर्ट के लिए कोई डेटा नहीं",
+      "toastCsvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+      "toastPdfInfo": "PDF एक्सपोर्ट जल्द उपलब्ध होगा"
+    }
   },
   "courseBuilder": {
     "pageTitle": "कोर्स बिल्डर",

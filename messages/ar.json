@@ -1069,8 +1069,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "أشرطة التمويل",
+    "pageSubtitle": "إدارة أشرطة التمويل للدورات مع عمليات مبسطة تشمل إضافة وتحديث الوظائف",
+    "form": {
+      "titleCreate": "إنشاء شريط تمويل جديد",
+      "titleEdit": "تعديل شريط التمويل",
+      "descriptionCreate": "املأ النموذج لإنشاء شريط تمويل جديد.",
+      "descriptionEdit": "حدّث مبلغ شريط التمويل أدناه.",
+      "selectCourse": "اختر الدورة",
+      "selectCoursePlaceholder": "اختر دورة",
+      "loadingCourses": "جاري تحميل الدورات...",
+      "bandName": "اسم الشريط",
+      "bandNamePlaceholder": "اسم الشريط (يُملأ تلقائياً من الدورة)",
+      "course": "الدورة",
+      "amount": "المبلغ (£)",
+      "amountPlaceholder": "أدخل المبلغ",
+      "cancel": "إلغاء",
+      "create": "إنشاء",
+      "update": "تحديث",
+      "validation": {
+        "courseRequired": "الدورة مطلوبة",
+        "bandNameRequired": "اسم الشريط مطلوب",
+        "amountRequired": "المبلغ مطلوب",
+        "amountPositive": "يجب أن يكون المبلغ رقماً موجباً"
+      },
+      "toast": {
+        "createSuccess": "تم إنشاء شريط التمويل بنجاح",
+        "updateSuccess": "تم تحديث شريط التمويل بنجاح",
+        "selectValidCourse": "الرجاء اختيار دورة صالحة",
+        "createFailed": "فشل إنشاء شريط التمويل",
+        "updateFailed": "فشل تحديث شريط التمويل"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "البحث بالكلمة الرئيسية...",
+      "clear": "مسح",
+      "export": "تصدير",
+      "exportCsv": "تصدير كـ CSV",
+      "exportPdf": "تصدير كـ PDF",
+      "addNew": "إضافة جديد",
+      "courseName": "اسم الدورة",
+      "level": "المستوى",
+      "amount": "المبلغ (£)",
+      "actions": "إجراءات",
+      "edit": "تعديل",
+      "openMenu": "فتح القائمة",
+      "noResults": "لا توجد نتائج.",
+      "toastNoData": "لا توجد بيانات للتصدير",
+      "toastCsvSuccess": "تم تصدير CSV بنجاح",
+      "toastPdfInfo": "سيتم تنفيذ تصدير PDF لاحقاً"
+    }
   },
   "courseBuilder": {
     "pageTitle": "منشئ الدورات",

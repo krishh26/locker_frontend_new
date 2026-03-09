@@ -1089,7 +1089,55 @@
   },
   "fundingBands": {
     "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities",
+    "form": {
+      "titleCreate": "Create New Funding Band",
+      "titleEdit": "Edit Funding Band",
+      "descriptionCreate": "Fill in the form below to create a new funding band.",
+      "descriptionEdit": "Update funding band amount below.",
+      "selectCourse": "Select Course",
+      "selectCoursePlaceholder": "Select a course",
+      "loadingCourses": "Loading courses...",
+      "bandName": "Band Name",
+      "bandNamePlaceholder": "Band name (auto-filled from course)",
+      "course": "Course",
+      "amount": "Amount (£)",
+      "amountPlaceholder": "Enter amount",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "validation": {
+        "courseRequired": "Course is required",
+        "bandNameRequired": "Band name is required",
+        "amountRequired": "Amount is required",
+        "amountPositive": "Amount must be a positive number"
+      },
+      "toast": {
+        "createSuccess": "Funding band created successfully",
+        "updateSuccess": "Funding band updated successfully",
+        "selectValidCourse": "Please select a valid course",
+        "createFailed": "Failed to create funding band",
+        "updateFailed": "Failed to update funding band"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Search by keyword...",
+      "clear": "Clear",
+      "export": "Export",
+      "exportCsv": "Export as CSV",
+      "exportPdf": "Export as PDF",
+      "addNew": "Add New",
+      "courseName": "Course Name",
+      "level": "Level",
+      "amount": "Amount (£)",
+      "actions": "Actions",
+      "edit": "Edit",
+      "openMenu": "Open menu",
+      "noResults": "No results.",
+      "toastNoData": "No data to export",
+      "toastCsvSuccess": "CSV exported successfully",
+      "toastPdfInfo": "PDF export functionality will be implemented"
+    }
   },
   "courseBuilder": {
     "pageTitle": "Course Builder",

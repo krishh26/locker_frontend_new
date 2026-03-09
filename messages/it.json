@@ -610,8 +610,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "Fasce di finanziamento",
+    "pageSubtitle": "Gestisci le fasce di finanziamento per i corsi con operazioni semplificate tra cui aggiunta e aggiornamento",
+    "form": {
+      "titleCreate": "Crea nuova fascia di finanziamento",
+      "titleEdit": "Modifica fascia di finanziamento",
+      "descriptionCreate": "Compila il modulo per creare una nuova fascia di finanziamento.",
+      "descriptionEdit": "Aggiorna l'importo della fascia di finanziamento qui sotto.",
+      "selectCourse": "Seleziona corso",
+      "selectCoursePlaceholder": "Seleziona un corso",
+      "loadingCourses": "Caricamento corsi...",
+      "bandName": "Nome fascia",
+      "bandNamePlaceholder": "Nome fascia (compilato automaticamente)",
+      "course": "Corso",
+      "amount": "Importo (£)",
+      "amountPlaceholder": "Inserisci l'importo",
+      "cancel": "Annulla",
+      "create": "Crea",
+      "update": "Aggiorna",
+      "validation": {
+        "courseRequired": "Il corso è obbligatorio",
+        "bandNameRequired": "Il nome della fascia è obbligatorio",
+        "amountRequired": "L'importo è obbligatorio",
+        "amountPositive": "L'importo deve essere un numero positivo"
+      },
+      "toast": {
+        "createSuccess": "Fascia di finanziamento creata con successo",
+        "updateSuccess": "Fascia di finanziamento aggiornata con successo",
+        "selectValidCourse": "Seleziona un corso valido",
+        "createFailed": "Impossibile creare la fascia di finanziamento",
+        "updateFailed": "Impossibile aggiornare la fascia di finanziamento"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "addNew": "Aggiungi",
+      "courseName": "Nome corso",
+      "level": "Livello",
+      "amount": "Importo (£)",
+      "actions": "Azioni",
+      "edit": "Modifica",
+      "openMenu": "Apri menu",
+      "noResults": "Nessun risultato.",
+      "toastNoData": "Nessun dato da esportare",
+      "toastCsvSuccess": "CSV esportato con successo",
+      "toastPdfInfo": "L'export PDF sarà disponibile a breve"
+    }
   },
   "courseBuilder": {
     "pageTitle": "Course Builder",

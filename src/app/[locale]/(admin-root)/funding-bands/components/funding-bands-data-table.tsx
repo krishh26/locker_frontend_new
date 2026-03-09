@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import {
   type ColumnDef,
   type SortingState,
@@ -46,6 +47,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 
 export function FundingBandsDataTable() {
+  const t = useTranslations("fundingBands");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -102,11 +104,11 @@ export function FundingBandsDataTable() {
 
   const handleExportCsv = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.toastNoData"));
       return;
     }
 
-    const headers = ["Course Name", "Level", "Amount (£)"];
+    const headers = [t("table.courseName"), t("table.level"), t("table.amount")];
     const rows = data.data.map((band) => [
       band.course.course_name,
       band.course.level || "",
@@ -125,32 +127,32 @@ export function FundingBandsDataTable() {
     link.download = `funding_bands_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("table.toastCsvSuccess"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("table.toastPdfInfo"));
   };
 
   const columns: ColumnDef<FundingBand>[] = useMemo(
     () => [
       {
         accessorKey: "course.course_name",
-        header: "Course Name",
+        header: t("table.courseName"),
         cell: ({ row }) => {
           return row.original.course.course_name;
         },
       },
       {
         accessorKey: "course.level",
-        header: "Level",
+        header: t("table.level"),
         cell: ({ row }) => {
           return row.original.course.level || "-";
         },
       },
       {
         accessorKey: "amount",
-        header: "Amount (£)",
+        header: t("table.amount"),
         cell: ({ row }) => {
           return (
             <span className="font-semibold">
@@ -161,21 +163,21 @@ export function FundingBandsDataTable() {
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.actions"),
         cell: ({ row }) => {
           const fundingBand = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{t("table.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleEdit(fundingBand)}>
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("table.edit")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -183,7 +185,7 @@ export function FundingBandsDataTable() {
         },
       },
     ],
-    []
+    [t]
   );
 
   const table = useReactTable({
@@ -229,7 +231,7 @@ export function FundingBandsDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -243,7 +245,7 @@ export function FundingBandsDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {t("table.clear")}
             </Button>
           )}
         </div>
@@ -252,21 +254,21 @@ export function FundingBandsDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("table.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("table.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("table.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button onClick={handleAddNew} className="cursor-pointer">
             <Plus className="mr-2 size-4" />
-            Add New
+            {t("table.addNew")}
           </Button>
         </div>
       </div>
@@ -315,7 +317,7 @@ export function FundingBandsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

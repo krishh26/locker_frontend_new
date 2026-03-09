@@ -1068,8 +1068,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "Bandes de financement",
+    "pageSubtitle": "Gérez les bandes de financement pour les cours avec des opérations simplifiées incluant l'ajout et la mise à jour",
+    "form": {
+      "titleCreate": "Créer une nouvelle bande de financement",
+      "titleEdit": "Modifier la bande de financement",
+      "descriptionCreate": "Remplissez le formulaire pour créer une nouvelle bande de financement.",
+      "descriptionEdit": "Mettez à jour le montant de la bande de financement ci-dessous.",
+      "selectCourse": "Sélectionner le cours",
+      "selectCoursePlaceholder": "Sélectionnez un cours",
+      "loadingCourses": "Chargement des cours...",
+      "bandName": "Nom de la bande",
+      "bandNamePlaceholder": "Nom de la bande (rempli automatiquement)",
+      "course": "Cours",
+      "amount": "Montant (£)",
+      "amountPlaceholder": "Entrez le montant",
+      "cancel": "Annuler",
+      "create": "Créer",
+      "update": "Mettre à jour",
+      "validation": {
+        "courseRequired": "Le cours est obligatoire",
+        "bandNameRequired": "Le nom de la bande est obligatoire",
+        "amountRequired": "Le montant est obligatoire",
+        "amountPositive": "Le montant doit être un nombre positif"
+      },
+      "toast": {
+        "createSuccess": "Bande de financement créée avec succès",
+        "updateSuccess": "Bande de financement mise à jour avec succès",
+        "selectValidCourse": "Veuillez sélectionner un cours valide",
+        "createFailed": "Échec de la création de la bande de financement",
+        "updateFailed": "Échec de la mise à jour de la bande de financement"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Rechercher par mot-clé...",
+      "clear": "Effacer",
+      "export": "Exporter",
+      "exportCsv": "Exporter en CSV",
+      "exportPdf": "Exporter en PDF",
+      "addNew": "Ajouter",
+      "courseName": "Nom du cours",
+      "level": "Niveau",
+      "amount": "Montant (£)",
+      "actions": "Actions",
+      "edit": "Modifier",
+      "openMenu": "Ouvrir le menu",
+      "noResults": "Aucun résultat.",
+      "toastNoData": "Aucune donnée à exporter",
+      "toastCsvSuccess": "CSV exporté avec succès",
+      "toastPdfInfo": "L'export PDF sera disponible prochainement"
+    }
   },
   "courseBuilder": {
     "pageTitle": "Générateur de cours",

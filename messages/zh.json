@@ -1068,8 +1068,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "资助档次",
+    "pageSubtitle": "管理课程的资助档次，简化添加与更新等操作",
+    "form": {
+      "titleCreate": "新建资助档次",
+      "titleEdit": "编辑资助档次",
+      "descriptionCreate": "填写下表以创建新的资助档次。",
+      "descriptionEdit": "在下方更新资助档次金额。",
+      "selectCourse": "选择课程",
+      "selectCoursePlaceholder": "请选择课程",
+      "loadingCourses": "正在加载课程...",
+      "bandName": "档次名称",
+      "bandNamePlaceholder": "档次名称（根据课程自动填写）",
+      "course": "课程",
+      "amount": "金额 (£)",
+      "amountPlaceholder": "输入金额",
+      "cancel": "取消",
+      "create": "创建",
+      "update": "更新",
+      "validation": {
+        "courseRequired": "请选择课程",
+        "bandNameRequired": "档次名称为必填项",
+        "amountRequired": "金额为必填项",
+        "amountPositive": "金额必须为正数"
+      },
+      "toast": {
+        "createSuccess": "资助档次创建成功",
+        "updateSuccess": "资助档次更新成功",
+        "selectValidCourse": "请选择有效课程",
+        "createFailed": "创建资助档次失败",
+        "updateFailed": "更新资助档次失败"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "按关键词搜索...",
+      "clear": "清除",
+      "export": "导出",
+      "exportCsv": "导出为 CSV",
+      "exportPdf": "导出为 PDF",
+      "addNew": "添加",
+      "courseName": "课程名称",
+      "level": "级别",
+      "amount": "金额 (£)",
+      "actions": "操作",
+      "edit": "编辑",
+      "openMenu": "打开菜单",
+      "noResults": "暂无结果。",
+      "toastNoData": "没有可导出的数据",
+      "toastCsvSuccess": "CSV 导出成功",
+      "toastPdfInfo": "PDF 导出功能即将推出"
+    }
   },
   "courseBuilder": {
     "pageTitle": "课程构建器",

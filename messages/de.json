@@ -610,8 +610,56 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "Förderbänder",
+    "pageSubtitle": "Verwalten Sie Förderbänder für Kurse mit optimierten Abläufen inkl. Hinzufügen und Aktualisieren",
+    "form": {
+      "titleCreate": "Neue Förderband erstellen",
+      "titleEdit": "Förderband bearbeiten",
+      "descriptionCreate": "Füllen Sie das Formular aus, um eine neue Förderband zu erstellen.",
+      "descriptionEdit": "Aktualisieren Sie den Betrag der Förderband unten.",
+      "selectCourse": "Kurs auswählen",
+      "selectCoursePlaceholder": "Kurs auswählen",
+      "loadingCourses": "Kurse werden geladen...",
+      "bandName": "Bandname",
+      "bandNamePlaceholder": "Bandname (wird automatisch ausgefüllt)",
+      "course": "Kurs",
+      "amount": "Betrag (£)",
+      "amountPlaceholder": "Betrag eingeben",
+      "cancel": "Abbrechen",
+      "create": "Erstellen",
+      "update": "Aktualisieren",
+      "validation": {
+        "courseRequired": "Kurs ist erforderlich",
+        "bandNameRequired": "Bandname ist erforderlich",
+        "amountRequired": "Betrag ist erforderlich",
+        "amountPositive": "Betrag muss eine positive Zahl sein"
+      },
+      "toast": {
+        "createSuccess": "Förderband erfolgreich erstellt",
+        "updateSuccess": "Förderband erfolgreich aktualisiert",
+        "selectValidCourse": "Bitte wählen Sie einen gültigen Kurs",
+        "createFailed": "Förderband konnte nicht erstellt werden",
+        "updateFailed": "Förderband konnte nicht aktualisiert werden"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Nach Stichwort suchen...",
+      "clear": "Löschen",
+      "export": "Exportieren",
+      "exportCsv": "Als CSV exportieren",
+      "exportPdf": "Als PDF exportieren",
+      "addNew": "Hinzufügen",
+      "courseName": "Kursname",
+      "level": "Niveau",
+      "amount": "Betrag (£)",
+      "actions": "Aktionen",
+      "edit": "Bearbeiten",
+      "openMenu": "Menü öffnen",
+      "noResults": "Keine Ergebnisse.",
+      "toastNoData": "Keine Daten zum Exportieren",
+      "toastCsvSuccess": "CSV erfolgreich exportiert",
+      "toastPdfInfo": "PDF-Export wird in Kürze verfügbar sein"
+    }
   },
   "courseBuilder": {
     "pageTitle": "Course Builder",

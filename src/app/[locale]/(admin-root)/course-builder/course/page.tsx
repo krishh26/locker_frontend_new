@@ -3,7 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";;
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectCourseType, clearCourseType } from "@/store/slices/courseBuilderSlice";
 import { useGetCourseQuery } from "@/store/api/course/courseApi";
@@ -15,6 +16,7 @@ import { CourseForm } from "./components/course-form";
 import type { CourseCoreType } from "@/store/api/course/types";
 
 export default function CoursePage() {
+    const t = useTranslations("courseBuilder");
     const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     const courseTypeFromRedux = useAppSelector(selectCourseType);
@@ -76,7 +78,7 @@ export default function CoursePage() {
         return (
             <div className="space-y-6 px-4 lg:px-6 pb-8">
                 <PageHeader
-                    title="Edit Course"
+                    title={t("course.pageTitleEdit")}
                     icon={BookOpen}
                     showBackButton
                     backButtonHref="/course-builder"
@@ -93,7 +95,7 @@ export default function CoursePage() {
         return (
             <div className="space-y-6 px-4 lg:px-6 pb-8">
                 <PageHeader
-                    title="Edit Course"
+                    title={t("course.pageTitleEdit")}
                     icon={BookOpen}
                     showBackButton
                     backButtonHref="/course-builder"
@@ -101,8 +103,8 @@ export default function CoursePage() {
                 <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6 text-center">
                     <p className="font-medium text-destructive">
                         {isForbiddenError(getCourseError)
-                            ? "You do not have access to this course."
-                            : "Course not found or an error occurred."}
+                            ? t("course.errorNoAccess")
+                            : t("course.errorNotFound")}
                     </p>
                     <p className="mt-2 text-sm text-muted-foreground">
                         {(getCourseError as { data?: { message?: string } })?.data?.message}
@@ -112,7 +114,7 @@ export default function CoursePage() {
                         className="mt-4"
                         onClick={() => router.push("/course-builder")}
                     >
-                        Back to course list
+                        {t("course.backToList")}
                     </Button>
                 </div>
             </div>
@@ -123,7 +125,7 @@ export default function CoursePage() {
         <div className="space-y-6 px-4 lg:px-6 pb-8">
             {/* Page Header */}
             <PageHeader
-                title={isCreateMode ? "Create Course" : "Edit Course"}
+                title={isCreateMode ? t("course.pageTitleCreate") : t("course.pageTitleEdit")}
                 icon={BookOpen}
                 showBackButton
                 backButtonHref="/course-builder"

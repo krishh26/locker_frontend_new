@@ -1053,20 +1053,19 @@ export function EvidenceLibraryDataTable() {
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Evidence?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Deleting this evidence will also remove all associated data and
-              relationships. This action cannot be undone. Proceed with deletion?
+              {t("deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("deleteDialog.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleteLoading}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleteLoading ? "Deleting..." : "Delete Evidence"}
+              {isDeleteLoading ? t("deleteDialog.deleting") : t("deleteDialog.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -1110,9 +1109,9 @@ export function EvidenceLibraryDataTable() {
       <AlertDialog open={reuploadDialogOpen} onOpenChange={setReuploadDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Reupload Evidence</AlertDialogTitle>
+            <AlertDialogTitle>{t("reuploadDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Select a new file to replace the existing evidence file for &quot;{reuploadEvidence?.title}&quot;.
+              {t("reuploadDialog.description", { title: reuploadEvidence?.title ?? "" })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-4">
@@ -1124,7 +1123,7 @@ export function EvidenceLibraryDataTable() {
             />
             {reuploadFile && (
               <p className="mt-2 text-sm text-muted-foreground">
-                Selected: {reuploadFile.name}
+                {t("reuploadDialog.selectedFile", { fileName: reuploadFile.name })}
               </p>
             )}
           </div>
@@ -1136,13 +1135,13 @@ export function EvidenceLibraryDataTable() {
                 setReuploadFile(null);
               }}
             >
-              Cancel
+              {t("reuploadDialog.buttons.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleReuploadSubmit}
               disabled={!reuploadFile || isReuploadLoading}
             >
-              {isReuploadLoading ? "Uploading..." : "Upload"}
+              {isReuploadLoading ? t("reuploadDialog.buttons.uploading") : t("reuploadDialog.buttons.upload")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

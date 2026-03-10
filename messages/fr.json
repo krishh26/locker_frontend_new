@@ -3517,6 +3517,21 @@
       "csvSuccess": "CSV exporté avec succès"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "Bibliothèque d'évidences",
+    "unitProgress": "Progression des unités",
+    "gapAnalysis": "Analyse des écarts",
+    "actionsAndActivities": "Actions et activités",
+    "healthAndWellbeing": "Santé et bien-être",
+    "chooseUnits": "Choisir les unités",
+    "learningPlan": "Plan d'apprentissage",
+    "resources": "Ressources",
+    "timeLog": "Journal du temps",
+    "supplementaryTraining": "Formation complémentaire",
+    "newDocToSign": "Nouveau document à signer",
+    "item": "élément",
+    "items": "éléments"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Tableau de bord",
@@ -3545,6 +3560,66 @@
         "title": "Journal de temps",
         "onTheJob": "Total en situation de travail",
         "offTheJob": "Total hors situation de travail"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Contact protection",
+      "description": "Contactez-nous immédiatement en cas de préoccupation",
+      "priorityBadge": "Support prioritaire",
+      "leadLabel": "Référent protection",
+      "leadRole": "Référent protection désigné",
+      "tel": "Tél :",
+      "mobile": "Portable :",
+      "email": "E-mail :",
+      "defaultContactMessage": "Informations de contact par défaut. Contactez votre administrateur si besoin."
+    },
+    "emailDialog": {
+      "title": "Envoyer un e-mail à {name}",
+      "description": "Envoyer un e-mail à {email}",
+      "learnerFallback": "Apprenant",
+      "learnerEmailFallback": "l'apprenant",
+      "subjectLabel": "Objet",
+      "subjectPlaceholder": "Saisissez l'objet de l'e-mail",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Saisissez votre message ici...",
+      "cancel": "Annuler",
+      "sending": "Envoi...",
+      "sendButton": "Envoyer l'e-mail",
+      "toast": {
+        "fillBoth": "Veuillez remplir l'objet et le message",
+        "noEmail": "L'e-mail de l'apprenant n'est pas disponible",
+        "success": "E-mail envoyé avec succès",
+        "failed": "Échec de l'envoi de l'e-mail"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Aperçu de la progression",
+      "courseFallback": "Cours {index}",
+      "gateway": "Gateway",
+      "core": "Noyau",
+      "nextMilestoneReview": "Prochaine étape : Révision",
+      "gatewayPrep": "Préparation Gateway",
+      "courseProgress": "Progression du cours",
+      "completed": "Terminé",
+      "remaining": "Restant",
+      "progressLabel": "Progression",
+      "completedUnits": "Unités terminées",
+      "totalUnits": "Unités totales"
+    },
+    "calendarDialog": {
+      "title": "Calendrier",
+      "description": "Consulter et gérer vos événements et rendez-vous"
+    },
+    "acknowledgementDialog": {
+      "title": "Message de confirmation",
+      "welcomeMessage": "Bienvenue {name} sur la plateforme YourLocker",
+      "reviewDocument": "Veuillez consulter le document joint",
+      "cancel": "Annuler",
+      "processing": "Traitement...",
+      "accept": "J'accepte",
+      "toast": {
+        "success": "Confirmation acceptée avec succès",
+        "failed": "Échec de la mise à jour du statut de confirmation"
       }
     }
   }

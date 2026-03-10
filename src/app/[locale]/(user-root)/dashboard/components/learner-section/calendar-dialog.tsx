@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,7 @@ interface CalendarDialogProps {
 }
 
 export function CalendarDialog({ open, onOpenChange }: CalendarDialogProps) {
+  const t = useTranslations("learnerDashboard.calendarDialog")
   // TODO: Fetch actual events from API
   const events: CalendarEvent[] = []
   const eventDates: Array<{ date: Date; count: number }> = []
@@ -24,9 +26,9 @@ export function CalendarDialog({ open, onOpenChange }: CalendarDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-6xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Calendar</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            View and manage your scheduled events and appointments
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4">

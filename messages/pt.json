@@ -3517,6 +3517,21 @@
       "csvSuccess": "CSV exportado com sucesso"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "Biblioteca de evidências",
+    "unitProgress": "Progresso das unidades",
+    "gapAnalysis": "Análise de lacunas",
+    "actionsAndActivities": "Ações e atividades",
+    "healthAndWellbeing": "Saúde e bem-estar",
+    "chooseUnits": "Escolher unidades",
+    "learningPlan": "Plano de aprendizagem",
+    "resources": "Recursos",
+    "timeLog": "Registo de tempo",
+    "supplementaryTraining": "Formação complementar",
+    "newDocToSign": "Novo documento para assinar",
+    "item": "item",
+    "items": "itens"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Painel",
@@ -3545,6 +3560,66 @@
         "title": "Registo de tempo",
         "onTheJob": "Total em serviço",
         "offTheJob": "Total fora de serviço"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Contacto de proteção",
+      "description": "Contacte imediatamente se tiver alguma preocupação",
+      "priorityBadge": "Suporte prioritário",
+      "leadLabel": "Responsável de proteção",
+      "leadRole": "Responsável designado de proteção",
+      "tel": "Tel:",
+      "mobile": "Telemóvel:",
+      "email": "E-mail:",
+      "defaultContactMessage": "A usar informações de contacto padrão. Contacte o seu administrador se precisar de ajuda."
+    },
+    "emailDialog": {
+      "title": "Enviar e-mail a {name}",
+      "description": "Enviar e-mail a {email}",
+      "learnerFallback": "Formando",
+      "learnerEmailFallback": "o formando",
+      "subjectLabel": "Assunto",
+      "subjectPlaceholder": "Introduza o assunto do e-mail",
+      "messageLabel": "Mensagem",
+      "messagePlaceholder": "Escreva a sua mensagem aqui...",
+      "cancel": "Cancelar",
+      "sending": "A enviar...",
+      "sendButton": "Enviar e-mail",
+      "toast": {
+        "fillBoth": "Preencha o assunto e a mensagem",
+        "noEmail": "O e-mail do formando não está disponível",
+        "success": "E-mail enviado com sucesso",
+        "failed": "Falha ao enviar o e-mail"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Resumo do progresso",
+      "courseFallback": "Curso {index}",
+      "gateway": "Gateway",
+      "core": "Núcleo",
+      "nextMilestoneReview": "Próximo marco: Revisão",
+      "gatewayPrep": "Preparação Gateway",
+      "courseProgress": "Progresso do curso",
+      "completed": "Concluído",
+      "remaining": "Restante",
+      "progressLabel": "Progresso",
+      "completedUnits": "Unidades concluídas",
+      "totalUnits": "Unidades totais"
+    },
+    "calendarDialog": {
+      "title": "Calendário",
+      "description": "Ver e gerir os seus eventos e agendamentos"
+    },
+    "acknowledgementDialog": {
+      "title": "Mensagem de confirmação",
+      "welcomeMessage": "Bem-vindo {name} à plataforma YourLocker",
+      "reviewDocument": "Revise o documento em anexo",
+      "cancel": "Cancelar",
+      "processing": "A processar...",
+      "accept": "Aceito",
+      "toast": {
+        "success": "Confirmação aceite com sucesso",
+        "failed": "Falha ao atualizar o estado de confirmação"
       }
     }
   }

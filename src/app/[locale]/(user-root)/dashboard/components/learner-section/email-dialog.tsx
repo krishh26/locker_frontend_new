@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTranslations } from "next-intl"
 import {
   Dialog,
   DialogContent,
@@ -31,6 +32,7 @@ export function EmailDialog({
   learnerEmail,
   learnerName,
 }: EmailDialogProps) {
+  const t = useTranslations("learnerDashboard.emailDialog")
   const user = useAppSelector((state) => state.auth.user)
   const [subject, setSubject] = useState("")
   const [message, setMessage] = useState("")
@@ -45,12 +47,12 @@ export function EmailDialog({
 
   const handleSend = async () => {
     if (!subject.trim() || !message.trim()) {
-      toast.error("Please fill in both subject and message")
+      toast.error(t("toast.fillBoth"))
       return
     }
 
     if (!learnerEmail) {
-      toast.error("Learner email is not available")
+      toast.error(t("toast.noEmail"))
       return
     }
 
@@ -64,14 +66,14 @@ export function EmailDialog({
         ),
       }).unwrap()
       
-      toast.success("Email sent successfully")
+      toast.success(t("toast.success"))
       onOpenChange(false)
       setSubject("")
       setMessage("")
     } catch (error: unknown) {
       const err = error as { data?: { message?: string; error?: string } }
       const errorMessage = err?.data?.message ?? err?.data?.error
-      toast.error(errorMessage || "Failed to send email")
+      toast.error(errorMessage || t("toast.failed"))
       console.error("Failed to send email:", error)
     }
   }
@@ -82,28 +84,28 @@ export function EmailDialog({
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
-            <DialogTitle>Email {learnerName || "Learner"}</DialogTitle>
+            <DialogTitle>{t("title", { name: learnerName || t("learnerFallback") })}</DialogTitle>
           </div>
           <DialogDescription>
-            Send an email to {learnerEmail || "the learner"}
+            {t("description", { email: learnerEmail || t("learnerEmailFallback") })}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="subject">Subject</Label>
+            <Label htmlFor="subject">{t("subjectLabel")}</Label>
             <Input
               id="subject"
-              placeholder="Enter email subject"
+              placeholder={t("subjectPlaceholder")}
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">{t("messageLabel")}</Label>
             <Textarea
               id="message"
-              placeholder="Enter your message here..."
+              placeholder={t("messagePlaceholder")}
               rows={6}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -117,10 +119,10 @@ export function EmailDialog({
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
           >
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleSend} disabled={isLoading || !subject.trim() || !message.trim()}>
-            {isLoading ? "Sending..." : "Send Email"}
+            {isLoading ? t("sending") : t("sendButton")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,13 +1,17 @@
 "use client"
 
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 export interface MetricCard {
   id: number
-  name: string
+  /** Display name when nameKey is not used */
+  name?: string
+  /** i18n key under "portfolioCards" namespace; takes precedence over name */
+  nameKey?: string
   color: string
   route?: string
 }
@@ -42,6 +46,7 @@ export function MetricCards({
   courseId,
   variant = "default",
 }: MetricCardsProps) {
+  const t = useTranslations("portfolioCards")
   const gridClasses =
     variant === "compact"
       ? "grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
@@ -63,6 +68,9 @@ export function MetricCards({
         const count = countData?.[card.id]
         const hasCount = count !== undefined && count > 0
 
+        const displayName = card.nameKey ? t(card.nameKey) : (card.name ?? "")
+        const initial = displayName.charAt(0)
+
         return (
           <Link key={card.id} href={route} className="group">
             <Card className={cn(
@@ -76,16 +84,16 @@ export function MetricCards({
                     style={{ backgroundColor: card.color }}
                   >
                     <span className={`${textSize} font-bold text-white drop-shadow-sm`}>
-                      {card.name.charAt(0)}
+                      {initial}
                     </span>
                   </div>
                   <div className="space-y-1">
                     <h3 className="font-semibold text-sm group-hover:text-white/80 transition-colors">
-                      {card.name}
+                      {displayName}
                     </h3>
                     {hasCount && (
                       <Badge variant="secondary" className="rounded-full shadow-sm">
-                        {count} {count === 1 ? "item" : "items"}
+                        {count} {count === 1 ? t("item") : t("items")}
                       </Badge>
                     )}
                   </div>

@@ -3533,6 +3533,21 @@
       "updateFailed": "Failed to update centre"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "Evidence Library",
+    "unitProgress": "Unit Progress",
+    "gapAnalysis": "Gap Analysis",
+    "actionsAndActivities": "Actions and Activities",
+    "healthAndWellbeing": "Health and Wellbeing",
+    "chooseUnits": "Choose Units",
+    "learningPlan": "Learning Plan",
+    "resources": "Resources",
+    "timeLog": "Time Log",
+    "supplementaryTraining": "Supplementary Training",
+    "newDocToSign": "New Doc to Sign",
+    "item": "item",
+    "items": "items"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Dashboard",
@@ -3561,6 +3576,66 @@
         "title": "Time Log",
         "onTheJob": "On The Job Total",
         "offTheJob": "Off The Job Total"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Safeguarding contact",
+      "description": "Reach out immediately if you have any concerns",
+      "priorityBadge": "Priority support",
+      "leadLabel": "Safeguarding Lead",
+      "leadRole": "Designated Safeguarding Lead",
+      "tel": "Tel:",
+      "mobile": "Mobile:",
+      "email": "Email:",
+      "defaultContactMessage": "Using default contact information. Please contact your administrator if you need assistance."
+    },
+    "emailDialog": {
+      "title": "Email {name}",
+      "description": "Send an email to {email}",
+      "learnerFallback": "Learner",
+      "learnerEmailFallback": "the learner",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter email subject",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter your message here...",
+      "cancel": "Cancel",
+      "sending": "Sending...",
+      "sendButton": "Send Email",
+      "toast": {
+        "fillBoth": "Please fill in both subject and message",
+        "noEmail": "Learner email is not available",
+        "success": "Email sent successfully",
+        "failed": "Failed to send email"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Progress Overview",
+      "courseFallback": "Course {index}",
+      "gateway": "Gateway",
+      "core": "Core",
+      "nextMilestoneReview": "Next milestone: Review",
+      "gatewayPrep": "Gateway prep",
+      "courseProgress": "Course progress",
+      "completed": "Completed",
+      "remaining": "Remaining",
+      "progressLabel": "Progress",
+      "completedUnits": "Completed units",
+      "totalUnits": "Total units"
+    },
+    "calendarDialog": {
+      "title": "Calendar",
+      "description": "View and manage your scheduled events and appointments"
+    },
+    "acknowledgementDialog": {
+      "title": "Acknowledgement Message",
+      "welcomeMessage": "Welcome {name} to YourLocker Platform",
+      "reviewDocument": "Please Review the Attached Document",
+      "cancel": "Cancel",
+      "processing": "Processing...",
+      "accept": "I Accept",
+      "toast": {
+        "success": "Acknowledgement accepted successfully",
+        "failed": "Failed to update acknowledgement status"
       }
     }
   }

@@ -3517,6 +3517,21 @@
       "updateFailed": "केंद्र अपडेट करने में विफल"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "साक्ष्य लाइब्रेरी",
+    "unitProgress": "यूनिट प्रगति",
+    "gapAnalysis": "गैप विश्लेषण",
+    "actionsAndActivities": "कार्रवाई और गतिविधियाँ",
+    "healthAndWellbeing": "स्वास्थ्य और कल्याण",
+    "chooseUnits": "यूनिट चुनें",
+    "learningPlan": "अधिगम योजना",
+    "resources": "संसाधन",
+    "timeLog": "समय लॉग",
+    "supplementaryTraining": "पूरक प्रशिक्षण",
+    "newDocToSign": "हस्ताक्षर के लिए नया दस्तावेज़",
+    "item": "आइटम",
+    "items": "आइटम"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "डैशबोर्ड",
@@ -3545,6 +3560,66 @@
         "title": "समय लॉग",
         "onTheJob": "कार्य पर समय (कुल)",
         "offTheJob": "कार्य से बाहर समय (कुल)"
+      }
+    },
+    "safeguardingCard": {
+      "title": "सुरक्षा संपर्क",
+      "description": "कोई भी चिंता होने पर तुरंत संपर्क करें",
+      "priorityBadge": "प्राथमिकता सहायता",
+      "leadLabel": "सुरक्षा लीड",
+      "leadRole": "नामित सुरक्षा लीड",
+      "tel": "टेल:",
+      "mobile": "मोबाइल:",
+      "email": "ईमेल:",
+      "defaultContactMessage": "डिफ़ॉल्ट संपर्क जानकारी उपयोग में है। सहायता के लिए अपने व्यवस्थापक से संपर्क करें।"
+    },
+    "emailDialog": {
+      "title": "{name} को ईमेल करें",
+      "description": "{email} को ईमेल भेजें",
+      "learnerFallback": "सीखने वाला",
+      "learnerEmailFallback": "सीखने वाला",
+      "subjectLabel": "विषय",
+      "subjectPlaceholder": "ईमेल विषय दर्ज करें",
+      "messageLabel": "संदेश",
+      "messagePlaceholder": "अपना संदेश यहाँ लिखें...",
+      "cancel": "रद्द करें",
+      "sending": "भेज रहा है...",
+      "sendButton": "ईमेल भेजें",
+      "toast": {
+        "fillBoth": "कृपया विषय और संदेश दोनों भरें",
+        "noEmail": "सीखने वाले का ईमेल उपलब्ध नहीं है",
+        "success": "ईमेल सफलतापूर्वक भेजा गया",
+        "failed": "ईमेल भेजने में विफल"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "प्रगति अवलोकन",
+      "courseFallback": "कोर्स {index}",
+      "gateway": "गेटवे",
+      "core": "कोर",
+      "nextMilestoneReview": "अगला माइलस्टोन: समीक्षा",
+      "gatewayPrep": "गेटवे तैयारी",
+      "courseProgress": "कोर्स प्रगति",
+      "completed": "पूर्ण",
+      "remaining": "शेष",
+      "progressLabel": "प्रगति",
+      "completedUnits": "पूर्ण इकाइयाँ",
+      "totalUnits": "कुल इकाइयाँ"
+    },
+    "calendarDialog": {
+      "title": "कैलेंडर",
+      "description": "अपनी निर्धारित घटनाओं और अपॉइंटमेंट देखें और प्रबंधित करें"
+    },
+    "acknowledgementDialog": {
+      "title": "पावती संदेश",
+      "welcomeMessage": "YourLocker प्लेटफ़ॉर्म में {name} का स्वागत है",
+      "reviewDocument": "कृपया संलग्न दस्तावेज़ की समीक्षा करें",
+      "cancel": "रद्द करें",
+      "processing": "प्रोसेस हो रहा है...",
+      "accept": "मैं स्वीकार करता/करती हूँ",
+      "toast": {
+        "success": "पावती सफलतापूर्वक स्वीकार की गई",
+        "failed": "पावती स्थिति अपडेट करने में विफल"
       }
     }
   }

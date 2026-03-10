@@ -3475,6 +3475,21 @@
       "csvSuccess": "CSV 导出成功"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "证据库",
+    "unitProgress": "单元进度",
+    "gapAnalysis": "差距分析",
+    "actionsAndActivities": "行动与活动",
+    "healthAndWellbeing": "健康与福祉",
+    "chooseUnits": "选择单元",
+    "learningPlan": "学习计划",
+    "resources": "资源",
+    "timeLog": "时间记录",
+    "supplementaryTraining": "补充培训",
+    "newDocToSign": "待签署新文件",
+    "item": "项",
+    "items": "项"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "仪表盘",
@@ -3503,6 +3518,66 @@
         "title": "时间记录",
         "onTheJob": "在岗学习总计",
         "offTheJob": "脱岗学习总计"
+      }
+    },
+    "safeguardingCard": {
+      "title": "保护联系人",
+      "description": "如有任何顾虑请立即联系",
+      "priorityBadge": "优先支持",
+      "leadLabel": "保护负责人",
+      "leadRole": "指定保护负责人",
+      "tel": "电话：",
+      "mobile": "手机：",
+      "email": "邮箱：",
+      "defaultContactMessage": "正在使用默认联系信息。如需帮助请联系管理员。"
+    },
+    "emailDialog": {
+      "title": "发送邮件给 {name}",
+      "description": "发送邮件至 {email}",
+      "learnerFallback": "学员",
+      "learnerEmailFallback": "该学员",
+      "subjectLabel": "主题",
+      "subjectPlaceholder": "输入邮件主题",
+      "messageLabel": "内容",
+      "messagePlaceholder": "在此输入您的消息...",
+      "cancel": "取消",
+      "sending": "发送中...",
+      "sendButton": "发送邮件",
+      "toast": {
+        "fillBoth": "请填写主题和内容",
+        "noEmail": "学员邮箱不可用",
+        "success": "邮件发送成功",
+        "failed": "发送邮件失败"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "进度概览",
+      "courseFallback": "课程 {index}",
+      "gateway": "Gateway",
+      "core": "核心",
+      "nextMilestoneReview": "下一里程碑：审阅",
+      "gatewayPrep": "Gateway 准备",
+      "courseProgress": "课程进度",
+      "completed": "已完成",
+      "remaining": "剩余",
+      "progressLabel": "进度",
+      "completedUnits": "已完成单元",
+      "totalUnits": "总单元数"
+    },
+    "calendarDialog": {
+      "title": "日历",
+      "description": "查看和管理您预定的活动和约会"
+    },
+    "acknowledgementDialog": {
+      "title": "确认消息",
+      "welcomeMessage": "欢迎 {name} 使用 YourLocker 平台",
+      "reviewDocument": "请查阅附件文档",
+      "cancel": "取消",
+      "processing": "处理中...",
+      "accept": "我接受",
+      "toast": {
+        "success": "确认已成功接受",
+        "failed": "更新确认状态失败"
       }
     }
   }

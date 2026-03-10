@@ -2683,6 +2683,21 @@
       "csvSuccess": "CSV erfolgreich exportiert"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "Evidenzbibliothek",
+    "unitProgress": "Einheitenfortschritt",
+    "gapAnalysis": "Lückenanalyse",
+    "actionsAndActivities": "Aktionen und Aktivitäten",
+    "healthAndWellbeing": "Gesundheit und Wohlbefinden",
+    "chooseUnits": "Einheiten wählen",
+    "learningPlan": "Lernplan",
+    "resources": "Ressourcen",
+    "timeLog": "Zeitprotokoll",
+    "supplementaryTraining": "Zusatzschulung",
+    "newDocToSign": "Neues Dokument zu unterschreiben",
+    "item": "Element",
+    "items": "Elemente"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Dashboard",
@@ -2711,6 +2726,66 @@
         "title": "Zeiterfassung",
         "onTheJob": "Gesamtzeit am Arbeitsplatz",
         "offTheJob": "Gesamtzeit außerhalb des Arbeitsplatzes"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Ansprechpartner Schutz",
+      "description": "Kontaktieren Sie uns sofort bei Bedenken",
+      "priorityBadge": "Prioritäts-Support",
+      "leadLabel": "Schutz-Beauftragter",
+      "leadRole": "Benannter Schutz-Beauftragter",
+      "tel": "Tel.:",
+      "mobile": "Mobil:",
+      "email": "E-Mail:",
+      "defaultContactMessage": "Standard-Kontaktinformationen werden verwendet. Bitte wenden Sie sich an Ihren Administrator."
+    },
+    "emailDialog": {
+      "title": "E-Mail an {name}",
+      "description": "E-Mail senden an {email}",
+      "learnerFallback": "Lerner",
+      "learnerEmailFallback": "den Lerner",
+      "subjectLabel": "Betreff",
+      "subjectPlaceholder": "E-Mail-Betreff eingeben",
+      "messageLabel": "Nachricht",
+      "messagePlaceholder": "Nachricht hier eingeben...",
+      "cancel": "Abbrechen",
+      "sending": "Wird gesendet...",
+      "sendButton": "E-Mail senden",
+      "toast": {
+        "fillBoth": "Bitte Betreff und Nachricht ausfüllen",
+        "noEmail": "Lerner-E-Mail ist nicht verfügbar",
+        "success": "E-Mail erfolgreich gesendet",
+        "failed": "E-Mail konnte nicht gesendet werden"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Fortschrittsübersicht",
+      "courseFallback": "Kurs {index}",
+      "gateway": "Gateway",
+      "core": "Kern",
+      "nextMilestoneReview": "Nächster Meilenstein: Überprüfung",
+      "gatewayPrep": "Gateway-Vorbereitung",
+      "courseProgress": "Kursfortschritt",
+      "completed": "Abgeschlossen",
+      "remaining": "Verbleibend",
+      "progressLabel": "Fortschritt",
+      "completedUnits": "Abgeschlossene Einheiten",
+      "totalUnits": "Einheiten gesamt"
+    },
+    "calendarDialog": {
+      "title": "Kalender",
+      "description": "Geplante Termine und Ereignisse anzeigen und verwalten"
+    },
+    "acknowledgementDialog": {
+      "title": "Bestätigungsnachricht",
+      "welcomeMessage": "Willkommen {name} auf der YourLocker-Plattform",
+      "reviewDocument": "Bitte überprüfen Sie das angehängte Dokument",
+      "cancel": "Abbrechen",
+      "processing": "Wird verarbeitet...",
+      "accept": "Ich akzeptiere",
+      "toast": {
+        "success": "Bestätigung erfolgreich angenommen",
+        "failed": "Bestätigungsstatus konnte nicht aktualisiert werden"
       }
     }
   }

@@ -3439,6 +3439,21 @@
       "csvSuccess": "تم تصدير ملف CSV بنجاح"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "مكتبة الأدلة",
+    "unitProgress": "تقدم الوحدات",
+    "gapAnalysis": "تحليل الفجوات",
+    "actionsAndActivities": "الإجراءات والأنشطة",
+    "healthAndWellbeing": "الصحة والرفاهية",
+    "chooseUnits": "اختر الوحدات",
+    "learningPlan": "خطة التعلم",
+    "resources": "الموارد",
+    "timeLog": "سجل الوقت",
+    "supplementaryTraining": "التدريب التكميلي",
+    "newDocToSign": "مستند جديد للتوقيع",
+    "item": "عنصر",
+    "items": "عناصر"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "لوحة التحكم",
@@ -3467,6 +3482,66 @@
         "title": "سجل الوقت",
         "onTheJob": "إجمالي أثناء العمل",
         "offTheJob": "إجمالي خارج العمل"
+      }
+    },
+    "safeguardingCard": {
+      "title": "جهة اتصال الحماية",
+      "description": "تواصل فوراً إذا كان لديك أي مخاوف",
+      "priorityBadge": "دعم ذو أولوية",
+      "leadLabel": "مسؤول الحماية",
+      "leadRole": "مسؤول الحماية المعين",
+      "tel": "هاتف:",
+      "mobile": "جوال:",
+      "email": "البريد:",
+      "defaultContactMessage": "جاري استخدام معلومات الاتصال الافتراضية. تواصل مع المسؤول إذا احتجت مساعدة."
+    },
+    "emailDialog": {
+      "title": "إرسال بريد إلى {name}",
+      "description": "إرسال بريد إلى {email}",
+      "learnerFallback": "المتعلم",
+      "learnerEmailFallback": "المتعلم",
+      "subjectLabel": "الموضوع",
+      "subjectPlaceholder": "أدخل موضوع البريد",
+      "messageLabel": "الرسالة",
+      "messagePlaceholder": "أدخل رسالتك هنا...",
+      "cancel": "إلغاء",
+      "sending": "جاري الإرسال...",
+      "sendButton": "إرسال البريد",
+      "toast": {
+        "fillBoth": "يرجى تعبئة الموضوع والرسالة",
+        "noEmail": "البريد الإلكتروني للمتعلم غير متوفر",
+        "success": "تم إرسال البريد بنجاح",
+        "failed": "فشل إرسال البريد"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "نظرة عامة على التقدم",
+      "courseFallback": "الدورة {index}",
+      "gateway": "بوابة",
+      "core": "أساسي",
+      "nextMilestoneReview": "المرحلة التالية: مراجعة",
+      "gatewayPrep": "تحضير البوابة",
+      "courseProgress": "تقدم الدورة",
+      "completed": "مكتمل",
+      "remaining": "متبقي",
+      "progressLabel": "التقدم",
+      "completedUnits": "الوحدات المكتملة",
+      "totalUnits": "إجمالي الوحدات"
+    },
+    "calendarDialog": {
+      "title": "التقويم",
+      "description": "عرض وإدارة أحداثك ومواعيدك المجدولة"
+    },
+    "acknowledgementDialog": {
+      "title": "رسالة التأكيد",
+      "welcomeMessage": "مرحباً {name} في منصة YourLocker",
+      "reviewDocument": "يرجى مراجعة المستند المرفق",
+      "cancel": "إلغاء",
+      "processing": "جاري المعالجة...",
+      "accept": "أوافق",
+      "toast": {
+        "success": "تم قبول التأكيد بنجاح",
+        "failed": "فشل تحديث حالة التأكيد"
       }
     }
   }

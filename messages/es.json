@@ -3358,6 +3358,21 @@
       "csvSuccess": "CSV exportado correctamente"
     }
   },
+  "portfolioCards": {
+    "evidenceLibrary": "Biblioteca de evidencias",
+    "unitProgress": "Progreso de unidades",
+    "gapAnalysis": "Análisis de brechas",
+    "actionsAndActivities": "Acciones y actividades",
+    "healthAndWellbeing": "Salud y bienestar",
+    "chooseUnits": "Elegir unidades",
+    "learningPlan": "Plan de aprendizaje",
+    "resources": "Recursos",
+    "timeLog": "Registro de tiempo",
+    "supplementaryTraining": "Formación complementaria",
+    "newDocToSign": "Nuevo documento a firmar",
+    "item": "elemento",
+    "items": "elementos"
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Panel",
@@ -3386,6 +3401,66 @@
         "title": "Registro de tiempo",
         "onTheJob": "Total en el puesto",
         "offTheJob": "Total fuera del puesto"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Contacto de protección",
+      "description": "Contacte de inmediato si tiene alguna preocupación",
+      "priorityBadge": "Soporte prioritario",
+      "leadLabel": "Responsable de protección",
+      "leadRole": "Responsable designado de protección",
+      "tel": "Tel:",
+      "mobile": "Móvil:",
+      "email": "Correo:",
+      "defaultContactMessage": "Se está usando la información de contacto por defecto. Contacte a su administrador si necesita ayuda."
+    },
+    "emailDialog": {
+      "title": "Enviar correo a {name}",
+      "description": "Enviar un correo a {email}",
+      "learnerFallback": "Aprendiz",
+      "learnerEmailFallback": "el aprendiz",
+      "subjectLabel": "Asunto",
+      "subjectPlaceholder": "Introduzca el asunto del correo",
+      "messageLabel": "Mensaje",
+      "messagePlaceholder": "Escriba su mensaje aquí...",
+      "cancel": "Cancelar",
+      "sending": "Enviando...",
+      "sendButton": "Enviar correo",
+      "toast": {
+        "fillBoth": "Por favor complete asunto y mensaje",
+        "noEmail": "El correo del aprendiz no está disponible",
+        "success": "Correo enviado correctamente",
+        "failed": "Error al enviar el correo"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Resumen de progreso",
+      "courseFallback": "Curso {index}",
+      "gateway": "Gateway",
+      "core": "Núcleo",
+      "nextMilestoneReview": "Próximo hito: Revisión",
+      "gatewayPrep": "Preparación Gateway",
+      "courseProgress": "Progreso del curso",
+      "completed": "Completado",
+      "remaining": "Pendiente",
+      "progressLabel": "Progreso",
+      "completedUnits": "Unidades completadas",
+      "totalUnits": "Unidades totales"
+    },
+    "calendarDialog": {
+      "title": "Calendario",
+      "description": "Ver y gestionar sus eventos y citas programadas"
+    },
+    "acknowledgementDialog": {
+      "title": "Mensaje de confirmación",
+      "welcomeMessage": "Bienvenido {name} a la plataforma YourLocker",
+      "reviewDocument": "Revise el documento adjunto",
+      "cancel": "Cancelar",
+      "processing": "Procesando...",
+      "accept": "Acepto",
+      "toast": {
+        "success": "Confirmación aceptada correctamente",
+        "failed": "Error al actualizar el estado de confirmación"
       }
     }
   }

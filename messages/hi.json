@@ -482,8 +482,70 @@
     "viewDetails": "विवरण देखें"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "हस्ताक्षर की प्रतीक्षा",
+    "pageSubtitle": "फ़ाइलें और दस्तावेज़ जो ट्रेनर, शिक्षार्थियों, नियोक्ता और IQA के हस्ताक्षर की प्रतीक्षा कर रहे हैं",
+    "table": {
+      "title": "हस्ताक्षर की प्रतीक्षा सूची",
+      "errorTitle": "त्रुटि",
+      "errorDescription": "डेटा लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "noData": "हस्ताक्षर की प्रतीक्षा में कोई फ़ाइल नहीं है",
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "courseName": "कोर्स का नाम",
+        "employerName": "नियोक्ता का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "fileType": "फ़ाइल प्रकार",
+        "fileName": "फ़ाइल नाम",
+        "fileDescription": "फ़ाइल विवरण",
+        "uploadedAt": "फ़ाइल अपलोड होने की तिथि",
+        "trainerSigned": "ट्रेनर हस्ताक्षर",
+        "learnerSigned": "शिक्षार्थी हस्ताक्षर",
+        "employerSigned": "नियोक्ता हस्ताक्षर",
+        "iqaSigned": "IQA हस्ताक्षर"
+      },
+      "signatureRequestedShort": "R",
+      "signatureSignedShort": "S"
+    },
+    "filters": {
+      "byTrainerLabel": "ट्रेनर के अनुसार फ़िल्टर करें",
+      "byCourseLabel": "कोर्स के अनुसार फ़िल्टर करें",
+      "byLearnerLabel": "शिक्षार्थी के अनुसार खोजें",
+      "learnerPlaceholder": "शिक्षार्थी का नाम लिखें",
+      "allOption": "सभी",
+      "clearButton": "साफ करें",
+      "exportCsvButton": "CSV एक्सपोर्ट करें"
+    },
+    "summary": {
+      "totalSignatures": "कुल हस्ताक्षर:",
+      "pendingFiles": "लंबित हस्ताक्षर वाली फ़ाइलें:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "courseName": "कोर्स का नाम",
+        "courseCode": "कोर्स कोड",
+        "employerName": "नियोक्ता का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "fileType": "फ़ाइल प्रकार",
+        "fileName": "फ़ाइल नाम",
+        "fileDescription": "फ़ाइल विवरण",
+        "uploadDate": "अपलोड तिथि",
+        "trainerReceived": "ट्रेनर को मिला",
+        "trainerSigned": "ट्रेनर हस्ताक्षर",
+        "learnerReceived": "शिक्षार्थी को मिला",
+        "learnerSigned": "शिक्षार्थी हस्ताक्षर",
+        "employerReceived": "नियोक्ता को मिला",
+        "employerSigned": "नियोक्ता हस्ताक्षर",
+        "iqaReceived": "IQA को मिला",
+        "iqaSigned": "IQA हस्ताक्षर"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए कोई डेटा उपलब्ध नहीं है",
+      "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट हो गया!",
+      "exportFailed": "डेटा एक्सपोर्ट करते समय त्रुटि हुई। कृपया पुनः प्रयास करें।"
+    }
   },
   "calendar": {
     "pageTitle": "कैलेंडर",
@@ -1753,16 +1815,36 @@
     }
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "टाइमलॉग डेटा एक्सपोर्ट",
+    "pageSubtitle": "टाइमलॉग डेटा को फ़िल्टर करें और CSV फ़ॉर्मेट में एक्सपोर्ट करें",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "एक्सपोर्ट जानकारी",
+      "description": "टाइमलॉग डेटा एक्सपोर्ट फीचर का उपयोग करने के लिए दिशानिर्देश",
+      "guideline1": "ऊपर दिए गए फ़िल्टर का उपयोग करके उस टाइमलॉग डेटा को सीमित करें जिसे आप एक्सपोर्ट करना चाहते हैं",
+      "guideline2": "एक्सपोर्ट की गई CSV फ़ाइल में आपके चुने गए मानदंडों से मेल खाने वाली सभी टाइमलॉग एंट्रियाँ शामिल होंगी",
+      "guideline3": "तिथि सीमा फ़िल्टर में \"से\" तिथि की शुरुआत से लेकर \"तक\" तिथि के अंत तक की एंट्रियाँ शामिल होंगी",
+      "guideline4": "\"केवल ऑफ द जॉब रिकॉर्ड्स दिखाएँ\" केवल ऑफ-द-जॉब प्रशिक्षण गतिविधियों को शामिल करने के लिए फ़िल्टर करेगा",
+      "guideline5": "यदि कोई फ़िल्टर चयनित नहीं है, तो सभी उपलब्ध टाइमलॉग डेटा एक्सपोर्ट किया जाएगा"
+    },
+    "filters": {
+      "cardTitle": "फ़िल्टर विकल्प",
+      "cardDescription": "टाइमलॉग डेटा को एक्सपोर्ट करने के लिए फ़िल्टर चुनें",
+      "errorInvalidDateRange": "तिथि \"से\" तिथि \"तक\" से बाद की नहीं हो सकती",
+      "toastExportSuccess": "टाइमलॉग डेटा सफलतापूर्वक एक्सपोर्ट किया गया!",
+      "noDataFound": "चुने गए फ़िल्टर के लिए कोई डेटा नहीं मिला।",
+      "genericError": "डेटा एक्सपोर्ट करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+      "filterByAdminLabel": "एडमिन के अनुसार",
+      "filterByEmployerLabel": "नियोक्ता के अनुसार",
+      "filterByCourseLabel": "कोर्स के अनुसार",
+      "filterByCurriculumManagerLabel": "करिकुलम मैनेजर के अनुसार",
+      "pleaseSelectOption": "कृपया चुनें",
+      "dateFromLabel": "तिथि सीमा (से)",
+      "dateToLabel": "तिथि सीमा (तक)",
+      "pickDatePlaceholder": "तिथि चुनें",
+      "showOnlyOffTheJobLabel": "केवल ऑफ द जॉब रिकॉर्ड्स दिखाएँ",
+      "clearButton": "साफ करें",
+      "exportingLabel": "एक्सपोर्ट हो रहा है...",
+      "exportCsvButton": "CSV में एक्सपोर्ट करें"
     }
   },
   "trainerRiskRating": {
@@ -2019,6 +2101,59 @@
           "submitFailed": "फीडबैक सबमिट करने में विफल। कृपया पुनः प्रयास करें।"
         }
       }
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "डैशबोर्ड",
+      "learner": "शिक्षार्थी",
+      "admin": "एडमिन",
+      "masterAdmin": "मास्टर एडमिन",
+      "trainer": "ट्रेनर",
+      "iqa": "IQA",
+      "employer": "नियोक्ता",
+      "eqa": "EQA",
+      "accountManager": "अकाउंट मैनेजर"
+    },
+    "items": {
+      "dashboard": "डैशबोर्ड",
+      "cpd": "CPD",
+      "forum": "फोरम",
+      "skillsScan": "स्किल्स स्कैन",
+      "forms": "फॉर्म्स",
+      "proposeInnovations": "अपने नवाचार सुझाएँ",
+      "support": "सपोर्ट",
+      "tickets": "टिकट्स",
+      "adminManagement": "एडमिन प्रबंधन",
+      "courseBuilder": "कोर्स बिल्डर",
+      "surveys": "सर्वे",
+      "fundingBands": "फंडिंग बैंड्स",
+      "trainerRiskRating": "ट्रेनर जोखिम रेटिंग",
+      "wellbeingResources": "वेलबीइंग संसाधन",
+      "supplementaryTraining": "पूरक प्रशिक्षण",
+      "qaSamplePlan": "QA सैंपल प्लान",
+      "caseloadManagement": "केसलोड मैनेजमेंट",
+      "safeguarding": "सेफगार्डिंग",
+      "acknowledgeMessage": "संदेश स्वीकारें",
+      "defaultReviewWeeks": "डिफ़ॉल्ट समीक्षा सप्ताह",
+      "iqaQuestions": "IQA प्रश्न प्रबंधन",
+      "sessionTypes": "सेशन प्रकार",
+      "timelogExport": "टाइमलॉग डेटा एक्सपोर्ट",
+      "awaitingSignature": "हस्ताक्षर की प्रतीक्षा",
+      "gatewayReport": "गेटवे रिपोर्ट",
+      "progressExclusion": "समग्र प्रोग्रेस से बाहर रखें",
+      "learnerManagement": "शिक्षार्थी प्रबंधन",
+      "organisations": "संगठन",
+      "centres": "सेंटर्स",
+      "subscriptions": "सब्सक्रिप्शन",
+      "payments": "पेमेंट्स",
+      "auditLogs": "ऑडिट लॉग्स",
+      "systemAdmins": "सिस्टम एडमिन",
+      "accountManagers": "अकाउंट मैनेजर्स",
+      "users": "यूज़र्स",
+      "learnerOverview": "शिक्षार्थी ओवरव्यू",
+      "resources": "संसाधन",
+      "learnersForms": "शिक्षार्थी फॉर्म्स"
     }
   },
   "acknowledgeMessage": {

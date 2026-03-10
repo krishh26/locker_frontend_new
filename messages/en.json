@@ -503,7 +503,69 @@
   },
   "awaitingSignature": {
     "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageSubtitle": "Files and documents awaiting signatures from trainers, learners, employers, and IQA",
+    "table": {
+      "title": "Awaiting Signature List",
+      "errorTitle": "Error",
+      "errorDescription": "Failed to load data. Please try again.",
+      "noData": "No files awaiting signature",
+      "headers": {
+        "learnerName": "Learner Name",
+        "courseName": "Course Name",
+        "employerName": "Employer Name",
+        "trainerName": "Trainer Name",
+        "fileType": "File Type",
+        "fileName": "File Name",
+        "fileDescription": "File Description",
+        "uploadedAt": "Date file was uploaded",
+        "trainerSigned": "Trainer Signed",
+        "learnerSigned": "Learner Signed",
+        "employerSigned": "Employer Signed",
+        "iqaSigned": "IQA Signed"
+      },
+      "signatureRequestedShort": "R",
+      "signatureSignedShort": "S"
+    },
+    "filters": {
+      "byTrainerLabel": "Filter by Trainer",
+      "byCourseLabel": "Filter by Course",
+      "byLearnerLabel": "Search by Learner",
+      "learnerPlaceholder": "Enter learner name",
+      "allOption": "All",
+      "clearButton": "Clear",
+      "exportCsvButton": "Export CSV"
+    },
+    "summary": {
+      "totalSignatures": "Total signatures:",
+      "pendingFiles": "Files with pending signatures:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "Learner Name",
+        "courseName": "Course Name",
+        "courseCode": "Course Code",
+        "employerName": "Employer Name",
+        "trainerName": "Trainer Name",
+        "fileType": "File Type",
+        "fileName": "File Name",
+        "fileDescription": "File Description",
+        "uploadDate": "Upload Date",
+        "trainerReceived": "Trainer Received",
+        "trainerSigned": "Trainer Signed",
+        "learnerReceived": "Learner Received",
+        "learnerSigned": "Learner Signed",
+        "employerReceived": "Employer Received",
+        "employerSigned": "Employer Signed",
+        "iqaReceived": "IQA Received",
+        "iqaSigned": "IQA Signed"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "No data available to export",
+      "exportSuccess": "Data exported successfully!",
+      "exportFailed": "Failed to export data. Please try again."
+    }
   },
   "calendar": {
     "pageTitle": "Calendar",
@@ -1783,6 +1845,26 @@
       "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
       "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
       "guideline5": "If no filters are selected, all available timelog data will be exported"
+    },
+    "filters": {
+      "cardTitle": "Filter Options",
+      "cardDescription": "Select filters to narrow down the timelog data for export",
+      "errorInvalidDateRange": "Date \"From\" cannot be later than date \"To\"",
+      "toastExportSuccess": "Timelog data exported successfully!",
+      "noDataFound": "No data found for the selected filters.",
+      "genericError": "An error occurred while exporting data. Please try again.",
+      "filterByAdminLabel": "By Admin",
+      "filterByEmployerLabel": "By Employer",
+      "filterByCourseLabel": "By Course",
+      "filterByCurriculumManagerLabel": "By Curriculum Manager",
+      "pleaseSelectOption": "Please Select",
+      "dateFromLabel": "Date Range From",
+      "dateToLabel": "Date Range To",
+      "pickDatePlaceholder": "Pick a date",
+      "showOnlyOffTheJobLabel": "Show only Off the Job Records",
+      "clearButton": "Clear",
+      "exportingLabel": "Exporting...",
+      "exportCsvButton": "Export to CSV"
     }
   },
   "trainerRiskRating": {
@@ -1876,6 +1958,59 @@
       "iplFullName": "Individual Personal Log",
       "lo": "LO",
       "loFullName": "Learning Outcome"
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "Dashboards",
+      "learner": "Learner",
+      "admin": "Admin",
+      "masterAdmin": "Master Admin",
+      "trainer": "Trainer",
+      "iqa": "IQA",
+      "employer": "Employer",
+      "eqa": "EQA",
+      "accountManager": "Account Manager"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "cpd": "CPD",
+      "forum": "Forum",
+      "skillsScan": "Skills Scan",
+      "forms": "Forms",
+      "proposeInnovations": "Propose Your Innovations",
+      "support": "Support",
+      "tickets": "Tickets",
+      "adminManagement": "Admin Management",
+      "courseBuilder": "Course Builder",
+      "surveys": "Surveys",
+      "fundingBands": "Funding Bands",
+      "trainerRiskRating": "Trainer Risk Rating",
+      "wellbeingResources": "Wellbeing Resources",
+      "supplementaryTraining": "Supplementary Training",
+      "qaSamplePlan": "QA Sample Plan",
+      "caseloadManagement": "Caseload Management",
+      "safeguarding": "Safeguarding",
+      "acknowledgeMessage": "Acknowledge Message",
+      "defaultReviewWeeks": "Default Review Weeks",
+      "iqaQuestions": "IQA Maintain Questions",
+      "sessionTypes": "Session Types",
+      "timelogExport": "Timelog Data Export",
+      "awaitingSignature": "Awaiting Signature",
+      "gatewayReport": "Gateway Report",
+      "progressExclusion": "Exclude From Overall Progress",
+      "learnerManagement": "Learner Management",
+      "organisations": "Organisations",
+      "centres": "Centres",
+      "subscriptions": "Subscriptions",
+      "payments": "Payments",
+      "auditLogs": "Audit Logs",
+      "systemAdmins": "System Admins",
+      "accountManagers": "Account Managers",
+      "users": "Users",
+      "learnerOverview": "Learner Overview",
+      "resources": "Resources",
+      "learnersForms": "Learner Forms"
     }
   },
   "wellbeing": {

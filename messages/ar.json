@@ -483,8 +483,70 @@
     "viewDetails": "عرض التفاصيل"
   },
   "awaitingSignature": {
-    "pageTitle": "ملفات ومستندات معلقة التوقيع",
-    "pageSubtitle": "ملفات ومستندات معلقة التوقيع من المدرب والمتعلمين"
+    "pageTitle": "في انتظار التوقيع",
+    "pageSubtitle": "ملفات ومستندات في انتظار توقيع المدربين والمتعلمين وأصحاب العمل و IQA",
+    "table": {
+      "title": "قائمة الملفات في انتظار التوقيع",
+      "errorTitle": "خطأ",
+      "errorDescription": "فشل في تحميل البيانات. يرجى المحاولة مرة أخرى.",
+      "noData": "لا توجد ملفات في انتظار التوقيع",
+      "headers": {
+        "learnerName": "اسم المتعلم",
+        "courseName": "اسم الدورة",
+        "employerName": "اسم صاحب العمل",
+        "trainerName": "اسم المدرب",
+        "fileType": "نوع الملف",
+        "fileName": "اسم الملف",
+        "fileDescription": "وصف الملف",
+        "uploadedAt": "تاريخ رفع الملف",
+        "trainerSigned": "توقيع المدرب",
+        "learnerSigned": "توقيع المتعلم",
+        "employerSigned": "توقيع صاحب العمل",
+        "iqaSigned": "توقيع IQA"
+      },
+      "signatureRequestedShort": "ط",
+      "signatureSignedShort": "ت"
+    },
+    "filters": {
+      "byTrainerLabel": "تصفية حسب المدرب",
+      "byCourseLabel": "تصفية حسب الدورة",
+      "byLearnerLabel": "بحث حسب المتعلم",
+      "learnerPlaceholder": "أدخل اسم المتعلم",
+      "allOption": "الكل",
+      "clearButton": "مسح",
+      "exportCsvButton": "تصدير CSV"
+    },
+    "summary": {
+      "totalSignatures": "إجمالي التوقيعات:",
+      "pendingFiles": "الملفات ذات التوقيعات المعلقة:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "اسم المتعلم",
+        "courseName": "اسم الدورة",
+        "courseCode": "رمز الدورة",
+        "employerName": "اسم صاحب العمل",
+        "trainerName": "اسم المدرب",
+        "fileType": "نوع الملف",
+        "fileName": "اسم الملف",
+        "fileDescription": "وصف الملف",
+        "uploadDate": "تاريخ الرفع",
+        "trainerReceived": "استلمها المدرب",
+        "trainerSigned": "وقّعها المدرب",
+        "learnerReceived": "استلمها المتعلم",
+        "learnerSigned": "وقّعها المتعلم",
+        "employerReceived": "استلمها صاحب العمل",
+        "employerSigned": "وقّعها صاحب العمل",
+        "iqaReceived": "استلمها IQA",
+        "iqaSigned": "وقّعها IQA"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات متاحة للتصدير",
+      "exportSuccess": "تم تصدير البيانات بنجاح!",
+      "exportFailed": "فشل في تصدير البيانات. يرجى المحاولة مرة أخرى."
+    }
   },
   "calendar": {
     "pageTitle": "التقويم",
@@ -1754,16 +1816,36 @@
     }
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "تصدير بيانات سجل الوقت",
+    "pageSubtitle": "تصفية بيانات سجل الوقت وتصديرها بصيغة CSV",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "معلومات التصدير",
+      "description": "إرشادات لاستخدام ميزة تصدير بيانات سجل الوقت",
+      "guideline1": "استخدم عوامل التصفية أعلاه لتضييق نطاق بيانات سجل الوقت التي تريد تصديرها",
+      "guideline2": "سيشمل ملف CSV المُصدَّر جميع إدخالات سجل الوقت التي تطابق المعايير التي حددتها",
+      "guideline3": "ستشمل فلاتر نطاق التاريخ الإدخالات من بداية تاريخ \"من\" حتى نهاية تاريخ \"إلى\"",
+      "guideline4": "سيعمل خيار \"إظهار سجلات خارج العمل فقط\" على التصفية لعرض أنشطة التدريب خارج العمل فقط",
+      "guideline5": "إذا لم يتم اختيار أي عوامل تصفية، فسيتم تصدير جميع بيانات سجل الوقت المتاحة"
+    },
+    "filters": {
+      "cardTitle": "خيارات التصفية",
+      "cardDescription": "اختر عوامل التصفية لتضييق بيانات سجل الوقت المراد تصديرها",
+      "errorInvalidDateRange": "لا يمكن أن يكون تاريخ \"من\" بعد تاريخ \"إلى\"",
+      "toastExportSuccess": "تم تصدير بيانات سجل الوقت بنجاح!",
+      "noDataFound": "لا توجد بيانات مطابقة لعوامل التصفية المحددة.",
+      "genericError": "حدث خطأ أثناء تصدير البيانات. يرجى المحاولة مرة أخرى.",
+      "filterByAdminLabel": "حسب المسؤول",
+      "filterByEmployerLabel": "حسب صاحب العمل",
+      "filterByCourseLabel": "حسب الدورة",
+      "filterByCurriculumManagerLabel": "حسب مدير المنهج",
+      "pleaseSelectOption": "الرجاء الاختيار",
+      "dateFromLabel": "نطاق التاريخ (من)",
+      "dateToLabel": "نطاق التاريخ (إلى)",
+      "pickDatePlaceholder": "اختر تاريخًا",
+      "showOnlyOffTheJobLabel": "إظهار سجلات خارج العمل فقط",
+      "clearButton": "مسح",
+      "exportingLabel": "جارٍ التصدير...",
+      "exportCsvButton": "تصدير إلى CSV"
     }
   },
   "trainerRiskRating": {
@@ -2063,6 +2145,59 @@
       "saveFailed": "فشل في تأكيد الرسالة. يرجى المحاولة مرة أخرى.",
       "deleteFailed": "فشل في حذف التأكيد. يرجى المحاولة مرة أخرى.",
       "clearFailed": "فشل في مسح التأكيدات. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "لوحات التحكم",
+      "learner": "المتعلم",
+      "admin": "المسؤول",
+      "masterAdmin": "المسؤول الأعلى",
+      "trainer": "المدرب",
+      "iqa": "IQA",
+      "employer": "صاحب العمل",
+      "eqa": "EQA",
+      "accountManager": "مدير الحساب"
+    },
+    "items": {
+      "dashboard": "لوحة التحكم",
+      "cpd": "CPD",
+      "forum": "المنتدى",
+      "skillsScan": "فحص المهارات",
+      "forms": "النماذج",
+      "proposeInnovations": "اقترح ابتكاراتك",
+      "support": "الدعم",
+      "tickets": "التذاكر",
+      "adminManagement": "إدارة المسؤول",
+      "courseBuilder": "Course Builder",
+      "surveys": "الاستبيانات",
+      "fundingBands": "شرائح التمويل",
+      "trainerRiskRating": "تقييم مخاطر المدرب",
+      "wellbeingResources": "موارد الرفاهية",
+      "supplementaryTraining": "تدريب تكميلي",
+      "qaSamplePlan": "خطة عينات QA",
+      "caseloadManagement": "إدارة caseload",
+      "safeguarding": "حماية",
+      "acknowledgeMessage": "تأكيد الرسالة",
+      "defaultReviewWeeks": "أسابيع المراجعة الافتراضية",
+      "iqaQuestions": "إدارة أسئلة IQA",
+      "sessionTypes": "أنواع الجلسات",
+      "timelogExport": "تصدير بيانات timelog",
+      "awaitingSignature": "في انتظار التوقيع",
+      "gatewayReport": "تقرير Gateway",
+      "progressExclusion": "استبعاد من التقدم العام",
+      "learnerManagement": "إدارة المتعلمين",
+      "organisations": "المنظمات",
+      "centres": "المراكز",
+      "subscriptions": "الاشتراكات",
+      "payments": "المدفوعات",
+      "auditLogs": "سجلات التدقيق",
+      "systemAdmins": "مسؤولو النظام",
+      "accountManagers": "مديرو الحسابات",
+      "users": "المستخدمون",
+      "learnerOverview": "نظرة عامة على المتعلم",
+      "resources": "الموارد",
+      "learnersForms": "نماذج المتعلم"
     }
   },
   "defaultReviewWeeks": {

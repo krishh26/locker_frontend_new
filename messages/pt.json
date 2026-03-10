@@ -482,8 +482,70 @@
     "viewDetails": "Ver detalhes"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "A aguardar assinatura",
+    "pageSubtitle": "Ficheiros e documentos a aguardar assinatura de formadores, alunos, empregadores e IQA",
+    "table": {
+      "title": "Lista de ficheiros a aguardar assinatura",
+      "errorTitle": "Erro",
+      "errorDescription": "Falha ao carregar os dados. Tente novamente.",
+      "noData": "Não há ficheiros a aguardar assinatura",
+      "headers": {
+        "learnerName": "Nome do aluno",
+        "courseName": "Nome do curso",
+        "employerName": "Nome do empregador",
+        "trainerName": "Nome do formador",
+        "fileType": "Tipo de ficheiro",
+        "fileName": "Nome do ficheiro",
+        "fileDescription": "Descrição do ficheiro",
+        "uploadedAt": "Data de upload do ficheiro",
+        "trainerSigned": "Assinatura do formador",
+        "learnerSigned": "Assinatura do aluno",
+        "employerSigned": "Assinatura do empregador",
+        "iqaSigned": "Assinatura IQA"
+      },
+      "signatureRequestedShort": "R",
+      "signatureSignedShort": "A"
+    },
+    "filters": {
+      "byTrainerLabel": "Filtrar por formador",
+      "byCourseLabel": "Filtrar por curso",
+      "byLearnerLabel": "Pesquisar por aluno",
+      "learnerPlaceholder": "Introduza o nome do aluno",
+      "allOption": "Todos",
+      "clearButton": "Limpar",
+      "exportCsvButton": "Exportar CSV"
+    },
+    "summary": {
+      "totalSignatures": "Total de assinaturas:",
+      "pendingFiles": "Ficheiros com assinaturas pendentes:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "Nome do aluno",
+        "courseName": "Nome do curso",
+        "courseCode": "Código do curso",
+        "employerName": "Nome do empregador",
+        "trainerName": "Nome do formador",
+        "fileType": "Tipo de ficheiro",
+        "fileName": "Nome do ficheiro",
+        "fileDescription": "Descrição do ficheiro",
+        "uploadDate": "Data de upload",
+        "trainerReceived": "Recebido pelo formador",
+        "trainerSigned": "Assinado pelo formador",
+        "learnerReceived": "Recebido pelo aluno",
+        "learnerSigned": "Assinado pelo aluno",
+        "employerReceived": "Recebido pelo empregador",
+        "employerSigned": "Assinado pelo empregador",
+        "iqaReceived": "Recebido pelo IQA",
+        "iqaSigned": "Assinado pelo IQA"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "Não existem dados disponíveis para exportar",
+      "exportSuccess": "Dados exportados com sucesso!",
+      "exportFailed": "Falha ao exportar os dados. Tente novamente."
+    }
   },
   "calendar": {
     "pageTitle": "Calendário",
@@ -1753,16 +1815,36 @@
     }
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "Exportação de dados do timelog",
+    "pageSubtitle": "Filtrar e exportar dados do timelog para o formato CSV",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "Informações de exportação",
+      "description": "Diretrizes para usar a funcionalidade de exportação de dados do timelog",
+      "guideline1": "Use os filtros acima para restringir os dados do timelog que deseja exportar",
+      "guideline2": "O arquivo CSV exportado incluirá todos os registos de timelog que correspondem aos critérios selecionados",
+      "guideline3": "Os filtros de intervalo de datas incluirão registos desde o início da data \"De\" até ao final da data \"Até\"",
+      "guideline4": "\"Mostrar apenas registos Off the Job\" irá filtrar para incluir apenas atividades de formação Off the Job",
+      "guideline5": "Se nenhum filtro for selecionado, todos os dados de timelog disponíveis serão exportados"
+    },
+    "filters": {
+      "cardTitle": "Opções de filtro",
+      "cardDescription": "Selecione filtros para restringir os dados do timelog a exportar",
+      "errorInvalidDateRange": "A data \"De\" não pode ser posterior à data \"Até\"",
+      "toastExportSuccess": "Dados do timelog exportados com sucesso!",
+      "noDataFound": "Nenhum dado encontrado para os filtros selecionados.",
+      "genericError": "Ocorreu um erro ao exportar os dados. Tente novamente.",
+      "filterByAdminLabel": "Por administrador",
+      "filterByEmployerLabel": "Por empregador",
+      "filterByCourseLabel": "Por curso",
+      "filterByCurriculumManagerLabel": "Por gestor de currículo",
+      "pleaseSelectOption": "Selecione",
+      "dateFromLabel": "Intervalo de datas (de)",
+      "dateToLabel": "Intervalo de datas (até)",
+      "pickDatePlaceholder": "Escolher data",
+      "showOnlyOffTheJobLabel": "Mostrar apenas registos Off the Job",
+      "clearButton": "Limpar",
+      "exportingLabel": "A exportar...",
+      "exportCsvButton": "Exportar para CSV"
     }
   },
   "trainerRiskRating": {
@@ -2062,6 +2144,59 @@
       "saveFailed": "Falha ao reconhecer a mensagem. Tente novamente.",
       "deleteFailed": "Falha ao eliminar o reconhecimento. Tente novamente.",
       "clearFailed": "Falha ao limpar os reconhecimentos. Tente novamente."
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "Painéis",
+      "learner": "Formando",
+      "admin": "Admin",
+      "masterAdmin": "Super admin",
+      "trainer": "Formador",
+      "iqa": "IQA",
+      "employer": "Empregador",
+      "eqa": "EQA",
+      "accountManager": "Gestor de contas"
+    },
+    "items": {
+      "dashboard": "Painel",
+      "cpd": "CPD",
+      "forum": "Fórum",
+      "skillsScan": "Avaliação de competências",
+      "forms": "Formulários",
+      "proposeInnovations": "Propor inovações",
+      "support": "Suporte",
+      "tickets": "Tickets",
+      "adminManagement": "Gestão admin",
+      "courseBuilder": "Course Builder",
+      "surveys": "Inquéritos",
+      "fundingBands": "Bandas de financiamento",
+      "trainerRiskRating": "Avaliação de risco do formador",
+      "wellbeingResources": "Recursos de bem-estar",
+      "supplementaryTraining": "Formação suplementar",
+      "qaSamplePlan": "Plano de amostragem QA",
+      "caseloadManagement": "Gestão de caseload",
+      "safeguarding": "Proteção",
+      "acknowledgeMessage": "Reconhecer mensagem",
+      "defaultReviewWeeks": "Semanas de revisão predefinidas",
+      "iqaQuestions": "Gestão de questões IQA",
+      "sessionTypes": "Tipos de sessão",
+      "timelogExport": "Exportação de dados de timelog",
+      "awaitingSignature": "A aguardar assinatura",
+      "gatewayReport": "Relatório Gateway",
+      "progressExclusion": "Excluir do progresso geral",
+      "learnerManagement": "Gestão de formandos",
+      "organisations": "Organizações",
+      "centres": "Centros",
+      "subscriptions": "Subscrições",
+      "payments": "Pagamentos",
+      "auditLogs": "Registos de auditoria",
+      "systemAdmins": "Admins de sistema",
+      "accountManagers": "Gestores de contas",
+      "users": "Utilizadores",
+      "learnerOverview": "Visão geral do formando",
+      "resources": "Recursos",
+      "learnersForms": "Formulários de formandos"
     }
   },
   "defaultReviewWeeks": {

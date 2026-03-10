@@ -388,8 +388,70 @@
     "viewDetails": "View Details"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "Ausstehende Unterschriften",
+    "pageSubtitle": "Dateien und Dokumente, die auf Unterschriften von Trainern, Lernenden, Arbeitgebern und IQA warten",
+    "table": {
+      "title": "Liste ausstehender Unterschriften",
+      "errorTitle": "Fehler",
+      "errorDescription": "Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noData": "Keine Dateien mit ausstehender Unterschrift",
+      "headers": {
+        "learnerName": "Name des Lernenden",
+        "courseName": "Kursname",
+        "employerName": "Name des Arbeitgebers",
+        "trainerName": "Name des Trainers",
+        "fileType": "Dateityp",
+        "fileName": "Dateiname",
+        "fileDescription": "Dateibeschreibung",
+        "uploadedAt": "Datum des Datei-Uploads",
+        "trainerSigned": "Trainer unterschrieben",
+        "learnerSigned": "Lernender unterschrieben",
+        "employerSigned": "Arbeitgeber unterschrieben",
+        "iqaSigned": "IQA unterschrieben"
+      },
+      "signatureRequestedShort": "A",
+      "signatureSignedShort": "U"
+    },
+    "filters": {
+      "byTrainerLabel": "Nach Trainer filtern",
+      "byCourseLabel": "Nach Kurs filtern",
+      "byLearnerLabel": "Nach Lernendem suchen",
+      "learnerPlaceholder": "Name des Lernenden eingeben",
+      "allOption": "Alle",
+      "clearButton": "Zurücksetzen",
+      "exportCsvButton": "CSV exportieren"
+    },
+    "summary": {
+      "totalSignatures": "Gesamtzahl der Unterschriften:",
+      "pendingFiles": "Dateien mit ausstehenden Unterschriften:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "Name des Lernenden",
+        "courseName": "Kursname",
+        "courseCode": "Kurscode",
+        "employerName": "Name des Arbeitgebers",
+        "trainerName": "Name des Trainers",
+        "fileType": "Dateityp",
+        "fileName": "Dateiname",
+        "fileDescription": "Dateibeschreibung",
+        "uploadDate": "Upload-Datum",
+        "trainerReceived": "Trainer erhalten",
+        "trainerSigned": "Trainer unterschrieben",
+        "learnerReceived": "Lernender erhalten",
+        "learnerSigned": "Lernender unterschrieben",
+        "employerReceived": "Arbeitgeber erhalten",
+        "employerSigned": "Arbeitgeber unterschrieben",
+        "iqaReceived": "IQA erhalten",
+        "iqaSigned": "IQA unterschrieben"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren verfügbar",
+      "exportSuccess": "Daten wurden erfolgreich exportiert!",
+      "exportFailed": "Fehler beim Exportieren der Daten. Bitte versuchen Sie es erneut."
+    }
   },
   "calendar": {
     "pageTitle": "Calendar",
@@ -1295,16 +1357,36 @@
     "pageSubtitle": "Create and manage surveys"
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "Timelog-Datenexport",
+    "pageSubtitle": "Timelog-Daten filtern und im CSV-Format exportieren",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "Exportinformationen",
+      "description": "Hinweise zur Verwendung der Timelog-Datenexportfunktion",
+      "guideline1": "Verwenden Sie die obigen Filter, um die Timelog-Daten einzugrenzen, die Sie exportieren möchten",
+      "guideline2": "Die exportierte CSV-Datei enthält alle Timelog-Einträge, die Ihren ausgewählten Kriterien entsprechen",
+      "guideline3": "Datumsbereichsfilter enthalten Einträge vom Beginn des Datums \"Von\" bis zum Ende des Datums \"Bis\"",
+      "guideline4": "\"Nur Off-the-Job-Einträge anzeigen\" filtert so, dass nur Off-the-Job-Schulungsaktivitäten enthalten sind",
+      "guideline5": "Wenn keine Filter ausgewählt sind, werden alle verfügbaren Timelog-Daten exportiert"
+    },
+    "filters": {
+      "cardTitle": "Filteroptionen",
+      "cardDescription": "Wählen Sie Filter aus, um die Timelog-Daten für den Export einzugrenzen",
+      "errorInvalidDateRange": "Datum \"Von\" darf nicht später als Datum \"Bis\" sein",
+      "toastExportSuccess": "Timelog-Daten wurden erfolgreich exportiert!",
+      "noDataFound": "Für die ausgewählten Filter wurden keine Daten gefunden.",
+      "genericError": "Beim Exportieren der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+      "filterByAdminLabel": "Nach Admin",
+      "filterByEmployerLabel": "Nach Arbeitgeber",
+      "filterByCourseLabel": "Nach Kurs",
+      "filterByCurriculumManagerLabel": "Nach Curriculum-Manager",
+      "pleaseSelectOption": "Bitte auswählen",
+      "dateFromLabel": "Datumsbereich von",
+      "dateToLabel": "Datumsbereich bis",
+      "pickDatePlaceholder": "Datum auswählen",
+      "showOnlyOffTheJobLabel": "Nur Off-the-Job-Einträge anzeigen",
+      "clearButton": "Zurücksetzen",
+      "exportingLabel": "Wird exportiert...",
+      "exportCsvButton": "Als CSV exportieren"
     }
   },
   "trainerRiskRating": {
@@ -1911,6 +1993,59 @@
         "typeKnowledge": "Wissen",
         "typeSkills": "Fertigkeiten"
       }
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "Dashboards",
+      "learner": "Lernender",
+      "admin": "Admin",
+      "masterAdmin": "Master-Admin",
+      "trainer": "Trainer",
+      "iqa": "IQA",
+      "employer": "Arbeitgeber",
+      "eqa": "EQA",
+      "accountManager": "Account Manager"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "cpd": "CPD",
+      "forum": "Forum",
+      "skillsScan": "Kompetenz-Scan",
+      "forms": "Formulare",
+      "proposeInnovations": "Ihre Innovationen vorschlagen",
+      "support": "Support",
+      "tickets": "Tickets",
+      "adminManagement": "Admin-Verwaltung",
+      "courseBuilder": "Course Builder",
+      "surveys": "Umfragen",
+      "fundingBands": "Förderbänder",
+      "trainerRiskRating": "Trainer-Risikobewertung",
+      "wellbeingResources": "Wellbeing-Ressourcen",
+      "supplementaryTraining": "Ergänzende Schulung",
+      "qaSamplePlan": "QA-Stichprobenplan",
+      "caseloadManagement": "Caseload-Verwaltung",
+      "safeguarding": "Schutzmaßnahmen",
+      "acknowledgeMessage": "Bestätigungsnachricht",
+      "defaultReviewWeeks": "Standardüberprüfungswochen",
+      "iqaQuestions": "IQA-Fragen verwalten",
+      "sessionTypes": "Sitzungstypen",
+      "timelogExport": "Timelog-Datenexport",
+      "awaitingSignature": "Ausstehende Unterschriften",
+      "gatewayReport": "Gateway-Bericht",
+      "progressExclusion": "Vom Gesamtfortschritt ausschließen",
+      "learnerManagement": "Lernendenverwaltung",
+      "organisations": "Organisationen",
+      "centres": "Zentren",
+      "subscriptions": "Abonnements",
+      "payments": "Zahlungen",
+      "auditLogs": "Audit-Logs",
+      "systemAdmins": "System-Admins",
+      "accountManagers": "Account Manager",
+      "users": "Benutzer",
+      "learnerOverview": "Lernendenübersicht",
+      "resources": "Ressourcen",
+      "learnersForms": "Lernendenformulare"
     }
   },
   "broadcast": {

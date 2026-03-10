@@ -482,8 +482,70 @@
     "viewDetails": "查看详情"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "待签署",
+    "pageSubtitle": "等待培训师、学员、雇主和 IQA 签署的文件和文档",
+    "table": {
+      "title": "待签署列表",
+      "errorTitle": "错误",
+      "errorDescription": "数据加载失败。请重试。",
+      "noData": "暂无待签署的文件",
+      "headers": {
+        "learnerName": "学员姓名",
+        "courseName": "课程名称",
+        "employerName": "雇主名称",
+        "trainerName": "培训师姓名",
+        "fileType": "文件类型",
+        "fileName": "文件名称",
+        "fileDescription": "文件描述",
+        "uploadedAt": "文件上传日期",
+        "trainerSigned": "培训师签署",
+        "learnerSigned": "学员签署",
+        "employerSigned": "雇主签署",
+        "iqaSigned": "IQA 签署"
+      },
+      "signatureRequestedShort": "申",
+      "signatureSignedShort": "签"
+    },
+    "filters": {
+      "byTrainerLabel": "按培训师筛选",
+      "byCourseLabel": "按课程筛选",
+      "byLearnerLabel": "按学员搜索",
+      "learnerPlaceholder": "输入学员姓名",
+      "allOption": "全部",
+      "clearButton": "清除",
+      "exportCsvButton": "导出 CSV"
+    },
+    "summary": {
+      "totalSignatures": "签署总数：",
+      "pendingFiles": "存在待签署的文件数："
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "学员姓名",
+        "courseName": "课程名称",
+        "courseCode": "课程代码",
+        "employerName": "雇主名称",
+        "trainerName": "培训师姓名",
+        "fileType": "文件类型",
+        "fileName": "文件名称",
+        "fileDescription": "文件描述",
+        "uploadDate": "上传日期",
+        "trainerReceived": "培训师接收",
+        "trainerSigned": "培训师签署",
+        "learnerReceived": "学员接收",
+        "learnerSigned": "学员签署",
+        "employerReceived": "雇主接收",
+        "employerSigned": "雇主签署",
+        "iqaReceived": "IQA 接收",
+        "iqaSigned": "IQA 签署"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "exportSuccess": "数据导出成功！",
+      "exportFailed": "数据导出失败。请重试。"
+    }
   },
   "calendar": {
     "pageTitle": "日历",
@@ -1715,16 +1777,36 @@
     }
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "时间日志数据导出",
+    "pageSubtitle": "筛选并将时间日志数据导出为 CSV 格式",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "导出信息",
+      "description": "使用时间日志数据导出功能的指导说明",
+      "guideline1": "使用上方的筛选条件来缩小需要导出的时间日志数据范围",
+      "guideline2": "导出的 CSV 文件将包含所有符合所选条件的时间日志记录",
+      "guideline3": "日期范围筛选将包含从“开始”日期起至“结束”日期止的记录",
+      "guideline4": "“仅显示脱产记录”将筛选出仅包含脱产培训活动的记录",
+      "guideline5": "如果未选择任何筛选条件，将导出所有可用的时间日志数据"
+    },
+    "filters": {
+      "cardTitle": "筛选选项",
+      "cardDescription": "请选择筛选条件以缩小要导出的时间日志数据",
+      "errorInvalidDateRange": "“开始”日期不能晚于“结束”日期",
+      "toastExportSuccess": "时间日志数据导出成功！",
+      "noDataFound": "根据所选筛选条件未找到任何数据。",
+      "genericError": "导出数据时发生错误。请重试。",
+      "filterByAdminLabel": "按管理员",
+      "filterByEmployerLabel": "按雇主",
+      "filterByCourseLabel": "按课程",
+      "filterByCurriculumManagerLabel": "按课程负责人",
+      "pleaseSelectOption": "请选择",
+      "dateFromLabel": "日期范围（起）",
+      "dateToLabel": "日期范围（止）",
+      "pickDatePlaceholder": "选择日期",
+      "showOnlyOffTheJobLabel": "仅显示脱产记录",
+      "clearButton": "清除",
+      "exportingLabel": "正在导出...",
+      "exportCsvButton": "导出为 CSV"
     }
   },
   "trainerRiskRating": {
@@ -2024,6 +2106,59 @@
       "saveFailed": "消息确认失败。请重试。",
       "deleteFailed": "删除确认失败。请重试。",
       "clearFailed": "清除确认失败。请重试。"
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "仪表板",
+      "learner": "学员",
+      "admin": "管理员",
+      "masterAdmin": "高级管理员",
+      "trainer": "培训师",
+      "iqa": "IQA",
+      "employer": "雇主",
+      "eqa": "EQA",
+      "accountManager": "客户经理"
+    },
+    "items": {
+      "dashboard": "仪表板",
+      "cpd": "CPD",
+      "forum": "论坛",
+      "skillsScan": "技能评估",
+      "forms": "表单",
+      "proposeInnovations": "提交你的创新",
+      "support": "支持",
+      "tickets": "工单",
+      "adminManagement": "管理员管理",
+      "courseBuilder": "Course Builder",
+      "surveys": "问卷调查",
+      "fundingBands": "资助区间",
+      "trainerRiskRating": "培训师风险评估",
+      "wellbeingResources": "身心健康资源",
+      "supplementaryTraining": "补充培训",
+      "qaSamplePlan": "QA 抽样计划",
+      "caseloadManagement": "Caseload 管理",
+      "safeguarding": "安全保护",
+      "acknowledgeMessage": "确认消息",
+      "defaultReviewWeeks": "默认复查周数",
+      "iqaQuestions": "IQA 题目维护",
+      "sessionTypes": "会话类型",
+      "timelogExport": "时间日志数据导出",
+      "awaitingSignature": "待签署",
+      "gatewayReport": "Gateway 报告",
+      "progressExclusion": "不计入总体进度",
+      "learnerManagement": "学员管理",
+      "organisations": "机构",
+      "centres": "中心",
+      "subscriptions": "订阅",
+      "payments": "付款",
+      "auditLogs": "审计日志",
+      "systemAdmins": "系统管理员",
+      "accountManagers": "客户经理",
+      "users": "用户",
+      "learnerOverview": "学员概览",
+      "resources": "资源",
+      "learnersForms": "学员表单"
     }
   },
   "defaultReviewWeeks": {

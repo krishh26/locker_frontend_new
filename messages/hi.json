@@ -939,22 +939,22 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "IQA बनाएं प्रश्न",
+    "pageSubtitle": "IQA असेसमेंट प्रश्न टाइप द्वारा प्रबंधित और व्यवस्थित करें",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "सभी",
+      "observeAssessor": "असेसर का अवलोकन",
+      "learnerInterview": "लर्नर इंटरव्यू",
+      "employerInterview": "एम्प्लॉयर इंटरव्यू",
+      "finalCheck": "अंतिम जांच"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "प्राइसिंग",
+    "pageSubtitle": "प्राइसिंग कॉन्फ़िगरेशन्स प्रबंधित करें"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "QA सैंपल प्लान",
     "pageSubtitle": "QA सैंपल प्लान बनाएं और प्रबंधित करें",
     "toast": {
       "invalidCourseRedirecting": "अमान्य कोर्स। रीडायरेक्ट किया जा रहा है...",
@@ -1005,7 +1005,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "QA सैंपल प्लान",
       "subtitle": "QA सैंपल प्लान, लर्नर और संबंधित एक्शन्स प्रबंधित करें।"
     },
     "actionModal": {
@@ -1041,7 +1041,7 @@
     "actionBar": {
       "dateFrom": "तारीख से",
       "dateTo": "तारीख तक",
-      "export": "एक्सपोर्ट",
+      "exportButton": "एक्सपोर्ट",
       "exporting": "एक्सपोर्ट हो रहा है...",
       "filter": "फ़िल्टर",
       "clear": "क्लियर",
@@ -1142,6 +1142,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका",
+        "unableToDetermineUserReLogin": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका। कृपया दोबारा लॉगिन करें और पुनः प्रयास करें।",
+        "loadPlanDetailsFailed": "प्लान डिटेल लोड करने में विफल",
         "questionsSavedSuccess": "प्रश्न सफलतापूर्वक सहेजे गए",
         "saveQuestionsFailed": "प्रश्न सहेजने में विफल",
         "missingRequiredInfo": "आवश्यक जानकारी गायब है",
@@ -1158,6 +1160,12 @@
         "uploadDocumentFailed": "डॉक्यूमेंट अपलोड करने में विफल",
         "documentDeletedSuccess": "डॉक्यूमेंट सफलतापूर्वक हटाया गया",
         "deleteDocumentFailed": "डॉक्यूमेंट हटाने में विफल",
+        "selectPlanBeforeCreatingNewEntry": "नई एंट्री बनाने से पहले कृपया एक प्लान चुनें।",
+        "noUnitSelectedSelectUnitFirst": "कोई यूनिट चयनित नहीं है। कृपया पहले एक यूनिट चुनें।",
+        "learnerIdNotFound": "लर्नर ID नहीं मिली।",
+        "invalidUnitInformation": "अमान्य यूनिट जानकारी।",
+        "newEntryCreatedSuccess": "नई एंट्री सफलतापूर्वक बनाई गई।",
+        "createNewEntryFailed": "नई एंट्री बनाने में विफल।",
         "selectFormToAllocate": "अलॉट करने के लिए एक फ़ॉर्म चुनें।",
         "surveyAllocatedSuccess": "सर्वे सफलतापूर्वक अलॉट हुआ",
         "allocateSurveyFailed": "सर्वे अलॉट करने में विफल",
@@ -1165,6 +1173,23 @@
         "unlinkFormFailed": "फ़ॉर्म अनलिंक करने में विफल",
         "formMarkedCompletedSuccess": "फ़ॉर्म को पूर्ण के रूप में चिह्नित किया गया",
         "markCompletedFailed": "पूर्ण के रूप में चिह्नित करने में विफल"
+      },
+      "header": {
+        "title": "सैंपल संपादित करें"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "कोई तिथि नहीं",
+        "noPlannedDates": "कोई प्लान्ड डेट नहीं",
+        "creating": "बनाया जा रहा है...",
+        "createNew": "नया बनाएं"
+      },
+      "actionButtons": {
+        "cancelClose": "रद्द करें / बंद करें",
+        "delete": "हटाएं",
+        "saving": "सहेजा जा रहा है...",
+        "save": "सहेजें",
+        "saveClose": "सहेजें और बंद करें"
       }
     }
   },

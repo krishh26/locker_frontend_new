@@ -939,22 +939,22 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "Perguntas de manutenção IQA",
+    "pageSubtitle": "Gerir e organizar perguntas de avaliação IQA por tipo",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "Todos",
+      "observeAssessor": "Observar avaliador",
+      "learnerInterview": "Entrevista ao formando",
+      "employerInterview": "Entrevista ao empregador",
+      "finalCheck": "Verificação final"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "Preços",
+    "pageSubtitle": "Gerir configurações de preços"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "Planos de Amostra QA",
     "pageSubtitle": "Criar e gerir planos de amostra de QA",
     "toast": {
       "invalidCourseRedirecting": "Curso inválido. A redirecionar...",
@@ -1005,7 +1005,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "Planos de Amostra QA",
       "subtitle": "Gerir planos de amostra de QA, formandos e ações associadas."
     },
     "actionModal": {
@@ -1041,7 +1041,7 @@
     "actionBar": {
       "dateFrom": "Data de",
       "dateTo": "Data até",
-      "export": "Exportar",
+      "exportButton": "Exportar",
       "exporting": "A exportar...",
       "filter": "Filtrar",
       "clear": "Limpar",
@@ -1142,6 +1142,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "Não foi possível determinar o utilizador atual",
+        "unableToDetermineUserReLogin": "Não foi possível determinar o utilizador atual. Volte a iniciar sessão e tente novamente.",
+        "loadPlanDetailsFailed": "Falha ao carregar os detalhes do plano",
         "questionsSavedSuccess": "Perguntas guardadas com sucesso",
         "saveQuestionsFailed": "Falha ao guardar perguntas",
         "missingRequiredInfo": "Falta informação obrigatória",
@@ -1158,6 +1160,12 @@
         "uploadDocumentFailed": "Falha ao carregar documento",
         "documentDeletedSuccess": "Documento eliminado com sucesso",
         "deleteDocumentFailed": "Falha ao eliminar documento",
+        "selectPlanBeforeCreatingNewEntry": "Selecione um plano antes de criar uma nova entrada.",
+        "noUnitSelectedSelectUnitFirst": "Nenhuma unidade selecionada. Selecione uma unidade primeiro.",
+        "learnerIdNotFound": "ID do formando não encontrado.",
+        "invalidUnitInformation": "Informação da unidade inválida.",
+        "newEntryCreatedSuccess": "Nova entrada criada com sucesso.",
+        "createNewEntryFailed": "Falha ao criar a nova entrada.",
         "selectFormToAllocate": "Selecione um formulário para alocar.",
         "surveyAllocatedSuccess": "Inquérito alocado com sucesso",
         "allocateSurveyFailed": "Falha ao alocar inquérito",
@@ -1165,6 +1173,23 @@
         "unlinkFormFailed": "Falha ao desvincular formulário",
         "formMarkedCompletedSuccess": "Formulário marcado como concluído",
         "markCompletedFailed": "Falha ao marcar como concluído"
+      },
+      "header": {
+        "title": "Editar amostra"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Sem data",
+        "noPlannedDates": "Sem datas planeadas",
+        "creating": "A criar...",
+        "createNew": "Criar novo"
+      },
+      "actionButtons": {
+        "cancelClose": "Cancelar / Fechar",
+        "delete": "Eliminar",
+        "saving": "A guardar...",
+        "save": "Guardar",
+        "saveClose": "Guardar e fechar"
       }
     }
   },

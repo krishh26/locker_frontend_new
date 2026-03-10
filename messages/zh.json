@@ -939,14 +939,14 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
+    "pageTitle": "IQA 维护问题",
     "pageSubtitle": "Manage and organize IQA assessment questions by type",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "全部",
+      "observeAssessor": "观察评估员",
+      "learnerInterview": "学员访谈",
+      "employerInterview": "雇主访谈",
+      "finalCheck": "最终检查"
     }
   },
   "pricing": {
@@ -954,7 +954,7 @@
     "pageSubtitle": "Manage pricing configurations"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "QA 抽样计划",
     "pageSubtitle": "创建并管理 QA 抽样计划",
     "toast": {
       "invalidCourseRedirecting": "课程无效。正在重定向...",
@@ -1005,7 +1005,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "QA 抽样计划",
       "subtitle": "管理 QA 抽样计划、学员及相关操作。"
     },
     "actionModal": {
@@ -1041,7 +1041,7 @@
     "actionBar": {
       "dateFrom": "开始日期",
       "dateTo": "结束日期",
-      "export": "导出",
+      "exportButton": "导出",
       "exporting": "导出中...",
       "filter": "筛选",
       "clear": "清除",
@@ -1142,6 +1142,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "无法确定当前用户",
+        "unableToDetermineUserReLogin": "无法确定当前用户。请重新登录后再试。",
+        "loadPlanDetailsFailed": "加载计划详情失败",
         "questionsSavedSuccess": "问题保存成功",
         "saveQuestionsFailed": "保存问题失败",
         "missingRequiredInfo": "缺少必填信息",
@@ -1158,6 +1160,12 @@
         "uploadDocumentFailed": "上传文档失败",
         "documentDeletedSuccess": "文档删除成功",
         "deleteDocumentFailed": "删除文档失败",
+        "selectPlanBeforeCreatingNewEntry": "创建新条目之前请选择一个计划。",
+        "noUnitSelectedSelectUnitFirst": "未选择单元。请先选择一个单元。",
+        "learnerIdNotFound": "未找到学员 ID。",
+        "invalidUnitInformation": "单元信息无效。",
+        "newEntryCreatedSuccess": "新条目创建成功。",
+        "createNewEntryFailed": "创建新条目失败。",
         "selectFormToAllocate": "请选择要分配的表单。",
         "surveyAllocatedSuccess": "问卷分配成功",
         "allocateSurveyFailed": "分配问卷失败",
@@ -1165,6 +1173,23 @@
         "unlinkFormFailed": "表单解绑失败",
         "formMarkedCompletedSuccess": "表单已标记为完成",
         "markCompletedFailed": "标记为完成失败"
+      },
+      "header": {
+        "title": "编辑抽样"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "无日期",
+        "noPlannedDates": "暂无计划日期",
+        "creating": "创建中...",
+        "createNew": "新建"
+      },
+      "actionButtons": {
+        "cancelClose": "取消 / 关闭",
+        "delete": "删除",
+        "saving": "保存中...",
+        "save": "保存",
+        "saveClose": "保存并关闭"
       }
     }
   },

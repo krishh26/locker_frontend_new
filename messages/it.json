@@ -692,22 +692,22 @@
     }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "Domande di manutenzione IQA",
+    "pageSubtitle": "Gestisci e organizza domande di valutazione IQA per tipo",
     "questionTypes": {
-      "all": "All",
+      "all": "Tutti",
       "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "learnerInterview": "Intervista discente",
+      "employerInterview": "Intervista datore di lavoro",
+      "finalCheck": "Controllo finale"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "Prezzi",
+    "pageSubtitle": "Gestisci configurazioni di prezzi"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "Piani campione QA",
     "pageSubtitle": "Crea e gestisci piani campione QA",
     "toast": {
       "invalidCourseRedirecting": "Corso non valido. Reindirizzamento...",
@@ -758,7 +758,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "Piani campione QA",
       "subtitle": "Gestisci piani campione QA, discenti e azioni associate."
     },
     "actionModal": {
@@ -794,7 +794,7 @@
     "actionBar": {
       "dateFrom": "Data da",
       "dateTo": "Data a",
-      "export": "Esporta",
+      "exportButton": "Esporta",
       "exporting": "Esportazione...",
       "filter": "Filtra",
       "clear": "Pulisci",
@@ -895,6 +895,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "Impossibile determinare l’utente corrente",
+        "unableToDetermineUserReLogin": "Impossibile determinare l’utente corrente. Effettua di nuovo l’accesso e riprova.",
+        "loadPlanDetailsFailed": "Impossibile caricare i dettagli del piano",
         "questionsSavedSuccess": "Domande salvate con successo",
         "saveQuestionsFailed": "Impossibile salvare le domande",
         "missingRequiredInfo": "Informazioni richieste mancanti",
@@ -911,6 +913,12 @@
         "uploadDocumentFailed": "Impossibile caricare il documento",
         "documentDeletedSuccess": "Documento eliminato con successo",
         "deleteDocumentFailed": "Impossibile eliminare il documento",
+        "selectPlanBeforeCreatingNewEntry": "Seleziona un piano prima di creare una nuova voce.",
+        "noUnitSelectedSelectUnitFirst": "Nessuna unità selezionata. Seleziona prima un’unità.",
+        "learnerIdNotFound": "ID discente non trovato.",
+        "invalidUnitInformation": "Informazioni unità non valide.",
+        "newEntryCreatedSuccess": "Nuova voce creata con successo.",
+        "createNewEntryFailed": "Impossibile creare la nuova voce.",
         "selectFormToAllocate": "Seleziona un modulo da assegnare.",
         "surveyAllocatedSuccess": "Sondaggio assegnato con successo",
         "allocateSurveyFailed": "Impossibile assegnare il sondaggio",
@@ -918,6 +926,23 @@
         "unlinkFormFailed": "Impossibile scollegare il modulo",
         "formMarkedCompletedSuccess": "Modulo contrassegnato come completato",
         "markCompletedFailed": "Impossibile contrassegnare come completato"
+      },
+      "header": {
+        "title": "Modifica campione"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Nessuna data",
+        "noPlannedDates": "Nessuna data pianificata",
+        "creating": "Creazione...",
+        "createNew": "Crea nuovo"
+      },
+      "actionButtons": {
+        "cancelClose": "Annulla / Chiudi",
+        "delete": "Elimina",
+        "saving": "Salvataggio...",
+        "save": "Salva",
+        "saveClose": "Salva e chiudi"
       }
     }
   },

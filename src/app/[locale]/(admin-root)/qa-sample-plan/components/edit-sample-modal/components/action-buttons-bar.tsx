@@ -1,5 +1,6 @@
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 interface ActionButtonsBarProps {
   planDetailId: string | number | null
@@ -18,6 +19,7 @@ export function ActionButtonsBar({
   onSave,
   isReadOnly = false,
 }: ActionButtonsBarProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.actionButtons')
   return (
     <div className='flex justify-end flex-wrap gap-2 px-6 py-4 border-b'>
       <Button
@@ -25,7 +27,7 @@ export function ActionButtonsBar({
         onClick={onClose}
         className='border-secondary text-secondary hover:bg-secondary'
       >
-        Cancel / Close
+        {t('cancelClose')}
       </Button>
       <Button
         variant='outline'
@@ -33,7 +35,7 @@ export function ActionButtonsBar({
         disabled={!planDetailId || isReadOnly}
         className='border-destructive text-destructive hover:bg-destructive'
       >
-        Delete
+        {t('delete')}
       </Button>
       {onSave && (
         <>
@@ -45,10 +47,10 @@ export function ActionButtonsBar({
             {isSaving ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                Saving...
+                {t('saving')}
               </>
             ) : (
-              'Save'
+              t('save')
             )}
           </Button>
           <Button
@@ -62,10 +64,10 @@ export function ActionButtonsBar({
             {isSaving ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                Saving...
+                {t('saving')}
               </>
             ) : (
-              'Save & Close'
+              t('saveClose')
             )}
           </Button>
         </>

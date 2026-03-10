@@ -1061,7 +1061,7 @@
     "actionBar": {
       "dateFrom": "Date From",
       "dateTo": "Date To",
-      "export": "Export",
+      "exportButton": "Export",
       "exporting": "Exporting...",
       "filter": "Filter",
       "clear": "Clear",
@@ -1162,6 +1162,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "Unable to determine current user",
+        "unableToDetermineUserReLogin": "Unable to determine current user. Please re-login and try again.",
+        "loadPlanDetailsFailed": "Failed to load plan details",
         "questionsSavedSuccess": "Questions saved successfully",
         "saveQuestionsFailed": "Failed to save questions",
         "missingRequiredInfo": "Missing required information",
@@ -1178,6 +1180,12 @@
         "uploadDocumentFailed": "Failed to upload document",
         "documentDeletedSuccess": "Document deleted successfully",
         "deleteDocumentFailed": "Failed to delete document",
+        "selectPlanBeforeCreatingNewEntry": "Please select a plan before creating a new entry.",
+        "noUnitSelectedSelectUnitFirst": "No unit selected. Please select a unit first.",
+        "learnerIdNotFound": "Learner ID not found.",
+        "invalidUnitInformation": "Invalid unit information.",
+        "newEntryCreatedSuccess": "New entry created successfully.",
+        "createNewEntryFailed": "Failed to create new entry.",
         "selectFormToAllocate": "Select a form to allocate.",
         "surveyAllocatedSuccess": "Survey allocated successfully",
         "allocateSurveyFailed": "Failed to allocate survey",
@@ -1185,6 +1193,23 @@
         "unlinkFormFailed": "Failed to unlink form",
         "formMarkedCompletedSuccess": "Form marked as completed",
         "markCompletedFailed": "Failed to mark as completed"
+      },
+      "header": {
+        "title": "Edit Sample"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "No Date",
+        "noPlannedDates": "No Planned Dates",
+        "creating": "Creating...",
+        "createNew": "Create New"
+      },
+      "actionButtons": {
+        "cancelClose": "Cancel / Close",
+        "delete": "Delete",
+        "saving": "Saving...",
+        "save": "Save",
+        "saveClose": "Save & Close"
       }
     }
   },

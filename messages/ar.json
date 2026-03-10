@@ -940,22 +940,22 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "IQA للأسئلة",
+    "pageSubtitle": "إدارة وتنظيم أسئلة التقييم IQA بنوع",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "الكل",
+      "observeAssessor": "ملاحظة المُقيِّم",
+      "learnerInterview": "مقابلة المتعلم",
+      "employerInterview": "مقابلة صاحب العمل",
+      "finalCheck": "فحص نهائي"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "التسعير",
+    "pageSubtitle": "إدارة التكوينات التسعيرية"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "خطط العينات",
     "pageSubtitle": "إنشاء وإدارة خطط عينات QA",
     "toast": {
       "invalidCourseRedirecting": "دورة غير صالحة. جارٍ إعادة التوجيه...",
@@ -1006,7 +1006,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "خطط العينات",
       "subtitle": "إدارة خطط عينات QA والمتعلمين والإجراءات المرتبطة."
     },
     "actionModal": {
@@ -1042,7 +1042,7 @@
     "actionBar": {
       "dateFrom": "التاريخ من",
       "dateTo": "التاريخ إلى",
-      "export": "تصدير",
+      "exportButton": "تصدير",
       "exporting": "جارٍ التصدير...",
       "filter": "تصفية",
       "clear": "مسح",
@@ -1143,6 +1143,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "تعذر تحديد المستخدم الحالي",
+        "unableToDetermineUserReLogin": "تعذر تحديد المستخدم الحالي. يرجى إعادة تسجيل الدخول والمحاولة مرة أخرى.",
+        "loadPlanDetailsFailed": "فشل تحميل تفاصيل الخطة",
         "questionsSavedSuccess": "تم حفظ الأسئلة بنجاح",
         "saveQuestionsFailed": "فشل حفظ الأسئلة",
         "missingRequiredInfo": "معلومات مطلوبة مفقودة",
@@ -1159,6 +1161,12 @@
         "uploadDocumentFailed": "فشل رفع المستند",
         "documentDeletedSuccess": "تم حذف المستند بنجاح",
         "deleteDocumentFailed": "فشل حذف المستند",
+        "selectPlanBeforeCreatingNewEntry": "يرجى اختيار خطة قبل إنشاء إدخال جديد.",
+        "noUnitSelectedSelectUnitFirst": "لم يتم اختيار أي وحدة. يرجى اختيار وحدة أولاً.",
+        "learnerIdNotFound": "لم يتم العثور على معرّف المتعلم.",
+        "invalidUnitInformation": "معلومات الوحدة غير صالحة.",
+        "newEntryCreatedSuccess": "تم إنشاء إدخال جديد بنجاح.",
+        "createNewEntryFailed": "فشل إنشاء إدخال جديد.",
         "selectFormToAllocate": "اختر نموذجًا لتخصيصه.",
         "surveyAllocatedSuccess": "تم تخصيص الاستبيان بنجاح",
         "allocateSurveyFailed": "فشل تخصيص الاستبيان",
@@ -1166,6 +1174,23 @@
         "unlinkFormFailed": "فشل إلغاء ربط النموذج",
         "formMarkedCompletedSuccess": "تم وضع علامة على النموذج كمكتمل",
         "markCompletedFailed": "فشل وضع علامة كمكتمل"
+      },
+      "header": {
+        "title": "تعديل العينة"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "بدون تاريخ",
+        "noPlannedDates": "لا توجد تواريخ مخططة",
+        "creating": "جارٍ الإنشاء...",
+        "createNew": "إنشاء جديد"
+      },
+      "actionButtons": {
+        "cancelClose": "إلغاء / إغلاق",
+        "delete": "حذف",
+        "saving": "جارٍ الحفظ...",
+        "save": "حفظ",
+        "saveClose": "حفظ وإغلاق"
       }
     }
   },

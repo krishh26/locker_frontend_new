@@ -125,7 +125,7 @@ export function useEditSampleModal(
         console.error("Error fetching plan details:", error);
         const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                             (error as { message?: string })?.message || 
-                            "Failed to load plan details";
+                            t("loadPlanDetailsFailed");
         toast.error(errorMessage);
       }
     };
@@ -368,12 +368,12 @@ export function useEditSampleModal(
   // Create new handler
   const handleCreateNew = useCallback(async () => {
     if (!planId) {
-      toast.error("Please select a plan before creating a new entry.");
+      toast.error(t("selectPlanBeforeCreatingNewEntry"));
       return;
     }
 
     if (!iqaId) {
-      toast.error("Unable to determine current user. Please re-login and try again.");
+      toast.error(t("unableToDetermineUserReLogin"));
       return;
     }
 
@@ -382,7 +382,7 @@ export function useEditSampleModal(
     const currentUnitName = modalState?.currentUnitName ?? null;
 
     if (!currentUnitCode && !currentUnitName) {
-      toast.error("No unit selected. Please select a unit first.");
+      toast.error(t("noUnitSelectedSelectUnitFirst"));
       return;
     }
 
@@ -420,7 +420,7 @@ export function useEditSampleModal(
     }
 
     if (!learnerId) {
-      toast.error("Learner ID not found.");
+      toast.error(t("learnerIdNotFound"));
       return;
     }
 
@@ -431,7 +431,7 @@ export function useEditSampleModal(
     const unitRef = String(unitRefRaw).trim() || unitId;
 
     if (!unitRef) {
-      toast.error("Invalid unit information.");
+      toast.error(t("invalidUnitInformation"));
       return;
     }
 
@@ -476,7 +476,7 @@ export function useEditSampleModal(
       : planId;
 
     if (!iqaId) {
-      toast.error("Unable to determine current user.");
+      toast.error(t("unableToDetermineUser"));
       setIsCreating(false);
       return;
     }
@@ -495,7 +495,7 @@ export function useEditSampleModal(
     setIsCreating(true);
     try {
       await applySamplePlanLearners(payload).unwrap();
-      toast.success("New entry created successfully.");
+      toast.success(t("newEntryCreatedSuccess"));
       dispatch(closeEditSampleModal());
       if (onDeleteSuccess) {
         onDeleteSuccess();
@@ -503,12 +503,23 @@ export function useEditSampleModal(
     } catch (error: unknown) {
       const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                           (error as { message?: string })?.message || 
-                          "Failed to create new entry.";
+                          t("createNewEntryFailed");
       toast.error(errorMessage);
     } finally {
       setIsCreating(false);
     }
-  }, [planId, iqaId, modalState, sampledLearners, modalFormData.sampleType, triggerGetPlanDetails, applySamplePlanLearners, dispatch, onDeleteSuccess]);
+  }, [
+    planId,
+    iqaId,
+    modalState,
+    sampledLearners,
+    modalFormData.sampleType,
+    triggerGetPlanDetails,
+    applySamplePlanLearners,
+    dispatch,
+    onDeleteSuccess,
+    t,
+  ]);
 
   const isLoading = isLoadingPlanDetails || isLoadingQuestions;
 

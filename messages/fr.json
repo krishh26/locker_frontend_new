@@ -939,22 +939,22 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "Questions de maintenance IQA",
+    "pageSubtitle": "Gérer et organiser les questions d’évaluation IQA par type",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "Tous",
+      "observeAssessor": "Observer l’évaluateur",
+      "learnerInterview": "Entretien apprenant",
+      "employerInterview": "Entretien employeur",
+      "finalCheck": "Vérification finale"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "Prix",
+    "pageSubtitle": "Gérer les configurations de prix"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "Plans d’échantillonnage QA",
     "pageSubtitle": "Créer et gérer des plans d’échantillonnage QA",
     "toast": {
       "invalidCourseRedirecting": "Cours invalide. Redirection...",
@@ -1005,7 +1005,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "Plans d’échantillonnage QA",
       "subtitle": "Gérer les plans d’échantillonnage QA, les apprenants et les actions associées."
     },
     "actionModal": {
@@ -1041,7 +1041,7 @@
     "actionBar": {
       "dateFrom": "Date de début",
       "dateTo": "Date de fin",
-      "export": "Exporter",
+      "exportButton": "Exporter",
       "exporting": "Exportation...",
       "filter": "Filtrer",
       "clear": "Effacer",
@@ -1142,6 +1142,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "Impossible de déterminer l’utilisateur actuel",
+        "unableToDetermineUserReLogin": "Impossible de déterminer l’utilisateur actuel. Veuillez vous reconnecter et réessayer.",
+        "loadPlanDetailsFailed": "Échec du chargement des détails du plan",
         "questionsSavedSuccess": "Questions enregistrées avec succès",
         "saveQuestionsFailed": "Échec de l’enregistrement des questions",
         "missingRequiredInfo": "Informations requises manquantes",
@@ -1158,6 +1160,12 @@
         "uploadDocumentFailed": "Échec du téléversement du document",
         "documentDeletedSuccess": "Document supprimé avec succès",
         "deleteDocumentFailed": "Échec de la suppression du document",
+        "selectPlanBeforeCreatingNewEntry": "Veuillez sélectionner un plan avant de créer une nouvelle entrée.",
+        "noUnitSelectedSelectUnitFirst": "Aucune unité sélectionnée. Veuillez d’abord sélectionner une unité.",
+        "learnerIdNotFound": "ID apprenant introuvable.",
+        "invalidUnitInformation": "Informations d’unité invalides.",
+        "newEntryCreatedSuccess": "Nouvelle entrée créée avec succès.",
+        "createNewEntryFailed": "Échec de la création de la nouvelle entrée.",
         "selectFormToAllocate": "Sélectionnez un formulaire à allouer.",
         "surveyAllocatedSuccess": "Enquête allouée avec succès",
         "allocateSurveyFailed": "Échec de l’allocation de l’enquête",
@@ -1165,6 +1173,23 @@
         "unlinkFormFailed": "Échec de la dissociation du formulaire",
         "formMarkedCompletedSuccess": "Formulaire marqué comme terminé",
         "markCompletedFailed": "Échec du marquage comme terminé"
+      },
+      "header": {
+        "title": "Modifier l’échantillon"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Aucune date",
+        "noPlannedDates": "Aucune date planifiée",
+        "creating": "Création...",
+        "createNew": "Créer nouveau"
+      },
+      "actionButtons": {
+        "cancelClose": "Annuler / Fermer",
+        "delete": "Supprimer",
+        "saving": "Enregistrement...",
+        "save": "Enregistrer",
+        "saveClose": "Enregistrer et fermer"
       }
     }
   },

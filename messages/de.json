@@ -707,7 +707,7 @@
     "pageSubtitle": "Manage pricing configurations"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
+    "pageTitle": "QA-Stichprobenpläne",
     "pageSubtitle": "QA-Stichprobenpläne erstellen und verwalten",
     "toast": {
       "invalidCourseRedirecting": "Ungültiger Kurs. Weiterleitung...",
@@ -758,7 +758,7 @@
       }
     },
     "layout": {
-      "title": "QA Sample Plan",
+      "title": "QA-Stichprobenpläne",
       "subtitle": "QA-Stichprobenpläne, Lernende und zugehörige Aktionen verwalten."
     },
     "actionModal": {
@@ -794,7 +794,7 @@
     "actionBar": {
       "dateFrom": "Datum von",
       "dateTo": "Datum bis",
-      "export": "Exportieren",
+      "exportButton": "Exportieren",
       "exporting": "Wird exportiert...",
       "filter": "Filtern",
       "clear": "Zurücksetzen",
@@ -895,6 +895,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "Aktueller Benutzer konnte nicht ermittelt werden",
+        "unableToDetermineUserReLogin": "Aktueller Benutzer konnte nicht ermittelt werden. Bitte melden Sie sich erneut an und versuchen Sie es noch einmal.",
+        "loadPlanDetailsFailed": "Plangdetails konnten nicht geladen werden",
         "questionsSavedSuccess": "Fragen erfolgreich gespeichert",
         "saveQuestionsFailed": "Fragen konnten nicht gespeichert werden",
         "missingRequiredInfo": "Erforderliche Informationen fehlen",
@@ -911,6 +913,12 @@
         "uploadDocumentFailed": "Dokument konnte nicht hochgeladen werden",
         "documentDeletedSuccess": "Dokument erfolgreich gelöscht",
         "deleteDocumentFailed": "Dokument konnte nicht gelöscht werden",
+        "selectPlanBeforeCreatingNewEntry": "Bitte wählen Sie einen Plan aus, bevor Sie einen neuen Eintrag erstellen.",
+        "noUnitSelectedSelectUnitFirst": "Keine Einheit ausgewählt. Bitte wählen Sie zuerst eine Einheit aus.",
+        "learnerIdNotFound": "Lernenden-ID nicht gefunden.",
+        "invalidUnitInformation": "Ungültige Einheitsinformationen.",
+        "newEntryCreatedSuccess": "Neuer Eintrag erfolgreich erstellt.",
+        "createNewEntryFailed": "Neuer Eintrag konnte nicht erstellt werden.",
         "selectFormToAllocate": "Bitte wählen Sie ein Formular zum Zuweisen aus.",
         "surveyAllocatedSuccess": "Umfrage erfolgreich zugewiesen",
         "allocateSurveyFailed": "Umfrage konnte nicht zugewiesen werden",
@@ -918,6 +926,23 @@
         "unlinkFormFailed": "Formular konnte nicht getrennt werden",
         "formMarkedCompletedSuccess": "Formular als abgeschlossen markiert",
         "markCompletedFailed": "Konnte nicht als abgeschlossen markieren"
+      },
+      "header": {
+        "title": "Stichprobe bearbeiten"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Kein Datum",
+        "noPlannedDates": "Keine geplanten Termine",
+        "creating": "Wird erstellt...",
+        "createNew": "Neu erstellen"
+      },
+      "actionButtons": {
+        "cancelClose": "Abbrechen / Schließen",
+        "delete": "Löschen",
+        "saving": "Wird gespeichert...",
+        "save": "Speichern",
+        "saveClose": "Speichern & schließen"
       }
     }
   },

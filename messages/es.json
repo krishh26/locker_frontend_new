@@ -882,7 +882,7 @@
     "actionBar": {
       "dateFrom": "Desde",
       "dateTo": "Hasta",
-      "export": "Exportar",
+      "exportButton": "Exportar",
       "exporting": "Exportando...",
       "filter": "Filtrar",
       "clear": "Limpiar",
@@ -983,6 +983,8 @@
     "editSampleModal": {
       "toast": {
         "unableToDetermineUser": "No se pudo determinar el usuario actual",
+        "unableToDetermineUserReLogin": "No se pudo determinar el usuario actual. Vuelva a iniciar sesión e inténtelo de nuevo.",
+        "loadPlanDetailsFailed": "No se pudieron cargar los detalles del plan",
         "questionsSavedSuccess": "Preguntas guardadas correctamente",
         "saveQuestionsFailed": "No se pudieron guardar las preguntas",
         "missingRequiredInfo": "Falta información requerida",
@@ -999,6 +1001,12 @@
         "uploadDocumentFailed": "No se pudo cargar el documento",
         "documentDeletedSuccess": "Documento eliminado correctamente",
         "deleteDocumentFailed": "No se pudo eliminar el documento",
+        "selectPlanBeforeCreatingNewEntry": "Seleccione un plan antes de crear una nueva entrada.",
+        "noUnitSelectedSelectUnitFirst": "No se seleccionó ninguna unidad. Seleccione una unidad primero.",
+        "learnerIdNotFound": "No se encontró el ID del alumno.",
+        "invalidUnitInformation": "Información de unidad no válida.",
+        "newEntryCreatedSuccess": "Nueva entrada creada correctamente.",
+        "createNewEntryFailed": "No se pudo crear la nueva entrada.",
         "selectFormToAllocate": "Seleccione un formulario para asignar.",
         "surveyAllocatedSuccess": "Encuesta asignada correctamente",
         "allocateSurveyFailed": "No se pudo asignar la encuesta",
@@ -1006,6 +1014,23 @@
         "unlinkFormFailed": "No se pudo desvincular el formulario",
         "formMarkedCompletedSuccess": "Formulario marcado como completado",
         "markCompletedFailed": "No se pudo marcar como completado"
+      },
+      "header": {
+        "title": "Editar muestra"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Sin fecha",
+        "noPlannedDates": "Sin fechas planificadas",
+        "creating": "Creando...",
+        "createNew": "Crear nuevo"
+      },
+      "actionButtons": {
+        "cancelClose": "Cancelar / Cerrar",
+        "delete": "Eliminar",
+        "saving": "Guardando...",
+        "save": "Guardar",
+        "saveClose": "Guardar y cerrar"
       }
     }
   },

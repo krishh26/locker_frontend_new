@@ -2,6 +2,7 @@ import { useRouter } from "@/i18n/navigation"
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 import type { ModalFormData } from '../../types'
 
 interface FeedbackSectionProps {
@@ -24,16 +25,17 @@ export function FeedbackSection({
   isReadOnly = false,
 }: FeedbackSectionProps) {
   const router = useRouter()
+  const t = useTranslations('qaSamplePlan.editSampleModal.formSections.feedback')
 
   return (
     <>
       <div className='col-span-12 space-y-2'>
-        <Label>Feedback</Label>
+        <Label>{t('title')}</Label>
         <Textarea
           rows={6}
           value={modalFormData.feedback}
           onChange={(e) => onFormDataChange('feedback', e.target.value)}
-          placeholder='Please type in feedback. Max 4400 characters.'
+          placeholder={t('placeholder')}
           maxLength={4400}
           disabled={isReadOnly}
           readOnly={isReadOnly}

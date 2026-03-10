@@ -757,6 +757,139 @@
         "Final": "Abschlussprüfung"
       }
     },
+    "evidence": {
+      "page": {
+        "subtitle": "Nachweisdokumente prüfen",
+        "subtitleForUnit": "Nachweisdokumente für Einheit prüfen: {unitCode}",
+        "confirmationStatements": {
+          "learner": "Ich bestätige, dass diese Einheit abgeschlossen ist und die bereitgestellten Nachweise das Ergebnis meiner eigenen Arbeit sind.",
+          "trainer": "Ich bestätige, dass der Lernende Kompetenz gezeigt hat, indem alle Fähigkeiten und Kenntnisse für diese Einheit erfüllt wurden, und dass gemäß den Anforderungen der Qualifikation bewertet wurde.",
+          "leadAssessorCountersignature": "Ich bestätige, dass der Lernende Kompetenz gezeigt hat, indem alle Fähigkeiten und Kenntnisse für diese Einheit erfüllt wurden, und dass gemäß den Anforderungen der Qualifikation bewertet wurde.",
+          "employer": "Ich bestätige als Arbeitgeber, dass die von mir geprüften Nachweise den Standards entsprechen.",
+          "iqa": "Ich bestätige als interner Qualitätssicherer, dass die von mir geprüften Stichproben-Nachweise den Standards entsprechen.",
+          "eqa": "Im Rahmen eines externen QA-Besuchs verifiziert."
+        },
+        "deleteFileDialog": {
+          "title": "Datei löschen?",
+          "description": "Möchten Sie diese Datei wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+          "fileLabel": "Datei",
+          "cancel": "Abbrechen",
+          "deleting": "Wird gelöscht...",
+          "confirm": "Löschen"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "Nur IQA kann alle Kriterien abzeichnen.",
+          "evidenceNotFound": "Nachweis nicht gefunden.",
+          "cannotUncheckSignOffPermanent": "Kann nicht abgewählt werden. Abzeichnung ist nach Anwendung dauerhaft.",
+          "noUnitsReadyTrainerMustMapFirst": "Keine Einheiten sind zur Abzeichnung bereit. Der Trainer muss die Einheiten zuerst mappen.",
+          "unitCodeRequired": "Einheitscode ist erforderlich.",
+          "signedOffUnitsSuccess": "{count} Einheit(en) erfolgreich abgezeichnet.",
+          "signOffUnitsFailed": "Einheiten konnten nicht abgezeichnet werden.",
+          "evidenceNotFoundCannotUpdateSignOff": "Nachweis nicht gefunden. Abzeichnungsstatus kann nicht aktualisiert werden.",
+          "subUnitNotFoundCannotUpdateSignOff": "Untereinheit nicht gefunden. Abzeichnungsstatus kann nicht aktualisiert werden.",
+          "iqaCanOnlySignOffWhenTrainerMapped": "IQA kann nur abzeichnen, wenn der Trainer diese Einheit gemappt hat.",
+          "signOffStatusUpdatedSuccess": "Abzeichnungsstatus erfolgreich aktualisiert.",
+          "signOffStatusUpdateFailed": "Abzeichnungsstatus konnte nicht aktualisiert werden.",
+          "fillAllRequiredFields": "Bitte alle Pflichtfelder ausfüllen.",
+          "commentAddedSuccess": "Kommentar erfolgreich hinzugefügt.",
+          "addCommentFailed": "Kommentar konnte nicht hinzugefügt werden.",
+          "noEvidenceCannotUpdateStatus": "Keine Nachweise gefunden. Status kann nicht aktualisiert werden.",
+          "statusUpdatedSuccess": "Status erfolgreich aktualisiert.",
+          "updateStatusFailed": "Status konnte nicht aktualisiert werden.",
+          "unableDeleteFileReviewIdNotFound": "Datei kann nicht gelöscht werden: Review-ID nicht gefunden.",
+          "fileDeletedSuccess": "Datei erfolgreich gelöscht.",
+          "deleteFileFailed": "Datei konnte nicht gelöscht werden.",
+          "noEvidenceCannotAddComment": "Keine Nachweise gefunden. Kommentar kann nicht hinzugefügt werden."
+        }
+      },
+      "unitProgress": {
+        "title": "Einheitsfortschritt",
+        "pendingTrainerMap": "Trainer-Mapping ausstehend",
+        "pendingIqaMap": "IQA-Mapping ausstehend",
+        "iqaChecked": "IQA geprüft",
+        "totalEvidence": "Nachweise gesamt"
+      },
+      "evidenceTable": {
+        "title": "Nachweisdokumente ({count})",
+        "columns": {
+          "refNo": "Ref.-Nr.",
+          "evidenceDocuments": "Nachweisdokumente",
+          "evidenceName": "Nachweisname",
+          "evidenceDescription": "Nachweisbeschreibung",
+          "assessmentMethod": "Bewertungsmethode",
+          "dateUploaded": "Upload-Datum",
+          "signOffAllCriteria": "Alle Kriterien abzeichnen"
+        },
+        "showAll": "Alle anzeigen",
+        "showLess": "Weniger anzeigen",
+        "empty": "Keine Nachweisdatensätze verfügbar",
+        "na": "k. A.",
+        "fileSize": {
+          "zeroBytes": "0 Bytes",
+          "bytes": "Bytes",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "Rolle",
+          "confirmationStatement": "Bestätigungsstatement",
+          "tickWhenCompleted": "Bitte abhaken, wenn abgeschlossen",
+          "signedOffBy": "Abgezeichnet von",
+          "dated": "Datum",
+          "generalComments": "Allgemeine Kommentare",
+          "file": "Datei"
+        },
+        "roles": {
+          "learner": "Lernender",
+          "trainer": "Trainer",
+          "leadAssessorCountersignature": "Leitender Assessor – Gegenzeichnung (falls erforderlich)",
+          "employer": "Arbeitgeber",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "Einheiten-Mapping",
+        "columns": {
+          "code": "Code",
+          "unitTitle": "Einheitstitel"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "Einheit abzeichnen",
+        "description": "Allgemeiner Kommentar für diese Einheit (max. 500 Zeichen).",
+        "commentLabel": "Kommentar",
+        "commentPlaceholder": "Kommentar hier eingeben...",
+        "charactersCount": "{count}/500 Zeichen",
+        "cancelClose": "Abbrechen / Schließen",
+        "submit": "Senden"
+      },
+      "commentModal": {
+        "title": "Kommentar hinzufügen",
+        "description": "Kommentar zu diesem Nachweisdokument hinzufügen",
+        "evidenceLabel": "Nachweis",
+        "assignmentIdLabel": "Assignment-ID",
+        "existingReviews": "Vorhandene Reviews:",
+        "status": {
+          "completed": "Abgeschlossen",
+          "pending": "Ausstehend"
+        },
+        "noComment": "Kein Kommentar",
+        "signedOffAt": "Abgezeichnet: {date}",
+        "by": "von",
+        "commentLabel": "Kommentar ({role})",
+        "commentPlaceholder": "Kommentar hier eingeben...",
+        "cancel": "Abbrechen",
+        "submitting": "Wird gesendet...",
+        "submit": "Senden",
+        "na": "k. A."
+      }
+    },
     "layout": {
       "title": "QA-Stichprobenpläne",
       "subtitle": "QA-Stichprobenpläne, Lernende und zugehörige Aktionen verwalten."
@@ -943,6 +1076,115 @@
         "saving": "Wird gespeichert...",
         "save": "Speichern",
         "saveClose": "Speichern & schließen"
+      },
+      "evidenceLinksTable": {
+        "title": "Nachweis-Links zur Stichprobe",
+        "columns": {
+          "examinedEvidence": "Geprüfte Nachweise",
+          "assessmentMethodsUsed": "Verwendete Bewertungsmethoden",
+          "actions": "Aktionen"
+        },
+        "loading": "Nachweise werden geladen...",
+        "empty": "Für diese Stichprobe sind keine Nachweis-Links vorhanden",
+        "na": "k. A."
+      },
+      "actionsTable": {
+        "title": "Aktionen zur Stichprobe",
+        "addAction": "Aktion hinzufügen",
+        "columns": {
+          "summary": "Zusammenfassung",
+          "actionRequired": "Erforderliche Aktion",
+          "actionWith": "Aktion mit",
+          "targetDate": "Zieldatum",
+          "actions": "Aktionen"
+        },
+        "loading": "Aktionen werden geladen...",
+        "empty": "Für diese Stichprobe sind keine Aktionen vorhanden",
+        "na": "k. A."
+      },
+      "iqaQuestions": {
+        "title": "IQA-Fragen",
+        "save": "Speichern",
+        "columns": {
+          "question": "Frage",
+          "yes": "Ja",
+          "no": "Nein",
+          "actions": "Aktionen"
+        },
+        "answers": {
+          "yes": "Ja",
+          "no": "Nein"
+        },
+        "empty": "Für diese Stichprobe sind keine IQA-Fragen verfügbar."
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "QA-Name",
+          "type": "Typ",
+          "selectType": "Typ auswählen",
+          "types": {
+            "formative": "Formativ",
+            "summative": "Summativ"
+          },
+          "sampleType": "Stichprobentyp",
+          "selectSampleType": "Stichprobentyp auswählen",
+          "sampleTypes": {
+            "portfolio": "Portfolio-Stichprobe",
+            "observeAssessor": "Assessor beobachten",
+            "learnerInterview": "Interview mit Lernenden",
+            "employerInterview": "Interview mit Arbeitgeber",
+            "final": "Endkontrolle"
+          },
+          "plannedDate": "Geplantes Datum",
+          "completedDate": "Abschlussdatum"
+        },
+        "assessmentMethods": {
+          "title": "Bewertungsmethoden"
+        },
+        "assessmentProcesses": {
+          "title": "Bewertungsprozesse"
+        },
+        "assessorDecision": {
+          "title": "Assessor-Entscheidung korrekt",
+          "yes": "Ja",
+          "no": "Nein"
+        },
+        "feedback": {
+          "title": "Feedback",
+          "placeholder": "Bitte Feedback eingeben. Maximal 4400 Zeichen."
+        },
+        "iqaConclusion": {
+          "title": "IQA-Schlussfolgerung"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "Aktion löschen?",
+          "description": "Möchten Sie diese Aktion wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+          "cancel": "Abbrechen",
+          "deleting": "Wird gelöscht...",
+          "confirm": "Löschen"
+        },
+        "deleteDocument": {
+          "title": "Dokument löschen?",
+          "description": "Möchten Sie dieses Dokument wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+          "cancel": "Abbrechen",
+          "deleting": "Wird gelöscht...",
+          "confirm": "Löschen"
+        },
+        "deleteForm": {
+          "title": "Zugewiesenes Formular entfernen?",
+          "description": "Möchten Sie dieses Formular wirklich von der Stichprobe trennen?",
+          "cancel": "Abbrechen",
+          "removing": "Wird entfernt...",
+          "confirm": "Entfernen"
+        },
+        "deleteLearner": {
+          "title": "Stichproben-Lernenden löschen?",
+          "description": "Möchten Sie diesen Stichproben-Lernenden wirklich entfernen? Diese Aktion kann nicht rückgängig gemacht werden.",
+          "cancel": "Abbrechen",
+          "confirm": "Löschen"
+        }
       }
     }
   },

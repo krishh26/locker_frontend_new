@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { useTranslations } from 'next-intl'
 import type { ModalFormData } from '../../types'
 
 interface AssessmentProcessesSectionProps {
@@ -13,9 +14,10 @@ export function AssessmentProcessesSection({
   onFormDataChange,
   isReadOnly = false,
 }: AssessmentProcessesSectionProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.formSections.assessmentProcesses')
   return (
     <div className='col-span-12 space-y-2'>
-      <Label>Assessment Processes</Label>
+      <Label>{t('title')}</Label>
       <Textarea
         rows={4}
         value={modalFormData.assessmentProcesses}

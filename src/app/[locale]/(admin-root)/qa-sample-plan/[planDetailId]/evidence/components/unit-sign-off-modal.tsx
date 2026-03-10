@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +27,7 @@ export function UnitSignOffModal({
   onSubmit,
   defaultValue = "",
 }: UnitSignOffModalProps) {
+  const t = useTranslations("qaSamplePlan.evidence.unitSignOffModal");
   const [comment, setComment] = useState(defaultValue);
 
   useEffect(() => {
@@ -51,40 +53,40 @@ export function UnitSignOffModal({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Unit sign off</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            General comment for this Unit (Max 500 Characters).
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-2 py-4">
-          <Label htmlFor="unit-comment">Comment</Label>
+          <Label htmlFor="unit-comment">{t("commentLabel")}</Label>
           <Textarea
             id="unit-comment"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Enter your comments here..."
+            placeholder={t("commentPlaceholder")}
             rows={8}
             className="resize-none"
             maxLength={500}
           />
           {comment.length > 0 && (
             <p className="text-xs text-muted-foreground text-right">
-              {comment.length}/500 characters
+              {t("charactersCount", { count: comment.length })}
             </p>
           )}
         </div>
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={handleClose}>
-            Cancel / Close
+            {t("cancelClose")}
           </Button>
           <Button
             type="button"
             onClick={handleSubmit}
             disabled={!comment.trim()}
           >
-            Submit
+            {t("submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

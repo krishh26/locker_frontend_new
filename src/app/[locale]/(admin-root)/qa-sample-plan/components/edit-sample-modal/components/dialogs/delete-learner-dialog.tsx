@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useTranslations } from 'next-intl'
 
 interface DeleteLearnerDialogProps {
   open: boolean
@@ -20,19 +21,20 @@ export function DeleteLearnerDialog({
   onOpenChange,
   onConfirm,
 }: DeleteLearnerDialogProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.dialogs.deleteLearner')
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Sampled Learner?</AlertDialogTitle>
+          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to remove this sampled learner? This action cannot be undone.
+            {t('description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm} className='bg-destructive hover:bg-destructive/90'>
-            Delete
+            {t('confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

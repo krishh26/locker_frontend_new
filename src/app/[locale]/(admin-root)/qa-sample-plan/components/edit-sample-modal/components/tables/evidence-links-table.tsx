@@ -1,6 +1,7 @@
 import { RefreshCw, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { useTranslations } from 'next-intl'
 import {
   Table,
   TableBody,
@@ -26,10 +27,11 @@ export function EvidenceLinksTable({
   onRefresh,
   isReadOnly = false,
 }: EvidenceLinksTableProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.evidenceLinksTable')
   return (
     <div className='flex-1'>
       <div className='flex items-center justify-between mb-4'>
-        <h3 className='text-lg font-semibold'>Evidence Links for Sample</h3>
+        <h3 className='text-lg font-semibold'>{t('title')}</h3>
         <div className='flex gap-2'>
           <Button
             variant='ghost'
@@ -46,9 +48,9 @@ export function EvidenceLinksTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Examined Evidence</TableHead>
-                <TableHead>Assessment Methods Used</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('columns.examinedEvidence')}</TableHead>
+                <TableHead>{t('columns.assessmentMethodsUsed')}</TableHead>
+                <TableHead>{t('columns.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -57,14 +59,14 @@ export function EvidenceLinksTable({
                   <TableCell colSpan={3} className='text-center py-8'>
                     <div className='flex items-center justify-center gap-2'>
                       <Loader2 className='h-4 w-4 animate-spin' />
-                      <span className='text-sm text-muted-foreground'>Loading evidence...</span>
+                      <span className='text-sm text-muted-foreground'>{t('loading')}</span>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : evidenceList.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={3} className='text-center py-8 text-muted-foreground'>
-                    There are no Evidence Links on this Sample
+                    {t('empty')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -88,7 +90,7 @@ export function EvidenceLinksTable({
                             </span>
                           ))
                         ) : (
-                          <span className='text-sm text-muted-foreground'>N/A</span>
+                          <span className='text-sm text-muted-foreground'>{t('na')}</span>
                         )}
                       </div>
                     </TableCell>

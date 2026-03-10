@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ export function UnitMappingTable({
   expandedUnits,
   onToggleUnitExpansion,
 }: UnitMappingTableProps) {
+  const t = useTranslations("qaSamplePlan.evidence.unitMappingTable");
   if (!unitMappingResponse?.data || unitMappingResponse.data.length === 0) {
     return null;
   }
@@ -32,7 +34,7 @@ export function UnitMappingTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Unit Mapping</CardTitle>
+        <CardTitle>{t("title")}</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <div className="overflow-x-auto">
@@ -40,8 +42,8 @@ export function UnitMappingTable({
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[50px]"></TableHead>
-                <TableHead>Code</TableHead>
-                <TableHead>Unit Title</TableHead>
+                <TableHead>{t("columns.code")}</TableHead>
+                <TableHead>{t("columns.unitTitle")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -80,7 +82,7 @@ export function UnitMappingTable({
                         >
                           <TableCell className="w-[50px] pl-8"></TableCell>
                           <TableCell>{subUnit.code || String(subUnit.id)}</TableCell>
-                          <TableCell>{subUnit.title || "-"}</TableCell>
+                          <TableCell>{subUnit.title || t("na")}</TableCell>
                         </TableRow>
                       ))}
                   </Fragment>

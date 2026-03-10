@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -79,6 +80,7 @@ export function EvidenceTable({
   onOpenCommentModal,
   createStateKey,
 }: EvidenceTableProps) {
+  const t = useTranslations("qaSamplePlan.evidence.evidenceTable");
   const handleViewFile = (url: string) => {
     window.open(url, "_blank");
   };
@@ -94,9 +96,9 @@ export function EvidenceTable({
   };
 
   const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return "0 Bytes";
+    if (bytes === 0) return t("fileSize.zeroBytes");
     const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const sizes = [t("fileSize.bytes"), t("fileSize.kb"), t("fileSize.mb"), t("fileSize.gb")];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
   };
@@ -106,7 +108,7 @@ export function EvidenceTable({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          Evidence Documents ({evidenceList.length})
+          {t("title", { count: evidenceList.length })}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -114,13 +116,13 @@ export function EvidenceTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Ref No</TableHead>
-                <TableHead>Evidence Documents</TableHead>
-                <TableHead>Evidence Name</TableHead>
-                <TableHead>Evidence Description</TableHead>
-                <TableHead>Assessment Method</TableHead>
-                <TableHead>Date Uploaded</TableHead>
-                <TableHead className="text-center">Sign off all criteria</TableHead>
+                <TableHead className="w-[100px]">{t("columns.refNo")}</TableHead>
+                <TableHead>{t("columns.evidenceDocuments")}</TableHead>
+                <TableHead>{t("columns.evidenceName")}</TableHead>
+                <TableHead>{t("columns.evidenceDescription")}</TableHead>
+                <TableHead>{t("columns.assessmentMethod")}</TableHead>
+                <TableHead>{t("columns.dateUploaded")}</TableHead>
+                <TableHead className="text-center">{t("columns.signOffAllCriteria")}</TableHead>
                 {hasExpandedRows &&
                   allUnitsToDisplay.map((unit) => (
                     <TableHead
@@ -135,7 +137,7 @@ export function EvidenceTable({
                   className={`text-center cursor-pointer ${hasExpandedRows ? "" : "border-l-0"}`}
                   onClick={onToggleAllRows}
                 >
-                  {hasExpandedRows ? "Show Less" : "Show All"}
+                  {hasExpandedRows ? t("showLess") : t("showAll")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -146,7 +148,7 @@ export function EvidenceTable({
                     colSpan={8 + (hasExpandedRows ? allUnitsToDisplay.length : 0)}
                     className="text-center py-8 text-muted-foreground"
                   >
-                    No evidence records available
+                    {t("empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -180,19 +182,19 @@ export function EvidenceTable({
                             rel="noopener noreferrer"
                             className="text-primary hover:underline"
                           >
-                            {evidence.file.name || "-"}
+                            {evidence.file.name || t("na")}
                           </a>
                         ) : (
                           <span className="text-muted-foreground">
-                            {evidence.file?.name || "-"}
+                            {evidence.file?.name || t("na")}
                           </span>
                         )}
                       </TableCell>
                       <TableCell className="max-w-[200px] truncate">
-                        {evidence.title || "-"}
+                        {evidence.title || t("na")}
                       </TableCell>
                       <TableCell className="max-w-[300px] truncate">
-                        {evidence.description || "-"}
+                        {evidence.description || t("na")}
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
@@ -204,14 +206,14 @@ export function EvidenceTable({
                               </Badge>
                             ))
                           ) : (
-                            <span className="text-muted-foreground">-</span>
+                            <span className="text-muted-foreground">{t("na")}</span>
                           )}
                         </div>
                       </TableCell>
                       <TableCell>
                         {evidence.created_at
                           ? format(new Date(evidence.created_at), "dd MMM yyyy")
-                          : "-"}
+                          : t("na")}
                       </TableCell>
                       <TableCell className="text-center">
                         <Checkbox

@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent } from '@/components/ui/card'
+import { useTranslations } from 'next-intl'
 import type { ModalFormData } from '../../types'
 import { iqaConclusionOptions } from '../../../../utils/constants'
 
@@ -15,9 +16,10 @@ export function IqaConclusionSection({
   onIqaConclusionToggle,
   isReadOnly = false,
 }: IqaConclusionSectionProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.formSections.iqaConclusion')
   return (
     <div className='md:col-span-4 space-y-2'>
-      <Label className='text-sm font-semibold'>IQA Conclusion</Label>
+      <Label className='text-sm font-semibold'>{t('title')}</Label>
       <Card>
         <CardContent className='p-4'>
           <div className='flex flex-wrap gap-2'>

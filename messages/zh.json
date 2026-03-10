@@ -1004,6 +1004,139 @@
         "Final": "最终检查"
       }
     },
+    "evidence": {
+      "page": {
+        "subtitle": "查看证据文档",
+        "subtitleForUnit": "查看单元的证据文档：{unitCode}",
+        "confirmationStatements": {
+          "learner": "我确认该单元已完成，所提供的证据为我本人完成的工作成果。",
+          "trainer": "我确认学员已通过满足该单元所有技能与知识要求来证明其胜任力，并已按照资格要求进行评估。",
+          "leadAssessorCountersignature": "我确认学员已通过满足该单元所有技能与知识要求来证明其胜任力，并已按照资格要求进行评估。",
+          "employer": "我确认作为雇主所检查的证据符合标准。",
+          "iqa": "我确认作为内部质量保证人员所抽样检查的证据符合标准。",
+          "eqa": "作为外部 QA 访问的一部分已验证。"
+        },
+        "deleteFileDialog": {
+          "title": "删除文件？",
+          "description": "确定要删除此文件吗？此操作无法撤销。",
+          "fileLabel": "文件",
+          "cancel": "取消",
+          "deleting": "删除中...",
+          "confirm": "删除"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "只有 IQA 才能对所有标准进行签核。",
+          "evidenceNotFound": "未找到证据。",
+          "cannotUncheckSignOffPermanent": "无法取消勾选。签核一旦生效即为永久。",
+          "noUnitsReadyTrainerMustMapFirst": "暂无可签核的单元。需要先由培训师映射单元。",
+          "unitCodeRequired": "需要单元代码。",
+          "signedOffUnitsSuccess": "已成功签核 {count} 个单元。",
+          "signOffUnitsFailed": "签核单元失败。",
+          "evidenceNotFoundCannotUpdateSignOff": "未找到证据。无法更新签核状态。",
+          "subUnitNotFoundCannotUpdateSignOff": "未找到子单元。无法更新签核状态。",
+          "iqaCanOnlySignOffWhenTrainerMapped": "仅当培训师已映射该单元后，IQA 才能签核。",
+          "signOffStatusUpdatedSuccess": "签核状态更新成功。",
+          "signOffStatusUpdateFailed": "签核状态更新失败。",
+          "fillAllRequiredFields": "请填写所有必填字段。",
+          "commentAddedSuccess": "评论添加成功。",
+          "addCommentFailed": "添加评论失败。",
+          "noEvidenceCannotUpdateStatus": "未找到证据。无法更新状态。",
+          "statusUpdatedSuccess": "状态更新成功。",
+          "updateStatusFailed": "状态更新失败。",
+          "unableDeleteFileReviewIdNotFound": "无法删除文件：未找到审查 ID。",
+          "fileDeletedSuccess": "文件删除成功。",
+          "deleteFileFailed": "删除文件失败。",
+          "noEvidenceCannotAddComment": "未找到证据。无法添加评论。"
+        }
+      },
+      "unitProgress": {
+        "title": "单元进度",
+        "pendingTrainerMap": "待培训师映射",
+        "pendingIqaMap": "待 IQA 映射",
+        "iqaChecked": "IQA 已签核",
+        "totalEvidence": "证据总数"
+      },
+      "evidenceTable": {
+        "title": "证据文档（{count}）",
+        "columns": {
+          "refNo": "编号",
+          "evidenceDocuments": "证据文档",
+          "evidenceName": "证据名称",
+          "evidenceDescription": "证据描述",
+          "assessmentMethod": "评估方法",
+          "dateUploaded": "上传日期",
+          "signOffAllCriteria": "签核所有标准"
+        },
+        "showAll": "显示全部",
+        "showLess": "收起",
+        "empty": "暂无证据记录",
+        "na": "无",
+        "fileSize": {
+          "zeroBytes": "0 字节",
+          "bytes": "字节",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "角色",
+          "confirmationStatement": "确认声明",
+          "tickWhenCompleted": "完成后请勾选",
+          "signedOffBy": "签核人",
+          "dated": "日期",
+          "generalComments": "通用备注",
+          "file": "文件"
+        },
+        "roles": {
+          "learner": "学员",
+          "trainer": "培训师",
+          "leadAssessorCountersignature": "主评估员复核（如需要）",
+          "employer": "雇主",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "单元映射",
+        "columns": {
+          "code": "代码",
+          "unitTitle": "单元标题"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "单元签核",
+        "description": "该单元的通用备注（最多 500 个字符）。",
+        "commentLabel": "备注",
+        "commentPlaceholder": "在此输入备注...",
+        "charactersCount": "{count}/500 字符",
+        "cancelClose": "取消 / 关闭",
+        "submit": "提交"
+      },
+      "commentModal": {
+        "title": "添加评论",
+        "description": "为该证据文档添加评论",
+        "evidenceLabel": "证据",
+        "assignmentIdLabel": "作业 ID",
+        "existingReviews": "已有审查：",
+        "status": {
+          "completed": "已完成",
+          "pending": "待处理"
+        },
+        "noComment": "无评论",
+        "signedOffAt": "签核时间：{date}",
+        "by": "由",
+        "commentLabel": "评论（{role}）",
+        "commentPlaceholder": "在此输入评论...",
+        "cancel": "取消",
+        "submitting": "提交中...",
+        "submit": "提交",
+        "na": "无"
+      }
+    },
     "layout": {
       "title": "QA 抽样计划",
       "subtitle": "管理 QA 抽样计划、学员及相关操作。"
@@ -1190,6 +1323,115 @@
         "saving": "保存中...",
         "save": "保存",
         "saveClose": "保存并关闭"
+      },
+      "evidenceLinksTable": {
+        "title": "抽样证据链接",
+        "columns": {
+          "examinedEvidence": "已检查证据",
+          "assessmentMethodsUsed": "使用的评估方法",
+          "actions": "操作"
+        },
+        "loading": "正在加载证据...",
+        "empty": "此抽样暂无证据链接",
+        "na": "无"
+      },
+      "actionsTable": {
+        "title": "抽样操作",
+        "addAction": "添加操作",
+        "columns": {
+          "summary": "摘要",
+          "actionRequired": "需要的操作",
+          "actionWith": "操作对象",
+          "targetDate": "目标日期",
+          "actions": "操作"
+        },
+        "loading": "正在加载操作...",
+        "empty": "此抽样暂无操作",
+        "na": "无"
+      },
+      "iqaQuestions": {
+        "title": "IQA 问题",
+        "save": "保存",
+        "columns": {
+          "question": "问题",
+          "yes": "是",
+          "no": "否",
+          "actions": "操作"
+        },
+        "answers": {
+          "yes": "是",
+          "no": "否"
+        },
+        "empty": "此抽样暂无可用的 IQA 问题。"
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "QA 名称",
+          "type": "类型",
+          "selectType": "选择类型",
+          "types": {
+            "formative": "形成性",
+            "summative": "总结性"
+          },
+          "sampleType": "抽样类型",
+          "selectSampleType": "选择抽样类型",
+          "sampleTypes": {
+            "portfolio": "作品集抽样",
+            "observeAssessor": "观察评估员",
+            "learnerInterview": "学员访谈",
+            "employerInterview": "雇主访谈",
+            "final": "最终检查"
+          },
+          "plannedDate": "计划日期",
+          "completedDate": "完成日期"
+        },
+        "assessmentMethods": {
+          "title": "评估方法"
+        },
+        "assessmentProcesses": {
+          "title": "评估流程"
+        },
+        "assessorDecision": {
+          "title": "评估员决定是否正确",
+          "yes": "是",
+          "no": "否"
+        },
+        "feedback": {
+          "title": "反馈",
+          "placeholder": "请输入反馈内容。最多 4400 个字符。"
+        },
+        "iqaConclusion": {
+          "title": "IQA 结论"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "删除操作？",
+          "description": "确定要删除此操作吗？此操作无法撤销。",
+          "cancel": "取消",
+          "deleting": "删除中...",
+          "confirm": "删除"
+        },
+        "deleteDocument": {
+          "title": "删除文档？",
+          "description": "确定要删除此文档吗？此操作无法撤销。",
+          "cancel": "取消",
+          "deleting": "删除中...",
+          "confirm": "删除"
+        },
+        "deleteForm": {
+          "title": "移除已分配表单？",
+          "description": "确定要将此表单与该抽样解绑吗？",
+          "cancel": "取消",
+          "removing": "移除中...",
+          "confirm": "移除"
+        },
+        "deleteLearner": {
+          "title": "删除抽样学员？",
+          "description": "确定要移除该抽样学员吗？此操作无法撤销。",
+          "cancel": "取消",
+          "confirm": "删除"
+        }
       }
     }
   },

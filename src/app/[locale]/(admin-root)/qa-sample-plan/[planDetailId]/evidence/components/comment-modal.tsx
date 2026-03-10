@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -60,6 +61,7 @@ export function CommentModal({
   initialComment = "",
   isLoading = false,
 }: CommentModalProps) {
+  const t = useTranslations("qaSamplePlan.evidence.commentModal");
   const [comment, setComment] = useState(initialComment);
 
   useEffect(() => {
@@ -100,9 +102,9 @@ export function CommentModal({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-primary">Add Comment</DialogTitle>
+          <DialogTitle className="text-primary">{t("title")}</DialogTitle>
           <DialogDescription>
-            Add a comment for this evidence document
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -111,17 +113,19 @@ export function CommentModal({
             <>
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">
-                  Evidence: <strong className="text-foreground">{evidence.title || "-"}</strong>
+                  {t("evidenceLabel")}:{" "}
+                  <strong className="text-foreground">{evidence.title || t("na")}</strong>
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Assignment ID: <strong className="text-foreground">{evidence.assignment_id}</strong>
+                  {t("assignmentIdLabel")}:{" "}
+                  <strong className="text-foreground">{evidence.assignment_id}</strong>
                 </p>
               </div>
 
               {/* Existing Reviews */}
               {sortedReviews.length > 0 && (
                 <div className="rounded-lg border bg-muted p-4 space-y-3">
-                  <h4 className="text-sm font-semibold">Existing Reviews:</h4>
+                  <h4 className="text-sm font-semibold">{t("existingReviews")}</h4>
                   <div className="space-y-2">
                     {sortedReviews.map(([role, reviewData]) => (
                       <div
@@ -142,16 +146,16 @@ export function CommentModal({
                                 : "text-muted-foreground"
                             }`}
                           >
-                            {reviewData.completed ? "Completed" : "Pending"}
+                            {reviewData.completed ? t("status.completed") : t("status.pending")}
                           </span>
                         </div>
                         <p className="text-sm text-foreground">
-                          {reviewData.comment || "No comment"}
+                          {reviewData.comment || t("noComment")}
                         </p>
                         {reviewData.signed_off_at && (
                           <p className="text-xs text-muted-foreground">
-                            Signed off: {new Date(reviewData.signed_off_at).toLocaleString()}
-                            {reviewData.signed_off_by && ` by ${reviewData.signed_off_by}`}
+                            {t("signedOffAt", { date: new Date(reviewData.signed_off_at).toLocaleString() })}
+                            {reviewData.signed_off_by ? ` ${t("by")} ${reviewData.signed_off_by}` : ""}
                           </p>
                         )}
                       </div>
@@ -164,13 +168,13 @@ export function CommentModal({
 
           <div className="space-y-2">
             <Label htmlFor="comment">
-              Comment ({currentUserRole})
+              {t("commentLabel", { role: currentUserRole })}
             </Label>
             <Textarea
               id="comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Enter your comment here..."
+              placeholder={t("commentPlaceholder")}
               rows={4}
               className="resize-none"
               disabled={isLoading}
@@ -185,7 +189,7 @@ export function CommentModal({
             onClick={handleClose}
             disabled={isLoading}
           >
-            Cancel
+            {t("cancel")}
           </Button>
           <Button
             type="button"
@@ -193,7 +197,7 @@ export function CommentModal({
             disabled={isLoading || !comment.trim()}
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isLoading ? "Submitting..." : "Submit"}
+            {isLoading ? t("submitting") : t("submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

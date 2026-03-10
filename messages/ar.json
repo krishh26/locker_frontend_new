@@ -1005,6 +1005,139 @@
         "Final": "فحص نهائي"
       }
     },
+    "evidence": {
+      "page": {
+        "subtitle": "مراجعة مستندات الأدلة",
+        "subtitleForUnit": "مراجعة مستندات الأدلة للوحدة: {unitCode}",
+        "confirmationStatements": {
+          "learner": "أؤكد أن هذه الوحدة مكتملة وأن الأدلة المقدمة هي نتيجة عملي الشخصي.",
+          "trainer": "أؤكد أن المتعلم قد أظهر الكفاءة من خلال استيفاء جميع المهارات والمعارف لهذه الوحدة، وتم تقييمه وفقًا لمتطلبات المؤهل.",
+          "leadAssessorCountersignature": "أؤكد أن المتعلم قد أظهر الكفاءة من خلال استيفاء جميع المهارات والمعارف لهذه الوحدة، وتم تقييمه وفقًا لمتطلبات المؤهل.",
+          "employer": "أؤكد، بصفتي صاحب عمل، أن الأدلة التي راجعتها تفي بالمعايير.",
+          "iqa": "أؤكد، بصفتي مُقيِّم جودة داخلي، أن الأدلة التي أخذت منها عينة تفي بالمعايير.",
+          "eqa": "تم التحقق منه كجزء من زيارة QA خارجية."
+        },
+        "deleteFileDialog": {
+          "title": "حذف الملف؟",
+          "description": "هل أنت متأكد من رغبتك في حذف هذا الملف؟ لا يمكن التراجع عن هذا الإجراء.",
+          "fileLabel": "الملف",
+          "cancel": "إلغاء",
+          "deleting": "جارٍ الحذف...",
+          "confirm": "حذف"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "يمكن لـ IQA فقط اعتماد جميع المعايير.",
+          "evidenceNotFound": "لم يتم العثور على الدليل.",
+          "cannotUncheckSignOffPermanent": "لا يمكن إلغاء التحديد. الاعتماد دائم بمجرد تطبيقه.",
+          "noUnitsReadyTrainerMustMapFirst": "لا توجد وحدات جاهزة للاعتماد. يجب على المدرب ربط الوحدات أولاً.",
+          "unitCodeRequired": "رمز الوحدة مطلوب.",
+          "signedOffUnitsSuccess": "تم اعتماد {count} وحدة(ات) بنجاح.",
+          "signOffUnitsFailed": "فشل اعتماد الوحدات.",
+          "evidenceNotFoundCannotUpdateSignOff": "لم يتم العثور على الدليل. لا يمكن تحديث حالة الاعتماد.",
+          "subUnitNotFoundCannotUpdateSignOff": "لم يتم العثور على الوحدة الفرعية. لا يمكن تحديث حالة الاعتماد.",
+          "iqaCanOnlySignOffWhenTrainerMapped": "يمكن لـ IQA الاعتماد فقط عندما يكون المدرب قد ربط هذه الوحدة.",
+          "signOffStatusUpdatedSuccess": "تم تحديث حالة الاعتماد بنجاح.",
+          "signOffStatusUpdateFailed": "فشل تحديث حالة الاعتماد.",
+          "fillAllRequiredFields": "يرجى تعبئة جميع الحقول المطلوبة.",
+          "commentAddedSuccess": "تمت إضافة التعليق بنجاح.",
+          "addCommentFailed": "فشل إضافة التعليق.",
+          "noEvidenceCannotUpdateStatus": "لم يتم العثور على أدلة. لا يمكن تحديث الحالة.",
+          "statusUpdatedSuccess": "تم تحديث الحالة بنجاح.",
+          "updateStatusFailed": "فشل تحديث الحالة.",
+          "unableDeleteFileReviewIdNotFound": "تعذر حذف الملف: لم يتم العثور على معرّف المراجعة.",
+          "fileDeletedSuccess": "تم حذف الملف بنجاح.",
+          "deleteFileFailed": "فشل حذف الملف.",
+          "noEvidenceCannotAddComment": "لم يتم العثور على أدلة. لا يمكن إضافة تعليق."
+        }
+      },
+      "unitProgress": {
+        "title": "تقدم الوحدة",
+        "pendingTrainerMap": "ربط المدرب المعلّق",
+        "pendingIqaMap": "ربط IQA المعلّق",
+        "iqaChecked": "IQA معتمد",
+        "totalEvidence": "إجمالي الأدلة"
+      },
+      "evidenceTable": {
+        "title": "مستندات الأدلة ({count})",
+        "columns": {
+          "refNo": "المرجع",
+          "evidenceDocuments": "مستندات الأدلة",
+          "evidenceName": "اسم الدليل",
+          "evidenceDescription": "وصف الدليل",
+          "assessmentMethod": "طريقة التقييم",
+          "dateUploaded": "تاريخ الرفع",
+          "signOffAllCriteria": "اعتماد جميع المعايير"
+        },
+        "showAll": "عرض الكل",
+        "showLess": "عرض أقل",
+        "empty": "لا توجد سجلات أدلة متاحة",
+        "na": "غير متاح",
+        "fileSize": {
+          "zeroBytes": "0 بايت",
+          "bytes": "بايت",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "الدور",
+          "confirmationStatement": "بيان التأكيد",
+          "tickWhenCompleted": "يرجى وضع علامة عند الاكتمال",
+          "signedOffBy": "تم الاعتماد بواسطة",
+          "dated": "التاريخ",
+          "generalComments": "تعليقات عامة",
+          "file": "ملف"
+        },
+        "roles": {
+          "learner": "المتعلم",
+          "trainer": "المدرب",
+          "leadAssessorCountersignature": "توقيع مُقيِّم رئيسي (عند الحاجة)",
+          "employer": "صاحب العمل",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "ربط الوحدات",
+        "columns": {
+          "code": "الرمز",
+          "unitTitle": "عنوان الوحدة"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "اعتماد الوحدة",
+        "description": "تعليق عام لهذه الوحدة (حد أقصى 500 حرف).",
+        "commentLabel": "تعليق",
+        "commentPlaceholder": "أدخل تعليقك هنا...",
+        "charactersCount": "{count}/500 حرف",
+        "cancelClose": "إلغاء / إغلاق",
+        "submit": "إرسال"
+      },
+      "commentModal": {
+        "title": "إضافة تعليق",
+        "description": "أضف تعليقًا لهذا المستند",
+        "evidenceLabel": "الدليل",
+        "assignmentIdLabel": "معرّف المهمة",
+        "existingReviews": "المراجعات الحالية:",
+        "status": {
+          "completed": "مكتمل",
+          "pending": "معلّق"
+        },
+        "noComment": "لا يوجد تعليق",
+        "signedOffAt": "تم الاعتماد: {date}",
+        "by": "بواسطة",
+        "commentLabel": "تعليق ({role})",
+        "commentPlaceholder": "أدخل تعليقك هنا...",
+        "cancel": "إلغاء",
+        "submitting": "جارٍ الإرسال...",
+        "submit": "إرسال",
+        "na": "غير متاح"
+      }
+    },
     "layout": {
       "title": "خطط العينات",
       "subtitle": "إدارة خطط عينات QA والمتعلمين والإجراءات المرتبطة."
@@ -1191,6 +1324,115 @@
         "saving": "جارٍ الحفظ...",
         "save": "حفظ",
         "saveClose": "حفظ وإغلاق"
+      },
+      "evidenceLinksTable": {
+        "title": "روابط الأدلة للعينة",
+        "columns": {
+          "examinedEvidence": "الأدلة المفحوصة",
+          "assessmentMethodsUsed": "طرق التقييم المستخدمة",
+          "actions": "الإجراءات"
+        },
+        "loading": "جارٍ تحميل الأدلة...",
+        "empty": "لا توجد روابط أدلة على هذه العينة",
+        "na": "غير متاح"
+      },
+      "actionsTable": {
+        "title": "إجراءات العينة",
+        "addAction": "إضافة إجراء",
+        "columns": {
+          "summary": "الملخص",
+          "actionRequired": "الإجراء المطلوب",
+          "actionWith": "الإجراء مع",
+          "targetDate": "تاريخ الاستحقاق",
+          "actions": "الإجراءات"
+        },
+        "loading": "جارٍ تحميل الإجراءات...",
+        "empty": "لا توجد إجراءات على هذه العينة",
+        "na": "غير متاح"
+      },
+      "iqaQuestions": {
+        "title": "أسئلة IQA",
+        "save": "حفظ",
+        "columns": {
+          "question": "السؤال",
+          "yes": "نعم",
+          "no": "لا",
+          "actions": "الإجراءات"
+        },
+        "answers": {
+          "yes": "نعم",
+          "no": "لا"
+        },
+        "empty": "لا توجد أسئلة IQA متاحة لهذه العينة."
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "اسم QA",
+          "type": "النوع",
+          "selectType": "اختر النوع",
+          "types": {
+            "formative": "تكويني",
+            "summative": "ختامي"
+          },
+          "sampleType": "نوع العينة",
+          "selectSampleType": "اختر نوع العينة",
+          "sampleTypes": {
+            "portfolio": "عينة محفظة",
+            "observeAssessor": "مراقبة المُقيِّم",
+            "learnerInterview": "مقابلة المتعلم",
+            "employerInterview": "مقابلة صاحب العمل",
+            "final": "تحقق نهائي"
+          },
+          "plannedDate": "التاريخ المخطط",
+          "completedDate": "تاريخ الإكمال"
+        },
+        "assessmentMethods": {
+          "title": "طرق التقييم"
+        },
+        "assessmentProcesses": {
+          "title": "عمليات التقييم"
+        },
+        "assessorDecision": {
+          "title": "قرار المُقيِّم صحيح",
+          "yes": "نعم",
+          "no": "لا"
+        },
+        "feedback": {
+          "title": "ملاحظات",
+          "placeholder": "يرجى كتابة الملاحظات. الحد الأقصى 4400 حرف."
+        },
+        "iqaConclusion": {
+          "title": "خلاصة IQA"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "حذف الإجراء؟",
+          "description": "هل أنت متأكد من رغبتك في حذف هذا الإجراء؟ لا يمكن التراجع عن هذا الإجراء.",
+          "cancel": "إلغاء",
+          "deleting": "جارٍ الحذف...",
+          "confirm": "حذف"
+        },
+        "deleteDocument": {
+          "title": "حذف المستند؟",
+          "description": "هل أنت متأكد من رغبتك في حذف هذا المستند؟ لا يمكن التراجع عن هذا الإجراء.",
+          "cancel": "إلغاء",
+          "deleting": "جارٍ الحذف...",
+          "confirm": "حذف"
+        },
+        "deleteForm": {
+          "title": "إزالة النموذج المخصص؟",
+          "description": "هل أنت متأكد من رغبتك في إلغاء ربط هذا النموذج بالعينة؟",
+          "cancel": "إلغاء",
+          "removing": "جارٍ الإزالة...",
+          "confirm": "إزالة"
+        },
+        "deleteLearner": {
+          "title": "حذف المتعلم المُختار؟",
+          "description": "هل أنت متأكد من رغبتك في إزالة هذا المتعلم المُختار؟ لا يمكن التراجع عن هذا الإجراء.",
+          "cancel": "إلغاء",
+          "confirm": "حذف"
+        }
       }
     }
   },

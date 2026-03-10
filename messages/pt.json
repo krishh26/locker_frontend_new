@@ -1004,6 +1004,139 @@
         "Final": "Verificação final"
       }
     },
+    "evidence": {
+      "page": {
+        "subtitle": "Rever documentos de evidência",
+        "subtitleForUnit": "Rever documentos de evidência para a unidade: {unitCode}",
+        "confirmationStatements": {
+          "learner": "Confirmo que esta unidade está concluída e que a evidência fornecida é resultado do meu próprio trabalho.",
+          "trainer": "Confirmo que o formando demonstrou competência ao satisfazer todas as competências e conhecimentos desta unidade e foi avaliado de acordo com os requisitos da qualificação.",
+          "leadAssessorCountersignature": "Confirmo que o formando demonstrou competência ao satisfazer todas as competências e conhecimentos desta unidade e foi avaliado de acordo com os requisitos da qualificação.",
+          "employer": "Confirmo, enquanto empregador, que a evidência que verifiquei cumpre os padrões.",
+          "iqa": "Confirmo, enquanto avaliador interno de qualidade, que a evidência que amostrei cumpre os padrões.",
+          "eqa": "Verificado como parte de uma visita de QA externa."
+        },
+        "deleteFileDialog": {
+          "title": "Eliminar ficheiro?",
+          "description": "Tem a certeza de que pretende eliminar este ficheiro? Esta ação não pode ser desfeita.",
+          "fileLabel": "Ficheiro",
+          "cancel": "Cancelar",
+          "deleting": "A eliminar...",
+          "confirm": "Eliminar"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "Apenas o IQA pode aprovar todos os critérios.",
+          "evidenceNotFound": "Evidência não encontrada.",
+          "cannotUncheckSignOffPermanent": "Não é possível desmarcar. A aprovação é permanente após aplicada.",
+          "noUnitsReadyTrainerMustMapFirst": "Não há unidades prontas para aprovação. O formador deve mapear as unidades primeiro.",
+          "unitCodeRequired": "O código da unidade é obrigatório.",
+          "signedOffUnitsSuccess": "{count} unidade(s) aprovada(s) com sucesso.",
+          "signOffUnitsFailed": "Falha ao aprovar unidades.",
+          "evidenceNotFoundCannotUpdateSignOff": "Evidência não encontrada. Não é possível atualizar a aprovação.",
+          "subUnitNotFoundCannotUpdateSignOff": "Subunidade não encontrada. Não é possível atualizar a aprovação.",
+          "iqaCanOnlySignOffWhenTrainerMapped": "O IQA só pode aprovar quando o formador tiver mapeado esta unidade.",
+          "signOffStatusUpdatedSuccess": "Estado de aprovação atualizado com sucesso.",
+          "signOffStatusUpdateFailed": "Falha ao atualizar o estado de aprovação.",
+          "fillAllRequiredFields": "Preencha todos os campos obrigatórios.",
+          "commentAddedSuccess": "Comentário adicionado com sucesso.",
+          "addCommentFailed": "Falha ao adicionar comentário.",
+          "noEvidenceCannotUpdateStatus": "Nenhuma evidência encontrada. Não é possível atualizar o estado.",
+          "statusUpdatedSuccess": "Estado atualizado com sucesso.",
+          "updateStatusFailed": "Falha ao atualizar o estado.",
+          "unableDeleteFileReviewIdNotFound": "Não foi possível eliminar o ficheiro: ID de revisão não encontrado.",
+          "fileDeletedSuccess": "Ficheiro eliminado com sucesso.",
+          "deleteFileFailed": "Falha ao eliminar o ficheiro.",
+          "noEvidenceCannotAddComment": "Nenhuma evidência encontrada. Não é possível adicionar comentário."
+        }
+      },
+      "unitProgress": {
+        "title": "Progresso da unidade",
+        "pendingTrainerMap": "Mapeamento do formador pendente",
+        "pendingIqaMap": "Mapeamento do IQA pendente",
+        "iqaChecked": "IQA aprovado",
+        "totalEvidence": "Total de evidências"
+      },
+      "evidenceTable": {
+        "title": "Documentos de evidência ({count})",
+        "columns": {
+          "refNo": "Ref.",
+          "evidenceDocuments": "Documentos de evidência",
+          "evidenceName": "Nome da evidência",
+          "evidenceDescription": "Descrição da evidência",
+          "assessmentMethod": "Método de avaliação",
+          "dateUploaded": "Data de upload",
+          "signOffAllCriteria": "Aprovar todos os critérios"
+        },
+        "showAll": "Mostrar tudo",
+        "showLess": "Mostrar menos",
+        "empty": "Não há registos de evidência disponíveis",
+        "na": "N/D",
+        "fileSize": {
+          "zeroBytes": "0 Bytes",
+          "bytes": "Bytes",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "Função",
+          "confirmationStatement": "Declaração de confirmação",
+          "tickWhenCompleted": "Assinale quando concluído",
+          "signedOffBy": "Aprovado por",
+          "dated": "Data",
+          "generalComments": "Comentários gerais",
+          "file": "Ficheiro"
+        },
+        "roles": {
+          "learner": "Formando",
+          "trainer": "Formador",
+          "leadAssessorCountersignature": "Contrassinatura do avaliador líder (se necessário)",
+          "employer": "Empregador",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "Mapeamento de unidades",
+        "columns": {
+          "code": "Código",
+          "unitTitle": "Título da unidade"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "Aprovação da unidade",
+        "description": "Comentário geral para esta unidade (máx. 500 caracteres).",
+        "commentLabel": "Comentário",
+        "commentPlaceholder": "Introduza os seus comentários aqui...",
+        "charactersCount": "{count}/500 caracteres",
+        "cancelClose": "Cancelar / Fechar",
+        "submit": "Submeter"
+      },
+      "commentModal": {
+        "title": "Adicionar comentário",
+        "description": "Adicionar um comentário para este documento de evidência",
+        "evidenceLabel": "Evidência",
+        "assignmentIdLabel": "ID da atribuição",
+        "existingReviews": "Revisões existentes:",
+        "status": {
+          "completed": "Concluído",
+          "pending": "Pendente"
+        },
+        "noComment": "Sem comentário",
+        "signedOffAt": "Aprovado: {date}",
+        "by": "por",
+        "commentLabel": "Comentário ({role})",
+        "commentPlaceholder": "Introduza o seu comentário aqui...",
+        "cancel": "Cancelar",
+        "submitting": "A submeter...",
+        "submit": "Submeter",
+        "na": "N/D"
+      }
+    },
     "layout": {
       "title": "Planos de Amostra QA",
       "subtitle": "Gerir planos de amostra de QA, formandos e ações associadas."
@@ -1190,6 +1323,115 @@
         "saving": "A guardar...",
         "save": "Guardar",
         "saveClose": "Guardar e fechar"
+      },
+      "evidenceLinksTable": {
+        "title": "Ligações de evidência para a amostra",
+        "columns": {
+          "examinedEvidence": "Evidência examinada",
+          "assessmentMethodsUsed": "Métodos de avaliação utilizados",
+          "actions": "Ações"
+        },
+        "loading": "A carregar evidências...",
+        "empty": "Não há ligações de evidência nesta amostra",
+        "na": "N/D"
+      },
+      "actionsTable": {
+        "title": "Ações para a amostra",
+        "addAction": "Adicionar ação",
+        "columns": {
+          "summary": "Resumo",
+          "actionRequired": "Ação requerida",
+          "actionWith": "Ação com",
+          "targetDate": "Data alvo",
+          "actions": "Ações"
+        },
+        "loading": "A carregar ações...",
+        "empty": "Não há ações nesta amostra",
+        "na": "N/D"
+      },
+      "iqaQuestions": {
+        "title": "Perguntas IQA",
+        "save": "Guardar",
+        "columns": {
+          "question": "Pergunta",
+          "yes": "Sim",
+          "no": "Não",
+          "actions": "Ações"
+        },
+        "answers": {
+          "yes": "Sim",
+          "no": "Não"
+        },
+        "empty": "Não há perguntas IQA disponíveis para esta amostra."
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "Nome QA",
+          "type": "Tipo",
+          "selectType": "Selecionar tipo",
+          "types": {
+            "formative": "Formativo",
+            "summative": "Sumativo"
+          },
+          "sampleType": "Tipo de amostra",
+          "selectSampleType": "Selecionar tipo de amostra",
+          "sampleTypes": {
+            "portfolio": "Amostra de portefólio",
+            "observeAssessor": "Observar avaliador",
+            "learnerInterview": "Entrevista ao formando",
+            "employerInterview": "Entrevista ao empregador",
+            "final": "Verificação final"
+          },
+          "plannedDate": "Data planeada",
+          "completedDate": "Data concluída"
+        },
+        "assessmentMethods": {
+          "title": "Métodos de avaliação"
+        },
+        "assessmentProcesses": {
+          "title": "Processos de avaliação"
+        },
+        "assessorDecision": {
+          "title": "Decisão do avaliador correta",
+          "yes": "Sim",
+          "no": "Não"
+        },
+        "feedback": {
+          "title": "Feedback",
+          "placeholder": "Escreva o feedback. Máximo 4400 caracteres."
+        },
+        "iqaConclusion": {
+          "title": "Conclusão IQA"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "Eliminar ação?",
+          "description": "Tem a certeza de que pretende eliminar esta ação? Esta ação não pode ser desfeita.",
+          "cancel": "Cancelar",
+          "deleting": "A eliminar...",
+          "confirm": "Eliminar"
+        },
+        "deleteDocument": {
+          "title": "Eliminar documento?",
+          "description": "Tem a certeza de que pretende eliminar este documento? Esta ação não pode ser desfeita.",
+          "cancel": "Cancelar",
+          "deleting": "A eliminar...",
+          "confirm": "Eliminar"
+        },
+        "deleteForm": {
+          "title": "Remover formulário alocado?",
+          "description": "Tem a certeza de que pretende desvincular este formulário da amostra?",
+          "cancel": "Cancelar",
+          "removing": "A remover...",
+          "confirm": "Remover"
+        },
+        "deleteLearner": {
+          "title": "Eliminar formando amostrado?",
+          "description": "Tem a certeza de que pretende remover este formando amostrado? Esta ação não pode ser desfeita.",
+          "cancel": "Cancelar",
+          "confirm": "Eliminar"
+        }
       }
     }
   },

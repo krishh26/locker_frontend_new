@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { useTranslations } from 'next-intl'
 import {
   Table,
   TableBody,
@@ -26,17 +27,18 @@ export function IqaQuestionsSection({
   onSaveQuestions,
   isReadOnly = false,
 }: IqaQuestionsSectionProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.iqaQuestions')
   return (
     <div className='mt-6'>
       <div className='flex items-center justify-between mb-4'>
-        <h3 className='text-lg font-semibold text-destructive'>IQA Questions</h3>
+        <h3 className='text-lg font-semibold text-destructive'>{t('title')}</h3>
         <Button
           onClick={onSaveQuestions}
           className='bg-accent hover:bg-accent/90'
           size='sm'
           disabled={isReadOnly}
         >
-          Save
+          {t('save')}
         </Button>
       </div>
       <Card>
@@ -44,17 +46,17 @@ export function IqaQuestionsSection({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[60%]'>Question</TableHead>
-                <TableHead className='w-[15%] text-center'>Yes</TableHead>
-                <TableHead className='w-[15%] text-center'>No</TableHead>
-                <TableHead className='w-[10%] text-center'>Actions</TableHead>
+                <TableHead className='w-[60%]'>{t('columns.question')}</TableHead>
+                <TableHead className='w-[15%] text-center'>{t('columns.yes')}</TableHead>
+                <TableHead className='w-[15%] text-center'>{t('columns.no')}</TableHead>
+                <TableHead className='w-[10%] text-center'>{t('columns.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {sampleQuestions.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={4} className='text-center py-8 text-muted-foreground'>
-                    No IQA questions available for this sample.
+                    {t('empty')}
                   </TableCell>
                 </TableRow>
               ) : (

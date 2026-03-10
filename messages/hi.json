@@ -1004,6 +1004,139 @@
         "Final": "अंतिम जांच"
       }
     },
+    "evidence": {
+      "page": {
+        "subtitle": "एविडेंस डॉक्यूमेंट्स की समीक्षा करें",
+        "subtitleForUnit": "यूनिट के लिए एविडेंस डॉक्यूमेंट्स की समीक्षा करें: {unitCode}",
+        "confirmationStatements": {
+          "learner": "मैं पुष्टि करता/करती हूँ कि यह यूनिट पूर्ण है और प्रदान किया गया एविडेंस मेरे अपने कार्य का परिणाम है।",
+          "trainer": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
+          "leadAssessorCountersignature": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
+          "employer": "मैं पुष्टि कर सकता/सकती हूँ कि नियोक्ता के रूप में मैंने जिस एविडेंस की जांच की है वह मानकों को पूरा करता है।",
+          "iqa": "मैं पुष्टि कर सकता/सकती हूँ कि आंतरिक गुणवत्ता आश्वासक के रूप में मैंने जिस एविडेंस का सैंपल लिया है वह मानकों को पूरा करता है।",
+          "eqa": "बाहरी QA विज़िट के हिस्से के रूप में सत्यापित।"
+        },
+        "deleteFileDialog": {
+          "title": "फ़ाइल हटाएं?",
+          "description": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "fileLabel": "फ़ाइल",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "केवल IQA ही सभी मानदंडों पर साइन-ऑफ कर सकता/सकती है।",
+          "evidenceNotFound": "एविडेंस नहीं मिला।",
+          "cannotUncheckSignOffPermanent": "अनचेक नहीं किया जा सकता। साइन-ऑफ लागू होने के बाद स्थायी होता है।",
+          "noUnitsReadyTrainerMustMapFirst": "कोई यूनिट साइन-ऑफ के लिए तैयार नहीं है। पहले ट्रेनर को यूनिट्स मैप करनी होंगी।",
+          "unitCodeRequired": "यूनिट कोड आवश्यक है।",
+          "signedOffUnitsSuccess": "{count} यूनिट(्स) सफलतापूर्वक साइन-ऑफ की गईं।",
+          "signOffUnitsFailed": "यूनिट्स साइन-ऑफ करने में विफल।",
+          "evidenceNotFoundCannotUpdateSignOff": "एविडेंस नहीं मिला। साइन-ऑफ स्थिति अपडेट नहीं हो सकी।",
+          "subUnitNotFoundCannotUpdateSignOff": "सब-यूनिट नहीं मिला। साइन-ऑफ स्थिति अपडेट नहीं हो सकी।",
+          "iqaCanOnlySignOffWhenTrainerMapped": "IQA केवल तब साइन-ऑफ कर सकता/सकती है जब ट्रेनर ने यह यूनिट मैप की हो।",
+          "signOffStatusUpdatedSuccess": "साइन-ऑफ स्थिति सफलतापूर्वक अपडेट हुई।",
+          "signOffStatusUpdateFailed": "साइन-ऑफ स्थिति अपडेट करने में विफल।",
+          "fillAllRequiredFields": "कृपया सभी आवश्यक फ़ील्ड भरें।",
+          "commentAddedSuccess": "कमेंट सफलतापूर्वक जोड़ा गया।",
+          "addCommentFailed": "कमेंट जोड़ने में विफल।",
+          "noEvidenceCannotUpdateStatus": "कोई एविडेंस नहीं मिला। स्थिति अपडेट नहीं हो सकती।",
+          "statusUpdatedSuccess": "स्थिति सफलतापूर्वक अपडेट हुई।",
+          "updateStatusFailed": "स्थिति अपडेट करने में विफल।",
+          "unableDeleteFileReviewIdNotFound": "फ़ाइल हटाई नहीं जा सकी: रिव्यू ID नहीं मिली।",
+          "fileDeletedSuccess": "फ़ाइल सफलतापूर्वक हटाई गई।",
+          "deleteFileFailed": "फ़ाइल हटाने में विफल।",
+          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।"
+        }
+      },
+      "unitProgress": {
+        "title": "यूनिट प्रगति",
+        "pendingTrainerMap": "पेंडिंग ट्रेनर मैप",
+        "pendingIqaMap": "पेंडिंग IQA मैप",
+        "iqaChecked": "IQA चेक्ड",
+        "totalEvidence": "कुल एविडेंस"
+      },
+      "evidenceTable": {
+        "title": "एविडेंस डॉक्यूमेंट्स ({count})",
+        "columns": {
+          "refNo": "रेफ़ नं.",
+          "evidenceDocuments": "एविडेंस डॉक्यूमेंट्स",
+          "evidenceName": "एविडेंस नाम",
+          "evidenceDescription": "एविडेंस विवरण",
+          "assessmentMethod": "मूल्यांकन विधि",
+          "dateUploaded": "अपलोड तिथि",
+          "signOffAllCriteria": "सभी मानदंडों पर साइन-ऑफ"
+        },
+        "showAll": "सभी दिखाएं",
+        "showLess": "कम दिखाएं",
+        "empty": "कोई एविडेंस रिकॉर्ड उपलब्ध नहीं है",
+        "na": "उपलब्ध नहीं",
+        "fileSize": {
+          "zeroBytes": "0 बाइट्स",
+          "bytes": "बाइट्स",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "भूमिका",
+          "confirmationStatement": "पुष्टि वक्तव्य",
+          "tickWhenCompleted": "पूर्ण होने पर टिक करें",
+          "signedOffBy": "साइन-ऑफ करने वाला",
+          "dated": "तिथि",
+          "generalComments": "सामान्य टिप्पणियाँ",
+          "file": "फ़ाइल"
+        },
+        "roles": {
+          "learner": "लर्नर",
+          "trainer": "ट्रेनर",
+          "leadAssessorCountersignature": "लीड असेसर काउंटरसाइन (यदि आवश्यक)",
+          "employer": "नियोक्ता",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "यूनिट मैपिंग",
+        "columns": {
+          "code": "कोड",
+          "unitTitle": "यूनिट शीर्षक"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "यूनिट साइन-ऑफ",
+        "description": "इस यूनिट के लिए सामान्य टिप्पणी (अधिकतम 500 अक्षर)।",
+        "commentLabel": "कमेंट",
+        "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
+        "charactersCount": "{count}/500 अक्षर",
+        "cancelClose": "रद्द करें / बंद करें",
+        "submit": "सबमिट"
+      },
+      "commentModal": {
+        "title": "कमेंट जोड़ें",
+        "description": "इस एविडेंस डॉक्यूमेंट के लिए कमेंट जोड़ें",
+        "evidenceLabel": "एविडेंस",
+        "assignmentIdLabel": "असाइनमेंट ID",
+        "existingReviews": "मौजूदा रिव्यू:",
+        "status": {
+          "completed": "पूर्ण",
+          "pending": "पेंडिंग"
+        },
+        "noComment": "कोई कमेंट नहीं",
+        "signedOffAt": "साइन-ऑफ: {date}",
+        "by": "द्वारा",
+        "commentLabel": "कमेंट ({role})",
+        "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
+        "cancel": "रद्द करें",
+        "submitting": "सबमिट हो रहा है...",
+        "submit": "सबमिट",
+        "na": "उपलब्ध नहीं"
+      }
+    },
     "layout": {
       "title": "QA सैंपल प्लान",
       "subtitle": "QA सैंपल प्लान, लर्नर और संबंधित एक्शन्स प्रबंधित करें।"
@@ -1190,6 +1323,115 @@
         "saving": "सहेजा जा रहा है...",
         "save": "सहेजें",
         "saveClose": "सहेजें और बंद करें"
+      },
+      "evidenceLinksTable": {
+        "title": "सैंपल के लिए एविडेंस लिंक",
+        "columns": {
+          "examinedEvidence": "जाँचा गया एविडेंस",
+          "assessmentMethodsUsed": "उपयोग की गई मूल्यांकन विधियाँ",
+          "actions": "एक्शन्स"
+        },
+        "loading": "एविडेंस लोड हो रहा है...",
+        "empty": "इस सैंपल पर कोई एविडेंस लिंक नहीं है",
+        "na": "उपलब्ध नहीं"
+      },
+      "actionsTable": {
+        "title": "सैंपल के लिए एक्शन्स",
+        "addAction": "एक्शन जोड़ें",
+        "columns": {
+          "summary": "सारांश",
+          "actionRequired": "आवश्यक एक्शन",
+          "actionWith": "किसके साथ",
+          "targetDate": "टारगेट तारीख",
+          "actions": "एक्शन्स"
+        },
+        "loading": "एक्शन्स लोड हो रहे हैं...",
+        "empty": "इस सैंपल पर कोई एक्शन नहीं है",
+        "na": "उपलब्ध नहीं"
+      },
+      "iqaQuestions": {
+        "title": "IQA प्रश्न",
+        "save": "सहेजें",
+        "columns": {
+          "question": "प्रश्न",
+          "yes": "हाँ",
+          "no": "नहीं",
+          "actions": "एक्शन्स"
+        },
+        "answers": {
+          "yes": "हाँ",
+          "no": "नहीं"
+        },
+        "empty": "इस सैंपल के लिए कोई IQA प्रश्न उपलब्ध नहीं है।"
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "QA नाम",
+          "type": "प्रकार",
+          "selectType": "प्रकार चुनें",
+          "types": {
+            "formative": "फॉर्मेटिव",
+            "summative": "समेटिव"
+          },
+          "sampleType": "सैंपल प्रकार",
+          "selectSampleType": "सैंपल प्रकार चुनें",
+          "sampleTypes": {
+            "portfolio": "सैंपल पोर्टफोलियो",
+            "observeAssessor": "असेसर का अवलोकन",
+            "learnerInterview": "लर्नर इंटरव्यू",
+            "employerInterview": "नियोक्ता इंटरव्यू",
+            "final": "अंतिम जाँच"
+          },
+          "plannedDate": "प्लान्ड तारीख",
+          "completedDate": "पूर्ण तारीख"
+        },
+        "assessmentMethods": {
+          "title": "मूल्यांकन विधियाँ"
+        },
+        "assessmentProcesses": {
+          "title": "मूल्यांकन प्रक्रियाएँ"
+        },
+        "assessorDecision": {
+          "title": "असेसर का निर्णय सही",
+          "yes": "हाँ",
+          "no": "नहीं"
+        },
+        "feedback": {
+          "title": "फ़ीडबैक",
+          "placeholder": "कृपया फ़ीडबैक लिखें। अधिकतम 4400 अक्षर।"
+        },
+        "iqaConclusion": {
+          "title": "IQA निष्कर्ष"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "एक्शन हटाएं?",
+          "description": "क्या आप वाकई इस एक्शन को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteDocument": {
+          "title": "डॉक्यूमेंट हटाएं?",
+          "description": "क्या आप वाकई इस डॉक्यूमेंट को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteForm": {
+          "title": "आवंटित फ़ॉर्म हटाएं?",
+          "description": "क्या आप वाकई इस फ़ॉर्म को सैंपल से अनलिंक करना चाहते हैं?",
+          "cancel": "रद्द करें",
+          "removing": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteLearner": {
+          "title": "सैंपल किया गया लर्नर हटाएं?",
+          "description": "क्या आप वाकई इस सैंपल किए गए लर्नर को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "confirm": "हटाएं"
+        }
       }
     }
   },

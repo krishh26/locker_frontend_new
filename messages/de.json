@@ -2788,5 +2788,37 @@
         "failed": "Bestätigungsstatus konnte nicht aktualisiert werden"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Kursinformationen nicht gefunden",
+      "notFoundDescription": "Der angeforderte Kurs konnte nicht gefunden werden. Bitte gehen Sie zurück und versuchen Sie es erneut.",
+      "backToDashboard": "Zurück zum Dashboard",
+      "subtitle": "Kursinformationen"
+    },
+    "supervisorCards": {
+      "title": "Lerner-Betreuer",
+      "unknown": "Unbekannt"
+    },
+    "courseInfo": {
+      "title": "Kursinformationen",
+      "courseNameFallback": "Kursname",
+      "notAvailable": "k. A.",
+      "courseCode": "Kursnummer:",
+      "level": "Niveau:",
+      "sector": "Bereich:",
+      "qualificationDetails": "Qualifikationsdetails",
+      "qualificationType": "Qualifikationstyp:",
+      "minAge": "Mindestalter:",
+      "totalCredits": "Credits gesamt:",
+      "keyDatesHours": "Wichtige Termine und Stunden",
+      "startDate": "Startdatum:",
+      "endDate": "Enddatum:",
+      "learningHours": "Lernstunden:",
+      "additionalInfo": "Zusätzliche Informationen",
+      "brandGuidelines": "Markenrichtlinien:",
+      "status": "Status:",
+      "gradingType": "Bewertungstyp:"
+    }
   }
 }

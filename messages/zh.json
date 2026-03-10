@@ -3580,5 +3580,37 @@
         "failed": "更新确认状态失败"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "未找到课程信息",
+      "notFoundDescription": "无法找到所请求的课程。请返回重试。",
+      "backToDashboard": "返回仪表板",
+      "subtitle": "课程信息"
+    },
+    "supervisorCards": {
+      "title": "学员督导",
+      "unknown": "未知"
+    },
+    "courseInfo": {
+      "title": "课程信息",
+      "courseNameFallback": "课程名称",
+      "notAvailable": "不适用",
+      "courseCode": "课程代码：",
+      "level": "级别：",
+      "sector": "行业：",
+      "qualificationDetails": "资格详情",
+      "qualificationType": "资格类型：",
+      "minAge": "最低年龄：",
+      "totalCredits": "总学分：",
+      "keyDatesHours": "关键日期与学时",
+      "startDate": "开始日期：",
+      "endDate": "结束日期：",
+      "learningHours": "学习时长：",
+      "additionalInfo": "附加信息",
+      "brandGuidelines": "品牌指南：",
+      "status": "状态：",
+      "gradingType": "评分类型："
+    }
   }
 }

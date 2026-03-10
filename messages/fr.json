@@ -3622,5 +3622,37 @@
         "failed": "Échec de la mise à jour du statut de confirmation"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Informations sur le cours introuvables",
+      "notFoundDescription": "Le cours demandé est introuvable. Veuillez revenir en arrière et réessayer.",
+      "backToDashboard": "Retour au tableau de bord",
+      "subtitle": "Informations sur le cours"
+    },
+    "supervisorCards": {
+      "title": "Superviseurs de l'apprenant",
+      "unknown": "Inconnu"
+    },
+    "courseInfo": {
+      "title": "Informations sur le cours",
+      "courseNameFallback": "Nom du cours",
+      "notAvailable": "N/D",
+      "courseCode": "Code du cours :",
+      "level": "Niveau :",
+      "sector": "Secteur :",
+      "qualificationDetails": "Détails de la qualification",
+      "qualificationType": "Type de qualification :",
+      "minAge": "Âge min. :",
+      "totalCredits": "Crédits totaux :",
+      "keyDatesHours": "Dates clés et heures",
+      "startDate": "Date de début :",
+      "endDate": "Date de fin :",
+      "learningHours": "Heures d'apprentissage :",
+      "additionalInfo": "Informations complémentaires",
+      "brandGuidelines": "Directives de marque :",
+      "status": "Statut :",
+      "gradingType": "Type de notation :"
+    }
   }
 }

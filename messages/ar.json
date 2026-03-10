@@ -3544,5 +3544,37 @@
         "failed": "فشل تحديث حالة التأكيد"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "معلومات الدورة غير متوفرة",
+      "notFoundDescription": "تعذر العثور على الدورة المطلوبة. يرجى العودة والمحاولة مرة أخرى.",
+      "backToDashboard": "العودة إلى لوحة التحكم",
+      "subtitle": "معلومات الدورة"
+    },
+    "supervisorCards": {
+      "title": "مشرفو المتعلم",
+      "unknown": "غير معروف"
+    },
+    "courseInfo": {
+      "title": "معلومات الدورة",
+      "courseNameFallback": "اسم الدورة",
+      "notAvailable": "غير متوفر",
+      "courseCode": "رمز الدورة:",
+      "level": "المستوى:",
+      "sector": "القطاع:",
+      "qualificationDetails": "تفاصيل المؤهل",
+      "qualificationType": "نوع المؤهل:",
+      "minAge": "الحد الأدنى للعمر:",
+      "totalCredits": "إجمالي الاعتمادات:",
+      "keyDatesHours": "التواريخ الرئيسية والساعات",
+      "startDate": "تاريخ البدء:",
+      "endDate": "تاريخ الانتهاء:",
+      "learningHours": "ساعات التعلم:",
+      "additionalInfo": "معلومات إضافية",
+      "brandGuidelines": "إرشادات العلامة التجارية:",
+      "status": "الحالة:",
+      "gradingType": "نوع التقدير:"
+    }
   }
 }

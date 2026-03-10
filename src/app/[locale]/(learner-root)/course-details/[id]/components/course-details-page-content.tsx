@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { useRouter } from "@/i18n/navigation"
+import { useTranslations } from "next-intl"
 import { BookOpen, ArrowLeft } from "lucide-react"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Button } from "@/components/ui/button"
@@ -22,6 +23,7 @@ interface CourseDetailsPageContentProps {
 }
 
 export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDetailsPageContentProps) {
+  const t = useTranslations("courseDetails.page")
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
@@ -76,7 +78,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
       <>
         <div className="px-4 lg:px-6">
           <PageHeader
-            title="Course information not found"
+            title={t("notFoundTitle")}
             icon={BookOpen}
             showBackButton
             backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}
@@ -84,11 +86,11 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
         </div>
         <div className="px-4 lg:px-6 py-12 text-center">
           <p className="text-muted-foreground">
-            The requested course could not be found. Please go back and try again.
+            {t("notFoundDescription")}
           </p>
           <Button onClick={handleBack} className="mt-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            {t("backToDashboard")}
           </Button>
         </div>
       </>
@@ -100,7 +102,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
       <div className="px-4 lg:px-6">
         <PageHeader
           title={course.course_name}
-          subtitle="Course information"
+          subtitle={t("subtitle")}
           icon={BookOpen}
           showBackButton
           backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}

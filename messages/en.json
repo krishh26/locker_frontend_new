@@ -3638,5 +3638,37 @@
         "failed": "Failed to update acknowledgement status"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Course information not found",
+      "notFoundDescription": "The requested course could not be found. Please go back and try again.",
+      "backToDashboard": "Back to Dashboard",
+      "subtitle": "Course information"
+    },
+    "supervisorCards": {
+      "title": "Learner Supervisors",
+      "unknown": "Unknown"
+    },
+    "courseInfo": {
+      "title": "Course Information",
+      "courseNameFallback": "Course Name",
+      "notAvailable": "N/A",
+      "courseCode": "Course Code:",
+      "level": "Level:",
+      "sector": "Sector:",
+      "qualificationDetails": "Qualification Details",
+      "qualificationType": "Qualification Type:",
+      "minAge": "Min. Age:",
+      "totalCredits": "Total Credits:",
+      "keyDatesHours": "Key Dates & Hours",
+      "startDate": "Start Date:",
+      "endDate": "End Date:",
+      "learningHours": "Learning Hours:",
+      "additionalInfo": "Additional Information",
+      "brandGuidelines": "Brand Guidelines:",
+      "status": "Status:",
+      "gradingType": "Grading Type:"
+    }
   }
 }

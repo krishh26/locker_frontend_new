@@ -1,6 +1,7 @@
 "use client"
 
 import { Users, Mail, Phone } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -17,13 +18,14 @@ function initialsFromName(firstName?: string, lastName?: string) {
 }
 
 export function SupervisorCards({ supervisors }: SupervisorCardsProps) {
+  const t = useTranslations("courseDetails.supervisorCards")
   if (supervisors.length === 0) return null
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Users className="h-5 w-5 text-primary" />
-        <h2 className="text-xl font-semibold">Learner Supervisors</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,7 +54,7 @@ export function SupervisorCards({ supervisors }: SupervisorCardsProps) {
                   <div className="flex-1 space-y-2">
                     <div>
                       <h3 className="font-semibold text-foreground">
-                        {displayName || "Unknown"}
+                        {displayName || t("unknown")}
                       </h3>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {supervisor.role?.map((role) => (

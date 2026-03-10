@@ -3622,5 +3622,37 @@
         "failed": "Falha ao atualizar o estado de confirmação"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Informação do curso não encontrada",
+      "notFoundDescription": "O curso solicitado não foi encontrado. Volte atrás e tente novamente.",
+      "backToDashboard": "Voltar ao painel",
+      "subtitle": "Informação do curso"
+    },
+    "supervisorCards": {
+      "title": "Supervisores do formando",
+      "unknown": "Desconhecido"
+    },
+    "courseInfo": {
+      "title": "Informação do curso",
+      "courseNameFallback": "Nome do curso",
+      "notAvailable": "N/D",
+      "courseCode": "Código do curso:",
+      "level": "Nível:",
+      "sector": "Setor:",
+      "qualificationDetails": "Detalhes da qualificação",
+      "qualificationType": "Tipo de qualificação:",
+      "minAge": "Idade mín.:",
+      "totalCredits": "Créditos totais:",
+      "keyDatesHours": "Datas chave e horas",
+      "startDate": "Data de início:",
+      "endDate": "Data de fim:",
+      "learningHours": "Horas de aprendizagem:",
+      "additionalInfo": "Informação adicional",
+      "brandGuidelines": "Diretrizes da marca:",
+      "status": "Estado:",
+      "gradingType": "Tipo de classificação:"
+    }
   }
 }

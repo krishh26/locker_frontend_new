@@ -3622,5 +3622,37 @@
         "failed": "पावती स्थिति अपडेट करने में विफल"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "कोर्स जानकारी नहीं मिली",
+      "notFoundDescription": "अनुरोधित कोर्स नहीं मिला। कृपया वापस जाएं और पुनः प्रयास करें।",
+      "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+      "subtitle": "कोर्स जानकारी"
+    },
+    "supervisorCards": {
+      "title": "सीखने वाले के पर्यवेक्षक",
+      "unknown": "अज्ञात"
+    },
+    "courseInfo": {
+      "title": "कोर्स जानकारी",
+      "courseNameFallback": "कोर्स का नाम",
+      "notAvailable": "N/A",
+      "courseCode": "कोर्स कोड:",
+      "level": "स्तर:",
+      "sector": "क्षेत्र:",
+      "qualificationDetails": "योग्यता विवरण",
+      "qualificationType": "योग्यता प्रकार:",
+      "minAge": "न्यूनतम आयु:",
+      "totalCredits": "कुल क्रेडिट:",
+      "keyDatesHours": "मुख्य तिथियाँ और घंटे",
+      "startDate": "आरंभ तिथि:",
+      "endDate": "समाप्ति तिथि:",
+      "learningHours": "सीखने के घंटे:",
+      "additionalInfo": "अतिरिक्त जानकारी",
+      "brandGuidelines": "ब्रांड दिशानिर्देश:",
+      "status": "स्थिति:",
+      "gradingType": "ग्रेडिंग प्रकार:"
+    }
   }
 }

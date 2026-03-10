@@ -2788,5 +2788,37 @@
         "failed": "Impossibile aggiornare lo stato di conferma"
       }
     }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Informazioni sul corso non trovate",
+      "notFoundDescription": "Il corso richiesto non è stato trovato. Torna indietro e riprova.",
+      "backToDashboard": "Torna alla dashboard",
+      "subtitle": "Informazioni sul corso"
+    },
+    "supervisorCards": {
+      "title": "Supervisori del learner",
+      "unknown": "Sconosciuto"
+    },
+    "courseInfo": {
+      "title": "Informazioni sul corso",
+      "courseNameFallback": "Nome del corso",
+      "notAvailable": "N/D",
+      "courseCode": "Codice corso:",
+      "level": "Livello:",
+      "sector": "Settore:",
+      "qualificationDetails": "Dettagli qualifica",
+      "qualificationType": "Tipo di qualifica:",
+      "minAge": "Età min.:",
+      "totalCredits": "Crediti totali:",
+      "keyDatesHours": "Date chiave e ore",
+      "startDate": "Data inizio:",
+      "endDate": "Data fine:",
+      "learningHours": "Ore di apprendimento:",
+      "additionalInfo": "Informazioni aggiuntive",
+      "brandGuidelines": "Linee guida del brand:",
+      "status": "Stato:",
+      "gradingType": "Tipo di valutazione:"
+    }
   }
 }

@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import type { Ticket } from "@/store/api/ticket/types"
+import { useTranslations } from "next-intl"
 
 interface TicketDeleteDialogProps {
   open: boolean
@@ -27,23 +28,24 @@ export function TicketDeleteDialog({
   onConfirm,
   isLoading,
 }: TicketDeleteDialogProps) {
+  const t = useTranslations("tickets.deleteDialog")
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete ticket?</AlertDialogTitle>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will soft-delete the ticket &quot;{ticket?.title}&quot; ({ticket?.ticket_number}). You can no longer see it in the list. This action cannot be undone.
+            {t("description", { title: ticket?.title ?? "", ticketNumber: ticket?.ticket_number ?? "" })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isLoading}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {isLoading ? "Deleting..." : "Delete"}
+            {isLoading ? t("deleting") : t("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

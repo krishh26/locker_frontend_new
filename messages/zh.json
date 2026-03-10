@@ -2402,6 +2402,40 @@
         "priorityUpdated": "优先级已更新。",
         "priorityUpdateFailed": "更新优先级失败。"
       }
+    },
+    "deleteDialog": {
+      "title": "删除工单？",
+      "description": "将软删除工单「{title}」({ticketNumber})。您将无法在列表中看到它。此操作无法撤销。",
+      "cancel": "取消",
+      "delete": "删除",
+      "deleting": "删除中..."
+    },
+    "comments": {
+      "title": "评论",
+      "noComments": "暂无评论。",
+      "placeholder": "添加评论...",
+      "send": "发送",
+      "sending": "发送中...",
+      "unknownUser": "未知",
+      "toast": {
+        "addSuccess": "评论已添加。",
+        "addFailed": "添加评论失败。"
+      }
+    },
+    "assignDialog": {
+      "title": "指派工单",
+      "description": "将此工单指派给用户。只能选择同一组织/中心的用户。",
+      "assignedToLabel": "指派给",
+      "selectUserPlaceholder": "选择用户",
+      "unassigned": "未指派",
+      "cancel": "取消",
+      "save": "保存",
+      "saving": "保存中...",
+      "userFallback": "用户 {id}",
+      "toast": {
+        "success": "工单指派已更新。",
+        "failed": "更新指派失败。"
+      }
     }
   },
   "supplementaryTraining": {

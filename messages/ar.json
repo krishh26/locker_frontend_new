@@ -2437,6 +2437,40 @@
         "priorityUpdated": "تم تحديث الأولوية.",
         "priorityUpdateFailed": "فشل تحديث الأولوية."
       }
+    },
+    "deleteDialog": {
+      "title": "حذف التذكرة؟",
+      "description": "سيتم حذف التذكرة (soft) \"{title}\" ({ticketNumber}). لن تتمكن من رؤيتها في القائمة. لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    },
+    "comments": {
+      "title": "التعليقات",
+      "noComments": "لا توجد تعليقات بعد.",
+      "placeholder": "أضف تعليقاً...",
+      "send": "إرسال",
+      "sending": "جاري الإرسال...",
+      "unknownUser": "غير معروف",
+      "toast": {
+        "addSuccess": "تمت إضافة التعليق.",
+        "addFailed": "فشل إضافة التعليق."
+      }
+    },
+    "assignDialog": {
+      "title": "تعيين التذكرة",
+      "description": "عيّن هذه التذكرة لمستخدم. يمكن فقط اختيار المستخدمين من نفس المؤسسة/المركز.",
+      "assignedToLabel": "معين إلى",
+      "selectUserPlaceholder": "اختر مستخدماً",
+      "unassigned": "غير معين",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "saving": "جاري الحفظ...",
+      "userFallback": "مستخدم {id}",
+      "toast": {
+        "success": "تم تحديث تعيين التذكرة.",
+        "failed": "فشل تحديث التعيين."
+      }
     }
   },
   "supplementaryTraining": {

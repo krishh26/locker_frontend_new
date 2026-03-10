@@ -2513,6 +2513,40 @@
         "priorityUpdated": "Priority updated.",
         "priorityUpdateFailed": "Failed to update priority."
       }
+    },
+    "deleteDialog": {
+      "title": "Delete ticket?",
+      "description": "This will soft-delete the ticket \"{title}\" ({ticketNumber}). You can no longer see it in the list. This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "comments": {
+      "title": "Comments",
+      "noComments": "No comments yet.",
+      "placeholder": "Add a comment...",
+      "send": "Send",
+      "sending": "Sending...",
+      "unknownUser": "Unknown",
+      "toast": {
+        "addSuccess": "Comment added.",
+        "addFailed": "Failed to add comment."
+      }
+    },
+    "assignDialog": {
+      "title": "Assign ticket",
+      "description": "Assign this ticket to a user. Only users in the same org/centre can be selected.",
+      "assignedToLabel": "Assigned to",
+      "selectUserPlaceholder": "Select user",
+      "unassigned": "Unassigned",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "userFallback": "User {id}",
+      "toast": {
+        "success": "Ticket assignment updated.",
+        "failed": "Failed to update assignment."
+      }
     }
   },
   "supplementaryTraining": {

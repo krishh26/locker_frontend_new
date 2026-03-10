@@ -2444,6 +2444,40 @@
         "priorityUpdated": "Priorité mise à jour.",
         "priorityUpdateFailed": "Échec de la mise à jour de la priorité."
       }
+    },
+    "deleteDialog": {
+      "title": "Supprimer le ticket ?",
+      "description": "Le ticket « {title} » ({ticketNumber}) sera supprimé (soft). Vous ne le verrez plus dans la liste. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "delete": "Supprimer",
+      "deleting": "Suppression..."
+    },
+    "comments": {
+      "title": "Commentaires",
+      "noComments": "Aucun commentaire pour l'instant.",
+      "placeholder": "Ajouter un commentaire...",
+      "send": "Envoyer",
+      "sending": "Envoi...",
+      "unknownUser": "Inconnu",
+      "toast": {
+        "addSuccess": "Commentaire ajouté.",
+        "addFailed": "Échec de l'ajout du commentaire."
+      }
+    },
+    "assignDialog": {
+      "title": "Assigner le ticket",
+      "description": "Assignez ce ticket à un utilisateur. Seuls les utilisateurs de la même organisation/centre peuvent être sélectionnés.",
+      "assignedToLabel": "Assigné à",
+      "selectUserPlaceholder": "Sélectionner un utilisateur",
+      "unassigned": "Non assigné",
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "userFallback": "Utilisateur {id}",
+      "toast": {
+        "success": "Assignation du ticket mise à jour.",
+        "failed": "Échec de la mise à jour de l'assignation."
+      }
     }
   },
   "supplementaryTraining": {

@@ -1856,6 +1856,40 @@
         "priorityUpdated": "Priorität aktualisiert.",
         "priorityUpdateFailed": "Priorität konnte nicht aktualisiert werden."
       }
+    },
+    "deleteDialog": {
+      "title": "Ticket löschen?",
+      "description": "Das Ticket \"{title}\" ({ticketNumber}) wird soft-gelöscht. Sie sehen es nicht mehr in der Liste. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "deleting": "Wird gelöscht..."
+    },
+    "comments": {
+      "title": "Kommentare",
+      "noComments": "Noch keine Kommentare.",
+      "placeholder": "Kommentar hinzufügen...",
+      "send": "Senden",
+      "sending": "Wird gesendet...",
+      "unknownUser": "Unbekannt",
+      "toast": {
+        "addSuccess": "Kommentar hinzugefügt.",
+        "addFailed": "Kommentar konnte nicht hinzugefügt werden."
+      }
+    },
+    "assignDialog": {
+      "title": "Ticket zuweisen",
+      "description": "Weisen Sie dieses Ticket einem Benutzer zu. Es können nur Benutzer derselben Organisation/des gleichen Zentrums ausgewählt werden.",
+      "assignedToLabel": "Zugewiesen an",
+      "selectUserPlaceholder": "Benutzer auswählen",
+      "unassigned": "Nicht zugewiesen",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "userFallback": "Benutzer {id}",
+      "toast": {
+        "success": "Ticket-Zuweisung aktualisiert.",
+        "failed": "Zuweisung konnte nicht aktualisiert werden."
+      }
     }
   },
   "supplementaryTraining": {

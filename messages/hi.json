@@ -2444,6 +2444,40 @@
         "priorityUpdated": "प्राथमिकता अपडेट हो गई।",
         "priorityUpdateFailed": "प्राथमिकता अपडेट करने में विफल।"
       }
+    },
+    "deleteDialog": {
+      "title": "टिकट हटाएं?",
+      "description": "टिकट \"{title}\" ({ticketNumber}) सॉफ्ट-डिलीट हो जाएगा। आप इसे सूची में नहीं देख पाएंगे। इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "deleting": "हटाया जा रहा है..."
+    },
+    "comments": {
+      "title": "टिप्पणियाँ",
+      "noComments": "अभी तक कोई टिप्पणी नहीं।",
+      "placeholder": "टिप्पणी जोड़ें...",
+      "send": "भेजें",
+      "sending": "भेज रहा है...",
+      "unknownUser": "अज्ञात",
+      "toast": {
+        "addSuccess": "टिप्पणी जोड़ी गई।",
+        "addFailed": "टिप्पणी जोड़ने में विफल।"
+      }
+    },
+    "assignDialog": {
+      "title": "टिकट नियत करें",
+      "description": "इस टिकट को किसी उपयोगकर्ता को नियत करें। केवल समान संगठन/केंद्र के उपयोगकर्ता चुने जा सकते हैं।",
+      "assignedToLabel": "नियत",
+      "selectUserPlaceholder": "उपयोगकर्ता चुनें",
+      "unassigned": "अनियत",
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "saving": "सहेज रहा है...",
+      "userFallback": "उपयोगकर्ता {id}",
+      "toast": {
+        "success": "टिकट नियत करना अपडेट हो गया।",
+        "failed": "नियत करना अपडेट करने में विफल।"
+      }
     }
   },
   "supplementaryTraining": {

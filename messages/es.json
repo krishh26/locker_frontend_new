@@ -2285,6 +2285,40 @@
         "priorityUpdated": "Prioridad actualizada.",
         "priorityUpdateFailed": "Error al actualizar la prioridad."
       }
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar ticket?",
+      "description": "Se eliminará (soft) el ticket \"{title}\" ({ticketNumber}). Ya no lo verá en la lista. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "deleting": "Eliminando..."
+    },
+    "comments": {
+      "title": "Comentarios",
+      "noComments": "Aún no hay comentarios.",
+      "placeholder": "Añadir un comentario...",
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "unknownUser": "Desconocido",
+      "toast": {
+        "addSuccess": "Comentario añadido.",
+        "addFailed": "Error al añadir el comentario."
+      }
+    },
+    "assignDialog": {
+      "title": "Asignar ticket",
+      "description": "Asigne este ticket a un usuario. Solo se pueden seleccionar usuarios de la misma organización/centro.",
+      "assignedToLabel": "Asignado a",
+      "selectUserPlaceholder": "Seleccionar usuario",
+      "unassigned": "Sin asignar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "userFallback": "Usuario {id}",
+      "toast": {
+        "success": "Asignación del ticket actualizada.",
+        "failed": "Error al actualizar la asignación."
+      }
     }
   },
   "supplementaryTraining": {

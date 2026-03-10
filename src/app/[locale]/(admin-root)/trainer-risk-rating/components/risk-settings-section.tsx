@@ -1,6 +1,7 @@
 "use client";
 
 import { Save, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,7 @@ interface RiskSettingsSectionProps {
   onSaveSuccess: () => void;
 }
 
-const validateRiskSettings = (
+const getValidateRiskSettings = (t: ReturnType<typeof useTranslations<"trainerRiskRating.riskSettings">>) => (
   settings: { high: string; medium: string; low: string }
 ): { high: string; medium: string; low: string; general: string } => {
   const errors = { high: "", medium: "", low: "", general: "" };
@@ -29,20 +30,20 @@ const validateRiskSettings = (
   const lowValue = parseFloat(settings.low) || 0;
 
   if (settings.high && (isNaN(highValue) || highValue < 0 || highValue > 100)) {
-    errors.high = "High risk must be between 0 and 100";
+    errors.high = t("highRiskError");
   }
   if (settings.medium && (isNaN(mediumValue) || mediumValue < 0 || mediumValue > 100)) {
-    errors.medium = "Medium risk must be between 0 and 100";
+    errors.medium = t("mediumRiskError");
   }
   if (settings.low && (isNaN(lowValue) || lowValue < 0 || lowValue > 100)) {
-    errors.low = "Low risk must be between 0 and 100";
+    errors.low = t("lowRiskError");
   }
   if (highValue > 0 && (mediumValue > highValue || lowValue > highValue)) {
-    errors.medium = mediumValue > highValue ? `Cannot exceed high risk value (${highValue})` : "";
-    errors.low = lowValue > highValue ? `Cannot exceed high risk value (${highValue})` : "";
+    errors.medium = mediumValue > highValue ? t("cannotExceedHigh", { value: highValue }) : "";
+    errors.low = lowValue > highValue ? t("cannotExceedHigh", { value: highValue }) : "";
   }
   if (mediumValue > 0 && lowValue > mediumValue) {
-    errors.low = `Cannot exceed medium risk value (${mediumValue})`;
+    errors.low = t("cannotExceedMedium", { value: mediumValue });
   }
 
   return errors;
@@ -57,6 +58,8 @@ export function RiskSettingsSection({
   courseRatings,
   onSaveSuccess,
 }: RiskSettingsSectionProps) {
+  const t = useTranslations("trainerRiskRating.riskSettings");
+  const validateRiskSettings = getValidateRiskSettings(t);
   const [saveCourseRisk, { isLoading: savingSettings }] = useSaveCourseRiskRatingsMutation();
 
   const handleChange = (field: "high" | "medium" | "low", value: string) => {
@@ -72,7 +75,7 @@ export function RiskSettingsSection({
     
     const hasErrors = Object.values(errors).some((e) => e !== "");
     if (hasErrors) {
-      toast.error("Please fix validation errors before saving");
+      toast.error(t("fixValidationErrors"));
       return;
     }
 
@@ -91,10 +94,10 @@ export function RiskSettingsSection({
 
     try {
       await saveCourseRisk({ data: payload }).unwrap();
-      toast.success("Risk settings saved successfully");
+      toast.success(t("savedSuccess"));
       onSaveSuccess();
     } catch {
-      toast.error("Failed to save risk settings");
+      toast.error(t("saveFailed"));
     }
   };
 
@@ -105,13 +108,13 @@ export function RiskSettingsSection({
           <div className="rounded-lg p-1.5 bg-secondary">
             <Save className="h-4 w-4 text-white" />
           </div>
-          <CardTitle className="text-foreground">Risk Settings Configuration</CardTitle>
+          <CardTitle className="text-foreground">{t("title")}</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
           <div className="space-y-2 rounded-lg bg-destructive/10 p-3 border border-destructive/30">
-            <Label htmlFor="high-risk" className="text-destructive font-semibold">High Risk %</Label>
+            <Label htmlFor="high-risk" className="text-destructive font-semibold">{t("highRiskPercent")}</Label>
             <Input
               id="high-risk"
               type="number"
@@ -126,7 +129,7 @@ export function RiskSettingsSection({
             )}
           </div>
           <div className="space-y-2 rounded-lg bg-secondary/10 p-3 border border-secondary/30">
-            <Label htmlFor="medium-risk" className="text-secondary font-semibold">Medium Risk %</Label>
+            <Label htmlFor="medium-risk" className="text-secondary font-semibold">{t("mediumRiskPercent")}</Label>
             <Input
               id="medium-risk"
               type="number"
@@ -141,7 +144,7 @@ export function RiskSettingsSection({
             )}
           </div>
           <div className="space-y-2 rounded-lg bg-accent/10 p-3 border border-accent/30">
-            <Label htmlFor="low-risk" className="text-accent font-semibold">Low Risk %</Label>
+            <Label htmlFor="low-risk" className="text-accent font-semibold">{t("lowRiskPercent")}</Label>
             <Input
               id="low-risk"
               type="number"
@@ -164,12 +167,12 @@ export function RiskSettingsSection({
             {savingSettings ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                {t("saving")}
               </>
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                Save Settings
+                {t("saveSettings")}
               </>
             )}
           </Button>

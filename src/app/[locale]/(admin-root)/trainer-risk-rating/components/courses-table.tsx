@@ -1,8 +1,8 @@
- 
 "use client";
 
 import { Fragment } from "react";
 import { School, Save, Loader2, Plus, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -58,6 +58,7 @@ export function CoursesTable({
   trainerUserId,
   onSaveSuccess,
 }: CoursesTableProps) {
+  const t = useTranslations("trainerRiskRating.coursesTable");
   const [saveCourseRisk, { isLoading: savingCourseRisk }] = useSaveCourseRiskRatingsMutation();
   const [saveCourseComment, { isLoading: savingComment }] = useSaveCourseCommentMutation();
 
@@ -71,7 +72,7 @@ export function CoursesTable({
       updated[course.course_id] = value;
     });
     onRatingChange(updated);
-    toast.success(`All courses set to ${value} risk level`);
+    toast.success(t("allCoursesSetTo", { value }));
   };
 
   const handleSaveCourseRatings = async () => {
@@ -87,16 +88,16 @@ export function CoursesTable({
 
     try {
       await saveCourseRisk({ data: payload }).unwrap();
-      toast.success("Course risk ratings saved successfully");
+      toast.success(t("ratingsSavedSuccess"));
       onSaveSuccess();
     } catch {
-      toast.error("Failed to save course risk ratings");
+      toast.error(t("ratingsSaveFailed"));
     }
   };
 
   const handleSaveComment = async (courseId: number, index: number) => {
     if (!trainerId) {
-      toast.error("Trainer ID is required");
+      toast.error(t("trainerIdRequired"));
       return;
     }
 
@@ -112,10 +113,10 @@ export function CoursesTable({
       }).unwrap();
 
       onExpandedRowChange(null);
-      toast.success("Comment saved successfully");
+      toast.success(t("commentSavedSuccess"));
       onSaveSuccess();
     } catch {
-      toast.error("Failed to save comment");
+      toast.error(t("commentSaveFailed"));
     }
   };
 
@@ -134,7 +135,7 @@ export function CoursesTable({
             <div className="rounded-lg p-1.5 bg-accent">
               <School className="h-4 w-4 text-white" />
             </div>
-            <CardTitle className="text-foreground">Courses ({courses.length})</CardTitle>
+            <CardTitle className="text-foreground">{t("title", { count: courses.length })}</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button
@@ -142,21 +143,21 @@ export function CoursesTable({
               size="sm"
               onClick={() => handleBulkSet("Low")}
             >
-              Set All Low
+              {t("setAllLow")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
             >
-              Set All Medium
+              {t("setAllMedium")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
             >
-              Set All High
+              {t("setAllHigh")}
             </Button>
             <Button
               onClick={handleSaveCourseRatings}
@@ -166,12 +167,12 @@ export function CoursesTable({
               {savingCourseRisk ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  {t("saving")}
                 </>
               ) : (
                 <>
                   <Save className="mr-2 h-4 w-4" />
-                  Save Courses
+                  {t("saveCourses")}
                 </>
               )}
             </Button>
@@ -181,16 +182,16 @@ export function CoursesTable({
       <CardContent>
         {courses.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground rounded-lg border border-dashed border-border">
-            <p>No courses found</p>
+            <p>{t("noCoursesFound")}</p>
           </div>
         ) : (
           <div className="border rounded-lg overflow-hidden shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Course Name</TableHead>
-                  <TableHead className="w-[30%]">Risk Level</TableHead>
-                  <TableHead className="w-[100px]">Actions</TableHead>
+                  <TableHead>{t("courseName")}</TableHead>
+                  <TableHead className="w-[30%]">{t("riskLevel")}</TableHead>
+                  <TableHead className="w-[100px]">{t("actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -225,7 +226,7 @@ export function CoursesTable({
                                     {opt.value !== "Please select" && opt.color && (
                                       <Badge
                                         variant="outline"
-                                        className={getRiskColor(opt.label)}
+                                        className={getRiskColor(opt.value)}
                                       >
                                         {opt.label}
                                       </Badge>
@@ -258,7 +259,7 @@ export function CoursesTable({
                             <CollapsibleContent>
                               <div className="p-6 bg-muted/30 border-t border-border">
                                 <Label className="text-base font-semibold mb-4 block">
-                                  Add Comment for {course.course_name}
+                                  {t("addCommentFor", { courseName: course.course_name })}
                                 </Label>
                                 <Textarea
                                   value={comments[index] || course.comment || ""}
@@ -268,7 +269,7 @@ export function CoursesTable({
                                       [index]: e.target.value,
                                     })
                                   }
-                                  placeholder="Enter your comment here..."
+                                  placeholder={t("commentPlaceholder")}
                                   className="min-h-[100px] mb-4"
                                 />
                                 <div className="flex gap-2">
@@ -281,12 +282,12 @@ export function CoursesTable({
                                     {savingComment ? (
                                       <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Saving...
+                                        {t("saving")}
                                       </>
                                     ) : (
                                       <>
                                         <Save className="mr-2 h-4 w-4" />
-                                        Save Comment
+                                        {t("saveComment")}
                                       </>
                                     )}
                                   </Button>
@@ -294,7 +295,7 @@ export function CoursesTable({
                                     variant="outline"
                                     onClick={() => onExpandedRowChange(null)}
                                   >
-                                    Cancel
+                                    {t("cancel")}
                                   </Button>
                                 </div>
                               </div>

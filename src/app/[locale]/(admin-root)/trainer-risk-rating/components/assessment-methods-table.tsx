@@ -1,6 +1,7 @@
 "use client";
 
 import { ClipboardList, Save, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -46,6 +47,7 @@ export function AssessmentMethodsTable({
   trainerId,
   onSaveSuccess,
 }: AssessmentMethodsTableProps) {
+  const t = useTranslations("trainerRiskRating.assessmentMethodsTable");
   const [saveCourseRisk, { isLoading: savingCourseRisk }] = useSaveCourseRiskRatingsMutation();
 
   const handleRatingChange = (method: string, value: string) => {
@@ -58,7 +60,7 @@ export function AssessmentMethodsTable({
       updated[method.value] = value;
     });
     onRatingChange(updated);
-    toast.success(`All assessment methods set to ${value} risk level`);
+    toast.success(t("allSetTo", { value }));
   };
 
   const handleSaveAssessmentRatings = async () => {
@@ -76,10 +78,10 @@ export function AssessmentMethodsTable({
 
     try {
       await saveCourseRisk({ data: payload }).unwrap();
-      toast.success("Assessment risk ratings saved successfully");
+      toast.success(t("ratingsSavedSuccess"));
       onSaveSuccess();
     } catch {
-      toast.error("Failed to save assessment risk ratings");
+      toast.error(t("ratingsSaveFailed"));
     }
   };
 
@@ -98,7 +100,7 @@ export function AssessmentMethodsTable({
             <div className="rounded-lg p-1.5 bg-secondary">
               <ClipboardList className="h-4 w-4 text-white" />
             </div>
-            <CardTitle className="text-foreground">Assessment Method Risk ({assessmentMethods.length})</CardTitle>
+            <CardTitle className="text-foreground">{t("title", { count: assessmentMethods.length })}</CardTitle>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button
@@ -106,21 +108,21 @@ export function AssessmentMethodsTable({
               size="sm"
               onClick={() => handleBulkSet("Low")}
             >
-              Set All Low
+              {t("setAllLow")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("Medium")}
             >
-              Set All Medium
+              {t("setAllMedium")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => handleBulkSet("High")}
             >
-              Set All High
+              {t("setAllHigh")}
             </Button>
             <Button
               onClick={handleSaveAssessmentRatings}
@@ -130,12 +132,12 @@ export function AssessmentMethodsTable({
               {savingCourseRisk ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  {t("saving")}
                 </>
               ) : (
                 <>
                   <Save className="mr-2 h-4 w-4" />
-                  Save Assessment
+                  {t("saveAssessment")}
                 </>
               )}
             </Button>
@@ -147,8 +149,8 @@ export function AssessmentMethodsTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Assessment Method</TableHead>
-                <TableHead className="w-[30%]">Risk Level</TableHead>
+                <TableHead>{t("assessmentMethod")}</TableHead>
+                <TableHead className="w-[30%]">{t("riskLevel")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -184,7 +186,7 @@ export function AssessmentMethodsTable({
                                 {opt.value !== "Please select" && opt.color && (
                                   <Badge
                                     variant="outline"
-                                    className={getRiskColor(opt.label)}
+                                    className={getRiskColor(opt.value)}
                                   >
                                     {opt.label}
                                   </Badge>

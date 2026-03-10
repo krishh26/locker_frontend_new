@@ -1750,8 +1750,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Gateway-Bericht",
+    "pageSubtitle": "Gateway-bereite Lerndaten anzeigen und exportieren",
+    "table": {
+      "title": "Gateway-Bericht",
+      "errorTitle": "Fehler",
+      "errorDescription": "Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noDataTitle": "Keine Daten in der Tabelle verfügbar",
+      "noDataDescription": "Es wurden keine Gateway-Einträge gefunden, die den aktuellen Filtern entsprechen.",
+      "headers": {
+        "learnerFirstName": "Vorname des Lernenden",
+        "learnerLastName": "Nachname des Lernenden",
+        "learnerUln": "ULN des Lernenden",
+        "courseName": "Kursname",
+        "trainerName": "Name des Trainers",
+        "sessionBookDate": "Sitzungsbuchungsdatum",
+        "gatewayProgress": "Gateway-Fortschritt %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Trainer auswählen",
+      "searchLabel": "Suche",
+      "searchPlaceholder": "Nach Lernendenname, ULN, Kurs oder Trainer suchen...",
+      "allOption": "Alle",
+      "clearButton": "Zurücksetzen",
+      "exportButton": "Als Excel exportieren"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Vorname des Lernenden",
+        "learnerLastName": "Nachname des Lernenden",
+        "learnerUln": "ULN des Lernenden",
+        "courseName": "Kursname",
+        "trainerName": "Name des Trainers",
+        "sessionBookDate": "Sitzungsbuchungsdatum",
+        "gatewayProgress": "Gateway-Fortschritt %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren verfügbar",
+      "exportSuccess": "Daten wurden erfolgreich exportiert!",
+      "exportFailed": "Fehler beim Exportieren der Daten. Bitte versuchen Sie es erneut."
+    }
   },
   "fundingBands": {
     "pageTitle": "Förderbänder",

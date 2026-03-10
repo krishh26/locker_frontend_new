@@ -2261,8 +2261,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Relatório Gateway",
+    "pageSubtitle": "Ver e exportar dados de formandos prontos para Gateway",
+    "table": {
+      "title": "Relatório Gateway",
+      "errorTitle": "Erro",
+      "errorDescription": "Falha ao carregar os dados. Tente novamente.",
+      "noDataTitle": "Não há dados disponíveis na tabela",
+      "noDataDescription": "Não foram encontrados registos Gateway que correspondam aos filtros atuais.",
+      "headers": {
+        "learnerFirstName": "Primeiro nome do formando",
+        "learnerLastName": "Apelido do formando",
+        "learnerUln": "ULN do formando",
+        "courseName": "Nome do curso",
+        "trainerName": "Nome do formador",
+        "sessionBookDate": "Data de marcação da sessão",
+        "gatewayProgress": "Progresso Gateway %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Selecionar formador",
+      "searchLabel": "Pesquisar",
+      "searchPlaceholder": "Pesquisar por nome do formando, ULN, curso ou formador...",
+      "allOption": "Todos",
+      "clearButton": "Limpar",
+      "exportButton": "Exportar para Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Primeiro nome do formando",
+        "learnerLastName": "Apelido do formando",
+        "learnerUln": "ULN do formando",
+        "courseName": "Nome do curso",
+        "trainerName": "Nome do formador",
+        "sessionBookDate": "Data de marcação da sessão",
+        "gatewayProgress": "Progresso Gateway %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "Não há dados disponíveis para exportar",
+      "exportSuccess": "Dados exportados com sucesso!",
+      "exportFailed": "Falha ao exportar os dados. Tente novamente."
+    }
   },
   "fundingBands": {
     "pageTitle": "Bandas de financiamento",

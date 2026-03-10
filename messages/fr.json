@@ -2261,8 +2261,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Rapport Gateway",
+    "pageSubtitle": "Afficher et exporter les données des apprenants prêts pour Gateway",
+    "table": {
+      "title": "Rapport Gateway",
+      "errorTitle": "Erreur",
+      "errorDescription": "Échec du chargement des données. Veuillez réessayer.",
+      "noDataTitle": "Aucune donnée disponible dans le tableau",
+      "noDataDescription": "Aucun enregistrement Gateway ne correspond aux filtres actuels.",
+      "headers": {
+        "learnerFirstName": "Prénom de l'apprenant",
+        "learnerLastName": "Nom de l'apprenant",
+        "learnerUln": "ULN de l'apprenant",
+        "courseName": "Nom du cours",
+        "trainerName": "Nom du formateur",
+        "sessionBookDate": "Date de réservation de la session",
+        "gatewayProgress": "Progression Gateway %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Sélectionner un formateur",
+      "searchLabel": "Rechercher",
+      "searchPlaceholder": "Rechercher par nom d'apprenant, ULN, cours ou formateur...",
+      "allOption": "Tous",
+      "clearButton": "Effacer",
+      "exportButton": "Exporter vers Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Prénom de l'apprenant",
+        "learnerLastName": "Nom de l'apprenant",
+        "learnerUln": "ULN de l'apprenant",
+        "courseName": "Nom du cours",
+        "trainerName": "Nom du formateur",
+        "sessionBookDate": "Date de réservation de la session",
+        "gatewayProgress": "Progression Gateway %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "Aucune donnée disponible à exporter",
+      "exportSuccess": "Données exportées avec succès !",
+      "exportFailed": "Échec de l’export des données. Veuillez réessayer."
+    }
   },
   "fundingBands": {
     "pageTitle": "Bandes de financement",

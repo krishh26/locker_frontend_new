@@ -45,6 +45,7 @@ import { toast } from "sonner";
 import type { User } from "@/store/api/user/types";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export interface GatewayData {
   learner_first_name: string;
@@ -125,6 +126,8 @@ const transformLearnerPlanData = (learnerPlanData: LearningPlanSession[]): Gatew
 };
 
 export function GatewayReportDataTable() {
+  const t = useTranslations("gatewayReport");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -252,20 +255,20 @@ export function GatewayReportDataTable() {
   };
 
 
-  const exportToCSV = () => {
+  const exportToCSV = async () => {
     if (!filteredData || filteredData.length === 0) {
-      toast.error("No data available to export");
+      toast.error(t("toast.noDataToExport"));
       return;
     }
 
     try {
-      const csvContent = exportGatewayReportToCSV(filteredData);
-      const filename = generateGatewayReportFilename();
+      const csvContent = await exportGatewayReportToCSV(filteredData);
+      const filename = await generateGatewayReportFilename();
       downloadCSV(csvContent, filename);
-      toast.success("Data exported successfully!");
+      toast.success(t("toast.exportSuccess"));
     } catch (error) {
       console.error("Export error:", error);
-      toast.error("Failed to export data. Please try again.");
+      toast.error(t("toast.exportFailed"));
     }
   };
 
@@ -293,7 +296,7 @@ export function GatewayReportDataTable() {
               }}
               className="h-8 px-2 hover:bg-transparent"
             >
-              Learner First Name
+              {t("table.headers.learnerFirstName")}
               {(() => {
                 const sort = sorting.find((s) => s.id === "learner_first_name");
                 if (!sort) return <ArrowUpDown className="ml-2 h-4 w-4" />;
@@ -330,7 +333,7 @@ export function GatewayReportDataTable() {
               }}
               className="h-8 px-2 hover:bg-transparent"
             >
-              Learner Last Name
+              {t("table.headers.learnerLastName")}
               {(() => {
                 const sort = sorting.find((s) => s.id === "learner_last_name");
                 if (!sort) return <ArrowUpDown className="ml-2 h-4 w-4" />;
@@ -347,12 +350,12 @@ export function GatewayReportDataTable() {
       },
       {
         accessorKey: "learner_uln",
-        header: "Learner ULN",
+        header: t("table.headers.learnerUln"),
         cell: ({ row }) => row.original.learner_uln,
       },
       {
         accessorKey: "course_name",
-        header: "Course Name",
+        header: t("table.headers.courseName"),
         cell: ({ row }) => (
           <Badge variant="outline" className="max-w-[200px] truncate">
             {row.original.course_name}
@@ -361,17 +364,17 @@ export function GatewayReportDataTable() {
       },
       {
         accessorKey: "trainer_name",
-        header: "Trainer Name",
+        header: t("table.headers.trainerName"),
         cell: ({ row }) => row.original.trainer_name,
       },
       {
         accessorKey: "session_book_date",
-        header: "Session Book Date",
+        header: t("table.headers.sessionBookDate"),
         cell: ({ row }) => formatDate(row.original.session_book_date),
       },
       {
         accessorKey: "gateway_progress",
-        header: "Gateway Progress %",
+        header: t("table.headers.gatewayProgress"),
         cell: ({ row }) => {
           const progress = row.original.gateway_progress;
 
@@ -396,7 +399,7 @@ export function GatewayReportDataTable() {
         },
       },
     ],
-    [sorting]
+    [sorting, t]
   );
 
   const table = useReactTable({
@@ -415,23 +418,23 @@ export function GatewayReportDataTable() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Gateway Report</CardTitle>
+        <CardTitle>{t("table.title")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 items-end">
           <div className="space-y-2 w-full sm:w-auto sm:min-w-[200px]">
-            <label className="text-sm font-medium">Select Trainer</label>
+            <label className="text-sm font-medium">{t("filters.trainerLabel")}</label>
             <Select
               value={filters.assessor}
               onValueChange={(value) => handleFilterChange("assessor", value)}
               disabled={loadingTrainers}
             >
               <SelectTrigger>
-                <SelectValue placeholder="All" />
+                <SelectValue placeholder={t("filters.allOption")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={DEFAULT_FILTER_VALUE}>All</SelectItem>
+                <SelectItem value={DEFAULT_FILTER_VALUE}>{t("filters.allOption")}</SelectItem>
                 {trainers.map((trainer) => (
                   <SelectItem key={trainer.id} value={trainer.id}>
                     {trainer.name}
@@ -442,12 +445,12 @@ export function GatewayReportDataTable() {
           </div>
 
           <div className="space-y-2 flex-1 w-full">
-            <label className="text-sm font-medium">Search</label>
+            <label className="text-sm font-medium">{t("filters.searchLabel")}</label>
             <div className="relative flex items-center gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search by learner name, ULN, course, or trainer..."
+                  placeholder={t("filters.searchPlaceholder")}
                   value={searchKeyword}
                   onChange={(e) => {
                     setSearchKeyword(e.target.value);
@@ -471,7 +474,7 @@ export function GatewayReportDataTable() {
               </div>
               <Button variant="outline" onClick={clearFilters} className="h-10 whitespace-nowrap">
                 <X className="mr-2 h-4 w-4" />
-                Clear
+                {t("filters.clearButton")}
               </Button>
             </div>
           </div>
@@ -483,15 +486,15 @@ export function GatewayReportDataTable() {
               className="w-full sm:w-auto"
             >
               <Download className="mr-2 h-4 w-4" />
-              Export to Excel
+              {t("filters.exportButton")}
             </Button>
           </div>
         </div>
 
         {error && (
           <Alert variant="destructive">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>Failed to load data. Please try again.</AlertDescription>
+            <AlertTitle>{t("table.errorTitle")}</AlertTitle>
+            <AlertDescription>{t("table.errorDescription")}</AlertDescription>
           </Alert>
         )}
 
@@ -538,10 +541,10 @@ export function GatewayReportDataTable() {
                     <TableCell colSpan={columns.length} className="h-24 text-center">
                       <div className="flex flex-col items-center gap-2">
                         <p className="text-muted-foreground font-medium">
-                          No data available in table
+                          {t("table.noDataTitle")}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          No gateway records found matching the current filters.
+                          {t("table.noDataDescription")}
                         </p>
                       </div>
                     </TableCell>

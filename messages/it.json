@@ -1803,8 +1803,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Report Gateway",
+    "pageSubtitle": "Visualizza ed esporta i dati degli studenti pronti per il gateway",
+    "table": {
+      "title": "Report Gateway",
+      "errorTitle": "Errore",
+      "errorDescription": "Caricamento dei dati non riuscito. Riprova.",
+      "noDataTitle": "Nessun dato disponibile nella tabella",
+      "noDataDescription": "Nessun record gateway trovato che corrisponda ai filtri correnti.",
+      "headers": {
+        "learnerFirstName": "Nome dello studente",
+        "learnerLastName": "Cognome dello studente",
+        "learnerUln": "ULN dello studente",
+        "courseName": "Nome del corso",
+        "trainerName": "Nome del formatore",
+        "sessionBookDate": "Data di prenotazione della sessione",
+        "gatewayProgress": "Progresso gateway %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Seleziona formatore",
+      "searchLabel": "Cerca",
+      "searchPlaceholder": "Cerca per nome studente, ULN, corso o formatore...",
+      "allOption": "Tutti",
+      "clearButton": "Pulisci",
+      "exportButton": "Esporta in Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Nome dello studente",
+        "learnerLastName": "Cognome dello studente",
+        "learnerUln": "ULN dello studente",
+        "courseName": "Nome del corso",
+        "trainerName": "Nome del formatore",
+        "sessionBookDate": "Data di prenotazione della sessione",
+        "gatewayProgress": "Progresso gateway %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato disponibile per l'esportazione",
+      "exportSuccess": "Dati esportati con successo!",
+      "exportFailed": "Errore durante l'esportazione dei dati. Riprova."
+    }
   },
   "fundingBands": {
     "pageTitle": "Fasce di finanziamento",

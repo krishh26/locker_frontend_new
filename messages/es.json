@@ -2050,7 +2050,48 @@
   },
   "gatewayReport": {
     "pageTitle": "Informe de Puerta de Enlace",
-    "pageSubtitle": "Vea y exporte datos de aprendices listos para puerta de enlace"
+    "pageSubtitle": "Vea y exporte datos de aprendices listos para la puerta de enlace",
+    "table": {
+      "title": "Informe de Puerta de Enlace",
+      "errorTitle": "Error",
+      "errorDescription": "No se pudo cargar la información. Inténtelo de nuevo.",
+      "noDataTitle": "No hay datos disponibles en la tabla",
+      "noDataDescription": "No se encontraron registros de puerta de enlace que coincidan con los filtros actuales.",
+      "headers": {
+        "learnerFirstName": "Nombre del aprendiz",
+        "learnerLastName": "Apellido del aprendiz",
+        "learnerUln": "ULN del aprendiz",
+        "courseName": "Nombre del curso",
+        "trainerName": "Nombre del formador",
+        "sessionBookDate": "Fecha de reserva de la sesión",
+        "gatewayProgress": "Progreso de puerta de enlace %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Seleccionar formador",
+      "searchLabel": "Buscar",
+      "searchPlaceholder": "Buscar por nombre de aprendiz, ULN, curso o formador...",
+      "allOption": "Todos",
+      "clearButton": "Limpiar",
+      "exportButton": "Exportar a Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Nombre del aprendiz",
+        "learnerLastName": "Apellido del aprendiz",
+        "learnerUln": "ULN del aprendiz",
+        "courseName": "Nombre del curso",
+        "trainerName": "Nombre del formador",
+        "sessionBookDate": "Fecha de reserva de la sesión",
+        "gatewayProgress": "Progreso de puerta de enlace %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "No hay datos disponibles para exportar",
+      "exportSuccess": "¡Datos exportados correctamente!",
+      "exportFailed": "Error al exportar los datos. Inténtelo de nuevo."
+    }
   },
   "fundingBands": {
     "pageTitle": "Bandas de Financiamiento",

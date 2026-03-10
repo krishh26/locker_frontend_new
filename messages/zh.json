@@ -2223,8 +2223,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Gateway 报告",
+    "pageSubtitle": "查看并导出已准备好 Gateway 的学员数据",
+    "table": {
+      "title": "Gateway 报告",
+      "errorTitle": "错误",
+      "errorDescription": "数据加载失败。请重试。",
+      "noDataTitle": "表格中暂无可用数据",
+      "noDataDescription": "没有找到符合当前筛选条件的 Gateway 记录。",
+      "headers": {
+        "learnerFirstName": "学员名",
+        "learnerLastName": "学员姓",
+        "learnerUln": "学员 ULN",
+        "courseName": "课程名称",
+        "trainerName": "培训师姓名",
+        "sessionBookDate": "课程预约日期",
+        "gatewayProgress": "Gateway 进度 %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "选择培训师",
+      "searchLabel": "搜索",
+      "searchPlaceholder": "按学员姓名、ULN、课程或培训师搜索...",
+      "allOption": "全部",
+      "clearButton": "清除",
+      "exportButton": "导出到 Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "学员名",
+        "learnerLastName": "学员姓",
+        "learnerUln": "学员 ULN",
+        "courseName": "课程名称",
+        "trainerName": "培训师姓名",
+        "sessionBookDate": "课程预约日期",
+        "gatewayProgress": "Gateway 进度 %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "exportSuccess": "数据导出成功！",
+      "exportFailed": "数据导出失败。请重试。"
+    }
   },
   "fundingBands": {
     "pageTitle": "资助档次",

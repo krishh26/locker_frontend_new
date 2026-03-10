@@ -2261,8 +2261,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "गेटवे रिपोर्ट",
+    "pageSubtitle": "गेटवे के लिए तैयार शिक्षार्थी डेटा देखें और एक्सपोर्ट करें",
+    "table": {
+      "title": "गेटवे रिपोर्ट",
+      "errorTitle": "त्रुटि",
+      "errorDescription": "डेटा लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "noDataTitle": "टेबल में कोई डेटा उपलब्ध नहीं",
+      "noDataDescription": "वर्तमान फ़िल्टर से मेल खाने वाली कोई गेटवे प्रविष्टि नहीं मिली।",
+      "headers": {
+        "learnerFirstName": "शिक्षार्थी का पहला नाम",
+        "learnerLastName": "शिक्षार्थी का अंतिम नाम",
+        "learnerUln": "शिक्षार्थी ULN",
+        "courseName": "कोर्स का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "sessionBookDate": "सेशन बुक तिथि",
+        "gatewayProgress": "गेटवे प्रोग्रेस %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "ट्रेनर चुनें",
+      "searchLabel": "खोजें",
+      "searchPlaceholder": "शिक्षार्थी नाम, ULN, कोर्स या ट्रेनर से खोजें...",
+      "allOption": "सभी",
+      "clearButton": "साफ करें",
+      "exportButton": "एक्सेल में एक्सपोर्ट करें"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "शिक्षार्थी का पहला नाम",
+        "learnerLastName": "शिक्षार्थी का अंतिम नाम",
+        "learnerUln": "शिक्षार्थी ULN",
+        "courseName": "कोर्स का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "sessionBookDate": "सेशन बुक तिथि",
+        "gatewayProgress": "गेटवे प्रोग्रेस %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए कोई डेटा उपलब्ध नहीं है",
+      "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट किया गया!",
+      "exportFailed": "डेटा एक्सपोर्ट करने में त्रुटि हुई। कृपया पुनः प्रयास करें।"
+    }
   },
   "fundingBands": {
     "pageTitle": "फंडिंग बैंड्स",

@@ -2262,8 +2262,49 @@
     "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "تقرير Gateway",
+    "pageSubtitle": "عرض وتصدير بيانات المتعلمين الجاهزين لـ Gateway",
+    "table": {
+      "title": "تقرير Gateway",
+      "errorTitle": "خطأ",
+      "errorDescription": "فشل في تحميل البيانات. يرجى المحاولة مرة أخرى.",
+      "noDataTitle": "لا توجد بيانات متاحة في الجدول",
+      "noDataDescription": "لم يتم العثور على أي سجلات Gateway مطابقة لمرشحات البحث الحالية.",
+      "headers": {
+        "learnerFirstName": "الاسم الأول للمتعلم",
+        "learnerLastName": "اسم العائلة للمتعلم",
+        "learnerUln": "ULN المتعلم",
+        "courseName": "اسم الدورة",
+        "trainerName": "اسم المدرب",
+        "sessionBookDate": "تاريخ حجز الجلسة",
+        "gatewayProgress": "نسبة تقدم Gateway %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "اختر المدرب",
+      "searchLabel": "بحث",
+      "searchPlaceholder": "ابحث بالاسم، ULN، الدورة أو المدرب...",
+      "allOption": "الكل",
+      "clearButton": "مسح",
+      "exportButton": "تصدير إلى Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "الاسم الأول للمتعلم",
+        "learnerLastName": "اسم العائلة للمتعلم",
+        "learnerUln": "ULN المتعلم",
+        "courseName": "اسم الدورة",
+        "trainerName": "اسم المدرب",
+        "sessionBookDate": "تاريخ حجز الجلسة",
+        "gatewayProgress": "نسبة تقدم Gateway %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات متاحة للتصدير",
+      "exportSuccess": "تم تصدير البيانات بنجاح!",
+      "exportFailed": "فشل في تصدير البيانات. يرجى المحاولة مرة أخرى."
+    }
   },
   "fundingBands": {
     "pageTitle": "أشرطة التمويل",

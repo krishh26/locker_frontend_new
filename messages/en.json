@@ -2282,7 +2282,48 @@
   },
   "gatewayReport": {
     "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageSubtitle": "View and export gateway ready learner data",
+    "table": {
+      "title": "Gateway Report",
+      "errorTitle": "Error",
+      "errorDescription": "Failed to load data. Please try again.",
+      "noDataTitle": "No data available in table",
+      "noDataDescription": "No gateway records found matching the current filters.",
+      "headers": {
+        "learnerFirstName": "Learner First Name",
+        "learnerLastName": "Learner Last Name",
+        "learnerUln": "Learner ULN",
+        "courseName": "Course Name",
+        "trainerName": "Trainer Name",
+        "sessionBookDate": "Session Book Date",
+        "gatewayProgress": "Gateway Progress %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Select Trainer",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Search by learner name, ULN, course, or trainer...",
+      "allOption": "All",
+      "clearButton": "Clear",
+      "exportButton": "Export to Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Learner First Name",
+        "learnerLastName": "Learner Last Name",
+        "learnerUln": "Learner ULN",
+        "courseName": "Course Name",
+        "trainerName": "Trainer Name",
+        "sessionBookDate": "Session Book Date",
+        "gatewayProgress": "Gateway Progress %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "No data available to export",
+      "exportSuccess": "Data exported successfully!",
+      "exportFailed": "Failed to export data. Please try again."
+    }
   },
   "fundingBands": {
     "pageTitle": "Funding Bands",

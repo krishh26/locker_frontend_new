@@ -11,6 +11,7 @@ import {
   getProgressPercentages,
 } from "@/lib/learner-progress-utils";
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
+import { useTranslations } from "next-intl";
 
 interface EmployerLearnerRowProps {
   learner: LearnerListItem;
@@ -20,6 +21,8 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
   // Calculate progress
   const progress = calculateLearnerProgress(learner);
   const percentages = getProgressPercentages(progress);
+
+  const t = useTranslations("learners.employerRow");
 
   // Generate avatar color and initials
   const avatarColor = getRandomColor(
@@ -80,13 +83,15 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
               )}
             </div>
             <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
-              <span>ID: {learner?.learner_id}</span>
+              <span>
+                {t("id")}: {learner?.learner_id}
+              </span>
               <span className="flex items-center gap-1">
-                <span className="font-medium">Last Login:</span>
+                <span className="font-medium">{t("lastLogin")}:</span>
                 {learner.updated_at ? formatDate(learner.updated_at) : "-"}
               </span>
               <span className="flex items-center gap-1">
-                <span className="font-medium">Next Visit:</span>
+                <span className="font-medium">{t("nextVisit")}:</span>
                 {learner.next_visit_date ? formatDate(learner.next_visit_date) : "-"}
               </span>
             </div>
@@ -128,7 +133,7 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
           {/* Comment - Inline */}
           <div className="hidden lg:block flex-1 max-w-[200px] min-w-0">
             <p className="text-xs truncate">
-              {learner?.comment || <span className="italic">No comment</span>}
+              {learner?.comment || <span className="italic">{t("noComment")}</span>}
             </p>
           </div>
 
@@ -139,7 +144,7 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
               className="flex items-center gap-1.5"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Profile</span>
+              <span className="hidden sm:inline">{t("profile")}</span>
             </Link>
           </Button>
         </div>

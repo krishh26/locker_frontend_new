@@ -22,6 +22,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -62,6 +63,7 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 import { WellbeingResourceFormDialog } from "./wellbeing-resource-form-dialog";
 
 export function WellbeingResourcesDataTable() {
+  const t = useTranslations("wellbeing");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -91,9 +93,9 @@ export function WellbeingResourcesDataTable() {
 
   useEffect(() => {
     if (error) {
-      toast.error("Failed to load wellbeing resources. Please try again.");
+      toast.error(t("toast.loadFailed"));
     }
-  }, [error]);
+  }, [error, t]);
 
   const [toggleResource, { isLoading: isToggling }] = useToggleResourceMutation();
   const [deleteResource, { isLoading: isDeleting }] = useDeleteResourceMutation();
@@ -125,16 +127,16 @@ export function WellbeingResourcesDataTable() {
           isActive: !resource.isActive,
         }).unwrap();
         toast.success(
-          `Resource ${resource.isActive ? "deactivated" : "activated"} successfully`
+          resource.isActive ? t("toast.deactivatedSuccess") : t("toast.activatedSuccess")
         );
         refetch();
       } catch {
         toast.error(
-          `Failed to ${resource.isActive ? "deactivate" : "activate"} resource`
+          resource.isActive ? t("toast.deactivateFailed") : t("toast.activateFailed")
         );
       }
     },
-    [toggleResource, refetch]
+    [toggleResource, refetch, t]
   );
 
   const handleDeleteClick = (resource: WellbeingResource) => {
@@ -147,14 +149,14 @@ export function WellbeingResourcesDataTable() {
 
     try {
       await deleteResource(resourceToDelete.id).unwrap();
-      toast.success("Resource deleted successfully");
+      toast.success(t("toast.deletedSuccess"));
       setDeleteDialogOpen(false);
       setResourceToDelete(null);
       refetch();
     } catch {
-      toast.error("Failed to delete resource");
+      toast.error(t("toast.deleteFailed"));
     }
-  }, [resourceToDelete, deleteResource, refetch]);
+  }, [resourceToDelete, deleteResource, refetch, t]);
 
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
@@ -177,7 +179,7 @@ export function WellbeingResourcesDataTable() {
 
   const handleExportFeedbacks = () => {
     if (!resourcesData?.data) {
-      toast.warning("No data available to export");
+      toast.warning(t("toast.noDataToExport"));
       return;
     }
 
@@ -186,11 +188,15 @@ export function WellbeingResourcesDataTable() {
     );
 
     if (resourcesWithFeedbacks.length === 0) {
-      toast.info("No feedback data available to export");
+      toast.info(t("toast.noFeedbackToExport"));
       return;
     }
 
-    const headers = ["Resource Name", "Feedback", "Created At"];
+    const headers = [
+      t("export.headers.resourceName"),
+      t("export.headers.feedback"),
+      t("export.headers.createdAt"),
+    ];
     const rows = resourcesWithFeedbacks.map((resource) => [
       resource.resource_name,
       resource.feedback?.feedback || "",
@@ -208,20 +214,20 @@ export function WellbeingResourcesDataTable() {
     link.setAttribute("href", url);
     link.setAttribute(
       "download",
-      `wellbeing-feedbacks-${format(new Date(), "yyyy-MM-dd")}.csv`
+      `${t("export.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`
     );
     link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success("Feedback report exported successfully");
+    toast.success(t("toast.exportSuccess"));
   };
 
   const formatDate = (dateString: string) => {
     try {
       return format(new Date(dateString), "MMM dd, yyyy");
     } catch {
-      return "Invalid Date";
+      return t("table.invalidDate");
     }
   };
 
@@ -229,7 +235,7 @@ export function WellbeingResourcesDataTable() {
     () => [
       {
         accessorKey: "resource_name",
-        header: "Name",
+        header: t("table.columns.name"),
         cell: ({ row }) => {
           const resource = row.original;
           return (
@@ -246,7 +252,7 @@ export function WellbeingResourcesDataTable() {
       },
       {
         accessorKey: "isActive",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const resource = row.original;
           return (
@@ -264,7 +270,7 @@ export function WellbeingResourcesDataTable() {
                     : "bg-muted text-muted-foreground"
                 }
               >
-                {resource.isActive ? "Active" : "Inactive"}
+                {resource.isActive ? t("table.status.active") : t("table.status.inactive")}
               </Badge>
             </div>
           );
@@ -272,42 +278,42 @@ export function WellbeingResourcesDataTable() {
       },
       {
         accessorKey: "createdAt",
-        header: "Created At",
+        header: t("table.columns.createdAt"),
         cell: ({ row }) => {
           return formatDate(row.original.createdAt);
         },
       },
       {
         accessorKey: "createdByName",
-        header: "Created By",
+        header: t("table.columns.createdBy"),
         cell: ({ row }) => {
           return row.original.createdByName || "-";
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const resource = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{t("table.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleEditClick(resource)}>
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("table.actions.edit")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleDeleteClick(resource)}
                   className="text-destructive"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {t("table.actions.delete")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -315,7 +321,7 @@ export function WellbeingResourcesDataTable() {
         },
       },
     ],
-    [handleToggleActive, isToggling]
+    [handleToggleActive, isToggling, t]
   );
 
   const table = useReactTable({
@@ -360,7 +366,7 @@ export function WellbeingResourcesDataTable() {
         <div className="relative flex-1 sm:max-w-sm">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search resources by name..."
+            placeholder={t("table.searchPlaceholder")}
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             onKeyDown={handleSearchKeyDown}
@@ -374,14 +380,14 @@ export function WellbeingResourcesDataTable() {
             className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
-            Export Feedbacks
+            {t("table.exportFeedbacks")}
           </Button>
           <Button
             onClick={handleAddClick}
             className="flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
-            Add Resource
+            {t("table.addResource")}
           </Button>
         </div>
       </div>
@@ -428,7 +434,7 @@ export function WellbeingResourcesDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No resources found.
+                  {t("table.noResourcesFound")}
                 </TableCell>
               </TableRow>
             )}
@@ -462,22 +468,23 @@ export function WellbeingResourcesDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Resource</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete &quot;{resourceToDelete?.resource_name}&quot;? This action
-              cannot be undone.
+              {t("deleteDialog.description", {
+                name: resourceToDelete?.resource_name || "",
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel} disabled={isDeleting}>
-              Cancel
+              {t("deleteDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("deleteDialog.deleting") : t("deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

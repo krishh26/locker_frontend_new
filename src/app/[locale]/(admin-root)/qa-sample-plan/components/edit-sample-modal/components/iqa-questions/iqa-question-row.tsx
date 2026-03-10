@@ -2,6 +2,7 @@ import { Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { useTranslations } from 'next-intl'
 import {
   TableCell,
   TableRow,
@@ -21,6 +22,7 @@ export function IqaQuestionRow({
   onDeleteQuestion,
   isReadOnly = false,
 }: IqaQuestionRowProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.iqaQuestions')
   const answer = question.answer || ''
 
   const handleAnswerSelect = (selectedAnswer: 'Yes' | 'No') => {
@@ -42,13 +44,13 @@ export function IqaQuestionRow({
           <div className='flex items-center space-x-2'>
             <RadioGroupItem value='Yes' id={`yes-${question.id}`} disabled={isReadOnly} />
             <Label htmlFor={`yes-${question.id}`} className={isReadOnly ? '' : 'cursor-pointer'}>
-              Yes
+              {t('answers.yes')}
             </Label>
           </div>
           <div className='flex items-center space-x-2'>
             <RadioGroupItem value='No' id={`no-${question.id}`} disabled={isReadOnly} />
             <Label htmlFor={`no-${question.id}`} className={isReadOnly ? '' : 'cursor-pointer'}>
-              No
+              {t('answers.no')}
             </Label>
           </div>
         </RadioGroup>

@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useTranslations } from 'next-intl'
 
 interface DeleteActionDialogProps {
   open: boolean
@@ -23,17 +24,18 @@ export function DeleteActionDialog({
   onOpenChange,
   onConfirm,
 }: DeleteActionDialogProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.dialogs.deleteAction')
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Action?</AlertDialogTitle>
+          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this action? This action cannot be undone.
+            {t('description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isDeleting}
@@ -42,10 +44,10 @@ export function DeleteActionDialog({
             {isDeleting ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                Deleting...
+                {t('deleting')}
               </>
             ) : (
-              'Delete'
+              t('confirm')
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

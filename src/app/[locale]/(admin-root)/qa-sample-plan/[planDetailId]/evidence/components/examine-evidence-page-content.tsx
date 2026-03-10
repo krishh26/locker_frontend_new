@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,72 +40,11 @@ interface ExamineEvidencePageContentProps {
   planDetailId: string;
 }
 
-const DEFAULT_CONFIRMATION_ROWS: ConfirmationRow[] = [
-  {
-    role: "Learner",
-    statement:
-      "I confirm that this unit is complete and the evidence provided is a result of my own work",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Trainer",
-    statement:
-      "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Lead assessor Countersignature (if required)",
-    statement:
-      "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Employer",
-    statement:
-      "I can confirm that the evidence I have checked as an employer meets the standards.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "IQA",
-    statement:
-      "I can confirm that the evidence I have sampled as an Internal Quality Assurer meets the standards.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "EQA",
-    statement: "Verified as part of External QA Visit.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-];
-
 export function ExamineEvidencePageContent({
   planDetailId,
 }: ExamineEvidencePageContentProps) {
   const router = useRouter();
+  const t = useTranslations("qaSamplePlan.evidence.page");
   const searchParams = useSearchParams();
 
   // Get unit info from search params
@@ -150,9 +90,66 @@ export function ExamineEvidencePageContent({
   const [lockedCheckboxes, setLockedCheckboxes] = useState<Set<string>>(new Set());
   const [iqaCheckedCheckboxes, setIqaCheckedCheckboxes] = useState<Set<string>>(new Set());
   const [expandedUnits, setExpandedUnits] = useState<Set<string | number>>(new Set());
-  const [confirmationRows, setConfirmationRows] = useState<ConfirmationRow[]>(
-    DEFAULT_CONFIRMATION_ROWS
+  const defaultConfirmationRows = useMemo<ConfirmationRow[]>(
+    () => [
+      {
+        role: "Learner",
+        statement: t("confirmationStatements.learner"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+      {
+        role: "Trainer",
+        statement: t("confirmationStatements.trainer"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+      {
+        role: "Lead assessor Countersignature (if required)",
+        statement: t("confirmationStatements.leadAssessorCountersignature"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+      {
+        role: "Employer",
+        statement: t("confirmationStatements.employer"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+      {
+        role: "IQA",
+        statement: t("confirmationStatements.iqa"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+      {
+        role: "EQA",
+        statement: t("confirmationStatements.eqa"),
+        completed: false,
+        signedOffBy: "",
+        dated: "",
+        comments: "",
+        file: "",
+      },
+    ],
+    [t]
   );
+  const [confirmationRows, setConfirmationRows] = useState<ConfirmationRow[]>(defaultConfirmationRows);
   const [unitLocked, setUnitLocked] = useState(false);
 
   // Comment modal state
@@ -445,7 +442,7 @@ export function ExamineEvidencePageContent({
 
       // Only IQA can use this shortcut
       if (!isIQA) {
-        toast.error("Only IQA can sign off all criteria.");
+        toast.error(t("toast.onlyIqaCanSignOffAllCriteria"));
         return;
       }
 
@@ -453,7 +450,7 @@ export function ExamineEvidencePageContent({
       const evidence = evidenceList.find((e) => String(e.assignment_id) === refNo);
 
       if (!evidence) {
-        toast.error("Evidence not found.");
+        toast.error(t("toast.evidenceNotFound"));
         return;
       }
 
@@ -463,7 +460,7 @@ export function ExamineEvidencePageContent({
 
       // If unchecking, don't allow (one-way operation)
       if (!newCheckedState) {
-        toast.error("Cannot uncheck. Sign-off is permanent once applied.");
+        toast.error(t("toast.cannotUncheckSignOffPermanent"));
         return;
       }
 
@@ -473,7 +470,7 @@ export function ExamineEvidencePageContent({
       ) || [];
 
       if (subUnitsToSignOff.length === 0) {
-        toast.error("No units are ready for sign-off. Trainer must map units first.");
+        toast.error(t("toast.noUnitsReadyTrainerMustMapFirst"));
         return;
       }
 
@@ -501,7 +498,7 @@ export function ExamineEvidencePageContent({
       // Call API for each subUnit
       try {
         if (!unitCode) {
-          toast.error("Unit code is required.");
+          toast.error(t("toast.unitCodeRequired"));
           // Revert state changes
           setCriteriaSignOff((prev) => ({
             ...prev,
@@ -537,7 +534,7 @@ export function ExamineEvidencePageContent({
 
         await Promise.all(updatePromises);
 
-        toast.success(`Successfully signed off ${subUnitsToSignOff.length} unit(s).`);
+        toast.success(t("toast.signedOffUnitsSuccess", { count: subUnitsToSignOff.length }));
 
         // Refetch evidence to get updated data
         fetchEvidence();
@@ -566,7 +563,7 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || "Failed to sign off units.";
+          error?.data?.message || error?.error || t("toast.signOffUnitsFailed");
         toast.error(message);
       }
     },
@@ -604,7 +601,7 @@ export function ExamineEvidencePageContent({
       }
 
       if (!targetEvidence) {
-        toast.error("Evidence not found. Cannot update sign-off status.");
+        toast.error(t("toast.evidenceNotFoundCannotUpdateSignOff"));
         return;
       }
 
@@ -614,7 +611,7 @@ export function ExamineEvidencePageContent({
       );
 
       if (!evidenceSubUnit) {
-        toast.error("SubUnit not found. Cannot update sign-off status.");
+        toast.error(t("toast.subUnitNotFoundCannotUpdateSignOff"));
         return;
       }
 
@@ -622,7 +619,7 @@ export function ExamineEvidencePageContent({
 
       // IQA can only check if trainerMapped is true
       if (isIQA && !evidenceSubUnit.trainerMapped) {
-        toast.error("IQA can only sign off when Trainer has mapped this unit.");
+        toast.error(t("toast.iqaCanOnlySignOffWhenTrainerMapped"));
         return;
       }
 
@@ -644,7 +641,7 @@ export function ExamineEvidencePageContent({
 
       try {
         if (!unitCode) {
-          toast.error("Unit code is required.");
+          toast.error(t("toast.unitCodeRequired"));
           // Revert state changes on error
           setMappedSubUnitsChecked((prev) => ({
             ...prev,
@@ -671,7 +668,7 @@ export function ExamineEvidencePageContent({
           signed_off: newSignedOffState,
         }).unwrap();
 
-        toast.success("Sign-off status updated successfully.");
+        toast.success(t("toast.signOffStatusUpdatedSuccess"));
 
         // Refetch evidence list to get updated data
         fetchEvidence();
@@ -693,7 +690,7 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || "Failed to update sign-off status.";
+          error?.data?.message || error?.error || t("toast.signOffStatusUpdateFailed");
         toast.error(message);
       }
     },
@@ -725,7 +722,7 @@ export function ExamineEvidencePageContent({
   const handleSubmitComment = useCallback(
     async (commentText: string) => {
       if (!selectedEvidence || !commentText.trim() || !planDetailId || !unitCode) {
-        toast.error("Please fill in all required fields.");
+        toast.error(t("toast.fillAllRequiredFields"));
         return;
       }
 
@@ -738,7 +735,7 @@ export function ExamineEvidencePageContent({
           unit_code: unitCode,
         }).unwrap();
 
-        toast.success("Comment added successfully.");
+        toast.success(t("toast.commentAddedSuccess"));
 
         setCommentModalOpen(false);
         setSelectedEvidence(null);
@@ -748,7 +745,7 @@ export function ExamineEvidencePageContent({
         fetchEvidence();
       } catch (error: any) {
         const message =
-          error?.data?.message || error?.error || "Failed to add comment.";
+          error?.data?.message || error?.error || t("toast.addCommentFailed");
         toast.error(message);
       }
     },
@@ -779,7 +776,7 @@ export function ExamineEvidencePageContent({
         const firstEvidence = evidenceList.length > 0 ? evidenceList[0] : null;
 
         if (!firstEvidence) {
-          toast.error("No evidence found. Cannot update status.");
+          toast.error(t("toast.noEvidenceCannotUpdateStatus"));
           // Revert the optimistic update
           setConfirmationRows((prev) => {
             const updated = [...prev];
@@ -805,7 +802,7 @@ export function ExamineEvidencePageContent({
           completed: newCompletedState,
         }).unwrap();
 
-        toast.success("Status updated successfully.");
+        toast.success(t("toast.statusUpdatedSuccess"));
 
         // Refetch evidence list to get updated data
         fetchEvidence();
@@ -821,7 +818,7 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || "Failed to update status.";
+          error?.data?.message || error?.error || t("toast.updateStatusFailed");
         toast.error(message);
       }
     },
@@ -848,7 +845,7 @@ export function ExamineEvidencePageContent({
     const confirmationRow = confirmationRows[index];
 
     if (!confirmationRow?.assignment_review_id) {
-      toast.error("Unable to delete file: Review ID not found.");
+      toast.error(t("toast.unableDeleteFileReviewIdNotFound"));
       setDeleteFileDialogOpen(false);
       setFileToDeleteIndex(null);
       return;
@@ -868,14 +865,14 @@ export function ExamineEvidencePageContent({
         return updated;
       });
 
-      toast.success("File deleted successfully.");
+      toast.success(t("toast.fileDeletedSuccess"));
 
       setDeleteFileDialogOpen(false);
       setFileToDeleteIndex(null);
       fetchEvidence();
     } catch (error: any) {
       const message =
-        error?.data?.message || error?.error || "Failed to delete file.";
+        error?.data?.message || error?.error || t("toast.deleteFileFailed");
       toast.error(message);
     }
   }, [
@@ -893,7 +890,7 @@ export function ExamineEvidencePageContent({
   const handleModalSubmit = useCallback(
     async (comment: string) => {
       if (!comment.trim() || selectedIndex === null || !planDetailId || !unitCode) {
-        toast.error("Please fill in all required fields.");
+        toast.error(t("toast.fillAllRequiredFields"));
         return;
       }
 
@@ -902,7 +899,7 @@ export function ExamineEvidencePageContent({
         const firstEvidence = evidenceList.length > 0 ? evidenceList[0] : null;
 
         if (!firstEvidence) {
-          toast.error("No evidence found. Cannot add comment.");
+          toast.error(t("toast.noEvidenceCannotAddComment"));
           return;
         }
 
@@ -926,7 +923,7 @@ export function ExamineEvidencePageContent({
         };
         setConfirmationRows(updated);
 
-        toast.success("Comment added successfully.");
+        toast.success(t("toast.commentAddedSuccess"));
 
         setUnitSignOffModalOpen(false);
         setSelectedIndex(null);
@@ -935,7 +932,7 @@ export function ExamineEvidencePageContent({
         fetchEvidence();
       } catch (error: any) {
         const message =
-          error?.data?.message || error?.error || "Failed to add comment.";
+          error?.data?.message || error?.error || t("toast.addCommentFailed");
         toast.error(message);
       }
     },
@@ -983,8 +980,8 @@ export function ExamineEvidencePageContent({
           title={unitName || ""}
           subtitle={
             unitCode
-              ? `Review evidence documents for unit: ${unitCode}`
-              : "Review evidence documents"
+              ? t("subtitleForUnit", { unitCode })
+              : t("subtitle")
           }
           icon={FileText}
         />
@@ -1069,24 +1066,26 @@ export function ExamineEvidencePageContent({
       <AlertDialog open={deleteFileDialogOpen} onOpenChange={setDeleteFileDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete File?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteFileDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this file? This action cannot be undone.
+              {t("deleteFileDialog.description")}
               {fileToDeleteIndex !== null && confirmationRows[fileToDeleteIndex]?.file && (
-                <div className="mt-2 font-medium">File: {confirmationRows[fileToDeleteIndex].file}</div>
+                <div className="mt-2 font-medium">
+                  {t("deleteFileDialog.fileLabel")}: {confirmationRows[fileToDeleteIndex].file}
+                </div>
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteFileCancel} disabled={isDeletingFile}>
-              Cancel
+              {t("deleteFileDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteFileConfirm}
               disabled={isDeletingFile}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeletingFile ? "Deleting..." : "Delete"}
+              {isDeletingFile ? t("deleteFileDialog.deleting") : t("deleteFileDialog.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

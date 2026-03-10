@@ -1,6 +1,7 @@
 "use client";
 
 import { User } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,6 +23,8 @@ export function TrainerList({
   onUserSelect,
   isLoading,
 }: TrainerListProps) {
+  const t = useTranslations("trainerRiskRating.trainerList");
+
   if (isLoading) {
     return (
       <Card>
@@ -56,7 +59,7 @@ export function TrainerList({
             <div className="rounded-lg p-1.5 bg-primary">
               <User className="h-4 w-4 text-primary-foreground" />
             </div>
-            <CardTitle className="text-foreground">Trainers</CardTitle>
+            <CardTitle className="text-foreground">{t("title")}</CardTitle>
           </div>
           <Badge variant="default" className="ml-auto">
             {trainers.length}
@@ -106,7 +109,7 @@ export function TrainerList({
           })}
           {trainers.length === 0 && (
             <div className="text-center py-8 text-muted-foreground">
-              <p>No trainers found</p>
+              <p>{t("noTrainersFound")}</p>
             </div>
           )}
         </div>

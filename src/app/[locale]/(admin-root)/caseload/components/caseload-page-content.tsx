@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetCaseloadListQuery } from "@/store/api/caseload/caseloadApi";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function CaseloadPageContent() {
@@ -18,7 +16,7 @@ export function CaseloadPageContent() {
   const [page, setPage] = useState(1);
   const rowsPerPage = 6;
 
-  const { data, isLoading, isError, refetch } = useGetCaseloadListQuery({
+  const { data, isLoading, refetch } = useGetCaseloadListQuery({
     line_manager_name: filterName,
     page,
     limit: rowsPerPage,

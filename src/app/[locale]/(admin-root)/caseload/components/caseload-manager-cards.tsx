@@ -33,6 +33,7 @@ import type { CaseloadItem } from "@/store/api/caseload/types";
 import jsPDF from "jspdf";
 import { applyPlugin } from "jspdf-autotable";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTranslations } from "next-intl";
 
 // Apply the autotable plugin to jsPDF
 applyPlugin(jsPDF);
@@ -50,6 +51,7 @@ export function CaseloadManagerCards({
   totalPages,
   onPageChange,
 }: CaseloadManagerCardsProps) {
+  const t = useTranslations("caseload");
   const [expandedManager, setExpandedManager] = useState<string | null>(null);
 
   const handleManagerToggle = (managerId: string) => {
@@ -75,9 +77,13 @@ export function CaseloadManagerCards({
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text("Caseload Management Report", 14, 20);
+    doc.text(t("cards.reportTitle"), 14, 20);
     doc.setFontSize(12);
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    doc.text(
+      t("cards.generatedOn", { date: new Date().toLocaleDateString() }),
+      14,
+      30
+    );
 
     let yPosition = 45;
     lineManagers.forEach((manager, idx) => {
@@ -91,12 +97,16 @@ export function CaseloadManagerCards({
       doc.setFontSize(10);
       doc.text(`Email: ${manager.line_manager.email}`, 20, yPosition + 8);
       doc.text(
-        `Total Learners: ${manager.statistics.total_managed_learners}`,
+        t("cards.totalLearnersLine", {
+          count: manager.statistics.total_managed_learners,
+        }),
         20,
         yPosition + 16
       );
       doc.text(
-        `Total Users: ${manager.statistics.total_managed_users}`,
+        t("cards.totalUsersLine", {
+          count: manager.statistics.total_managed_users,
+        }),
         20,
         yPosition + 24
       );
@@ -124,10 +134,10 @@ export function CaseloadManagerCards({
 
   const handleExportCSV = () => {
     const csvHeaders = [
-      "Line Manager Name",
-      "Managed User Email",
-      "Total Learners",
-      "Total Users",
+      t("cards.overallCsv.lineManagerName"),
+      t("cards.overallCsv.managedUserEmail"),
+      t("cards.overallCsv.totalLearners"),
+      t("cards.overallCsv.totalUsers"),
     ];
 
     let csvContent = csvHeaders.join(",") + "\n";
@@ -168,31 +178,45 @@ export function CaseloadManagerCards({
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text(
-      `${manager.line_manager.full_name} - Caseload Report`,
+      t("cards.managerReportTitle", {
+        name: manager.line_manager.full_name,
+      }),
       14,
       20
     );
     doc.setFontSize(12);
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    doc.text(
+      t("cards.generatedOn", { date: new Date().toLocaleDateString() }),
+      14,
+      30
+    );
 
     let yPosition = 45;
 
     doc.setFontSize(14);
-    doc.text("Manager Information:", 14, yPosition);
+    doc.text(t("cards.managerInformation"), 14, yPosition);
     doc.setFontSize(10);
     doc.text(
-      `Name: ${manager.line_manager.full_name}`,
+      t("cards.nameLabel", { name: manager.line_manager.full_name }),
       20,
       yPosition + 8
     );
-    doc.text(`Email: ${manager.line_manager.email}`, 20, yPosition + 16);
     doc.text(
-      `Total Learners: ${manager.statistics.total_managed_learners}`,
+      t("cards.emailLabel", { email: manager.line_manager.email }),
+      20,
+      yPosition + 16
+    );
+    doc.text(
+      t("cards.totalLearnersLine", {
+        count: manager.statistics.total_managed_learners,
+      }),
       20,
       yPosition + 24
     );
     doc.text(
-      `Total Users: ${manager.statistics.total_managed_users}`,
+      t("cards.totalUsersLine", {
+        count: manager.statistics.total_managed_users,
+      }),
       20,
       yPosition + 32
     );
@@ -201,11 +225,17 @@ export function CaseloadManagerCards({
 
     if (manager.managed_users && manager.managed_users.length > 0) {
       doc.setFontSize(14);
-      doc.text("Managed Users:", 14, yPosition);
+      doc.text(t("cards.managedUsersHeading"), 14, yPosition);
       yPosition += 10;
       (doc as any).autoTable({
         startY: yPosition,
-        head: [["Name", "Email", "Role"]],
+        head: [
+          [
+            t("cards.managerTableHeaders.name"),
+            t("cards.managerTableHeaders.email"),
+            t("cards.managerTableHeaders.role"),
+          ],
+        ],
         body: manager.managed_users.map((u) => [
           `${u.first_name} ${u.last_name}`,
           u.email,
@@ -216,7 +246,7 @@ export function CaseloadManagerCards({
       });
     } else {
       doc.setFontSize(12);
-      doc.text("No users assigned to this manager.", 14, yPosition);
+      doc.text(t("cards.managerNoUsersAssigned"), 14, yPosition);
     }
 
     doc.save(
@@ -226,13 +256,13 @@ export function CaseloadManagerCards({
 
   const handleExportManagerCSV = (manager: CaseloadItem) => {
     const csvHeaders = [
-      "Manager Name",
-      "Manager Email",
-      "User Name",
-      "User Email",
-      "User Role",
-      "Total Learners",
-      "Total Users",
+      t("cards.managerCsv.managerName"),
+      t("cards.managerCsv.managerEmail"),
+      t("cards.managerCsv.userName"),
+      t("cards.managerCsv.userEmail"),
+      t("cards.managerCsv.userRole"),
+      t("cards.managerCsv.totalLearners"),
+      t("cards.managerCsv.totalUsers"),
     ];
 
     let csvContent = csvHeaders.join(",") + "\n";
@@ -244,7 +274,7 @@ export function CaseloadManagerCards({
           manager.line_manager.email,
           `${user.first_name} ${user.last_name}`,
           user.email,
-          user.role || "User",
+          user.role || t("cards.managerCsv.defaultUserRole"),
           manager.statistics.total_managed_learners,
           manager.statistics.total_managed_users,
         ];
@@ -254,7 +284,7 @@ export function CaseloadManagerCards({
       const rowData = [
         manager.line_manager.full_name,
         manager.line_manager.email,
-        "No users assigned",
+        t("cards.managerCsv.noUsersAssigned"),
         "",
         "",
         manager.statistics.total_managed_learners,
@@ -285,17 +315,17 @@ export function CaseloadManagerCards({
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4 mr-2" />
-              Export
+              {t("cards.export")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={handleExportCSV}>
               <Table2 className="h-4 w-4 mr-2" />
-              Export CSV
+              {t("cards.exportCsv")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleExportPDF}>
               <FileText className="h-4 w-4 mr-2" />
-              Export PDF
+              {t("cards.exportPdf")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -340,13 +370,13 @@ export function CaseloadManagerCards({
                             onClick={() => handleExportManagerCSV(manager)}
                           >
                             <Table2 className="h-4 w-4 mr-2" />
-                            Export CSV
+                            {t("cards.exportCsv")}
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => handleExportManagerPDF(manager)}
                           >
                             <FileText className="h-4 w-4 mr-2" />
-                            Export PDF
+                            {t("cards.exportPdf")}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -375,21 +405,27 @@ export function CaseloadManagerCards({
                     <div className="text-2xl font-bold text-foreground">
                       {manager.statistics.total_managed_users}
                     </div>
-                    <div className="text-xs text-muted-foreground">Users</div>
+                    <div className="text-xs text-muted-foreground">
+                      {t("cards.usersLabel")}
+                    </div>
                   </div>
                   <div className="bg-accent/10 border border-accent/20 rounded-lg p-3 text-center">
                     <GraduationCap className="h-5 w-5 mx-auto mb-1 text-accent" />
                     <div className="text-2xl font-bold text-foreground">
                       {manager.statistics.total_managed_learners}
                     </div>
-                    <div className="text-xs text-muted-foreground">Learners</div>
+                    <div className="text-xs text-muted-foreground">
+                      {t("cards.learnersLabel")}
+                    </div>
                   </div>
                 </div>
 
                 {/* Status Badge */}
                 <div className="flex justify-center">
                   <Badge variant={getStatusColor(manager.statistics.total_managed_users) as "secondary" | "default" | "destructive" | "outline" | null | undefined}>
-                    {manager.statistics.total_managed_users} Users
+                    {t("cards.usersBadge", {
+                      count: manager.statistics.total_managed_users,
+                    })}
                   </Badge>
                 </div>
 
@@ -432,7 +468,7 @@ export function CaseloadManagerCards({
                     ) : (
                       <div className="text-center py-6 text-muted-foreground rounded-lg border border-dashed border-border">
                         <Users className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
-                        <p className="text-sm">No users assigned yet</p>
+                        <p className="text-sm">{t("cards.noUsersAssignedYet")}</p>
                       </div>
                     )}
                   </div>

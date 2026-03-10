@@ -1,4 +1,5 @@
 import type { AwaitingSignatureEntry } from "@/store/api/awaiting-signature/types";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Formats date for Excel CSV export
@@ -29,30 +30,32 @@ function escapeCSVField(value: string | undefined): string {
 /**
  * Convert awaiting signature data to CSV format
  */
-export function exportAwaitingSignatureToCSV(data: AwaitingSignatureEntry[]): string {
+export async function exportAwaitingSignatureToCSV(data: AwaitingSignatureEntry[]): Promise<string> {
   if (!data || data.length === 0) {
     return "";
   }
 
+  const t = await getTranslations("awaitingSignature.csv.headers");
+
   // Define CSV headers
   const headers = [
-    "Learner Name",
-    "Course Name",
-    "Course Code",
-    "Employer Name",
-    "Trainer Name",
-    "File Type",
-    "File Name",
-    "File Description",
-    "Upload Date",
-    "Trainer Received",
-    "Trainer Signed",
-    "Learner Received",
-    "Learner Signed",
-    "Employer Received",
-    "Employer Signed",
-    "IQA Received",
-    "IQA Signed",
+    t("learnerName"),
+    t("courseName"),
+    t("courseCode"),
+    t("employerName"),
+    t("trainerName"),
+    t("fileType"),
+    t("fileName"),
+    t("fileDescription"),
+    t("uploadDate"),
+    t("trainerReceived"),
+    t("trainerSigned"),
+    t("learnerReceived"),
+    t("learnerSigned"),
+    t("employerReceived"),
+    t("employerSigned"),
+    t("iqaReceived"),
+    t("iqaSigned"),
   ];
 
   // Convert data to CSV rows
@@ -102,8 +105,10 @@ export function downloadCSV(csvContent: string, filename: string): void {
 /**
  * Generate filename with timestamp
  */
-export function generateAwaitingSignatureFilename(): string {
+export async function generateAwaitingSignatureFilename(): Promise<string> {
+  const t = await getTranslations("awaitingSignature.csv");
   const timestamp = new Date().toISOString().split("T")[0];
-  return `awaiting_signature_${timestamp}.csv`;
+  const prefix = t("filenamePrefix");
+  return `${prefix}_${timestamp}.csv`;
 }
 

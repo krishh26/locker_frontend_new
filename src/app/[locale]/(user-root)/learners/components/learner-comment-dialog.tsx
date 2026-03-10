@@ -16,6 +16,7 @@ import { useUpdateLearnerCommentMutation } from "@/store/api/learner/learnerApi"
 import type { LearnerListItem } from "@/store/api/learner/types";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface LearnerCommentDialogProps {
   open: boolean;
@@ -32,6 +33,7 @@ export function LearnerCommentDialog({
 }: LearnerCommentDialogProps) {
   const [comment, setComment] = useState("");
   const [updateComment, { isLoading }] = useUpdateLearnerCommentMutation();
+  const t = useTranslations("learners.commentDialog");
 
   useEffect(() => {
     if (learner && open) {
@@ -45,7 +47,7 @@ export function LearnerCommentDialog({
         id: learner.learner_id,
         data: { comment },
       }).unwrap();
-      toast.success("Comment updated successfully");
+      toast.success(t("toast.success"));
       onSuccess();
       onOpenChange(false);
     } catch (error: unknown) {
@@ -53,7 +55,7 @@ export function LearnerCommentDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to update comment");
+      toast.error(errorMessage || t("toast.failedGeneric"));
     }
   };
 
@@ -62,19 +64,21 @@ export function LearnerCommentDialog({
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            Add/Edit Comment for {learner.first_name} {learner.last_name}
+            {t("title", {
+              name: `${learner.first_name} ${learner.last_name}`,
+            })}
           </DialogTitle>
           <DialogDescription>
-            Update the comment for this learner. This comment will be visible to admins and trainers.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="comment">Comment</Label>
+            <Label htmlFor="comment">{t("field.label")}</Label>
             <Textarea
               id="comment"
-              placeholder="Enter your comment here..."
+              placeholder={t("field.placeholder")}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
@@ -90,11 +94,11 @@ export function LearnerCommentDialog({
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
           >
-            Cancel
+            {t("actions.cancel")}
           </Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Save Comment
+            {t("actions.save")}
           </Button>
         </DialogFooter>
       </DialogContent>

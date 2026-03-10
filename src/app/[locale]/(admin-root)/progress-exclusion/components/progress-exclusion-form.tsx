@@ -30,6 +30,7 @@ import {
 } from "@/store/api/progress-exclusion/progressExclusionApi";
 import type { Course } from "@/store/api/course/types";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 // Training status list
 const trainingStatuses = [
@@ -45,6 +46,8 @@ const trainingStatuses = [
 ];
 
 export function ProgressExclusionForm() {
+  const t = useTranslations("progressExclusion");
+
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
   const [excludedStatuses, setExcludedStatuses] = useState<Set<string>>(new Set());
 
@@ -93,7 +96,7 @@ export function ProgressExclusionForm() {
   // Handle submit
   const handleSubmit = async () => {
     if (!selectedCourseId) {
-      toast.error("Please select a course");
+      toast.error(t("toast.selectCourseRequired"));
       return;
     }
 
@@ -103,15 +106,13 @@ export function ProgressExclusionForm() {
         excluded_statuses: Array.from(excludedStatuses),
       }).unwrap();
 
-      toast.success("Progress exclusion settings updated successfully");
+      toast.success(t("toast.updateSuccess"));
     } catch (error: unknown) {
       const errorMessage =
-        (error as { data?: { error?: string; message?: string }; message?: string })?.data
-          ?.error ||
-        (error as { data?: { error?: string; message?: string }; message?: string })?.data
-          ?.message ||
+        (error as { data?: { error?: string; message?: string }; message?: string })?.data?.error ||
+        (error as { data?: { error?: string; message?: string }; message?: string })?.data?.message ||
         (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
-        "Failed to update progress exclusion settings";
+        t("toast.updateFailed");
       toast.error(errorMessage);
     }
   };
@@ -119,25 +120,21 @@ export function ProgressExclusionForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Exclude From Overall Progress</CardTitle>
-        <CardDescription>
-          Select a course and choose which training statuses should be excluded from overall
-          progress tracking
-        </CardDescription>
+        <CardTitle>{t("card.title")}</CardTitle>
+        <CardDescription>{t("card.description")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <Alert>
           <Info className="h-4 w-4" />
           <AlertDescription>
-            Select a course and choose which training statuses should be excluded from overall
-            progress tracking.
+            {t("info.description")}
           </AlertDescription>
         </Alert>
 
         {/* Course Selection */}
         <div className="space-y-2">
           <Label htmlFor="course-select">
-            Select Course <span className="text-destructive">*</span>
+            {t("form.courseLabel")} <span className="text-destructive">*</span>
           </Label>
           <Select
             value={selectedCourseId}
@@ -148,7 +145,7 @@ export function ProgressExclusionForm() {
             disabled={coursesLoading}
           >
             <SelectTrigger id="course-select" className="w-full">
-              <SelectValue placeholder="Select a course" />
+              <SelectValue placeholder={t("form.coursePlaceholder")} />
             </SelectTrigger>
             <SelectContent>
               {courses.map((course: Course) => (
@@ -182,8 +179,10 @@ export function ProgressExclusionForm() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Status Changed To</TableHead>
-                        <TableHead className="text-center">Exclude From Progress</TableHead>
+                        <TableHead>{t("table.statusColumn")}</TableHead>
+                        <TableHead className="text-center">
+                          {t("table.excludeColumn")}
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -192,7 +191,9 @@ export function ProgressExclusionForm() {
                           key={status}
                           className={index % 2 === 0 ? "bg-background" : "bg-muted/50"}
                         >
-                          <TableCell className="font-medium">{status}</TableCell>
+                          <TableCell className="font-medium">
+                            {t(`statusLabels.${status}`)}
+                          </TableCell>
                           <TableCell className="text-center">
                             <Checkbox
                               checked={excludedStatuses.has(status)}
@@ -209,7 +210,7 @@ export function ProgressExclusionForm() {
                 <div className="flex justify-end">
                   <Button onClick={handleSubmit} disabled={isSubmitting} size="lg">
                     {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isSubmitting ? "Submitting..." : "Submit"}
+                    {isSubmitting ? t("form.submitting") : t("form.submit")}
                   </Button>
                 </div>
               </>

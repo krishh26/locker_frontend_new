@@ -51,6 +51,7 @@ import { getAllowedRolesForPath } from '@/config/route-access'
 import { isRoleAllowed } from '@/config/auth-roles'
 import { isMasterAdmin } from '@/utils/permissions'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 type SidebarItem = {
   title: string
@@ -653,11 +654,120 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const learner = useAppSelector((state) => state.auth.learner)
+  const tSidebar = useTranslations('sidebar')
 
   // MasterAdmin bypasses all feature checks
   const isMasterAdminUser = isMasterAdmin(user)
 
   const filteredNavGroups = React.useMemo(() => {
+    const translateGroupLabel = (label: string): string => {
+      switch (label) {
+        case 'Dashboards':
+          return tSidebar('groups.dashboards')
+        case 'Learner':
+          return tSidebar('groups.learner')
+        case 'Admin':
+          return tSidebar('groups.admin')
+        case 'Master Admin':
+          return tSidebar('groups.masterAdmin')
+        case 'Trainer':
+          return tSidebar('groups.trainer')
+        case 'IQA':
+          return tSidebar('groups.iqa')
+        case 'Employer':
+          return tSidebar('groups.employer')
+        case 'EQA':
+          return tSidebar('groups.eqa')
+        case 'Account Manager':
+          return tSidebar('groups.accountManager')
+        default:
+          return label
+      }
+    }
+
+    const translateItemTitle = (title: string): string => {
+      switch (title) {
+        case 'Dashboard':
+          return tSidebar('items.dashboard')
+        case 'CPD':
+          return tSidebar('items.cpd')
+        case 'Forum':
+          return tSidebar('items.forum')
+        case 'Skills Scan':
+          return tSidebar('items.skillsScan')
+        case 'Forms':
+          return tSidebar('items.forms')
+        case 'Propose Your Innovations':
+          return tSidebar('items.proposeInnovations')
+        case 'Support':
+          return tSidebar('items.support')
+        case 'Tickets':
+          return tSidebar('items.tickets')
+        case 'Admin Management':
+          return tSidebar('items.adminManagement')
+        case 'Course Builder':
+          return tSidebar('items.courseBuilder')
+        case 'Surveys':
+          return tSidebar('items.surveys')
+        case 'Funding Bands':
+          return tSidebar('items.fundingBands')
+        case 'Trainer Risk Rating':
+          return tSidebar('items.trainerRiskRating')
+        case 'Wellbeing Resources':
+          return tSidebar('items.wellbeingResources')
+        case 'Supplementary Training':
+          return tSidebar('items.supplementaryTraining')
+        case 'QA Sample Plan':
+          return tSidebar('items.qaSamplePlan')
+        case 'Caseload Management':
+          return tSidebar('items.caseloadManagement')
+        case 'Safeguarding':
+          return tSidebar('items.safeguarding')
+        case 'Acknowledge Message':
+          return tSidebar('items.acknowledgeMessage')
+        case 'Default Review Weeks':
+          return tSidebar('items.defaultReviewWeeks')
+        case 'IQA Maintain Questions':
+          return tSidebar('items.iqaQuestions')
+        case 'Session Types':
+          return tSidebar('items.sessionTypes')
+        case 'Timelog Data Export':
+          return tSidebar('items.timelogExport')
+        case 'Awaiting Signature':
+          return tSidebar('items.awaitingSignature')
+        case 'Gateway Report':
+          return tSidebar('items.gatewayReport')
+        case 'Exclude From Overall Progress':
+          return tSidebar('items.progressExclusion')
+        case 'Learner Management':
+          return tSidebar('items.learnerManagement')
+        case 'Organisations':
+          return tSidebar('items.organisations')
+        case 'Centres':
+          return tSidebar('items.centres')
+        case 'Subscriptions':
+          return tSidebar('items.subscriptions')
+        case 'Payments':
+          return tSidebar('items.payments')
+        case 'Audit Logs':
+          return tSidebar('items.auditLogs')
+        case 'System Admins':
+          return tSidebar('items.systemAdmins')
+        case 'Account Managers':
+          return tSidebar('items.accountManagers')
+        case 'Users':
+          return tSidebar('items.users')
+        case 'Learner Overview':
+          return tSidebar('items.learnerOverview')
+        case 'Resources':
+          return tSidebar('items.resources')
+        case 'Learner Forms':
+          return tSidebar('items.learnersForms')
+        default:
+          return title
+      }
+    }
+
     const filterItems = (items: SidebarItem[]): SidebarItem[] => {
       const results: SidebarItem[] = []
 
@@ -750,14 +860,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return filteredGroups
       .map((group) => {
-        const items = filterItems(group.items)
+        const items = filterItems(group.items).map((item) => ({
+          ...item,
+          title: translateItemTitle(item.title),
+        }))
         return {
           ...group,
+          label: translateGroupLabel(group.label),
           items,
         }
       })
       .filter((group) => group.items.length > 0)
-  }, [userRole, isMasterAdminUser])
+  }, [userRole, isMasterAdminUser, tSidebar])
 
   return (
     <Sidebar {...props}>

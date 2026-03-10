@@ -68,7 +68,105 @@
     "status": "Stato",
     "actions": "Azioni",
     "noLearnersFound": "Nessuno studente trovato",
-    "confirmDelete": "Sei sicuro di voler eliminare questo studente?"
+    "confirmDelete": "Sei sicuro di voler eliminare questo studente?",
+    "page": {
+      "title": "Gestione Studenti",
+      "adminSubtitle": "Ottimizza la gestione degli studenti aggiungendo, aggiornando ed eliminando studenti e facilitando l’assegnazione di corsi, formatori, datori di lavoro, IQA ed EQA",
+      "defaultSubtitle": "Gestisci e monitora i tuoi studenti assegnati"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "Nome",
+        "course": "Corso",
+        "trainer": "Formatore",
+        "iqa": "IQA",
+        "status": "Stato",
+        "iqaReport": "Report IQA",
+        "learnerCreated": "Studente creato",
+        "courseRegistered": "Corso registrato"
+      },
+      "headers": {
+        "learnerName": "Nome dello Studente",
+        "username": "Nome utente",
+        "email": "Email",
+        "mobile": "Cellulare",
+        "course": "Corso",
+        "comment": "Commento",
+        "status": "Stato",
+        "actions": "Azioni"
+      },
+      "actions": {
+        "openMenu": "Apri menu",
+        "edit": "Modifica",
+        "comment": "Commento",
+        "delete": "Elimina"
+      },
+      "unknownCourse": "Corso sconosciuto",
+      "qaSamplePlan": "Piano di campionamento QA",
+      "viewIqaReport": "Visualizza report IQA",
+      "noResults": "Nessun risultato."
+    },
+    "filters": {
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "coursePlaceholder": "Filtra per corso",
+      "allCourses": "Tutti i corsi",
+      "loadingCourses": "Caricamento corsi...",
+      "employerPlaceholder": "Filtra per datore di lavoro",
+      "allEmployers": "Tutti i datori di lavoro",
+      "loadingEmployers": "Caricamento datori di lavoro...",
+      "clear": "Cancella"
+    },
+    "statusFilters": {
+      "title": "Filtri di stato",
+      "options": {
+        "Awaiting Induction": "In attesa di induzione",
+        "Certificated": "Certificato",
+        "Completed": "Completato",
+        "Early Leaver": "Abbandono anticipato",
+        "Exempt": "Esente",
+        "In Training": "In formazione",
+        "IQA Approved": "Approvato da IQA",
+        "Training Suspended": "Formazione sospesa",
+        "Transferred": "Trasferito",
+        "Show only archived users": "Mostra solo utenti archiviati"
+      }
+    },
+    "export": {
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "uploadLearners": "Carica studenti",
+      "addNew": "Aggiungi Nuovo",
+      "noData": "Nessun dato da esportare",
+      "csvSuccess": "CSV esportato con successo",
+      "pdfSuccess": "PDF esportato con successo",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "Studenti",
+      "pdfTitleEqa": "Studenti (EQA)",
+      "csvHeaders": {
+        "learnerName": "Nome dello Studente",
+        "username": "Nome utente",
+        "email": "Email",
+        "mobile": "Cellulare",
+        "course": "Corso",
+        "status": "Stato"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "Nome dello Studente",
+        "course": "Corso",
+        "employer": "Datore di Lavoro",
+        "iqa": "IQA",
+        "status": "Stato",
+        "iqaReport": "Report IQA",
+        "learnerCreated": "Studente creato",
+        "courseRegistered": "Corso registrato"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Studente eliminato con successo",
+      "deleteFailedGeneric": "Impossibile eliminare lo studente"
+    }
   },
   "users": {
     "title": "Utenti",
@@ -268,143 +366,205 @@
     "pdfExportInfo": "La funzionalità di esportazione PDF sarà implementata"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "Gestione datori di lavoro",
+    "pageSubtitle": "Gestisci le informazioni dei datori di lavoro, aggiungi, aggiorna e elimina record dei datori di lavoro, e assegna studenti ai datori di lavoro",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
+      "employerName": "Nome del datore di lavoro",
+      "businessDepartment": "Dipartimento commerciale",
       "email": "Email",
       "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "actions": "Azioni",
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "addNew": "Aggiungi Nuovo",
+      "uploadCsv": "Carica CSV",
+      "noResults": "Nessun risultato.",
+      "openMenu": "Apri menu",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "deleteDialogTitle": "Sei sicuro?",
+      "deleteDialogDescription": "Questa azione non può essere annullata. Questo eliminerà permanentemente il datore di lavoro",
+      "deleteDialogCancel": "Annulla",
+      "deleteDialogConfirm": "Elimina",
+      "deleting": "Eliminazione...",
+      "employerDeleted": "Datore di lavoro eliminato con successo",
+      "deleteFailed": "Impossibile eliminare il datore di lavoro",
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato con successo"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "Formulario del datore di lavoro",
+      "companyName": "Nome della società",
+      "companyNamePlaceholder": "Inserisci il nome della società",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
+      "misIdPlaceholder": "Inserisci il MIS ID",
       "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
+      "businessDepartmentPlaceholder": "Inserisci il dipartimento commerciale",
+      "businessLocation": "Location commerciale",
+      "businessLocationPlaceholder": "Inserisci la location commerciale",
       "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
+      "branchCodePlaceholder": "Inserisci il codice della branch",
+      "address1": "Indirizzo 1",
       "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
+      "address2": "Indirizzo 2",
+      "address2Placeholder": "Inserisci l'indirizzo 2",
       "town": "Town",
-      "townPlaceholder": "Enter town",
-      "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
-      "countryPlaceholder": "Enter country",
+      "townPlaceholder": "Inserisci la città",
+      "county": "Provincia",
+      "countyPlaceholder": "Inserisci la provincia",
+      "country": "Nazione",
+      "countryPlaceholder": "Inserisci la nazione",
       "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
+      "postcodePlaceholder": "Inserisci il codice postale",
+      "businessCategory": "Categoria commerciale",
+      "businessCategoryPlaceholder": "Seleziona la categoria commerciale",
+      "numberOfEmployees": "Numero di dipendenti",
+      "numberOfEmployeesPlaceholder": "Inserisci il numero di dipendenti",
       "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
+      "telephonePlaceholder": "Inserisci il telefono",
       "website": "Website",
-      "websitePlaceholder": "Enter website",
+      "websitePlaceholder": "Inserisci il sito web",
       "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
+      "keyContactNamePlaceholder": "Inserisci il nome del contatto chiave",
       "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
+      "keyContactNumberPlaceholder": "Inserisci il numero del contatto chiave",
       "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "emailPlaceholder": "Inserisci l'email",
+      "businessDescription": "Descrizione commerciale",
+      "businessDescriptionPlaceholder": "Inserisci la descrizione commerciale",
+      "comments": "Commenti",
+      "commentsPlaceholder": "Inserisci i commenti",
+      "assessmentDate": "Data di valutazione",
+      "assessmentRenewalDate": "Data di rinnovo della valutazione",
+      "insuranceRenewalDate": "Data di rinnovo dell'assicurazione",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "Crea datore di lavoro",
+      "updateEmployer": "Aggiorna datore di lavoro"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
+      "companyNameRequired": "Il nome della società è obbligatorio",
+      "misIdRequired": "Il MIS ID è obbligatorio",
       "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "address2Required": "L'indirizzo 2 è obbligatorio",
+      "townRequired": "La città è obbligatoria",
+      "countyRequired": "La provincia è obbligatoria",
+      "countryRequired": "La nazione è obbligatoria",
+      "postcodeRequired": "Il codice postale è obbligatorio",
+      "emailInvalid": "Indirizzo email non valido"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "Datore di lavoro creato con successo",
+      "employerUpdated": "Datore di lavoro aggiornato con successo",
+      "employerDeleted": "Datore di lavoro eliminato con successo",
+      "createFailed": "Impossibile creare il datore di lavoro",
+      "updateFailed": "Impossibile aggiornare il datore di lavoro",
+      "deleteFailed": "Impossibile eliminare il datore di lavoro"
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "Gestione amministratore",
+    "pageSubtitle": "Gestisci tutte le funzioni amministrative e le configurazioni del sistema",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "Gestione utenti",
+        "description": "Gestisci efficientemente gli utenti con operazioni semplificate incluse add, delete, e update."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "Gestione studenti",
+        "description": "Ottimizza la gestione degli studenti aggiungendo, aggiornando e eliminando studenti, mentre anche facilitando l'assegnazione di corsi, formatori, datori di lavoro, IQAs e EQAs."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "Gestione datori di lavoro",
+        "description": "Gestisci le informazioni dei datori di lavoro, aggiungi, aggiorna e elimina record dei datori di lavoro, e assegna studenti ai datori di lavoro."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "Gestione messaggi di broadcast",
+        "description": "Crea e gestisci messaggi di broadcast, invia notifiche agli utenti, studenti o corsi specifici."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "Visualizza dettagli"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "In attesa di firma",
+    "pageSubtitle": "File e documenti in attesa di firma da parte di formatori, studenti, datori di lavoro e IQA.",
+    "table": {
+      "title": "Elenco elementi in attesa di firma",
+      "errorTitle": "Errore",
+      "errorDescription": "Caricamento dei dati non riuscito. Riprova.",
+      "noData": "Nessun file in attesa di firma",
+      "headers": {
+        "learnerName": "Nome dello studente",
+        "courseName": "Nome del corso",
+        "employerName": "Nome del datore di lavoro",
+        "trainerName": "Nome del formatore",
+        "fileType": "Tipo di file",
+        "fileName": "Nome del file",
+        "fileDescription": "Descrizione del file",
+        "uploadedAt": "Data di caricamento del file",
+        "trainerSigned": "Firma del formatore",
+        "learnerSigned": "Firma dello studente",
+        "employerSigned": "Firma del datore di lavoro",
+        "iqaSigned": "Firma IQA"
+      },
+      "signatureRequestedShort": "R",
+      "signatureSignedShort": "F"
+    },
+    "filters": {
+      "byTrainerLabel": "Filtra per formatore",
+      "byCourseLabel": "Filtra per corso",
+      "byLearnerLabel": "Cerca per studente",
+      "learnerPlaceholder": "Inserisci il nome dello studente",
+      "allOption": "Tutti",
+      "clearButton": "Pulisci",
+      "exportCsvButton": "Esporta CSV"
+    },
+    "summary": {
+      "totalSignatures": "Firme totali:",
+      "pendingFiles": "File con firme in attesa:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "Nome dello studente",
+        "courseName": "Nome del corso",
+        "courseCode": "Codice corso",
+        "employerName": "Nome del datore di lavoro",
+        "trainerName": "Nome del formatore",
+        "fileType": "Tipo di file",
+        "fileName": "Nome del file",
+        "fileDescription": "Descrizione del file",
+        "uploadDate": "Data di caricamento",
+        "trainerReceived": "Ricevuto dal formatore",
+        "trainerSigned": "Firmato dal formatore",
+        "learnerReceived": "Ricevuto dallo studente",
+        "learnerSigned": "Firmato dallo studente",
+        "employerReceived": "Ricevuto dal datore di lavoro",
+        "employerSigned": "Firmato dal datore di lavoro",
+        "iqaReceived": "Ricevuto da IQA",
+        "iqaSigned": "Firmato da IQA"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato disponibile per l'esportazione",
+      "exportSuccess": "Dati esportati con successo!",
+      "exportFailed": "Errore durante l'esportazione dei dati. Riprova."
+    }
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "Calendario",
+    "pageSubtitle": "Gestisci sessioni e appuntamenti"
   },
   "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
+    "pageTitle": "Gestione caseload",
+    "pageSubtitle": "Gestisci e visualizza responsabili di linea e i loro utenti assegnati",
+    "searchPlaceholder": "Cerca responsabili di linea per nome o email.",
+    "refresh": "Aggiorna",
+    "clear": "Cancella",
+    "noLineManagersFound": "Nessun responsabile di linea trovato",
+    "noLineManagersMatch": "Nessun responsabile di linea trovato",
+    "noLineManagersInSystem": "Non ci sono responsabili di linea nel sistema.",
+    "failedToLoad": "Impossibile caricare i dati del caseload. Riprova."
   },
   "forms": {
     "pageTitle": "Generatore di moduli",
@@ -692,198 +852,1349 @@
     }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "Domande di manutenzione IQA",
+    "pageSubtitle": "Gestisci e organizza domande di valutazione IQA per tipo",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "Tutti",
+      "observeAssessor": "Osservare l’assessore",
+      "learnerInterview": "Intervista discente",
+      "employerInterview": "Intervista datore di lavoro",
+      "finalCheck": "Controllo finale"
+    },
+    "form": {
+      "questionTypeLabel": "Tipo di domanda",
+      "requiredBadge": "Obbligatorio",
+      "typePlaceholder": "Seleziona un tipo di domanda per gestire le domande",
+      "questionLabel": "Testo della domanda",
+      "questionPlaceholder": "Inserisci qui la tua domanda...",
+      "questionRequired": "Il testo della domanda è obbligatorio",
+      "charactersCount": "{count} caratteri",
+      "addQuestion": "Aggiungi domanda"
+    },
+    "formDialog": {
+      "createTitle": "Aggiungi nuova domanda",
+      "editTitle": "Modifica domanda",
+      "description": "Tipo di domanda: {type}",
+      "updating": "Aggiornamento in corso...",
+      "adding": "Aggiunta in corso...",
+      "updateQuestion": "Aggiorna domanda",
+      "addQuestion": "Aggiungi domanda"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "Tipo",
+        "question": "Domanda",
+        "actions": "Azioni"
+      },
+      "questionsCount": "{count} domanda/e",
+      "allTypesSuffix": "(tutti i tipi)",
+      "addQuestion": "Aggiungi domanda",
+      "searchPlaceholder": "Cerca domande...",
+      "emptyTitle": "Ancora nessuna domanda",
+      "emptyDescription": "Inizia aggiungendo la tua prima domanda per questo tipo di domanda. Fai clic sul pulsante \"Aggiungi domanda\" qui sopra per iniziare.",
+      "addFirstQuestion": "Aggiungi prima domanda"
+    },
+    "dialogs": {
+      "deleteTitle": "Eliminare la domanda?",
+      "deleteDescription": "Sei sicuro di voler eliminare questa domanda? Questa azione non può essere annullata.",
+      "deleting": "Eliminazione in corso...",
+      "deleteQuestion": "Elimina domanda"
+    },
+    "toast": {
+      "selectTypeFirst": "Seleziona prima un tipo di domanda",
+      "createSuccess": "Domanda creata con successo!",
+      "updateSuccess": "Domanda aggiornata con successo!",
+      "saveFailed": "Impossibile salvare la domanda. Riprova.",
+      "deleteSuccess": "Domanda eliminata con successo",
+      "deleteFailed": "Impossibile eliminare la domanda. Riprova."
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "Prezzi",
+    "pageSubtitle": "Gestisci configurazioni di prezzi"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageTitle": "Piani campione QA",
+    "pageSubtitle": "Crea e gestisci piani campione QA",
+    "toast": {
+      "invalidCourseRedirecting": "Corso non valido. Reindirizzamento...",
+      "sampledLearnersAddedSuccess": "Discenti campionati aggiunti con successo.",
+      "applySampledLearnersFailed": "Impossibile applicare i discenti campionati.",
+      "randomSampledLearnersAddedSuccess": "Discenti campionati casualmente aggiunti con successo.",
+      "applyRandomSampledLearnersFailed": "Impossibile applicare i discenti campionati casualmente."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Seleziona un piano prima di applicare i campioni.",
+      "selectSampleTypeBeforeApplyingSamples": "Seleziona un tipo di campione prima di applicare i campioni.",
+      "unableToDetermineUserReLogin": "Impossibile determinare l’utente corrente. Effettua di nuovo l’accesso e riprova.",
+      "selectAtLeastOneUnit": "Seleziona almeno un'unità prima di applicare i campioni.",
+      "selectLearnerWithSampledUnits": "Seleziona almeno un discente con unità campionate prima di applicare.",
+      "plannedSampleDateRequired": "La data del campione pianificata è obbligatoria",
+      "noLearnersForRandomSamples": "Nessun discente disponibile per applicare campioni casuali.",
+      "noLearnersWithUnitsForRandomSamples": "Nessun discente con unità disponibile per applicare campioni casuali."
+    },
+    "filters": {
+      "title": "Filtri",
+      "assessmentMethods": "Metodi di valutazione",
+      "selectAll": "Seleziona tutto",
+      "sampleType": "Tipo di campione",
+      "selectSampleType": "Seleziona il tipo di campione",
+      "plannedSampleDate": "Data campione pianificata",
+      "plannedSampleDateRequired": "La data del campione pianificata è obbligatoria",
+      "applySamples": "Applica campioni",
+      "applyRandomSamples": "Applica campioni casuali",
+      "assessmentMethodTitles": {
+        "WO": "Osservazione sul posto di lavoro",
+        "WP": "Progetti sul posto di lavoro / fuori dal lavoro",
+        "PW": "Portfolio di lavoro",
+        "VI": "Viva",
+        "LB": "Registro / compiti",
+        "PD": "Discussioni professionali",
+        "PT": "Test pratico",
+        "TE": "Test / esami",
+        "RJ": "Diario riflessivo",
+        "OT": "Altro",
+        "RPL": "Riconoscimento di apprendimenti pregressi"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Campione portfolio",
+        "ObserveAssessor": "Osserva valutatore",
+        "LearnerInterview": "Intervista discente",
+        "EmployerInterview": "Intervista datore di lavoro",
+        "Final": "Controllo finale"
+      }
+    },
+    "evidence": {
+      "page": {
+        "subtitle": "Rivedi i documenti di evidenza",
+        "subtitleForUnit": "Rivedi i documenti di evidenza per l’unità: {unitCode}",
+        "confirmationStatements": {
+          "learner": "Confermo che questa unità è completa e che le evidenze fornite sono il risultato del mio lavoro.",
+          "trainer": "Confermo che il discente ha dimostrato competenza soddisfacendo tutte le competenze e conoscenze per questa unità ed è stato valutato secondo i requisiti della qualifica.",
+          "leadAssessorCountersignature": "Confermo che il discente ha dimostrato competenza soddisfacendo tutte le competenze e conoscenze per questa unità ed è stato valutato secondo i requisiti della qualifica.",
+          "employer": "Confermo, in qualità di datore di lavoro, che le evidenze che ho verificato soddisfano gli standard.",
+          "iqa": "Confermo, in qualità di assicuratore interno di qualità, che le evidenze campionate soddisfano gli standard.",
+          "eqa": "Verificato come parte di una visita QA esterna."
+        },
+        "deleteFileDialog": {
+          "title": "Eliminare file?",
+          "description": "Sei sicuro di voler eliminare questo file? Questa azione non può essere annullata.",
+          "fileLabel": "File",
+          "cancel": "Annulla",
+          "deleting": "Eliminazione...",
+          "confirm": "Elimina"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "Solo l’IQA può approvare tutti i criteri.",
+          "evidenceNotFound": "Evidenza non trovata.",
+          "cannotUncheckSignOffPermanent": "Non è possibile deselezionare. L’approvazione è permanente una volta applicata.",
+          "noUnitsReadyTrainerMustMapFirst": "Nessuna unità pronta per l’approvazione. Il formatore deve mappare prima le unità.",
+          "unitCodeRequired": "Il codice unità è obbligatorio.",
+          "signedOffUnitsSuccess": "{count} unità approvata/e con successo.",
+          "signOffUnitsFailed": "Impossibile approvare le unità.",
+          "evidenceNotFoundCannotUpdateSignOff": "Evidenza non trovata. Impossibile aggiornare l’approvazione.",
+          "subUnitNotFoundCannotUpdateSignOff": "Sotto-unità non trovata. Impossibile aggiornare l’approvazione.",
+          "iqaCanOnlySignOffWhenTrainerMapped": "L’IQA può approvare solo quando il formatore ha mappato questa unità.",
+          "signOffStatusUpdatedSuccess": "Stato di approvazione aggiornato con successo.",
+          "signOffStatusUpdateFailed": "Impossibile aggiornare lo stato di approvazione.",
+          "fillAllRequiredFields": "Compila tutti i campi obbligatori.",
+          "commentAddedSuccess": "Commento aggiunto con successo.",
+          "addCommentFailed": "Impossibile aggiungere il commento.",
+          "noEvidenceCannotUpdateStatus": "Nessuna evidenza trovata. Impossibile aggiornare lo stato.",
+          "statusUpdatedSuccess": "Stato aggiornato con successo.",
+          "updateStatusFailed": "Impossibile aggiornare lo stato.",
+          "unableDeleteFileReviewIdNotFound": "Impossibile eliminare il file: ID revisione non trovato.",
+          "fileDeletedSuccess": "File eliminato con successo.",
+          "deleteFileFailed": "Impossibile eliminare il file.",
+          "noEvidenceCannotAddComment": "Nessuna evidenza trovata. Impossibile aggiungere un commento."
+        }
+      },
+      "unitProgress": {
+        "title": "Progresso unità",
+        "pendingTrainerMap": "Mapping formatore in sospeso",
+        "pendingIqaMap": "Mapping IQA in sospeso",
+        "iqaChecked": "IQA approvato",
+        "totalEvidence": "Evidenze totali"
+      },
+      "evidenceTable": {
+        "title": "Documenti di evidenza ({count})",
+        "columns": {
+          "refNo": "Rif.",
+          "evidenceDocuments": "Documenti di evidenza",
+          "evidenceName": "Nome evidenza",
+          "evidenceDescription": "Descrizione evidenza",
+          "assessmentMethod": "Metodo di valutazione",
+          "dateUploaded": "Data caricamento",
+          "signOffAllCriteria": "Approva tutti i criteri"
+        },
+        "showAll": "Mostra tutto",
+        "showLess": "Mostra meno",
+        "empty": "Nessun record di evidenza disponibile",
+        "na": "N/D",
+        "fileSize": {
+          "zeroBytes": "0 Byte",
+          "bytes": "Byte",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "Ruolo",
+          "confirmationStatement": "Dichiarazione di conferma",
+          "tickWhenCompleted": "Spunta quando completato",
+          "signedOffBy": "Approvato da",
+          "dated": "Data",
+          "generalComments": "Commenti generali",
+          "file": "File"
+        },
+        "roles": {
+          "learner": "Discente",
+          "trainer": "Formatore",
+          "leadAssessorCountersignature": "Controfirma valutatore principale (se richiesta)",
+          "employer": "Datore di lavoro",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "Mapping unità",
+        "columns": {
+          "code": "Codice",
+          "unitTitle": "Titolo unità"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "Approvazione unità",
+        "description": "Commento generale per questa unità (max 500 caratteri).",
+        "commentLabel": "Commento",
+        "commentPlaceholder": "Inserisci i tuoi commenti qui...",
+        "charactersCount": "{count}/500 caratteri",
+        "cancelClose": "Annulla / Chiudi",
+        "submit": "Invia"
+      },
+      "commentModal": {
+        "title": "Aggiungi commento",
+        "description": "Aggiungi un commento per questo documento di evidenza",
+        "evidenceLabel": "Evidenza",
+        "assignmentIdLabel": "ID assegnazione",
+        "existingReviews": "Revisioni esistenti:",
+        "status": {
+          "completed": "Completato",
+          "pending": "In attesa"
+        },
+        "noComment": "Nessun commento",
+        "signedOffAt": "Approvato: {date}",
+        "by": "da",
+        "commentLabel": "Commento ({role})",
+        "commentPlaceholder": "Inserisci il tuo commento qui...",
+        "cancel": "Annulla",
+        "submitting": "Invio...",
+        "submit": "Invia",
+        "na": "N/D"
+      }
+    },
+    "layout": {
+      "title": "Piani campione QA",
+      "subtitle": "Gestisci piani campione QA, discenti e azioni associate."
+    },
+    "actionModal": {
+      "title": "Azioni dal campionamento",
+      "descriptionEdit": "Modifica i dettagli dell’azione",
+      "descriptionCreate": "Crea una nuova azione",
+      "fields": {
+        "actionWithName": "Azione con",
+        "actionRequired": "Azione richiesta",
+        "targetDate": "Data obiettivo dell’azione",
+        "status": "Stato",
+        "assessorFeedback": "Feedback del valutatore"
+      },
+      "placeholders": {
+        "selectUser": "Seleziona un utente"
+      },
+      "maxCharactersHint": "max 1000 caratteri",
+      "cancelClose": "Annulla / Chiudi",
+      "saving": "Salvataggio...",
+      "status": {
+        "Pending": "In sospeso",
+        "In Progress": "In corso",
+        "Completed": "Completato",
+        "Closed": "Chiuso"
+      },
+      "validation": {
+        "actionWithRequired": "Seleziona un utente per l’azione",
+        "actionRequiredRequired": "L’azione richiesta è obbligatoria",
+        "actionRequiredMax": "L’azione richiesta deve essere di 1000 caratteri o meno",
+        "targetDateRequired": "La data obiettivo è obbligatoria"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Data da",
+      "dateTo": "Data a",
+      "exportButton": "Esporta",
+      "exporting": "Esportazione...",
+      "filter": "Filtra",
+      "clear": "Pulisci",
+      "errors": {
+        "selectCourseBeforeFiltering": "Seleziona un corso prima di filtrare.",
+        "noPlansForCourse": "Nessun piano QA disponibile per il corso selezionato.",
+        "selectCourseAndPlanBeforeFiltering": "Seleziona sia un corso che un piano prima di filtrare."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Nome valutatore",
+          "learnerName": "Nome discente",
+          "learnerId": "ID discente",
+          "riskLevel": "Livello di rischio",
+          "qaApproved": "Approvato QA",
+          "totalUnits": "Unità totali",
+          "selectedUnits": "Unità selezionate",
+          "plannedDate": "Data pianificata",
+          "courseName": "Nome corso"
+        },
+        "values": {
+          "yes": "Sì",
+          "no": "No"
+        }
+      },
+      "toast": {
+        "noDataToExport": "Nessun dato disponibile da esportare",
+        "exportSuccess": "Dati esportati con successo",
+        "exportFailed": "Impossibile esportare i dati. Riprova."
+      }
+    },
+    "learnersTable": {
+      "title": "Discenti",
+      "summary": {
+        "viewingPlan": "Visualizzazione piano {planId}{courseName}",
+        "na": "N/D"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Cerca discenti...",
+        "expandAll": "Espandi tutto",
+        "collapseAll": "Comprimi tutto"
+      },
+      "units": {
+        "noUnitsAvailable": "Nessuna unità disponibile per questo discente.",
+        "unitsAvailable": "{count} unità disponibili",
+        "unitDefaultName": "Unità",
+        "status": {
+          "completed": "Completato",
+          "incomplete": "Incompleto"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "Seleziona stato QA",
+        "selectStatusPlaceholder": "Seleziona stato",
+        "hideCompletedLearners": "Non mostrare i discenti con stato corso completato",
+        "qaStatus": {
+          "All": "Tutti",
+          "QA Approved": "Approvato QA"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Seleziona corso",
+        "selectPlan": "Seleziona piano",
+        "placeholders": {
+          "selectCourseFirst": "Seleziona prima un corso",
+          "loadingPlans": "Caricamento piani...",
+          "unableLoadPlans": "Impossibile caricare i piani",
+          "noPlansAvailable": "Nessun piano disponibile",
+          "selectPlan": "Seleziona un piano"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Impossibile caricare i piani per il corso selezionato."
+        }
+      },
+      "columns": {
+        "assessor": "Valutatore",
+        "riskLevel": "Livello di rischio",
+        "qaApproved": "Approvato QA",
+        "learner": "Discente",
+        "actions": "Azioni"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Seleziona un corso e un piano, quindi scegli Filtra per caricare i discenti.",
+        "noLearnersMatch": "Nessun discente corrisponde ai filtri correnti."
+      },
+      "loading": "Caricamento discenti...",
+      "errors": {
+        "fetchLearners": "Si è verificato un errore durante il recupero dei discenti per questo piano."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Visualizza documenti / prove",
+        "viewPortfolio": "Visualizza portfolio",
+        "unableOpenDocumentsLearnerIdMissing": "Impossibile aprire i documenti. ID discente non trovato.",
+        "unableOpenPortfolioLearnerIdMissing": "Impossibile aprire il portfolio. ID discente non trovato."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Impossibile determinare l’utente corrente",
+        "unableToDetermineUserReLogin": "Impossibile determinare l’utente corrente. Effettua di nuovo l’accesso e riprova.",
+        "loadPlanDetailsFailed": "Impossibile caricare i dettagli del piano",
+        "questionsSavedSuccess": "Domande salvate con successo",
+        "saveQuestionsFailed": "Impossibile salvare le domande",
+        "missingRequiredInfo": "Informazioni richieste mancanti",
+        "planDetailUpdatedSuccess": "Dettaglio piano aggiornato con successo",
+        "updatePlanDetailFailed": "Impossibile aggiornare il dettaglio del piano",
+        "sampledLearnerRemovedSuccess": "Discente campionato rimosso con successo",
+        "removeSampledLearnerFailed": "Impossibile rimuovere il discente campionato",
+        "actionUpdatedSuccess": "Azione aggiornata con successo",
+        "actionCreatedSuccess": "Azione creata con successo",
+        "actionDeletedSuccess": "Azione eliminata con successo",
+        "saveActionFailed": "Impossibile salvare l'azione",
+        "deleteActionFailed": "Impossibile eliminare l'azione",
+        "documentUploadedSuccess": "Documento caricato con successo",
+        "uploadDocumentFailed": "Impossibile caricare il documento",
+        "documentDeletedSuccess": "Documento eliminato con successo",
+        "deleteDocumentFailed": "Impossibile eliminare il documento",
+        "selectPlanBeforeCreatingNewEntry": "Seleziona un piano prima di creare una nuova voce.",
+        "noUnitSelectedSelectUnitFirst": "Nessuna unità selezionata. Seleziona prima un’unità.",
+        "learnerIdNotFound": "ID discente non trovato.",
+        "invalidUnitInformation": "Informazioni unità non valide.",
+        "newEntryCreatedSuccess": "Nuova voce creata con successo.",
+        "createNewEntryFailed": "Impossibile creare la nuova voce.",
+        "selectFormToAllocate": "Seleziona un modulo da assegnare.",
+        "surveyAllocatedSuccess": "Sondaggio assegnato con successo",
+        "allocateSurveyFailed": "Impossibile assegnare il sondaggio",
+        "formUnlinkedSuccess": "Modulo scollegato con successo",
+        "unlinkFormFailed": "Impossibile scollegare il modulo",
+        "formMarkedCompletedSuccess": "Modulo contrassegnato come completato",
+        "markCompletedFailed": "Impossibile contrassegnare come completato"
+      },
+      "header": {
+        "title": "Modifica campione"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "Nessuna data",
+        "noPlannedDates": "Nessuna data pianificata",
+        "creating": "Creazione...",
+        "createNew": "Crea nuovo"
+      },
+      "actionButtons": {
+        "cancelClose": "Annulla / Chiudi",
+        "delete": "Elimina",
+        "saving": "Salvataggio...",
+        "save": "Salva",
+        "saveClose": "Salva e chiudi"
+      },
+      "evidenceLinksTable": {
+        "title": "Link delle evidenze per il campione",
+        "columns": {
+          "examinedEvidence": "Evidenza esaminata",
+          "assessmentMethodsUsed": "Metodi di valutazione utilizzati",
+          "actions": "Azioni"
+        },
+        "loading": "Caricamento evidenze...",
+        "empty": "Non ci sono link di evidenza per questo campione",
+        "na": "N/D"
+      },
+      "actionsTable": {
+        "title": "Azioni per il campione",
+        "addAction": "Aggiungi azione",
+        "columns": {
+          "summary": "Riepilogo",
+          "actionRequired": "Azione richiesta",
+          "actionWith": "Azione con",
+          "targetDate": "Data obiettivo",
+          "actions": "Azioni"
+        },
+        "loading": "Caricamento azioni...",
+        "empty": "Non ci sono azioni per questo campione",
+        "na": "N/D"
+      },
+      "iqaQuestions": {
+        "title": "Domande IQA",
+        "save": "Salva",
+        "columns": {
+          "question": "Domanda",
+          "yes": "Sì",
+          "no": "No",
+          "actions": "Azioni"
+        },
+        "answers": {
+          "yes": "Sì",
+          "no": "No"
+        },
+        "empty": "Non ci sono domande IQA disponibili per questo campione."
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "Nome QA",
+          "type": "Tipo",
+          "selectType": "Seleziona tipo",
+          "types": {
+            "formative": "Formativo",
+            "summative": "Sommativo"
+          },
+          "sampleType": "Tipo di campione",
+          "selectSampleType": "Seleziona tipo di campione",
+          "sampleTypes": {
+            "portfolio": "Campione portfolio",
+            "observeAssessor": "Osserva il valutatore",
+            "learnerInterview": "Intervista al discente",
+            "employerInterview": "Intervista al datore di lavoro",
+            "final": "Controllo finale"
+          },
+          "plannedDate": "Data pianificata",
+          "completedDate": "Data completata"
+        },
+        "assessmentMethods": {
+          "title": "Metodi di valutazione"
+        },
+        "assessmentProcesses": {
+          "title": "Processi di valutazione"
+        },
+        "assessorDecision": {
+          "title": "Decisione del valutatore corretta",
+          "yes": "Sì",
+          "no": "No"
+        },
+        "feedback": {
+          "title": "Feedback",
+          "placeholder": "Inserisci il feedback. Massimo 4400 caratteri."
+        },
+        "iqaConclusion": {
+          "title": "Conclusione IQA"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "Eliminare l’azione?",
+          "description": "Sei sicuro di voler eliminare questa azione? Questa azione non può essere annullata.",
+          "cancel": "Annulla",
+          "deleting": "Eliminazione...",
+          "confirm": "Elimina"
+        },
+        "deleteDocument": {
+          "title": "Eliminare il documento?",
+          "description": "Sei sicuro di voler eliminare questo documento? Questa azione non può essere annullata.",
+          "cancel": "Annulla",
+          "deleting": "Eliminazione...",
+          "confirm": "Elimina"
+        },
+        "deleteForm": {
+          "title": "Rimuovere il modulo assegnato?",
+          "description": "Sei sicuro di voler scollegare questo modulo dal campione?",
+          "cancel": "Annulla",
+          "removing": "Rimozione...",
+          "confirm": "Rimuovi"
+        },
+        "deleteLearner": {
+          "title": "Eliminare il discente campionato?",
+          "description": "Sei sicuro di voler rimuovere questo discente campionato? Questa azione non può essere annullata.",
+          "cancel": "Annulla",
+          "confirm": "Elimina"
+        }
+      }
+    }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+    "pageTitle": "Tipi di sessione",
+    "pageSubtitle": "Gestisci le configurazioni dei tipi di sessione",
+    "formDialog": {
+      "createTitle": "Aggiungi tipo di sessione",
+      "editTitle": "Modifica tipo di sessione",
+      "descriptionCreate": "Crea un nuovo tipo di sessione",
+      "descriptionEdit": "Aggiorna i dettagli del tipo di sessione"
+    },
+    "form": {
+      "centreLabel": "Centro",
+      "centrePlaceholder": "Seleziona centro",
+      "centreHelperText": "Il tipo di sessione verrà creato per il centro selezionato. Gli admin di centro vedono solo il proprio centro; gli admin dell’organizzazione vedono tutti.",
+      "requiredAsterisk": "*",
+      "nameLabel": "Nome del tipo di sessione",
+      "namePlaceholder": "Inserisci il nome del tipo di sessione",
+      "nameRequired": "Il nome del tipo di sessione è obbligatorio",
+      "offTheJobLabel": "Fuori dal lavoro",
+      "activeLabel": "Attivo",
+      "updating": "Aggiornamento in corso...",
+      "creating": "Creazione in corso...",
+      "selectCentre": "Seleziona centro",
+      "update": "Aggiorna",
+      "create": "Crea"
+    },
+    "table": {
+      "title": "Tipi di sessione",
+      "count": "{count} tipo/i di sessione",
+      "addButton": "Aggiungi tipo di sessione",
+      "headers": {
+        "order": "Ordine",
+        "name": "Nome",
+        "offTheJob": "Fuori dal lavoro",
+        "active": "Attivo",
+        "actions": "Azioni"
+      },
+      "emptyDescription": "Nessun tipo di sessione trovato. Creane uno per iniziare."
+    },
+    "dialogs": {
+      "deleteTitle": "Confermare l’eliminazione",
+      "deleteDescription": "Sei sicuro di voler eliminare questo tipo di sessione? Questa azione non può essere annullata.",
+      "deleting": "Eliminazione in corso...",
+      "delete": "Elimina"
+    },
+    "toast": {
+      "updateSuccess": "Tipo di sessione aggiornato con successo",
+      "createSuccess": "Tipo di sessione creato con successo",
+      "saveFailed": "Impossibile salvare il tipo di sessione",
+      "deleteSuccess": "Tipo di sessione eliminato con successo",
+      "deleteFailed": "Impossibile eliminare il tipo di sessione",
+      "activatedSuccess": "Tipo di sessione attivato con successo",
+      "deactivatedSuccess": "Tipo di sessione disattivato con successo"
+    }
   },
   "surveys": {
     "pageTitle": "Surveys",
     "pageSubtitle": "Create and manage surveys"
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "Esportazione dati timelog",
+    "pageSubtitle": "Filtra ed esporta i dati del timelog in formato CSV",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "Informazioni di esportazione",
+      "description": "Linee guida per utilizzare la funzione di esportazione dei dati del timelog",
+      "guideline1": "Usa i filtri sopra per restringere i dati del timelog che desideri esportare",
+      "guideline2": "Il file CSV esportato includerà tutte le voci di timelog che corrispondono ai criteri selezionati",
+      "guideline3": "I filtri di intervallo di date includeranno le voci dall’inizio della data \"Da\" fino alla fine della data \"A\"",
+      "guideline4": "\"Mostra solo registri Off the Job\" filtrerà per includere solo le attività di formazione Off the Job",
+      "guideline5": "Se non viene selezionato alcun filtro, verranno esportati tutti i dati di timelog disponibili"
+    },
+    "filters": {
+      "cardTitle": "Opzioni di filtro",
+      "cardDescription": "Seleziona i filtri per restringere i dati del timelog da esportare",
+      "errorInvalidDateRange": "La data \"Da\" non può essere successiva alla data \"A\"",
+      "toastExportSuccess": "Dati del timelog esportati con successo!",
+      "noDataFound": "Nessun dato trovato per i filtri selezionati.",
+      "genericError": "Si è verificato un errore durante l’esportazione dei dati. Riprova.",
+      "filterByAdminLabel": "Per amministratore",
+      "filterByEmployerLabel": "Per datore di lavoro",
+      "filterByCourseLabel": "Per corso",
+      "filterByCurriculumManagerLabel": "Per responsabile del curriculum",
+      "pleaseSelectOption": "Seleziona",
+      "dateFromLabel": "Intervallo date (da)",
+      "dateToLabel": "Intervallo date (a)",
+      "pickDatePlaceholder": "Seleziona una data",
+      "showOnlyOffTheJobLabel": "Mostra solo registri Off the Job",
+      "clearButton": "Pulisci",
+      "exportingLabel": "Esportazione in corso...",
+      "exportCsvButton": "Esporta in CSV"
     }
   },
   "trainerRiskRating": {
-    "pageTitle": "Trainer Risk Rating",
-    "pageSubtitle": "Manage risk ratings for trainers, courses, and assessment methods",
-    "selectTrainer": "Select a Trainer",
-    "selectTrainerDescription": "Select a trainer from the list to view their courses and assessment methods",
+    "pageTitle": "Valutazione del rischio formatore",
+    "pageSubtitle": "Gestisci le valutazioni del rischio per formatori, corsi e metodi di valutazione",
+    "selectTrainer": "Seleziona un formatore",
+    "selectTrainerDescription": "Seleziona un formatore dall'elenco per visualizzare corsi e metodi di valutazione",
+    "trainerList": {
+      "title": "Formatori",
+      "noTrainersFound": "Nessun formatore trovato"
+    },
+    "riskSettings": {
+      "title": "Configurazione impostazioni rischio",
+      "highRiskPercent": "Rischio alto %",
+      "mediumRiskPercent": "Rischio medio %",
+      "lowRiskPercent": "Rischio basso %",
+      "highRiskError": "Il rischio alto deve essere tra 0 e 100",
+      "mediumRiskError": "Il rischio medio deve essere tra 0 e 100",
+      "lowRiskError": "Il rischio basso deve essere tra 0 e 100",
+      "cannotExceedHigh": "Non può superare il valore di rischio alto ({value})",
+      "cannotExceedMedium": "Non può superare il valore di rischio medio ({value})",
+      "fixValidationErrors": "Correggi gli errori di convalida prima di salvare",
+      "savedSuccess": "Impostazioni rischio salvate con successo",
+      "saveFailed": "Salvataggio impostazioni rischio non riuscito",
+      "saving": "Salvataggio...",
+      "saveSettings": "Salva impostazioni"
+    },
+    "coursesTable": {
+      "title": "Corsi ({count})",
+      "setAllLow": "Imposta tutti basso",
+      "setAllMedium": "Imposta tutti medio",
+      "setAllHigh": "Imposta tutti alto",
+      "saveCourses": "Salva corsi",
+      "saving": "Salvataggio...",
+      "noCoursesFound": "Nessun corso trovato",
+      "courseName": "Nome corso",
+      "riskLevel": "Livello di rischio",
+      "actions": "Azioni",
+      "addCommentFor": "Aggiungi commento per {courseName}",
+      "commentPlaceholder": "Inserisci il tuo commento qui...",
+      "saveComment": "Salva commento",
+      "cancel": "Annulla",
+      "allCoursesSetTo": "Tutti i corsi impostati al livello di rischio {value}",
+      "ratingsSavedSuccess": "Valutazioni rischio corsi salvate con successo",
+      "ratingsSaveFailed": "Salvataggio valutazioni rischio corsi non riuscito",
+      "trainerIdRequired": "ID formatore richiesto",
+      "commentSavedSuccess": "Commento salvato con successo",
+      "commentSaveFailed": "Salvataggio commento non riuscito"
+    },
+    "assessmentMethodsTable": {
+      "title": "Rischio metodo di valutazione ({count})",
+      "setAllLow": "Imposta tutti basso",
+      "setAllMedium": "Imposta tutti medio",
+      "setAllHigh": "Imposta tutti alto",
+      "saveAssessment": "Salva valutazione",
+      "saving": "Salvataggio...",
+      "assessmentMethod": "Metodo di valutazione",
+      "riskLevel": "Livello di rischio",
+      "allSetTo": "Tutti i metodi di valutazione impostati al livello di rischio {value}",
+      "ratingsSavedSuccess": "Valutazioni rischio valutazione salvate con successo",
+      "ratingsSaveFailed": "Salvataggio valutazioni rischio valutazione non riuscito"
+    },
     "riskOptions": {
-      "pleaseSelect": "Please select",
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High"
+      "pleaseSelect": "Seleziona",
+      "low": "Basso",
+      "medium": "Medio",
+      "high": "Alto"
     },
     "assessmentMethods": {
       "pe": "PE",
-      "peFullName": "Professional Discussion",
+      "peFullName": "Discussione professionale",
       "do": "DO",
-      "doFullName": "Direct Observation",
+      "doFullName": "Osservazione diretta",
       "wt": "WT",
-      "wtFullName": "Witness Testimony",
+      "wtFullName": "Testimonianza",
       "qa": "QA",
-      "qaFullName": "Question and Answer",
+      "qaFullName": "Domanda e risposta",
       "ps": "PS",
-      "psFullName": "Product Sample",
+      "psFullName": "Campione di prodotto",
       "di": "DI",
-      "diFullName": "Discussion",
+      "diFullName": "Discussione",
       "si": "SI",
-      "siFullName": "Simulation",
+      "siFullName": "Simulazione",
       "ee": "ET",
-      "eeFullName": "Expert Evidence",
+      "eeFullName": "Prova di esperti",
       "ba": "RA",
-      "baFullName": "Basic Assessment",
+      "baFullName": "Valutazione di base",
       "ot": "OT",
-      "otFullName": "Other",
+      "otFullName": "Altro",
       "ipl": "RPL",
-      "iplFullName": "Individual Personal Log",
+      "iplFullName": "Registro personale individuale",
       "lo": "LO",
-      "loFullName": "Learning Outcome"
+      "loFullName": "Risultato di apprendimento"
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "Gestione delle risorse di benessere",
+    "pageSubtitle": "Gestisci le risorse di benessere per gli studenti, inclusi aggiunta, modifica e attivazione/disattivazione",
+    "table": {
+      "searchPlaceholder": "Cerca risorse per nome...",
+      "exportFeedbacks": "Esporta feedback",
+      "addResource": "Aggiungi risorsa",
+      "noResourcesFound": "Nessuna risorsa trovata.",
+      "openMenu": "Apri menu",
+      "invalidDate": "Data non valida",
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "actions": {
+        "edit": "Modifica",
+        "delete": "Elimina"
+      },
+      "columns": {
+        "name": "Nome",
+        "status": "Stato",
+        "createdAt": "Creato il",
+        "createdBy": "Creato da",
+        "actions": "Azioni"
+      }
+    },
+    "deleteDialog": {
+      "title": "Elimina risorsa",
+      "description": "Sei sicuro di voler eliminare \"{name}\"? Questa azione non può essere annullata.",
+      "cancel": "Annulla",
+      "delete": "Elimina",
+      "deleting": "Eliminazione..."
+    },
+    "form": {
+      "titleAdd": "Aggiungi risorsa",
+      "titleEdit": "Modifica risorsa",
+      "descriptionAdd": "Compila i dettagli per aggiungere una nuova risorsa di benessere.",
+      "descriptionEdit": "Aggiorna le informazioni della risorsa qui sotto.",
+      "resourceName": "Nome risorsa",
+      "resourceType": "Tipo di risorsa",
+      "uploadFile": "Carica file",
+      "resourceUrl": "URL risorsa",
+      "description": "Descrizione",
+      "active": "Attivo",
+      "addResource": "Aggiungi risorsa",
+      "updateResource": "Aggiorna risorsa",
+      "currentFile": "File corrente:",
+      "uploadNewToReplace": "Carica un nuovo file per sostituire",
+      "dragDrop": "Trascina e rilascia qui il file oppure",
+      "browse": "Sfoglia",
+      "maxSizeAndSupported": "Max {max}MB. Supportati: {types}",
+      "resourceTypeOptions": {
+        "url": "Link URL",
+        "file": "Caricamento file"
+      },
+      "placeholders": {
+        "resourceName": "Inserisci il nome della risorsa",
+        "resourceType": "Seleziona il tipo di risorsa",
+        "resourceUrl": "https://example.com/resource",
+        "description": "Inserisci la descrizione della risorsa"
+      },
+      "validation": {
+        "resourceNameRequired": "Il nome della risorsa è obbligatorio",
+        "pleaseUploadFile": "Carica un file",
+        "urlRequired": "L'URL è obbligatorio",
+        "fileSizeExceeds": "La dimensione del file supera il limite di {max}MB",
+        "unsupportedFileType": "Tipo di file non supportato. Consentiti: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "Nome risorsa",
+        "feedback": "Feedback",
+        "createdAt": "Creato il"
+      }
+    },
+    "toast": {
+      "loadFailed": "Impossibile caricare le risorse di benessere. Riprova.",
+      "activatedSuccess": "Risorsa attivata con successo",
+      "deactivatedSuccess": "Risorsa disattivata con successo",
+      "activateFailed": "Impossibile attivare la risorsa",
+      "deactivateFailed": "Impossibile disattivare la risorsa",
+      "deletedSuccess": "Risorsa eliminata con successo",
+      "deleteFailed": "Impossibile eliminare la risorsa",
+      "noDataToExport": "Nessun dato disponibile da esportare",
+      "noFeedbackToExport": "Nessun dato di feedback disponibile da esportare",
+      "exportSuccess": "Report dei feedback esportato con successo",
+      "addedSuccess": "Risorsa aggiunta con successo",
+      "addFailed": "Impossibile aggiungere la risorsa",
+      "updatedSuccess": "Risorsa aggiornata con successo",
+      "updateFailed": "Impossibile aggiornare la risorsa"
+    }
+  },
+  "support": {
+    "pageTitle": "Supporto",
+    "pageSubtitle": "Invia e gestisci le richieste di supporto",
+    "table": {
+      "columns": {
+        "title": "Titolo",
+        "description": "Descrizione",
+        "email": "E-mail",
+        "userName": "Nome utente",
+        "date": "Data",
+        "status": "Stato",
+        "action": "Azione"
+      },
+      "actions": {
+        "edit": "Modifica",
+        "delete": "Elimina"
+      },
+      "addRequest": "Aggiungi richiesta",
+      "loading": "Caricamento...",
+      "noResults": "Nessuna richiesta di supporto trovata.",
+      "csvExportSuccess": "CSV esportato con successo",
+      "toast": {
+        "deleteSuccess": "Richiesta di supporto eliminata con successo!",
+        "deleteFailed": "Impossibile eliminare la richiesta di supporto. Riprova."
+      }
+    },
+    "form": {
+      "titleAdd": "Aggiungi richiesta",
+      "titleEdit": "Modifica richiesta di supporto",
+      "descriptionAdd": "Invia una nuova richiesta di supporto.",
+      "descriptionEdit": "Aggiorna i dettagli della richiesta di supporto.",
+      "fields": {
+        "titleLabel": "Titolo",
+        "titlePlaceholder": "Aggiungi il tuo titolo",
+        "descriptionLabel": "Descrizione",
+        "descriptionPlaceholder": "Aggiungi la tua descrizione",
+        "statusLabel": "Seleziona stato",
+        "statusPlaceholder": "Seleziona stato",
+        "status": {
+          "pending": "In attesa",
+          "inProgress": "In corso",
+          "reject": "Rifiutato",
+          "resolve": "Risolto"
+        }
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "creating": "Creazione...",
+        "updating": "Aggiornamento...",
+        "save": "Salva",
+        "update": "Aggiorna"
+      },
+      "validation": {
+        "titleRequired": "Il titolo è obbligatorio",
+        "descriptionRequired": "La descrizione è obbligatoria"
+      },
+      "toast": {
+        "userIdNotFound": "ID utente non trovato",
+        "createSuccess": "Richiesta di supporto creata con successo!",
+        "updateSuccess": "Richiesta di supporto aggiornata con successo!",
+        "createFailed": "Impossibile creare la richiesta. Riprova.",
+        "updateFailed": "Impossibile aggiornare la richiesta. Riprova."
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminare il supporto?",
+      "description": "Eliminando la richiesta \"{title}\" verranno rimossi anche tutti i dati e le relazioni associati. Procedere?",
+      "cancel": "Annulla",
+      "confirm": "Elimina supporto",
+      "deleting": "Eliminazione..."
+    }
+  },
+  "tickets": {
+    "pageTitle": "Ticket",
+    "pageSubtitle": "Crea e gestisci i ticket",
+    "table": {
+      "columns": {
+        "ticketNumber": "Ticket #",
+        "title": "Titolo",
+        "raisedBy": "Creato da",
+        "status": "Stato",
+        "priority": "Priorità",
+        "assignedTo": "Assegnato a",
+        "created": "Creato",
+        "actions": "Azioni"
+      },
+      "actions": {
+        "view": "Visualizza",
+        "assign": "Assegna",
+        "delete": "Elimina"
+      },
+      "searchPlaceholder": "Cerca ticket...",
+      "filters": {
+        "status": {
+          "placeholder": "Stato",
+          "all": "Tutti gli stati"
+        },
+        "priority": {
+          "placeholder": "Priorità",
+          "all": "Tutte le priorità"
+        },
+        "view": {
+          "placeholder": "Visualizza",
+          "mine": "I miei ticket",
+          "under": "Nel mio ambito"
+        }
+      },
+      "view": {
+        "myTickets": "Visualizzazione: I miei ticket",
+        "underScope": "Visualizzazione: Nel mio ambito (creati da altri)"
+      },
+      "export": {
+        "tooltip": "Esporta CSV"
+      },
+      "raiseButton": "Crea ticket",
+      "loading": "Caricamento...",
+      "noResults": "Nessun ticket trovato.",
+      "csvExportSuccess": "CSV esportato con successo",
+      "toast": {
+        "deleteSuccess": "Ticket eliminato con successo!",
+        "deleteFailed": "Impossibile eliminare il ticket. Riprova."
+      }
+    },
+    "raise": {
+      "title": "Crea un ticket",
+      "description": "Invia un nuovo ticket. Fornisci un titolo e una descrizione chiari.",
+      "fields": {
+        "titleLabel": "Titolo",
+        "titlePlaceholder": "Titolo breve",
+        "descriptionLabel": "Descrizione",
+        "descriptionPlaceholder": "Descrivi il problema o la richiesta",
+        "priorityLabel": "Priorità",
+        "priorityPlaceholder": "Priorità",
+        "priority": {
+          "low": "Bassa",
+          "medium": "Media",
+          "high": "Alta",
+          "urgent": "Urgente"
+        },
+        "centreLabel": "Centro (facoltativo)",
+        "centrePlaceholder": "ID centro"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "creating": "Creazione...",
+        "raise": "Crea ticket"
+      },
+      "validation": {
+        "titleRequired": "Il titolo è obbligatorio",
+        "descriptionRequired": "La descrizione è obbligatoria"
+      },
+      "toast": {
+        "createSuccess": "Ticket creato con successo!",
+        "createFailed": "Impossibile creare il ticket. Riprova."
+      }
+    },
+    "detail": {
+      "titleFallback": "Ticket",
+      "loading": "Caricamento...",
+      "status": {
+        "label": "Stato",
+        "markClosed": "Segna come chiuso",
+        "reopen": "Riapri"
+      },
+      "priority": {
+        "label": "Priorità"
+      },
+      "raisedBy": "Creato da",
+      "assignedTo": "Assegnato a",
+      "unassigned": "Non assegnato",
+      "created": "Creato",
+      "lastActivity": "Ultima attività",
+      "attachments": {
+        "label": "Allegati",
+        "itemFallback": "Allegato"
+      },
+      "toast": {
+        "statusUpdated": "Stato aggiornato.",
+        "statusUpdateFailed": "Impossibile aggiornare lo stato.",
+        "priorityUpdated": "Priorità aggiornata.",
+        "priorityUpdateFailed": "Impossibile aggiornare la priorità."
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminare il ticket?",
+      "description": "Il ticket \"{title}\" ({ticketNumber}) verrà eliminato (soft). Non lo vedrai più nell'elenco. Questa azione non può essere annullata.",
+      "cancel": "Annulla",
+      "delete": "Elimina",
+      "deleting": "Eliminazione..."
+    },
+    "comments": {
+      "title": "Commenti",
+      "noComments": "Nessun commento ancora.",
+      "placeholder": "Aggiungi un commento...",
+      "send": "Invia",
+      "sending": "Invio...",
+      "unknownUser": "Sconosciuto",
+      "toast": {
+        "addSuccess": "Commento aggiunto.",
+        "addFailed": "Impossibile aggiungere il commento."
+      }
+    },
+    "assignDialog": {
+      "title": "Assegna ticket",
+      "description": "Assegna questo ticket a un utente. Possono essere selezionati solo utenti della stessa organizzazione/centro.",
+      "assignedToLabel": "Assegnato a",
+      "selectUserPlaceholder": "Seleziona utente",
+      "unassigned": "Non assegnato",
+      "cancel": "Annulla",
+      "save": "Salva",
+      "saving": "Salvataggio...",
+      "userFallback": "Utente {id}",
+      "toast": {
+        "success": "Assegnazione ticket aggiornata.",
+        "failed": "Impossibile aggiornare l'assegnazione."
+      }
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "Formazione supplementare",
+      "pageSubtitle": "Accedi alle risorse di formazione supplementare e monitora i tuoi progressi",
+      "table": {
+        "loading": "Caricamento risorse...",
+        "searchPlaceholder": "Cerca risorse...",
+        "noResourcesFound": "Nessuna risorsa trovata.",
+        "columns": {
+          "resourceName": "Nome risorsa",
+          "description": "Descrizione",
+          "createdDate": "Data di creazione",
+          "lastOpened": "Ultima apertura",
+          "feedback": "Feedback",
+          "actions": "Azioni"
+        },
+        "actions": {
+          "openDownload": "Apri / Scarica",
+          "visitLink": "Visita link",
+          "feedback": "Feedback"
+        },
+        "dates": {
+          "never": "Mai",
+          "invalid": "Data non valida"
+        },
+        "feedback": {
+          "none": "Nessun feedback",
+          "values": {
+            "veryHelpful": "Molto utile",
+            "helpful": "Utile",
+            "neutral": "Neutro",
+            "notHelpful": "Poco utile",
+            "unknown": "Sconosciuto"
+          }
+        },
+        "columnVisibility": {
+          "label": "Visibilità colonne",
+          "button": "Colonne"
+        },
+        "toast": {
+          "trackFailed": "Impossibile tracciare l'accesso alla risorsa"
+        }
+      },
+      "feedbackDialog": {
+        "title": "Com'è stata questa risorsa per te?",
+        "description": "Seleziona un'emoji per valutare la tua esperienza",
+        "labels": {
+          "veryHelpful": "Molto utile",
+          "helpful": "Utile",
+          "neutral": "Neutro",
+          "notHelpful": "Poco utile"
+        },
+        "messages": {
+          "veryHelpful": "Ottimo! Questa risorsa è stata molto utile",
+          "helpful": "Bene! Questa risorsa è stata utile",
+          "neutral": "Ok, questa risorsa andava bene",
+          "notHelpful": "Questa risorsa potrebbe essere migliorata"
+        },
+        "submit": "Invia feedback",
+        "submitting": "Invio...",
+        "toast": {
+          "submittedSuccess": "Feedback inviato con successo!",
+          "submitFailed": "Impossibile inviare il feedback. Riprova."
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
+    "pageTitle": "Conferma messaggio",
+    "pageSubtitle": "Crea e gestisci messaggi di conferma per i discenti",
     "form": {
-      "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
+      "message": "Messaggio",
+      "messagePlaceholder": "Inserisci qui il tuo messaggio di conferma...",
+      "messageRequired": "Il messaggio è obbligatorio",
+      "messageMaxLength": "Il messaggio può contenere al massimo 1000 caratteri",
+      "charactersCount": "{count} / 1000 caratteri",
+      "uploadFile": "Carica file",
+      "dragDrop": "Trascina qui i tuoi file oppure",
+      "browse": "Sfoglia",
+      "maxFileSize": "Sono consentiti file fino a 10MB (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "La dimensione del file deve essere inferiore a 10MB",
+      "fileTypeError": "Sono consentiti solo file PDF, CSV, DOC e DOCX",
+      "remove": "Rimuovi",
+      "viewCurrentFile": "Visualizza file corrente",
+      "clear": "Pulisci",
+      "clearAll": "Pulisci tutte le conferme dei discenti",
+      "clearing": "Pulizia in corso...",
+      "save": "Salva",
+      "saving": "Salvataggio in corso...",
       "required": "*"
     },
     "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
+      "deleteTitle": "Elimina conferma",
+      "deleteDescription": "Sei sicuro di voler eliminare questa conferma? Questa azione non può essere annullata.",
+      "clearAllTitle": "Pulisci tutte le conferme dei discenti",
+      "clearAllDescription": "Sei sicuro di voler pulire tutte le conferme dei discenti? Questa azione rimuoverà tutte le conferme per tutti i discenti e non può essere annullata.",
+      "cancel": "Annulla",
+      "delete": "Elimina",
+      "clearAll": "Pulisci tutto"
     },
     "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
+      "messageUpdated": "Messaggio aggiornato con successo!",
+      "messageAcknowledged": "Messaggio confermato con successo!",
+      "acknowledgementDeleted": "Conferma eliminata con successo!",
+      "allCleared": "Tutte le conferme dei discenti sono state pulite con successo!",
+      "saveFailed": "Impossibile confermare il messaggio. Riprova.",
+      "deleteFailed": "Impossibile eliminare la conferma. Riprova.",
+      "clearFailed": "Impossibile pulire le conferme. Riprova."
+    }
+  },
+  "sidebar": {
+    "groups": {
+      "dashboards": "Dashboard",
+      "learner": "Discente",
+      "admin": "Admin",
+      "masterAdmin": "Super admin",
+      "trainer": "Formatore",
+      "iqa": "IQA",
+      "employer": "Datore di lavoro",
+      "eqa": "EQA",
+      "accountManager": "Account manager"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "cpd": "CPD",
+      "forum": "Forum",
+      "skillsScan": "Analisi competenze",
+      "forms": "Moduli",
+      "proposeInnovations": "Proponi le tue innovazioni",
+      "support": "Supporto",
+      "tickets": "Ticket",
+      "adminManagement": "Gestione admin",
+      "courseBuilder": "Course Builder",
+      "surveys": "Sondaggi",
+      "fundingBands": "Bande di finanziamento",
+      "trainerRiskRating": "Valutazione rischio formatore",
+      "wellbeingResources": "Risorse benessere",
+      "supplementaryTraining": "Formazione supplementare",
+      "qaSamplePlan": "Piano campionamento QA",
+      "caseloadManagement": "Gestione caseload",
+      "safeguarding": "Tutela",
+      "acknowledgeMessage": "Conferma messaggio",
+      "defaultReviewWeeks": "Settimane di revisione predefinite",
+      "iqaQuestions": "Gestione domande IQA",
+      "sessionTypes": "Tipi di sessione",
+      "timelogExport": "Esportazione dati timelog",
+      "awaitingSignature": "In attesa di firma",
+      "gatewayReport": "Report Gateway",
+      "progressExclusion": "Escludi dal progresso complessivo",
+      "learnerManagement": "Gestione discenti",
+      "organisations": "Organizzazioni",
+      "centres": "Centri",
+      "subscriptions": "Abbonamenti",
+      "payments": "Pagamenti",
+      "auditLogs": "Log di audit",
+      "systemAdmins": "Amministratori di sistema",
+      "accountManagers": "Account manager",
+      "users": "Utenti",
+      "learnerOverview": "Panoramica discenti",
+      "resources": "Risorse",
+      "learnersForms": "Moduli discenti"
     }
   },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "Configurazione settimane di revisione predefinite",
+    "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "Impostazioni periodo di revisione",
+      "reviewPeriodDescription": "Configura i periodi di avviso per revisioni e induzioni",
+      "noReviewWeeksLabel": "Mostra un avviso se non è stata effettuata alcuna revisione per:",
+      "noReviewWeeksPlaceholder": "Inserisci il numero di settimane",
+      "weeks": "Settimane",
+      "noInductionWeeksLabel": "Mostra un avviso se non è stata effettuata alcuna induzione per:",
+      "noInductionWeeksPlaceholder": "Inserisci il numero di settimane",
+      "save": "Salva",
+      "saving": "Salvataggio in corso...",
+      "reviewWarningRequired": "Le settimane di avviso per la revisione sono obbligatorie",
+      "mustBeAtLeast1": "Deve essere almeno 1 settimana",
+      "cannotExceed52": "Non può superare le 52 settimane",
+      "mustBeWholeNumber": "Deve essere un numero intero",
+      "inductionWarningRequired": "Le settimane di avviso per l’induzione sono obbligatorie"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "Informazioni importanti",
+      "description": "Queste impostazioni verranno applicate come periodo di revisione predefinito per tutti i tipi di discenti che non hanno un periodo di revisione personalizzato assegnato. Le modifiche avranno effetto immediato dopo il salvataggio e influenzeranno le nuove sessioni di revisione future."
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "Configurazione salvata con successo!",
+      "saveFailed": "Salvataggio della configurazione non riuscito. Riprova.",
+      "loadFailed": "Caricamento della configurazione non riuscito. Riprova."
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
+    "pageTitle": "Gestione contatti di tutela",
+    "pageSubtitle": "Gestisci i contatti del responsabile della tutela e le informazioni aggiuntive",
     "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
+      "editingExisting": "Modifica contatto esistente",
+      "contactInformation": "Informazioni di contatto",
+      "telephoneNumber": "Numero di telefono",
       "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
+      "mobileNumber": "Numero di cellulare",
       "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
+      "emailAddress": "Indirizzo e‑mail",
       "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
+      "emailRequired": "L'indirizzo e‑mail è obbligatorio",
+      "emailInvalid": "Inserisci un indirizzo e‑mail valido",
+      "additionalInformation": "Informazioni aggiuntive",
+      "additionalDetails": "Dettagli aggiuntivi",
+      "additionalDetailsPlaceholder": "Disponibile 24/7 per segnalazioni urgenti relative alla tutela",
+      "reset": "Reimposta",
+      "saveContact": "Salva contatto",
+      "saving": "Salvataggio in corso...",
       "required": "*"
     },
     "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
+      "contactSaved": "Contatto di tutela salvato con successo!",
+      "saveFailed": "Errore durante il salvataggio dei dati. Riprova.",
+      "loadFailed": "Impossibile caricare i contatti di tutela. Riprova."
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "Escludi dal progresso complessivo",
+    "pageSubtitle": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo",
+    "card": {
+      "title": "Escludi dal progresso complessivo",
+      "description": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo"
+    },
+    "info": {
+      "description": "Le modifiche apportate qui influenzeranno il modo in cui viene calcolato il progresso complessivo per tutti gli studenti del corso selezionato."
+    },
+    "form": {
+      "courseLabel": "Seleziona corso",
+      "coursePlaceholder": "Seleziona un corso",
+      "submit": "Salva",
+      "submitting": "Salvataggio in corso..."
+    },
+    "table": {
+      "statusColumn": "Stato modificato in",
+      "excludeColumn": "Escludi dal progresso"
+    },
+    "statusLabels": {
+      "In Training": "In formazione",
+      "IQA Approved": "Approvato da IQA",
+      "Completed": "Completato",
+      "Certificated": "Certificato",
+      "Training Suspended": "Formazione sospesa",
+      "Transferred": "Trasferito",
+      "Early Leaver": "Uscita anticipata",
+      "Exempt": "Esente",
+      "Awaiting Induction": "In attesa di induzione"
+    },
+    "toast": {
+      "selectCourseRequired": "Seleziona un corso",
+      "updateSuccess": "Impostazioni di esclusione dal progresso aggiornate con successo",
+      "updateFailed": "Errore durante l’aggiornamento delle impostazioni di esclusione dal progresso. Riprova."
+    }
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "Report Gateway",
+    "pageSubtitle": "Visualizza ed esporta i dati degli studenti pronti per il gateway",
+    "table": {
+      "title": "Report Gateway",
+      "errorTitle": "Errore",
+      "errorDescription": "Caricamento dei dati non riuscito. Riprova.",
+      "noDataTitle": "Nessun dato disponibile nella tabella",
+      "noDataDescription": "Nessun record gateway trovato che corrisponda ai filtri correnti.",
+      "headers": {
+        "learnerFirstName": "Nome dello studente",
+        "learnerLastName": "Cognome dello studente",
+        "learnerUln": "ULN dello studente",
+        "courseName": "Nome del corso",
+        "trainerName": "Nome del formatore",
+        "sessionBookDate": "Data di prenotazione della sessione",
+        "gatewayProgress": "Progresso gateway %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "Seleziona formatore",
+      "searchLabel": "Cerca",
+      "searchPlaceholder": "Cerca per nome studente, ULN, corso o formatore...",
+      "allOption": "Tutti",
+      "clearButton": "Pulisci",
+      "exportButton": "Esporta in Excel"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "Nome dello studente",
+        "learnerLastName": "Cognome dello studente",
+        "learnerUln": "ULN dello studente",
+        "courseName": "Nome del corso",
+        "trainerName": "Nome del formatore",
+        "sessionBookDate": "Data di prenotazione della sessione",
+        "gatewayProgress": "Progresso gateway %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato disponibile per l'esportazione",
+      "exportSuccess": "Dati esportati con successo!",
+      "exportFailed": "Errore durante l'esportazione dei dati. Riprova."
+    }
   },
   "fundingBands": {
     "pageTitle": "Fasce di finanziamento",
@@ -1128,8 +2439,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "Gestione broadcast",
+    "pageSubtitle": "Crea e gestisci messaggi di broadcast e invia notifiche a utenti, discenti o corsi specifici",
+    "dialog": {
+      "createTitle": "Crea broadcast",
+      "editTitle": "Modifica broadcast",
+      "createDescription": "Compila le informazioni del broadcast nei campi sottostanti.",
+      "editDescription": "Aggiorna le informazioni del broadcast nei campi sottostanti."
+    },
+    "form": {
+      "titleLabel": "Titolo",
+      "descriptionLabel": "Descrizione",
+      "titlePlaceholder": "Inserisci il titolo del broadcast",
+      "descriptionPlaceholder": "Inserisci la descrizione del broadcast"
+    },
+    "buttons": {
+      "cancel": "Annulla",
+      "create": "Crea",
+      "update": "Aggiorna"
+    },
+    "validation": {
+      "titleRequired": "Il titolo è obbligatorio",
+      "descriptionRequired": "La descrizione è obbligatoria"
+    },
+    "toast": {
+      "createSuccess": "Broadcast creato correttamente",
+      "updateSuccess": "Broadcast aggiornato correttamente",
+      "createFailed": "Impossibile creare il broadcast",
+      "updateFailed": "Impossibile aggiornare il broadcast",
+      "deleteSuccess": "Broadcast eliminato correttamente",
+      "deleteFailed": "Impossibile eliminare il broadcast"
+    },
+    "dataTable": {
+      "title": "Titolo",
+      "description": "Descrizione",
+      "email": "E-mail",
+      "userName": "Nome utente",
+      "date": "Data",
+      "actions": "Azioni",
+      "broadcast": "Invia broadcast",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "openMenu": "Apri menu",
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "addNew": "Aggiungi nuovo broadcast",
+      "noResults": "Nessun risultato.",
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExportSuccess": "CSV esportato correttamente",
+      "pdfExportComingSoon": "La funzionalità di esportazione PDF sarà disponibile a breve"
+    },
+    "deleteDialog": {
+      "title": "Sei sicuro?",
+      "description": "Questa azione non può essere annullata. Il broadcast \"{title}\" verrà eliminato in modo permanente.",
+      "delete": "Elimina",
+      "deleting": "Eliminazione in corso..."
+    },
+    "messageDialog": {
+      "title": "Messaggio di broadcast",
+      "description": "Seleziona il pubblico di destinazione per questo messaggio di broadcast.",
+      "readonly": {
+        "titleLabel": "Titolo:",
+        "descriptionLabel": "Descrizione:"
+      },
+      "target": {
+        "label": "Messaggio di broadcast agli utenti",
+        "all": "Tutti",
+        "allLearner": "Tutti i discenti",
+        "allEqa": "Tutti gli EQA",
+        "allTrainer": "Tutti i trainer",
+        "allEmployer": "Tutti i datori di lavoro",
+        "allIqa": "Tutti gli IQA",
+        "allLiqa": "Tutti i LIQA",
+        "individual": "Utenti specifici",
+        "qualification": "Qualifiche / corsi"
+      },
+      "individual": {
+        "selectUsers": "Seleziona utenti",
+        "loadingUsers": "Caricamento utenti...",
+        "selectUsersPlaceholder": "Seleziona utenti",
+        "noUsersFound": "Nessun utente trovato."
+      },
+      "qualification": {
+        "selectCourses": "Seleziona corsi",
+        "loadingCourses": "Caricamento corsi...",
+        "selectCoursesPlaceholder": "Seleziona corsi",
+        "noCoursesFound": "Nessun corso trovato.",
+        "comingSoon": "La selezione dei corsi sarà disponibile una volta integrata l'API dei corsi."
+      },
+      "validation": {
+        "selectUserOrCourse": "Seleziona almeno un utente o un corso"
+      },
+      "toast": {
+        "sendSuccess": "Messaggio di broadcast inviato correttamente",
+        "sendFailed": "Impossibile inviare il messaggio di broadcast"
+      },
+      "submit": "Invia broadcast"
+    }
   },
   "organisations": {
     "form": {
@@ -1157,6 +2566,58 @@
       "updateFailed": "Failed to update organisation"
     }
   },
+  "caseload": {
+    "pageTitle": "Gestione caseload",
+    "pageSubtitle": "Visualizza ed esporta i carichi di lavoro dei line manager.",
+    "searchPlaceholder": "Cerca line manager...",
+    "refresh": "Aggiorna",
+    "clear": "Pulisci",
+    "noLineManagersFound": "Nessun line manager trovato",
+    "noLineManagersMatch": "Nessun line manager corrisponde alla tua ricerca",
+    "noLineManagersInSystem": "Al momento non ci sono line manager nel sistema.",
+    "cards": {
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF",
+      "usersLabel": "Utenti",
+      "learnersLabel": "Discenti",
+      "usersBadge": "{count} utenti",
+      "managedUsersTitle": "Utenti gestiti ({count})",
+      "noUsersAssignedYet": "Nessun utente ancora assegnato",
+      "reportTitle": "Report gestione caseload",
+      "generatedOn": "Generato il: {date}",
+      "totalLearnersLine": "Totale discenti: {count}",
+      "totalUsersLine": "Totale utenti: {count}",
+      "overallCsv": {
+        "lineManagerName": "Nome del line manager",
+        "managedUserEmail": "Email utente gestito",
+        "totalLearners": "Totale discenti",
+        "totalUsers": "Totale utenti"
+      },
+      "managerReportTitle": "{name} - Report caseload",
+      "managerInformation": "Informazioni sul manager:",
+      "nameLabel": "Nome: {name}",
+      "emailLabel": "Email: {email}",
+      "managedUsersHeading": "Utenti gestiti:",
+      "managerTableHeaders": {
+        "name": "Nome",
+        "email": "Email",
+        "role": "Ruolo"
+      },
+      "managerNoUsersAssigned": "Nessun utente assegnato a questo manager.",
+      "managerCsv": {
+        "managerName": "Nome del manager",
+        "managerEmail": "Email del manager",
+        "userName": "Nome utente",
+        "userEmail": "Email utente",
+        "userRole": "Ruolo utente",
+        "totalLearners": "Totale discenti",
+        "totalUsers": "Totale utenti",
+        "defaultUserRole": "Utente",
+        "noUsersAssigned": "Nessun utente assegnato"
+      }
+    }
+  },
   "centres": {
     "form": {
       "organisation": "Organizzazione",
@@ -1179,6 +2640,47 @@
       "createFailed": "Impossibile creare il centro",
       "updateSuccess": "Centro aggiornato con successo",
       "updateFailed": "Impossibile aggiornare il centro"
+    }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "Proponi le tue innovazioni",
+      "subtitle": "Condividi le tue idee e innovazioni con il team"
+    },
+    "table": {
+      "headers": {
+        "topic": "Argomento",
+        "description": "Descrizione",
+        "email": "Email",
+        "userName": "Nome utente",
+        "date": "Data",
+        "status": "Stato",
+        "action": "Azione"
+      },
+      "loading": "Caricamento...",
+      "noData": "Nessuna innovazione trovata."
+    },
+    "actions": {
+      "submitIdea": "Invia un’idea",
+      "viewChat": "Visualizza e chatta",
+      "edit": "Modifica",
+      "delete": "Elimina"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "Argomento",
+        "description": "Descrizione",
+        "email": "Email",
+        "userName": "Nome utente",
+        "date": "Data",
+        "status": "Stato"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Innovazione eliminata con successo!",
+      "deleteFailed": "Impossibile eliminare l’innovazione. Riprova.",
+      "csvSuccess": "CSV esportato con successo"
     }
   }
 }

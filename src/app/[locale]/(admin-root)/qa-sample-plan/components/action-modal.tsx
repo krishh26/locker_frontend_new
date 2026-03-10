@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -28,18 +29,27 @@ import { useGetUsersQuery } from "@/store/api/user/userApi";
 import type { SampleAction } from "@/store/api/qa-sample-plan/types";
 import { formatDateForInput } from "../utils/constants";
 
-const actionFormSchema = z.object({
-  action_with_id: z.string().min(1, "Please select an action with user"),
-  action_required: z
-    .string()
-    .min(1, "Action required is required")
-    .max(1000, "Action required must be 1000 characters or less"),
-  target_date: z.string().min(1, "Target date is required"),
-  status: z.enum(["Pending", "In Progress", "Completed", "Closed"]),
-  assessor_feedback: z.string().optional(),
-});
+const getActionFormSchema = (
+  t: (key: string, values?: Record<string, string | number | Date>) => string
+) =>
+  z.object({
+    action_with_id: z.string().min(1, t("validation.actionWithRequired")),
+    action_required: z
+      .string()
+      .min(1, t("validation.actionRequiredRequired"))
+      .max(1000, t("validation.actionRequiredMax")),
+    target_date: z.string().min(1, t("validation.targetDateRequired")),
+    status: z.enum(["Pending", "In Progress", "Completed", "Closed"]),
+    assessor_feedback: z.string().optional(),
+  });
 
-type ActionFormValues = z.infer<typeof actionFormSchema>;
+type ActionFormValues = {
+  action_with_id: string;
+  action_required: string;
+  target_date: string;
+  status: "Pending" | "In Progress" | "Completed" | "Closed";
+  assessor_feedback?: string;
+};
 
 export interface ActionFormData {
   action_with_id: string | number;
@@ -71,6 +81,8 @@ export function ActionModal({
   editingAction,
   isSaving = false,
 }: ActionModalProps) {
+  const t = useTranslations("qaSamplePlan.actionModal");
+  const commonT = useTranslations("common");
   const { data: usersData, isLoading: isLoadingUsers } = useGetUsersQuery({
     page: 1,
     page_size: 500,
@@ -79,7 +91,7 @@ export function ActionModal({
   const users = usersData?.data || [];
 
   const form = useForm<ActionFormValues>({
-    resolver: zodResolver(actionFormSchema),
+    resolver: zodResolver(getActionFormSchema(t)),
     defaultValues: {
       action_with_id: "",
       action_required: "",
@@ -132,16 +144,16 @@ export function ActionModal({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Actions from sampling</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            {editingAction ? "Edit the action details" : "Create a new action"}
+            {editingAction ? t("descriptionEdit") : t("descriptionCreate")}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(handleSave)} className="space-y-4">
           {/* Action With Name */}
           <div className="space-y-2">
-            <Label htmlFor="action_with_id">Action With Name</Label>
+            <Label htmlFor="action_with_id">{t("fields.actionWithName")}</Label>
             <Controller
               name="action_with_id"
               control={form.control}
@@ -152,7 +164,7 @@ export function ActionModal({
                   disabled={isLoadingUsers}
                 >
                   <SelectTrigger id="action_with_id">
-                    <SelectValue placeholder="Select a user" />
+                    <SelectValue placeholder={t("placeholders.selectUser")} />
                   </SelectTrigger>
                   <SelectContent>
                     {users.map((user) => (
@@ -174,7 +186,10 @@ export function ActionModal({
           {/* Action Required */}
           <div className="space-y-2">
             <Label htmlFor="action_required">
-              Action Required <span className="text-muted-foreground text-xs">(max 1000 characters)</span>
+              {t("fields.actionRequired")}{" "}
+              <span className="text-muted-foreground text-xs">
+                ({t("maxCharactersHint")})
+              </span>
             </Label>
             <Textarea
               id="action_required"
@@ -192,7 +207,7 @@ export function ActionModal({
 
           {/* Target Date */}
           <div className="space-y-2">
-            <Label htmlFor="target_date">Action Target Date</Label>
+            <Label htmlFor="target_date">{t("fields.targetDate")}</Label>
             <Input
               id="target_date"
               type="date"
@@ -207,7 +222,7 @@ export function ActionModal({
 
           {/* Status */}
           <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status">{t("fields.status")}</Label>
             <Controller
               name="status"
               control={form.control}
@@ -219,7 +234,7 @@ export function ActionModal({
                   <SelectContent>
                     {statusOptions.map((status) => (
                       <SelectItem key={status} value={status}>
-                        {status}
+                        {t(`status.${status}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -230,7 +245,7 @@ export function ActionModal({
 
           {/* Assessor Feedback */}
           <div className="space-y-2">
-            <Label htmlFor="assessor_feedback">Assessor Feedback</Label>
+            <Label htmlFor="assessor_feedback">{t("fields.assessorFeedback")}</Label>
             <Textarea
               id="assessor_feedback"
               {...form.register("assessor_feedback")}
@@ -246,16 +261,16 @@ export function ActionModal({
               onClick={handleClose}
               disabled={isSaving}
             >
-              Cancel / Close
+              {t("cancelClose")}
             </Button>
             <Button type="submit" disabled={isSaving}>
               {isSaving ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  {t("saving")}
                 </>
               ) : (
-                "Save"
+                commonT("save")
               )}
             </Button>
           </DialogFooter>

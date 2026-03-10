@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select"
 import { useUpdateTicketMutation, useGetAssignableUsersQuery } from "@/store/api/ticket/ticketApi"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 import type { Ticket, TicketUser } from "@/store/api/ticket/types"
 
 interface TicketAssignDialogProps {
@@ -40,6 +41,7 @@ export function TicketAssignDialog({
   ticket,
   onSuccess,
 }: TicketAssignDialogProps) {
+  const t = useTranslations("tickets.assignDialog")
   const [assigneeId, setAssigneeId] = useState<string>("")
 
   const [updateTicket, { isLoading }] = useUpdateTicketMutation()
@@ -64,10 +66,10 @@ export function TicketAssignDialog({
         ticket_id: ticket.ticket_id,
         assigned_to: value as number | null,
       }).unwrap()
-      toast.success("Ticket assignment updated.")
+      toast.success(t("toast.success"))
       onSuccess()
     } catch {
-      toast.error("Failed to update assignment.")
+      toast.error(t("toast.failed"))
     }
   }
 
@@ -75,23 +77,23 @@ export function TicketAssignDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Assign ticket</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Assign this ticket to a user. Only users in the same org/centre can be selected.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-2">
           <div className="space-y-2">
-            <Label>Assigned to</Label>
+            <Label>{t("assignedToLabel")}</Label>
             <Select value={assigneeId} onValueChange={setAssigneeId}>
               <SelectTrigger>
-                <SelectValue placeholder="Select user" />
+                <SelectValue placeholder={t("selectUserPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
+                <SelectItem value="unassigned">{t("unassigned")}</SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.user_id} value={String(u.user_id)}>
-                    {displayUser(u) || `User ${u.user_id}`}
+                    {displayUser(u) || t("userFallback", { id: u.user_id })}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -100,10 +102,10 @@ export function TicketAssignDialog({
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleAssign} disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save"}
+            {isLoading ? t("saving") : t("save")}
           </Button>
         </DialogFooter>
       </DialogContent>

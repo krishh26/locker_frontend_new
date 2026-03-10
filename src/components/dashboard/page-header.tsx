@@ -5,6 +5,7 @@ import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface PageHeaderProps {
   title: string;
@@ -24,6 +25,7 @@ export function PageHeader({
   backButtonHref,
 }: PageHeaderProps) {
   const router = useRouter();
+  const t = useTranslations("common");
 
   const handleBack = () => {
     if (backButtonHref) {
@@ -43,7 +45,7 @@ export function PageHeader({
           className="mb-2 -ml-2"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {t("back")}
         </Button>
       )}
       <div className="flex items-center gap-3">

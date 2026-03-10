@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import {
   useLazyGetPlanDetailsQuery,
   useUpdateSamplePlanDetailMutation,
@@ -28,6 +29,7 @@ export function useEditSampleModal(
   onDeleteSuccess?: () => void
 ) {
   const dispatch = useAppDispatch();
+  const t = useTranslations("qaSamplePlan.editSampleModal.toast");
 
   // Form data state
   const [modalFormData, setModalFormData] = useState<ModalFormData>(getEmptyModalFormData());
@@ -123,7 +125,7 @@ export function useEditSampleModal(
         console.error("Error fetching plan details:", error);
         const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                             (error as { message?: string })?.message || 
-                            "Failed to load plan details";
+                            t("loadPlanDetailsFailed");
         toast.error(errorMessage);
       }
     };
@@ -213,7 +215,7 @@ export function useEditSampleModal(
 
   const handleSaveQuestions = useCallback(async () => {
     if (!planDetailId || !iqaId) {
-      toast.error("Unable to determine current user");
+      toast.error(t("unableToDetermineUser"));
       return;
     }
 
@@ -252,19 +254,19 @@ export function useEditSampleModal(
         }
       }
 
-      toast.success("Questions saved successfully");
+      toast.success(t("questionsSavedSuccess"));
     } catch (error: unknown) {
       const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                           (error as { message?: string })?.message || 
-                          "Failed to save questions";
+                          t("saveQuestionsFailed");
       toast.error(errorMessage);
     }
-  }, [planDetailId, sampleQuestions, iqaId, createSampleQuestions, updateSampleQuestion]);
+  }, [planDetailId, sampleQuestions, iqaId, createSampleQuestions, updateSampleQuestion, t]);
 
   // Save handler
   const handleSave = useCallback(async () => {
     if (!planDetailId) {
-      toast.error("Missing required information");
+      toast.error(t("missingRequiredInfo"));
       return;
     }
 
@@ -272,16 +274,16 @@ export function useEditSampleModal(
     try {
       const updateRequest = transformModalDataToUpdateRequest(modalFormData, planDetailId);
       await updateSamplePlanDetail(updateRequest).unwrap();
-      toast.success("Sample plan detail updated successfully");
+      toast.success(t("planDetailUpdatedSuccess"));
     } catch (error: unknown) {
       const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                           (error as { message?: string })?.message || 
-                          "Failed to update sample plan detail";
+                          t("updatePlanDetailFailed");
       toast.error(errorMessage);
     } finally {
       setIsSaving(false);
     }
-  }, [planDetailId, modalFormData, updateSamplePlanDetail]);
+  }, [planDetailId, modalFormData, updateSamplePlanDetail, t]);
 
   // Delete handler
   const handleDelete = useCallback(async () => {
@@ -289,7 +291,7 @@ export function useEditSampleModal(
 
     try {
       await removeSampledLearner(planDetailId).unwrap();
-      toast.success("Sampled learner removed successfully");
+      toast.success(t("sampledLearnerRemovedSuccess"));
       dispatch(closeEditSampleModal());
       if (onDeleteSuccess) {
         onDeleteSuccess();
@@ -297,10 +299,10 @@ export function useEditSampleModal(
     } catch (error: unknown) {
       const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                           (error as { message?: string })?.message || 
-                          "Failed to remove sampled learner";
+                          t("removeSampledLearnerFailed");
       toast.error(errorMessage);
     }
-  }, [planDetailId, removeSampledLearner, dispatch, onDeleteSuccess]);
+  }, [planDetailId, removeSampledLearner, dispatch, onDeleteSuccess, t]);
 
   // Close handler
   const handleClose = useCallback(() => {
@@ -366,12 +368,12 @@ export function useEditSampleModal(
   // Create new handler
   const handleCreateNew = useCallback(async () => {
     if (!planId) {
-      toast.error("Please select a plan before creating a new entry.");
+      toast.error(t("selectPlanBeforeCreatingNewEntry"));
       return;
     }
 
     if (!iqaId) {
-      toast.error("Unable to determine current user. Please re-login and try again.");
+      toast.error(t("unableToDetermineUserReLogin"));
       return;
     }
 
@@ -380,7 +382,7 @@ export function useEditSampleModal(
     const currentUnitName = modalState?.currentUnitName ?? null;
 
     if (!currentUnitCode && !currentUnitName) {
-      toast.error("No unit selected. Please select a unit first.");
+      toast.error(t("noUnitSelectedSelectUnitFirst"));
       return;
     }
 
@@ -418,7 +420,7 @@ export function useEditSampleModal(
     }
 
     if (!learnerId) {
-      toast.error("Learner ID not found.");
+      toast.error(t("learnerIdNotFound"));
       return;
     }
 
@@ -429,7 +431,7 @@ export function useEditSampleModal(
     const unitRef = String(unitRefRaw).trim() || unitId;
 
     if (!unitRef) {
-      toast.error("Invalid unit information.");
+      toast.error(t("invalidUnitInformation"));
       return;
     }
 
@@ -474,7 +476,7 @@ export function useEditSampleModal(
       : planId;
 
     if (!iqaId) {
-      toast.error("Unable to determine current user.");
+      toast.error(t("unableToDetermineUser"));
       setIsCreating(false);
       return;
     }
@@ -493,7 +495,7 @@ export function useEditSampleModal(
     setIsCreating(true);
     try {
       await applySamplePlanLearners(payload).unwrap();
-      toast.success("New entry created successfully.");
+      toast.success(t("newEntryCreatedSuccess"));
       dispatch(closeEditSampleModal());
       if (onDeleteSuccess) {
         onDeleteSuccess();
@@ -501,12 +503,23 @@ export function useEditSampleModal(
     } catch (error: unknown) {
       const errorMessage = (error as { data?: { message?: string }; message?: string })?.data?.message || 
                           (error as { message?: string })?.message || 
-                          "Failed to create new entry.";
+                          t("createNewEntryFailed");
       toast.error(errorMessage);
     } finally {
       setIsCreating(false);
     }
-  }, [planId, iqaId, modalState, sampledLearners, modalFormData.sampleType, triggerGetPlanDetails, applySamplePlanLearners, dispatch, onDeleteSuccess]);
+  }, [
+    planId,
+    iqaId,
+    modalState,
+    sampledLearners,
+    modalFormData.sampleType,
+    triggerGetPlanDetails,
+    applySamplePlanLearners,
+    dispatch,
+    onDeleteSuccess,
+    t,
+  ]);
 
   const isLoading = isLoadingPlanDetails || isLoadingQuestions;
 

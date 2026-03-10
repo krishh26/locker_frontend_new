@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-table";
 import { Search, Download, ExternalLink, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,13 +43,14 @@ import { useAppSelector } from "@/store/hooks";
 import { FeedbackDialog } from "./feedback-dialog";
 
 const feedbackDisplayMapping = {
-  very_helpful: "Very Helpful",
-  helpful: "Helpful",
-  neutral: "Neutral",
-  not_helpful: "Not Helpful",
+  very_helpful: "veryHelpful",
+  helpful: "helpful",
+  neutral: "neutral",
+  not_helpful: "notHelpful",
 };
 
 export function SupplementaryTrainingDataTable() {
+  const t = useTranslations("supplementaryTraining.learner.table");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -79,10 +81,10 @@ export function SupplementaryTrainingDataTable() {
           error && typeof error === "object" && "data" in error
             ? (error as { data?: { error?: string } }).data?.error
             : undefined;
-        toast.error(errorMessage || "Failed to track resource access");
+        toast.error(errorMessage || t("toast.trackFailed"));
       }
     },
-    [trackResourceOpen]
+    [trackResourceOpen, t]
   );
 
   const handleOpenFeedback = useCallback((resource: SupplementaryTrainingResource) => {
@@ -96,11 +98,11 @@ export function SupplementaryTrainingDataTable() {
   }, []);
 
   const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return "Never";
+    if (!dateString) return t("dates.never");
     try {
       return format(new Date(dateString), "MMM dd, yyyy");
     } catch {
-      return "Invalid date";
+      return t("dates.invalid");
     }
   };
 
@@ -108,7 +110,7 @@ export function SupplementaryTrainingDataTable() {
     () => [
       {
         accessorKey: "resource_name",
-        header: "Resource Name",
+        header: t("columns.resourceName"),
         cell: ({ row }) => {
           return (
             <span className="font-semibold">{row.getValue("resource_name")}</span>
@@ -117,7 +119,7 @@ export function SupplementaryTrainingDataTable() {
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("columns.description"),
         cell: ({ row }) => {
           const description = row.getValue("description") as string;
           return (
@@ -129,7 +131,7 @@ export function SupplementaryTrainingDataTable() {
       },
       {
         accessorKey: "createdAt",
-        header: "Created Date",
+        header: t("columns.createdDate"),
         cell: ({ row }) => {
           const date = row.getValue("createdAt") as string;
           return (
@@ -141,7 +143,7 @@ export function SupplementaryTrainingDataTable() {
       },
       {
         accessorKey: "lastOpenedDate",
-        header: "Last Opened",
+        header: t("columns.lastOpened"),
         cell: ({ row }) => {
           const date = row.getValue("lastOpenedDate") as string | undefined;
           return (
@@ -153,25 +155,27 @@ export function SupplementaryTrainingDataTable() {
       },
       {
         accessorKey: "feedbacks",
-        header: "Feedback",
+        header: t("columns.feedback"),
         cell: ({ row }) => {
           const resource = row.original;
           const feedback = resource
 
           if (!feedback) {
-            return <span className="text-sm text-muted-foreground">No feedback</span>;
+            return <span className="text-sm text-muted-foreground">{t("feedback.none")}</span>;
           }
 
           return (
             <span className="text-sm">
-              {feedbackDisplayMapping[feedback.feedback as unknown as keyof typeof feedbackDisplayMapping] || "Unknown"}
+              {t(
+                `feedback.values.${feedbackDisplayMapping[feedback.feedback as unknown as keyof typeof feedbackDisplayMapping] || "unknown"}`
+              )}
             </span>
           );
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("columns.actions"),
         cell: ({ row }) => {
           const resource = row.original;
           return (
@@ -186,12 +190,12 @@ export function SupplementaryTrainingDataTable() {
                 {resource.resourceType === "FILE" ? (
                   <>
                     <Download className="mr-2 h-4 w-4" />
-                    Open / Download
+                    {t("actions.openDownload")}
                   </>
                 ) : (
                   <>
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    Visit Link
+                    {t("actions.visitLink")}
                   </>
                 )}
               </Button>
@@ -202,14 +206,14 @@ export function SupplementaryTrainingDataTable() {
                 disabled={isEmployer}
                 className="cursor-pointer"
               >
-                Feedback
+                {t("actions.feedback")}
               </Button>
             </div>
           );
         },
       },
     ],
-    [handleResourceAction, handleOpenFeedback, isTracking, isEmployer]
+    [handleResourceAction, handleOpenFeedback, isTracking, isEmployer, t]
   );
 
   const table = useReactTable({
@@ -240,7 +244,7 @@ export function SupplementaryTrainingDataTable() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading resources...</div>
+        <div className="text-muted-foreground">{t("loading")}</div>
       </div>
     );
   }
@@ -252,7 +256,7 @@ export function SupplementaryTrainingDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search resources..."
+              placeholder={t("searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -261,12 +265,12 @@ export function SupplementaryTrainingDataTable() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="column-visibility" className="text-sm font-medium">
-            Column Visibility
+            {t("columnVisibility.label")}
           </Label>
           <DropdownMenu>
             <DropdownMenuTrigger asChild id="column-visibility">
               <Button variant="outline" className="cursor-pointer">
-                Columns <ChevronDown className="ml-2 size-4" />
+                {t("columnVisibility.button")} <ChevronDown className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -335,7 +339,7 @@ export function SupplementaryTrainingDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No resources found.
+                  {t("noResourcesFound")}
                 </TableCell>
               </TableRow>
             )}

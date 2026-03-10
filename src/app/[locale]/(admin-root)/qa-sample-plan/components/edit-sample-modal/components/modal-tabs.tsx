@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useTranslations } from 'next-intl'
 import { formatDate } from '../../../utils/constants'
 
 interface ModalTabsProps {
@@ -20,6 +21,7 @@ export function ModalTabs({
   isCreating = false,
   isReadOnly = false,
 }: ModalTabsProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.tabs')
   const activeTabString = String(activeTab)
   const handleTabChange = (value: string) => {
     onTabChange(Number(value))
@@ -35,13 +37,13 @@ export function ModalTabs({
                 key={`planned-date-${index}-${date || 'no-date'}`}
                 value={String(index)}
               >
-                FS {index + 1} - ({date ? formatDate(date) : 'No Date'})
+                {t('tabLabel', { index: index + 1, date: date ? formatDate(date) : t('noDate') })}
               </TabsTrigger>
             ))}
           </TabsList>
         </Tabs>
       ) : (
-        <div className='text-sm text-muted-foreground'>No Planned Dates</div>
+        <div className='text-sm text-muted-foreground'>{t('noPlannedDates')}</div>
       )}
       {onCreateNew && (
         <Button
@@ -50,7 +52,7 @@ export function ModalTabs({
           className='ml-4 bg-destructive hover:bg-destructive/90'
         >
           <Plus className='mr-2 h-4 w-4' />
-          {isCreating ? 'Creating...' : 'Create New'}
+          {isCreating ? t('creating') : t('createNew')}
         </Button>
       )}
     </div>

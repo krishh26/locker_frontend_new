@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
+import { useTranslations } from "next-intl";
 import type { SampleDocument } from '@/store/api/qa-sample-plan/types'
 import {
   useLazyGetSampleDocumentsQuery,
@@ -8,6 +9,7 @@ import {
 } from '@/store/api/qa-sample-plan/qaSamplePlanApi'
 
 export function useSampleDocuments(planDetailId: string | number | null) {
+  const t = useTranslations("qaSamplePlan.editSampleModal.toast");
   const [documents, setDocuments] = useState<SampleDocument[]>([])
   const [deleteDocumentId, setDeleteDocumentId] = useState<number | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -37,35 +39,35 @@ export function useSampleDocuments(planDetailId: string | number | null) {
 
       try {
         await uploadDocument(formData).unwrap()
-        toast.success('Document uploaded successfully')
+        toast.success(t("documentUploadedSuccess"))
         fetchDocuments()
         if (fileInputRef.current) {
           fileInputRef.current.value = ''
         }
       } catch (error: unknown) {
         toast.error(
-          (error as { data?: { message?: string } })?.data?.message || 'Failed to upload document'
+          (error as { data?: { message?: string } })?.data?.message || t("uploadDocumentFailed")
         )
       }
     },
-    [planDetailId, uploadDocument, fetchDocuments]
+    [planDetailId, uploadDocument, fetchDocuments, t]
   )
 
   const handleDeleteDocument = useCallback(
     async (docId: number) => {
       try {
         await deleteDocument(docId).unwrap()
-        toast.success('Document deleted successfully')
+        toast.success(t("documentDeletedSuccess"))
         fetchDocuments()
         setDeleteDocumentId(null)
       } catch (error: unknown) {
         toast.error(
-          (error as { data?: { message?: string } })?.data?.message || 'Failed to delete document'
+          (error as { data?: { message?: string } })?.data?.message || t("deleteDocumentFailed")
         )
         setDeleteDocumentId(null)
       }
     },
-    [deleteDocument, fetchDocuments]
+    [deleteDocument, fetchDocuments, t]
   )
 
   return {

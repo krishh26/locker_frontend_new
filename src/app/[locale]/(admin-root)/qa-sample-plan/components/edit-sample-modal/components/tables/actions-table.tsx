@@ -1,6 +1,7 @@
 import { Plus, RefreshCw, Edit, Trash2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { useTranslations } from 'next-intl'
 import {
   Table,
   TableBody,
@@ -43,10 +44,11 @@ export function ActionsTable({
   onDeleteAction,
   isReadOnly = false,
 }: ActionsTableProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.actionsTable')
   return (
     <div className='flex-1'>
       <div className='flex items-center justify-between mb-4'>
-        <h3 className='text-lg font-semibold'>Actions for Sample</h3>
+        <h3 className='text-lg font-semibold'>{t('title')}</h3>
         <div className='flex gap-2'>
           <Button variant='ghost' size='sm' onClick={onRefresh} disabled={isLoadingActions}>
             <RefreshCw className={`h-4 w-4 ${isLoadingActions ? 'animate-spin' : ''}`} />
@@ -57,7 +59,7 @@ export function ActionsTable({
             className='bg-accent hover:bg-accent/90'
           >
             <Plus className='mr-2 h-4 w-4' />
-            Add Action
+            {t('addAction')}
           </Button>
         </div>
       </div>
@@ -66,11 +68,11 @@ export function ActionsTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Summary</TableHead>
-                <TableHead>Action Required</TableHead>
-                <TableHead>Action With</TableHead>
-                <TableHead>Target Date</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('columns.summary')}</TableHead>
+                <TableHead>{t('columns.actionRequired')}</TableHead>
+                <TableHead>{t('columns.actionWith')}</TableHead>
+                <TableHead>{t('columns.targetDate')}</TableHead>
+                <TableHead>{t('columns.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,14 +81,14 @@ export function ActionsTable({
                   <TableCell colSpan={5} className='text-center py-8'>
                     <div className='flex items-center justify-center gap-2'>
                       <Loader2 className='h-4 w-4 animate-spin' />
-                      <span className='text-sm text-muted-foreground'>Loading actions...</span>
+                      <span className='text-sm text-muted-foreground'>{t('loading')}</span>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : actions.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className='text-center py-8 text-muted-foreground'>
-                    There are no Actions on this Sample
+                    {t('empty')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -101,7 +103,7 @@ export function ActionsTable({
                       } ${
                         (action.action_with as { first_name?: string; last_name?: string })
                           ?.last_name || ''
-                      }`.trim() || 'N/A'}
+                      }`.trim() || t('na')}
                     </TableCell>
                     <TableCell>{formatDisplayDate(action.target_date)}</TableCell>
                     <TableCell>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
@@ -30,15 +30,13 @@ import {
 import { toast } from "sonner"
 import { useAppSelector } from "@/store/hooks"
 import type { Support } from "@/store/api/support/types"
-import { Controller } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
-const supportSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
-  status: z.enum(["Pending", "InProgress", "Reject", "Resolve"]).optional(),
-})
-
-type SupportFormValues = z.infer<typeof supportSchema>
+type SupportFormValues = {
+  title: string
+  description: string
+  status?: "Pending" | "InProgress" | "Reject" | "Resolve"
+}
 
 interface SupportAddEditDialogProps {
   open: boolean
@@ -57,6 +55,14 @@ export function SupportAddEditDialog({
 }: SupportAddEditDialogProps) {
   const user = useAppSelector((state) => state.auth.user)
   const isAdmin = user?.role === "Admin"
+
+  const t = useTranslations("support")
+
+  const supportSchema = z.object({
+    title: z.string().min(1, t("form.validation.titleRequired")),
+    description: z.string().min(1, t("form.validation.descriptionRequired")),
+    status: z.enum(["Pending", "InProgress", "Reject", "Resolve"]).optional(),
+  })
 
   const [createSupport, { isLoading: isCreating }] = useCreateSupportMutation()
   const [updateSupport, { isLoading: isUpdating }] = useUpdateSupportMutation()
@@ -98,15 +104,18 @@ export function SupportAddEditDialog({
     try {
       if (mode === "add") {
         if (!user?.user_id) {
-          toast.error("User ID not found")
+          toast.error(t("form.toast.userIdNotFound"))
           return
         }
         await createSupport({
-          request_id: typeof user.user_id === 'number' ? user.user_id : parseInt(String(user.user_id)),
+          request_id:
+            typeof user.user_id === "number"
+              ? user.user_id
+              : parseInt(String(user.user_id)),
           title: data.title,
           description: data.description,
         }).unwrap()
-        toast.success("Support request created successfully!")
+        toast.success(t("form.toast.createSuccess"))
       } else {
         if (!support) return
         await updateSupport({
@@ -115,7 +124,7 @@ export function SupportAddEditDialog({
           description: data.description,
           status: isAdmin ? data.status : undefined,
         }).unwrap()
-        toast.success("Support request updated successfully!")
+        toast.success(t("form.toast.updateSuccess"))
       }
       onSuccess()
     } catch (error: unknown) {
@@ -125,7 +134,11 @@ export function SupportAddEditDialog({
         "data" in error &&
         typeof (error as { data?: { message?: string } }).data?.message === "string"
           ? (error as { data: { message: string } }).data.message
-          : `Failed to ${mode === "add" ? "create" : "update"} support request. Please try again.`
+          : t(
+              mode === "add"
+                ? "form.toast.createFailed"
+                : "form.toast.updateFailed"
+            )
       toast.error(errorMessage)
     }
   }
@@ -137,20 +150,25 @@ export function SupportAddEditDialog({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
-            {mode === "add" ? "Add Request" : "Edit Support Request"}
+            {mode === "add"
+              ? t("form.titleAdd")
+              : t("form.titleEdit")}
           </DialogTitle>
           <DialogDescription>
             {mode === "add"
-              ? "Submit a new support request."
-              : "Update the support request details."}
+              ? t("form.descriptionAdd")
+              : t("form.descriptionEdit")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
+            <Label htmlFor="title">
+              {t("form.fields.titleLabel")}{" "}
+              <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="title"
-              placeholder="Add your title"
+              placeholder={t("form.fields.titlePlaceholder")}
               {...register("title")}
             />
             {errors.title && (
@@ -159,10 +177,13 @@ export function SupportAddEditDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description <span className="text-destructive">*</span></Label>
+            <Label htmlFor="description">
+              {t("form.fields.descriptionLabel")}{" "}
+              <span className="text-destructive">*</span>
+            </Label>
             <Textarea
               id="description"
-              placeholder="Add your description"
+              placeholder={t("form.fields.descriptionPlaceholder")}
               rows={6}
               {...register("description")}
             />
@@ -175,7 +196,9 @@ export function SupportAddEditDialog({
 
           {isAdmin && mode === "edit" && (
             <div className="space-y-2">
-              <Label htmlFor="status">Select Status</Label>
+              <Label htmlFor="status">
+                {t("form.fields.statusLabel")}
+              </Label>
               <Controller
                 name="status"
                 control={control}
@@ -185,13 +208,25 @@ export function SupportAddEditDialog({
                     onValueChange={field.onChange}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Status" />
+                      <SelectValue
+                        placeholder={t(
+                          "form.fields.statusPlaceholder"
+                        )}
+                      />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Pending">Pending</SelectItem>
-                      <SelectItem value="InProgress">InProgress</SelectItem>
-                      <SelectItem value="Reject">Reject</SelectItem>
-                      <SelectItem value="Resolve">Resolve</SelectItem>
+                      <SelectItem value="Pending">
+                        {t("form.fields.status.pending")}
+                      </SelectItem>
+                      <SelectItem value="InProgress">
+                        {t("form.fields.status.inProgress")}
+                      </SelectItem>
+                      <SelectItem value="Reject">
+                        {t("form.fields.status.reject")}
+                      </SelectItem>
+                      <SelectItem value="Resolve">
+                        {t("form.fields.status.resolve")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -211,16 +246,16 @@ export function SupportAddEditDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {t("form.buttons.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? mode === "add"
-                  ? "Creating..."
-                  : "Updating..."
+                  ? t("form.buttons.creating")
+                  : t("form.buttons.updating")
                 : mode === "add"
-                  ? "Save"
-                  : "Update"}
+                  ? t("form.buttons.save")
+                  : t("form.buttons.update")}
             </Button>
           </DialogFooter>
         </form>

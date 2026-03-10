@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -40,6 +41,7 @@ export function FilterPanel({
   onApplyRandomSamples,
   isApplyRandomSamplesLoading,
 }: FilterPanelProps) {
+  const t = useTranslations("qaSamplePlan.filters");
   const dispatch = useAppDispatch();
   const filterState = useAppSelector(selectFilterState);
   const { selectedMethods, sampleType, plannedSampleDate } = filterState;
@@ -49,7 +51,7 @@ export function FilterPanel({
   const handleDateChange = (value: string) => {
     dispatch(setPlannedSampleDate(value));
     if (!value.trim()) {
-      setDateError("Planned Sample Date is required");
+      setDateError(t("plannedSampleDateRequired"));
     } else {
       setDateError("");
     }
@@ -57,7 +59,7 @@ export function FilterPanel({
 
   const handleApplySamplesClick = () => {
     if (!plannedSampleDate.trim()) {
-      setDateError("Planned Sample Date is required");
+      setDateError(t("plannedSampleDateRequired"));
       return;
     }
     setDateError("");
@@ -66,7 +68,7 @@ export function FilterPanel({
 
   const handleApplyRandomSamplesClick = () => {
     if (!plannedSampleDate.trim()) {
-      setDateError("Planned Sample Date is required");
+      setDateError(t("plannedSampleDateRequired"));
       return;
     }
     setDateError("");
@@ -76,12 +78,12 @@ export function FilterPanel({
   return (
     <Card className="sticky top-4">
       <CardHeader>
-        <CardTitle>Filters</CardTitle>
+        <CardTitle>{t("title")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Assessment Methods */}
         <div className="space-y-3">
-          <Label className="text-base font-semibold">Assessment Methods</Label>
+          <Label className="text-base font-semibold">{t("assessmentMethods")}</Label>
           <div className="space-y-2 max-h-64 overflow-y-auto border rounded-md p-3">
             <div className="flex items-center space-x-2 pb-2 border-b">
               <Checkbox
@@ -99,7 +101,7 @@ export function FilterPanel({
                 htmlFor="select-all"
                 className="text-sm font-semibold cursor-pointer"
               >
-                Select All
+                {t("selectAll")}
               </Label>
             </div>
             {assessmentMethods.map((method) => (
@@ -113,7 +115,7 @@ export function FilterPanel({
                   htmlFor={`method-${method.code}`}
                   className="text-sm cursor-pointer flex-1"
                 >
-                  {method.code} - {method.title}
+                  {method.code} - {t(`assessmentMethodTitles.${method.code}`)}
                 </Label>
               </div>
             ))}
@@ -125,16 +127,16 @@ export function FilterPanel({
         {/* Sample Type */}
         <div className="space-y-2">
           <Label htmlFor="sample-type" className="text-base font-semibold">
-            Sample Type
+            {t("sampleType")}
           </Label>
           <Select value={sampleType || undefined} onValueChange={(value) => dispatch(setSampleType(value))}>
             <SelectTrigger className="w-full" id="sample-type">
-              <SelectValue placeholder="Select sample type" />
+              <SelectValue placeholder={t("selectSampleType")} />
             </SelectTrigger>
             <SelectContent>
               {sampleTypes.map((type) => (
                 <SelectItem key={type.value} value={type.value}>
-                  {type.label}
+                  {t(`sampleTypeLabels.${type.value}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -144,7 +146,7 @@ export function FilterPanel({
         {/* Planned Sample Date */}
         <div className="space-y-2">
           <Label htmlFor="date-from" className="text-base font-semibold">
-            Planned Sample Date <span className="text-destructive">*</span>
+            {t("plannedSampleDate")} <span className="text-destructive">*</span>
           </Label>
           <Input
             id="date-from"
@@ -169,7 +171,7 @@ export function FilterPanel({
             {isApplySamplesLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Apply Samples
+            {t("applySamples")}
           </Button>
           <Button
             onClick={handleApplyRandomSamplesClick}
@@ -180,7 +182,7 @@ export function FilterPanel({
             {isApplyRandomSamplesLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Apply Random Samples
+            {t("applyRandomSamples")}
           </Button>
         </div>
       </CardContent>

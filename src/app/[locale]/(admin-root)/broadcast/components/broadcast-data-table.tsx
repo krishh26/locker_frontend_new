@@ -56,6 +56,7 @@ import type { Broadcast, BroadcastFilters } from "@/store/api/broadcast/types";
 import { BroadcastFormDialog } from "./broadcast-form-dialog";
 import { BroadcastMessageDialog } from "./broadcast-message-dialog";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 
@@ -74,6 +75,8 @@ export function BroadcastDataTable() {
   const [broadcastToDelete, setBroadcastToDelete] = useState<Broadcast | null>(null);
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   const [broadcastToSend, setBroadcastToSend] = useState<Broadcast | null>(null);
+
+  const t = useTranslations("broadcast");
 
   const { data, isLoading, refetch } = useGetBroadcastsQuery(filters);
   const [deleteBroadcast, { isLoading: isDeleting }] = useDeleteBroadcastMutation();
@@ -126,7 +129,7 @@ export function BroadcastDataTable() {
 
     try {
       await deleteBroadcast(broadcastToDelete.id).unwrap();
-      toast.success("Broadcast deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setBroadcastToDelete(null);
       refetch();
@@ -135,7 +138,7 @@ export function BroadcastDataTable() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to delete broadcast");
+      toast.error(errorMessage || t("toast.deleteFailed"));
     }
   };
 
@@ -154,11 +157,17 @@ export function BroadcastDataTable() {
 
   const handleExportCsv = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("dataTable.noDataToExport"));
       return;
     }
 
-    const headers = ["Title", "Description", "Email", "User Name", "Date"];
+    const headers = [
+      t("dataTable.title"),
+      t("dataTable.description"),
+      t("dataTable.email"),
+      t("dataTable.userName"),
+      t("dataTable.date"),
+    ];
     const rows = data.data.map((broadcast) => [
       broadcast.title,
       broadcast.description,
@@ -179,18 +188,18 @@ export function BroadcastDataTable() {
     link.download = `broadcasts_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("dataTable.csvExportSuccess"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("dataTable.pdfExportComingSoon"));
   };
 
   const columns: ColumnDef<Broadcast>[] = useMemo(
     () => [
       {
         accessorKey: "title",
-        header: "Title",
+        header: t("dataTable.title"),
         cell: ({ row }) => {
           const title = row.original.title;
           return (
@@ -202,7 +211,7 @@ export function BroadcastDataTable() {
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("dataTable.description"),
         cell: ({ row }) => {
           const description = row.original.description;
           return (
@@ -214,53 +223,53 @@ export function BroadcastDataTable() {
       },
       {
         accessorKey: "email",
-        header: "Email",
+        header: t("dataTable.email"),
         cell: ({ row }) => {
           return row.original.user_id?.email || "-";
         },
       },
       {
         accessorKey: "user_name",
-        header: "User Name",
+        header: t("dataTable.userName"),
         cell: ({ row }) => {
           return row.original.user_id?.user_name || "-";
         },
       },
       {
         accessorKey: "created_at",
-        header: "Date",
+        header: t("dataTable.date"),
         cell: ({ row }) => {
           return formatDate(row.original.created_at);
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("dataTable.actions"),
         cell: ({ row }) => {
           const broadcast = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{t("dataTable.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleBroadcast(broadcast)}>
                   <Radio className="mr-2 h-4 w-4" />
-                  Broadcast
+                  {t("dataTable.broadcast")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleEdit(broadcast)}>
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("dataTable.edit")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleDeleteClick(broadcast)}
                   className="text-destructive"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {t("dataTable.delete")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -268,7 +277,7 @@ export function BroadcastDataTable() {
         },
       },
     ],
-    []
+    [t]
   );
 
   const table = useReactTable({
@@ -314,7 +323,7 @@ export function BroadcastDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={t("dataTable.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -328,7 +337,7 @@ export function BroadcastDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {t("dataTable.clear")}
             </Button>
           )}
         </div>
@@ -337,21 +346,21 @@ export function BroadcastDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("dataTable.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("dataTable.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("dataTable.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button onClick={handleAddNew} className="cursor-pointer">
             <Plus className="mr-2 size-4" />
-            Add New
+            {t("dataTable.addNew")}
           </Button>
         </div>
       </div>
@@ -400,7 +409,7 @@ export function BroadcastDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("dataTable.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -455,20 +464,23 @@ export function BroadcastDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the broadcast{" "}
-              <strong>{broadcastToDelete?.title}</strong>.
+              {t("deleteDialog.description", {
+                title: broadcastToDelete?.title ?? "",
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>
+              {t("buttons.cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("deleteDialog.deleting") : t("deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

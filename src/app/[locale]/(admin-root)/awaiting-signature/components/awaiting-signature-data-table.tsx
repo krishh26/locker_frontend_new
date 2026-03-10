@@ -47,6 +47,7 @@ import { toast } from 'sonner'
 import type { User } from '@/store/api/user/types'
 import type { Course } from '@/store/api/course/types'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { useTranslations } from 'next-intl'
 
 interface FilterState {
   trainer: string
@@ -67,13 +68,17 @@ const formatDate = (dateString: string | undefined): string => {
   }
 }
 
-const getSignatureStatus = (signature: Signature | undefined): string => {
+const getSignatureStatus = (
+  signature: Signature | undefined,
+  requestedLabel: string,
+  signedLabel: string
+): string => {
   if (!signature) return '-'
   const requested = signature.requestedAt
-    ? `R: ${formatDate(signature.requestedAt)}`
+    ? `${requestedLabel}: ${formatDate(signature.requestedAt)}`
     : ''
   const signed = signature.signedAt
-    ? `S: ${formatDate(signature.signedAt)}`
+    ? `${signedLabel}: ${formatDate(signature.signedAt)}`
     : ''
   return signed ? `${requested} ${signed}` : requested || '-'
 }
@@ -84,6 +89,8 @@ const isSignaturePending = (signature: Signature | undefined): boolean => {
 }
 
 export function AwaitingSignatureDataTable() {
+  const t = useTranslations('awaitingSignature')
+
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [filters, setFilters] = useState<FilterState>({
@@ -173,20 +180,20 @@ export function AwaitingSignatureDataTable() {
     setCurrentPage(1)
   }
 
-  const exportToCSV = () => {
+  const exportToCSV = async () => {
     if (!data || data.length === 0) {
-      toast.error('No data available to export')
+      toast.error(t('toast.noDataToExport'))
       return
     }
 
     try {
-      const csvContent = exportAwaitingSignatureToCSV(data)
-      const filename = generateAwaitingSignatureFilename()
+      const csvContent = await exportAwaitingSignatureToCSV(data)
+      const filename = await generateAwaitingSignatureFilename()
       downloadCSV(csvContent, filename)
-      toast.success('Data exported successfully!')
+      toast.success(t('toast.exportSuccess'))
     } catch (error) {
       console.error('Export error:', error)
-      toast.error('Failed to export data. Please try again.')
+      toast.error(t('toast.exportFailed'))
     }
   }
 
@@ -253,63 +260,79 @@ export function AwaitingSignatureDataTable() {
       },
       {
         accessorKey: 'uploaded_at',
-        header: 'Date File was uploaded',
+        header: t('table.headers.uploadedAt'),
         cell: ({ row }) => formatDate(row.original.uploaded_at),
       },
       {
         accessorKey: 'signatures.Trainer',
-        header: 'Trainer Signed',
+        header: t('table.headers.trainerSigned'),
         cell: ({ row }) => {
           const signature = row.original.signatures?.Trainer
           const isPending = isSignaturePending(signature)
           return (
             <span className={isPending ? 'text-destructive font-medium' : ''}>
-              {getSignatureStatus(signature)}
+              {getSignatureStatus(
+                signature,
+                t('table.signatureRequestedShort'),
+                t('table.signatureSignedShort')
+              )}
             </span>
           )
         },
       },
       {
         accessorKey: 'signatures.Learner',
-        header: 'Learner Signed',
+        header: t('table.headers.learnerSigned'),
         cell: ({ row }) => {
           const signature = row.original.signatures?.Learner
           const isPending = isSignaturePending(signature)
           return (
             <span className={isPending ? 'text-destructive font-medium' : ''}>
-              {getSignatureStatus(signature)}
+              {getSignatureStatus(
+                signature,
+                t('table.signatureRequestedShort'),
+                t('table.signatureSignedShort')
+              )}
             </span>
           )
         },
       },
       {
         accessorKey: 'signatures.Employer',
-        header: 'Employer Signed',
+        header: t('table.headers.employerSigned'),
         cell: ({ row }) => {
           const signature = row.original.signatures?.Employer
           const isPending = isSignaturePending(signature)
           return (
             <span className={isPending ? 'text-destructive font-medium' : ''}>
-              {getSignatureStatus(signature)}
+              {getSignatureStatus(
+                signature,
+                t('table.signatureRequestedShort'),
+                t('table.signatureSignedShort')
+              )}
             </span>
           )
         },
       },
       {
         accessorKey: 'signatures.IQA',
-        header: 'IQA Signed',
+        header: t('table.headers.iqaSigned'),
         cell: ({ row }) => {
           const signature = row.original.signatures?.IQA
           const isPending = isSignaturePending(signature)
           return (
             <span className={isPending ? 'text-destructive font-medium' : ''}>
-              {getSignatureStatus(signature)}
+              {getSignatureStatus(
+                signature,
+                t('table.signatureRequestedShort'),
+                t('table.signatureSignedShort')
+              )}
             </span>
           )
         },
       },
     ],
-    []
+    [t]
   )
 
   const table = useReactTable({
@@ -333,23 +356,23 @@ export function AwaitingSignatureDataTable() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Awaiting Signature List</CardTitle>
+        <CardTitle>{t('table.title')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-4'>
         {/* Filters */}
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-start'>
           <div className='space-y-2'>
-            <label className='text-sm font-medium'>Filter by Trainer</label>
+            <label className='text-sm font-medium'>{t('filters.byTrainerLabel')}</label>
             <Select
               value={filters.trainer}
               onValueChange={(value) => handleFilterChange('trainer', value)}
               disabled={loadingTrainers}
             >
               <SelectTrigger className='w-full'>
-                <SelectValue placeholder='All' />
+                <SelectValue placeholder={t('filters.allOption')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={DEFAULT_FILTER_VALUE}>All</SelectItem>
+                <SelectItem value={DEFAULT_FILTER_VALUE}>{t('filters.allOption')}</SelectItem>
                 {trainers.map((trainer) => (
                   <SelectItem key={trainer.id} value={trainer.id}>
                     {trainer.name}
@@ -360,17 +383,17 @@ export function AwaitingSignatureDataTable() {
           </div>
 
           <div className='space-y-2'>
-            <label className='text-sm font-medium'>Filter by Course</label>
+            <label className='text-sm font-medium'>{t('filters.byCourseLabel')}</label>
             <Select
               value={filters.course}
               onValueChange={(value) => handleFilterChange('course', value)}
               disabled={loadingCourses}
             >
               <SelectTrigger className='w-full'>
-                <SelectValue placeholder='All' />
+                <SelectValue placeholder={t('filters.allOption')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={DEFAULT_FILTER_VALUE}>All</SelectItem>
+                <SelectItem value={DEFAULT_FILTER_VALUE}>{t('filters.allOption')}</SelectItem>
                 {courses.map((course) => (
                   <SelectItem key={course.id} value={course.id}>
                     {course.name}
@@ -381,11 +404,11 @@ export function AwaitingSignatureDataTable() {
           </div>
 
           <div className='space-y-2'>
-            <label className='text-sm font-medium'>Search by Learner</label>
+            <label className='text-sm font-medium'>{t('filters.byLearnerLabel')}</label>
             <div className='relative'>
               <Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
               <Input
-                placeholder='Enter learner name'
+                placeholder={t('filters.learnerPlaceholder')}
                 value={learnerSearch}
                 onChange={(e) => {
                   setLearnerSearch(e.target.value)
@@ -399,7 +422,7 @@ export function AwaitingSignatureDataTable() {
           <div className='flex mt-6 flex-row items-end justify-end gap-2'>
             <Button variant='outline' onClick={clearFilters} className='w-full sm:w-auto'>
               <X className='mr-2 h-4 w-4' />
-              Clear
+              {t('filters.clearButton')}
             </Button>
             <Button
               onClick={exportToCSV}
@@ -407,16 +430,16 @@ export function AwaitingSignatureDataTable() {
               className='w-full sm:w-auto'
             >
               <Download className='mr-2 h-4 w-4' />
-              Export CSV
+              {t('filters.exportCsvButton')}
             </Button>
           </div>
         </div>
 
         {error && (
           <Alert className='text-destructive'>
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>{t('table.errorTitle')}</AlertTitle>
             <AlertDescription>
-              Failed to load data. Please try again.
+              {t('table.errorDescription')}
             </AlertDescription>
           </Alert>
         )}
@@ -473,7 +496,7 @@ export function AwaitingSignatureDataTable() {
                     >
                       <div className='flex flex-col items-center gap-2'>
                         <p className='text-muted-foreground font-medium'>
-                          No files awaiting signature
+                          {t('table.noData')}
                         </p>
                       </div>
                     </TableCell>
@@ -502,11 +525,11 @@ export function AwaitingSignatureDataTable() {
         {data.length > 0 && (
           <div className='rounded-lg border bg-muted/50 p-4 space-y-1'>
             <p className='text-sm text-muted-foreground'>
-              Total Signatures:{' '}
+              {t('summary.totalSignatures')}{' '}
               <strong className='text-foreground'>{data.length}</strong>
             </p>
             <p className='text-sm text-muted-foreground'>
-              Files with pending signatures:{' '}
+              {t('summary.pendingFiles')}{' '}
               <strong className='text-foreground'>{pendingCount}</strong>
             </p>
           </div>

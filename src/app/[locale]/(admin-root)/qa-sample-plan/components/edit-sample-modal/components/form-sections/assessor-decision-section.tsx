@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { useTranslations } from 'next-intl'
 import type { ModalFormData } from '../../types'
 
 interface AssessorDecisionSectionProps {
@@ -13,9 +14,10 @@ export function AssessorDecisionSection({
   onFormDataChange,
   isReadOnly = false,
 }: AssessorDecisionSectionProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.formSections.assessorDecision')
   return (
     <div className='md:col-span-4 space-y-2'>
-      <Label className='text-sm font-semibold'>Assessor Decision Correct</Label>
+      <Label className='text-sm font-semibold'>{t('title')}</Label>
       <RadioGroup
         value={modalFormData.assessorDecisionCorrect}
         onValueChange={(value) => onFormDataChange('assessorDecisionCorrect', value)}
@@ -25,13 +27,13 @@ export function AssessorDecisionSection({
         <div className='flex items-center space-x-2'>
           <RadioGroupItem value='Yes' id='decision-yes' disabled={isReadOnly} />
           <Label htmlFor='decision-yes' className={isReadOnly ? '' : 'cursor-pointer'}>
-            Yes
+            {t('yes')}
           </Label>
         </div>
         <div className='flex items-center space-x-2'>
           <RadioGroupItem value='No' id='decision-no' disabled={isReadOnly} />
           <Label htmlFor='decision-no' className={isReadOnly ? '' : 'cursor-pointer'}>
-            No
+            {t('no')}
           </Label>
         </div>
       </RadioGroup>

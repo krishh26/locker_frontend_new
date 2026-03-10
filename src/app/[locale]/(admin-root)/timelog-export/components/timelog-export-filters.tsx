@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -37,6 +38,8 @@ const curriculumManagers = [
 ];
 
 export function TimelogExportFilters() {
+  const t = useTranslations("timelogExport");
+
   const [filters, setFilters] = useState<FilterData>({
     primaryAssessor: "",
     employer: "",
@@ -104,7 +107,7 @@ export function TimelogExportFilters() {
 
       // Validate date range
       if (filters.dateFrom && filters.dateTo && filters.dateFrom > filters.dateTo) {
-        setError('Date "From" cannot be later than date "To"');
+        setError(t("filters.errorInvalidDateRange"));
         setExporting(false);
         return;
       }
@@ -142,9 +145,9 @@ export function TimelogExportFilters() {
         const filename = generateTimelogFilename();
         downloadCSV(csvContent, filename);
 
-        toast.success("Timelog data exported successfully!");
+        toast.success(t("filters.toastExportSuccess"));
       } else {
-        setError("No data found for the selected filters.");
+        setError(t("filters.noDataFound"));
       }
     } catch (err: unknown) {
       console.error("Export error:", err);
@@ -152,7 +155,7 @@ export function TimelogExportFilters() {
         (err as { data?: { error?: string; message?: string }; message?: string })?.data?.error ||
         (err as { data?: { error?: string; message?: string }; message?: string })?.data?.message ||
         (err as { data?: { error?: string; message?: string }; message?: string })?.message ||
-        "An error occurred while exporting data. Please try again.";
+        t("filters.genericError");
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -165,8 +168,8 @@ export function TimelogExportFilters() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Filter Options</CardTitle>
-        <CardDescription>Select filters to narrow down the timelog data for export</CardDescription>
+        <CardTitle>{t("filters.cardTitle")}</CardTitle>
+        <CardDescription>{t("filters.cardDescription")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Error Alert */}
@@ -181,7 +184,7 @@ export function TimelogExportFilters() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {/* Primary Assessor (Admin) */}
           <div className="space-y-2">
-            <Label htmlFor="primary-assessor">By Admin</Label>
+            <Label htmlFor="primary-assessor">{t("filters.filterByAdminLabel")}</Label>
             <select
               id="primary-assessor"
               value={filters.primaryAssessor}
@@ -189,7 +192,7 @@ export function TimelogExportFilters() {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
-              <option value="">Please Select</option>
+              <option value="">{t("filters.pleaseSelectOption")}</option>
               {primaryAssessors.map((assessor) => (
                 <option key={assessor.id} value={assessor.id}>
                   {assessor.name}
@@ -200,7 +203,7 @@ export function TimelogExportFilters() {
 
           {/* Employer */}
           <div className="space-y-2">
-            <Label htmlFor="employer">By Employer</Label>
+            <Label htmlFor="employer">{t("filters.filterByEmployerLabel")}</Label>
             <select
               id="employer"
               value={filters.employer}
@@ -208,7 +211,7 @@ export function TimelogExportFilters() {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
-              <option value="">Please Select</option>
+              <option value="">{t("filters.pleaseSelectOption")}</option>
               {employers.map((employer) => (
                 <option key={employer.id} value={employer.id}>
                   {employer.name}
@@ -219,7 +222,7 @@ export function TimelogExportFilters() {
 
           {/* Course */}
           <div className="space-y-2">
-            <Label htmlFor="course">By Course</Label>
+            <Label htmlFor="course">{t("filters.filterByCourseLabel")}</Label>
             <select
               id="course"
               value={filters.course}
@@ -227,7 +230,7 @@ export function TimelogExportFilters() {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
-              <option value="">Please Select</option>
+              <option value="">{t("filters.pleaseSelectOption")}</option>
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.name}
@@ -238,7 +241,7 @@ export function TimelogExportFilters() {
 
           {/* Curriculum Manager */}
           <div className="space-y-2">
-            <Label htmlFor="curriculum-manager">By Curriculum Manager</Label>
+            <Label htmlFor="curriculum-manager">{t("filters.filterByCurriculumManagerLabel")}</Label>
             <select
               id="curriculum-manager"
               value={filters.curriculumManager}
@@ -256,7 +259,7 @@ export function TimelogExportFilters() {
 
           {/* Date From */}
           <div className="space-y-2">
-            <Label>Date Range From</Label>
+            <Label>{t("filters.dateFromLabel")}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -267,7 +270,7 @@ export function TimelogExportFilters() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {filters.dateFrom ? format(filters.dateFrom, "PPP") : <span>Pick a date</span>}
+                  {filters.dateFrom ? format(filters.dateFrom, "PPP") : <span>{t("filters.pickDatePlaceholder")}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -283,7 +286,7 @@ export function TimelogExportFilters() {
 
           {/* Date To */}
           <div className="space-y-2">
-            <Label>Date Range To</Label>
+            <Label>{t("filters.dateToLabel")}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -294,7 +297,7 @@ export function TimelogExportFilters() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {filters.dateTo ? format(filters.dateTo, "PPP") : <span>Pick a date</span>}
+                  {filters.dateTo ? format(filters.dateTo, "PPP") : <span>{t("filters.pickDatePlaceholder")}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -320,7 +323,7 @@ export function TimelogExportFilters() {
                 htmlFor="off-the-job"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
               >
-                Show only Off the Job Records
+                {t("filters.showOnlyOffTheJobLabel")}
               </Label>
             </div>
           </div>
@@ -334,7 +337,7 @@ export function TimelogExportFilters() {
             disabled={exporting || isTimelogLoading}
             className="w-full sm:w-auto"
           >
-            Clear
+            {t("filters.clearButton")}
           </Button>
           <Button
             onClick={handleExportToCSV}
@@ -342,7 +345,7 @@ export function TimelogExportFilters() {
             className="w-full sm:w-auto"
           >
             {(exporting || isTimelogLoading) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {(exporting || isTimelogLoading) ? "Exporting..." : "Export to CSV"}
+            {(exporting || isTimelogLoading) ? t("filters.exportingLabel") : t("filters.exportCsvButton")}
           </Button>
         </div>
       </CardContent>

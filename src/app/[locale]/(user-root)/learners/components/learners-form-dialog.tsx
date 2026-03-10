@@ -36,6 +36,7 @@ import type { AuthUser } from "@/store/api/auth/types";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 // Funding body options from constants
 const fundingBodies = [
@@ -63,6 +64,32 @@ const fundingBodies = [
   "SFA",
   "Student Loan",
 ];
+
+const fundingBodyLabelKeyMap: Record<string, string> = {
+  "Advance Learning Loan": "fundingBodyOptions.advanceLearningLoan",
+  Bursary: "fundingBodyOptions.bursary",
+  Commercial: "fundingBodyOptions.commercial",
+  "Community Learning": "fundingBodyOptions.communityLearning",
+  EFA: "fundingBodyOptions.efa",
+  Employer: "fundingBodyOptions.employer",
+  ESF: "fundingBodyOptions.esf",
+  ESFA: "fundingBodyOptions.esfa",
+  "Fee Waiver": "fundingBodyOptions.feeWaiver",
+  FWDF: "fundingBodyOptions.fwdf",
+  ITA: "fundingBodyOptions.ita",
+  Levy: "fundingBodyOptions.levy",
+  "MA Fully Funded": "fundingBodyOptions.maFullyFunded",
+  "MA-Employer": "fundingBodyOptions.maEmployer",
+  "Non-Levy": "fundingBodyOptions.nonLevy",
+  Other: "fundingBodyOptions.other",
+  SAAS: "fundingBodyOptions.saas",
+  "SAAS-Employer": "fundingBodyOptions.saasEmployer",
+  "SAAS-Self": "fundingBodyOptions.saasSelf",
+  SDS: "fundingBodyOptions.sds",
+  Self: "fundingBodyOptions.self",
+  SFA: "fundingBodyOptions.sfa",
+  "Student Loan": "fundingBodyOptions.studentLoan",
+};
 
 const EMPLOYER_PLACEHOLDER_VALUE = "__none__";
 
@@ -137,6 +164,10 @@ export function LearnersFormDialog({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const isEditMode = !!learner;
+
+  const tForm = useTranslations("learners.form");
+  const tDialog = useTranslations("learners.formDialog");
+  const tToast = useTranslations("learners.toast");
 
   const authUser = useAppSelector((state) => state.auth.user);
   const [createLearner, { isLoading: isCreating }] = useCreateLearnerMutation();
@@ -300,10 +331,10 @@ export function LearnersFormDialog({
           id: learner.learner_id,
           data: payload as UpdateLearnerRequest,
         }).unwrap();
-        toast.success("Learner updated successfully");
+        toast.success(tToast("updateSuccess"));
       } else {
         await createLearner(payload as CreateLearnerRequest).unwrap();
-        toast.success("Learner created successfully");
+        toast.success(tToast("createSuccess"));
       }
       onSuccess();
       onOpenChange(false);
@@ -312,7 +343,10 @@ export function LearnersFormDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || `Failed to ${isEditMode ? "update" : "create"} learner`);
+      toast.error(
+        errorMessage ||
+          (isEditMode ? tToast("updateFailedGeneric") : tToast("createFailedGeneric"))
+      );
     }
   };
 
@@ -323,11 +357,11 @@ export function LearnersFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEditMode ? "Edit Learner" : "Create New Learner"}</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? tDialog("titleEdit") : tDialog("titleCreate")}
+          </DialogTitle>
           <DialogDescription>
-            {isEditMode
-              ? "Update learner information below."
-              : "Fill in the form below to create a new learner."}
+            {isEditMode ? tDialog("descriptionEdit") : tDialog("descriptionCreate")}
           </DialogDescription>
         </DialogHeader>
 
@@ -336,7 +370,7 @@ export function LearnersFormDialog({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="first_name">
-                First Name <span className="text-destructive">*</span>
+                {tForm("firstNameLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="first_name"
@@ -345,7 +379,7 @@ export function LearnersFormDialog({
                   <>
                     <Input
                       id="first_name"
-                      placeholder="Enter first name"
+                      placeholder={tForm("firstNamePlaceholder")}
                       {...field}
                       className={form.formState.errors.first_name ? "border-destructive" : ""}
                     />
@@ -360,7 +394,7 @@ export function LearnersFormDialog({
             </div>
             <div className="space-y-2">
               <Label htmlFor="last_name">
-                Last Name <span className="text-destructive">*</span>
+                {tForm("lastNameLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="last_name"
@@ -369,7 +403,7 @@ export function LearnersFormDialog({
                   <>
                     <Input
                       id="last_name"
-                      placeholder="Enter last name"
+                      placeholder={tForm("lastNamePlaceholder")}
                       {...field}
                       className={form.formState.errors.last_name ? "border-destructive" : ""}
                     />
@@ -388,7 +422,7 @@ export function LearnersFormDialog({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="user_name">
-                Username <span className="text-destructive">*</span>
+                {tForm("usernameLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="user_name"
@@ -397,7 +431,7 @@ export function LearnersFormDialog({
                   <>
                     <Input
                       id="user_name"
-                      placeholder="Enter username"
+                      placeholder={tForm("usernamePlaceholder")}
                       {...field}
                       className={form.formState.errors.user_name ? "border-destructive" : ""}
                     />
@@ -412,7 +446,7 @@ export function LearnersFormDialog({
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">
-                Email <span className="text-destructive">*</span>
+                {tForm("emailLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="email"
@@ -422,7 +456,7 @@ export function LearnersFormDialog({
                     <Input
                       id="email"
                       type="email"
-                      placeholder="Enter email"
+                      placeholder={tForm("emailPlaceholder")}
                       {...field}
                       className={form.formState.errors.email ? "border-destructive" : ""}
                     />
@@ -442,7 +476,7 @@ export function LearnersFormDialog({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="password">
-                  Password <span className="text-destructive">*</span>
+                  {tForm("passwordLabel")} <span className="text-destructive">*</span>
                 </Label>
                 <Controller
                   name="password"
@@ -453,7 +487,7 @@ export function LearnersFormDialog({
                         <Input
                           id="password"
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter password"
+                          placeholder={tForm("passwordPlaceholder")}
                           {...field}
                           className={
                             !isEditMode &&
@@ -488,7 +522,8 @@ export function LearnersFormDialog({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">
-                  Confirm Password <span className="text-destructive">*</span>
+                  {tForm("confirmPasswordLabel")}{" "}
+                  <span className="text-destructive">*</span>
                 </Label>
                 <Controller
                   name="confirmPassword"
@@ -499,7 +534,7 @@ export function LearnersFormDialog({
                         <Input
                           id="confirmPassword"
                           type={showConfirmPassword ? "text" : "password"}
-                          placeholder="Confirm password"
+                          placeholder={tForm("confirmPasswordPlaceholder")}
                           {...field}
                           className={
                             !isEditMode &&
@@ -538,7 +573,7 @@ export function LearnersFormDialog({
           {/* Centre (organisation fixed from auth / backend) */}
           {assignedOrganisations.length > 0 && (
             <div className="space-y-2">
-              <Label htmlFor="centre_id">Centre</Label>
+              <Label htmlFor="centre_id">{tForm("centreLabel")}</Label>
               <Select
                 value={selectedCentreId ? String(selectedCentreId) : ""}
                 onValueChange={(value) => {
@@ -550,8 +585,8 @@ export function LearnersFormDialog({
                   <SelectValue
                     placeholder={
                       centreOptions.length
-                        ? "Select centre"
-                        : "No centres available for this organisation"
+                        ? tForm("centrePlaceholder")
+                        : tForm("noCentresAvailable")
                     }
                   />
                 </SelectTrigger>
@@ -566,12 +601,12 @@ export function LearnersFormDialog({
             </div>
           )}
 
-          {/* Mobile & Employer */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="mobile">
-                Mobile <span className="text-destructive">*</span>
-              </Label>
+        {/* Mobile & Employer */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="mobile">
+              {tForm("mobileLabel")} <span className="text-destructive">*</span>
+            </Label>
               <Controller
                 name="mobile"
                 control={form.control}
@@ -579,7 +614,7 @@ export function LearnersFormDialog({
                   <>
                     <Input
                       id="mobile"
-                      placeholder="Enter mobile number"
+                      placeholder={tForm("mobilePlaceholder")}
                       {...field}
                       className={form.formState.errors.mobile ? "border-destructive" : ""}
                     />
@@ -592,10 +627,10 @@ export function LearnersFormDialog({
                 )}
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="employer_id">
-                Employer <span className="text-destructive">*</span>
-              </Label>
+          <div className="space-y-2">
+            <Label htmlFor="employer_id">
+              {tForm("employerLabel")} <span className="text-destructive">*</span>
+            </Label>
               <Controller
                 name="employer_id"
                 control={form.control}
@@ -612,13 +647,15 @@ export function LearnersFormDialog({
                       >
                         <SelectValue
                           placeholder={
-                            isLoadingEmployers ? "Loading employers..." : "Select employer"
+                            isLoadingEmployers
+                              ? tForm("loadingEmployers")
+                              : tForm("employerPlaceholder")
                           }
                         />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value={EMPLOYER_PLACEHOLDER_VALUE}>
-                          Select employer
+                          {tForm("employerPlaceholder")}
                         </SelectItem>
                         {employerOptions.map((employer) => (
                           <SelectItem
@@ -645,7 +682,7 @@ export function LearnersFormDialog({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="funding_body">
-                Funding Body <span className="text-destructive">*</span>
+                {tForm("fundingBodyLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="funding_body"
@@ -657,12 +694,14 @@ export function LearnersFormDialog({
                         id="funding_body"
                         className={form.formState.errors.funding_body ? "border-destructive" : ""}
                       >
-                        <SelectValue placeholder="Select funding body" />
+                        <SelectValue placeholder={tForm("fundingBodyPlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
                         {fundingBodies.map((body) => (
                           <SelectItem key={body} value={body}>
-                            {body}
+                            {fundingBodyLabelKeyMap[body]
+                              ? tForm(fundingBodyLabelKeyMap[body])
+                              : body}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -677,14 +716,14 @@ export function LearnersFormDialog({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="national_ins_no">National Insurance Number</Label>
+              <Label htmlFor="national_ins_no">{tForm("nationalInsuranceLabel")}</Label>
               <Controller
                 name="national_ins_no"
                 control={form.control}
                 render={({ field }) => (
                   <Input
                     id="national_ins_no"
-                    placeholder="Enter national insurance number"
+                    placeholder={tForm("nationalInsurancePlaceholder")}
                     {...field}
                   />
                 )}
@@ -696,7 +735,7 @@ export function LearnersFormDialog({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="job_title">
-                Job Title <span className="text-destructive">*</span>
+                {tForm("jobTitleLabel")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="job_title"
@@ -705,7 +744,7 @@ export function LearnersFormDialog({
                   <>
                     <Input
                       id="job_title"
-                      placeholder="Enter job title"
+                      placeholder={tForm("jobTitlePlaceholder")}
                       {...field}
                       className={form.formState.errors.job_title ? "border-destructive" : ""}
                     />
@@ -719,14 +758,14 @@ export function LearnersFormDialog({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="comment">Comment</Label>
+              <Label htmlFor="comment">{tForm("commentLabel")}</Label>
               <Controller
                 name="comment"
                 control={form.control}
                 render={({ field }) => (
                   <Input
                     id="comment"
-                    placeholder="Enter comment (optional)"
+                    placeholder={tForm("commentPlaceholder")}
                     {...field}
                   />
                 )}
@@ -741,11 +780,15 @@ export function LearnersFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {tDialog("cancel")}
             </Button>
             <Button type="submit" disabled={isLoading || hasErrors}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isEditMode ? "Update" : "Create"}
+              {isLoading
+                ? tDialog("saving")
+                : isEditMode
+                ? tDialog("saveChanges")
+                : tDialog("create")}
             </Button>
           </DialogFooter>
         </form>

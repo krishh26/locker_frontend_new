@@ -78,7 +78,231 @@
     "status": "स्थिति",
     "actions": "कार्रवाई",
     "noLearnersFound": "कोई शिक्षार्थी नहीं मिला",
-    "confirmDelete": "क्या आप वाकई इस शिक्षार्थी को हटाना चाहते हैं?"
+    "confirmDelete": "क्या आप वाकई इस शिक्षार्थी को हटाना चाहते हैं?",
+    "page": {
+      "title": "शिक्षार्थी प्रबंधन",
+      "adminSubtitle": "शिक्षार्थियों को सहज रूप से जोड़कर, अपडेट करके और हटाकर, तथा कोर्स, ट्रेनर, नियोक्ता, IQA और EQA असाइन करके प्रशासन को बेहतर बनाएं",
+      "defaultSubtitle": "अपने असाइन किए गए शिक्षार्थियों को प्रबंधित और मॉनिटर करें"
+    },
+    "form": {
+      "firstNameLabel": "पहला नाम",
+      "firstNamePlaceholder": "पहला नाम दर्ज करें",
+      "lastNameLabel": "अंतिम नाम",
+      "lastNamePlaceholder": "अंतिम नाम दर्ज करें",
+      "usernameLabel": "उपयोगकर्ता नाम",
+      "usernamePlaceholder": "उपयोगकर्ता नाम दर्ज करें",
+      "emailLabel": "ईमेल",
+      "emailPlaceholder": "ईमेल दर्ज करें",
+      "passwordLabel": "पासवर्ड",
+      "passwordPlaceholder": "पासवर्ड दर्ज करें",
+      "confirmPasswordLabel": "पासवर्ड की पुष्टि करें",
+      "confirmPasswordPlaceholder": "पासवर्ड की पुष्टि करें",
+      "centreLabel": "केंद्र",
+      "centrePlaceholder": "केंद्र चुनें",
+      "noCentresAvailable": "इस संगठन के लिए कोई केंद्र उपलब्ध नहीं है",
+      "mobileLabel": "मोबाइल",
+      "mobilePlaceholder": "मोबाइल नंबर दर्ज करें",
+      "employerLabel": "నियोक्ता",
+      "employerPlaceholder": "नियोक्ता चुनें",
+      "loadingEmployers": "नियोक्ता लोड हो रहे हैं...",
+      "fundingBodyLabel": "फंडिंग बॉडी",
+      "fundingBodyPlaceholder": "फंडिंग बॉडी चुनें",
+      "nationalInsuranceLabel": "नेशनल इंश्योरेंस नंबर",
+      "nationalInsurancePlaceholder": "नेशनल इंश्योरेंस नंबर दर्ज करें",
+      "jobTitleLabel": "कार्य शीर्षक",
+      "jobTitlePlaceholder": "कार्य शीर्षक दर्ज करें",
+      "commentLabel": "टिप्पणी",
+      "commentPlaceholder": "टिप्पणी दर्ज करें (वैकल्पिक)",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "एडवांस लर्निंग लोन",
+        "bursary": "बर्सरी",
+        "commercial": "वाणिज्यिक",
+        "communityLearning": "समुदाय शिक्षा",
+        "efa": "EFA",
+        "employer": "नियोक्ता",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "फीस माफी",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "लेवी",
+        "maFullyFunded": "MA पूर्ण रूप से फंडेड",
+        "maEmployer": "MA-नियोक्ता",
+        "nonLevy": "नॉन-लेवी",
+        "other": "अन्य",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-नियोक्ता",
+        "saasSelf": "SAAS-स्वयं",
+        "sds": "SDS",
+        "self": "स्वयं",
+        "sfa": "SFA",
+        "studentLoan": "स्टूडेंट लोन"
+      }
+    },
+    "formDialog": {
+      "titleCreate": "नया शिक्षार्थी बनाएं",
+      "titleEdit": "शिक्षार्थी संपादित करें",
+      "descriptionCreate": "नया शिक्षार्थी बनाने के लिए नीचे दिया गया फॉर्म भरें।",
+      "descriptionEdit": "नीचे शिक्षार्थी की जानकारी अपडेट करें।",
+      "cancel": "रद्द करें",
+      "create": "बनाएं",
+      "saveChanges": "परिवर्तन सहेजें",
+      "saving": "सहेजा जा रहा है..."
+    },
+    "toast": {
+      "createSuccess": "शिक्षार्थी सफलतापूर्वक बनाया गया",
+      "updateSuccess": "शिक्षार्थी सफलतापूर्वक अपडेट किया गया",
+      "createFailedGeneric": "शिक्षार्थी बनाने में विफल",
+      "updateFailedGeneric": "शिक्षार्थी अपडेट करने में विफल",
+      "deleteSuccess": "शिक्षार्थी सफलतापूर्वक हटाया गया",
+      "deleteFailedGeneric": "शिक्षार्थी हटाने में विफल"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "नाम",
+        "course": "कोर्स",
+        "trainer": "प्रशिक्षक",
+        "iqa": "IQA",
+        "status": "स्थिति",
+        "iqaReport": "IQA रिपोर्ट",
+        "learnerCreated": "शिक्षार्थी बनाया गया",
+        "courseRegistered": "कोर्स पंजीकृत"
+      },
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "mobile": "मोबाइल",
+        "course": "कोर्स",
+        "comment": "टिप्पणी",
+        "status": "स्थिति",
+        "actions": "कार्रवाई"
+      },
+      "actions": {
+        "openMenu": "मेनू खोलें",
+        "edit": "संपादित करें",
+        "comment": "टिप्पणी",
+        "delete": "हटाएं"
+      },
+      "unknownCourse": "अज्ञात कोर्स",
+      "qaSamplePlan": "QA सैंपल प्लान",
+      "viewIqaReport": "IQA रिपोर्ट देखें",
+      "noResults": "कोई परिणाम नहीं।"
+    },
+    "filters": {
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "coursePlaceholder": "कोर्स द्वारा फ़िल्टर करें",
+      "allCourses": "सभी कोर्स",
+      "loadingCourses": "कोर्स लोड हो रहे हैं...",
+      "employerPlaceholder": "नियोक्ता द्वारा फ़िल्टर करें",
+      "allEmployers": "सभी नियोक्ता",
+      "loadingEmployers": "नियोक्ता लोड हो रहे हैं...",
+      "clear": "साफ करें"
+    },
+    "statusFilters": {
+      "title": "स्थिति फ़िल्टर",
+      "options": {
+        "Awaiting Induction": "इंडक्शन की प्रतीक्षा",
+        "Certificated": "सर्टिफिकेट जारी",
+        "Completed": "पूर्ण",
+        "Early Leaver": "जल्दी छोड़ने वाला",
+        "Exempt": "मुक्त",
+        "In Training": "प्रशिक्षण में",
+        "IQA Approved": "IQA द्वारा स्वीकृत",
+        "Training Suspended": "प्रशिक्षण निलंबित",
+        "Transferred": "स्थानांतरित",
+        "Show only archived users": "केवल संग्रहित उपयोगकर्ता दिखाएं"
+      }
+    },
+    "export": {
+      "export": "निर्यात",
+      "exportCsv": "CSV के रूप में निर्यात",
+      "exportPdf": "PDF के रूप में निर्यात",
+      "uploadLearners": "शिक्षार्थी अपलोड करें",
+      "addNew": "नया जोड़ें",
+      "noData": "निर्यात के लिए कोई डेटा नहीं",
+      "csvSuccess": "CSV सफलतापूर्वक निर्यात किया गया",
+      "pdfSuccess": "PDF सफलतापूर्वक निर्यात किया गया",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "शिक्षार्थी",
+      "pdfTitleEqa": "शिक्षार्थी (EQA)",
+      "csvHeaders": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "mobile": "मोबाइल",
+        "course": "कोर्स",
+        "status": "स्थिति"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "course": "कोर्स",
+        "employer": "नियोक्ता",
+        "iqa": "IQA",
+        "status": "स्थिति",
+        "iqaReport": "IQA रिपोर्ट",
+        "learnerCreated": "शिक्षार्थी बनाया गया",
+        "courseRegistered": "कोर्स पंजीकृत"
+      }
+    },
+    "csvUpload": {
+      "title": "शिक्षार्थी CSV अपलोड करें",
+      "description": "CSV फ़ॉर्मेट का उपयोग करके शिक्षार्थी डेटा bulk में अपलोड करें",
+      "sample": {
+        "title": "सैंपल CSV चाहिए?",
+        "description": "सभी आवश्यक फ़ील्ड और सैंपल डेटा के साथ हमारा टेम्पलेट डाउनलोड करें ताकि सही फ़ॉर्मेटिंग सुनिश्चित हो सके",
+        "button": "सैंपल CSV डाउनलोड करें"
+      },
+      "upload": {
+        "fileSize": "फ़ाइल साइज़: {size} MB",
+        "dragDrop": "अपनी CSV फ़ाइल यहां drag और drop करें या",
+        "browse": "Browse",
+        "maxSize": "अधिकतम 10MB फ़ाइलें अनुमत हैं",
+        "supportedFormats": "समर्थित फ़ॉर्मेट: केवल CSV"
+      },
+      "summary": {
+        "ready": "शिक्षार्थी मिले और अपलोड के लिए तैयार हैं",
+        "formatted": "सभी आवश्यक फ़ील्ड सही तरीके से फ़ॉर्मैट की गई हैं"
+      },
+      "actions": {
+        "cancel": "रद्द करें",
+        "upload": "शिक्षार्थी अपलोड करें",
+        "uploading": "अपलोड हो रहा है..."
+      },
+      "errors": {
+        "missingRequiredFields": "कुछ शिक्षार्थी विवरण गायब हैं। कृपया जांचें कि हर पंक्ति में {fields} शामिल हैं।",
+        "parseError": "CSV फ़ाइल पार्स करते समय त्रुटि: {message}",
+        "noValidData": "कोई मान्य डेटा नहीं मिला। कृपया सही CSV फ़ाइल अपलोड करें।"
+      },
+      "toast": {
+        "success": "शिक्षार्थी सफलतापूर्वक अपलोड किए गए",
+        "failedGeneric": "शिक्षार्थी अपलोड करने में विफल"
+      }
+    },
+    "commentDialog": {
+      "title": "{name} के लिए टिप्पणी जोड़ें/संपादित करें",
+      "description": "इस शिक्षार्थी के लिए टिप्पणी अपडेट करें। यह टिप्पणी एडमिन और प्रशिक्षकों को दिखाई देगी।",
+      "field": {
+        "label": "टिप्पणी",
+        "placeholder": "अपनी टिप्पणी यहाँ दर्ज करें..."
+      },
+      "actions": {
+        "cancel": "रद्द करें",
+        "save": "टिप्पणी सहेजें"
+      },
+      "toast": {
+        "success": "टिप्पणी सफलतापूर्वक अपडेट की गई",
+        "failedGeneric": "टिप्पणी अपडेट करने में विफल"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "अंतिम लॉगिन",
+      "nextVisit": "अगली विज़िट",
+      "noComment": "कोई टिप्पणी नहीं",
+      "profile": "प्रोफ़ाइल"
+    }
   },
   "users": {
     "title": "उपयोगकर्ता",
@@ -115,6 +339,10 @@
       "employersPlaceholder": "नियोक्ता चुनें",
       "loadingEmployers": "नियोक्ता लोड हो रहे हैं...",
       "noEmployersFound": "कोई नियोक्ता नहीं मिला",
+      "lineManager": "लाइन मैनेजर",
+      "lineManagerPlaceholder": "लाइन मैनेजर चुनें",
+      "noLineManagersAvailable": "कोई लाइन मैनेजर उपलब्ध नहीं",
+      "noLineManager": "कोई लाइन मैनेजर नहीं",
       "assignedLearners": "निर्दिष्ट शिक्षार्थी",
       "assignedLearnersDescription": "इस EQA उपयोगकर्ता के लिए निर्दिष्ट शिक्षार्थियों को देखने और प्रबंधित करने के लिए एक कोर्स चुनें",
       "selectLearners": "शिक्षार्थी चुनें",
@@ -362,100 +590,100 @@
     "pdfExportInfo": "PDF निर्यात कार्यक्षमता लागू की जाएगी"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "नियोक्ता प्रबंधन",
+    "pageSubtitle": "नियोक्ता जानकारी प्रबंधित करें, रिकॉर्ड जोड़ें, अपडेट करें और हटाएँ, तथा लर्नरों को नियोक्ता से लिंक करें।",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
-      "email": "Email",
-      "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
+      "employerName": "नियोक्ता का नाम",
+      "businessDepartment": "व्यापार विभाग",
+      "email": "ईमेल",
+      "mobile": "मोबाइल",
+      "actions": "कार्रवाई",
+      "searchPlaceholder": "कुंजिका द्वारा खोजें...",
+      "clear": "साफ करें",
       "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
+      "addNew": "नया जोड़ें",
+      "uploadCsv": "CSV अपलोड करें",
+      "noResults": "कोई परिणाम नहीं।",
       "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
+        "edit": "संपादित करें",
+      "delete": "हटाएं",
+      "deleteDialogTitle": "क्या आप सुनिश्चित हैं?",
+      "deleteDialogDescription": "यह कार्रवाई पूर्ववत नहीं की जा सकती है। यह नियोक्ता को हमेशा हटाएगा",
+      "deleteDialogCancel": "रद्द करें",
+      "deleteDialogConfirm": "हटाएं",
       "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "employerDeleted": "नियोक्ता सफलतापूर्वक हटाया गया",
+      "deleteFailed": "नियोक्ता हटाने में विफल",
+      "noDataToExport": "निर्यात करने के लिए कोई डेटा नहीं",
+      "csvExported": "CSV सफलतापूर्वक निर्यात किया गया"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "नियोक्ता फ़ॉर्म",
+      "companyName": "कंपनी का नाम",
+      "companyNamePlaceholder": "कंपनी का नाम दर्ज करें",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
-      "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
+      "misIdPlaceholder": "MIS ID दर्ज करें",
+      "businessDepartment": "व्यापार विभाग",
+      "businessDepartmentPlaceholder": "व्यापार विभाग दर्ज करें",
       "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
-      "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
-      "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
-      "town": "Town",
-      "townPlaceholder": "Enter town",
-      "county": "County",
-      "countyPlaceholder": "Enter county",
+      "businessLocationPlaceholder": "व्यापार स्थान दर्ज करें",
+      "branchCode": "शाखा कोड",
+      "branchCodePlaceholder": "शाखा कोड दर्ज करें",
+      "address1": "एड्रेस 1",
+      "address1Placeholder": "एड्रेस 1 दर्ज करें",
+      "address2": "एड्रेस 2",
+      "address2Placeholder": "एड्रेस 2 दर्ज करें",
+      "town": "शहर",
+      "townPlaceholder": "शहर दर्ज करें",
+      "county": "काउंटी",
+      "countyPlaceholder": "काउंटी दर्ज करें",
       "country": "Country",
-      "countryPlaceholder": "Enter country",
-      "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
-      "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
-      "website": "Website",
-      "websitePlaceholder": "Enter website",
-      "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
-      "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
-      "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "countryPlaceholder": "देश दर्ज करें",
+      "postcode": "पोस्ट कोड",
+      "postcodePlaceholder": "पोस्ट कोड दर्ज करें",
+      "businessCategory": "व्यापार श्रेणी",
+      "businessCategoryPlaceholder": "व्यापार श्रेणी चुनें",
+      "numberOfEmployees": "कर्मचारियों की संख्या",
+      "numberOfEmployeesPlaceholder": "कर्मचारियों की संख्या दर्ज करें",
+      "telephone": "टेलीफ़ोन",
+      "telephonePlaceholder": "टेलीफ़ोन दर्ज करें",
+      "website": "वेबसाइट",
+      "websitePlaceholder": "वेबसाइट दर्ज करें",
+      "keyContactName": "कुंजिका संपर्क नाम",
+      "keyContactNamePlaceholder": "कुंजिका संपर्क नाम दर्ज करें",
+      "keyContactNumber": "कुंजिका संपर्क नंबर",
+      "keyContactNumberPlaceholder": "कुंजिका संपर्क नंबर दर्ज करें",
+      "email": "ईमेल",
+      "emailPlaceholder": "ईमेल दर्ज करें",
+      "businessDescription": "व्यापार विवरण",
+      "businessDescriptionPlaceholder": "व्यापार विवरण दर्ज करें",
+      "comments": "टिप्पणियां",
+      "commentsPlaceholder": "टिप्पणियां दर्ज करें",
+      "assessmentDate": "समीक्षा तिथि",
+      "assessmentRenewalDate": "समीक्षा पुनरावृत्ति तिथि",
+      "insuranceRenewalDate": "बीमा पुनरावृत्ति तिथि",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "नियोक्ता बनाएं",
+      "updateEmployer": "नियोक्ता अपडेट करें"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
-      "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "companyNameRequired": "कंपनी का नाम आवश्यक है",
+      "misIdRequired": "MIS ID आवश्यक है",
+      "address1Required": "एड्रेस 1 आवश्यक है",
+      "address2Required": "एड्रेस 2 आवश्यक है",
+      "townRequired": "शहर आवश्यक है",
+      "countyRequired": "काउंटी आवश्यक है",
+      "countryRequired": "देश आवश्यक है",
+      "postcodeRequired": "पोस्ट कोड आवश्यक है",
+      "emailInvalid": "अमान्य ईमेल पता"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "नियोक्ता सफलतापूर्वक बनाया गया",
+      "employerUpdated": "नियोक्ता सफलतापूर्वक अपडेट किया गया",
+      "employerDeleted": "नियोक्ता सफलतापूर्वक हटाया गया",
+      "createFailed": "नियोक्ता बनाने में विफल",
+      "updateFailed": "नियोक्ता अपडेट करने में विफल",
+      "deleteFailed": "नियोक्ता हटाने में विफल"
     }
   },
   "admin": {
@@ -482,8 +710,70 @@
     "viewDetails": "विवरण देखें"
   },
   "awaitingSignature": {
-    "pageTitle": "Awaiting Signature",
-    "pageSubtitle": "Files and documents awaiting signatures from Trainer and learners"
+    "pageTitle": "हस्ताक्षर की प्रतीक्षा",
+    "pageSubtitle": "फ़ाइलें और दस्तावेज़ जो ट्रेनर, शिक्षार्थियों, नियोक्ता और IQA के हस्ताक्षर की प्रतीक्षा कर रहे हैं",
+    "table": {
+      "title": "हस्ताक्षर की प्रतीक्षा सूची",
+      "errorTitle": "त्रुटि",
+      "errorDescription": "डेटा लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "noData": "हस्ताक्षर की प्रतीक्षा में कोई फ़ाइल नहीं है",
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "courseName": "कोर्स का नाम",
+        "employerName": "नियोक्ता का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "fileType": "फ़ाइल प्रकार",
+        "fileName": "फ़ाइल नाम",
+        "fileDescription": "फ़ाइल विवरण",
+        "uploadedAt": "फ़ाइल अपलोड होने की तिथि",
+        "trainerSigned": "ट्रेनर हस्ताक्षर",
+        "learnerSigned": "शिक्षार्थी हस्ताक्षर",
+        "employerSigned": "नियोक्ता हस्ताक्षर",
+        "iqaSigned": "IQA हस्ताक्षर"
+      },
+      "signatureRequestedShort": "R",
+      "signatureSignedShort": "S"
+    },
+    "filters": {
+      "byTrainerLabel": "ट्रेनर के अनुसार फ़िल्टर करें",
+      "byCourseLabel": "कोर्स के अनुसार फ़िल्टर करें",
+      "byLearnerLabel": "शिक्षार्थी के अनुसार खोजें",
+      "learnerPlaceholder": "शिक्षार्थी का नाम लिखें",
+      "allOption": "सभी",
+      "clearButton": "साफ करें",
+      "exportCsvButton": "CSV एक्सपोर्ट करें"
+    },
+    "summary": {
+      "totalSignatures": "कुल हस्ताक्षर:",
+      "pendingFiles": "लंबित हस्ताक्षर वाली फ़ाइलें:"
+    },
+    "csv": {
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "courseName": "कोर्स का नाम",
+        "courseCode": "कोर्स कोड",
+        "employerName": "नियोक्ता का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "fileType": "फ़ाइल प्रकार",
+        "fileName": "फ़ाइल नाम",
+        "fileDescription": "फ़ाइल विवरण",
+        "uploadDate": "अपलोड तिथि",
+        "trainerReceived": "ट्रेनर को मिला",
+        "trainerSigned": "ट्रेनर हस्ताक्षर",
+        "learnerReceived": "शिक्षार्थी को मिला",
+        "learnerSigned": "शिक्षार्थी हस्ताक्षर",
+        "employerReceived": "नियोक्ता को मिला",
+        "employerSigned": "नियोक्ता हस्ताक्षर",
+        "iqaReceived": "IQA को मिला",
+        "iqaSigned": "IQA हस्ताक्षर"
+      },
+      "filenamePrefix": "awaiting_signature"
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए कोई डेटा उपलब्ध नहीं है",
+      "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट हो गया!",
+      "exportFailed": "डेटा एक्सपोर्ट करते समय त्रुटि हुई। कृपया पुनः प्रयास करें।"
+    }
   },
   "calendar": {
     "pageTitle": "कैलेंडर",
@@ -939,27 +1229,603 @@
   }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "IQA बनाएं प्रश्न",
+    "pageSubtitle": "IQA असेसमेंट प्रश्न टाइप द्वारा प्रबंधित और व्यवस्थित करें",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "सभी",
+      "observeAssessor": "असेसर का अवलोकन",
+      "learnerInterview": "लर्नर इंटरव्यू",
+      "employerInterview": "एम्प्लॉयर इंटरव्यू",
+      "finalCheck": "अंतिम जांच"
+    },
+    "form": {
+      "questionTypeLabel": "प्रश्न प्रकार",
+      "requiredBadge": "आवश्यक",
+      "typePlaceholder": "प्रश्न प्रबंधित करने के लिए एक प्रश्न प्रकार चुनें",
+      "questionLabel": "प्रश्न पाठ",
+      "questionPlaceholder": "अपना प्रश्न यहाँ लिखें...",
+      "questionRequired": "प्रश्न पाठ आवश्यक है",
+      "charactersCount": "{count} अक्षर",
+      "addQuestion": "प्रश्न जोड़ें"
+    },
+    "formDialog": {
+      "createTitle": "नया प्रश्न जोड़ें",
+      "editTitle": "प्रश्न संपादित करें",
+      "description": "प्रश्न प्रकार: {type}",
+      "updating": "अपडेट किया जा रहा है...",
+      "adding": "जोड़ा जा रहा है...",
+      "updateQuestion": "प्रश्न अपडेट करें",
+      "addQuestion": "प्रश्न जोड़ें"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "प्रकार",
+        "question": "प्रश्न",
+        "actions": "क्रियाएँ"
+      },
+      "questionsCount": "{count} प्रश्न",
+      "allTypesSuffix": "(सभी प्रकार)",
+      "addQuestion": "प्रश्न जोड़ें",
+      "searchPlaceholder": "प्रश्न खोजें...",
+      "emptyTitle": "अभी तक कोई प्रश्न नहीं",
+      "emptyDescription": "इस प्रश्न प्रकार के लिए अपना पहला प्रश्न जोड़कर शुरू करें। ऊपर दिए गए \"प्रश्न जोड़ें\" बटन पर क्लिक करें।",
+      "addFirstQuestion": "पहला प्रश्न जोड़ें"
+    },
+    "dialogs": {
+      "deleteTitle": "प्रश्न हटाएँ?",
+      "deleteDescription": "क्या आप वाकई इस प्रश्न को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+      "deleting": "हटाया जा रहा है...",
+      "deleteQuestion": "प्रश्न हटाएँ"
+    },
+    "toast": {
+      "selectTypeFirst": "कृपया पहले प्रश्न प्रकार चुनें",
+      "createSuccess": "प्रश्न सफलतापूर्वक बनाया गया!",
+      "updateSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया!",
+      "saveFailed": "प्रश्न सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "deleteSuccess": "प्रश्न सफलतापूर्वक हटाया गया",
+      "deleteFailed": "प्रश्न हटाने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
   "pricing": {
-    "pageTitle": "Pricing",
-    "pageSubtitle": "Manage pricing configurations"
+    "pageTitle": "प्राइसिंग",
+    "pageSubtitle": "प्राइसिंग कॉन्फ़िगरेशन्स प्रबंधित करें"
   },
   "qaSamplePlan": {
-    "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageTitle": "QA सैंपल प्लान",
+    "pageSubtitle": "QA सैंपल प्लान बनाएं और प्रबंधित करें",
+    "toast": {
+      "invalidCourseRedirecting": "अमान्य कोर्स। रीडायरेक्ट किया जा रहा है...",
+      "sampledLearnersAddedSuccess": "सैंपल किए गए लर्नर सफलतापूर्वक जोड़े गए।",
+      "applySampledLearnersFailed": "सैंपल किए गए लर्नर लागू करने में विफल।",
+      "randomSampledLearnersAddedSuccess": "रैंडम सैंपल किए गए लर्नर सफलतापूर्वक जोड़े गए।",
+      "applyRandomSampledLearnersFailed": "रैंडम सैंपल किए गए लर्नर लागू करने में विफल।"
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "सैंपल लागू करने से पहले एक प्लान चुनें।",
+      "selectSampleTypeBeforeApplyingSamples": "सैंपल लागू करने से पहले सैंपल टाइप चुनें।",
+      "unableToDetermineUserReLogin": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका। कृपया फिर से लॉगिन करें और प्रयास करें।",
+      "selectAtLeastOneUnit": "सैंपल लागू करने से पहले कम से कम एक यूनिट चुनें।",
+      "selectLearnerWithSampledUnits": "लागू करने से पहले कम से कम एक लर्नर (सैंपल्ड यूनिट्स के साथ) चुनें।",
+      "plannedSampleDateRequired": "प्लान्ड सैंपल डेट आवश्यक है",
+      "noLearnersForRandomSamples": "रैंडम सैंपल लागू करने के लिए कोई लर्नर उपलब्ध नहीं है।",
+      "noLearnersWithUnitsForRandomSamples": "रैंडम सैंपल लागू करने के लिए यूनिट्स वाले लर्नर उपलब्ध नहीं हैं।"
+    },
+    "filters": {
+      "title": "फ़िल्टर्स",
+      "assessmentMethods": "असेसमेंट मेथड्स",
+      "selectAll": "सभी चुनें",
+      "sampleType": "सैंपल टाइप",
+      "selectSampleType": "सैंपल टाइप चुनें",
+      "plannedSampleDate": "प्लान्ड सैंपल डेट",
+      "plannedSampleDateRequired": "प्लान्ड सैंपल डेट आवश्यक है",
+      "applySamples": "सैंपल लागू करें",
+      "applyRandomSamples": "रैंडम सैंपल लागू करें",
+      "assessmentMethodTitles": {
+        "WO": "वर्कप्लेस ऑब्ज़र्वेशन",
+        "WP": "वर्कप्लेस प्रोजेक्ट्स / वर्क से बाहर प्रोजेक्ट्स",
+        "PW": "वर्क पोर्टफोलियो",
+        "VI": "वाइवा",
+        "LB": "लॉग बुक / असाइनमेंट्स",
+        "PD": "प्रोफेशनल डिस्कशन्स",
+        "PT": "प्रैक्टिकल टेस्ट",
+        "TE": "टेस्ट / परीक्षाएँ",
+        "RJ": "रिफ्लेक्टिव जर्नल",
+        "OT": "अन्य",
+        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "पोर्टफोलियो सैंपल",
+        "ObserveAssessor": "असेसर का अवलोकन",
+        "LearnerInterview": "लर्नर इंटरव्यू",
+        "EmployerInterview": "एम्प्लॉयर इंटरव्यू",
+        "Final": "अंतिम जांच"
+      }
+    },
+    "evidence": {
+      "page": {
+        "subtitle": "एविडेंस डॉक्यूमेंट्स की समीक्षा करें",
+        "subtitleForUnit": "यूनिट के लिए एविडेंस डॉक्यूमेंट्स की समीक्षा करें: {unitCode}",
+        "confirmationStatements": {
+          "learner": "मैं पुष्टि करता/करती हूँ कि यह यूनिट पूर्ण है और प्रदान किया गया एविडेंस मेरे अपने कार्य का परिणाम है।",
+          "trainer": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
+          "leadAssessorCountersignature": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
+          "employer": "मैं पुष्टि कर सकता/सकती हूँ कि नियोक्ता के रूप में मैंने जिस एविडेंस की जांच की है वह मानकों को पूरा करता है।",
+          "iqa": "मैं पुष्टि कर सकता/सकती हूँ कि आंतरिक गुणवत्ता आश्वासक के रूप में मैंने जिस एविडेंस का सैंपल लिया है वह मानकों को पूरा करता है।",
+          "eqa": "बाहरी QA विज़िट के हिस्से के रूप में सत्यापित।"
+        },
+        "deleteFileDialog": {
+          "title": "फ़ाइल हटाएं?",
+          "description": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "fileLabel": "फ़ाइल",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "toast": {
+          "onlyIqaCanSignOffAllCriteria": "केवल IQA ही सभी मानदंडों पर साइन-ऑफ कर सकता/सकती है।",
+          "evidenceNotFound": "एविडेंस नहीं मिला।",
+          "cannotUncheckSignOffPermanent": "अनचेक नहीं किया जा सकता। साइन-ऑफ लागू होने के बाद स्थायी होता है।",
+          "noUnitsReadyTrainerMustMapFirst": "कोई यूनिट साइन-ऑफ के लिए तैयार नहीं है। पहले ट्रेनर को यूनिट्स मैप करनी होंगी।",
+          "unitCodeRequired": "यूनिट कोड आवश्यक है।",
+          "signedOffUnitsSuccess": "{count} यूनिट(्स) सफलतापूर्वक साइन-ऑफ की गईं।",
+          "signOffUnitsFailed": "यूनिट्स साइन-ऑफ करने में विफल।",
+          "evidenceNotFoundCannotUpdateSignOff": "एविडेंस नहीं मिला। साइन-ऑफ स्थिति अपडेट नहीं हो सकी।",
+          "subUnitNotFoundCannotUpdateSignOff": "सब-यूनिट नहीं मिला। साइन-ऑफ स्थिति अपडेट नहीं हो सकी।",
+          "iqaCanOnlySignOffWhenTrainerMapped": "IQA केवल तब साइन-ऑफ कर सकता/सकती है जब ट्रेनर ने यह यूनिट मैप की हो।",
+          "signOffStatusUpdatedSuccess": "साइन-ऑफ स्थिति सफलतापूर्वक अपडेट हुई।",
+          "signOffStatusUpdateFailed": "साइन-ऑफ स्थिति अपडेट करने में विफल।",
+          "fillAllRequiredFields": "कृपया सभी आवश्यक फ़ील्ड भरें।",
+          "commentAddedSuccess": "कमेंट सफलतापूर्वक जोड़ा गया।",
+          "addCommentFailed": "कमेंट जोड़ने में विफल।",
+          "noEvidenceCannotUpdateStatus": "कोई एविडेंस नहीं मिला। स्थिति अपडेट नहीं हो सकती।",
+          "statusUpdatedSuccess": "स्थिति सफलतापूर्वक अपडेट हुई।",
+          "updateStatusFailed": "स्थिति अपडेट करने में विफल।",
+          "unableDeleteFileReviewIdNotFound": "फ़ाइल हटाई नहीं जा सकी: रिव्यू ID नहीं मिली।",
+          "fileDeletedSuccess": "फ़ाइल सफलतापूर्वक हटाई गई।",
+          "deleteFileFailed": "फ़ाइल हटाने में विफल।",
+          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।"
+        }
+      },
+      "unitProgress": {
+        "title": "यूनिट प्रगति",
+        "pendingTrainerMap": "पेंडिंग ट्रेनर मैप",
+        "pendingIqaMap": "पेंडिंग IQA मैप",
+        "iqaChecked": "IQA चेक्ड",
+        "totalEvidence": "कुल एविडेंस"
+      },
+      "evidenceTable": {
+        "title": "एविडेंस डॉक्यूमेंट्स ({count})",
+        "columns": {
+          "refNo": "रेफ़ नं.",
+          "evidenceDocuments": "एविडेंस डॉक्यूमेंट्स",
+          "evidenceName": "एविडेंस नाम",
+          "evidenceDescription": "एविडेंस विवरण",
+          "assessmentMethod": "मूल्यांकन विधि",
+          "dateUploaded": "अपलोड तिथि",
+          "signOffAllCriteria": "सभी मानदंडों पर साइन-ऑफ"
+        },
+        "showAll": "सभी दिखाएं",
+        "showLess": "कम दिखाएं",
+        "empty": "कोई एविडेंस रिकॉर्ड उपलब्ध नहीं है",
+        "na": "उपलब्ध नहीं",
+        "fileSize": {
+          "zeroBytes": "0 बाइट्स",
+          "bytes": "बाइट्स",
+          "kb": "KB",
+          "mb": "MB",
+          "gb": "GB"
+        }
+      },
+      "confirmationStatements": {
+        "columns": {
+          "role": "भूमिका",
+          "confirmationStatement": "पुष्टि वक्तव्य",
+          "tickWhenCompleted": "पूर्ण होने पर टिक करें",
+          "signedOffBy": "साइन-ऑफ करने वाला",
+          "dated": "तिथि",
+          "generalComments": "सामान्य टिप्पणियाँ",
+          "file": "फ़ाइल"
+        },
+        "roles": {
+          "learner": "लर्नर",
+          "trainer": "ट्रेनर",
+          "leadAssessorCountersignature": "लीड असेसर काउंटरसाइन (यदि आवश्यक)",
+          "employer": "नियोक्ता",
+          "iqa": "IQA",
+          "eqa": "EQA"
+        },
+        "na": "-"
+      },
+      "unitMappingTable": {
+        "title": "यूनिट मैपिंग",
+        "columns": {
+          "code": "कोड",
+          "unitTitle": "यूनिट शीर्षक"
+        },
+        "na": "-"
+      },
+      "unitSignOffModal": {
+        "title": "यूनिट साइन-ऑफ",
+        "description": "इस यूनिट के लिए सामान्य टिप्पणी (अधिकतम 500 अक्षर)।",
+        "commentLabel": "कमेंट",
+        "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
+        "charactersCount": "{count}/500 अक्षर",
+        "cancelClose": "रद्द करें / बंद करें",
+        "submit": "सबमिट"
+      },
+      "commentModal": {
+        "title": "कमेंट जोड़ें",
+        "description": "इस एविडेंस डॉक्यूमेंट के लिए कमेंट जोड़ें",
+        "evidenceLabel": "एविडेंस",
+        "assignmentIdLabel": "असाइनमेंट ID",
+        "existingReviews": "मौजूदा रिव्यू:",
+        "status": {
+          "completed": "पूर्ण",
+          "pending": "पेंडिंग"
+        },
+        "noComment": "कोई कमेंट नहीं",
+        "signedOffAt": "साइन-ऑफ: {date}",
+        "by": "द्वारा",
+        "commentLabel": "कमेंट ({role})",
+        "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
+        "cancel": "रद्द करें",
+        "submitting": "सबमिट हो रहा है...",
+        "submit": "सबमिट",
+        "na": "उपलब्ध नहीं"
+      }
+    },
+    "layout": {
+      "title": "QA सैंपल प्लान",
+      "subtitle": "QA सैंपल प्लान, लर्नर और संबंधित एक्शन्स प्रबंधित करें।"
+    },
+    "actionModal": {
+      "title": "सैंपलिंग से एक्शन्स",
+      "descriptionEdit": "एक्शन विवरण संपादित करें",
+      "descriptionCreate": "नया एक्शन बनाएं",
+      "fields": {
+        "actionWithName": "एक्शन किसके साथ",
+        "actionRequired": "आवश्यक एक्शन",
+        "targetDate": "एक्शन टारगेट तारीख",
+        "status": "स्थिति",
+        "assessorFeedback": "असेसर फीडबैक"
+      },
+      "placeholders": {
+        "selectUser": "एक उपयोगकर्ता चुनें"
+      },
+      "maxCharactersHint": "अधिकतम 1000 अक्षर",
+      "cancelClose": "रद्द करें / बंद करें",
+      "saving": "सहेज रहा है...",
+      "status": {
+        "Pending": "लंबित",
+        "In Progress": "प्रगति में",
+        "Completed": "पूर्ण",
+        "Closed": "बंद"
+      },
+      "validation": {
+        "actionWithRequired": "कृपया एक्शन के लिए उपयोगकर्ता चुनें",
+        "actionRequiredRequired": "आवश्यक एक्शन अनिवार्य है",
+        "actionRequiredMax": "आवश्यक एक्शन 1000 अक्षरों या उससे कम होना चाहिए",
+        "targetDateRequired": "टारगेट तारीख अनिवार्य है"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "तारीख से",
+      "dateTo": "तारीख तक",
+      "exportButton": "एक्सपोर्ट",
+      "exporting": "एक्सपोर्ट हो रहा है...",
+      "filter": "फ़िल्टर",
+      "clear": "क्लियर",
+      "errors": {
+        "selectCourseBeforeFiltering": "फ़िल्टर करने से पहले एक कोर्स चुनें।",
+        "noPlansForCourse": "चुने गए कोर्स के लिए कोई QA प्लान उपलब्ध नहीं है।",
+        "selectCourseAndPlanBeforeFiltering": "फ़िल्टर करने से पहले कोर्स और प्लान दोनों चुनें।"
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "असेसर नाम",
+          "learnerName": "लर्नर नाम",
+          "learnerId": "लर्नर ID",
+          "riskLevel": "रिस्क लेवल",
+          "qaApproved": "QA अप्रूव्ड",
+          "totalUnits": "कुल यूनिट्स",
+          "selectedUnits": "चुनी गई यूनिट्स",
+          "plannedDate": "प्लान्ड तारीख",
+          "courseName": "कोर्स नाम"
+        },
+        "values": {
+          "yes": "हाँ",
+          "no": "नहीं"
+        }
+      },
+      "toast": {
+        "noDataToExport": "एक्सपोर्ट के लिए डेटा उपलब्ध नहीं है",
+        "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट हुआ",
+        "exportFailed": "डेटा एक्सपोर्ट करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "learnersTable": {
+      "title": "लर्नर",
+      "summary": {
+        "viewingPlan": "प्लान देख रहे हैं {planId}{courseName}",
+        "na": "उपलब्ध नहीं"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "लर्नर खोजें...",
+        "expandAll": "सभी विस्तृत करें",
+        "collapseAll": "सभी संक्षिप्त करें"
+      },
+      "units": {
+        "noUnitsAvailable": "इस लर्नर के लिए कोई यूनिट उपलब्ध नहीं है।",
+        "unitsAvailable": "{count} यूनिट उपलब्ध",
+        "unitDefaultName": "यूनिट",
+        "status": {
+          "completed": "पूर्ण",
+          "incomplete": "अपूर्ण"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "QA स्टेटस चुनें",
+        "selectStatusPlaceholder": "स्टेटस चुनें",
+        "hideCompletedLearners": "पूर्ण कोर्स स्टेटस वाले लर्नर न दिखाएं",
+        "qaStatus": {
+          "All": "सभी",
+          "QA Approved": "QA अप्रूव्ड"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "कोर्स चुनें",
+        "selectPlan": "प्लान चुनें",
+        "placeholders": {
+          "selectCourseFirst": "पहले कोर्स चुनें",
+          "loadingPlans": "प्लान लोड हो रहे हैं...",
+          "unableLoadPlans": "प्लान लोड नहीं हो सके",
+          "noPlansAvailable": "कोई प्लान उपलब्ध नहीं",
+          "selectPlan": "प्लान चुनें"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "चुने गए कोर्स के लिए प्लान लोड नहीं हो सके।"
+        }
+      },
+      "columns": {
+        "assessor": "असेसर",
+        "riskLevel": "रिस्क लेवल",
+        "qaApproved": "QA अप्रूव्ड",
+        "learner": "लर्नर",
+        "actions": "एक्शन्स"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "पहले कोर्स और प्लान चुनें, फिर लर्नर लोड करने के लिए फ़िल्टर चुनें।",
+        "noLearnersMatch": "वर्तमान फ़िल्टर्स से कोई लर्नर मेल नहीं खाता।"
+      },
+      "loading": "लर्नर लोड हो रहे हैं...",
+      "errors": {
+        "fetchLearners": "इस प्लान के लिए लर्नर फ़ेच करते समय कुछ गलत हुआ।"
+      },
+      "actions": {
+        "viewDocumentsEvidence": "डॉक्यूमेंट्स / एविडेंस देखें",
+        "viewPortfolio": "पोर्टफोलियो देखें",
+        "unableOpenDocumentsLearnerIdMissing": "डॉक्यूमेंट्स नहीं खुल सके। लर्नर ID नहीं मिली।",
+        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।"
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका",
+        "unableToDetermineUserReLogin": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका। कृपया दोबारा लॉगिन करें और पुनः प्रयास करें।",
+        "loadPlanDetailsFailed": "प्लान डिटेल लोड करने में विफल",
+        "questionsSavedSuccess": "प्रश्न सफलतापूर्वक सहेजे गए",
+        "saveQuestionsFailed": "प्रश्न सहेजने में विफल",
+        "missingRequiredInfo": "आवश्यक जानकारी गायब है",
+        "planDetailUpdatedSuccess": "सैंपल प्लान डिटेल सफलतापूर्वक अपडेट हुई",
+        "updatePlanDetailFailed": "सैंपल प्लान डिटेल अपडेट करने में विफल",
+        "sampledLearnerRemovedSuccess": "सैंपल किया गया लर्नर सफलतापूर्वक हटाया गया",
+        "removeSampledLearnerFailed": "सैंपल किए गए लर्नर को हटाने में विफल",
+        "actionUpdatedSuccess": "एक्शन सफलतापूर्वक अपडेट हुआ",
+        "actionCreatedSuccess": "एक्शन सफलतापूर्वक बनाया गया",
+        "actionDeletedSuccess": "एक्शन सफलतापूर्वक हटाया गया",
+        "saveActionFailed": "एक्शन सहेजने में विफल",
+        "deleteActionFailed": "एक्शन हटाने में विफल",
+        "documentUploadedSuccess": "डॉक्यूमेंट सफलतापूर्वक अपलोड हुआ",
+        "uploadDocumentFailed": "डॉक्यूमेंट अपलोड करने में विफल",
+        "documentDeletedSuccess": "डॉक्यूमेंट सफलतापूर्वक हटाया गया",
+        "deleteDocumentFailed": "डॉक्यूमेंट हटाने में विफल",
+        "selectPlanBeforeCreatingNewEntry": "नई एंट्री बनाने से पहले कृपया एक प्लान चुनें।",
+        "noUnitSelectedSelectUnitFirst": "कोई यूनिट चयनित नहीं है। कृपया पहले एक यूनिट चुनें।",
+        "learnerIdNotFound": "लर्नर ID नहीं मिली।",
+        "invalidUnitInformation": "अमान्य यूनिट जानकारी।",
+        "newEntryCreatedSuccess": "नई एंट्री सफलतापूर्वक बनाई गई।",
+        "createNewEntryFailed": "नई एंट्री बनाने में विफल।",
+        "selectFormToAllocate": "अलॉट करने के लिए एक फ़ॉर्म चुनें।",
+        "surveyAllocatedSuccess": "सर्वे सफलतापूर्वक अलॉट हुआ",
+        "allocateSurveyFailed": "सर्वे अलॉट करने में विफल",
+        "formUnlinkedSuccess": "फ़ॉर्म सफलतापूर्वक अनलिंक हुआ",
+        "unlinkFormFailed": "फ़ॉर्म अनलिंक करने में विफल",
+        "formMarkedCompletedSuccess": "फ़ॉर्म को पूर्ण के रूप में चिह्नित किया गया",
+        "markCompletedFailed": "पूर्ण के रूप में चिह्नित करने में विफल"
+      },
+      "header": {
+        "title": "सैंपल संपादित करें"
+      },
+      "tabs": {
+        "tabLabel": "FS {index} - ({date})",
+        "noDate": "कोई तिथि नहीं",
+        "noPlannedDates": "कोई प्लान्ड डेट नहीं",
+        "creating": "बनाया जा रहा है...",
+        "createNew": "नया बनाएं"
+      },
+      "actionButtons": {
+        "cancelClose": "रद्द करें / बंद करें",
+        "delete": "हटाएं",
+        "saving": "सहेजा जा रहा है...",
+        "save": "सहेजें",
+        "saveClose": "सहेजें और बंद करें"
+      },
+      "evidenceLinksTable": {
+        "title": "सैंपल के लिए एविडेंस लिंक",
+        "columns": {
+          "examinedEvidence": "जाँचा गया एविडेंस",
+          "assessmentMethodsUsed": "उपयोग की गई मूल्यांकन विधियाँ",
+          "actions": "एक्शन्स"
+        },
+        "loading": "एविडेंस लोड हो रहा है...",
+        "empty": "इस सैंपल पर कोई एविडेंस लिंक नहीं है",
+        "na": "उपलब्ध नहीं"
+      },
+      "actionsTable": {
+        "title": "सैंपल के लिए एक्शन्स",
+        "addAction": "एक्शन जोड़ें",
+        "columns": {
+          "summary": "सारांश",
+          "actionRequired": "आवश्यक एक्शन",
+          "actionWith": "किसके साथ",
+          "targetDate": "टारगेट तारीख",
+          "actions": "एक्शन्स"
+        },
+        "loading": "एक्शन्स लोड हो रहे हैं...",
+        "empty": "इस सैंपल पर कोई एक्शन नहीं है",
+        "na": "उपलब्ध नहीं"
+      },
+      "iqaQuestions": {
+        "title": "IQA प्रश्न",
+        "save": "सहेजें",
+        "columns": {
+          "question": "प्रश्न",
+          "yes": "हाँ",
+          "no": "नहीं",
+          "actions": "एक्शन्स"
+        },
+        "answers": {
+          "yes": "हाँ",
+          "no": "नहीं"
+        },
+        "empty": "इस सैंपल के लिए कोई IQA प्रश्न उपलब्ध नहीं है।"
+      },
+      "formSections": {
+        "basicDetails": {
+          "qaName": "QA नाम",
+          "type": "प्रकार",
+          "selectType": "प्रकार चुनें",
+          "types": {
+            "formative": "फॉर्मेटिव",
+            "summative": "समेटिव"
+          },
+          "sampleType": "सैंपल प्रकार",
+          "selectSampleType": "सैंपल प्रकार चुनें",
+          "sampleTypes": {
+            "portfolio": "सैंपल पोर्टफोलियो",
+            "observeAssessor": "असेसर का अवलोकन",
+            "learnerInterview": "लर्नर इंटरव्यू",
+            "employerInterview": "नियोक्ता इंटरव्यू",
+            "final": "अंतिम जाँच"
+          },
+          "plannedDate": "प्लान्ड तारीख",
+          "completedDate": "पूर्ण तारीख"
+        },
+        "assessmentMethods": {
+          "title": "मूल्यांकन विधियाँ"
+        },
+        "assessmentProcesses": {
+          "title": "मूल्यांकन प्रक्रियाएँ"
+        },
+        "assessorDecision": {
+          "title": "असेसर का निर्णय सही",
+          "yes": "हाँ",
+          "no": "नहीं"
+        },
+        "feedback": {
+          "title": "फ़ीडबैक",
+          "placeholder": "कृपया फ़ीडबैक लिखें। अधिकतम 4400 अक्षर।"
+        },
+        "iqaConclusion": {
+          "title": "IQA निष्कर्ष"
+        }
+      },
+      "dialogs": {
+        "deleteAction": {
+          "title": "एक्शन हटाएं?",
+          "description": "क्या आप वाकई इस एक्शन को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteDocument": {
+          "title": "डॉक्यूमेंट हटाएं?",
+          "description": "क्या आप वाकई इस डॉक्यूमेंट को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "deleting": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteForm": {
+          "title": "आवंटित फ़ॉर्म हटाएं?",
+          "description": "क्या आप वाकई इस फ़ॉर्म को सैंपल से अनलिंक करना चाहते हैं?",
+          "cancel": "रद्द करें",
+          "removing": "हटाया जा रहा है...",
+          "confirm": "हटाएं"
+        },
+        "deleteLearner": {
+          "title": "सैंपल किया गया लर्नर हटाएं?",
+          "description": "क्या आप वाकई इस सैंपल किए गए लर्नर को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+          "cancel": "रद्द करें",
+          "confirm": "हटाएं"
+        }
+      }
+    }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+  "pageTitle": "सेशन प्रकार",
+  "pageSubtitle": "सेशन टाइप कॉन्फ़िगरेशन प्रबंधित करें",
+  "formDialog": {
+    "createTitle": "सेशन प्रकार जोड़ें",
+    "editTitle": "सेशन प्रकार संपादित करें",
+    "descriptionCreate": "नया सेशन प्रकार बनाएं",
+    "descriptionEdit": "सेशन प्रकार विवरण अपडेट करें"
+  },
+  "form": {
+    "centreLabel": "सेंटर",
+    "centrePlaceholder": "सेंटर चुनें",
+    "centreHelperText": "सेशन प्रकार चुने गए सेंटर के लिए बनाया जाएगा। सेंटर एडमिन केवल अपना सेंटर देखते हैं; ऑर्ग एडमिन सभी देखते हैं।",
+    "requiredAsterisk": "*",
+    "nameLabel": "सेशन प्रकार नाम",
+    "namePlaceholder": "सेशन प्रकार का नाम दर्ज करें",
+    "nameRequired": "सेशन प्रकार नाम आवश्यक है",
+    "offTheJobLabel": "ऑफ द जॉब",
+    "activeLabel": "सक्रिय",
+    "updating": "अपडेट हो रहा है...",
+    "creating": "बनाया जा रहा है...",
+    "selectCentre": "सेंटर चुनें",
+    "update": "अपडेट",
+    "create": "बनाएं"
+  },
+  "table": {
+    "title": "सेशन प्रकार",
+    "count": "{count} सेशन प्रकार",
+    "addButton": "सेशन प्रकार जोड़ें",
+    "headers": {
+      "order": "क्रम",
+      "name": "नाम",
+      "offTheJob": "ऑफ द जॉब",
+      "active": "सक्रिय",
+      "actions": "क्रियाएँ"
+    },
+    "emptyDescription": "कोई सेशन प्रकार नहीं मिला। शुरू करने के लिए एक सेशन प्रकार बनाएं।"
+  },
+  "dialogs": {
+    "deleteTitle": "हटाने की पुष्टि करें",
+    "deleteDescription": "क्या आप वाकई इस सेशन प्रकार को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+    "deleting": "हटाया जा रहा है...",
+    "delete": "हटाएँ"
+  },
+  "toast": {
+    "updateSuccess": "सेशन प्रकार सफलतापूर्वक अपडेट हुआ",
+    "createSuccess": "सेशन प्रकार सफलतापूर्वक बनाया गया",
+    "saveFailed": "सेशन प्रकार सहेजने में विफल",
+    "deleteSuccess": "सेशन प्रकार सफलतापूर्वक हटाया गया",
+    "deleteFailed": "सेशन प्रकार हटाने में विफल",
+    "activatedSuccess": "सेशन प्रकार सफलतापूर्वक सक्रिय हुआ",
+    "deactivatedSuccess": "सेशन प्रकार सफलतापूर्वक निष्क्रिय हुआ"
+  }
   },
   "surveys": {
     "pageTitle": "सर्वेक्षण",
@@ -1177,171 +2043,787 @@
     }
   },
   "timelogExport": {
-    "pageTitle": "Timelog Data Export",
-    "pageSubtitle": "Filter and export timelog data to CSV format",
+    "pageTitle": "टाइमलॉग डेटा एक्सपोर्ट",
+    "pageSubtitle": "टाइमलॉग डेटा को फ़िल्टर करें और CSV फ़ॉर्मेट में एक्सपोर्ट करें",
     "exportInformation": {
-      "title": "Export Information",
-      "description": "Guidelines for using the timelog data export feature",
-      "guideline1": "Use the filters above to narrow down the timelog data you want to export",
-      "guideline2": "The exported CSV file will include all timelog entries matching your selected criteria",
-      "guideline3": "Date range filters will include entries from the start of \"From\" date to the end of \"To\" date",
-      "guideline4": "\"Show only Off the Job Records\" will filter to include only off-the-job training activities",
-      "guideline5": "If no filters are selected, all available timelog data will be exported"
+      "title": "एक्सपोर्ट जानकारी",
+      "description": "टाइमलॉग डेटा एक्सपोर्ट फीचर का उपयोग करने के लिए दिशानिर्देश",
+      "guideline1": "ऊपर दिए गए फ़िल्टर का उपयोग करके उस टाइमलॉग डेटा को सीमित करें जिसे आप एक्सपोर्ट करना चाहते हैं",
+      "guideline2": "एक्सपोर्ट की गई CSV फ़ाइल में आपके चुने गए मानदंडों से मेल खाने वाली सभी टाइमलॉग एंट्रियाँ शामिल होंगी",
+      "guideline3": "तिथि सीमा फ़िल्टर में \"से\" तिथि की शुरुआत से लेकर \"तक\" तिथि के अंत तक की एंट्रियाँ शामिल होंगी",
+      "guideline4": "\"केवल ऑफ द जॉब रिकॉर्ड्स दिखाएँ\" केवल ऑफ-द-जॉब प्रशिक्षण गतिविधियों को शामिल करने के लिए फ़िल्टर करेगा",
+      "guideline5": "यदि कोई फ़िल्टर चयनित नहीं है, तो सभी उपलब्ध टाइमलॉग डेटा एक्सपोर्ट किया जाएगा"
+    },
+    "filters": {
+      "cardTitle": "फ़िल्टर विकल्प",
+      "cardDescription": "टाइमलॉग डेटा को एक्सपोर्ट करने के लिए फ़िल्टर चुनें",
+      "errorInvalidDateRange": "तिथि \"से\" तिथि \"तक\" से बाद की नहीं हो सकती",
+      "toastExportSuccess": "टाइमलॉग डेटा सफलतापूर्वक एक्सपोर्ट किया गया!",
+      "noDataFound": "चुने गए फ़िल्टर के लिए कोई डेटा नहीं मिला।",
+      "genericError": "डेटा एक्सपोर्ट करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+      "filterByAdminLabel": "एडमिन के अनुसार",
+      "filterByEmployerLabel": "नियोक्ता के अनुसार",
+      "filterByCourseLabel": "कोर्स के अनुसार",
+      "filterByCurriculumManagerLabel": "करिकुलम मैनेजर के अनुसार",
+      "pleaseSelectOption": "कृपया चुनें",
+      "dateFromLabel": "तिथि सीमा (से)",
+      "dateToLabel": "तिथि सीमा (तक)",
+      "pickDatePlaceholder": "तिथि चुनें",
+      "showOnlyOffTheJobLabel": "केवल ऑफ द जॉब रिकॉर्ड्स दिखाएँ",
+      "clearButton": "साफ करें",
+      "exportingLabel": "एक्सपोर्ट हो रहा है...",
+      "exportCsvButton": "CSV में एक्सपोर्ट करें"
     }
   },
   "trainerRiskRating": {
-    "pageTitle": "Trainer Risk Rating",
-    "pageSubtitle": "Manage risk ratings for trainers, courses, and assessment methods",
-    "selectTrainer": "Select a Trainer",
-    "selectTrainerDescription": "Select a trainer from the list to view their courses and assessment methods",
+    "pageTitle": "ट्रेनर जोखिम रेटिंग",
+    "pageSubtitle": "ट्रेनरों, पाठ्यक्रमों और मूल्यांकन विधियों के लिए जोखिम रेटिंग प्रबंधित करें",
+    "selectTrainer": "एक ट्रेनर चुनें",
+    "selectTrainerDescription": "उनके पाठ्यक्रम और मूल्यांकन विधियाँ देखने के लिए सूची से एक ट्रेनर चुनें",
+    "trainerList": {
+      "title": "ट्रेनर",
+      "noTrainersFound": "कोई ट्रेनर नहीं मिला"
+    },
+    "riskSettings": {
+      "title": "जोखिम सेटिंग कॉन्फ़िगरेशन",
+      "highRiskPercent": "उच्च जोखिम %",
+      "mediumRiskPercent": "मध्यम जोखिम %",
+      "lowRiskPercent": "कम जोखिम %",
+      "highRiskError": "उच्च जोखिम 0 और 100 के बीच होना चाहिए",
+      "mediumRiskError": "मध्यम जोखिम 0 और 100 के बीच होना चाहिए",
+      "lowRiskError": "कम जोखिम 0 और 100 के बीच होना चाहिए",
+      "cannotExceedHigh": "उच्च जोखिम मान ({value}) से अधिक नहीं हो सकता",
+      "cannotExceedMedium": "मध्यम जोखिम मान ({value}) से अधिक नहीं हो सकता",
+      "fixValidationErrors": "सहेजने से पहले कृपया सत्यापन त्रुटियाँ ठीक करें",
+      "savedSuccess": "जोखिम सेटिंग सफलतापूर्वक सहेजी गई",
+      "saveFailed": "जोखिम सेटिंग सहेजने में विफल",
+      "saving": "सहेज रहा है...",
+      "saveSettings": "सेटिंग सहेजें"
+    },
+    "coursesTable": {
+      "title": "पाठ्यक्रम ({count})",
+      "setAllLow": "सभी कम सेट करें",
+      "setAllMedium": "सभी मध्यम सेट करें",
+      "setAllHigh": "सभी उच्च सेट करें",
+      "saveCourses": "पाठ्यक्रम सहेजें",
+      "saving": "सहेज रहा है...",
+      "noCoursesFound": "कोई पाठ्यक्रम नहीं मिला",
+      "courseName": "पाठ्यक्रम का नाम",
+      "riskLevel": "जोखिम स्तर",
+      "actions": "कार्रवाई",
+      "addCommentFor": "{courseName} के लिए टिप्पणी जोड़ें",
+      "commentPlaceholder": "अपनी टिप्पणी यहाँ दर्ज करें...",
+      "saveComment": "टिप्पणी सहेजें",
+      "cancel": "रद्द करें",
+      "allCoursesSetTo": "सभी पाठ्यक्रम {value} जोखिम स्तर पर सेट किए गए",
+      "ratingsSavedSuccess": "पाठ्यक्रम जोखिम रेटिंग सफलतापूर्वक सहेजी गई",
+      "ratingsSaveFailed": "पाठ्यक्रम जोखिम रेटिंग सहेजने में विफल",
+      "trainerIdRequired": "ट्रेनर आईडी आवश्यक है",
+      "commentSavedSuccess": "टिप्पणी सफलतापूर्वक सहेजी गई",
+      "commentSaveFailed": "टिप्पणी सहेजने में विफल"
+    },
+    "assessmentMethodsTable": {
+      "title": "मूल्यांकन विधि जोखिम ({count})",
+      "setAllLow": "सभी कम सेट करें",
+      "setAllMedium": "सभी मध्यम सेट करें",
+      "setAllHigh": "सभी उच्च सेट करें",
+      "saveAssessment": "मूल्यांकन सहेजें",
+      "saving": "सहेज रहा है...",
+      "assessmentMethod": "मूल्यांकन विधि",
+      "riskLevel": "जोखिम स्तर",
+      "allSetTo": "सभी मूल्यांकन विधियाँ {value} जोखिम स्तर पर सेट की गई",
+      "ratingsSavedSuccess": "मूल्यांकन जोखिम रेटिंग सफलतापूर्वक सहेजी गई",
+      "ratingsSaveFailed": "मूल्यांकन जोखिम रेटिंग सहेजने में विफल"
+    },
     "riskOptions": {
-      "pleaseSelect": "Please select",
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High"
+      "pleaseSelect": "कृपया चुनें",
+      "low": "कम",
+      "medium": "मध्यम",
+      "high": "उच्च"
     },
     "assessmentMethods": {
       "pe": "PE",
-      "peFullName": "Professional Discussion",
+      "peFullName": "व्यावसायिक चर्चा",
       "do": "DO",
-      "doFullName": "Direct Observation",
+      "doFullName": "प्रत्यक्ष अवलोकन",
       "wt": "WT",
-      "wtFullName": "Witness Testimony",
+      "wtFullName": "गवाह की गवाही",
       "qa": "QA",
-      "qaFullName": "Question and Answer",
+      "qaFullName": "प्रश्न और उत्तर",
       "ps": "PS",
-      "psFullName": "Product Sample",
+      "psFullName": "उत्पाद नमूना",
       "di": "DI",
-      "diFullName": "Discussion",
+      "diFullName": "चर्चा",
       "si": "SI",
-      "siFullName": "Simulation",
+      "siFullName": "सिमुलेशन",
       "ee": "ET",
-      "eeFullName": "Expert Evidence",
+      "eeFullName": "विशेषज्ञ साक्ष्य",
       "ba": "RA",
-      "baFullName": "Basic Assessment",
+      "baFullName": "मूल मूल्यांकन",
       "ot": "OT",
-      "otFullName": "Other",
+      "otFullName": "अन्य",
       "ipl": "RPL",
-      "iplFullName": "Individual Personal Log",
+      "iplFullName": "व्यक्तिगत लॉग",
       "lo": "LO",
-      "loFullName": "Learning Outcome"
+      "loFullName": "सीखने का परिणाम"
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "कल्याण संसाधन प्रबंधन",
+    "pageSubtitle": "सीखने वालों के लिए कल्याण संसाधनों का प्रबंधन करें—जोड़ना, संपादित करना और उपलब्धता बदलना",
+    "table": {
+      "searchPlaceholder": "नाम से संसाधन खोजें...",
+      "exportFeedbacks": "फीडबैक एक्सपोर्ट करें",
+      "addResource": "संसाधन जोड़ें",
+      "noResourcesFound": "कोई संसाधन नहीं मिला।",
+      "openMenu": "मेनू खोलें",
+      "invalidDate": "अमान्य तिथि",
+      "status": {
+        "active": "सक्रिय",
+        "inactive": "निष्क्रिय"
+      },
+      "actions": {
+        "edit": "संपादित करें",
+        "delete": "हटाएं"
+      },
+      "columns": {
+        "name": "नाम",
+        "status": "स्थिति",
+        "createdAt": "बनाया गया",
+        "createdBy": "द्वारा बनाया गया",
+        "actions": "कार्रवाई"
+      }
+    },
+    "deleteDialog": {
+      "title": "संसाधन हटाएं",
+      "description": "क्या आप वाकई \"{name}\" हटाना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "deleting": "हटा रहा है..."
+    },
+    "form": {
+      "titleAdd": "संसाधन जोड़ें",
+      "titleEdit": "संसाधन संपादित करें",
+      "descriptionAdd": "नया कल्याण संसाधन जोड़ने के लिए विवरण भरें।",
+      "descriptionEdit": "नीचे संसाधन की जानकारी अपडेट करें।",
+      "resourceName": "संसाधन का नाम",
+      "resourceType": "संसाधन प्रकार",
+      "uploadFile": "फ़ाइल अपलोड करें",
+      "resourceUrl": "संसाधन URL",
+      "description": "विवरण",
+      "active": "सक्रिय",
+      "addResource": "संसाधन जोड़ें",
+      "updateResource": "संसाधन अपडेट करें",
+      "currentFile": "वर्तमान फ़ाइल:",
+      "uploadNewToReplace": "बदलने के लिए नई फ़ाइल अपलोड करें",
+      "dragDrop": "अपनी फ़ाइल यहाँ ड्रैग-ड्रॉप करें या",
+      "browse": "ब्राउज़ करें",
+      "maxSizeAndSupported": "अधिकतम {max}MB. समर्थित: {types}",
+      "resourceTypeOptions": {
+        "url": "URL लिंक",
+        "file": "फ़ाइल अपलोड"
+      },
+      "placeholders": {
+        "resourceName": "संसाधन नाम दर्ज करें",
+        "resourceType": "संसाधन प्रकार चुनें",
+        "resourceUrl": "https://example.com/resource",
+        "description": "संसाधन विवरण दर्ज करें"
+      },
+      "validation": {
+        "resourceNameRequired": "संसाधन नाम आवश्यक है",
+        "pleaseUploadFile": "कृपया एक फ़ाइल अपलोड करें",
+        "urlRequired": "URL आवश्यक है",
+        "fileSizeExceeds": "फ़ाइल आकार {max}MB सीमा से अधिक है",
+        "unsupportedFileType": "असमर्थित फ़ाइल प्रकार। अनुमत: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "संसाधन का नाम",
+        "feedback": "फीडबैक",
+        "createdAt": "बनाया गया"
+      }
+    },
+    "toast": {
+      "loadFailed": "कल्याण संसाधन लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "activatedSuccess": "संसाधन सफलतापूर्वक सक्रिय किया गया",
+      "deactivatedSuccess": "संसाधन सफलतापूर्वक निष्क्रिय किया गया",
+      "activateFailed": "संसाधन सक्रिय करने में विफल",
+      "deactivateFailed": "संसाधन निष्क्रिय करने में विफल",
+      "deletedSuccess": "संसाधन सफलतापूर्वक हटाया गया",
+      "deleteFailed": "संसाधन हटाने में विफल",
+      "noDataToExport": "एक्सपोर्ट करने के लिए डेटा उपलब्ध नहीं है",
+      "noFeedbackToExport": "एक्सपोर्ट करने के लिए फीडबैक डेटा उपलब्ध नहीं है",
+      "exportSuccess": "फीडबैक रिपोर्ट सफलतापूर्वक एक्सपोर्ट की गई",
+      "addedSuccess": "संसाधन सफलतापूर्वक जोड़ा गया",
+      "addFailed": "संसाधन जोड़ने में विफल",
+      "updatedSuccess": "संसाधन सफलतापूर्वक अपडेट किया गया",
+      "updateFailed": "संसाधन अपडेट करने में विफल"
+    }
+  },
+  "support": {
+    "pageTitle": "सहायता",
+    "pageSubtitle": "सहायता अनुरोध जमा करें और प्रबंधित करें",
+    "table": {
+      "columns": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता का नाम",
+        "date": "तारीख",
+        "status": "स्थिति",
+        "action": "कार्रवाई"
+      },
+      "actions": {
+        "edit": "संपादित करें",
+        "delete": "हटाएं"
+      },
+      "addRequest": "अनुरोध जोड़ें",
+      "loading": "लोड हो रहा है...",
+      "noResults": "कोई सहायता अनुरोध नहीं मिला।",
+      "csvExportSuccess": "CSV सफलतापूर्वक निर्यात हुआ",
+      "toast": {
+        "deleteSuccess": "सहायता अनुरोध सफलतापूर्वक हटाया गया!",
+        "deleteFailed": "सहायता अनुरोध हटाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "form": {
+      "titleAdd": "अनुरोध जोड़ें",
+      "titleEdit": "सहायता अनुरोध संपादित करें",
+      "descriptionAdd": "नया सहायता अनुरोध जमा करें।",
+      "descriptionEdit": "सहायता अनुरोध का विवरण अपडेट करें।",
+      "fields": {
+        "titleLabel": "शीर्षक",
+        "titlePlaceholder": "अपना शीर्षक जोड़ें",
+        "descriptionLabel": "विवरण",
+        "descriptionPlaceholder": "अपना विवरण जोड़ें",
+        "statusLabel": "स्थिति चुनें",
+        "statusPlaceholder": "स्थिति चुनें",
+        "status": {
+          "pending": "लंबित",
+          "inProgress": "प्रगति में",
+          "reject": "अस्वीकृत",
+          "resolve": "हल हो गया"
+        }
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "creating": "बन रहा है...",
+        "updating": "अपडेट हो रहा है...",
+        "save": "सहेजें",
+        "update": "अपडेट करें"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "descriptionRequired": "विवरण आवश्यक है"
+      },
+      "toast": {
+        "userIdNotFound": "उपयोगकर्ता ID नहीं मिला",
+        "createSuccess": "सहायता अनुरोध सफलतापूर्वक बनाया गया!",
+        "updateSuccess": "सहायता अनुरोध सफलतापूर्वक अपडेट हुआ!",
+        "createFailed": "सहायता अनुरोध बनाने में विफल। कृपया पुनः प्रयास करें।",
+        "updateFailed": "सहायता अनुरोध अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "deleteDialog": {
+      "title": "सहायता हटाएं?",
+      "description": "सहायता अनुरोध \"{title}\" हटाने से संबंधित सभी डेटा और संबंध भी हट जाएंगे। हटाना जारी रखें?",
+      "cancel": "रद्द करें",
+      "confirm": "सहायता हटाएं",
+      "deleting": "हट रहा है..."
+    }
+  },
+  "tickets": {
+    "pageTitle": "टिकट",
+    "pageSubtitle": "टिकट बनाएं और प्रबंधित करें",
+    "table": {
+      "columns": {
+        "ticketNumber": "टिकट #",
+        "title": "शीर्षक",
+        "raisedBy": "बनाने वाला",
+        "status": "स्थिति",
+        "priority": "प्राथमिकता",
+        "assignedTo": "नियत",
+        "created": "बनाया गया",
+        "actions": "कार्रवाई"
+      },
+      "actions": {
+        "view": "देखें",
+        "assign": "नियत करें",
+        "delete": "हटाएं"
+      },
+      "searchPlaceholder": "टिकट खोजें...",
+      "filters": {
+        "status": {
+          "placeholder": "स्थिति",
+          "all": "सभी स्थितियाँ"
+        },
+        "priority": {
+          "placeholder": "प्राथमिकता",
+          "all": "सभी प्राथमिकताएँ"
+        },
+        "view": {
+          "placeholder": "देखें",
+          "mine": "मेरे टिकट",
+          "under": "मेरे दायरे में"
+        }
+      },
+      "view": {
+        "myTickets": "दिख रहा है: मेरे टिकट",
+        "underScope": "दिख रहा है: मेरे दायरे में (दूसरों द्वारा बनाए गए)"
+      },
+      "export": {
+        "tooltip": "CSV निर्यात करें"
+      },
+      "raiseButton": "टिकट बनाएं",
+      "loading": "लोड हो रहा है...",
+      "noResults": "कोई टिकट नहीं मिला।",
+      "csvExportSuccess": "CSV सफलतापूर्वक निर्यात हुआ",
+      "toast": {
+        "deleteSuccess": "टिकट सफलतापूर्वक हटाया गया!",
+        "deleteFailed": "टिकट हटाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "raise": {
+      "title": "टिकट बनाएं",
+      "description": "नया टिकट जमा करें। स्पष्ट शीर्षक और विवरण दें।",
+      "fields": {
+        "titleLabel": "शीर्षक",
+        "titlePlaceholder": "संक्षिप्त शीर्षक",
+        "descriptionLabel": "विवरण",
+        "descriptionPlaceholder": "समस्या या अनुरोध का विवरण दें",
+        "priorityLabel": "प्राथमिकता",
+        "priorityPlaceholder": "प्राथमिकता",
+        "priority": {
+          "low": "कम",
+          "medium": "मध्यम",
+          "high": "उच्च",
+          "urgent": "जरूरी"
+        },
+        "centreLabel": "केंद्र (वैकल्पिक)",
+        "centrePlaceholder": "केंद्र ID"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "creating": "बन रहा है...",
+        "raise": "टिकट बनाएं"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "descriptionRequired": "विवरण आवश्यक है"
+      },
+      "toast": {
+        "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",
+        "createFailed": "टिकट बनाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "detail": {
+      "titleFallback": "टिकट",
+      "loading": "लोड हो रहा है...",
+      "status": {
+        "label": "स्थिति",
+        "markClosed": "बंद के रूप में चिह्नित करें",
+        "reopen": "फिर से खोलें"
+      },
+      "priority": {
+        "label": "प्राथमिकता"
+      },
+      "raisedBy": "बनाने वाला",
+      "assignedTo": "नियत",
+      "unassigned": "अनियत",
+      "created": "बनाया गया",
+      "lastActivity": "अंतिम गतिविधि",
+      "attachments": {
+        "label": "संलग्नक",
+        "itemFallback": "संलग्नक"
+      },
+      "toast": {
+        "statusUpdated": "स्थिति अपडेट हो गई।",
+        "statusUpdateFailed": "स्थिति अपडेट करने में विफल।",
+        "priorityUpdated": "प्राथमिकता अपडेट हो गई।",
+        "priorityUpdateFailed": "प्राथमिकता अपडेट करने में विफल।"
+      }
+    },
+    "deleteDialog": {
+      "title": "टिकट हटाएं?",
+      "description": "टिकट \"{title}\" ({ticketNumber}) सॉफ्ट-डिलीट हो जाएगा। आप इसे सूची में नहीं देख पाएंगे। इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "deleting": "हटाया जा रहा है..."
+    },
+    "comments": {
+      "title": "टिप्पणियाँ",
+      "noComments": "अभी तक कोई टिप्पणी नहीं।",
+      "placeholder": "टिप्पणी जोड़ें...",
+      "send": "भेजें",
+      "sending": "भेज रहा है...",
+      "unknownUser": "अज्ञात",
+      "toast": {
+        "addSuccess": "टिप्पणी जोड़ी गई।",
+        "addFailed": "टिप्पणी जोड़ने में विफल।"
+      }
+    },
+    "assignDialog": {
+      "title": "टिकट नियत करें",
+      "description": "इस टिकट को किसी उपयोगकर्ता को नियत करें। केवल समान संगठन/केंद्र के उपयोगकर्ता चुने जा सकते हैं।",
+      "assignedToLabel": "नियत",
+      "selectUserPlaceholder": "उपयोगकर्ता चुनें",
+      "unassigned": "अनियत",
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "saving": "सहेज रहा है...",
+      "userFallback": "उपयोगकर्ता {id}",
+      "toast": {
+        "success": "टिकट नियत करना अपडेट हो गया।",
+        "failed": "नियत करना अपडेट करने में विफल।"
+      }
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
-  },
-  "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
-    "form": {
-      "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
-      "required": "*"
-    },
-    "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
-    },
-    "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "पूरक प्रशिक्षण",
+      "pageSubtitle": "अपने पूरक प्रशिक्षण संसाधनों तक पहुँचें और अपनी प्रगति को ट्रैक करें",
+      "table": {
+        "loading": "संसाधन लोड हो रहे हैं...",
+        "searchPlaceholder": "संसाधन खोजें...",
+        "noResourcesFound": "कोई संसाधन नहीं मिला।",
+        "columns": {
+          "resourceName": "संसाधन का नाम",
+          "description": "विवरण",
+          "createdDate": "बनाने की तिथि",
+          "lastOpened": "अंतिम बार खोला गया",
+          "feedback": "फीडबैक",
+          "actions": "कार्रवाई"
+        },
+        "actions": {
+          "openDownload": "खोलें / डाउनलोड करें",
+          "visitLink": "लिंक खोलें",
+          "feedback": "फीडबैक"
+        },
+        "dates": {
+          "never": "कभी नहीं",
+          "invalid": "अमान्य तिथि"
+        },
+        "feedback": {
+          "none": "कोई फीडबैक नहीं",
+          "values": {
+            "veryHelpful": "बहुत उपयोगी",
+            "helpful": "उपयोगी",
+            "neutral": "तटस्थ",
+            "notHelpful": "उपयोगी नहीं",
+            "unknown": "अज्ञात"
+          }
+        },
+        "columnVisibility": {
+          "label": "कॉलम दृश्यता",
+          "button": "कॉलम"
+        },
+        "toast": {
+          "trackFailed": "संसाधन एक्सेस ट्रैक करने में विफल"
+        }
+      },
+      "feedbackDialog": {
+        "title": "यह संसाधन आपके लिए कैसा रहा?",
+        "description": "अपना अनुभव रेट करने के लिए एक इमोजी चुनें",
+        "labels": {
+          "veryHelpful": "बहुत उपयोगी",
+          "helpful": "उपयोगी",
+          "neutral": "तटस्थ",
+          "notHelpful": "उपयोगी नहीं"
+        },
+        "messages": {
+          "veryHelpful": "बहुत बढ़िया! यह संसाधन बहुत उपयोगी था",
+          "helpful": "अच्छा! यह संसाधन उपयोगी था",
+          "neutral": "ठीक है, यह संसाधन ठीक था",
+          "notHelpful": "इस संसाधन में सुधार किया जा सकता है"
+        },
+        "submit": "फीडबैक सबमिट करें",
+        "submitting": "सबमिट हो रहा है...",
+        "toast": {
+          "submittedSuccess": "फीडबैक सफलतापूर्वक सबमिट किया गया!",
+          "submitFailed": "फीडबैक सबमिट करने में विफल। कृपया पुनः प्रयास करें।"
+        }
+      }
     }
   },
+  "sidebar": {
+    "groups": {
+      "dashboards": "डैशबोर्ड",
+      "learner": "शिक्षार्थी",
+      "admin": "एडमिन",
+      "masterAdmin": "मास्टर एडमिन",
+      "trainer": "ट्रेनर",
+      "iqa": "IQA",
+      "employer": "नियोक्ता",
+      "eqa": "EQA",
+      "accountManager": "अकाउंट मैनेजर"
+    },
+    "items": {
+      "dashboard": "डैशबोर्ड",
+      "cpd": "CPD",
+      "forum": "फोरम",
+      "skillsScan": "स्किल्स स्कैन",
+      "forms": "फॉर्म्स",
+      "proposeInnovations": "अपने नवाचार सुझाएँ",
+      "support": "सपोर्ट",
+      "tickets": "टिकट्स",
+      "adminManagement": "एडमिन प्रबंधन",
+      "courseBuilder": "कोर्स बिल्डर",
+      "surveys": "सर्वे",
+      "fundingBands": "फंडिंग बैंड्स",
+      "trainerRiskRating": "ट्रेनर जोखिम रेटिंग",
+      "wellbeingResources": "वेलबीइंग संसाधन",
+      "supplementaryTraining": "पूरक प्रशिक्षण",
+      "qaSamplePlan": "QA सैंपल प्लान",
+      "caseloadManagement": "केसलोड मैनेजमेंट",
+      "safeguarding": "सेफगार्डिंग",
+      "acknowledgeMessage": "संदेश स्वीकारें",
+      "defaultReviewWeeks": "डिफ़ॉल्ट समीक्षा सप्ताह",
+      "iqaQuestions": "IQA प्रश्न प्रबंधन",
+      "sessionTypes": "सेशन प्रकार",
+      "timelogExport": "टाइमलॉग डेटा एक्सपोर्ट",
+      "awaitingSignature": "हस्ताक्षर की प्रतीक्षा",
+      "gatewayReport": "गेटवे रिपोर्ट",
+      "progressExclusion": "समग्र प्रोग्रेस से बाहर रखें",
+      "learnerManagement": "शिक्षार्थी प्रबंधन",
+      "organisations": "संगठन",
+      "centres": "सेंटर्स",
+      "subscriptions": "सब्सक्रिप्शन",
+      "payments": "पेमेंट्स",
+      "auditLogs": "ऑडिट लॉग्स",
+      "systemAdmins": "सिस्टम एडमिन",
+      "accountManagers": "अकाउंट मैनेजर्स",
+      "users": "यूज़र्स",
+      "learnerOverview": "शिक्षार्थी ओवरव्यू",
+      "resources": "संसाधन",
+      "learnersForms": "शिक्षार्थी फॉर्म्स"
+    }
+  },
+  "acknowledgeMessage": {
+  "pageTitle": "संदेश स्वीकार करें",
+  "pageSubtitle": "लर्नर्स के लिए स्वीकृति संदेश बनाएं और प्रबंधित करें",
+  "form": {
+  "message": "संदेश",
+  "messagePlaceholder": "अपना स्वीकृति संदेश यहाँ लिखें...",
+  "messageRequired": "संदेश आवश्यक है",
+  "messageMaxLength": "संदेश अधिकतम 1000 अक्षरों का हो सकता है",
+  "charactersCount": "{count} / 1000 अक्षर",
+  "uploadFile": "फ़ाइल अपलोड करें",
+  "dragDrop": "अपनी फ़ाइलें यहाँ खींचकर छोड़ें या",
+  "browse": "ब्राउज़ करें",
+  "maxFileSize": "अधिकतम 10MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
+  "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए",
+  "fileTypeError": "केवल PDF, CSV, DOC, DOCX फ़ाइलें अनुमत हैं",
+  "remove": "हटाएँ",
+  "viewCurrentFile": "वर्तमान फ़ाइल देखें",
+  "clear": "साफ़ करें",
+  "clearAll": "सभी लर्नर स्वीकृति साफ़ करें",
+  "clearing": "साफ़ किया जा रहा है...",
+  "save": "सहेजें",
+  "saving": "सहेजा जा रहा है...",
+  "required": "*"
+  },
+  "dialogs": {
+  "deleteTitle": "स्वीकृति हटाएँ",
+  "deleteDescription": "क्या आप वाकई इस स्वीकृति को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+  "clearAllTitle": "सभी लर्नर स्वीकृतियाँ साफ़ करें",
+  "clearAllDescription": "क्या आप वाकई सभी लर्नर स्वीकृतियाँ साफ़ करना चाहते हैं? यह क्रिया सभी लर्नर्स से सभी स्वीकृतियाँ हटा देगी और वापस नहीं की जा सकती।",
+  "cancel": "रद्द करें",
+  "delete": "हटाएँ",
+  "clearAll": "सब साफ़ करें"
+  },
+  "toast": {
+  "messageUpdated": "संदेश सफलतापूर्वक अपडेट किया गया!",
+  "messageAcknowledged": "संदेश सफलतापूर्वक स्वीकार किया गया!",
+  "acknowledgementDeleted": "स्वीकृति सफलतापूर्वक हटाई गई!",
+  "allCleared": "सभी लर्नर स्वीकृतियाँ सफलतापूर्वक साफ़ की गईं!",
+  "saveFailed": "संदेश स्वीकार करने में विफल। कृपया पुनः प्रयास करें।",
+  "deleteFailed": "स्वीकृति हटाने में विफल। कृपया पुनः प्रयास करें।",
+  "clearFailed": "स्वीकृतियाँ साफ़ करने में विफल। कृपया पुनः प्रयास करें।"
+  }
+  },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
+    "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "रिव्यू पीरियड सेटिंग्स",
+      "reviewPeriodDescription": "रिव्यू और इंडक्शन के लिए चेतावनी अवधि कॉन्फ़िगर करें",
+      "noReviewWeeksLabel": "यदि इस अवधि तक कोई रिव्यू नहीं हुआ तो चेतावनी दिखाएँ:",
+      "noReviewWeeksPlaceholder": "सप्ताह दर्ज करें",
+      "weeks": "सप्ताह",
+      "noInductionWeeksLabel": "यदि इस अवधि तक कोई इंडक्शन नहीं हुआ तो चेतावनी दिखाएँ:",
+      "noInductionWeeksPlaceholder": "सप्ताह दर्ज करें",
+      "save": "सहेजें",
+      "saving": "सहेजा जा रहा है...",
+      "reviewWarningRequired": "रिव्यू चेतावनी सप्ताह आवश्यक है",
+      "mustBeAtLeast1": "कम से कम 1 सप्ताह होना चाहिए",
+      "cannotExceed52": "52 सप्ताह से अधिक नहीं हो सकता",
+      "mustBeWholeNumber": "पूर्णांक होना चाहिए",
+      "inductionWarningRequired": "इंडक्शन चेतावनी सप्ताह आवश्यक है"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "महत्वपूर्ण जानकारी",
+      "description": "ये सेटिंग्स उन सभी लर्नर प्रकारों के लिए डिफॉल्ट रिव्यू पीरियड के रूप में लागू होंगी जिनके लिए कोई कस्टम रिव्यू पीरियड असाइन नहीं है। सहेजने के तुरंत बाद बदलाव प्रभावी होंगे और आगे की नई रिव्यू सत्रों को प्रभावित करेंगे।"
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "कॉन्फ़िगरेशन सफलतापूर्वक सहेजी गई!",
+      "saveFailed": "कॉन्फ़िगरेशन सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
+    }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "अपने नवाचार सुझाएँ",
+      "subtitle": "अपनी आइडिया और नवाचार टीम के साथ साझा करें"
+    },
+    "table": {
+      "headers": {
+        "topic": "विषय",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता नाम",
+        "date": "तारीख",
+        "status": "स्थिति",
+        "action": "कार्रवाई"
+      },
+      "loading": "लोड हो रहा है...",
+      "noData": "कोई नवाचार नहीं मिला।"
+    },
+    "actions": {
+      "submitIdea": "एक आइडिया सबमिट करें",
+      "viewChat": "देखें और चैट करें",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "विषय",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता नाम",
+        "date": "तारीख",
+        "status": "स्थिति"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "नवाचार सफलतापूर्वक हटाया गया!",
+      "deleteFailed": "नवाचार हटाने में विफल। कृपया पुनः प्रयास करें।",
+      "csvSuccess": "CSV सफलतापूर्वक निर्यात किया गया"
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
-    "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
-      "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
-      "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
-      "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
-      "required": "*"
-    },
-    "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
-    }
+  "pageTitle": "सुरक्षा संपर्क प्रबंधन",
+  "pageSubtitle": "सुरक्षा अधिकारी के संपर्क विवरण और अतिरिक्त जानकारी प्रबंधित करें",
+  "form": {
+  "editingExisting": "मौजूदा संपर्क को संपादित किया जा रहा है",
+  "contactInformation": "संपर्क जानकारी",
+  "telephoneNumber": "टेलीफोन नंबर",
+  "telephonePlaceholder": "+44 20 1234 5678",
+  "mobileNumber": "मोबाइल नंबर",
+  "mobilePlaceholder": "+44 7700 900123",
+  "emailAddress": "ईमेल पता",
+  "emailPlaceholder": "safeguarding@example.com",
+  "emailRequired": "ईमेल पता आवश्यक है",
+  "emailInvalid": "कृपया मान्य ईमेल पता दर्ज करें",
+  "additionalInformation": "अतिरिक्त जानकारी",
+  "additionalDetails": "अतिरिक्त विवरण",
+  "additionalDetailsPlaceholder": "तत्काल सुरक्षा संबंधी चिंताओं के लिए 24/7 उपलब्ध",
+  "reset": "रीसेट",
+  "saveContact": "संपर्क सहेजें",
+  "saving": "सहेजा जा रहा है...",
+  "required": "*"
+  },
+  "toast": {
+  "contactSaved": "सुरक्षा संपर्क सफलतापूर्वक सहेजा गया!",
+  "saveFailed": "डेटा सहेजने में त्रुटि। कृपया पुनः प्रयास करें।",
+  "loadFailed": "सुरक्षा संपर्क लोड करने में विफल। कृपया पुनः प्रयास करें।"
+  }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "समग्र प्रोग्रेस से बाहर रखें",
+    "pageSubtitle": "कोर्स चुनें और तय करें कि किन प्रशिक्षण स्थितियों को समग्र प्रोग्रेस ट्रैकिंग से बाहर रखना है",
+    "card": {
+      "title": "समग्र प्रोग्रेस से बाहर रखें",
+      "description": "कोर्स चुनें और तय करें कि किन प्रशिक्षण स्थितियों को समग्र प्रोग्रेस ट्रैकिंग से बाहर रखना है"
+    },
+    "info": {
+      "description": "यहाँ किए गए बदलाव चुने गए कोर्स के सभी शिक्षार्थियों के समग्र प्रोग्रेस की गणना को प्रभावित करेंगे।"
+    },
+    "form": {
+      "courseLabel": "कोर्स चुनें",
+      "coursePlaceholder": "कोई कोर्स चुनें",
+      "submit": "सबमिट करें",
+      "submitting": "सबमिट हो रहा है..."
+    },
+    "table": {
+      "statusColumn": "स्थिति बदले जाने पर",
+      "excludeColumn": "प्रोग्रेस से बाहर रखें"
+    },
+    "statusLabels": {
+      "In Training": "प्रशिक्षण में",
+      "IQA Approved": "IQA स्वीकृत",
+      "Completed": "पूर्ण",
+      "Certificated": "प्रमाणित",
+      "Training Suspended": "प्रशिक्षण निलंबित",
+      "Transferred": "स्थानांतरित",
+      "Early Leaver": "जल्दी छोड़ने वाला",
+      "Exempt": "मुक्त",
+      "Awaiting Induction": "अभिमुखीकरण की प्रतीक्षा में"
+    },
+    "toast": {
+      "selectCourseRequired": "कृपया कोई कोर्स चुनें",
+      "updateSuccess": "प्रोग्रेस एक्सक्लूज़न सेटिंग्स सफलतापूर्वक अपडेट हो गईं",
+      "updateFailed": "प्रोग्रेस एक्सक्लूज़न सेटिंग्स अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+    }
   },
   "gatewayReport": {
-    "pageTitle": "Gateway Report",
-    "pageSubtitle": "View and export gateway ready learner data"
+    "pageTitle": "गेटवे रिपोर्ट",
+    "pageSubtitle": "गेटवे के लिए तैयार शिक्षार्थी डेटा देखें और एक्सपोर्ट करें",
+    "table": {
+      "title": "गेटवे रिपोर्ट",
+      "errorTitle": "त्रुटि",
+      "errorDescription": "डेटा लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "noDataTitle": "टेबल में कोई डेटा उपलब्ध नहीं",
+      "noDataDescription": "वर्तमान फ़िल्टर से मेल खाने वाली कोई गेटवे प्रविष्टि नहीं मिली।",
+      "headers": {
+        "learnerFirstName": "शिक्षार्थी का पहला नाम",
+        "learnerLastName": "शिक्षार्थी का अंतिम नाम",
+        "learnerUln": "शिक्षार्थी ULN",
+        "courseName": "कोर्स का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "sessionBookDate": "सेशन बुक तिथि",
+        "gatewayProgress": "गेटवे प्रोग्रेस %"
+      }
+    },
+    "filters": {
+      "trainerLabel": "ट्रेनर चुनें",
+      "searchLabel": "खोजें",
+      "searchPlaceholder": "शिक्षार्थी नाम, ULN, कोर्स या ट्रेनर से खोजें...",
+      "allOption": "सभी",
+      "clearButton": "साफ करें",
+      "exportButton": "एक्सेल में एक्सपोर्ट करें"
+    },
+    "csv": {
+      "filenamePrefix": "gateway-report",
+      "headers": {
+        "learnerFirstName": "शिक्षार्थी का पहला नाम",
+        "learnerLastName": "शिक्षार्थी का अंतिम नाम",
+        "learnerUln": "शिक्षार्थी ULN",
+        "courseName": "कोर्स का नाम",
+        "trainerName": "ट्रेनर का नाम",
+        "sessionBookDate": "सेशन बुक तिथि",
+        "gatewayProgress": "गेटवे प्रोग्रेस %"
+      }
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए कोई डेटा उपलब्ध नहीं है",
+      "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट किया गया!",
+      "exportFailed": "डेटा एक्सपोर्ट करने में त्रुटि हुई। कृपया पुनः प्रयास करें।"
+    }
   },
   "fundingBands": {
     "pageTitle": "फंडिंग बैंड्स",
@@ -1646,12 +3128,110 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "ब्रॉडकास्ट प्रबंधन",
+    "pageSubtitle": "ब्रॉडकास्ट संदेश बनाएं और प्रबंधित करें, तथा उपयोगकर्ताओं, शिक्षार्थियों या चुने हुए कोर्सों को सूचनाएँ भेजें",
+    "dialog": {
+      "createTitle": "नया ब्रॉडकास्ट बनाएँ",
+      "editTitle": "ब्रॉडकास्ट संपादित करें",
+      "createDescription": "नीचे दिए गए फ़ील्ड में ब्रॉडकास्ट की जानकारी भरें।",
+      "editDescription": "नीचे दिए गए फ़ील्ड में ब्रॉडकास्ट की जानकारी अपडेट करें।"
+    },
+    "form": {
+      "titleLabel": "शीर्षक",
+      "descriptionLabel": "विवरण",
+      "titlePlaceholder": "ब्रॉडकास्ट का शीर्षक दर्ज करें",
+      "descriptionPlaceholder": "ब्रॉडकास्ट का विवरण दर्ज करें"
+    },
+    "buttons": {
+      "cancel": "रद्द करें",
+      "create": "बनाएँ",
+      "update": "अपडेट करें"
+    },
+    "validation": {
+      "titleRequired": "शीर्षक आवश्यक है",
+      "descriptionRequired": "विवरण आवश्यक है"
+    },
+    "toast": {
+      "createSuccess": "ब्रॉडकास्ट सफलतापूर्वक बना दिया गया",
+      "updateSuccess": "ब्रॉडकास्ट सफलतापूर्वक अपडेट कर दिया गया",
+      "createFailed": "ब्रॉडकास्ट बनाने में विफल",
+      "updateFailed": "ब्रॉडकास्ट अपडेट करने में विफल",
+      "deleteSuccess": "ब्रॉडकास्ट सफलतापूर्वक हटा दिया गया",
+      "deleteFailed": "ब्रॉडकास्ट हटाने में विफल"
+    },
+    "dataTable": {
+      "title": "शीर्षक",
+      "description": "विवरण",
+      "email": "ईमेल",
+      "userName": "उपयोगकर्ता नाम",
+      "date": "तारीख",
+      "actions": "कार्रवाई",
+      "broadcast": "ब्रॉडकास्ट भेजें",
+      "edit": "संपादित करें",
+      "delete": "हटाएँ",
+      "openMenu": "मेनू खोलें",
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "clear": "साफ करें",
+      "export": "निर्यात",
+      "exportCsv": "CSV के रूप में निर्यात करें",
+      "exportPdf": "PDF के रूप में निर्यात करें",
+      "addNew": "नया ब्रॉडकास्ट जोड़ें",
+      "noResults": "कोई परिणाम नहीं।",
+      "noDataToExport": "निर्यात करने के लिए कोई डेटा नहीं है",
+      "csvExportSuccess": "CSV सफलतापूर्वक निर्यात हो गया",
+      "pdfExportComingSoon": "PDF निर्यात सुविधा जल्द ही उपलब्ध होगी"
+    },
+    "deleteDialog": {
+      "title": "क्या आप सुनिश्चित हैं?",
+      "description": "इस क्रिया को वापस नहीं लिया जा सकता। इससे \"{title}\" ब्रॉडकास्ट स्थायी रूप से हटा दिया जाएगा।",
+      "delete": "हटाएँ",
+      "deleting": "हटा रहे हैं..."
+    },
+    "messageDialog": {
+      "title": "ब्रॉडकास्ट संदेश",
+      "description": "इस ब्रॉडकास्ट संदेश के लिए लक्षित उपयोगकर्ताओं का चयन करें।",
+      "readonly": {
+        "titleLabel": "शीर्षक:",
+        "descriptionLabel": "विवरण:"
+      },
+      "target": {
+        "label": "उपयोगकर्ताओं को ब्रॉडकास्ट संदेश",
+        "all": "सभी",
+        "allLearner": "सभी शिक्षार्थी",
+        "allEqa": "सभी EQA",
+        "allTrainer": "सभी ट्रेनर",
+        "allEmployer": "सभी नियोक्ता",
+        "allIqa": "सभी IQA",
+        "allLiqa": "सभी LIQA",
+        "individual": "चुने हुए उपयोगकर्ता",
+        "qualification": "योग्यता / कोर्स"
+      },
+      "individual": {
+        "selectUsers": "उपयोगकर्ता चुनें",
+        "loadingUsers": "उपयोगकर्ता लोड हो रहे हैं...",
+        "selectUsersPlaceholder": "उपयोगकर्ता चुनें",
+        "noUsersFound": "कोई उपयोगकर्ता नहीं मिला।"
+      },
+      "qualification": {
+        "selectCourses": "कोर्स चुनें",
+        "loadingCourses": "कोर्स लोड हो रहे हैं...",
+        "selectCoursesPlaceholder": "कोर्स चुनें",
+        "noCoursesFound": "कोई कोर्स नहीं मिला।",
+        "comingSoon": "कोर्स API इंटीग्रेशन के बाद कोर्स चयन उपलब्ध होगा।"
+      },
+      "validation": {
+        "selectUserOrCourse": "कृपया कम से कम एक उपयोगकर्ता या एक कोर्स चुनें"
+      },
+      "toast": {
+        "sendSuccess": "ब्रॉडकास्ट संदेश सफलतापूर्वक भेज दिया गया",
+        "sendFailed": "ब्रॉडकास्ट संदेश भेजने में विफल"
+      },
+      "submit": "ब्रॉडकास्ट भेजें"
+    }
   },
   "organisations": {
     "page": {
-      "title": "संगठन",
+      "title": "संगठन प्रबंधन",
       "subtitle": "सभी संगठनों को प्रबंधित और देखें"
     },
     "detail": {
@@ -1774,6 +3354,58 @@
       "saving": "सहेज रहा है...",
       "toastSuccess": "व्यवस्थापक सफलतापूर्वक सहेजे गए",
       "toastFailed": "व्यवस्थापक सहेजने में विफल"
+    }
+  },
+  "caseload": {
+    "pageTitle": "केसलोड प्रबंधन",
+    "pageSubtitle": "लाइन मैनेजर के केसलोड देखें और एक्सपोर्ट करें।",
+    "searchPlaceholder": "लाइन मैनेजर खोजें...",
+    "refresh": "रिफ्रेश",
+    "clear": "क्लियर",
+    "noLineManagersFound": "कोई लाइन मैनेजर नहीं मिला",
+    "noLineManagersMatch": "आपकी खोज से कोई लाइन मैनेजर मेल नहीं खाता",
+    "noLineManagersInSystem": "वर्तमान में सिस्टम में कोई लाइन मैनेजर नहीं है।",
+    "cards": {
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट",
+      "exportPdf": "PDF एक्सपोर्ट",
+      "usersLabel": "यूज़र",
+      "learnersLabel": "लर्नर",
+      "usersBadge": "{count} यूज़र",
+      "managedUsersTitle": "मैनेज किए गए यूज़र ({count})",
+      "noUsersAssignedYet": "अभी तक कोई यूज़र असाइन नहीं है",
+      "reportTitle": "केसलोड मैनेजमेंट रिपोर्ट",
+      "generatedOn": "जेनरेट किया गया: {date}",
+      "totalLearnersLine": "कुल लर्नर: {count}",
+      "totalUsersLine": "कुल यूज़र: {count}",
+      "overallCsv": {
+        "lineManagerName": "लाइन मैनेजर का नाम",
+        "managedUserEmail": "मैनेज किए गए यूज़र का ईमेल",
+        "totalLearners": "कुल लर्नर",
+        "totalUsers": "कुल यूज़र"
+      },
+      "managerReportTitle": "{name} - केसलोड रिपोर्ट",
+      "managerInformation": "मैनेजर की जानकारी:",
+      "nameLabel": "नाम: {name}",
+      "emailLabel": "ईमेल: {email}",
+      "managedUsersHeading": "मैनेज किए गए यूज़र:",
+      "managerTableHeaders": {
+        "name": "नाम",
+        "email": "ईमेल",
+        "role": "रोल"
+      },
+      "managerNoUsersAssigned": "इस मैनेजर को कोई यूज़र असाइन नहीं है।",
+      "managerCsv": {
+        "managerName": "मैनेजर का नाम",
+        "managerEmail": "मैनेजर का ईमेल",
+        "userName": "यूज़र का नाम",
+        "userEmail": "यूज़र का ईमेल",
+        "userRole": "यूज़र रोल",
+        "totalLearners": "कुल लर्नर",
+        "totalUsers": "कुल यूज़र",
+        "defaultUserRole": "यूज़र",
+        "noUsersAssigned": "कोई यूज़र असाइन नहीं"
+      }
     }
   },
   "centres": {

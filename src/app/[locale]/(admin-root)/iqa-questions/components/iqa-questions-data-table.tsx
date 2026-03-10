@@ -49,6 +49,7 @@ import { IQAQuestionFormDialog } from "./iqa-question-form-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HelpCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface IQAQuestionsDataTableProps {
   selectedQuestionType: string;
@@ -61,6 +62,8 @@ export function IQAQuestionsDataTable({
   onQuestionTypeChange,
   questionTypeOptions,
 }: IQAQuestionsDataTableProps) {
+  const t = useTranslations("iqaQuestions");
+  const common = useTranslations("common");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -86,7 +89,7 @@ export function IQAQuestionsDataTable({
 
   const handleAddNew = () => {
     if (!selectedQuestionType || selectedQuestionType === "All") {
-      toast.error("Please select a question type first");
+      toast.error(t("toast.selectTypeFirst"));
       return;
     }
     setEditingQuestion(null);
@@ -108,12 +111,12 @@ export function IQAQuestionsDataTable({
 
     try {
       await deleteQuestion(questionToDelete.id).unwrap();
-      toast.success("Question deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setQuestionToDelete(null);
       refetch();
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to delete question");
+      toast.error(error?.data?.message || t("toast.deleteFailed"));
     }
   };
 
@@ -121,7 +124,7 @@ export function IQAQuestionsDataTable({
     () => [
       {
         accessorKey: "index",
-        header: "#",
+        header: t("table.headers.index"),
         cell: ({ row, table }) => {
           const index = table.getRowModel().rows.findIndex((r) => r.id === row.id);
           return (
@@ -136,7 +139,7 @@ export function IQAQuestionsDataTable({
         ? [
             {
               accessorKey: "questionType",
-              header: "Type",
+              header: t("table.headers.type"),
               cell: ({ row }) => (
                 <Badge variant="outline">{row.original.questionType}</Badge>
               ),
@@ -145,7 +148,7 @@ export function IQAQuestionsDataTable({
         : []),
       {
         accessorKey: "question",
-        header: "Question",
+        header: t("table.headers.question"),
         cell: ({ row }) => (
           <div className="max-w-[600px]">
             <p className="line-clamp-2">{row.original.question}</p>
@@ -154,7 +157,7 @@ export function IQAQuestionsDataTable({
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.headers.actions"),
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <Button
@@ -176,7 +179,7 @@ export function IQAQuestionsDataTable({
         size: 100,
       },
     ],
-    [selectedQuestionType]
+    [selectedQuestionType, t]
   );
 
   const table = useReactTable({
@@ -200,9 +203,9 @@ export function IQAQuestionsDataTable({
         <CardContent className="pt-6">
           <div className="space-y-2">
             <label className="text-sm font-medium">
-              Question Type{" "}
+              {t("form.questionTypeLabel")}{" "}
               <Badge variant="secondary" className="ml-1">
-                Required
+                {t("form.requiredBadge")}
               </Badge>
             </label>
             <Select
@@ -210,7 +213,7 @@ export function IQAQuestionsDataTable({
               onValueChange={onQuestionTypeChange}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a question type to manage questions" />
+                <SelectValue placeholder={t("form.typePlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 {questionTypeOptions.map((option) => (
@@ -235,14 +238,14 @@ export function IQAQuestionsDataTable({
                 </h3>
               )}
               <p className="text-sm text-muted-foreground">
-                {questions.length} {questions.length === 1 ? "question" : "questions"}
-                {selectedQuestionType === "All" && " (all types)"}
+                {t("table.questionsCount", { count: questions.length })}{" "}
+                {selectedQuestionType === "All" && t("table.allTypesSuffix")}
               </p>
             </div>
 
             <Button onClick={handleAddNew} disabled={!selectedQuestionType || selectedQuestionType === "All"}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Question
+              {t("table.addQuestion")}
             </Button>
           </div>
 
@@ -251,7 +254,7 @@ export function IQAQuestionsDataTable({
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search questions..."
+                placeholder={t("table.searchPlaceholder")}
                 value={globalFilter}
                 onChange={(e) => setGlobalFilter(e.target.value)}
                 className="pl-10"
@@ -310,15 +313,16 @@ export function IQAQuestionsDataTable({
           {!isLoading && questions.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <HelpCircle className="h-16 w-16 text-muted-foreground mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold mb-2">No questions yet</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                {t("table.emptyTitle")}
+              </h3>
               <p className="text-sm text-muted-foreground mb-4 max-w-md">
-                Get started by adding your first question for this question type.
-                Click the "Add Question" button above to begin.
+                {t("table.emptyDescription")}
               </p>
               {selectedQuestionType && selectedQuestionType !== "All" && (
                 <Button onClick={handleAddNew}>
                   <Plus className="h-4 w-4 mr-2" />
-                  Add First Question
+                  {t("table.addFirstQuestion")}
                 </Button>
               )}
             </div>
@@ -343,20 +347,19 @@ export function IQAQuestionsDataTable({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Question?</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this question? This action cannot
-              be undone.
+              {t("dialogs.deleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{common("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={isDeleting}
             >
-              {isDeleting ? "Deleting..." : "Delete Question"}
+              {isDeleting ? t("dialogs.deleting") : t("dialogs.deleteQuestion")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

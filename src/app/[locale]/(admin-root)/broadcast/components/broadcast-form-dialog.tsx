@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -28,16 +29,6 @@ import type {
 } from "@/store/api/broadcast/types";
 import { toast } from "sonner";
 
-const createBroadcastSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
-});
-
-const updateBroadcastSchema = createBroadcastSchema.partial();
-
-type CreateBroadcastFormValues = z.infer<typeof createBroadcastSchema>;
-type UpdateBroadcastFormValues = z.infer<typeof updateBroadcastSchema>;
-
 interface BroadcastFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -51,7 +42,18 @@ export function BroadcastFormDialog({
   broadcast,
   onSuccess,
 }: BroadcastFormDialogProps) {
+  const t = useTranslations("broadcast");
   const isEditMode = !!broadcast;
+
+  const createBroadcastSchema = z.object({
+    title: z.string().min(1, t("validation.titleRequired")),
+    description: z.string().min(1, t("validation.descriptionRequired")),
+  });
+
+  const updateBroadcastSchema = createBroadcastSchema.partial();
+
+  type CreateBroadcastFormValues = z.infer<typeof createBroadcastSchema>;
+  type UpdateBroadcastFormValues = z.infer<typeof updateBroadcastSchema>;
 
   const [createBroadcast, { isLoading: isCreating }] = useCreateBroadcastMutation();
   const [updateBroadcast, { isLoading: isUpdating }] = useUpdateBroadcastMutation();
@@ -85,10 +87,10 @@ export function BroadcastFormDialog({
           id: broadcast.id,
           data: values as UpdateBroadcastRequest,
         }).unwrap();
-        toast.success("Broadcast updated successfully");
+        toast.success(t("toast.updateSuccess"));
       } else {
         await createBroadcast(values as CreateBroadcastRequest).unwrap();
-        toast.success("Broadcast created successfully");
+        toast.success(t("toast.createSuccess"));
       }
 
       onSuccess();
@@ -98,7 +100,10 @@ export function BroadcastFormDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || `Failed to ${isEditMode ? "update" : "create"} broadcast`);
+      toast.error(
+        errorMessage ||
+          t(isEditMode ? "toast.updateFailed" : "toast.createFailed")
+      );
     }
   };
 
@@ -108,23 +113,26 @@ export function BroadcastFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{isEditMode ? "Edit Broadcast" : "Create Broadcast"}</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? t("dialog.editTitle") : t("dialog.createTitle")}
+          </DialogTitle>
           <DialogDescription>
             {isEditMode
-              ? "Update broadcast information below."
-              : "Fill in the broadcast information below."}
+              ? t("dialog.editDescription")
+              : t("dialog.createDescription")}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title">
-              Title <span className="text-destructive">*</span>
+              {t("form.titleLabel")}{" "}
+              <span className="text-destructive">*</span>
             </Label>
             <Input
               id="title"
               {...form.register("title")}
-              placeholder="Add your title"
+              placeholder={t("form.titlePlaceholder")}
             />
             {form.formState.errors.title && (
               <p className="text-sm text-destructive">
@@ -135,12 +143,13 @@ export function BroadcastFormDialog({
 
           <div className="space-y-2">
             <Label htmlFor="description">
-              Description <span className="text-destructive">*</span>
+              {t("form.descriptionLabel")}{" "}
+              <span className="text-destructive">*</span>
             </Label>
             <Textarea
               id="description"
               {...form.register("description")}
-              placeholder="Add your description"
+              placeholder={t("form.descriptionPlaceholder")}
               rows={6}
             />
             {form.formState.errors.description && (
@@ -157,11 +166,11 @@ export function BroadcastFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isEditMode ? "Update" : "Create"}
+              {isEditMode ? t("buttons.update") : t("buttons.create")}
             </Button>
           </DialogFooter>
         </form>

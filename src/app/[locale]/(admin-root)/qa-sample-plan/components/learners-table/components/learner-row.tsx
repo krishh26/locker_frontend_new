@@ -3,6 +3,7 @@
 import { memo } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { ChevronDown, ChevronUp, FileText, FolderOpen } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +36,7 @@ export const LearnerRow = memo(function LearnerRow({
   onToggleExpansion,
 }: LearnerRowProps) {
   const router = useRouter();
+  const t = useTranslations("qaSamplePlan.learnersTable.actions");
   const unitSelection = useAppSelector(selectUnitSelection);
   const units = Array.isArray(learner.units) ? learner.units : [];
   const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
@@ -46,7 +48,7 @@ export const LearnerRow = memo(function LearnerRow({
     if (learnerId) {
       router.push(`/evidence-library?learner_id=${learnerId}`);
     } else {
-      toast.warning("Unable to open documents. Learner ID not found.");
+      toast.warning(t("unableOpenDocumentsLearnerIdMissing"));
     }
   };
 
@@ -55,7 +57,7 @@ export const LearnerRow = memo(function LearnerRow({
     if (learnerId) {
       router.push(`/portfolio?learner_id=${learnerId}`);
     } else {
-      toast.warning("Unable to open portfolio. Learner ID not found.");
+      toast.warning(t("unableOpenPortfolioLearnerIdMissing"));
     }
   };
 
@@ -93,7 +95,7 @@ export const LearnerRow = memo(function LearnerRow({
               variant="ghost"
               size="sm"
               onClick={() => handleViewDocuments(learner)}
-              title="View Documents / Evidence"
+              title={t("viewDocumentsEvidence")}
             >
               <FileText className="h-4 w-4" />
             </Button>
@@ -101,7 +103,7 @@ export const LearnerRow = memo(function LearnerRow({
               variant="ghost"
               size="sm"
               onClick={() => handleViewPortfolio(learner)}
-              title="View Portfolio"
+              title={t("viewPortfolio")}
             >
               <FolderOpen className="h-4 w-4" />
             </Button>

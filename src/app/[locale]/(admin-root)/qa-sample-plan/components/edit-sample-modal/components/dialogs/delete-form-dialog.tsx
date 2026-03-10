@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useTranslations } from 'next-intl'
 
 interface DeleteFormDialogProps {
   open: boolean
@@ -23,17 +24,18 @@ export function DeleteFormDialog({
   onOpenChange,
   onConfirm,
 }: DeleteFormDialogProps) {
+  const t = useTranslations('qaSamplePlan.editSampleModal.dialogs.deleteForm')
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Remove Allocated Form?</AlertDialogTitle>
+          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to unlink this form from the sample?
+            {t('description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isUnlinking}
@@ -42,10 +44,10 @@ export function DeleteFormDialog({
             {isUnlinking ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                Removing...
+                {t('removing')}
               </>
             ) : (
-              'Remove'
+              t('confirm')
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

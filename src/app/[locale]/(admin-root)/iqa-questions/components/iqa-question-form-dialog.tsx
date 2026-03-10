@@ -23,12 +23,14 @@ import {
 } from "@/store/api/iqa-questions/iqaQuestionsApi";
 import type { IQAQuestion } from "@/store/api/iqa-questions/types";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
-const iqaQuestionSchema = z.object({
-  question: z.string().min(1, "Question text is required"),
-});
+const iqaQuestionSchema = (t: (key: string) => string) =>
+  z.object({
+    question: z.string().min(1, t("form.questionRequired")),
+  });
 
-type IQAQuestionFormData = z.infer<typeof iqaQuestionSchema>;
+type IQAQuestionFormData = z.infer<ReturnType<typeof iqaQuestionSchema>>;
 
 interface IQAQuestionFormDialogProps {
   open: boolean;
@@ -45,6 +47,8 @@ export function IQAQuestionFormDialog({
   questionType,
   onSuccess,
 }: IQAQuestionFormDialogProps) {
+  const t = useTranslations("iqaQuestions");
+  const common = useTranslations("common");
   const isEditMode = !!question;
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -54,7 +58,7 @@ export function IQAQuestionFormDialog({
     useUpdateIQAQuestionMutation();
 
   const form = useForm<IQAQuestionFormData>({
-    resolver: zodResolver(iqaQuestionSchema),
+    resolver: zodResolver(iqaQuestionSchema(t)),
     defaultValues: {
       question: "",
     },
@@ -77,7 +81,8 @@ export function IQAQuestionFormDialog({
     setErrorMessage("");
 
     if (!questionType || questionType === "All") {
-      setErrorMessage("Please select a valid question type");
+      const msg = t("form.selectValidType");
+      setErrorMessage(msg);
       return;
     }
 
@@ -89,19 +94,19 @@ export function IQAQuestionFormDialog({
             question: data.question.trim(),
           },
         }).unwrap();
-        toast.success("Question updated successfully!");
+        toast.success(t("toast.updateSuccess"));
       } else {
         await createQuestion({
           questionType,
           question: data.question.trim(),
         }).unwrap();
-        toast.success("Question created successfully!");
+        toast.success(t("toast.createSuccess"));
       }
       onSuccess();
     } catch (error: unknown) {
       const errorData = error as { data?: { message?: string }; message?: string };
       const errorMsg =
-        errorData.data?.message || errorData.message || "Failed to save question";
+        errorData.data?.message || errorData.message || t("toast.saveFailed");
       setErrorMessage(errorMsg);
       toast.error(errorMsg);
     }
@@ -119,10 +124,10 @@ export function IQAQuestionFormDialog({
             </div>
             <div>
               <DialogTitle>
-                {isEditMode ? "Edit Question" : "Add New Question"}
+                {isEditMode ? t("formDialog.editTitle") : t("formDialog.createTitle")}
               </DialogTitle>
               <DialogDescription>
-                Question Type: {questionType}
+                {t("formDialog.description", { type: questionType })}
               </DialogDescription>
             </div>
           </div>
@@ -138,14 +143,14 @@ export function IQAQuestionFormDialog({
 
             <div className="space-y-2">
               <Label htmlFor="question">
-                Question Text{" "}
+                {t("form.questionLabel")}{" "}
                 <Badge variant="destructive" className="ml-1">
-                  Required
+                  {t("form.requiredBadge")}
                 </Badge>
               </Label>
               <Textarea
                 id="question"
-                placeholder="Enter your question here..."
+                placeholder={t("form.questionPlaceholder")}
                 rows={5}
                 {...form.register("question")}
                 className="resize-none"
@@ -156,7 +161,9 @@ export function IQAQuestionFormDialog({
                 </p>
               )}
               <p className="text-xs text-muted-foreground">
-                {form.watch("question")?.length || 0} characters
+                {t("form.charactersCount", {
+                  count: form.watch("question")?.length || 0,
+                })}
               </p>
             </div>
           </div>
@@ -168,18 +175,18 @@ export function IQAQuestionFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {common("cancel")}
             </Button>
             <Button type="submit" disabled={isLoading || !form.formState.isValid}>
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isEditMode ? "Updating..." : "Adding..."}
+                  {isEditMode ? t("form.updating") : t("form.adding")}
                 </>
               ) : isEditMode ? (
-                "Update Question"
+                t("form.updateQuestion")
               ) : (
-                "Add Question"
+                t("form.addQuestion")
               )}
             </Button>
           </DialogFooter>

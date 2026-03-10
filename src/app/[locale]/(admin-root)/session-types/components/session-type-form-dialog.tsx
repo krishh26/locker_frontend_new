@@ -34,14 +34,16 @@ import { useGetCentresQuery } from "@/store/api/centres/centreApi";
 import { useAppSelector } from "@/store/hooks";
 import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
-const sessionTypeSchema = z.object({
-  name: z.string().min(1, "Session Type name is required"),
-  isOffTheJob: z.boolean(),
-  isActive: z.boolean(),
-});
+const sessionTypeSchema = (t: (key: string) => string) =>
+  z.object({
+    name: z.string().min(1, t("form.nameRequired")),
+    isOffTheJob: z.boolean(),
+    isActive: z.boolean(),
+  });
 
-type SessionTypeFormData = z.infer<typeof sessionTypeSchema>;
+type SessionTypeFormData = z.infer<ReturnType<typeof sessionTypeSchema>>;
 
 interface SessionTypeFormDialogProps {
   open: boolean;
@@ -56,6 +58,8 @@ export function SessionTypeFormDialog({
   sessionType,
   onSuccess,
 }: SessionTypeFormDialogProps) {
+  const t = useTranslations("sessionTypes");
+  const common = useTranslations("common");
   const isEditMode = !!sessionType;
 
   const [createSessionType, { isLoading: isCreating }] =
@@ -123,7 +127,7 @@ export function SessionTypeFormDialog({
         : undefined;
 
   const form = useForm<SessionTypeFormData>({
-    resolver: zodResolver(sessionTypeSchema),
+    resolver: zodResolver(sessionTypeSchema(t)),
     defaultValues: {
       name: "",
       isOffTheJob: false,
@@ -162,7 +166,7 @@ export function SessionTypeFormDialog({
             }),
           },
         }).unwrap();
-        toast.success("Session Type updated successfully");
+        toast.success(t("toast.updateSuccess"));
       } else {
         await createSessionType({
           name: data.name,
@@ -173,7 +177,7 @@ export function SessionTypeFormDialog({
             centre_id: Number(centreId),
           }),
         }).unwrap();
-        toast.success("Session Type created successfully");
+        toast.success(t("toast.createSuccess"));
       }
       onSuccess();
     } catch (error: unknown) {
@@ -182,8 +186,8 @@ export function SessionTypeFormDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : undefined
-      toast.error(errorMessage ?? "Failed to save Session Type");
+          : undefined;
+      toast.error(errorMessage ?? t("toast.saveFailed"));
     }
   };
 
@@ -194,12 +198,12 @@ export function SessionTypeFormDialog({
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? "Edit Session Type" : "Add Session Type"}
+            {isEditMode ? t("formDialog.editTitle") : t("formDialog.createTitle")}
           </DialogTitle>
           <DialogDescription>
             {isEditMode
-              ? "Update the session type details"
-              : "Create a new session type"}
+              ? t("formDialog.descriptionEdit")
+              : t("formDialog.descriptionCreate")}
           </DialogDescription>
         </DialogHeader>
 
@@ -208,14 +212,17 @@ export function SessionTypeFormDialog({
             {isOrgOrMultiCentre && (
               <div className="space-y-2">
                 <Label htmlFor="centre">
-                  Centre <span className="text-destructive">*</span>
+                  {t("form.centreLabel")}{" "}
+                  <span className="text-destructive">
+                    {t("form.requiredAsterisk")}
+                  </span>
                 </Label>
                 <Select
                   value={selectedCentreId != null ? String(selectedCentreId) : ""}
                   onValueChange={(v) => setSelectedCentreId(v ? Number(v) : null)}
                 >
                   <SelectTrigger id="centre">
-                    <SelectValue placeholder="Select centre" />
+                    <SelectValue placeholder={t("form.centrePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {centres.map((c) => (
@@ -226,17 +233,20 @@ export function SessionTypeFormDialog({
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  Session type will be created for the selected centre. Centre admins see only their centre; org admins see all.
+                  {t("form.centreHelperText")}
                 </p>
               </div>
             )}
             <div className="space-y-2">
               <Label htmlFor="name">
-                Session Type Name <span className="text-destructive">*</span>
+                {t("form.nameLabel")}{" "}
+                <span className="text-destructive">
+                  {t("form.requiredAsterisk")}
+                </span>
               </Label>
               <Input
                 id="name"
-                placeholder="Enter session type name"
+                placeholder={t("form.namePlaceholder")}
                 {...form.register("name")}
               />
               {form.formState.errors.name && (
@@ -258,7 +268,7 @@ export function SessionTypeFormDialog({
                 htmlFor="isOffTheJob"
                 className="text-sm font-normal cursor-pointer"
               >
-                Off the Job
+                {t("form.offTheJobLabel")}
               </Label>
             </div>
 
@@ -274,7 +284,7 @@ export function SessionTypeFormDialog({
                 htmlFor="isActive"
                 className="text-sm font-normal cursor-pointer"
               >
-                Active
+                {t("form.activeLabel")}
               </Label>
             </div>
           </div>
@@ -286,7 +296,7 @@ export function SessionTypeFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {common("cancel")}
             </Button>
             <Button
               type="submit"
@@ -299,12 +309,14 @@ export function SessionTypeFormDialog({
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isEditMode ? "Updating..." : "Creating..."}
+                  {isEditMode ? t("form.updating") : t("form.creating")}
                 </>
+              ) : isOrgOrMultiCentre && selectedCentreId == null ? (
+                t("form.selectCentre")
               ) : isEditMode ? (
-                "Update"
+                t("form.update")
               ) : (
-                "Create"
+                t("form.create")
               )}
             </Button>
           </DialogFooter>

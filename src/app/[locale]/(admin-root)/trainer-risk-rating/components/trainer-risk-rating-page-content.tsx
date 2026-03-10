@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FileBarChart, User as UserIcon } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { useTranslations } from "next-intl";
@@ -15,30 +15,34 @@ import { useCachedUsersByRole } from "@/store/hooks/useCachedUsersByRole";
 import { useGetTrainerDetailsQuery } from "@/store/api/trainer-risk-rating/trainerRiskRatingApi";
 import type { User } from "@/store/api/user/types";
 
-const riskOptions = [
-  { value: "Please select", label: "Please select" },
-  { value: "Low", label: "Low", color: "success" },
-  { value: "Medium", label: "Medium", color: "warning" },
-  { value: "High", label: "High", color: "error" },
-] as const;
-
-const assessmentMethods = [
-  { value: "pe", label: "PE", fullName: "Professional Discussion" },
-  { value: "do", label: "DO", fullName: "Direct Observation" },
-  { value: "wt", label: "WT", fullName: "Witness Testimony" },
-  { value: "qa", label: "QA", fullName: "Question and Answer" },
-  { value: "ps", label: "PS", fullName: "Product Sample" },
-  { value: "di", label: "DI", fullName: "Discussion" },
-  { value: "si", label: "SI", fullName: "Simulation" },
-  { value: "ee", label: "ET", fullName: "Expert Evidence" },
-  { value: "ba", label: "RA", fullName: "Basic Assessment" },
-  { value: "ot", label: "OT", fullName: "Other" },
-  { value: "ipl", label: "RPL", fullName: "Individual Personal Log" },
-  { value: "lo", label: "LO", fullName: "Learning Outcome" },
-] as const;
-
 export function TrainerRiskRatingPageContent() {
   const t = useTranslations("trainerRiskRating");
+  const riskOptions = useMemo(
+    () => [
+      { value: "Please select", label: t("riskOptions.pleaseSelect") },
+      { value: "Low", label: t("riskOptions.low"), color: "success" },
+      { value: "Medium", label: t("riskOptions.medium"), color: "warning" },
+      { value: "High", label: t("riskOptions.high"), color: "error" },
+    ] as const,
+    [t]
+  );
+  const assessmentMethods = useMemo(
+    () => [
+      { value: "pe", label: t("assessmentMethods.pe"), fullName: t("assessmentMethods.peFullName") },
+      { value: "do", label: t("assessmentMethods.do"), fullName: t("assessmentMethods.doFullName") },
+      { value: "wt", label: t("assessmentMethods.wt"), fullName: t("assessmentMethods.wtFullName") },
+      { value: "qa", label: t("assessmentMethods.qa"), fullName: t("assessmentMethods.qaFullName") },
+      { value: "ps", label: t("assessmentMethods.ps"), fullName: t("assessmentMethods.psFullName") },
+      { value: "di", label: t("assessmentMethods.di"), fullName: t("assessmentMethods.diFullName") },
+      { value: "si", label: t("assessmentMethods.si"), fullName: t("assessmentMethods.siFullName") },
+      { value: "ee", label: t("assessmentMethods.ee"), fullName: t("assessmentMethods.eeFullName") },
+      { value: "ba", label: t("assessmentMethods.ba"), fullName: t("assessmentMethods.baFullName") },
+      { value: "ot", label: t("assessmentMethods.ot"), fullName: t("assessmentMethods.otFullName") },
+      { value: "ipl", label: t("assessmentMethods.ipl"), fullName: t("assessmentMethods.iplFullName") },
+      { value: "lo", label: t("assessmentMethods.lo"), fullName: t("assessmentMethods.loFullName") },
+    ] as const,
+    [t]
+  );
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [comments, setComments] = useState<{ [key: number]: string }>({});

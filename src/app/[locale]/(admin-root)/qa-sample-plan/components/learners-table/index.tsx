@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 import { CoursePlanSelector } from "./components/course-plan-selector";
 import { FilterControls } from "./components/filter-controls";
 import { ActionButtons } from "./components/action-buttons";
@@ -20,6 +21,7 @@ interface LearnersTableProps {
 }
 
 export function LearnersTable({ learnersData, disableCourseSelector = false }: LearnersTableProps) {
+  const t = useTranslations("qaSamplePlan.learnersTable");
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   // Redux state
@@ -53,7 +55,7 @@ export function LearnersTable({ learnersData, disableCourseSelector = false }: L
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Learners</CardTitle>
+        <CardTitle>{t("title")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Course and Plan Selection */}
@@ -73,8 +75,10 @@ export function LearnersTable({ learnersData, disableCourseSelector = false }: L
         {/* Plan Summary */}
         {filterState.filterApplied && !filterState.filterError && qaState.planSummary && (
           <div className="text-sm text-muted-foreground">
-            Viewing plan <strong>{qaState.planSummary.planId ? `#${qaState.planSummary.planId}` : "N/A"}</strong>
-            {qaState.planSummary.courseName ? ` • ${qaState.planSummary.courseName}` : ""}
+            {t("summary.viewingPlan", {
+              planId: qaState.planSummary.planId ? `#${qaState.planSummary.planId}` : t("summary.na"),
+              courseName: qaState.planSummary.courseName ? ` • ${qaState.planSummary.courseName}` : "",
+            })}
           </div>
         )}
 

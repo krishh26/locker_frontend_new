@@ -4,6 +4,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -12,6 +13,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+const roleKeyMap: Record<string, string> = {
+  Learner: "learner",
+  Trainer: "trainer",
+  "Lead assessor Countersignature (if required)": "leadAssessorCountersignature",
+  Employer: "employer",
+  IQA: "iqa",
+  EQA: "eqa",
+};
 
 export interface ConfirmationRow {
   role: string;
@@ -33,76 +43,15 @@ interface ConfirmationStatementsTableProps {
   isDeletingFile?: boolean;
 }
 
-const DEFAULT_CONFIRMATION_ROWS: ConfirmationRow[] = [
-  {
-    role: "Learner",
-    statement:
-      "I confirm that this unit is complete and the evidence provided is a result of my own work",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Trainer",
-    statement:
-      "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Lead assessor Countersignature (if required)",
-    statement:
-      "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "Employer",
-    statement:
-      "I can confirm that the evidence I have checked as an employer meets the standards.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "IQA",
-    statement:
-      "I can confirm that the evidence I have sampled as an Internal Quality Assurer meets the standards.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-  {
-    role: "EQA",
-    statement: "Verified as part of External QA Visit.",
-    completed: false,
-    signedOffBy: "",
-    dated: "",
-    comments: "",
-    file: "",
-  },
-];
-
 export function ConfirmationStatementsTable({
-  confirmationRows = DEFAULT_CONFIRMATION_ROWS,
+  confirmationRows,
   currentUserRole,
   onConfirmationToggle,
   onAddComment,
   onDeleteFile,
   isDeletingFile,
 }: ConfirmationStatementsTableProps) {
+  const t = useTranslations("qaSamplePlan.evidence.confirmationStatements");
   return (
     <Card>
       <CardContent className="p-0">
@@ -110,26 +59,28 @@ export function ConfirmationStatementsTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[20%]">Role</TableHead>
-                <TableHead className="w-[35%]">Confirmation Statement</TableHead>
+                <TableHead className="w-[20%]">{t("columns.role")}</TableHead>
+                <TableHead className="w-[35%]">{t("columns.confirmationStatement")}</TableHead>
                 <TableHead className="text-center w-[10%]">
-                  Please tick when completed
+                  {t("columns.tickWhenCompleted")}
                 </TableHead>
-                <TableHead className="w-[12%]">Signed off by</TableHead>
-                <TableHead className="w-[10%]">Dated</TableHead>
-                <TableHead className="w-[13%]">General Comments</TableHead>
-                <TableHead className="w-[10%]">File</TableHead>
+                <TableHead className="w-[12%]">{t("columns.signedOffBy")}</TableHead>
+                <TableHead className="w-[10%]">{t("columns.dated")}</TableHead>
+                <TableHead className="w-[13%]">{t("columns.generalComments")}</TableHead>
+                <TableHead className="w-[10%]">{t("columns.file")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {confirmationRows.map((row, index) => {
                 const canAccess = currentUserRole === row.role;
+                const roleKey = roleKeyMap[row.role];
+                const roleLabel = roleKey ? t(`roles.${roleKey}`) : row.role;
 
                 return (
                   <TableRow key={index} className="hover:bg-muted">
                     {/* Role */}
                     <TableCell className="font-medium align-top">
-                      {row.role}
+                      {roleLabel}
                     </TableCell>
 
                     {/* Statement */}
@@ -163,15 +114,15 @@ export function ConfirmationStatementsTable({
 
                     {/* Signed Off By */}
                     <TableCell className="align-top">
-                      {row.signedOffBy || "-"}
+                      {row.signedOffBy || t("na")}
                     </TableCell>
 
                     {/* Dated */}
-                    <TableCell className="align-top">{row.dated || "-"}</TableCell>
+                    <TableCell className="align-top">{row.dated || t("na")}</TableCell>
 
                     {/* Comments */}
                     <TableCell className="align-top">
-                      {row.comments || "-"}
+                      {row.comments || t("na")}
                     </TableCell>
 
                     {/* File Upload */}
@@ -192,7 +143,7 @@ export function ConfirmationStatementsTable({
                           )}
                         </div>
                       ) : (
-                        "-"
+                        t("na")
                       )}
                     </TableCell>
                   </TableRow>

@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, Upload, FileText, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -50,15 +51,24 @@ const ALLOWED_MIME_TYPES = [
 
 const MAX_FILE_SIZE_MB = 10;
 
-const resourceFormSchema = z.object({
-  resource_name: z.string().min(1, "Resource name is required"),
-  description: z.string().optional(),
-  location: z.string().optional(),
-  resourceType: z.enum(["FILE", "URL"]),
-  isActive: z.boolean().optional(),
-});
+const getResourceFormSchema = (
+  t: (key: string, values?: Record<string, string | number | Date>) => string
+) =>
+  z.object({
+    resource_name: z.string().min(1, t("form.validation.resourceNameRequired")),
+    description: z.string().optional(),
+    location: z.string().optional(),
+    resourceType: z.enum(["FILE", "URL"]),
+    isActive: z.boolean().optional(),
+  });
 
-type ResourceFormValues = z.infer<typeof resourceFormSchema>;
+type ResourceFormValues = {
+  resource_name: string;
+  description?: string;
+  location?: string;
+  resourceType: "FILE" | "URL";
+  isActive?: boolean;
+};
 
 interface WellbeingResourceFormDialogProps {
   open: boolean;
@@ -73,6 +83,8 @@ export function WellbeingResourceFormDialog({
   resource,
   onSuccess,
 }: WellbeingResourceFormDialogProps) {
+  const t = useTranslations("wellbeing");
+  const commonT = useTranslations("common");
   const isEditMode = !!resource;
   const [addResource, { isLoading: isAdding }] = useAddResourceMutation();
   const [updateResource, { isLoading: isUpdating }] = useUpdateResourceMutation();
@@ -83,7 +95,7 @@ export function WellbeingResourceFormDialog({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ResourceFormValues>({
-    resolver: zodResolver(resourceFormSchema),
+    resolver: zodResolver(getResourceFormSchema(t)),
     defaultValues: {
       resource_name: "",
       description: "",
@@ -121,13 +133,15 @@ export function WellbeingResourceFormDialog({
 
   const validateFile = useCallback((file: File): string | null => {
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      return `File size exceeds ${MAX_FILE_SIZE_MB}MB limit`;
+      return t("form.validation.fileSizeExceeds", { max: MAX_FILE_SIZE_MB });
     }
     if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-      return `Unsupported file type. Allowed: ${ALLOWED_FILE_TYPES.join(", ")}`;
+      return t("form.validation.unsupportedFileType", {
+        allowed: ALLOWED_FILE_TYPES.join(", "),
+      });
     }
     return null;
-  }, []);
+  }, [t]);
 
   const handleFileSelect = useCallback((file: File) => {
     const error = validateFile(file);
@@ -178,7 +192,7 @@ export function WellbeingResourceFormDialog({
 
       if (data.resourceType === "FILE") {
         if (!uploadedFile && !isEditMode) {
-          setFileError("Please upload a file");
+          setFileError(t("form.validation.pleaseUploadFile"));
           return;
         }
         if (uploadedFile) {
@@ -186,7 +200,7 @@ export function WellbeingResourceFormDialog({
         }
       } else {
         if (!data.location) {
-          form.setError("location", { message: "URL is required" });
+          form.setError("location", { message: t("form.validation.urlRequired") });
           return;
         }
         formData.append("url", data.location);
@@ -199,15 +213,15 @@ export function WellbeingResourceFormDialog({
 
       if (isEditMode && resource) {
         await updateResource({ id: resource.id, payload: formData }).unwrap();
-        toast.success("Resource updated successfully");
+        toast.success(t("toast.updatedSuccess"));
       } else {
         await addResource(formData).unwrap();
-        toast.success("Resource added successfully");
+        toast.success(t("toast.addedSuccess"));
       }
       onOpenChange(false);
       onSuccess();
     } catch {
-      toast.error(isEditMode ? "Failed to update resource" : "Failed to add resource");
+      toast.error(isEditMode ? t("toast.updateFailed") : t("toast.addFailed"));
     }
   };
 
@@ -218,12 +232,12 @@ export function WellbeingResourceFormDialog({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? "Edit Resource" : "Add Resource"}
+            {isEditMode ? t("form.titleEdit") : t("form.titleAdd")}
           </DialogTitle>
           <DialogDescription>
             {isEditMode
-              ? "Update the resource information below."
-              : "Fill in the details to add a new wellbeing resource."}
+              ? t("form.descriptionEdit")
+              : t("form.descriptionAdd")}
           </DialogDescription>
         </DialogHeader>
 
@@ -231,12 +245,12 @@ export function WellbeingResourceFormDialog({
           {/* Resource Name */}
           <div className="space-y-2">
             <Label htmlFor="resource_name">
-              Resource Name <span className="text-destructive">*</span>
+              {t("form.resourceName")} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="resource_name"
               {...form.register("resource_name")}
-              placeholder="Enter resource name"
+              placeholder={t("form.placeholders.resourceName")}
               disabled={isLoading}
             />
             {form.formState.errors.resource_name && (
@@ -249,7 +263,7 @@ export function WellbeingResourceFormDialog({
           {/* Resource Type */}
           <div className="space-y-2">
             <Label htmlFor="resourceType">
-              Resource Type <span className="text-destructive">*</span>
+              {t("form.resourceType")} <span className="text-destructive">*</span>
             </Label>
             <Controller
               control={form.control}
@@ -265,11 +279,11 @@ export function WellbeingResourceFormDialog({
                   disabled={isLoading}
                 >
                   <SelectTrigger id="resourceType">
-                    <SelectValue placeholder="Select resource type" />
+                    <SelectValue placeholder={t("form.placeholders.resourceType")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="URL">URL Link</SelectItem>
-                    <SelectItem value="FILE">File Upload</SelectItem>
+                    <SelectItem value="URL">{t("form.resourceTypeOptions.url")}</SelectItem>
+                    <SelectItem value="FILE">{t("form.resourceTypeOptions.file")}</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -280,7 +294,7 @@ export function WellbeingResourceFormDialog({
           {watchedResourceType === "FILE" ? (
             <div className="space-y-2">
               <Label>
-                Upload File <span className="text-destructive">*</span>
+                {t("form.uploadFile")} <span className="text-destructive">*</span>
               </Label>
 
               {/* Hidden file input */}
@@ -332,21 +346,25 @@ export function WellbeingResourceFormDialog({
                   <div>
                     <FileText className="mx-auto size-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Current file: <span className="font-medium">{resource.resource_name}</span>
+                      {t("form.currentFile")}{" "}
+                      <span className="font-medium">{resource.resource_name}</span>
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Upload a new file to replace
+                      {t("form.uploadNewToReplace")}
                     </p>
                   </div>
                 ) : (
                   <div>
                     <Upload className="mx-auto size-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-foreground">
-                      Drag and drop your file here or{" "}
-                      <span className="font-medium text-primary underline">Browse</span>
+                      {t("form.dragDrop")}{" "}
+                      <span className="font-medium text-primary underline">{t("form.browse")}</span>
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Max {MAX_FILE_SIZE_MB}MB. Supported: {ALLOWED_FILE_TYPES.join(", ")}
+                      {t("form.maxSizeAndSupported", {
+                        max: MAX_FILE_SIZE_MB,
+                        types: ALLOWED_FILE_TYPES.join(", "),
+                      })}
                     </p>
                   </div>
                 )}
@@ -359,13 +377,13 @@ export function WellbeingResourceFormDialog({
           ) : (
             <div className="space-y-2">
               <Label htmlFor="location">
-                Resource URL <span className="text-destructive">*</span>
+                {t("form.resourceUrl")} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="location"
                 type="url"
                 {...form.register("location")}
-                placeholder="https://example.com/resource"
+                placeholder={t("form.placeholders.resourceUrl")}
                 disabled={isLoading}
               />
               {form.formState.errors.location && (
@@ -378,11 +396,11 @@ export function WellbeingResourceFormDialog({
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t("form.description")}</Label>
             <Textarea
               id="description"
               {...form.register("description")}
-              placeholder="Enter resource description"
+              placeholder={t("form.placeholders.description")}
               rows={4}
               disabled={isLoading}
             />
@@ -403,7 +421,7 @@ export function WellbeingResourceFormDialog({
               )}
             />
             <Label htmlFor="isActive" className="cursor-pointer">
-              Active
+              {t("form.active")}
             </Label>
           </div>
 
@@ -414,11 +432,11 @@ export function WellbeingResourceFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {commonT("cancel")}
             </Button>
             <Button type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isEditMode ? "Update Resource" : "Add Resource"}
+              {isEditMode ? t("form.updateResource") : t("form.addResource")}
             </Button>
           </DialogFooter>
         </form>

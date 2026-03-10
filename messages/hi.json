@@ -2262,6 +2262,74 @@
       "updateFailed": "संसाधन अपडेट करने में विफल"
     }
   },
+  "support": {
+    "pageTitle": "सहायता",
+    "pageSubtitle": "सहायता अनुरोध जमा करें और प्रबंधित करें",
+    "table": {
+      "columns": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता का नाम",
+        "date": "तारीख",
+        "status": "स्थिति",
+        "action": "कार्रवाई"
+      },
+      "actions": {
+        "edit": "संपादित करें",
+        "delete": "हटाएं"
+      },
+      "addRequest": "अनुरोध जोड़ें",
+      "loading": "लोड हो रहा है...",
+      "noResults": "कोई सहायता अनुरोध नहीं मिला।",
+      "csvExportSuccess": "CSV सफलतापूर्वक निर्यात हुआ"
+    },
+    "form": {
+      "titleAdd": "अनुरोध जोड़ें",
+      "titleEdit": "सहायता अनुरोध संपादित करें",
+      "descriptionAdd": "नया सहायता अनुरोध जमा करें।",
+      "descriptionEdit": "सहायता अनुरोध का विवरण अपडेट करें।",
+      "fields": {
+        "titleLabel": "शीर्षक",
+        "titlePlaceholder": "अपना शीर्षक जोड़ें",
+        "descriptionLabel": "विवरण",
+        "descriptionPlaceholder": "अपना विवरण जोड़ें",
+        "statusLabel": "स्थिति चुनें",
+        "statusPlaceholder": "स्थिति चुनें",
+        "status": {
+          "pending": "लंबित",
+          "inProgress": "प्रगति में",
+          "reject": "अस्वीकृत",
+          "resolve": "हल हो गया"
+        }
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "creating": "बन रहा है...",
+        "updating": "अपडेट हो रहा है...",
+        "save": "सहेजें",
+        "update": "अपडेट करें"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "descriptionRequired": "विवरण आवश्यक है"
+      },
+      "toast": {
+        "userIdNotFound": "उपयोगकर्ता ID नहीं मिला",
+        "createSuccess": "सहायता अनुरोध सफलतापूर्वक बनाया गया!",
+        "updateSuccess": "सहायता अनुरोध सफलतापूर्वक अपडेट हुआ!",
+        "createFailed": "सहायता अनुरोध बनाने में विफल। कृपया पुनः प्रयास करें।",
+        "updateFailed": "सहायता अनुरोध अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "deleteDialog": {
+      "title": "सहायता हटाएं?",
+      "description": "सहायता अनुरोध \"{title}\" हटाने से संबंधित सभी डेटा और संबंध भी हट जाएंगे। हटाना जारी रखें?",
+      "cancel": "रद्द करें",
+      "confirm": "सहायता हटाएं",
+      "deleting": "हट रहा है..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

@@ -2103,6 +2103,74 @@
       "updateFailed": "No se pudo actualizar el recurso"
     }
   },
+  "support": {
+    "pageTitle": "Soporte",
+    "pageSubtitle": "Enviar y gestionar solicitudes de soporte",
+    "table": {
+      "columns": {
+        "title": "Título",
+        "description": "Descripción",
+        "email": "Correo",
+        "userName": "Nombre de usuario",
+        "date": "Fecha",
+        "status": "Estado",
+        "action": "Acción"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "addRequest": "Añadir solicitud",
+      "loading": "Cargando...",
+      "noResults": "No se encontraron solicitudes de soporte.",
+      "csvExportSuccess": "CSV exportado correctamente"
+    },
+    "form": {
+      "titleAdd": "Añadir solicitud",
+      "titleEdit": "Editar solicitud de soporte",
+      "descriptionAdd": "Enviar una nueva solicitud de soporte.",
+      "descriptionEdit": "Actualizar los detalles de la solicitud de soporte.",
+      "fields": {
+        "titleLabel": "Título",
+        "titlePlaceholder": "Añade tu título",
+        "descriptionLabel": "Descripción",
+        "descriptionPlaceholder": "Añade tu descripción",
+        "statusLabel": "Seleccionar estado",
+        "statusPlaceholder": "Seleccionar estado",
+        "status": {
+          "pending": "Pendiente",
+          "inProgress": "En curso",
+          "reject": "Rechazado",
+          "resolve": "Resuelto"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "creating": "Creando...",
+        "updating": "Actualizando...",
+        "save": "Guardar",
+        "update": "Actualizar"
+      },
+      "validation": {
+        "titleRequired": "El título es obligatorio",
+        "descriptionRequired": "La descripción es obligatoria"
+      },
+      "toast": {
+        "userIdNotFound": "ID de usuario no encontrado",
+        "createSuccess": "¡Solicitud de soporte creada correctamente!",
+        "updateSuccess": "¡Solicitud de soporte actualizada correctamente!",
+        "createFailed": "Error al crear la solicitud de soporte. Inténtelo de nuevo.",
+        "updateFailed": "Error al actualizar la solicitud de soporte. Inténtelo de nuevo."
+      }
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar soporte?",
+      "description": "Eliminar la solicitud de soporte \"{title}\" también eliminará todos los datos y relaciones asociados. ¿Continuar con la eliminación?",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar soporte",
+      "deleting": "Eliminando..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Gestión de Recursos de Formación Complementaria",
     "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

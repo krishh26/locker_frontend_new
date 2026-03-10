@@ -2262,6 +2262,74 @@
       "updateFailed": "Impossible de mettre à jour la ressource"
     }
   },
+  "support": {
+    "pageTitle": "Support",
+    "pageSubtitle": "Soumettre et gérer les demandes de support",
+    "table": {
+      "columns": {
+        "title": "Titre",
+        "description": "Description",
+        "email": "E-mail",
+        "userName": "Nom d'utilisateur",
+        "date": "Date",
+        "status": "Statut",
+        "action": "Action"
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "addRequest": "Ajouter une demande",
+      "loading": "Chargement...",
+      "noResults": "Aucune demande de support trouvée.",
+      "csvExportSuccess": "CSV exporté avec succès"
+    },
+    "form": {
+      "titleAdd": "Ajouter une demande",
+      "titleEdit": "Modifier la demande de support",
+      "descriptionAdd": "Soumettre une nouvelle demande de support.",
+      "descriptionEdit": "Mettre à jour les détails de la demande de support.",
+      "fields": {
+        "titleLabel": "Titre",
+        "titlePlaceholder": "Ajoutez votre titre",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Ajoutez votre description",
+        "statusLabel": "Sélectionner le statut",
+        "statusPlaceholder": "Sélectionner le statut",
+        "status": {
+          "pending": "En attente",
+          "inProgress": "En cours",
+          "reject": "Rejeté",
+          "resolve": "Résolu"
+        }
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "creating": "Création...",
+        "updating": "Mise à jour...",
+        "save": "Enregistrer",
+        "update": "Mettre à jour"
+      },
+      "validation": {
+        "titleRequired": "Le titre est obligatoire",
+        "descriptionRequired": "La description est obligatoire"
+      },
+      "toast": {
+        "userIdNotFound": "ID utilisateur introuvable",
+        "createSuccess": "Demande de support créée avec succès !",
+        "updateSuccess": "Demande de support mise à jour avec succès !",
+        "createFailed": "Échec de la création de la demande. Veuillez réessayer.",
+        "updateFailed": "Échec de la mise à jour de la demande. Veuillez réessayer."
+      }
+    },
+    "deleteDialog": {
+      "title": "Supprimer le support ?",
+      "description": "La suppression de la demande \"{title}\" supprimera également toutes les données et relations associées. Continuer ?",
+      "cancel": "Annuler",
+      "confirm": "Supprimer le support",
+      "deleting": "Suppression..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

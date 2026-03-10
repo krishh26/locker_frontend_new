@@ -2255,6 +2255,74 @@
       "updateFailed": "فشل تحديث المورد"
     }
   },
+  "support": {
+    "pageTitle": "الدعم",
+    "pageSubtitle": "إرسال وإدارة طلبات الدعم",
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "description": "الوصف",
+        "email": "البريد الإلكتروني",
+        "userName": "اسم المستخدم",
+        "date": "التاريخ",
+        "status": "الحالة",
+        "action": "إجراء"
+      },
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "addRequest": "إضافة طلب",
+      "loading": "جاري التحميل...",
+      "noResults": "لم يتم العثور على طلبات دعم.",
+      "csvExportSuccess": "تم تصدير CSV بنجاح"
+    },
+    "form": {
+      "titleAdd": "إضافة طلب",
+      "titleEdit": "تعديل طلب الدعم",
+      "descriptionAdd": "إرسال طلب دعم جديد.",
+      "descriptionEdit": "تحديث تفاصيل طلب الدعم.",
+      "fields": {
+        "titleLabel": "العنوان",
+        "titlePlaceholder": "أضف عنوانك",
+        "descriptionLabel": "الوصف",
+        "descriptionPlaceholder": "أضف وصفك",
+        "statusLabel": "اختر الحالة",
+        "statusPlaceholder": "اختر الحالة",
+        "status": {
+          "pending": "قيد الانتظار",
+          "inProgress": "قيد المعالجة",
+          "reject": "مرفوض",
+          "resolve": "تم الحل"
+        }
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "creating": "جاري الإنشاء...",
+        "updating": "جاري التحديث...",
+        "save": "حفظ",
+        "update": "تحديث"
+      },
+      "validation": {
+        "titleRequired": "العنوان مطلوب",
+        "descriptionRequired": "الوصف مطلوب"
+      },
+      "toast": {
+        "userIdNotFound": "معرف المستخدم غير موجود",
+        "createSuccess": "تم إنشاء طلب الدعم بنجاح!",
+        "updateSuccess": "تم تحديث طلب الدعم بنجاح!",
+        "createFailed": "فشل إنشاء طلب الدعم. يرجى المحاولة مرة أخرى.",
+        "updateFailed": "فشل تحديث طلب الدعم. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "deleteDialog": {
+      "title": "حذف طلب الدعم؟",
+      "description": "حذف طلب الدعم \"{title}\" سيحذف أيضاً جميع البيانات والعلاقات المرتبطة. متابعة الحذف؟",
+      "cancel": "إلغاء",
+      "confirm": "حذف الدعم",
+      "deleting": "جاري الحذف..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

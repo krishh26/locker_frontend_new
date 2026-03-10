@@ -1674,6 +1674,74 @@
       "updateFailed": "Ressource konnte nicht aktualisiert werden"
     }
   },
+  "support": {
+    "pageTitle": "Support",
+    "pageSubtitle": "Supportanfragen einreichen und verwalten",
+    "table": {
+      "columns": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "email": "E-Mail",
+        "userName": "Benutzername",
+        "date": "Datum",
+        "status": "Status",
+        "action": "Aktion"
+      },
+      "actions": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+      },
+      "addRequest": "Anfrage hinzufügen",
+      "loading": "Wird geladen...",
+      "noResults": "Keine Supportanfragen gefunden.",
+      "csvExportSuccess": "CSV erfolgreich exportiert"
+    },
+    "form": {
+      "titleAdd": "Anfrage hinzufügen",
+      "titleEdit": "Supportanfrage bearbeiten",
+      "descriptionAdd": "Neue Supportanfrage einreichen.",
+      "descriptionEdit": "Details der Supportanfrage aktualisieren.",
+      "fields": {
+        "titleLabel": "Titel",
+        "titlePlaceholder": "Titel eingeben",
+        "descriptionLabel": "Beschreibung",
+        "descriptionPlaceholder": "Beschreibung eingeben",
+        "statusLabel": "Status auswählen",
+        "statusPlaceholder": "Status auswählen",
+        "status": {
+          "pending": "Ausstehend",
+          "inProgress": "In Bearbeitung",
+          "reject": "Abgelehnt",
+          "resolve": "Gelöst"
+        }
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "creating": "Wird erstellt...",
+        "updating": "Wird aktualisiert...",
+        "save": "Speichern",
+        "update": "Aktualisieren"
+      },
+      "validation": {
+        "titleRequired": "Titel ist erforderlich",
+        "descriptionRequired": "Beschreibung ist erforderlich"
+      },
+      "toast": {
+        "userIdNotFound": "Benutzer-ID nicht gefunden",
+        "createSuccess": "Supportanfrage erfolgreich erstellt!",
+        "updateSuccess": "Supportanfrage erfolgreich aktualisiert!",
+        "createFailed": "Supportanfrage konnte nicht erstellt werden. Bitte erneut versuchen.",
+        "updateFailed": "Supportanfrage konnte nicht aktualisiert werden. Bitte erneut versuchen."
+      }
+    },
+    "deleteDialog": {
+      "title": "Support löschen?",
+      "description": "Das Löschen der Anfrage \"{title}\" entfernt auch alle zugehörigen Daten und Beziehungen. Fortfahren?",
+      "cancel": "Abbrechen",
+      "confirm": "Support löschen",
+      "deleting": "Wird gelöscht..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

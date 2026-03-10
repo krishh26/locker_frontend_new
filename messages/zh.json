@@ -2220,6 +2220,74 @@
       "updateFailed": "更新资源失败"
     }
   },
+  "support": {
+    "pageTitle": "支持",
+    "pageSubtitle": "提交和管理支持请求",
+    "table": {
+      "columns": {
+        "title": "标题",
+        "description": "描述",
+        "email": "邮箱",
+        "userName": "用户名",
+        "date": "日期",
+        "status": "状态",
+        "action": "操作"
+      },
+      "actions": {
+        "edit": "编辑",
+        "delete": "删除"
+      },
+      "addRequest": "添加请求",
+      "loading": "加载中...",
+      "noResults": "未找到支持请求。",
+      "csvExportSuccess": "CSV 导出成功"
+    },
+    "form": {
+      "titleAdd": "添加请求",
+      "titleEdit": "编辑支持请求",
+      "descriptionAdd": "提交新的支持请求。",
+      "descriptionEdit": "更新支持请求详情。",
+      "fields": {
+        "titleLabel": "标题",
+        "titlePlaceholder": "添加标题",
+        "descriptionLabel": "描述",
+        "descriptionPlaceholder": "添加描述",
+        "statusLabel": "选择状态",
+        "statusPlaceholder": "选择状态",
+        "status": {
+          "pending": "待处理",
+          "inProgress": "处理中",
+          "reject": "已拒绝",
+          "resolve": "已解决"
+        }
+      },
+      "buttons": {
+        "cancel": "取消",
+        "creating": "创建中...",
+        "updating": "更新中...",
+        "save": "保存",
+        "update": "更新"
+      },
+      "validation": {
+        "titleRequired": "标题为必填项",
+        "descriptionRequired": "描述为必填项"
+      },
+      "toast": {
+        "userIdNotFound": "未找到用户 ID",
+        "createSuccess": "支持请求创建成功！",
+        "updateSuccess": "支持请求更新成功！",
+        "createFailed": "创建支持请求失败，请重试。",
+        "updateFailed": "更新支持请求失败，请重试。"
+      }
+    },
+    "deleteDialog": {
+      "title": "删除支持请求？",
+      "description": "删除支持请求「{title}」将同时删除所有相关数据和关联。是否继续删除？",
+      "cancel": "取消",
+      "confirm": "删除支持",
+      "deleting": "删除中..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

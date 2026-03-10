@@ -1674,6 +1674,74 @@
       "updateFailed": "Impossibile aggiornare la risorsa"
     }
   },
+  "support": {
+    "pageTitle": "Supporto",
+    "pageSubtitle": "Invia e gestisci le richieste di supporto",
+    "table": {
+      "columns": {
+        "title": "Titolo",
+        "description": "Descrizione",
+        "email": "E-mail",
+        "userName": "Nome utente",
+        "date": "Data",
+        "status": "Stato",
+        "action": "Azione"
+      },
+      "actions": {
+        "edit": "Modifica",
+        "delete": "Elimina"
+      },
+      "addRequest": "Aggiungi richiesta",
+      "loading": "Caricamento...",
+      "noResults": "Nessuna richiesta di supporto trovata.",
+      "csvExportSuccess": "CSV esportato con successo"
+    },
+    "form": {
+      "titleAdd": "Aggiungi richiesta",
+      "titleEdit": "Modifica richiesta di supporto",
+      "descriptionAdd": "Invia una nuova richiesta di supporto.",
+      "descriptionEdit": "Aggiorna i dettagli della richiesta di supporto.",
+      "fields": {
+        "titleLabel": "Titolo",
+        "titlePlaceholder": "Aggiungi il tuo titolo",
+        "descriptionLabel": "Descrizione",
+        "descriptionPlaceholder": "Aggiungi la tua descrizione",
+        "statusLabel": "Seleziona stato",
+        "statusPlaceholder": "Seleziona stato",
+        "status": {
+          "pending": "In attesa",
+          "inProgress": "In corso",
+          "reject": "Rifiutato",
+          "resolve": "Risolto"
+        }
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "creating": "Creazione...",
+        "updating": "Aggiornamento...",
+        "save": "Salva",
+        "update": "Aggiorna"
+      },
+      "validation": {
+        "titleRequired": "Il titolo è obbligatorio",
+        "descriptionRequired": "La descrizione è obbligatoria"
+      },
+      "toast": {
+        "userIdNotFound": "ID utente non trovato",
+        "createSuccess": "Richiesta di supporto creata con successo!",
+        "updateSuccess": "Richiesta di supporto aggiornata con successo!",
+        "createFailed": "Impossibile creare la richiesta. Riprova.",
+        "updateFailed": "Impossibile aggiornare la richiesta. Riprova."
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminare il supporto?",
+      "description": "Eliminando la richiesta \"{title}\" verranno rimossi anche tutti i dati e le relazioni associati. Procedere?",
+      "cancel": "Annulla",
+      "confirm": "Elimina supporto",
+      "deleting": "Eliminazione..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

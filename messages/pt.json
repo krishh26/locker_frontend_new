@@ -2262,6 +2262,74 @@
       "updateFailed": "Falha ao atualizar o recurso"
     }
   },
+  "support": {
+    "pageTitle": "Suporte",
+    "pageSubtitle": "Submeter e gerir pedidos de suporte",
+    "table": {
+      "columns": {
+        "title": "Título",
+        "description": "Descrição",
+        "email": "E-mail",
+        "userName": "Nome do utilizador",
+        "date": "Data",
+        "status": "Estado",
+        "action": "Ação"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "addRequest": "Adicionar pedido",
+      "loading": "A carregar...",
+      "noResults": "Nenhum pedido de suporte encontrado.",
+      "csvExportSuccess": "CSV exportado com sucesso"
+    },
+    "form": {
+      "titleAdd": "Adicionar pedido",
+      "titleEdit": "Editar pedido de suporte",
+      "descriptionAdd": "Submeter um novo pedido de suporte.",
+      "descriptionEdit": "Atualizar os detalhes do pedido de suporte.",
+      "fields": {
+        "titleLabel": "Título",
+        "titlePlaceholder": "Adicione o seu título",
+        "descriptionLabel": "Descrição",
+        "descriptionPlaceholder": "Adicione a sua descrição",
+        "statusLabel": "Selecionar estado",
+        "statusPlaceholder": "Selecionar estado",
+        "status": {
+          "pending": "Pendente",
+          "inProgress": "Em progresso",
+          "reject": "Rejeitado",
+          "resolve": "Resolvido"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "creating": "A criar...",
+        "updating": "A atualizar...",
+        "save": "Guardar",
+        "update": "Atualizar"
+      },
+      "validation": {
+        "titleRequired": "O título é obrigatório",
+        "descriptionRequired": "A descrição é obrigatória"
+      },
+      "toast": {
+        "userIdNotFound": "ID do utilizador não encontrado",
+        "createSuccess": "Pedido de suporte criado com sucesso!",
+        "updateSuccess": "Pedido de suporte atualizado com sucesso!",
+        "createFailed": "Falha ao criar o pedido. Por favor, tente novamente.",
+        "updateFailed": "Falha ao atualizar o pedido. Por favor, tente novamente."
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminar suporte?",
+      "description": "Eliminar o pedido \"{title}\" também removerá todos os dados e relações associados. Continuar com a eliminação?",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar suporte",
+      "deleting": "A eliminar..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

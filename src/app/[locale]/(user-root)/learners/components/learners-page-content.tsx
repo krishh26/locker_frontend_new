@@ -4,15 +4,16 @@ import { GraduationCap } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { LearnersDataTable } from "./learners-data-table";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 export function LearnersPageContent() {
   const userRole = useAppSelector((state) => state.auth.user?.role);
   const isAdmin = userRole === "Admin";
 
-  const title = "Learner Management";
-  const subtitle = isAdmin
-    ? "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs"
-    : "Manage and monitor your assigned learners";
+  const t = useTranslations("learners.page");
+
+  const title = t("title");
+  const subtitle = isAdmin ? t("adminSubtitle") : t("defaultSubtitle");
 
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">

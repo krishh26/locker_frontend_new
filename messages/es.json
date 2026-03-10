@@ -79,7 +79,12 @@
     "status": "Estado",
     "actions": "Acciones",
     "noLearnersFound": "No se encontraron estudiantes",
-    "confirmDelete": "¿Estás seguro de que deseas eliminar este estudiante?"
+    "confirmDelete": "¿Estás seguro de que deseas eliminar este estudiante?",
+    "page": {
+      "title": "Gestión de Estudiantes",
+      "adminSubtitle": "Optimice la administración de estudiantes añadiendo, actualizando y eliminando estudiantes, y facilitando la asignación de cursos, formadores, empleadores, IQA y EQA",
+      "defaultSubtitle": "Gestione y supervise sus estudiantes asignados"
+    }
   },
   "users": {
     "title": "Usuarios",
@@ -2046,7 +2051,40 @@
   },
   "progressExclusion": {
     "pageTitle": "Excluir del Progreso General",
-    "pageSubtitle": "Seleccione un curso y elija qué estados de capacitación deben excluirse del seguimiento del progreso general"
+    "pageSubtitle": "Seleccione un curso y elija qué estados de capacitación deben excluirse del seguimiento del progreso general",
+    "card": {
+      "title": "Excluir del Progreso General",
+      "description": "Seleccione un curso y elija qué estados de capacitación deben excluirse del seguimiento del progreso general"
+    },
+    "info": {
+      "description": "Los cambios aquí afectarán cómo se calcula el progreso general para todos los aprendices del curso seleccionado."
+    },
+    "form": {
+      "courseLabel": "Seleccionar curso",
+      "coursePlaceholder": "Seleccione un curso",
+      "submit": "Guardar",
+      "submitting": "Guardando..."
+    },
+    "table": {
+      "statusColumn": "Estado cambiado a",
+      "excludeColumn": "Excluir del progreso"
+    },
+    "statusLabels": {
+      "In Training": "En formación",
+      "IQA Approved": "Aprobado por IQA",
+      "Completed": "Completado",
+      "Certificated": "Certificado",
+      "Training Suspended": "Formación suspendida",
+      "Transferred": "Transferido",
+      "Early Leaver": "Abandono temprano",
+      "Exempt": "Exento",
+      "Awaiting Induction": "En espera de inducción"
+    },
+    "toast": {
+      "selectCourseRequired": "Seleccione un curso",
+      "updateSuccess": "La configuración de exclusión de progreso se actualizó correctamente",
+      "updateFailed": "Error al actualizar la configuración de exclusión de progreso. Inténtelo de nuevo."
+    }
   },
   "gatewayReport": {
     "pageTitle": "Informe de Puerta de Enlace",

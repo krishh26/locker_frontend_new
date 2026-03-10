@@ -79,7 +79,206 @@
     "status": "Status",
     "actions": "Actions",
     "noLearnersFound": "No learners found",
-    "confirmDelete": "Are you sure you want to delete this learner?"
+    "confirmDelete": "Are you sure you want to delete this learner?",
+    "page": {
+      "title": "Learner Management",
+      "adminSubtitle": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs",
+      "defaultSubtitle": "Manage and monitor your assigned learners"
+    },
+    "form": {
+      "firstNameLabel": "First Name",
+      "firstNamePlaceholder": "Enter first name",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter last name",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Enter username",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm password",
+      "centreLabel": "Centre",
+      "centrePlaceholder": "Select centre",
+      "noCentresAvailable": "No centres available for this organisation",
+      "mobileLabel": "Mobile",
+      "mobilePlaceholder": "Enter mobile number",
+      "employerLabel": "Employer",
+      "employerPlaceholder": "Select employer",
+      "loadingEmployers": "Loading employers...",
+      "fundingBodyLabel": "Funding Body",
+      "fundingBodyPlaceholder": "Select funding body",
+      "nationalInsuranceLabel": "National Insurance Number",
+      "nationalInsurancePlaceholder": "Enter national insurance number",
+      "jobTitleLabel": "Job Title",
+      "jobTitlePlaceholder": "Enter job title",
+      "commentLabel": "Comment",
+      "commentPlaceholder": "Enter comment (optional)"
+    },
+    "formDialog": {
+      "titleCreate": "Create New Learner",
+      "titleEdit": "Edit Learner",
+      "descriptionCreate": "Fill in the form below to create a new learner.",
+      "descriptionEdit": "Update learner information below.",
+      "cancel": "Cancel",
+      "create": "Create",
+      "saveChanges": "Save Changes",
+      "saving": "Saving..."
+    },
+    "toast": {
+      "createSuccess": "Learner created successfully",
+      "updateSuccess": "Learner updated successfully",
+      "createFailedGeneric": "Failed to create learner",
+      "updateFailedGeneric": "Failed to update learner",
+      "deleteSuccess": "Learner deleted successfully",
+      "deleteFailedGeneric": "Failed to delete learner"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "Name",
+        "course": "Course",
+        "trainer": "Trainer",
+        "iqa": "IQA",
+        "status": "Status",
+        "iqaReport": "IQA Report",
+        "learnerCreated": "Learner Created",
+        "courseRegistered": "Course Registered"
+      },
+      "headers": {
+        "learnerName": "Learner Name",
+        "username": "Username",
+        "email": "Email",
+        "mobile": "Mobile",
+        "course": "Course",
+        "comment": "Comment",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "openMenu": "Open menu",
+        "edit": "Edit",
+        "comment": "Comment",
+        "delete": "Delete"
+      },
+      "unknownCourse": "Unknown Course",
+      "qaSamplePlan": "QA Sample Plan",
+      "viewIqaReport": "View IQA Report",
+      "noResults": "No results."
+    },
+    "filters": {
+      "searchPlaceholder": "Search by keyword...",
+      "coursePlaceholder": "Filter by course",
+      "allCourses": "All Courses",
+      "loadingCourses": "Loading courses...",
+      "employerPlaceholder": "Filter by employer",
+      "allEmployers": "All Employers",
+      "loadingEmployers": "Loading employers...",
+      "clear": "Clear"
+    },
+    "statusFilters": {
+      "title": "Status Filters",
+      "options": {
+        "Awaiting Induction": "Awaiting Induction",
+        "Certificated": "Certificated",
+        "Completed": "Completed",
+        "Early Leaver": "Early Leaver",
+        "Exempt": "Exempt",
+        "In Training": "In Training",
+        "IQA Approved": "IQA Approved",
+        "Training Suspended": "Training Suspended",
+        "Transferred": "Transferred",
+        "Show only archived users": "Show only archived users"
+      }
+    },
+    "export": {
+      "export": "Export",
+      "exportCsv": "Export as CSV",
+      "exportPdf": "Export as PDF",
+      "uploadLearners": "Upload Learners",
+      "addNew": "Add New",
+      "noData": "No data to export",
+      "csvSuccess": "CSV exported successfully",
+      "pdfSuccess": "PDF exported successfully",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "Learners",
+      "pdfTitleEqa": "Learners (EQA)",
+      "csvHeaders": {
+        "learnerName": "Learner Name",
+        "username": "Username",
+        "email": "Email",
+        "mobile": "Mobile",
+        "course": "Course",
+        "status": "Status"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "Learner Name",
+        "course": "Course",
+        "employer": "Employer",
+        "iqa": "IQA",
+        "status": "Status",
+        "iqaReport": "IQA Report",
+        "learnerCreated": "Learner Created",
+        "courseRegistered": "Course Registered"
+      }
+    },
+    "csvUpload": {
+      "title": "Upload Learner CSV",
+      "description": "Upload learner data in bulk using CSV format",
+      "sample": {
+        "title": "Need a sample CSV?",
+        "description": "Download our template with all required fields and sample data to ensure proper formatting",
+        "button": "Download Sample CSV"
+      },
+      "upload": {
+        "fileSize": "File size: {size} MB",
+        "dragDrop": "Drag and drop your CSV file here or",
+        "browse": "Browse",
+        "maxSize": "Max 10MB files are allowed",
+        "supportedFormats": "Supported format: CSV only"
+      },
+      "summary": {
+        "ready": "learners found and ready to upload",
+        "formatted": "All required fields are properly formatted"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "upload": "Upload Learners",
+        "uploading": "Uploading..."
+      },
+      "errors": {
+        "missingRequiredFields": "Some learner details are missing. Please check that every row includes {fields}.",
+        "parseError": "Error parsing CSV file: {message}",
+        "noValidData": "No valid data found. Please upload a proper CSV file."
+      },
+      "toast": {
+        "success": "Learners uploaded successfully",
+        "failedGeneric": "Failed to upload learners"
+      }
+    },
+    "commentDialog": {
+      "title": "Add/Edit Comment for {name}",
+      "description": "Update the comment for this learner. This comment will be visible to admins and trainers.",
+      "field": {
+        "label": "Comment",
+        "placeholder": "Enter your comment here..."
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Comment"
+      },
+      "toast": {
+        "success": "Comment updated successfully",
+        "failedGeneric": "Failed to update comment"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "Last Login",
+      "nextVisit": "Next Visit",
+      "noComment": "No comment",
+      "profile": "Profile"
+    }
   },
   "users": {
     "title": "Users",
@@ -2278,7 +2477,40 @@
   },
   "progressExclusion": {
     "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking",
+    "card": {
+      "title": "Exclude From Overall Progress",
+      "description": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    },
+    "info": {
+      "description": "Changes here will affect how overall progress is calculated for all learners on the selected course."
+    },
+    "form": {
+      "courseLabel": "Select Course",
+      "coursePlaceholder": "Select a course",
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    },
+    "table": {
+      "statusColumn": "Status Changed To",
+      "excludeColumn": "Exclude From Progress"
+    },
+    "statusLabels": {
+      "In Training": "In Training",
+      "IQA Approved": "IQA Approved",
+      "Completed": "Completed",
+      "Certificated": "Certificated",
+      "Training Suspended": "Training Suspended",
+      "Transferred": "Transferred",
+      "Early Leaver": "Early Leaver",
+      "Exempt": "Exempt",
+      "Awaiting Induction": "Awaiting Induction"
+    },
+    "toast": {
+      "selectCourseRequired": "Please select a course",
+      "updateSuccess": "Progress exclusion settings updated successfully",
+      "updateFailed": "Failed to update progress exclusion settings"
+    }
   },
   "gatewayReport": {
     "pageTitle": "Gateway Report",

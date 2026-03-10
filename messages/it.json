@@ -68,7 +68,12 @@
     "status": "Stato",
     "actions": "Azioni",
     "noLearnersFound": "Nessuno studente trovato",
-    "confirmDelete": "Sei sicuro di voler eliminare questo studente?"
+    "confirmDelete": "Sei sicuro di voler eliminare questo studente?",
+    "page": {
+      "title": "Gestione Studenti",
+      "adminSubtitle": "Ottimizza la gestione degli studenti aggiungendo, aggiornando ed eliminando studenti e facilitando l’assegnazione di corsi, formatori, datori di lavoro, IQA ed EQA",
+      "defaultSubtitle": "Gestisci e monitora i tuoi studenti assegnati"
+    }
   },
   "users": {
     "title": "Utenti",
@@ -1799,8 +1804,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "Escludi dal progresso complessivo",
+    "pageSubtitle": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo",
+    "card": {
+      "title": "Escludi dal progresso complessivo",
+      "description": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo"
+    },
+    "info": {
+      "description": "Le modifiche apportate qui influenzeranno il modo in cui viene calcolato il progresso complessivo per tutti gli studenti del corso selezionato."
+    },
+    "form": {
+      "courseLabel": "Seleziona corso",
+      "coursePlaceholder": "Seleziona un corso",
+      "submit": "Salva",
+      "submitting": "Salvataggio in corso..."
+    },
+    "table": {
+      "statusColumn": "Stato modificato in",
+      "excludeColumn": "Escludi dal progresso"
+    },
+    "statusLabels": {
+      "In Training": "In formazione",
+      "IQA Approved": "Approvato da IQA",
+      "Completed": "Completato",
+      "Certificated": "Certificato",
+      "Training Suspended": "Formazione sospesa",
+      "Transferred": "Trasferito",
+      "Early Leaver": "Uscita anticipata",
+      "Exempt": "Esente",
+      "Awaiting Induction": "In attesa di induzione"
+    },
+    "toast": {
+      "selectCourseRequired": "Seleziona un corso",
+      "updateSuccess": "Impostazioni di esclusione dal progresso aggiornate con successo",
+      "updateFailed": "Errore durante l’aggiornamento delle impostazioni di esclusione dal progresso. Riprova."
+    }
   },
   "gatewayReport": {
     "pageTitle": "Report Gateway",

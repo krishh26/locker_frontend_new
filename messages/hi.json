@@ -78,7 +78,206 @@
     "status": "स्थिति",
     "actions": "कार्रवाई",
     "noLearnersFound": "कोई शिक्षार्थी नहीं मिला",
-    "confirmDelete": "क्या आप वाकई इस शिक्षार्थी को हटाना चाहते हैं?"
+    "confirmDelete": "क्या आप वाकई इस शिक्षार्थी को हटाना चाहते हैं?",
+    "page": {
+      "title": "शिक्षार्थी प्रबंधन",
+      "adminSubtitle": "शिक्षार्थियों को सहज रूप से जोड़कर, अपडेट करके और हटाकर, तथा कोर्स, ट्रेनर, नियोक्ता, IQA और EQA असाइन करके प्रशासन को बेहतर बनाएं",
+      "defaultSubtitle": "अपने असाइन किए गए शिक्षार्थियों को प्रबंधित और मॉनिटर करें"
+    },
+    "form": {
+      "firstNameLabel": "पहला नाम",
+      "firstNamePlaceholder": "पहला नाम दर्ज करें",
+      "lastNameLabel": "अंतिम नाम",
+      "lastNamePlaceholder": "अंतिम नाम दर्ज करें",
+      "usernameLabel": "उपयोगकर्ता नाम",
+      "usernamePlaceholder": "उपयोगकर्ता नाम दर्ज करें",
+      "emailLabel": "ईमेल",
+      "emailPlaceholder": "ईमेल दर्ज करें",
+      "passwordLabel": "पासवर्ड",
+      "passwordPlaceholder": "पासवर्ड दर्ज करें",
+      "confirmPasswordLabel": "पासवर्ड की पुष्टि करें",
+      "confirmPasswordPlaceholder": "पासवर्ड की पुष्टि करें",
+      "centreLabel": "केंद्र",
+      "centrePlaceholder": "केंद्र चुनें",
+      "noCentresAvailable": "इस संगठन के लिए कोई केंद्र उपलब्ध नहीं है",
+      "mobileLabel": "मोबाइल",
+      "mobilePlaceholder": "मोबाइल नंबर दर्ज करें",
+      "employerLabel": "नियोक्ता",
+      "employerPlaceholder": "नियोक्ता चुनें",
+      "loadingEmployers": "नियोक्ता लोड हो रहे हैं...",
+      "fundingBodyLabel": "फंडिंग बॉडी",
+      "fundingBodyPlaceholder": "फंडिंग बॉडी चुनें",
+      "nationalInsuranceLabel": "नेशनल इंश्योरेंस नंबर",
+      "nationalInsurancePlaceholder": "नेशनल इंश्योरेंस नंबर दर्ज करें",
+      "jobTitleLabel": "कार्य शीर्षक",
+      "jobTitlePlaceholder": "कार्य शीर्षक दर्ज करें",
+      "commentLabel": "टिप्पणी",
+      "commentPlaceholder": "टिप्पणी दर्ज करें (वैकल्पिक)"
+    },
+    "formDialog": {
+      "titleCreate": "नया शिक्षार्थी बनाएं",
+      "titleEdit": "शिक्षार्थी संपादित करें",
+      "descriptionCreate": "नया शिक्षार्थी बनाने के लिए नीचे दिया गया फॉर्म भरें।",
+      "descriptionEdit": "नीचे शिक्षार्थी की जानकारी अपडेट करें।",
+      "cancel": "रद्द करें",
+      "create": "बनाएं",
+      "saveChanges": "परिवर्तन सहेजें",
+      "saving": "सहेजा जा रहा है..."
+    },
+    "toast": {
+      "createSuccess": "शिक्षार्थी सफलतापूर्वक बनाया गया",
+      "updateSuccess": "शिक्षार्थी सफलतापूर्वक अपडेट किया गया",
+      "createFailedGeneric": "शिक्षार्थी बनाने में विफल",
+      "updateFailedGeneric": "शिक्षार्थी अपडेट करने में विफल",
+      "deleteSuccess": "शिक्षार्थी सफलतापूर्वक हटाया गया",
+      "deleteFailedGeneric": "शिक्षार्थी हटाने में विफल"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "नाम",
+        "course": "कोर्स",
+        "trainer": "प्रशिक्षक",
+        "iqa": "IQA",
+        "status": "स्थिति",
+        "iqaReport": "IQA रिपोर्ट",
+        "learnerCreated": "शिक्षार्थी बनाया गया",
+        "courseRegistered": "कोर्स पंजीकृत"
+      },
+      "headers": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "mobile": "मोबाइल",
+        "course": "कोर्स",
+        "comment": "टिप्पणी",
+        "status": "स्थिति",
+        "actions": "कार्रवाई"
+      },
+      "actions": {
+        "openMenu": "मेनू खोलें",
+        "edit": "संपादित करें",
+        "comment": "टिप्पणी",
+        "delete": "हटाएं"
+      },
+      "unknownCourse": "अज्ञात कोर्स",
+      "qaSamplePlan": "QA सैंपल प्लान",
+      "viewIqaReport": "IQA रिपोर्ट देखें",
+      "noResults": "कोई परिणाम नहीं।"
+    },
+    "filters": {
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "coursePlaceholder": "कोर्स द्वारा फ़िल्टर करें",
+      "allCourses": "सभी कोर्स",
+      "loadingCourses": "कोर्स लोड हो रहे हैं...",
+      "employerPlaceholder": "नियोक्ता द्वारा फ़िल्टर करें",
+      "allEmployers": "सभी नियोक्ता",
+      "loadingEmployers": "नियोक्ता लोड हो रहे हैं...",
+      "clear": "साफ करें"
+    },
+    "statusFilters": {
+      "title": "स्थिति फ़िल्टर",
+      "options": {
+        "Awaiting Induction": "इंडक्शन की प्रतीक्षा",
+        "Certificated": "सर्टिफिकेट जारी",
+        "Completed": "पूर्ण",
+        "Early Leaver": "जल्दी छोड़ने वाला",
+        "Exempt": "मुक्त",
+        "In Training": "प्रशिक्षण में",
+        "IQA Approved": "IQA द्वारा स्वीकृत",
+        "Training Suspended": "प्रशिक्षण निलंबित",
+        "Transferred": "स्थानांतरित",
+        "Show only archived users": "केवल संग्रहित उपयोगकर्ता दिखाएं"
+      }
+    },
+    "export": {
+      "export": "निर्यात",
+      "exportCsv": "CSV के रूप में निर्यात",
+      "exportPdf": "PDF के रूप में निर्यात",
+      "uploadLearners": "शिक्षार्थी अपलोड करें",
+      "addNew": "नया जोड़ें",
+      "noData": "निर्यात के लिए कोई डेटा नहीं",
+      "csvSuccess": "CSV सफलतापूर्वक निर्यात किया गया",
+      "pdfSuccess": "PDF सफलतापूर्वक निर्यात किया गया",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "शिक्षार्थी",
+      "pdfTitleEqa": "शिक्षार्थी (EQA)",
+      "csvHeaders": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "mobile": "मोबाइल",
+        "course": "कोर्स",
+        "status": "स्थिति"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "शिक्षार्थी का नाम",
+        "course": "कोर्स",
+        "employer": "नियोक्ता",
+        "iqa": "IQA",
+        "status": "स्थिति",
+        "iqaReport": "IQA रिपोर्ट",
+        "learnerCreated": "शिक्षार्थी बनाया गया",
+        "courseRegistered": "कोर्स पंजीकृत"
+      }
+    },
+    "csvUpload": {
+      "title": "शिक्षार्थी CSV अपलोड करें",
+      "description": "CSV फ़ॉर्मेट का उपयोग करके शिक्षार्थी डेटा bulk में अपलोड करें",
+      "sample": {
+        "title": "सैंपल CSV चाहिए?",
+        "description": "सभी आवश्यक फ़ील्ड और सैंपल डेटा के साथ हमारा टेम्पलेट डाउनलोड करें ताकि सही फ़ॉर्मेटिंग सुनिश्चित हो सके",
+        "button": "सैंपल CSV डाउनलोड करें"
+      },
+      "upload": {
+        "fileSize": "फ़ाइल साइज़: {size} MB",
+        "dragDrop": "अपनी CSV फ़ाइल यहां drag और drop करें या",
+        "browse": "Browse",
+        "maxSize": "अधिकतम 10MB फ़ाइलें अनुमत हैं",
+        "supportedFormats": "समर्थित फ़ॉर्मेट: केवल CSV"
+      },
+      "summary": {
+        "ready": "शिक्षार्थी मिले और अपलोड के लिए तैयार हैं",
+        "formatted": "सभी आवश्यक फ़ील्ड सही तरीके से फ़ॉर्मैट की गई हैं"
+      },
+      "actions": {
+        "cancel": "रद्द करें",
+        "upload": "शिक्षार्थी अपलोड करें",
+        "uploading": "अपलोड हो रहा है..."
+      },
+      "errors": {
+        "missingRequiredFields": "कुछ शिक्षार्थी विवरण गायब हैं। कृपया जांचें कि हर पंक्ति में {fields} शामिल हैं।",
+        "parseError": "CSV फ़ाइल पार्स करते समय त्रुटि: {message}",
+        "noValidData": "कोई मान्य डेटा नहीं मिला। कृपया सही CSV फ़ाइल अपलोड करें।"
+      },
+      "toast": {
+        "success": "शिक्षार्थी सफलतापूर्वक अपलोड किए गए",
+        "failedGeneric": "शिक्षार्थी अपलोड करने में विफल"
+      }
+    },
+    "commentDialog": {
+      "title": "{name} के लिए टिप्पणी जोड़ें/संपादित करें",
+      "description": "इस शिक्षार्थी के लिए टिप्पणी अपडेट करें। यह टिप्पणी एडमिन और प्रशिक्षकों को दिखाई देगी।",
+      "field": {
+        "label": "टिप्पणी",
+        "placeholder": "अपनी टिप्पणी यहाँ दर्ज करें..."
+      },
+      "actions": {
+        "cancel": "रद्द करें",
+        "save": "टिप्पणी सहेजें"
+      },
+      "toast": {
+        "success": "टिप्पणी सफलतापूर्वक अपडेट की गई",
+        "failedGeneric": "टिप्पणी अपडेट करने में विफल"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "अंतिम लॉगिन",
+      "nextVisit": "अगली विज़िट",
+      "noComment": "कोई टिप्पणी नहीं",
+      "profile": "प्रोफ़ाइल"
+    }
   },
   "users": {
     "title": "उपयोगकर्ता",
@@ -2257,8 +2456,41 @@
   }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "समग्र प्रोग्रेस से बाहर रखें",
+    "pageSubtitle": "कोर्स चुनें और तय करें कि किन प्रशिक्षण स्थितियों को समग्र प्रोग्रेस ट्रैकिंग से बाहर रखना है",
+    "card": {
+      "title": "समग्र प्रोग्रेस से बाहर रखें",
+      "description": "कोर्स चुनें और तय करें कि किन प्रशिक्षण स्थितियों को समग्र प्रोग्रेस ट्रैकिंग से बाहर रखना है"
+    },
+    "info": {
+      "description": "यहाँ किए गए बदलाव चुने गए कोर्स के सभी शिक्षार्थियों के समग्र प्रोग्रेस की गणना को प्रभावित करेंगे।"
+    },
+    "form": {
+      "courseLabel": "कोर्स चुनें",
+      "coursePlaceholder": "कोई कोर्स चुनें",
+      "submit": "सबमिट करें",
+      "submitting": "सबमिट हो रहा है..."
+    },
+    "table": {
+      "statusColumn": "स्थिति बदले जाने पर",
+      "excludeColumn": "प्रोग्रेस से बाहर रखें"
+    },
+    "statusLabels": {
+      "In Training": "प्रशिक्षण में",
+      "IQA Approved": "IQA स्वीकृत",
+      "Completed": "पूर्ण",
+      "Certificated": "प्रमाणित",
+      "Training Suspended": "प्रशिक्षण निलंबित",
+      "Transferred": "स्थानांतरित",
+      "Early Leaver": "जल्दी छोड़ने वाला",
+      "Exempt": "मुक्त",
+      "Awaiting Induction": "अभिमुखीकरण की प्रतीक्षा में"
+    },
+    "toast": {
+      "selectCourseRequired": "कृपया कोई कोर्स चुनें",
+      "updateSuccess": "प्रोग्रेस एक्सक्लूज़न सेटिंग्स सफलतापूर्वक अपडेट हो गईं",
+      "updateFailed": "प्रोग्रेस एक्सक्लूज़न सेटिंग्स अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+    }
   },
   "gatewayReport": {
     "pageTitle": "गेटवे रिपोर्ट",

@@ -68,7 +68,12 @@
     "status": "Status",
     "actions": "Aktionen",
     "noLearnersFound": "Keine Lernenden gefunden",
-    "confirmDelete": "Möchten Sie diesen Lernenden wirklich löschen?"
+    "confirmDelete": "Möchten Sie diesen Lernenden wirklich löschen?",
+    "page": {
+      "title": "Lernendenverwaltung",
+      "adminSubtitle": "Optimieren Sie die Verwaltung, indem Sie Lernende nahtlos hinzufügen, aktualisieren und löschen und gleichzeitig Kurse, Trainer, Arbeitgeber, IQA und EQA zuweisen",
+      "defaultSubtitle": "Verwalten und überwachen Sie Ihre zugewiesenen Lernenden"
+    }
   },
   "users": {
     "title": "Benutzer",
@@ -1746,8 +1751,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "Vom Gesamtfortschritt ausschließen",
+    "pageSubtitle": "Wählen Sie einen Kurs und legen Sie fest, welche Trainingsstatus vom Gesamtfortschritt ausgeschlossen werden sollen",
+    "card": {
+      "title": "Vom Gesamtfortschritt ausschließen",
+      "description": "Wählen Sie einen Kurs und legen Sie fest, welche Trainingsstatus vom Gesamtfortschritt ausgeschlossen werden sollen"
+    },
+    "info": {
+      "description": "Änderungen hier beeinflussen die Berechnung des Gesamtfortschritts für alle Lernenden im ausgewählten Kurs."
+    },
+    "form": {
+      "courseLabel": "Kurs auswählen",
+      "coursePlaceholder": "Kurs auswählen",
+      "submit": "Speichern",
+      "submitting": "Wird gespeichert..."
+    },
+    "table": {
+      "statusColumn": "Status geändert zu",
+      "excludeColumn": "Vom Fortschritt ausschließen"
+    },
+    "statusLabels": {
+      "In Training": "In Ausbildung",
+      "IQA Approved": "IQA genehmigt",
+      "Completed": "Abgeschlossen",
+      "Certificated": "Zertifiziert",
+      "Training Suspended": "Ausbildung ausgesetzt",
+      "Transferred": "Versetzt",
+      "Early Leaver": "Früher Ausstieg",
+      "Exempt": "Befreit",
+      "Awaiting Induction": "Wartet auf Einweisung"
+    },
+    "toast": {
+      "selectCourseRequired": "Bitte wählen Sie einen Kurs aus",
+      "updateSuccess": "Einstellungen zum Fortschrittsausschluss wurden erfolgreich aktualisiert",
+      "updateFailed": "Einstellungen zum Fortschrittsausschluss konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut."
+    }
   },
   "gatewayReport": {
     "pageTitle": "Gateway-Bericht",

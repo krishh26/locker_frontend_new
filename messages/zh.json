@@ -78,7 +78,12 @@
     "status": "状态",
     "actions": "操作",
     "noLearnersFound": "未找到学员",
-    "confirmDelete": "您确定要删除此学员吗？"
+    "confirmDelete": "您确定要删除此学员吗？",
+    "page": {
+      "title": "学员管理",
+      "adminSubtitle": "通过便捷地添加、更新和删除学员，以及分配课程、培训师、雇主、IQA 和 EQA，优化学员管理",
+      "defaultSubtitle": "管理并跟踪分配给你的学员"
+    }
   },
   "users": {
     "title": "用户",
@@ -2219,8 +2224,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "不计入总体进度",
+    "pageSubtitle": "选择课程并指定哪些培训状态不计入总体进度统计",
+    "card": {
+      "title": "不计入总体进度",
+      "description": "选择课程并指定哪些培训状态不计入总体进度统计"
+    },
+    "info": {
+      "description": "此处的更改会影响所选课程下所有学员的总体进度计算方式。"
+    },
+    "form": {
+      "courseLabel": "选择课程",
+      "coursePlaceholder": "请选择课程",
+      "submit": "保存",
+      "submitting": "正在保存..."
+    },
+    "table": {
+      "statusColumn": "状态变更为",
+      "excludeColumn": "不计入进度"
+    },
+    "statusLabels": {
+      "In Training": "培训中",
+      "IQA Approved": "IQA 已批准",
+      "Completed": "已完成",
+      "Certificated": "已发证书",
+      "Training Suspended": "培训暂停",
+      "Transferred": "已转出",
+      "Early Leaver": "提前离开",
+      "Exempt": "豁免",
+      "Awaiting Induction": "等待入职培训"
+    },
+    "toast": {
+      "selectCourseRequired": "请选择课程",
+      "updateSuccess": "进度排除设置已成功更新",
+      "updateFailed": "更新进度排除设置失败。请重试。"
+    }
   },
   "gatewayReport": {
     "pageTitle": "Gateway 报告",

@@ -79,7 +79,12 @@
     "status": "الحالة",
     "actions": "الإجراءات",
     "noLearnersFound": "لم يتم العثور على متعلمين",
-    "confirmDelete": "هل أنت متأكد من حذف هذا المتعلم؟"
+    "confirmDelete": "هل أنت متأكد من حذف هذا المتعلم؟",
+    "page": {
+      "title": "إدارة المتعلمين",
+      "adminSubtitle": "قم بتحسين إدارة المتعلمين عن طريق إضافة المتعلمين وتحديثهم وحذفهم بسهولة، مع تسهيل إسناد الدورات والمدربين وأصحاب العمل و IQA و EQA",
+      "defaultSubtitle": "إدارة ومتابعة المتعلمين المعيّنين لك"
+    }
   },
   "users": {
     "title": "المستخدمون",
@@ -2258,8 +2263,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "استبعاد من التقدم العام",
+    "pageSubtitle": "اختر دورة وحدد حالات التدريب التي يجب استبعادها من تتبع التقدم العام",
+    "card": {
+      "title": "استبعاد من التقدم العام",
+      "description": "اختر دورة وحدد حالات التدريب التي يجب استبعادها من تتبع التقدم العام"
+    },
+    "info": {
+      "description": "التغييرات هنا ستؤثر على كيفية حساب التقدم العام لجميع المتعلمين في الدورة المحددة."
+    },
+    "form": {
+      "courseLabel": "اختر الدورة",
+      "coursePlaceholder": "اختر دورة",
+      "submit": "حفظ",
+      "submitting": "جارٍ الحفظ..."
+    },
+    "table": {
+      "statusColumn": "تغيير الحالة إلى",
+      "excludeColumn": "استبعاد من التقدم"
+    },
+    "statusLabels": {
+      "In Training": "قيد التدريب",
+      "IQA Approved": "معتمد من IQA",
+      "Completed": "مكتمل",
+      "Certificated": "حصل على شهادة",
+      "Training Suspended": "التدريب موقوف",
+      "Transferred": "منقول",
+      "Early Leaver": "انسحاب مبكر",
+      "Exempt": "معفى",
+      "Awaiting Induction": "في انتظار التعريف"
+    },
+    "toast": {
+      "selectCourseRequired": "يرجى اختيار دورة",
+      "updateSuccess": "تم تحديث إعدادات استبعاد التقدم بنجاح",
+      "updateFailed": "فشل تحديث إعدادات استبعاد التقدم. يرجى المحاولة مرة أخرى."
+    }
   },
   "gatewayReport": {
     "pageTitle": "تقرير Gateway",

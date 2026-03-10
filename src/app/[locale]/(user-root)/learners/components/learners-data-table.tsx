@@ -88,6 +88,7 @@ import { exportTableToPdf } from "@/utils/pdfExport";
 import Link from "next/link";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
+import { useTranslations } from "next-intl";
 
 const statusOptions = [
   "Awaiting Induction",
@@ -127,6 +128,12 @@ export function LearnersDataTable() {
   const isIqa = userRole === "IQA";
 
   const canEditComments = isAdmin || isTrainer || isIqa;
+
+  const tTable = useTranslations("learners.table");
+  const tFilters = useTranslations("learners.filters");
+  const tStatus = useTranslations("learners.statusFilters");
+  const tExport = useTranslations("learners.export");
+  const tToast = useTranslations("learners.toast");
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -375,7 +382,7 @@ export function LearnersDataTable() {
 
     try {
       await deleteLearner(learnerToDelete.learner_id).unwrap();
-      toast.success("Learner deleted successfully");
+      toast.success(tToast("deleteSuccess"));
       setDeleteDialogOpen(false);
       setLearnerToDelete(null);
       refetchData();
@@ -384,7 +391,7 @@ export function LearnersDataTable() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to delete learner");
+      toast.error(errorMessage || tToast("deleteFailedGeneric"));
     }
   };
 
@@ -405,12 +412,21 @@ export function LearnersDataTable() {
   const handleExportCsv = () => {
     const exportData = isEqa ? eqaLearners : (data?.data || []);
     if (!exportData || exportData.length === 0) {
-      toast.info("No data to export");
+      toast.info(tExport("noData"));
       return;
     }
 
     if (isEqa) {
-      const headers = ["Learner Name", "Course", "Employer", "IQA", "Status", "IQA Report", "Learner Created", "Course Registered"];
+      const headers = [
+        tExport("eqaCsvHeaders.learnerName"),
+        tExport("eqaCsvHeaders.course"),
+        tExport("eqaCsvHeaders.employer"),
+        tExport("eqaCsvHeaders.iqa"),
+        tExport("eqaCsvHeaders.status"),
+        tExport("eqaCsvHeaders.iqaReport"),
+        tExport("eqaCsvHeaders.learnerCreated"),
+        tExport("eqaCsvHeaders.courseRegistered"),
+      ];
       const rows = exportData.map((learner) => {
         const eqaLerner = learner as EqaLearnerItem;
         return [
@@ -434,12 +450,21 @@ export function LearnersDataTable() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `learners_export_${new Date().toISOString().split("T")[0]}.csv`;
+      link.download = `${tExport("eqaCsvFilenamePrefix")}_${new Date()
+        .toISOString()
+        .split("T")[0]}.csv`;
       link.click();
       URL.revokeObjectURL(url);
-      toast.success("CSV exported successfully");
+      toast.success(tExport("csvSuccess"));
     } else {
-      const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
+      const headers = [
+        tExport("csvHeaders.learnerName"),
+        tExport("csvHeaders.username"),
+        tExport("csvHeaders.email"),
+        tExport("csvHeaders.mobile"),
+        tExport("csvHeaders.course"),
+        tExport("csvHeaders.status"),
+      ];
       const rows = exportData.map((learner) => [
         `${learner.first_name} ${learner.last_name}`,
         learner.user_name,
@@ -458,21 +483,32 @@ export function LearnersDataTable() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `learners_export_${new Date().toISOString().split("T")[0]}.csv`;
+      link.download = `${tExport("csvFilenamePrefix")}_${new Date()
+        .toISOString()
+        .split("T")[0]}.csv`;
       link.click();
       URL.revokeObjectURL(url);
-      toast.success("CSV exported successfully");
+      toast.success(tExport("csvSuccess"));
     }
   };
 
   const handleExportPdf = () => {
     const exportData = isEqa ? eqaLearners : (data?.data || []);
     if (!exportData || exportData.length === 0) {
-      toast.info("No data to export");
+      toast.info(tExport("noData"));
       return;
     }
     if (isEqa) {
-      const headers = ["Learner Name", "Course", "Employer", "IQA", "Status", "IQA Report", "Learner Created", "Course Registered"];
+      const headers = [
+        tExport("eqaCsvHeaders.learnerName"),
+        tExport("eqaCsvHeaders.course"),
+        tExport("eqaCsvHeaders.employer"),
+        tExport("eqaCsvHeaders.iqa"),
+        tExport("eqaCsvHeaders.status"),
+        tExport("eqaCsvHeaders.iqaReport"),
+        tExport("eqaCsvHeaders.learnerCreated"),
+        tExport("eqaCsvHeaders.courseRegistered"),
+      ];
       const rows = exportData.map((learner) => {
         const eqaLerner = learner as LearnerListItem & { IQA_id?: { first_name: string; last_name: string }; learner_created?: string; course_registered?: string; iqa_report?: string };
         return [
@@ -486,9 +522,16 @@ export function LearnersDataTable() {
           formatDate(eqaLerner.course_registered),
         ];
       });
-      exportTableToPdf({ title: "Learners", headers, rows });
+      exportTableToPdf({ title: tExport("pdfTitleEqa"), headers, rows });
     } else {
-      const headers = ["Learner Name", "Username", "Email", "Mobile", "Course", "Status"];
+      const headers = [
+        tExport("csvHeaders.learnerName"),
+        tExport("csvHeaders.username"),
+        tExport("csvHeaders.email"),
+        tExport("csvHeaders.mobile"),
+        tExport("csvHeaders.course"),
+        tExport("csvHeaders.status"),
+      ];
       const rows = exportData.map((learner) => [
         `${learner.first_name} ${learner.last_name}`,
         learner.user_name,
@@ -497,9 +540,9 @@ export function LearnersDataTable() {
         learner.course?.map((c) => c.course.course_name).join(", ") || "",
         learner.status || "",
       ]);
-      exportTableToPdf({ title: "Learners", headers, rows });
+      exportTableToPdf({ title: tExport("pdfTitleDefault"), headers, rows });
     }
-    toast.success("PDF exported successfully");
+    toast.success(tExport("pdfSuccess"));
   };
 
   // Extended type for EQA learners
@@ -517,7 +560,7 @@ export function LearnersDataTable() {
       return [
         {
           accessorKey: "name",
-          header: "Name",
+          header: tTable("eqaHeaders.name"),
           cell: ({ row }) => {
             const learner = row.original;
             const learnerName = `${learner.first_name} ${learner.last_name}`;
@@ -533,7 +576,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "course",
-          header: "Course",
+          header: tTable("eqaHeaders.course"),
           cell: ({ row }) => {
             const learner = row.original;
             const courses = learner.course;
@@ -541,7 +584,7 @@ export function LearnersDataTable() {
             return (
               <div className="flex items-center gap-1">
                 {courses.map((c, index: number) => {
-                  const courseName = c.course?.course_name || "Unknown Course";
+                  const courseName = c.course?.course_name || tTable("unknownCourse");
                   return (
                     <div key={index} className="flex items-center gap-3">
                       <Tooltip>
@@ -570,7 +613,7 @@ export function LearnersDataTable() {
                           </Link>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>QA Sample Plan</p>
+                          <p>{tTable("qaSamplePlan")}</p>
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -582,7 +625,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "trainer",
-          header: "Trainer",
+          header: tTable("eqaHeaders.trainer"),
           cell: ({ row }) => {
             const learner = row.original;
             if (!isEqa || !('trainer_id' in learner)) return "-";
@@ -593,7 +636,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "iqa",
-          header: "IQA",
+          header: tTable("eqaHeaders.iqa"),
           cell: ({ row }) => {
             const learner = row.original;
             if (!isEqa || !('IQA_id' in learner)) return "-";
@@ -604,7 +647,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "status",
-          header: "Status",
+          header: tTable("eqaHeaders.status"),
           cell: ({ row }) => {
             const status = row.original.status;
             if (!status) return "-";
@@ -626,7 +669,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "iqa_report",
-          header: "IQA Report",
+          header: tTable("eqaHeaders.iqaReport"),
           cell: ({ row }) => {
             const learner = row.original;
             return (
@@ -642,7 +685,7 @@ export function LearnersDataTable() {
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>View IQA Report</p>
+                    <p>{tTable("viewIqaReport")}</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -651,7 +694,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "learner_created",
-          header: "Learner Created",
+          header: tTable("eqaHeaders.learnerCreated"),
           cell: ({ row }) => {
             const learner = row.original;
             if (!isEqa || !('learner_created' in learner)) return "-";
@@ -660,7 +703,7 @@ export function LearnersDataTable() {
         },
         {
           accessorKey: "course_registered",
-          header: "Course Registered",
+          header: tTable("eqaHeaders.courseRegistered"),
           cell: ({ row }) => {
             const learner = row.original;
             if (!isEqa || !('course_registered' in learner)) return "-";
@@ -674,7 +717,7 @@ export function LearnersDataTable() {
     return [
       {
         accessorKey: "name",
-        header: "Learner Name",
+        header: tTable("headers.learnerName"),
         cell: ({ row }) => {
           const learner = row.original;
           const learnerName = `${learner.first_name} ${learner.last_name}`;
@@ -699,26 +742,26 @@ export function LearnersDataTable() {
       },
       {
         accessorKey: "user_name",
-        header: "Username",
+        header: tTable("headers.username"),
       },
       {
         accessorKey: "email",
-        header: "Email",
+        header: tTable("headers.email"),
       },
       {
         accessorKey: "mobile",
-        header: "Mobile",
+        header: tTable("headers.mobile"),
       },
       {
         accessorKey: "course",
-        header: "Course",
+        header: tTable("headers.course"),
         cell: ({ row }) => {
           const courses = row.original.course;
           if (!courses || courses.length === 0) return "-";
           return (
             <div className="flex items-center gap-1">
               {courses.map((c, index) => {
-                const courseName = c.course?.course_name || "Unknown Course";
+                const courseName = c.course?.course_name || tTable("unknownCourse");
                 return (
                   <Tooltip key={index}>
                     <TooltipTrigger asChild>
@@ -738,7 +781,7 @@ export function LearnersDataTable() {
       },
       {
         accessorKey: "comment",
-        header: "Comment",
+        header: tTable("headers.comment"),
         cell: ({ row }) => {
           const learner = row.original;
           const comment = learner.comment;
@@ -767,7 +810,7 @@ export function LearnersDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: tTable("headers.status"),
         cell: ({ row }) => {
           const status = row.original.status;
           if (!status) return "-";
@@ -789,14 +832,14 @@ export function LearnersDataTable() {
       },
       {
         id: "actions",
-        header: "Actions",
+        header: tTable("headers.actions"),
         cell: ({ row }) => {
           const learner = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">{tTable("actions.openMenu")}</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -804,13 +847,13 @@ export function LearnersDataTable() {
                 {isAdmin && (
                   <DropdownMenuItem onClick={() => handleEdit(learner)}>
                     <Edit className="mr-2 h-4 w-4" />
-                    Edit
+                    {tTable("actions.edit")}
                   </DropdownMenuItem>
                 )}
                 {canEditComments && (
                   <DropdownMenuItem onClick={() => handleCommentClick(learner)}>
                     <MessageSquare className="mr-2 h-4 w-4" />
-                    Comment
+                    {tTable("actions.comment")}
                   </DropdownMenuItem>
                 )}
                 {isAdmin && (
@@ -819,7 +862,7 @@ export function LearnersDataTable() {
                     className="text-destructive"
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
+                    {tTable("actions.delete")}
                   </DropdownMenuItem>
                 )}
               </DropdownMenuContent>
@@ -876,7 +919,7 @@ export function LearnersDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={tFilters("searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -886,13 +929,13 @@ export function LearnersDataTable() {
           {!isEqa && (
             <Select value={courseFilter} onValueChange={setCourseFilter}>
               <SelectTrigger className="w-full sm:w-[200px]">
-                <SelectValue placeholder="Filter by course" />
+                <SelectValue placeholder={tFilters("coursePlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Courses</SelectItem>
+                <SelectItem value="all">{tFilters("allCourses")}</SelectItem>
                 {isLoadingCourses ? (
                   <SelectItem value="loading" disabled>
-                    Loading courses...
+                    {tFilters("loadingCourses")}
                   </SelectItem>
                 ) : (
                   courseOptions.map((course) => (
@@ -908,13 +951,13 @@ export function LearnersDataTable() {
           {isAdmin && !isEqa && (
             <Select value={employerFilter} onValueChange={setEmployerFilter}>
               <SelectTrigger className="w-full sm:w-[200px]">
-                <SelectValue placeholder="Filter by employer" />
+                <SelectValue placeholder={tFilters("employerPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Employers</SelectItem>
+                <SelectItem value="all">{tFilters("allEmployers")}</SelectItem>
                 {isLoadingEmployers ? (
                   <SelectItem value="loading" disabled>
-                    Loading employers...
+                    {tFilters("loadingEmployers")}
                   </SelectItem>
                 ) : (
                   employerOptions.map((employer) => (
@@ -933,7 +976,7 @@ export function LearnersDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {tFilters("clear")}
             </Button>
           )}
         </div>
@@ -942,15 +985,15 @@ export function LearnersDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {tExport("export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {tExport("exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {tExport("exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -959,11 +1002,11 @@ export function LearnersDataTable() {
             <>
               <Button variant="outline" onClick={() => setCsvUploadOpen(true)} className="cursor-pointer">
                 <Upload className="mr-2 size-4" />
-                Upload Learners
+                {tExport("uploadLearners")}
               </Button>
               <Button onClick={handleAddNew} className="cursor-pointer">
                 <Plus className="mr-2 size-4" />
-                Add New
+                {tExport("addNew")}
               </Button>
             </>
           )}
@@ -973,7 +1016,7 @@ export function LearnersDataTable() {
       {/* Status Filter Checkboxes - Hide for EQA */}
       {!isEqa && (
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Status Filters</Label>
+          <Label className="text-sm font-medium">{tStatus("title")}</Label>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {statusOptions.map((status) => (
               <div key={status} className="flex items-center space-x-2">
@@ -988,7 +1031,7 @@ export function LearnersDataTable() {
                   htmlFor={`status-${status}`}
                   className="text-sm font-normal cursor-pointer"
                 >
-                  {status}
+                  {tStatus(`options.${status}`)}
                 </Label>
               </div>
             ))}
@@ -1064,7 +1107,7 @@ export function LearnersDataTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {tTable("noResults")}
                   </TableCell>
                 </TableRow>
               )}

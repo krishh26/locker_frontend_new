@@ -75,10 +75,15 @@
     "deleteLearner": "Excluir Aluno",
     "learnerName": "Nome do Aluno",
     "email": "E-mail",
-    "status": "Status",
+    "status": "Estado",
     "actions": "Ações",
     "noLearnersFound": "Nenhum aluno encontrado",
-    "confirmDelete": "Tem certeza de que deseja excluir este aluno?"
+    "confirmDelete": "Tem certeza de que deseja excluir este aluno?",
+    "page": {
+      "title": "Gestão de Alunos",
+      "adminSubtitle": "Otimize a gestão de alunos adicionando, atualizando e excluindo alunos de forma simples, facilitando também a atribuição de cursos, formadores, empregadores, IQA e EQA",
+      "defaultSubtitle": "Gira e acompanhe os seus alunos atribuídos"
+    }
   },
   "users": {
     "title": "Usuários",
@@ -2257,8 +2262,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "Excluir do progresso geral",
+    "pageSubtitle": "Selecione um curso e escolha quais estados de formação devem ser excluídos do acompanhamento do progresso geral",
+    "card": {
+      "title": "Excluir do progresso geral",
+      "description": "Selecione um curso e escolha quais estados de formação devem ser excluídos do acompanhamento do progresso geral"
+    },
+    "info": {
+      "description": "As alterações aqui irão afetar a forma como o progresso geral é calculado para todos os formandos do curso selecionado."
+    },
+    "form": {
+      "courseLabel": "Selecionar curso",
+      "coursePlaceholder": "Selecione um curso",
+      "submit": "Guardar",
+      "submitting": "A guardar..."
+    },
+    "table": {
+      "statusColumn": "Estado alterado para",
+      "excludeColumn": "Excluir do progresso"
+    },
+    "statusLabels": {
+      "In Training": "Em formação",
+      "IQA Approved": "Aprovado por IQA",
+      "Completed": "Concluído",
+      "Certificated": "Certificado",
+      "Training Suspended": "Formação suspensa",
+      "Transferred": "Transferido",
+      "Early Leaver": "Saída antecipada",
+      "Exempt": "Isento",
+      "Awaiting Induction": "A aguardar indução"
+    },
+    "toast": {
+      "selectCourseRequired": "Selecione um curso",
+      "updateSuccess": "Definições de exclusão do progresso atualizadas com sucesso",
+      "updateFailed": "Falha ao atualizar as definições de exclusão do progresso. Tente novamente."
+    }
   },
   "gatewayReport": {
     "pageTitle": "Relatório Gateway",

@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useBulkCreateLearnersMutation } from "@/store/api/learner/learnerApi";
 import type { BulkCreateLearnerRequest } from "@/store/api/learner/types";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 // Function to convert date from DD-MM-YYYY to YYYY-MM-DD format
 const convertDateFormat = (dateString: string): string => {
@@ -104,6 +105,8 @@ export function LearnersCsvUploadDialog({
 
   const [bulkCreateLearners, { isLoading }] = useBulkCreateLearnersMutation();
 
+  const t = useTranslations("learners.csvUpload");
+
   const requiredFields = ["FirstNames", "Surname", "Courses"];
 
   const handleFileSelect = (selectedFile: File) => {
@@ -125,7 +128,12 @@ export function LearnersCsvUploadDialog({
 
         if (invalidRow) {
           setError(
-            "Some learner details are missing. Please check that every row includes First Names, Surname, and Courses."
+            t(
+              "errors.missingRequiredFields",
+              {
+                fields: "First Names, Surname, Courses",
+              }
+            )
           );
           setParsedData([]);
         } else {
@@ -173,7 +181,11 @@ export function LearnersCsvUploadDialog({
         }
       },
       error: (error: Error) => {
-        setError(`Error parsing CSV file: ${error.message}`);
+        setError(
+          t("errors.parseError", {
+            message: error.message,
+          })
+        );
         setParsedData([]);
       },
     });
@@ -210,7 +222,7 @@ export function LearnersCsvUploadDialog({
   const handleUpload = async () => {
     if (!file) return;
     if (parsedData.length === 0) {
-      setError("No valid data found. Please upload a proper CSV file.");
+      setError(t("errors.noValidData"));
       return;
     }
 
@@ -221,7 +233,7 @@ export function LearnersCsvUploadDialog({
     try {
       const response = await bulkCreateLearners(payload).unwrap();
       if (response.status) {
-        toast.success("Learners uploaded successfully");
+        toast.success(t("toast.success"));
         onSuccess();
         onOpenChange(false);
         setFile(null);
@@ -233,7 +245,7 @@ export function LearnersCsvUploadDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to upload learners");
+      toast.error(errorMessage || t("toast.failedGeneric"));
     }
   };
 
@@ -250,9 +262,9 @@ export function LearnersCsvUploadDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Upload Learner CSV</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Upload learner data in bulk using CSV format
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -265,11 +277,10 @@ export function LearnersCsvUploadDialog({
               </div>
               <div>
                 <h3 className="font-bold text-foreground text-lg mb-2">
-                  Need a sample CSV?
+                  {t("sample.title")}
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Download our template with all required fields and sample data
-                  to ensure proper formatting
+                  {t("sample.description")}
                 </p>
               </div>
             </div>
@@ -278,7 +289,7 @@ export function LearnersCsvUploadDialog({
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <Download className="mr-2 h-4 w-4" />
-              Download Sample CSV
+              {t("sample.button")}
             </Button>
           </div>
         </div>
@@ -314,24 +325,26 @@ export function LearnersCsvUploadDialog({
                   {file.name}
                 </p>
                 <p className="text-sm text-accent">
-                  File size: {(file.size / 1024 / 1024).toFixed(2)} MB
+                  {t("upload.fileSize", {
+                    size: (file.size / 1024 / 1024).toFixed(2),
+                  })}
                 </p>
               </div>
             </div>
           ) : (
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-foreground">
-                Drag and drop your CSV file here or{" "}
+                {t("upload.dragDrop") + " "}
                 <span className="text-primary font-bold">
-                  Browse
+                  {t("upload.browse")}
                 </span>
               </h3>
               <p className="text-muted-foreground text-base">
-                Max 10MB files are allowed
+                {t("upload.maxSize")}
               </p>
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                 <Upload className="w-5 h-5" />
-                Supported format: CSV only
+                {t("upload.supportedFormats")}
               </div>
             </div>
           )}
@@ -373,10 +386,10 @@ export function LearnersCsvUploadDialog({
               <div>
                 <p className="text-accent text-sm font-medium">
                   <span className="font-bold text-lg">{parsedData.length}</span>{" "}
-                  learners found and ready to upload
+                  {t("summary.ready")}
                 </p>
                 <p className="text-accent text-xs mt-1">
-                  All required fields are properly formatted
+                  {t("summary.formatted")}
                 </p>
               </div>
             </div>
@@ -390,7 +403,7 @@ export function LearnersCsvUploadDialog({
             onClick={handleClose}
             disabled={isLoading}
           >
-            Cancel
+            {t("actions.cancel")}
           </Button>
           <Button
             type="button"
@@ -398,7 +411,7 @@ export function LearnersCsvUploadDialog({
             disabled={!file || parsedData.length === 0 || isLoading}
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isLoading ? "Uploading..." : "Upload Learners"}
+            {isLoading ? t("actions.uploading") : t("actions.upload")}
           </Button>
         </DialogFooter>
       </DialogContent>

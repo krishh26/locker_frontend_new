@@ -78,7 +78,12 @@
     "status": "Statut",
     "actions": "Actions",
     "noLearnersFound": "Aucun apprenant trouvé",
-    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet apprenant?"
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet apprenant?",
+    "page": {
+      "title": "Gestion des Apprenants",
+      "adminSubtitle": "Optimisez la gestion des apprenants en ajoutant, mettant à jour et supprimant des apprenants, tout en facilitant l’attribution des cours, des formateurs, des employeurs, des IQA et des EQA",
+      "defaultSubtitle": "Gérez et suivez vos apprenants assignés"
+    }
   },
   "users": {
     "title": "Utilisateurs",
@@ -2257,8 +2262,41 @@
     }
   },
   "progressExclusion": {
-    "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+    "pageTitle": "Exclure du progrès global",
+    "pageSubtitle": "Sélectionnez un cours et choisissez quels statuts de formation doivent être exclus du suivi du progrès global",
+    "card": {
+      "title": "Exclure du progrès global",
+      "description": "Sélectionnez un cours et choisissez quels statuts de formation doivent être exclus du suivi du progrès global"
+    },
+    "info": {
+      "description": "Les modifications effectuées ici affecteront la façon dont le progrès global est calculé pour tous les apprenants du cours sélectionné."
+    },
+    "form": {
+      "courseLabel": "Sélectionner un cours",
+      "coursePlaceholder": "Sélectionnez un cours",
+      "submit": "Enregistrer",
+      "submitting": "Enregistrement..."
+    },
+    "table": {
+      "statusColumn": "Statut modifié en",
+      "excludeColumn": "Exclure du progrès"
+    },
+    "statusLabels": {
+      "In Training": "En formation",
+      "IQA Approved": "Approuvé par IQA",
+      "Completed": "Terminé",
+      "Certificated": "Certifié",
+      "Training Suspended": "Formation suspendue",
+      "Transferred": "Transféré",
+      "Early Leaver": "Départ anticipé",
+      "Exempt": "Exempté",
+      "Awaiting Induction": "En attente d’induction"
+    },
+    "toast": {
+      "selectCourseRequired": "Veuillez sélectionner un cours",
+      "updateSuccess": "Les paramètres d’exclusion du progrès ont été mis à jour avec succès",
+      "updateFailed": "Échec de la mise à jour des paramètres d’exclusion du progrès. Veuillez réessayer."
+    }
   },
   "gatewayReport": {
     "pageTitle": "Rapport Gateway",

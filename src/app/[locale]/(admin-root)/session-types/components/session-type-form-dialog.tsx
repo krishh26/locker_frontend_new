@@ -36,9 +36,7 @@ import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
-const sessionTypeSchema = (
-  t: (key: string, values?: Record<string, unknown>) => string
-) =>
+const sessionTypeSchema = (t: (key: string) => string) =>
   z.object({
     name: z.string().min(1, t("form.nameRequired")),
     isOffTheJob: z.boolean(),

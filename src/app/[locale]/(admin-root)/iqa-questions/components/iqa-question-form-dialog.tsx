@@ -25,7 +25,7 @@ import type { IQAQuestion } from "@/store/api/iqa-questions/types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
-const iqaQuestionSchema = (t: (key: string, values?: Record<string, unknown>) => string) =>
+const iqaQuestionSchema = (t: (key: string) => string) =>
   z.object({
     question: z.string().min(1, t("form.questionRequired")),
   });

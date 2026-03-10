@@ -2698,6 +2698,71 @@
     "item": "elemento",
     "items": "elementi"
   },
+  "chooseUnits": {
+    "pageTitle": "Scegli unità",
+    "pageSubtitle": "Seleziona le unità obbligatorie e opzionali per il discente",
+    "table": {
+      "columns": {
+        "select": "Seleziona",
+        "unitName": "Nome unità",
+        "type": "Tipo",
+        "glh": "GLH",
+        "level": "Livello",
+        "credits": "Crediti"
+      },
+      "types": {
+        "mandatory": "Obbligatoria",
+        "optional": "Opzionale"
+      },
+      "searchPlaceholder": "Cerca unità...",
+      "noTopics": "Nessun argomento disponibile",
+      "noResults": "Nessun risultato.",
+      "columnVisibilityLabel": "Visibilità colonne",
+      "columnsButton": "Colonne",
+      "export": {
+        "button": "Esporta",
+        "csv": "Esporta come CSV",
+        "pdf": "Esporta come PDF",
+        "csvTodo": "La funzione di esportazione CSV sarà disponibile prossimamente",
+        "pdfTodo": "La funzione di esportazione PDF sarà disponibile prossimamente"
+      },
+      "addNew": {
+        "button": "Aggiungi nuova",
+        "todo": "La funzione \"Aggiungi nuova\" sarà disponibile prossimamente"
+      },
+      "aria": {
+        "expandUnit": "Espandi unità",
+        "collapseUnit": "Comprimi unità",
+        "selectUnit": "Seleziona l’unità {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Unità totali:",
+        "totalCredits": "Crediti totali:",
+        "totalGlh": "GLH totali:"
+      },
+      "validation": {
+        "allMandatoryRequired": "Tutte le unità obbligatorie devono essere selezionate",
+        "optionalCreditsMinimum": "Le unità opzionali devono totalizzare almeno 15 crediti"
+      },
+      "status": {
+        "loadingUnits": "Caricamento unità in corso...",
+        "noCourseSelected": "Nessun corso selezionato. Seleziona un corso di qualificazione.",
+        "noLearner": "Le informazioni sul discente non sono disponibili.",
+        "noUnits": "Per questo corso non sono state trovate unità."
+      },
+      "toast": {
+        "missingIds": "ID discente o ID corso mancante",
+        "saveSuccess": "Unità salvate con successo",
+        "saveError": "Impossibile salvare le unità"
+      },
+      "buttons": {
+        "save": "Salva unità",
+        "saving": "Salvataggio in corso..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Dashboard",

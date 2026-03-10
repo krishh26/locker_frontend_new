@@ -3532,6 +3532,71 @@
     "item": "आइटम",
     "items": "आइटम"
   },
+  "chooseUnits": {
+    "pageTitle": "यूनिट चुनें",
+    "pageSubtitle": "लर्नर के लिए अनिवार्य और वैकल्पिक यूनिट चुनें",
+    "table": {
+      "columns": {
+        "select": "चुनें",
+        "unitName": "यूनिट का नाम",
+        "type": "प्रकार",
+        "glh": "GLH",
+        "level": "स्तर",
+        "credits": "क्रेडिट"
+      },
+      "types": {
+        "mandatory": "अनिवार्य",
+        "optional": "वैकल्पिक"
+      },
+      "searchPlaceholder": "यूनिट खोजें...",
+      "noTopics": "कोई टॉपिक उपलब्ध नहीं है",
+      "noResults": "कोई परिणाम नहीं।",
+      "columnVisibilityLabel": "कॉलम दृश्यता",
+      "columnsButton": "कॉलम",
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "csvTodo": "CSV एक्सपोर्ट सुविधा शीघ्र ही उपलब्ध होगी",
+        "pdfTodo": "PDF एक्सपोर्ट सुविधा शीघ्र ही उपलब्ध होगी"
+      },
+      "addNew": {
+        "button": "नया जोड़ें",
+        "todo": "\"नया जोड़ें\" सुविधा शीघ्र ही उपलब्ध होगी"
+      },
+      "aria": {
+        "expandUnit": "यूनिट फैलाएँ",
+        "collapseUnit": "यूनिट समेटें",
+        "selectUnit": "यूनिट {unitTitle} चुनें"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "कुल यूनिट:",
+        "totalCredits": "कुल क्रेडिट:",
+        "totalGlh": "कुल GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "सभी अनिवार्य यूनिट का चयन आवश्यक है",
+        "optionalCreditsMinimum": "वैकल्पिक यूनिट के क्रेडिट कम से कम 15 होने चाहिए"
+      },
+      "status": {
+        "loadingUnits": "यूनिट लोड हो रहे हैं...",
+        "noCourseSelected": "कोई कोर्स चयनित नहीं है। कृपया एक क्वालिफिकेशन कोर्स चुनें।",
+        "noLearner": "लर्नर की जानकारी उपलब्ध नहीं है।",
+        "noUnits": "इस कोर्स के लिए कोई यूनिट नहीं मिली।"
+      },
+      "toast": {
+        "missingIds": "लर्नर आईडी या कोर्स आईडी नहीं मिली",
+        "saveSuccess": "यूनिट सफलतापूर्वक सेव हो गए",
+        "saveError": "यूनिट सेव नहीं हो सके"
+      },
+      "buttons": {
+        "save": "यूनिट सेव करें",
+        "saving": "सेव किया जा रहा है..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "डैशबोर्ड",

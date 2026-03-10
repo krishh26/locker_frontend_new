@@ -3548,6 +3548,71 @@
     "item": "item",
     "items": "items"
   },
+  "chooseUnits": {
+    "pageTitle": "Choose Units",
+    "pageSubtitle": "Select mandatory and optional units for the learner",
+    "table": {
+      "columns": {
+        "select": "Select",
+        "unitName": "Unit Name",
+        "type": "Type",
+        "glh": "GLH",
+        "level": "Level",
+        "credits": "Credits"
+      },
+      "types": {
+        "mandatory": "Mandatory",
+        "optional": "Optional"
+      },
+      "searchPlaceholder": "Search units...",
+      "noTopics": "No topics available",
+      "noResults": "No results.",
+      "columnVisibilityLabel": "Column Visibility",
+      "columnsButton": "Columns",
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "csvTodo": "CSV export functionality will be implemented",
+        "pdfTodo": "PDF export functionality will be implemented"
+      },
+      "addNew": {
+        "button": "Add New",
+        "todo": "Add New functionality will be implemented"
+      },
+      "aria": {
+        "expandUnit": "Expand unit",
+        "collapseUnit": "Collapse unit",
+        "selectUnit": "Select {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Total Units:",
+        "totalCredits": "Total Credits:",
+        "totalGlh": "Total GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "All mandatory units must be selected",
+        "optionalCreditsMinimum": "Optional units must total at least 15 credits"
+      },
+      "status": {
+        "loadingUnits": "Loading units...",
+        "noCourseSelected": "No course selected. Please select a qualification course.",
+        "noLearner": "Learner information not available.",
+        "noUnits": "No units found for this course."
+      },
+      "toast": {
+        "missingIds": "Learner ID or Course ID is missing",
+        "saveSuccess": "Units saved successfully",
+        "saveError": "Failed to save units"
+      },
+      "buttons": {
+        "save": "Save Units",
+        "saving": "Saving..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Dashboard",

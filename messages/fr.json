@@ -3532,6 +3532,71 @@
     "item": "élément",
     "items": "éléments"
   },
+  "chooseUnits": {
+    "pageTitle": "Choisir les unités",
+    "pageSubtitle": "Sélectionnez les unités obligatoires et optionnelles pour l’apprenant",
+    "table": {
+      "columns": {
+        "select": "Sélectionner",
+        "unitName": "Nom de l’unité",
+        "type": "Type",
+        "glh": "GLH",
+        "level": "Niveau",
+        "credits": "Crédits"
+      },
+      "types": {
+        "mandatory": "Obligatoire",
+        "optional": "Optionnelle"
+      },
+      "searchPlaceholder": "Rechercher des unités...",
+      "noTopics": "Aucun sujet disponible",
+      "noResults": "Aucun résultat.",
+      "columnVisibilityLabel": "Visibilité des colonnes",
+      "columnsButton": "Colonnes",
+      "export": {
+        "button": "Exporter",
+        "csv": "Exporter en CSV",
+        "pdf": "Exporter en PDF",
+        "csvTodo": "La fonctionnalité d’export CSV sera bientôt disponible",
+        "pdfTodo": "La fonctionnalité d’export PDF sera bientôt disponible"
+      },
+      "addNew": {
+        "button": "Ajouter une unité",
+        "todo": "La fonctionnalité « Ajouter une unité » sera bientôt disponible"
+      },
+      "aria": {
+        "expandUnit": "Développer l’unité",
+        "collapseUnit": "Réduire l’unité",
+        "selectUnit": "Sélectionner l’unité {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Nombre total d’unités :",
+        "totalCredits": "Nombre total de crédits :",
+        "totalGlh": "Total GLH :"
+      },
+      "validation": {
+        "allMandatoryRequired": "Toutes les unités obligatoires doivent être sélectionnées",
+        "optionalCreditsMinimum": "Les unités optionnelles doivent totaliser au moins 15 crédits"
+      },
+      "status": {
+        "loadingUnits": "Chargement des unités...",
+        "noCourseSelected": "Aucun cours sélectionné. Veuillez choisir un cours de qualification.",
+        "noLearner": "Les informations sur l’apprenant ne sont pas disponibles.",
+        "noUnits": "Aucune unité trouvée pour ce cours."
+      },
+      "toast": {
+        "missingIds": "L’ID de l’apprenant ou du cours est manquant",
+        "saveSuccess": "Les unités ont été enregistrées avec succès",
+        "saveError": "Échec de l’enregistrement des unités"
+      },
+      "buttons": {
+        "save": "Enregistrer les unités",
+        "saving": "Enregistrement..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Tableau de bord",

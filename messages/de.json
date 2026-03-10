@@ -2698,6 +2698,71 @@
     "item": "Element",
     "items": "Elemente"
   },
+  "chooseUnits": {
+    "pageTitle": "Einheiten wählen",
+    "pageSubtitle": "Wählen Sie Pflicht- und Wahlmodule für den Lernenden aus",
+    "table": {
+      "columns": {
+        "select": "Auswählen",
+        "unitName": "Einheitenname",
+        "type": "Typ",
+        "glh": "GLH",
+        "level": "Niveau",
+        "credits": "Credits"
+      },
+      "types": {
+        "mandatory": "Pflicht",
+        "optional": "Optional"
+      },
+      "searchPlaceholder": "Einheiten durchsuchen...",
+      "noTopics": "Keine Themen verfügbar",
+      "noResults": "Keine Ergebnisse.",
+      "columnVisibilityLabel": "Spaltensichtbarkeit",
+      "columnsButton": "Spalten",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvTodo": "Die CSV-Exportfunktion wird noch implementiert",
+        "pdfTodo": "Die PDF-Exportfunktion wird noch implementiert"
+      },
+      "addNew": {
+        "button": "Neu hinzufügen",
+        "todo": "Die Funktion „Neu hinzufügen“ wird noch implementiert"
+      },
+      "aria": {
+        "expandUnit": "Einheit ausklappen",
+        "collapseUnit": "Einheit einklappen",
+        "selectUnit": "Einheit {unitTitle} auswählen"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Gesamtanzahl Einheiten:",
+        "totalCredits": "Gesamtcredits:",
+        "totalGlh": "Gesamt-GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "Alle Pflichtmodule müssen ausgewählt sein",
+        "optionalCreditsMinimum": "Wahlmodule müssen insgesamt mindestens 15 Credits haben"
+      },
+      "status": {
+        "loadingUnits": "Einheiten werden geladen...",
+        "noCourseSelected": "Kein Kurs ausgewählt. Bitte wählen Sie einen Qualifikationskurs.",
+        "noLearner": "Lernerinformationen sind nicht verfügbar.",
+        "noUnits": "Für diesen Kurs wurden keine Einheiten gefunden."
+      },
+      "toast": {
+        "missingIds": "Lerner- oder Kurs-ID fehlt",
+        "saveSuccess": "Einheiten wurden erfolgreich gespeichert",
+        "saveError": "Einheiten konnten nicht gespeichert werden"
+      },
+      "buttons": {
+        "save": "Einheiten speichern",
+        "saving": "Speichern..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Dashboard",

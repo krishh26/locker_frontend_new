@@ -3373,6 +3373,71 @@
     "item": "elemento",
     "items": "elementos"
   },
+  "chooseUnits": {
+    "pageTitle": "Elegir unidades",
+    "pageSubtitle": "Seleccione las unidades obligatorias y opcionales para el alumno",
+    "table": {
+      "columns": {
+        "select": "Seleccionar",
+        "unitName": "Nombre de la unidad",
+        "type": "Tipo",
+        "glh": "GLH",
+        "level": "Nivel",
+        "credits": "Créditos"
+      },
+      "types": {
+        "mandatory": "Obligatoria",
+        "optional": "Opcional"
+      },
+      "searchPlaceholder": "Buscar unidades...",
+      "noTopics": "No hay temas disponibles",
+      "noResults": "Sin resultados.",
+      "columnVisibilityLabel": "Visibilidad de columnas",
+      "columnsButton": "Columnas",
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "csvTodo": "La función de exportación CSV se implementará próximamente",
+        "pdfTodo": "La función de exportación PDF se implementará próximamente"
+      },
+      "addNew": {
+        "button": "Agregar nueva",
+        "todo": "La función \"Agregar nueva\" se implementará próximamente"
+      },
+      "aria": {
+        "expandUnit": "Desplegar unidad",
+        "collapseUnit": "Contraer unidad",
+        "selectUnit": "Seleccionar unidad {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Total de unidades:",
+        "totalCredits": "Total de créditos:",
+        "totalGlh": "Total de GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "Se deben seleccionar todas las unidades obligatorias",
+        "optionalCreditsMinimum": "Las unidades opcionales deben sumar al menos 15 créditos"
+      },
+      "status": {
+        "loadingUnits": "Cargando unidades...",
+        "noCourseSelected": "No se ha seleccionado un curso. Seleccione un curso de cualificación.",
+        "noLearner": "La información del alumno no está disponible.",
+        "noUnits": "No se encontraron unidades para este curso."
+      },
+      "toast": {
+        "missingIds": "Falta el ID del alumno o del curso",
+        "saveSuccess": "Las unidades se han guardado correctamente",
+        "saveError": "No se pudieron guardar las unidades"
+      },
+      "buttons": {
+        "save": "Guardar unidades",
+        "saving": "Guardando..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "Panel",

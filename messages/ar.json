@@ -3454,6 +3454,71 @@
     "item": "عنصر",
     "items": "عناصر"
   },
+  "chooseUnits": {
+    "pageTitle": "اختيار الوحدات",
+    "pageSubtitle": "اختر الوحدات الإلزامية والاختيارية للمتعلم",
+    "table": {
+      "columns": {
+        "select": "اختيار",
+        "unitName": "اسم الوحدة",
+        "type": "النوع",
+        "glh": "GLH",
+        "level": "المستوى",
+        "credits": "الساعات المعتمدة"
+      },
+      "types": {
+        "mandatory": "إلزامية",
+        "optional": "اختيارية"
+      },
+      "searchPlaceholder": "بحث عن الوحدات...",
+      "noTopics": "لا توجد موضوعات متاحة",
+      "noResults": "لا توجد نتائج.",
+      "columnVisibilityLabel": "إظهار الأعمدة",
+      "columnsButton": "الأعمدة",
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "csvTodo": "سيتم تنفيذ وظيفة تصدير CSV لاحقًا",
+        "pdfTodo": "سيتم تنفيذ وظيفة تصدير PDF لاحقًا"
+      },
+      "addNew": {
+        "button": "إضافة جديدة",
+        "todo": "سيتم تنفيذ وظيفة \"إضافة جديدة\" لاحقًا"
+      },
+      "aria": {
+        "expandUnit": "توسيع عرض الوحدة",
+        "collapseUnit": "طي عرض الوحدة",
+        "selectUnit": "اختيار الوحدة {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "إجمالي عدد الوحدات:",
+        "totalCredits": "إجمالي الساعات المعتمدة:",
+        "totalGlh": "إجمالي GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "يجب اختيار جميع الوحدات الإلزامية",
+        "optionalCreditsMinimum": "يجب أن يبلغ مجموع الوحدات الاختيارية ما لا يقل عن 15 ساعة معتمدة"
+      },
+      "status": {
+        "loadingUnits": "جارٍ تحميل الوحدات...",
+        "noCourseSelected": "لم يتم اختيار دورة. يرجى اختيار دورة مؤهلة.",
+        "noLearner": "معلومات المتعلم غير متاحة.",
+        "noUnits": "لم يتم العثور على وحدات لهذه الدورة."
+      },
+      "toast": {
+        "missingIds": "معرّف المتعلم أو الدورة غير موجود",
+        "saveSuccess": "تم حفظ الوحدات بنجاح",
+        "saveError": "فشل حفظ الوحدات"
+      },
+      "buttons": {
+        "save": "حفظ الوحدات",
+        "saving": "جارٍ الحفظ..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "لوحة التحكم",

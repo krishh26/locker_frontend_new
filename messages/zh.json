@@ -3490,6 +3490,71 @@
     "item": "项",
     "items": "项"
   },
+  "chooseUnits": {
+    "pageTitle": "选择单元",
+    "pageSubtitle": "为学员选择必修和选修单元",
+    "table": {
+      "columns": {
+        "select": "选择",
+        "unitName": "单元名称",
+        "type": "类型",
+        "glh": "GLH",
+        "level": "级别",
+        "credits": "学分"
+      },
+      "types": {
+        "mandatory": "必修",
+        "optional": "选修"
+      },
+      "searchPlaceholder": "搜索单元...",
+      "noTopics": "暂无可用主题",
+      "noResults": "没有结果。",
+      "columnVisibilityLabel": "列可见性",
+      "columnsButton": "列",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvTodo": "CSV 导出功能即将推出",
+        "pdfTodo": "PDF 导出功能即将推出"
+      },
+      "addNew": {
+        "button": "新增",
+        "todo": "“新增”功能即将推出"
+      },
+      "aria": {
+        "expandUnit": "展开单元",
+        "collapseUnit": "收起单元",
+        "selectUnit": "选择单元 {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "单元总数：",
+        "totalCredits": "总学分：",
+        "totalGlh": "总 GLH："
+      },
+      "validation": {
+        "allMandatoryRequired": "必须选择所有必修单元",
+        "optionalCreditsMinimum": "选修单元的学分总数至少为 15 学分"
+      },
+      "status": {
+        "loadingUnits": "正在加载单元...",
+        "noCourseSelected": "尚未选择课程。请选择一个资格课程。",
+        "noLearner": "学员信息不可用。",
+        "noUnits": "未找到该课程的单元。"
+      },
+      "toast": {
+        "missingIds": "缺少学员 ID 或课程 ID",
+        "saveSuccess": "单元保存成功",
+        "saveError": "单元保存失败"
+      },
+      "buttons": {
+        "save": "保存单元",
+        "saving": "正在保存..."
+      }
+    }
+  },
   "learnerDashboard": {
     "pageHeader": {
       "title": "仪表盘",

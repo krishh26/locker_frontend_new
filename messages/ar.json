@@ -2255,6 +2255,100 @@
       "updateFailed": "فشل تحديث المورد"
     }
   },
+  "courseResources": {
+    "pageTitle": "موارد الدورة",
+    "pageSubtitle": "الوصول إلى موارد التعلم الخاصة بالدورة وإدارتها",
+    "filters": {
+      "courseLabel": "الدورة:",
+      "coursePlaceholder": "اختر دورة",
+      "searchPlaceholder": "البحث حسب الاسم أو الوصف",
+      "jobTypeLabel": "نوع العمل: {jobType}",
+      "jobTypeOnOff": "تشغيل/إيقاف"
+    },
+    "table": {
+      "columns": {
+        "name": "الاسم",
+        "description": "الوصف",
+        "hours": "الساعات",
+        "minutes": "الدقائق",
+        "jobType": "نوع العمل",
+        "access": "الوصول",
+        "accessStatus": "حالة الوصول",
+        "actions": "إجراء"
+      },
+      "accessStatus": {
+        "opened": "تم الفتح",
+        "notOpened": "لم يتم الفتح"
+      },
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "noData": "لا توجد بيانات للتصدير",
+        "csvSuccess": "تم تصدير ملف CSV بنجاح",
+        "pdfTitle": "موارد الدورة",
+        "pdfSuccess": "تم تصدير ملف PDF بنجاح"
+      },
+      "status": {
+        "loading": "جارٍ تحميل الموارد...",
+        "noResourcesForCourse": "لم يتم العثور على موارد لهذه الدورة.",
+        "selectCourse": "يرجى اختيار دورة لعرض الموارد.",
+        "noResults": "لا توجد نتائج."
+      }
+    }
+  },
+  "cpd": {
+    "pageTitle": "التطوير المهني المستمر",
+    "pageSubtitle": "سجل التعلم ومتعقب التطوير",
+    "learnerInfo": {
+      "learnerName": "اسم المتعلم",
+      "jobTitle": "المسمى الوظيفي",
+      "employer": "صاحب العمل",
+      "notSpecified": "غير محدد"
+    },
+    "table": {
+      "headers": {
+        "activity": "ما نشاط التدريب أو التعلم أو التطوير الذي قمت به؟",
+        "date": "التاريخ الذي قمت فيه بذلك",
+        "method": "كيف قمت بتنفيذ نشاط التطوير هذا؟",
+        "learning": "ماذا تعلمت من ذلك؟",
+        "impact": "كيف أثّر هذا التعلم على عملك وحسّن طريقة أدائك له؟"
+      },
+      "columns": {
+        "actions": "الإجراءات"
+      },
+      "searchPlaceholder": "ابحث في الإدخالات...",
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "csvTodo": "سيتم تنفيذ وظيفة تصدير CSV لاحقًا",
+        "pdfTodo": "سيتم تنفيذ وظيفة تصدير PDF لاحقًا"
+      },
+      "status": {
+        "loading": "جارٍ تحميل إدخالات CPD...",
+        "noResults": "لا توجد نتائج."
+      },
+      "addNew": "إضافة إدخال جديد"
+    },
+    "validation": {
+      "activityRequired": "النشاط مطلوب",
+      "dateRequired": "التاريخ مطلوب",
+      "methodRequired": "طريقة التنفيذ مطلوبة",
+      "learningRequired": "قيمة التعلم مطلوبة",
+      "impactRequired": "الأثر مطلوب"
+    },
+    "placeholders": {
+      "pickDate": "اختر تاريخًا *",
+      "field": "أدخل {field} *"
+    },
+    "toast": {
+      "saveFailed": "فشل حفظ إدخال CPD",
+      "updateSuccess": "تم تحديث إدخال CPD بنجاح",
+      "deleteSuccess": "تم حذف إدخال CPD بنجاح",
+      "deleteFailed": "فشل حذف إدخال CPD"
+    }
+  },
   "support": {
     "pageTitle": "الدعم",
     "pageSubtitle": "إرسال وإدارة طلبات الدعم",
@@ -3437,6 +3531,464 @@
       "deleteSuccess": "تم حذف الابتكار بنجاح!",
       "deleteFailed": "فشل حذف الابتكار. يرجى المحاولة مرة أخرى.",
       "csvSuccess": "تم تصدير ملف CSV بنجاح"
+    }
+  },
+  "portfolioCards": {
+    "evidenceLibrary": "مكتبة الأدلة",
+    "unitProgress": "تقدم الوحدات",
+    "gapAnalysis": "تحليل الفجوات",
+    "actionsAndActivities": "الإجراءات والأنشطة",
+    "healthAndWellbeing": "الصحة والرفاهية",
+    "chooseUnits": "اختر الوحدات",
+    "learningPlan": "خطة التعلم",
+    "resources": "الموارد",
+    "timeLog": "سجل الوقت",
+    "supplementaryTraining": "التدريب التكميلي",
+    "newDocToSign": "مستند جديد للتوقيع",
+    "item": "عنصر",
+    "items": "عناصر"
+  },
+  "evidenceLibrary": {
+    "pageTitle": "مكتبة الأدلة",
+    "pageSubtitle": "إدارة وتنظيم ملفات الأدلة الخاصة بك",
+    "filters": {
+      "searchPlaceholder": "البحث حسب العنوان...",
+      "coursePlaceholder": "تصفية حسب الدورة",
+      "allCourses": "جميع الدورات"
+    },
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "description": "الوصف",
+        "files": "الملفات",
+        "status": "الحالة",
+        "createdDate": "تاريخ الإنشاء",
+        "view": "عرض",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "loading": "جارٍ تحميل مكتبة الأدلة...",
+        "noResults": "لم يتم العثور على أي دليل."
+      },
+      "pagination": {
+        "summary": "يتم عرض {current} من {total} سجل",
+        "labelPage": "الصفحة",
+        "previous": "السابق",
+        "next": "التالي"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "تنزيل ملفات الأدلة",
+      "addEvidence": "إضافة دليل"
+    },
+    "form": {
+      "createTitle": "إنشاء دليل",
+      "editTitle": "تعديل الدليل",
+      "createSubtitle": "إضافة دليل جديد إلى مكتبتك",
+      "editSubtitle": "تحديث تفاصيل الدليل والارتباطات",
+      "cards": {
+        "fileOptions": "خيارات الملف",
+        "basicInformation": "المعلومات الأساسية",
+        "courseSelection": "اختيار الدورة",
+        "unitMappings": "ربط الوحدات",
+        "additionalInformation": "معلومات إضافية",
+        "signatures": "التوقيعات"
+      },
+      "fields": {
+        "title": "العنوان",
+        "description": "الوصف",
+        "trainerFeedback": "ملاحظات المدرب",
+        "pointsForImprovement": "نقاط التحسين",
+        "learnerComments": "تعليقات المتعلم",
+        "uploadFile": "رفع ملف",
+        "additionalEvidence": "دليل إضافي",
+        "session": "الجلسة",
+        "grade": "الدرجة",
+        "evidenceTimeLog": "استخدام هذا الدليل في سجل الوقت؟",
+        "yes": "نعم",
+        "no": "لا",
+        "assessmentMethod": "طريقة التقييم",
+        "declaration": "أقر بأن هذا الدليل من عملي الخاص"
+      },
+      "placeholders": {
+        "title": "أدخل عنوان الدليل",
+        "description": "أدخل الوصف",
+        "trainerFeedback": "ملاحظات المدرب",
+        "pointsForImprovement": "نقاط التحسين",
+        "learnerComments": "تعليقاتك",
+        "session": "اختر الجلسة",
+        "grade": "أدخل الدرجة",
+        "enterName": "أدخل الاسم",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "saving": "جاري الحفظ...",
+        "updateEvidence": "تحديث الدليل",
+        "createEvidence": "إنشاء دليل"
+      },
+      "toast": {
+        "selectOneCourse": "يرجى اختيار دورة واحدة على الأقل",
+        "selectOneTypeForCourse": "يرجى اختيار نوع واحد على الأقل لـ {courseName}",
+        "selectOneUnitForCourse": "يرجى اختيار وحدة واحدة على الأقل لـ {courseName}",
+        "evidenceUpdated": "تم تحديث الدليل بنجاح",
+        "evidenceCreated": "تم إنشاء الدليل بنجاح",
+        "uploadFileOrCreateDoc": "يرجى رفع ملف أو إنشاء مستند",
+        "invalidFile": "ملف غير صالح. يرجى رفع ملف أو إنشاء مستند",
+        "saveFailed": "فشل حفظ الدليل. يرجى المحاولة مرة أخرى.",
+        "documentCreatedSuccess": "تم إنشاء المستند بنجاح! يمكنك متابعة تعبئة النموذج."
+      },
+      "status": {
+        "loadingEvidence": "جاري تحميل الدليل...",
+        "selectSession": "اختر الجلسة",
+        "loadingSessions": "جاري تحميل الجلسات...",
+        "noSessionsAvailable": "لا توجد جلسات متاحة"
+      },
+      "assessmentMethods": {
+        "Obs": "الملاحظات",
+        "PA": "التقييم العملي",
+        "ET": "الامتحانات والاختبارات",
+        "PD": "النقاش المهني",
+        "I": "المقابلة",
+        "Q&A": "الأسئلة والأجوبة",
+        "P": "المشروع",
+        "RA": "الحساب التأملي",
+        "WT": "شهادة الشاهد",
+        "PE": "دليل المنتج",
+        "SI": "المحاكاة",
+        "OT": "أخرى",
+        "RPL": "التعلم السابق المعترف به"
+      },
+      "signature": {
+        "signedInAgreement": "موقع بالاتفاق:",
+        "name": "الاسم:",
+        "signed": "موقع:",
+        "es": "ES:",
+        "date": "التاريخ:",
+        "signatureReq": "التوقيع مطلوب:",
+        "trainer": "المدرب",
+        "learner": "المتعلم",
+        "employer": "صاحب العمل",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "العنوان مطلوب",
+        "fileRequired": "يرجى رفع ملف أو إنشاء مستند قبل الإرسال.",
+        "declarationRequired": "يجب قبول الإقرار",
+        "assessmentMethodRequired": "يرجى اختيار طريقة تقييم واحدة على الأقل",
+        "selectOneCourse": "يرجى اختيار دورة واحدة على الأقل",
+        "selectOneTypePerStandardCourse": "يرجى اختيار نوع واحد على الأقل (المعرفة أو السلوك أو المهارات) لكل دورة قياسية",
+        "learnerMapRequiredStandard": "لدورات المعيار، يجب تحديد خريطة متعلم واحدة على الأقل لكل نوع محدد",
+        "learnerMapRequiredQualification": "لدورات التأهيل، يجب اختيار وحدة واحدة على الأقل وتحديد خريطة متعلم واحدة على الأقل لكل وحدة محددة"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "اختر الدورات",
+      "selectCourseToAdd": "اختر دورة للإضافة",
+      "selectTypeFor": "{courseName} – اختر النوع:",
+      "selectUnitsFor": "{courseName} – اختر الوحدات:",
+      "knowledge": "المعرفة",
+      "behaviour": "السلوك",
+      "skills": "المهارات",
+      "selectOneTypeError": "يرجى اختيار نوع واحد على الأقل لـ {courseName}",
+      "selectOneUnitError": "يرجى اختيار وحدة واحدة على الأقل لـ {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "معاينة المستند",
+      "uploadedFile": "الملف المرفوع",
+      "view": "عرض",
+      "download": "تنزيل",
+      "noFileForPreview": "لا يوجد ملف للمعاينة",
+      "createDocument": "إنشاء مستند",
+      "wordDocument": "مستند Word",
+      "excelSpreadsheet": "جدول Excel",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "تم إنشاء المستند بنجاح",
+      "defaultSlideTitle": "شريحة الدليل 1",
+      "defaultSlideContent": "أدخل محتوى الدليل هنا...",
+      "validation": {
+        "documentTitleRequired": "عنوان المستند مطلوب",
+        "documentContentEmpty": "لا يمكن أن يكون محتوى المستند فارغاً",
+        "sheetNameRequired": "اسم الورقة مطلوب",
+        "addDataToSpreadsheet": "يرجى إضافة بيانات إلى الجدول",
+        "presentationTitleRequired": "عنوان العرض التقديمي مطلوب",
+        "allSlidesTitleAndContent": "يجب أن تحتوي جميع الشرائح على عنوان ومحتوى"
+      },
+      "buttons": {
+        "creating": "جاري الإنشاء...",
+        "createDocument": "إنشاء مستند",
+        "createPresentation": "إنشاء عرض تقديمي",
+        "createSpreadsheet": "إنشاء جدول"
+      },
+      "labels": {
+        "documentTitle": "عنوان المستند",
+        "enterDocumentTitle": "أدخل عنوان المستند",
+        "presentationTitle": "عنوان العرض التقديمي",
+        "enterPresentationTitle": "أدخل عنوان العرض التقديمي",
+        "sheetName": "اسم الورقة",
+        "enterSheetName": "أدخل اسم الورقة",
+        "slides": "الشرائح",
+        "slideTitle": "عنوان الشريحة",
+        "slideContent": "محتوى الشريحة"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "يجب أن يكون حجم الملف أقل من 10 ميجابايت"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "تعليق المدرب"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "تعليق المدرب",
+      "noComment": "لا تعليق"
+    },
+    "deleteDialog": {
+      "title": "حذف الدليل؟",
+      "description": "سيؤدي حذف هذا الدليل أيضًا إلى إزالة جميع البيانات والعلاقات المرتبطة به. لا يمكن التراجع عن هذا الإجراء. هل تريد المتابعة؟",
+      "cancel": "إلغاء",
+      "confirm": "حذف الدليل",
+      "deleting": "جارٍ الحذف..."
+    },
+    "downloadDialog": {
+      "title": "تنزيل ملفات الأدلة",
+      "description": "اختر دورة لعرض وتنزيل ملفات الأدلة الخاصة بها",
+      "selectCourseLabel": "اختر دورة",
+      "selectAllFiles": "تحديد جميع الملفات",
+      "loadingEvidence": "جارٍ تحميل الأدلة...",
+      "noEvidenceForCourse": "لم يتم العثور على ملفات أدلة لهذه الدورة",
+      "noCourseSelectedTitle": "اختر دورة",
+      "noCourseSelectedDescription": "اختر دورة من القائمة لعرض ملفات الأدلة الخاصة بها",
+      "file": {
+        "noFileName": "لا يوجد اسم ملف",
+        "unknownStatus": "غير معروف"
+      },
+      "button": {
+        "cancel": "إلغاء",
+        "download": "تنزيل ({count} ملف{suffix})",
+        "downloading": "جارٍ التنزيل..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "إعادة رفع الدليل",
+      "description": "اختر ملفًا جديدًا لاستبدال ملف الدليل الحالي لـ \"{title}\".",
+      "selectedFile": "المحدد: {fileName}",
+      "buttons": {
+        "cancel": "إلغاء",
+        "upload": "رفع",
+        "uploading": "جارٍ الرفع..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "إعادة الرفع",
+      "viewEdit": "عرض/تعديل",
+      "view": "عرض",
+      "download": "تنزيل",
+      "delete": "حذف"
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الدليل بنجاح",
+      "deleteFailed": "فشل حذف الدليل. يرجى المحاولة مرة أخرى.",
+      "noFileForDownload": "لا يوجد ملف متاح للتنزيل",
+      "downloadingFile": "جارٍ تنزيل {fileName}",
+      "reuploadMissingFile": "يرجى اختيار ملف لرفعه",
+      "reuploadSuccess": "تم استبدال ملف الدليل بنجاح",
+      "reuploadFailed": "فشل في إعادة رفع الدليل",
+      "downloadSelectOne": "يرجى اختيار ملف واحد على الأقل للتنزيل",
+      "downloadNoFilesForSelection": "لم يتم العثور على ملفات للسجلات المحددة",
+      "downloadCorsOpenedInTabs": "تم فتح {count} ملف(ات) في علامات تبويب جديدة بسبب قيود CORS",
+      "downloadAllInTabs": "تم فتح جميع الملفات في علامات تبويب جديدة. التنزيل بصيغة ZIP غير متاح بسبب قيود CORS.",
+      "downloadMixed": "تم تنزيل {zipCount} ملف(ات) في ملف ZIP. تم فتح {tabCount} ملف(ات) في علامات تبويب جديدة بسبب قيود CORS.",
+      "downloadZipCorrupt": "ملف ZIP الذي تم إنشاؤه تالف",
+      "downloadSuccess": "تم تنزيل {count} ملف(ات) دليل محدد بنجاح",
+      "downloadFailed": "فشل تنزيل ملفات الدليل. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "chooseUnits": {
+    "pageTitle": "اختيار الوحدات",
+    "pageSubtitle": "اختر الوحدات الإلزامية والاختيارية للمتعلم",
+    "table": {
+      "columns": {
+        "select": "اختيار",
+        "unitName": "اسم الوحدة",
+        "type": "النوع",
+        "glh": "GLH",
+        "level": "المستوى",
+        "credits": "الساعات المعتمدة"
+      },
+      "types": {
+        "mandatory": "إلزامية",
+        "optional": "اختيارية"
+      },
+      "searchPlaceholder": "بحث عن الوحدات...",
+      "noTopics": "لا توجد موضوعات متاحة",
+      "noResults": "لا توجد نتائج.",
+      "columnVisibilityLabel": "إظهار الأعمدة",
+      "columnsButton": "الأعمدة",
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "csvTodo": "سيتم تنفيذ وظيفة تصدير CSV لاحقًا",
+        "pdfTodo": "سيتم تنفيذ وظيفة تصدير PDF لاحقًا"
+      },
+      "addNew": {
+        "button": "إضافة جديدة",
+        "todo": "سيتم تنفيذ وظيفة \"إضافة جديدة\" لاحقًا"
+      },
+      "aria": {
+        "expandUnit": "توسيع عرض الوحدة",
+        "collapseUnit": "طي عرض الوحدة",
+        "selectUnit": "اختيار الوحدة {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "إجمالي عدد الوحدات:",
+        "totalCredits": "إجمالي الساعات المعتمدة:",
+        "totalGlh": "إجمالي GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "يجب اختيار جميع الوحدات الإلزامية",
+        "optionalCreditsMinimum": "يجب أن يبلغ مجموع الوحدات الاختيارية ما لا يقل عن 15 ساعة معتمدة"
+      },
+      "status": {
+        "loadingUnits": "جارٍ تحميل الوحدات...",
+        "noCourseSelected": "لم يتم اختيار دورة. يرجى اختيار دورة مؤهلة.",
+        "noLearner": "معلومات المتعلم غير متاحة.",
+        "noUnits": "لم يتم العثور على وحدات لهذه الدورة."
+      },
+      "toast": {
+        "missingIds": "معرّف المتعلم أو الدورة غير موجود",
+        "saveSuccess": "تم حفظ الوحدات بنجاح",
+        "saveError": "فشل حفظ الوحدات"
+      },
+      "buttons": {
+        "save": "حفظ الوحدات",
+        "saving": "جارٍ الحفظ..."
+      }
+    }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "لوحة التحكم",
+      "subtitle": "إدارة رحلة التعلم الخاصة بك وتتبع التقدم"
+    },
+    "buttons": {
+      "emailLearner": "إرسال بريد للمتعلم",
+      "awaitingSignature": "في انتظار التوقيع",
+      "calendar": "التقويم"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "المتعلم",
+      "viewProfile": "عرض الملف الشخصي",
+      "trainerLabel": "المدرب:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "الزيارة التالية:",
+      "notAvailable": "غير متوفر",
+      "overallProgress": {
+        "title": "التقدم الإجمالي",
+        "completed": "✓ مكتمل",
+        "inProgress": "◐ قيد التقدم",
+        "pending": "○ قيد الانتظار",
+        "totalUnits": "الإجمالي: {units} وحدة عبر {courses} برنامج"
+      },
+      "timeLog": {
+        "title": "سجل الوقت",
+        "onTheJob": "إجمالي أثناء العمل",
+        "offTheJob": "إجمالي خارج العمل"
+      }
+    },
+    "safeguardingCard": {
+      "title": "جهة اتصال الحماية",
+      "description": "تواصل فوراً إذا كان لديك أي مخاوف",
+      "priorityBadge": "دعم ذو أولوية",
+      "leadLabel": "مسؤول الحماية",
+      "leadRole": "مسؤول الحماية المعين",
+      "tel": "هاتف:",
+      "mobile": "جوال:",
+      "email": "البريد:",
+      "defaultContactMessage": "جاري استخدام معلومات الاتصال الافتراضية. تواصل مع المسؤول إذا احتجت مساعدة."
+    },
+    "emailDialog": {
+      "title": "إرسال بريد إلى {name}",
+      "description": "إرسال بريد إلى {email}",
+      "learnerFallback": "المتعلم",
+      "learnerEmailFallback": "المتعلم",
+      "subjectLabel": "الموضوع",
+      "subjectPlaceholder": "أدخل موضوع البريد",
+      "messageLabel": "الرسالة",
+      "messagePlaceholder": "أدخل رسالتك هنا...",
+      "cancel": "إلغاء",
+      "sending": "جاري الإرسال...",
+      "sendButton": "إرسال البريد",
+      "toast": {
+        "fillBoth": "يرجى تعبئة الموضوع والرسالة",
+        "noEmail": "البريد الإلكتروني للمتعلم غير متوفر",
+        "success": "تم إرسال البريد بنجاح",
+        "failed": "فشل إرسال البريد"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "نظرة عامة على التقدم",
+      "courseFallback": "الدورة {index}",
+      "gateway": "بوابة",
+      "core": "أساسي",
+      "nextMilestoneReview": "المرحلة التالية: مراجعة",
+      "gatewayPrep": "تحضير البوابة",
+      "courseProgress": "تقدم الدورة",
+      "completed": "مكتمل",
+      "remaining": "متبقي",
+      "progressLabel": "التقدم",
+      "completedUnits": "الوحدات المكتملة",
+      "totalUnits": "إجمالي الوحدات"
+    },
+    "calendarDialog": {
+      "title": "التقويم",
+      "description": "عرض وإدارة أحداثك ومواعيدك المجدولة"
+    },
+    "acknowledgementDialog": {
+      "title": "رسالة التأكيد",
+      "welcomeMessage": "مرحباً {name} في منصة YourLocker",
+      "reviewDocument": "يرجى مراجعة المستند المرفق",
+      "cancel": "إلغاء",
+      "processing": "جاري المعالجة...",
+      "accept": "أوافق",
+      "toast": {
+        "success": "تم قبول التأكيد بنجاح",
+        "failed": "فشل تحديث حالة التأكيد"
+      }
+    }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "معلومات الدورة غير متوفرة",
+      "notFoundDescription": "تعذر العثور على الدورة المطلوبة. يرجى العودة والمحاولة مرة أخرى.",
+      "backToDashboard": "العودة إلى لوحة التحكم",
+      "subtitle": "معلومات الدورة"
+    },
+    "supervisorCards": {
+      "title": "مشرفو المتعلم",
+      "unknown": "غير معروف"
+    },
+    "courseInfo": {
+      "title": "معلومات الدورة",
+      "courseNameFallback": "اسم الدورة",
+      "notAvailable": "غير متوفر",
+      "courseCode": "رمز الدورة:",
+      "level": "المستوى:",
+      "sector": "القطاع:",
+      "qualificationDetails": "تفاصيل المؤهل",
+      "qualificationType": "نوع المؤهل:",
+      "minAge": "الحد الأدنى للعمر:",
+      "totalCredits": "إجمالي الاعتمادات:",
+      "keyDatesHours": "التواريخ الرئيسية والساعات",
+      "startDate": "تاريخ البدء:",
+      "endDate": "تاريخ الانتهاء:",
+      "learningHours": "ساعات التعلم:",
+      "additionalInfo": "معلومات إضافية",
+      "brandGuidelines": "إرشادات العلامة التجارية:",
+      "status": "الحالة:",
+      "gradingType": "نوع التقدير:"
     }
   }
 }

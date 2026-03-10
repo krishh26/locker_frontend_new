@@ -50,6 +50,7 @@ import { exportTableToPdf } from "@/utils/pdfExport";
 import type { CourseResource } from "@/store/api/resources/types";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { useTranslations } from "next-intl";
 
 export function CourseResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user);
@@ -61,6 +62,8 @@ export function CourseResourcesDataTable() {
       (course) => course?.course?.course_id != null
     );
   }, [courses]);
+
+  const t = useTranslations("courseResources");
 
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(
     currentCourseId ? currentCourseId  : null
@@ -122,14 +125,14 @@ export function CourseResourcesDataTable() {
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: t("table.columns.name"),
         cell: ({ row }) => (
           <div className="font-medium">{row.getValue("name")}</div>
         ),
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.columns.description"),
         cell: ({ row }) => {
           const description = row.getValue("description") as string | undefined;
           return (
@@ -141,7 +144,7 @@ export function CourseResourcesDataTable() {
       },
       {
         accessorKey: "hours",
-        header: "Hours",
+        header: t("table.columns.hours"),
         cell: ({ row }) => {
           const hours = row.getValue("hours") as number | string | undefined;
           return <div>{hours ?? "-"}</div>;
@@ -149,7 +152,7 @@ export function CourseResourcesDataTable() {
       },
       {
         accessorKey: "minute",
-        header: "Minutes",
+        header: t("table.columns.minutes"),
         cell: ({ row }) => {
           const minute = row.getValue("minute") as number | string | undefined;
           return <div>{minute ?? "-"}</div>;
@@ -157,7 +160,7 @@ export function CourseResourcesDataTable() {
       },
       {
         accessorKey: "job_type",
-        header: "Job Type",
+        header: t("table.columns.jobType"),
         cell: ({ row }) => {
           const jobType = row.getValue("job_type") as string | undefined;
           return <div>{jobType || "-"}</div>;
@@ -165,15 +168,19 @@ export function CourseResourcesDataTable() {
       },
       {
         accessorKey: "isAccessed",
-        header: "Access",
+        header: t("table.columns.access"),
         cell: ({ row }) => {
           const isAccessed = row.getValue("isAccessed") as boolean | undefined;
           return (
             <div className="text-sm">
               {isAccessed ? (
-                <span className="text-accent">Opened</span>
+                <span className="text-accent">
+                  {t("table.accessStatus.opened")}
+                </span>
               ) : (
-                <span className="text-muted-foreground">Not Opened</span>
+                <span className="text-muted-foreground">
+                  {t("table.accessStatus.notOpened")}
+                </span>
               )}
             </div>
           );
@@ -181,7 +188,7 @@ export function CourseResourcesDataTable() {
       },
       {
         id: "actions",
-        header: "Action",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const resource = row.original;
           const url = resource.url?.url;
@@ -230,18 +237,27 @@ export function CourseResourcesDataTable() {
 
   const handleExportCsv = () => {
     if (resources.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.export.noData"));
       return;
     }
 
-    const headers = ["Name", "Description", "Hours", "Minutes", "Job Type", "Access Status"];
+    const headers = [
+      t("table.columns.name"),
+      t("table.columns.description"),
+      t("table.columns.hours"),
+      t("table.columns.minutes"),
+      t("table.columns.jobType"),
+      t("table.columns.accessStatus"),
+    ];
     const rows = resources.map((resource) => [
       resource.name || "-",
       resource.description || "-",
       resource.hours ?? "-",
       resource.minute ?? "-",
       resource.job_type || "-",
-      resource.isAccessed ? "Opened" : "Not Opened",
+      resource.isAccessed
+        ? t("table.accessStatus.opened")
+        : t("table.accessStatus.notOpened"),
     ]);
 
     const csvContent = [
@@ -256,25 +272,34 @@ export function CourseResourcesDataTable() {
     link.download = `course_resources_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(t("table.export.csvSuccess"));
   };
 
   const handleExportPdf = () => {
     if (resources.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.export.noData"));
       return;
     }
-    const headers = ["Name", "Description", "Hours", "Minutes", "Job Type", "Access Status"];
+    const headers = [
+      t("table.columns.name"),
+      t("table.columns.description"),
+      t("table.columns.hours"),
+      t("table.columns.minutes"),
+      t("table.columns.jobType"),
+      t("table.columns.accessStatus"),
+    ];
     const rows = resources.map((resource) => [
       resource.name || "-",
       resource.description || "-",
       String(resource.hours ?? "-"),
       String(resource.minute ?? "-"),
       resource.job_type || "-",
-      resource.isAccessed ? "Opened" : "Not Opened",
+      resource.isAccessed
+        ? t("table.accessStatus.opened")
+        : t("table.accessStatus.notOpened"),
     ]);
-    exportTableToPdf({ title: "Course Resources", headers, rows });
-    toast.success("PDF exported successfully");
+    exportTableToPdf({ title: t("table.export.pdfTitle"), headers, rows });
+    toast.success(t("table.export.pdfSuccess"));
   };
 
   return (
@@ -287,14 +312,14 @@ export function CourseResourcesDataTable() {
             {validCourses.length > 0 && (
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Label htmlFor="course-select" className="whitespace-nowrap">
-                  Course:
+                  {t("filters.courseLabel")}
                 </Label>
                 <Select
                   value={selectedCourseId?.toString() || ""}
                   onValueChange={(value) => setSelectedCourseId(Number(value))}
                 >
                   <SelectTrigger id="course-select" className="w-full sm:w-[250px]">
-                    <SelectValue placeholder="Select a course" />
+                    <SelectValue placeholder={t("filters.coursePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {validCourses.map((course) => (
@@ -314,7 +339,7 @@ export function CourseResourcesDataTable() {
             <div className="relative flex-1 w-full sm:w-auto">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search by name or description"
+                placeholder={t("filters.searchPlaceholder")}
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 onKeyDown={(e) => {
@@ -347,7 +372,9 @@ export function CourseResourcesDataTable() {
                 htmlFor="job-type-switch"
                 className="text-sm whitespace-nowrap"
               >
-                Job Type: {jobType || "On/Off"}
+                {t("filters.jobTypeLabel", {
+                  jobType: jobType || t("filters.jobTypeOnOff"),
+                })}
               </Label>
             </div>
 
@@ -356,15 +383,15 @@ export function CourseResourcesDataTable() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Download className="mr-2 h-4 w-4" />
-                  Export
+                  {t("table.export.button")}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleExportCsv}>
-                  Export as CSV
+                  {t("table.export.csv")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleExportPdf}>
-                  Export as PDF
+                  {t("table.export.pdf")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -377,14 +404,16 @@ export function CourseResourcesDataTable() {
         <CardContent className="pt-6">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
-              <p className="text-muted-foreground">Loading resources...</p>
+              <p className="text-muted-foreground">
+                {t("table.status.loading")}
+              </p>
             </div>
           ) : resources.length === 0 ? (
             <div className="flex items-center justify-center py-8">
               <p className="text-muted-foreground">
                 {selectedCourseId
-                  ? "No resources found for this course."
-                  : "Please select a course to view resources."}
+                  ? t("table.status.noResourcesForCourse")
+                  : t("table.status.selectCourse")}
               </p>
             </div>
           ) : (
@@ -430,7 +459,7 @@ export function CourseResourcesDataTable() {
                           colSpan={columns.length}
                           className="h-24 text-center"
                         >
-                          No results.
+                          {t("table.status.noResults")}
                         </TableCell>
                       </TableRow>
                     )}

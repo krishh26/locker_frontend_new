@@ -2220,6 +2220,100 @@
       "updateFailed": "更新资源失败"
     }
   },
+  "courseResources": {
+    "pageTitle": "课程资源",
+    "pageSubtitle": "访问并管理课程学习资源",
+    "filters": {
+      "courseLabel": "课程：",
+      "coursePlaceholder": "选择课程",
+      "searchPlaceholder": "按名称或描述搜索",
+      "jobTypeLabel": "工作类型：{jobType}",
+      "jobTypeOnOff": "开/关"
+    },
+    "table": {
+      "columns": {
+        "name": "名称",
+        "description": "描述",
+        "hours": "小时",
+        "minutes": "分钟",
+        "jobType": "工作类型",
+        "access": "访问",
+        "accessStatus": "访问状态",
+        "actions": "操作"
+      },
+      "accessStatus": {
+        "opened": "已打开",
+        "notOpened": "未打开"
+      },
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "noData": "没有可导出的数据",
+        "csvSuccess": "CSV 导出成功",
+        "pdfTitle": "课程资源",
+        "pdfSuccess": "PDF 导出成功"
+      },
+      "status": {
+        "loading": "正在加载资源...",
+        "noResourcesForCourse": "未找到该课程的资源。",
+        "selectCourse": "请选择课程以查看资源。",
+        "noResults": "没有结果。"
+      }
+    }
+  },
+  "cpd": {
+    "pageTitle": "持续专业发展",
+    "pageSubtitle": "学习日志与发展跟踪",
+    "learnerInfo": {
+      "learnerName": "学员姓名",
+      "jobTitle": "职位名称",
+      "employer": "雇主",
+      "notSpecified": "未指定"
+    },
+    "table": {
+      "headers": {
+        "activity": "您完成了哪些培训、学习或发展活动？",
+        "date": "完成此活动的日期",
+        "method": "您是如何开展这项发展活动的？",
+        "learning": "您从中学到了什么？",
+        "impact": "这次学习如何改变了您的工作并提升了您的工作方式？"
+      },
+      "columns": {
+        "actions": "操作"
+      },
+      "searchPlaceholder": "搜索记录...",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvTodo": "CSV 导出功能即将推出",
+        "pdfTodo": "PDF 导出功能即将推出"
+      },
+      "status": {
+        "loading": "正在加载 CPD 记录...",
+        "noResults": "没有结果。"
+      },
+      "addNew": "添加新记录"
+    },
+    "validation": {
+      "activityRequired": "活动为必填项",
+      "dateRequired": "日期为必填项",
+      "methodRequired": "方式为必填项",
+      "learningRequired": "学习内容为必填项",
+      "impactRequired": "影响为必填项"
+    },
+    "placeholders": {
+      "pickDate": "选择日期 *",
+      "field": "请输入 {field} *"
+    },
+    "toast": {
+      "saveFailed": "无法保存 CPD 记录",
+      "updateSuccess": "CPD 记录更新成功",
+      "deleteSuccess": "CPD 记录删除成功",
+      "deleteFailed": "无法删除 CPD 记录"
+    }
+  },
   "support": {
     "pageTitle": "支持",
     "pageSubtitle": "提交和管理支持请求",
@@ -3473,6 +3567,464 @@
       "deleteSuccess": "创新已成功删除！",
       "deleteFailed": "删除创新失败，请重试。",
       "csvSuccess": "CSV 导出成功"
+    }
+  },
+  "portfolioCards": {
+    "evidenceLibrary": "证据库",
+    "unitProgress": "单元进度",
+    "gapAnalysis": "差距分析",
+    "actionsAndActivities": "行动与活动",
+    "healthAndWellbeing": "健康与福祉",
+    "chooseUnits": "选择单元",
+    "learningPlan": "学习计划",
+    "resources": "资源",
+    "timeLog": "时间记录",
+    "supplementaryTraining": "补充培训",
+    "newDocToSign": "待签署新文件",
+    "item": "项",
+    "items": "项"
+  },
+  "evidenceLibrary": {
+    "pageTitle": "证据库",
+    "pageSubtitle": "管理和组织您的证据文件",
+    "filters": {
+      "searchPlaceholder": "按标题搜索...",
+      "coursePlaceholder": "按课程筛选",
+      "allCourses": "所有课程"
+    },
+    "table": {
+      "columns": {
+        "title": "标题",
+        "description": "描述",
+        "files": "文件",
+        "status": "状态",
+        "createdDate": "创建日期",
+        "view": "查看",
+        "actions": "操作"
+      },
+      "status": {
+        "loading": "正在加载证据库...",
+        "noResults": "未找到任何证据。"
+      },
+      "pagination": {
+        "summary": "正在显示 {current} / {total} 条记录",
+        "labelPage": "页",
+        "previous": "上一页",
+        "next": "下一页"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "下载证据文件",
+      "addEvidence": "添加证据"
+    },
+    "form": {
+      "createTitle": "创建证据",
+      "editTitle": "编辑证据",
+      "createSubtitle": "向证据库添加新的证据",
+      "editSubtitle": "更新证据详情和映射",
+      "cards": {
+        "fileOptions": "文件选项",
+        "basicInformation": "基本信息",
+        "courseSelection": "课程选择",
+        "unitMappings": "单元映射",
+        "additionalInformation": "附加信息",
+        "signatures": "签名"
+      },
+      "fields": {
+        "title": "标题",
+        "description": "描述",
+        "trainerFeedback": "培训师反馈",
+        "pointsForImprovement": "改进点",
+        "learnerComments": "学员评论",
+        "uploadFile": "上传文件",
+        "additionalEvidence": "附加证据",
+        "session": "会话",
+        "grade": "成绩",
+        "evidenceTimeLog": "是否在时间记录中使用此证据？",
+        "yes": "是",
+        "no": "否",
+        "assessmentMethod": "评估方法",
+        "declaration": "我声明此证据为本人所作"
+      },
+      "placeholders": {
+        "title": "输入证据标题",
+        "description": "输入描述",
+        "trainerFeedback": "培训师反馈",
+        "pointsForImprovement": "改进点",
+        "learnerComments": "您的评论",
+        "session": "选择会话",
+        "grade": "输入成绩",
+        "enterName": "输入姓名",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "saving": "保存中...",
+        "updateEvidence": "更新证据",
+        "createEvidence": "创建证据"
+      },
+      "toast": {
+        "selectOneCourse": "请至少选择一个课程",
+        "selectOneTypeForCourse": "请为 {courseName} 至少选择一种类型",
+        "selectOneUnitForCourse": "请为 {courseName} 至少选择一个单元",
+        "evidenceUpdated": "证据更新成功",
+        "evidenceCreated": "证据创建成功",
+        "uploadFileOrCreateDoc": "请上传文件或创建文档",
+        "invalidFile": "无效文件。请上传文件或创建文档",
+        "saveFailed": "证据保存失败。请重试。",
+        "documentCreatedSuccess": "文档创建成功！您可以继续填写表单。"
+      },
+      "status": {
+        "loadingEvidence": "正在加载证据...",
+        "selectSession": "选择会话",
+        "loadingSessions": "正在加载会话...",
+        "noSessionsAvailable": "暂无可用会话"
+      },
+      "assessmentMethods": {
+        "Obs": "观察",
+        "PA": "实践评估",
+        "ET": "考试与测验",
+        "PD": "专业讨论",
+        "I": "访谈",
+        "Q&A": "问答",
+        "P": "项目",
+        "RA": "反思陈述",
+        "WT": "证人证言",
+        "PE": "产品证据",
+        "SI": "模拟",
+        "OT": "其他",
+        "RPL": "认可的先验学习"
+      },
+      "signature": {
+        "signedInAgreement": "同意并签署：",
+        "name": "姓名：",
+        "signed": "已签署：",
+        "es": "ES：",
+        "date": "日期：",
+        "signatureReq": "需要签名：",
+        "trainer": "培训师",
+        "learner": "学员",
+        "employer": "雇主",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "标题为必填项",
+        "fileRequired": "请在提交前上传文件或创建文档。",
+        "declarationRequired": "您必须接受声明",
+        "assessmentMethodRequired": "请至少选择一种评估方法",
+        "selectOneCourse": "请至少选择一个课程",
+        "selectOneTypePerStandardCourse": "请为每个标准课程至少选择一种类型（知识、行为或技能）",
+        "learnerMapRequiredStandard": "对于标准课程，每种所选类型至少需勾选一个学员映射",
+        "learnerMapRequiredQualification": "对于资格课程，至少需选择一个单元，且每个所选单元至少勾选一个学员映射"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "选择课程",
+      "selectCourseToAdd": "选择要添加的课程",
+      "selectTypeFor": "{courseName} - 选择类型：",
+      "selectUnitsFor": "{courseName} - 选择单元：",
+      "knowledge": "知识",
+      "behaviour": "行为",
+      "skills": "技能",
+      "selectOneTypeError": "请为 {courseName} 至少选择一种类型",
+      "selectOneUnitError": "请为 {courseName} 至少选择一个单元"
+    },
+    "createDocument": {
+      "documentPreview": "文档预览",
+      "uploadedFile": "已上传文件",
+      "view": "查看",
+      "download": "下载",
+      "noFileForPreview": "暂无文件可预览",
+      "createDocument": "创建文档",
+      "wordDocument": "Word 文档",
+      "excelSpreadsheet": "Excel 电子表格",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "您的文档已成功创建",
+      "defaultSlideTitle": "证据幻灯片 1",
+      "defaultSlideContent": "在此输入您的证据内容...",
+      "validation": {
+        "documentTitleRequired": "文档标题为必填项",
+        "documentContentEmpty": "文档内容不能为空",
+        "sheetNameRequired": "工作表名称为必填项",
+        "addDataToSpreadsheet": "请向电子表格添加数据",
+        "presentationTitleRequired": "演示文稿标题为必填项",
+        "allSlidesTitleAndContent": "所有幻灯片均须包含标题和内容"
+      },
+      "buttons": {
+        "creating": "创建中...",
+        "createDocument": "创建文档",
+        "createPresentation": "创建演示文稿",
+        "createSpreadsheet": "创建电子表格"
+      },
+      "labels": {
+        "documentTitle": "文档标题",
+        "enterDocumentTitle": "输入文档标题",
+        "presentationTitle": "演示文稿标题",
+        "enterPresentationTitle": "输入演示文稿标题",
+        "sheetName": "工作表名称",
+        "enterSheetName": "输入工作表名称",
+        "slides": "幻灯片",
+        "slideTitle": "幻灯片标题",
+        "slideContent": "幻灯片内容"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "文件大小必须小于 10 MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "培训师评论"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "培训师评论",
+      "noComment": "无评论"
+    },
+    "deleteDialog": {
+      "title": "删除证据？",
+      "description": "删除此证据还会移除所有相关数据和关系。此操作无法撤销。确定要继续吗？",
+      "cancel": "取消",
+      "confirm": "删除证据",
+      "deleting": "正在删除..."
+    },
+    "downloadDialog": {
+      "title": "下载证据文件",
+      "description": "选择课程以查看和下载其证据文件",
+      "selectCourseLabel": "选择课程",
+      "selectAllFiles": "选择所有文件",
+      "loadingEvidence": "正在加载证据...",
+      "noEvidenceForCourse": "未找到该课程的证据文件",
+      "noCourseSelectedTitle": "选择课程",
+      "noCourseSelectedDescription": "从列表中选择课程以查看其证据文件",
+      "file": {
+        "noFileName": "无文件名",
+        "unknownStatus": "未知"
+      },
+      "button": {
+        "cancel": "取消",
+        "download": "下载（{count} 个文件{suffix}）",
+        "downloading": "正在下载..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "重新上传证据",
+      "description": "选择新文件以替换 \"{title}\" 的现有证据文件。",
+      "selectedFile": "已选择：{fileName}",
+      "buttons": {
+        "cancel": "取消",
+        "upload": "上传",
+        "uploading": "正在上传..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "重新上传",
+      "viewEdit": "查看/编辑",
+      "view": "查看",
+      "download": "下载",
+      "delete": "删除"
+    },
+    "toast": {
+      "deleteSuccess": "证据删除成功",
+      "deleteFailed": "无法删除证据，请重试。",
+      "noFileForDownload": "没有可下载的文件",
+      "downloadingFile": "正在下载 {fileName}",
+      "reuploadMissingFile": "请选择要上传的文件",
+      "reuploadSuccess": "证据文件替换成功",
+      "reuploadFailed": "重新上传证据失败",
+      "downloadSelectOne": "请至少选择一个文件进行下载",
+      "downloadNoFilesForSelection": "所选记录未找到任何文件",
+      "downloadCorsOpenedInTabs": "由于 CORS 限制，{count} 个文件已在新标签页中打开",
+      "downloadAllInTabs": "所有文件已在新标签页中打开。由于 CORS 限制，无法提供 ZIP 下载。",
+      "downloadMixed": "{zipCount} 个文件已作为 ZIP 下载。由于 CORS 限制，{tabCount} 个文件已在新标签页中打开。",
+      "downloadZipCorrupt": "创建的 ZIP 文件已损坏",
+      "downloadSuccess": "{count} 个选中的证据文件已成功下载",
+      "downloadFailed": "无法下载证据文件，请重试。"
+    }
+  },
+  "chooseUnits": {
+    "pageTitle": "选择单元",
+    "pageSubtitle": "为学员选择必修和选修单元",
+    "table": {
+      "columns": {
+        "select": "选择",
+        "unitName": "单元名称",
+        "type": "类型",
+        "glh": "GLH",
+        "level": "级别",
+        "credits": "学分"
+      },
+      "types": {
+        "mandatory": "必修",
+        "optional": "选修"
+      },
+      "searchPlaceholder": "搜索单元...",
+      "noTopics": "暂无可用主题",
+      "noResults": "没有结果。",
+      "columnVisibilityLabel": "列可见性",
+      "columnsButton": "列",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvTodo": "CSV 导出功能即将推出",
+        "pdfTodo": "PDF 导出功能即将推出"
+      },
+      "addNew": {
+        "button": "新增",
+        "todo": "“新增”功能即将推出"
+      },
+      "aria": {
+        "expandUnit": "展开单元",
+        "collapseUnit": "收起单元",
+        "selectUnit": "选择单元 {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "单元总数：",
+        "totalCredits": "总学分：",
+        "totalGlh": "总 GLH："
+      },
+      "validation": {
+        "allMandatoryRequired": "必须选择所有必修单元",
+        "optionalCreditsMinimum": "选修单元的学分总数至少为 15 学分"
+      },
+      "status": {
+        "loadingUnits": "正在加载单元...",
+        "noCourseSelected": "尚未选择课程。请选择一个资格课程。",
+        "noLearner": "学员信息不可用。",
+        "noUnits": "未找到该课程的单元。"
+      },
+      "toast": {
+        "missingIds": "缺少学员 ID 或课程 ID",
+        "saveSuccess": "单元保存成功",
+        "saveError": "单元保存失败"
+      },
+      "buttons": {
+        "save": "保存单元",
+        "saving": "正在保存..."
+      }
+    }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "仪表盘",
+      "subtitle": "管理你的学习旅程并跟踪进度"
+    },
+    "buttons": {
+      "emailLearner": "给学员发邮件",
+      "awaitingSignature": "等待签名",
+      "calendar": "日历"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "学员",
+      "viewProfile": "查看资料",
+      "trainerLabel": "培训师：",
+      "iqaLabel": "IQA：",
+      "nextVisit": "下次访问：",
+      "notAvailable": "无",
+      "overallProgress": {
+        "title": "总体进度",
+        "completed": "✓ 已完成",
+        "inProgress": "◐ 进行中",
+        "pending": "○ 待完成",
+        "totalUnits": "合计：{units} 个单元，分布在 {courses} 门课程中"
+      },
+      "timeLog": {
+        "title": "时间记录",
+        "onTheJob": "在岗学习总计",
+        "offTheJob": "脱岗学习总计"
+      }
+    },
+    "safeguardingCard": {
+      "title": "保护联系人",
+      "description": "如有任何顾虑请立即联系",
+      "priorityBadge": "优先支持",
+      "leadLabel": "保护负责人",
+      "leadRole": "指定保护负责人",
+      "tel": "电话：",
+      "mobile": "手机：",
+      "email": "邮箱：",
+      "defaultContactMessage": "正在使用默认联系信息。如需帮助请联系管理员。"
+    },
+    "emailDialog": {
+      "title": "发送邮件给 {name}",
+      "description": "发送邮件至 {email}",
+      "learnerFallback": "学员",
+      "learnerEmailFallback": "该学员",
+      "subjectLabel": "主题",
+      "subjectPlaceholder": "输入邮件主题",
+      "messageLabel": "内容",
+      "messagePlaceholder": "在此输入您的消息...",
+      "cancel": "取消",
+      "sending": "发送中...",
+      "sendButton": "发送邮件",
+      "toast": {
+        "fillBoth": "请填写主题和内容",
+        "noEmail": "学员邮箱不可用",
+        "success": "邮件发送成功",
+        "failed": "发送邮件失败"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "进度概览",
+      "courseFallback": "课程 {index}",
+      "gateway": "Gateway",
+      "core": "核心",
+      "nextMilestoneReview": "下一里程碑：审阅",
+      "gatewayPrep": "Gateway 准备",
+      "courseProgress": "课程进度",
+      "completed": "已完成",
+      "remaining": "剩余",
+      "progressLabel": "进度",
+      "completedUnits": "已完成单元",
+      "totalUnits": "总单元数"
+    },
+    "calendarDialog": {
+      "title": "日历",
+      "description": "查看和管理您预定的活动和约会"
+    },
+    "acknowledgementDialog": {
+      "title": "确认消息",
+      "welcomeMessage": "欢迎 {name} 使用 YourLocker 平台",
+      "reviewDocument": "请查阅附件文档",
+      "cancel": "取消",
+      "processing": "处理中...",
+      "accept": "我接受",
+      "toast": {
+        "success": "确认已成功接受",
+        "failed": "更新确认状态失败"
+      }
+    }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "未找到课程信息",
+      "notFoundDescription": "无法找到所请求的课程。请返回重试。",
+      "backToDashboard": "返回仪表板",
+      "subtitle": "课程信息"
+    },
+    "supervisorCards": {
+      "title": "学员督导",
+      "unknown": "未知"
+    },
+    "courseInfo": {
+      "title": "课程信息",
+      "courseNameFallback": "课程名称",
+      "notAvailable": "不适用",
+      "courseCode": "课程代码：",
+      "level": "级别：",
+      "sector": "行业：",
+      "qualificationDetails": "资格详情",
+      "qualificationType": "资格类型：",
+      "minAge": "最低年龄：",
+      "totalCredits": "总学分：",
+      "keyDatesHours": "关键日期与学时",
+      "startDate": "开始日期：",
+      "endDate": "结束日期：",
+      "learningHours": "学习时长：",
+      "additionalInfo": "附加信息",
+      "brandGuidelines": "品牌指南：",
+      "status": "状态：",
+      "gradingType": "评分类型："
     }
   }
 }

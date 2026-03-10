@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface Learner {
   learner_id?: string | number
@@ -130,6 +131,7 @@ const convertToProgressData = (
 }
 
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
+  const t = useTranslations('learnerDashboard.infoCard')
   // Calculate overall progress across all courses
   const overallProgressData = useMemo(() => {
     if (!learner?.course || learner.course.length === 0) {
@@ -176,18 +178,18 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
     ? `${learner.first_name || ''} ${learner.last_name || ''}`.trim()
     : user
     ? `${user.first_name || ''} ${user.last_name || ''}`.trim()
-    : 'Learner'
+    : t('fallbackLearnerName')
 
   const avatarUrl = learner?.avatar || user?.avatar?.url
   const initials = initialsFromName(learnerName)
 
   const trainerName = learner?.course?.[0]?.trainer_id
     ? `${learner.course[0].trainer_id.first_name} ${learner.course[0].trainer_id.last_name}`
-    : 'N/A'
+    : t('notAvailable')
 
   const iqaName = learner?.course?.[0]?.IQA_id
     ? `${learner.course[0].IQA_id.first_name} ${learner.course[0].IQA_id.last_name}`
-    : 'N/A'
+    : t('notAvailable')
 
   const completion = Math.min(
     Math.max(overallProgressData.completionPercentage, 0),
@@ -230,7 +232,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
                       learner?.learner_id || ''
                     )}`}
                   >
-                    <span className='text-sm'>View Profile</span>
+                    <span className='text-sm'>{t('viewProfile')}</span>
                     <ArrowRight className='ml-1 size-4' />
                   </Link>
                 </Button>
@@ -252,7 +254,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
               variant='outline'
               className='w-fit rounded-full px-4 py-2 shadow-sm border-primary bg-primary text-white'
             >
-              Next Visit: {learner?.nextvisitdate || 'N/A'}
+              {t('nextVisit')} {learner?.nextvisitdate || t('notAvailable')}
             </Badge>
           </div>
         </div>
@@ -262,7 +264,9 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
           {/* Overall Progress Card */}
           <div className='flex-1 min-w-[280px] rounded-lg border border-accent bg-accent p-4 shadow-sm'>
             <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-white'>Overall Progress</h3>
+              <h3 className='text-sm font-semibold text-white'>
+                {t('overallProgress.title')}
+              </h3>
               <Badge
                 variant='outline'
                 className={cn(
@@ -278,45 +282,59 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
             <Progress value={completion} className='h-2 mb-4' />
             <div className='grid grid-cols-3 gap-2 text-center'>
               <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>✓ Completed</p>
+                <p className='text-xs text-white font-medium'>
+                  {t('overallProgress.completed')}
+                </p>
                 <p className='text-lg font-bold text-white'>
                   {overallProgressData.fullyCompleted}
                 </p>
               </div>
               <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>◐ In Progress</p>
+                <p className='text-xs text-white font-medium'>
+                  {t('overallProgress.inProgress')}
+                </p>
                 <p className='text-lg font-bold text-white'>
                   {overallProgressData.workInProgress}
                 </p>
               </div>
               <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>○ Pending</p>
+                <p className='text-xs text-white font-medium'>
+                  {t('overallProgress.pending')}
+                </p>
                 <p className='text-lg font-bold text-white'>
                   {overallProgressData.yetToComplete}
                 </p>
               </div>
             </div>
             <p className='text-xs text-white/70 mt-3 text-center'>
-              Total: {overallProgressData.totalUnits} units across {learner?.course?.length || 0} course
-              {(learner?.course?.length || 0) !== 1 ? 's' : ''}
+              {t('overallProgress.totalUnits', {
+                units: overallProgressData.totalUnits,
+                courses: learner?.course?.length || 0,
+              })}
             </p>
           </div>
 
           {/* Time Log Card - Compact Version */}
           <div className='flex-1 rounded-lg border border-secondary bg-secondary p-4 shadow-sm flex flex-col justify-center'>
             <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-white'>Time Log</h3>
+              <h3 className='text-sm font-semibold text-white'>
+                {t('timeLog.title')}
+              </h3>
               <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-white/10 text-white shadow-sm'>
                 24h 57m
               </Badge>
             </div>
             <div className='grid grid-cols-2 gap-4 flex-1 items-center'>
               <div className='text-center space-y-1 border-r border-white/30'>
-                <p className='text-xs text-white/70'>On The Job Total</p>
+                <p className='text-xs text-white/70'>
+                  {t('timeLog.onTheJob')}
+                </p>
                 <p className='text-lg font-bold text-white'>02h 00m</p>
               </div>
               <div className='text-center space-y-1'>
-                <p className='text-xs text-white/70'>Off The Job Total</p>
+                <p className='text-xs text-white/70'>
+                  {t('timeLog.offTheJob')}
+                </p>
                 <p className='text-lg font-bold text-white'>22h 57m</p>
               </div>
             </div>

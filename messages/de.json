@@ -1674,6 +1674,100 @@
       "updateFailed": "Ressource konnte nicht aktualisiert werden"
     }
   },
+  "courseResources": {
+    "pageTitle": "Kursressourcen",
+    "pageSubtitle": "Greifen Sie auf Lernressourcen des Kurses zu und verwalten Sie sie",
+    "filters": {
+      "courseLabel": "Kurs:",
+      "coursePlaceholder": "Kurs auswählen",
+      "searchPlaceholder": "Nach Name oder Beschreibung suchen",
+      "jobTypeLabel": "Jobtyp: {jobType}",
+      "jobTypeOnOff": "Ein/Aus"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "hours": "Stunden",
+        "minutes": "Minuten",
+        "jobType": "Jobtyp",
+        "access": "Zugriff",
+        "accessStatus": "Zugriffsstatus",
+        "actions": "Aktion"
+      },
+      "accessStatus": {
+        "opened": "Geöffnet",
+        "notOpened": "Nicht geöffnet"
+      },
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "noData": "Keine Daten zum Exportieren",
+        "csvSuccess": "CSV erfolgreich exportiert",
+        "pdfTitle": "Kursressourcen",
+        "pdfSuccess": "PDF erfolgreich exportiert"
+      },
+      "status": {
+        "loading": "Ressourcen werden geladen...",
+        "noResourcesForCourse": "Für diesen Kurs wurden keine Ressourcen gefunden.",
+        "selectCourse": "Bitte wählen Sie einen Kurs, um Ressourcen anzuzeigen.",
+        "noResults": "Keine Ergebnisse."
+      }
+    }
+  },
+  "cpd": {
+    "pageTitle": "Fortlaufende berufliche Entwicklung",
+    "pageSubtitle": "Lerntagebuch und Entwicklungs-Tracker",
+    "learnerInfo": {
+      "learnerName": "Name des Lernenden",
+      "jobTitle": "Berufsbezeichnung",
+      "employer": "Arbeitgeber",
+      "notSpecified": "Nicht angegeben"
+    },
+    "table": {
+      "headers": {
+        "activity": "Welche Schulungs-, Lern- oder Entwicklungsaktivität haben Sie durchgeführt?",
+        "date": "Datum dieser Aktivität",
+        "method": "Wie haben Sie diese Entwicklungsaktivität durchgeführt?",
+        "learning": "Was haben Sie daraus gelernt?",
+        "impact": "Wie hat dieses Lernen Ihre Arbeit verändert und verbessert?"
+      },
+      "columns": {
+        "actions": "Aktionen"
+      },
+      "searchPlaceholder": "Einträge durchsuchen...",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvTodo": "Die CSV-Exportfunktion wird noch implementiert",
+        "pdfTodo": "Die PDF-Exportfunktion wird noch implementiert"
+      },
+      "status": {
+        "loading": "CPD-Einträge werden geladen...",
+        "noResults": "Keine Ergebnisse."
+      },
+      "addNew": "Neuen Eintrag hinzufügen"
+    },
+    "validation": {
+      "activityRequired": "Aktivität ist erforderlich",
+      "dateRequired": "Datum ist erforderlich",
+      "methodRequired": "Methode ist erforderlich",
+      "learningRequired": "Lernergebnis ist erforderlich",
+      "impactRequired": "Auswirkung ist erforderlich"
+    },
+    "placeholders": {
+      "pickDate": "Datum auswählen *",
+      "field": "{field} eingeben *"
+    },
+    "toast": {
+      "saveFailed": "CPD-Eintrag konnte nicht gespeichert werden",
+      "updateSuccess": "CPD-Eintrag wurde erfolgreich aktualisiert",
+      "deleteSuccess": "CPD-Eintrag wurde erfolgreich gelöscht",
+      "deleteFailed": "CPD-Eintrag konnte nicht gelöscht werden"
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Supportanfragen einreichen und verwalten",
@@ -2681,6 +2775,464 @@
       "deleteSuccess": "Innovation erfolgreich gelöscht!",
       "deleteFailed": "Löschen der Innovation fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "csvSuccess": "CSV erfolgreich exportiert"
+    }
+  },
+  "portfolioCards": {
+    "evidenceLibrary": "Evidenzbibliothek",
+    "unitProgress": "Einheitenfortschritt",
+    "gapAnalysis": "Lückenanalyse",
+    "actionsAndActivities": "Aktionen und Aktivitäten",
+    "healthAndWellbeing": "Gesundheit und Wohlbefinden",
+    "chooseUnits": "Einheiten wählen",
+    "learningPlan": "Lernplan",
+    "resources": "Ressourcen",
+    "timeLog": "Zeitprotokoll",
+    "supplementaryTraining": "Zusatzschulung",
+    "newDocToSign": "Neues Dokument zu unterschreiben",
+    "item": "Element",
+    "items": "Elemente"
+  },
+  "evidenceLibrary": {
+    "pageTitle": "Evidenzbibliothek",
+    "pageSubtitle": "Verwalten und organisieren Sie Ihre Evidenzdateien",
+    "filters": {
+      "searchPlaceholder": "Nach Titel suchen...",
+      "coursePlaceholder": "Nach Kurs filtern",
+      "allCourses": "Alle Kurse"
+    },
+    "table": {
+      "columns": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "files": "Dateien",
+        "status": "Status",
+        "createdDate": "Erstellungsdatum",
+        "view": "Anzeigen",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "loading": "Evidenzbibliothek wird geladen...",
+        "noResults": "Keine Evidenz gefunden."
+      },
+      "pagination": {
+        "summary": "{current} von {total} Einträgen werden angezeigt",
+        "labelPage": "Seite",
+        "previous": "Zurück",
+        "next": "Weiter"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Evidenzdateien herunterladen",
+      "addEvidence": "Evidenz hinzufügen"
+    },
+    "form": {
+      "createTitle": "Evidenz erstellen",
+      "editTitle": "Evidenz bearbeiten",
+      "createSubtitle": "Neue Evidenz zu Ihrer Bibliothek hinzufügen",
+      "editSubtitle": "Evidenzdetails und Zuordnungen aktualisieren",
+      "cards": {
+        "fileOptions": "Dateioptionen",
+        "basicInformation": "Grundinformationen",
+        "courseSelection": "Kursauswahl",
+        "unitMappings": "Einheitenzuordnungen",
+        "additionalInformation": "Zusätzliche Informationen",
+        "signatures": "Unterschriften"
+      },
+      "fields": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "trainerFeedback": "Trainer-Feedback",
+        "pointsForImprovement": "Verbesserungspunkte",
+        "learnerComments": "Lerner-Kommentare",
+        "uploadFile": "Datei hochladen",
+        "additionalEvidence": "Zusätzliche Evidenz",
+        "session": "Sitzung",
+        "grade": "Note",
+        "evidenceTimeLog": "Soll die Evidenz im Zeitprotokoll verwendet werden?",
+        "yes": "Ja",
+        "no": "Nein",
+        "assessmentMethod": "Bewertungsmethode",
+        "declaration": "Ich bestätige, dass diese Evidenz meine eigene Arbeit ist"
+      },
+      "placeholders": {
+        "title": "Evidenztitel eingeben",
+        "description": "Beschreibung eingeben",
+        "trainerFeedback": "Trainer-Feedback",
+        "pointsForImprovement": "Verbesserungspunkte",
+        "learnerComments": "Ihre Kommentare",
+        "session": "Sitzung auswählen",
+        "grade": "Note eingeben",
+        "enterName": "Name eingeben",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "updateEvidence": "Evidenz aktualisieren",
+        "createEvidence": "Evidenz erstellen"
+      },
+      "toast": {
+        "selectOneCourse": "Bitte wählen Sie mindestens einen Kurs",
+        "selectOneTypeForCourse": "Bitte wählen Sie mindestens einen Typ für {courseName}",
+        "selectOneUnitForCourse": "Bitte wählen Sie mindestens eine Einheit für {courseName}",
+        "evidenceUpdated": "Evidenz erfolgreich aktualisiert",
+        "evidenceCreated": "Evidenz erfolgreich erstellt",
+        "uploadFileOrCreateDoc": "Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument",
+        "invalidFile": "Ungültige Datei. Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument",
+        "saveFailed": "Evidenz konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+        "documentCreatedSuccess": "Dokument erfolgreich erstellt! Sie können das Formular weiter ausfüllen."
+      },
+      "status": {
+        "loadingEvidence": "Evidenz wird geladen...",
+        "selectSession": "Sitzung auswählen",
+        "loadingSessions": "Sitzungen werden geladen...",
+        "noSessionsAvailable": "Keine Sitzungen verfügbar"
+      },
+      "assessmentMethods": {
+        "Obs": "Beobachtungen",
+        "PA": "Praktische Bewertung",
+        "ET": "Prüfungen und Tests",
+        "PD": "Fachgespräch",
+        "I": "Interview",
+        "Q&A": "Fragen und Antworten",
+        "P": "Projekt",
+        "RA": "Reflexiver Bericht",
+        "WT": "Zeugenaussage",
+        "PE": "Produktnachweis",
+        "SI": "Simulation",
+        "OT": "Sonstige",
+        "RPL": "Anerkannte Vorkenntnisse"
+      },
+      "signature": {
+        "signedInAgreement": "Unterzeichnet zur Vereinbarung:",
+        "name": "Name:",
+        "signed": "Unterschrieben:",
+        "es": "ES:",
+        "date": "Datum:",
+        "signatureReq": "Unterschrift erf.:",
+        "trainer": "Trainer",
+        "learner": "Lerner",
+        "employer": "Arbeitgeber",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "Titel ist erforderlich",
+        "fileRequired": "Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument.",
+        "declarationRequired": "Sie müssen die Erklärung akzeptieren",
+        "assessmentMethodRequired": "Bitte wählen Sie mindestens eine Bewertungsmethode",
+        "selectOneCourse": "Bitte wählen Sie mindestens einen Kurs",
+        "selectOneTypePerStandardCourse": "Bitte wählen Sie mindestens einen Typ (Wissen, Verhalten oder Fertigkeiten) für jeden Standardkurs",
+        "learnerMapRequiredStandard": "Bei Standardkursen muss für jeden gewählten Typ mindestens eine Lerner-Zuordnung angekreuzt werden",
+        "learnerMapRequiredQualification": "Bei Qualifikationskursen muss mindestens eine Einheit ausgewählt und für jede ausgewählte Einheit mindestens eine Lerner-Zuordnung angekreuzt werden"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "Kurse auswählen",
+      "selectCourseToAdd": "Kurs zum Hinzufügen auswählen",
+      "selectTypeFor": "{courseName} – Typ auswählen:",
+      "selectUnitsFor": "{courseName} – Einheiten auswählen:",
+      "knowledge": "Wissen",
+      "behaviour": "Verhalten",
+      "skills": "Fertigkeiten",
+      "selectOneTypeError": "Bitte wählen Sie mindestens einen Typ (Wissen, Verhalten oder Fertigkeiten) für {courseName}",
+      "selectOneUnitError": "Bitte wählen Sie mindestens eine Einheit für {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Dokumentvorschau",
+      "uploadedFile": "Hochgeladene Datei",
+      "view": "Anzeigen",
+      "download": "Herunterladen",
+      "noFileForPreview": "Keine Datei zur Vorschau verfügbar",
+      "createDocument": "Dokument erstellen",
+      "wordDocument": "Word-Dokument",
+      "excelSpreadsheet": "Excel-Tabelle",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Ihr Dokument wurde erfolgreich erstellt",
+      "defaultSlideTitle": "Evidenz-Folie 1",
+      "defaultSlideContent": "Geben Sie hier Ihren Evidenzinhalt ein...",
+      "validation": {
+        "documentTitleRequired": "Dokumenttitel ist erforderlich",
+        "documentContentEmpty": "Dokumentinhalt darf nicht leer sein",
+        "sheetNameRequired": "Tabellenblattname ist erforderlich",
+        "addDataToSpreadsheet": "Bitte fügen Sie Daten in die Tabelle ein",
+        "presentationTitleRequired": "Präsentationstitel ist erforderlich",
+        "allSlidesTitleAndContent": "Alle Folien müssen Titel und Inhalt haben"
+      },
+      "buttons": {
+        "creating": "Wird erstellt...",
+        "createDocument": "Dokument erstellen",
+        "createPresentation": "Präsentation erstellen",
+        "createSpreadsheet": "Tabelle erstellen"
+      },
+      "labels": {
+        "documentTitle": "Dokumenttitel",
+        "enterDocumentTitle": "Dokumenttitel eingeben",
+        "presentationTitle": "Präsentationstitel",
+        "enterPresentationTitle": "Präsentationstitel eingeben",
+        "sheetName": "Tabellenblattname",
+        "enterSheetName": "Tabellenblattname eingeben",
+        "slides": "Folien",
+        "slideTitle": "Folientitel",
+        "slideContent": "Folieninhalt"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "Die Dateigröße muss unter 10 MB liegen"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Trainer-Kommentar"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Trainer-Kommentar",
+      "noComment": "Kein Kommentar"
+    },
+    "deleteDialog": {
+      "title": "Evidenz löschen?",
+      "description": "Wenn Sie diese Evidenz löschen, werden auch alle zugehörigen Daten und Verknüpfungen entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. Möchten Sie fortfahren?",
+      "cancel": "Abbrechen",
+      "confirm": "Evidenz löschen",
+      "deleting": "Wird gelöscht..."
+    },
+    "downloadDialog": {
+      "title": "Evidenzdateien herunterladen",
+      "description": "Wählen Sie einen Kurs aus, um dessen Evidenzdateien anzuzeigen und herunterzuladen",
+      "selectCourseLabel": "Kurs auswählen",
+      "selectAllFiles": "Alle Dateien auswählen",
+      "loadingEvidence": "Evidenz wird geladen...",
+      "noEvidenceForCourse": "Für diesen Kurs wurden keine Evidenzdateien gefunden.",
+      "noCourseSelectedTitle": "Kurs auswählen",
+      "noCourseSelectedDescription": "Wählen Sie einen Kurs aus der Liste, um dessen Evidenzdateien anzuzeigen",
+      "file": {
+        "noFileName": "Kein Dateiname",
+        "unknownStatus": "Unbekannt"
+      },
+      "button": {
+        "cancel": "Abbrechen",
+        "download": "Herunterladen ({count} Datei{suffix})",
+        "downloading": "Wird heruntergeladen..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Evidenz neu hochladen",
+      "description": "Wählen Sie eine neue Datei, um die vorhandene Evidenzdatei für \"{title}\" zu ersetzen.",
+      "selectedFile": "Ausgewählt: {fileName}",
+      "buttons": {
+        "cancel": "Abbrechen",
+        "upload": "Hochladen",
+        "uploading": "Wird hochgeladen..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Neu hochladen",
+      "viewEdit": "Anzeigen/Bearbeiten",
+      "view": "Anzeigen",
+      "download": "Herunterladen",
+      "delete": "Löschen"
+    },
+    "toast": {
+      "deleteSuccess": "Evidenz wurde erfolgreich gelöscht",
+      "deleteFailed": "Evidenz konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+      "noFileForDownload": "Keine Datei zum Herunterladen verfügbar",
+      "downloadingFile": "{fileName} wird heruntergeladen",
+      "reuploadMissingFile": "Bitte wählen Sie eine Datei zum Hochladen aus",
+      "reuploadSuccess": "Evidenzdatei wurde erfolgreich ersetzt",
+      "reuploadFailed": "Evidenz konnte nicht erneut hochgeladen werden",
+      "downloadSelectOne": "Bitte wählen Sie mindestens eine Datei zum Herunterladen aus",
+      "downloadNoFilesForSelection": "Für die ausgewählten Einträge wurden keine Dateien gefunden",
+      "downloadCorsOpenedInTabs": "{count} Dateien wurden aufgrund von CORS-Einschränkungen in neuen Tabs geöffnet",
+      "downloadAllInTabs": "Alle Dateien wurden in neuen Tabs geöffnet. ZIP-Download ist aufgrund von CORS-Einschränkungen nicht verfügbar.",
+      "downloadMixed": "{zipCount} Dateien wurden als ZIP heruntergeladen. {tabCount} Dateien wurden aufgrund von CORS-Einschränkungen in neuen Tabs geöffnet.",
+      "downloadZipCorrupt": "Die erstellte ZIP-Datei ist beschädigt",
+      "downloadSuccess": "{count} ausgewählte Evidenzdatei(en) wurden erfolgreich heruntergeladen",
+      "downloadFailed": "Evidenzdateien konnten nicht heruntergeladen werden. Bitte versuchen Sie es erneut."
+    }
+  },
+  "chooseUnits": {
+    "pageTitle": "Einheiten wählen",
+    "pageSubtitle": "Wählen Sie Pflicht- und Wahlmodule für den Lernenden aus",
+    "table": {
+      "columns": {
+        "select": "Auswählen",
+        "unitName": "Einheitenname",
+        "type": "Typ",
+        "glh": "GLH",
+        "level": "Niveau",
+        "credits": "Credits"
+      },
+      "types": {
+        "mandatory": "Pflicht",
+        "optional": "Optional"
+      },
+      "searchPlaceholder": "Einheiten durchsuchen...",
+      "noTopics": "Keine Themen verfügbar",
+      "noResults": "Keine Ergebnisse.",
+      "columnVisibilityLabel": "Spaltensichtbarkeit",
+      "columnsButton": "Spalten",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvTodo": "Die CSV-Exportfunktion wird noch implementiert",
+        "pdfTodo": "Die PDF-Exportfunktion wird noch implementiert"
+      },
+      "addNew": {
+        "button": "Neu hinzufügen",
+        "todo": "Die Funktion „Neu hinzufügen“ wird noch implementiert"
+      },
+      "aria": {
+        "expandUnit": "Einheit ausklappen",
+        "collapseUnit": "Einheit einklappen",
+        "selectUnit": "Einheit {unitTitle} auswählen"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Gesamtanzahl Einheiten:",
+        "totalCredits": "Gesamtcredits:",
+        "totalGlh": "Gesamt-GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "Alle Pflichtmodule müssen ausgewählt sein",
+        "optionalCreditsMinimum": "Wahlmodule müssen insgesamt mindestens 15 Credits haben"
+      },
+      "status": {
+        "loadingUnits": "Einheiten werden geladen...",
+        "noCourseSelected": "Kein Kurs ausgewählt. Bitte wählen Sie einen Qualifikationskurs.",
+        "noLearner": "Lernerinformationen sind nicht verfügbar.",
+        "noUnits": "Für diesen Kurs wurden keine Einheiten gefunden."
+      },
+      "toast": {
+        "missingIds": "Lerner- oder Kurs-ID fehlt",
+        "saveSuccess": "Einheiten wurden erfolgreich gespeichert",
+        "saveError": "Einheiten konnten nicht gespeichert werden"
+      },
+      "buttons": {
+        "save": "Einheiten speichern",
+        "saving": "Speichern..."
+      }
+    }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Dashboard",
+      "subtitle": "Verwalten Sie Ihren Lernweg und verfolgen Sie den Fortschritt"
+    },
+    "buttons": {
+      "emailLearner": "Lernenden per E-Mail kontaktieren",
+      "awaitingSignature": "Ausstehende Unterschrift",
+      "calendar": "Kalender"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Lernende/r",
+      "viewProfile": "Profil anzeigen",
+      "trainerLabel": "Trainer:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Nächster Besuch:",
+      "notAvailable": "k. A.",
+      "overallProgress": {
+        "title": "Gesamtfortschritt",
+        "completed": "✓ Abgeschlossen",
+        "inProgress": "◐ In Bearbeitung",
+        "pending": "○ Ausstehend",
+        "totalUnits": "Gesamt: {units} Einheiten über {courses} Kurs(e)"
+      },
+      "timeLog": {
+        "title": "Zeiterfassung",
+        "onTheJob": "Gesamtzeit am Arbeitsplatz",
+        "offTheJob": "Gesamtzeit außerhalb des Arbeitsplatzes"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Ansprechpartner Schutz",
+      "description": "Kontaktieren Sie uns sofort bei Bedenken",
+      "priorityBadge": "Prioritäts-Support",
+      "leadLabel": "Schutz-Beauftragter",
+      "leadRole": "Benannter Schutz-Beauftragter",
+      "tel": "Tel.:",
+      "mobile": "Mobil:",
+      "email": "E-Mail:",
+      "defaultContactMessage": "Standard-Kontaktinformationen werden verwendet. Bitte wenden Sie sich an Ihren Administrator."
+    },
+    "emailDialog": {
+      "title": "E-Mail an {name}",
+      "description": "E-Mail senden an {email}",
+      "learnerFallback": "Lerner",
+      "learnerEmailFallback": "den Lerner",
+      "subjectLabel": "Betreff",
+      "subjectPlaceholder": "E-Mail-Betreff eingeben",
+      "messageLabel": "Nachricht",
+      "messagePlaceholder": "Nachricht hier eingeben...",
+      "cancel": "Abbrechen",
+      "sending": "Wird gesendet...",
+      "sendButton": "E-Mail senden",
+      "toast": {
+        "fillBoth": "Bitte Betreff und Nachricht ausfüllen",
+        "noEmail": "Lerner-E-Mail ist nicht verfügbar",
+        "success": "E-Mail erfolgreich gesendet",
+        "failed": "E-Mail konnte nicht gesendet werden"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Fortschrittsübersicht",
+      "courseFallback": "Kurs {index}",
+      "gateway": "Gateway",
+      "core": "Kern",
+      "nextMilestoneReview": "Nächster Meilenstein: Überprüfung",
+      "gatewayPrep": "Gateway-Vorbereitung",
+      "courseProgress": "Kursfortschritt",
+      "completed": "Abgeschlossen",
+      "remaining": "Verbleibend",
+      "progressLabel": "Fortschritt",
+      "completedUnits": "Abgeschlossene Einheiten",
+      "totalUnits": "Einheiten gesamt"
+    },
+    "calendarDialog": {
+      "title": "Kalender",
+      "description": "Geplante Termine und Ereignisse anzeigen und verwalten"
+    },
+    "acknowledgementDialog": {
+      "title": "Bestätigungsnachricht",
+      "welcomeMessage": "Willkommen {name} auf der YourLocker-Plattform",
+      "reviewDocument": "Bitte überprüfen Sie das angehängte Dokument",
+      "cancel": "Abbrechen",
+      "processing": "Wird verarbeitet...",
+      "accept": "Ich akzeptiere",
+      "toast": {
+        "success": "Bestätigung erfolgreich angenommen",
+        "failed": "Bestätigungsstatus konnte nicht aktualisiert werden"
+      }
+    }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Kursinformationen nicht gefunden",
+      "notFoundDescription": "Der angeforderte Kurs konnte nicht gefunden werden. Bitte gehen Sie zurück und versuchen Sie es erneut.",
+      "backToDashboard": "Zurück zum Dashboard",
+      "subtitle": "Kursinformationen"
+    },
+    "supervisorCards": {
+      "title": "Lerner-Betreuer",
+      "unknown": "Unbekannt"
+    },
+    "courseInfo": {
+      "title": "Kursinformationen",
+      "courseNameFallback": "Kursname",
+      "notAvailable": "k. A.",
+      "courseCode": "Kursnummer:",
+      "level": "Niveau:",
+      "sector": "Bereich:",
+      "qualificationDetails": "Qualifikationsdetails",
+      "qualificationType": "Qualifikationstyp:",
+      "minAge": "Mindestalter:",
+      "totalCredits": "Credits gesamt:",
+      "keyDatesHours": "Wichtige Termine und Stunden",
+      "startDate": "Startdatum:",
+      "endDate": "Enddatum:",
+      "learningHours": "Lernstunden:",
+      "additionalInfo": "Zusätzliche Informationen",
+      "brandGuidelines": "Markenrichtlinien:",
+      "status": "Status:",
+      "gradingType": "Bewertungstyp:"
     }
   }
 }

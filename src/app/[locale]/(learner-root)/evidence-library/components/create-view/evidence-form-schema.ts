@@ -70,7 +70,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
   ])
 
   return z.object({
-    title: z.string().min(1, 'Title is required'),
+    title: z.string().min(1, 'form.validation.titleRequired'),
     description: z.string().optional(),
     trainer_feedback: z.string().optional(),
     points_for_improvement: z.string().optional(),
@@ -97,7 +97,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
               return false
             },
             {
-              message: 'Please upload a file or create a document. You must either upload a file or create a document before submitting.',
+              message: 'form.validation.fileRequired',
             }
           ),
     file_key: z.string().optional(),
@@ -108,14 +108,14 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
     declaration: canEditDeclaration
       ? z.boolean().optional()
       : z.boolean().refine((val) => val === true, {
-          message: 'You must accept the declaration',
+          message: 'form.validation.declarationRequired',
         }),
     assessment_method: z
       .array(z.string())
-      .min(1, 'Please select at least one assessment method'),
+      .min(1, 'form.validation.assessmentMethodRequired'),
     selectedCourses: z
       .array(z.any())
-      .min(1, 'Please select at least one course'),
+      .min(1, 'form.validation.selectOneCourse'),
     courseSelectedTypes: z
       .record(z.string(), z.array(z.string()))
       .optional(),
@@ -154,8 +154,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
       return true
     },
     {
-      message:
-        'Please select at least one type (Knowledge, Behaviour, or Skills) for each Standard course',
+      message: 'form.validation.selectOneTypePerStandardCourse',
       path: ['courseSelectedTypes'], // This will attach the error to the courseSelectedTypes field
     }
   )
@@ -211,8 +210,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
       return true
     },
     {
-      message:
-        'For Standard courses, at least one Learner Map must be checked for each selected type (Knowledge, Behaviour, or Skills)',
+      message: 'form.validation.learnerMapRequiredStandard',
       path: ['units'], // This will attach the error to the units field
     }
   )
@@ -261,8 +259,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
       return true
     },
     {
-      message:
-        'For Qualification courses, at least one unit must be selected and at least one Learner Map must be checked for each selected unit',
+      message: 'form.validation.learnerMapRequiredQualification',
       path: ['units'], // This will attach the error to the units field
     }
   )

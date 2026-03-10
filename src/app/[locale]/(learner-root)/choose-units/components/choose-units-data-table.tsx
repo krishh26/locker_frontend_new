@@ -45,6 +45,7 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import type { Unit } from "@/store/api/units/types";
+import { useTranslations } from "next-intl";
 
 type FormValues = {
   selectedUnitIds: string[];
@@ -67,6 +68,7 @@ export function ChooseUnitsDataTable({
 }: ChooseUnitsDataTableProps) {
   const { control, watch } = useFormContext<FormValues>();
   const selectedUnitIds = watch("selectedUnitIds");
+  const t = useTranslations("chooseUnits");
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -75,15 +77,15 @@ export function ChooseUnitsDataTable({
   const [expandedUnits, setExpandedUnits] = useState<Set<number>>(new Set());
 
   const handleExportCsv = () => {
-    toast.info("CSV export functionality will be implemented");
+    toast.info(t("table.export.csvTodo"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("table.export.pdfTodo"));
   };
 
   const handleAddNew = () => {
-    toast.info("Add New functionality will be implemented");
+    toast.info(t("table.addNew.todo"));
   };
 
   const toggleUnitExpansion = useCallback((unitId: number) => {
@@ -104,7 +106,9 @@ export function ChooseUnitsDataTable({
         id: "select",
         header: () => (
           <div className="flex items-center justify-center px-2">
-            <span className="text-sm font-medium">Select</span>
+            <span className="text-sm font-medium">
+              {t("table.columns.select")}
+            </span>
           </div>
         ),
         cell: ({ row }) => {
@@ -136,7 +140,9 @@ export function ChooseUnitsDataTable({
                       checked={isChecked}
                       disabled={isMandatory}
                       onCheckedChange={handleCheckedChange}
-                      aria-label={`Select ${unit.title}`}
+                      aria-label={t("table.aria.selectUnit", {
+                        unitTitle: unit.title,
+                      })}
                     />
                   );
                 }}
@@ -150,7 +156,7 @@ export function ChooseUnitsDataTable({
       },
       {
         accessorKey: "title",
-        header: "Unit Name",
+        header: t("table.columns.unitName"),
         cell: ({ row }) => {
           const unit = row.original;
           const isExpanded = expandedUnits.has(unit.id);
@@ -163,7 +169,11 @@ export function ChooseUnitsDataTable({
                   type="button"
                   onClick={() => toggleUnitExpansion(unit.id)}
                   className="flex items-center justify-center p-1 hover:bg-accent rounded transition-colors cursor-pointer"
-                  aria-label={isExpanded ? "Collapse unit" : "Expand unit"}
+                  aria-label={
+                    isExpanded
+                      ? t("table.aria.collapseUnit")
+                      : t("table.aria.expandUnit")
+                  }
                 >
                   {isExpanded ? (
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
@@ -179,7 +189,7 @@ export function ChooseUnitsDataTable({
       },
       {
         accessorKey: "mandatory",
-        header: "Type",
+        header: t("table.columns.type"),
         cell: ({ row }) => {
           const unit = row.original;
           return (
@@ -187,14 +197,16 @@ export function ChooseUnitsDataTable({
               variant="secondary"
               className={getTypeColor(unit.mandatory)}
             >
-              {unit.mandatory ? "Mandatory" : "Optional"}
+              {unit.mandatory
+                ? t("table.types.mandatory")
+                : t("table.types.optional")}
             </Badge>
           );
         },
       },
       {
         accessorKey: "glh",
-        header: "GLH",
+        header: t("table.columns.glh"),
         cell: ({ row }) => {
           const glh = row.getValue("glh") as number;
           return <span className="text-sm">{glh || 0}</span>;
@@ -202,7 +214,7 @@ export function ChooseUnitsDataTable({
       },
       {
         accessorKey: "level",
-        header: "Level",
+        header: t("table.columns.level"),
         cell: ({ row }) => {
           const level = row.getValue("level") as string;
           return <span className="text-sm">{level || "-"}</span>;
@@ -210,14 +222,14 @@ export function ChooseUnitsDataTable({
       },
       {
         accessorKey: "credit_value",
-        header: "Credits",
+        header: t("table.columns.credits"),
         cell: ({ row }) => {
           const credits = row.getValue("credit_value") as number;
           return <span className="text-sm font-medium">{credits || 0}</span>;
         },
       },
     ],
-    [control, mandatoryUnitIds, selectedUnitIds, expandedUnits, toggleUnitExpansion]
+    [t, mandatoryUnitIds, selectedUnitIds, control, expandedUnits, toggleUnitExpansion]
   );
 
   const table = useReactTable({
@@ -247,7 +259,7 @@ export function ChooseUnitsDataTable({
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search units..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -259,15 +271,15 @@ export function ChooseUnitsDataTable({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("table.export.button")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("table.export.csv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("table.export.pdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -278,7 +290,7 @@ export function ChooseUnitsDataTable({
             className="cursor-pointer"
           >
             <Plus className="mr-2 size-4" />
-            Add New
+            {t("table.addNew.button")}
           </Button>
         </div>
       </div>
@@ -286,12 +298,13 @@ export function ChooseUnitsDataTable({
       {/* Column Visibility Toggle */}
       <div className="flex items-center space-x-2">
         <Label htmlFor="column-visibility" className="text-sm font-medium">
-          Column Visibility
+          {t("table.columnVisibilityLabel")}
         </Label>
         <DropdownMenu>
           <DropdownMenuTrigger asChild id="column-visibility">
             <Button variant="outline" className="cursor-pointer">
-              Columns <ChevronDown className="ml-2 size-4" />
+              {t("table.columnsButton")}{" "}
+              <ChevronDown className="ml-2 size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -306,7 +319,11 @@ export function ChooseUnitsDataTable({
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) => column.toggleVisibility(!!value)}
                     >
-                      {column.id === "mandatory" ? "Type" : column.id === "credit_value" ? "Credits" : column.id}
+                      {column.id === "mandatory"
+                        ? t("table.columns.type")
+                        : column.id === "credit_value"
+                        ? t("table.columns.credits")
+                        : column.id}
                     </DropdownMenuCheckboxItem>
                 );
               })}
@@ -391,7 +408,7 @@ export function ChooseUnitsDataTable({
                           ))}
                           {allTopics.length === 0 && (
                             <div className="text-sm text-muted-foreground py-2">
-                              No topics available
+                              {t("table.noTopics")}
                             </div>
                           )}
                         </div>
@@ -408,7 +425,7 @@ export function ChooseUnitsDataTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

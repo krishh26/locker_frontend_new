@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Table, Presentation, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { WordEditor } from "./word-editor";
 import { ExcelEditor } from "./excel-editor";
 import { PowerPointEditor } from "./powerpoint-editor";
@@ -34,6 +36,7 @@ export function CreateDocumentCard({
   fileUrl,
   fileName,
 }: CreateDocumentCardProps) {
+  const t = useTranslations("evidenceLibrary");
   const [docTab, setDocTab] = useState(0);
   const [loading, setLoading] = useState(false);
   const [createdFile, setCreatedFile] = useState<File | null>(null);
@@ -215,10 +218,10 @@ export function CreateDocumentCard({
   const handleWordCreate = async () => {
     try {
       if (!documentTitle.trim()) {
-        throw new Error("Document title is required");
+        throw new Error("createDocument.validation.documentTitleRequired");
       }
       if (!wordContent.trim()) {
-        throw new Error("Document content cannot be empty");
+        throw new Error("createDocument.validation.documentContentEmpty");
       }
 
       setLoading(true);
@@ -235,7 +238,8 @@ export function CreateDocumentCard({
       
       onDocumentCreated(file);
     } catch (error) {
-      console.error("Word creation error:", error);
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(t(message));
       throw error;
     } finally {
       setLoading(false);
@@ -246,7 +250,7 @@ export function CreateDocumentCard({
   const handleExcelCreate = async () => {
     try {
       if (!sheetName.trim()) {
-        throw new Error("Sheet name is required");
+        throw new Error("createDocument.validation.sheetNameRequired");
       }
 
       const hasData = excelData.some((row) =>
@@ -254,7 +258,7 @@ export function CreateDocumentCard({
       );
 
       if (!hasData) {
-        throw new Error("Please add some data to the spreadsheet");
+        throw new Error("createDocument.validation.addDataToSpreadsheet");
       }
 
       setLoading(true);
@@ -269,7 +273,8 @@ export function CreateDocumentCard({
       
       onDocumentCreated(file);
     } catch (error) {
-      console.error("Excel creation error:", error);
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(t(message));
       throw error;
     } finally {
       setLoading(false);
@@ -280,7 +285,7 @@ export function CreateDocumentCard({
   const handlePowerPointCreate = async () => {
     try {
       if (!presentationTitle.trim()) {
-        throw new Error("Presentation title is required");
+        throw new Error("createDocument.validation.presentationTitleRequired");
       }
 
       const invalidSlides = slides.filter(
@@ -288,7 +293,7 @@ export function CreateDocumentCard({
       );
 
       if (invalidSlides.length > 0) {
-        throw new Error("All slides must have both title and content");
+        throw new Error("createDocument.validation.allSlidesTitleAndContent");
       }
 
       setLoading(true);
@@ -303,7 +308,8 @@ export function CreateDocumentCard({
       
       onDocumentCreated(file);
     } catch (error) {
-      console.error("PowerPoint creation error:", error);
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(t(message));
       throw error;
     } finally {
       setLoading(false);
@@ -324,7 +330,7 @@ export function CreateDocumentCard({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Document Preview</CardTitle>
+          <CardTitle>{t("createDocument.documentPreview")}</CardTitle>
         </CardHeader>
         <CardContent>
           {fileUrl ? (
@@ -334,7 +340,7 @@ export function CreateDocumentCard({
                   <FileText className="h-8 w-8 text-primary" />
                   <div>
                     <p className="font-medium">{fileName || "Document"}</p>
-                    <p className="text-sm text-muted-foreground">Uploaded file</p>
+                    <p className="text-sm text-muted-foreground">{t("createDocument.uploadedFile")}</p>
                   </div>
                 </div>
                 <div className="flex gap-2">
@@ -345,7 +351,7 @@ export function CreateDocumentCard({
                     onClick={() => window.open(fileUrl, "_blank")}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
-                    View
+                    {t("createDocument.view")}
                   </Button>
                   <Button
                     type="button"
@@ -361,7 +367,7 @@ export function CreateDocumentCard({
                     }}
                   >
                     <Download className="h-4 w-4 mr-2" />
-                    Download
+                    {t("createDocument.download")}
                   </Button>
                 </div>
               </div>
@@ -369,7 +375,7 @@ export function CreateDocumentCard({
           ) : (
             <div className="text-center py-8 text-muted-foreground">
               <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No file available for preview</p>
+              <p>{t("createDocument.noFileForPreview")}</p>
             </div>
           )}
         </CardContent>
@@ -381,7 +387,7 @@ export function CreateDocumentCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create Document</CardTitle>
+        <CardTitle>{t("createDocument.createDocument")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Tabs
@@ -392,15 +398,15 @@ export function CreateDocumentCard({
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="0" disabled={disabled || loading}>
               <FileText className="h-4 w-4 mr-2" />
-              Word Document
+              {t("createDocument.wordDocument")}
             </TabsTrigger>
             <TabsTrigger value="1" disabled={disabled || loading}>
               <Table className="h-4 w-4 mr-2" />
-              Excel Spreadsheet
+              {t("createDocument.excelSpreadsheet")}
             </TabsTrigger>
             <TabsTrigger value="2" disabled={disabled || loading}>
               <Presentation className="h-4 w-4 mr-2" />
-              PowerPoint
+              {t("createDocument.powerpoint")}
             </TabsTrigger>
           </TabsList>
 
@@ -452,9 +458,9 @@ export function CreateDocumentCard({
           <div className="mt-2 space-y-4 border-t pt-2">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold">Document Preview</h3>
+                <h3 className="text-lg font-semibold">{t("createDocument.documentPreview")}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Your document has been created successfully
+                  {t("createDocument.documentCreatedSuccess")}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -465,7 +471,7 @@ export function CreateDocumentCard({
                   onClick={() => window.open(previewUrl, "_blank")}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
-                  View
+                  {t("createDocument.view")}
                 </Button>
                 <Button
                   type="button"
@@ -481,7 +487,7 @@ export function CreateDocumentCard({
                   }}
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Download
+                  {t("createDocument.download")}
                 </Button>
               </div>
             </div>

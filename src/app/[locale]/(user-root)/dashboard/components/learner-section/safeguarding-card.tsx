@@ -1,6 +1,7 @@
 "use client"
 
 import { Mail, Phone, ShieldAlert } from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
   Card,
   CardContent,
@@ -14,6 +15,7 @@ import { useGetSafeguardingContactsQuery } from "@/store/api/safeguarding/safegu
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function SafeguardingCard() {
+  const t = useTranslations("learnerDashboard.safeguardingCard")
   const { data, isLoading, isError } = useGetSafeguardingContactsQuery()
   
   // Get the first active contact or use placeholder
@@ -45,13 +47,13 @@ export function SafeguardingCard() {
     <Card className="h-full shadow-sm bg-primary/10 border-primary/20">
       <CardHeader className="flex flex-row items-start justify-between gap-3">
         <div>
-          <CardTitle className="text-xl text-foreground">Safeguarding contact</CardTitle>
+          <CardTitle className="text-xl text-foreground">{t("title")}</CardTitle>
           <CardDescription className="text-muted-foreground">
-            Reach out immediately if you have any concerns
+            {t("description")}
           </CardDescription>
         </div>
         <Badge variant="secondary" className="rounded-full shadow-sm bg-primary text-primary-foreground">
-          Priority support
+          {t("priorityBadge")}
         </Badge>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -60,8 +62,8 @@ export function SafeguardingCard() {
             <ShieldAlert className="size-4" />
           </div>
           <div className="space-y-1">
-            <p className="text-base font-semibold text-foreground">Safeguarding Lead</p>
-            <p className="text-sm text-muted-foreground">Designated Safeguarding Lead</p>
+            <p className="text-base font-semibold text-foreground">{t("leadLabel")}</p>
+            <p className="text-sm text-muted-foreground">{t("leadRole")}</p>
           </div>
         </div>
 
@@ -71,7 +73,7 @@ export function SafeguardingCard() {
           {safeguardingContact.telNumber && (
             <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
               <Phone className="size-4 text-primary" />
-              <span className="font-medium text-foreground">Tel:</span>
+              <span className="font-medium text-foreground">{t("tel")}</span>
               <span className="text-foreground">{safeguardingContact.telNumber}</span>
             </div>
           )}
@@ -79,7 +81,7 @@ export function SafeguardingCard() {
           {safeguardingContact.mobileNumber && (
             <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
               <Phone className="size-4 text-primary" />
-              <span className="font-medium text-foreground">Mobile:</span>
+              <span className="font-medium text-foreground">{t("mobile")}</span>
               <span className="text-foreground">{safeguardingContact.mobileNumber}</span>
             </div>
           )}
@@ -87,7 +89,7 @@ export function SafeguardingCard() {
           {safeguardingContact.emailAddress && (
             <div className="flex items-center gap-2 rounded-md border border-primary/15 bg-background p-3">
               <Mail className="size-4 text-primary" />
-              <span className="font-medium text-foreground">Email:</span>
+              <span className="font-medium text-foreground">{t("email")}</span>
               <a
                 className="text-primary underline-offset-4 hover:underline"
                 href={`mailto:${safeguardingContact.emailAddress}`}
@@ -109,7 +111,7 @@ export function SafeguardingCard() {
 
         {isError && (
           <div className="text-sm text-muted-foreground italic">
-            Using default contact information. Please contact your administrator if you need assistance.
+            {t("defaultContactMessage")}
           </div>
         )}
       </CardContent>

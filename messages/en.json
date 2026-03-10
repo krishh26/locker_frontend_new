@@ -2331,6 +2331,355 @@
       "updateFailed": "Failed to update resource"
     }
   },
+  "cpd": {
+    "pageTitle": "Continuing Professional Development",
+    "pageSubtitle": "Learning Log & Development Tracker",
+    "learnerInfo": {
+      "learnerName": "Learner Name",
+      "jobTitle": "Job Title",
+      "employer": "Employer",
+      "notSpecified": "Not specified"
+    },
+    "table": {
+      "headers": {
+        "activity": "What training, learning or development activity have you done?",
+        "date": "Date you did this",
+        "method": "How did you undertake this development activity?",
+        "learning": "What did you learn from this?",
+        "impact": "How has this learning made a difference to your work and improved the way you work?"
+      },
+      "columns": {
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Search entries...",
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "csvTodo": "CSV export functionality will be implemented",
+        "pdfTodo": "PDF export functionality will be implemented"
+      },
+      "status": {
+        "loading": "Loading CPD entries...",
+        "noResults": "No results."
+      },
+      "addNew": "Add New Entry"
+    },
+    "validation": {
+      "activityRequired": "Activity is required",
+      "dateRequired": "Date is required",
+      "methodRequired": "Method is required",
+      "learningRequired": "Learning is required",
+      "impactRequired": "Impact is required"
+    },
+    "placeholders": {
+      "pickDate": "Pick a date *",
+      "field": "Enter {field} *"
+    },
+    "toast": {
+      "saveFailed": "Failed to save CPD entry",
+      "updateSuccess": "CPD entry updated successfully",
+      "deleteSuccess": "CPD entry deleted successfully",
+      "deleteFailed": "Failed to delete CPD entry"
+    }
+  },
+  "courseResources": {
+    "pageTitle": "Course Resources",
+    "pageSubtitle": "Access and manage course learning resources",
+    "filters": {
+      "courseLabel": "Course:",
+      "coursePlaceholder": "Select a course",
+      "searchPlaceholder": "Search by name or description",
+      "jobTypeLabel": "Job Type: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "jobType": "Job Type",
+        "access": "Access",
+        "accessStatus": "Access Status",
+        "actions": "Action"
+      },
+      "accessStatus": {
+        "opened": "Opened",
+        "notOpened": "Not Opened"
+      },
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "noData": "No data to export",
+        "csvSuccess": "CSV exported successfully",
+        "pdfTitle": "Course Resources",
+        "pdfSuccess": "PDF exported successfully"
+      },
+      "status": {
+        "loading": "Loading resources...",
+        "noResourcesForCourse": "No resources found for this course.",
+        "selectCourse": "Please select a course to view resources.",
+        "noResults": "No results."
+      }
+    }
+  },
+  "evidenceLibrary": {
+    "pageTitle": "Evidence Library",
+    "pageSubtitle": "Manage and organize your evidence files",
+    "filters": {
+      "searchPlaceholder": "Search by title...",
+      "coursePlaceholder": "Filter by course",
+      "allCourses": "All Courses"
+    },
+    "table": {
+      "columns": {
+        "title": "Title",
+        "description": "Description",
+        "files": "Files",
+        "status": "Status",
+        "createdDate": "Created Date",
+        "view": "View",
+        "actions": "Actions"
+      },
+      "status": {
+        "loading": "Loading evidence library...",
+        "noResults": "No evidence found."
+      },
+      "pagination": {
+        "summary": "Showing {current} of {total} entries",
+        "labelPage": "Page",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Download Evidence Files",
+      "addEvidence": "Add Evidence"
+    },
+    "form": {
+      "createTitle": "Create Evidence",
+      "editTitle": "Edit Evidence",
+      "createSubtitle": "Add new evidence to your library",
+      "editSubtitle": "Update evidence details and mappings",
+      "cards": {
+        "fileOptions": "File Options",
+        "basicInformation": "Basic Information",
+        "courseSelection": "Course Selection",
+        "unitMappings": "Unit Mappings",
+        "additionalInformation": "Additional Information",
+        "signatures": "Signatures"
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "trainerFeedback": "Trainer Feedback",
+        "pointsForImprovement": "Points for Improvement",
+        "learnerComments": "Learner Comments",
+        "uploadFile": "Upload File",
+        "additionalEvidence": "Additional Evidence",
+        "session": "Session",
+        "grade": "Grade",
+        "evidenceTimeLog": "Evidence to be used in time log?",
+        "yes": "Yes",
+        "no": "No",
+        "assessmentMethod": "Assessment Method",
+        "declaration": "I declare that this evidence is my own work"
+      },
+      "placeholders": {
+        "title": "Enter evidence title",
+        "description": "Enter description",
+        "trainerFeedback": "Trainer feedback",
+        "pointsForImprovement": "Points for improvement",
+        "learnerComments": "Your comments",
+        "session": "Select session",
+        "grade": "Enter grade",
+        "enterName": "Enter name",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "updateEvidence": "Update Evidence",
+        "createEvidence": "Create Evidence"
+      },
+      "toast": {
+        "selectOneCourse": "Please select at least one course",
+        "selectOneTypeForCourse": "Please select at least one type for {courseName}",
+        "selectOneUnitForCourse": "Please select at least one unit for {courseName}",
+        "evidenceUpdated": "Evidence updated successfully",
+        "evidenceCreated": "Evidence created successfully",
+        "uploadFileOrCreateDoc": "Please upload a file or create a document",
+        "invalidFile": "Invalid file. Please upload a file or create a document",
+        "saveFailed": "Failed to save evidence. Please try again.",
+        "documentCreatedSuccess": "Document created successfully! You can continue filling the form."
+      },
+      "status": {
+        "loadingEvidence": "Loading evidence...",
+        "selectSession": "Select session",
+        "loadingSessions": "Loading sessions...",
+        "noSessionsAvailable": "No sessions available"
+      },
+      "assessmentMethods": {
+        "Obs": "Observations",
+        "PA": "Practical assessment",
+        "ET": "Exams and Tests",
+        "PD": "Professional discussion",
+        "I": "Interview",
+        "Q&A": "Question and Answers",
+        "P": "Project",
+        "RA": "Reflective Account",
+        "WT": "Witness Testimony",
+        "PE": "Product Evidence",
+        "SI": "Simulation",
+        "OT": "Other",
+        "RPL": "Recognised prior learning"
+      },
+      "signature": {
+        "signedInAgreement": "Signed in Agreement:",
+        "name": "Name:",
+        "signed": "Signed:",
+        "es": "ES:",
+        "date": "Date:",
+        "signatureReq": "Signature req:",
+        "trainer": "Trainer",
+        "learner": "Learner",
+        "employer": "Employer",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "fileRequired": "Please upload a file or create a document. You must either upload a file or create a document before submitting.",
+        "declarationRequired": "You must accept the declaration",
+        "assessmentMethodRequired": "Please select at least one assessment method",
+        "selectOneCourse": "Please select at least one course",
+        "selectOneTypePerStandardCourse": "Please select at least one type (Knowledge, Behaviour, or Skills) for each Standard course",
+        "learnerMapRequiredStandard": "For Standard courses, at least one Learner Map must be checked for each selected type (Knowledge, Behaviour, or Skills)",
+        "learnerMapRequiredQualification": "For Qualification courses, at least one unit must be selected and at least one Learner Map must be checked for each selected unit"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "Select Courses",
+      "selectCourseToAdd": "Select a course to add",
+      "selectTypeFor": "{courseName} - Select Type:",
+      "selectUnitsFor": "{courseName} - Select Units:",
+      "knowledge": "Knowledge",
+      "behaviour": "Behaviour",
+      "skills": "Skills",
+      "selectOneTypeError": "Please select at least one type (Knowledge, Behaviour, or Skills) for {courseName}",
+      "selectOneUnitError": "Please select at least one unit for {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Document Preview",
+      "uploadedFile": "Uploaded file",
+      "view": "View",
+      "download": "Download",
+      "noFileForPreview": "No file available for preview",
+      "createDocument": "Create Document",
+      "wordDocument": "Word Document",
+      "excelSpreadsheet": "Excel Spreadsheet",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Your document has been created successfully",
+      "defaultSlideTitle": "Evidence Slide 1",
+      "defaultSlideContent": "Enter your evidence content here...",
+      "validation": {
+        "documentTitleRequired": "Document title is required",
+        "documentContentEmpty": "Document content cannot be empty",
+        "sheetNameRequired": "Sheet name is required",
+        "addDataToSpreadsheet": "Please add some data to the spreadsheet",
+        "presentationTitleRequired": "Presentation title is required",
+        "allSlidesTitleAndContent": "All slides must have both title and content"
+      },
+      "buttons": {
+        "creating": "Creating...",
+        "createDocument": "Create Document",
+        "createPresentation": "Create Presentation",
+        "createSpreadsheet": "Create Spreadsheet"
+      },
+      "labels": {
+        "documentTitle": "Document Title",
+        "enterDocumentTitle": "Enter document title",
+        "presentationTitle": "Presentation Title",
+        "enterPresentationTitle": "Enter presentation title",
+        "sheetName": "Sheet Name",
+        "enterSheetName": "Enter sheet name",
+        "slides": "Slides",
+        "slideTitle": "Slide Title",
+        "slideContent": "Slide Content"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "File size must be less than 10MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Trainer comment"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Trainer comment",
+      "noComment": "No comment"
+    },
+    "deleteDialog": {
+      "title": "Delete Evidence?",
+      "description": "Deleting this evidence will also remove all associated data and relationships. This action cannot be undone. Proceed with deletion?",
+      "cancel": "Cancel",
+      "confirm": "Delete Evidence",
+      "deleting": "Deleting..."
+    },
+    "downloadDialog": {
+      "title": "Download Evidence Files",
+      "description": "Select a course to view and download its evidence files",
+      "selectCourseLabel": "Select Course",
+      "selectAllFiles": "Select All Files",
+      "loadingEvidence": "Loading evidence...",
+      "noEvidenceForCourse": "No evidence files found for this course",
+      "noCourseSelectedTitle": "Select a Course",
+      "noCourseSelectedDescription": "Choose a course from the list to view its evidence files",
+      "file": {
+        "noFileName": "No file name",
+        "unknownStatus": "Unknown"
+      },
+      "button": {
+        "cancel": "Cancel",
+        "download": "Download ({count} file{suffix})",
+        "downloading": "Downloading..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Reupload Evidence",
+      "description": "Select a new file to replace the existing evidence file for \"{title}\".",
+      "selectedFile": "Selected: {fileName}",
+      "buttons": {
+        "cancel": "Cancel",
+        "upload": "Upload",
+        "uploading": "Uploading..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Reupload",
+      "viewEdit": "View/Edit",
+      "view": "View",
+      "download": "Download",
+      "delete": "Delete"
+    },
+    "toast": {
+      "deleteSuccess": "Evidence deleted successfully",
+      "deleteFailed": "Failed to delete evidence. Please try again.",
+      "noFileForDownload": "No file available for download",
+      "downloadingFile": "Downloading {fileName}",
+      "reuploadMissingFile": "Please select a file to upload",
+      "reuploadSuccess": "Evidence file replaced successfully",
+      "reuploadFailed": "Failed to reupload evidence",
+      "downloadSelectOne": "Please select at least one file to download",
+      "downloadNoFilesForSelection": "No files found for selected files",
+      "downloadCorsOpenedInTabs": "{count} files opened in new tabs due to CORS restrictions",
+      "downloadAllInTabs": "All files opened in new tabs. ZIP download not available due to CORS restrictions.",
+      "downloadMixed": "Downloaded {zipCount} files as ZIP. {tabCount} files opened in new tabs due to CORS restrictions.",
+      "downloadZipCorrupt": "Created ZIP file is corrupted",
+      "downloadSuccess": "Successfully downloaded {count} selected evidence files",
+      "downloadFailed": "Failed to download evidence files. Please try again."
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Submit and manage support requests",
@@ -3531,6 +3880,209 @@
       "createFailed": "Failed to create centre",
       "updateSuccess": "Centre updated successfully",
       "updateFailed": "Failed to update centre"
+    }
+  },
+  "portfolioCards": {
+    "evidenceLibrary": "Evidence Library",
+    "unitProgress": "Unit Progress",
+    "gapAnalysis": "Gap Analysis",
+    "actionsAndActivities": "Actions and Activities",
+    "healthAndWellbeing": "Health and Wellbeing",
+    "chooseUnits": "Choose Units",
+    "learningPlan": "Learning Plan",
+    "resources": "Resources",
+    "timeLog": "Time Log",
+    "supplementaryTraining": "Supplementary Training",
+    "newDocToSign": "New Doc to Sign",
+    "item": "item",
+    "items": "items"
+  },
+  "chooseUnits": {
+    "pageTitle": "Choose Units",
+    "pageSubtitle": "Select mandatory and optional units for the learner",
+    "table": {
+      "columns": {
+        "select": "Select",
+        "unitName": "Unit Name",
+        "type": "Type",
+        "glh": "GLH",
+        "level": "Level",
+        "credits": "Credits"
+      },
+      "types": {
+        "mandatory": "Mandatory",
+        "optional": "Optional"
+      },
+      "searchPlaceholder": "Search units...",
+      "noTopics": "No topics available",
+      "noResults": "No results.",
+      "columnVisibilityLabel": "Column Visibility",
+      "columnsButton": "Columns",
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "csvTodo": "CSV export functionality will be implemented",
+        "pdfTodo": "PDF export functionality will be implemented"
+      },
+      "addNew": {
+        "button": "Add New",
+        "todo": "Add New functionality will be implemented"
+      },
+      "aria": {
+        "expandUnit": "Expand unit",
+        "collapseUnit": "Collapse unit",
+        "selectUnit": "Select {unitTitle}"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "Total Units:",
+        "totalCredits": "Total Credits:",
+        "totalGlh": "Total GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "All mandatory units must be selected",
+        "optionalCreditsMinimum": "Optional units must total at least 15 credits"
+      },
+      "status": {
+        "loadingUnits": "Loading units...",
+        "noCourseSelected": "No course selected. Please select a qualification course.",
+        "noLearner": "Learner information not available.",
+        "noUnits": "No units found for this course."
+      },
+      "toast": {
+        "missingIds": "Learner ID or Course ID is missing",
+        "saveSuccess": "Units saved successfully",
+        "saveError": "Failed to save units"
+      },
+      "buttons": {
+        "save": "Save Units",
+        "saving": "Saving..."
+      }
+    }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Dashboard",
+      "subtitle": "Manage your learning journey and track progress"
+    },
+    "buttons": {
+      "emailLearner": "Email Learner",
+      "awaitingSignature": "Awaiting Signature",
+      "calendar": "Calendar"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Learner",
+      "viewProfile": "View Profile",
+      "trainerLabel": "Trainer:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Next Visit:",
+      "notAvailable": "N/A",
+      "overallProgress": {
+        "title": "Overall Progress",
+        "completed": "✓ Completed",
+        "inProgress": "◐ In Progress",
+        "pending": "○ Pending",
+        "totalUnits": "Total: {units} units across {courses} course(s)"
+      },
+      "timeLog": {
+        "title": "Time Log",
+        "onTheJob": "On The Job Total",
+        "offTheJob": "Off The Job Total"
+      }
+    },
+    "safeguardingCard": {
+      "title": "Safeguarding contact",
+      "description": "Reach out immediately if you have any concerns",
+      "priorityBadge": "Priority support",
+      "leadLabel": "Safeguarding Lead",
+      "leadRole": "Designated Safeguarding Lead",
+      "tel": "Tel:",
+      "mobile": "Mobile:",
+      "email": "Email:",
+      "defaultContactMessage": "Using default contact information. Please contact your administrator if you need assistance."
+    },
+    "emailDialog": {
+      "title": "Email {name}",
+      "description": "Send an email to {email}",
+      "learnerFallback": "Learner",
+      "learnerEmailFallback": "the learner",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter email subject",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Enter your message here...",
+      "cancel": "Cancel",
+      "sending": "Sending...",
+      "sendButton": "Send Email",
+      "toast": {
+        "fillBoth": "Please fill in both subject and message",
+        "noEmail": "Learner email is not available",
+        "success": "Email sent successfully",
+        "failed": "Failed to send email"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "Progress Overview",
+      "courseFallback": "Course {index}",
+      "gateway": "Gateway",
+      "core": "Core",
+      "nextMilestoneReview": "Next milestone: Review",
+      "gatewayPrep": "Gateway prep",
+      "courseProgress": "Course progress",
+      "completed": "Completed",
+      "remaining": "Remaining",
+      "progressLabel": "Progress",
+      "completedUnits": "Completed units",
+      "totalUnits": "Total units"
+    },
+    "calendarDialog": {
+      "title": "Calendar",
+      "description": "View and manage your scheduled events and appointments"
+    },
+    "acknowledgementDialog": {
+      "title": "Acknowledgement Message",
+      "welcomeMessage": "Welcome {name} to YourLocker Platform",
+      "reviewDocument": "Please Review the Attached Document",
+      "cancel": "Cancel",
+      "processing": "Processing...",
+      "accept": "I Accept",
+      "toast": {
+        "success": "Acknowledgement accepted successfully",
+        "failed": "Failed to update acknowledgement status"
+      }
+    }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "Course information not found",
+      "notFoundDescription": "The requested course could not be found. Please go back and try again.",
+      "backToDashboard": "Back to Dashboard",
+      "subtitle": "Course information"
+    },
+    "supervisorCards": {
+      "title": "Learner Supervisors",
+      "unknown": "Unknown"
+    },
+    "courseInfo": {
+      "title": "Course Information",
+      "courseNameFallback": "Course Name",
+      "notAvailable": "N/A",
+      "courseCode": "Course Code:",
+      "level": "Level:",
+      "sector": "Sector:",
+      "qualificationDetails": "Qualification Details",
+      "qualificationType": "Qualification Type:",
+      "minAge": "Min. Age:",
+      "totalCredits": "Total Credits:",
+      "keyDatesHours": "Key Dates & Hours",
+      "startDate": "Start Date:",
+      "endDate": "End Date:",
+      "learningHours": "Learning Hours:",
+      "additionalInfo": "Additional Information",
+      "brandGuidelines": "Brand Guidelines:",
+      "status": "Status:",
+      "gradingType": "Grading Type:"
     }
   }
 }

@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import type { EvidenceEntry } from "@/store/api/evidence/types";
+import { useTranslations } from "next-intl";
 
 interface ActionMenuProps {
   evidence: EvidenceEntry;
@@ -36,6 +37,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
+  const t = useTranslations("evidenceLibrary");
 
   const handleView = () => {
     router.push(`/evidence-library/${evidence.assignment_id}`);
@@ -57,24 +59,24 @@ export const ActionMenu: FC<ActionMenuProps> = ({
           <>
             <DropdownMenuItem onClick={handleReuploadClick} className="cursor-pointer">
               <CloudUpload className="mr-2 h-4 w-4" />
-              Reupload
+              {t("actionMenu.reupload")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleView} className="cursor-pointer">
               <Eye className="mr-2 h-4 w-4" />
-              View/Edit
+              {t("actionMenu.viewEdit")}
             </DropdownMenuItem>
           </>
         )}
         {isEmployer && (
           <DropdownMenuItem onClick={handleView} className="cursor-pointer">
             <Eye className="mr-2 h-4 w-4" />
-            View
+            {t("actionMenu.view")}
           </DropdownMenuItem>
         )}
         {evidence.file && (
           <DropdownMenuItem onClick={onDownload} className="cursor-pointer">
             <Download className="mr-2 h-4 w-4" />
-            Download
+            {t("actionMenu.download")}
           </DropdownMenuItem>
         )}
         {!isEmployer && (
@@ -85,7 +87,7 @@ export const ActionMenu: FC<ActionMenuProps> = ({
               className="cursor-pointer text-destructive focus:text-destructive"
             >
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              {t("actionMenu.delete")}
             </DropdownMenuItem>
           </>
         )}

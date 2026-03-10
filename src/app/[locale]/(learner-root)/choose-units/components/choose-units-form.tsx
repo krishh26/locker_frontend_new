@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useAppSelector } from "@/store/hooks";
 import { ChooseUnitsDataTable } from "./choose-units-data-table";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   selectedUnitIds: z.array(z.string()),
@@ -26,6 +27,7 @@ export function ChooseUnitsForm() {
   const learner = useAppSelector((state) => state.auth.learner);
   // Get learner ID
   const learnerId = learner?.learner_id ? learner.learner_id : null;
+  const t = useTranslations("chooseUnits");
 
   // Fetch units from API
   const { data: unitsResponse, isLoading } = useGetUnitsByCourseQuery(selectedCourseId || 0, {
@@ -73,12 +75,12 @@ export function ChooseUnitsForm() {
     // Check if mandatory units are all included
     const missingMandatory = mandatoryUnitIds.filter((id: string) => !selectedIds.includes(id));
     if (missingMandatory.length > 0) {
-      return "All mandatory units must be selected";
+      return t("form.validation.allMandatoryRequired");
     }
 
     // Check optional units credit requirement
     if (optionalUnits.length > 0 && optionalCredits < 15) {
-      return "Optional units must total at least 15 credits";
+      return t("form.validation.optionalCreditsMinimum");
     }
 
     return null;
@@ -96,7 +98,7 @@ export function ChooseUnitsForm() {
 
     try {
       if (!learnerId || !selectedCourseId) {
-        toast.error("Learner ID or Course ID is missing");
+        toast.error(t("form.toast.missingIds"));
         return;
       }
 
@@ -106,12 +108,12 @@ export function ChooseUnitsForm() {
         unit_ids: data.selectedUnitIds,
       }).unwrap();
 
-      toast.success("Units saved successfully");
+      toast.success(t("form.toast.saveSuccess"));
     } catch (error) {
       toast.error(
         error && typeof error === "object" && "message" in error
           ? String(error.message)
-          : "Failed to save units"
+          : t("form.toast.saveError")
       );
     }
   };
@@ -135,7 +137,9 @@ export function ChooseUnitsForm() {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">Loading units...</p>
+          <p className="text-muted-foreground">
+            {t("form.status.loadingUnits")}
+          </p>
         </div>
       </div>
     );
@@ -145,7 +149,9 @@ export function ChooseUnitsForm() {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">No course selected. Please select a qualification course.</p>
+          <p className="text-muted-foreground">
+            {t("form.status.noCourseSelected")}
+          </p>
         </div>
       </div>
     );
@@ -155,7 +161,9 @@ export function ChooseUnitsForm() {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">Learner information not available.</p>
+          <p className="text-muted-foreground">
+            {t("form.status.noLearner")}
+          </p>
         </div>
       </div>
     );
@@ -165,7 +173,9 @@ export function ChooseUnitsForm() {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">No units found for this course.</p>
+          <p className="text-muted-foreground">
+            {t("form.status.noUnits")}
+          </p>
         </div>
       </div>
     );
@@ -179,41 +189,49 @@ export function ChooseUnitsForm() {
           mandatoryUnitIds={mandatoryUnitIds}
         />
 
-      {/* Sticky Summary Footer */}
-      <div className="border-t bg-background px-4 py-4 shadow-lg">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
-              <div className="text-sm">
-                <span className="font-medium">Total Units: </span>
-                <span className="text-muted-foreground">{totals.units}</span>
+        {/* Sticky Summary Footer */}
+        <div className="border-t bg-background px-4 py-4 shadow-lg">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:gap-6">
+                <div className="text-sm">
+                  <span className="font-medium">
+                    {t("form.summary.totalUnits")}
+                  </span>{" "}
+                  <span className="text-muted-foreground">{totals.units}</span>
+                </div>
+                <div className="text-sm">
+                  <span className="font-medium">
+                    {t("form.summary.totalCredits")}
+                  </span>{" "}
+                  <span className="text-muted-foreground">
+                    {totals.credits}
+                  </span>
+                </div>
+                <div className="text-sm">
+                  <span className="font-medium">
+                    {t("form.summary.totalGlh")}
+                  </span>{" "}
+                  <span className="text-muted-foreground">{totals.glh}</span>
+                </div>
               </div>
-              <div className="text-sm">
-                <span className="font-medium">Total Credits: </span>
-                <span className="text-muted-foreground">{totals.credits}</span>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                {validationError && (
+                  <p className="text-sm text-destructive sm:mr-4">
+                    {validationError}
+                  </p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={!!validationError || isSaving || isEmployer}
+                  className="cursor-pointer"
+                >
+                  {isSaving ? t("form.buttons.saving") : t("form.buttons.save")}
+                </Button>
               </div>
-              <div className="text-sm">
-                <span className="font-medium">Total GLH: </span>
-                <span className="text-muted-foreground">{totals.glh}</span>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              {validationError && (
-                <p className="text-sm text-destructive sm:mr-4">
-                  {validationError}
-                </p>
-              )}
-              <Button
-                type="submit"
-                disabled={!!validationError || isSaving || isEmployer}
-                className="cursor-pointer"
-              >
-                {isSaving ? "Saving..." : "Save Units"}
-              </Button>
             </div>
           </div>
         </div>
-      </div>
       </form>
     </FormProvider>
   );

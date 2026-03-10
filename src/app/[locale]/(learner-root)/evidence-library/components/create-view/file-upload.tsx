@@ -4,8 +4,9 @@ import { useCallback } from "react";
 import { Upload, X, FileText } from "lucide-react";
 import { Controller, Control, FieldError } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import type { EvidenceFormValues } from "./evidence-form-types";
 
 interface FileUploadProps {
@@ -21,12 +22,13 @@ export function FileUpload({
   disabled,
   error,
 }: FileUploadProps) {
+  const t = useTranslations("evidenceLibrary");
   const handleFileChange = useCallback(
     (file: File | null, onChange: (file: File | null) => void) => {
       if (file) {
         // Validate file size (max 10MB)
         if (file.size > 10 * 1024 * 1024) {
-          alert("File size must be less than 10MB");
+          toast.error(t("fileUpload.fileSizeError"));
           return;
         }
         onChange(file);
@@ -34,7 +36,7 @@ export function FileUpload({
         onChange(null);
       }
     },
-    []
+    [t]
   );
 
   return (
@@ -102,7 +104,7 @@ export function FileUpload({
             )}
           </div>
           {error && (
-            <p className="text-sm text-destructive">{error.message}</p>
+            <p className="text-sm text-destructive">{t(String(error.message))}</p>
           )}
         </div>
       )}

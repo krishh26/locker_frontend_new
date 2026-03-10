@@ -39,6 +39,7 @@ import { useGetCpdEntriesQuery } from "@/store/api/cpd/cpdApi";
 import { CpdEditableRow } from "./cpd-editable-row";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export type CpdTableHeader = {
   id: string;
@@ -83,37 +84,37 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
+  const t = useTranslations("cpd");
 
   const defaultHeaders: CpdTableHeader[] = useMemo(
     () => [
       {
         id: "activity",
-        label: "What training, learning or development activity have you done?",
+        label: t("table.headers.activity"),
         multiline: true,
       },
       {
         id: "date",
-        label: "Date you did this",
+        label: t("table.headers.date"),
         multiline: false,
       },
       {
         id: "method",
-        label: "How did you undertake this development activity?",
+        label: t("table.headers.method"),
         multiline: true,
       },
       {
         id: "learning",
-        label: "What did you learn from this?",
+        label: t("table.headers.learning"),
         multiline: true,
       },
       {
         id: "impact",
-        label:
-          "How has this learning made a difference to your work and improved the way you work?",
+        label: t("table.headers.impact"),
         multiline: true,
       },
     ],
-    []
+    [t]
   );
 
   useEffect(() => {
@@ -168,11 +169,11 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
   }, [userId, onAddRow]);
 
   const handleExportCsv = () => {
-    toast.info("CSV export functionality will be implemented");
+    toast.info(t("table.export.csvTodo"));
   };
 
   const handleExportPdf = () => {
-    toast.info("PDF export functionality will be implemented");
+    toast.info(t("table.export.pdfTodo"));
   };
 
   const columns: ColumnDef<CpdEntry>[] = useMemo(
@@ -187,11 +188,11 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
       })),
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: () => null, // Handled by CpdEditableRow
       },
     ],
-    [defaultHeaders]
+    [defaultHeaders, t]
   );
 
   const filteredData = useMemo(() => {
@@ -234,7 +235,9 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">Loading CPD entries...</p>
+          <p className="text-muted-foreground">
+            {t("table.status.loading")}
+          </p>
         </div>
       </div>
     );
@@ -248,7 +251,7 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search entries..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -260,22 +263,22 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                  {t("table.export.button")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                  {t("table.export.csv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                  {t("table.export.pdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           {!isEmployer && (
             <Button onClick={handleAddNewRow} className="cursor-pointer">
               <Plus className="mr-2 size-4" />
-              Add New Entry
+              {t("table.addNew")}
             </Button>
           )}
         </div>
@@ -319,7 +322,7 @@ export function CpdDataTable({ onAddRow }: CpdDataTableProps) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.status.noResults")}
                 </TableCell>
               </TableRow>
             )}

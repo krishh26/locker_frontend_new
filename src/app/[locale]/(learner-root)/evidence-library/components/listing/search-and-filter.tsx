@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { LearnerCourse } from "@/store/api/learner/types";
+import { useTranslations } from "next-intl";
 
 interface SearchAndFilterProps {
   searchQuery: string;
@@ -30,9 +31,10 @@ export const SearchAndFilter: FC<SearchAndFilterProps> = ({
   onCourseFilterChange,
   courses,
 }) => {
+  const t = useTranslations("evidenceLibrary");
   // Transform courses to options
   const courseOptions = [
-    { value: "all", label: "All Courses" },
+    { value: "all", label: t("filters.allCourses") },
     ...courses
       .map((courseItem) => {
         const course = courseItem.course || courseItem;
@@ -56,7 +58,7 @@ export const SearchAndFilter: FC<SearchAndFilterProps> = ({
       <div className="relative flex-1 max-w-sm">
         <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search by title..."
+          placeholder={t("filters.searchPlaceholder")}
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           className="pl-9"
@@ -80,7 +82,7 @@ export const SearchAndFilter: FC<SearchAndFilterProps> = ({
       >
         <SelectTrigger className="w-[250px]">
           <School className="mr-2 h-4 w-4" />
-          <SelectValue placeholder="Filter by course" />
+          <SelectValue placeholder={t("filters.coursePlaceholder")} />
         </SelectTrigger>
         <SelectContent>
           {courseOptions.map((option) => (

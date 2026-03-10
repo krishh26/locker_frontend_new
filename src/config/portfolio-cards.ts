@@ -4,20 +4,21 @@ import type { MetricCard } from "@/components/dashboard/metric-cards"
 export type PortfolioCard = MetricCard
 
 /**
- * All portfolio cards used across the application
+ * All portfolio cards used across the application.
+ * nameKey is the i18n key under "portfolioCards" namespace.
  */
 export const portfolioCards: PortfolioCard[] = [
-  { id: 1, name: "Evidence Library", color: "#FCA14E", route: "/evidence-library" },
-  { id: 2, name: "Unit Progress", color: "#8F78F4", route: "/module-unit-progress" },
-  { id: 3, name: "Gap Analysis", color: "#F44771", route: "/gap-analysis" },
-  { id: 4, name: "Actions and Activities", color: "#009FB7", route: "/resources" },
-  { id: 5, name: "Health and Wellbeing", color: "#E95ACB", route: "/health-wellbeing" },
-  { id: 6, name: "Choose Units", color: "#489E20", route: "/choose-units" },
-  { id: 7, name: "Learning Plan", color: "#1E72AE", route: "/learning-plan" },
-  { id: 8, name: "Resources", color: "#A847F4", route: "/course-resources" },
-  { id: 9, name: "Time Log", color: "#B7B000", route: "/time-log" },
-  { id: 10, name: "Supplementary Training", color: "#4564D0", route: "/supplementary-training" },
-  { id: 11, name: "New Doc to Sign", color: "#007E84", route: "/learners-documents-to-sign" },
+  { id: 1, nameKey: "evidenceLibrary", color: "#FCA14E", route: "/evidence-library" },
+  { id: 2, nameKey: "unitProgress", color: "#8F78F4", route: "/module-unit-progress" },
+  { id: 3, nameKey: "gapAnalysis", color: "#F44771", route: "/gap-analysis" },
+  { id: 4, nameKey: "actionsAndActivities", color: "#009FB7", route: "/resources" },
+  { id: 5, nameKey: "healthAndWellbeing", color: "#E95ACB", route: "/health-wellbeing" },
+  { id: 6, nameKey: "chooseUnits", color: "#489E20", route: "/choose-units" },
+  { id: 7, nameKey: "learningPlan", color: "#1E72AE", route: "/learning-plan" },
+  { id: 8, nameKey: "resources", color: "#A847F4", route: "/course-resources" },
+  { id: 9, nameKey: "timeLog", color: "#B7B000", route: "/time-log" },
+  { id: 10, nameKey: "supplementaryTraining", color: "#4564D0", route: "/supplementary-training" },
+  { id: 11, nameKey: "newDocToSign", color: "#007E84", route: "/learners-documents-to-sign" },
 ]
 
 /**

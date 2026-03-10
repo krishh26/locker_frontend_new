@@ -26,13 +26,14 @@ import {
 } from "@/store/api/cpd/cpdApi";
 import { toast } from "sonner";
 import type { CpdTableHeader } from "./cpd-data-table";
+import { useTranslations } from "next-intl";
 
 const cpdEntrySchema = z.object({
-  activity: z.string().min(1, "Activity is required"),
-  date: z.string().min(1, "Date is required"),
-  method: z.string().min(1, "Method is required"),
-  learning: z.string().min(1, "Learning is required"),
-  impact: z.string().min(1, "Impact is required"),
+  activity: z.string().min(1, "cpd.validation.activityRequired"),
+  date: z.string().min(1, "cpd.validation.dateRequired"),
+  method: z.string().min(1, "cpd.validation.methodRequired"),
+  learning: z.string().min(1, "cpd.validation.learningRequired"),
+  impact: z.string().min(1, "cpd.validation.impactRequired"),
 });
 
 type CpdEntryFormValues = z.infer<typeof cpdEntrySchema>;
@@ -58,6 +59,7 @@ export function CpdEditableRow({
   const [createEntry] = useCreateCpdEntryMutation();
   const [updateEntry] = useUpdateCpdEntryMutation();
   const [deleteEntry] = useDeleteCpdEntryMutation();
+  const t = useTranslations("cpd");
 
   const form = useForm<CpdEntryFormValues>({
     resolver: zodResolver(cpdEntrySchema),
@@ -124,14 +126,14 @@ export function CpdEditableRow({
           ...row,
           ...values,
         });
-        toast.success("CPD entry updated successfully");
+        toast.success(t("toast.updateSuccess"));
         form.reset(values);
       }
     } catch (error) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error.data as { message?: string })?.message
-          : "Failed to save CPD entry";
+          : t("toast.saveFailed");
       toast.error(errorMessage);
     } finally {
       setIsSaving(false);
@@ -147,12 +149,12 @@ export function CpdEditableRow({
     try {
       await deleteEntry(rowId).unwrap();
       onDelete(rowId);
-      toast.success("CPD entry deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
     } catch (error) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error.data as { message?: string })?.message
-          : "Failed to delete CPD entry";
+          : t("toast.deleteFailed");
       toast.error(errorMessage);
     }
   };
@@ -195,7 +197,7 @@ export function CpdEditableRow({
                           {field.value ? (
                             format(new Date(field.value), "PPP")
                           ) : (
-                            <span>Pick a date *</span>
+                            <span>{t("placeholders.pickDate")}</span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -211,14 +213,18 @@ export function CpdEditableRow({
                   )}
                 />
                 {error && (
-                  <p className="text-destructive text-xs">{error.message}</p>
+                  <p className="text-destructive text-xs">
+                    {t(error.message as string)}
+                  </p>
                 )}
               </div>
             ) : header.multiline ? (
               <div className="space-y-1">
                 <Textarea
                   {...form.register(fieldName)}
-                  placeholder={`Enter ${header.label.toLowerCase()} *`}
+                  placeholder={t("placeholders.field", {
+                    field: header.label.toLowerCase(),
+                  })}
                   disabled={isSaving || isEmployer}
                   className={cn(
                     "min-h-[80px] resize-none",
@@ -226,19 +232,25 @@ export function CpdEditableRow({
                   )}
                 />
                 {error && (
-                  <p className="text-destructive text-xs">{error.message}</p>
+                  <p className="text-destructive text-xs">
+                    {t(error.message as string)}
+                  </p>
                 )}
               </div>
             ) : (
               <div className="space-y-1">
                 <Input
                   {...form.register(fieldName)}
-                  placeholder={`Enter ${header.label.toLowerCase()} *`}
+                  placeholder={t("placeholders.field", {
+                    field: header.label.toLowerCase(),
+                  })}
                   disabled={isSaving || isEmployer}
                   className={error ? "border-destructive" : ""}
                 />
                 {error && (
-                  <p className="text-destructive text-xs">{error.message}</p>
+                  <p className="text-destructive text-xs">
+                    {t(error.message as string)}
+                  </p>
                 )}
               </div>
             )}

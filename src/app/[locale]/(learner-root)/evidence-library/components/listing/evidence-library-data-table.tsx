@@ -65,6 +65,7 @@ import {
   truncateText,
 } from "../../utils/evidence-helpers";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { useTranslations } from "next-intl";
 
 // Selection state reducer
 type SelectionState = {
@@ -147,6 +148,7 @@ export function EvidenceLibraryDataTable() {
   const [reuploadDialogOpen, setReuploadDialogOpen] = useState(false);
   const [reuploadEvidence, setReuploadEvidence] = useState<EvidenceEntry | null>(null);
   const [reuploadFile, setReuploadFile] = useState<File | null>(null);
+  const t = useTranslations("evidenceLibrary");
 
   // Selection state
   const [selectionState, dispatchSelection] = useReducer(selectionReducer, {
@@ -234,23 +236,24 @@ export function EvidenceLibraryDataTable() {
 
     try {
       await deleteEvidence(selectedEvidence.assignment_id).unwrap();
-      toast.success("Evidence deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setSelectedEvidence(null);
       refetch();
     } catch {
-      toast.error("Failed to delete evidence. Please try again.");
+      toast.error(t("toast.deleteFailed"));
     }
-  }, [selectedEvidence, deleteEvidence, refetch]);
+  }, [selectedEvidence, deleteEvidence, refetch, t]);
 
   // Handle download
   const handleDownload = useCallback((evidence: EvidenceEntry) => {
     if (!evidence.file?.url) {
-      toast.warning("No file available for download");
+      toast.warning(t("toast.noFileForDownload"));
       return;
     }
 
-    const fileName = evidence.file.name || `evidence_${evidence.assignment_id}.pdf`;
+    const fileName =
+      evidence.file.name || `evidence_${evidence.assignment_id}.pdf`;
     const link = document.createElement("a");
     link.href = evidence.file.url;
     link.download = fileName;
@@ -258,14 +261,8 @@ export function EvidenceLibraryDataTable() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success(`Downloading ${fileName}`);
-  }, []);
-
-  // Handle view/edit
-  const handleView = useCallback((evidence: EvidenceEntry) => {
-    // Navigate to evidence detail/edit page
-    router.push(`/evidence-library/create?id=${evidence.assignment_id}`);
-  }, [router]);
+    toast.success(t("toast.downloadingFile", { fileName }));
+  }, [t]);
 
   // Handle reupload
   const handleReuploadClick = useCallback((evidence: EvidenceEntry) => {
@@ -276,7 +273,7 @@ export function EvidenceLibraryDataTable() {
 
   const handleReuploadSubmit = useCallback(async () => {
     if (!reuploadEvidence || !reuploadFile) {
-      toast.error("Please select a file to upload");
+      toast.error(t("toast.reuploadMissingFile"));
       return;
     }
 
@@ -285,16 +282,20 @@ export function EvidenceLibraryDataTable() {
         id: reuploadEvidence.assignment_id,
         data: { file: reuploadFile },
       }).unwrap();
-      toast.success("Evidence file replaced successfully");
+      toast.success(t("toast.reuploadSuccess"));
       setReuploadDialogOpen(false);
       setReuploadEvidence(null);
       setReuploadFile(null);
       refetch();
     } catch (error) {
       const err = error as { data?: { error?: string; message?: string } };
-      toast.error(err?.data?.error || err?.data?.message || "Failed to reupload evidence");
+      toast.error(
+        err?.data?.error ||
+          err?.data?.message ||
+          t("toast.reuploadFailed")
+      );
     }
-  }, [reuploadEvidence, reuploadFile, reuploadEvidenceMutation, refetch]);
+  }, [reuploadEvidence, reuploadFile, reuploadEvidenceMutation, refetch, t]);
 
 
   // Handle download all
@@ -332,7 +333,7 @@ export function EvidenceLibraryDataTable() {
     const baseColumns: ColumnDef<EvidenceEntry>[] = [
       {
         accessorKey: "title",
-        header: "Title",
+        header: t("table.columns.title"),
         cell: ({ row }) => {
           const title = row.original.title;
           return (
@@ -344,7 +345,7 @@ export function EvidenceLibraryDataTable() {
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.columns.description"),
         cell: ({ row }) => {
           const description = row.original.description;
           return (
@@ -358,7 +359,7 @@ export function EvidenceLibraryDataTable() {
       },
       {
         accessorKey: "file",
-        header: "Files",
+        header: t("table.columns.files"),
         cell: ({ row }) => {
           const file = row.original.file;
           if (!file) {
@@ -380,7 +381,7 @@ export function EvidenceLibraryDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const status = row.original.status;
           const color = getStatusColor(status);
@@ -403,7 +404,7 @@ export function EvidenceLibraryDataTable() {
       },
       {
         accessorKey: "created_at",
-        header: "Created Date",
+        header: t("table.columns.createdDate"),
         cell: ({ row }) => {
           return (
             <span className="text-sm">{formatDate(row.original.created_at)}</span>
@@ -412,7 +413,7 @@ export function EvidenceLibraryDataTable() {
       },
       {
         id: "view_details",
-        header: "View",
+        header: t("table.columns.view"),
         cell: ({ row }) => {
           const evidenceId = row.original.assignment_id;
           const selectedUnits = learnerSelectedUnits.get(evidenceId);
@@ -822,7 +823,7 @@ export function EvidenceLibraryDataTable() {
     // Add actions column
     baseColumns.push({
       id: "actions",
-      header: "Actions",
+      header: t("table.columns.actions"),
       cell: ({ row }) => {
         const evidence = row.original;
         return (
@@ -840,7 +841,7 @@ export function EvidenceLibraryDataTable() {
     });
 
     return baseColumns;
-  }, [selectedCourseFilter, selectedCourseDetails, learnerSelectedUnits, router, courses, isLearner, handleReuploadClick, handleDownload]);
+  }, [selectedCourseFilter, selectedCourseDetails, learnerSelectedUnits, router, courses, isLearner, handleReuploadClick, handleDownload, t]);
 
   const table = useReactTable({
     data: tableData,
@@ -905,7 +906,9 @@ export function EvidenceLibraryDataTable() {
     return (
       <div className="w-full space-y-4">
         <div className="flex items-center justify-center py-12">
-          <p className="text-muted-foreground">Loading evidence library...</p>
+          <p className="text-muted-foreground">
+            {t("table.status.loading")}
+          </p>
         </div>
       </div>
     );
@@ -931,7 +934,7 @@ export function EvidenceLibraryDataTable() {
             className="cursor-pointer"
           >
             <Download className="mr-2 size-4" />
-            Download Evidence Files
+            {t("toolbar.downloadAll")}
           </Button>
           {!isEmployer && (
             <Button
@@ -939,7 +942,7 @@ export function EvidenceLibraryDataTable() {
               className="cursor-pointer"
             >
               <Plus className="mr-2 size-4" />
-              Add Evidence
+              {t("toolbar.addEvidence")}
             </Button>
           )}
         </div>
@@ -986,7 +989,7 @@ export function EvidenceLibraryDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No evidence found.
+                  {t("table.status.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -997,12 +1000,16 @@ export function EvidenceLibraryDataTable() {
       {/* Pagination */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          Showing {table.getRowModel().rows.length} of{" "}
-          {data?.meta_data?.items || 0} entries
+          {t("table.pagination.summary", {
+            current: table.getRowModel().rows.length,
+            total: data?.meta_data?.items || 0,
+          })}
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-6 lg:space-x-8">
           <div className="flex items-center space-x-2">
-            <p className="text-sm font-medium">Page</p>
+            <p className="text-sm font-medium">
+              {t("table.pagination.labelPage")}
+            </p>
             <strong className="text-sm">
               {table.getState().pagination.pageIndex + 1} of{" "}
               {table.getPageCount() || 1}
@@ -1021,7 +1028,7 @@ export function EvidenceLibraryDataTable() {
               disabled={!table.getCanPreviousPage()}
               className="cursor-pointer"
             >
-              Previous
+              {t("table.pagination.previous")}
             </Button>
             <Button
               variant="outline"
@@ -1035,7 +1042,7 @@ export function EvidenceLibraryDataTable() {
               disabled={!table.getCanNextPage()}
               className="cursor-pointer"
             >
-              Next
+              {t("table.pagination.next")}
             </Button>
           </div>
         </div>
@@ -1046,20 +1053,19 @@ export function EvidenceLibraryDataTable() {
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Evidence?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Deleting this evidence will also remove all associated data and
-              relationships. This action cannot be undone. Proceed with deletion?
+              {t("deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("deleteDialog.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleteLoading}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleteLoading ? "Deleting..." : "Delete Evidence"}
+              {isDeleteLoading ? t("deleteDialog.deleting") : t("deleteDialog.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -1103,9 +1109,9 @@ export function EvidenceLibraryDataTable() {
       <AlertDialog open={reuploadDialogOpen} onOpenChange={setReuploadDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Reupload Evidence</AlertDialogTitle>
+            <AlertDialogTitle>{t("reuploadDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Select a new file to replace the existing evidence file for &quot;{reuploadEvidence?.title}&quot;.
+              {t("reuploadDialog.description", { title: reuploadEvidence?.title ?? "" })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-4">
@@ -1117,7 +1123,7 @@ export function EvidenceLibraryDataTable() {
             />
             {reuploadFile && (
               <p className="mt-2 text-sm text-muted-foreground">
-                Selected: {reuploadFile.name}
+                {t("reuploadDialog.selectedFile", { fileName: reuploadFile.name })}
               </p>
             )}
           </div>
@@ -1129,13 +1135,13 @@ export function EvidenceLibraryDataTable() {
                 setReuploadFile(null);
               }}
             >
-              Cancel
+              {t("reuploadDialog.buttons.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleReuploadSubmit}
               disabled={!reuploadFile || isReuploadLoading}
             >
-              {isReuploadLoading ? "Uploading..." : "Upload"}
+              {isReuploadLoading ? t("reuploadDialog.buttons.uploading") : t("reuploadDialog.buttons.upload")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

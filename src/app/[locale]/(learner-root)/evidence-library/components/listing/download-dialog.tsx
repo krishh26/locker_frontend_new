@@ -24,6 +24,7 @@ import {
   createZipFile,
   sanitizeFileName,
 } from "../../utils/download-helpers";
+import { useTranslations } from "next-intl";
 
 interface DownloadDialogProps {
   open: boolean;
@@ -55,6 +56,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
   selectedCourseName,
 }) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const t = useTranslations("evidenceLibrary");
   // Transform courses to options (filter out Gateway courses)
   const courseOptions = useMemo(() => {
     return courses
@@ -80,7 +82,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
   // Handle download with ZIP creation
   const handleDownload = async () => {
     if (selectedFiles.size === 0) {
-      toast.warning("Please select at least one file to download");
+      toast.warning(t("toast.downloadSelectOne"));
       return;
     }
 
@@ -94,7 +96,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
       );
 
       if (evidenceWithFiles.length === 0) {
-        toast.warning("No files found for selected files");
+        toast.warning(t("toast.downloadNoFilesForSelection"));
         setIsDownloading(false);
         return;
       }
@@ -192,15 +194,15 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
       // Show warning for failed downloads
       if (failedFiles.length > 0) {
         toast.warning(
-          `${failedFiles.length} files opened in new tabs due to CORS restrictions`
+          t("toast.downloadCorsOpenedInTabs", {
+            count: failedFiles.length,
+          })
         );
       }
 
       // Only create ZIP if we have successful downloads
       if (successfulFiles.length === 0) {
-        toast.info(
-          "All files opened in new tabs. ZIP download not available due to CORS restrictions."
-        );
+        toast.info(t("toast.downloadAllInTabs"));
         setIsDownloading(false);
         return;
       }
@@ -208,7 +210,10 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
       // If we have both successful and failed files, show a warning
       if (failedFiles.length > 0 && successfulFiles.length > 0) {
         toast.warning(
-          `Downloaded ${successfulFiles.length} files as ZIP. ${failedFiles.length} files opened in new tabs due to CORS restrictions.`
+          t("toast.downloadMixed", {
+            zipCount: successfulFiles.length,
+            tabCount: failedFiles.length,
+          })
         );
       }
 
@@ -270,14 +275,16 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
       }, 100);
 
       toast.success(
-        `Successfully downloaded ${files.length} selected evidence files`
+        t("toast.downloadSuccess", {
+          count: files.length,
+        })
       );
       
       // Close dialog after successful download
       onClose();
     } catch (error) {
       console.error("Error downloading files:", error);
-      toast.error("Failed to download evidence files. Please try again.");
+      toast.error(t("toast.downloadFailed"));
     } finally {
       setIsDownloading(false);
     }
@@ -289,10 +296,10 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
         <DialogHeader className="px-6 py-4 border-b">
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-6 w-6 text-primary" />
-            Download Evidence Files
+            {t("downloadDialog.title")}
           </DialogTitle>
           <DialogDescription>
-            Select a course to view and download its evidence files
+            {t("downloadDialog.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -300,7 +307,9 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
           {/* Left Side - Course List */}
           <div className="w-1/3 border-r flex flex-col">
             <div className="p-4 border-b">
-              <Label className="text-sm font-semibold">Select Course</Label>
+              <Label className="text-sm font-semibold">
+                {t("downloadDialog.selectCourseLabel")}
+              </Label>
             </div>
             <ScrollArea className="flex-1">
               <div className="p-2">
@@ -338,13 +347,15 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                     htmlFor="select-all"
                     className="text-sm font-semibold cursor-pointer"
                   >
-                    Select All Files
+                    {t("downloadDialog.selectAllFiles")}
                   </Label>
                 </div>
                 <ScrollArea className="flex-1">
                   {isLoadingEvidence ? (
                     <div className="flex items-center justify-center h-full">
-                      <p className="text-muted-foreground">Loading evidence...</p>
+                      <p className="text-muted-foreground">
+                        {t("downloadDialog.loadingEvidence")}
+                      </p>
                     </div>
                   ) : evidenceFiles.length > 0 ? (
                     <div className="p-2">
@@ -372,13 +383,15 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                               </div>
                               <div className="flex items-center gap-2 mt-1">
                                 <span className="text-xs text-muted-foreground">
-                                  {evidence.file?.name || "No file name"}
+                                  {evidence.file?.name ||
+                                    t("downloadDialog.file.noFileName")}
                                 </span>
                                 <Badge
                                   variant="outline"
                                   className="text-xs"
                                 >
-                                  {evidence.status || "Unknown"}
+                                  {evidence.status ||
+                                    t("downloadDialog.file.unknownStatus")}
                                 </Badge>
                               </div>
                             </div>
@@ -390,7 +403,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                     <div className="flex flex-col items-center justify-center h-full p-8">
                       <School className="h-16 w-16 text-muted-foreground mb-4" />
                       <p className="text-muted-foreground">
-                        No evidence files found for this course
+                        {t("downloadDialog.noEvidenceForCourse")}
                       </p>
                     </div>
                   )}
@@ -400,9 +413,11 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center p-8">
                   <School className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Select a Course</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {t("downloadDialog.noCourseSelectedTitle")}
+                  </h3>
                   <p className="text-muted-foreground">
-                    Choose a course from the list to view its evidence files
+                    {t("downloadDialog.noCourseSelectedDescription")}
                   </p>
                 </div>
               </div>
@@ -412,7 +427,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
 
         <DialogFooter className="px-6 py-4 border-t">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {t("downloadDialog.button.cancel")}
           </Button>
           <Button
             onClick={handleDownload}
@@ -421,13 +436,15 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
             {isDownloading || externalIsDownloading ? (
               <>
                 <Archive className="mr-2 h-4 w-4" />
-                Downloading...
+                {t("downloadDialog.button.downloading")}
               </>
             ) : (
               <>
                 <Download className="mr-2 h-4 w-4" />
-                Download ({selectedFiles.size} file
-                {selectedFiles.size !== 1 ? "s" : ""})
+                {t("downloadDialog.button.download", {
+                  count: selectedFiles.size,
+                  suffix: selectedFiles.size !== 1 ? "s" : "",
+                })}
               </>
             )}
           </Button>

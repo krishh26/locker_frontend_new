@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "@/i18n/navigation"
+import { useTranslations } from "next-intl"
 import { useAppDispatch } from "@/store/hooks"
 import { setCurrentCourseId } from "@/store/slices/courseSlice"
 import {
@@ -133,17 +134,19 @@ function CourseProgressDonut({
   completion,
   isGateway,
   colorIndex = 0,
+  labels,
 }: {
   completion: number
   isGateway: boolean
   colorIndex?: number
+  labels: { completed: string; remaining: string; gatewayPrep: string; courseProgress: string }
 }) {
   const safeCompletion = Math.min(Math.max(completion, 0), 100)
   const colors = getDonutColors(colorIndex)
   const data = [
-    { name: "Completed", value: safeCompletion, color: colors.completed },
+    { name: labels.completed, value: safeCompletion, color: colors.completed },
     {
-      name: "Remaining",
+      name: labels.remaining,
       value: Math.max(0, 100 - safeCompletion),
       color: colors.remaining,
     },
@@ -190,7 +193,7 @@ function CourseProgressDonut({
             isGateway ? "text-foreground" : "text-muted-foreground"
           )}
         >
-          {isGateway ? "Gateway prep" : "Course progress"}
+          {isGateway ? labels.gatewayPrep : labels.courseProgress}
         </span>
       </div>
     </div>
@@ -200,9 +203,17 @@ function CourseProgressDonut({
 export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const t = useTranslations("learnerDashboard.courseProgressCharts")
 
   if (!courses || courses.length === 0) {
     return null
+  }
+
+  const donutLabels = {
+    completed: t("completed"),
+    remaining: t("remaining"),
+    gatewayPrep: t("gatewayPrep"),
+    courseProgress: t("courseProgress"),
   }
 
   return (
@@ -211,13 +222,12 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         <div className="rounded-lg p-1.5 bg-primary">
           <TrendingUp className="h-5 w-5 text-white" />
         </div>
-        <h2 className="text-xl font-semibold">Progress Overview</h2>
+        <h2 className="text-xl font-semibold">{t("progressOverview")}</h2>
       </div>
       <div className="grid gap-4 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-1 ">
         {courses.map((course, index) => {
-          console.log("🚀 ~ CourseProgressCharts ~ course:", course)
           const progressData = convertToProgressData(course)
-          const courseName = course?.course?.course_name || `Course ${index + 1}`
+          const courseName = course?.course?.course_name || t("courseFallback", { index: index + 1 })
           const colorIdx = index % cardBgColors.length
 
           return (
@@ -241,14 +251,14 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
               >
                 <Flag className="size-3" />
                 {progressData.isGateway
-                  ? "Gateway"
-                  : "Core"}
+                  ? t("gateway")
+                  : t("core")}
               </Badge>
               <CardHeader className="space-y-1 pr-24">
                 <CardTitle className="text-base font-semibold text-foreground line-clamp-2" title={courseName}>{courseName}</CardTitle>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <CalendarDays className="size-4" />
-                  <span>Next milestone: Review</span>
+                  <span>{t("nextMilestoneReview")}</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -256,10 +266,11 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                   completion={progressData.completion}
                   isGateway={progressData.isGateway}
                   colorIndex={colorIdx}
+                  labels={donutLabels}
                 />
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Progress</span>
+                    <span className="text-muted-foreground">{t("progressLabel")}</span>
                     <span className="font-semibold text-foreground">
                       {progressData.completion.toFixed(0)}%
                     </span>
@@ -271,13 +282,13 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                   statsBgColors[colorIdx]
                 )}>
                   <div>
-                    <p className="text-muted-foreground">Completed units</p>
+                    <p className="text-muted-foreground">{t("completedUnits")}</p>
                     <p className="font-semibold text-foreground">
                       {progressData.completedUnits}/{progressData.totalUnits}
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground">Total units</p>
+                    <p className="text-muted-foreground">{t("totalUnits")}</p>
                     <p className="font-semibold text-foreground">
                       {progressData.totalUnits}
                     </p>

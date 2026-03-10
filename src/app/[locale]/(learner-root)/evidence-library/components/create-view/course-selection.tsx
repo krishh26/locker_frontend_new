@@ -16,9 +16,16 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
 import type { LearnerCourse } from "@/store/api/learner/types";
 import { COURSE_TYPES } from "../constants";
+
+const UNIT_TYPE_KEYS = {
+  Knowledge: "knowledge",
+  Behaviour: "behaviour",
+  Skills: "skills",
+} as const;
 
 const UNIT_TYPES = {
   KNOWLEDGE: "Knowledge",
@@ -47,6 +54,7 @@ export function CourseSelection({
   setValue,
   getValues,
 }: CourseSelectionProps) {
+  const t = useTranslations("evidenceLibrary");
   const selectedCourses = useWatch({ control, name: "selectedCourses" });
   const courseSelectedTypes = useWatch({ control, name: "courseSelectedTypes" }) || {};
   const units = useWatch({ control, name: "units" }) || [];
@@ -279,7 +287,7 @@ export function CourseSelection({
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>
-              Select Courses <span className="text-destructive">*</span>
+              {t("courseSelection.selectCourses")} <span className="text-destructive">*</span>
             </Label>
             <div className="space-y-3">
               {/* Selected Courses Display */}
@@ -312,7 +320,7 @@ export function CourseSelection({
               {!disabled && (
                 <Select value="" onValueChange={handleCourseAdd}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a course to add" />
+                    <SelectValue placeholder={t("courseSelection.selectCourseToAdd")} />
                   </SelectTrigger>
                   <SelectContent>
                     {courseOptions
@@ -336,7 +344,7 @@ export function CourseSelection({
               )}
 
               {error && (
-                <p className="text-sm text-destructive">{error.message}</p>
+                <p className="text-sm text-destructive">{t(String(error.message))}</p>
               )}
             </div>
           </div>
@@ -351,7 +359,7 @@ export function CourseSelection({
                return (
                  <Card key={course.course_id} className={`p-4 ${hasError ? 'border-destructive border-2' : ''}`}>
                    <Label className="text-base font-semibold mb-3 block">
-                     {course.course_name} - Select Type:
+                     {t("courseSelection.selectTypeFor", { courseName: course.course_name })}
                      <span className="text-destructive ml-1">*</span>
                    </Label>
                    <div className={`flex flex-wrap gap-4 ${hasError ? 'mb-2' : ''}`}>
@@ -368,7 +376,7 @@ export function CourseSelection({
                              disabled={disabled}
                            />
                            <Label htmlFor={`${course.course_id}-${type}`} className="cursor-pointer">
-                             {type}
+                             {t(`courseSelection.${UNIT_TYPE_KEYS[type as keyof typeof UNIT_TYPE_KEYS]}`)}
                            </Label>
                          </div>
                        );
@@ -377,7 +385,7 @@ export function CourseSelection({
                    {hasError && (
                      <div className="mt-2">
                        <p className="text-sm text-destructive font-medium">
-                         {courseSelectedTypesError?.message || `Please select at least one type (Knowledge, Behaviour, or Skills) for ${course.course_name}`}
+                         {courseSelectedTypesError?.message && t(String(courseSelectedTypesError.message))}
                        </p>
                      </div>
                    )}
@@ -396,7 +404,7 @@ export function CourseSelection({
               return (
                 <Card key={course.course_id} className="p-4">
                   <Label className="text-base font-semibold mb-3 block">
-                    {course.course_name} - Select Units:
+                    {t("courseSelection.selectUnitsFor", { courseName: course.course_name })}
                     <span className="text-destructive ml-1">*</span>
                   </Label>
                   <div className="space-y-2">
@@ -426,7 +434,7 @@ export function CourseSelection({
                   </div>
                   {unitsError && !hasSelectedUnits && (
                     <p className="text-sm text-destructive mt-2">
-                      Please select at least one unit for {course.course_name}
+                      {t("courseSelection.selectOneUnitError", { courseName: course.course_name })}
                     </p>
                   )}
                 </Card>

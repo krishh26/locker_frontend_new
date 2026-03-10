@@ -2262,6 +2262,100 @@
       "updateFailed": "संसाधन अपडेट करने में विफल"
     }
   },
+  "courseResources": {
+    "pageTitle": "कोर्स संसाधन",
+    "pageSubtitle": "कोर्स के लर्निंग संसाधनों तक पहुँचें और उन्हें प्रबंधित करें",
+    "filters": {
+      "courseLabel": "कोर्स:",
+      "coursePlaceholder": "कोर्स चुनें",
+      "searchPlaceholder": "नाम या विवरण द्वारा खोजें",
+      "jobTypeLabel": "जॉब प्रकार: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "नाम",
+        "description": "विवरण",
+        "hours": "घंटे",
+        "minutes": "मिनट",
+        "jobType": "जॉब प्रकार",
+        "access": "पहुँच",
+        "accessStatus": "पहुँच स्थिति",
+        "actions": "क्रिया"
+      },
+      "accessStatus": {
+        "opened": "खोला गया",
+        "notOpened": "नहीं खोला गया"
+      },
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "noData": "एक्सपोर्ट करने के लिए कोई डेटा नहीं है",
+        "csvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+        "pdfTitle": "कोर्स संसाधन",
+        "pdfSuccess": "PDF सफलतापूर्वक एक्सपोर्ट हुआ"
+      },
+      "status": {
+        "loading": "संसाधन लोड हो रहे हैं...",
+        "noResourcesForCourse": "इस कोर्स के लिए कोई संसाधन नहीं मिले।",
+        "selectCourse": "संसाधन देखने के लिए कृपया कोई कोर्स चुनें।",
+        "noResults": "कोई परिणाम नहीं।"
+      }
+    }
+  },
+  "cpd": {
+    "pageTitle": "निरंतर व्यावसायिक विकास",
+    "pageSubtitle": "लर्निंग लॉग और विकास ट्रैकर",
+    "learnerInfo": {
+      "learnerName": "लर्नर का नाम",
+      "jobTitle": "कार्य पद",
+      "employer": "नियोक्ता",
+      "notSpecified": "निर्दिष्ट नहीं"
+    },
+    "table": {
+      "headers": {
+        "activity": "आपने कौन‑सी प्रशिक्षण, सीखने या विकास गतिविधि की है?",
+        "date": "आपने यह कब किया",
+        "method": "आपने यह विकास गतिविधि कैसे की?",
+        "learning": "आपने इससे क्या सीखा?",
+        "impact": "इस सीखने से आपके काम में क्या बदलाव आया और काम करने का तरीका कैसे बेहतर हुआ?"
+      },
+      "columns": {
+        "actions": "क्रियाएँ"
+      },
+      "searchPlaceholder": "एंट्री खोजें...",
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "csvTodo": "CSV एक्सपोर्ट सुविधा शीघ्र उपलब्ध होगी",
+        "pdfTodo": "PDF एक्सपोर्ट सुविधा शीघ्र उपलब्ध होगी"
+      },
+      "status": {
+        "loading": "CPD एंट्री लोड हो रही हैं...",
+        "noResults": "कोई परिणाम नहीं।"
+      },
+      "addNew": "नई एंट्री जोड़ें"
+    },
+    "validation": {
+      "activityRequired": "गतिविधि आवश्यक है",
+      "dateRequired": "तारीख आवश्यक है",
+      "methodRequired": "विधि आवश्यक है",
+      "learningRequired": "सीख आवश्यक है",
+      "impactRequired": "प्रभाव आवश्यक है"
+    },
+    "placeholders": {
+      "pickDate": "तारीख चुनें *",
+      "field": "{field} दर्ज करें *"
+    },
+    "toast": {
+      "saveFailed": "CPD एंट्री सेव नहीं हो सकी",
+      "updateSuccess": "CPD एंट्री सफलतापूर्वक अपडेट हुई",
+      "deleteSuccess": "CPD एंट्री सफलतापूर्वक डिलीट हुई",
+      "deleteFailed": "CPD एंट्री डिलीट नहीं हो सकी"
+    }
+  },
   "support": {
     "pageTitle": "सहायता",
     "pageSubtitle": "सहायता अनुरोध जमा करें और प्रबंधित करें",
@@ -3515,6 +3609,464 @@
       "createFailed": "केंद्र बनाने में विफल",
       "updateSuccess": "केंद्र सफलतापूर्वक अपडेट किया गया",
       "updateFailed": "केंद्र अपडेट करने में विफल"
+    }
+  },
+  "portfolioCards": {
+    "evidenceLibrary": "साक्ष्य लाइब्रेरी",
+    "unitProgress": "यूनिट प्रगति",
+    "gapAnalysis": "गैप विश्लेषण",
+    "actionsAndActivities": "कार्रवाई और गतिविधियाँ",
+    "healthAndWellbeing": "स्वास्थ्य और कल्याण",
+    "chooseUnits": "यूनिट चुनें",
+    "learningPlan": "अधिगम योजना",
+    "resources": "संसाधन",
+    "timeLog": "समय लॉग",
+    "supplementaryTraining": "पूरक प्रशिक्षण",
+    "newDocToSign": "हस्ताक्षर के लिए नया दस्तावेज़",
+    "item": "आइटम",
+    "items": "आइटम"
+  },
+  "evidenceLibrary": {
+    "pageTitle": "साक्ष्य लाइब्रेरी",
+    "pageSubtitle": "अपने साक्ष्य फ़ाइलों को प्रबंधित करें और व्यवस्थित करें",
+    "filters": {
+      "searchPlaceholder": "शीर्षक द्वारा खोजें...",
+      "coursePlaceholder": "कोर्स के आधार पर फ़िल्टर करें",
+      "allCourses": "सभी कोर्स"
+    },
+    "table": {
+      "columns": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "files": "फ़ाइलें",
+        "status": "स्थिति",
+        "createdDate": "निर्माण तिथि",
+        "view": "देखें",
+        "actions": "क्रियाएँ"
+      },
+      "status": {
+        "loading": "साक्ष्य लाइब्रेरी लोड हो रही है...",
+        "noResults": "कोई साक्ष्य नहीं मिला।"
+      },
+      "pagination": {
+        "summary": "{current} में से {total} प्रविष्टियाँ दिखा रहा है",
+        "labelPage": "पृष्ठ",
+        "previous": "पिछला",
+        "next": "अगला"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "साक्ष्य फ़ाइलें डाउनलोड करें",
+      "addEvidence": "साक्ष्य जोड़ें"
+    },
+    "form": {
+      "createTitle": "नया साक्ष्य बनाएँ",
+      "editTitle": "साक्ष्य संपादित करें",
+      "createSubtitle": "अपनी लाइब्रेरी में नया साक्ष्य जोड़ें",
+      "editSubtitle": "साक्ष्य के विवरण और मैपिंग अपडेट करें",
+      "cards": {
+        "fileOptions": "फ़ाइल विकल्प",
+        "basicInformation": "मूल जानकारी",
+        "courseSelection": "कोर्स चयन",
+        "unitMappings": "यूनिट मैपिंग",
+        "additionalInformation": "अतिरिक्त जानकारी",
+        "signatures": "हस्ताक्षर"
+      },
+      "fields": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "trainerFeedback": "ट्रेनर फीडबैक",
+        "pointsForImprovement": "सुधार के बिंदु",
+        "learnerComments": "लर्नर टिप्पणियाँ",
+        "uploadFile": "फ़ाइल अपलोड करें",
+        "additionalEvidence": "अतिरिक्त साक्ष्य",
+        "session": "सत्र",
+        "grade": "ग्रेड",
+        "evidenceTimeLog": "क्या इस साक्ष्य को टाइम लॉग में उपयोग किया जाए?",
+        "yes": "हाँ",
+        "no": "नहीं",
+        "assessmentMethod": "मूल्यांकन विधि",
+        "declaration": "मैं घोषणा करता/करती हूँ कि यह साक्ष्य मेरा अपना काम है"
+      },
+      "placeholders": {
+        "title": "साक्ष्य शीर्षक दर्ज करें",
+        "description": "विवरण दर्ज करें",
+        "trainerFeedback": "ट्रेनर फीडबैक",
+        "pointsForImprovement": "सुधार के बिंदु",
+        "learnerComments": "आपकी टिप्पणियाँ",
+        "session": "सत्र चुनें",
+        "grade": "ग्रेड दर्ज करें",
+        "enterName": "नाम दर्ज करें",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "saving": "सेव हो रहा है...",
+        "updateEvidence": "साक्ष्य अपडेट करें",
+        "createEvidence": "साक्ष्य बनाएँ"
+      },
+      "toast": {
+        "selectOneCourse": "कृपया कम से कम एक कोर्स चुनें",
+        "selectOneTypeForCourse": "कृपया {courseName} के लिए कम से कम एक प्रकार चुनें",
+        "selectOneUnitForCourse": "कृपया {courseName} के लिए कम से कम एक यूनिट चुनें",
+        "evidenceUpdated": "साक्ष्य सफलतापूर्वक अपडेट हुआ",
+        "evidenceCreated": "साक्ष्य सफलतापूर्वक बनाया गया",
+        "uploadFileOrCreateDoc": "कृपया फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ",
+        "invalidFile": "अमान्य फ़ाइल। कृपया फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ",
+        "saveFailed": "साक्ष्य सेव नहीं हो सका। कृपया पुनः प्रयास करें।",
+        "documentCreatedSuccess": "दस्तावेज़ सफलतापूर्वक बनाया गया! आप फॉर्म भरना जारी रख सकते हैं।"
+      },
+      "status": {
+        "loadingEvidence": "साक्ष्य लोड हो रहा है...",
+        "selectSession": "सत्र चुनें",
+        "loadingSessions": "सत्र लोड हो रहे हैं...",
+        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है"
+      },
+      "assessmentMethods": {
+        "Obs": "अवलोकन",
+        "PA": "प्रैक्टिकल असेसमेंट",
+        "ET": "परीक्षा और टेस्ट",
+        "PD": "प्रोफेशनल चर्चा",
+        "I": "इंटरव्यू",
+        "Q&A": "प्रश्न और उत्तर",
+        "P": "प्रोजेक्ट",
+        "RA": "रिफ्लेक्टिव अकाउंट",
+        "WT": "विटनेस टेस्टिमनी",
+        "PE": "प्रोडक्ट एविडेंस",
+        "SI": "सिमुलेशन",
+        "OT": "अन्य",
+        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
+      },
+      "signature": {
+        "signedInAgreement": "समझौते में हस्ताक्षर:",
+        "name": "नाम:",
+        "signed": "हस्ताक्षरित:",
+        "es": "ES:",
+        "date": "तारीख:",
+        "signatureReq": "हस्ताक्षर आवश्यक:",
+        "trainer": "ट्रेनर",
+        "learner": "लर्नर",
+        "employer": "नियोक्ता",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "fileRequired": "कृपया सबमिट करने से पहले फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ।",
+        "declarationRequired": "आपको घोषणा स्वीकार करनी होगी",
+        "assessmentMethodRequired": "कृपया कम से कम एक मूल्यांकन विधि चुनें",
+        "selectOneCourse": "कृपया कम से कम एक कोर्स चुनें",
+        "selectOneTypePerStandardCourse": "कृपया प्रत्येक स्टैंडर्ड कोर्स के लिए कम से कम एक प्रकार (नॉलेज, बिहेवियर या स्किल्स) चुनें",
+        "learnerMapRequiredStandard": "स्टैंडर्ड कोर्स के लिए प्रत्येक चयनित प्रकार में कम से कम एक लर्नर मैप चेक होना चाहिए",
+        "learnerMapRequiredQualification": "क्वालिफिकेशन कोर्स के लिए कम से कम एक यूनिट चुननी होगी और प्रत्येक चयनित यूनिट में कम से कम एक लर्नर मैप चेक होना चाहिए"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "कोर्स चुनें",
+      "selectCourseToAdd": "जोड़ने के लिए कोर्स चुनें",
+      "selectTypeFor": "{courseName} – प्रकार चुनें:",
+      "selectUnitsFor": "{courseName} – यूनिट चुनें:",
+      "knowledge": "नॉलेज",
+      "behaviour": "बिहेवियर",
+      "skills": "स्किल्स",
+      "selectOneTypeError": "कृपया {courseName} के लिए कम से कम एक प्रकार चुनें",
+      "selectOneUnitError": "कृपया {courseName} के लिए कम से कम एक यूनिट चुनें"
+    },
+    "createDocument": {
+      "documentPreview": "दस्तावेज़ पूर्वावलोकन",
+      "uploadedFile": "अपलोड की गई फ़ाइल",
+      "view": "देखें",
+      "download": "डाउनलोड",
+      "noFileForPreview": "पूर्वावलोकन के लिए कोई फ़ाइल उपलब्ध नहीं",
+      "createDocument": "दस्तावेज़ बनाएँ",
+      "wordDocument": "Word दस्तावेज़",
+      "excelSpreadsheet": "Excel स्प्रेडशीट",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "आपका दस्तावेज़ सफलतापूर्वक बनाया गया",
+      "defaultSlideTitle": "साक्ष्य स्लाइड 1",
+      "defaultSlideContent": "अपना साक्ष्य कंटेंट यहाँ दर्ज करें...",
+      "validation": {
+        "documentTitleRequired": "दस्तावेज़ शीर्षक आवश्यक है",
+        "documentContentEmpty": "दस्तावेज़ कंटेंट खाली नहीं हो सकता",
+        "sheetNameRequired": "शीट का नाम आवश्यक है",
+        "addDataToSpreadsheet": "कृपया स्प्रेडशीट में कुछ डेटा जोड़ें",
+        "presentationTitleRequired": "प्रेजेंटेशन शीर्षक आवश्यक है",
+        "allSlidesTitleAndContent": "सभी स्लाइड में शीर्षक और कंटेंट दोनों होने चाहिए"
+      },
+      "buttons": {
+        "creating": "बन रहा है...",
+        "createDocument": "दस्तावेज़ बनाएँ",
+        "createPresentation": "प्रेजेंटेशन बनाएँ",
+        "createSpreadsheet": "स्प्रेडशीट बनाएँ"
+      },
+      "labels": {
+        "documentTitle": "दस्तावेज़ शीर्षक",
+        "enterDocumentTitle": "दस्तावेज़ शीर्षक दर्ज करें",
+        "presentationTitle": "प्रेजेंटेशन शीर्षक",
+        "enterPresentationTitle": "प्रेजेंटेशन शीर्षक दर्ज करें",
+        "sheetName": "शीट का नाम",
+        "enterSheetName": "शीट का नाम दर्ज करें",
+        "slides": "स्लाइड",
+        "slideTitle": "स्लाइड शीर्षक",
+        "slideContent": "स्लाइड कंटेंट"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "ट्रेनर टिप्पणी"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "ट्रेनर टिप्पणी",
+      "noComment": "कोई टिप्पणी नहीं"
+    },
+    "deleteDialog": {
+      "title": "साक्ष्य हटाएँ?",
+      "description": "इस साक्ष्य को हटाने से सभी संबंधित डेटा और संबंध भी हट जाएंगे। यह कार्रवाई पूर्ववत नहीं की जा सकती। क्या आप आगे बढ़ना चाहते हैं?",
+      "cancel": "रद्द करें",
+      "confirm": "साक्ष्य हटाएँ",
+      "deleting": "हटा रहा है..."
+    },
+    "downloadDialog": {
+      "title": "साक्ष्य फ़ाइलें डाउनलोड करें",
+      "description": "साक्ष्य फ़ाइलें देखने और डाउनलोड करने के लिए कोई कोर्स चुनें",
+      "selectCourseLabel": "कोर्स चुनें",
+      "selectAllFiles": "सभी फ़ाइलें चुनें",
+      "loadingEvidence": "साक्ष्य लोड हो रहे हैं...",
+      "noEvidenceForCourse": "इस कोर्स के लिए कोई साक्ष्य फ़ाइल नहीं मिली",
+      "noCourseSelectedTitle": "कोर्स चुनें",
+      "noCourseSelectedDescription": "सूची से कोई कोर्स चुनें ताकि उसकी साक्ष्य फ़ाइलें देख सकें",
+      "file": {
+        "noFileName": "कोई फ़ाइल नाम नहीं",
+        "unknownStatus": "अज्ञात"
+      },
+      "button": {
+        "cancel": "रद्द करें",
+        "download": "डाउनलोड ({count} फ़ाइल{suffix})",
+        "downloading": "डाउनलोड हो रहा है..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "साक्ष्य फिर से अपलोड करें",
+      "description": "\"{title}\" के मौजूदा साक्ष्य फ़ाइल को बदलने के लिए नई फ़ाइल चुनें।",
+      "selectedFile": "चयनित: {fileName}",
+      "buttons": {
+        "cancel": "रद्द करें",
+        "upload": "अपलोड करें",
+        "uploading": "अपलोड हो रहा है..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "फिर से अपलोड करें",
+      "viewEdit": "देखें/संपादित करें",
+      "view": "देखें",
+      "download": "डाउनलोड",
+      "delete": "हटाएँ"
+    },
+    "toast": {
+      "deleteSuccess": "साक्ष्य सफलतापूर्वक हटाया गया",
+      "deleteFailed": "साक्ष्य हटाया नहीं जा सका। कृपया पुनः प्रयास करें।",
+      "noFileForDownload": "डाउनलोड के लिए कोई फ़ाइल उपलब्ध नहीं है",
+      "downloadingFile": "{fileName} डाउनलोड हो रहा है",
+      "reuploadMissingFile": "कृपया अपलोड करने के लिए कोई फ़ाइल चुनें",
+      "reuploadSuccess": "साक्ष्य फ़ाइल सफलतापूर्वक बदली गई",
+      "reuploadFailed": "साक्ष्य फिर से अपलोड नहीं हो सका",
+      "downloadSelectOne": "कृपया डाउनलोड के लिए कम से कम एक फ़ाइल चुनें",
+      "downloadNoFilesForSelection": "चयनित प्रविष्टियों के लिए कोई फ़ाइल नहीं मिली",
+      "downloadCorsOpenedInTabs": "{count} फ़ाइल(ें) CORS प्रतिबंधों के कारण नए टैब में खुलीं",
+      "downloadAllInTabs": "सभी फ़ाइलें नए टैब में खुल गईं। CORS प्रतिबंधों के कारण ZIP डाउनलोड उपलब्ध नहीं है।",
+      "downloadMixed": "{zipCount} फ़ाइल(ें) ZIP के रूप में डाउनलोड हुईं। {tabCount} फ़ाइल(ें) CORS प्रतिबंधों के कारण नए टैब में खुलीं।",
+      "downloadZipCorrupt": "बनाई गई ZIP फ़ाइल ख़राब है",
+      "downloadSuccess": "{count} चयनित साक्ष्य फ़ाइल(ें) सफलतापूर्वक डाउनलोड हुईं",
+      "downloadFailed": "साक्ष्य फ़ाइलें डाउनलोड नहीं हो सकीं। कृपया पुनः प्रयास करें।"
+    }
+  },
+  "chooseUnits": {
+    "pageTitle": "यूनिट चुनें",
+    "pageSubtitle": "लर्नर के लिए अनिवार्य और वैकल्पिक यूनिट चुनें",
+    "table": {
+      "columns": {
+        "select": "चुनें",
+        "unitName": "यूनिट का नाम",
+        "type": "प्रकार",
+        "glh": "GLH",
+        "level": "स्तर",
+        "credits": "क्रेडिट"
+      },
+      "types": {
+        "mandatory": "अनिवार्य",
+        "optional": "वैकल्पिक"
+      },
+      "searchPlaceholder": "यूनिट खोजें...",
+      "noTopics": "कोई टॉपिक उपलब्ध नहीं है",
+      "noResults": "कोई परिणाम नहीं।",
+      "columnVisibilityLabel": "कॉलम दृश्यता",
+      "columnsButton": "कॉलम",
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "csvTodo": "CSV एक्सपोर्ट सुविधा शीघ्र ही उपलब्ध होगी",
+        "pdfTodo": "PDF एक्सपोर्ट सुविधा शीघ्र ही उपलब्ध होगी"
+      },
+      "addNew": {
+        "button": "नया जोड़ें",
+        "todo": "\"नया जोड़ें\" सुविधा शीघ्र ही उपलब्ध होगी"
+      },
+      "aria": {
+        "expandUnit": "यूनिट फैलाएँ",
+        "collapseUnit": "यूनिट समेटें",
+        "selectUnit": "यूनिट {unitTitle} चुनें"
+      }
+    },
+    "form": {
+      "summary": {
+        "totalUnits": "कुल यूनिट:",
+        "totalCredits": "कुल क्रेडिट:",
+        "totalGlh": "कुल GLH:"
+      },
+      "validation": {
+        "allMandatoryRequired": "सभी अनिवार्य यूनिट का चयन आवश्यक है",
+        "optionalCreditsMinimum": "वैकल्पिक यूनिट के क्रेडिट कम से कम 15 होने चाहिए"
+      },
+      "status": {
+        "loadingUnits": "यूनिट लोड हो रहे हैं...",
+        "noCourseSelected": "कोई कोर्स चयनित नहीं है। कृपया एक क्वालिफिकेशन कोर्स चुनें।",
+        "noLearner": "लर्नर की जानकारी उपलब्ध नहीं है।",
+        "noUnits": "इस कोर्स के लिए कोई यूनिट नहीं मिली।"
+      },
+      "toast": {
+        "missingIds": "लर्नर आईडी या कोर्स आईडी नहीं मिली",
+        "saveSuccess": "यूनिट सफलतापूर्वक सेव हो गए",
+        "saveError": "यूनिट सेव नहीं हो सके"
+      },
+      "buttons": {
+        "save": "यूनिट सेव करें",
+        "saving": "सेव किया जा रहा है..."
+      }
+    }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "डैशबोर्ड",
+      "subtitle": "अपनी सीखने की यात्रा प्रबंधित करें और प्रगति ट्रैक करें"
+    },
+    "buttons": {
+      "emailLearner": "लर्नर को ईमेल करें",
+      "awaitingSignature": "हस्ताक्षर की प्रतीक्षा",
+      "calendar": "कैलेंडर"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "लर्नर",
+      "viewProfile": "प्रोफ़ाइल देखें",
+      "trainerLabel": "ट्रेनर:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "अगली मुलाकात:",
+      "notAvailable": "उपलब्ध नहीं",
+      "overallProgress": {
+        "title": "समग्र प्रगति",
+        "completed": "✓ पूर्ण",
+        "inProgress": "◐ प्रगति पर",
+        "pending": "○ लंबित",
+        "totalUnits": "कुल: {units} यूनिट {courses} कोर्स(कोर्सों) में"
+      },
+      "timeLog": {
+        "title": "समय लॉग",
+        "onTheJob": "कार्य पर समय (कुल)",
+        "offTheJob": "कार्य से बाहर समय (कुल)"
+      }
+    },
+    "safeguardingCard": {
+      "title": "सुरक्षा संपर्क",
+      "description": "कोई भी चिंता होने पर तुरंत संपर्क करें",
+      "priorityBadge": "प्राथमिकता सहायता",
+      "leadLabel": "सुरक्षा लीड",
+      "leadRole": "नामित सुरक्षा लीड",
+      "tel": "टेल:",
+      "mobile": "मोबाइल:",
+      "email": "ईमेल:",
+      "defaultContactMessage": "डिफ़ॉल्ट संपर्क जानकारी उपयोग में है। सहायता के लिए अपने व्यवस्थापक से संपर्क करें।"
+    },
+    "emailDialog": {
+      "title": "{name} को ईमेल करें",
+      "description": "{email} को ईमेल भेजें",
+      "learnerFallback": "सीखने वाला",
+      "learnerEmailFallback": "सीखने वाला",
+      "subjectLabel": "विषय",
+      "subjectPlaceholder": "ईमेल विषय दर्ज करें",
+      "messageLabel": "संदेश",
+      "messagePlaceholder": "अपना संदेश यहाँ लिखें...",
+      "cancel": "रद्द करें",
+      "sending": "भेज रहा है...",
+      "sendButton": "ईमेल भेजें",
+      "toast": {
+        "fillBoth": "कृपया विषय और संदेश दोनों भरें",
+        "noEmail": "सीखने वाले का ईमेल उपलब्ध नहीं है",
+        "success": "ईमेल सफलतापूर्वक भेजा गया",
+        "failed": "ईमेल भेजने में विफल"
+      }
+    },
+    "courseProgressCharts": {
+      "progressOverview": "प्रगति अवलोकन",
+      "courseFallback": "कोर्स {index}",
+      "gateway": "गेटवे",
+      "core": "कोर",
+      "nextMilestoneReview": "अगला माइलस्टोन: समीक्षा",
+      "gatewayPrep": "गेटवे तैयारी",
+      "courseProgress": "कोर्स प्रगति",
+      "completed": "पूर्ण",
+      "remaining": "शेष",
+      "progressLabel": "प्रगति",
+      "completedUnits": "पूर्ण इकाइयाँ",
+      "totalUnits": "कुल इकाइयाँ"
+    },
+    "calendarDialog": {
+      "title": "कैलेंडर",
+      "description": "अपनी निर्धारित घटनाओं और अपॉइंटमेंट देखें और प्रबंधित करें"
+    },
+    "acknowledgementDialog": {
+      "title": "पावती संदेश",
+      "welcomeMessage": "YourLocker प्लेटफ़ॉर्म में {name} का स्वागत है",
+      "reviewDocument": "कृपया संलग्न दस्तावेज़ की समीक्षा करें",
+      "cancel": "रद्द करें",
+      "processing": "प्रोसेस हो रहा है...",
+      "accept": "मैं स्वीकार करता/करती हूँ",
+      "toast": {
+        "success": "पावती सफलतापूर्वक स्वीकार की गई",
+        "failed": "पावती स्थिति अपडेट करने में विफल"
+      }
+    }
+  },
+  "courseDetails": {
+    "page": {
+      "notFoundTitle": "कोर्स जानकारी नहीं मिली",
+      "notFoundDescription": "अनुरोधित कोर्स नहीं मिला। कृपया वापस जाएं और पुनः प्रयास करें।",
+      "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+      "subtitle": "कोर्स जानकारी"
+    },
+    "supervisorCards": {
+      "title": "सीखने वाले के पर्यवेक्षक",
+      "unknown": "अज्ञात"
+    },
+    "courseInfo": {
+      "title": "कोर्स जानकारी",
+      "courseNameFallback": "कोर्स का नाम",
+      "notAvailable": "N/A",
+      "courseCode": "कोर्स कोड:",
+      "level": "स्तर:",
+      "sector": "क्षेत्र:",
+      "qualificationDetails": "योग्यता विवरण",
+      "qualificationType": "योग्यता प्रकार:",
+      "minAge": "न्यूनतम आयु:",
+      "totalCredits": "कुल क्रेडिट:",
+      "keyDatesHours": "मुख्य तिथियाँ और घंटे",
+      "startDate": "आरंभ तिथि:",
+      "endDate": "समाप्ति तिथि:",
+      "learningHours": "सीखने के घंटे:",
+      "additionalInfo": "अतिरिक्त जानकारी",
+      "brandGuidelines": "ब्रांड दिशानिर्देश:",
+      "status": "स्थिति:",
+      "gradingType": "ग्रेडिंग प्रकार:"
     }
   }
 }

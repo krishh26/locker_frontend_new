@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
 
 interface SignatureTableProps {
@@ -38,6 +39,7 @@ export function SignatureTable({
   disabled = false,
   requestedRoles = [],
 }: SignatureTableProps) {
+  const t = useTranslations("evidenceLibrary");
   const requestedSet = useMemo(() => new Set(requestedRoles), [requestedRoles]);
   return (
     <div className="space-y-4">
@@ -45,12 +47,12 @@ export function SignatureTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Signed in Agreement:</TableHead>
-              <TableHead>Name:</TableHead>
-              <TableHead>Signed:</TableHead>
-              <TableHead>ES:</TableHead>
-              <TableHead>Date:</TableHead>
-              <TableHead>Signature req:</TableHead>
+              <TableHead>{t("form.signature.signedInAgreement")}</TableHead>
+              <TableHead>{t("form.signature.name")}</TableHead>
+              <TableHead>{t("form.signature.signed")}</TableHead>
+              <TableHead>{t("form.signature.es")}</TableHead>
+              <TableHead>{t("form.signature.date")}</TableHead>
+              <TableHead>{t("form.signature.signatureReq")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -60,7 +62,7 @@ export function SignatureTable({
               return (
                 <TableRow key={item.role}>
                   <TableCell>
-                    <Label className="text-sm">{item.label}</Label>
+                    <Label className="text-sm">{t(`form.signature.${item.role.toLowerCase()}`)}</Label>
                   </TableCell>
                   <TableCell>
                     <Controller
@@ -69,7 +71,7 @@ export function SignatureTable({
                       render={({ field }) => (
                         <Input
                           {...field}
-                          placeholder="Enter name"
+                          placeholder={t("form.placeholders.enterName")}
                           disabled={true}
                           className="w-full disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
                         />
@@ -97,7 +99,7 @@ export function SignatureTable({
                       render={({ field }) => (
                         <Input
                           {...field}
-                          placeholder="ES"
+                          placeholder={t("form.placeholders.es")}
                           disabled={true}
                           className="w-full disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:cursor-not-allowed"
                         />
@@ -140,7 +142,7 @@ export function SignatureTable({
       </div>
       {errors.signatures && (
         <p className="text-sm text-destructive">
-          {errors.signatures.message}
+          {t(String(errors.signatures.message))}
         </p>
       )}
     </div>

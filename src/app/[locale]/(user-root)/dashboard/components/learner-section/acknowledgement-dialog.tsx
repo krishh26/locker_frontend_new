@@ -1,6 +1,7 @@
 "use client";
 
 import { Info, Download, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +36,7 @@ export function AcknowledgementDialog({
   organisationId,
   centreId,
 }: AcknowledgementDialogProps) {
+  const t = useTranslations("learnerDashboard.acknowledgementDialog");
   const dispatch = useAppDispatch();
   const queryFilters =
     organisationId != null
@@ -89,7 +91,7 @@ export function AcknowledgementDialog({
           (error as { data?: { error?: string; message?: string }; message?: string })?.data
             ?.message ||
           (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
-          "Failed to update acknowledgement status";
+          t("toast.failed");
         toast.error(errorMessage);
       }
     } else {
@@ -120,7 +122,7 @@ export function AcknowledgementDialog({
         
         // Close dialog after store is updated
         onOpenChange(false);
-        toast.success("Acknowledgement accepted successfully");
+        toast.success(t("toast.success"));
       } catch (error) {
         const errorMessage =
           (error as { data?: { error?: string; message?: string }; message?: string })?.data
@@ -128,7 +130,7 @@ export function AcknowledgementDialog({
           (error as { data?: { error?: string; message?: string }; message?: string })?.data
             ?.message ||
           (error as { data?: { error?: string; message?: string }; message?: string })?.message ||
-          "Failed to update acknowledgement status";
+          t("toast.failed");
         toast.error(errorMessage);
       }
     } else {
@@ -153,10 +155,10 @@ export function AcknowledgementDialog({
             </div>
             <div className="flex-1">
               <DialogTitle className="text-xl font-semibold">
-                Acknowledgement Message
+                {t("title")}
               </DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground mt-1">
-                Welcome {learnerName} to YourLocker Platform
+                {t("welcomeMessage", { name: learnerName })}
               </DialogDescription>
             </div>
           </div>
@@ -183,7 +185,7 @@ export function AcknowledgementDialog({
                   <Separator />
                   <div className="space-y-3">
                     <h4 className="text-sm font-semibold text-foreground">
-                      Please Review the Attached Document
+                      {t("reviewDocument")}
                     </h4>
                     <div
                       className="flex items-center gap-2 p-3 rounded-lg border hover:bg-muted/50 cursor-pointer transition-colors"
@@ -208,16 +210,16 @@ export function AcknowledgementDialog({
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={handleClose} disabled={isLoading || isProcessing}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleAccept} disabled={isLoading || isProcessing}>
             {isProcessing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Processing...
+                {t("processing")}
               </>
             ) : (
-              "I Accept"
+              t("accept")
             )}
           </Button>
         </DialogFooter>

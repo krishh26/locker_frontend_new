@@ -955,7 +955,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "Criar e gerir planos de amostra de QA",
+    "toast": {
+      "invalidCourseRedirecting": "Curso inválido. A redirecionar...",
+      "sampledLearnersAddedSuccess": "Formandos amostrados adicionados com sucesso.",
+      "applySampledLearnersFailed": "Falha ao aplicar formandos amostrados.",
+      "randomSampledLearnersAddedSuccess": "Formandos amostrados aleatoriamente adicionados com sucesso.",
+      "applyRandomSampledLearnersFailed": "Falha ao aplicar formandos amostrados aleatoriamente."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Selecione um plano antes de aplicar amostras.",
+      "selectSampleTypeBeforeApplyingSamples": "Selecione um tipo de amostra antes de aplicar amostras.",
+      "unableToDetermineUserReLogin": "Não foi possível determinar o utilizador atual. Volte a iniciar sessão e tente novamente.",
+      "selectAtLeastOneUnit": "Selecione pelo menos uma unidade antes de aplicar amostras.",
+      "selectLearnerWithSampledUnits": "Selecione pelo menos um formando com unidades amostradas antes de aplicar.",
+      "plannedSampleDateRequired": "A Data de Amostra Planeada é obrigatória",
+      "noLearnersForRandomSamples": "Não há formandos disponíveis para aplicar amostras aleatórias.",
+      "noLearnersWithUnitsForRandomSamples": "Não há formandos com unidades disponíveis para aplicar amostras aleatórias."
+    },
+    "filters": {
+      "title": "Filtros",
+      "assessmentMethods": "Métodos de avaliação",
+      "selectAll": "Selecionar tudo",
+      "sampleType": "Tipo de amostra",
+      "selectSampleType": "Selecione o tipo de amostra",
+      "plannedSampleDate": "Data de Amostra Planeada",
+      "plannedSampleDateRequired": "A Data de Amostra Planeada é obrigatória",
+      "applySamples": "Aplicar amostras",
+      "applyRandomSamples": "Aplicar amostras aleatórias",
+      "assessmentMethodTitles": {
+        "WO": "Observação no local de trabalho",
+        "WP": "Projetos no local de trabalho / fora do trabalho",
+        "PW": "Portefólio de trabalho",
+        "VI": "Viva",
+        "LB": "Livro de registo / atribuições",
+        "PD": "Discussões profissionais",
+        "PT": "Teste prático",
+        "TE": "Testes / exames",
+        "RJ": "Diário reflexivo",
+        "OT": "Outro",
+        "RPL": "Reconhecimento de aprendizagem prévia"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Amostra de portefólio",
+        "ObserveAssessor": "Observar avaliador",
+        "LearnerInterview": "Entrevista ao formando",
+        "EmployerInterview": "Entrevista ao empregador",
+        "Final": "Verificação final"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "Gerir planos de amostra de QA, formandos e ações associadas."
+    },
+    "actionModal": {
+      "title": "Ações da amostragem",
+      "descriptionEdit": "Editar os detalhes da ação",
+      "descriptionCreate": "Criar uma nova ação",
+      "fields": {
+        "actionWithName": "Ação com",
+        "actionRequired": "Ação necessária",
+        "targetDate": "Data alvo da ação",
+        "status": "Estado",
+        "assessorFeedback": "Feedback do avaliador"
+      },
+      "placeholders": {
+        "selectUser": "Selecione um utilizador"
+      },
+      "maxCharactersHint": "máx. 1000 caracteres",
+      "cancelClose": "Cancelar / Fechar",
+      "saving": "A guardar...",
+      "status": {
+        "Pending": "Pendente",
+        "In Progress": "Em progresso",
+        "Completed": "Concluído",
+        "Closed": "Fechado"
+      },
+      "validation": {
+        "actionWithRequired": "Por favor selecione um utilizador para a ação",
+        "actionRequiredRequired": "A ação necessária é obrigatória",
+        "actionRequiredMax": "A ação necessária deve ter 1000 caracteres ou menos",
+        "targetDateRequired": "A data alvo é obrigatória"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Data de",
+      "dateTo": "Data até",
+      "export": "Exportar",
+      "exporting": "A exportar...",
+      "filter": "Filtrar",
+      "clear": "Limpar",
+      "errors": {
+        "selectCourseBeforeFiltering": "Selecione um curso antes de filtrar.",
+        "noPlansForCourse": "Não há planos de QA disponíveis para o curso selecionado.",
+        "selectCourseAndPlanBeforeFiltering": "Selecione um curso e um plano antes de filtrar."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Nome do avaliador",
+          "learnerName": "Nome do formando",
+          "learnerId": "ID do formando",
+          "riskLevel": "Nível de risco",
+          "qaApproved": "Aprovado por QA",
+          "totalUnits": "Total de unidades",
+          "selectedUnits": "Unidades selecionadas",
+          "plannedDate": "Data planeada",
+          "courseName": "Nome do curso"
+        },
+        "values": {
+          "yes": "Sim",
+          "no": "Não"
+        }
+      },
+      "toast": {
+        "noDataToExport": "Não há dados disponíveis para exportar",
+        "exportSuccess": "Dados exportados com sucesso",
+        "exportFailed": "Falha ao exportar dados. Tente novamente."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Avaliador",
+        "riskLevel": "Nível de risco",
+        "qaApproved": "Aprovado por QA",
+        "learner": "Formando",
+        "actions": "Ações"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Selecione um curso e um plano e, em seguida, escolha Filtrar para carregar formandos.",
+        "noLearnersMatch": "Nenhum formando corresponde aos filtros atuais."
+      },
+      "loading": "A carregar formandos...",
+      "errors": {
+        "fetchLearners": "Ocorreu um erro ao obter formandos para este plano."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Ver documentos / evidências",
+        "viewPortfolio": "Ver portefólio",
+        "unableOpenDocumentsLearnerIdMissing": "Não foi possível abrir os documentos. ID do formando não encontrado.",
+        "unableOpenPortfolioLearnerIdMissing": "Não foi possível abrir o portefólio. ID do formando não encontrado."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Não foi possível determinar o utilizador atual",
+        "questionsSavedSuccess": "Perguntas guardadas com sucesso",
+        "saveQuestionsFailed": "Falha ao guardar perguntas",
+        "missingRequiredInfo": "Falta informação obrigatória",
+        "planDetailUpdatedSuccess": "Detalhe do plano atualizado com sucesso",
+        "updatePlanDetailFailed": "Falha ao atualizar o detalhe do plano",
+        "sampledLearnerRemovedSuccess": "Formando amostrado removido com sucesso",
+        "removeSampledLearnerFailed": "Falha ao remover o formando amostrado",
+        "actionUpdatedSuccess": "Ação atualizada com sucesso",
+        "actionCreatedSuccess": "Ação criada com sucesso",
+        "actionDeletedSuccess": "Ação eliminada com sucesso",
+        "saveActionFailed": "Falha ao guardar a ação",
+        "deleteActionFailed": "Falha ao eliminar a ação",
+        "documentUploadedSuccess": "Documento carregado com sucesso",
+        "uploadDocumentFailed": "Falha ao carregar documento",
+        "documentDeletedSuccess": "Documento eliminado com sucesso",
+        "deleteDocumentFailed": "Falha ao eliminar documento",
+        "selectFormToAllocate": "Selecione um formulário para alocar.",
+        "surveyAllocatedSuccess": "Inquérito alocado com sucesso",
+        "allocateSurveyFailed": "Falha ao alocar inquérito",
+        "formUnlinkedSuccess": "Formulário desvinculado com sucesso",
+        "unlinkFormFailed": "Falha ao desvincular formulário",
+        "formMarkedCompletedSuccess": "Formulário marcado como concluído",
+        "markCompletedFailed": "Falha ao marcar como concluído"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

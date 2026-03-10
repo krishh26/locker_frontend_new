@@ -3,7 +3,6 @@
 import { memo, useCallback, useMemo, useRef, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
@@ -17,14 +16,12 @@ import {
   selectFilterState,
   setSelectedStatus,
   setOnlyIncomplete,
-  setDateFrom,
-  setDateTo,
 } from "@/store/slices/qaSamplePlanSlice";
 
 export const FilterControls = memo(function FilterControls() {
   const dispatch = useAppDispatch();
   const filterState = useAppSelector(selectFilterState);
-  const { selectedStatus, onlyIncomplete, dateFrom, dateTo } = filterState;
+  const { selectedStatus, onlyIncomplete } = filterState;
 
   // Use ref to track current value without causing re-renders
   const selectedStatusRef = useRef(selectedStatus);

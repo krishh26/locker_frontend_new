@@ -33,11 +33,13 @@ import { QASamplePlanLayout } from "./components/qa-sample-plan-layout";
 import { useLearnersData } from "./hooks/use-learners-data";
 import { buildApplySamplesPayload } from "./utils/apply-samples-payload";
 import { EditSampleModalWrapper } from "../edit-sample-modal/edit-sample-modal-wrapper";
+import { useTranslations } from "next-intl";
 
 export function QASamplePlanPageContent() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations("qaSamplePlan");
   
   // Get current user
   const user = useAppSelector((state) => state.auth.user);
@@ -179,7 +181,7 @@ export function QASamplePlanPageContent() {
 
     if (!courseExists) {
       // Invalid course_id, redirect back
-      toast.error("Invalid course. Redirecting...");
+      toast.error(t("toast.invalidCourseRedirecting"));
       // router.push("/learners");
       return;
     }
@@ -270,17 +272,17 @@ export function QASamplePlanPageContent() {
 
   const handleApplySamples = useCallback(async () => {
     if (!selectedPlan) {
-      dispatch(setFilterError("Please select a plan before applying samples."));
+      dispatch(setFilterError(t("errors.selectPlanBeforeApplyingSamples")));
       return;
     }
 
     if (!filterState.sampleType) {
-      dispatch(setFilterError("Please select a sample type before applying samples."));
+      dispatch(setFilterError(t("errors.selectSampleTypeBeforeApplyingSamples")));
       return;
     }
 
     if (!userId) {
-      dispatch(setFilterError("Unable to determine current user. Please re-login and try again."));
+      dispatch(setFilterError(t("errors.unableToDetermineUserReLogin")));
       return;
     }
 
@@ -292,7 +294,7 @@ export function QASamplePlanPageContent() {
     );
     
     if (!hasAtLeastOneSelectedUnit) {
-      dispatch(setFilterError("Please select at least one unit before applying samples."));
+      dispatch(setFilterError(t("errors.selectAtLeastOneUnit")));
       return;
     }
 
@@ -317,13 +319,13 @@ export function QASamplePlanPageContent() {
     console.log("payload", payload);
 
     if (!payload) {
-      dispatch(setFilterError("Select at least one learner with sampled units before applying."));
+      dispatch(setFilterError(t("errors.selectLearnerWithSampledUnits")));
       return;
     }
 
     try {
       const response = await applySamplePlanLearners(payload).unwrap();
-      const successMessage = response?.message || "Sampled learners added successfully.";
+      const successMessage = response?.message || t("toast.sampledLearnersAddedSuccess");
       toast.success(successMessage);
       dispatch(setFilterError(""));
 
@@ -332,7 +334,7 @@ export function QASamplePlanPageContent() {
       }
     } catch (error: unknown) {
       const errorData = error as { data?: { message?: string }; message?: string };
-      const message = errorData.data?.message || errorData.message || "Failed to apply sampled learners.";
+      const message = errorData.data?.message || errorData.message || t("toast.applySampledLearnersFailed");
       dispatch(setFilterError(message));
       toast.error(message);
     }
@@ -347,22 +349,23 @@ export function QASamplePlanPageContent() {
     applySamplePlanLearners,
     isApplySamplesDisabled,
     dispatch,
+    t,
   ]);
 
 
   const handleApplyRandomSamples = useCallback(async () => {
     if (!selectedPlan) {
-      dispatch(setFilterError("Please select a plan before applying samples."));
+      dispatch(setFilterError(t("errors.selectPlanBeforeApplyingSamples")));
       return;
     }
 
     if (!filterState.sampleType) {
-      dispatch(setFilterError("Please select a sample type before applying samples."));
+      dispatch(setFilterError(t("errors.selectSampleTypeBeforeApplyingSamples")));
       return;
     }
 
     if (!userId) {
-      dispatch(setFilterError("Unable to determine current user. Please re-login and try again."));
+      dispatch(setFilterError(t("errors.unableToDetermineUserReLogin")));
       return;
     }
 
@@ -371,12 +374,12 @@ export function QASamplePlanPageContent() {
     }
 
     if (!filterState.plannedSampleDate.trim()) {
-      dispatch(setFilterError("Planned Sample Date is required"));
+      dispatch(setFilterError(t("errors.plannedSampleDateRequired")));
       return;
     }
 
     if (!learnersData.learnersData.length) {
-      dispatch(setFilterError("No learners available to apply random samples."));
+      dispatch(setFilterError(t("errors.noLearnersForRandomSamples")));
       return;
     }
 
@@ -447,14 +450,14 @@ export function QASamplePlanPageContent() {
     });
 
     if (!payload) {
-      dispatch(setFilterError("No learners with units available to apply random samples."));
+      dispatch(setFilterError(t("errors.noLearnersWithUnitsForRandomSamples")));
       return;
     }
 
 
     try {
       const response = await applySamplePlanLearners(payload).unwrap();
-      const successMessage = response?.message || "Random sampled learners added successfully.";
+      const successMessage = response?.message || t("toast.randomSampledLearnersAddedSuccess");
       toast.success(successMessage);
       dispatch(setFilterError(""));
 
@@ -464,7 +467,7 @@ export function QASamplePlanPageContent() {
       }
     } catch (error: unknown) {
       const errorData = error as { data?: { message?: string }; message?: string };
-      const message = errorData.data?.message || errorData.message || "Failed to apply random sampled learners.";
+      const message = errorData.data?.message || errorData.message || t("toast.applyRandomSampledLearnersFailed");
       dispatch(setFilterError(message));
       toast.error(message);
     }
@@ -478,6 +481,7 @@ export function QASamplePlanPageContent() {
     isApplySamplesDisabled,
     applySamplePlanLearners,
     dispatch,
+    t,
   ]);
 
 

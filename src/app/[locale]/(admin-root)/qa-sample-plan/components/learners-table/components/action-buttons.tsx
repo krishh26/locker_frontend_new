@@ -2,6 +2,7 @@
 
 import { memo, useState, useCallback, useMemo } from "react";
 import { Download, Filter, X, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,6 +35,7 @@ interface ActionButtonsProps {
 }
 
 export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLearners: triggerFromParent }: ActionButtonsProps) {
+  const t = useTranslations("qaSamplePlan.actionBar");
   const dispatch = useAppDispatch();
   const qaState = useAppSelector(selectQASamplePlanState);
   const selectedCourse = useAppSelector(selectSelectedCourse);
@@ -83,19 +85,19 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
   // Apply filter handler
   const handleApplyFilter = useCallback(() => {
     if (!selectedCourse) {
-      dispatch(setFilterError("Please select a course before filtering."));
+      dispatch(setFilterError(t("errors.selectCourseBeforeFiltering")));
       dispatch(setFilterApplied(false));
       return;
     }
 
     if (!plans.length) {
-      dispatch(setFilterError("No QA plans are available for the selected course."));
+      dispatch(setFilterError(t("errors.noPlansForCourse")));
       dispatch(setFilterApplied(false));
       return;
     }
 
     if (!selectedPlan || !plans.some((plan) => plan.id === selectedPlan)) {
-      dispatch(setFilterError("Please select both a course and a plan before filtering."));
+      dispatch(setFilterError(t("errors.selectCourseAndPlanBeforeFiltering")));
       dispatch(setFilterApplied(false));
       return;
     }
@@ -104,26 +106,26 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
     dispatch(resetSelectedUnits()); // Reset selected units when filter is applied
     dispatch(setFilterApplied(true));
     triggerSamplePlanLearners(selectedPlan);
-  }, [selectedCourse, plans, selectedPlan, dispatch, triggerSamplePlanLearners]);
+  }, [selectedCourse, plans, selectedPlan, dispatch, triggerSamplePlanLearners, t]);
 
   const handleExportToCSV = () => {
     if (!visibleRows.length) {
-      toast.warning("No data available to export");
+      toast.warning(t("toast.noDataToExport"));
       return;
     }
 
     try {
       setExporting(true);
       const headers = [
-        "Assessor Name",
-        "Learner Name",
-        "Learner ID",
-        "Risk Level",
-        "QA Approved",
-        "Total Units",
-        "Selected Units",
-        "Planned Date",
-        "Course Name",
+        t("export.headers.assessorName"),
+        t("export.headers.learnerName"),
+        t("export.headers.learnerId"),
+        t("export.headers.riskLevel"),
+        t("export.headers.qaApproved"),
+        t("export.headers.totalUnits"),
+        t("export.headers.selectedUnits"),
+        t("export.headers.plannedDate"),
+        t("export.headers.courseName"),
       ];
 
       const csvRows = visibleRows.map((row, index) => {
@@ -137,7 +139,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
           sanitizeText(row.learner_name),
           row.learner_id || row.learnerId || row.id || "-",
           sanitizeText(row.risk_level),
-          row.qa_approved ? "Yes" : "No",
+          row.qa_approved ? t("export.values.yes") : t("export.values.no"),
           units.length.toString(),
           selectedUnits.toString(),
           plannedDate ? formatDisplayDate(plannedDate) : "-",
@@ -154,14 +156,17 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
       link.setAttribute("href", url);
-      link.setAttribute("download", `qa-sample-plan-learners-${format(new Date(), "yyyy-MM-dd")}.csv`);
+      link.setAttribute(
+        "download",
+        `${t("export.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`
+      );
       link.style.visibility = "hidden";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      toast.success("Data exported successfully");
+      toast.success(t("toast.exportSuccess"));
     } catch (error) {
-      toast.error("Failed to export data. Please try again.");
+      toast.error(t("toast.exportFailed"));
       console.error("Export error:", error);
     } finally {
       setExporting(false);
@@ -172,7 +177,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
     <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
       <div className="flex gap-4 flex-1">
         <div className="space-y-2 flex-1">
-          <Label>Date From</Label>
+          <Label>{t("dateFrom")}</Label>
           <Input
             type="date"
             value={filterState.dateFrom}
@@ -180,7 +185,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
           />
         </div>
         <div className="space-y-2 flex-1">
-          <Label>Date To</Label>
+          <Label>{t("dateTo")}</Label>
           <Input
             type="date"
             value={filterState.dateTo}
@@ -198,12 +203,12 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
           {exporting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Exporting...
+              {t("exporting")}
             </>
           ) : (
             <>
               <Download className="mr-2 h-4 w-4" />
-              Export
+              {t("export")}
             </>
           )}
         </Button>
@@ -213,7 +218,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
           disabled={!selectedCourse || !selectedPlan || isPlanListLoading || !plans.length || learnersData.isLearnersInFlight}
         >
           <Filter className="mr-2 h-4 w-4" />
-          Filter
+          {t("filter")}
         </Button>
         <Button
           variant="outline"
@@ -221,7 +226,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
           disabled={learnersData.isLearnersInFlight}
         >
           <X className="mr-2 h-4 w-4" />
-          Clear
+          {t("clear")}
         </Button>
       </div>
     </div>

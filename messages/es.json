@@ -796,7 +796,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "Plan de Muestra QA",
-    "pageSubtitle": "Cree y gestione planes de muestra QA"
+    "pageSubtitle": "Cree y gestione planes de muestra QA",
+    "toast": {
+      "invalidCourseRedirecting": "Curso inválido. Redirigiendo...",
+      "sampledLearnersAddedSuccess": "Alumnos muestreados agregados correctamente.",
+      "applySampledLearnersFailed": "No se pudieron aplicar los alumnos muestreados.",
+      "randomSampledLearnersAddedSuccess": "Alumnos muestreados aleatoriamente agregados correctamente.",
+      "applyRandomSampledLearnersFailed": "No se pudieron aplicar los alumnos muestreados aleatoriamente."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Seleccione un plan antes de aplicar muestras.",
+      "selectSampleTypeBeforeApplyingSamples": "Seleccione un tipo de muestra antes de aplicar muestras.",
+      "unableToDetermineUserReLogin": "No se pudo determinar el usuario actual. Vuelva a iniciar sesión e inténtelo de nuevo.",
+      "selectAtLeastOneUnit": "Seleccione al menos una unidad antes de aplicar muestras.",
+      "selectLearnerWithSampledUnits": "Seleccione al menos un alumno con unidades muestreadas antes de aplicar.",
+      "plannedSampleDateRequired": "La fecha de muestra planificada es obligatoria",
+      "noLearnersForRandomSamples": "No hay alumnos disponibles para aplicar muestras aleatorias.",
+      "noLearnersWithUnitsForRandomSamples": "No hay alumnos con unidades disponibles para aplicar muestras aleatorias."
+    },
+    "filters": {
+      "title": "Filtros",
+      "assessmentMethods": "Métodos de evaluación",
+      "selectAll": "Seleccionar todo",
+      "sampleType": "Tipo de muestra",
+      "selectSampleType": "Seleccione el tipo de muestra",
+      "plannedSampleDate": "Fecha de muestra planificada",
+      "plannedSampleDateRequired": "La fecha de muestra planificada es obligatoria",
+      "applySamples": "Aplicar muestras",
+      "applyRandomSamples": "Aplicar muestras aleatorias",
+      "assessmentMethodTitles": {
+        "WO": "Observación en el lugar de trabajo",
+        "WP": "Proyectos en el lugar de trabajo / fuera del trabajo",
+        "PW": "Portafolio de trabajo",
+        "VI": "Viva",
+        "LB": "Libro de registro / tareas",
+        "PD": "Discusiones profesionales",
+        "PT": "Prueba práctica",
+        "TE": "Pruebas / exámenes",
+        "RJ": "Diario reflexivo",
+        "OT": "Otro",
+        "RPL": "Reconocimiento de aprendizaje previo"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Muestrear portafolio",
+        "ObserveAssessor": "Observar evaluador",
+        "LearnerInterview": "Entrevista al alumno",
+        "EmployerInterview": "Entrevista al empleador",
+        "Final": "Revisión final"
+      }
+    },
+    "layout": {
+      "title": "Plan de Muestra QA",
+      "subtitle": "Gestione planes de muestra QA, alumnos y acciones asociadas."
+    },
+    "actionModal": {
+      "title": "Acciones del muestreo",
+      "descriptionEdit": "Editar los detalles de la acción",
+      "descriptionCreate": "Crear una nueva acción",
+      "fields": {
+        "actionWithName": "Acción con",
+        "actionRequired": "Acción requerida",
+        "targetDate": "Fecha objetivo de la acción",
+        "status": "Estado",
+        "assessorFeedback": "Comentarios del evaluador"
+      },
+      "placeholders": {
+        "selectUser": "Seleccione un usuario"
+      },
+      "maxCharactersHint": "máx. 1000 caracteres",
+      "cancelClose": "Cancelar / Cerrar",
+      "saving": "Guardando...",
+      "status": {
+        "Pending": "Pendiente",
+        "In Progress": "En progreso",
+        "Completed": "Completado",
+        "Closed": "Cerrado"
+      },
+      "validation": {
+        "actionWithRequired": "Seleccione un usuario para la acción",
+        "actionRequiredRequired": "La acción requerida es obligatoria",
+        "actionRequiredMax": "La acción requerida debe tener 1000 caracteres o menos",
+        "targetDateRequired": "La fecha objetivo es obligatoria"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Desde",
+      "dateTo": "Hasta",
+      "export": "Exportar",
+      "exporting": "Exportando...",
+      "filter": "Filtrar",
+      "clear": "Limpiar",
+      "errors": {
+        "selectCourseBeforeFiltering": "Seleccione un curso antes de filtrar.",
+        "noPlansForCourse": "No hay planes de QA disponibles para el curso seleccionado.",
+        "selectCourseAndPlanBeforeFiltering": "Seleccione un curso y un plan antes de filtrar."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Nombre del evaluador",
+          "learnerName": "Nombre del alumno",
+          "learnerId": "ID del alumno",
+          "riskLevel": "Nivel de riesgo",
+          "qaApproved": "Aprobado por QA",
+          "totalUnits": "Unidades totales",
+          "selectedUnits": "Unidades seleccionadas",
+          "plannedDate": "Fecha planificada",
+          "courseName": "Nombre del curso"
+        },
+        "values": {
+          "yes": "Sí",
+          "no": "No"
+        }
+      },
+      "toast": {
+        "noDataToExport": "No hay datos disponibles para exportar",
+        "exportSuccess": "Datos exportados correctamente",
+        "exportFailed": "No se pudieron exportar los datos. Inténtelo de nuevo."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Evaluador",
+        "riskLevel": "Nivel de riesgo",
+        "qaApproved": "Aprobado por QA",
+        "learner": "Alumno",
+        "actions": "Acciones"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Seleccione un curso y un plan, luego elija Filtrar para cargar alumnos.",
+        "noLearnersMatch": "Ningún alumno coincide con los filtros actuales."
+      },
+      "loading": "Cargando alumnos...",
+      "errors": {
+        "fetchLearners": "Ocurrió un problema al obtener alumnos para este plan."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Ver documentos / evidencias",
+        "viewPortfolio": "Ver portafolio",
+        "unableOpenDocumentsLearnerIdMissing": "No se pueden abrir los documentos. No se encontró el ID del alumno.",
+        "unableOpenPortfolioLearnerIdMissing": "No se puede abrir el portafolio. No se encontró el ID del alumno."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "No se pudo determinar el usuario actual",
+        "questionsSavedSuccess": "Preguntas guardadas correctamente",
+        "saveQuestionsFailed": "No se pudieron guardar las preguntas",
+        "missingRequiredInfo": "Falta información requerida",
+        "planDetailUpdatedSuccess": "Detalle del plan actualizado correctamente",
+        "updatePlanDetailFailed": "No se pudo actualizar el detalle del plan",
+        "sampledLearnerRemovedSuccess": "Alumno muestreado eliminado correctamente",
+        "removeSampledLearnerFailed": "No se pudo eliminar el alumno muestreado",
+        "actionUpdatedSuccess": "Acción actualizada correctamente",
+        "actionCreatedSuccess": "Acción creada correctamente",
+        "actionDeletedSuccess": "Acción eliminada correctamente",
+        "saveActionFailed": "No se pudo guardar la acción",
+        "deleteActionFailed": "No se pudo eliminar la acción",
+        "documentUploadedSuccess": "Documento cargado correctamente",
+        "uploadDocumentFailed": "No se pudo cargar el documento",
+        "documentDeletedSuccess": "Documento eliminado correctamente",
+        "deleteDocumentFailed": "No se pudo eliminar el documento",
+        "selectFormToAllocate": "Seleccione un formulario para asignar.",
+        "surveyAllocatedSuccess": "Encuesta asignada correctamente",
+        "allocateSurveyFailed": "No se pudo asignar la encuesta",
+        "formUnlinkedSuccess": "Formulario desvinculado correctamente",
+        "unlinkFormFailed": "No se pudo desvincular el formulario",
+        "formMarkedCompletedSuccess": "Formulario marcado como completado",
+        "markCompletedFailed": "No se pudo marcar como completado"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Tipos de Sesión",

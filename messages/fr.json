@@ -955,7 +955,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "Créer et gérer des plans d’échantillonnage QA",
+    "toast": {
+      "invalidCourseRedirecting": "Cours invalide. Redirection...",
+      "sampledLearnersAddedSuccess": "Apprenants échantillonnés ajoutés avec succès.",
+      "applySampledLearnersFailed": "Échec de l’application des apprenants échantillonnés.",
+      "randomSampledLearnersAddedSuccess": "Apprenants échantillonnés aléatoirement ajoutés avec succès.",
+      "applyRandomSampledLearnersFailed": "Échec de l’application des apprenants échantillonnés aléatoirement."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Veuillez sélectionner un plan avant d’appliquer les échantillons.",
+      "selectSampleTypeBeforeApplyingSamples": "Veuillez sélectionner un type d’échantillon avant d’appliquer les échantillons.",
+      "unableToDetermineUserReLogin": "Impossible de déterminer l’utilisateur actuel. Veuillez vous reconnecter et réessayer.",
+      "selectAtLeastOneUnit": "Veuillez sélectionner au moins une unité avant d’appliquer les échantillons.",
+      "selectLearnerWithSampledUnits": "Sélectionnez au moins un apprenant avec des unités échantillonnées avant d’appliquer.",
+      "plannedSampleDateRequired": "La date d’échantillon planifiée est requise",
+      "noLearnersForRandomSamples": "Aucun apprenant disponible pour appliquer des échantillons aléatoires.",
+      "noLearnersWithUnitsForRandomSamples": "Aucun apprenant avec des unités disponibles pour appliquer des échantillons aléatoires."
+    },
+    "filters": {
+      "title": "Filtres",
+      "assessmentMethods": "Méthodes d’évaluation",
+      "selectAll": "Tout sélectionner",
+      "sampleType": "Type d’échantillon",
+      "selectSampleType": "Sélectionnez le type d’échantillon",
+      "plannedSampleDate": "Date d’échantillon planifiée",
+      "plannedSampleDateRequired": "La date d’échantillon planifiée est requise",
+      "applySamples": "Appliquer les échantillons",
+      "applyRandomSamples": "Appliquer des échantillons aléatoires",
+      "assessmentMethodTitles": {
+        "WO": "Observation en milieu de travail",
+        "WP": "Projets en milieu de travail / hors travail",
+        "PW": "Portefeuille de travaux",
+        "VI": "Viva",
+        "LB": "Carnet de bord / devoirs",
+        "PD": "Discussions professionnelles",
+        "PT": "Test pratique",
+        "TE": "Tests / examens",
+        "RJ": "Journal réflexif",
+        "OT": "Autre",
+        "RPL": "Reconnaissance des acquis antérieurs"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Échantillon de portefeuille",
+        "ObserveAssessor": "Observer l’évaluateur",
+        "LearnerInterview": "Entretien apprenant",
+        "EmployerInterview": "Entretien employeur",
+        "Final": "Vérification finale"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "Gérer les plans d’échantillonnage QA, les apprenants et les actions associées."
+    },
+    "actionModal": {
+      "title": "Actions issues de l’échantillonnage",
+      "descriptionEdit": "Modifier les détails de l’action",
+      "descriptionCreate": "Créer une nouvelle action",
+      "fields": {
+        "actionWithName": "Action avec",
+        "actionRequired": "Action requise",
+        "targetDate": "Date cible de l’action",
+        "status": "Statut",
+        "assessorFeedback": "Retour de l’évaluateur"
+      },
+      "placeholders": {
+        "selectUser": "Sélectionner un utilisateur"
+      },
+      "maxCharactersHint": "max 1000 caractères",
+      "cancelClose": "Annuler / Fermer",
+      "saving": "Enregistrement...",
+      "status": {
+        "Pending": "En attente",
+        "In Progress": "En cours",
+        "Completed": "Terminé",
+        "Closed": "Clôturé"
+      },
+      "validation": {
+        "actionWithRequired": "Veuillez sélectionner un utilisateur pour l’action",
+        "actionRequiredRequired": "L’action requise est obligatoire",
+        "actionRequiredMax": "L’action requise doit contenir 1000 caractères ou moins",
+        "targetDateRequired": "La date cible est obligatoire"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Date de début",
+      "dateTo": "Date de fin",
+      "export": "Exporter",
+      "exporting": "Exportation...",
+      "filter": "Filtrer",
+      "clear": "Effacer",
+      "errors": {
+        "selectCourseBeforeFiltering": "Veuillez sélectionner un cours avant de filtrer.",
+        "noPlansForCourse": "Aucun plan QA n’est disponible pour le cours sélectionné.",
+        "selectCourseAndPlanBeforeFiltering": "Veuillez sélectionner un cours et un plan avant de filtrer."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Nom de l’évaluateur",
+          "learnerName": "Nom de l’apprenant",
+          "learnerId": "ID de l’apprenant",
+          "riskLevel": "Niveau de risque",
+          "qaApproved": "Approuvé QA",
+          "totalUnits": "Unités totales",
+          "selectedUnits": "Unités sélectionnées",
+          "plannedDate": "Date planifiée",
+          "courseName": "Nom du cours"
+        },
+        "values": {
+          "yes": "Oui",
+          "no": "Non"
+        }
+      },
+      "toast": {
+        "noDataToExport": "Aucune donnée disponible à exporter",
+        "exportSuccess": "Données exportées avec succès",
+        "exportFailed": "Échec de l’exportation des données. Veuillez réessayer."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Évaluateur",
+        "riskLevel": "Niveau de risque",
+        "qaApproved": "Approuvé QA",
+        "learner": "Apprenant",
+        "actions": "Actions"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Sélectionnez un cours et un plan, puis choisissez Filtrer pour charger les apprenants.",
+        "noLearnersMatch": "Aucun apprenant ne correspond aux filtres actuels."
+      },
+      "loading": "Chargement des apprenants...",
+      "errors": {
+        "fetchLearners": "Une erreur s’est produite lors de la récupération des apprenants pour ce plan."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Voir documents / preuves",
+        "viewPortfolio": "Voir le portfolio",
+        "unableOpenDocumentsLearnerIdMissing": "Impossible d’ouvrir les documents. ID apprenant introuvable.",
+        "unableOpenPortfolioLearnerIdMissing": "Impossible d’ouvrir le portfolio. ID apprenant introuvable."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Impossible de déterminer l’utilisateur actuel",
+        "questionsSavedSuccess": "Questions enregistrées avec succès",
+        "saveQuestionsFailed": "Échec de l’enregistrement des questions",
+        "missingRequiredInfo": "Informations requises manquantes",
+        "planDetailUpdatedSuccess": "Détail du plan mis à jour avec succès",
+        "updatePlanDetailFailed": "Échec de la mise à jour du détail du plan",
+        "sampledLearnerRemovedSuccess": "Apprenant échantillonné supprimé avec succès",
+        "removeSampledLearnerFailed": "Échec de la suppression de l’apprenant échantillonné",
+        "actionUpdatedSuccess": "Action mise à jour avec succès",
+        "actionCreatedSuccess": "Action créée avec succès",
+        "actionDeletedSuccess": "Action supprimée avec succès",
+        "saveActionFailed": "Échec de l’enregistrement de l’action",
+        "deleteActionFailed": "Échec de la suppression de l’action",
+        "documentUploadedSuccess": "Document téléversé avec succès",
+        "uploadDocumentFailed": "Échec du téléversement du document",
+        "documentDeletedSuccess": "Document supprimé avec succès",
+        "deleteDocumentFailed": "Échec de la suppression du document",
+        "selectFormToAllocate": "Sélectionnez un formulaire à allouer.",
+        "surveyAllocatedSuccess": "Enquête allouée avec succès",
+        "allocateSurveyFailed": "Échec de l’allocation de l’enquête",
+        "formUnlinkedSuccess": "Formulaire dissocié avec succès",
+        "unlinkFormFailed": "Échec de la dissociation du formulaire",
+        "formMarkedCompletedSuccess": "Formulaire marqué comme terminé",
+        "markCompletedFailed": "Échec du marquage comme terminé"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

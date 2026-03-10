@@ -956,7 +956,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "إنشاء وإدارة خطط عينات QA",
+    "toast": {
+      "invalidCourseRedirecting": "دورة غير صالحة. جارٍ إعادة التوجيه...",
+      "sampledLearnersAddedSuccess": "تمت إضافة المتعلمين المُختارين بنجاح.",
+      "applySampledLearnersFailed": "فشل تطبيق المتعلمين المُختارين.",
+      "randomSampledLearnersAddedSuccess": "تمت إضافة المتعلمين المُختارين عشوائيًا بنجاح.",
+      "applyRandomSampledLearnersFailed": "فشل تطبيق المتعلمين المُختارين عشوائيًا."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "يرجى اختيار خطة قبل تطبيق العينات.",
+      "selectSampleTypeBeforeApplyingSamples": "يرجى اختيار نوع العينة قبل تطبيق العينات.",
+      "unableToDetermineUserReLogin": "تعذر تحديد المستخدم الحالي. يرجى إعادة تسجيل الدخول والمحاولة مرة أخرى.",
+      "selectAtLeastOneUnit": "يرجى اختيار وحدة واحدة على الأقل قبل تطبيق العينات.",
+      "selectLearnerWithSampledUnits": "اختر متعلمًا واحدًا على الأقل مع وحدات مُختارة قبل التطبيق.",
+      "plannedSampleDateRequired": "تاريخ العينة المخطط مطلوب",
+      "noLearnersForRandomSamples": "لا يوجد متعلمون متاحون لتطبيق عينات عشوائية.",
+      "noLearnersWithUnitsForRandomSamples": "لا يوجد متعلمون لديهم وحدات متاحة لتطبيق عينات عشوائية."
+    },
+    "filters": {
+      "title": "عوامل التصفية",
+      "assessmentMethods": "طرق التقييم",
+      "selectAll": "تحديد الكل",
+      "sampleType": "نوع العينة",
+      "selectSampleType": "اختر نوع العينة",
+      "plannedSampleDate": "تاريخ العينة المخطط",
+      "plannedSampleDateRequired": "تاريخ العينة المخطط مطلوب",
+      "applySamples": "تطبيق العينات",
+      "applyRandomSamples": "تطبيق عينات عشوائية",
+      "assessmentMethodTitles": {
+        "WO": "ملاحظة في مكان العمل",
+        "WP": "مشاريع مكان العمل / خارج العمل",
+        "PW": "محفظة الأعمال",
+        "VI": "فيفا",
+        "LB": "دفتر السجل / الواجبات",
+        "PD": "مناقشات مهنية",
+        "PT": "اختبار عملي",
+        "TE": "اختبارات / امتحانات",
+        "RJ": "يومية تأملية",
+        "OT": "أخرى",
+        "RPL": "اعتراف بالتعلم السابق"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "عينة المحفظة",
+        "ObserveAssessor": "ملاحظة المُقيِّم",
+        "LearnerInterview": "مقابلة المتعلم",
+        "EmployerInterview": "مقابلة صاحب العمل",
+        "Final": "فحص نهائي"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "إدارة خطط عينات QA والمتعلمين والإجراءات المرتبطة."
+    },
+    "actionModal": {
+      "title": "إجراءات من أخذ العينات",
+      "descriptionEdit": "تعديل تفاصيل الإجراء",
+      "descriptionCreate": "إنشاء إجراء جديد",
+      "fields": {
+        "actionWithName": "الإجراء مع",
+        "actionRequired": "الإجراء المطلوب",
+        "targetDate": "تاريخ الهدف للإجراء",
+        "status": "الحالة",
+        "assessorFeedback": "ملاحظات المُقيِّم"
+      },
+      "placeholders": {
+        "selectUser": "اختر مستخدمًا"
+      },
+      "maxCharactersHint": "حد أقصى 1000 حرف",
+      "cancelClose": "إلغاء / إغلاق",
+      "saving": "جارٍ الحفظ...",
+      "status": {
+        "Pending": "قيد الانتظار",
+        "In Progress": "قيد التنفيذ",
+        "Completed": "مكتمل",
+        "Closed": "مغلق"
+      },
+      "validation": {
+        "actionWithRequired": "يرجى اختيار مستخدم للإجراء",
+        "actionRequiredRequired": "الإجراء المطلوب إلزامي",
+        "actionRequiredMax": "يجب ألا يزيد الإجراء المطلوب عن 1000 حرف",
+        "targetDateRequired": "تاريخ الهدف مطلوب"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "التاريخ من",
+      "dateTo": "التاريخ إلى",
+      "export": "تصدير",
+      "exporting": "جارٍ التصدير...",
+      "filter": "تصفية",
+      "clear": "مسح",
+      "errors": {
+        "selectCourseBeforeFiltering": "يرجى اختيار دورة قبل التصفية.",
+        "noPlansForCourse": "لا توجد خطط QA متاحة للدورة المحددة.",
+        "selectCourseAndPlanBeforeFiltering": "يرجى اختيار كل من الدورة والخطة قبل التصفية."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "اسم المُقيِّم",
+          "learnerName": "اسم المتعلم",
+          "learnerId": "معرّف المتعلم",
+          "riskLevel": "مستوى المخاطر",
+          "qaApproved": "موافق عليه من QA",
+          "totalUnits": "إجمالي الوحدات",
+          "selectedUnits": "الوحدات المحددة",
+          "plannedDate": "التاريخ المخطط",
+          "courseName": "اسم الدورة"
+        },
+        "values": {
+          "yes": "نعم",
+          "no": "لا"
+        }
+      },
+      "toast": {
+        "noDataToExport": "لا توجد بيانات متاحة للتصدير",
+        "exportSuccess": "تم تصدير البيانات بنجاح",
+        "exportFailed": "فشل تصدير البيانات. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "المُقيِّم",
+        "riskLevel": "مستوى المخاطر",
+        "qaApproved": "موافق عليه من QA",
+        "learner": "المتعلم",
+        "actions": "الإجراءات"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "اختر دورة وخطة، ثم اختر تصفية لتحميل المتعلمين.",
+        "noLearnersMatch": "لا يوجد متعلمون يطابقون عوامل التصفية الحالية."
+      },
+      "loading": "جارٍ تحميل المتعلمين...",
+      "errors": {
+        "fetchLearners": "حدث خطأ أثناء جلب المتعلمين لهذه الخطة."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "عرض المستندات / الأدلة",
+        "viewPortfolio": "عرض المحفظة",
+        "unableOpenDocumentsLearnerIdMissing": "تعذر فتح المستندات. لم يتم العثور على معرّف المتعلم.",
+        "unableOpenPortfolioLearnerIdMissing": "تعذر فتح المحفظة. لم يتم العثور على معرّف المتعلم."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "تعذر تحديد المستخدم الحالي",
+        "questionsSavedSuccess": "تم حفظ الأسئلة بنجاح",
+        "saveQuestionsFailed": "فشل حفظ الأسئلة",
+        "missingRequiredInfo": "معلومات مطلوبة مفقودة",
+        "planDetailUpdatedSuccess": "تم تحديث تفاصيل الخطة بنجاح",
+        "updatePlanDetailFailed": "فشل تحديث تفاصيل الخطة",
+        "sampledLearnerRemovedSuccess": "تمت إزالة المتعلم المُختار بنجاح",
+        "removeSampledLearnerFailed": "فشل إزالة المتعلم المُختار",
+        "actionUpdatedSuccess": "تم تحديث الإجراء بنجاح",
+        "actionCreatedSuccess": "تم إنشاء الإجراء بنجاح",
+        "actionDeletedSuccess": "تم حذف الإجراء بنجاح",
+        "saveActionFailed": "فشل حفظ الإجراء",
+        "deleteActionFailed": "فشل حذف الإجراء",
+        "documentUploadedSuccess": "تم رفع المستند بنجاح",
+        "uploadDocumentFailed": "فشل رفع المستند",
+        "documentDeletedSuccess": "تم حذف المستند بنجاح",
+        "deleteDocumentFailed": "فشل حذف المستند",
+        "selectFormToAllocate": "اختر نموذجًا لتخصيصه.",
+        "surveyAllocatedSuccess": "تم تخصيص الاستبيان بنجاح",
+        "allocateSurveyFailed": "فشل تخصيص الاستبيان",
+        "formUnlinkedSuccess": "تم إلغاء ربط النموذج بنجاح",
+        "unlinkFormFailed": "فشل إلغاء ربط النموذج",
+        "formMarkedCompletedSuccess": "تم وضع علامة على النموذج كمكتمل",
+        "markCompletedFailed": "فشل وضع علامة كمكتمل"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

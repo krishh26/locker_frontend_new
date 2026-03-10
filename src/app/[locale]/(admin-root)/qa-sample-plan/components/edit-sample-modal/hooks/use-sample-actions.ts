@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
+import { useTranslations } from "next-intl";
 import type { SampleAction } from '@/store/api/qa-sample-plan/types'
 import {
   useLazyGetSampleActionsQuery,
@@ -10,6 +11,7 @@ import {
 import type { ActionFormData } from '../../action-modal'
 
 export function useSampleActions(planDetailId: string | number | null, iqaId: string | number | null) {
+  const t = useTranslations("qaSamplePlan.editSampleModal.toast");
   const [actions, setActions] = useState<SampleAction[]>([])
   const [deleteActionId, setDeleteActionId] = useState<number | null>(null)
 
@@ -32,7 +34,7 @@ export function useSampleActions(planDetailId: string | number | null, iqaId: st
   const handleSaveAction = useCallback(
     async (formData: ActionFormData, editingAction: SampleAction | null) => {
       if (!planDetailId || !iqaId) {
-        toast.error('Missing required information')
+        toast.error(t("missingRequiredInfo"))
         return
       }
 
@@ -46,7 +48,7 @@ export function useSampleActions(planDetailId: string | number | null, iqaId: st
             assessor_feedback: formData.assessor_feedback || undefined,
             action_with_id: formData.action_with_id,
           }).unwrap()
-          toast.success('Action updated successfully')
+          toast.success(t("actionUpdatedSuccess"))
         } else {
           await createAction({
             plan_detail_id: planDetailId,
@@ -57,7 +59,7 @@ export function useSampleActions(planDetailId: string | number | null, iqaId: st
             created_by_id: iqaId,
             assessor_feedback: formData.assessor_feedback || undefined,
           }).unwrap()
-          toast.success('Action created successfully')
+          toast.success(t("actionCreatedSuccess"))
         }
         fetchActions()
         return true
@@ -65,31 +67,31 @@ export function useSampleActions(planDetailId: string | number | null, iqaId: st
         const message =
           (error as { data?: { message?: string }; error?: string })?.data?.message ||
           (error as { error?: string })?.error ||
-          'Failed to save action'
+          t("saveActionFailed")
         toast.error(message)
         return false
       }
     },
-    [planDetailId, iqaId, createAction, updateAction, fetchActions]
+    [planDetailId, iqaId, createAction, updateAction, fetchActions, t]
   )
 
   const handleDeleteAction = useCallback(
     async (actionId: number) => {
       try {
         await deleteAction(actionId).unwrap()
-        toast.success('Action deleted successfully')
+        toast.success(t("actionDeletedSuccess"))
         fetchActions()
         setDeleteActionId(null)
       } catch (error: unknown) {
         const message =
           (error as { data?: { message?: string }; error?: string })?.data?.message ||
           (error as { error?: string })?.error ||
-          'Failed to delete action'
+          t("deleteActionFailed")
         toast.error(message)
         setDeleteActionId(null)
       }
     },
-    [deleteAction, fetchActions]
+    [deleteAction, fetchActions, t]
   )
 
   return {

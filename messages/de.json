@@ -708,7 +708,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "QA-Stichprobenpläne erstellen und verwalten",
+    "toast": {
+      "invalidCourseRedirecting": "Ungültiger Kurs. Weiterleitung...",
+      "sampledLearnersAddedSuccess": "Stichproben-Lernende erfolgreich hinzugefügt.",
+      "applySampledLearnersFailed": "Stichproben-Lernende konnten nicht angewendet werden.",
+      "randomSampledLearnersAddedSuccess": "Zufällig stichprobenartige Lernende erfolgreich hinzugefügt.",
+      "applyRandomSampledLearnersFailed": "Zufällige Stichproben-Lernende konnten nicht angewendet werden."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Bitte wählen Sie einen Plan, bevor Sie Stichproben anwenden.",
+      "selectSampleTypeBeforeApplyingSamples": "Bitte wählen Sie einen Stichprobentyp, bevor Sie Stichproben anwenden.",
+      "unableToDetermineUserReLogin": "Aktueller Benutzer konnte nicht ermittelt werden. Bitte erneut anmelden und versuchen Sie es erneut.",
+      "selectAtLeastOneUnit": "Bitte wählen Sie mindestens eine Einheit, bevor Sie Stichproben anwenden.",
+      "selectLearnerWithSampledUnits": "Wählen Sie mindestens einen Lernenden mit stichprobenartigen Einheiten, bevor Sie anwenden.",
+      "plannedSampleDateRequired": "Geplantes Stichprobendatum ist erforderlich",
+      "noLearnersForRandomSamples": "Keine Lernenden verfügbar, um zufällige Stichproben anzuwenden.",
+      "noLearnersWithUnitsForRandomSamples": "Keine Lernenden mit Einheiten verfügbar, um zufällige Stichproben anzuwenden."
+    },
+    "filters": {
+      "title": "Filter",
+      "assessmentMethods": "Bewertungsmethoden",
+      "selectAll": "Alle auswählen",
+      "sampleType": "Stichprobentyp",
+      "selectSampleType": "Stichprobentyp auswählen",
+      "plannedSampleDate": "Geplantes Stichprobendatum",
+      "plannedSampleDateRequired": "Geplantes Stichprobendatum ist erforderlich",
+      "applySamples": "Stichproben anwenden",
+      "applyRandomSamples": "Zufällige Stichproben anwenden",
+      "assessmentMethodTitles": {
+        "WO": "Beobachtung am Arbeitsplatz",
+        "WP": "Projekte am Arbeitsplatz / außerhalb der Arbeit",
+        "PW": "Arbeitsportfolio",
+        "VI": "Viva",
+        "LB": "Logbuch / Aufgaben",
+        "PD": "Fachgespräche",
+        "PT": "Praktischer Test",
+        "TE": "Tests / Prüfungen",
+        "RJ": "Reflexionsjournal",
+        "OT": "Sonstige",
+        "RPL": "Anerkannte Vorbildung"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Portfolio-Stichprobe",
+        "ObserveAssessor": "Assessor beobachten",
+        "LearnerInterview": "Lernenden-Interview",
+        "EmployerInterview": "Arbeitgeber-Interview",
+        "Final": "Abschlussprüfung"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "QA-Stichprobenpläne, Lernende und zugehörige Aktionen verwalten."
+    },
+    "actionModal": {
+      "title": "Aktionen aus der Stichprobe",
+      "descriptionEdit": "Aktionsdetails bearbeiten",
+      "descriptionCreate": "Neue Aktion erstellen",
+      "fields": {
+        "actionWithName": "Aktion mit",
+        "actionRequired": "Erforderliche Aktion",
+        "targetDate": "Zieldatum der Aktion",
+        "status": "Status",
+        "assessorFeedback": "Feedback des Assessors"
+      },
+      "placeholders": {
+        "selectUser": "Benutzer auswählen"
+      },
+      "maxCharactersHint": "max. 1000 Zeichen",
+      "cancelClose": "Abbrechen / Schließen",
+      "saving": "Wird gespeichert...",
+      "status": {
+        "Pending": "Ausstehend",
+        "In Progress": "In Bearbeitung",
+        "Completed": "Abgeschlossen",
+        "Closed": "Geschlossen"
+      },
+      "validation": {
+        "actionWithRequired": "Bitte wählen Sie einen Benutzer für die Aktion aus",
+        "actionRequiredRequired": "Erforderliche Aktion ist Pflicht",
+        "actionRequiredMax": "Erforderliche Aktion muss 1000 Zeichen oder weniger haben",
+        "targetDateRequired": "Zieldatum ist erforderlich"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Datum von",
+      "dateTo": "Datum bis",
+      "export": "Exportieren",
+      "exporting": "Wird exportiert...",
+      "filter": "Filtern",
+      "clear": "Zurücksetzen",
+      "errors": {
+        "selectCourseBeforeFiltering": "Bitte wählen Sie einen Kurs, bevor Sie filtern.",
+        "noPlansForCourse": "Für den ausgewählten Kurs sind keine QA-Pläne verfügbar.",
+        "selectCourseAndPlanBeforeFiltering": "Bitte wählen Sie einen Kurs und einen Plan, bevor Sie filtern."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Name des Assessors",
+          "learnerName": "Name des Lernenden",
+          "learnerId": "Lernenden-ID",
+          "riskLevel": "Risikostufe",
+          "qaApproved": "QA genehmigt",
+          "totalUnits": "Einheiten gesamt",
+          "selectedUnits": "Ausgewählte Einheiten",
+          "plannedDate": "Geplantes Datum",
+          "courseName": "Kursname"
+        },
+        "values": {
+          "yes": "Ja",
+          "no": "Nein"
+        }
+      },
+      "toast": {
+        "noDataToExport": "Keine Daten zum Exportieren verfügbar",
+        "exportSuccess": "Daten erfolgreich exportiert",
+        "exportFailed": "Daten konnten nicht exportiert werden. Bitte versuchen Sie es erneut."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Assessor",
+        "riskLevel": "Risikostufe",
+        "qaApproved": "QA genehmigt",
+        "learner": "Lernender",
+        "actions": "Aktionen"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Wählen Sie einen Kurs und Plan und anschließend Filtern, um Lernende zu laden.",
+        "noLearnersMatch": "Keine Lernenden entsprechen den aktuellen Filtern."
+      },
+      "loading": "Lernende werden geladen...",
+      "errors": {
+        "fetchLearners": "Beim Abrufen der Lernenden für diesen Plan ist ein Fehler aufgetreten."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Dokumente / Nachweise ansehen",
+        "viewPortfolio": "Portfolio ansehen",
+        "unableOpenDocumentsLearnerIdMissing": "Dokumente können nicht geöffnet werden. Lernenden-ID nicht gefunden.",
+        "unableOpenPortfolioLearnerIdMissing": "Portfolio kann nicht geöffnet werden. Lernenden-ID nicht gefunden."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Aktueller Benutzer konnte nicht ermittelt werden",
+        "questionsSavedSuccess": "Fragen erfolgreich gespeichert",
+        "saveQuestionsFailed": "Fragen konnten nicht gespeichert werden",
+        "missingRequiredInfo": "Erforderliche Informationen fehlen",
+        "planDetailUpdatedSuccess": "Plan-Detail erfolgreich aktualisiert",
+        "updatePlanDetailFailed": "Plan-Detail konnte nicht aktualisiert werden",
+        "sampledLearnerRemovedSuccess": "Stichproben-Lernender erfolgreich entfernt",
+        "removeSampledLearnerFailed": "Stichproben-Lernender konnte nicht entfernt werden",
+        "actionUpdatedSuccess": "Aktion erfolgreich aktualisiert",
+        "actionCreatedSuccess": "Aktion erfolgreich erstellt",
+        "actionDeletedSuccess": "Aktion erfolgreich gelöscht",
+        "saveActionFailed": "Aktion konnte nicht gespeichert werden",
+        "deleteActionFailed": "Aktion konnte nicht gelöscht werden",
+        "documentUploadedSuccess": "Dokument erfolgreich hochgeladen",
+        "uploadDocumentFailed": "Dokument konnte nicht hochgeladen werden",
+        "documentDeletedSuccess": "Dokument erfolgreich gelöscht",
+        "deleteDocumentFailed": "Dokument konnte nicht gelöscht werden",
+        "selectFormToAllocate": "Bitte wählen Sie ein Formular zum Zuweisen aus.",
+        "surveyAllocatedSuccess": "Umfrage erfolgreich zugewiesen",
+        "allocateSurveyFailed": "Umfrage konnte nicht zugewiesen werden",
+        "formUnlinkedSuccess": "Formular erfolgreich getrennt",
+        "unlinkFormFailed": "Formular konnte nicht getrennt werden",
+        "formMarkedCompletedSuccess": "Formular als abgeschlossen markiert",
+        "markCompletedFailed": "Konnte nicht als abgeschlossen markieren"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

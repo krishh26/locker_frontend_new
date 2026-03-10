@@ -2,6 +2,7 @@
 
 import { memo, Fragment } from "react";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -30,6 +31,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
   isLearnersInFlight,
   isLearnersError,
 }: LearnersTableContentProps) {
+  const t = useTranslations("qaSamplePlan.learnersTable");
   const filterState = useAppSelector(selectFilterState);
   const filterApplied = filterState.filterApplied;
   const filterError = filterState.filterError;
@@ -39,11 +41,11 @@ export const LearnersTableContent = memo(function LearnersTableContent({
         <TableHeader>
           <TableRow>
             <TableHead className="w-[50px]"></TableHead>
-            <TableHead>Assessor</TableHead>
-            <TableHead>Risk Level</TableHead>
-            <TableHead>QA Approved</TableHead>
-            <TableHead>Learner</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>{t("columns.assessor")}</TableHead>
+            <TableHead>{t("columns.riskLevel")}</TableHead>
+            <TableHead>{t("columns.qaApproved")}</TableHead>
+            <TableHead>{t("columns.learner")}</TableHead>
+            <TableHead>{t("columns.actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -51,7 +53,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
             <TableRow>
               <TableCell colSpan={6} className="text-center py-12">
                 <p className="text-muted-foreground">
-                  Select a course and plan, then choose Filter to load learners.
+                  {t("empty.selectCoursePlanThenFilter")}
                 </p>
               </TableCell>
             </TableRow>
@@ -60,7 +62,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
               <TableCell colSpan={6} className="text-center py-12">
                 <div className="flex items-center justify-center gap-2">
                   <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-                  <span className="text-muted-foreground">Loading learners...</span>
+                  <span className="text-muted-foreground">{t("loading")}</span>
                 </div>
               </TableCell>
             </TableRow>
@@ -68,7 +70,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
             <TableRow>
               <TableCell colSpan={6} className="text-center py-12">
                 <p className="text-destructive">
-                  {filterError || "Something went wrong while fetching learners for this plan."}
+                  {filterError || t("errors.fetchLearners")}
                 </p>
               </TableCell>
             </TableRow>
@@ -89,7 +91,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
           ) : (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-12">
-                <p className="text-muted-foreground">No learners match the current filters.</p>
+                <p className="text-muted-foreground">{t("empty.noLearnersMatch")}</p>
               </TableCell>
             </TableRow>
           )}

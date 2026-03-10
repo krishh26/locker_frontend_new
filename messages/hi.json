@@ -955,7 +955,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "QA सैंपल प्लान बनाएं और प्रबंधित करें",
+    "toast": {
+      "invalidCourseRedirecting": "अमान्य कोर्स। रीडायरेक्ट किया जा रहा है...",
+      "sampledLearnersAddedSuccess": "सैंपल किए गए लर्नर सफलतापूर्वक जोड़े गए।",
+      "applySampledLearnersFailed": "सैंपल किए गए लर्नर लागू करने में विफल।",
+      "randomSampledLearnersAddedSuccess": "रैंडम सैंपल किए गए लर्नर सफलतापूर्वक जोड़े गए।",
+      "applyRandomSampledLearnersFailed": "रैंडम सैंपल किए गए लर्नर लागू करने में विफल।"
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "सैंपल लागू करने से पहले एक प्लान चुनें।",
+      "selectSampleTypeBeforeApplyingSamples": "सैंपल लागू करने से पहले सैंपल टाइप चुनें।",
+      "unableToDetermineUserReLogin": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका। कृपया फिर से लॉगिन करें और प्रयास करें।",
+      "selectAtLeastOneUnit": "सैंपल लागू करने से पहले कम से कम एक यूनिट चुनें।",
+      "selectLearnerWithSampledUnits": "लागू करने से पहले कम से कम एक लर्नर (सैंपल्ड यूनिट्स के साथ) चुनें।",
+      "plannedSampleDateRequired": "प्लान्ड सैंपल डेट आवश्यक है",
+      "noLearnersForRandomSamples": "रैंडम सैंपल लागू करने के लिए कोई लर्नर उपलब्ध नहीं है।",
+      "noLearnersWithUnitsForRandomSamples": "रैंडम सैंपल लागू करने के लिए यूनिट्स वाले लर्नर उपलब्ध नहीं हैं।"
+    },
+    "filters": {
+      "title": "फ़िल्टर्स",
+      "assessmentMethods": "असेसमेंट मेथड्स",
+      "selectAll": "सभी चुनें",
+      "sampleType": "सैंपल टाइप",
+      "selectSampleType": "सैंपल टाइप चुनें",
+      "plannedSampleDate": "प्लान्ड सैंपल डेट",
+      "plannedSampleDateRequired": "प्लान्ड सैंपल डेट आवश्यक है",
+      "applySamples": "सैंपल लागू करें",
+      "applyRandomSamples": "रैंडम सैंपल लागू करें",
+      "assessmentMethodTitles": {
+        "WO": "वर्कप्लेस ऑब्ज़र्वेशन",
+        "WP": "वर्कप्लेस प्रोजेक्ट्स / वर्क से बाहर प्रोजेक्ट्स",
+        "PW": "वर्क पोर्टफोलियो",
+        "VI": "वाइवा",
+        "LB": "लॉग बुक / असाइनमेंट्स",
+        "PD": "प्रोफेशनल डिस्कशन्स",
+        "PT": "प्रैक्टिकल टेस्ट",
+        "TE": "टेस्ट / परीक्षाएँ",
+        "RJ": "रिफ्लेक्टिव जर्नल",
+        "OT": "अन्य",
+        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "पोर्टफोलियो सैंपल",
+        "ObserveAssessor": "असेसर का अवलोकन",
+        "LearnerInterview": "लर्नर इंटरव्यू",
+        "EmployerInterview": "एम्प्लॉयर इंटरव्यू",
+        "Final": "अंतिम जांच"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "QA सैंपल प्लान, लर्नर और संबंधित एक्शन्स प्रबंधित करें।"
+    },
+    "actionModal": {
+      "title": "सैंपलिंग से एक्शन्स",
+      "descriptionEdit": "एक्शन विवरण संपादित करें",
+      "descriptionCreate": "नया एक्शन बनाएं",
+      "fields": {
+        "actionWithName": "एक्शन किसके साथ",
+        "actionRequired": "आवश्यक एक्शन",
+        "targetDate": "एक्शन टारगेट तारीख",
+        "status": "स्थिति",
+        "assessorFeedback": "असेसर फीडबैक"
+      },
+      "placeholders": {
+        "selectUser": "एक उपयोगकर्ता चुनें"
+      },
+      "maxCharactersHint": "अधिकतम 1000 अक्षर",
+      "cancelClose": "रद्द करें / बंद करें",
+      "saving": "सहेज रहा है...",
+      "status": {
+        "Pending": "लंबित",
+        "In Progress": "प्रगति में",
+        "Completed": "पूर्ण",
+        "Closed": "बंद"
+      },
+      "validation": {
+        "actionWithRequired": "कृपया एक्शन के लिए उपयोगकर्ता चुनें",
+        "actionRequiredRequired": "आवश्यक एक्शन अनिवार्य है",
+        "actionRequiredMax": "आवश्यक एक्शन 1000 अक्षरों या उससे कम होना चाहिए",
+        "targetDateRequired": "टारगेट तारीख अनिवार्य है"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "तारीख से",
+      "dateTo": "तारीख तक",
+      "export": "एक्सपोर्ट",
+      "exporting": "एक्सपोर्ट हो रहा है...",
+      "filter": "फ़िल्टर",
+      "clear": "क्लियर",
+      "errors": {
+        "selectCourseBeforeFiltering": "फ़िल्टर करने से पहले एक कोर्स चुनें।",
+        "noPlansForCourse": "चुने गए कोर्स के लिए कोई QA प्लान उपलब्ध नहीं है।",
+        "selectCourseAndPlanBeforeFiltering": "फ़िल्टर करने से पहले कोर्स और प्लान दोनों चुनें।"
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "असेसर नाम",
+          "learnerName": "लर्नर नाम",
+          "learnerId": "लर्नर ID",
+          "riskLevel": "रिस्क लेवल",
+          "qaApproved": "QA अप्रूव्ड",
+          "totalUnits": "कुल यूनिट्स",
+          "selectedUnits": "चुनी गई यूनिट्स",
+          "plannedDate": "प्लान्ड तारीख",
+          "courseName": "कोर्स नाम"
+        },
+        "values": {
+          "yes": "हाँ",
+          "no": "नहीं"
+        }
+      },
+      "toast": {
+        "noDataToExport": "एक्सपोर्ट के लिए डेटा उपलब्ध नहीं है",
+        "exportSuccess": "डेटा सफलतापूर्वक एक्सपोर्ट हुआ",
+        "exportFailed": "डेटा एक्सपोर्ट करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "असेसर",
+        "riskLevel": "रिस्क लेवल",
+        "qaApproved": "QA अप्रूव्ड",
+        "learner": "लर्नर",
+        "actions": "एक्शन्स"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "पहले कोर्स और प्लान चुनें, फिर लर्नर लोड करने के लिए फ़िल्टर चुनें।",
+        "noLearnersMatch": "वर्तमान फ़िल्टर्स से कोई लर्नर मेल नहीं खाता।"
+      },
+      "loading": "लर्नर लोड हो रहे हैं...",
+      "errors": {
+        "fetchLearners": "इस प्लान के लिए लर्नर फ़ेच करते समय कुछ गलत हुआ।"
+      },
+      "actions": {
+        "viewDocumentsEvidence": "डॉक्यूमेंट्स / एविडेंस देखें",
+        "viewPortfolio": "पोर्टफोलियो देखें",
+        "unableOpenDocumentsLearnerIdMissing": "डॉक्यूमेंट्स नहीं खुल सके। लर्नर ID नहीं मिली।",
+        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।"
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "वर्तमान उपयोगकर्ता निर्धारित नहीं हो सका",
+        "questionsSavedSuccess": "प्रश्न सफलतापूर्वक सहेजे गए",
+        "saveQuestionsFailed": "प्रश्न सहेजने में विफल",
+        "missingRequiredInfo": "आवश्यक जानकारी गायब है",
+        "planDetailUpdatedSuccess": "सैंपल प्लान डिटेल सफलतापूर्वक अपडेट हुई",
+        "updatePlanDetailFailed": "सैंपल प्लान डिटेल अपडेट करने में विफल",
+        "sampledLearnerRemovedSuccess": "सैंपल किया गया लर्नर सफलतापूर्वक हटाया गया",
+        "removeSampledLearnerFailed": "सैंपल किए गए लर्नर को हटाने में विफल",
+        "actionUpdatedSuccess": "एक्शन सफलतापूर्वक अपडेट हुआ",
+        "actionCreatedSuccess": "एक्शन सफलतापूर्वक बनाया गया",
+        "actionDeletedSuccess": "एक्शन सफलतापूर्वक हटाया गया",
+        "saveActionFailed": "एक्शन सहेजने में विफल",
+        "deleteActionFailed": "एक्शन हटाने में विफल",
+        "documentUploadedSuccess": "डॉक्यूमेंट सफलतापूर्वक अपलोड हुआ",
+        "uploadDocumentFailed": "डॉक्यूमेंट अपलोड करने में विफल",
+        "documentDeletedSuccess": "डॉक्यूमेंट सफलतापूर्वक हटाया गया",
+        "deleteDocumentFailed": "डॉक्यूमेंट हटाने में विफल",
+        "selectFormToAllocate": "अलॉट करने के लिए एक फ़ॉर्म चुनें।",
+        "surveyAllocatedSuccess": "सर्वे सफलतापूर्वक अलॉट हुआ",
+        "allocateSurveyFailed": "सर्वे अलॉट करने में विफल",
+        "formUnlinkedSuccess": "फ़ॉर्म सफलतापूर्वक अनलिंक हुआ",
+        "unlinkFormFailed": "फ़ॉर्म अनलिंक करने में विफल",
+        "formMarkedCompletedSuccess": "फ़ॉर्म को पूर्ण के रूप में चिह्नित किया गया",
+        "markCompletedFailed": "पूर्ण के रूप में चिह्नित करने में विफल"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

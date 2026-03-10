@@ -708,7 +708,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "Crea e gestisci piani campione QA",
+    "toast": {
+      "invalidCourseRedirecting": "Corso non valido. Reindirizzamento...",
+      "sampledLearnersAddedSuccess": "Discenti campionati aggiunti con successo.",
+      "applySampledLearnersFailed": "Impossibile applicare i discenti campionati.",
+      "randomSampledLearnersAddedSuccess": "Discenti campionati casualmente aggiunti con successo.",
+      "applyRandomSampledLearnersFailed": "Impossibile applicare i discenti campionati casualmente."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Seleziona un piano prima di applicare i campioni.",
+      "selectSampleTypeBeforeApplyingSamples": "Seleziona un tipo di campione prima di applicare i campioni.",
+      "unableToDetermineUserReLogin": "Impossibile determinare l’utente corrente. Effettua di nuovo l’accesso e riprova.",
+      "selectAtLeastOneUnit": "Seleziona almeno un'unità prima di applicare i campioni.",
+      "selectLearnerWithSampledUnits": "Seleziona almeno un discente con unità campionate prima di applicare.",
+      "plannedSampleDateRequired": "La data del campione pianificata è obbligatoria",
+      "noLearnersForRandomSamples": "Nessun discente disponibile per applicare campioni casuali.",
+      "noLearnersWithUnitsForRandomSamples": "Nessun discente con unità disponibile per applicare campioni casuali."
+    },
+    "filters": {
+      "title": "Filtri",
+      "assessmentMethods": "Metodi di valutazione",
+      "selectAll": "Seleziona tutto",
+      "sampleType": "Tipo di campione",
+      "selectSampleType": "Seleziona il tipo di campione",
+      "plannedSampleDate": "Data campione pianificata",
+      "plannedSampleDateRequired": "La data del campione pianificata è obbligatoria",
+      "applySamples": "Applica campioni",
+      "applyRandomSamples": "Applica campioni casuali",
+      "assessmentMethodTitles": {
+        "WO": "Osservazione sul posto di lavoro",
+        "WP": "Progetti sul posto di lavoro / fuori dal lavoro",
+        "PW": "Portfolio di lavoro",
+        "VI": "Viva",
+        "LB": "Registro / compiti",
+        "PD": "Discussioni professionali",
+        "PT": "Test pratico",
+        "TE": "Test / esami",
+        "RJ": "Diario riflessivo",
+        "OT": "Altro",
+        "RPL": "Riconoscimento di apprendimenti pregressi"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Campione portfolio",
+        "ObserveAssessor": "Osserva valutatore",
+        "LearnerInterview": "Intervista discente",
+        "EmployerInterview": "Intervista datore di lavoro",
+        "Final": "Controllo finale"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "Gestisci piani campione QA, discenti e azioni associate."
+    },
+    "actionModal": {
+      "title": "Azioni dal campionamento",
+      "descriptionEdit": "Modifica i dettagli dell’azione",
+      "descriptionCreate": "Crea una nuova azione",
+      "fields": {
+        "actionWithName": "Azione con",
+        "actionRequired": "Azione richiesta",
+        "targetDate": "Data obiettivo dell’azione",
+        "status": "Stato",
+        "assessorFeedback": "Feedback del valutatore"
+      },
+      "placeholders": {
+        "selectUser": "Seleziona un utente"
+      },
+      "maxCharactersHint": "max 1000 caratteri",
+      "cancelClose": "Annulla / Chiudi",
+      "saving": "Salvataggio...",
+      "status": {
+        "Pending": "In sospeso",
+        "In Progress": "In corso",
+        "Completed": "Completato",
+        "Closed": "Chiuso"
+      },
+      "validation": {
+        "actionWithRequired": "Seleziona un utente per l’azione",
+        "actionRequiredRequired": "L’azione richiesta è obbligatoria",
+        "actionRequiredMax": "L’azione richiesta deve essere di 1000 caratteri o meno",
+        "targetDateRequired": "La data obiettivo è obbligatoria"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Data da",
+      "dateTo": "Data a",
+      "export": "Esporta",
+      "exporting": "Esportazione...",
+      "filter": "Filtra",
+      "clear": "Pulisci",
+      "errors": {
+        "selectCourseBeforeFiltering": "Seleziona un corso prima di filtrare.",
+        "noPlansForCourse": "Nessun piano QA disponibile per il corso selezionato.",
+        "selectCourseAndPlanBeforeFiltering": "Seleziona sia un corso che un piano prima di filtrare."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Nome valutatore",
+          "learnerName": "Nome discente",
+          "learnerId": "ID discente",
+          "riskLevel": "Livello di rischio",
+          "qaApproved": "Approvato QA",
+          "totalUnits": "Unità totali",
+          "selectedUnits": "Unità selezionate",
+          "plannedDate": "Data pianificata",
+          "courseName": "Nome corso"
+        },
+        "values": {
+          "yes": "Sì",
+          "no": "No"
+        }
+      },
+      "toast": {
+        "noDataToExport": "Nessun dato disponibile da esportare",
+        "exportSuccess": "Dati esportati con successo",
+        "exportFailed": "Impossibile esportare i dati. Riprova."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Valutatore",
+        "riskLevel": "Livello di rischio",
+        "qaApproved": "Approvato QA",
+        "learner": "Discente",
+        "actions": "Azioni"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Seleziona un corso e un piano, quindi scegli Filtra per caricare i discenti.",
+        "noLearnersMatch": "Nessun discente corrisponde ai filtri correnti."
+      },
+      "loading": "Caricamento discenti...",
+      "errors": {
+        "fetchLearners": "Si è verificato un errore durante il recupero dei discenti per questo piano."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "Visualizza documenti / prove",
+        "viewPortfolio": "Visualizza portfolio",
+        "unableOpenDocumentsLearnerIdMissing": "Impossibile aprire i documenti. ID discente non trovato.",
+        "unableOpenPortfolioLearnerIdMissing": "Impossibile aprire il portfolio. ID discente non trovato."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Impossibile determinare l’utente corrente",
+        "questionsSavedSuccess": "Domande salvate con successo",
+        "saveQuestionsFailed": "Impossibile salvare le domande",
+        "missingRequiredInfo": "Informazioni richieste mancanti",
+        "planDetailUpdatedSuccess": "Dettaglio piano aggiornato con successo",
+        "updatePlanDetailFailed": "Impossibile aggiornare il dettaglio del piano",
+        "sampledLearnerRemovedSuccess": "Discente campionato rimosso con successo",
+        "removeSampledLearnerFailed": "Impossibile rimuovere il discente campionato",
+        "actionUpdatedSuccess": "Azione aggiornata con successo",
+        "actionCreatedSuccess": "Azione creata con successo",
+        "actionDeletedSuccess": "Azione eliminata con successo",
+        "saveActionFailed": "Impossibile salvare l'azione",
+        "deleteActionFailed": "Impossibile eliminare l'azione",
+        "documentUploadedSuccess": "Documento caricato con successo",
+        "uploadDocumentFailed": "Impossibile caricare il documento",
+        "documentDeletedSuccess": "Documento eliminato con successo",
+        "deleteDocumentFailed": "Impossibile eliminare il documento",
+        "selectFormToAllocate": "Seleziona un modulo da assegnare.",
+        "surveyAllocatedSuccess": "Sondaggio assegnato con successo",
+        "allocateSurveyFailed": "Impossibile assegnare il sondaggio",
+        "formUnlinkedSuccess": "Modulo scollegato con successo",
+        "unlinkFormFailed": "Impossibile scollegare il modulo",
+        "formMarkedCompletedSuccess": "Modulo contrassegnato come completato",
+        "markCompletedFailed": "Impossibile contrassegnare come completato"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

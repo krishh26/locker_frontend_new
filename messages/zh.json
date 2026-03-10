@@ -955,7 +955,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "创建并管理 QA 抽样计划",
+    "toast": {
+      "invalidCourseRedirecting": "课程无效。正在重定向...",
+      "sampledLearnersAddedSuccess": "已成功添加抽样学员。",
+      "applySampledLearnersFailed": "应用抽样学员失败。",
+      "randomSampledLearnersAddedSuccess": "已成功添加随机抽样学员。",
+      "applyRandomSampledLearnersFailed": "应用随机抽样学员失败。"
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "在应用抽样前请选择一个计划。",
+      "selectSampleTypeBeforeApplyingSamples": "在应用抽样前请选择抽样类型。",
+      "unableToDetermineUserReLogin": "无法确定当前用户。请重新登录后再试。",
+      "selectAtLeastOneUnit": "在应用抽样前请选择至少一个单元。",
+      "selectLearnerWithSampledUnits": "在应用前请选择至少一位包含抽样单元的学员。",
+      "plannedSampleDateRequired": "计划抽样日期为必填项",
+      "noLearnersForRandomSamples": "没有可用于随机抽样的学员。",
+      "noLearnersWithUnitsForRandomSamples": "没有包含单元的学员可用于随机抽样。"
+    },
+    "filters": {
+      "title": "筛选",
+      "assessmentMethods": "评估方式",
+      "selectAll": "全选",
+      "sampleType": "抽样类型",
+      "selectSampleType": "请选择抽样类型",
+      "plannedSampleDate": "计划抽样日期",
+      "plannedSampleDateRequired": "计划抽样日期为必填项",
+      "applySamples": "应用抽样",
+      "applyRandomSamples": "应用随机抽样",
+      "assessmentMethodTitles": {
+        "WO": "工作场所观察",
+        "WP": "工作场所项目 / 工作外项目",
+        "PW": "工作作品集",
+        "VI": "口试",
+        "LB": "日志 / 作业",
+        "PD": "专业讨论",
+        "PT": "实操测试",
+        "TE": "测试 / 考试",
+        "RJ": "反思日志",
+        "OT": "其他",
+        "RPL": "认可的先前学习"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "抽样作品集",
+        "ObserveAssessor": "观察评估员",
+        "LearnerInterview": "学员访谈",
+        "EmployerInterview": "雇主访谈",
+        "Final": "最终检查"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "管理 QA 抽样计划、学员及相关操作。"
+    },
+    "actionModal": {
+      "title": "抽样产生的操作",
+      "descriptionEdit": "编辑操作详情",
+      "descriptionCreate": "创建新的操作",
+      "fields": {
+        "actionWithName": "操作对象",
+        "actionRequired": "所需操作",
+        "targetDate": "操作目标日期",
+        "status": "状态",
+        "assessorFeedback": "评估员反馈"
+      },
+      "placeholders": {
+        "selectUser": "选择用户"
+      },
+      "maxCharactersHint": "最多 1000 个字符",
+      "cancelClose": "取消 / 关闭",
+      "saving": "保存中...",
+      "status": {
+        "Pending": "待处理",
+        "In Progress": "进行中",
+        "Completed": "已完成",
+        "Closed": "已关闭"
+      },
+      "validation": {
+        "actionWithRequired": "请选择操作对象用户",
+        "actionRequiredRequired": "所需操作为必填项",
+        "actionRequiredMax": "所需操作不得超过 1000 个字符",
+        "targetDateRequired": "目标日期为必填项"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "开始日期",
+      "dateTo": "结束日期",
+      "export": "导出",
+      "exporting": "导出中...",
+      "filter": "筛选",
+      "clear": "清除",
+      "errors": {
+        "selectCourseBeforeFiltering": "筛选前请选择课程。",
+        "noPlansForCourse": "所选课程没有可用的 QA 计划。",
+        "selectCourseAndPlanBeforeFiltering": "筛选前请选择课程和计划。"
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "评估员姓名",
+          "learnerName": "学员姓名",
+          "learnerId": "学员 ID",
+          "riskLevel": "风险等级",
+          "qaApproved": "QA 已批准",
+          "totalUnits": "单元总数",
+          "selectedUnits": "已选单元",
+          "plannedDate": "计划日期",
+          "courseName": "课程名称"
+        },
+        "values": {
+          "yes": "是",
+          "no": "否"
+        }
+      },
+      "toast": {
+        "noDataToExport": "没有可导出的数据",
+        "exportSuccess": "数据导出成功",
+        "exportFailed": "导出数据失败。请重试。"
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "评估员",
+        "riskLevel": "风险等级",
+        "qaApproved": "QA 已批准",
+        "learner": "学员",
+        "actions": "操作"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "请选择课程和计划，然后点击筛选以加载学员。",
+        "noLearnersMatch": "没有学员符合当前筛选条件。"
+      },
+      "loading": "正在加载学员...",
+      "errors": {
+        "fetchLearners": "获取该计划的学员时发生错误。"
+      },
+      "actions": {
+        "viewDocumentsEvidence": "查看文档 / 证据",
+        "viewPortfolio": "查看作品集",
+        "unableOpenDocumentsLearnerIdMissing": "无法打开文档。未找到学员 ID。",
+        "unableOpenPortfolioLearnerIdMissing": "无法打开作品集。未找到学员 ID。"
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "无法确定当前用户",
+        "questionsSavedSuccess": "问题保存成功",
+        "saveQuestionsFailed": "保存问题失败",
+        "missingRequiredInfo": "缺少必填信息",
+        "planDetailUpdatedSuccess": "抽样计划详情更新成功",
+        "updatePlanDetailFailed": "更新抽样计划详情失败",
+        "sampledLearnerRemovedSuccess": "已成功移除抽样学员",
+        "removeSampledLearnerFailed": "移除抽样学员失败",
+        "actionUpdatedSuccess": "操作更新成功",
+        "actionCreatedSuccess": "操作创建成功",
+        "actionDeletedSuccess": "操作删除成功",
+        "saveActionFailed": "保存操作失败",
+        "deleteActionFailed": "删除操作失败",
+        "documentUploadedSuccess": "文档上传成功",
+        "uploadDocumentFailed": "上传文档失败",
+        "documentDeletedSuccess": "文档删除成功",
+        "deleteDocumentFailed": "删除文档失败",
+        "selectFormToAllocate": "请选择要分配的表单。",
+        "surveyAllocatedSuccess": "问卷分配成功",
+        "allocateSurveyFailed": "分配问卷失败",
+        "formUnlinkedSuccess": "表单解绑成功",
+        "unlinkFormFailed": "表单解绑失败",
+        "formMarkedCompletedSuccess": "表单已标记为完成",
+        "markCompletedFailed": "标记为完成失败"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

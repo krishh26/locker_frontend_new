@@ -975,7 +975,176 @@
   },
   "qaSamplePlan": {
     "pageTitle": "QA Sample Plan",
-    "pageSubtitle": "Create and manage QA sample plans"
+    "pageSubtitle": "Create and manage QA sample plans",
+    "toast": {
+      "invalidCourseRedirecting": "Invalid course. Redirecting...",
+      "sampledLearnersAddedSuccess": "Sampled learners added successfully.",
+      "applySampledLearnersFailed": "Failed to apply sampled learners.",
+      "randomSampledLearnersAddedSuccess": "Random sampled learners added successfully.",
+      "applyRandomSampledLearnersFailed": "Failed to apply random sampled learners."
+    },
+    "errors": {
+      "selectPlanBeforeApplyingSamples": "Please select a plan before applying samples.",
+      "selectSampleTypeBeforeApplyingSamples": "Please select a sample type before applying samples.",
+      "unableToDetermineUserReLogin": "Unable to determine current user. Please re-login and try again.",
+      "selectAtLeastOneUnit": "Please select at least one unit before applying samples.",
+      "selectLearnerWithSampledUnits": "Select at least one learner with sampled units before applying.",
+      "plannedSampleDateRequired": "Planned Sample Date is required",
+      "noLearnersForRandomSamples": "No learners available to apply random samples.",
+      "noLearnersWithUnitsForRandomSamples": "No learners with units available to apply random samples."
+    },
+    "filters": {
+      "title": "Filters",
+      "assessmentMethods": "Assessment Methods",
+      "selectAll": "Select All",
+      "sampleType": "Sample Type",
+      "selectSampleType": "Select sample type",
+      "plannedSampleDate": "Planned Sample Date",
+      "plannedSampleDateRequired": "Planned Sample Date is required",
+      "applySamples": "Apply Samples",
+      "applyRandomSamples": "Apply Random Samples",
+      "assessmentMethodTitles": {
+        "WO": "Workplace Observation",
+        "WP": "Workplace Projects/Projects away from Work",
+        "PW": "Portfolio of Work",
+        "VI": "Viva",
+        "LB": "Log Book/Assignments",
+        "PD": "Professional Discussions",
+        "PT": "Practical Test",
+        "TE": "Tests/Examinations",
+        "RJ": "Reflective Journal",
+        "OT": "Other",
+        "RPL": "Recognised Prior Learning"
+      },
+      "sampleTypeLabels": {
+        "Portfolio": "Sample Portfolio",
+        "ObserveAssessor": "Observe Assessor",
+        "LearnerInterview": "Learner Interview",
+        "EmployerInterview": "Employer Interview",
+        "Final": "Final Check"
+      }
+    },
+    "layout": {
+      "title": "QA Sample Plan",
+      "subtitle": "Manage QA sample plans, learners, and associated actions."
+    },
+    "actionModal": {
+      "title": "Actions from sampling",
+      "descriptionEdit": "Edit the action details",
+      "descriptionCreate": "Create a new action",
+      "fields": {
+        "actionWithName": "Action With Name",
+        "actionRequired": "Action Required",
+        "targetDate": "Action Target Date",
+        "status": "Status",
+        "assessorFeedback": "Assessor Feedback"
+      },
+      "placeholders": {
+        "selectUser": "Select a user"
+      },
+      "maxCharactersHint": "max 1000 characters",
+      "cancelClose": "Cancel / Close",
+      "saving": "Saving...",
+      "status": {
+        "Pending": "Pending",
+        "In Progress": "In Progress",
+        "Completed": "Completed",
+        "Closed": "Closed"
+      },
+      "validation": {
+        "actionWithRequired": "Please select an action with user",
+        "actionRequiredRequired": "Action required is required",
+        "actionRequiredMax": "Action required must be 1000 characters or less",
+        "targetDateRequired": "Target date is required"
+      }
+    },
+    "actionBar": {
+      "dateFrom": "Date From",
+      "dateTo": "Date To",
+      "export": "Export",
+      "exporting": "Exporting...",
+      "filter": "Filter",
+      "clear": "Clear",
+      "errors": {
+        "selectCourseBeforeFiltering": "Please select a course before filtering.",
+        "noPlansForCourse": "No QA plans are available for the selected course.",
+        "selectCourseAndPlanBeforeFiltering": "Please select both a course and a plan before filtering."
+      },
+      "export": {
+        "filenamePrefix": "qa-sample-plan-learners",
+        "headers": {
+          "assessorName": "Assessor Name",
+          "learnerName": "Learner Name",
+          "learnerId": "Learner ID",
+          "riskLevel": "Risk Level",
+          "qaApproved": "QA Approved",
+          "totalUnits": "Total Units",
+          "selectedUnits": "Selected Units",
+          "plannedDate": "Planned Date",
+          "courseName": "Course Name"
+        },
+        "values": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "toast": {
+        "noDataToExport": "No data available to export",
+        "exportSuccess": "Data exported successfully",
+        "exportFailed": "Failed to export data. Please try again."
+      }
+    },
+    "learnersTable": {
+      "columns": {
+        "assessor": "Assessor",
+        "riskLevel": "Risk Level",
+        "qaApproved": "QA Approved",
+        "learner": "Learner",
+        "actions": "Actions"
+      },
+      "empty": {
+        "selectCoursePlanThenFilter": "Select a course and plan, then choose Filter to load learners.",
+        "noLearnersMatch": "No learners match the current filters."
+      },
+      "loading": "Loading learners...",
+      "errors": {
+        "fetchLearners": "Something went wrong while fetching learners for this plan."
+      },
+      "actions": {
+        "viewDocumentsEvidence": "View Documents / Evidence",
+        "viewPortfolio": "View Portfolio",
+        "unableOpenDocumentsLearnerIdMissing": "Unable to open documents. Learner ID not found.",
+        "unableOpenPortfolioLearnerIdMissing": "Unable to open portfolio. Learner ID not found."
+      }
+    },
+    "editSampleModal": {
+      "toast": {
+        "unableToDetermineUser": "Unable to determine current user",
+        "questionsSavedSuccess": "Questions saved successfully",
+        "saveQuestionsFailed": "Failed to save questions",
+        "missingRequiredInfo": "Missing required information",
+        "planDetailUpdatedSuccess": "Sample plan detail updated successfully",
+        "updatePlanDetailFailed": "Failed to update sample plan detail",
+        "sampledLearnerRemovedSuccess": "Sampled learner removed successfully",
+        "removeSampledLearnerFailed": "Failed to remove sampled learner",
+        "actionUpdatedSuccess": "Action updated successfully",
+        "actionCreatedSuccess": "Action created successfully",
+        "actionDeletedSuccess": "Action deleted successfully",
+        "saveActionFailed": "Failed to save action",
+        "deleteActionFailed": "Failed to delete action",
+        "documentUploadedSuccess": "Document uploaded successfully",
+        "uploadDocumentFailed": "Failed to upload document",
+        "documentDeletedSuccess": "Document deleted successfully",
+        "deleteDocumentFailed": "Failed to delete document",
+        "selectFormToAllocate": "Select a form to allocate.",
+        "surveyAllocatedSuccess": "Survey allocated successfully",
+        "allocateSurveyFailed": "Failed to allocate survey",
+        "formUnlinkedSuccess": "Form unlinked successfully",
+        "unlinkFormFailed": "Failed to unlink form",
+        "formMarkedCompletedSuccess": "Form marked as completed",
+        "markCompletedFailed": "Failed to mark as completed"
+      }
+    }
   },
   "sessionTypes": {
     "pageTitle": "Session Types",

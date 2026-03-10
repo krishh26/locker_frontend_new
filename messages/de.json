@@ -2232,5 +2232,46 @@
       "updateSuccess": "Zentrum erfolgreich aktualisiert",
       "updateFailed": "Zentrum konnte nicht aktualisiert werden"
     }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "Ihre Innovationen vorschlagen",
+      "subtitle": "Teilen Sie Ihre Ideen und Innovationen mit dem Team"
+    },
+    "table": {
+      "headers": {
+        "topic": "Thema",
+        "description": "Beschreibung",
+        "email": "E-Mail",
+        "userName": "Benutzername",
+        "date": "Datum",
+        "status": "Status",
+        "action": "Aktion"
+      },
+      "loading": "Wird geladen...",
+      "noData": "Keine Innovationen gefunden."
+    },
+    "actions": {
+      "submitIdea": "Idee einreichen",
+      "viewChat": "Anzeigen & chatten",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "Thema",
+        "description": "Beschreibung",
+        "email": "E-Mail",
+        "userName": "Benutzername",
+        "date": "Datum",
+        "status": "Status"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Innovation erfolgreich gelöscht!",
+      "deleteFailed": "Löschen der Innovation fehlgeschlagen. Bitte versuchen Sie es erneut.",
+      "csvSuccess": "CSV erfolgreich exportiert"
+    }
   }
 }

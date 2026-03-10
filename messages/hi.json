@@ -2427,6 +2427,47 @@
       "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
+  "proposeInnovations": {
+    "page": {
+      "title": "अपने नवाचार सुझाएँ",
+      "subtitle": "अपनी आइडिया और नवाचार टीम के साथ साझा करें"
+    },
+    "table": {
+      "headers": {
+        "topic": "विषय",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता नाम",
+        "date": "तारीख",
+        "status": "स्थिति",
+        "action": "कार्रवाई"
+      },
+      "loading": "लोड हो रहा है...",
+      "noData": "कोई नवाचार नहीं मिला।"
+    },
+    "actions": {
+      "submitIdea": "एक आइडिया सबमिट करें",
+      "viewChat": "देखें और चैट करें",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "विषय",
+        "description": "विवरण",
+        "email": "ईमेल",
+        "userName": "उपयोगकर्ता नाम",
+        "date": "तारीख",
+        "status": "स्थिति"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "नवाचार सफलतापूर्वक हटाया गया!",
+      "deleteFailed": "नवाचार हटाने में विफल। कृपया पुनः प्रयास करें।",
+      "csvSuccess": "CSV सफलतापूर्वक निर्यात किया गया"
+    }
+  },
   "safeguarding": {
   "pageTitle": "सुरक्षा संपर्क प्रबंधन",
   "pageSubtitle": "सुरक्षा अधिकारी के संपर्क विवरण और अतिरिक्त जानकारी प्रबंधित करें",

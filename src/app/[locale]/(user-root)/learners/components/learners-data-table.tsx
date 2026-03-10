@@ -871,7 +871,7 @@ export function LearnersDataTable() {
         },
       },
     ];
-  }, [canEditComments, isAdmin, isEmployer, isEqa]);
+  }, [canEditComments, isAdmin, isEmployer, isEqa, tTable]);
 
   // Determine table data - all roles now use server-side data
   // tableData is already defined above with conditional logic

@@ -2898,5 +2898,46 @@
       "updateSuccess": "中心更新成功",
       "updateFailed": "更新中心失败"
     }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "提交你的创新",
+      "subtitle": "与团队分享你的想法和创新"
+    },
+    "table": {
+      "headers": {
+        "topic": "主题",
+        "description": "描述",
+        "email": "邮箱",
+        "userName": "用户名",
+        "date": "日期",
+        "status": "状态",
+        "action": "操作"
+      },
+      "loading": "加载中...",
+      "noData": "未找到任何创新。"
+    },
+    "actions": {
+      "submitIdea": "提交一个想法",
+      "viewChat": "查看并聊天",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "主题",
+        "description": "描述",
+        "email": "邮箱",
+        "userName": "用户名",
+        "date": "日期",
+        "status": "状态"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "创新已成功删除！",
+      "deleteFailed": "删除创新失败，请重试。",
+      "csvSuccess": "CSV 导出成功"
+    }
   }
 }

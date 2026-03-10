@@ -50,6 +50,7 @@ import type { Innovation } from "@/store/api/innovations/types"
 import { InnovationsDeleteDialog } from "./innovations-delete-dialog"
 import { InnovationsAddEditDialog } from "./innovations-add-edit-dialog"
 import { InnovationsViewChatDrawer } from "./innovations-view-chat-drawer"
+import { useTranslations } from "next-intl"
 
 export function ProposeYourInnovationsDataTable() {
   const user = useAppSelector((state) => state.auth.user)
@@ -66,6 +67,8 @@ export function ProposeYourInnovationsDataTable() {
   const [viewChatDrawerOpen, setViewChatDrawerOpen] = useState(false)
   const [selectedInnovation, setSelectedInnovation] = useState<Innovation | null>(null)
   const [dialogMode, setDialogMode] = useState<"add" | "edit">("add")
+
+  const t = useTranslations("proposeInnovations")
 
   // For non-admin users, filter by their user_id
   const userId: number | undefined = !isAdmin && user?.user_id
@@ -113,12 +116,12 @@ export function ProposeYourInnovationsDataTable() {
 
     try {
       await deleteInnovation({ id: selectedInnovation.id }).unwrap()
-      toast.success("Innovation deleted successfully!")
+      toast.success(t("toast.deleteSuccess"))
       setDeleteDialogOpen(false)
       setSelectedInnovation(null)
       refetch()
     } catch {
-      toast.error("Failed to delete innovation. Please try again.")
+      toast.error(t("toast.deleteFailed"))
     }
   }
 
@@ -140,14 +143,14 @@ export function ProposeYourInnovationsDataTable() {
     () => [
       {
         accessorKey: "topic",
-        header: "Topic",
+        header: t("table.headers.topic"),
         cell: ({ row }) => (
           <div className="font-medium max-w-[200px] truncate">{row.original.topic}</div>
         ),
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.headers.description"),
         cell: ({ row }) => (
           <div className="max-w-[300px] truncate text-muted-foreground">
             {row.original.description || "-"}
@@ -158,7 +161,7 @@ export function ProposeYourInnovationsDataTable() {
         ? [
             {
               accessorKey: "email",
-              header: "Email",
+              header: t("table.headers.email"),
               cell: ({ row }: { row: { original: Innovation } }) => (
                 <div className="max-w-[200px] truncate">
                   {row.original.innovation_propose_by_id?.email || "-"}
@@ -167,7 +170,7 @@ export function ProposeYourInnovationsDataTable() {
             },
             {
               accessorKey: "user_name",
-              header: "User Name",
+              header: t("table.headers.userName"),
               cell: ({ row }: { row: { original: Innovation } }) => (
                 <div className="max-w-[200px] truncate">
                   {row.original.innovation_propose_by_id?.user_name || "-"}
@@ -178,12 +181,12 @@ export function ProposeYourInnovationsDataTable() {
         : []),
       {
         accessorKey: "created_at",
-        header: "Date",
+        header: t("table.headers.date"),
         cell: ({ row }) => formatDate(row.original.created_at),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.headers.status"),
         cell: ({ row }) => {
           const status = row.original.status
           return (
@@ -197,7 +200,7 @@ export function ProposeYourInnovationsDataTable() {
       },
       {
         id: "actions",
-        header: "Action",
+        header: t("table.headers.action"),
         cell: ({ row }) => (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -208,7 +211,7 @@ export function ProposeYourInnovationsDataTable() {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => handleView(row.original)}>
                 <Eye className="mr-2 h-4 w-4" />
-                View & Chat
+                {t("actions.viewChat")}
               </DropdownMenuItem>
               {!isEmployer && (
                 <DropdownMenuItem
@@ -216,7 +219,7 @@ export function ProposeYourInnovationsDataTable() {
                   disabled={!isAdmin && row.original.status === "Closed"}
                 >
                   <Pencil className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("actions.edit")}
                 </DropdownMenuItem>
               )}
               {!isEmployer && (
@@ -225,7 +228,7 @@ export function ProposeYourInnovationsDataTable() {
                   className="text-destructive"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {t("actions.delete")}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -260,8 +263,20 @@ export function ProposeYourInnovationsDataTable() {
   const handleExportCSV = () => {
     const data = innovationsData?.data || []
     const headers = isAdmin
-      ? ["Topic", "Description", "Email", "User Name", "Date", "Status"]
-      : ["Topic", "Description", "Date", "Status"]
+      ? [
+          t("csv.headers.topic"),
+          t("csv.headers.description"),
+          t("csv.headers.email"),
+          t("csv.headers.userName"),
+          t("csv.headers.date"),
+          t("csv.headers.status"),
+        ]
+      : [
+          t("csv.headers.topic"),
+          t("csv.headers.description"),
+          t("csv.headers.date"),
+          t("csv.headers.status"),
+        ]
     const rows = data.map((innovation) =>
       isAdmin
         ? [
@@ -291,13 +306,13 @@ export function ProposeYourInnovationsDataTable() {
     link.setAttribute("href", url)
     link.setAttribute(
       "download",
-      `innovations-${format(new Date(), "yyyy-MM-dd")}.csv`
+      `${t("csv.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`
     )
     link.style.visibility = "hidden"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvSuccess"))
   }
 
   return (
@@ -307,7 +322,7 @@ export function ProposeYourInnovationsDataTable() {
         {!isAdmin && (
           <Button onClick={handleAddClick} className="gap-2">
             <Plus className="h-4 w-4" />
-            Submit An Idea
+            {t("actions.submitIdea")}
           </Button>
         )}
       </div>
@@ -338,7 +353,7 @@ export function ProposeYourInnovationsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  {t("table.loading")}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -363,7 +378,7 @@ export function ProposeYourInnovationsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No innovations found.
+                  {t("table.noData")}
                 </TableCell>
               </TableRow>
             )}

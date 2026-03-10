@@ -2936,5 +2936,46 @@
       "updateSuccess": "Centro atualizado com sucesso",
       "updateFailed": "Falha ao atualizar o centro"
     }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "Propor inovações",
+      "subtitle": "Partilhe as suas ideias e inovações com a equipa"
+    },
+    "table": {
+      "headers": {
+        "topic": "Tópico",
+        "description": "Descrição",
+        "email": "Email",
+        "userName": "Nome de utilizador",
+        "date": "Data",
+        "status": "Estado",
+        "action": "Ação"
+      },
+      "loading": "A carregar...",
+      "noData": "Nenhuma inovação encontrada."
+    },
+    "actions": {
+      "submitIdea": "Submeter uma ideia",
+      "viewChat": "Ver e conversar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "Tópico",
+        "description": "Descrição",
+        "email": "Email",
+        "userName": "Nome de utilizador",
+        "date": "Data",
+        "status": "Estado"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Inovação eliminada com sucesso!",
+      "deleteFailed": "Falha ao eliminar a inovação. Tente novamente.",
+      "csvSuccess": "CSV exportado com sucesso"
+    }
   }
 }

@@ -2866,5 +2866,46 @@
       "updateSuccess": "تم تحديث المركز بنجاح",
       "updateFailed": "فشل في تحديث المركز"
     }
+  },
+  "proposeInnovations": {
+    "page": {
+      "title": "اقترح ابتكاراتك",
+      "subtitle": "شارك أفكارك وابتكاراتك مع الفريق"
+    },
+    "table": {
+      "headers": {
+        "topic": "الموضوع",
+        "description": "الوصف",
+        "email": "البريد الإلكتروني",
+        "userName": "اسم المستخدم",
+        "date": "التاريخ",
+        "status": "الحالة",
+        "action": "الإجراء"
+      },
+      "loading": "جارٍ التحميل...",
+      "noData": "لم يتم العثور على أي ابتكارات."
+    },
+    "actions": {
+      "submitIdea": "إرسال فكرة",
+      "viewChat": "عرض و محادثة",
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "الموضوع",
+        "description": "الوصف",
+        "email": "البريد الإلكتروني",
+        "userName": "اسم المستخدم",
+        "date": "التاريخ",
+        "status": "الحالة"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الابتكار بنجاح!",
+      "deleteFailed": "فشل حذف الابتكار. يرجى المحاولة مرة أخرى.",
+      "csvSuccess": "تم تصدير ملف CSV بنجاح"
+    }
   }
 }

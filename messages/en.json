@@ -2418,6 +2418,47 @@
       "clearFailed": "Failed to clear acknowledgments. Please try again."
     }
   },
+  "proposeInnovations": {
+    "page": {
+      "title": "Propose Your Innovations",
+      "subtitle": "Share your ideas and innovations with the team"
+    },
+    "table": {
+      "headers": {
+        "topic": "Topic",
+        "description": "Description",
+        "email": "Email",
+        "userName": "User Name",
+        "date": "Date",
+        "status": "Status",
+        "action": "Action"
+      },
+      "loading": "Loading...",
+      "noData": "No innovations found."
+    },
+    "actions": {
+      "submitIdea": "Submit An Idea",
+      "viewChat": "View & Chat",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "csv": {
+      "filenamePrefix": "innovations",
+      "headers": {
+        "topic": "Topic",
+        "description": "Description",
+        "email": "Email",
+        "userName": "User Name",
+        "date": "Date",
+        "status": "Status"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Innovation deleted successfully!",
+      "deleteFailed": "Failed to delete innovation. Please try again.",
+      "csvSuccess": "CSV exported successfully"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

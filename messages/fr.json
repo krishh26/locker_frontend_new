@@ -3626,6 +3626,106 @@
     "item": "élément",
     "items": "éléments"
   },
+  "evidenceLibrary": {
+    "pageTitle": "Bibliothèque d'évidences",
+    "pageSubtitle": "Gérez et organisez vos fichiers d’évidences",
+    "filters": {
+      "searchPlaceholder": "Rechercher par titre...",
+      "coursePlaceholder": "Filtrer par cours",
+      "allCourses": "Tous les cours"
+    },
+    "table": {
+      "columns": {
+        "title": "Titre",
+        "description": "Description",
+        "files": "Fichiers",
+        "status": "Statut",
+        "createdDate": "Date de création",
+        "view": "Voir",
+        "actions": "Actions"
+      },
+      "status": {
+        "loading": "Chargement de la bibliothèque d’évidences...",
+        "noResults": "Aucune évidence trouvée."
+      },
+      "pagination": {
+        "summary": "Affichage de {current} sur {total} enregistrements",
+        "labelPage": "Page",
+        "previous": "Précédent",
+        "next": "Suivant"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Télécharger les fichiers d’évidences",
+      "addEvidence": "Ajouter une évidence"
+    },
+    "form": {
+      "createTitle": "Créer une évidence",
+      "editTitle": "Modifier l’évidence",
+      "createSubtitle": "Ajouter une nouvelle évidence à votre bibliothèque",
+      "editSubtitle": "Mettre à jour les détails et les mappages de l’évidence"
+    },
+    "deleteDialog": {
+      "title": "Supprimer l’évidence ?",
+      "description": "La suppression de cette évidence supprimera également toutes les données et relations associées. Cette action est irréversible. Souhaitez-vous continuer ?",
+      "cancel": "Annuler",
+      "confirm": "Supprimer l’évidence",
+      "deleting": "Suppression..."
+    },
+    "downloadDialog": {
+      "title": "Télécharger les fichiers d’évidences",
+      "description": "Sélectionnez un cours pour afficher et télécharger ses fichiers d’évidences",
+      "selectCourseLabel": "Sélectionner un cours",
+      "selectAllFiles": "Sélectionner tous les fichiers",
+      "loadingEvidence": "Chargement des évidences...",
+      "noEvidenceForCourse": "Aucun fichier d’évidence trouvé pour ce cours",
+      "noCourseSelectedTitle": "Sélectionner un cours",
+      "noCourseSelectedDescription": "Choisissez un cours dans la liste pour afficher ses fichiers d’évidences",
+      "file": {
+        "noFileName": "Aucun nom de fichier",
+        "unknownStatus": "Inconnu"
+      },
+      "button": {
+        "cancel": "Annuler",
+        "download": "Télécharger ({count} fichier{suffix})",
+        "downloading": "Téléchargement..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Téléverser à nouveau l’évidence",
+      "description": "Sélectionnez un nouveau fichier pour remplacer le fichier d’évidence existant pour \"{title}\".",
+      "selectedFile": "Sélectionné : {fileName}",
+      "buttons": {
+        "cancel": "Annuler",
+        "upload": "Téléverser",
+        "uploading": "Téléversement..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Téléverser à nouveau",
+      "viewEdit": "Voir/Modifier",
+      "view": "Voir",
+      "download": "Télécharger",
+      "delete": "Supprimer"
+    },
+    "toast": {
+      "deleteSuccess": "L’évidence a été supprimée avec succès",
+      "deleteFailed": "Échec de la suppression de l’évidence. Veuillez réessayer.",
+      "noFileForDownload": "Aucun fichier disponible pour le téléchargement",
+      "downloadingFile": "Téléchargement de {fileName}",
+      "reuploadMissingFile": "Veuillez sélectionner un fichier à téléverser",
+      "reuploadSuccess": "Le fichier d’évidence a été remplacé avec succès",
+      "reuploadFailed": "Échec du nouveau téléversement de l’évidence",
+      "downloadSelectOne": "Veuillez sélectionner au moins un fichier à télécharger",
+      "downloadNoFilesForSelection": "Aucun fichier trouvé pour les enregistrements sélectionnés",
+      "downloadCorsOpenedInTabs": "{count} fichier(s) ouvert(s) dans de nouveaux onglets en raison de restrictions CORS",
+      "downloadAllInTabs": "Tous les fichiers ont été ouverts dans de nouveaux onglets. Le téléchargement ZIP n’est pas disponible en raison de restrictions CORS.",
+      "downloadMixed": "{zipCount} fichier(s) téléchargé(s) en ZIP. {tabCount} fichier(s) ouvert(s) dans de nouveaux onglets en raison de restrictions CORS.",
+      "downloadZipCorrupt": "Le fichier ZIP créé est corrompu",
+      "downloadSuccess": "{count} fichier(s) d’évidence sélectionné(s) téléchargé(s) avec succès",
+      "downloadFailed": "Échec du téléchargement des fichiers d’évidences. Veuillez réessayer."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "Choisir les unités",
     "pageSubtitle": "Sélectionnez les unités obligatoires et optionnelles pour l’apprenant",

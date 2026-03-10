@@ -3626,6 +3626,106 @@
     "item": "item",
     "items": "itens"
   },
+  "evidenceLibrary": {
+    "pageTitle": "Biblioteca de evidências",
+    "pageSubtitle": "Gerir e organizar os seus ficheiros de evidências",
+    "filters": {
+      "searchPlaceholder": "Procurar por título...",
+      "coursePlaceholder": "Filtrar por curso",
+      "allCourses": "Todos os cursos"
+    },
+    "table": {
+      "columns": {
+        "title": "Título",
+        "description": "Descrição",
+        "files": "Ficheiros",
+        "status": "Estado",
+        "createdDate": "Data de criação",
+        "view": "Ver",
+        "actions": "Ações"
+      },
+      "status": {
+        "loading": "A carregar a biblioteca de evidências...",
+        "noResults": "Nenhuma evidência encontrada."
+      },
+      "pagination": {
+        "summary": "A mostrar {current} de {total} registos",
+        "labelPage": "Página",
+        "previous": "Anterior",
+        "next": "Seguinte"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Transferir ficheiros de evidências",
+      "addEvidence": "Adicionar evidência"
+    },
+    "form": {
+      "createTitle": "Criar evidência",
+      "editTitle": "Editar evidência",
+      "createSubtitle": "Adicionar nova evidência à sua biblioteca",
+      "editSubtitle": "Atualizar os detalhes e mapeamentos da evidência"
+    },
+    "deleteDialog": {
+      "title": "Eliminar evidência?",
+      "description": "Eliminar esta evidência também irá remover todos os dados e relações associadas. Esta ação não pode ser anulada. Deseja continuar?",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar evidência",
+      "deleting": "A eliminar..."
+    },
+    "downloadDialog": {
+      "title": "Transferir ficheiros de evidências",
+      "description": "Selecione um curso para ver e transferir os seus ficheiros de evidências",
+      "selectCourseLabel": "Selecionar curso",
+      "selectAllFiles": "Selecionar todos os ficheiros",
+      "loadingEvidence": "A carregar evidências...",
+      "noEvidenceForCourse": "Não foram encontrados ficheiros de evidências para este curso",
+      "noCourseSelectedTitle": "Selecionar um curso",
+      "noCourseSelectedDescription": "Escolha um curso da lista para ver os seus ficheiros de evidências",
+      "file": {
+        "noFileName": "Sem nome de ficheiro",
+        "unknownStatus": "Desconhecido"
+      },
+      "button": {
+        "cancel": "Cancelar",
+        "download": "Transferir ({count} ficheiro{suffix})",
+        "downloading": "A transferir..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Voltar a carregar evidência",
+      "description": "Selecione um novo ficheiro para substituir o ficheiro de evidências existente de \"{title}\".",
+      "selectedFile": "Selecionado: {fileName}",
+      "buttons": {
+        "cancel": "Cancelar",
+        "upload": "Carregar",
+        "uploading": "A carregar..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Voltar a carregar",
+      "viewEdit": "Ver/Editar",
+      "view": "Ver",
+      "download": "Transferir",
+      "delete": "Eliminar"
+    },
+    "toast": {
+      "deleteSuccess": "Evidência eliminada com sucesso",
+      "deleteFailed": "Não foi possível eliminar a evidência. Tente novamente.",
+      "noFileForDownload": "Nenhum ficheiro disponível para transferência",
+      "downloadingFile": "A transferir {fileName}",
+      "reuploadMissingFile": "Selecione um ficheiro para carregar",
+      "reuploadSuccess": "Ficheiro de evidências substituído com sucesso",
+      "reuploadFailed": "Não foi possível voltar a carregar a evidência",
+      "downloadSelectOne": "Selecione pelo menos um ficheiro para transferir",
+      "downloadNoFilesForSelection": "Não foram encontrados ficheiros para os registos selecionados",
+      "downloadCorsOpenedInTabs": "{count} ficheiro(s) foram abertos em novos separadores devido a restrições CORS",
+      "downloadAllInTabs": "Todos os ficheiros foram abertos em novos separadores. A transferência ZIP não está disponível devido a restrições CORS.",
+      "downloadMixed": "{zipCount} ficheiro(s) foram transferidos em formato ZIP. {tabCount} ficheiro(s) foram abertos em novos separadores devido a restrições CORS.",
+      "downloadZipCorrupt": "O ficheiro ZIP criado está corrompido",
+      "downloadSuccess": "{count} ficheiro(s) de evidências selecionados transferidos com sucesso",
+      "downloadFailed": "Não foi possível transferir os ficheiros de evidências. Tente novamente."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "Escolher unidades",
     "pageSubtitle": "Selecione as unidades obrigatórias e opcionais para o formando",

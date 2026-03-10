@@ -2792,6 +2792,106 @@
     "item": "Element",
     "items": "Elemente"
   },
+  "evidenceLibrary": {
+    "pageTitle": "Evidenzbibliothek",
+    "pageSubtitle": "Verwalten und organisieren Sie Ihre Evidenzdateien",
+    "filters": {
+      "searchPlaceholder": "Nach Titel suchen...",
+      "coursePlaceholder": "Nach Kurs filtern",
+      "allCourses": "Alle Kurse"
+    },
+    "table": {
+      "columns": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "files": "Dateien",
+        "status": "Status",
+        "createdDate": "Erstellungsdatum",
+        "view": "Anzeigen",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "loading": "Evidenzbibliothek wird geladen...",
+        "noResults": "Keine Evidenz gefunden."
+      },
+      "pagination": {
+        "summary": "{current} von {total} Einträgen werden angezeigt",
+        "labelPage": "Seite",
+        "previous": "Zurück",
+        "next": "Weiter"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Evidenzdateien herunterladen",
+      "addEvidence": "Evidenz hinzufügen"
+    },
+    "form": {
+      "createTitle": "Evidenz erstellen",
+      "editTitle": "Evidenz bearbeiten",
+      "createSubtitle": "Neue Evidenz zu Ihrer Bibliothek hinzufügen",
+      "editSubtitle": "Evidenzdetails und Zuordnungen aktualisieren"
+    },
+    "deleteDialog": {
+      "title": "Evidenz löschen?",
+      "description": "Wenn Sie diese Evidenz löschen, werden auch alle zugehörigen Daten und Verknüpfungen entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. Möchten Sie fortfahren?",
+      "cancel": "Abbrechen",
+      "confirm": "Evidenz löschen",
+      "deleting": "Wird gelöscht..."
+    },
+    "downloadDialog": {
+      "title": "Evidenzdateien herunterladen",
+      "description": "Wählen Sie einen Kurs aus, um dessen Evidenzdateien anzuzeigen und herunterzuladen",
+      "selectCourseLabel": "Kurs auswählen",
+      "selectAllFiles": "Alle Dateien auswählen",
+      "loadingEvidence": "Evidenz wird geladen...",
+      "noEvidenceForCourse": "Für diesen Kurs wurden keine Evidenzdateien gefunden.",
+      "noCourseSelectedTitle": "Kurs auswählen",
+      "noCourseSelectedDescription": "Wählen Sie einen Kurs aus der Liste, um dessen Evidenzdateien anzuzeigen",
+      "file": {
+        "noFileName": "Kein Dateiname",
+        "unknownStatus": "Unbekannt"
+      },
+      "button": {
+        "cancel": "Abbrechen",
+        "download": "Herunterladen ({count} Datei{suffix})",
+        "downloading": "Wird heruntergeladen..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Evidenz neu hochladen",
+      "description": "Wählen Sie eine neue Datei, um die vorhandene Evidenzdatei für \"{title}\" zu ersetzen.",
+      "selectedFile": "Ausgewählt: {fileName}",
+      "buttons": {
+        "cancel": "Abbrechen",
+        "upload": "Hochladen",
+        "uploading": "Wird hochgeladen..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Neu hochladen",
+      "viewEdit": "Anzeigen/Bearbeiten",
+      "view": "Anzeigen",
+      "download": "Herunterladen",
+      "delete": "Löschen"
+    },
+    "toast": {
+      "deleteSuccess": "Evidenz wurde erfolgreich gelöscht",
+      "deleteFailed": "Evidenz konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+      "noFileForDownload": "Keine Datei zum Herunterladen verfügbar",
+      "downloadingFile": "{fileName} wird heruntergeladen",
+      "reuploadMissingFile": "Bitte wählen Sie eine Datei zum Hochladen aus",
+      "reuploadSuccess": "Evidenzdatei wurde erfolgreich ersetzt",
+      "reuploadFailed": "Evidenz konnte nicht erneut hochgeladen werden",
+      "downloadSelectOne": "Bitte wählen Sie mindestens eine Datei zum Herunterladen aus",
+      "downloadNoFilesForSelection": "Für die ausgewählten Einträge wurden keine Dateien gefunden",
+      "downloadCorsOpenedInTabs": "{count} Dateien wurden aufgrund von CORS-Einschränkungen in neuen Tabs geöffnet",
+      "downloadAllInTabs": "Alle Dateien wurden in neuen Tabs geöffnet. ZIP-Download ist aufgrund von CORS-Einschränkungen nicht verfügbar.",
+      "downloadMixed": "{zipCount} Dateien wurden als ZIP heruntergeladen. {tabCount} Dateien wurden aufgrund von CORS-Einschränkungen in neuen Tabs geöffnet.",
+      "downloadZipCorrupt": "Die erstellte ZIP-Datei ist beschädigt",
+      "downloadSuccess": "{count} ausgewählte Evidenzdatei(en) wurden erfolgreich heruntergeladen",
+      "downloadFailed": "Evidenzdateien konnten nicht heruntergeladen werden. Bitte versuchen Sie es erneut."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "Einheiten wählen",
     "pageSubtitle": "Wählen Sie Pflicht- und Wahlmodule für den Lernenden aus",

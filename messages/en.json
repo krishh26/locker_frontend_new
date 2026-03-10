@@ -2425,6 +2425,106 @@
       }
     }
   },
+  "evidenceLibrary": {
+    "pageTitle": "Evidence Library",
+    "pageSubtitle": "Manage and organize your evidence files",
+    "filters": {
+      "searchPlaceholder": "Search by title...",
+      "coursePlaceholder": "Filter by course",
+      "allCourses": "All Courses"
+    },
+    "table": {
+      "columns": {
+        "title": "Title",
+        "description": "Description",
+        "files": "Files",
+        "status": "Status",
+        "createdDate": "Created Date",
+        "view": "View",
+        "actions": "Actions"
+      },
+      "status": {
+        "loading": "Loading evidence library...",
+        "noResults": "No evidence found."
+      },
+      "pagination": {
+        "summary": "Showing {current} of {total} entries",
+        "labelPage": "Page",
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Download Evidence Files",
+      "addEvidence": "Add Evidence"
+    },
+    "form": {
+      "createTitle": "Create Evidence",
+      "editTitle": "Edit Evidence",
+      "createSubtitle": "Add new evidence to your library",
+      "editSubtitle": "Update evidence details and mappings"
+    },
+    "deleteDialog": {
+      "title": "Delete Evidence?",
+      "description": "Deleting this evidence will also remove all associated data and relationships. This action cannot be undone. Proceed with deletion?",
+      "cancel": "Cancel",
+      "confirm": "Delete Evidence",
+      "deleting": "Deleting..."
+    },
+    "downloadDialog": {
+      "title": "Download Evidence Files",
+      "description": "Select a course to view and download its evidence files",
+      "selectCourseLabel": "Select Course",
+      "selectAllFiles": "Select All Files",
+      "loadingEvidence": "Loading evidence...",
+      "noEvidenceForCourse": "No evidence files found for this course",
+      "noCourseSelectedTitle": "Select a Course",
+      "noCourseSelectedDescription": "Choose a course from the list to view its evidence files",
+      "file": {
+        "noFileName": "No file name",
+        "unknownStatus": "Unknown"
+      },
+      "button": {
+        "cancel": "Cancel",
+        "download": "Download ({count} file{suffix})",
+        "downloading": "Downloading..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Reupload Evidence",
+      "description": "Select a new file to replace the existing evidence file for \"{title}\".",
+      "selectedFile": "Selected: {fileName}",
+      "buttons": {
+        "cancel": "Cancel",
+        "upload": "Upload",
+        "uploading": "Uploading..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Reupload",
+      "viewEdit": "View/Edit",
+      "view": "View",
+      "download": "Download",
+      "delete": "Delete"
+    },
+    "toast": {
+      "deleteSuccess": "Evidence deleted successfully",
+      "deleteFailed": "Failed to delete evidence. Please try again.",
+      "noFileForDownload": "No file available for download",
+      "downloadingFile": "Downloading {fileName}",
+      "reuploadMissingFile": "Please select a file to upload",
+      "reuploadSuccess": "Evidence file replaced successfully",
+      "reuploadFailed": "Failed to reupload evidence",
+      "downloadSelectOne": "Please select at least one file to download",
+      "downloadNoFilesForSelection": "No files found for selected files",
+      "downloadCorsOpenedInTabs": "{count} files opened in new tabs due to CORS restrictions",
+      "downloadAllInTabs": "All files opened in new tabs. ZIP download not available due to CORS restrictions.",
+      "downloadMixed": "Downloaded {zipCount} files as ZIP. {tabCount} files opened in new tabs due to CORS restrictions.",
+      "downloadZipCorrupt": "Created ZIP file is corrupted",
+      "downloadSuccess": "Successfully downloaded {count} selected evidence files",
+      "downloadFailed": "Failed to download evidence files. Please try again."
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Submit and manage support requests",

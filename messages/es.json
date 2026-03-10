@@ -3467,6 +3467,106 @@
     "item": "elemento",
     "items": "elementos"
   },
+  "evidenceLibrary": {
+    "pageTitle": "Biblioteca de evidencias",
+    "pageSubtitle": "Gestione y organice sus archivos de evidencias",
+    "filters": {
+      "searchPlaceholder": "Buscar por título...",
+      "coursePlaceholder": "Filtrar por curso",
+      "allCourses": "Todos los cursos"
+    },
+    "table": {
+      "columns": {
+        "title": "Título",
+        "description": "Descripción",
+        "files": "Archivos",
+        "status": "Estado",
+        "createdDate": "Fecha de creación",
+        "view": "Ver",
+        "actions": "Acciones"
+      },
+      "status": {
+        "loading": "Cargando biblioteca de evidencias...",
+        "noResults": "No se encontraron evidencias."
+      },
+      "pagination": {
+        "summary": "Mostrando {current} de {total} registros",
+        "labelPage": "Página",
+        "previous": "Anterior",
+        "next": "Siguiente"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Descargar archivos de evidencias",
+      "addEvidence": "Agregar evidencia"
+    },
+    "form": {
+      "createTitle": "Crear evidencia",
+      "editTitle": "Editar evidencia",
+      "createSubtitle": "Añada nueva evidencia a su biblioteca",
+      "editSubtitle": "Actualice los detalles y mapeos de la evidencia"
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar evidencia?",
+      "description": "Al eliminar esta evidencia también se eliminarán todos los datos y relaciones asociados. Esta acción no se puede deshacer. ¿Desea continuar?",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar evidencia",
+      "deleting": "Eliminando..."
+    },
+    "downloadDialog": {
+      "title": "Descargar archivos de evidencias",
+      "description": "Seleccione un curso para ver y descargar sus archivos de evidencias",
+      "selectCourseLabel": "Seleccionar curso",
+      "selectAllFiles": "Seleccionar todos los archivos",
+      "loadingEvidence": "Cargando evidencias...",
+      "noEvidenceForCourse": "No se encontraron archivos de evidencias para este curso",
+      "noCourseSelectedTitle": "Seleccione un curso",
+      "noCourseSelectedDescription": "Elija un curso de la lista para ver sus archivos de evidencias",
+      "file": {
+        "noFileName": "Sin nombre de archivo",
+        "unknownStatus": "Desconocido"
+      },
+      "button": {
+        "cancel": "Cancelar",
+        "download": "Descargar ({count} archivo{suffix})",
+        "downloading": "Descargando..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Volver a subir evidencia",
+      "description": "Seleccione un nuevo archivo para reemplazar el archivo de evidencias existente de \"{title}\".",
+      "selectedFile": "Seleccionado: {fileName}",
+      "buttons": {
+        "cancel": "Cancelar",
+        "upload": "Subir",
+        "uploading": "Subiendo..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Volver a subir",
+      "viewEdit": "Ver/Editar",
+      "view": "Ver",
+      "download": "Descargar",
+      "delete": "Eliminar"
+    },
+    "toast": {
+      "deleteSuccess": "Evidencia eliminada correctamente",
+      "deleteFailed": "No se pudo eliminar la evidencia. Inténtelo de nuevo.",
+      "noFileForDownload": "No hay archivo disponible para descargar",
+      "downloadingFile": "Descargando {fileName}",
+      "reuploadMissingFile": "Seleccione un archivo para subir",
+      "reuploadSuccess": "Archivo de evidencias reemplazado correctamente",
+      "reuploadFailed": "No se pudo volver a subir la evidencia",
+      "downloadSelectOne": "Seleccione al menos un archivo para descargar",
+      "downloadNoFilesForSelection": "No se encontraron archivos para los registros seleccionados",
+      "downloadCorsOpenedInTabs": "{count} archivo(s) se abrieron en nuevas pestañas debido a restricciones CORS",
+      "downloadAllInTabs": "Todos los archivos se abrieron en nuevas pestañas. La descarga ZIP no está disponible debido a restricciones CORS.",
+      "downloadMixed": "Se descargaron {zipCount} archivos en un ZIP. {tabCount} archivo(s) se abrieron en nuevas pestañas debido a restricciones CORS.",
+      "downloadZipCorrupt": "El archivo ZIP creado está dañado",
+      "downloadSuccess": "Se han descargado correctamente {count} archivo(s) de evidencias seleccionados",
+      "downloadFailed": "No se pudieron descargar los archivos de evidencias. Inténtelo de nuevo."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "Elegir unidades",
     "pageSubtitle": "Seleccione las unidades obligatorias y opcionales para el alumno",

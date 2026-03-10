@@ -3584,6 +3584,106 @@
     "item": "项",
     "items": "项"
   },
+  "evidenceLibrary": {
+    "pageTitle": "证据库",
+    "pageSubtitle": "管理和组织您的证据文件",
+    "filters": {
+      "searchPlaceholder": "按标题搜索...",
+      "coursePlaceholder": "按课程筛选",
+      "allCourses": "所有课程"
+    },
+    "table": {
+      "columns": {
+        "title": "标题",
+        "description": "描述",
+        "files": "文件",
+        "status": "状态",
+        "createdDate": "创建日期",
+        "view": "查看",
+        "actions": "操作"
+      },
+      "status": {
+        "loading": "正在加载证据库...",
+        "noResults": "未找到任何证据。"
+      },
+      "pagination": {
+        "summary": "正在显示 {current} / {total} 条记录",
+        "labelPage": "页",
+        "previous": "上一页",
+        "next": "下一页"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "下载证据文件",
+      "addEvidence": "添加证据"
+    },
+    "form": {
+      "createTitle": "创建证据",
+      "editTitle": "编辑证据",
+      "createSubtitle": "向证据库添加新的证据",
+      "editSubtitle": "更新证据详情和映射"
+    },
+    "deleteDialog": {
+      "title": "删除证据？",
+      "description": "删除此证据还会移除所有相关数据和关系。此操作无法撤销。确定要继续吗？",
+      "cancel": "取消",
+      "confirm": "删除证据",
+      "deleting": "正在删除..."
+    },
+    "downloadDialog": {
+      "title": "下载证据文件",
+      "description": "选择课程以查看和下载其证据文件",
+      "selectCourseLabel": "选择课程",
+      "selectAllFiles": "选择所有文件",
+      "loadingEvidence": "正在加载证据...",
+      "noEvidenceForCourse": "未找到该课程的证据文件",
+      "noCourseSelectedTitle": "选择课程",
+      "noCourseSelectedDescription": "从列表中选择课程以查看其证据文件",
+      "file": {
+        "noFileName": "无文件名",
+        "unknownStatus": "未知"
+      },
+      "button": {
+        "cancel": "取消",
+        "download": "下载（{count} 个文件{suffix}）",
+        "downloading": "正在下载..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "重新上传证据",
+      "description": "选择新文件以替换 \"{title}\" 的现有证据文件。",
+      "selectedFile": "已选择：{fileName}",
+      "buttons": {
+        "cancel": "取消",
+        "upload": "上传",
+        "uploading": "正在上传..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "重新上传",
+      "viewEdit": "查看/编辑",
+      "view": "查看",
+      "download": "下载",
+      "delete": "删除"
+    },
+    "toast": {
+      "deleteSuccess": "证据删除成功",
+      "deleteFailed": "无法删除证据，请重试。",
+      "noFileForDownload": "没有可下载的文件",
+      "downloadingFile": "正在下载 {fileName}",
+      "reuploadMissingFile": "请选择要上传的文件",
+      "reuploadSuccess": "证据文件替换成功",
+      "reuploadFailed": "重新上传证据失败",
+      "downloadSelectOne": "请至少选择一个文件进行下载",
+      "downloadNoFilesForSelection": "所选记录未找到任何文件",
+      "downloadCorsOpenedInTabs": "由于 CORS 限制，{count} 个文件已在新标签页中打开",
+      "downloadAllInTabs": "所有文件已在新标签页中打开。由于 CORS 限制，无法提供 ZIP 下载。",
+      "downloadMixed": "{zipCount} 个文件已作为 ZIP 下载。由于 CORS 限制，{tabCount} 个文件已在新标签页中打开。",
+      "downloadZipCorrupt": "创建的 ZIP 文件已损坏",
+      "downloadSuccess": "{count} 个选中的证据文件已成功下载",
+      "downloadFailed": "无法下载证据文件，请重试。"
+    }
+  },
   "chooseUnits": {
     "pageTitle": "选择单元",
     "pageSubtitle": "为学员选择必修和选修单元",

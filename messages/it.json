@@ -2792,6 +2792,106 @@
     "item": "elemento",
     "items": "elementi"
   },
+  "evidenceLibrary": {
+    "pageTitle": "Libreria evidenze",
+    "pageSubtitle": "Gestisci e organizza i tuoi file di evidenza",
+    "filters": {
+      "searchPlaceholder": "Cerca per titolo...",
+      "coursePlaceholder": "Filtra per corso",
+      "allCourses": "Tutti i corsi"
+    },
+    "table": {
+      "columns": {
+        "title": "Titolo",
+        "description": "Descrizione",
+        "files": "File",
+        "status": "Stato",
+        "createdDate": "Data di creazione",
+        "view": "Visualizza",
+        "actions": "Azioni"
+      },
+      "status": {
+        "loading": "Caricamento libreria evidenze...",
+        "noResults": "Nessuna evidenza trovata."
+      },
+      "pagination": {
+        "summary": "Visualizzazione di {current} su {total} record",
+        "labelPage": "Pagina",
+        "previous": "Precedente",
+        "next": "Successivo"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "Scarica file di evidenza",
+      "addEvidence": "Aggiungi evidenza"
+    },
+    "form": {
+      "createTitle": "Crea evidenza",
+      "editTitle": "Modifica evidenza",
+      "createSubtitle": "Aggiungi una nuova evidenza alla tua libreria",
+      "editSubtitle": "Aggiorna i dettagli e i mapping dell’evidenza"
+    },
+    "deleteDialog": {
+      "title": "Eliminare l’evidenza?",
+      "description": "L’eliminazione di questa evidenza rimuoverà anche tutti i dati e le relazioni associate. Questa azione non può essere annullata. Vuoi procedere?",
+      "cancel": "Annulla",
+      "confirm": "Elimina evidenza",
+      "deleting": "Eliminazione in corso..."
+    },
+    "downloadDialog": {
+      "title": "Scarica file di evidenza",
+      "description": "Seleziona un corso per visualizzare e scaricare i suoi file di evidenza",
+      "selectCourseLabel": "Seleziona corso",
+      "selectAllFiles": "Seleziona tutti i file",
+      "loadingEvidence": "Caricamento evidenze...",
+      "noEvidenceForCourse": "Nessun file di evidenza trovato per questo corso",
+      "noCourseSelectedTitle": "Seleziona un corso",
+      "noCourseSelectedDescription": "Scegli un corso dall’elenco per visualizzare i suoi file di evidenza",
+      "file": {
+        "noFileName": "Nessun nome file",
+        "unknownStatus": "Sconosciuto"
+      },
+      "button": {
+        "cancel": "Annulla",
+        "download": "Scarica ({count} file{suffix})",
+        "downloading": "Download in corso..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "Carica nuovamente l’evidenza",
+      "description": "Seleziona un nuovo file per sostituire il file di evidenza esistente per \"{title}\".",
+      "selectedFile": "Selezionato: {fileName}",
+      "buttons": {
+        "cancel": "Annulla",
+        "upload": "Carica",
+        "uploading": "Caricamento in corso..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "Ricarica",
+      "viewEdit": "Visualizza/Modifica",
+      "view": "Visualizza",
+      "download": "Scarica",
+      "delete": "Elimina"
+    },
+    "toast": {
+      "deleteSuccess": "Evidenza eliminata con successo",
+      "deleteFailed": "Impossibile eliminare l’evidenza. Riprova.",
+      "noFileForDownload": "Nessun file disponibile per il download",
+      "downloadingFile": "Download di {fileName} in corso",
+      "reuploadMissingFile": "Seleziona un file da caricare",
+      "reuploadSuccess": "File di evidenza sostituito con successo",
+      "reuploadFailed": "Impossibile caricare nuovamente l’evidenza",
+      "downloadSelectOne": "Seleziona almeno un file da scaricare",
+      "downloadNoFilesForSelection": "Nessun file trovato per i record selezionati",
+      "downloadCorsOpenedInTabs": "{count} file sono stati aperti in nuove schede a causa delle restrizioni CORS",
+      "downloadAllInTabs": "Tutti i file sono stati aperti in nuove schede. Il download ZIP non è disponibile a causa delle restrizioni CORS.",
+      "downloadMixed": "{zipCount} file sono stati scaricati come ZIP. {tabCount} file sono stati aperti in nuove schede a causa delle restrizioni CORS.",
+      "downloadZipCorrupt": "Il file ZIP creato è danneggiato",
+      "downloadSuccess": "{count} file di evidenza selezionati scaricati con successo",
+      "downloadFailed": "Impossibile scaricare i file di evidenza. Riprova."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "Scegli unità",
     "pageSubtitle": "Seleziona le unità obbligatorie e opzionali per il discente",

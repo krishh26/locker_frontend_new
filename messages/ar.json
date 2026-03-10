@@ -3548,6 +3548,106 @@
     "item": "عنصر",
     "items": "عناصر"
   },
+  "evidenceLibrary": {
+    "pageTitle": "مكتبة الأدلة",
+    "pageSubtitle": "إدارة وتنظيم ملفات الأدلة الخاصة بك",
+    "filters": {
+      "searchPlaceholder": "البحث حسب العنوان...",
+      "coursePlaceholder": "تصفية حسب الدورة",
+      "allCourses": "جميع الدورات"
+    },
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "description": "الوصف",
+        "files": "الملفات",
+        "status": "الحالة",
+        "createdDate": "تاريخ الإنشاء",
+        "view": "عرض",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "loading": "جارٍ تحميل مكتبة الأدلة...",
+        "noResults": "لم يتم العثور على أي دليل."
+      },
+      "pagination": {
+        "summary": "يتم عرض {current} من {total} سجل",
+        "labelPage": "الصفحة",
+        "previous": "السابق",
+        "next": "التالي"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "تنزيل ملفات الأدلة",
+      "addEvidence": "إضافة دليل"
+    },
+    "form": {
+      "createTitle": "إنشاء دليل",
+      "editTitle": "تعديل الدليل",
+      "createSubtitle": "إضافة دليل جديد إلى مكتبتك",
+      "editSubtitle": "تحديث تفاصيل الدليل والارتباطات"
+    },
+    "deleteDialog": {
+      "title": "حذف الدليل؟",
+      "description": "سيؤدي حذف هذا الدليل أيضًا إلى إزالة جميع البيانات والعلاقات المرتبطة به. لا يمكن التراجع عن هذا الإجراء. هل تريد المتابعة؟",
+      "cancel": "إلغاء",
+      "confirm": "حذف الدليل",
+      "deleting": "جارٍ الحذف..."
+    },
+    "downloadDialog": {
+      "title": "تنزيل ملفات الأدلة",
+      "description": "اختر دورة لعرض وتنزيل ملفات الأدلة الخاصة بها",
+      "selectCourseLabel": "اختر دورة",
+      "selectAllFiles": "تحديد جميع الملفات",
+      "loadingEvidence": "جارٍ تحميل الأدلة...",
+      "noEvidenceForCourse": "لم يتم العثور على ملفات أدلة لهذه الدورة",
+      "noCourseSelectedTitle": "اختر دورة",
+      "noCourseSelectedDescription": "اختر دورة من القائمة لعرض ملفات الأدلة الخاصة بها",
+      "file": {
+        "noFileName": "لا يوجد اسم ملف",
+        "unknownStatus": "غير معروف"
+      },
+      "button": {
+        "cancel": "إلغاء",
+        "download": "تنزيل ({count} ملف{suffix})",
+        "downloading": "جارٍ التنزيل..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "إعادة رفع الدليل",
+      "description": "اختر ملفًا جديدًا لاستبدال ملف الدليل الحالي لـ \"{title}\".",
+      "selectedFile": "المحدد: {fileName}",
+      "buttons": {
+        "cancel": "إلغاء",
+        "upload": "رفع",
+        "uploading": "جارٍ الرفع..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "إعادة الرفع",
+      "viewEdit": "عرض/تعديل",
+      "view": "عرض",
+      "download": "تنزيل",
+      "delete": "حذف"
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الدليل بنجاح",
+      "deleteFailed": "فشل حذف الدليل. يرجى المحاولة مرة أخرى.",
+      "noFileForDownload": "لا يوجد ملف متاح للتنزيل",
+      "downloadingFile": "جارٍ تنزيل {fileName}",
+      "reuploadMissingFile": "يرجى اختيار ملف لرفعه",
+      "reuploadSuccess": "تم استبدال ملف الدليل بنجاح",
+      "reuploadFailed": "فشل في إعادة رفع الدليل",
+      "downloadSelectOne": "يرجى اختيار ملف واحد على الأقل للتنزيل",
+      "downloadNoFilesForSelection": "لم يتم العثور على ملفات للسجلات المحددة",
+      "downloadCorsOpenedInTabs": "تم فتح {count} ملف(ات) في علامات تبويب جديدة بسبب قيود CORS",
+      "downloadAllInTabs": "تم فتح جميع الملفات في علامات تبويب جديدة. التنزيل بصيغة ZIP غير متاح بسبب قيود CORS.",
+      "downloadMixed": "تم تنزيل {zipCount} ملف(ات) في ملف ZIP. تم فتح {tabCount} ملف(ات) في علامات تبويب جديدة بسبب قيود CORS.",
+      "downloadZipCorrupt": "ملف ZIP الذي تم إنشاؤه تالف",
+      "downloadSuccess": "تم تنزيل {count} ملف(ات) دليل محدد بنجاح",
+      "downloadFailed": "فشل تنزيل ملفات الدليل. يرجى المحاولة مرة أخرى."
+    }
+  },
   "chooseUnits": {
     "pageTitle": "اختيار الوحدات",
     "pageSubtitle": "اختر الوحدات الإلزامية والاختيارية للمتعلم",

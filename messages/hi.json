@@ -3626,6 +3626,106 @@
     "item": "आइटम",
     "items": "आइटम"
   },
+  "evidenceLibrary": {
+    "pageTitle": "साक्ष्य लाइब्रेरी",
+    "pageSubtitle": "अपने साक्ष्य फ़ाइलों को प्रबंधित करें और व्यवस्थित करें",
+    "filters": {
+      "searchPlaceholder": "शीर्षक द्वारा खोजें...",
+      "coursePlaceholder": "कोर्स के आधार पर फ़िल्टर करें",
+      "allCourses": "सभी कोर्स"
+    },
+    "table": {
+      "columns": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "files": "फ़ाइलें",
+        "status": "स्थिति",
+        "createdDate": "निर्माण तिथि",
+        "view": "देखें",
+        "actions": "क्रियाएँ"
+      },
+      "status": {
+        "loading": "साक्ष्य लाइब्रेरी लोड हो रही है...",
+        "noResults": "कोई साक्ष्य नहीं मिला।"
+      },
+      "pagination": {
+        "summary": "{current} में से {total} प्रविष्टियाँ दिखा रहा है",
+        "labelPage": "पृष्ठ",
+        "previous": "पिछला",
+        "next": "अगला"
+      }
+    },
+    "toolbar": {
+      "downloadAll": "साक्ष्य फ़ाइलें डाउनलोड करें",
+      "addEvidence": "साक्ष्य जोड़ें"
+    },
+    "form": {
+      "createTitle": "नया साक्ष्य बनाएँ",
+      "editTitle": "साक्ष्य संपादित करें",
+      "createSubtitle": "अपनी लाइब्रेरी में नया साक्ष्य जोड़ें",
+      "editSubtitle": "साक्ष्य के विवरण और मैपिंग अपडेट करें"
+    },
+    "deleteDialog": {
+      "title": "साक्ष्य हटाएँ?",
+      "description": "इस साक्ष्य को हटाने से सभी संबंधित डेटा और संबंध भी हट जाएंगे। यह कार्रवाई पूर्ववत नहीं की जा सकती। क्या आप आगे बढ़ना चाहते हैं?",
+      "cancel": "रद्द करें",
+      "confirm": "साक्ष्य हटाएँ",
+      "deleting": "हटा रहा है..."
+    },
+    "downloadDialog": {
+      "title": "साक्ष्य फ़ाइलें डाउनलोड करें",
+      "description": "साक्ष्य फ़ाइलें देखने और डाउनलोड करने के लिए कोई कोर्स चुनें",
+      "selectCourseLabel": "कोर्स चुनें",
+      "selectAllFiles": "सभी फ़ाइलें चुनें",
+      "loadingEvidence": "साक्ष्य लोड हो रहे हैं...",
+      "noEvidenceForCourse": "इस कोर्स के लिए कोई साक्ष्य फ़ाइल नहीं मिली",
+      "noCourseSelectedTitle": "कोर्स चुनें",
+      "noCourseSelectedDescription": "सूची से कोई कोर्स चुनें ताकि उसकी साक्ष्य फ़ाइलें देख सकें",
+      "file": {
+        "noFileName": "कोई फ़ाइल नाम नहीं",
+        "unknownStatus": "अज्ञात"
+      },
+      "button": {
+        "cancel": "रद्द करें",
+        "download": "डाउनलोड ({count} फ़ाइल{suffix})",
+        "downloading": "डाउनलोड हो रहा है..."
+      }
+    },
+    "reuploadDialog": {
+      "title": "साक्ष्य फिर से अपलोड करें",
+      "description": "\"{title}\" के मौजूदा साक्ष्य फ़ाइल को बदलने के लिए नई फ़ाइल चुनें।",
+      "selectedFile": "चयनित: {fileName}",
+      "buttons": {
+        "cancel": "रद्द करें",
+        "upload": "अपलोड करें",
+        "uploading": "अपलोड हो रहा है..."
+      }
+    },
+    "actionMenu": {
+      "reupload": "फिर से अपलोड करें",
+      "viewEdit": "देखें/संपादित करें",
+      "view": "देखें",
+      "download": "डाउनलोड",
+      "delete": "हटाएँ"
+    },
+    "toast": {
+      "deleteSuccess": "साक्ष्य सफलतापूर्वक हटाया गया",
+      "deleteFailed": "साक्ष्य हटाया नहीं जा सका। कृपया पुनः प्रयास करें।",
+      "noFileForDownload": "डाउनलोड के लिए कोई फ़ाइल उपलब्ध नहीं है",
+      "downloadingFile": "{fileName} डाउनलोड हो रहा है",
+      "reuploadMissingFile": "कृपया अपलोड करने के लिए कोई फ़ाइल चुनें",
+      "reuploadSuccess": "साक्ष्य फ़ाइल सफलतापूर्वक बदली गई",
+      "reuploadFailed": "साक्ष्य फिर से अपलोड नहीं हो सका",
+      "downloadSelectOne": "कृपया डाउनलोड के लिए कम से कम एक फ़ाइल चुनें",
+      "downloadNoFilesForSelection": "चयनित प्रविष्टियों के लिए कोई फ़ाइल नहीं मिली",
+      "downloadCorsOpenedInTabs": "{count} फ़ाइल(ें) CORS प्रतिबंधों के कारण नए टैब में खुलीं",
+      "downloadAllInTabs": "सभी फ़ाइलें नए टैब में खुल गईं। CORS प्रतिबंधों के कारण ZIP डाउनलोड उपलब्ध नहीं है।",
+      "downloadMixed": "{zipCount} फ़ाइल(ें) ZIP के रूप में डाउनलोड हुईं। {tabCount} फ़ाइल(ें) CORS प्रतिबंधों के कारण नए टैब में खुलीं।",
+      "downloadZipCorrupt": "बनाई गई ZIP फ़ाइल ख़राब है",
+      "downloadSuccess": "{count} चयनित साक्ष्य फ़ाइल(ें) सफलतापूर्वक डाउनलोड हुईं",
+      "downloadFailed": "साक्ष्य फ़ाइलें डाउनलोड नहीं हो सकीं। कृपया पुनः प्रयास करें।"
+    }
+  },
   "chooseUnits": {
     "pageTitle": "यूनिट चुनें",
     "pageSubtitle": "लर्नर के लिए अनिवार्य और वैकल्पिक यूनिट चुनें",

@@ -3474,5 +3474,36 @@
       "deleteFailed": "删除创新失败，请重试。",
       "csvSuccess": "CSV 导出成功"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "仪表盘",
+      "subtitle": "管理你的学习旅程并跟踪进度"
+    },
+    "buttons": {
+      "emailLearner": "给学员发邮件",
+      "awaitingSignature": "等待签名",
+      "calendar": "日历"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "学员",
+      "viewProfile": "查看资料",
+      "trainerLabel": "培训师：",
+      "iqaLabel": "IQA：",
+      "nextVisit": "下次访问：",
+      "notAvailable": "无",
+      "overallProgress": {
+        "title": "总体进度",
+        "completed": "✓ 已完成",
+        "inProgress": "◐ 进行中",
+        "pending": "○ 待完成",
+        "totalUnits": "合计：{units} 个单元，分布在 {courses} 门课程中"
+      },
+      "timeLog": {
+        "title": "时间记录",
+        "onTheJob": "在岗学习总计",
+        "offTheJob": "脱岗学习总计"
+      }
+    }
   }
 }

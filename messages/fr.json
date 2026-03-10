@@ -3516,5 +3516,36 @@
       "deleteFailed": "Échec de la suppression de l’innovation. Veuillez réessayer.",
       "csvSuccess": "CSV exporté avec succès"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Tableau de bord",
+      "subtitle": "Gérez votre parcours d’apprentissage et suivez votre progression"
+    },
+    "buttons": {
+      "emailLearner": "Envoyer un e-mail à l’apprenant",
+      "awaitingSignature": "En attente de signature",
+      "calendar": "Calendrier"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Apprenant",
+      "viewProfile": "Voir le profil",
+      "trainerLabel": "Formateur :",
+      "iqaLabel": "IQA :",
+      "nextVisit": "Prochaine visite :",
+      "notAvailable": "N/D",
+      "overallProgress": {
+        "title": "Progression globale",
+        "completed": "✓ Terminé",
+        "inProgress": "◐ En cours",
+        "pending": "○ En attente",
+        "totalUnits": "Total : {units} unités sur {courses} parcours"
+      },
+      "timeLog": {
+        "title": "Journal de temps",
+        "onTheJob": "Total en situation de travail",
+        "offTheJob": "Total hors situation de travail"
+      }
+    }
   }
 }

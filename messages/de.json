@@ -2682,5 +2682,36 @@
       "deleteFailed": "Löschen der Innovation fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "csvSuccess": "CSV erfolgreich exportiert"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Dashboard",
+      "subtitle": "Verwalten Sie Ihren Lernweg und verfolgen Sie den Fortschritt"
+    },
+    "buttons": {
+      "emailLearner": "Lernenden per E-Mail kontaktieren",
+      "awaitingSignature": "Ausstehende Unterschrift",
+      "calendar": "Kalender"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Lernende/r",
+      "viewProfile": "Profil anzeigen",
+      "trainerLabel": "Trainer:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Nächster Besuch:",
+      "notAvailable": "k. A.",
+      "overallProgress": {
+        "title": "Gesamtfortschritt",
+        "completed": "✓ Abgeschlossen",
+        "inProgress": "◐ In Bearbeitung",
+        "pending": "○ Ausstehend",
+        "totalUnits": "Gesamt: {units} Einheiten über {courses} Kurs(e)"
+      },
+      "timeLog": {
+        "title": "Zeiterfassung",
+        "onTheJob": "Gesamtzeit am Arbeitsplatz",
+        "offTheJob": "Gesamtzeit außerhalb des Arbeitsplatzes"
+      }
+    }
   }
 }

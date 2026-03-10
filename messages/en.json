@@ -3532,5 +3532,36 @@
       "updateSuccess": "Centre updated successfully",
       "updateFailed": "Failed to update centre"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Dashboard",
+      "subtitle": "Manage your learning journey and track progress"
+    },
+    "buttons": {
+      "emailLearner": "Email Learner",
+      "awaitingSignature": "Awaiting Signature",
+      "calendar": "Calendar"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Learner",
+      "viewProfile": "View Profile",
+      "trainerLabel": "Trainer:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Next Visit:",
+      "notAvailable": "N/A",
+      "overallProgress": {
+        "title": "Overall Progress",
+        "completed": "✓ Completed",
+        "inProgress": "◐ In Progress",
+        "pending": "○ Pending",
+        "totalUnits": "Total: {units} units across {courses} course(s)"
+      },
+      "timeLog": {
+        "title": "Time Log",
+        "onTheJob": "On The Job Total",
+        "offTheJob": "Off The Job Total"
+      }
+    }
   }
 }

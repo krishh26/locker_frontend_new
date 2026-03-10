@@ -3438,5 +3438,36 @@
       "deleteFailed": "فشل حذف الابتكار. يرجى المحاولة مرة أخرى.",
       "csvSuccess": "تم تصدير ملف CSV بنجاح"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "لوحة التحكم",
+      "subtitle": "إدارة رحلة التعلم الخاصة بك وتتبع التقدم"
+    },
+    "buttons": {
+      "emailLearner": "إرسال بريد للمتعلم",
+      "awaitingSignature": "في انتظار التوقيع",
+      "calendar": "التقويم"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "المتعلم",
+      "viewProfile": "عرض الملف الشخصي",
+      "trainerLabel": "المدرب:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "الزيارة التالية:",
+      "notAvailable": "غير متوفر",
+      "overallProgress": {
+        "title": "التقدم الإجمالي",
+        "completed": "✓ مكتمل",
+        "inProgress": "◐ قيد التقدم",
+        "pending": "○ قيد الانتظار",
+        "totalUnits": "الإجمالي: {units} وحدة عبر {courses} برنامج"
+      },
+      "timeLog": {
+        "title": "سجل الوقت",
+        "onTheJob": "إجمالي أثناء العمل",
+        "offTheJob": "إجمالي خارج العمل"
+      }
+    }
   }
 }

@@ -21,12 +21,14 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { clearCurrentCourseId } from '@/store/slices/courseSlice'
 import { overviewCards } from '../../data/portfolio-data'
 import { SafeguardingCard } from './safeguarding-card'
+import { useTranslations } from 'next-intl'
 
 export function LearnerDashboard() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
+  const t = useTranslations('learnerDashboard')
 
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false)
   const [isCalendarDialogOpen, setIsCalendarDialogOpen] = useState(false)
@@ -137,8 +139,8 @@ export function LearnerDashboard() {
     <>
       <div className='px-4 lg:px-6'>
         <PageHeader
-          title='Dashboard'
-          subtitle='Manage your learning journey and track progress'
+          title={t('pageHeader.title')}
+          subtitle={t('pageHeader.subtitle')}
           icon={LayoutDashboard}
         />
       </div>
@@ -173,7 +175,7 @@ export function LearnerDashboard() {
               className='gap-2'
             >
               <Mail className='h-4 w-4' />
-              Email Learner
+              {t('buttons.emailLearner')}
             </Button>
           )}
           <Button
@@ -182,7 +184,7 @@ export function LearnerDashboard() {
             className='gap-2'
           >
             <FileSignature className='h-4 w-4' />
-            Awaiting Signature
+            {t('buttons.awaitingSignature')}
           </Button>
           <Button
             variant='default'
@@ -190,7 +192,7 @@ export function LearnerDashboard() {
             className='gap-2'
           >
             <Calendar className='h-4 w-4' />
-            Calendar
+            {t('buttons.calendar')}
           </Button>
         </div>
       </div>

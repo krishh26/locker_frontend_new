@@ -3357,5 +3357,36 @@
       "deleteFailed": "Error al eliminar la innovación. Inténtelo de nuevo.",
       "csvSuccess": "CSV exportado correctamente"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Panel",
+      "subtitle": "Gestione su trayectoria de aprendizaje y supervise el progreso"
+    },
+    "buttons": {
+      "emailLearner": "Enviar correo al alumno",
+      "awaitingSignature": "Pendiente de firma",
+      "calendar": "Calendario"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Alumno",
+      "viewProfile": "Ver perfil",
+      "trainerLabel": "Tutor:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Próxima visita:",
+      "notAvailable": "N/D",
+      "overallProgress": {
+        "title": "Progreso general",
+        "completed": "✓ Completado",
+        "inProgress": "◐ En progreso",
+        "pending": "○ Pendiente",
+        "totalUnits": "Total: {units} unidades en {courses} curso(s)"
+      },
+      "timeLog": {
+        "title": "Registro de tiempo",
+        "onTheJob": "Total en el puesto",
+        "offTheJob": "Total fuera del puesto"
+      }
+    }
   }
 }

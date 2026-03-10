@@ -3516,5 +3516,36 @@
       "updateSuccess": "केंद्र सफलतापूर्वक अपडेट किया गया",
       "updateFailed": "केंद्र अपडेट करने में विफल"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "डैशबोर्ड",
+      "subtitle": "अपनी सीखने की यात्रा प्रबंधित करें और प्रगति ट्रैक करें"
+    },
+    "buttons": {
+      "emailLearner": "लर्नर को ईमेल करें",
+      "awaitingSignature": "हस्ताक्षर की प्रतीक्षा",
+      "calendar": "कैलेंडर"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "लर्नर",
+      "viewProfile": "प्रोफ़ाइल देखें",
+      "trainerLabel": "ट्रेनर:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "अगली मुलाकात:",
+      "notAvailable": "उपलब्ध नहीं",
+      "overallProgress": {
+        "title": "समग्र प्रगति",
+        "completed": "✓ पूर्ण",
+        "inProgress": "◐ प्रगति पर",
+        "pending": "○ लंबित",
+        "totalUnits": "कुल: {units} यूनिट {courses} कोर्स(कोर्सों) में"
+      },
+      "timeLog": {
+        "title": "समय लॉग",
+        "onTheJob": "कार्य पर समय (कुल)",
+        "offTheJob": "कार्य से बाहर समय (कुल)"
+      }
+    }
   }
 }

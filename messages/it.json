@@ -2682,5 +2682,36 @@
       "deleteFailed": "Impossibile eliminare l’innovazione. Riprova.",
       "csvSuccess": "CSV esportato con successo"
     }
+  },
+  "learnerDashboard": {
+    "pageHeader": {
+      "title": "Dashboard",
+      "subtitle": "Gestisci il tuo percorso di apprendimento e monitora i progressi"
+    },
+    "buttons": {
+      "emailLearner": "Invia email al discente",
+      "awaitingSignature": "In attesa di firma",
+      "calendar": "Calendario"
+    },
+    "infoCard": {
+      "fallbackLearnerName": "Discente",
+      "viewProfile": "Visualizza profilo",
+      "trainerLabel": "Formatore:",
+      "iqaLabel": "IQA:",
+      "nextVisit": "Prossima visita:",
+      "notAvailable": "N/D",
+      "overallProgress": {
+        "title": "Progresso complessivo",
+        "completed": "✓ Completato",
+        "inProgress": "◐ In corso",
+        "pending": "○ In sospeso",
+        "totalUnits": "Totale: {units} unità su {courses} corso/i"
+      },
+      "timeLog": {
+        "title": "Registro ore",
+        "onTheJob": "Totale in servizio",
+        "offTheJob": "Totale fuori servizio"
+      }
+    }
   }
 }

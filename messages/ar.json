@@ -2275,7 +2275,11 @@
       "addRequest": "إضافة طلب",
       "loading": "جاري التحميل...",
       "noResults": "لم يتم العثور على طلبات دعم.",
-      "csvExportSuccess": "تم تصدير CSV بنجاح"
+      "csvExportSuccess": "تم تصدير CSV بنجاح",
+      "toast": {
+        "deleteSuccess": "تم حذف طلب الدعم بنجاح!",
+        "deleteFailed": "فشل حذف طلب الدعم. يرجى المحاولة مرة أخرى."
+      }
     },
     "form": {
       "titleAdd": "إضافة طلب",

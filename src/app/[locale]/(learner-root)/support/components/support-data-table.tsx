@@ -109,12 +109,12 @@ export function SupportDataTable() {
 
     try {
       await deleteSupport({ support_id: selectedSupport.support_id }).unwrap()
-      toast.success("Support request deleted successfully!")
+      toast.success(t("table.toast.deleteSuccess"))
       setDeleteDialogOpen(false)
       setSelectedSupport(null)
       refetch()
     } catch {
-      toast.error("Failed to delete support request. Please try again.")
+      toast.error(t("table.toast.deleteFailed"))
     }
   }
 

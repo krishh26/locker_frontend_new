@@ -1694,7 +1694,11 @@
       "addRequest": "Aggiungi richiesta",
       "loading": "Caricamento...",
       "noResults": "Nessuna richiesta di supporto trovata.",
-      "csvExportSuccess": "CSV esportato con successo"
+      "csvExportSuccess": "CSV esportato con successo",
+      "toast": {
+        "deleteSuccess": "Richiesta di supporto eliminata con successo!",
+        "deleteFailed": "Impossibile eliminare la richiesta di supporto. Riprova."
+      }
     },
     "form": {
       "titleAdd": "Aggiungi richiesta",

@@ -2282,7 +2282,11 @@
       "addRequest": "Adicionar pedido",
       "loading": "A carregar...",
       "noResults": "Nenhum pedido de suporte encontrado.",
-      "csvExportSuccess": "CSV exportado com sucesso"
+      "csvExportSuccess": "CSV exportado com sucesso",
+      "toast": {
+        "deleteSuccess": "Pedido de suporte eliminado com sucesso!",
+        "deleteFailed": "Falha ao eliminar o pedido de suporte. Tente novamente."
+      }
     },
     "form": {
       "titleAdd": "Adicionar pedido",

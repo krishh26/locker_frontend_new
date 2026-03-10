@@ -2282,7 +2282,11 @@
       "addRequest": "Ajouter une demande",
       "loading": "Chargement...",
       "noResults": "Aucune demande de support trouvée.",
-      "csvExportSuccess": "CSV exporté avec succès"
+      "csvExportSuccess": "CSV exporté avec succès",
+      "toast": {
+        "deleteSuccess": "Demande de support supprimée avec succès !",
+        "deleteFailed": "Échec de la suppression de la demande de support. Veuillez réessayer."
+      }
     },
     "form": {
       "titleAdd": "Ajouter une demande",

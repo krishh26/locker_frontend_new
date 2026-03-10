@@ -2123,7 +2123,11 @@
       "addRequest": "Añadir solicitud",
       "loading": "Cargando...",
       "noResults": "No se encontraron solicitudes de soporte.",
-      "csvExportSuccess": "CSV exportado correctamente"
+      "csvExportSuccess": "CSV exportado correctamente",
+      "toast": {
+        "deleteSuccess": "¡Solicitud de soporte eliminada correctamente!",
+        "deleteFailed": "Error al eliminar la solicitud de soporte. Inténtelo de nuevo."
+      }
     },
     "form": {
       "titleAdd": "Añadir solicitud",

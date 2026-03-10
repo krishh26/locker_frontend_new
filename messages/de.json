@@ -1694,7 +1694,11 @@
       "addRequest": "Anfrage hinzufügen",
       "loading": "Wird geladen...",
       "noResults": "Keine Supportanfragen gefunden.",
-      "csvExportSuccess": "CSV erfolgreich exportiert"
+      "csvExportSuccess": "CSV erfolgreich exportiert",
+      "toast": {
+        "deleteSuccess": "Supportanfrage erfolgreich gelöscht!",
+        "deleteFailed": "Supportanfrage konnte nicht gelöscht werden. Bitte erneut versuchen."
+      }
     },
     "form": {
       "titleAdd": "Anfrage hinzufügen",

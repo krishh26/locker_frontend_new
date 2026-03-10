@@ -2351,7 +2351,11 @@
       "addRequest": "Add Request",
       "loading": "Loading...",
       "noResults": "No support requests found.",
-      "csvExportSuccess": "CSV exported successfully"
+      "csvExportSuccess": "CSV exported successfully",
+      "toast": {
+        "deleteSuccess": "Support request deleted successfully!",
+        "deleteFailed": "Failed to delete support request. Please try again."
+      }
     },
     "form": {
       "titleAdd": "Add Request",

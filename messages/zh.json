@@ -2240,7 +2240,11 @@
       "addRequest": "添加请求",
       "loading": "加载中...",
       "noResults": "未找到支持请求。",
-      "csvExportSuccess": "CSV 导出成功"
+      "csvExportSuccess": "CSV 导出成功",
+      "toast": {
+        "deleteSuccess": "支持请求已成功删除！",
+        "deleteFailed": "删除支持请求失败，请重试。"
+      }
     },
     "form": {
       "titleAdd": "添加请求",

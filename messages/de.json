@@ -1746,6 +1746,118 @@
       "deleting": "Wird gelöscht..."
     }
   },
+  "tickets": {
+    "pageTitle": "Tickets",
+    "pageSubtitle": "Tickets erstellen und verwalten",
+    "table": {
+      "columns": {
+        "ticketNumber": "Ticket #",
+        "title": "Titel",
+        "raisedBy": "Erstellt von",
+        "status": "Status",
+        "priority": "Priorität",
+        "assignedTo": "Zugewiesen an",
+        "created": "Erstellt",
+        "actions": "Aktionen"
+      },
+      "actions": {
+        "view": "Ansehen",
+        "assign": "Zuweisen",
+        "delete": "Löschen"
+      },
+      "searchPlaceholder": "Tickets suchen...",
+      "filters": {
+        "status": {
+          "placeholder": "Status",
+          "all": "Alle Status"
+        },
+        "priority": {
+          "placeholder": "Priorität",
+          "all": "Alle Prioritäten"
+        },
+        "view": {
+          "placeholder": "Anzeige",
+          "mine": "Meine Tickets",
+          "under": "In meinem Bereich"
+        }
+      },
+      "view": {
+        "myTickets": "Anzeige: Meine Tickets",
+        "underScope": "Anzeige: In meinem Bereich (von anderen erstellt)"
+      },
+      "export": {
+        "tooltip": "CSV exportieren"
+      },
+      "raiseButton": "Ticket erstellen",
+      "loading": "Wird geladen...",
+      "noResults": "Keine Tickets gefunden.",
+      "csvExportSuccess": "CSV erfolgreich exportiert",
+      "toast": {
+        "deleteSuccess": "Ticket erfolgreich gelöscht!",
+        "deleteFailed": "Ticket konnte nicht gelöscht werden. Bitte erneut versuchen."
+      }
+    },
+    "raise": {
+      "title": "Ticket erstellen",
+      "description": "Neues Ticket einreichen. Geben Sie einen klaren Titel und eine Beschreibung an.",
+      "fields": {
+        "titleLabel": "Titel",
+        "titlePlaceholder": "Kurzer Titel",
+        "descriptionLabel": "Beschreibung",
+        "descriptionPlaceholder": "Beschreiben Sie das Problem oder die Anfrage",
+        "priorityLabel": "Priorität",
+        "priorityPlaceholder": "Priorität",
+        "priority": {
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch",
+          "urgent": "Dringend"
+        },
+        "centreLabel": "Zentrum (optional)",
+        "centrePlaceholder": "Zentrum-ID"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "creating": "Wird erstellt...",
+        "raise": "Ticket erstellen"
+      },
+      "validation": {
+        "titleRequired": "Titel ist erforderlich",
+        "descriptionRequired": "Beschreibung ist erforderlich"
+      },
+      "toast": {
+        "createSuccess": "Ticket erfolgreich erstellt!",
+        "createFailed": "Ticket konnte nicht erstellt werden. Bitte erneut versuchen."
+      }
+    },
+    "detail": {
+      "titleFallback": "Ticket",
+      "loading": "Wird geladen...",
+      "status": {
+        "label": "Status",
+        "markClosed": "Als geschlossen markieren",
+        "reopen": "Wieder öffnen"
+      },
+      "priority": {
+        "label": "Priorität"
+      },
+      "raisedBy": "Erstellt von",
+      "assignedTo": "Zugewiesen an",
+      "unassigned": "Nicht zugewiesen",
+      "created": "Erstellt",
+      "lastActivity": "Letzte Aktivität",
+      "attachments": {
+        "label": "Anhänge",
+        "itemFallback": "Anhang"
+      },
+      "toast": {
+        "statusUpdated": "Status aktualisiert.",
+        "statusUpdateFailed": "Status konnte nicht aktualisiert werden.",
+        "priorityUpdated": "Priorität aktualisiert.",
+        "priorityUpdateFailed": "Priorität konnte nicht aktualisiert werden."
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

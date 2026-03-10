@@ -2403,6 +2403,118 @@
       "deleting": "Deleting..."
     }
   },
+  "tickets": {
+    "pageTitle": "Tickets",
+    "pageSubtitle": "Raise and manage tickets",
+    "table": {
+      "columns": {
+        "ticketNumber": "Ticket #",
+        "title": "Title",
+        "raisedBy": "Raised by",
+        "status": "Status",
+        "priority": "Priority",
+        "assignedTo": "Assigned to",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "assign": "Assign",
+        "delete": "Delete"
+      },
+      "searchPlaceholder": "Search tickets...",
+      "filters": {
+        "status": {
+          "placeholder": "Status",
+          "all": "All statuses"
+        },
+        "priority": {
+          "placeholder": "Priority",
+          "all": "All priorities"
+        },
+        "view": {
+          "placeholder": "View",
+          "mine": "My tickets",
+          "under": "Under my scope"
+        }
+      },
+      "view": {
+        "myTickets": "Showing: My tickets",
+        "underScope": "Showing: Under my scope (raised by others)"
+      },
+      "export": {
+        "tooltip": "Export CSV"
+      },
+      "raiseButton": "Raise ticket",
+      "loading": "Loading...",
+      "noResults": "No tickets found.",
+      "csvExportSuccess": "CSV exported successfully",
+      "toast": {
+        "deleteSuccess": "Ticket deleted successfully!",
+        "deleteFailed": "Failed to delete ticket. Please try again."
+      }
+    },
+    "raise": {
+      "title": "Raise a ticket",
+      "description": "Submit a new ticket. Provide a clear title and description.",
+      "fields": {
+        "titleLabel": "Title",
+        "titlePlaceholder": "Brief title",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Describe the issue or request",
+        "priorityLabel": "Priority",
+        "priorityPlaceholder": "Priority",
+        "priority": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "urgent": "Urgent"
+        },
+        "centreLabel": "Centre (optional)",
+        "centrePlaceholder": "Centre ID"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "creating": "Creating...",
+        "raise": "Raise ticket"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "descriptionRequired": "Description is required"
+      },
+      "toast": {
+        "createSuccess": "Ticket raised successfully!",
+        "createFailed": "Failed to raise ticket. Please try again."
+      }
+    },
+    "detail": {
+      "titleFallback": "Ticket",
+      "loading": "Loading...",
+      "status": {
+        "label": "Status",
+        "markClosed": "Mark closed",
+        "reopen": "Reopen"
+      },
+      "priority": {
+        "label": "Priority"
+      },
+      "raisedBy": "Raised by",
+      "assignedTo": "Assigned to",
+      "unassigned": "Unassigned",
+      "created": "Created",
+      "lastActivity": "Last activity",
+      "attachments": {
+        "label": "Attachments",
+        "itemFallback": "Attachment"
+      },
+      "toast": {
+        "statusUpdated": "Status updated.",
+        "statusUpdateFailed": "Failed to update status.",
+        "priorityUpdated": "Priority updated.",
+        "priorityUpdateFailed": "Failed to update priority."
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

@@ -24,6 +24,7 @@ import { useAppSelector } from "@/store/hooks"
 import type { Ticket, TicketStatus, TicketPriority } from "@/store/api/ticket/types"
 import { TicketCommentSection } from "./ticket-comment-section"
 import { TicketAssignDialog } from "./ticket-assign-dialog"
+import { useTranslations } from "next-intl"
 
 const PRIORITY_OPTIONS: TicketPriority[] = ["Low", "Medium", "High", "Urgent"]
 
@@ -60,6 +61,8 @@ export function TicketDetailSheet({
   const isLearner = user?.role === "Learner"
   const isAdmin = !isLearner && ["Admin", "MasterAdmin", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
 
+  const t = useTranslations("tickets.detail")
+
   const { data, isLoading, refetch } = useGetTicketByIdQuery(ticketId!, {
     skip: ticketId == null,
   })
@@ -83,12 +86,12 @@ export function TicketDetailSheet({
     setLocalStatus(newStatus)
     try {
       await updateTicket({ ticket_id: ticket.ticket_id, status: newStatus }).unwrap()
-      toast.success("Status updated.")
+      toast.success(t("toast.statusUpdated"))
       refetch()
       onUpdated()
     } catch {
       setLocalStatus(null)
-      toast.error("Failed to update status.")
+      toast.error(t("toast.statusUpdateFailed"))
     }
   }
 
@@ -97,12 +100,12 @@ export function TicketDetailSheet({
     setLocalPriority(newPriority)
     try {
       await updateTicket({ ticket_id: ticket.ticket_id, priority: newPriority }).unwrap()
-      toast.success("Priority updated.")
+      toast.success(t("toast.priorityUpdated"))
       refetch()
       onUpdated()
     } catch {
       setLocalPriority(null)
-      toast.error("Failed to update priority.")
+      toast.error(t("toast.priorityUpdateFailed"))
     }
   }
 
@@ -115,11 +118,11 @@ export function TicketDetailSheet({
         <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="pr-8">
-              {ticket?.ticket_number ?? "Ticket"}
+              {ticket?.ticket_number ?? t("titleFallback")}
             </SheetTitle>
           </SheetHeader>
           {isLoading || !ticket ? (
-            <div className="p-4 text-muted-foreground">Loading...</div>
+            <div className="p-4 text-muted-foreground">{t("loading")}</div>
           ) : (
             <div className="space-y-6 p-4 pt-0">
               <div>
@@ -130,7 +133,7 @@ export function TicketDetailSheet({
               </div>
               <div className="grid gap-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Status</span>
+                  <span className="text-muted-foreground">{t("status.label")}</span>
                   {isAdmin ? (
                     <Select
                       value={currentStatus}
@@ -156,7 +159,7 @@ export function TicketDetailSheet({
                       onClick={() => handleStatusChange("Closed")}
                       disabled={isUpdating}
                     >
-                      Mark closed
+                      {t("status.markClosed")}
                     </Button>
                   ) : adminCanReopen ? (
                     <Button
@@ -165,14 +168,14 @@ export function TicketDetailSheet({
                       onClick={() => handleStatusChange("Open")}
                       disabled={isUpdating}
                     >
-                      Reopen
+                      {t("status.reopen")}
                     </Button>
                   ) : (
                     <Badge variant="secondary">{currentStatus}</Badge>
                   )}
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Priority</span>
+                  <span className="text-muted-foreground">{t("priority.label")}</span>
                   {isAdmin ? (
                     <Select
                       value={currentPriority}
@@ -193,36 +196,36 @@ export function TicketDetailSheet({
                   )}
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Raised by</span>
+                  <span className="text-muted-foreground">{t("raisedBy")}</span>
                   <span>{displayUser(ticket.raised_by)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Assigned to</span>
+                  <span className="text-muted-foreground">{t("assignedTo")}</span>
                   {canAssign ? (
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => setAssignDialogOpen(true)}
                     >
-                      {ticket.assigned_to ? displayUser(ticket.assigned_to) : "Unassigned"}
+                      {ticket.assigned_to ? displayUser(ticket.assigned_to) : t("unassigned")}
                     </Button>
                   ) : (
                     <span>{ticket.assigned_to ? displayUser(ticket.assigned_to) : "-"}</span>
                   )}
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Created</span>
+                  <span className="text-muted-foreground">{t("created")}</span>
                   <span>{format(new Date(ticket.created_at), "dd MMM yyyy")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Last activity</span>
+                  <span className="text-muted-foreground">{t("lastActivity")}</span>
                   <span>{format(new Date(ticket.last_activity_at), "dd MMM yyyy")}</span>
                 </div>
               </div>
 
               {ticket.attachments && ticket.attachments.length > 0 && (
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Attachments</Label>
+                  <Label className="text-sm font-medium">{t("attachments.label")}</Label>
                   <ul className="space-y-1">
                     {ticket.attachments.map((a) => (
                       <li key={a.id}>
@@ -232,7 +235,7 @@ export function TicketDetailSheet({
                           rel="noopener noreferrer"
                           className="text-primary hover:underline text-sm"
                         >
-                          {a.file_url.split("/").pop() ?? "Attachment"}
+                          {a.file_url.split("/").pop() ?? t("attachments.itemFallback")}
                         </a>
                       </li>
                     ))}

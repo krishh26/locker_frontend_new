@@ -27,13 +27,14 @@ import { toast } from "sonner"
 import { useAppSelector } from "@/store/hooks"
 import type { TicketPriority } from "@/store/api/ticket/types"
 import { Controller } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
-const raiseSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
+const raiseSchemaBase = {
+  title: z.string(),
+  description: z.string(),
   priority: z.enum(["Low", "Medium", "High", "Urgent"]).optional(),
   centre_id: z.number().nullable().optional(),
-})
+}
 
 type RaiseFormValues = z.infer<typeof raiseSchema>
 
@@ -50,6 +51,15 @@ export function TicketRaiseDialog({
 }: TicketRaiseDialogProps) {
   const user = useAppSelector((state) => state.auth.user)
   const isCentreAdmin = user?.role === "CentreAdmin"
+
+  const t = useTranslations("tickets.raise")
+
+  const raiseSchema = z.object({
+    title: z.string().min(1, t("validation.titleRequired")),
+    description: z.string().min(1, t("validation.descriptionRequired")),
+    priority: raiseSchemaBase.priority,
+    centre_id: raiseSchemaBase.centre_id,
+  })
 
   const [createTicket, { isLoading }] = useCreateTicketMutation()
 
@@ -77,7 +87,7 @@ export function TicketRaiseDialog({
         priority: (data.priority as TicketPriority) ?? "Medium",
         centre_id: data.centre_id ?? undefined,
       }).unwrap()
-      toast.success("Ticket raised successfully!")
+      toast.success(t("toast.createSuccess"))
       reset()
       onSuccess()
     } catch (err: unknown) {
@@ -87,7 +97,7 @@ export function TicketRaiseDialog({
         "data" in err &&
         typeof (err as { data?: { message?: string } }).data?.message === "string"
           ? (err as { data: { message: string } }).data.message
-          : "Failed to raise ticket. Please try again."
+          : t("toast.createFailed")
       toast.error(message)
     }
   }
@@ -96,17 +106,19 @@ export function TicketRaiseDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[560px]">
         <DialogHeader>
-          <DialogTitle>Raise a ticket</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Submit a new ticket. Provide a clear title and description.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
+            <Label htmlFor="title">
+              {t("fields.titleLabel")} <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="title"
-              placeholder="Brief title"
+              placeholder={t("fields.titlePlaceholder")}
               {...register("title")}
             />
             {errors.title && (
@@ -114,10 +126,12 @@ export function TicketRaiseDialog({
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description <span className="text-destructive">*</span></Label>
+            <Label htmlFor="description">
+              {t("fields.descriptionLabel")} <span className="text-destructive">*</span>
+            </Label>
             <Textarea
               id="description"
-              placeholder="Describe the issue or request"
+              placeholder={t("fields.descriptionPlaceholder")}
               rows={4}
               {...register("description")}
             />
@@ -126,20 +140,20 @@ export function TicketRaiseDialog({
             )}
           </div>
           <div className="space-y-2">
-            <Label>Priority</Label>
+            <Label>{t("fields.priorityLabel")}</Label>
             <Controller
               name="priority"
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Priority" />
+                    <SelectValue placeholder={t("fields.priorityPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Low">Low</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Urgent">Urgent</SelectItem>
+                    <SelectItem value="Low">{t("fields.priority.low")}</SelectItem>
+                    <SelectItem value="Medium">{t("fields.priority.medium")}</SelectItem>
+                    <SelectItem value="High">{t("fields.priority.high")}</SelectItem>
+                    <SelectItem value="Urgent">{t("fields.priority.urgent")}</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -147,11 +161,11 @@ export function TicketRaiseDialog({
           </div>
           {isCentreAdmin && (
             <div className="space-y-2">
-              <Label htmlFor="centre_id">Centre (optional)</Label>
+              <Label htmlFor="centre_id">{t("fields.centreLabel")}</Label>
               <Input
                 id="centre_id"
                 type="number"
-                placeholder="Centre ID"
+                placeholder={t("fields.centrePlaceholder")}
                 {...register("centre_id", { valueAsNumber: true })}
               />
             </div>
@@ -163,10 +177,10 @@ export function TicketRaiseDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Creating..." : "Raise ticket"}
+              {isLoading ? t("buttons.creating") : t("buttons.raise")}
             </Button>
           </DialogFooter>
         </form>

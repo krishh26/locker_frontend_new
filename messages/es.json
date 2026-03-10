@@ -2175,6 +2175,118 @@
       "deleting": "Eliminando..."
     }
   },
+  "tickets": {
+    "pageTitle": "Tickets",
+    "pageSubtitle": "Crear y gestionar tickets",
+    "table": {
+      "columns": {
+        "ticketNumber": "Ticket #",
+        "title": "Título",
+        "raisedBy": "Creado por",
+        "status": "Estado",
+        "priority": "Prioridad",
+        "assignedTo": "Asignado a",
+        "created": "Creado",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "view": "Ver",
+        "assign": "Asignar",
+        "delete": "Eliminar"
+      },
+      "searchPlaceholder": "Buscar tickets...",
+      "filters": {
+        "status": {
+          "placeholder": "Estado",
+          "all": "Todos los estados"
+        },
+        "priority": {
+          "placeholder": "Prioridad",
+          "all": "Todas las prioridades"
+        },
+        "view": {
+          "placeholder": "Ver",
+          "mine": "Mis tickets",
+          "under": "En mi ámbito"
+        }
+      },
+      "view": {
+        "myTickets": "Mostrando: Mis tickets",
+        "underScope": "Mostrando: En mi ámbito (creados por otros)"
+      },
+      "export": {
+        "tooltip": "Exportar CSV"
+      },
+      "raiseButton": "Crear ticket",
+      "loading": "Cargando...",
+      "noResults": "No se encontraron tickets.",
+      "csvExportSuccess": "CSV exportado correctamente",
+      "toast": {
+        "deleteSuccess": "¡Ticket eliminado correctamente!",
+        "deleteFailed": "Error al eliminar el ticket. Inténtelo de nuevo."
+      }
+    },
+    "raise": {
+      "title": "Crear un ticket",
+      "description": "Envíe un nuevo ticket. Indique un título y descripción claros.",
+      "fields": {
+        "titleLabel": "Título",
+        "titlePlaceholder": "Título breve",
+        "descriptionLabel": "Descripción",
+        "descriptionPlaceholder": "Describa el problema o solicitud",
+        "priorityLabel": "Prioridad",
+        "priorityPlaceholder": "Prioridad",
+        "priority": {
+          "low": "Baja",
+          "medium": "Media",
+          "high": "Alta",
+          "urgent": "Urgente"
+        },
+        "centreLabel": "Centro (opcional)",
+        "centrePlaceholder": "ID del centro"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "creating": "Creando...",
+        "raise": "Crear ticket"
+      },
+      "validation": {
+        "titleRequired": "El título es obligatorio",
+        "descriptionRequired": "La descripción es obligatoria"
+      },
+      "toast": {
+        "createSuccess": "¡Ticket creado correctamente!",
+        "createFailed": "Error al crear el ticket. Inténtelo de nuevo."
+      }
+    },
+    "detail": {
+      "titleFallback": "Ticket",
+      "loading": "Cargando...",
+      "status": {
+        "label": "Estado",
+        "markClosed": "Marcar cerrado",
+        "reopen": "Reabrir"
+      },
+      "priority": {
+        "label": "Prioridad"
+      },
+      "raisedBy": "Creado por",
+      "assignedTo": "Asignado a",
+      "unassigned": "Sin asignar",
+      "created": "Creado",
+      "lastActivity": "Última actividad",
+      "attachments": {
+        "label": "Adjuntos",
+        "itemFallback": "Adjunto"
+      },
+      "toast": {
+        "statusUpdated": "Estado actualizado.",
+        "statusUpdateFailed": "Error al actualizar el estado.",
+        "priorityUpdated": "Prioridad actualizada.",
+        "priorityUpdateFailed": "Error al actualizar la prioridad."
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Gestión de Recursos de Formación Complementaria",
     "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

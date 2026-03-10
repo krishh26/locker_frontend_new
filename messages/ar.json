@@ -2327,6 +2327,118 @@
       "deleting": "جاري الحذف..."
     }
   },
+  "tickets": {
+    "pageTitle": "التذاكر",
+    "pageSubtitle": "إنشاء وإدارة التذاكر",
+    "table": {
+      "columns": {
+        "ticketNumber": "تذكرة #",
+        "title": "العنوان",
+        "raisedBy": "أنشأه",
+        "status": "الحالة",
+        "priority": "الأولوية",
+        "assignedTo": "معين إلى",
+        "created": "تاريخ الإنشاء",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "assign": "تعيين",
+        "delete": "حذف"
+      },
+      "searchPlaceholder": "البحث في التذاكر...",
+      "filters": {
+        "status": {
+          "placeholder": "الحالة",
+          "all": "جميع الحالات"
+        },
+        "priority": {
+          "placeholder": "الأولوية",
+          "all": "جميع الأولويات"
+        },
+        "view": {
+          "placeholder": "عرض",
+          "mine": "تذاكري",
+          "under": "ضمن نطاقي"
+        }
+      },
+      "view": {
+        "myTickets": "عرض: تذاكري",
+        "underScope": "عرض: ضمن نطاقي (أنشأها آخرون)"
+      },
+      "export": {
+        "tooltip": "تصدير CSV"
+      },
+      "raiseButton": "إنشاء تذكرة",
+      "loading": "جاري التحميل...",
+      "noResults": "لم يتم العثور على تذاكر.",
+      "csvExportSuccess": "تم تصدير CSV بنجاح",
+      "toast": {
+        "deleteSuccess": "تم حذف التذكرة بنجاح!",
+        "deleteFailed": "فشل حذف التذكرة. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "raise": {
+      "title": "إنشاء تذكرة",
+      "description": "إرسال تذكرة جديدة. قدم عنواناً ووصفاً واضحين.",
+      "fields": {
+        "titleLabel": "العنوان",
+        "titlePlaceholder": "عنوان موجز",
+        "descriptionLabel": "الوصف",
+        "descriptionPlaceholder": "صف المشكلة أو الطلب",
+        "priorityLabel": "الأولوية",
+        "priorityPlaceholder": "الأولوية",
+        "priority": {
+          "low": "منخفضة",
+          "medium": "متوسطة",
+          "high": "عالية",
+          "urgent": "عاجلة"
+        },
+        "centreLabel": "المركز (اختياري)",
+        "centrePlaceholder": "معرف المركز"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "creating": "جاري الإنشاء...",
+        "raise": "إنشاء تذكرة"
+      },
+      "validation": {
+        "titleRequired": "العنوان مطلوب",
+        "descriptionRequired": "الوصف مطلوب"
+      },
+      "toast": {
+        "createSuccess": "تم إنشاء التذكرة بنجاح!",
+        "createFailed": "فشل إنشاء التذكرة. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "detail": {
+      "titleFallback": "تذكرة",
+      "loading": "جاري التحميل...",
+      "status": {
+        "label": "الحالة",
+        "markClosed": "تحديد كمغلقة",
+        "reopen": "إعادة فتح"
+      },
+      "priority": {
+        "label": "الأولوية"
+      },
+      "raisedBy": "أنشأه",
+      "assignedTo": "معين إلى",
+      "unassigned": "غير معين",
+      "created": "تاريخ الإنشاء",
+      "lastActivity": "آخر نشاط",
+      "attachments": {
+        "label": "المرفقات",
+        "itemFallback": "مرفق"
+      },
+      "toast": {
+        "statusUpdated": "تم تحديث الحالة.",
+        "statusUpdateFailed": "فشل تحديث الحالة.",
+        "priorityUpdated": "تم تحديث الأولوية.",
+        "priorityUpdateFailed": "فشل تحديث الأولوية."
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

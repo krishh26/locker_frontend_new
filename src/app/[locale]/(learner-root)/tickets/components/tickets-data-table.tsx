@@ -60,6 +60,7 @@ import { TicketRaiseDialog } from "./ticket-raise-dialog"
 import { TicketDetailSheet } from "./ticket-detail-sheet"
 import { TicketAssignDialog } from "./ticket-assign-dialog"
 import { VariantProps } from "class-variance-authority"
+import { useTranslations } from "next-intl"
 
 const STATUS_OPTIONS: TicketStatus[] = ["Open", "InProgress", "Resolved", "Closed"]
 const PRIORITY_OPTIONS: TicketPriority[] = ["Low", "Medium", "High", "Urgent"]
@@ -106,6 +107,8 @@ export function TicketsDataTable() {
   const canRaiseTicket = ["Learner", "CentreAdmin", "OrganisationAdmin" ,"Admin" ,"Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
   const showRaisedByMeFilter = isAdmin && !isMasterAdmin
   const isOrgAdminOrCentreAdmin = showRaisedByMeFilter
+
+  const t = useTranslations("tickets")
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -166,12 +169,12 @@ export function TicketsDataTable() {
     if (!selectedTicket) return
     try {
       await deleteTicket({ ticket_id: selectedTicket.ticket_id }).unwrap()
-      toast.success("Ticket deleted successfully!")
+      toast.success(t("table.toast.deleteSuccess"))
       setDeleteDialogOpen(false)
       setSelectedTicket(null)
       refetch()
     } catch {
-      toast.error("Failed to delete ticket. Please try again.")
+      toast.error(t("table.toast.deleteFailed"))
     }
   }
 
@@ -190,14 +193,14 @@ export function TicketsDataTable() {
     () => [
       {
         accessorKey: "ticket_number",
-        header: "Ticket #",
+        header: t("table.columns.ticketNumber"),
         cell: ({ row }) => (
           <div className="font-mono font-medium">{row.original.ticket_number}</div>
         ),
       },
       {
         accessorKey: "title",
-        header: "Title",
+        header: t("table.columns.title"),
         cell: ({ row }) => (
           <div className="font-medium max-w-[200px] truncate">{row.original.title}</div>
         ),
@@ -206,7 +209,7 @@ export function TicketsDataTable() {
         ? [
             {
               id: "raised_by",
-              header: "Raised by",
+              header: t("table.columns.raisedBy"),
               cell: ({ row }: { row: { original: Ticket } }) => (
                 <div className="max-w-[160px] truncate">
                   {displayUser(row.original.raised_by)}
@@ -217,7 +220,7 @@ export function TicketsDataTable() {
         : []),
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const status = row.original.status
           return (
@@ -229,7 +232,7 @@ export function TicketsDataTable() {
       },
       {
         accessorKey: "priority",
-        header: "Priority",
+        header: t("table.columns.priority"),
         cell: ({ row }) => {
           const priority = row.original.priority
           return (
@@ -243,7 +246,7 @@ export function TicketsDataTable() {
         ? [
             {
               id: "assigned_to",
-              header: "Assigned to",
+              header: t("table.columns.assignedTo"),
               cell: ({ row }: { row: { original: Ticket } }) => (
                 <div className="max-w-[160px] truncate">
                   {displayUser(row.original.assigned_to ?? null)}
@@ -254,21 +257,21 @@ export function TicketsDataTable() {
         : []),
       {
         accessorKey: "created_at",
-        header: "Created",
+        header: t("table.columns.created"),
         cell: ({ row }) => formatDate(row.original.created_at),
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }: { row: { original: Ticket } }) => (
-          <DropdownMenu>
+                <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleView(row.original)}>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => handleView(row.original)}>
                 <Eye className="mr-2 h-4 w-4" />
                 View
               </DropdownMenuItem>
@@ -280,14 +283,14 @@ export function TicketsDataTable() {
                   <>
                     <DropdownMenuItem onClick={() => handleAssignClick(row.original)}>
                       <UserPlus className="mr-2 h-4 w-4" />
-                      Assign
+                      {t("table.actions.assign")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleDeleteClick(row.original)}
                       className="text-destructive"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
+                      {t("table.actions.delete")}
                     </DropdownMenuItem>
                   </>
                 ) : null
@@ -318,8 +321,22 @@ export function TicketsDataTable() {
   const handleExportCSV = () => {
     const data = ticketData?.data ?? []
     const headers = isAdmin
-      ? ["Ticket #", "Title", "Raised by", "Status", "Priority", "Assigned to", "Created"]
-      : ["Ticket #", "Title", "Status", "Priority", "Created"]
+      ? [
+          t("table.columns.ticketNumber"),
+          t("table.columns.title"),
+          t("table.columns.raisedBy"),
+          t("table.columns.status"),
+          t("table.columns.priority"),
+          t("table.columns.assignedTo"),
+          t("table.columns.created"),
+        ]
+      : [
+          t("table.columns.ticketNumber"),
+          t("table.columns.title"),
+          t("table.columns.status"),
+          t("table.columns.priority"),
+          t("table.columns.created"),
+        ]
     const rows = data.map((t) =>
       isAdmin
         ? [
@@ -345,20 +362,22 @@ export function TicketsDataTable() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-    toast.success("CSV exported successfully")
+    toast.success(t("table.csvExportSuccess"))
   }
 
   return (
     <div className="space-y-4">
       {showRaisedByMeFilter && (
         <p className="text-sm text-muted-foreground">
-          {raisedByMeFilter === "mine" ? "Showing: My tickets" : "Showing: Under my scope (raised by others)"}
+          {raisedByMeFilter === "mine"
+            ? t("table.view.myTickets")
+            : t("table.view.underScope")}
         </p>
       )}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <Input
-            placeholder="Search tickets..."
+            placeholder={t("table.searchPlaceholder")}
             value={keyword}
             onChange={(e) => {
               setKeyword(e.target.value)
@@ -368,10 +387,10 @@ export function TicketsDataTable() {
           />
           <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setPage(1) }}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Status" />
+              <SelectValue placeholder={t("table.filters.status.placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All statuses</SelectItem>
+              <SelectItem value="all">{t("table.filters.status.all")}</SelectItem>
               {STATUS_OPTIONS.map((s) => (
                 <SelectItem key={s} value={s}>{s}</SelectItem>
               ))}
@@ -379,10 +398,10 @@ export function TicketsDataTable() {
           </Select>
           <Select value={priorityFilter} onValueChange={(v) => { setPriorityFilter(v); setPage(1) }}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Priority" />
+              <SelectValue placeholder={t("table.filters.priority.placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All priorities</SelectItem>
+              <SelectItem value="all">{t("table.filters.priority.all")}</SelectItem>
               {PRIORITY_OPTIONS.map((p) => (
                 <SelectItem key={p} value={p}>{p}</SelectItem>
               ))}
@@ -397,22 +416,22 @@ export function TicketsDataTable() {
               }}
             >
               <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="View" />
+              <SelectValue placeholder={t("table.filters.view.placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="mine">My tickets</SelectItem>
-                <SelectItem value="under">Under my scope</SelectItem>
+                <SelectItem value="mine">{t("table.filters.view.mine")}</SelectItem>
+                <SelectItem value="under">{t("table.filters.view.under")}</SelectItem>
               </SelectContent>
             </Select>
           )}
-          <Button variant="outline" size="icon" onClick={handleExportCSV} title="Export CSV">
+          <Button variant="outline" size="icon" onClick={handleExportCSV} title={t("table.export.tooltip")}>
             <Download className="h-4 w-4" />
           </Button>
         </div>
         {canRaiseTicket && (
           <Button onClick={handleRaiseClick} className="gap-2">
             <Plus className="h-4 w-4" />
-            Raise ticket
+            {t("table.raiseButton")}
           </Button>
         )}
       </div>
@@ -436,7 +455,7 @@ export function TicketsDataTable() {
             {isLoading ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  Loading...
+                  {t("table.loading")}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -452,7 +471,7 @@ export function TicketsDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No tickets found.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

@@ -2334,6 +2334,118 @@
       "deleting": "A eliminar..."
     }
   },
+  "tickets": {
+    "pageTitle": "Tickets",
+    "pageSubtitle": "Criar e gerir tickets",
+    "table": {
+      "columns": {
+        "ticketNumber": "Ticket #",
+        "title": "Título",
+        "raisedBy": "Criado por",
+        "status": "Estado",
+        "priority": "Prioridade",
+        "assignedTo": "Atribuído a",
+        "created": "Criado",
+        "actions": "Ações"
+      },
+      "actions": {
+        "view": "Ver",
+        "assign": "Atribuir",
+        "delete": "Eliminar"
+      },
+      "searchPlaceholder": "Pesquisar tickets...",
+      "filters": {
+        "status": {
+          "placeholder": "Estado",
+          "all": "Todos os estados"
+        },
+        "priority": {
+          "placeholder": "Prioridade",
+          "all": "Todas as prioridades"
+        },
+        "view": {
+          "placeholder": "Ver",
+          "mine": "Os meus tickets",
+          "under": "No meu âmbito"
+        }
+      },
+      "view": {
+        "myTickets": "A mostrar: Os meus tickets",
+        "underScope": "A mostrar: No meu âmbito (criados por outros)"
+      },
+      "export": {
+        "tooltip": "Exportar CSV"
+      },
+      "raiseButton": "Criar ticket",
+      "loading": "A carregar...",
+      "noResults": "Nenhum ticket encontrado.",
+      "csvExportSuccess": "CSV exportado com sucesso",
+      "toast": {
+        "deleteSuccess": "Ticket eliminado com sucesso!",
+        "deleteFailed": "Falha ao eliminar o ticket. Tente novamente."
+      }
+    },
+    "raise": {
+      "title": "Criar um ticket",
+      "description": "Submeta um novo ticket. Indique um título e descrição claros.",
+      "fields": {
+        "titleLabel": "Título",
+        "titlePlaceholder": "Título breve",
+        "descriptionLabel": "Descrição",
+        "descriptionPlaceholder": "Descreva o problema ou pedido",
+        "priorityLabel": "Prioridade",
+        "priorityPlaceholder": "Prioridade",
+        "priority": {
+          "low": "Baixa",
+          "medium": "Média",
+          "high": "Alta",
+          "urgent": "Urgente"
+        },
+        "centreLabel": "Centro (opcional)",
+        "centrePlaceholder": "ID do centro"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "creating": "A criar...",
+        "raise": "Criar ticket"
+      },
+      "validation": {
+        "titleRequired": "O título é obrigatório",
+        "descriptionRequired": "A descrição é obrigatória"
+      },
+      "toast": {
+        "createSuccess": "Ticket criado com sucesso!",
+        "createFailed": "Falha ao criar o ticket. Tente novamente."
+      }
+    },
+    "detail": {
+      "titleFallback": "Ticket",
+      "loading": "A carregar...",
+      "status": {
+        "label": "Estado",
+        "markClosed": "Marcar como fechado",
+        "reopen": "Reabrir"
+      },
+      "priority": {
+        "label": "Prioridade"
+      },
+      "raisedBy": "Criado por",
+      "assignedTo": "Atribuído a",
+      "unassigned": "Não atribuído",
+      "created": "Criado",
+      "lastActivity": "Última atividade",
+      "attachments": {
+        "label": "Anexos",
+        "itemFallback": "Anexo"
+      },
+      "toast": {
+        "statusUpdated": "Estado atualizado.",
+        "statusUpdateFailed": "Falha ao atualizar o estado.",
+        "priorityUpdated": "Prioridade atualizada.",
+        "priorityUpdateFailed": "Falha ao atualizar a prioridade."
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

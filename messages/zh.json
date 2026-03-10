@@ -2292,6 +2292,118 @@
       "deleting": "删除中..."
     }
   },
+  "tickets": {
+    "pageTitle": "工单",
+    "pageSubtitle": "提交和管理工单",
+    "table": {
+      "columns": {
+        "ticketNumber": "工单 #",
+        "title": "标题",
+        "raisedBy": "创建人",
+        "status": "状态",
+        "priority": "优先级",
+        "assignedTo": "指派给",
+        "created": "创建时间",
+        "actions": "操作"
+      },
+      "actions": {
+        "view": "查看",
+        "assign": "指派",
+        "delete": "删除"
+      },
+      "searchPlaceholder": "搜索工单...",
+      "filters": {
+        "status": {
+          "placeholder": "状态",
+          "all": "全部状态"
+        },
+        "priority": {
+          "placeholder": "优先级",
+          "all": "全部优先级"
+        },
+        "view": {
+          "placeholder": "视图",
+          "mine": "我的工单",
+          "under": "我的范围内"
+        }
+      },
+      "view": {
+        "myTickets": "显示：我的工单",
+        "underScope": "显示：我的范围内（他人创建）"
+      },
+      "export": {
+        "tooltip": "导出 CSV"
+      },
+      "raiseButton": "创建工单",
+      "loading": "加载中...",
+      "noResults": "未找到工单。",
+      "csvExportSuccess": "CSV 导出成功",
+      "toast": {
+        "deleteSuccess": "工单已成功删除！",
+        "deleteFailed": "删除工单失败，请重试。"
+      }
+    },
+    "raise": {
+      "title": "创建工单",
+      "description": "提交新工单。请提供清晰的标题和描述。",
+      "fields": {
+        "titleLabel": "标题",
+        "titlePlaceholder": "简短标题",
+        "descriptionLabel": "描述",
+        "descriptionPlaceholder": "描述问题或请求",
+        "priorityLabel": "优先级",
+        "priorityPlaceholder": "优先级",
+        "priority": {
+          "low": "低",
+          "medium": "中",
+          "high": "高",
+          "urgent": "紧急"
+        },
+        "centreLabel": "中心（可选）",
+        "centrePlaceholder": "中心 ID"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "creating": "创建中...",
+        "raise": "创建工单"
+      },
+      "validation": {
+        "titleRequired": "标题为必填项",
+        "descriptionRequired": "描述为必填项"
+      },
+      "toast": {
+        "createSuccess": "工单创建成功！",
+        "createFailed": "创建工单失败，请重试。"
+      }
+    },
+    "detail": {
+      "titleFallback": "工单",
+      "loading": "加载中...",
+      "status": {
+        "label": "状态",
+        "markClosed": "标记为已关闭",
+        "reopen": "重新打开"
+      },
+      "priority": {
+        "label": "优先级"
+      },
+      "raisedBy": "创建人",
+      "assignedTo": "指派给",
+      "unassigned": "未指派",
+      "created": "创建时间",
+      "lastActivity": "最后活动",
+      "attachments": {
+        "label": "附件",
+        "itemFallback": "附件"
+      },
+      "toast": {
+        "statusUpdated": "状态已更新。",
+        "statusUpdateFailed": "更新状态失败。",
+        "priorityUpdated": "优先级已更新。",
+        "priorityUpdateFailed": "更新优先级失败。"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

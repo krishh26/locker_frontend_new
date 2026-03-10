@@ -2334,6 +2334,118 @@
       "deleting": "हट रहा है..."
     }
   },
+  "tickets": {
+    "pageTitle": "टिकट",
+    "pageSubtitle": "टिकट बनाएं और प्रबंधित करें",
+    "table": {
+      "columns": {
+        "ticketNumber": "टिकट #",
+        "title": "शीर्षक",
+        "raisedBy": "बनाने वाला",
+        "status": "स्थिति",
+        "priority": "प्राथमिकता",
+        "assignedTo": "नियत",
+        "created": "बनाया गया",
+        "actions": "कार्रवाई"
+      },
+      "actions": {
+        "view": "देखें",
+        "assign": "नियत करें",
+        "delete": "हटाएं"
+      },
+      "searchPlaceholder": "टिकट खोजें...",
+      "filters": {
+        "status": {
+          "placeholder": "स्थिति",
+          "all": "सभी स्थितियाँ"
+        },
+        "priority": {
+          "placeholder": "प्राथमिकता",
+          "all": "सभी प्राथमिकताएँ"
+        },
+        "view": {
+          "placeholder": "देखें",
+          "mine": "मेरे टिकट",
+          "under": "मेरे दायरे में"
+        }
+      },
+      "view": {
+        "myTickets": "दिख रहा है: मेरे टिकट",
+        "underScope": "दिख रहा है: मेरे दायरे में (दूसरों द्वारा बनाए गए)"
+      },
+      "export": {
+        "tooltip": "CSV निर्यात करें"
+      },
+      "raiseButton": "टिकट बनाएं",
+      "loading": "लोड हो रहा है...",
+      "noResults": "कोई टिकट नहीं मिला।",
+      "csvExportSuccess": "CSV सफलतापूर्वक निर्यात हुआ",
+      "toast": {
+        "deleteSuccess": "टिकट सफलतापूर्वक हटाया गया!",
+        "deleteFailed": "टिकट हटाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "raise": {
+      "title": "टिकट बनाएं",
+      "description": "नया टिकट जमा करें। स्पष्ट शीर्षक और विवरण दें।",
+      "fields": {
+        "titleLabel": "शीर्षक",
+        "titlePlaceholder": "संक्षिप्त शीर्षक",
+        "descriptionLabel": "विवरण",
+        "descriptionPlaceholder": "समस्या या अनुरोध का विवरण दें",
+        "priorityLabel": "प्राथमिकता",
+        "priorityPlaceholder": "प्राथमिकता",
+        "priority": {
+          "low": "कम",
+          "medium": "मध्यम",
+          "high": "उच्च",
+          "urgent": "जरूरी"
+        },
+        "centreLabel": "केंद्र (वैकल्पिक)",
+        "centrePlaceholder": "केंद्र ID"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "creating": "बन रहा है...",
+        "raise": "टिकट बनाएं"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "descriptionRequired": "विवरण आवश्यक है"
+      },
+      "toast": {
+        "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",
+        "createFailed": "टिकट बनाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "detail": {
+      "titleFallback": "टिकट",
+      "loading": "लोड हो रहा है...",
+      "status": {
+        "label": "स्थिति",
+        "markClosed": "बंद के रूप में चिह्नित करें",
+        "reopen": "फिर से खोलें"
+      },
+      "priority": {
+        "label": "प्राथमिकता"
+      },
+      "raisedBy": "बनाने वाला",
+      "assignedTo": "नियत",
+      "unassigned": "अनियत",
+      "created": "बनाया गया",
+      "lastActivity": "अंतिम गतिविधि",
+      "attachments": {
+        "label": "संलग्नक",
+        "itemFallback": "संलग्नक"
+      },
+      "toast": {
+        "statusUpdated": "स्थिति अपडेट हो गई।",
+        "statusUpdateFailed": "स्थिति अपडेट करने में विफल।",
+        "priorityUpdated": "प्राथमिकता अपडेट हो गई।",
+        "priorityUpdateFailed": "प्राथमिकता अपडेट करने में विफल।"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

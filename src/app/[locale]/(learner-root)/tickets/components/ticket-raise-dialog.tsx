@@ -36,7 +36,12 @@ const raiseSchemaBase = {
   centre_id: z.number().nullable().optional(),
 }
 
-type RaiseFormValues = z.infer<typeof raiseSchema>
+type RaiseFormValues = {
+  title: string
+  description: string
+  priority?: "Low" | "Medium" | "High" | "Urgent"
+  centre_id?: number | null
+}
 
 interface TicketRaiseDialogProps {
   open: boolean

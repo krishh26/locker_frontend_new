@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { GripVertical, Pencil, Copy, Trash2 } from "lucide-react"
@@ -42,16 +43,17 @@ interface QuestionCardProps {
 }
 
 const questionTypeLabels: Record<Question["type"], string> = {
-  "short-text": "Short Text",
-  "long-text": "Long Text",
-  "multiple-choice": "Multiple Choice",
-  checkbox: "Checkbox",
-  rating: "Rating",
-  date: "Date",
-  likert: "Likert Scale",
+  "short-text": "builder.questionTypeShortText",
+  "long-text": "builder.questionTypeLongText",
+  "multiple-choice": "builder.questionTypeMultipleChoice",
+  checkbox: "builder.questionTypeCheckbox",
+  rating: "builder.questionTypeRating",
+  date: "builder.questionTypeDate",
+  likert: "builder.questionTypeLikert",
 }
 
 export function QuestionCard({ question, surveyId, onEdit }: QuestionCardProps) {
+  const t = useTranslations("surveys")
   const dispatch = useAppDispatch()
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [title, setTitle] = useState(question.title)
@@ -161,7 +163,7 @@ export function QuestionCard({ question, surveyId, onEdit }: QuestionCardProps) 
                       className="font-medium cursor-text"
                       onClick={() => setIsEditingTitle(true)}
                     >
-                      {question.title || "Untitled Question"}
+                    {question.title || t("builder.untitledQuestion")}
                     </h3>
                   )}
                   {question.description && (
@@ -221,13 +223,15 @@ export function QuestionCard({ question, surveyId, onEdit }: QuestionCardProps) 
                   htmlFor={`required-${question.id}`}
                   className="text-sm font-normal cursor-pointer"
                 >
-                  Required
+                  {t("builder.requiredLabel")}
                 </Label>
               </div>
 
               {question.options && question.options.length > 0 && (
                 <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">Options:</span>{" "}
+                  <span className="font-medium">
+                    {t("builder.optionsLabel")}
+                  </span>{" "}
                   {question.options.join(", ")}
                 </div>
               )}
@@ -239,19 +243,20 @@ export function QuestionCard({ question, surveyId, onEdit }: QuestionCardProps) 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogTitle>{t("builder.alertDeleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              question.
+                {t("builder.alertDeleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>
+                {t("form.cancel")}
+              </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+                {t("builder.questionMenuDelete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

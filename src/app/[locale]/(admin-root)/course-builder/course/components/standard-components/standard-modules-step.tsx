@@ -8,6 +8,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Controller, Control, useFieldArray, useWatch, FieldErrors } from "react-hook-form";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,7 @@ export function StandardModulesStep({
   setValue,
   errors,
 }: StandardModulesStepProps) {
+  const t = useTranslations("courseBuilder");
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   const { fields, append, remove } = useFieldArray({
@@ -93,21 +95,21 @@ export function StandardModulesStep({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold">Modules</h3>
+          <h3 className="text-lg font-semibold">{t("course.standard.modulesTitle")}</h3>
           <p className="text-sm text-muted-foreground">
-            Add and manage modules with topics for your standard course
+            {t("course.standard.modulesDescription")}
           </p>
         </div>
         <Button onClick={handleAddModule} className="gap-2" type="button">
           <Plus className="h-4 w-4" />
-          Add Module
+          {t("course.standard.addModule")}
         </Button>
       </div>
 
       {errors?.units && fields.length === 0 && (
         <div className="rounded-lg border border-destructive bg-destructive p-3">
           <p className="text-sm text-white font-medium">
-            {errors.units.message || "At least one module is required"}
+            {errors.units.message || t("course.standard.atLeastOneModule")}
           </p>
         </div>
       )}
@@ -115,7 +117,7 @@ export function StandardModulesStep({
       {fields.length === 0 ? (
         <Card className="p-6">
           <p className="text-sm text-muted-foreground text-center">
-            No modules added yet. Click "Add Module" to get started.
+            {t("course.standard.noModulesYet")}
           </p>
         </Card>
       ) : (
@@ -126,18 +128,18 @@ export function StandardModulesStep({
                 <TableRow>
                   <TableHead className="w-[50px]"></TableHead>
                   <TableHead>
-                    Module Title <span className="text-destructive">*</span>
+                    {t("course.standard.moduleTitle")} <span className="text-destructive">*</span>
                   </TableHead>
                   <TableHead>
-                    Module Reference <span className="text-destructive">*</span>
+                    {t("course.standard.moduleReference")} <span className="text-destructive">*</span>
                   </TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Active</TableHead>
-                  <TableHead>Sort Order</TableHead>
-                  <TableHead>Delivery Method</TableHead>
-                  <TableHead>OTJ Hours</TableHead>
-                  <TableHead>Delivery Lead</TableHead>
-                  <TableHead className="w-[100px] text-center">Actions</TableHead>
+                  <TableHead>{t("course.standard.description")}</TableHead>
+                  <TableHead>{t("course.standard.active")}</TableHead>
+                  <TableHead>{t("course.standard.sortOrder")}</TableHead>
+                  <TableHead>{t("course.standard.deliveryMethod")}</TableHead>
+                  <TableHead>{t("course.standard.otjHours")}</TableHead>
+                  <TableHead>{t("course.standard.deliveryLead")}</TableHead>
+                  <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -169,7 +171,7 @@ export function StandardModulesStep({
                               <div className="space-y-1">
                                 <Input
                                   {...formField}
-                                  placeholder="Module Title"
+                                  placeholder={t("course.standard.placeholderModuleTitle")}
                                   className={cn("min-w-[150px]", error && "border-destructive")}
                                 />
                                 {error && (
@@ -187,7 +189,7 @@ export function StandardModulesStep({
                               <div className="space-y-1">
                                 <Input
                                   {...formField}
-                                  placeholder="Module Reference"
+                                  placeholder={t("course.standard.placeholderModuleReference")}
                                   className={cn("min-w-[120px]", error && "border-destructive")}
                                 />
                                 {error && (
@@ -202,11 +204,11 @@ export function StandardModulesStep({
                             name={`units.${index}.description`}
                             control={control}
                             render={({ field: formField }) => (
-                              <Input
-                                {...formField}
-                                placeholder="Description"
-                                className="min-w-[150px]"
-                              />
+                            <Input
+                              {...formField}
+                              placeholder={t("course.standard.placeholderDescription")}
+                              className="min-w-[150px]"
+                            />
                             )}
                           />
                         </TableCell>
@@ -223,8 +225,8 @@ export function StandardModulesStep({
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="true">Active</SelectItem>
-                                  <SelectItem value="false">Inactive</SelectItem>
+                                  <SelectItem value="true">{t("course.standard.activeOption")}</SelectItem>
+                                  <SelectItem value="false">{t("course.standard.inactiveOption")}</SelectItem>
                                 </SelectContent>
                               </Select>
                             )}
@@ -235,12 +237,12 @@ export function StandardModulesStep({
                             name={`units.${index}.sort_order`}
                             control={control}
                             render={({ field: formField }) => (
-                              <Input
-                                {...formField}
-                                type="text"
-                                placeholder="Auto"
-                                className="w-[80px]"
-                              />
+                            <Input
+                              {...formField}
+                              type="text"
+                              placeholder={t("course.standard.placeholderAuto")}
+                              className="w-[80px]"
+                            />
                             )}
                           />
                         </TableCell>
@@ -251,7 +253,7 @@ export function StandardModulesStep({
                             render={({ field: formField }) => (
                               <Input
                                 {...formField}
-                                placeholder="Delivery Method"
+                                placeholder={t("course.standard.placeholderDeliveryMethod")}
                                 className="min-w-[150px]"
                               />
                             )}
@@ -265,7 +267,7 @@ export function StandardModulesStep({
                               <Input
                                 {...formField}
                                 type="text"
-                                placeholder="0"
+                                placeholder={t("course.standard.placeholderOtjHours")}
                                 className="w-[100px]"
                               />
                             )}
@@ -278,7 +280,7 @@ export function StandardModulesStep({
                             render={({ field: formField }) => (
                               <Input
                                 {...formField}
-                                placeholder="Delivery Lead"
+                                placeholder={t("course.standard.placeholderDeliveryLead")}
                                 className="min-w-[120px]"
                               />
                             )}

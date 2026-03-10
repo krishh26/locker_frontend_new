@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { SessionDialog } from "./session-dialog";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface CalendarListViewProps {
   sessions: Session[];
@@ -54,6 +55,7 @@ export function CalendarListView({
   metaData,
   onPageChange,
 }: CalendarListViewProps) {
+  const t = useTranslations("calendar");
   const [updateSession] = useUpdateSessionMutation();
   const [deleteLearnerPlan] = useDeleteLearnerPlanMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -72,9 +74,11 @@ export function CalendarListView({
         id: sessionId,
         Attended: newStatus,
       }).unwrap();
-      toast.success("Session status updated successfully");
+      toast.success(t("list.toastStatusUpdated"));
     } catch (error: unknown) {
-      const errorMessage = (error as { data?: { error?: string } })?.data?.error || "Failed to update session status";
+      const errorMessage =
+        (error as { data?: { error?: string } })?.data?.error ||
+        t("list.toastStatusUpdateFailed");
       toast.error(errorMessage);
     }
   };
@@ -89,11 +93,13 @@ export function CalendarListView({
 
     try {
       await deleteLearnerPlan(sessionToDelete.session_id).unwrap();
-      toast.success("Session deleted successfully");
+      toast.success(t("list.toastDeleteSuccess"));
       setDeleteDialogOpen(false);
       setSessionToDelete(null);
     } catch (error: unknown) {
-      const errorMessage = (error as { data?: { error?: string } })?.data?.error || "Failed to delete session";
+      const errorMessage =
+        (error as { data?: { error?: string } })?.data?.error ||
+        t("list.toastDeleteFailed");
       toast.error(errorMessage);
     }
   };
@@ -117,9 +123,11 @@ export function CalendarListView({
           <div className="rounded-full bg-primary p-4">
             <span className="text-2xl">📅</span>
           </div>
-          <p className="text-lg font-semibold">No data found</p>
+          <p className="text-lg font-semibold">
+            {t("list.emptyTitle")}
+          </p>
           <p className="text-sm text-center">
-            No sessions scheduled. Sessions will appear here once they are created.
+            {t("list.emptyDescription")}
           </p>
         </div>
       </Card>
@@ -133,20 +141,24 @@ export function CalendarListView({
           <Table>
             <TableHeader>
               <TableRow className="bg-white/10">
-                <TableHead>Title</TableHead>
-                <TableHead>Learners</TableHead>
-                <TableHead>Trainer</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Visit Date</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead className="text-center">Attended</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead>{t("list.headers.title")}</TableHead>
+                <TableHead>{t("list.headers.learners")}</TableHead>
+                <TableHead>{t("list.headers.trainer")}</TableHead>
+                <TableHead>{t("list.headers.location")}</TableHead>
+                <TableHead>{t("list.headers.visitDate")}</TableHead>
+                <TableHead>{t("list.headers.duration")}</TableHead>
+                <TableHead className="text-center">
+                  {t("list.headers.attended")}
+                </TableHead>
+                <TableHead>{t("list.headers.action")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {sessions.map((session) => (
                 <TableRow key={session.session_id}>
-                  <TableCell>{session.title || "Untitled Session"}</TableCell>
+                  <TableCell>
+                    {session.title || t("list.untitledSession")}
+                  </TableCell>
                   <TableCell>
                     {session.learners
                       ?.map((learner) => learner.user_name)
@@ -167,22 +179,32 @@ export function CalendarListView({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Not Set">Not Set</SelectItem>
-                        <SelectItem value="Attended">Attended</SelectItem>
-                        <SelectItem value="Cancelled">Cancelled</SelectItem>
+                        <SelectItem value="Not Set">
+                          {t("status.notSet")}
+                        </SelectItem>
+                        <SelectItem value="Attended">
+                          {t("status.attended")}
+                        </SelectItem>
+                        <SelectItem value="Cancelled">
+                          {t("status.cancelled")}
+                        </SelectItem>
                         <SelectItem value="Cancelled by Assessor">
-                          Cancelled by Assessor
+                          {t("status.cancelledByAssessor")}
                         </SelectItem>
                         <SelectItem value="Cancelled by Learner">
-                          Cancelled by Learner
+                          {t("status.cancelledByLearner")}
                         </SelectItem>
                         <SelectItem value="Cancelled by Employer">
-                          Cancelled by Employer
+                          {t("status.cancelledByEmployer")}
                         </SelectItem>
-                        <SelectItem value="Learner Late">Learner Late</SelectItem>
-                        <SelectItem value="Assessor Late">Assessor Late</SelectItem>
+                        <SelectItem value="Learner Late">
+                          {t("status.learnerLate")}
+                        </SelectItem>
+                        <SelectItem value="Assessor Late">
+                          {t("status.assessorLate")}
+                        </SelectItem>
                         <SelectItem value="Learner not Attended">
-                          Learner not Attended
+                          {t("status.learnerNotAttended")}
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -201,13 +223,13 @@ export function CalendarListView({
                             setEditDialogOpen(true);
                           }}
                         >
-                          Edit
+                            {t("list.actions.edit")}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleDeleteClick(session)}
                           className="text-destructive"
                         >
-                          Delete
+                            {t("list.actions.delete")}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -222,7 +244,11 @@ export function CalendarListView({
         {metaData && metaData.pages > 1 && (
           <div className="flex items-center justify-between px-4 py-4 border-t">
             <div className="text-sm text-muted-foreground">
-              Page {metaData.page} of {metaData.pages} ({metaData.items} total items)
+              {t("list.pagination.pageOf", {
+                page: metaData.page,
+                pages: metaData.pages,
+              })}{" "}
+              ({t("list.pagination.totalItems", { count: metaData.items })})
             </div>
             <div className="flex gap-2">
               <Button
@@ -231,7 +257,7 @@ export function CalendarListView({
                 onClick={() => onPageChange(metaData.page - 1)}
                 disabled={metaData.page <= 1}
               >
-                Previous
+                {t("list.pagination.previous")}
               </Button>
               <Button
                 variant="outline"
@@ -239,7 +265,7 @@ export function CalendarListView({
                 onClick={() => onPageChange(metaData.page + 1)}
                 disabled={metaData.page >= metaData.pages}
               >
-                Next
+                {t("list.pagination.next")}
               </Button>
             </div>
           </div>
@@ -250,20 +276,22 @@ export function CalendarListView({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Session?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {t("list.deleteDialog.title")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Deleting this session will also remove all associated data and relationships. Proceed with deletion?
+              {t("list.deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setSessionToDelete(null)}>
-              Cancel
+              {t("list.deleteDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete Session
+              {t("list.deleteDialog.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

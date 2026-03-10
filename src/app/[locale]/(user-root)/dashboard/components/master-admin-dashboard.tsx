@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { Building2, MapPin, CreditCard, DollarSign, FileText, ExternalLink } from "lucide-react"
 import { PageHeader } from "@/components/dashboard/page-header"
@@ -25,21 +26,22 @@ import { useGetAuditLogsQuery } from "@/store/api/audit-logs/auditLogApi"
 import type { AuditLog } from "@/store/api/audit-logs/types"
 import { format } from "date-fns"
 
-const AUDIT_ACTION_LABELS: Record<string, string> = {
-  system_action: "System Action",
-  account_manager_action: "Account Manager Action",
-  organisation_change: "Organisation Change",
-  access_change: "Access Change",
-  centre_change: "Centre Change",
-  subscription_change: "Subscription Change",
-  feature_change: "Feature Change",
+const AUDIT_ACTION_KEYS: Record<string, string> = {
+  system_action: "system_action",
+  account_manager_action: "account_manager_action",
+  organisation_change: "organisation_change",
+  access_change: "access_change",
+  centre_change: "centre_change",
+  subscription_change: "subscription_change",
+  feature_change: "feature_change",
 }
 
-function getAuditActionLabel(value: string): string {
-  return AUDIT_ACTION_LABELS[value] ?? value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+function getAuditActionKey(value: string): string {
+  return AUDIT_ACTION_KEYS[value] ?? value
 }
 
 export function MasterAdminDashboard() {
+  const t = useTranslations("dashboard.masterAdmin")
   const { data: summaryData, isLoading: summaryLoading, isError: summaryError } = useGetSystemSummaryQuery()
   const { data: statusData, isLoading: statusLoading } = useGetStatusOverviewQuery()
   const { data: orgsFallback } = useGetOrganisationsQuery({ page: 1, limit: 1 }, { skip: !summaryError })
@@ -82,30 +84,30 @@ export function MasterAdminDashboard() {
 
   const stats = [
     {
-      title: "Total Organisations",
+      title: t("totalOrganisations"),
       value: totalOrgs,
-      subtitle: `${activeOrgs} active`,
+      subtitle: `${activeOrgs} ${t("active")}`,
       icon: Building2,
       color: "text-primary",
     },
     {
-      title: "Total Centres",
+      title: t("totalCentres"),
       value: totalCentres,
-      subtitle: status ? `${status.centres?.active ?? 0} active / ${status.centres?.suspended ?? 0} suspended` : "Across all organisations",
+      subtitle: status ? `${status.centres?.active ?? 0} ${t("active")} / ${status.centres?.suspended ?? 0} ${t("suspended")}` : t("acrossAllOrgs"),
       icon: MapPin,
       color: "text-accent",
     },
     {
-      title: "Active Subscriptions",
+      title: t("activeSubscriptions"),
       value: activeSubscriptions,
-      subtitle: totalSubscriptions ? `${totalSubscriptions} total` : "Active plans",
+      subtitle: totalSubscriptions ? `${totalSubscriptions} ${t("total")}` : t("activePlans"),
       icon: CreditCard,
       color: "text-secondary",
     },
     {
-      title: "Total Revenue",
+      title: t("totalRevenue"),
       value: `£${revenueFromPayments.toLocaleString()}`,
-      subtitle: recentPaymentCount ? `From ${recentPaymentCount} recent payments` : "From recent payments",
+      subtitle: recentPaymentCount ? t("fromPaymentsCount", { count: recentPaymentCount }) : t("fromRecentPayments"),
       icon: DollarSign,
       color: "text-secondary",
     },
@@ -114,8 +116,8 @@ export function MasterAdminDashboard() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Master Admin Dashboard"
-        subtitle="Overview of all organisations, centres, and system activity"
+        title={t("title")}
+        subtitle={t("subtitle")}
       />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -149,11 +151,11 @@ export function MasterAdminDashboard() {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-base font-medium flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            Recent audit events
+            {t("recentAuditEvents")}
           </CardTitle>
           <Button variant="ghost" size="sm" asChild>
             <Link href="/audit-logs" className="gap-1">
-              View all
+              {t("viewAll")}
               <ExternalLink className="h-3 w-3" />
             </Link>
           </Button>
@@ -166,22 +168,28 @@ export function MasterAdminDashboard() {
               ))}
             </div>
           ) : recentLogs.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4">No recent audit events.</p>
+            <p className="text-sm text-muted-foreground py-4">{t("noRecentAuditEvents")}</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[140px]">Action</TableHead>
-                  <TableHead>User</TableHead>
-                  <TableHead>Organisation</TableHead>
-                  <TableHead className="text-right">Date</TableHead>
+                  <TableHead className="w-[140px]">{t("action")}</TableHead>
+                  <TableHead>{t("user")}</TableHead>
+                  <TableHead>{t("organisation")}</TableHead>
+                  <TableHead className="text-right">{t("date")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentLogs.map((log) => (
+                {recentLogs.map((log) => {
+                  const actionKey = getAuditActionKey(log.actionType)
+                  const actionLabel =
+                    log.actionType in AUDIT_ACTION_KEYS
+                      ? t(("auditActions." + actionKey) as "auditActions.system_action" | "auditActions.account_manager_action" | "auditActions.organisation_change" | "auditActions.access_change" | "auditActions.centre_change" | "auditActions.subscription_change" | "auditActions.feature_change")
+                      : log.actionType.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+                  return (
                   <TableRow key={log.id}>
                     <TableCell className="font-medium">
-                      {getAuditActionLabel(log.actionType)}
+                      {actionLabel}
                     </TableCell>
                     <TableCell>{log.userName ?? log.userEmail ?? "—"}</TableCell>
                     <TableCell>{log.organisationName ?? "—"}</TableCell>
@@ -189,7 +197,8 @@ export function MasterAdminDashboard() {
                       {log.createdAt ? format(new Date(log.createdAt), "MMM d, yyyy HH:mm") : "—"}
                     </TableCell>
                   </TableRow>
-                ))}
+                  )
+                })}
               </TableBody>
             </Table>
           )}

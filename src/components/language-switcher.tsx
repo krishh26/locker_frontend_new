@@ -14,13 +14,21 @@ import { locales, type Locale } from "@/i18n/config";
 const localeNames: Record<Locale, string> = {
   en: "English",
   es: "Español",
-  fr: "Français",
-  de: "Deutsch",
-  it: "Italiano",
-  pt: "Português",
-  ar: "العربية",
-  hi: "हिन्दी",
   zh: "中文",
+  fr: "Français",
+  ar: "العربية",
+  pt: "Português",
+  hi: "हिन्दी",
+};
+
+const localeFlags: Record<Locale, string> = {
+  en: "🇬🇧",
+  es: "🇪🇸",
+  zh: "🇨🇳",
+  fr: "🇫🇷",
+  ar: "🇸🇦",
+  pt: "🇵🇹",
+  hi: "🇮🇳",
 };
 
 export function LanguageSwitcher() {
@@ -51,6 +59,7 @@ export function LanguageSwitcher() {
             onClick={() => switchLocale(loc)}
             className={locale === loc ? "bg-accent" : ""}
           >
+            <span className="mr-2">{localeFlags[loc]}</span>
             {localeNames[loc]}
           </DropdownMenuItem>
         ))}

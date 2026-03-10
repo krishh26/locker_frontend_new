@@ -19,6 +19,7 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -46,6 +47,7 @@ export function DataTablePagination<TData>({
   showSelectedRows = false,
 }: DataTablePaginationProps<TData>) {
   const id = useId();
+  const t = useTranslations("common");
 
   // For manual pagination, use provided values; otherwise use table state
   const page = manualPagination
@@ -198,7 +200,7 @@ export function DataTablePagination<TData>({
     <div className="flex w-full flex-wrap items-center justify-between gap-6 py-4 max-sm:justify-center">
       <div className="flex shrink-0 items-center gap-3">
         <Label htmlFor={id} className="text-sm font-medium">
-          Rows per page
+          {t("pagination.rowsPerPage")}
         </Label>
         <Select
           value={`${currentPageSize}`}
@@ -219,17 +221,21 @@ export function DataTablePagination<TData>({
 
       {showSelectedRows && !manualPagination && (
         <div className="flex-1 text-sm text-muted-foreground hidden sm:block">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {t("pagination.selectedRows", {
+            selected: table.getFilteredSelectedRowModel().rows.length,
+            total: table.getFilteredRowModel().rows.length,
+          })}
         </div>
       )}
 
       {manualPagination && (
         <div className="text-muted-foreground flex grow items-center justify-end whitespace-nowrap max-sm:justify-center">
           <p className="text-muted-foreground text-sm whitespace-nowrap" aria-live="polite">
-            Showing <span className="text-foreground">{showingFrom}</span> to{" "}
-            <span className="text-foreground">{showingTo}</span> of{" "}
-            <span className="text-foreground">{items}</span> item(s).
+            {t("pagination.showingRange", {
+              from: showingFrom,
+              to: showingTo,
+              count: items,
+            })}
           </p>
         </div>
       )}
@@ -237,9 +243,11 @@ export function DataTablePagination<TData>({
       {!manualPagination && !showSelectedRows && (
         <div className="text-muted-foreground flex grow items-center justify-end whitespace-nowrap max-sm:justify-center">
           <p className="text-muted-foreground text-sm whitespace-nowrap" aria-live="polite">
-            Showing <span className="text-foreground">{showingFrom}</span> to{" "}
-            <span className="text-foreground">{showingTo}</span> of{" "}
-            <span className="text-foreground">{items}</span> item(s).
+            {t("pagination.showingRange", {
+              from: showingFrom,
+              to: showingTo,
+              count: items,
+            })}
           </p>
         </div>
       )}
@@ -249,7 +257,7 @@ export function DataTablePagination<TData>({
           <PaginationItem>
             <PaginationLink
               href="#"
-              aria-label="Go to first page"
+              aria-label={t("pagination.ariaFirst")}
               size="icon"
               className="rounded-full"
               onClick={(e) => {
@@ -265,7 +273,7 @@ export function DataTablePagination<TData>({
           <PaginationItem>
             <PaginationLink
               href="#"
-              aria-label="Go to previous page"
+              aria-label={t("pagination.ariaPrevious")}
               size="icon"
               className="rounded-full"
               onClick={(e) => {
@@ -287,7 +295,7 @@ export function DataTablePagination<TData>({
                       <PaginationEllipsis />
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>More pages</p>
+                      <p>{t("pagination.morePages")}</p>
                     </TooltipContent>
                   </Tooltip>
                 </PaginationItem>
@@ -313,7 +321,7 @@ export function DataTablePagination<TData>({
           <PaginationItem>
             <PaginationLink
               href="#"
-              aria-label="Go to next page"
+              aria-label={t("pagination.ariaNext")}
               size="icon"
               className="rounded-full"
               onClick={(e) => {
@@ -329,7 +337,7 @@ export function DataTablePagination<TData>({
           <PaginationItem>
             <PaginationLink
               href="#"
-              aria-label="Go to last page"
+              aria-label={t("pagination.ariaLast")}
               size="icon"
               className="rounded-full"
               onClick={(e) => {

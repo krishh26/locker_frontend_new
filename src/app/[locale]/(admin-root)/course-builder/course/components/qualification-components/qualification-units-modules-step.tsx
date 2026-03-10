@@ -9,6 +9,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Controller, Control, useFieldArray, useWatch, FieldErrors } from "react-hook-form";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,7 @@ export function QualificationUnitsModulesStep({
   setValue,
   errors,
 }: QualificationUnitsModulesStepProps) {
+  const t = useTranslations("courseBuilder");
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
 
   const { fields, append, remove } = useFieldArray({
@@ -89,21 +91,21 @@ export function QualificationUnitsModulesStep({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold">Units</h3>
+          <h3 className="text-lg font-semibold">{t("course.qualification.unitsTitle")}</h3>
           <p className="text-sm text-muted-foreground">
-            Add and manage units with outcomes and criteria for your qualification course
+            {t("course.qualification.unitsDescription")}
           </p>
         </div>
         <Button onClick={handleAddUnit} className="gap-2" type="button">
           <Plus className="h-4 w-4" />
-          Add Unit
+          {t("course.qualification.addUnit")}
         </Button>
       </div>
 
       {errors?.units && fields.length === 0 && (
         <div className="rounded-lg border border-destructive bg-destructive p-3">
           <p className="text-sm text-white font-medium">
-            {errors.units.message || "At least one unit is required"}
+            {errors.units.message || t("course.qualification.atLeastOneUnit")}
           </p>
         </div>
       )}
@@ -111,7 +113,7 @@ export function QualificationUnitsModulesStep({
       {fields.length === 0 ? (
         <Card className="p-6">
           <p className="text-sm text-muted-foreground text-center">
-            No units added yet. Click &quot;Add Unit&quot; to get started.
+            {t("course.qualification.noUnitsYet")}
           </p>
         </Card>
       ) : (
@@ -122,16 +124,16 @@ export function QualificationUnitsModulesStep({
                 <TableRow>
                   <TableHead className="w-[50px]"></TableHead>
                   <TableHead>
-                    Unit Ref <span className="text-destructive">*</span>
+                    {t("course.qualification.unitRef")} <span className="text-destructive">*</span>
                   </TableHead>
                   <TableHead>
-                    Unit Title <span className="text-destructive">*</span>
+                    {t("course.qualification.unitTitle")} <span className="text-destructive">*</span>
                   </TableHead>
-                  <TableHead>Level</TableHead>
-                  <TableHead>GLH</TableHead>
-                  <TableHead>Credit Value</TableHead>
-                  <TableHead>Mandatory</TableHead>
-                  <TableHead className="w-[100px] text-center">Actions</TableHead>
+                  <TableHead>{t("course.qualification.level")}</TableHead>
+                  <TableHead>{t("course.qualification.glh")}</TableHead>
+                  <TableHead>{t("course.qualification.creditValue")}</TableHead>
+                  <TableHead>{t("course.qualification.mandatory")}</TableHead>
+                  <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -163,7 +165,7 @@ export function QualificationUnitsModulesStep({
                               <div className="space-y-1">
                                 <Input
                                   {...formField}
-                                  placeholder="Unit Ref"
+                                  placeholder={t("course.qualification.placeholderUnitRef")}
                                   className={cn(
                                     "w-[120px]",
                                     error && "border-destructive"
@@ -186,7 +188,7 @@ export function QualificationUnitsModulesStep({
                               <div className="space-y-1">
                                 <Input
                                   {...formField}
-                                  placeholder="Unit Title"
+                                  placeholder={t("course.qualification.placeholderUnitTitle")}
                                   className={cn(error && "border-destructive")}
                                 />
                                 {error && (
@@ -203,10 +205,10 @@ export function QualificationUnitsModulesStep({
                             name={`units.${index}.level`}
                             control={control}
                             render={({ field: formField }) => (
-                              <Input
+                                <Input
                                 {...formField}
                                 type="number"
-                                placeholder="Level"
+                                placeholder={t("course.qualification.placeholderLevel")}
                                 className="w-[100px]"
                                 value={formField.value ?? ""}
                                 onChange={(e) =>
@@ -223,10 +225,10 @@ export function QualificationUnitsModulesStep({
                             name={`units.${index}.glh`}
                             control={control}
                             render={({ field: formField }) => (
-                              <Input
+                                <Input
                                 {...formField}
                                 type="number"
-                                placeholder="GLH"
+                                placeholder={t("course.qualification.placeholderGlh")}
                                 className="w-[100px]"
                                 value={formField.value ?? ""}
                                 onChange={(e) =>
@@ -243,10 +245,10 @@ export function QualificationUnitsModulesStep({
                             name={`units.${index}.credit_value`}
                             control={control}
                             render={({ field: formField }) => (
-                              <Input
+                                <Input
                                 {...formField}
                                 type="number"
-                                placeholder="Credit"
+                                placeholder={t("course.qualification.placeholderCredit")}
                                 className="w-[100px]"
                                 value={formField.value ?? ""}
                                 onChange={(e) =>
@@ -271,8 +273,8 @@ export function QualificationUnitsModulesStep({
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="true">Mandatory</SelectItem>
-                                  <SelectItem value="false">Optional</SelectItem>
+                                  <SelectItem value="true">{t("course.qualification.mandatoryOption")}</SelectItem>
+                                  <SelectItem value="false">{t("course.qualification.optionalOption")}</SelectItem>
                                 </SelectContent>
                               </Select>
                             )}

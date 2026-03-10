@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -58,12 +59,13 @@ const formTypeOptions = [
   "Workbook",
   "Test/Exams",
   "Others",
-];
+] as const;
 
-const metadataSchema = z
+function buildMetadataSchema(t: (key: string) => string) {
+  return z
   .object({
-    form_name: z.string().min(1, "Form name is required"),
-    type: z.string().min(1, "Form type is required"),
+    form_name: z.string().min(1, t("validation.formNameRequired")),
+    type: z.string().min(1, t("validation.formTypeRequired")),
     description: z.string().optional(),
     accessRights: z.record(z.string(), z.boolean()),
     enableCompleteFunction: z.boolean(),
@@ -73,17 +75,15 @@ const metadataSchema = z
     otherEmail: z.string().optional(),
   })
   .superRefine((data, ctx) => {
-    // Validate access rights
     const hasAccessRight = Object.values(data.accessRights).some((v) => v === true);
     if (!hasAccessRight) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Select at least one access right",
+        message: t("validation.selectAccessRight"),
         path: ["accessRights"],
       });
     }
 
-    // Validate completion roles when enableCompleteFunction is true
     if (data.enableCompleteFunction) {
       const hasCompletionRole = data.completionRoles
         ? Object.values(data.completionRoles).some((v) => v === true)
@@ -91,28 +91,26 @@ const metadataSchema = z
       if (!hasCompletionRole) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Select at least one completion role",
+          message: t("validation.selectCompletionRole"),
           path: ["completionRoles"],
         });
       }
     }
 
-    // Validate emails
     const hasEmail = Object.values(data.emails).some((v) => v === true);
     if (!hasEmail) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Select at least one email recipient",
+        message: t("validation.selectEmailRecipient"),
         path: ["emails"],
       });
     }
 
-    // Validate other emails
     const hasOtherEmail = data.emails && "Other" in data.emails && data.emails.Other;
     if (hasOtherEmail && !data.otherEmail?.trim()) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Please enter other emails",
+        message: t("validation.enterOtherEmails"),
         path: ["otherEmail"],
       });
     }
@@ -125,24 +123,28 @@ const metadataSchema = z
       if (!allValid) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Enter valid email(s) separated by commas",
+          message: t("validation.validEmails"),
           path: ["otherEmail"],
         });
       }
     }
   });
+}
 
-type MetadataFormValues = z.infer<typeof metadataSchema>;
+type MetadataFormValues = z.infer<ReturnType<typeof buildMetadataSchema>>;
 
 interface FormBuilderProps {
   formId: string | null;
 }
 
 export function FormBuilder({ formId }: FormBuilderProps) {
+  const t = useTranslations("forms.builder");
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
+
+  const metadataSchema = useMemo(() => buildMetadataSchema((k) => t(k)), [t]);
   
   const isEditMode = formId !== null && formId !== "new";
   const [formFields, setFormFields] = useState<SimpleFormField[]>([]);
@@ -267,12 +269,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
     const values = form.getValues();
 
     if (!values.form_name.trim()) {
-      toast.error("Please enter a form name");
+      toast.error(t("toast.enterFormName"));
       return;
     }
 
     if (formFields.length === 0) {
-      toast.error("Please add at least one field to the form");
+      toast.error(t("toast.addOneField"));
       return;
     }
 
@@ -304,10 +306,10 @@ export function FormBuilder({ formId }: FormBuilderProps) {
     try {
       if (isEditMode) {
         await updateForm({ id: formId!, data: formData }).unwrap();
-        toast.success("Form updated successfully");
+        toast.success(t("toast.formUpdated"));
       } else {
         await createForm(formData).unwrap();
-        toast.success("Form created successfully");
+        toast.success(t("toast.formCreated"));
       }
       setSaveStatus("saved");
       setTimeout(() => router.push("/forms"), 1500);
@@ -316,7 +318,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to save form");
+      toast.error(errorMessage || t("toast.saveFailed"));
       setSaveStatus("error");
     }
   };
@@ -325,12 +327,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
     const values = form.getValues();
 
     if (!values.form_name.trim()) {
-      toast.error("Please enter a form name");
+      toast.error(t("toast.enterFormName"));
       return;
     }
 
     if (formFields.length === 0) {
-      toast.error("Please add at least one field to the form");
+      toast.error(t("toast.addOneField"));
       return;
     }
 
@@ -344,9 +346,9 @@ export function FormBuilder({ formId }: FormBuilderProps) {
     if (existingFormNames.includes(newFormName.toLowerCase())) {
       form.setError("form_name", {
         type: "manual",
-        message: "A form with this name already exists. Please choose a different name.",
+        message: t("toast.duplicateName"),
       });
-      toast.error("A form with this name already exists. Please choose a different name.");
+      toast.error(t("toast.duplicateName"));
       return;
     }
 
@@ -377,7 +379,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
 
     try {
       await createForm(formData).unwrap();
-      toast.success("Form saved as new form successfully");
+      toast.success(t("toast.saveAsSuccess"));
       setSaveStatus("saved");
       setTimeout(() => router.push("/forms"), 1500);
     } catch (error: unknown) {
@@ -385,7 +387,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to save form as new");
+      toast.error(errorMessage || t("toast.saveAsFailed"));
       setSaveStatus("error");
     }
   };
@@ -421,12 +423,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
       <div className="space-y-6 px-4 lg:px-6">
         <div className="rounded-lg border border-destructive bg-destructive p-4">
           <p className="text-sm text-white">
-            Failed to load form details. Please try again.
+            {t("loadFormError")}
           </p>
         </div>
         <Button onClick={handleCancel}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Forms
+          {t("backToForms")}
         </Button>
       </div>
     );
@@ -440,21 +442,21 @@ export function FormBuilder({ formId }: FormBuilderProps) {
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" onClick={handleCancel}>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
+              {t("back")}
             </Button>
             <div>
               <h1 className="text-lg font-semibold">
-                {isEditMode ? "Edit Form" : "Create New Form"}
+                {isEditMode ? t("editForm") : t("createNewForm")}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Drag components to build your form
+                {t("dragComponentsHint")}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {formFields.length > 0 && (
               <Badge variant="outline">
-                {formFields.length} field{formFields.length !== 1 ? "s" : ""}
+                {formFields.length} {formFields.length !== 1 ? t("fields") : t("field")}
               </Badge>
             )}
             <Button
@@ -463,12 +465,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
               disabled={formFields.length === 0}
             >
               <Eye className="mr-2 h-4 w-4" />
-              {isPreviewMode ? "Edit" : "Preview"}
+              {isPreviewMode ? t("edit") : t("preview")}
             </Button>
             {(isCreating || isUpdating || saveStatus === "saving") ? (
               <Button disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                {t("saving")}
               </Button>
             ) : (
               <>
@@ -477,12 +479,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                     {isEditMode && (
                       <Button variant="outline" onClick={handleSaveAsForm}>
                         <Copy className="mr-2 h-4 w-4" />
-                        Save As Form
+                        {t("saveAsForm")}
                       </Button>
                     )}
                     <Button onClick={handleSave}>
                       <Save className="mr-2 h-4 w-4" />
-                      Save Form
+                      {t("saveForm")}
                     </Button>
                   </>
                 )}
@@ -497,12 +499,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
       <div className="border-b bg-background p-4">
         <Card>
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">📋 Form Information</h3>
+            <h3 className="text-lg font-semibold mb-4">📋 {t("formInformation")}</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-2">
                 <Label>
-                  Form Name <span className="text-destructive">*</span>
+                  {t("formName")} <span className="text-destructive">*</span>
                 </Label>
                 <Controller
                   name="form_name"
@@ -511,7 +513,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                     <>
                       <Input
                         {...field}
-                        placeholder="e.g., Customer Feedback Form"
+                        placeholder={t("formNamePlaceholder")}
                         className={
                           form.formState.errors.form_name
                             ? "border-destructive"
@@ -530,7 +532,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
 
               <div className="space-y-2">
                 <Label>
-                  Form Type <span className="text-destructive">*</span>
+                  {t("formType")} <span className="text-destructive">*</span>
                 </Label>
                 <Controller
                   name="type"
@@ -548,12 +550,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                               : ""
                           }
                         >
-                          <SelectValue placeholder="Select form type" />
+                          <SelectValue placeholder={t("selectFormType")} />
                         </SelectTrigger>
                         <SelectContent>
                           {formTypeOptions.map((option) => (
                             <SelectItem key={option} value={option}>
-                              {option}
+                              {t(`formTypes.${option === "Test/Exams" ? "testExams" : option}`)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -570,14 +572,14 @@ export function FormBuilder({ formId }: FormBuilderProps) {
             </div>
 
             <div className="space-y-2 mb-4">
-              <Label>Description (Optional)</Label>
+              <Label>{t("descriptionOptional")}</Label>
               <Controller
                 name="description"
                 control={form.control}
                 render={({ field }) => (
                   <Textarea
                     {...field}
-                    placeholder="Describe what this form is for..."
+                    placeholder={t("descriptionPlaceholder")}
                     rows={2}
                   />
                 )}
@@ -587,12 +589,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
             {formFields.length > 0 && (
               <div className="border-t pt-4 mb-4">
                 <p className="text-sm text-muted-foreground mb-2">
-                  Form Statistics:
+                  {t("formStatistics")}
                 </p>
                 <div className="flex gap-2 flex-wrap">
                   {Object.entries(fieldCounts).map(([type, count]) => (
                     <Badge key={type} variant="outline">
-                      {count} {type} field{count > 1 ? "s" : ""}
+                      {count} {type} {count > 1 ? t("fields") : t("field")}
                     </Badge>
                   ))}
                 </div>
@@ -601,7 +603,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
 
             {/* Access Rights */}
             <div className="space-y-2 mb-4">
-              <Label>Access Rights</Label>
+              <Label>{t("accessRights")}</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {roles.map((role) => (
                   <Controller
@@ -619,7 +621,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                           htmlFor={`access-${role}`}
                           className="text-sm font-normal cursor-pointer"
                         >
-                          {role}
+                          {t(`roles.${role}`)}
                         </Label>
                       </div>
                     )}
@@ -648,13 +650,13 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                   )}
                 />
                 <Label htmlFor="enableComplete" className="cursor-pointer">
-                  Enable Complete Function
+                  {t("enableCompleteFunction")}
                 </Label>
               </div>
 
               {enableCompleteFunction && (
                 <div className="border rounded-lg p-4 ml-6">
-                  <Label className="mb-2 block">Completion Roles</Label>
+                  <Label className="mb-2 block">{t("completionRoles")}</Label>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     {roles.map((role) => (
                       <Controller
@@ -672,7 +674,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                               htmlFor={`completion-${role}`}
                               className="text-sm font-normal cursor-pointer"
                             >
-                              {role}
+                              {t(`roles.${role}`)}
                             </Label>
                           </div>
                         )}
@@ -702,13 +704,13 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                 )}
               />
               <Label htmlFor="requestSignature" className="cursor-pointer">
-                Set Request Signature
+                {t("setRequestSignature")}
               </Label>
             </div>
 
             {/* Emails */}
             <div className="space-y-2">
-              <Label>Email Recipients</Label>
+              <Label>{t("emailRecipients")}</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {roles.map((role) => (
                   <Controller
@@ -726,7 +728,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                           htmlFor={`email-${role}`}
                           className="text-sm font-normal cursor-pointer"
                         >
-                          {role}
+                          {t(`roles.${role}`)}
                         </Label>
                       </div>
                     )}
@@ -742,7 +744,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                       <>
                         <Input
                           {...field}
-                          placeholder="Emails separated by comma(,)"
+                          placeholder={t("otherEmailsPlaceholder")}
                           className={
                             form.formState.errors.otherEmail
                               ? "border-destructive"

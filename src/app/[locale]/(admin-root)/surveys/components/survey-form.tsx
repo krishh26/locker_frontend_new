@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -48,29 +49,30 @@ import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 
-const surveyFormSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  description: z.string().optional(),
-  status: z.enum(["Draft", "Published"]),
-  expirationDate: z
-    .date()
-    .optional()
-    .refine(
-      (date) => {
-        if (!date) return true; // Optional field
-        // Compare UTC timestamps to ensure future date validation works correctly
-        const now = new Date()
-        return date > now
-      },
-      {
-        message: "Expiration date must be in the future",
-      }
-    ),
-})
+function getSurveyFormSchema(t: (key: string) => string) {
+  return z.object({
+    name: z.string().min(2, {
+      message: t("form.validation.nameMin"),
+    }),
+    description: z.string().optional(),
+    status: z.enum(["Draft", "Published"]),
+    expirationDate: z
+      .date()
+      .optional()
+      .refine(
+        (date) => {
+          if (!date) return true
+          const now = new Date()
+          return date > now
+        },
+        {
+          message: t("form.validation.expirationFuture"),
+        }
+      ),
+  })
+}
 
-type SurveyFormValues = z.infer<typeof surveyFormSchema>
+type SurveyFormValues = z.infer<ReturnType<typeof getSurveyFormSchema>>
 
 interface SurveyFormProps {
   open: boolean
@@ -79,6 +81,8 @@ interface SurveyFormProps {
 }
 
 export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
+  const t = useTranslations("surveys")
+  const surveyFormSchema = useMemo(() => getSurveyFormSchema(t), [t])
   const [createSurvey, { isLoading: isCreating }] = useCreateSurveyMutation()
   const [updateSurvey, { isLoading: isUpdating }] = useUpdateSurveyMutation()
   const authUser = useAppSelector((state) => state.auth.user)
@@ -147,7 +151,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
             ...(organisationId !== undefined && { organizationId: organisationId }),
           },
         }).unwrap()
-        toast.success("Survey updated successfully")
+        toast.success(t("form.toastUpdateSuccess"))
       } else {
         await createSurvey({
           name: data.name,
@@ -158,14 +162,12 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
           }),
           ...(organisationId !== undefined && { organizationId: organisationId }),
         }).unwrap()
-        toast.success("Survey created successfully")
+        toast.success(t("form.toastCreateSuccess"))
       }
       form.reset()
       onOpenChange(false)
     } catch (error: unknown) {
-      // Handle RTK Query error format
-      // Error structure: { status: 403, data: { message: "...", status: false } }
-      let errorMessage = survey ? "Failed to update survey" : "Failed to create survey"
+      let errorMessage = survey ? t("form.toastUpdateFailed") : t("form.toastCreateFailed")
       
       if (error && typeof error === 'object' && 'data' in error) {
         const errorData = error.data
@@ -182,11 +184,9 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{survey ? "Edit Survey" : "Create Survey"}</DialogTitle>
+          <DialogTitle>{survey ? t("form.titleEdit") : t("form.titleCreate")}</DialogTitle>
           <DialogDescription>
-            {survey
-              ? "Update the survey details. Click save when you're done."
-              : "Create a new survey form. Click save when you're done."}
+            {survey ? t("form.descriptionEdit") : t("form.descriptionCreate")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -196,9 +196,9 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("form.nameLabel")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter survey name" {...field} />
+                    <Input placeholder={t("form.namePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -209,10 +209,10 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("form.descriptionLabel")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter survey description (optional)"
+                      placeholder={t("form.descriptionPlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -225,7 +225,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
               name="expirationDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Expiration Date</FormLabel>
+                  <FormLabel>{t("form.expirationLabel")}</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -239,7 +239,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span>Pick a date</span>
+                            <span>{t("form.pickDate")}</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
@@ -264,16 +264,16 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t("form.statusLabel")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="cursor-pointer w-full">
-                        <SelectValue placeholder="Select status" />
+                        <SelectValue placeholder={t("form.statusPlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Draft">Draft</SelectItem>
-                      <SelectItem value="Published">Published</SelectItem>
+                      <SelectItem value="Draft">{t("form.statusDraft")}</SelectItem>
+                      <SelectItem value="Published">{t("form.statusPublished")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -286,7 +286,7 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                Cancel
+                {t("form.cancel")}
               </Button>
               <Button
                 type="submit"
@@ -294,8 +294,8 @@ export function SurveyForm({ open, onOpenChange, survey }: SurveyFormProps) {
                 disabled={!form.formState.isValid || isCreating || isUpdating}
               >
                 {isCreating || isUpdating
-                  ? (survey ? "Updating..." : "Creating...")
-                  : (survey ? "Update Survey" : "Create Survey")}
+                  ? (survey ? t("form.updating") : t("form.creating"))
+                  : (survey ? t("form.update") : t("form.create"))}
               </Button>
             </DialogFooter>
           </form>

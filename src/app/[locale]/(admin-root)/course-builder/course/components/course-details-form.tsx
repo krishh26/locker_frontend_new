@@ -8,6 +8,7 @@
 "use client";
 
 import { Controller, Control, FieldErrors, UseFormSetValue } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -44,13 +45,14 @@ export function CourseDetailsForm({
   gatewayCourses = [],
   setValue,
 }: CourseDetailsFormProps) {
+  const t = useTranslations("courseBuilder");
   return (
     <div className="space-y-6">
       {/* Row 1: Course Name, Course Code, Course Level */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="space-y-2">
           <Label htmlFor="course_name">
-            Course Name <span className="text-destructive">*</span>
+            {t("course.form.courseName")} <span className="text-destructive">*</span>
           </Label>
           <Controller
             name="course_name"
@@ -60,7 +62,7 @@ export function CourseDetailsForm({
                 <Input
                   {...field}
                   id="course_name"
-                  placeholder="Enter Course Name"
+                  placeholder={t("course.form.courseNamePlaceholder")}
                   className={cn(errors.course_name && "border-destructive")}
                 />
                 {errors.course_name && (
@@ -75,7 +77,7 @@ export function CourseDetailsForm({
 
         <div className="space-y-2">
           <Label htmlFor="course_code">
-            Course Code <span className="text-destructive">*</span>
+            {t("course.form.courseCode")} <span className="text-destructive">*</span>
           </Label>
           <Controller
             name="course_code"
@@ -85,7 +87,7 @@ export function CourseDetailsForm({
                 <Input
                   {...field}
                   id="course_code"
-                  placeholder="Enter Course Code"
+                  placeholder={t("course.form.courseCodePlaceholder")}
                   className={cn(errors.course_code && "border-destructive")}
                 />
                 {errors.course_code && (
@@ -100,7 +102,7 @@ export function CourseDetailsForm({
 
         <div className="space-y-2">
           <Label htmlFor="level">
-            Course Level <span className="text-destructive">*</span>
+            {t("course.form.courseLevel")} <span className="text-destructive">*</span>
           </Label>
           <Controller
             name="level"
@@ -115,7 +117,7 @@ export function CourseDetailsForm({
                     id="level"
                     className={cn("w-full", errors.level && "border-destructive")}
                   >
-                    <SelectValue placeholder="Select Course Level" />
+                    <SelectValue placeholder={t("course.form.selectCourseLevel")} />
                   </SelectTrigger>
                   <SelectContent>
                     {COURSE_LEVELS.map((level) => (
@@ -140,7 +142,7 @@ export function CourseDetailsForm({
       {courseCoreType === "Qualification" && (
         <div className="space-y-2">
           <Label htmlFor="brand_guidelines">
-            Course Guidance <span className="text-destructive">*</span>
+            {t("course.form.courseGuidance")} <span className="text-destructive">*</span>
           </Label>
           <Controller
             name="brand_guidelines"
@@ -150,7 +152,7 @@ export function CourseDetailsForm({
                 <Textarea
                   {...field}
                   id="brand_guidelines"
-                  placeholder="Enter Course Guidance"
+                  placeholder={t("course.form.courseGuidancePlaceholder")}
                   rows={4}
                   className={cn(errors.brand_guidelines && "border-destructive")}
                 />
@@ -171,7 +173,7 @@ export function CourseDetailsForm({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="course_type">
-                Course Type <span className="text-destructive">*</span>
+                {t("course.form.courseType")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="course_type"
@@ -186,7 +188,7 @@ export function CourseDetailsForm({
                         id="course_type"
                         className={cn("w-full", errors.course_type && "border-destructive")}
                       >
-                        <SelectValue placeholder="Select Course Type" />
+                        <SelectValue placeholder={t("course.form.selectCourseType")} />
                       </SelectTrigger>
                       <SelectContent>
                         {COURSE_TYPES.map((type) => (
@@ -207,7 +209,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="operational_start_date">Operational Start Date</Label>
+              <Label htmlFor="operational_start_date">{t("course.form.operationalStartDate")}</Label>
               <Controller
                 name="operational_start_date"
                 control={control}
@@ -225,7 +227,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sector">Sector</Label>
+              <Label htmlFor="sector">{t("course.form.sector")}</Label>
               <Controller
                 name="sector"
                 control={control}
@@ -233,7 +235,7 @@ export function CourseDetailsForm({
                   <Input
                     {...field}
                     id="sector"
-                    placeholder="Enter Sector"
+                    placeholder={t("course.form.sectorPlaceholder")}
                     className={cn(errors.sector && "border-destructive")}
                   />
                 )}
@@ -243,7 +245,7 @@ export function CourseDetailsForm({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="total_credits">Total Credits</Label>
+              <Label htmlFor="total_credits">{t("course.form.totalCredits")}</Label>
               <Controller
                 name="total_credits"
                 control={control}
@@ -253,7 +255,7 @@ export function CourseDetailsForm({
                       {...field}
                       id="total_credits"
                       type="number"
-                      placeholder="Enter Total Credits"
+                      placeholder={t("course.form.totalCreditsPlaceholder")}
                       className={cn(errors.total_credits && "border-destructive")}
                     />
                     {errors.total_credits && (
@@ -267,7 +269,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="guided_learning_hours">Guided Learning Hours</Label>
+              <Label htmlFor="guided_learning_hours">{t("course.form.guidedLearningHours")}</Label>
               <Controller
                 name="guided_learning_hours"
                 control={control}
@@ -277,7 +279,7 @@ export function CourseDetailsForm({
                       {...field}
                       id="guided_learning_hours"
                       type="number"
-                      placeholder="Enter Guided Learning Hours"
+                      placeholder={t("course.form.guidedLearningHoursPlaceholder")}
                       className={cn(
                         errors.guided_learning_hours && "border-destructive"
                       )}
@@ -293,7 +295,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="recommended_minimum_age">Recommended Minimum Age</Label>
+              <Label htmlFor="recommended_minimum_age">{t("course.form.recommendedMinAge")}</Label>
               <Controller
                 name="recommended_minimum_age"
                 control={control}
@@ -302,7 +304,7 @@ export function CourseDetailsForm({
                     {...field}
                     id="recommended_minimum_age"
                     type="number"
-                    placeholder="Enter Recommended Minimum Age"
+                    placeholder={t("course.form.recommendedMinAgePlaceholder")}
                     className={cn(
                       errors.recommended_minimum_age && "border-destructive"
                     )}
@@ -314,7 +316,7 @@ export function CourseDetailsForm({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="overall_grading_type">Overall Grading Type</Label>
+              <Label htmlFor="overall_grading_type">{t("course.form.overallGradingType")}</Label>
               <Controller
                 name="overall_grading_type"
                 control={control}
@@ -322,7 +324,7 @@ export function CourseDetailsForm({
                   <Input
                     {...field}
                     id="overall_grading_type"
-                    placeholder="Enter Overall Grading Type"
+                    placeholder={t("course.form.overallGradingTypePlaceholder")}
                     className={cn(
                       errors.overall_grading_type && "border-destructive"
                     )}
@@ -332,7 +334,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="awarding_body">Awarding Body</Label>
+              <Label htmlFor="awarding_body">{t("course.form.awardingBody")}</Label>
               <Controller
                 name="awarding_body"
                 control={control}
@@ -346,7 +348,7 @@ export function CourseDetailsForm({
                         id="awarding_body"
                         className={cn("w-full", errors.awarding_body && "border-destructive")}
                       >
-                        <SelectValue placeholder="Select Awarding Body" />
+                        <SelectValue placeholder={t("course.form.selectAwardingBody")} />
                       </SelectTrigger>
                       <SelectContent>
                         {AWARDING_BODY_OPTIONS.map((body) => (
@@ -374,7 +376,7 @@ export function CourseDetailsForm({
         <>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="operational_start_date">Expiration Date</Label>
+              <Label htmlFor="operational_start_date">{t("course.form.expirationDate")}</Label>
               <Controller
                 name="operational_start_date"
                 control={control}
@@ -392,7 +394,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="active">Active</Label>
+              <Label htmlFor="active">{t("course.form.active")}</Label>
               <Controller
                 name="active"
                 control={control}
@@ -415,7 +417,7 @@ export function CourseDetailsForm({
                         errors.active && "border-destructive"
                       )}
                     >
-                        <SelectValue placeholder="Select Active Status" />
+                        <SelectValue placeholder={t("course.form.selectActiveStatus")} />
                       </SelectTrigger>
                       <SelectContent>
                         {YES_NO_OPTIONS_STRINGS.map((option) => (
@@ -437,7 +439,7 @@ export function CourseDetailsForm({
 
             <div className="space-y-2">
               <Label htmlFor="included_in_off_the_job">
-                Included in Off The Job Calculation
+                {t("course.form.includedOffTheJob")}
               </Label>
               <Controller
                 name="included_in_off_the_job"
@@ -461,7 +463,7 @@ export function CourseDetailsForm({
                           errors.included_in_off_the_job && "border-destructive"
                         )}
                       >
-                        <SelectValue placeholder="Select Option" />
+                        <SelectValue placeholder={t("course.form.selectOption")} />
                       </SelectTrigger>
                       <SelectContent>
                         {YES_NO_OPTIONS_STRINGS.map((option) => (
@@ -485,7 +487,7 @@ export function CourseDetailsForm({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="duration_period">
-                Duration of Course <span className="text-destructive">*</span>
+                {t("course.form.durationOfCourse")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="duration_period"
@@ -500,7 +502,7 @@ export function CourseDetailsForm({
                         id="duration_period"
                         className={cn("w-full", errors.duration_period && "border-destructive")}
                       >
-                        <SelectValue placeholder="Select Duration Period" />
+                        <SelectValue placeholder={t("course.form.selectDurationPeriod")} />
                       </SelectTrigger>
                       <SelectContent>
                         {DURATION_PERIODS.map((period) => (
@@ -521,7 +523,7 @@ export function CourseDetailsForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="duration_value">Duration Value</Label>
+              <Label htmlFor="duration_value">{t("course.form.durationValue")}</Label>
               <Controller
                 name="duration_value"
                 control={control}
@@ -530,7 +532,7 @@ export function CourseDetailsForm({
                     {...field}
                     id="duration_value"
                     type="number"
-                    placeholder="Enter duration value"
+                    placeholder={t("course.form.durationValuePlaceholder")}
                     value={field.value ?? ""}
                     onChange={(e) =>
                       field.onChange(e.target.value ? Number(e.target.value) : null)
@@ -543,7 +545,7 @@ export function CourseDetailsForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="two_page_standard_link">Two Page Standard Link</Label>
+            <Label htmlFor="two_page_standard_link">{t("course.form.twoPageStandardLink")}</Label>
             <Controller
               name="two_page_standard_link"
               control={control}
@@ -552,7 +554,7 @@ export function CourseDetailsForm({
                   {...field}
                   id="two_page_standard_link"
                   type="url"
-                  placeholder="Enter Two Page Standard Link"
+                  placeholder={t("course.form.twoPageStandardLinkPlaceholder")}
                   className={cn(
                     errors.two_page_standard_link && "border-destructive"
                   )}
@@ -562,7 +564,7 @@ export function CourseDetailsForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="assessment_plan_link">Assessment Plan Link</Label>
+            <Label htmlFor="assessment_plan_link">{t("course.form.assessmentPlanLink")}</Label>
             <Controller
               name="assessment_plan_link"
               control={control}
@@ -571,7 +573,7 @@ export function CourseDetailsForm({
                   {...field}
                   id="assessment_plan_link"
                   type="url"
-                  placeholder="Enter Assessment Plan Link"
+                  placeholder={t("course.form.assessmentPlanLinkPlaceholder")}
                   className={cn(errors.assessment_plan_link && "border-destructive")}
                 />
               )}
@@ -580,7 +582,7 @@ export function CourseDetailsForm({
 
           {gatewayCourses.length > 0 && (
             <div className="space-y-2">
-              <Label htmlFor="assigned_gateway_id">Gateway Assigned</Label>
+              <Label htmlFor="assigned_gateway_id">{t("course.form.gatewayAssigned")}</Label>
               <Controller
                 name="assigned_gateway_id"
                 control={control}
@@ -620,7 +622,7 @@ export function CourseDetailsForm({
                             errors.assigned_gateway_id && "border-destructive"
                           )}
                         >
-                          <SelectValue placeholder="Select a Gateway Course..." />
+                          <SelectValue placeholder={t("course.form.selectGatewayCourse")} />
                         </SelectTrigger>
                         <SelectContent>
                           {gatewayCourses.map((gateway) => (
@@ -651,7 +653,7 @@ export function CourseDetailsForm({
       {courseCoreType === "Gateway" && (
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Gateway course details. Questions will be managed in the next step.
+            {t("course.form.gatewayDetailsNote")}
           </p>
         </div>
       )}

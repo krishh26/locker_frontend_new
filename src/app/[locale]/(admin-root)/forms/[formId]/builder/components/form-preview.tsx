@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FormFieldsRenderer } from "@/components/forms/form-fields-renderer";
@@ -17,6 +18,7 @@ export function FormPreview({
   formName,
   description,
 }: FormPreviewProps) {
+  const t = useTranslations("forms.builder.preview");
   const form = useForm({
     defaultValues: fields.reduce((acc, field) => {
       acc[field.id] = field.type === "checkbox" ? [] : "";
@@ -39,7 +41,7 @@ export function FormPreview({
     return (
       <Card>
         <CardContent className="p-8 text-center">
-          <p className="text-muted-foreground">No fields added to the form.</p>
+          <p className="text-muted-foreground">{t("noFields")}</p>
         </CardContent>
       </Card>
     );
@@ -48,7 +50,7 @@ export function FormPreview({
   return (
     <Card className="max-w-3xl mx-auto">
       <CardContent className="p-6">
-        <h2 className="text-2xl font-bold mb-2">{formName || "Untitled Form"}</h2>
+        <h2 className="text-2xl font-bold mb-2">{formName || t("untitledForm")}</h2>
         {description && (
           <p className="text-muted-foreground mb-6">{description}</p>
         )}
@@ -63,10 +65,10 @@ export function FormPreview({
 
           <div className="flex justify-end gap-2 pt-4">
             <Button type="button" variant="outline" onClick={() => form.reset()}>
-              Clear Form
+              {t("clearForm")}
             </Button>
             <Button type="submit" disabled>
-              Submit (Preview Only)
+              {t("submitPreview")}
             </Button>
           </div>
         </form>

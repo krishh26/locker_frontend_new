@@ -1,6 +1,7 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { filterRolesFromApi } from "@/config/auth-roles"
 import { useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
@@ -37,6 +38,7 @@ import { EditCentreForm } from "../components/edit-centre-form"
 import { AssignAdminDialog } from "../components/assign-admin-dialog"
 
 export default function CentreDetailPage() {
+  const t = useTranslations("centres.detail")
   const params = useParams()
   const router = useRouter()
   const centreId = Number(params.centreId)
@@ -67,7 +69,7 @@ export default function CentreDetailPage() {
     if (!centre) return
     try {
       await activateCentre(centre.id).unwrap()
-      toast.success("Centre activated successfully")
+      toast.success(t("toastActivated"))
       refetchCentre()
     } catch (error: unknown) {
       const errorMessage =
@@ -75,16 +77,16 @@ export default function CentreDetailPage() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to activate centre"
+          : t("toastActivateFailed")
       toast.error(errorMessage)
     }
-  }, [centre, activateCentre, refetchCentre])
+  }, [centre, activateCentre, refetchCentre, t])
 
   const handleSuspend = useCallback(async () => {
     if (!centre) return
     try {
       await suspendCentre(centre.id).unwrap()
-      toast.success("Centre suspended successfully")
+      toast.success(t("toastSuspended"))
       refetchCentre()
     } catch (error: unknown) {
       const errorMessage =
@@ -92,10 +94,10 @@ export default function CentreDetailPage() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to suspend centre"
+          : t("toastSuspendFailed")
       toast.error(errorMessage)
     }
-  }, [centre, suspendCentre, refetchCentre])
+  }, [centre, suspendCentre, refetchCentre, t])
 
   const handleAssignAdminSuccess = useCallback(() => {
     setIsAssignAdminDialogOpen(false)
@@ -111,9 +113,9 @@ export default function CentreDetailPage() {
   if (isAPILoading) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
-        <PageHeader title="Loading..." />
+        <PageHeader title={t("loading")} />
         <div className="text-center py-8 text-muted-foreground">
-          Loading centre details...
+          {t("loadingDetails")}
         </div>
       </div>
     )
@@ -122,9 +124,9 @@ export default function CentreDetailPage() {
   if (!centre) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
-        <PageHeader title="Centre Not Found" />
+        <PageHeader title={t("notFound")} />
         <div className="text-center py-8 text-muted-foreground">
-          The centre you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
+          {t("notFoundDescription")}
         </div>
       </div>
     )
@@ -136,7 +138,7 @@ export default function CentreDetailPage() {
         <PageHeader
           title={centre.name}
           showBackButton
-          subtitle={`Centre ID: ${centre.id}`}
+          subtitle={`${t("centreId")}: ${centre.id}`}
         />
         {canEdit && (
           <div className="flex items-center gap-2">
@@ -146,7 +148,7 @@ export default function CentreDetailPage() {
               onClick={() => setIsEditDialogOpen(true)}
             >
               <Edit className="h-4 w-4 mr-2" />
-              Edit
+              {t("edit")}
             </Button>
             {centre.status === "suspended" ? (
               <Button
@@ -156,7 +158,7 @@ export default function CentreDetailPage() {
                 disabled={isActivating}
               >
                 <CheckCircle className="h-4 w-4 mr-2" />
-                Activate
+                {t("activate")}
               </Button>
             ) : (
               <Button
@@ -166,7 +168,7 @@ export default function CentreDetailPage() {
                 disabled={isSuspending}
               >
                 <XCircle className="h-4 w-4 mr-2" />
-                Suspend
+                {t("suspend")}
               </Button>
             )}
           </div>
@@ -175,8 +177,8 @@ export default function CentreDetailPage() {
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="admins">Admins</TabsTrigger>
+          <TabsTrigger value="overview">{t("overview")}</TabsTrigger>
+          <TabsTrigger value="admins">{t("admins")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -185,26 +187,26 @@ export default function CentreDetailPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
-                  Centre Details
+                  {t("centreDetails")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div>
-                  <span className="text-sm font-medium">Name:</span>
+                  <span className="text-sm font-medium">{t("name")}:</span>
                   <p className="text-sm text-muted-foreground">{centre.name}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Status:</span>
+                  <span className="text-sm font-medium">{t("status")}:</span>
                   <div className="mt-1">
                     <Badge
                       variant={centre.status === "active" ? "default" : "destructive"}
                     >
-                      {centre.status === "active" ? "Active" : "Suspended"}
+                      {centre.status === "active" ? t("active") : t("suspended")}
                     </Badge>
                   </div>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">ID:</span>
+                  <span className="text-sm font-medium">{t("id")}:</span>
                   <p className="text-sm text-muted-foreground">{centre.id}</p>
                 </div>
               </CardContent>
@@ -214,14 +216,14 @@ export default function CentreDetailPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
-                  Organisation
+                  {t("organisation")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 {organisation ? (
                   <>
                     <div>
-                      <span className="text-sm font-medium">Name:</span>
+                      <span className="text-sm font-medium">{t("name")}:</span>
                       <Button
                         variant="link"
                         className="h-auto p-0 font-normal"
@@ -231,18 +233,18 @@ export default function CentreDetailPage() {
                       </Button>
                     </div>
                     <div>
-                      <span className="text-sm font-medium">Status:</span>
+                      <span className="text-sm font-medium">{t("status")}:</span>
                       <div className="mt-1">
                         <Badge
                           variant={organisation.status === "active" ? "default" : "destructive"}
                         >
-                          {organisation.status === "active" ? "Active" : "Suspended"}
+                          {organisation.status === "active" ? t("active") : t("suspended")}
                         </Badge>
                       </div>
                     </div>
                   </>
                 ) : (
-                  <p className="text-sm text-muted-foreground">Organisation not found</p>
+                  <p className="text-sm text-muted-foreground">{t("organisationNotFound")}</p>
                 )}
               </CardContent>
             </Card>
@@ -255,7 +257,7 @@ export default function CentreDetailPage() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
-                  Centre Admins
+                  {t("centreAdmins")}
                 </CardTitle>
                 {canEdit && (
                   <Button
@@ -263,7 +265,7 @@ export default function CentreDetailPage() {
                     onClick={() => setIsAssignAdminDialogOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Assign Admin
+                    {t("assignAdmin")}
                   </Button>
                 )}
               </div>
@@ -271,19 +273,19 @@ export default function CentreDetailPage() {
             <CardContent>
               {assignedAdmins.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  No admins assigned to this centre. Click &quot;Assign Admin&quot; to add admins.
+                  {t("noAdmins")}
                 </div>
               ) : (
                 <>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Admins assigned to this centre can manage it.
+                    {t("adminsAssignedDescription")}
                   </p>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Roles</TableHead>
+                        <TableHead>{t("name")}</TableHead>
+                        <TableHead>{t("email")}</TableHead>
+                        <TableHead>{t("roles")}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -318,9 +320,9 @@ export default function CentreDetailPage() {
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Edit Centre</DialogTitle>
+              <DialogTitle>{t("editCentre")}</DialogTitle>
               <DialogDescription>
-                Update centre details. Only MasterAdmin can edit centres.
+                {t("editCentreDescription")}
               </DialogDescription>
             </DialogHeader>
             <EditCentreForm
@@ -337,9 +339,9 @@ export default function CentreDetailPage() {
         <Dialog open={isAssignAdminDialogOpen} onOpenChange={setIsAssignAdminDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Assign Admins to Centre</DialogTitle>
+              <DialogTitle>{t("assignAdminsTitle")}</DialogTitle>
               <DialogDescription>
-                Select which admins can manage this centre. Each admin can be assigned to only one centre; assigning them here will set this as their centre.
+                {t("assignAdminsDescription")}
               </DialogDescription>
             </DialogHeader>
             <AssignAdminDialog

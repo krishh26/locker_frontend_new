@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useRef } from "react"
+import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import {
   type ColumnDef,
@@ -56,6 +57,7 @@ import { EditOrganisationForm } from "./edit-organisation-form"
 const DEFAULT_PAGE_SIZE = 10
 
 export function OrganisationsDataTable() {
+  const t = useTranslations("organisations.dataTable")
   const router = useRouter()
   const routerRef = useRef(router)
   routerRef.current = router
@@ -111,40 +113,40 @@ export function OrganisationsDataTable() {
   const handleActivate = useCallback(async (org: Organisation) => {
     try {
       await activateOrganisation(org.id).unwrap()
-      toast.success("Organisation activated successfully")
+      toast.success(t("toastActivated"))
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to activate organisation"
+          : t("toastActivateFailed")
       toast.error(errorMessage)
     }
-  }, [activateOrganisation])
+  }, [activateOrganisation, t])
 
   const handleSuspend = useCallback(async (org: Organisation) => {
     try {
       await suspendOrganisation(org.id).unwrap()
-      toast.success("Organisation suspended successfully")
+      toast.success(t("toastSuspended"))
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to suspend organisation"
+          : t("toastSuspendFailed")
       toast.error(errorMessage)
     }
-  }, [suspendOrganisation])
+  }, [suspendOrganisation, t])
 
   const handleExportCsv = () => {
     if (organisations.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("noDataToExport"))
       return
     }
 
-    const headers = ["Name", "Status"]
+    const headers = [t("name"), t("status")]
     const rows = organisations.map((org: Organisation) => [
       org.name,
       org.status,
@@ -162,46 +164,46 @@ export function OrganisationsDataTable() {
     link.download = `organisations_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("csvExported"))
   }
 
   const handleExportPdf = () => {
     if (organisations.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("noDataToExport"))
       return
     }
-    const headers = ["Name", "Status"]
+    const headers = [t("name"), t("status")]
     const rows = organisations.map((org: Organisation) => [org.name, org.status])
-    exportTableToPdf({ title: "Organisations", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("pdfTitle"), headers, rows })
+    toast.success(t("pdfExported"))
   }
 
   const columns: ColumnDef<Organisation>[] = useMemo(
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: t("name"),
         cell: ({ row }) => {
           return <div className="font-medium">{row.original.name}</div>
         },
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("status"),
         cell: ({ row }) => {
           const status = row.original.status
           return (
             <Badge
               variant={status === "active" ? "default" : "destructive"}
             >
-              {status === "active" ? "Active" : "Suspended"}
+              {status === "active" ? t("active") : t("suspended")}
             </Badge>
           )
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("actions"),
         cell: ({ row }) => {
           const org = row.original
           return (
@@ -212,7 +214,7 @@ export function OrganisationsDataTable() {
                 onClick={() => routerRef.current.push(`/organisations/${org.id}`)}
               >
                 <Eye className="h-4 w-4 mr-2" />
-                View
+                {t("view")}
               </Button>
               {canManageOrganisations && (
                 <>
@@ -222,7 +224,7 @@ export function OrganisationsDataTable() {
                     onClick={() => handleEdit(org)}
                   >
                     <Edit className="h-4 w-4 mr-2" />
-                    Edit
+                    {t("edit")}
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -237,7 +239,7 @@ export function OrganisationsDataTable() {
                           disabled={isActivating}
                         >
                           <CheckCircle className="h-4 w-4 mr-2" />
-                          Activate
+                          {t("activate")}
                         </DropdownMenuItem>
                       ) : (
                         <DropdownMenuItem
@@ -245,7 +247,7 @@ export function OrganisationsDataTable() {
                           disabled={isSuspending}
                         >
                           <XCircle className="h-4 w-4 mr-2" />
-                          Suspend
+                          {t("suspend")}
                         </DropdownMenuItem>
                       )}
                     </DropdownMenuContent>
@@ -257,7 +259,7 @@ export function OrganisationsDataTable() {
         },
       },
     ],
-    [canManageOrganisations, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending]
+    [canManageOrganisations, handleEdit, handleActivate, handleSuspend, isActivating, isSuspending, t]
   )
 
   const table = useReactTable({
@@ -308,7 +310,7 @@ export function OrganisationsDataTable() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search organisations..."
+            placeholder={t("searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-9"
@@ -321,22 +323,22 @@ export function OrganisationsDataTable() {
               onClick={() => setIsCreateDialogOpen(true)}
             >
               <Plus className="mr-2 h-4 w-4" />
-              Add Organisation
+              {t("addOrganisation")}
             </Button>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                {t("export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv}>
-                Export CSV
+                {t("exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf}>
-                Export PDF
+                {t("exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -385,7 +387,7 @@ export function OrganisationsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No organisations found.
+                  {t("noOrganisationsFound")}
                 </TableCell>
               </TableRow>
             )}
@@ -409,9 +411,9 @@ export function OrganisationsDataTable() {
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create Organisation</DialogTitle>
+            <DialogTitle>{t("createTitle")}</DialogTitle>
             <DialogDescription>
-              Add a new organisation to the system. Only MasterAdmin can create organisations.
+              {t("createDescription")}
             </DialogDescription>
           </DialogHeader>
           <CreateOrganisationForm
@@ -426,9 +428,9 @@ export function OrganisationsDataTable() {
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Edit Organisation</DialogTitle>
+              <DialogTitle>{t("editTitle")}</DialogTitle>
               <DialogDescription>
-                Update organisation details. Only MasterAdmin can edit organisations.
+                {t("editDescription")}
               </DialogDescription>
             </DialogHeader>
             <EditOrganisationForm

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { GripVertical, MoreVertical, Pencil, Copy, Trash2 } from "lucide-react"
@@ -58,6 +59,7 @@ export function LivePreviewQuestion({
   index,
   onEdit,
 }: LivePreviewQuestionProps) {
+  const t = useTranslations("surveys")
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [deleteQuestion, { isLoading: isDeleting }] = useDeleteQuestionMutation()
   const [createQuestion] = useCreateQuestionMutation()
@@ -88,9 +90,9 @@ export function LivePreviewQuestion({
           title: `${question.title} (Copy)`,
         },
       }).unwrap()
-      toast.success("Question duplicated successfully")
+      toast.success(t("builder.questionDuplicateSuccess"))
     } catch (error: unknown) {
-      let errorMessage = "Failed to duplicate question"
+      let errorMessage = t("builder.questionDuplicateFailed")
       if (error && typeof error === 'object' && 'data' in error) {
         const errorData = error.data
         if (errorData && typeof errorData === 'object' && 'message' in errorData) {
@@ -111,10 +113,10 @@ export function LivePreviewQuestion({
         surveyId,
         questionId: question.id,
       }).unwrap()
-      toast.success("Question deleted successfully")
+      toast.success(t("builder.questionDeleteSuccess"))
       setDeleteDialogOpen(false)
     } catch (error: unknown) {
-      let errorMessage = "Failed to delete question"
+      let errorMessage = t("builder.questionDeleteFailed")
       if (error && typeof error === 'object' && 'data' in error) {
         const errorData = error.data
         if (errorData && typeof errorData === 'object' && 'message' in errorData) {
@@ -130,7 +132,7 @@ export function LivePreviewQuestion({
       case "short-text":
         return (
           <Input
-            placeholder="Short text answer"
+            placeholder={t("builder.previewShortTextPlaceholder")}
             disabled
             className="bg-muted/50 cursor-not-allowed"
           />
@@ -138,7 +140,7 @@ export function LivePreviewQuestion({
       case "long-text":
         return (
           <Textarea
-            placeholder="Long text answer"
+            placeholder={t("builder.previewLongTextPlaceholder")}
             disabled
             rows={4}
             className="bg-muted/50 cursor-not-allowed"
@@ -195,7 +197,7 @@ export function LivePreviewQuestion({
         if (!question.statements || !question.options) {
           return (
             <p className="text-sm text-muted-foreground">
-              Add statements and options to see the Likert scale matrix.
+              {t("builder.previewLikertHelp")}
             </p>
           )
         }
@@ -205,7 +207,7 @@ export function LivePreviewQuestion({
               <thead>
                 <tr>
                   <th className="border border-border bg-muted/50 p-2 text-left font-medium">
-                    Statements
+                    {t("builder.previewLikertStatementsHeader")}
                   </th>
                   {question.options.map((option) => (
                     <th
@@ -282,7 +284,9 @@ export function LivePreviewQuestion({
                   onClick={(e) => e.stopPropagation()}
                 >
                   <MoreVertical className="h-4 w-4" />
-                  <span className="sr-only">More options</span>
+                  <span className="sr-only">
+                    {t("builder.questionMenuMore")}
+                  </span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="z-50">
@@ -294,7 +298,7 @@ export function LivePreviewQuestion({
                   }}
                 >
                   <Pencil className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("builder.questionMenuEdit")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="cursor-pointer"
@@ -304,7 +308,7 @@ export function LivePreviewQuestion({
                   }}
                 >
                   <Copy className="mr-2 h-4 w-4" />
-                  Duplicate
+                  {t("builder.questionMenuDuplicate")}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -316,7 +320,7 @@ export function LivePreviewQuestion({
                   }}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {t("builder.questionMenuDelete")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -345,20 +349,21 @@ export function LivePreviewQuestion({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("builder.alertDeleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              question.
+              {t("builder.alertDeleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>
+              {t("form.cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("builder.alertDeleting") : t("builder.questionMenuDelete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

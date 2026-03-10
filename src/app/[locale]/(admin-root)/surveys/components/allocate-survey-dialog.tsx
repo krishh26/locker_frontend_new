@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -39,12 +40,7 @@ interface AllocateSurveyDialogProps {
   onAllocate?: (allocations: Array<{ user_id: number; role: AllocationRole; user_type: "user" | "learner" }>) => Promise<void>
 }
 
-const ROLES: Array<{ value: AllocationRole; label: string }> = [
-  { value: "Trainer", label: "Trainer" },
-  { value: "IQA", label: "IQA" },
-  { value: "Learner", label: "Learner" },
-  { value: "EQA", label: "EQA" },
-]
+const ROLES: AllocationRole[] = ["Trainer", "IQA", "Learner", "EQA"]
 
 const STATUS_OPTIONS = [
   "Awaiting Induction",
@@ -65,6 +61,7 @@ export function AllocateSurveyDialog({
   survey,
   onAllocate,
 }: AllocateSurveyDialogProps) {
+  const t = useTranslations("surveys")
   const [selectedRoles, setSelectedRoles] = useState<Set<AllocationRole>>(new Set())
   const [selectedUsers, setSelectedUsers] = useState<Map<AllocationRole, Set<number>>>(
     new Map()
@@ -248,26 +245,25 @@ export function AllocateSurveyDialog({
 
   const handleAssign = async () => {
     if (totalSelected === 0) {
-      toast.error("Please select at least one user to allocate")
+      toast.error(t("allocate.toastSelectOne"))
       return
     }
 
     const allocations = getAllocations()
-    
+
     try {
       if (onAllocate) {
         await onAllocate(allocations)
       } else {
-        // Placeholder - will be replaced with API call
         console.log("Allocating survey:", {
           survey_id: survey?.id,
           allocations,
         })
-        toast.success(`Successfully allocated survey to ${totalSelected} user(s)`)
+        toast.success(t("allocate.toastSuccess", { count: totalSelected }))
         handleClose()
       }
     } catch (error) {
-      toast.error("Failed to allocate survey. Please try again.")
+      toast.error(t("allocate.toastFailed"))
       console.error("Allocation error:", error)
     }
   }
@@ -312,35 +308,35 @@ export function AllocateSurveyDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-6xl! max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Allocate Survey</DialogTitle>
+          <DialogTitle>{t("allocate.title")}</DialogTitle>
           <DialogDescription>
-            Assign &quot;{survey?.name}&quot; to users by selecting roles and users below.
+            {t("allocate.description", { name: survey?.name ?? "" })}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
           {/* Role Selection */}
           <div className="space-y-3">
-            <Label>Select Roles</Label>
+            <Label>{t("allocate.selectRoles")}</Label>
             <div className="flex flex-wrap gap-4">
-              {ROLES.map((role) => (
-                <div key={role.value} className="flex items-center space-x-2">
+              {ROLES.map((roleValue) => (
+                <div key={roleValue} className="flex items-center space-x-2">
                   <Checkbox
-                    id={`role-${role.value}`}
-                    checked={selectedRoles.has(role.value)}
+                    id={`role-${roleValue}`}
+                    checked={selectedRoles.has(roleValue)}
                     onCheckedChange={(checked) =>
-                      handleRoleToggle(role.value, checked === true)
+                      handleRoleToggle(roleValue, checked === true)
                     }
                   />
                   <Label
-                    htmlFor={`role-${role.value}`}
+                    htmlFor={`role-${roleValue}`}
                     className="cursor-pointer font-normal"
                   >
-                    {role.label}
+                    {t(`allocate.roles.${roleValue}`)}
                   </Label>
-                  {getSelectedCount(role.value) > 0 && (
+                  {getSelectedCount(roleValue) > 0 && (
                     <Badge variant="secondary" className="ml-2">
-                      {getSelectedCount(role.value)}
+                      {getSelectedCount(roleValue)}
                     </Badge>
                   )}
                 </div>
@@ -352,23 +348,23 @@ export function AllocateSurveyDialog({
           {selectedRoles.size > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label>Select Users</Label>
+                <Label>{t("allocate.selectUsers")}</Label>
                 {totalSelected > 0 && (
                   <Badge variant="default" className="ml-2">
-                    {totalSelected} user{totalSelected !== 1 ? "s" : ""} selected
+                    {t("allocate.usersSelected", { count: totalSelected })}
                   </Badge>
                 )}
               </div>
 
               <Tabs defaultValue={Array.from(selectedRoles)[0]} className="w-full">
                 <TabsList className="grid w-full grid-cols-4">
-                  {ROLES.map((role) =>
-                    selectedRoles.has(role.value) ? (
-                      <TabsTrigger key={role.value} value={role.value}>
-                        {role.label}
-                        {getSelectedCount(role.value) > 0 && (
+                  {ROLES.map((roleValue) =>
+                    selectedRoles.has(roleValue) ? (
+                      <TabsTrigger key={roleValue} value={roleValue}>
+                        {t(`allocate.roles.${roleValue}`)}
+                        {getSelectedCount(roleValue) > 0 && (
                           <Badge variant="secondary" className="ml-2">
-                            {getSelectedCount(role.value)}
+                            {getSelectedCount(roleValue)}
                           </Badge>
                         )}
                       </TabsTrigger>
@@ -382,7 +378,7 @@ export function AllocateSurveyDialog({
                     {/* Filters */}
                     <div className="flex flex-wrap gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="learner-course">Course</Label>
+                        <Label htmlFor="learner-course">{t("allocate.course")}</Label>
                         <Select
                           value={learnerFilters.course || "all"}
                           onValueChange={(value) =>
@@ -390,10 +386,10 @@ export function AllocateSurveyDialog({
                           }
                         >
                           <SelectTrigger id="learner-course">
-                            <SelectValue placeholder="All courses" />
+                            <SelectValue placeholder={t("allocate.allCourses")} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="all">All courses</SelectItem>
+                            <SelectItem value="all">{t("allocate.allCourses")}</SelectItem>
                             {courses.map((course) => (
                               <SelectItem
                                 key={course.course_id}
@@ -406,7 +402,7 @@ export function AllocateSurveyDialog({
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="learner-employer">Employer</Label>
+                        <Label htmlFor="learner-employer">{t("allocate.employer")}</Label>
                         <Select
                           value={learnerFilters.employer || "all"}
                           onValueChange={(value) =>
@@ -414,10 +410,10 @@ export function AllocateSurveyDialog({
                           }
                         >
                           <SelectTrigger id="learner-employer">
-                            <SelectValue placeholder="All employers" />
+                            <SelectValue placeholder={t("allocate.allEmployers")} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="all">All employers</SelectItem>
+                            <SelectItem value="all">{t("allocate.allEmployers")}</SelectItem>
                             {employers.map((employer) => (
                               <SelectItem
                                 key={employer.employer_id}
@@ -430,10 +426,10 @@ export function AllocateSurveyDialog({
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="learner-search">Search</Label>
+                        <Label htmlFor="learner-search">{t("allocate.search")}</Label>
                         <Input
                           id="learner-search"
-                          placeholder="Search by name or email..."
+                          placeholder={t("allocate.searchPlaceholder")}
                           value={learnerFilters.search}
                           onChange={(e) =>
                             setLearnerFilters((prev) => ({
@@ -447,7 +443,7 @@ export function AllocateSurveyDialog({
 
                     {/* Status Filter Checkboxes */}
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Status Filters</Label>
+                      <Label className="text-sm font-medium">{t("allocate.statusFilters")}</Label>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                         {STATUS_OPTIONS.map((status) => (
                           <div key={status} className="flex items-center space-x-2">
@@ -465,7 +461,7 @@ export function AllocateSurveyDialog({
                               htmlFor={`learner-status-${status}`}
                               className="text-sm font-normal cursor-pointer"
                             >
-                              {status}
+                              {t(`allocate.statusOptions.${status}`)}
                             </Label>
                           </div>
                         ))}
@@ -484,7 +480,7 @@ export function AllocateSurveyDialog({
                     {learnersData?.meta_data && learnersData.meta_data.pages > 1 && (
                       <div className="flex items-center justify-between">
                         <div className="text-sm text-muted-foreground">
-                          Page {learnerPage} of {learnersData.meta_data.pages}
+                          {t("allocate.pageOf", { page: learnerPage, pages: learnersData.meta_data.pages })}
                         </div>
                         <div className="flex gap-2">
                           <Button
@@ -493,7 +489,7 @@ export function AllocateSurveyDialog({
                             onClick={() => setLearnerPage((p) => Math.max(1, p - 1))}
                             disabled={learnerPage === 1}
                           >
-                            Previous
+                            {t("allocate.previous")}
                           </Button>
                           <Button
                             variant="outline"
@@ -505,7 +501,7 @@ export function AllocateSurveyDialog({
                             }
                             disabled={learnerPage === learnersData.meta_data!.pages}
                           >
-                            Next
+                            {t("allocate.next")}
                           </Button>
                         </div>
                       </div>
@@ -517,10 +513,10 @@ export function AllocateSurveyDialog({
                 {selectedRoles.has("Trainer") && (
                   <TabsContent value="Trainer" className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="trainer-search">Search</Label>
+                      <Label htmlFor="trainer-search">{t("allocate.search")}</Label>
                       <Input
                         id="trainer-search"
-                        placeholder="Search by name or email..."
+                        placeholder={t("allocate.searchPlaceholder")}
                         value={trainerSearch}
                         onChange={(e) => setTrainerSearch(e.target.value)}
                       />
@@ -537,7 +533,7 @@ export function AllocateSurveyDialog({
                     {trainersData?.meta_data && trainersData.meta_data.pages > 1 && (
                       <div className="flex items-center justify-between">
                         <div className="text-sm text-muted-foreground">
-                          Page {trainerPage} of {trainersData.meta_data.pages}
+                          {t("allocate.pageOf", { page: trainerPage, pages: trainersData.meta_data.pages })}
                         </div>
                         <div className="flex gap-2">
                           <Button
@@ -546,7 +542,7 @@ export function AllocateSurveyDialog({
                             onClick={() => setTrainerPage((p) => Math.max(1, p - 1))}
                             disabled={trainerPage === 1}
                           >
-                            Previous
+                            {t("allocate.previous")}
                           </Button>
                           <Button
                             variant="outline"
@@ -558,7 +554,7 @@ export function AllocateSurveyDialog({
                             }
                             disabled={trainerPage === trainersData.meta_data!.pages}
                           >
-                            Next
+                            {t("allocate.next")}
                           </Button>
                         </div>
                       </div>
@@ -570,10 +566,10 @@ export function AllocateSurveyDialog({
                 {selectedRoles.has("IQA") && (
                   <TabsContent value="IQA" className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="iqa-search">Search</Label>
+                      <Label htmlFor="iqa-search">{t("allocate.search")}</Label>
                       <Input
                         id="iqa-search"
-                        placeholder="Search by name or email..."
+                        placeholder={t("allocate.searchPlaceholder")}
                         value={iqaSearch}
                         onChange={(e) => setIqaSearch(e.target.value)}
                       />
@@ -590,7 +586,7 @@ export function AllocateSurveyDialog({
                     {iqaData?.meta_data && iqaData.meta_data.pages > 1 && (
                       <div className="flex items-center justify-between">
                         <div className="text-sm text-muted-foreground">
-                          Page {iqaPage} of {iqaData.meta_data.pages}
+                          {t("allocate.pageOf", { page: iqaPage, pages: iqaData.meta_data.pages })}
                         </div>
                         <div className="flex gap-2">
                           <Button
@@ -599,7 +595,7 @@ export function AllocateSurveyDialog({
                             onClick={() => setIqaPage((p) => Math.max(1, p - 1))}
                             disabled={iqaPage === 1}
                           >
-                            Previous
+                            {t("allocate.previous")}
                           </Button>
                           <Button
                             variant="outline"
@@ -609,7 +605,7 @@ export function AllocateSurveyDialog({
                             }
                             disabled={iqaPage === iqaData.meta_data!.pages}
                           >
-                            Next
+                            {t("allocate.next")}
                           </Button>
                         </div>
                       </div>
@@ -621,10 +617,10 @@ export function AllocateSurveyDialog({
                 {selectedRoles.has("EQA") && (
                   <TabsContent value="EQA" className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="eqa-search">Search</Label>
+                      <Label htmlFor="eqa-search">{t("allocate.search")}</Label>
                       <Input
                         id="eqa-search"
-                        placeholder="Search by name or email..."
+                        placeholder={t("allocate.searchPlaceholder")}
                         value={eqaSearch}
                         onChange={(e) => setEqaSearch(e.target.value)}
                       />
@@ -641,7 +637,7 @@ export function AllocateSurveyDialog({
                     {eqaData?.meta_data && eqaData.meta_data.pages > 1 && (
                       <div className="flex items-center justify-between">
                         <div className="text-sm text-muted-foreground">
-                          Page {eqaPage} of {eqaData.meta_data.pages}
+                          {t("allocate.pageOf", { page: eqaPage, pages: eqaData.meta_data.pages })}
                         </div>
                         <div className="flex gap-2">
                           <Button
@@ -650,7 +646,7 @@ export function AllocateSurveyDialog({
                             onClick={() => setEqaPage((p) => Math.max(1, p - 1))}
                             disabled={eqaPage === 1}
                           >
-                            Previous
+                            {t("allocate.previous")}
                           </Button>
                           <Button
                             variant="outline"
@@ -660,7 +656,7 @@ export function AllocateSurveyDialog({
                             }
                             disabled={eqaPage === eqaData.meta_data!.pages}
                           >
-                            Next
+                            {t("allocate.next")}
                           </Button>
                         </div>
                       </div>
@@ -674,11 +670,11 @@ export function AllocateSurveyDialog({
 
         <DialogFooter>
           <Button variant="outline" onClick={handleClose}>
-            Cancel
+            {t("allocate.cancel")}
           </Button>
           <Button onClick={handleAssign} disabled={totalSelected === 0}>
             <Users className="mr-2 size-4" />
-            Assign ({totalSelected})
+            {t("allocate.assign", { count: totalSelected })}
           </Button>
         </DialogFooter>
       </DialogContent>

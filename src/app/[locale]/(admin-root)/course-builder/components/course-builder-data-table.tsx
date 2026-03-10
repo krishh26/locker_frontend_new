@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCourseType } from "@/store/slices/courseBuilderSlice";
-import { exportTableToPdf } from "@/utils/pdfExport"
+import { exportTableToPdf } from "@/utils/pdfExport";
 import { useGetCoursesQuery, useDeleteCourseMutation } from "@/store/api/course/courseApi";
 import {
   type ColumnDef,
@@ -68,19 +68,11 @@ import { CourseUploadDialog } from "./course-upload-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import { useTranslations } from "next-intl";
 
-const courseTypes = [
-  { value: "all", label: "All Types" },
-  { value: "Qualification", label: "Qualification" },
-  { value: "Standard", label: "Standard" },
-  { value: "Gateway", label: "Gateway" },
-];
+const courseTypes = ["all", "Qualification", "Standard", "Gateway"] as const;
 
-const createCourseTypes = [
-  { value: "Qualification", label: "Qualification", description: "Create a qualification course with units and criteria" },
-  { value: "Standard", label: "Standard", description: "Create a standard course with modules and topics" },
-  { value: "Gateway", label: "Gateway", description: "Create a gateway course for assessments" },
-];
+const createCourseTypes = ["Qualification", "Standard", "Gateway"] as const;
 
 export function CourseBuilderDataTable() {
   const router = useRouter();
@@ -88,6 +80,9 @@ export function CourseBuilderDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
+  const t = useTranslations("courseBuilder");
+  const tCommon = useTranslations("common");
+  const tAdmin = useTranslations("adminCommon");
   
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -164,17 +159,17 @@ export function CourseBuilderDataTable() {
     if (!courseToDelete) return;
     try {
       await deleteCourse(courseToDelete.course_id).unwrap();
-      toast.success("Course deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setCourseToDelete(null);
     } catch (error: unknown) {
       const err = error as { status?: number; data?: { message?: string; error?: string } };
       if (isForbiddenError(err)) {
-        toast.error(err?.data?.message ?? "You do not have access to delete this course.");
+        toast.error(err?.data?.message ?? t("toast.forbiddenDelete"));
         return;
       }
       const errorMessage = err?.data?.message ?? err?.data?.error;
-      toast.error(errorMessage || "Failed to delete course");
+      toast.error(errorMessage || t("toast.deleteFailed"));
     }
   };
 
@@ -184,11 +179,18 @@ export function CourseBuilderDataTable() {
 
   const handleExportCsv = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(tAdmin("noDataToExport"));
       return;
     }
 
-    const headers = ["Course Name", "Code", "Core Type", "Level", "Sector", "Learning Hours"];
+    const headers = [
+      t("table.headers.courseName"),
+      t("table.headers.code"),
+      t("table.headers.coreType"),
+      t("table.headers.level"),
+      t("table.headers.sector"),
+      t("table.headers.learningHours"),
+    ];
     const rows = data.data.map((course) => [
       course.course_name,
       course.course_code,
@@ -210,15 +212,22 @@ export function CourseBuilderDataTable() {
     link.download = `courses_export_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
-    toast.success("CSV exported successfully");
+    toast.success(tAdmin("csvExported"));
   };
 
   const handleExportPdf = () => {
     if (!data?.data || data.data.length === 0) {
-      toast.info("No data to export");
+      toast.info(tAdmin("noDataToExport"));
       return;
     }
-    const headers = ["Course Name", "Code", "Core Type", "Level", "Sector", "Learning Hours"];
+    const headers = [
+      t("table.headers.courseName"),
+      t("table.headers.code"),
+      t("table.headers.coreType"),
+      t("table.headers.level"),
+      t("table.headers.sector"),
+      t("table.headers.learningHours"),
+    ];
     const rows = data.data.map((course) => [
       course.course_name,
       course.course_code,
@@ -227,15 +236,15 @@ export function CourseBuilderDataTable() {
       course.sector,
       String(course.guided_learning_hours ?? ""),
     ]);
-    exportTableToPdf({ title: "Courses", headers, rows });
-    toast.success("PDF exported successfully");
+    exportTableToPdf({ title: t("export.pdfTitle"), headers, rows });
+    toast.success(t("export.pdfExported"));
   };
 
   const columns: ColumnDef<Course>[] = useMemo(
     () => [
       {
         accessorKey: "course_name",
-        header: "Course Name",
+        header: t("table.headers.courseName"),
         cell: ({ row }) => {
           const name = row.original.course_name;
           return (
@@ -247,19 +256,19 @@ export function CourseBuilderDataTable() {
       },
       {
         accessorKey: "course_code",
-        header: "Code",
+        header: t("table.headers.code"),
       },
       {
         accessorKey: "course_core_type",
-        header: "Core Type",
+        header: t("table.headers.coreType"),
       },
       {
         accessorKey: "level",
-        header: "Level",
+        header: t("table.headers.level"),
       },
       {
         accessorKey: "sector",
-        header: "Sector",
+        header: t("table.headers.sector"),
         cell: ({ row }) => {
           const sector = row.original.sector;
           return (
@@ -271,11 +280,11 @@ export function CourseBuilderDataTable() {
       },
       {
         accessorKey: "guided_learning_hours",
-        header: "Learning Hours",
+        header: t("table.headers.learningHours"),
       },
       {
         id: "actions",
-        header: "Actions",
+        header: tAdmin("actions"),
         cell: ({ row }) => {
           const course = row.original;
           return (
@@ -289,20 +298,20 @@ export function CourseBuilderDataTable() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleView(course)}>
                   <Eye className="mr-2 h-4 w-4" />
-                  View
+                  {t("table.actions.view")}
                 </DropdownMenuItem>
                 {!isEmployer && (
                   <>
                     <DropdownMenuItem onClick={() => handleEdit(course)}>
                       <Edit className="mr-2 h-4 w-4" />
-                      Edit
+                      {tCommon("edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleDeleteClick(course)}
                       className="text-destructive"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
+                      {tCommon("delete")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -312,7 +321,7 @@ export function CourseBuilderDataTable() {
         },
       },
     ],
-    [handleEdit, handleView, isEmployer]
+    [handleEdit, handleView, isEmployer, t, tAdmin]
   );
 
   const table = useReactTable({
@@ -358,7 +367,7 @@ export function CourseBuilderDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by keyword..."
+              placeholder={t("filters.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -367,12 +376,12 @@ export function CourseBuilderDataTable() {
           </div>
           <Select value={courseTypeFilter} onValueChange={handleCourseTypeChange}>
             <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="Course Type" />
+              <SelectValue placeholder={t("filters.courseTypePlaceholder")} />
             </SelectTrigger>
             <SelectContent>
               {courseTypes.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
-                  {type.label}
+                <SelectItem key={type} value={type}>
+                  {t(`filters.courseTypes.${type}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -384,7 +393,7 @@ export function CourseBuilderDataTable() {
               onClick={handleClearSearch}
               className="sm:w-auto"
             >
-              Clear
+              {tAdmin("clear")}
             </Button>
           )}
         </div>
@@ -393,15 +402,15 @@ export function CourseBuilderDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {tAdmin("export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {tAdmin("exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {tAdmin("exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -413,31 +422,35 @@ export function CourseBuilderDataTable() {
                 className="cursor-pointer"
               >
                 <Upload className="mr-2 size-4" />
-                Upload File
+                {t("upload.button")}
               </Button>
               <DropdownMenu open={createCourseMenuOpen} onOpenChange={setCreateCourseMenuOpen}>
                 <DropdownMenuTrigger asChild>
                   <Button className="cursor-pointer">
                     <Plus className="mr-2 size-4" />
-                    Create Course
+                    {t("create.button")}
                     <ChevronDown className="ml-2 size-4" />
                   </Button>
                 </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {createCourseTypes.map((type) => (
-                <DropdownMenuItem
-                  key={type.value}
-                  onClick={() => handleCreateCourse(type.value)}
-                  className="cursor-pointer"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-medium">{type.label}</span>
-                    <span className="text-xs text-muted-foreground">{type.description}</span>
-                  </div>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {createCourseTypes.map((type) => (
+                  <DropdownMenuItem
+                    key={type}
+                    onClick={() => handleCreateCourse(type)}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-medium">
+                        {t(`create.types.${type}.label`)}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {t(`create.types.${type}.description`)}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             </>
           )}
         </div>
@@ -487,7 +500,7 @@ export function CourseBuilderDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {tAdmin("noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -525,19 +538,20 @@ export function CourseBuilderDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the course{" "}
-              <strong>{courseToDelete?.course_name}</strong>.
+              {t("deleteDialog.description", {
+                name: courseToDelete?.course_name ?? "",
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              {tCommon("delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

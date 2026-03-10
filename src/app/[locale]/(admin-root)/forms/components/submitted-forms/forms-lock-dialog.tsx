@@ -1,6 +1,7 @@
 "use client";
 
 import { Lock } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +32,7 @@ export function FormsLockDialog({
   onConfirm,
   isLoading,
 }: FormsLockDialogProps) {
+  const t = useTranslations("forms");
   const [reason, setReason] = useState("");
 
   const handleConfirm = () => {
@@ -49,18 +51,20 @@ export function FormsLockDialog({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-secondary" />
-            Lock Form
+            {t("submittedForms.lockDialog.title")}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You are about to lock the form: <strong>{form?.form.form_name}</strong> for user{" "}
-            <strong>{form?.user.user_name}</strong>
+            {t("submittedForms.lockDialog.description", {
+              formName: form?.form.form_name ?? "",
+              userName: form?.user.user_name ?? "",
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="space-y-2">
-          <Label htmlFor="lock-reason">Reason for Locking (Optional)</Label>
+          <Label htmlFor="lock-reason">{t("submittedForms.lockDialog.reasonLabel")}</Label>
           <Textarea
             id="lock-reason"
-            placeholder="Please provide a reason for locking this form..."
+            placeholder={t("submittedForms.lockDialog.reasonPlaceholder")}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             rows={3}
@@ -68,14 +72,14 @@ export function FormsLockDialog({
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel} disabled={isLoading}>
-            Cancel
+            {t("submittedForms.lockDialog.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isLoading}
             className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
           >
-            {isLoading ? "Locking..." : "Lock Form"}
+            {isLoading ? t("submittedForms.lockDialog.submitting") : t("submittedForms.lockDialog.submit")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

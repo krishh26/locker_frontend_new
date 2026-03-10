@@ -8,6 +8,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Controller, Control, useFieldArray, UseFormSetValue } from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ export function StandardTopicsForm({
   setValue,
   readOnly = false,
 }: StandardTopicsFormProps) {
+  const t = useTranslations("courseBuilder");
   const { fields, append, remove } = useFieldArray({
     control,
     name: `units.${moduleIndex}.subUnit`,
@@ -64,12 +66,14 @@ export function StandardTopicsForm({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-semibold">
-          Assessment Criteria {topics.length > 0 && `(${topics.length})`}
+          {topics.length > 0
+            ? t("course.standard.assessmentCriteriaCount", { count: topics.length })
+            : t("course.standard.assessmentCriteria")}
         </h4>
         {!readOnly && (
           <Button onClick={handleAddTopic} size="sm" className="gap-2" type="button">
             <Plus className="h-4 w-4" />
-            Add Assessment Criteria
+            {t("course.standard.addAssessmentCriteria")}
           </Button>
         )}
       </div>
@@ -81,13 +85,13 @@ export function StandardTopicsForm({
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    Type <span className="text-destructive">*</span>
+                    {t("course.standard.type")} <span className="text-destructive">*</span>
                   </TableHead>
                   <TableHead>
-                    Title <span className="text-destructive">*</span>
+                    {t("course.standard.title")} <span className="text-destructive">*</span>
                   </TableHead>
                   {!readOnly && (
-                    <TableHead className="w-[100px] text-center">Actions</TableHead>
+                    <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                   )}
                 </TableRow>
               </TableHeader>
@@ -107,12 +111,12 @@ export function StandardTopicsForm({
                                 disabled={readOnly}
                               >
                                 <SelectTrigger className={cn("w-[150px]", error && "border-destructive")}>
-                                  <SelectValue placeholder="Select type" />
+                                  <SelectValue placeholder={t("course.standard.placeholderSelectType")} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="Behaviour">Behaviour</SelectItem>
-                                  <SelectItem value="Knowledge">Knowledge</SelectItem>
-                                  <SelectItem value="Skills">Skills</SelectItem>
+                                  <SelectItem value="Behaviour">{t("course.standard.typeBehaviour")}</SelectItem>
+                                  <SelectItem value="Knowledge">{t("course.standard.typeKnowledge")}</SelectItem>
+                                  <SelectItem value="Skills">{t("course.standard.typeSkills")}</SelectItem>
                                 </SelectContent>
                               </Select>
                               {error && (
@@ -130,7 +134,7 @@ export function StandardTopicsForm({
                             <div className="space-y-1">
                               <Input
                                 {...formField}
-                                placeholder="Topic title"
+                                placeholder={t("course.standard.placeholderTopicTitle")}
                                 className={cn(error && "border-destructive")}
                                 disabled={readOnly}
                               />

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Loader2, X, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -27,6 +28,8 @@ export function AssignAdminDialog({
   onSuccess,
   onCancel,
 }: AssignAdminDialogProps) {
+  const t = useTranslations("centres.assignAdmin")
+  const common = useTranslations("common")
   const { data: usersData, isLoading: isLoadingUsers } = useGetUsersByRoleQuery("Admin")
   const [setCentreAdmins, { isLoading: isSaving }] = useSetCentreAdminsMutation()
 
@@ -82,7 +85,7 @@ export function AssignAdminDialog({
   const handleSave = async () => {
     try {
       await setCentreAdmins({ id: centreId, user_ids: selectedAdminIds }).unwrap()
-      toast.success("Admins saved successfully")
+      toast.success(t("toastSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -90,7 +93,7 @@ export function AssignAdminDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to save admins"
+          : t("toastFailed")
       toast.error(errorMessage)
     }
   }
@@ -109,14 +112,14 @@ export function AssignAdminDialog({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <Label>Select Admins</Label>
+        <Label>{t("selectAdminsLabel")}</Label>
         <p className="text-sm text-muted-foreground">
-          Choose which admins can manage this centre. Each admin can be assigned to only one centre; assigning them here will set this as their centre.
+          {t("description")}
         </p>
         <div className="relative">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name or email..."
+            placeholder={t("searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-8"
@@ -127,7 +130,7 @@ export function AssignAdminDialog({
       <ScrollArea className="h-[300px] w-full rounded-md border p-4">
         {filteredAdmins.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
-            {searchQuery ? "No admins found matching your search" : "No admin users available"}
+            {searchQuery ? t("noAdminsMatchingSearch") : t("noAdminUsersAvailable")}
           </div>
         ) : (
           <div className="space-y-3">
@@ -160,7 +163,7 @@ export function AssignAdminDialog({
 
       {selectedAdminIds.length > 0 && (
         <div className="space-y-2">
-          <Label>Selected Admins ({selectedAdminIds.length})</Label>
+          <Label>{t("selectedAdminsCount", { count: selectedAdminIds.length })}</Label>
           <div className="flex flex-wrap gap-2">
             {selectedAdminIds.map((adminId) => {
               const admin = allAdmins.find((a) => a.user_id === adminId)
@@ -196,7 +199,7 @@ export function AssignAdminDialog({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Close
+          {common("close")}
         </Button>
         <Button
           type="button"
@@ -207,10 +210,10 @@ export function AssignAdminDialog({
           {isSaving ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Saving...
+              {t("saving")}
             </>
           ) : (
-            "Save"
+            common("save")
           )}
         </Button>
       </div>

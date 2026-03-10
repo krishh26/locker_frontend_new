@@ -24,23 +24,8 @@ import { cardApiTypeToCountKey } from '@/store/api/dashboard/types'
 import { useAppSelector } from '@/store/hooks'
 
 /* ============================================================
-   CSV HEADER MAPPING
+   CSV HEADER MAPPING - use t() at runtime in handleExport
 ============================================================ */
-
-const CSV_HEADER_NAMES: Record<string, string> = {
-  learner_id: 'Learner ID',
-  first_name: 'First Name',
-  last_name: 'Last Name',
-  email: 'Email',
-  course_name: 'Course Name',
-  start_date: 'Start Date',
-  planned_end_date: 'Planned End Date',
-  overall_progress: 'Overall Progress (%)',
-  timeline_progress: 'Timeline Progress (%)',
-  overdue: 'Overdue',
-  on_track: 'On Track',
-  course_status: 'Course Status',
-}
 
 /** Keys to strip from CSV export (file paths and similar). */
 const FILE_PATH_HEADERS_BLOCKLIST = [
@@ -157,6 +142,7 @@ const cardBgColors = [
 
 export function AdminDashboard() {
   const t = useTranslations('dashboard')
+  const tAdmin = useTranslations('dashboard.admin')
   const userRole = useAppSelector((state) => state.auth.user?.role)
 
   const { data: dashboardData, isLoading: loading } =
@@ -178,7 +164,7 @@ export function AdminDashboard() {
      EXPORT HANDLER
   ============================================================ */
 
-  const handleExport = async (apiType: string, title: string) => {
+  const handleExport = async (apiType: string, cardId: string) => {
     setExporting((prev) => ({ ...prev, [apiType]: true }))
 
     try {
@@ -222,13 +208,13 @@ export function AdminDashboard() {
 
         if (summary.sa_unmapped_evidence_count !== undefined) {
           summaryRows.push(
-            `SA + unmapped evidence,${summary.sa_unmapped_evidence_count}`,
+            `${tAdmin('summarySaUnmapped')},${summary.sa_unmapped_evidence_count}`,
           )
         }
 
         if (summary.outstanding_iqa_actions_count !== undefined) {
           summaryRows.push(
-            `Outstanding IQA actions,${summary.outstanding_iqa_actions_count}`,
+            `${tAdmin('summaryOutstandingIqa')},${summary.outstanding_iqa_actions_count}`,
           )
         }
 
@@ -249,7 +235,7 @@ export function AdminDashboard() {
         )
         const headers = filteredHeaders.map(
           (h) =>
-            CSV_HEADER_NAMES[h] ??
+            (tAdmin as (key: string) => string)('csvHeaders.' + h) ||
             h.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
         )
 
@@ -274,7 +260,7 @@ export function AdminDashboard() {
 
       /* Ensure a file is always generated (e.g. when data and summary are empty). */
       if (csvParts.length === 0) {
-        csvParts.push('"Report","No data"')
+        csvParts.push(`"Report","${tAdmin('csvNoData')}"`)
       }
 
       /* -------- Generate File -------- */
@@ -287,7 +273,7 @@ export function AdminDashboard() {
         const url = URL.createObjectURL(blob)
 
         link.href = url
-        link.download = `${title.replace(/\s+/g, '_')}_${
+        link.download = `${cardId}_${
           new Date().toISOString().split('T')[0]
         }.csv`
 
@@ -343,13 +329,13 @@ export function AdminDashboard() {
               return (
                 <AdminDashboardCard
                   key={card.id}
-                  title={card.title}
+                  title={tAdmin('cards.' + card.id)}
                   count={displayCount}
                   textColor={card.textColor}
                   radiusColor={card.radiusColor}
                   onExport={
                     apiType
-                      ? () => handleExport(apiType, card.title)
+                      ? () => handleExport(apiType, card.id)
                       : undefined
                   }
                   isExporting={isExporting}
@@ -366,7 +352,7 @@ export function AdminDashboard() {
         onOpenChange={(open) =>
           setActiveLearnersDialog((prev) => ({ ...prev, open }))
         }
-        title='Active Learner'
+        title={tAdmin('cards.active_learner')}
         count={counts.active_learners_count ?? '0'}
         summary={activeLearnersDialog.summary}
       />

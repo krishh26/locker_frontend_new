@@ -34,7 +34,17 @@
     "confirm": "تأكيد",
     "yes": "نعم",
     "no": "لا",
-    "ok": "موافق"
+    "ok": "موافق",
+    "pagination": {
+      "rowsPerPage": "صفوف لكل صفحة",
+      "showingRange": "يتم عرض {from} إلى {to} من أصل {count} عنصر.",
+      "selectedRows": "تم تحديد {selected} من {total} صف.",
+      "morePages": "مزيد من الصفحات",
+      "ariaFirst": "الانتقال إلى الصفحة الأولى",
+      "ariaPrevious": "الانتقال إلى الصفحة السابقة",
+      "ariaNext": "الانتقال إلى الصفحة التالية",
+      "ariaLast": "الانتقال إلى الصفحة الأخيرة"
+    }
   },
   "navigation": {
     "home": "الرئيسية",
@@ -244,7 +254,91 @@
   },
   "dashboard": {
     "adminDashboard": "لوحة التحكم للمشرف",
-    "dashboard": "لوحة التحكم"
+    "dashboard": "لوحة التحكم",
+    "masterAdmin": {
+      "title": "لوحة تحكم المشرف الرئيسي",
+      "subtitle": "نظرة عامة على جميع المنظمات والمراكز ونشاط النظام",
+      "totalOrganisations": "إجمالي المنظمات",
+      "active": "نشطة",
+      "totalCentres": "إجمالي المراكز",
+      "acrossAllOrgs": "عبر جميع المنظمات",
+      "suspended": "معلقة",
+      "activeSubscriptions": "الاشتراكات النشطة",
+      "total": "الإجمالي",
+      "activePlans": "الخطط النشطة",
+      "totalRevenue": "إجمالي الإيرادات",
+      "fromRecentPayments": "من المدفوعات الأخيرة",
+      "fromPaymentsCount": "من {count} مدفوعات حديثة",
+      "recentAuditEvents": "أحداث التدقيق الأخيرة",
+      "viewAll": "عرض الكل",
+      "noRecentAuditEvents": "لا توجد أحداث تدقيق حديثة.",
+      "action": "الإجراء",
+      "user": "المستخدم",
+      "organisation": "المنظمة",
+      "date": "التاريخ",
+      "auditActions": {
+        "system_action": "إجراء النظام",
+        "account_manager_action": "إجراء مدير الحساب",
+        "organisation_change": "تغيير المنظمة",
+        "access_change": "تغيير الوصول",
+        "centre_change": "تغيير المركز",
+        "subscription_change": "تغيير الاشتراك",
+        "feature_change": "تغيير الميزة"
+      }
+    },
+    "admin": {
+      "cards": {
+        "active_learner": "المتعلم النشط",
+        "learners_on_bil": "المتعلمون في BIL",
+        "overdue_learners": "المتعلمون المتأخرون",
+        "overdue_progress_review": "مراجعات التقدم المتأخرة",
+        "learners_due_complete_30_days": "المتعلمون المقرر إكمالهم خلال 30 يومًا",
+        "learners_off_track": "المتعلمون خارج المسار",
+        "unmapped_evidences": "الأدلة غير المعينة",
+        "session_learner_action_due_today": "إجراء المتعلم المستحق (اليوم)",
+        "session_learner_actions_due_next_7_days": "إجراءات المتعلم المستحقة في 7 أيام",
+        "session_learner_action_overdue": "إجراء المتعلم المتأخر",
+        "learner_all_sampling_plan": "المتعلمون في خطة المعاينة",
+        "learner_not_all_sampling_plan": "المتعلمون خارج خطة المعاينة",
+        "default_review_overdue": "المراجعة الافتراضية متأخرة",
+        "due_actions": "الإجراءات المستحقة",
+        "overdue_actions": "الإجراءات المتأخرة",
+        "actions_due_7_days": "الإجراءات في 7 أيام",
+        "otj_up_to_date": "OTJ خارج المسار",
+        "iqa_actions_overdue": "إجراءات IQA المتأخرة",
+        "all_iqa_actions": "جميع إجراءات IQA",
+        "iqa_actions_due_in_30_days": "إجراءات IQA في 30 يومًا",
+        "session_due_today": "الجلسات المستحقة اليوم",
+        "session_due_in_7_days": "الجلسات في 7 أيام",
+        "sample_due_in_month": "العينة في الشهر",
+        "sampling_plan_overdue": "خطة المعاينة متأخرة",
+        "trainer_rag_report": "تقييم RAG للمدرب",
+        "outstanding_eqa_actions": "إجراءات EQA المعلقة",
+        "overall_progress": "التقدم الإجمالي"
+      },
+      "csvHeaders": {
+        "learner_id": "معرف المتعلم",
+        "first_name": "الاسم الأول",
+        "last_name": "اسم العائلة",
+        "email": "البريد",
+        "course_name": "الدورة",
+        "start_date": "تاريخ البدء",
+        "planned_end_date": "تاريخ الانتهاء المخطط",
+        "overall_progress": "التقدم (%)",
+        "timeline_progress": "التقدم الزمني (%)",
+        "overdue": "متأخر",
+        "on_track": "على المسار",
+        "course_status": "حالة الدورة"
+      },
+      "csvNoData": "لا توجد بيانات",
+      "summarySaUnmapped": "SA + أدلة غير معينة",
+      "summaryOutstandingIqa": "إجراءات IQA المعلقة",
+      "orangePercent": "برتقالي %",
+      "greenPercent": "أخضر %",
+      "lastMonth": "الشهر الماضي",
+      "current": "الحالي",
+      "metricsFallback": "ستظهر المقاييس الإضافية هنا عند توفيرها من الخادم."
+    }
   },
   "adminCommon": {
     "name": "الاسم",
@@ -366,35 +460,188 @@
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "إدارة لوحة التحكم",
+    "pageSubtitle": "إدارة جميع الوظائف الإدارية وإعدادات النظام",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "إدارة المستخدمين",
+        "description": "إدارة المستخدمين بكفاءة من خلال عمليات مبسطة تشمل الإضافة والحذف والتحديث."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "إدارة المتعلمين",
+        "description": "إضافة المتعلمين وتحديثهم وحذفهم بسهولة، مع تعيين الدورات والمدربين وأصحاب العمل و‑IQA و‑EQA."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "إدارة أصحاب العمل",
+        "description": "إدارة بيانات أصحاب العمل، وإضافة وتحديث وحذف سجلاتهم، وتعيين المتعلمين لهم."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "إدارة الإشعارات",
+        "description": "إنشاء وإدارة رسائل البث، وإرسال الإشعارات إلى المستخدمين والمتعلمين أو إلى دورات محددة."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "عرض التفاصيل"
   },
   "awaitingSignature": {
     "pageTitle": "ملفات ومستندات معلقة التوقيع",
     "pageSubtitle": "ملفات ومستندات معلقة التوقيع من المدرب والمتعلمين"
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "التقويم",
+    "pageSubtitle": "إدارة الجلسات والمواعيد",
+    "filters": {
+      "trainerPlaceholder": "تصفية حسب المدرب",
+      "allTrainers": "كل المدربين",
+      "loading": "جارٍ التحميل...",
+      "attendedPlaceholder": "تصفية حسب حالة الحضور",
+      "allStatus": "جميع الحالات",
+      "view": {
+        "calendar": "تقويم",
+        "list": "قائمة"
+      },
+      "exportCsv": "تصدير CSV"
+    },
+    "status": {
+      "notSet": "غير محددة",
+      "attended": "حضر",
+      "cancelled": "ألغيت",
+      "cancelledByAssessor": "ألغيت من قبل المدرب",
+      "cancelledByLearner": "ألغيت من قبل المتعلم",
+      "cancelledByEmployer": "ألغيت من قبل صاحب العمل",
+      "learnerLate": "تأخر المتعلم",
+      "assessorLate": "تأخر المدرب",
+      "learnerNotAttended": "المتعلم لم يحضر",
+      "lateGeneric": "متأخر",
+      "notAttendedGeneric": "لم يحضر"
+    },
+    "legend": {
+      "title": "دليل حالات الجلسة"
+    },
+    "month": {
+      "today": "اليوم",
+      "weekdays": {
+        "sun": "أحد",
+        "mon": "اثنين",
+        "tue": "ثلاثاء",
+        "wed": "أربعاء",
+        "thu": "خميس",
+        "fri": "جمعة",
+        "sat": "سبت"
+      }
+    },
+    "sort": {
+      "byVisitDate": "ترتيب حسب تاريخ الزيارة",
+      "latestFirst": "الأحدث أولاً",
+      "oldestFirst": "الأقدم أولاً"
+    },
+    "list": {
+      "headers": {
+        "title": "العنوان",
+        "learners": "المتعلمون",
+        "trainer": "المدرب",
+        "location": "الموقع",
+        "visitDate": "تاريخ الزيارة",
+        "duration": "المدة",
+        "attended": "الحضور",
+        "action": "الإجراء"
+      },
+      "untitledSession": "جلسة بدون عنوان",
+      "emptyTitle": "لا توجد بيانات",
+      "emptyDescription": "لا توجد جلسات مجدولة حالياً. ستظهر هنا بعد إنشائها.",
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "pagination": {
+        "pageOf": "الصفحة {page} من {pages}",
+        "totalItems": "{count} عنصر إجماليًا",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "deleteDialog": {
+        "title": "حذف الجلسة؟",
+        "description": "سيتم حذف هذه الجلسة وجميع البيانات المرتبطة بها. هل تريد المتابعة؟",
+        "cancel": "إلغاء",
+        "confirm": "حذف الجلسة"
+      },
+      "toastStatusUpdated": "تم تحديث حالة الجلسة بنجاح",
+      "toastStatusUpdateFailed": "فشل في تحديث حالة الجلسة",
+      "toastDeleteSuccess": "تم حذف الجلسة بنجاح",
+      "toastDeleteFailed": "فشل في حذف الجلسة"
+    },
+    "sessionDialog": {
+      "titleCreate": "حجز جلسة جديدة",
+      "subtitleCreate": "املأ التفاصيل أدناه لإنشاء جلسة جديدة.",
+      "titleEdit": "تعديل الجلسة",
+      "subtitleEdit": "قم بتحديث تفاصيل الجلسة أدناه.",
+      "trainerLabel": "اختيار المدرب",
+      "trainerPlaceholder": "اختر المدرب",
+      "learnersLabel": "اختيار المتعلمين",
+      "learnersPlaceholder": "اختر المتعلمين...",
+      "noLearners": "لم يتم العثور على متعلمين",
+      "titleLabel": "العنوان",
+      "titlePlaceholder": "أدخل عنوان الجلسة",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "أدخل وصف الجلسة",
+      "locationLabel": "مكان الجلسة",
+      "locationPlaceholder": "أدخل المكان",
+      "startLabel": "اختيار تاريخ ووقت الجلسة",
+      "durationLabel": "اختيار مدة الجلسة",
+      "durationHours": "الساعات",
+      "durationMinutes": "الدقائق",
+      "typeLabel": "اختيار نوع الجلسة",
+      "typePlaceholder": "اختر نوع الجلسة",
+      "typeOptions": {
+        "General": "عام",
+        "Induction": "تعريفي",
+        "Formal Review": "مراجعة رسمية",
+        "Telephone": "هاتف",
+        "Exit Session": "جلسة خروج",
+        "Out Of the Workplace": "خارج مكان العمل",
+        "Tests/Exams": "اختبارات/امتحانات",
+        "Learner Support": "دعم المتعلم",
+        "Initial Session": "جلسة أولية",
+        "Gateway Ready": "جاهز للـ Gateway",
+        "EPA": "EPA",
+        "Furloughed": "موقوف عن العمل مؤقتًا"
+      },
+      "loading": "جارٍ التحميل...",
+      "toastCreateSuccess": "تم إنشاء الجلسة بنجاح",
+      "toastUpdateSuccess": "تم تحديث الجلسة بنجاح",
+      "toastSaveFailed": "فشل في حفظ الجلسة",
+      "validation": {
+        "trainerRequired": "اسم المدرب مطلوب",
+        "learnersRequired": "يجب اختيار متعلم واحد على الأقل",
+        "titleRequired": "العنوان مطلوب",
+        "locationRequired": "الموقع مطلوب",
+        "startDateRequired": "تاريخ البدء مطلوب",
+        "durationRequired": "المدة مطلوبة",
+        "typeRequired": "نوع الجلسة مطلوب"
+      }
+    }
+  },
+  "forum": {
+    "pageTitle": "المنتدى",
+    "pageSubtitle": "تواصل وتحدّث حول دوراتك",
+    "chatList": {
+      "loading": "جارٍ تحميل المحادثات...",
+      "searchPlaceholder": "ابحث عن الدورات...",
+      "noCourses": "لم يتم العثور على دورات"
+    },
+    "messageInput": {
+      "placeholder": "اكتب رسالتك...",
+      "toastSuccess": "تم إرسال الرسالة بنجاح",
+      "toastError": "فشل في إرسال الرسالة"
+    },
+    "thread": {
+      "loading": "جارٍ تحميل الرسائل...",
+      "empty": "لا توجد رسائل بعد",
+      "emptyDescription": "ابدأ المحادثة الآن"
+    },
+    "empty": {
+      "noChatSelected": "لم يتم اختيار محادثة",
+      "noChatSelectedDescription": "اختر دورة من القائمة لبدء المراسلة"
+    }
   },
   "caseload": {
     "pageTitle": "Caseload Management",
@@ -408,13 +655,289 @@
     "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
-    "pageTitle": "Form Builder",
-    "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
-    "tabs": {
-      "formList": "Form List",
-      "templateList": "Template List",
-      "response": "Response"
+  "pageTitle": "منشئ النماذج",
+  "pageSubtitle": "إنشاء وإدارة النماذج الديناميكية باستخدام أداة سحب وإفلات",
+  "tabs": {
+  "formList": "قائمة النماذج",
+  "templateList": "قائمة القوالب",
+  "response": "الاستجابات"
+  },
+  "table": {
+    "searchPlaceholder": "البحث بالكلمة الرئيسية...",
+    "clear": "مسح",
+    "export": "تصدير",
+    "exportCsv": "تصدير كـ CSV",
+    "exportPdf": "تصدير كـ PDF",
+    "addNewForm": "إضافة نموذج جديد",
+    "formName": "اسم النموذج",
+    "description": "الوصف",
+    "type": "النوع",
+    "createdAt": "تاريخ الإنشاء",
+    "actions": "إجراءات",
+    "view": "عرض",
+    "edit": "تعديل",
+    "assignUsers": "تعيين المستخدمين",
+    "delete": "حذف",
+    "openMenu": "فتح القائمة",
+    "noResults": "لا توجد نتائج.",
+    "toastNoData": "لا توجد بيانات للتصدير",
+    "toastCsvSuccess": "تم تصدير CSV بنجاح",
+    "toastPdfInfo": "سيتم تنفيذ تصدير PDF لاحقاً",
+    "toastDeleteSuccess": "تم حذف النموذج بنجاح",
+    "toastDeleteFailed": "فشل حذف النموذج"
+  },
+  "deleteDialog": {
+    "title": "هل أنت متأكد؟",
+    "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف النموذج {name} وجميع البيانات المرتبطة به نهائياً.",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف..."
+  },
+  "assignUsers": {
+    "dialogTitle": "تعيين المستخدمين للنموذج",
+    "dialogDescription": "تعيين المستخدمين للنموذج: {formName}",
+    "selectAssignmentType": "اختر نوع التعيين",
+    "selectUsers": "اختر المستخدمين",
+    "cancel": "إلغاء",
+    "submit": "تعيين المستخدمين",
+    "validationSelectType": "الرجاء اختيار نوع التعيين",
+    "validationSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
+    "toastSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
+    "toastSuccess": "تم تعيين المستخدمين بنجاح",
+    "toastFailed": "فشل تعيين المستخدمين",
+    "optionAll": "الكل",
+    "optionAllLearner": "جميع المتعلمين",
+    "optionAllEQA": "جميع EQA",
+    "optionAllTrainer": "جميع المدربين",
+    "optionAllEmployer": "جميع أصحاب العمل",
+    "optionAllIQA": "جميع IQA",
+    "optionAllLIQA": "جميع LIQA",
+    "optionIndividual": "فردي"
+  },
+  "submittedForms": {
+    "pageTitle": "النماذج المُرسلة",
+    "pageSubtitle": "عرض وإدارة جميع النماذج المُرسلة",
+    "table": {
+      "searchPlaceholder": "البحث باسم النموذج أو المستخدم أو البريد...",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "formName": "اسم النموذج",
+      "type": "النوع",
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "status": "الحالة",
+      "submitDate": "تاريخ الإرسال",
+      "actions": "إجراءات",
+      "locked": "مقفل",
+      "unlocked": "مفتوح",
+      "loading": "جاري التحميل...",
+      "noFormsFound": "لم يتم العثور على نماذج.",
+      "toastCsvSuccess": "تم تصدير CSV بنجاح",
+      "toastLockSuccess": "تم قفل النموذج بنجاح!",
+      "toastLockFailed": "فشل قفل النموذج. يرجى المحاولة مرة أخرى.",
+      "toastUnlockSuccess": "تم فتح النموذج بنجاح!",
+      "toastUnlockFailed": "فشل فتح النموذج. يرجى المحاولة مرة أخرى."
+    },
+    "lockDialog": {
+      "title": "قفل النموذج",
+      "description": "أنت على وشك قفل النموذج: {formName} للمستخدم {userName}",
+      "reasonLabel": "سبب القفل (اختياري)",
+      "reasonPlaceholder": "يرجى تقديم سبب لقفل هذا النموذج...",
+      "cancel": "إلغاء",
+      "submit": "قفل النموذج",
+      "submitting": "جاري القفل..."
+    },
+    "unlockDialog": {
+      "title": "فتح النموذج",
+      "description": "أنت على وشك فتح النموذج: {formName} للمستخدم {userName}",
+      "reasonLabel": "سبب الفتح (اختياري)",
+      "reasonPlaceholder": "يرجى تقديم سبب لفتح هذا النموذج...",
+      "cancel": "إلغاء",
+      "submit": "فتح النموذج",
+      "submitting": "جاري الفتح..."
     }
+  },
+  "templates": {
+    "sectionTitle": "قوالب النماذج",
+    "searchPlaceholder": "البحث في القوالب...",
+    "clear": "مسح",
+    "createTemplate": "إنشاء قالب",
+    "noTemplatesFound": "لم يتم العثور على قوالب",
+    "noTemplatesDescription": "أنشئ قالباً لإعادة استخدام هياكل النماذج",
+    "templateName": "اسم القالب",
+    "createDate": "تاريخ الإنشاء",
+    "actions": "إجراءات",
+    "useTemplate": "استخدام القالب",
+    "toastDeleteSuccess": "تم حذف القالب بنجاح",
+    "toastDeleteFailed": "فشل حذف القالب",
+    "deleteDialog": {
+      "title": "هل أنت متأكد؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف القالب {name} نهائياً.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    }
+  },
+  "builder": {
+    "back": "رجوع",
+    "backToForms": "العودة إلى النماذج",
+    "editForm": "تعديل النموذج",
+    "createNewForm": "إنشاء نموذج جديد",
+    "dragComponentsHint": "اسحب المكونات لبناء النموذج",
+    "field": "حقل",
+    "fields": "حقول",
+    "preview": "معاينة",
+    "edit": "تعديل",
+    "saving": "جاري الحفظ...",
+    "saveAsForm": "حفظ كنموذج",
+    "saveForm": "حفظ النموذج",
+    "formInformation": "معلومات النموذج",
+    "formName": "اسم النموذج",
+    "formType": "نوع النموذج",
+    "formNamePlaceholder": "مثال: نموذج التعليقات",
+    "descriptionOptional": "الوصف (اختياري)",
+    "descriptionPlaceholder": "صف الغرض من هذا النموذج...",
+    "formStatistics": "إحصائيات النموذج:",
+    "typeField": "{count} {type} حقل",
+    "typeFields": "{count} {type} حقول",
+    "accessRights": "صلاحيات الوصول",
+    "enableCompleteFunction": "تفعيل وظيفة الإكمال",
+    "completionRoles": "أدوار الإكمال",
+    "setRequestSignature": "طلب التوقيع",
+    "emailRecipients": "مستلمو البريد",
+    "otherEmailsPlaceholder": "البريد مفصول بفاصلة (،)",
+    "selectFormType": "اختر نوع النموذج",
+    "loadFormError": "فشل تحميل النموذج. يرجى المحاولة مرة أخرى.",
+    "validation": {
+      "formNameRequired": "اسم النموذج مطلوب",
+      "formTypeRequired": "نوع النموذج مطلوب",
+      "selectAccessRight": "اختر صلاحية وصول واحدة على الأقل",
+      "selectCompletionRole": "اختر دور إكمال واحداً على الأقل",
+      "selectEmailRecipient": "اختر مستلماً واحداً على الأقل",
+      "enterOtherEmails": "يرجى إدخال بريد آخر",
+      "validEmails": "أدخل بريداً صالحاً مفصولاً بفواصل"
+    },
+    "toast": {
+      "enterFormName": "يرجى إدخال اسم النموذج",
+      "addOneField": "أضف حقل واحداً على الأقل",
+      "formUpdated": "تم تحديث النموذج بنجاح",
+      "formCreated": "تم إنشاء النموذج بنجاح",
+      "saveFailed": "فشل حفظ النموذج",
+      "duplicateName": "يوجد نموذج بهذا الاسم. اختر اسماً آخر.",
+      "saveAsSuccess": "تم حفظ النموذج كنموذج جديد بنجاح",
+      "saveAsFailed": "فشل الحفظ كنموذج جديد"
+    },
+    "formTypes": {
+      "ILP": "ILP",
+      "Review": "مراجعة",
+      "Enrolment": "التسجيل",
+      "Survey": "استبيان",
+      "Workbook": "دفتر العمل",
+      "testExams": "اختبار/امتحانات",
+      "Others": "أخرى"
+    },
+    "roles": {
+      "Master Admin": "المشرف الرئيسي",
+      "Basic Admin": "مشرف أساسي",
+      "Assessor": "مقيّم",
+      "IQA": "IQA",
+      "EQA": "EQA",
+      "Curriculum Manager": "مدير المنهج",
+      "Employer Overview": "نظرة عامة على صاحب العمل",
+      "Employer Manager": "مدير صاحب العمل",
+      "Partner": "شريك",
+      "Custom Manager": "مدير مخصص",
+      "Learner": "متعلم",
+      "Other": "آخر"
+    },
+    "palette": {
+      "components": "مكونات",
+      "presets": "قوالب",
+      "dragComponents": "اسحب المكونات لبناء النموذج",
+      "choosePresets": "اختر من القوالب المحفوظة",
+      "formBuilderTitle": "منشئ النماذج",
+      "formBuilderHint": "اسحب المكونات هنا لإنشاء النموذج",
+      "dropHere": "أفلت مكونات النموذج هنا",
+      "dropHint": "اسحب أي مكون من اللوحة اليسرى للبدء.",
+      "componentLabels": {
+        "text": "نص",
+        "email": "بريد",
+        "phone": "هاتف",
+        "number": "رقم",
+        "textarea": "نص طويل",
+        "select": "قائمة منسدلة",
+        "radio": "اختيار متعدد",
+        "checkbox": "خانات اختيار",
+        "date": "تاريخ",
+        "file": "رفع ملف",
+        "signature": "توقيع"
+      },
+      "defaultLabels": {
+        "text": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "number": "العمر",
+        "textarea": "تعليقات",
+        "select": "اختر خياراً",
+        "radio": "اختر واحداً",
+        "checkbox": "حدد كل ما ينطبق",
+        "date": "تاريخ",
+        "file": "رفع ملف",
+        "signature": "توقيع",
+        "default": "تسمية الحقل"
+      },
+      "defaultPlaceholders": {
+        "text": "أدخل اسمك الكامل",
+        "email": "بريدك@مثال.com",
+        "phone": "+1 (555) 123-4567",
+        "number": "أدخل رقماً",
+        "textarea": "اكتب رسالتك هنا...",
+        "date": "اختر التاريخ",
+        "file": "اختر ملفاً للرفع",
+        "default": "أدخل قيمة"
+      },
+      "optionLabel": "خيار {n}",
+      "copySuffix": "(نسخة)"
+    },
+    "presets": {
+      "roles": {
+        "learner": "متعلم",
+        "trainer": "مدرب",
+        "employee": "موظف"
+      },
+      "fields": {
+        "learner-name": "اسم المتعلم",
+        "learner-email": "بريد المتعلم",
+        "learner-phone": "هاتف المتعلم",
+        "date_of_birth": "تاريخ الميلاد",
+        "employer": "صاحب العمل",
+        "trainer-name": "اسم المدرب",
+        "email": "بريد",
+        "employee-name": "اسم الموظف"
+      }
+    },
+    "preview": {
+      "noFields": "لم تتم إضافة حقول إلى النموذج.",
+      "untitledForm": "نموذج بدون عنوان",
+      "clearForm": "مسح النموذج",
+      "submitPreview": "إرسال (معاينة فقط)"
+    },
+    "fieldCard": {
+      "selectOption": "اختر خياراً",
+      "fileUploadArea": "منطقة رفع الملفات",
+      "signaturePad": "لوحة التوقيع",
+      "editField": "تعديل الحقل",
+      "fieldLabel": "تسمية الحقل",
+      "placeholder": "النص التوضيحي",
+      "requiredField": "حقل مطلوب",
+      "fieldWidth": "عرض الحقل",
+      "fullWidth": "عرض كامل",
+      "halfWidth": "نصف العرض",
+      "oneThird": "الثلث",
+      "options": "خيارات",
+      "addOption": "إضافة خيار"
+    }
+  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",
@@ -440,8 +963,219 @@
     "pageSubtitle": "Manage session type configurations"
   },
   "surveys": {
-    "pageTitle": "Surveys",
-    "pageSubtitle": "Create and manage surveys"
+    "pageTitle": "الاستبيانات",
+    "pageSubtitle": "إنشاء وإدارة الاستبيانات",
+    "table": {
+      "headers": {
+        "name": "الاسم",
+        "status": "الحالة",
+        "questions": "الأسئلة",
+        "responses": "الردود",
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث",
+        "actions": "إجراءات"
+      },
+      "searchPlaceholder": "البحث في الاستبيانات...",
+      "createButton": "إنشاء استبيان",
+      "loading": "جاري تحميل الاستبيانات...",
+      "error": "خطأ في تحميل الاستبيانات. يرجى المحاولة مرة أخرى.",
+      "noResults": "لا توجد نتائج.",
+      "actions": {
+        "viewSurvey": "عرض الاستبيان",
+        "editSurvey": "تعديل الاستبيان",
+        "more": "المزيد من الإجراءات",
+        "viewResponses": "عرض الردود",
+        "openPublicForm": "فتح النموذج العام",
+        "allocateSurvey": "تخصيص الاستبيان",
+        "exportCsv": "تصدير CSV",
+        "exportPdf": "تصدير PDF",
+        "deleteSurvey": "حذف الاستبيان"
+      }
+    },
+    "filters": {
+      "statusLabel": "الحالة",
+      "statusPlaceholder": "اختر الحالة",
+      "statusAll": "جميع الحالات"
+    },
+    "status": {
+      "Draft": "مسودة",
+      "Published": "منشور",
+      "Archived": "مؤرشف"
+    },
+    "deleteDialog": {
+      "title": "حذف الاستبيان؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الاستبيان وجميع أسئلته وردوده نهائياً.",
+      "deleting": "جاري الحذف..."
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الاستبيان بنجاح",
+      "deleteFailed": "فشل حذف الاستبيان",
+      "allocateSelectSurvey": "يرجى اختيار استبيان للتخصيص",
+      "allocateSuccess": "تم تخصيص الاستبيان بنجاح لـ {count} مستخدم(ين)",
+      "allocateFailed": "فشل تخصيص الاستبيان. يرجى المحاولة مرة أخرى."
+    },
+    "form": {
+      "titleEdit": "تعديل الاستبيان",
+      "titleCreate": "إنشاء استبيان",
+      "descriptionEdit": "قم بتحديث تفاصيل الاستبيان. انقر حفظ عند الانتهاء.",
+      "descriptionCreate": "إنشاء نموذج استبيان جديد. انقر حفظ عند الانتهاء.",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "أدخل اسم الاستبيان",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "أدخل وصف الاستبيان (اختياري)",
+      "expirationLabel": "تاريخ الانتهاء",
+      "pickDate": "اختر تاريخاً",
+      "statusLabel": "الحالة",
+      "statusPlaceholder": "اختر الحالة",
+      "statusDraft": "مسودة",
+      "statusPublished": "منشور",
+      "cancel": "إلغاء",
+      "update": "تحديث الاستبيان",
+      "create": "إنشاء الاستبيان",
+      "updating": "جاري التحديث...",
+      "creating": "جاري الإنشاء...",
+      "toastUpdateSuccess": "تم تحديث الاستبيان بنجاح",
+      "toastCreateSuccess": "تم إنشاء الاستبيان بنجاح",
+      "toastUpdateFailed": "فشل تحديث الاستبيان",
+      "toastCreateFailed": "فشل إنشاء الاستبيان",
+      "validation": {
+        "nameMin": "يجب أن يكون الاسم حرفين على الأقل.",
+        "expirationFuture": "يجب أن يكون تاريخ الانتهاء في المستقبل"
+      }
+    },
+    "allocate": {
+      "title": "تخصيص الاستبيان",
+      "description": "خصص \"{name}\" للمستخدمين باختيار الأدوار والمستخدمين أدناه.",
+      "selectRoles": "اختر الأدوار",
+      "selectUsers": "اختر المستخدمين",
+      "usersSelected": "تم اختيار {count} مستخدم(ين)",
+      "course": "الدورة",
+      "employer": "صاحب العمل",
+      "search": "بحث",
+      "allCourses": "جميع الدورات",
+      "allEmployers": "جميع أصحاب العمل",
+      "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني...",
+      "statusFilters": "فلاتر الحالة",
+      "pageOf": "صفحة {page} من {pages}",
+      "previous": "السابق",
+      "next": "التالي",
+      "cancel": "إلغاء",
+      "assign": "تخصيص ({count})",
+      "toastSelectOne": "يرجى اختيار مستخدم واحد على الأقل للتخصيص",
+      "toastSuccess": "تم تخصيص الاستبيان بنجاح لـ {count} مستخدم(ين)",
+      "toastFailed": "فشل تخصيص الاستبيان. يرجى المحاولة مرة أخرى.",
+      "roles": {
+        "Trainer": "مدرب",
+        "IQA": "IQA",
+        "Learner": "متعلم",
+        "EQA": "EQA"
+      },
+      "statusOptions": {
+        "Awaiting Induction": "في انتظار التعريف",
+        "Certificated": "معتمد",
+        "Completed": "مكتمل",
+        "Early Leaver": "مغادر مبكر",
+        "Exempt": "معفى",
+        "In Training": "قيد التدريب",
+        "IQA Approved": "معتمد من IQA",
+        "Training Suspended": "التدريب معلق",
+        "Transferred": "منقول",
+        "Show only archived users": "إظهار المستخدمين المؤرشفين فقط"
+      },
+      "tableLoading": "جاري التحميل...",
+      "noUsersFound": "لم يتم العثور على مستخدمين",
+      "tableName": "الاسم",
+      "tableEmail": "البريد الإلكتروني",
+      "selectAll": "تحديد الكل",
+      "selectUser": "تحديد {name}"
+    },
+    "builder": {
+      "loadingTitle": "جاري تحميل الاستبيان...",
+      "loadingSubtitle": "يرجى الانتظار أثناء تحميل الاستبيان.",
+      "notFoundTitle": "الاستبيان غير موجود",
+      "notFoundSubtitleError": "فشل تحميل الاستبيان. يرجى المحاولة مرة أخرى.",
+      "notFoundSubtitleMissing": "الاستبيان الذي تبحث عنه غير موجود.",
+      "headerFallbackDescription": "قم ببناء أسئلة الاستبيان الخاص بك.",
+      "questionsTitle": "الأسئلة",
+      "questionsCount": "{count} سؤال/أسئلة",
+      "templateUse": "استخدام قالب",
+      "templateApplying": "جارٍ التطبيق...",
+      "addQuestion": "إضافة سؤال",
+      "emptyDescription": "لا توجد أسئلة بعد. ابدأ باستخدام قالب أو بإضافة أسئلتك الخاصة.",
+      "submitPreview": "إرسال",
+      "reorderToastSuccess": "تم إعادة ترتيب الأسئلة بنجاح",
+      "reorderToastFailed": "فشل في إعادة ترتيب الأسئلة",
+      "templateApplySuccess": "تم تطبيق القالب بنجاح!",
+      "templateApplyFailed": "فشل في تطبيق القالب. يرجى المحاولة مرة أخرى.",
+      "templateDialogTitle": "إنشاء من القوالب المميزة",
+      "templateDialogDescription": "اختر قالباً للبدء بسرعة باستخدام أسئلة جاهزة.",
+      "templateQuestionsCount": "{count} سؤال/أسئلة",
+      "previewShortTextPlaceholder": "إجابة نصية قصيرة",
+      "previewLongTextPlaceholder": "إجابة نصية طويلة",
+      "previewLikertStatementsHeader": "العبارات",
+      "previewLikertHelp": "أضف عبارات وخيارات لعرض مصفوفة مقياس ليكرت.",
+      "alertDeleteTitle": "هل أنت متأكد؟",
+      "alertDeleteDescription": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف هذا السؤال نهائياً.",
+      "alertDeleting": "جارٍ الحذف...",
+      "questionMenuMore": "المزيد من الخيارات",
+      "questionMenuEdit": "تعديل",
+      "questionMenuDuplicate": "تكرار",
+      "questionMenuDelete": "حذف",
+      "questionDuplicateSuccess": "تم تكرار السؤال بنجاح",
+      "questionDuplicateFailed": "فشل تكرار السؤال",
+      "questionDeleteSuccess": "تم حذف السؤال بنجاح",
+      "questionDeleteFailed": "فشل حذف السؤال",
+      "questionTypeShortText": "نص قصير",
+      "questionTypeLongText": "نص طويل",
+      "questionTypeMultipleChoice": "اختيار من متعدد",
+      "questionTypeCheckbox": "خانات اختيار",
+      "questionTypeRating": "تقييم",
+      "questionTypeDate": "تاريخ",
+      "questionTypeLikert": "مقياس ليكرت",
+      "untitledQuestion": "سؤال بدون عنوان",
+      "requiredLabel": "إلزامي",
+      "optionsLabel": "الخيارات:",
+      "formTitleRequired": "العنوان مطلوب.",
+      "formOptionsRequiredForType": "يلزم خيار واحد على الأقل لهذا النوع من الأسئلة.",
+      "formStatementsRequiredForLikert": "يلزم عبارة واحدة على الأقل لأسئلة مقياس ليكرت.",
+      "formStatementsInlineRequired": "يلزم عبارة واحدة على الأقل.",
+      "formOptionsInlineRequired": "يلزم خيار واحد على الأقل.",
+      "formDialogTitleEdit": "تعديل السؤال",
+      "formDialogTitleCreate": "إضافة سؤال",
+      "formDialogDescriptionEdit": "قم بتحديث تفاصيل السؤال.",
+      "formDialogDescriptionCreate": "أنشئ سؤالاً جديداً لاستبيانك.",
+      "formTitleLabel": "العنوان",
+      "formTitlePlaceholder": "أدخل عنوان السؤال",
+      "formDescriptionLabel": "الوصف",
+      "formDescriptionPlaceholder": "أدخل وصف السؤال (اختياري)",
+      "formTypeLabel": "نوع السؤال",
+      "formTypePlaceholder": "اختر نوع السؤال",
+      "formTypeShortText": "نص قصير",
+      "formTypeLongText": "نص طويل",
+      "formTypeMultipleChoice": "اختيار من متعدد",
+      "formTypeCheckbox": "خانات اختيار",
+      "formTypeRating": "تقييم (1–5)",
+      "formTypeDate": "تاريخ",
+      "formTypeLikert": "مقياس ليكرت",
+      "formStatementsLabel": "العبارات (صفوف)",
+      "formStatementsAdd": "إضافة عبارة",
+      "formStatementsHelp": "أضف عبارات لمقياس ليكرت (واحدة في كل صف).",
+      "formOptionsLabel": "الخيارات",
+      "formOptionsAdd": "إضافة خيار",
+      "formOptionsHelpLikert": "أضف خيارات تقييم لمقياس ليكرت (أعمدة).",
+      "formOptionsHelpMultipleChoice": "أضف خيارات لأسئلة الاختيار من متعدد.",
+      "formOptionsHelpCheckbox": "أضف خيارات لأسئلة خانات الاختيار.",
+      "formRequiredLabel": "إلزامي",
+      "formRequiredDescription": "اجعل هذا السؤال إلزامياً للمجيبين.",
+      "formSubmitUpdating": "جارٍ التحديث...",
+      "formSubmitCreating": "جارٍ الإنشاء...",
+      "formSubmitUpdate": "تحديث السؤال",
+      "formSubmitCreate": "إضافة السؤال",
+      "formToastUpdateSuccess": "تم تحديث السؤال بنجاح",
+      "formToastCreateSuccess": "تم إنشاء السؤال بنجاح",
+      "formToastUpdateFailed": "فشل تحديث السؤال",
+      "formToastCreateFailed": "فشل إنشاء السؤال"
+    }
   },
   "timelogExport": {
     "pageTitle": "Timelog Data Export",
@@ -611,18 +1345,303 @@
     "pageSubtitle": "View and export gateway ready learner data"
   },
   "fundingBands": {
-    "pageTitle": "Funding Bands",
-    "pageSubtitle": "Manage funding bands for courses with streamlined operations including add and update functionalities"
+    "pageTitle": "أشرطة التمويل",
+    "pageSubtitle": "إدارة أشرطة التمويل للدورات مع عمليات مبسطة تشمل إضافة وتحديث الوظائف",
+    "form": {
+      "titleCreate": "إنشاء شريط تمويل جديد",
+      "titleEdit": "تعديل شريط التمويل",
+      "descriptionCreate": "املأ النموذج لإنشاء شريط تمويل جديد.",
+      "descriptionEdit": "حدّث مبلغ شريط التمويل أدناه.",
+      "selectCourse": "اختر الدورة",
+      "selectCoursePlaceholder": "اختر دورة",
+      "loadingCourses": "جاري تحميل الدورات...",
+      "bandName": "اسم الشريط",
+      "bandNamePlaceholder": "اسم الشريط (يُملأ تلقائياً من الدورة)",
+      "course": "الدورة",
+      "amount": "المبلغ (£)",
+      "amountPlaceholder": "أدخل المبلغ",
+      "cancel": "إلغاء",
+      "create": "إنشاء",
+      "update": "تحديث",
+      "validation": {
+        "courseRequired": "الدورة مطلوبة",
+        "bandNameRequired": "اسم الشريط مطلوب",
+        "amountRequired": "المبلغ مطلوب",
+        "amountPositive": "يجب أن يكون المبلغ رقماً موجباً"
+      },
+      "toast": {
+        "createSuccess": "تم إنشاء شريط التمويل بنجاح",
+        "updateSuccess": "تم تحديث شريط التمويل بنجاح",
+        "selectValidCourse": "الرجاء اختيار دورة صالحة",
+        "createFailed": "فشل إنشاء شريط التمويل",
+        "updateFailed": "فشل تحديث شريط التمويل"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "البحث بالكلمة الرئيسية...",
+      "clear": "مسح",
+      "export": "تصدير",
+      "exportCsv": "تصدير كـ CSV",
+      "exportPdf": "تصدير كـ PDF",
+      "addNew": "إضافة جديد",
+      "courseName": "اسم الدورة",
+      "level": "المستوى",
+      "amount": "المبلغ (£)",
+      "actions": "إجراءات",
+      "edit": "تعديل",
+      "openMenu": "فتح القائمة",
+      "noResults": "لا توجد نتائج.",
+      "toastNoData": "لا توجد بيانات للتصدير",
+      "toastCsvSuccess": "تم تصدير CSV بنجاح",
+      "toastPdfInfo": "سيتم تنفيذ تصدير PDF لاحقاً"
+    }
   },
   "courseBuilder": {
-    "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease"
+    "pageTitle": "منشئ الدورات",
+    "pageSubtitle": "أنشئ وأدِر ونظّم دوراتك بسهولة",
+    "filters": {
+      "searchPlaceholder": "البحث حسب الكلمة الرئيسية...",
+      "courseTypePlaceholder": "نوع الدورة",
+      "courseTypes": {
+        "all": "جميع الأنواع",
+        "Qualification": "مؤهل",
+        "Standard": "قياسية",
+        "Gateway": "Gateway"
+      }
+    },
+    "table": {
+      "headers": {
+        "courseName": "اسم الدورة",
+        "code": "الرمز",
+        "coreType": "النوع الأساسي",
+        "level": "المستوى",
+        "sector": "القطاع",
+        "learningHours": "ساعات التعلم"
+      },
+      "actions": {
+        "view": "عرض"
+      }
+    },
+    "export": {
+      "pdfTitle": "الدورات",
+      "pdfExported": "تم تصدير ملف PDF بنجاح"
+    },
+    "upload": {
+      "button": "رفع ملف"
+    },
+    "create": {
+      "button": "إنشاء دورة",
+      "types": {
+        "Qualification": {
+          "label": "مؤهل",
+          "description": "إنشاء دورة مؤهل تحتوي على وحدات ومعايير"
+        },
+        "Standard": {
+          "label": "قياسية",
+          "description": "إنشاء دورة قياسية تحتوي على وحدات وموضوعات"
+        },
+        "Gateway": {
+          "label": "Gateway",
+          "description": "إنشاء دورة Gateway للتقييمات"
+        }
+      }
+    },
+    "uploadDialog": {
+      "title": "رفع ملف دورة",
+      "description": "سيتم تنفيذ وظيفة رفع الدورات لاحقًا."
+    },
+    "deleteDialog": {
+      "title": "حذف الدورة؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيؤدي إلى حذف الدورة \"{name}\" نهائيًا."
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف الدورة بنجاح",
+      "forbiddenDelete": "ليست لديك صلاحية لحذف هذه الدورة.",
+      "deleteFailed": "فشل حذف الدورة"
+    },
+    "course": {
+      "form": {
+        "courseName": "اسم الدورة",
+        "courseNamePlaceholder": "أدخل اسم الدورة",
+        "courseCode": "رمز الدورة",
+        "courseCodePlaceholder": "أدخل رمز الدورة"
+      },
+      "gateway": {
+        "courseDetails": "تفاصيل الدورة",
+        "pleaseSelect": "الرجاء الاختيار",
+        "yes": "نعم",
+        "no": "لا",
+        "checklistQuestions": "أسئلة القائمة",
+        "addQuestion": "إضافة سؤال",
+        "noQuestionsYet": "لم تتم إضافة أسئلة بعد.",
+        "addFirstQuestion": "إضافة أول سؤال",
+        "tableQuestion": "السؤال",
+        "evidenceRequired": "هل الدليل مطلوب؟",
+        "isDropdown": "قائمة منسدلة؟",
+        "dropdownOptions": "خيارات القائمة",
+        "actions": "إجراءات",
+        "enterQuestion": "أدخل السؤال",
+        "commaSeparatedOptions": "خيارات مفصولة بفواصل",
+        "toastQuestionRemoved": "تم حذف السؤال بنجاح",
+        "toastQuestionRemoveFailed": "فشل حذف السؤال",
+        "assignGatewayToStandard": "تعيين البوابة لدورات المعيار",
+        "loadingStandardCourses": "جاري تحميل دورات المعيار...",
+        "unassignedStandardCourses": "دورات معيار (نشطة) غير معينة",
+        "assignedStandardCourses": "دورات معيار (نشطة) معينة"
+      },
+      "transferList": {
+        "unassignedDefault": "دورات معيار غير معينة",
+        "assignedDefault": "دورات معيار معينة",
+        "selectedCount": "{count}/{total} محدد",
+        "selectAll": "تحديد الكل",
+        "unselectAll": "إلغاء تحديد الكل",
+        "noAvailableCourses": "لا توجد دورات متاحة",
+        "noCoursesAssigned": "لا توجد دورات معينة",
+        "ariaMoveSelectedRight": "نقل المحدد لليمين",
+        "ariaMoveSelectedLeft": "نقل المحدد لليسار",
+        "ariaMoveAllRight": "نقل الكل لليمين",
+        "ariaMoveAllLeft": "نقل الكل لليسار"
+      },
+      "qualification": {
+        "unitsTitle": "الوحدات",
+        "unitsDescription": "أضف وحدات مع النتائج والمعايير لدورة المؤهل",
+        "addUnit": "إضافة وحدة",
+        "atLeastOneUnit": "مطلوب وحدة واحدة على الأقل",
+        "noUnitsYet": "لم تتم إضافة وحدات. انقر \"إضافة وحدة\" للبدء.",
+        "unitRef": "مرجع الوحدة",
+        "unitTitle": "عنوان الوحدة",
+        "level": "المستوى",
+        "glh": "GLH",
+        "creditValue": "قيمة الاعتماد",
+        "mandatory": "إلزامي",
+        "placeholderUnitRef": "مرجع الوحدة",
+        "placeholderUnitTitle": "عنوان الوحدة",
+        "placeholderLevel": "المستوى",
+        "placeholderGlh": "GLH",
+        "placeholderCredit": "اعتماد",
+        "mandatoryOption": "إلزامي",
+        "optionalOption": "اختياري",
+        "learningOutcome": "نتيجة التعلم",
+        "learningOutcomeCount": "نتيجة التعلم ({count})",
+        "addLearningOutcome": "إضافة نتيجة تعلم",
+        "type": "النوع",
+        "code": "الرمز",
+        "showOrder": "ترتيب العرض",
+        "title": "العنوان",
+        "placeholderCode": "الرمز",
+        "placeholderAuto": "تلقائي",
+        "placeholderCriterionTitle": "عنوان المعيار",
+        "typeToDo": "للتنفيذ",
+        "typeToKnow": "للمعرفة",
+        "typeRequired": "مطلوب",
+        "assessmentCriteria": "معايير التقييم",
+        "assessmentCriteriaCount": "معايير التقييم ({count})",
+        "addAssessmentCriteria": "إضافة معيار تقييم",
+        "placeholderTopicTitle": "عنوان الموضوع"
+      },
+      "standard": {
+        "modulesTitle": "الوحدات",
+        "modulesDescription": "أضف وحدات مع المواضيع لدورة المعيار",
+        "addModule": "إضافة وحدة",
+        "atLeastOneModule": "مطلوب وحدة واحدة على الأقل",
+        "noModulesYet": "لم تتم إضافة وحدات. انقر \"إضافة وحدة\" للبدء.",
+        "moduleTitle": "عنوان الوحدة",
+        "moduleReference": "مرجع الوحدة",
+        "description": "الوصف",
+        "active": "نشط",
+        "sortOrder": "الترتيب",
+        "deliveryMethod": "طريقة التقديم",
+        "otjHours": "ساعات OTJ",
+        "deliveryLead": "مسؤول التقديم",
+        "placeholderModuleTitle": "عنوان الوحدة",
+        "placeholderModuleReference": "مرجع الوحدة",
+        "placeholderDescription": "الوصف",
+        "placeholderAuto": "تلقائي",
+        "placeholderDeliveryMethod": "طريقة التقديم",
+        "placeholderOtjHours": "0",
+        "placeholderDeliveryLead": "المسؤول",
+        "activeOption": "نشط",
+        "inactiveOption": "غير نشط",
+        "assessmentCriteria": "معايير التقييم",
+        "assessmentCriteriaCount": "معايير التقييم ({count})",
+        "addAssessmentCriteria": "إضافة معيار تقييم",
+        "type": "النوع",
+        "title": "العنوان",
+        "placeholderSelectType": "اختر النوع",
+        "placeholderTopicTitle": "عنوان الموضوع",
+        "typeBehaviour": "سلوك",
+        "typeKnowledge": "معرفة",
+        "typeSkills": "مهارات"
+      }
+    }
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",
     "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
   },
   "organisations": {
+    "page": {
+      "title": "المنظمات",
+      "subtitle": "إدارة وعرض جميع المنظمات"
+    },
+    "detail": {
+      "loading": "جاري التحميل...",
+      "loadingDetails": "جاري تحميل تفاصيل المنظمة...",
+      "notFound": "المنظمة غير موجودة",
+      "notFoundDescription": "المنظمة التي تبحث عنها غير موجودة أو ليس لديك حق الوصول إليها.",
+      "organisationId": "معرف المنظمة",
+      "edit": "تعديل",
+      "activate": "تفعيل",
+      "suspend": "تعليق",
+      "overview": "نظرة عامة",
+      "centres": "المراكز",
+      "admins": "المسؤولون",
+      "subscription": "الاشتراك",
+      "payments": "المدفوعات",
+      "organisationDetails": "تفاصيل المنظمة",
+      "name": "الاسم",
+      "status": "الحالة",
+      "id": "المعرف",
+      "active": "نشط",
+      "suspended": "معلق",
+      "quickStats": "إحصائيات سريعة",
+      "totalCentres": "إجمالي المراكز",
+      "activeCentres": "المراكز النشطة",
+      "totalPayments": "إجمالي المدفوعات",
+      "noCentres": "لم يتم العثور على مراكز لهذه المنظمة",
+      "organisationAdmins": "مسؤولو المنظمة",
+      "assignAdmins": "تعيين مسؤولين للمنظمة",
+      "noAdmins": "لم يتم تعيين مسؤولين لهذه المنظمة.",
+      "adminsAssignedDescription": "المسؤولون المعينون لهذه المنظمة.",
+      "adminName": "اسم المسؤول",
+      "email": "البريد الإلكتروني",
+      "roles": "الأدوار",
+      "actions": "الإجراءات",
+      "loginAs": "تسجيل الدخول باسم",
+      "subscriptionDetails": "تفاصيل الاشتراك",
+      "plan": "الخطة",
+      "userLimit": "حد المستخدمين",
+      "usersCount": "{used} / {limit} مستخدمين",
+      "expired": "منتهي",
+      "expiryDate": "تاريخ الانتهاء",
+      "noSubscription": "لم يتم العثور على اشتراك لهذه المنظمة",
+      "paymentHistory": "سجل المدفوعات",
+      "noPaymentHistory": "لم يتم العثور على سجل مدفوعات",
+      "date": "التاريخ",
+      "amount": "المبلغ",
+      "invoice": "الفاتورة",
+      "editOrganisation": "تعديل المنظمة",
+      "editOrganisationDescription": "تحديث تفاصيل المنظمة. فقط MasterAdmin يمكنه تعديل المنظمات.",
+      "assignAdminsTitle": "تعيين مسؤولين للمنظمة",
+      "assignAdminsDescription": "اختر المسؤولين الذين يمكنهم إدارة هذه المنظمة. انقر على حفظ عند الانتهاء.",
+      "disabled": "معطل",
+      "toastActivated": "تم تفعيل المنظمة بنجاح",
+      "toastActivateFailed": "فشل في تفعيل المنظمة",
+      "toastSuspended": "تم تعليق المنظمة بنجاح",
+      "toastSuspendFailed": "فشل في تعليق المنظمة",
+      "toastLoginAs": "فتح لوحة التحكم باسم {name} في علامة تبويب جديدة",
+      "toastLoginAsFailed": "فشل تسجيل الدخول كمسؤول"
+    },
     "form": {
       "name": "Name",
       "namePlaceholder": "Enter organisation name",
@@ -646,9 +1665,133 @@
       "createFailed": "Failed to create organisation",
       "updateSuccess": "Organisation updated successfully",
       "updateFailed": "Failed to update organisation"
+    },
+    "dataTable": {
+      "searchPlaceholder": "البحث عن المنظمات...",
+      "addOrganisation": "إضافة منظمة",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "name": "الاسم",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "view": "عرض",
+      "edit": "تعديل",
+      "activate": "تفعيل",
+      "suspend": "تعليق",
+      "active": "نشط",
+      "suspended": "معلق",
+      "noOrganisationsFound": "لم يتم العثور على منظمات.",
+      "createTitle": "إنشاء منظمة",
+      "createDescription": "إضافة منظمة جديدة إلى النظام. فقط MasterAdmin يمكنه إنشاء المنظمات.",
+      "editTitle": "تعديل المنظمة",
+      "editDescription": "تحديث تفاصيل المنظمة. فقط MasterAdmin يمكنه تعديل المنظمات.",
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح",
+      "pdfTitle": "المنظمات",
+      "toastActivated": "تم تفعيل المنظمة بنجاح",
+      "toastActivateFailed": "فشل في تفعيل المنظمة",
+      "toastSuspended": "تم تعليق المنظمة بنجاح",
+      "toastSuspendFailed": "فشل في تعليق المنظمة"
+    },
+    "assignAdmin": {
+      "selectAdminsLabel": "اختر المسؤولين للتعيين",
+      "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني...",
+      "noAdminsMatchingSearch": "لم يتم العثور على مسؤولين يطابقون بحثك",
+      "noAdminUsersAvailable": "لا يوجد مستخدمون مسؤولون متاحون",
+      "selectedAdminsCount": "المسؤولون المحددون ({count})",
+      "saving": "جاري الحفظ...",
+      "toastSuccess": "تم حفظ المسؤولين بنجاح",
+      "toastFailed": "فشل في حفظ المسؤولين"
     }
   },
   "centres": {
+    "page": {
+      "title": "المراكز",
+      "subtitle": "إدارة وعرض جميع المراكز عبر المنظمات"
+    },
+    "dataTable": {
+      "searchPlaceholder": "البحث عن المراكز...",
+      "addCentre": "إضافة مركز",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "name": "الاسم",
+      "organisation": "المنظمة",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "view": "عرض",
+      "edit": "تعديل",
+      "activate": "تفعيل",
+      "suspend": "تعليق",
+      "active": "نشط",
+      "disabled": "معطل",
+      "unknown": "غير معروف",
+      "noCentresFound": "لم يتم العثور على مراكز.",
+      "statusPlaceholder": "الحالة",
+      "allStatuses": "جميع الحالات",
+      "suspended": "معلق",
+      "filterByOrganisation": "تصفية حسب المنظمة",
+      "allOrganisations": "جميع المنظمات",
+      "createTitle": "إنشاء مركز",
+      "createDescription": "إضافة مركز جديد إلى منظمة.",
+      "editTitle": "تعديل المركز",
+      "editDescription": "تحديث تفاصيل المركز.",
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح",
+      "pdfTitle": "المراكز",
+      "toastActivated": "تم تفعيل المركز بنجاح",
+      "toastActivateFailed": "فشل في تفعيل المركز",
+      "toastSuspended": "تم تعليق المركز بنجاح",
+      "toastSuspendFailed": "فشل في تعليق المركز"
+    },
+    "detail": {
+      "loading": "جاري التحميل...",
+      "loadingDetails": "جاري تحميل تفاصيل المركز...",
+      "notFound": "المركز غير موجود",
+      "notFoundDescription": "المركز الذي تبحث عنه غير موجود أو ليس لديك حق الوصول.",
+      "centreId": "معرف المركز",
+      "edit": "تعديل",
+      "activate": "تفعيل",
+      "suspend": "تعليق",
+      "overview": "نظرة عامة",
+      "admins": "المسؤولون",
+      "centreDetails": "تفاصيل المركز",
+      "name": "الاسم",
+      "status": "الحالة",
+      "id": "المعرف",
+      "active": "نشط",
+      "suspended": "معلق",
+      "organisation": "المنظمة",
+      "organisationNotFound": "المنظمة غير موجودة",
+      "centreAdmins": "مسؤولو المركز",
+      "assignAdmin": "تعيين مسؤول",
+      "email": "البريد الإلكتروني",
+      "roles": "الأدوار",
+      "noAdmins": "لم يتم تعيين مسؤولين لهذا المركز. انقر على \"تعيين مسؤول\" للإضافة.",
+      "adminsAssignedDescription": "المسؤولون المعينون لهذا المركز يمكنهم إدارته.",
+      "editCentre": "تعديل المركز",
+      "editCentreDescription": "تحديث تفاصيل المركز. فقط MasterAdmin يمكنه تعديل المراكز.",
+      "assignAdminsTitle": "تعيين مسؤولين للمركز",
+      "assignAdminsDescription": "اختر المسؤولين الذين يمكنهم إدارة هذا المركز. يمكن تعيين كل مسؤول لمركز واحد فقط.",
+      "toastActivated": "تم تفعيل المركز بنجاح",
+      "toastActivateFailed": "فشل في تفعيل المركز",
+      "toastSuspended": "تم تعليق المركز بنجاح",
+      "toastSuspendFailed": "فشل في تعليق المركز"
+    },
+    "assignAdmin": {
+      "selectAdminsLabel": "اختر المسؤولين",
+      "description": "اختر المسؤولين الذين يمكنهم إدارة هذا المركز. يمكن تعيين كل مسؤول لمركز واحد فقط.",
+      "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني...",
+      "noAdminsMatchingSearch": "لم يتم العثور على مسؤولين يطابقون بحثك",
+      "noAdminUsersAvailable": "لا يوجد مستخدمون مسؤولون متاحون",
+      "selectedAdminsCount": "المسؤولون المحددون ({count})",
+      "saving": "جاري الحفظ...",
+      "toastSuccess": "تم حفظ المسؤولين بنجاح",
+      "toastFailed": "فشل في حفظ المسؤولين"
+    },
     "form": {
       "organisation": "المنظمة",
       "organisationPlaceholder": "اختر المنظمة",

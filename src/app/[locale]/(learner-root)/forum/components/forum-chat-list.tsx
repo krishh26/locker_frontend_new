@@ -9,6 +9,7 @@ import { useGetChatListQuery } from "@/store/api/forum/forumApi"
 import { useAppSelector } from "@/store/hooks"
 import { timeAgo } from "../utils/timeAgo"
 import type { ForumChat } from "@/store/api/forum/types"
+import { useTranslations } from "next-intl"
 
 // Theme-adaptive avatar colors that cycle through chat items
 const avatarColors = [
@@ -43,6 +44,7 @@ export function ForumChatList({
   onChatSelect,
   selectedChatId,
 }: ForumChatListProps) {
+  const t = useTranslations("forum")
   const user = useAppSelector((state) => state.auth.user)
   const userId = user?.role === "Admin" ? undefined : user?.id
   const { data, isLoading } = useGetChatListQuery(userId)
@@ -55,7 +57,9 @@ export function ForumChatList({
   if (isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p className="text-muted-foreground">Loading chats...</p>
+        <p className="text-muted-foreground">
+          {t("chatList.loading")}
+        </p>
       </div>
     )
   }
@@ -67,7 +71,7 @@ export function ForumChatList({
           <div className="relative">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search courses..."
+              placeholder={t("chatList.searchPlaceholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9"
@@ -75,7 +79,9 @@ export function ForumChatList({
           </div>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <p className="text-muted-foreground">No courses found</p>
+          <p className="text-muted-foreground">
+            {t("chatList.noCourses")}
+          </p>
         </div>
       </div>
     )

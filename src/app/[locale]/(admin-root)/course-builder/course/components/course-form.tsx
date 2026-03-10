@@ -12,6 +12,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -53,11 +54,11 @@ interface CourseFormProps {
   initialStep?: number;
 }
 
-const getSteps = (courseType: CourseCoreType) => {
+const getSteps = (courseType: CourseCoreType, t: (key: string) => string) => {
   if (courseType === "Gateway") {
-    return ["Course Details"];
+    return [t("course.steps.courseDetails")];
   }
-  return ["Course Details", "Units/Modules"];
+  return [t("course.steps.courseDetails"), t("course.steps.unitsModules")];
 };
 
 function getInitialStep(courseType: CourseCoreType, initialStep?: number): number {
@@ -66,6 +67,7 @@ function getInitialStep(courseType: CourseCoreType, initialStep?: number): numbe
 }
 
 export function CourseForm({ courseType, courseId, initialStep }: CourseFormProps) {
+  const t = useTranslations("courseBuilder");
   const router = useRouter();
   const authUser = useAppSelector(selectAuthUser);
   const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
@@ -320,7 +322,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       const step0Fields = getStep0FieldNames();
       const isValid = await trigger([...step0Fields, "questions", "assigned_standards"] as any);
       if (!isValid) {
-        toast.error("Please fill in all required fields.");
+        toast.error(t("course.toast.fillRequired"));
         return;
       }
 
@@ -339,7 +341,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             data: finalStep0Data,
           }).unwrap();
           if (result.status) {
-            toast.success("Course updated successfully!");
+            toast.success(t("course.toast.updateSuccess"));
             router.push("/course-builder");
           }
         } else {
@@ -351,24 +353,24 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
                 ? (masterAdminOrgId ?? null)
                 : undefined;
           if (!isMasterAdmin(authUser) && (orgId == null || orgId === undefined)) {
-            toast.error("Organisation is required when creating a course.");
+            toast.error(t("course.toast.orgRequired"));
             return;
           }
           const createPayload: CourseFormData = { ...finalStep0Data };
           (createPayload as Record<string, unknown>).organisation_id = orgId ?? null;
           const result = await createCourse(createPayload).unwrap();
           if (result.status) {
-            toast.success("Course created successfully!");
+            toast.success(t("course.toast.createSuccess"));
             router.push("/course-builder");
           }
         }
       } catch (error: any) {
         if (isForbiddenError(error)) {
-          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          toast.error(error?.data?.message ?? t("course.toast.noAccessUpdate"));
           return;
         }
         const errorMessage =
-          error?.data?.error || error?.data?.message || "Failed to save course. Please try again.";
+          error?.data?.error || error?.data?.message || t("course.toast.saveFailed");
         toast.error(errorMessage);
       }
       return;
@@ -405,7 +407,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             }).unwrap();
 
             if (result.status) {
-              toast.success("Course details saved successfully!");
+              toast.success(t("course.toast.detailsSaved"));
               clearErrors(); // Clear all errors before moving to next step
               setActiveStep((prev) => prev + 1);
               queueMicrotask(() => {
@@ -437,7 +439,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
                 ? (masterAdminOrgId ?? null)
                 : undefined;
           if (!isMasterAdmin(authUser) && (orgId == null || orgId === undefined)) {
-            toast.error("Organisation is required when creating a course.");
+            toast.error(t("course.toast.orgRequired"));
             return;
           }
           const createPayload: CourseFormData = { ...finalStep0Data };
@@ -449,7 +451,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             setCurrentCourseId(newCourseId);
             clearErrors(); // Clear all errors before moving to next step
             setActiveStep((prev) => prev + 1);
-            toast.success("Course created successfully!");
+            toast.success(t("course.toast.createSuccess"));
             // Defer URL update so React commits state first; avoids step reset on re-render
             queueMicrotask(() => {
               router.replace(`/course-builder/course?id=${newCourseId}&step=1`);
@@ -458,11 +460,11 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         }
       } catch (error: any) {
         if (isForbiddenError(error)) {
-          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          toast.error(error?.data?.message ?? t("course.toast.noAccessUpdate"));
           return;
         }
         const errorMessage =
-          error?.data?.error || error?.data?.message || "Failed to save course. Please try again.";
+          error?.data?.error || error?.data?.message || t("course.toast.saveFailed");
         toast.error(errorMessage);
       }
     } else {
@@ -470,12 +472,12 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       const step1Fields = getStep1FieldNames();
       const isValid = await trigger(step1Fields as any);
       if (!isValid) {
-        toast.error("Please fill in all required fields for this step.");
+        toast.error(t("course.toast.fillRequiredStep"));
         return;
       }
 
       if (!currentCourseId) {
-        toast.error("Course ID not found. Please go back and save course details first.");
+        toast.error(t("course.toast.courseIdNotFound"));
         return;
       }
 
@@ -494,16 +496,16 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         }).unwrap();
 
         if (result.status) {
-          toast.success("Course updated successfully!");
+          toast.success(t("course.toast.updateSuccess"));
           router.push("/course-builder");
         }
       } catch (error: any) {
         if (isForbiddenError(error)) {
-          toast.error(error?.data?.message ?? "You do not have access to update this course.");
+          toast.error(error?.data?.message ?? t("course.toast.noAccessUpdate"));
           return;
         }
         const errorMessage =
-          error?.data?.error || error?.data?.message || "Failed to update course. Please try again.";
+          error?.data?.error || error?.data?.message || t("course.toast.updateFailed");
         toast.error(errorMessage);
       }
     }
@@ -531,9 +533,9 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       return (
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-semibold mb-2">Course Details</h3>
+            <h3 className="text-lg font-semibold mb-2">{t("course.steps.courseDetails")}</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Enter the basic information for your gateway course
+              {t("course.stepDescGateway")}
             </p>
           </div>
           <GatewayQuestionsStep
@@ -553,15 +555,15 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         return (
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2">Course Details</h3>
+              <h3 className="text-lg font-semibold mb-2">{t("course.steps.courseDetails")}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Enter the basic information for your {courseCoreType.toLowerCase()} course
+                {t("course.stepDescType", { type: courseCoreType.toLowerCase() })}
               </p>
             </div>
             {isMasterAdmin(authUser) && !isEditMode && (
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Organisation
+                  {t("course.organisation")}
                 </label>
                 <Controller
                   name="organisation_id"
@@ -572,10 +574,10 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
                       onValueChange={(v) => field.onChange(v === "all" ? null : (v ? Number(v) : null))}
                     >
                       <SelectTrigger className={cn(errors.organisation_id && "border-destructive")}>
-                        <SelectValue placeholder="Select organisation" />
+                        <SelectValue placeholder={t("course.selectOrganisation")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All organisations</SelectItem>
+                        <SelectItem value="all">{t("course.allOrganisations")}</SelectItem>
                         {organisations.map((org: { id: number; name: string }) => (
                           <SelectItem key={org.id} value={String(org.id)}>
                             {org.name}
@@ -585,7 +587,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
                     </Select>
                   )}
                 />
-                <p className="text-xs text-muted-foreground">Choose &quot;All organisations&quot; to make this course available to every organisation.</p>
+                <p className="text-xs text-muted-foreground">{t("course.organisationHelp")}</p>
                 {errors.organisation_id && (
                   <p className="text-sm text-destructive">{errors.organisation_id.message}</p>
                 )}
@@ -615,7 +617,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
     }
   };
 
-  const steps = getSteps(courseCoreType);
+  const steps = getSteps(courseCoreType, t);
 
   if (isLoadingCourse) {
     return (
@@ -630,7 +632,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
       {/* Course Type Badge */}
       <div className="flex items-center justify-end">
         <Badge variant="outline" className="px-3 py-1.5">
-          Course Type: {courseTypeConfig.label}
+          {t("course.courseTypeBadge", { label: courseTypeConfig.label })}
         </Badge>
       </div>
 
@@ -714,7 +716,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
               disabled={activeStep === 0 || isLoading || courseCoreType === "Gateway"}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
+              {t("course.back")}
             </Button>
 
             <Button
@@ -724,13 +726,13 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  {t("course.saving")}
                 </>
               ) : (
                 <>
                   {activeStep === steps.length - 1 || courseCoreType === "Gateway"
-                    ? "Submit"
-                    : "Next"}
+                    ? t("course.submit")
+                    : t("course.next")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </>
               )}

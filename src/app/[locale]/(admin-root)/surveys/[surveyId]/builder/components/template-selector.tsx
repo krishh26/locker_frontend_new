@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "next-intl"
 import {
   Dialog,
   DialogContent,
@@ -22,6 +23,7 @@ export function TemplateSelector({
   onOpenChange,
   onSelectTemplate,
 }: TemplateSelectorProps) {
+  const t = useTranslations("surveys")
   const handleSelectTemplate = (template: SurveyTemplate) => {
     onSelectTemplate(template)
     onOpenChange(false)
@@ -31,9 +33,9 @@ export function TemplateSelector({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create from featured templates</DialogTitle>
+          <DialogTitle>{t("builder.templateDialogTitle")}</DialogTitle>
           <DialogDescription>
-            Choose a template to quickly get started with pre-filled questions
+            {t("builder.templateDialogDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -61,7 +63,9 @@ export function TemplateSelector({
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">
-                    {template.questions.length} questions
+                    {t("builder.templateQuestionsCount", {
+                      count: template.questions.length,
+                    })}
                   </span>
                   <Button
                     size="sm"
@@ -71,7 +75,7 @@ export function TemplateSelector({
                       handleSelectTemplate(template)
                     }}
                   >
-                    Use Template
+                    {t("builder.templateUse")}
                   </Button>
                 </div>
               </CardContent>

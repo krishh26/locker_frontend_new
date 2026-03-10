@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface SortByVisitDateDropdownProps {
   value?: "asc" | "desc";
@@ -18,6 +19,8 @@ export function SortByVisitDateDropdown({
   value,
   onChange,
 }: SortByVisitDateDropdownProps) {
+  const t = useTranslations("calendar");
+
   const handleSelect = (newValue: "asc" | "desc") => {
     onChange(newValue);
   };
@@ -27,21 +30,21 @@ export function SortByVisitDateDropdown({
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="w-full sm:w-[190px] justify-between">
           {value === "asc"
-            ? "Oldest First"
+            ? t("sort.oldestFirst")
             : value === "desc"
-            ? "Latest First"
-            : "Sort by Visit Date"}
+            ? t("sort.latestFirst")
+            : t("sort.byVisitDate")}
           <ChevronDown className="h-4 w-4 ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <DropdownMenuItem onClick={() => handleSelect("desc")}>
           <ArrowDown className="h-4 w-4 mr-2" />
-          Latest First
+          {t("sort.latestFirst")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleSelect("asc")}>
           <ArrowUp className="h-4 w-4 mr-2" />
-          Oldest First
+          {t("sort.oldestFirst")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

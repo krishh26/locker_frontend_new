@@ -6,8 +6,10 @@ import { ForumChatList } from "./forum-chat-list";
 import { ForumMessageThread } from "./forum-message-thread";
 import { useState, useEffect } from "react";
 import type { ForumChat } from "@/store/api/forum/types";
+import { useTranslations } from "next-intl";
 
 export function ForumPageContent() {
+  const t = useTranslations("forum");
   const [selectedChat, setSelectedChat] = useState<ForumChat | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -31,8 +33,8 @@ export function ForumPageContent() {
   return (
     <div className="space-y-6 px-4 lg:px-6">
       <PageHeader
-        title="Forum"
-        subtitle="Connect and communicate with your courses"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={MessageSquare}
       />
 
@@ -61,9 +63,11 @@ export function ForumPageContent() {
                   <MessageSquare className="h-12 w-12 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">No chat selected</h3>
+                  <h3 className="text-lg font-semibold">
+                    {t("empty.noChatSelected")}
+                  </h3>
                   <p className="text-muted-foreground text-sm">
-                    Select a course from the list to start messaging
+                    {t("empty.noChatSelectedDescription")}
                   </p>
                 </div>
               </div>

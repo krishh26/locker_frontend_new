@@ -1,6 +1,7 @@
 "use client"
 
 import { useParams, useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { filterRolesFromApi } from "@/config/auth-roles"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
@@ -44,6 +45,7 @@ import { EditOrganisationForm } from "../components/edit-organisation-form"
 import { AssignAdminDialog } from "../components/assign-admin-dialog"
 
 export default function OrganisationDetailPage() {
+  const t = useTranslations("organisations.detail")
   const params = useParams()
   const router = useRouter()
   const organisationId = Number(params.organisationId)
@@ -95,7 +97,7 @@ export default function OrganisationDetailPage() {
     if (!organisation) return
     try {
       await activateOrganisation(organisation.id).unwrap()
-      toast.success("Organisation activated successfully")
+      toast.success(t("toastActivated"))
       refetchOrg()
     } catch (error: unknown) {
       const errorMessage =
@@ -104,7 +106,7 @@ export default function OrganisationDetailPage() {
           : error instanceof Error
           ? error.message
           : "Failed to activate organisation"
-      toast.error(errorMessage)
+      toast.error(errorMessage || t("toastActivateFailed"))
     }
   }, [organisation, activateOrganisation, refetchOrg])
 
@@ -112,7 +114,7 @@ export default function OrganisationDetailPage() {
     if (!organisation) return
     try {
       await suspendOrganisation(organisation.id).unwrap()
-      toast.success("Organisation suspended successfully")
+      toast.success(t("toastSuspended"))
       refetchOrg()
     } catch (error: unknown) {
       const errorMessage =
@@ -121,7 +123,7 @@ export default function OrganisationDetailPage() {
           : error instanceof Error
           ? error.message
           : "Failed to suspend organisation"
-      toast.error(errorMessage)
+      toast.error(errorMessage || t("toastSuspendFailed"))
     }
   }, [organisation, suspendOrganisation, refetchOrg])
 
@@ -144,7 +146,7 @@ export default function OrganisationDetailPage() {
         dispatch(setMasterAdminOrganisationId(organisationId))
       }
       window.open(`/auth/impersonate?key=${key}`, "_blank")
-      toast.success(`Opening dashboard as ${adminName} in a new tab`)
+      toast.success(t("toastLoginAs", { name: adminName }))
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -152,7 +154,7 @@ export default function OrganisationDetailPage() {
           : error instanceof Error
           ? error.message
           : "Failed to login as admin"
-      toast.error(errorMessage)
+      toast.error(errorMessage || t("toastLoginAsFailed"))
     }
   }, [getTokenByEmail, organisationId, dispatch])
 
@@ -164,9 +166,9 @@ export default function OrganisationDetailPage() {
   if (isAPILoading) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
-        <PageHeader title="Loading..." />
+        <PageHeader title={t("loading")} />
         <div className="text-center py-8 text-muted-foreground">
-          Loading organisation details...
+          {t("loadingDetails")}
         </div>
       </div>
     )
@@ -175,9 +177,9 @@ export default function OrganisationDetailPage() {
   if (!organisation) {
     return (
       <div className="space-y-6 px-4 lg:px-6 pb-8">
-        <PageHeader title="Organisation Not Found" />
+        <PageHeader title={t("notFound")} />
         <div className="text-center py-8 text-muted-foreground">
-          The organisation you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
+          {t("notFoundDescription")}
         </div>
       </div>
     )
@@ -188,7 +190,7 @@ export default function OrganisationDetailPage() {
       <div className="flex items-center justify-between">
         <PageHeader
           title={organisation.name}
-          subtitle={`Organisation ID: ${organisation.id}`}
+          subtitle={`${t("organisationId")}: ${organisation.id}`}
           showBackButton
         />
         {canEdit && (
@@ -199,7 +201,7 @@ export default function OrganisationDetailPage() {
               onClick={() => setIsEditDialogOpen(true)}
             >
               <Edit className="h-4 w-4 mr-2" />
-              Edit
+              {t("edit")}
             </Button>
             {organisation.status === "suspended" ? (
               <Button
@@ -209,7 +211,7 @@ export default function OrganisationDetailPage() {
                 disabled={isActivating}
               >
                 <CheckCircle className="h-4 w-4 mr-2" />
-                Activate
+                {t("activate")}
               </Button>
             ) : (
               <Button
@@ -219,7 +221,7 @@ export default function OrganisationDetailPage() {
                 disabled={isSuspending}
               >
                 <XCircle className="h-4 w-4 mr-2" />
-                Suspend
+                {t("suspend")}
               </Button>
             )}
           </div>
@@ -228,11 +230,11 @@ export default function OrganisationDetailPage() {
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="centres">Centres</TabsTrigger>
-          <TabsTrigger value="admins">Admins</TabsTrigger>
-          <TabsTrigger value="subscription">Subscription</TabsTrigger>
-          <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="overview">{t("overview")}</TabsTrigger>
+          <TabsTrigger value="centres">{t("centres")}</TabsTrigger>
+          <TabsTrigger value="admins">{t("admins")}</TabsTrigger>
+          <TabsTrigger value="subscription">{t("subscription")}</TabsTrigger>
+          <TabsTrigger value="payments">{t("payments")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -241,26 +243,26 @@ export default function OrganisationDetailPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
-                  Organisation Details
+                  {t("organisationDetails")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div>
-                  <span className="text-sm font-medium">Name:</span>
+                  <span className="text-sm font-medium">{t("name")}:</span>
                   <p className="text-sm text-muted-foreground">{organisation.name}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Status:</span>
+                  <span className="text-sm font-medium">{t("status")}:</span>
                   <div className="mt-1">
                     <Badge
                       variant={organisation.status === "active" ? "default" : "destructive"}
                     >
-                      {organisation.status === "active" ? "Active" : "Suspended"}
+                      {organisation.status === "active" ? t("active") : t("suspended")}
                     </Badge>
                   </div>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">ID:</span>
+                  <span className="text-sm font-medium">{t("id")}:</span>
                   <p className="text-sm text-muted-foreground">{organisation.id}</p>
                 </div>
               </CardContent>
@@ -270,22 +272,22 @@ export default function OrganisationDetailPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
-                  Quick Stats
+                  {t("quickStats")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div>
-                  <span className="text-sm font-medium">Total Centres:</span>
+                  <span className="text-sm font-medium">{t("totalCentres")}:</span>
                   <p className="text-sm text-muted-foreground">{centres.length}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Active Centres:</span>
+                  <span className="text-sm font-medium">{t("activeCentres")}:</span>
                   <p className="text-sm text-muted-foreground">
                     {centres.filter((c) => c.status === "active").length}
                   </p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Total Payments:</span>
+                  <span className="text-sm font-medium">{t("totalPayments")}:</span>
                   <p className="text-sm text-muted-foreground">{payments.length}</p>
                 </div>
               </CardContent>
@@ -298,20 +300,20 @@ export default function OrganisationDetailPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
-                Centres
+                {t("centres")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               {centres.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  No centres found for this organisation
+                  {t("noCentres")}
                 </div>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>{t("name")}</TableHead>
+                      <TableHead>{t("status")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -322,7 +324,7 @@ export default function OrganisationDetailPage() {
                           <Badge
                             variant={centre.status === "active" ? "default" : "destructive"}
                           >
-                            {centre.status === "active" ? "Active" : "Disabled"}
+                            {centre.status === "active" ? t("active") : t("disabled")}
                           </Badge>
                         </TableCell>
                       </TableRow>
@@ -340,7 +342,7 @@ export default function OrganisationDetailPage() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
-                  Organisation Admins
+                  {t("organisationAdmins")}
                 </CardTitle>
                 {canEdit && (
                   <Button
@@ -348,7 +350,7 @@ export default function OrganisationDetailPage() {
                     onClick={() => setIsAssignOrgAdminDialogOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Assign Admins to Organisation
+                    {t("assignAdmins")}
                   </Button>
                 )}
               </div>
@@ -356,20 +358,20 @@ export default function OrganisationDetailPage() {
             <CardContent>
               {!organisation?.admins?.length ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  No admins assigned to this organisation.
+                  {t("noAdmins")}
                 </div>
               ) : (
                 <>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Admins assigned to this organisation.
+                    {t("adminsAssignedDescription")}
                   </p>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Admin Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Roles</TableHead>
-                        <TableHead>Actions</TableHead>
+                        <TableHead>{t("adminName")}</TableHead>
+                        <TableHead>{t("email")}</TableHead>
+                        <TableHead>{t("roles")}</TableHead>
+                        <TableHead>{t("actions")}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -405,7 +407,7 @@ export default function OrganisationDetailPage() {
                                 onClick={() => handleLoginAsAdmin(admin.email, adminName)}
                               >
                                 <LogIn className="h-4 w-4 mr-2" />
-                                Login As
+                                {t("loginAs")}
                               </Button>
                             </TableCell>
                           </TableRow>
@@ -424,32 +426,32 @@ export default function OrganisationDetailPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Subscription Details
+                {t("subscriptionDetails")}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {subscription ? (
                 <>
                   <div>
-                    <span className="text-sm font-medium">Plan:</span>
+                    <span className="text-sm font-medium">{t("plan")}:</span>
                     <p className="text-sm text-muted-foreground">{subscription.plan}</p>
                   </div>
                   <div>
-                    <span className="text-sm font-medium">User Limit:</span>
+                    <span className="text-sm font-medium">{t("userLimit")}:</span>
                     <p className="text-sm text-muted-foreground">
-                      {subscription.usedUsers} / {subscription.userLimit} users
+                      {t("usersCount", { used: subscription.usedUsers, limit: subscription.userLimit })}
                     </p>
                   </div>
                   <div>
-                    <span className="text-sm font-medium">Status:</span>
+                    <span className="text-sm font-medium">{t("status")}:</span>
                     <div className="mt-1">
                       <Badge variant={subscription.isExpired ? "destructive" : "default"}>
-                        {subscription.isExpired ? "Expired" : "Active"}
+                        {subscription.isExpired ? t("expired") : t("active")}
                       </Badge>
                     </div>
                   </div>
                   <div>
-                    <span className="text-sm font-medium">Expiry Date:</span>
+                    <span className="text-sm font-medium">{t("expiryDate")}:</span>
                     <p className="text-sm text-muted-foreground">
                       {new Date(subscription.expiryDate).toLocaleDateString()}
                     </p>
@@ -457,7 +459,7 @@ export default function OrganisationDetailPage() {
                 </>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  No subscription found for this organisation
+                  {t("noSubscription")}
                 </div>
               )}
             </CardContent>
@@ -469,22 +471,22 @@ export default function OrganisationDetailPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <DollarSign className="h-5 w-5" />
-                Payment History
+                {t("paymentHistory")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               {payments.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  No payment history found
+                  {t("noPaymentHistory")}
                 </div>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Amount</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Invoice</TableHead>
+                      <TableHead>{t("date")}</TableHead>
+                      <TableHead>{t("amount")}</TableHead>
+                      <TableHead>{t("status")}</TableHead>
+                      <TableHead>{t("invoice")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -529,9 +531,9 @@ export default function OrganisationDetailPage() {
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Edit Organisation</DialogTitle>
+              <DialogTitle>{t("editOrganisation")}</DialogTitle>
               <DialogDescription>
-                Update organisation details. Only MasterAdmin can edit organisations.
+                {t("editOrganisationDescription")}
               </DialogDescription>
             </DialogHeader>
             <EditOrganisationForm
@@ -548,9 +550,9 @@ export default function OrganisationDetailPage() {
         <Dialog open={isAssignOrgAdminDialogOpen} onOpenChange={setIsAssignOrgAdminDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Assign Admins to Organisation</DialogTitle>
+              <DialogTitle>{t("assignAdminsTitle")}</DialogTitle>
               <DialogDescription>
-                Select which admins can manage this organisation. Click Save when done.
+                {t("assignAdminsDescription")}
               </DialogDescription>
             </DialogHeader>
             <AssignAdminDialog

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import {
   Dialog,
@@ -31,36 +32,40 @@ import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import type { FundingBand } from "@/store/api/funding-band/types";
 import { toast } from "sonner";
 
-const createFundingBandSchema = z.object({
-  course_id: z.string().min(1, "Course is required"),
-  band_name: z.string().min(1, "Band name is required"),
-  amount: z
-    .string()
-    .min(1, "Amount is required")
-    .refine(
-      (val) => {
-        const num = parseFloat(val);
-        return !isNaN(num) && num > 0;
-      },
-      { message: "Amount must be a positive number" }
-    ),
-});
+function getCreateFundingBandSchema(t: (key: string) => string) {
+  return z.object({
+    course_id: z.string().min(1, t("form.validation.courseRequired")),
+    band_name: z.string().min(1, t("form.validation.bandNameRequired")),
+    amount: z
+      .string()
+      .min(1, t("form.validation.amountRequired"))
+      .refine(
+        (val) => {
+          const num = parseFloat(val);
+          return !isNaN(num) && num > 0;
+        },
+        { message: t("form.validation.amountPositive") }
+      ),
+  });
+}
 
-const updateFundingBandSchema = z.object({
-  amount: z
-    .string()
-    .min(1, "Amount is required")
-    .refine(
-      (val) => {
-        const num = parseFloat(val);
-        return !isNaN(num) && num > 0;
-      },
-      { message: "Amount must be a positive number" }
-    ),
-});
+function getUpdateFundingBandSchema(t: (key: string) => string) {
+  return z.object({
+    amount: z
+      .string()
+      .min(1, t("form.validation.amountRequired"))
+      .refine(
+        (val) => {
+          const num = parseFloat(val);
+          return !isNaN(num) && num > 0;
+        },
+        { message: t("form.validation.amountPositive") }
+      ),
+  });
+}
 
-type CreateFundingBandFormValues = z.infer<typeof createFundingBandSchema>;
-type UpdateFundingBandFormValues = z.infer<typeof updateFundingBandSchema>;
+type CreateFundingBandFormValues = z.infer<ReturnType<typeof getCreateFundingBandSchema>>;
+type UpdateFundingBandFormValues = z.infer<ReturnType<typeof getUpdateFundingBandSchema>>;
 
 interface FundingBandsFormDialogProps {
   open: boolean;
@@ -75,7 +80,11 @@ export function FundingBandsFormDialog({
   fundingBand,
   onSuccess,
 }: FundingBandsFormDialogProps) {
+  const t = useTranslations("fundingBands");
   const isEditMode = !!fundingBand;
+
+  const createSchema = useMemo(() => getCreateFundingBandSchema(t), [t]);
+  const updateSchema = useMemo(() => getUpdateFundingBandSchema(t), [t]);
 
   const [createFundingBand, { isLoading: isCreating }] =
     useCreateFundingBandMutation();
@@ -88,7 +97,7 @@ export function FundingBandsFormDialog({
   });
 
   const form = useForm<CreateFundingBandFormValues | UpdateFundingBandFormValues>({
-    resolver: zodResolver(isEditMode ? updateFundingBandSchema : createFundingBandSchema),
+    resolver: zodResolver(isEditMode ? updateSchema : createSchema),
     defaultValues: isEditMode
       ? {
           amount: "",
@@ -126,7 +135,7 @@ export function FundingBandsFormDialog({
             amount: parseFloat(updateData.amount),
           },
         }).unwrap();
-        toast.success("Funding band updated successfully");
+        toast.success(t("form.toast.updateSuccess"));
       } else {
         const createData = values as CreateFundingBandFormValues;
         const selectedCourse = coursesData?.data?.find(
@@ -134,7 +143,7 @@ export function FundingBandsFormDialog({
         );
         
         if (!selectedCourse) {
-          toast.error("Please select a valid course");
+          toast.error(t("form.toast.selectValidCourse"));
           return;
         }
         
@@ -143,7 +152,7 @@ export function FundingBandsFormDialog({
           band_name: selectedCourse.course_name,
           amount: parseFloat(createData.amount),
         }).unwrap();
-        toast.success("Funding band created successfully");
+        toast.success(t("form.toast.createSuccess"));
       }
       onSuccess();
       onOpenChange(false);
@@ -154,7 +163,7 @@ export function FundingBandsFormDialog({
           : undefined;
       toast.error(
         errorMessage ||
-          `Failed to ${isEditMode ? "update" : "create"} funding band`
+          (isEditMode ? t("form.toast.updateFailed") : t("form.toast.createFailed"))
       );
     }
   };
@@ -167,12 +176,12 @@ export function FundingBandsFormDialog({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? "Edit Funding Band" : "Create New Funding Band"}
+            {isEditMode ? t("form.titleEdit") : t("form.titleCreate")}
           </DialogTitle>
           <DialogDescription>
             {isEditMode
-              ? "Update funding band amount below."
-              : "Fill in the form below to create a new funding band."}
+              ? t("form.descriptionEdit")
+              : t("form.descriptionCreate")}
           </DialogDescription>
         </DialogHeader>
 
@@ -181,7 +190,7 @@ export function FundingBandsFormDialog({
           {!isEditMode && (
             <div className="space-y-2">
               <Label htmlFor="course_id">
-                Select Course <span className="text-destructive">*</span>
+                {t("form.selectCourse")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="course_id"
@@ -211,12 +220,12 @@ export function FundingBandsFormDialog({
                             : ""
                         }
                       >
-                        <SelectValue placeholder="Select a course" />
+                        <SelectValue placeholder={t("form.selectCoursePlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
                         {isLoadingCourses ? (
                           <SelectItem value="loading" disabled>
-                            Loading courses...
+                            {t("form.loadingCourses")}
                           </SelectItem>
                         ) : (
                           coursesData?.data?.map((course) => (
@@ -248,7 +257,7 @@ export function FundingBandsFormDialog({
           {!isEditMode && (
             <div className="space-y-2">
               <Label htmlFor="band_name">
-                Band Name <span className="text-destructive">*</span>
+                {t("form.bandName")} <span className="text-destructive">*</span>
               </Label>
               <Controller
                 name="band_name"
@@ -257,7 +266,7 @@ export function FundingBandsFormDialog({
                   <>
                     <Input
                       id="band_name"
-                      placeholder="Band name (auto-filled from course)"
+                      placeholder={t("form.bandNamePlaceholder")}
                       {...field}
                       readOnly
                       className={
@@ -284,7 +293,7 @@ export function FundingBandsFormDialog({
           {/* Course Info (read-only in edit mode) */}
           {isEditMode && (
             <div className="space-y-2">
-              <Label>Course</Label>
+              <Label>{t("form.course")}</Label>
               <Input
                 value={fundingBand.course.course_name}
                 readOnly
@@ -296,7 +305,7 @@ export function FundingBandsFormDialog({
           {/* Amount */}
           <div className="space-y-2">
             <Label htmlFor="amount">
-              Amount (£) <span className="text-destructive">*</span>
+              {t("form.amount")} <span className="text-destructive">*</span>
             </Label>
             <Controller
               name="amount"
@@ -312,7 +321,7 @@ export function FundingBandsFormDialog({
                       type="number"
                       step="0.01"
                       min="0"
-                      placeholder="Enter amount"
+                      placeholder={t("form.amountPlaceholder")}
                       {...field}
                       className={`pl-8 ${
                         form.formState.errors.amount ? "border-destructive" : ""
@@ -336,11 +345,11 @@ export function FundingBandsFormDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {t("form.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading || hasErrors}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isEditMode ? "Update" : "Create"}
+              {isEditMode ? t("form.update") : t("form.create")}
             </Button>
           </DialogFooter>
         </form>

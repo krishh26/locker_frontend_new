@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { useEffect } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import * as React from "react"
+import { useEffect } from "react"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import {
   Dialog,
   DialogContent,
@@ -12,39 +12,54 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Loader2 } from 'lucide-react'
-import { format } from 'date-fns'
-import { useCachedUsersByRole } from '@/store/hooks/useCachedUsersByRole'
-import { useCachedLearnersList } from '@/store/hooks/useCachedLearnersList'
+} from "@/components/ui/select"
+import { Loader2 } from "lucide-react"
+import { format } from "date-fns"
+import { useCachedUsersByRole } from "@/store/hooks/useCachedUsersByRole"
+import { useCachedLearnersList } from "@/store/hooks/useCachedLearnersList"
 import {
   useCreateLearnerPlanMutation,
   useUpdateSessionMutation,
-} from '@/store/api/learner-plan/learnerPlanApi'
-import type { Session } from '@/store/api/session/types'
-import { toast } from 'sonner'
-import MultipleSelector, { type Option } from '@/components/ui/multi-select'
+} from "@/store/api/learner-plan/learnerPlanApi"
+import type { Session } from "@/store/api/session/types"
+import { toast } from "sonner"
+import MultipleSelector, { type Option } from "@/components/ui/multi-select"
+import { useTranslations } from "next-intl"
 
 const sessionSchema = z.object({
-  trainer_id: z.string().min(1, 'Trainer is required'),
-  learners: z.array(z.string()).min(1, 'At least one learner is required'),
-  title: z.string().min(1, 'Title is required'),
+  trainer_id: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.trainerRequired",
+  }),
+  learners: z.array(z.string()).min(1, {
+    message: "calendar.sessionDialog.validation.learnersRequired",
+  }),
+  title: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.titleRequired",
+  }),
   description: z.string().optional(),
-  location: z.string().min(1, 'Location is required'),
-  startDate: z.string().min(1, 'Start date is required'),
-  Duration: z.string().min(1, 'Duration is required'),
-  type: z.string().min(1, 'Session type is required'),
+  location: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.locationRequired",
+  }),
+  startDate: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.startDateRequired",
+  }),
+  Duration: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.durationRequired",
+  }),
+  type: z.string().min(1, {
+    message: "calendar.sessionDialog.validation.typeRequired",
+  }),
 })
 
 type SessionFormValues = z.infer<typeof sessionSchema>
@@ -86,6 +101,8 @@ export function SessionDialog({
   const [updateSession, { isLoading: isUpdating }] = useUpdateSessionMutation()
 
   const isLoading = isCreating || isUpdating
+  const t = useTranslations("calendar")
+  const tCommon = useTranslations("common")
 
   const form = useForm<SessionFormValues>({
     resolver: zodResolver(sessionSchema),
@@ -199,7 +216,7 @@ export function SessionDialog({
           Duration: values.Duration,
           type: values.type,
         }).unwrap()
-        toast.success('Session updated successfully')
+        toast.success(t("sessionDialog.toastUpdateSuccess"))
       } else {
         await createLearnerPlan({
           assessor_id: parseInt(values.trainer_id, 10),
@@ -214,7 +231,7 @@ export function SessionDialog({
           Duration: values.Duration,
           type: values.type,
         }).unwrap()
-        toast.success('Session created successfully')
+        toast.success(t("sessionDialog.toastCreateSuccess"))
       }
 
       onOpenChange(false)
@@ -222,7 +239,7 @@ export function SessionDialog({
     } catch (error: unknown) {
       const errorMessage =
         (error as { data?: { error?: string } })?.data?.error ||
-        'Failed to save session'
+        t("sessionDialog.toastSaveFailed")
       toast.error(errorMessage)
     }
   }
@@ -239,12 +256,14 @@ export function SessionDialog({
       <DialogContent className='max-w-2xl max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>
-            {isEdit ? 'Edit Session' : 'Book a New Session'}
+            {isEdit
+              ? t("sessionDialog.titleEdit")
+              : t("sessionDialog.titleCreate")}
           </DialogTitle>
           <DialogDescription>
             {isEdit
-              ? 'Update the session details below.'
-              : 'Fill in the details to create a new session.'}
+              ? t("sessionDialog.subtitleEdit")
+              : t("sessionDialog.subtitleCreate")}
           </DialogDescription>
         </DialogHeader>
 
@@ -252,7 +271,8 @@ export function SessionDialog({
           {/* Trainer Selection */}
           <div className='space-y-2'>
             <Label htmlFor='trainer_id'>
-              Select Trainer <span className='text-destructive'>*</span>
+              {t("sessionDialog.trainerLabel")}{' '}
+              <span className='text-destructive'>*</span>
             </Label>
             <Controller
               name='trainer_id'
@@ -264,12 +284,14 @@ export function SessionDialog({
                   disabled={isLoading}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder='Select trainer' />
+                    <SelectValue
+                      placeholder={t("sessionDialog.trainerPlaceholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {isTrainersLoading ? (
                       <SelectItem value='loading' disabled>
-                        Loading...
+                        {t("sessionDialog.loading")}
                       </SelectItem>
                     ) : (
                       trainersData?.data?.map((trainer) => (
@@ -287,7 +309,7 @@ export function SessionDialog({
             />
             {form.formState.errors.trainer_id && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.trainer_id.message}
+                {t(form.formState.errors.trainer_id.message as string)}
               </p>
             )}
           </div>
@@ -295,7 +317,8 @@ export function SessionDialog({
           {/* Learners Selection */}
           <div className='space-y-2'>
             <Label>
-              Select Learner(s) <span className='text-destructive'>*</span>
+              {t("sessionDialog.learnersLabel")}{' '}
+              <span className='text-destructive'>*</span>
             </Label>
             <Controller
               name='learners'
@@ -308,10 +331,10 @@ export function SessionDialog({
                     field.onChange(options.map((opt) => opt.value))
                   }}
                   options={learnerOptions}
-                  placeholder='Select learners...'
+                  placeholder={t("sessionDialog.learnersPlaceholder")}
                   emptyIndicator={
                     <p className='text-center text-sm text-muted-foreground'>
-                      No learners found
+                      {t("sessionDialog.noLearners")}
                     </p>
                   }
                   disabled={isLoading || isLearnersLoading}
@@ -322,7 +345,7 @@ export function SessionDialog({
             />
             {form.formState.errors.learners && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.learners.message}
+                {t(form.formState.errors.learners.message as string)}
               </p>
             )}
           </div>
@@ -330,29 +353,32 @@ export function SessionDialog({
           {/* Title */}
           <div className='space-y-2'>
             <Label htmlFor='title'>
-              Title <span className='text-destructive'>*</span>
+              {t("sessionDialog.titleLabel")}{' '}
+              <span className='text-destructive'>*</span>
             </Label>
             <Input
               id='title'
               {...form.register('title')}
               disabled={isLoading}
-              placeholder='Enter session title'
+              placeholder={t("sessionDialog.titlePlaceholder")}
             />
             {form.formState.errors.title && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.title.message}
+                {t(form.formState.errors.title.message as string)}
               </p>
             )}
           </div>
 
           {/* Description */}
           <div className='space-y-2'>
-            <Label htmlFor='description'>Description</Label>
+            <Label htmlFor='description'>
+              {t("sessionDialog.descriptionLabel")}
+            </Label>
             <Textarea
               id='description'
               {...form.register('description')}
               disabled={isLoading}
-              placeholder='Enter session description'
+              placeholder={t("sessionDialog.descriptionPlaceholder")}
               rows={4}
             />
           </div>
@@ -360,17 +386,18 @@ export function SessionDialog({
           {/* Location */}
           <div className='space-y-2'>
             <Label htmlFor='location'>
-              Enter Session Location <span className='text-destructive'>*</span>
+              {t("sessionDialog.locationLabel")}{' '}
+              <span className='text-destructive'>*</span>
             </Label>
             <Input
               id='location'
               {...form.register('location')}
               disabled={isLoading}
-              placeholder='Enter location'
+              placeholder={t("sessionDialog.locationPlaceholder")}
             />
             {form.formState.errors.location && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.location.message}
+                {t(form.formState.errors.location.message as string)}
               </p>
             )}
           </div>
@@ -378,7 +405,7 @@ export function SessionDialog({
           {/* Start Date and Time */}
           <div className='space-y-2'>
             <Label>
-              Select Session Date and Time{' '}
+              {t("sessionDialog.startLabel")}{' '}
               <span className='text-destructive'>*</span>
             </Label>
             <Controller
@@ -395,7 +422,7 @@ export function SessionDialog({
             />
             {form.formState.errors.startDate && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.startDate.message}
+                {t(form.formState.errors.startDate.message as string)}
               </p>
             )}
           </div>
@@ -403,12 +430,14 @@ export function SessionDialog({
           {/* Duration */}
           <div className='space-y-2'>
             <Label>
-              Select Session Duration{' '}
+              {t("sessionDialog.durationLabel")}{' '}
               <span className='text-destructive'>*</span>
             </Label>
             <div className='grid grid-cols-2 gap-4'>
               <div className='space-y-2'>
-                <Label htmlFor='hours'>Hours</Label>
+                <Label htmlFor='hours'>
+                  {t("sessionDialog.durationHours")}
+                </Label>
                 <Input
                   id='hours'
                   type='number'
@@ -425,7 +454,9 @@ export function SessionDialog({
                 />
               </div>
               <div className='space-y-2'>
-                <Label htmlFor='minutes'>Minutes</Label>
+                <Label htmlFor='minutes'>
+                  {t("sessionDialog.durationMinutes")}
+                </Label>
                 <Input
                   id='minutes'
                   type='number'
@@ -447,7 +478,8 @@ export function SessionDialog({
           {/* Session Type */}
           <div className='space-y-2'>
             <Label htmlFor='type'>
-              Select Session Type <span className='text-destructive'>*</span>
+              {t("sessionDialog.typeLabel")}{' '}
+              <span className='text-destructive'>*</span>
             </Label>
             <Controller
               name='type'
@@ -459,12 +491,14 @@ export function SessionDialog({
                   disabled={isLoading}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder='Select Session Type' />
+                    <SelectValue
+                      placeholder={t("sessionDialog.typePlaceholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {SESSION_TYPES.map((type) => (
                       <SelectItem key={type} value={type}>
-                        {type}
+                        {t(`sessionDialog.typeOptions.${type}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -473,7 +507,7 @@ export function SessionDialog({
             />
             {form.formState.errors.type && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.type.message}
+                {t(form.formState.errors.type.message as string)}
               </p>
             )}
           </div>
@@ -485,11 +519,11 @@ export function SessionDialog({
               onClick={handleClose}
               disabled={isLoading}
             >
-              Cancel
+              {tCommon("cancel")}
             </Button>
             <Button type='submit' disabled={isLoading}>
               {isLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-              {isEdit ? 'Update' : 'Save'}
+              {isEdit ? tCommon("update") : tCommon("save")}
             </Button>
           </DialogFooter>
         </form>

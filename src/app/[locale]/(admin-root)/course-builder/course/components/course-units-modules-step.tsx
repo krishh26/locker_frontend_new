@@ -10,6 +10,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Control, FieldErrors } from "react-hook-form";
 import type { CourseFormData, CourseCoreType } from "@/store/api/course/types";
 import { StandardModulesStep } from "./standard-components/standard-modules-step";
@@ -30,12 +31,13 @@ export function CourseUnitsModulesStep({
   setValue,
   errors,
 }: CourseUnitsModulesStepProps) {
+  const t = useTranslations("courseBuilder");
   // Gateway courses don't have units/modules
   if (courseCoreType === "Gateway") {
     return (
       <div className="rounded-lg border p-6">
         <p className="text-sm text-muted-foreground">
-          Gateway courses do not have units or modules.
+          {t("course.gatewayNoUnits")}
         </p>
       </div>
     );

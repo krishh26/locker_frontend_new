@@ -8,6 +8,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Controller, Control, useFieldArray, UseFormSetValue } from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ export function TopicsForm({
   readOnly = false,
   setValue,
 }: TopicsFormProps) {
+  const t = useTranslations("courseBuilder");
   const { fields, append, remove } = useFieldArray({
     control,
     name: `units.${unitIndex}.subUnit.${subUnitIndex}.topics`,
@@ -83,12 +85,14 @@ export function TopicsForm({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-semibold">
-          Assessment Criteria {topics.length > 0 && `(${topics.length})`}
+          {topics.length > 0
+            ? t("course.qualification.assessmentCriteriaCount", { count: topics.length })
+            : t("course.qualification.assessmentCriteria")}
         </h4>
         {!readOnly && (
           <Button onClick={handleAddTopic} size="sm" variant="outline" className="gap-2" type="button">
             <Plus className="h-4 w-4" />
-            Add Assessment Criteria
+            {t("course.qualification.addAssessmentCriteria")}
           </Button>
         )}
       </div>
@@ -99,13 +103,13 @@ export function TopicsForm({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Code</TableHead>
-                  <TableHead>Show Order</TableHead>
+                  <TableHead>{t("course.qualification.code")}</TableHead>
+                  <TableHead>{t("course.qualification.showOrder")}</TableHead>
                   <TableHead>
-                    Title <span className="text-destructive">*</span>
+                    {t("course.qualification.title")} <span className="text-destructive">*</span>
                   </TableHead>
                   {!readOnly && (
-                    <TableHead className="w-[100px] text-center">Actions</TableHead>
+                    <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                   )}
                 </TableRow>
               </TableHeader>
@@ -119,7 +123,7 @@ export function TopicsForm({
                         render={({ field: formField }) => (
                           <Input
                             {...formField}
-                            placeholder="Code"
+                            placeholder={t("course.qualification.placeholderCode")}
                             className="w-[100px]"
                             disabled={readOnly}
                           />
@@ -134,7 +138,7 @@ export function TopicsForm({
                           <Input
                             {...formField}
                             type="number"
-                            placeholder="Auto"
+                            placeholder={t("course.qualification.placeholderAuto")}
                             className="w-[80px]"
                             value={formField.value ?? index + 1}
                             disabled={readOnly}
@@ -153,7 +157,7 @@ export function TopicsForm({
                           <div className="space-y-1">
                             <Input
                               {...formField}
-                              placeholder="Topic title"
+                              placeholder={t("course.qualification.placeholderTopicTitle")}
                               className={cn(error && "border-destructive")}
                               disabled={readOnly}
                             />

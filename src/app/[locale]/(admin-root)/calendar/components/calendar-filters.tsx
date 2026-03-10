@@ -1,19 +1,20 @@
-'use client'
+"use client"
 
-import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Download, Calendar as CalendarIcon, List } from 'lucide-react'
-import { SortByVisitDateDropdown } from './sort-by-visit-date-dropdown'
-import type { SessionFilters } from '@/store/api/session/types'
-import { useCachedUsersByRole } from '@/store/hooks/useCachedUsersByRole'
-import { useAppSelector } from '@/store/hooks'
+} from "@/components/ui/select"
+import { Download, Calendar as CalendarIcon, List } from "lucide-react"
+import { SortByVisitDateDropdown } from "./sort-by-visit-date-dropdown"
+import type { SessionFilters } from "@/store/api/session/types"
+import { useCachedUsersByRole } from "@/store/hooks/useCachedUsersByRole"
+import { useAppSelector } from "@/store/hooks"
+import { useTranslations } from "next-intl"
 
 interface CalendarFiltersProps {
   viewMode: 'calendar' | 'list'
@@ -33,6 +34,7 @@ export function CalendarFilters({
   isLoading,
 }: CalendarFiltersProps) {
   const { user } = useAppSelector((state) => state.auth)
+  const t = useTranslations("calendar")
   const isAdmin = user?.role === 'Admin'
   const isTrainer = user?.role === 'Trainer'
   // Fetch trainers for the dropdown
@@ -65,13 +67,13 @@ export function CalendarFilters({
               onValueChange={handleTrainerChange}
             >
               <SelectTrigger className='w-full sm:w-[200px]'>
-                <SelectValue placeholder='Search by Trainer' />
+                <SelectValue placeholder={t("filters.trainerPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='all'>All Trainers</SelectItem>
+                <SelectItem value='all'>{t("filters.allTrainers")}</SelectItem>
                 {isTrainersLoading ? (
                   <SelectItem value='loading' disabled>
-                    Loading...
+                    {t("filters.loading")}
                   </SelectItem>
                 ) : (
                   trainersData?.data?.map((trainer) => (
@@ -93,26 +95,30 @@ export function CalendarFilters({
             onValueChange={handleAttendedChange}
           >
             <SelectTrigger className='w-full sm:w-[200px]'>
-              <SelectValue placeholder='Search by Attended' />
+              <SelectValue placeholder={t("filters.attendedPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value='all'>All Status</SelectItem>
-              <SelectItem value='Not Set'>Not Set</SelectItem>
-              <SelectItem value='Attended'>Attended</SelectItem>
-              <SelectItem value='Cancelled'>Cancelled</SelectItem>
+              <SelectItem value='all'>{t("filters.allStatus")}</SelectItem>
+              <SelectItem value='Not Set'>{t("status.notSet")}</SelectItem>
+              <SelectItem value='Attended'>{t("status.attended")}</SelectItem>
+              <SelectItem value='Cancelled'>{t("status.cancelled")}</SelectItem>
               <SelectItem value='Cancelled by Assessor'>
-                Cancelled by Assessor
+                {t("status.cancelledByAssessor")}
               </SelectItem>
               <SelectItem value='Cancelled by Learner'>
-                Cancelled by Learner
+                {t("status.cancelledByLearner")}
               </SelectItem>
               <SelectItem value='Cancelled by Employer'>
-                Cancelled by Employer
+                {t("status.cancelledByEmployer")}
               </SelectItem>
-              <SelectItem value='Learner Late'>Learner Late</SelectItem>
-              <SelectItem value='Assessor Late'>Assessor Late</SelectItem>
+              <SelectItem value='Learner Late'>
+                {t("status.learnerLate")}
+              </SelectItem>
+              <SelectItem value='Assessor Late'>
+                {t("status.assessorLate")}
+              </SelectItem>
               <SelectItem value='Learner not Attended'>
-                Learner not Attended
+                {t("status.learnerNotAttended")}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -134,7 +140,7 @@ export function CalendarFilters({
               className='rounded-r-none'
             >
               <CalendarIcon className='h-4 w-4 mr-2' />
-              Calendar
+              {t("filters.view.calendar")}
             </Button>
             <Button
               variant={viewMode === 'list' ? 'default' : 'ghost'}
@@ -143,7 +149,7 @@ export function CalendarFilters({
               className='rounded-l-none'
             >
               <List className='h-4 w-4 mr-2' />
-              List
+              {t("filters.view.list")}
             </Button>
           </div>
           <Button
@@ -153,7 +159,7 @@ export function CalendarFilters({
             disabled={isLoading}
           >
             <Download className='h-4 w-4 mr-2' />
-            Export CSV
+            {t("filters.exportCsv")}
           </Button>
         </div>
       </div>

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -24,12 +25,14 @@ import {
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-const assignUsersSchema = z.object({
-  assignType: z.string().min(1, "Please select an assignment type"),
-  user_ids: z.array(z.union([z.string(), z.number()])).optional(),
-});
+function getAssignUsersSchema(t: (key: string) => string) {
+  return z.object({
+    assignType: z.string().min(1, t("assignUsers.validationSelectType")),
+    user_ids: z.array(z.union([z.string(), z.number()])).optional(),
+  });
+}
 
-type AssignUsersFormValues = z.infer<typeof assignUsersSchema>;
+type AssignUsersFormValues = z.infer<ReturnType<typeof getAssignUsersSchema>>;
 
 interface AssignUsersDialogProps {
   open: boolean;
@@ -50,6 +53,17 @@ const assignOptions = [
   { value: "Individual", label: "Individual" },
 ];
 
+const ASSIGN_OPTION_KEYS: Record<string, string> = {
+  All: "assignUsers.optionAll",
+  "All Learner": "assignUsers.optionAllLearner",
+  "All EQA": "assignUsers.optionAllEQA",
+  "All Trainer": "assignUsers.optionAllTrainer",
+  "All Employer": "assignUsers.optionAllEmployer",
+  "All IQA": "assignUsers.optionAllIQA",
+  "All LIQA": "assignUsers.optionAllLIQA",
+  Individual: "assignUsers.optionIndividual",
+};
+
 export function AssignUsersDialog({
   open,
   onOpenChange,
@@ -57,6 +71,8 @@ export function AssignUsersDialog({
   formName,
   onSuccess,
 }: AssignUsersDialogProps) {
+  const t = useTranslations("forms");
+  const schema = useMemo(() => getAssignUsersSchema(t), [t]);
   const [selectedUserIds, setSelectedUserIds] = useState<(string | number)[]>([]);
   const { data: usersData, isLoading: isLoadingUsers } = useGetAllUsersQuery(
     undefined,
@@ -65,7 +81,7 @@ export function AssignUsersDialog({
   const [assignUsers, { isLoading: isAssigning }] = useAssignUsersToFormMutation();
 
   const form = useForm<AssignUsersFormValues>({
-    resolver: zodResolver(assignUsersSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       assignType: "",
       user_ids: [],
@@ -98,7 +114,7 @@ export function AssignUsersDialog({
   const onSubmit = async (values: AssignUsersFormValues) => {
     try {
       if (values.assignType === "Individual" && (!values.user_ids || values.user_ids.length === 0)) {
-        toast.error("Please select at least one user");
+        toast.error(t("assignUsers.toastSelectOneUser"));
         return;
       }
 
@@ -108,7 +124,7 @@ export function AssignUsersDialog({
         user_ids: values.assignType === "Individual" ? values.user_ids : undefined,
       }).unwrap();
 
-      toast.success("Users assigned successfully");
+      toast.success(t("assignUsers.toastSuccess"));
       onSuccess();
       onOpenChange(false);
     } catch (error: unknown) {
@@ -116,7 +132,7 @@ export function AssignUsersDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to assign users");
+      toast.error(errorMessage || t("assignUsers.toastFailed"));
     }
   };
 
@@ -127,15 +143,15 @@ export function AssignUsersDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Assign Users to Form</DialogTitle>
+          <DialogTitle>{t("assignUsers.dialogTitle")}</DialogTitle>
           <DialogDescription>
-            Assign users to the form: <strong>{formName}</strong>
+            {t("assignUsers.dialogDescription", { formName: formName })}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label>Select Assignment Type</Label>
+            <Label>{t("assignUsers.selectAssignmentType")}</Label>
             <Controller
               name="assignType"
               control={form.control}
@@ -153,7 +169,7 @@ export function AssignUsersDialog({
                           htmlFor={option.value}
                           className="text-sm font-normal cursor-pointer"
                         >
-                          {option.label}
+                          {t(ASSIGN_OPTION_KEYS[option.value] ?? option.value)}
                         </Label>
                       </div>
                     ))}
@@ -170,7 +186,7 @@ export function AssignUsersDialog({
 
           {assignType === "Individual" && (
             <div className="space-y-2">
-              <Label>Select Users</Label>
+              <Label>{t("assignUsers.selectUsers")}</Label>
               {isLoadingUsers ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -208,7 +224,7 @@ export function AssignUsersDialog({
                 selectedUserIds.length === 0 &&
                 form.formState.errors.user_ids && (
                   <p className="text-sm text-destructive">
-                    Please select at least one user
+                    {t("assignUsers.validationSelectOneUser")}
                   </p>
                 )}
             </div>
@@ -221,11 +237,11 @@ export function AssignUsersDialog({
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
             >
-              Cancel
+              {t("assignUsers.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading || hasErrors}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Assign Users
+              {t("assignUsers.submit")}
             </Button>
           </DialogFooter>
         </form>

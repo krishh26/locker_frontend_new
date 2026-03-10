@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { Control, useWatch, UseFormSetValue } from "react-hook-form";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,10 +44,13 @@ export function CourseTransferList({
   setValue,
   allStandardCourses,
   disabled = false,
-  leftTitle = "Unassigned Standard Courses",
-  rightTitle = "Assigned Standard Courses",
+  leftTitle,
+  rightTitle,
   error = false,
 }: CourseTransferListProps) {
+  const t = useTranslations("courseBuilder");
+  const defaultLeft = t("course.transferList.unassignedDefault");
+  const defaultRight = t("course.transferList.assignedDefault");
   const [checked, setChecked] = useState<CourseItem[]>([]);
 
   // Watch assigned_standards from React Hook Form
@@ -159,7 +163,7 @@ export function CourseTransferList({
         <div className="flex justify-between items-center">
           <CardTitle className="text-base font-semibold">{title}</CardTitle>
           <p className="text-sm text-muted-foreground">
-            {numberOfChecked(items)}/{items.length} selected
+            {t("course.transferList.selectedCount", { count: numberOfChecked(items), total: items.length })}
           </p>
         </div>
         {!disabled && (
@@ -172,7 +176,7 @@ export function CourseTransferList({
               className="h-8 text-xs"
               type="button"
             >
-              {numberOfChecked(items) === items.length ? "Unselect all" : "Select all"}
+              {numberOfChecked(items) === items.length ? t("course.transferList.unselectAll") : t("course.transferList.selectAll")}
             </Button>
           </div>
         )}
@@ -182,7 +186,7 @@ export function CourseTransferList({
         {items.length === 0 ? (
           <div className="flex items-center justify-center h-[230px] p-4">
             <p className="text-sm text-muted-foreground italic text-center">
-              {side === "left" ? "No available courses" : "No courses assigned"}
+              {side === "left" ? t("course.transferList.noAvailableCourses") : t("course.transferList.noCoursesAssigned")}
             </p>
           </div>
         ) : (
@@ -231,14 +235,14 @@ export function CourseTransferList({
   return (
     <div className="w-full">
       <div className="grid grid-cols-12 gap-4 items-center">
-        <div className="col-span-5">{customList(leftTitle, left, "left")}</div>
+        <div className="col-span-5">{customList(leftTitle ?? defaultLeft, left, "left")}</div>
         <div className="col-span-2 flex flex-col items-center gap-2">
           <Button
             variant="outline"
             size="icon"
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0 || disabled}
-            aria-label="move selected right"
+            aria-label={t("course.transferList.ariaMoveSelectedRight")}
             className="min-w-[40px]"
             type="button"
           >
@@ -249,7 +253,7 @@ export function CourseTransferList({
             size="icon"
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0 || disabled}
-            aria-label="move selected left"
+            aria-label={t("course.transferList.ariaMoveSelectedLeft")}
             className="min-w-[40px]"
             type="button"
           >
@@ -260,7 +264,7 @@ export function CourseTransferList({
             size="icon"
             onClick={handleAllRight}
             disabled={left.length === 0 || disabled}
-            aria-label="move all right"
+            aria-label={t("course.transferList.ariaMoveAllRight")}
             className="min-w-[40px]"
             type="button"
           >
@@ -271,14 +275,14 @@ export function CourseTransferList({
             size="icon"
             onClick={handleAllLeft}
             disabled={right.length === 0 || disabled}
-            aria-label="move all left"
+            aria-label={t("course.transferList.ariaMoveAllLeft")}
             className="min-w-[40px] rotate-180"
             type="button"
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="col-span-5">{customList(rightTitle, right, "right")}</div>
+        <div className="col-span-5">{customList(rightTitle ?? defaultRight, right, "right")}</div>
       </div>
     </div>
   );

@@ -2304,6 +2304,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "Desenvolvimento profissional contínuo",
+    "pageSubtitle": "Registo de aprendizagem e acompanhamento do desenvolvimento",
+    "learnerInfo": {
+      "learnerName": "Nome do formando",
+      "jobTitle": "Função",
+      "employer": "Empregador",
+      "notSpecified": "Não especificado"
+    },
+    "table": {
+      "headers": {
+        "activity": "Que atividade de formação, aprendizagem ou desenvolvimento realizou?",
+        "date": "Data em que a realizou",
+        "method": "Como realizou esta atividade de desenvolvimento?",
+        "learning": "O que aprendeu com isto?",
+        "impact": "De que forma esta aprendizagem fez a diferença no seu trabalho e melhorou a forma como trabalha?"
+      },
+      "columns": {
+        "actions": "Ações"
+      },
+      "searchPlaceholder": "Procurar registos...",
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "csvTodo": "A funcionalidade de exportação CSV será adicionada em breve",
+        "pdfTodo": "A funcionalidade de exportação PDF será adicionada em breve"
+      },
+      "status": {
+        "loading": "A carregar registos de CPD...",
+        "noResults": "Sem resultados."
+      },
+      "addNew": "Adicionar novo registo"
+    },
+    "validation": {
+      "activityRequired": "A atividade é obrigatória",
+      "dateRequired": "A data é obrigatória",
+      "methodRequired": "O método é obrigatório",
+      "learningRequired": "A aprendizagem é obrigatória",
+      "impactRequired": "O impacto é obrigatório"
+    },
+    "placeholders": {
+      "pickDate": "Escolher uma data *",
+      "field": "Introduza {field} *"
+    },
+    "toast": {
+      "saveFailed": "Não foi possível guardar o registo de CPD",
+      "updateSuccess": "Registo de CPD atualizado com sucesso",
+      "deleteSuccess": "Registo de CPD eliminado com sucesso",
+      "deleteFailed": "Não foi possível eliminar o registo de CPD"
+    }
+  },
   "support": {
     "pageTitle": "Suporte",
     "pageSubtitle": "Submeter e gerir pedidos de suporte",

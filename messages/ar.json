@@ -2297,6 +2297,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "التطوير المهني المستمر",
+    "pageSubtitle": "سجل التعلم ومتعقب التطوير",
+    "learnerInfo": {
+      "learnerName": "اسم المتعلم",
+      "jobTitle": "المسمى الوظيفي",
+      "employer": "صاحب العمل",
+      "notSpecified": "غير محدد"
+    },
+    "table": {
+      "headers": {
+        "activity": "ما نشاط التدريب أو التعلم أو التطوير الذي قمت به؟",
+        "date": "التاريخ الذي قمت فيه بذلك",
+        "method": "كيف قمت بتنفيذ نشاط التطوير هذا؟",
+        "learning": "ماذا تعلمت من ذلك؟",
+        "impact": "كيف أثّر هذا التعلم على عملك وحسّن طريقة أدائك له؟"
+      },
+      "columns": {
+        "actions": "الإجراءات"
+      },
+      "searchPlaceholder": "ابحث في الإدخالات...",
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "csvTodo": "سيتم تنفيذ وظيفة تصدير CSV لاحقًا",
+        "pdfTodo": "سيتم تنفيذ وظيفة تصدير PDF لاحقًا"
+      },
+      "status": {
+        "loading": "جارٍ تحميل إدخالات CPD...",
+        "noResults": "لا توجد نتائج."
+      },
+      "addNew": "إضافة إدخال جديد"
+    },
+    "validation": {
+      "activityRequired": "النشاط مطلوب",
+      "dateRequired": "التاريخ مطلوب",
+      "methodRequired": "طريقة التنفيذ مطلوبة",
+      "learningRequired": "قيمة التعلم مطلوبة",
+      "impactRequired": "الأثر مطلوب"
+    },
+    "placeholders": {
+      "pickDate": "اختر تاريخًا *",
+      "field": "أدخل {field} *"
+    },
+    "toast": {
+      "saveFailed": "فشل حفظ إدخال CPD",
+      "updateSuccess": "تم تحديث إدخال CPD بنجاح",
+      "deleteSuccess": "تم حذف إدخال CPD بنجاح",
+      "deleteFailed": "فشل حذف إدخال CPD"
+    }
+  },
   "support": {
     "pageTitle": "الدعم",
     "pageSubtitle": "إرسال وإدارة طلبات الدعم",

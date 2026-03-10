@@ -2145,6 +2145,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "Desarrollo Profesional Continuo",
+    "pageSubtitle": "Registro de aprendizaje y seguimiento del desarrollo",
+    "learnerInfo": {
+      "learnerName": "Nombre del aprendiz",
+      "jobTitle": "Puesto de trabajo",
+      "employer": "Empleador",
+      "notSpecified": "No especificado"
+    },
+    "table": {
+      "headers": {
+        "activity": "¿Qué actividad de formación, aprendizaje o desarrollo ha realizado?",
+        "date": "Fecha en la que la realizó",
+        "method": "¿Cómo llevó a cabo esta actividad de desarrollo?",
+        "learning": "¿Qué aprendió con ello?",
+        "impact": "¿Cómo ha cambiado este aprendizaje su trabajo y mejorado la forma en que trabaja?"
+      },
+      "columns": {
+        "actions": "Acciones"
+      },
+      "searchPlaceholder": "Buscar entradas...",
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "csvTodo": "La función de exportación CSV se implementará próximamente",
+        "pdfTodo": "La función de exportación PDF se implementará próximamente"
+      },
+      "status": {
+        "loading": "Cargando entradas de CPD...",
+        "noResults": "Sin resultados."
+      },
+      "addNew": "Agregar nueva entrada"
+    },
+    "validation": {
+      "activityRequired": "La actividad es obligatoria",
+      "dateRequired": "La fecha es obligatoria",
+      "methodRequired": "El método es obligatorio",
+      "learningRequired": "El aprendizaje es obligatorio",
+      "impactRequired": "El impacto es obligatorio"
+    },
+    "placeholders": {
+      "pickDate": "Seleccione una fecha *",
+      "field": "Introduzca {field} *"
+    },
+    "toast": {
+      "saveFailed": "No se pudo guardar la entrada de CPD",
+      "updateSuccess": "Entrada de CPD actualizada correctamente",
+      "deleteSuccess": "Entrada de CPD eliminada correctamente",
+      "deleteFailed": "No se pudo eliminar la entrada de CPD"
+    }
+  },
   "support": {
     "pageTitle": "Soporte",
     "pageSubtitle": "Enviar y gestionar solicitudes de soporte",

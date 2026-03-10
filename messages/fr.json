@@ -2304,6 +2304,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "Développement professionnel continu",
+    "pageSubtitle": "Journal d’apprentissage et suivi du développement",
+    "learnerInfo": {
+      "learnerName": "Nom de l’apprenant",
+      "jobTitle": "Intitulé du poste",
+      "employer": "Employeur",
+      "notSpecified": "Non spécifié"
+    },
+    "table": {
+      "headers": {
+        "activity": "Quelle activité de formation, d’apprentissage ou de développement avez-vous réalisée ?",
+        "date": "Date à laquelle vous l’avez réalisée",
+        "method": "Comment avez-vous réalisé cette activité de développement ?",
+        "learning": "Qu’avez-vous appris grâce à cela ?",
+        "impact": "En quoi cet apprentissage a-t-il changé votre travail et amélioré votre manière de travailler ?"
+      },
+      "columns": {
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Rechercher des entrées...",
+      "export": {
+        "button": "Exporter",
+        "csv": "Exporter en CSV",
+        "pdf": "Exporter en PDF",
+        "csvTodo": "La fonctionnalité d’export CSV sera bientôt disponible",
+        "pdfTodo": "La fonctionnalité d’export PDF sera bientôt disponible"
+      },
+      "status": {
+        "loading": "Chargement des entrées de CPD...",
+        "noResults": "Aucun résultat."
+      },
+      "addNew": "Ajouter une nouvelle entrée"
+    },
+    "validation": {
+      "activityRequired": "L’activité est obligatoire",
+      "dateRequired": "La date est obligatoire",
+      "methodRequired": "La méthode est obligatoire",
+      "learningRequired": "L’apprentissage est obligatoire",
+      "impactRequired": "L’impact est obligatoire"
+    },
+    "placeholders": {
+      "pickDate": "Choisissez une date *",
+      "field": "Saisir {field} *"
+    },
+    "toast": {
+      "saveFailed": "Échec de l’enregistrement de l’entrée de CPD",
+      "updateSuccess": "Entrée de CPD mise à jour avec succès",
+      "deleteSuccess": "Entrée de CPD supprimée avec succès",
+      "deleteFailed": "Échec de la suppression de l’entrée de CPD"
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Soumettre et gérer les demandes de support",

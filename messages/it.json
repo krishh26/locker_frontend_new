@@ -2290,6 +2290,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "Sviluppo professionale continuo",
+    "pageSubtitle": "Registro di apprendimento e tracciamento dello sviluppo",
+    "learnerInfo": {
+      "learnerName": "Nome del discente",
+      "jobTitle": "Titolo di lavoro",
+      "employer": "Datore di lavoro",
+      "notSpecified": "Non specificato"
+    },
+    "table": {
+      "headers": {
+        "activity": "Quale attività di formazione, apprendimento o sviluppo hai svolto?",
+        "date": "Data in cui l’hai svolta",
+        "method": "In che modo hai svolto questa attività di sviluppo?",
+        "learning": "Che cosa hai imparato da questa esperienza?",
+        "impact": "In che modo questo apprendimento ha fatto la differenza nel tuo lavoro e ne ha migliorato lo svolgimento?"
+      },
+      "columns": {
+        "actions": "Azioni"
+      },
+      "searchPlaceholder": "Cerca tra le voci...",
+      "export": {
+        "button": "Esporta",
+        "csv": "Esporta come CSV",
+        "pdf": "Esporta come PDF",
+        "csvTodo": "La funzione di esportazione CSV sarà disponibile prossimamente",
+        "pdfTodo": "La funzione di esportazione PDF sarà disponibile prossimamente"
+      },
+      "status": {
+        "loading": "Caricamento delle voci CPD...",
+        "noResults": "Nessun risultato."
+      },
+      "addNew": "Aggiungi nuova voce"
+    },
+    "validation": {
+      "activityRequired": "L’attività è obbligatoria",
+      "dateRequired": "La data è obbligatoria",
+      "methodRequired": "Il metodo è obbligatorio",
+      "learningRequired": "L’apprendimento è obbligatorio",
+      "impactRequired": "L’impatto è obbligatorio"
+    },
+    "placeholders": {
+      "pickDate": "Seleziona una data *",
+      "field": "Inserisci {field} *"
+    },
+    "toast": {
+      "saveFailed": "Impossibile salvare la voce CPD",
+      "updateSuccess": "Voce CPD aggiornata con successo",
+      "deleteSuccess": "Voce CPD eliminata con successo",
+      "deleteFailed": "Impossibile eliminare la voce CPD"
+    }
+  },
   "courseBuilder": {
     "pageTitle": "Course Builder",
     "pageSubtitle": "Create, manage, and organize your courses with ease",

@@ -2262,6 +2262,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "持续专业发展",
+    "pageSubtitle": "学习日志与发展跟踪",
+    "learnerInfo": {
+      "learnerName": "学员姓名",
+      "jobTitle": "职位名称",
+      "employer": "雇主",
+      "notSpecified": "未指定"
+    },
+    "table": {
+      "headers": {
+        "activity": "您完成了哪些培训、学习或发展活动？",
+        "date": "完成此活动的日期",
+        "method": "您是如何开展这项发展活动的？",
+        "learning": "您从中学到了什么？",
+        "impact": "这次学习如何改变了您的工作并提升了您的工作方式？"
+      },
+      "columns": {
+        "actions": "操作"
+      },
+      "searchPlaceholder": "搜索记录...",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvTodo": "CSV 导出功能即将推出",
+        "pdfTodo": "PDF 导出功能即将推出"
+      },
+      "status": {
+        "loading": "正在加载 CPD 记录...",
+        "noResults": "没有结果。"
+      },
+      "addNew": "添加新记录"
+    },
+    "validation": {
+      "activityRequired": "活动为必填项",
+      "dateRequired": "日期为必填项",
+      "methodRequired": "方式为必填项",
+      "learningRequired": "学习内容为必填项",
+      "impactRequired": "影响为必填项"
+    },
+    "placeholders": {
+      "pickDate": "选择日期 *",
+      "field": "请输入 {field} *"
+    },
+    "toast": {
+      "saveFailed": "无法保存 CPD 记录",
+      "updateSuccess": "CPD 记录更新成功",
+      "deleteSuccess": "CPD 记录删除成功",
+      "deleteFailed": "无法删除 CPD 记录"
+    }
+  },
   "support": {
     "pageTitle": "支持",
     "pageSubtitle": "提交和管理支持请求",

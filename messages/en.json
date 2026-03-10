@@ -2331,6 +2331,58 @@
       "updateFailed": "Failed to update resource"
     }
   },
+  "cpd": {
+    "pageTitle": "Continuing Professional Development",
+    "pageSubtitle": "Learning Log & Development Tracker",
+    "learnerInfo": {
+      "learnerName": "Learner Name",
+      "jobTitle": "Job Title",
+      "employer": "Employer",
+      "notSpecified": "Not specified"
+    },
+    "table": {
+      "headers": {
+        "activity": "What training, learning or development activity have you done?",
+        "date": "Date you did this",
+        "method": "How did you undertake this development activity?",
+        "learning": "What did you learn from this?",
+        "impact": "How has this learning made a difference to your work and improved the way you work?"
+      },
+      "columns": {
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Search entries...",
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "csvTodo": "CSV export functionality will be implemented",
+        "pdfTodo": "PDF export functionality will be implemented"
+      },
+      "status": {
+        "loading": "Loading CPD entries...",
+        "noResults": "No results."
+      },
+      "addNew": "Add New Entry"
+    },
+    "validation": {
+      "activityRequired": "Activity is required",
+      "dateRequired": "Date is required",
+      "methodRequired": "Method is required",
+      "learningRequired": "Learning is required",
+      "impactRequired": "Impact is required"
+    },
+    "placeholders": {
+      "pickDate": "Pick a date *",
+      "field": "Enter {field} *"
+    },
+    "toast": {
+      "saveFailed": "Failed to save CPD entry",
+      "updateSuccess": "CPD entry updated successfully",
+      "deleteSuccess": "CPD entry deleted successfully",
+      "deleteFailed": "Failed to delete CPD entry"
+    }
+  },
   "courseResources": {
     "pageTitle": "Course Resources",
     "pageSubtitle": "Access and manage course learning resources",

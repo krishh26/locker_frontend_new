@@ -4,6 +4,7 @@ import { Users, Briefcase, Building2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface MetricCardProps {
   title: string;
@@ -37,32 +38,34 @@ function MetricCard({ title, value, icon: Icon, className }: MetricCardProps) {
 export function CpdLearnerInfoCard() {
   const user = useAppSelector((state) => state.auth.user);
   const learner = useAppSelector((state) => state.auth.learner);
+  const t = useTranslations("cpd");
 
   const learnerName = user
-    ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Not specified"
-    : "Not specified";
+    ? `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+      t("learnerInfo.notSpecified")
+    : t("learnerInfo.notSpecified");
 
   // Get job title and employer from learner data
-  const jobTitle = learner?.job_title || "Not specified";
+  const jobTitle = learner?.job_title || t("learnerInfo.notSpecified");
   
   const employerName = 
     learner?.employer_id && typeof learner.employer_id === "object" && "employer_name" in learner.employer_id
       ? learner.employer_id.employer_name
-      : "Not specified";
+      : t("learnerInfo.notSpecified");
 
   const learnerInfo = [
     {
-      title: "Learner Name",
+      title: t("learnerInfo.learnerName"),
       value: learnerName,
       icon: Users,
     },
     {
-      title: "Job Title",
+      title: t("learnerInfo.jobTitle"),
       value: jobTitle,
       icon: Briefcase,
     },
     {
-      title: "Employer",
+      title: t("learnerInfo.employer"),
       value: employerName,
       icon: Building2,
     },

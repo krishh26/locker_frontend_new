@@ -1716,6 +1716,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "Fortlaufende berufliche Entwicklung",
+    "pageSubtitle": "Lerntagebuch und Entwicklungs-Tracker",
+    "learnerInfo": {
+      "learnerName": "Name des Lernenden",
+      "jobTitle": "Berufsbezeichnung",
+      "employer": "Arbeitgeber",
+      "notSpecified": "Nicht angegeben"
+    },
+    "table": {
+      "headers": {
+        "activity": "Welche Schulungs-, Lern- oder Entwicklungsaktivität haben Sie durchgeführt?",
+        "date": "Datum dieser Aktivität",
+        "method": "Wie haben Sie diese Entwicklungsaktivität durchgeführt?",
+        "learning": "Was haben Sie daraus gelernt?",
+        "impact": "Wie hat dieses Lernen Ihre Arbeit verändert und verbessert?"
+      },
+      "columns": {
+        "actions": "Aktionen"
+      },
+      "searchPlaceholder": "Einträge durchsuchen...",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvTodo": "Die CSV-Exportfunktion wird noch implementiert",
+        "pdfTodo": "Die PDF-Exportfunktion wird noch implementiert"
+      },
+      "status": {
+        "loading": "CPD-Einträge werden geladen...",
+        "noResults": "Keine Ergebnisse."
+      },
+      "addNew": "Neuen Eintrag hinzufügen"
+    },
+    "validation": {
+      "activityRequired": "Aktivität ist erforderlich",
+      "dateRequired": "Datum ist erforderlich",
+      "methodRequired": "Methode ist erforderlich",
+      "learningRequired": "Lernergebnis ist erforderlich",
+      "impactRequired": "Auswirkung ist erforderlich"
+    },
+    "placeholders": {
+      "pickDate": "Datum auswählen *",
+      "field": "{field} eingeben *"
+    },
+    "toast": {
+      "saveFailed": "CPD-Eintrag konnte nicht gespeichert werden",
+      "updateSuccess": "CPD-Eintrag wurde erfolgreich aktualisiert",
+      "deleteSuccess": "CPD-Eintrag wurde erfolgreich gelöscht",
+      "deleteFailed": "CPD-Eintrag konnte nicht gelöscht werden"
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Supportanfragen einreichen und verwalten",

@@ -2304,6 +2304,58 @@
       }
     }
   },
+  "cpd": {
+    "pageTitle": "निरंतर व्यावसायिक विकास",
+    "pageSubtitle": "लर्निंग लॉग और विकास ट्रैकर",
+    "learnerInfo": {
+      "learnerName": "लर्नर का नाम",
+      "jobTitle": "कार्य पद",
+      "employer": "नियोक्ता",
+      "notSpecified": "निर्दिष्ट नहीं"
+    },
+    "table": {
+      "headers": {
+        "activity": "आपने कौन‑सी प्रशिक्षण, सीखने या विकास गतिविधि की है?",
+        "date": "आपने यह कब किया",
+        "method": "आपने यह विकास गतिविधि कैसे की?",
+        "learning": "आपने इससे क्या सीखा?",
+        "impact": "इस सीखने से आपके काम में क्या बदलाव आया और काम करने का तरीका कैसे बेहतर हुआ?"
+      },
+      "columns": {
+        "actions": "क्रियाएँ"
+      },
+      "searchPlaceholder": "एंट्री खोजें...",
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "csvTodo": "CSV एक्सपोर्ट सुविधा शीघ्र उपलब्ध होगी",
+        "pdfTodo": "PDF एक्सपोर्ट सुविधा शीघ्र उपलब्ध होगी"
+      },
+      "status": {
+        "loading": "CPD एंट्री लोड हो रही हैं...",
+        "noResults": "कोई परिणाम नहीं।"
+      },
+      "addNew": "नई एंट्री जोड़ें"
+    },
+    "validation": {
+      "activityRequired": "गतिविधि आवश्यक है",
+      "dateRequired": "तारीख आवश्यक है",
+      "methodRequired": "विधि आवश्यक है",
+      "learningRequired": "सीख आवश्यक है",
+      "impactRequired": "प्रभाव आवश्यक है"
+    },
+    "placeholders": {
+      "pickDate": "तारीख चुनें *",
+      "field": "{field} दर्ज करें *"
+    },
+    "toast": {
+      "saveFailed": "CPD एंट्री सेव नहीं हो सकी",
+      "updateSuccess": "CPD एंट्री सफलतापूर्वक अपडेट हुई",
+      "deleteSuccess": "CPD एंट्री सफलतापूर्वक डिलीट हुई",
+      "deleteFailed": "CPD एंट्री डिलीट नहीं हो सकी"
+    }
+  },
   "support": {
     "pageTitle": "सहायता",
     "pageSubtitle": "सहायता अनुरोध जमा करें और प्रबंधित करें",

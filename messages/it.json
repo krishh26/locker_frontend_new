@@ -366,128 +366,128 @@
     "pdfExportInfo": "La funzionalità di esportazione PDF sarà implementata"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "Gestione datori di lavoro",
+    "pageSubtitle": "Gestisci le informazioni dei datori di lavoro, aggiungi, aggiorna e elimina record dei datori di lavoro, e assegna studenti ai datori di lavoro",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
+      "employerName": "Nome del datore di lavoro",
+      "businessDepartment": "Dipartimento commerciale",
       "email": "Email",
       "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "actions": "Azioni",
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "addNew": "Aggiungi Nuovo",
+      "uploadCsv": "Carica CSV",
+      "noResults": "Nessun risultato.",
+      "openMenu": "Apri menu",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "deleteDialogTitle": "Sei sicuro?",
+      "deleteDialogDescription": "Questa azione non può essere annullata. Questo eliminerà permanentemente il datore di lavoro",
+      "deleteDialogCancel": "Annulla",
+      "deleteDialogConfirm": "Elimina",
+      "deleting": "Eliminazione...",
+      "employerDeleted": "Datore di lavoro eliminato con successo",
+      "deleteFailed": "Impossibile eliminare il datore di lavoro",
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato con successo"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "Formulario del datore di lavoro",
+      "companyName": "Nome della società",
+      "companyNamePlaceholder": "Inserisci il nome della società",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
+      "misIdPlaceholder": "Inserisci il MIS ID",
       "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
+      "businessDepartmentPlaceholder": "Inserisci il dipartimento commerciale",
+      "businessLocation": "Location commerciale",
+      "businessLocationPlaceholder": "Inserisci la location commerciale",
       "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
+      "branchCodePlaceholder": "Inserisci il codice della branch",
+      "address1": "Indirizzo 1",
       "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
+      "address2": "Indirizzo 2",
+      "address2Placeholder": "Inserisci l'indirizzo 2",
       "town": "Town",
-      "townPlaceholder": "Enter town",
-      "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
-      "countryPlaceholder": "Enter country",
+      "townPlaceholder": "Inserisci la città",
+      "county": "Provincia",
+      "countyPlaceholder": "Inserisci la provincia",
+      "country": "Nazione",
+      "countryPlaceholder": "Inserisci la nazione",
       "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
+      "postcodePlaceholder": "Inserisci il codice postale",
+      "businessCategory": "Categoria commerciale",
+      "businessCategoryPlaceholder": "Seleziona la categoria commerciale",
+      "numberOfEmployees": "Numero di dipendenti",
+      "numberOfEmployeesPlaceholder": "Inserisci il numero di dipendenti",
       "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
+      "telephonePlaceholder": "Inserisci il telefono",
       "website": "Website",
-      "websitePlaceholder": "Enter website",
+      "websitePlaceholder": "Inserisci il sito web",
       "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
+      "keyContactNamePlaceholder": "Inserisci il nome del contatto chiave",
       "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
+      "keyContactNumberPlaceholder": "Inserisci il numero del contatto chiave",
       "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "emailPlaceholder": "Inserisci l'email",
+      "businessDescription": "Descrizione commerciale",
+      "businessDescriptionPlaceholder": "Inserisci la descrizione commerciale",
+      "comments": "Commenti",
+      "commentsPlaceholder": "Inserisci i commenti",
+      "assessmentDate": "Data di valutazione",
+      "assessmentRenewalDate": "Data di rinnovo della valutazione",
+      "insuranceRenewalDate": "Data di rinnovo dell'assicurazione",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "Crea datore di lavoro",
+      "updateEmployer": "Aggiorna datore di lavoro"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
+      "companyNameRequired": "Il nome della società è obbligatorio",
+      "misIdRequired": "Il MIS ID è obbligatorio",
       "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "address2Required": "L'indirizzo 2 è obbligatorio",
+      "townRequired": "La città è obbligatoria",
+      "countyRequired": "La provincia è obbligatoria",
+      "countryRequired": "La nazione è obbligatoria",
+      "postcodeRequired": "Il codice postale è obbligatorio",
+      "emailInvalid": "Indirizzo email non valido"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "Datore di lavoro creato con successo",
+      "employerUpdated": "Datore di lavoro aggiornato con successo",
+      "employerDeleted": "Datore di lavoro eliminato con successo",
+      "createFailed": "Impossibile creare il datore di lavoro",
+      "updateFailed": "Impossibile aggiornare il datore di lavoro",
+      "deleteFailed": "Impossibile eliminare il datore di lavoro"
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "Gestione amministratore",
+    "pageSubtitle": "Gestisci tutte le funzioni amministrative e le configurazioni del sistema",
     "modules": {
       "userManagement": {
-        "title": "User Management",
-        "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
+        "title": "Gestione utenti",
+        "description": "Gestisci efficientemente gli utenti con operazioni semplificate incluse add, delete, e update."
       },
       "learnerManagement": {
-        "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "title": "Gestione studenti",
+        "description": "Ottimizza la gestione degli studenti aggiungendo, aggiornando e eliminando studenti, mentre anche facilitando l'assegnazione di corsi, formatori, datori di lavoro, IQAs e EQAs."
       },
       "employerManagement": {
-        "title": "Employer Management",
-        "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
+        "title": "Gestione datori di lavoro",
+        "description": "Gestisci le informazioni dei datori di lavoro, aggiungi, aggiorna e elimina record dei datori di lavoro, e assegna studenti ai datori di lavoro."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
-        "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
+        "title": "Gestione messaggi di broadcast",
+        "description": "Crea e gestisci messaggi di broadcast, invia notifiche agli utenti, studenti o corsi specifici."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "Visualizza dettagli"
   },
   "awaitingSignature": {
     "pageTitle": "In attesa di firma",
-    "pageSubtitle": "File e documenti in attesa di firma da parte di formatori, studenti, datori di lavoro e IQA",
+    "pageSubtitle": "File e documenti in attesa di firma da parte di formatori, studenti, datori di lavoro e IQA.",
     "table": {
       "title": "Elenco elementi in attesa di firma",
       "errorTitle": "Errore",
@@ -552,19 +552,19 @@
     }
   },
   "calendar": {
-    "pageTitle": "Calendar",
-    "pageSubtitle": "Manage sessions and appointments"
+    "pageTitle": "Calendario",
+    "pageSubtitle": "Gestisci sessioni e appuntamenti"
   },
   "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
+    "pageTitle": "Gestione caseload",
+    "pageSubtitle": "Gestisci e visualizza responsabili di linea e i loro utenti assegnati",
+    "searchPlaceholder": "Cerca responsabili di linea per nome o email.",
+    "refresh": "Aggiorna",
+    "clear": "Cancella",
+    "noLineManagersFound": "Nessun responsabile di linea trovato",
+    "noLineManagersMatch": "Nessun responsabile di linea trovato",
+    "noLineManagersInSystem": "Non ci sono responsabili di linea nel sistema.",
+    "failedToLoad": "Impossibile caricare i dati del caseload. Riprova."
   },
   "forms": {
     "pageTitle": "Generatore di moduli",
@@ -2221,8 +2221,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "Gestione broadcast",
+    "pageSubtitle": "Crea e gestisci messaggi di broadcast e invia notifiche a utenti, discenti o corsi specifici",
+    "dialog": {
+      "createTitle": "Crea broadcast",
+      "editTitle": "Modifica broadcast",
+      "createDescription": "Compila le informazioni del broadcast nei campi sottostanti.",
+      "editDescription": "Aggiorna le informazioni del broadcast nei campi sottostanti."
+    },
+    "form": {
+      "titleLabel": "Titolo",
+      "descriptionLabel": "Descrizione",
+      "titlePlaceholder": "Inserisci il titolo del broadcast",
+      "descriptionPlaceholder": "Inserisci la descrizione del broadcast"
+    },
+    "buttons": {
+      "cancel": "Annulla",
+      "create": "Crea",
+      "update": "Aggiorna"
+    },
+    "validation": {
+      "titleRequired": "Il titolo è obbligatorio",
+      "descriptionRequired": "La descrizione è obbligatoria"
+    },
+    "toast": {
+      "createSuccess": "Broadcast creato correttamente",
+      "updateSuccess": "Broadcast aggiornato correttamente",
+      "createFailed": "Impossibile creare il broadcast",
+      "updateFailed": "Impossibile aggiornare il broadcast",
+      "deleteSuccess": "Broadcast eliminato correttamente",
+      "deleteFailed": "Impossibile eliminare il broadcast"
+    },
+    "dataTable": {
+      "title": "Titolo",
+      "description": "Descrizione",
+      "email": "E-mail",
+      "userName": "Nome utente",
+      "date": "Data",
+      "actions": "Azioni",
+      "broadcast": "Invia broadcast",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "openMenu": "Apri menu",
+      "searchPlaceholder": "Cerca per parola chiave...",
+      "clear": "Cancella",
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "addNew": "Aggiungi nuovo broadcast",
+      "noResults": "Nessun risultato.",
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExportSuccess": "CSV esportato correttamente",
+      "pdfExportComingSoon": "La funzionalità di esportazione PDF sarà disponibile a breve"
+    },
+    "deleteDialog": {
+      "title": "Sei sicuro?",
+      "description": "Questa azione non può essere annullata. Il broadcast \"{title}\" verrà eliminato in modo permanente.",
+      "delete": "Elimina",
+      "deleting": "Eliminazione in corso..."
+    },
+    "messageDialog": {
+      "title": "Messaggio di broadcast",
+      "description": "Seleziona il pubblico di destinazione per questo messaggio di broadcast.",
+      "readonly": {
+        "titleLabel": "Titolo:",
+        "descriptionLabel": "Descrizione:"
+      },
+      "target": {
+        "label": "Messaggio di broadcast agli utenti",
+        "all": "Tutti",
+        "allLearner": "Tutti i discenti",
+        "allEqa": "Tutti gli EQA",
+        "allTrainer": "Tutti i trainer",
+        "allEmployer": "Tutti i datori di lavoro",
+        "allIqa": "Tutti gli IQA",
+        "allLiqa": "Tutti i LIQA",
+        "individual": "Utenti specifici",
+        "qualification": "Qualifiche / corsi"
+      },
+      "individual": {
+        "selectUsers": "Seleziona utenti",
+        "loadingUsers": "Caricamento utenti...",
+        "selectUsersPlaceholder": "Seleziona utenti",
+        "noUsersFound": "Nessun utente trovato."
+      },
+      "qualification": {
+        "selectCourses": "Seleziona corsi",
+        "loadingCourses": "Caricamento corsi...",
+        "selectCoursesPlaceholder": "Seleziona corsi",
+        "noCoursesFound": "Nessun corso trovato.",
+        "comingSoon": "La selezione dei corsi sarà disponibile una volta integrata l'API dei corsi."
+      },
+      "validation": {
+        "selectUserOrCourse": "Seleziona almeno un utente o un corso"
+      },
+      "toast": {
+        "sendSuccess": "Messaggio di broadcast inviato correttamente",
+        "sendFailed": "Impossibile inviare il messaggio di broadcast"
+      },
+      "submit": "Invia broadcast"
+    }
   },
   "organisations": {
     "form": {

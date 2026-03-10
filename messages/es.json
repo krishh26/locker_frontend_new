@@ -85,6 +85,71 @@
       "adminSubtitle": "Optimice la administración de estudiantes añadiendo, actualizando y eliminando estudiantes, y facilitando la asignación de cursos, formadores, empleadores, IQA y EQA",
       "defaultSubtitle": "Gestione y supervise sus estudiantes asignados"
     },
+    "form": {
+      "firstNameLabel": "Nombre",
+      "firstNamePlaceholder": "Ingrese el nombre",
+      "lastNameLabel": "Apellido",
+      "lastNamePlaceholder": "Ingrese el apellido",
+      "usernameLabel": "Nombre de usuario",
+      "usernamePlaceholder": "Ingrese el nombre de usuario",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "Ingrese el correo electrónico",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Ingrese la contraseña",
+      "confirmPasswordLabel": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirme la contraseña",
+      "centreLabel": "Centro",
+      "centrePlaceholder": "Seleccione un centro",
+      "noCentresAvailable": "No hay centros disponibles para esta organización",
+      "mobileLabel": "Móvil",
+      "mobilePlaceholder": "Ingrese el número de móvil",
+      "employerLabel": "Empleador",
+      "employerPlaceholder": "Seleccione un empleador",
+      "loadingEmployers": "Cargando empleadores...",
+      "fundingBodyLabel": "Organismo financiador",
+      "fundingBodyPlaceholder": "Seleccione un organismo financiador",
+      "nationalInsuranceLabel": "Número de Seguro Nacional",
+      "nationalInsurancePlaceholder": "Ingrese el número de seguro nacional",
+      "jobTitleLabel": "Puesto de trabajo",
+      "jobTitlePlaceholder": "Ingrese el puesto de trabajo",
+      "commentLabel": "Comentario",
+      "commentPlaceholder": "Ingrese un comentario (opcional)",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "Advance Learning Loan",
+        "bursary": "Beca",
+        "commercial": "Comercial",
+        "communityLearning": "Aprendizaje comunitario",
+        "efa": "EFA",
+        "employer": "Empleador",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "Exención de tasas",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "Levy",
+        "maFullyFunded": "MA totalmente financiado",
+        "maEmployer": "MA-Empleador",
+        "nonLevy": "Non-Levy",
+        "other": "Otro",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-Empleador",
+        "saasSelf": "SAAS-Auto",
+        "sds": "SDS",
+        "self": "Particular",
+        "sfa": "SFA",
+        "studentLoan": "Préstamo estudiantil"
+      }
+    },
+    "formDialog": {
+      "titleCreate": "Crear nuevo estudiante",
+      "titleEdit": "Editar estudiante",
+      "descriptionCreate": "Complete el formulario a continuación para crear un nuevo estudiante.",
+      "descriptionEdit": "Actualice la información del estudiante a continuación.",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "saveChanges": "Guardar cambios",
+      "saving": "Guardando..."
+    },
     "table": {
       "eqaHeaders": {
         "name": "Nombre",
@@ -175,8 +240,69 @@
       }
     },
     "toast": {
+      "createSuccess": "Estudiante creado exitosamente",
+      "updateSuccess": "Estudiante actualizado exitosamente",
+      "createFailedGeneric": "Error al crear el estudiante",
+      "updateFailedGeneric": "Error al actualizar el estudiante",
       "deleteSuccess": "Estudiante eliminado exitosamente",
       "deleteFailedGeneric": "Error al eliminar el estudiante"
+    },
+    "csvUpload": {
+      "title": "Subir CSV de Estudiantes",
+      "description": "Sube datos de estudiantes en bloque utilizando el formato CSV",
+      "sample": {
+        "title": "¿Necesitas un CSV de ejemplo?",
+        "description": "Descarga nuestra plantilla con todos los campos obligatorios y datos de ejemplo para asegurar el formato correcto",
+        "button": "Descargar CSV de ejemplo"
+      },
+      "upload": {
+        "fileSize": "Tamaño del archivo: {size} MB",
+        "dragDrop": "Arrastra y suelta tu archivo CSV aquí o",
+        "browse": "Buscar",
+        "maxSize": "Se permiten archivos de hasta 10 MB",
+        "supportedFormats": "Formato admitido: solo CSV"
+      },
+      "summary": {
+        "ready": "estudiantes encontrados y listos para subir",
+        "formatted": "Todos los campos obligatorios están correctamente formateados"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "upload": "Subir Estudiantes",
+        "uploading": "Subiendo..."
+      },
+      "errors": {
+        "missingRequiredFields": "Faltan algunos datos de estudiantes. Verifica que cada fila incluya {fields}.",
+        "parseError": "Error al analizar el archivo CSV: {message}",
+        "noValidData": "No se encontraron datos válidos. Sube un archivo CSV correcto."
+      },
+      "toast": {
+        "success": "Estudiantes subidos exitosamente",
+        "failedGeneric": "Error al subir los estudiantes"
+      }
+    },
+    "commentDialog": {
+      "title": "Agregar/Editar comentario para {name}",
+      "description": "Actualiza el comentario para este estudiante. Este comentario será visible para administradores y formadores.",
+      "field": {
+        "label": "Comentario",
+        "placeholder": "Escribe tu comentario aquí..."
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar comentario"
+      },
+      "toast": {
+        "success": "Comentario actualizado correctamente",
+        "failedGeneric": "Error al actualizar el comentario"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "Último acceso",
+      "nextVisit": "Próxima visita",
+      "noComment": "Sin comentario",
+      "profile": "Perfil"
     }
   },
   "users": {
@@ -214,6 +340,10 @@
       "employersPlaceholder": "Seleccione empleadores",
       "loadingEmployers": "Cargando empleadores...",
       "noEmployersFound": "No se encontraron empleadores",
+      "lineManager": "Gerente de línea",
+      "lineManagerPlaceholder": "Seleccione un gerente de línea",
+      "noLineManagersAvailable": "No hay gerentes de línea disponibles",
+      "noLineManager": "Sin gerente de línea",
       "assignedLearners": "Aprendices Asignados",
       "assignedLearnersDescription": "Seleccione un curso para ver y gestionar los aprendices asignados para este usuario EQA",
       "selectLearners": "Seleccionar Aprendices",
@@ -2580,8 +2710,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Gestión de Difusión",
-    "pageSubtitle": "Cree y gestione mensajes de difusión, envíe notificaciones a usuarios, aprendices o cursos específicos"
+    "pageTitle": "Gestión de difusiones",
+    "pageSubtitle": "Cree y gestione mensajes de difusión y envíe notificaciones a usuarios, aprendices o cursos específicos",
+    "dialog": {
+      "createTitle": "Crear difusión",
+      "editTitle": "Editar difusión",
+      "createDescription": "Rellene la información de la difusión en los campos de abajo.",
+      "editDescription": "Actualice la información de la difusión en los campos de abajo."
+    },
+    "form": {
+      "titleLabel": "Título",
+      "descriptionLabel": "Descripción",
+      "titlePlaceholder": "Introduzca el título de la difusión",
+      "descriptionPlaceholder": "Introduzca la descripción de la difusión"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "update": "Actualizar"
+    },
+    "validation": {
+      "titleRequired": "El título es obligatorio",
+      "descriptionRequired": "La descripción es obligatoria"
+    },
+    "toast": {
+      "createSuccess": "Difusión creada correctamente",
+      "updateSuccess": "Difusión actualizada correctamente",
+      "createFailed": "No se pudo crear la difusión",
+      "updateFailed": "No se pudo actualizar la difusión",
+      "deleteSuccess": "Difusión eliminada correctamente",
+      "deleteFailed": "No se pudo eliminar la difusión"
+    },
+    "dataTable": {
+      "title": "Título",
+      "description": "Descripción",
+      "email": "Correo electrónico",
+      "userName": "Nombre de usuario",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "broadcast": "Enviar difusión",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "openMenu": "Abrir menú",
+      "searchPlaceholder": "Buscar por palabra clave...",
+      "clear": "Borrar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "addNew": "Añadir nueva difusión",
+      "noResults": "Sin resultados.",
+      "noDataToExport": "No hay datos para exportar",
+      "csvExportSuccess": "CSV exportado correctamente",
+      "pdfExportComingSoon": "La funcionalidad de exportar a PDF estará disponible pronto"
+    },
+    "messageDialog": {
+      "title": "Mensaje de difusión",
+      "description": "Selecciona el público objetivo para este mensaje de difusión.",
+      "readonly": {
+        "titleLabel": "Título:",
+        "descriptionLabel": "Descripción:"
+      },
+      "target": {
+        "label": "Mensaje de difusión a usuarios",
+        "all": "Todos",
+        "allLearner": "Todos los aprendices",
+        "allEqa": "Todos los EQA",
+        "allTrainer": "Todos los formadores",
+        "allEmployer": "Todos los empleadores",
+        "allIqa": "Todos los IQA",
+        "allLiqa": "Todos los LIQA",
+        "individual": "Usuarios individuales",
+        "qualification": "Cualificaciones / cursos"
+      },
+      "individual": {
+        "selectUsers": "Seleccionar usuarios",
+        "loadingUsers": "Cargando usuarios...",
+        "selectUsersPlaceholder": "Selecciona usuarios",
+        "noUsersFound": "No se encontraron usuarios."
+      },
+      "qualification": {
+        "selectCourses": "Seleccionar cursos",
+        "loadingCourses": "Cargando cursos...",
+        "selectCoursesPlaceholder": "Selecciona cursos",
+        "noCoursesFound": "No se encontraron cursos.",
+        "comingSoon": "La selección de cursos estará disponible cuando se integre la API de cursos."
+      },
+      "validation": {
+        "selectUserOrCourse": "Selecciona al menos un usuario o un curso"
+      },
+      "toast": {
+        "sendSuccess": "Mensaje de difusión enviado correctamente",
+        "sendFailed": "No se pudo enviar el mensaje de difusión"
+      },
+      "submit": "Enviar difusión"
+    },
+    "deleteDialog": {
+      "title": "¿Estás seguro?",
+      "description": "Esta acción no se puede deshacer. Esto eliminará de forma permanente la difusión \"{title}\".",
+      "delete": "Eliminar",
+      "deleting": "Eliminando..."
+    }
   },
   "organisations": {
     "page": {

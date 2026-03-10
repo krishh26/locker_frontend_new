@@ -24,40 +24,22 @@ import type { Broadcast } from "@/store/api/broadcast/types";
 import { toast } from "sonner";
 import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
+import { useTranslations } from "next-intl";
 
-const broadcastMessageSchema = z
-  .object({
-    target: z.enum([
-      "All",
-      "All Learner",
-      "All EQA",
-      "All Trainer",
-      "All Employer",
-      "All IQA",
-      "All LIQA",
-      "Individual",
-      "qualification",
-    ]),
-    user_ids: z.array(z.number()).optional(),
-    course_ids: z.array(z.number()).optional(),
-  })
-  .refine(
-    (data) => {
-      if (data.target === "Individual") {
-        return data.user_ids && data.user_ids.length > 0;
-      }
-      if (data.target === "qualification") {
-        return data.course_ids && data.course_ids.length > 0;
-      }
-      return true;
-    },
-    {
-      message: "Please select at least one user or course",
-      path: ["user_ids"],
-    }
-  );
-
-type BroadcastMessageFormValues = z.infer<typeof broadcastMessageSchema>;
+type BroadcastMessageFormValues = {
+  target:
+    | "All"
+    | "All Learner"
+    | "All EQA"
+    | "All Trainer"
+    | "All Employer"
+    | "All IQA"
+    | "All LIQA"
+    | "Individual"
+    | "qualification";
+  user_ids?: number[];
+  course_ids?: number[];
+};
 
 interface BroadcastMessageDialogProps {
   open: boolean;
@@ -75,6 +57,40 @@ export function BroadcastMessageDialog({
   const [selectedTarget, setSelectedTarget] = useState<string>("");
   const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
   const [selectedCourseIds, setSelectedCourseIds] = useState<number[]>([]);
+
+  const t = useTranslations("broadcast");
+
+  const broadcastMessageSchema = z
+    .object({
+      target: z.enum([
+        "All",
+        "All Learner",
+        "All EQA",
+        "All Trainer",
+        "All Employer",
+        "All IQA",
+        "All LIQA",
+        "Individual",
+        "qualification",
+      ]),
+      user_ids: z.array(z.number()).optional(),
+      course_ids: z.array(z.number()).optional(),
+    })
+    .refine(
+      (data) => {
+        if (data.target === "Individual") {
+          return data.user_ids && data.user_ids.length > 0;
+        }
+        if (data.target === "qualification") {
+          return data.course_ids && data.course_ids.length > 0;
+        }
+        return true;
+      },
+      {
+        message: t("messageDialog.validation.selectUserOrCourse"),
+        path: ["user_ids"],
+      }
+    );
 
   const [sendBroadcastMessage, { isLoading: isSending }] =
     useSendBroadcastMessageMutation();
@@ -173,7 +189,7 @@ export function BroadcastMessageDialog({
       }
 
       await sendBroadcastMessage(payload).unwrap();
-      toast.success("Broadcast message sent successfully");
+      toast.success(t("messageDialog.toast.sendSuccess"));
       onSuccess();
       onOpenChange(false);
     } catch (error: unknown) {
@@ -181,7 +197,9 @@ export function BroadcastMessageDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to send broadcast message");
+      toast.error(
+        errorMessage || t("messageDialog.toast.sendFailed")
+      );
     }
   };
 
@@ -199,9 +217,9 @@ export function BroadcastMessageDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Broadcast Message</DialogTitle>
+          <DialogTitle>{t("messageDialog.title")}</DialogTitle>
           <DialogDescription>
-            Select the target audience for this broadcast message.
+            {t("messageDialog.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -209,18 +227,22 @@ export function BroadcastMessageDialog({
           {/* Broadcast Info (Read-only) */}
           <div className="space-y-2 p-4 bg-muted rounded-lg">
             <div>
-              <Label className="text-sm font-semibold">Title:</Label>
+              <Label className="text-sm font-semibold">
+                {t("messageDialog.readonly.titleLabel")}
+              </Label>
               <p className="text-sm">{broadcast.title}</p>
             </div>
             <div>
-              <Label className="text-sm font-semibold">Description:</Label>
+              <Label className="text-sm font-semibold">
+                {t("messageDialog.readonly.descriptionLabel")}
+              </Label>
               <p className="text-sm">{broadcast.description}</p>
             </div>
           </div>
 
           {/* Target Selection */}
           <div className="space-y-4">
-            <Label>Broadcast Message to users</Label>
+            <Label>{t("messageDialog.target.label")}</Label>
             <Controller
               name="target"
               control={form.control}
@@ -236,59 +258,59 @@ export function BroadcastMessageDialog({
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All" id="all" />
                       <Label htmlFor="all" className="cursor-pointer">
-                        All
+                        {t("messageDialog.target.all")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All Learner" id="all-learner" />
                       <Label htmlFor="all-learner" className="cursor-pointer">
-                        All Learner
+                        {t("messageDialog.target.allLearner")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All EQA" id="all-eqa" />
                       <Label htmlFor="all-eqa" className="cursor-pointer">
-                        All EQA
+                        {t("messageDialog.target.allEqa")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All Trainer" id="all-trainer" />
                       <Label htmlFor="all-trainer" className="cursor-pointer">
-                        All Trainer
+                        {t("messageDialog.target.allTrainer")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All Employer" id="all-employer" />
                       <Label htmlFor="all-employer" className="cursor-pointer">
-                        All Employer
+                        {t("messageDialog.target.allEmployer")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All IQA" id="all-iqa" />
                       <Label htmlFor="all-iqa" className="cursor-pointer">
-                        All IQA
+                        {t("messageDialog.target.allIqa")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="All LIQA" id="all-liqa" />
                       <Label htmlFor="all-liqa" className="cursor-pointer">
-                        All LIQA
+                        {t("messageDialog.target.allLiqa")}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="Individual" id="individual" />
                       <Label htmlFor="individual" className="cursor-pointer">
-                        Individual
+                        {t("messageDialog.target.individual")}
                       </Label>
                     </div>
                     {selectedTarget === "Individual" && (
                       <div className="ml-6 space-y-2">
-                        <Label>Select Users</Label>
+                        <Label>{t("messageDialog.individual.selectUsers")}</Label>
                         {isUsersLoading ? (
                           <div className="flex items-center gap-2">
                             <Loader2 className="h-4 w-4 animate-spin" />
                             <span className="text-sm text-muted-foreground">
-                              Loading users...
+                              {t("messageDialog.individual.loadingUsers")}
                             </span>
                           </div>
                         ) : (
@@ -298,10 +320,12 @@ export function BroadcastMessageDialog({
                             )}
                             options={userOptions}
                             onChange={handleUserSelection}
-                            placeholder="Select users"
+                            placeholder={t(
+                              "messageDialog.individual.selectUsersPlaceholder"
+                            )}
                             emptyIndicator={
                               <p className="text-center text-sm text-muted-foreground">
-                                No users found.
+                                {t("messageDialog.individual.noUsersFound")}
                               </p>
                             }
                           />
@@ -316,17 +340,17 @@ export function BroadcastMessageDialog({
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="qualification" id="qualification" />
                       <Label htmlFor="qualification" className="cursor-pointer">
-                        Qualification
+                        {t("messageDialog.target.qualification")}
                       </Label>
                     </div>
                     {selectedTarget === "qualification" && (
                       <div className="ml-6 space-y-2">
-                        <Label>Select Courses</Label>
+                        <Label>{t("messageDialog.qualification.selectCourses")}</Label>
                         {isLoadingCourses ? (
                           <div className="flex items-center gap-2">
                             <Loader2 className="h-4 w-4 animate-spin" />
                             <span className="text-sm text-muted-foreground">
-                              Loading courses...
+                              {t("messageDialog.qualification.loadingCourses")}
                             </span>
                           </div>
                         ) : courseOptions.length > 0 ? (
@@ -336,17 +360,18 @@ export function BroadcastMessageDialog({
                             )}
                             options={courseOptions}
                             onChange={handleCourseSelection}
-                            placeholder="Select courses"
+                            placeholder={t(
+                              "messageDialog.qualification.selectCoursesPlaceholder"
+                            )}
                             emptyIndicator={
                               <p className="text-center text-sm text-muted-foreground">
-                                No courses found.
+                                {t("messageDialog.qualification.noCoursesFound")}
                               </p>
                             }
                           />
                         ) : (
                           <p className="text-sm text-muted-foreground">
-                            Course selection will be available once the course API is
-                            integrated.
+                            {t("messageDialog.qualification.comingSoon")}
                           </p>
                         )}
                         {form.formState.errors.course_ids && (
@@ -374,11 +399,11 @@ export function BroadcastMessageDialog({
               onClick={() => onOpenChange(false)}
               disabled={isSending}
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
             <Button type="submit" disabled={isSending || !isFormValid}>
               {isSending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Broadcast
+              {t("messageDialog.submit")}
             </Button>
           </DialogFooter>
         </form>

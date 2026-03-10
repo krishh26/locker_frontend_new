@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import type { Support } from "@/store/api/support/types"
+import { useTranslations } from "next-intl"
 
 interface SupportDeleteDialogProps {
   open: boolean
@@ -27,24 +28,33 @@ export function SupportDeleteDialog({
   onConfirm,
   isLoading,
 }: SupportDeleteDialogProps) {
+  const t = useTranslations("support")
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Support?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("deleteDialog.title")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Deleting this support request will also remove all associated data and
-            relationships. Proceed with deletion?
+            {t("deleteDialog.description", {
+              title: support?.title ?? "",
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            {t("deleteDialog.cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             disabled={isLoading}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {isLoading ? "Deleting..." : "Delete Support"}
+            {isLoading
+              ? t("deleteDialog.deleting")
+              : t("deleteDialog.confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -65,6 +65,32 @@ const fundingBodies = [
   "Student Loan",
 ];
 
+const fundingBodyLabelKeyMap: Record<string, string> = {
+  "Advance Learning Loan": "fundingBodyOptions.advanceLearningLoan",
+  Bursary: "fundingBodyOptions.bursary",
+  Commercial: "fundingBodyOptions.commercial",
+  "Community Learning": "fundingBodyOptions.communityLearning",
+  EFA: "fundingBodyOptions.efa",
+  Employer: "fundingBodyOptions.employer",
+  ESF: "fundingBodyOptions.esf",
+  ESFA: "fundingBodyOptions.esfa",
+  "Fee Waiver": "fundingBodyOptions.feeWaiver",
+  FWDF: "fundingBodyOptions.fwdf",
+  ITA: "fundingBodyOptions.ita",
+  Levy: "fundingBodyOptions.levy",
+  "MA Fully Funded": "fundingBodyOptions.maFullyFunded",
+  "MA-Employer": "fundingBodyOptions.maEmployer",
+  "Non-Levy": "fundingBodyOptions.nonLevy",
+  Other: "fundingBodyOptions.other",
+  SAAS: "fundingBodyOptions.saas",
+  "SAAS-Employer": "fundingBodyOptions.saasEmployer",
+  "SAAS-Self": "fundingBodyOptions.saasSelf",
+  SDS: "fundingBodyOptions.sds",
+  Self: "fundingBodyOptions.self",
+  SFA: "fundingBodyOptions.sfa",
+  "Student Loan": "fundingBodyOptions.studentLoan",
+};
+
 const EMPLOYER_PLACEHOLDER_VALUE = "__none__";
 
 const createLearnerSchema = z
@@ -673,7 +699,9 @@ export function LearnersFormDialog({
                       <SelectContent>
                         {fundingBodies.map((body) => (
                           <SelectItem key={body} value={body}>
-                            {body}
+                            {fundingBodyLabelKeyMap[body]
+                              ? tForm(fundingBodyLabelKeyMap[body])
+                              : body}
                           </SelectItem>
                         ))}
                       </SelectContent>

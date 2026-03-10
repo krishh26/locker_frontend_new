@@ -366,124 +366,124 @@
     "pdfExportInfo": "PDF-Export-Funktion wird implementiert"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "Arbeitgeberverwaltung ",
+    "pageSubtitle": "Verwalten Sie Arbeitgeberinformationen, fügen Sie hinzu, aktualisieren und löschen Sie Arbeitgeberdatensätze und weisen Sie Lernende Arbeitgebern zu",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
-      "email": "Email",
-      "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "employerName": "Arbeitgebername",
+      "businessDepartment": "Geschäftsbereich",
+      "email": "E-Mail",
+      "mobile": "Mobil",
+      "actions": "Aktionen",
+      "searchPlaceholder": "Nach Stichwort suchen...",
+      "clear": "Löschen",
+      "export": "Exportieren",
+      "addNew": "Neu hinzufügen",
+      "uploadCsv": "CSV hochladen",
+      "noResults": "Keine Ergebnisse.",
+      "openMenu": "Menü öffnen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "deleteDialogTitle": "Sind Sie sicher?",
+      "deleteDialogDescription": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird den Arbeitgeber dauerhaft löschen",
+      "deleteDialogCancel": "Abbrechen",
+      "deleteDialogConfirm": "Löschen",
+      "deleting": "Wird gelöscht...",
+      "employerDeleted": "Arbeitgeber erfolgreich gelöscht",
+      "deleteFailed": "Arbeitgeber konnte nicht gelöscht werden",
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "Arbeitgeber-Formular",
+      "companyName": "Firmenname",
+      "companyNamePlaceholder": "Firmenname eingeben",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
-      "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
-      "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
-      "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
-      "town": "Town",
-      "townPlaceholder": "Enter town",
+      "misIdPlaceholder": "MIS ID eingeben",
+      "businessDepartment": "Geschäftsbereich",
+      "businessDepartmentPlaceholder": "Geschäftsbereich eingeben",
+      "businessLocation": "Geschäftssitz",
+      "businessLocationPlaceholder": "Geschäftssitz eingeben",
+      "branchCode": "Zweigcode",
+      "branchCodePlaceholder": "Zweigcode eingeben",
+      "address1": "Adresse 1",
+      "address1Placeholder": "Adresse 1 eingeben",
+      "address2": "Adresse 2",
+      "address2Placeholder": "Adresse 2 eingeben",
+      "town": "Stadt",
+      "townPlaceholder": "Stadt eingeben",
       "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
-      "countryPlaceholder": "Enter country",
+      "countyPlaceholder": "Landkreis eingeben",
+      "country": "Land",
+      "countryPlaceholder": "Land eingeben",
       "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
-      "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
+      "postcodePlaceholder": "Postleitzahl eingeben",
+      "businessCategory": "Geschäftskategorie",
+      "businessCategoryPlaceholder": "Geschäftskategorie auswählen",
+      "numberOfEmployees": "Anzahl der Mitarbeiter",
+      "numberOfEmployeesPlaceholder": "Anzahl der Mitarbeiter eingeben",
+      "telephone": "Telefon", 
+      "telephonePlaceholder": "Telefon eingeben",
       "website": "Website",
-      "websitePlaceholder": "Enter website",
-      "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
-      "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
-      "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "websitePlaceholder": "Website eingeben",
+      "keyContactName": "Schlüsselkontaktname",
+      "keyContactNamePlaceholder": "Schlüsselkontaktname eingeben",
+      "keyContactNumber": "Schlüsselkontaktnummer",
+      "keyContactNumberPlaceholder": "Schlüsselkontaktnummer eingeben",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail eingeben",
+      "businessDescription": "Geschäftsbeschreibung",
+      "businessDescriptionPlaceholder": "Geschäftsbeschreibung eingeben",
+      "comments": "Kommentare",
+      "commentsPlaceholder": "Kommentare eingeben",
+      "assessmentDate": "Bewertungsdatum",
+      "assessmentRenewalDate": "Bewertungsneuprüfungsdatum",
+      "insuranceRenewalDate": "Versicherungsneuprüfungsdatum",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "Arbeitgeber erstellen",
+      "updateEmployer": "Arbeitgeber aktualisieren"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
+      "companyNameRequired": "Firmenname ist erforderlich",
+      "misIdRequired": "MIS ID ist erforderlich",
       "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "address2Required": "Adresse 2 ist erforderlich",
+      "townRequired": "Stadt ist erforderlich",
+      "countyRequired": "Landkreis ist erforderlich",
+      "countryRequired": "Land ist erforderlich",
+      "postcodeRequired": "Postleitzahl ist erforderlich",
+      "emailInvalid": "Ungültige E-Mail-Adresse"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "Arbeitgeber erfolgreich erstellt",
+      "employerUpdated": "Arbeitgeber erfolgreich aktualisiert",
+      "employerDeleted": "Arbeitgeber erfolgreich gelöscht",
+      "createFailed": "Arbeitgeber konnte nicht erstellt werden",
+      "updateFailed": "Arbeitgeber konnte nicht aktualisiert werden",
+      "deleteFailed": "Arbeitgeber konnte nicht gelöscht werden"
     }
   },
   "admin": {
-    "pageTitle": "Admin Management",
-    "pageSubtitle": "Manage all administrative functions and system configurations",
+    "pageTitle": "Adminverwaltung",
+    "pageSubtitle": "Verwalten Sie alle administrativen Funktionen und Systemkonfigurationen",
     "modules": {
       "userManagement": {
-        "title": "User Management",
+        "title": "Benutzerverwaltung",
         "description": "Efficiently manage users with streamlined operations including add, delete, and update functionalities."
       },
       "learnerManagement": {
-        "title": "Learner Management",
+        "title": "Lernende verwalten",
         "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
       },
       "employerManagement": {
-        "title": "Employer Management",
+        "title": "Arbeitgeberverwaltung",
         "description": "Manage employer information, add, update, and delete employer records, and assign learners to employers."
       },
       "broadcastManagement": {
-        "title": "Broadcast Management",
+        "title": "Broadcast-Verwaltung",
         "description": "Create and manage broadcast messages, send notifications to users, learners, or specific courses."
       }
     },
-    "viewDetails": "View Details"
+    "viewDetails": "Details anzeigen"
   },
   "awaitingSignature": {
     "pageTitle": "Ausstehende Unterschriften",
@@ -2221,8 +2221,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "Broadcast-Verwaltung",
+    "pageSubtitle": "Broadcast-Nachrichten erstellen und verwalten, Benachrichtigungen an Benutzer, Lernende oder bestimmte Kurse senden",
+    "dialog": {
+      "createTitle": "Broadcast erstellen",
+      "editTitle": "Broadcast bearbeiten",
+      "createDescription": "Füllen Sie die Broadcast-Informationen in den Feldern unten aus.",
+      "editDescription": "Aktualisieren Sie die Broadcast-Informationen in den Feldern unten."
+    },
+    "form": {
+      "titleLabel": "Titel",
+      "descriptionLabel": "Beschreibung",
+      "titlePlaceholder": "Broadcast-Titel eingeben",
+      "descriptionPlaceholder": "Broadcast-Beschreibung eingeben"
+    },
+    "buttons": {
+      "cancel": "Abbrechen",
+      "create": "Erstellen",
+      "update": "Aktualisieren"
+    },
+    "validation": {
+      "titleRequired": "Titel ist erforderlich",
+      "descriptionRequired": "Beschreibung ist erforderlich"
+    },
+    "toast": {
+      "createSuccess": "Broadcast wurde erfolgreich erstellt",
+      "updateSuccess": "Broadcast wurde erfolgreich aktualisiert",
+      "createFailed": "Broadcast konnte nicht erstellt werden",
+      "updateFailed": "Broadcast konnte nicht aktualisiert werden",
+      "deleteSuccess": "Broadcast wurde erfolgreich gelöscht",
+      "deleteFailed": "Broadcast konnte nicht gelöscht werden"
+    },
+    "dataTable": {
+      "title": "Titel",
+      "description": "Beschreibung",
+      "email": "E-Mail",
+      "userName": "Benutzername",
+      "date": "Datum",
+      "actions": "Aktionen",
+      "broadcast": "Broadcast senden",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "openMenu": "Menü öffnen",
+      "searchPlaceholder": "Nach Stichwort suchen...",
+      "clear": "Zurücksetzen",
+      "export": "Exportieren",
+      "exportCsv": "Als CSV exportieren",
+      "exportPdf": "Als PDF exportieren",
+      "addNew": "Neuen Broadcast hinzufügen",
+      "noResults": "Keine Ergebnisse.",
+      "noDataToExport": "Keine Daten zum Exportieren vorhanden",
+      "csvExportSuccess": "CSV wurde erfolgreich exportiert",
+      "pdfExportComingSoon": "Die PDF-Exportfunktion wird demnächst implementiert"
+    },
+    "messageDialog": {
+      "title": "Broadcast-Nachricht",
+      "description": "Wählen Sie die Zielgruppe für diese Broadcast-Nachricht aus.",
+      "readonly": {
+        "titleLabel": "Titel:",
+        "descriptionLabel": "Beschreibung:"
+      },
+      "target": {
+        "label": "Broadcast-Nachricht an Benutzer",
+        "all": "Alle",
+        "allLearner": "Alle Lernenden",
+        "allEqa": "Alle EQA",
+        "allTrainer": "Alle Trainer",
+        "allEmployer": "Alle Arbeitgeber",
+        "allIqa": "Alle IQA",
+        "allLiqa": "Alle LIQA",
+        "individual": "Einzelne Benutzer",
+        "qualification": "Qualifikationen / Kurse"
+      },
+      "individual": {
+        "selectUsers": "Benutzer auswählen",
+        "loadingUsers": "Benutzer werden geladen...",
+        "selectUsersPlaceholder": "Benutzer auswählen",
+        "noUsersFound": "Keine Benutzer gefunden."
+      },
+      "qualification": {
+        "selectCourses": "Kurse auswählen",
+        "loadingCourses": "Kurse werden geladen...",
+        "selectCoursesPlaceholder": "Kurse auswählen",
+        "noCoursesFound": "Keine Kurse gefunden.",
+        "comingSoon": "Die Kursauswahl ist verfügbar, sobald die Kurs-API integriert ist."
+      },
+      "validation": {
+        "selectUserOrCourse": "Bitte wählen Sie mindestens einen Benutzer oder einen Kurs aus"
+      },
+      "toast": {
+        "sendSuccess": "Broadcast-Nachricht wurde erfolgreich gesendet",
+        "sendFailed": "Broadcast-Nachricht konnte nicht gesendet werden"
+      },
+      "submit": "Broadcast senden"
+    },
+    "deleteDialog": {
+      "title": "Sind Sie sicher?",
+      "description": "Dieser Vorgang kann nicht rückgängig gemacht werden. Der Broadcast „{title}“ wird dauerhaft gelöscht.",
+      "delete": "Löschen",
+      "deleting": "Wird gelöscht..."
+    }
   },
   "organisations": {
     "form": {

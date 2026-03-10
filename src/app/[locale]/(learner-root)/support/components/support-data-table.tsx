@@ -49,11 +49,14 @@ import type { Support } from "@/store/api/support/types"
 import { SupportDeleteDialog } from "./support-delete-dialog"
 import { SupportAddEditDialog } from "./support-add-edit-dialog"
 import { VariantProps } from "class-variance-authority"
+import { useTranslations } from "next-intl"
 
 export function SupportDataTable() {
   const user = useAppSelector((state) => state.auth.user)
   const isAdmin = user?.role === "Admin"
   const isEmployer = user?.role === "Employer"
+
+  const t = useTranslations("support")
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -148,14 +151,14 @@ export function SupportDataTable() {
     () => [
       {
         accessorKey: "title",
-        header: "Title",
+        header: t("table.columns.title"),
         cell: ({ row }: { row: { original: Support } }) => (
           <div className="font-medium max-w-[200px] truncate">{row.original.title}</div>
         ),
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.columns.description"),
         cell: ({ row }: { row: { original: Support } }) => (
           <div className="max-w-[300px] truncate text-muted-foreground">
             {row.original.description || "-"}
@@ -166,7 +169,7 @@ export function SupportDataTable() {
         ? [
             {
               accessorKey: "email",
-              header: "Email",
+              header: t("table.columns.email"),
               cell: ({ row }: { row: { original: Support } }) => (
                 <div className="max-w-[200px] truncate">
                   {row.original.request_id?.email || "-"}
@@ -175,7 +178,7 @@ export function SupportDataTable() {
             },
             {
               accessorKey: "user_name",
-              header: "User Name",
+              header: t("table.columns.userName"),
               cell: ({ row }: { row: { original: Support } }) => (
                 <div className="max-w-[200px] truncate">
                   {row.original.request_id?.user_name || "-"}
@@ -186,12 +189,12 @@ export function SupportDataTable() {
         : []),
       {
         accessorKey: "created_at",
-        header: "Date",
+        header: t("table.columns.date"),
         cell: ({ row }: { row: { original: Support } }) => formatDate(row.original.created_at),
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }: { row: { original: Support } }) => {
           const status = row.original.status
           return (
@@ -205,7 +208,7 @@ export function SupportDataTable() {
         ? [
             {
               id: "actions",
-              header: "Action",
+              header: t("table.columns.action"),
               cell: ({ row }: { row: { original: Support } }) => (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -220,7 +223,7 @@ export function SupportDataTable() {
                         disabled={!isAdmin && row.original.status === "Resolve"}
                       >
                         <Pencil className="mr-2 h-4 w-4" />
-                        Edit
+                        {t("table.actions.edit")}
                       </DropdownMenuItem>
                     )}
                     {!isEmployer && (
@@ -229,7 +232,7 @@ export function SupportDataTable() {
                         className="text-destructive"
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
+                        {t("table.actions.delete")}
                       </DropdownMenuItem>
                     )}
                   </DropdownMenuContent>
@@ -239,7 +242,7 @@ export function SupportDataTable() {
           ]
         : []),
     ],
-    [isAdmin, isEmployer, handleEdit, handleDeleteClick]
+    [isAdmin, isEmployer, handleEdit, handleDeleteClick, t]
   )
 
   const table = useReactTable({
@@ -266,8 +269,20 @@ export function SupportDataTable() {
   const handleExportCSV = () => {
     const data = supportData?.data || []
     const headers = isAdmin
-      ? ["Title", "Description", "Email", "User Name", "Date", "Status"]
-      : ["Title", "Description", "Date", "Status"]
+      ? [
+          t("table.columns.title"),
+          t("table.columns.description"),
+          t("table.columns.email"),
+          t("table.columns.userName"),
+          t("table.columns.date"),
+          t("table.columns.status"),
+        ]
+      : [
+          t("table.columns.title"),
+          t("table.columns.description"),
+          t("table.columns.date"),
+          t("table.columns.status"),
+        ]
     const rows = data.map((support) =>
       isAdmin
         ? [
@@ -303,7 +318,7 @@ export function SupportDataTable() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-    toast.success("CSV exported successfully")
+    toast.success(t("table.csvExportSuccess"))
   }
 
   return (
@@ -313,7 +328,7 @@ export function SupportDataTable() {
         {!isAdmin && (
           <Button onClick={handleAddClick} className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Request
+            {t("table.addRequest")}
           </Button>
         )}
       </div>
@@ -344,7 +359,7 @@ export function SupportDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  {t("table.loading")}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -369,7 +384,7 @@ export function SupportDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No support requests found.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

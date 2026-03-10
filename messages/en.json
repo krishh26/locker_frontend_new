@@ -113,7 +113,32 @@
       "jobTitleLabel": "Job Title",
       "jobTitlePlaceholder": "Enter job title",
       "commentLabel": "Comment",
-      "commentPlaceholder": "Enter comment (optional)"
+      "commentPlaceholder": "Enter comment (optional)",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "Advance Learning Loan",
+        "bursary": "Bursary",
+        "commercial": "Commercial",
+        "communityLearning": "Community Learning",
+        "efa": "EFA",
+        "employer": "Employer",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "Fee Waiver",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "Levy",
+        "maFullyFunded": "MA Fully Funded",
+        "maEmployer": "MA-Employer",
+        "nonLevy": "Non-Levy",
+        "other": "Other",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-Employer",
+        "saasSelf": "SAAS-Self",
+        "sds": "SDS",
+        "self": "Self",
+        "sfa": "SFA",
+        "studentLoan": "Student Loan"
+      }
     },
     "formDialog": {
       "titleCreate": "Create New Learner",
@@ -2306,6 +2331,74 @@
       "updateFailed": "Failed to update resource"
     }
   },
+  "support": {
+    "pageTitle": "Support",
+    "pageSubtitle": "Submit and manage support requests",
+    "table": {
+      "columns": {
+        "title": "Title",
+        "description": "Description",
+        "email": "Email",
+        "userName": "User Name",
+        "date": "Date",
+        "status": "Status",
+        "action": "Action"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "addRequest": "Add Request",
+      "loading": "Loading...",
+      "noResults": "No support requests found.",
+      "csvExportSuccess": "CSV exported successfully"
+    },
+    "form": {
+      "titleAdd": "Add Request",
+      "titleEdit": "Edit Support Request",
+      "descriptionAdd": "Submit a new support request.",
+      "descriptionEdit": "Update the support request details.",
+      "fields": {
+        "titleLabel": "Title",
+        "titlePlaceholder": "Add your title",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Add your description",
+        "statusLabel": "Select Status",
+        "statusPlaceholder": "Select Status",
+        "status": {
+          "pending": "Pending",
+          "inProgress": "In Progress",
+          "reject": "Rejected",
+          "resolve": "Resolved"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "creating": "Creating...",
+        "updating": "Updating...",
+        "save": "Save",
+        "update": "Update"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "descriptionRequired": "Description is required"
+      },
+      "toast": {
+        "userIdNotFound": "User ID not found",
+        "createSuccess": "Support request created successfully!",
+        "updateSuccess": "Support request updated successfully!",
+        "createFailed": "Failed to create support request. Please try again.",
+        "updateFailed": "Failed to update support request. Please try again."
+      }
+    },
+    "deleteDialog": {
+      "title": "Delete Support?",
+      "description": "Deleting the support request \"{title}\" will also remove all associated data and relationships. Proceed with deletion?",
+      "cancel": "Cancel",
+      "confirm": "Delete Support",
+      "deleting": "Deleting..."
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
@@ -2902,7 +2995,105 @@
   },
   "broadcast": {
     "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses",
+    "dialog": {
+      "createTitle": "Create Broadcast",
+      "editTitle": "Edit Broadcast",
+      "createDescription": "Fill in the broadcast information below.",
+      "editDescription": "Update broadcast information below."
+    },
+    "form": {
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "titlePlaceholder": "Add your title",
+      "descriptionPlaceholder": "Add your description"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "descriptionRequired": "Description is required"
+    },
+    "toast": {
+      "createSuccess": "Broadcast created successfully",
+      "updateSuccess": "Broadcast updated successfully",
+      "createFailed": "Failed to create broadcast",
+      "updateFailed": "Failed to update broadcast",
+      "deleteSuccess": "Broadcast deleted successfully",
+      "deleteFailed": "Failed to delete broadcast"
+    },
+    "dataTable": {
+      "title": "Title",
+      "description": "Description",
+      "email": "Email",
+      "userName": "User Name",
+      "date": "Date",
+      "actions": "Actions",
+      "broadcast": "Broadcast",
+      "edit": "Edit",
+      "delete": "Delete",
+      "openMenu": "Open menu",
+      "searchPlaceholder": "Search by keyword...",
+      "clear": "Clear",
+      "export": "Export",
+      "exportCsv": "Export as CSV",
+      "exportPdf": "Export as PDF",
+      "addNew": "Add New",
+      "noResults": "No results.",
+      "noDataToExport": "No data to export",
+      "csvExportSuccess": "CSV exported successfully",
+      "pdfExportComingSoon": "PDF export functionality will be implemented soon"
+    },
+    "messageDialog": {
+      "title": "Broadcast Message",
+      "description": "Select the target audience for this broadcast message.",
+      "readonly": {
+        "titleLabel": "Title:",
+        "descriptionLabel": "Description:"
+      },
+      "target": {
+        "label": "Broadcast message to users",
+        "all": "All",
+        "allLearner": "All Learner",
+        "allEqa": "All EQA",
+        "allTrainer": "All Trainer",
+        "allEmployer": "All Employer",
+        "allIqa": "All IQA",
+        "allLiqa": "All LIQA",
+        "individual": "Individual",
+        "qualification": "Qualification"
+      },
+      "individual": {
+        "selectUsers": "Select Users",
+        "loadingUsers": "Loading users...",
+        "selectUsersPlaceholder": "Select users",
+        "noUsersFound": "No users found."
+      },
+      "qualification": {
+        "selectCourses": "Select Courses",
+        "loadingCourses": "Loading courses...",
+        "selectCoursesPlaceholder": "Select courses",
+        "noCoursesFound": "No courses found.",
+        "comingSoon": "Course selection will be available once the course API is integrated."
+      },
+      "validation": {
+        "selectUserOrCourse": "Please select at least one user or course"
+      },
+      "toast": {
+        "sendSuccess": "Broadcast message sent successfully",
+        "sendFailed": "Failed to send broadcast message"
+      },
+      "submit": "Broadcast"
+    },
+    "deleteDialog": {
+      "title": "Are you sure?",
+      "description": "This action cannot be undone. This will permanently delete the broadcast \"{title}\".",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    }
   },
   "organisations": {
     "page": {

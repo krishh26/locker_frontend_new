@@ -85,6 +85,71 @@
       "adminSubtitle": "قم بتحسين إدارة المتعلمين عن طريق إضافة المتعلمين وتحديثهم وحذفهم بسهولة، مع تسهيل إسناد الدورات والمدربين وأصحاب العمل و IQA و EQA",
       "defaultSubtitle": "إدارة ومتابعة المتعلمين المعيّنين لك"
     },
+    "form": {
+      "firstNameLabel": "الاسم الأول",
+      "firstNamePlaceholder": "أدخل الاسم الأول",
+      "lastNameLabel": "اسم العائلة",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "usernameLabel": "اسم المستخدم",
+      "usernamePlaceholder": "أدخل اسم المستخدم",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل البريد الإلكتروني",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "confirmPasswordLabel": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أكّد كلمة المرور",
+      "centreLabel": "المركز",
+      "centrePlaceholder": "اختر مركزًا",
+      "noCentresAvailable": "لا توجد مراكز متاحة لهذه المؤسسة",
+      "mobileLabel": "رقم الجوال",
+      "mobilePlaceholder": "أدخل رقم الجوال",
+      "employerLabel": "صاحب العمل",
+      "employerPlaceholder": "اختر صاحب العمل",
+      "loadingEmployers": "جاري تحميل أصحاب العمل...",
+      "fundingBodyLabel": "جهة التمويل",
+      "fundingBodyPlaceholder": "اختر جهة التمويل",
+      "nationalInsuranceLabel": "رقم التأمين الوطني",
+      "nationalInsurancePlaceholder": "أدخل رقم التأمين الوطني",
+      "jobTitleLabel": "المسمى الوظيفي",
+      "jobTitlePlaceholder": "أدخل المسمى الوظيفي",
+      "commentLabel": "ملاحظة",
+      "commentPlaceholder": "أدخل ملاحظة (اختياري)",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "Advance Learning Loan",
+        "bursary": "منحة",
+        "commercial": "تجاري",
+        "communityLearning": "تعليم مجتمعي",
+        "efa": "EFA",
+        "employer": "صاحب العمل",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "إعفاء من الرسوم",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "Levy",
+        "maFullyFunded": "MA ممول بالكامل",
+        "maEmployer": "MA-صاحب العمل",
+        "nonLevy": "Non-Levy",
+        "other": "أخرى",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-صاحب العمل",
+        "saasSelf": "SAAS-ذاتي",
+        "sds": "SDS",
+        "self": "ذاتي",
+        "sfa": "SFA",
+        "studentLoan": "قرض طلابي"
+      }
+    },
+    "formDialog": {
+      "titleCreate": "إنشاء متعلم جديد",
+      "titleEdit": "تعديل المتعلم",
+      "descriptionCreate": "املأ النموذج أدناه لإنشاء متعلم جديد.",
+      "descriptionEdit": "حدّث بيانات المتعلم أدناه.",
+      "cancel": "إلغاء",
+      "create": "إنشاء",
+      "saveChanges": "حفظ التغييرات",
+      "saving": "جاري الحفظ..."
+    },
     "table": {
       "eqaHeaders": {
         "name": "الاسم",
@@ -177,6 +242,63 @@
     "toast": {
       "deleteSuccess": "تم حذف المتعلم بنجاح",
       "deleteFailedGeneric": "فشل في حذف المتعلم"
+    },
+    "csvUpload": {
+      "title": "رفع ملف CSV للمتعلمين",
+      "description": "قم برفع بيانات المتعلمين دفعة واحدة باستخدام تنسيق CSV",
+      "sample": {
+        "title": "تحتاج إلى CSV نموذجي؟",
+        "description": "قم بتنزيل القالب الخاص بنا الذي يحتوي على جميع الحقول المطلوبة وبيانات نموذجية لضمان التنسيق الصحيح",
+        "button": "تنزيل ملف CSV النموذجي"
+      },
+      "upload": {
+        "fileSize": "حجم الملف: {size} ميجابايت",
+        "dragDrop": "اسحب وأسقط ملف CSV هنا أو",
+        "browse": "استعراض",
+        "maxSize": "الحد الأقصى المسموح به هو 10 ميجابايت",
+        "supportedFormats": "التنسيق المدعوم: CSV فقط"
+      },
+      "summary": {
+        "ready": "تم العثور على متعلمين وجاهزون للرفع",
+        "formatted": "تم تنسيق جميع الحقول المطلوبة بشكل صحيح"
+      },
+      "actions": {
+        "cancel": "إلغاء",
+        "upload": "رفع المتعلمين",
+        "uploading": "جاري الرفع..."
+      },
+      "errors": {
+        "missingRequiredFields": "بعض بيانات المتعلمين مفقودة. يرجى التحقق من أن كل صف يتضمن {fields}.",
+        "parseError": "حدث خطأ أثناء تحليل ملف CSV: {message}",
+        "noValidData": "لم يتم العثور على أي بيانات صالحة. يرجى رفع ملف CSV صحيح."
+      },
+      "toast": {
+        "success": "تم رفع المتعلمين بنجاح",
+        "failedGeneric": "فشل في رفع المتعلمين"
+      }
+    },
+    "commentDialog": {
+      "title": "إضافة/تعديل تعليق لـ {name}",
+      "description": "قم بتحديث التعليق لهذا المتعلم. سيكون هذا التعليق مرئيًا للمسؤولين والمدرّبين.",
+      "field": {
+        "label": "التعليق",
+        "placeholder": "اكتب تعليقك هنا..."
+      },
+      "actions": {
+        "cancel": "إلغاء",
+        "save": "حفظ التعليق"
+      },
+      "toast": {
+        "success": "تم تحديث التعليق بنجاح",
+        "failedGeneric": "فشل في تحديث التعليق"
+      }
+    },
+    "employerRow": {
+      "id": "المعرف",
+      "lastLogin": "آخر تسجيل دخول",
+      "nextVisit": "الزيارة القادمة",
+      "noComment": "لا يوجد تعليق",
+      "profile": "الملف الشخصي"
     }
   },
   "users": {
@@ -461,100 +583,100 @@
     "pdfExportInfo": "سيتم تنفيذ وظيفة تصدير PDF"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "إدارة أصحاب العمل",
+    "pageSubtitle": "إدارة بيانات أصحاب العمل، وإضافة وتحديث وحذف سجلاتهم، وتعيين المتعلمين لهم.",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
-      "email": "Email",
-      "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "employerName": "اسم صاحب العمل",
+      "businessDepartment": "قسم العمل",
+      "email": "البريد الإلكتروني",
+      "mobile": "الموبايل",
+      "actions": "الإجراءات",
+      "searchPlaceholder": "البحث بالكلمات الرئيسية...",
+      "clear": "مسح",
+      "export": "تصدير",
+      "addNew": "إضافة جديد",
+      "uploadCsv": "رفع CSV",
+      "noResults": "لا توجد نتائج.",
+      "openMenu": "فتح القائمة",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleteDialogTitle": "هل أنت متأكد؟",
+      "deleteDialogDescription": "هذا الإجراء لا يمكن التراجع عنه. سيتم حذف صاحب العمل بشكل دائم.",
+      "deleteDialogCancel": "إلغاء",
+      "deleteDialogConfirm": "حذف",
+      "deleting": "جاري الحذف...",
+      "employerDeleted": "تم حذف صاحب العمل بنجاح",
+      "deleteFailed": "فشل في حذف صاحب العمل",
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "نموذج صاحب العمل",
+      "companyName": "اسم الشركة",
+      "companyNamePlaceholder": "أدخل اسم الشركة",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
-      "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
-      "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
-      "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
-      "town": "Town",
-      "townPlaceholder": "Enter town",
-      "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
-      "countryPlaceholder": "Enter country",
-      "postcode": "Postcode",
+      "misIdPlaceholder": "أدخل معرف MIS",
+      "businessDepartment": "قسم العمل",
+      "businessDepartmentPlaceholder": "أدخل قسم العمل",
+      "businessLocation": "موقع العمل",
+      "businessLocationPlaceholder": "أدخل موقع العمل",
+      "branchCode": "رمز الفرع",
+      "branchCodePlaceholder": "أدخل رمز الفرع",
+      "address1": "العنوان 1",
+      "address1Placeholder": "أدخل العنوان 1",
+      "address2": "العنوان 2",
+      "address2Placeholder": "أدخل العنوان 2",
+      "town": "المدينة",
+      "townPlaceholder": "أدخل المدينة",
+      "county": "المقاطعة",
+      "countyPlaceholder": "أدخل المقاطعة",
+      "country": "البلد",
+      "countryPlaceholder": "أدخل البلد",
+      "postcode": "الرمز البريدي",
       "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
-      "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
-      "website": "Website",
-      "websitePlaceholder": "Enter website",
-      "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
-      "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
-      "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "businessCategory": "فئة العمل",
+      "businessCategoryPlaceholder": "اختر فئة العمل",
+      "numberOfEmployees": "عدد الموظفين",
+      "numberOfEmployeesPlaceholder": "أدخل عدد الموظفين",
+      "telephone": "الهاتف",
+      "telephonePlaceholder": "أدخل الهاتف",
+      "website": "الموقع الإلكتروني",
+      "websitePlaceholder": "أدخل الموقع الإلكتروني",
+      "keyContactName": "اسم الاتصال الرئيسي",
+      "keyContactNamePlaceholder": "أدخل اسم الاتصال الرئيسي",
+      "keyContactNumber": "رقم الاتصال الرئيسي",
+      "keyContactNumberPlaceholder": "أدخل رقم الاتصال الرئيسي",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل البريد الإلكتروني",
+      "businessDescription": "وصف العمل",
+      "businessDescriptionPlaceholder": "أدخل وصف العمل",
+      "comments": "التعليقات",
+      "commentsPlaceholder": "أدخل التعليقات",
+      "assessmentDate": "تاريخ التقييم",
+      "assessmentRenewalDate": "تاريخ تجديد التقييم",
+      "insuranceRenewalDate": "تاريخ تجديد التأمين",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "إنشاء صاحب العمل",
+      "updateEmployer": "تحديث صاحب العمل"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
-      "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "companyNameRequired": "اسم الشركة مطلوب",
+      "misIdRequired": "معرف MIS مطلوب",
+      "address1Required": "العنوان 1 مطلوب",
+      "address2Required": "العنوان 2 مطلوب",
+      "townRequired": "المدينة مطلوبة",
+      "countyRequired": "المقاطعة مطلوبة",
+      "countryRequired": "البلد مطلوب",
+      "postcodeRequired": "الرمز البريدي مطلوب",
+      "emailInvalid": "البريد الإلكتروني غير صالح"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "تم إنشاء صاحب العمل بنجاح",
+      "employerUpdated": "تم تحديث صاحب العمل بنجاح",
+      "employerDeleted": "تم حذف صاحب العمل بنجاح",
+      "createFailed": "فشل في إنشاء صاحب العمل",
+      "updateFailed": "فشل في تحديث صاحب العمل",
+      "deleteFailed": "فشل في حذف صاحب العمل"
     }
   },
   "admin": {
@@ -2669,8 +2791,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "إدارة البث",
+    "pageSubtitle": "إنشاء وإدارة رسائل البث، وإرسال الإشعارات للمستخدمين والمتعلمين أو الدورات المحددة",
+    "dialog": {
+      "createTitle": "إنشاء بث جديد",
+      "editTitle": "تعديل البث",
+      "createDescription": "املأ معلومات البث في الحقول أدناه.",
+      "editDescription": "حدّث معلومات البث في الحقول أدناه."
+    },
+    "form": {
+      "titleLabel": "العنوان",
+      "descriptionLabel": "الوصف",
+      "titlePlaceholder": "أدخل عنوان البث",
+      "descriptionPlaceholder": "أدخل وصف البث"
+    },
+    "buttons": {
+      "cancel": "إلغاء",
+      "create": "إنشاء",
+      "update": "تحديث"
+    },
+    "validation": {
+      "titleRequired": "العنوان مطلوب",
+      "descriptionRequired": "الوصف مطلوب"
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء البث بنجاح",
+      "updateSuccess": "تم تحديث البث بنجاح",
+      "createFailed": "فشل في إنشاء البث",
+      "updateFailed": "فشل في تحديث البث",
+      "deleteSuccess": "تم حذف البث بنجاح",
+      "deleteFailed": "فشل في حذف البث"
+    },
+    "dataTable": {
+      "title": "العنوان",
+      "description": "الوصف",
+      "email": "البريد الإلكتروني",
+      "userName": "اسم المستخدم",
+      "date": "التاريخ",
+      "actions": "الإجراءات",
+      "broadcast": "إرسال بث",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "openMenu": "فتح القائمة",
+      "searchPlaceholder": "ابحث بالكلمة المفتاحية...",
+      "clear": "مسح",
+      "export": "تصدير",
+      "exportCsv": "تصدير كملف CSV",
+      "exportPdf": "تصدير كملف PDF",
+      "addNew": "إضافة بث جديد",
+      "noResults": "لا توجد نتائج.",
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExportSuccess": "تم تصدير ملف CSV بنجاح",
+      "pdfExportComingSoon": "سيتم تنفيذ وظيفة تصدير PDF قريبًا"
+    },
+    "messageDialog": {
+      "title": "رسالة بث",
+      "description": "اختر الجمهور المستهدف لهذه رسالة البث.",
+      "readonly": {
+        "titleLabel": "العنوان:",
+        "descriptionLabel": "الوصف:"
+      },
+      "target": {
+        "label": "رسالة البث إلى المستخدمين",
+        "all": "الكل",
+        "allLearner": "جميع المتعلمين",
+        "allEqa": "جميع EQA",
+        "allTrainer": "جميع المدربين",
+        "allEmployer": "جميع أصحاب العمل",
+        "allIqa": "جميع IQA",
+        "allLiqa": "جميع LIQA",
+        "individual": "مستخدمون محددون",
+        "qualification": "المؤهلات / الدورات"
+      },
+      "individual": {
+        "selectUsers": "اختر المستخدمين",
+        "loadingUsers": "جارٍ تحميل المستخدمين...",
+        "selectUsersPlaceholder": "اختر المستخدمين",
+        "noUsersFound": "لم يتم العثور على مستخدمين."
+      },
+      "qualification": {
+        "selectCourses": "اختر الدورات",
+        "loadingCourses": "جارٍ تحميل الدورات...",
+        "selectCoursesPlaceholder": "اختر الدورات",
+        "noCoursesFound": "لم يتم العثور على دورات.",
+        "comingSoon": "سيتم إتاحة اختيار الدورات بعد ربط واجهة برمجة تطبيقات الدورات."
+      },
+      "validation": {
+        "selectUserOrCourse": "يرجى اختيار مستخدم واحد أو دورة واحدة على الأقل"
+      },
+      "toast": {
+        "sendSuccess": "تم إرسال رسالة البث بنجاح",
+        "sendFailed": "فشل في إرسال رسالة البث"
+      },
+      "submit": "إرسال البث"
+    },
+    "deleteDialog": {
+      "title": "هل أنت متأكد؟",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيؤدي ذلك إلى حذف البث \"{title}\" بشكل نهائي.",
+      "delete": "حذف",
+      "deleting": "جاري الحذف..."
+    }
   },
   "organisations": {
     "page": {

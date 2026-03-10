@@ -84,6 +84,71 @@
       "adminSubtitle": "Otimize a gestão de alunos adicionando, atualizando e excluindo alunos de forma simples, facilitando também a atribuição de cursos, formadores, empregadores, IQA e EQA",
       "defaultSubtitle": "Gira e acompanhe os seus alunos atribuídos"
     },
+    "form": {
+      "firstNameLabel": "Nome",
+      "firstNamePlaceholder": "Digite o nome",
+      "lastNameLabel": "Sobrenome",
+      "lastNamePlaceholder": "Digite o sobrenome",
+      "usernameLabel": "Nome de usuário",
+      "usernamePlaceholder": "Digite o nome de usuário",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Digite o e-mail",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite a senha",
+      "confirmPasswordLabel": "Confirmar Senha",
+      "confirmPasswordPlaceholder": "Confirme a senha",
+      "centreLabel": "Centro",
+      "centrePlaceholder": "Selecione o centro",
+      "noCentresAvailable": "Não há centros disponíveis para esta organização",
+      "mobileLabel": "Celular",
+      "mobilePlaceholder": "Digite o número do celular",
+      "employerLabel": "Empregador",
+      "employerPlaceholder": "Selecione o empregador",
+      "loadingEmployers": "Carregando empregadores...",
+      "fundingBodyLabel": "Entidade financiadora",
+      "fundingBodyPlaceholder": "Selecione a entidade financiadora",
+      "nationalInsuranceLabel": "Número de Segurança Social",
+      "nationalInsurancePlaceholder": "Digite o número de segurança social",
+      "jobTitleLabel": "Cargo",
+      "jobTitlePlaceholder": "Digite o cargo",
+      "commentLabel": "Comentário",
+      "commentPlaceholder": "Digite um comentário (opcional)",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "Advance Learning Loan",
+        "bursary": "Bolsa",
+        "commercial": "Comercial",
+        "communityLearning": "Aprendizagem comunitária",
+        "efa": "EFA",
+        "employer": "Empregador",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "Isenção de propinas",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "Levy",
+        "maFullyFunded": "MA totalmente financiado",
+        "maEmployer": "MA-Empregador",
+        "nonLevy": "Non-Levy",
+        "other": "Outro",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-Empregador",
+        "saasSelf": "SAAS-Próprio",
+        "sds": "SDS",
+        "self": "Particular",
+        "sfa": "SFA",
+        "studentLoan": "Empréstimo estudantil"
+      }
+    },
+    "formDialog": {
+      "titleCreate": "Criar novo aluno",
+      "titleEdit": "Editar aluno",
+      "descriptionCreate": "Preencha o formulário abaixo para criar um novo aluno.",
+      "descriptionEdit": "Atualize as informações do aluno abaixo.",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "saveChanges": "Guardar alterações",
+      "saving": "A guardar..."
+    },
     "table": {
       "eqaHeaders": {
         "name": "Nome",
@@ -174,8 +239,69 @@
       }
     },
     "toast": {
+      "createSuccess": "Aluno criado com sucesso",
+      "updateSuccess": "Aluno atualizado com sucesso",
+      "createFailedGeneric": "Falha ao criar o aluno",
+      "updateFailedGeneric": "Falha ao atualizar o aluno",
       "deleteSuccess": "Aluno excluído com sucesso",
       "deleteFailedGeneric": "Falha ao excluir o aluno"
+    },
+    "csvUpload": {
+      "title": "Carregar CSV de Alunos",
+      "description": "Carregue dados de alunos em massa utilizando o formato CSV",
+      "sample": {
+        "title": "Precisa de um CSV de exemplo?",
+        "description": "Descarregue o nosso modelo com todos os campos obrigatórios e dados de exemplo para garantir o formato correto",
+        "button": "Descarregar CSV de exemplo"
+      },
+      "upload": {
+        "fileSize": "Tamanho do ficheiro: {size} MB",
+        "dragDrop": "Arraste e largue o seu ficheiro CSV aqui ou",
+        "browse": "Procurar",
+        "maxSize": "São permitidos ficheiros até 10 MB",
+        "supportedFormats": "Formato suportado: apenas CSV"
+      },
+      "summary": {
+        "ready": "alunos encontrados e prontos para carregar",
+        "formatted": "Todos os campos obrigatórios estão corretamente formatados"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "upload": "Carregar Alunos",
+        "uploading": "A carregar..."
+      },
+      "errors": {
+        "missingRequiredFields": "Alguns dados de alunos estão em falta. Verifique se cada linha inclui {fields}.",
+        "parseError": "Erro ao analisar o ficheiro CSV: {message}",
+        "noValidData": "Não foram encontrados dados válidos. Carregue um ficheiro CSV correto."
+      },
+      "toast": {
+        "success": "Alunos carregados com sucesso",
+        "failedGeneric": "Falha ao carregar os alunos"
+      }
+    },
+    "commentDialog": {
+      "title": "Adicionar/Editar comentário para {name}",
+      "description": "Atualize o comentário para este aluno. Este comentário ficará visível para administradores e instrutores.",
+      "field": {
+        "label": "Comentário",
+        "placeholder": "Digite seu comentário aqui..."
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Salvar comentário"
+      },
+      "toast": {
+        "success": "Comentário atualizado com sucesso",
+        "failedGeneric": "Falha ao atualizar o comentário"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "Último acesso",
+      "nextVisit": "Próxima visita",
+      "noComment": "Sem comentário",
+      "profile": "Perfil"
     }
   },
   "users": {
@@ -213,6 +339,10 @@
       "employersPlaceholder": "Selecione empregadores",
       "loadingEmployers": "Carregando empregadores...",
       "noEmployersFound": "Nenhum empregador encontrado",
+      "lineManager": "Gerente de linha",
+      "lineManagerPlaceholder": "Selecione um gerente de linha",
+      "noLineManagersAvailable": "Nenhum gerente de linha disponível",
+      "noLineManager": "Nenhum gerente de linha",
       "assignedLearners": "Alunos Atribuídos",
       "assignedLearnersDescription": "Selecione um curso para visualizar e gerenciar alunos atribuídos para este usuário EQA",
       "selectLearners": "Selecionar Alunos",
@@ -459,101 +589,101 @@
     "csvExported": "CSV exportado com sucesso",
     "pdfExportInfo": "A funcionalidade de exportação PDF será implementada"
   },
-  "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+  "employers": {  
+    "pageTitle": "Gestão de empregadores",
+    "pageSubtitle": "Gerir informações de empregadores, adicionar, atualizar e remover registos e atribuir alunos a empregadores",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
-      "email": "Email",
-      "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "employerName": "Nome do empregador",
+      "businessDepartment": "Departamento comercial",
+      "email": "E-mail",
+      "mobile": "Celular",
+      "actions": "Ações",
+      "searchPlaceholder": "Pesquisar por palavra-chave...",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "addNew": "Adicionar Novo",
+      "uploadCsv": "Carregar CSV",
+      "noResults": "Nenhum resultado.",
+      "openMenu": "Abrir menu",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "deleteDialogTitle": "Tem certeza?",
+      "deleteDialogDescription": "Esta ação não pode ser desfeita. Isso excluirá permanentemente o empregador",
+      "deleteDialogCancel": "Cancelar",
+      "deleteDialogConfirm": "Excluir",
+      "deleting": "Excluindo...",
+      "employerDeleted": "Empregador excluído com sucesso",
+      "deleteFailed": "Falha ao excluir empregador",
+      "noDataToExport": "Nenhum dado para exportar",
+      "csvExported": "CSV exportado com sucesso"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
-      "companyNamePlaceholder": "Enter company name",
+      "title": "Formulário de empregador",
+      "companyName": "Nome da empresa",
+      "companyNamePlaceholder": "Introduza o nome da empresa",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
-      "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
-      "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
-      "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
-      "town": "Town",
-      "townPlaceholder": "Enter town",
-      "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
-      "countryPlaceholder": "Enter country",
-      "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
-      "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
-      "website": "Website",
-      "websitePlaceholder": "Enter website",
-      "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
-      "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
-      "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "misIdPlaceholder": "Introduza o MIS ID",
+      "businessDepartment": "Departamento comercial",
+      "businessDepartmentPlaceholder": "Introduza o departamento comercial",
+      "businessLocation": "Localização comercial",
+      "businessLocationPlaceholder": "Introduza a localização comercial",
+      "branchCode": "Código da filial",
+      "branchCodePlaceholder": "Introduza o código da filial",
+      "address1": "Endereço 1",
+      "address1Placeholder": "Introduza o endereço 1",
+      "address2": "Endereço 2",
+      "address2Placeholder": "Introduza o endereço 2",
+      "town": "Cidade",
+      "townPlaceholder": "Introduza a cidade",
+      "county": "Condado",
+      "countyPlaceholder": "Introduza a condado",
+      "country": "País",
+      "countryPlaceholder": "Introduza o país",
+      "postcode": "Código postal",
+      "postcodePlaceholder": "Introduza o código postal",
+      "businessCategory": "Categoria comercial",
+      "businessCategoryPlaceholder": "Selecione a categoria comercial",
+      "numberOfEmployees": "Número de empregados",
+      "numberOfEmployeesPlaceholder": "Introduza o número de empregados",
+      "telephone": "Telefone",
+      "telephonePlaceholder": "Introduza o telefone",
+      "website": "Site web",
+      "websitePlaceholder": "Introduza o website",
+      "keyContactName": "Nome do contato chave",
+      "keyContactNamePlaceholder": "Introduza o nome do contato chave",
+      "keyContactNumber": "Número do contato chave",
+      "keyContactNumberPlaceholder": "Introduza o número do contato chave",
+      "email": "E-mail",
+      "emailPlaceholder": "Introduza o email",
+      "businessDescription": "Descrição comercial",
+      "businessDescriptionPlaceholder": "Introduza a descrição comercial",
+      "comments": "Comentários",
+      "commentsPlaceholder": "Introduza os comentários",
+      "assessmentDate": "Data de avaliação",
+      "assessmentRenewalDate": "Data de renovação da avaliação",
+      "insuranceRenewalDate": "Data de renovação da seguros",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "Criar empregador",
+      "updateEmployer": "Atualizar empregador"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
-      "misIdRequired": "MIS ID is required",
-      "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "companyNameRequired": "Nome da empresa é obrigatório",
+      "misIdRequired": "MIS ID é obrigatório",
+      "address1Required": "Endereço 1 é obrigatório",
+      "address2Required": "Endereço 2 é obrigatório",
+      "townRequired": "Cidade é obrigatória",
+      "countyRequired": "Condado é obrigatório",
+      "countryRequired": "País é obrigatório",
+      "postcodeRequired": "Código postal é obrigatório",
+      "emailInvalid": "Endereço de email inválido"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "Empregador criado com sucesso",
+      "employerUpdated": "Empregador atualizado com sucesso",
+      "employerDeleted": "Empregador excluído com sucesso",
+      "createFailed": "Falha ao criar empregador",
+      "updateFailed": "Falha ao atualizar empregador",
+      "deleteFailed": "Falha ao excluir empregador"
     }
   },
   "admin": {
@@ -2739,12 +2869,110 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "Gestão de broadcasts",
+    "pageSubtitle": "Crie e gerencie mensagens de broadcast e envie notificações para usuários, alunos ou cursos específicos",
+    "dialog": {
+      "createTitle": "Criar broadcast",
+      "editTitle": "Editar broadcast",
+      "createDescription": "Preencha as informações do broadcast nos campos abaixo.",
+      "editDescription": "Atualize as informações do broadcast nos campos abaixo."
+    },
+    "form": {
+      "titleLabel": "Título",
+      "descriptionLabel": "Descrição",
+      "titlePlaceholder": "Insira o título do broadcast",
+      "descriptionPlaceholder": "Insira a descrição do broadcast"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "update": "Atualizar"
+    },
+    "validation": {
+      "titleRequired": "O título é obrigatório",
+      "descriptionRequired": "A descrição é obrigatória"
+    },
+    "toast": {
+      "createSuccess": "Broadcast criado com sucesso",
+      "updateSuccess": "Broadcast atualizado com sucesso",
+      "createFailed": "Falha ao criar o broadcast",
+      "updateFailed": "Falha ao atualizar o broadcast",
+      "deleteSuccess": "Broadcast eliminado com sucesso",
+      "deleteFailed": "Falha ao eliminar o broadcast"
+    },
+    "dataTable": {
+      "title": "Título",
+      "description": "Descrição",
+      "email": "E-mail",
+      "userName": "Nome de utilizador",
+      "date": "Data",
+      "actions": "Ações",
+      "broadcast": "Enviar broadcast",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "openMenu": "Abrir menu",
+      "searchPlaceholder": "Pesquisar por palavra-chave...",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "addNew": "Adicionar novo broadcast",
+      "noResults": "Sem resultados.",
+      "noDataToExport": "Não há dados para exportar",
+      "csvExportSuccess": "CSV exportado com sucesso",
+      "pdfExportComingSoon": "A funcionalidade de exportação para PDF estará disponível em breve"
+    },
+    "deleteDialog": {
+      "title": "Tem a certeza?",
+      "description": "Esta ação não pode ser anulada. O broadcast \"{title}\" será eliminado permanentemente.",
+      "delete": "Eliminar",
+      "deleting": "A eliminar..."
+    },
+    "messageDialog": {
+      "title": "Mensagem de broadcast",
+      "description": "Selecione o público-alvo desta mensagem de broadcast.",
+      "readonly": {
+        "titleLabel": "Título:",
+        "descriptionLabel": "Descrição:"
+      },
+      "target": {
+        "label": "Mensagem de broadcast para utilizadores",
+        "all": "Todos",
+        "allLearner": "Todos os alunos",
+        "allEqa": "Todos os EQA",
+        "allTrainer": "Todos os formadores",
+        "allEmployer": "Todos os empregadores",
+        "allIqa": "Todos os IQA",
+        "allLiqa": "Todos os LIQA",
+        "individual": "Utilizadores específicos",
+        "qualification": "Qualificações / cursos"
+      },
+      "individual": {
+        "selectUsers": "Selecionar utilizadores",
+        "loadingUsers": "A carregar utilizadores...",
+        "selectUsersPlaceholder": "Selecione utilizadores",
+        "noUsersFound": "Nenhum utilizador encontrado."
+      },
+      "qualification": {
+        "selectCourses": "Selecionar cursos",
+        "loadingCourses": "A carregar cursos...",
+        "selectCoursesPlaceholder": "Selecione cursos",
+        "noCoursesFound": "Nenhum curso encontrado.",
+        "comingSoon": "A seleção de cursos estará disponível assim que a API de cursos for integrada."
+      },
+      "validation": {
+        "selectUserOrCourse": "Selecione pelo menos um utilizador ou um curso"
+      },
+      "toast": {
+        "sendSuccess": "Mensagem de broadcast enviada com sucesso",
+        "sendFailed": "Falha ao enviar a mensagem de broadcast"
+      },
+      "submit": "Enviar broadcast"
+    }
   },
   "organisations": {
     "page": {
-      "title": "Organizações",
+      "title": "Gestão de Organizações",
       "subtitle": "Gerir e ver todas as organizações"
     },
     "detail": {
@@ -2806,31 +3034,31 @@
       "toastLoginAsFailed": "Falha ao entrar como administrador"
     },
     "form": {
-      "name": "Name",
-      "namePlaceholder": "Enter organisation name",
-      "email": "Email",
-      "emailPlaceholder": "Enter organisation email (optional)",
-      "status": "Status",
-      "statusPlaceholder": "Select status",
-      "statusActive": "Active",
-      "statusSuspended": "Suspended",
-      "createOrganisation": "Create Organisation",
-      "updateOrganisation": "Update Organisation",
+      "name": "Nome",
+      "namePlaceholder": "Digite o nome da organização",
+      "email": "E-mail",
+      "emailPlaceholder": "Digite o email da organização (opcional)",
+      "status": "Estado",
+      "statusPlaceholder": "Selecionar status",
+      "statusActive": "Ativo",
+      "statusSuspended": "Suspenso",
+      "createOrganisation": "Criar Organização",
+      "updateOrganisation": "Atualizar Organização",
       "required": "*"
     },
     "validation": {
-      "nameRequired": "Organisation name is required",
-      "emailInvalid": "Invalid email address",
-      "statusRequired": "Status is required"
+      "nameRequired": "O nome da organização é obrigatório",
+      "emailInvalid": "Endereço de email inválido",
+      "statusRequired": "O status é obrigatório"
     },
     "toast": {
-      "createSuccess": "Organisation created successfully",
-      "createFailed": "Failed to create organisation",
-      "updateSuccess": "Organisation updated successfully",
-      "updateFailed": "Failed to update organisation"
+      "createSuccess": "Organização criada com sucesso",
+      "createFailed": "Falha ao criar a organização",
+      "updateSuccess": "Organização atualizada com sucesso",
+      "updateFailed": "Falha ao atualizar a organização"
     },
     "dataTable": {
-      "searchPlaceholder": "Pesquisar organizações...",
+      "searchPlaceholder": "Pesquisar organizações por nome ou e-mail...",
       "addOrganisation": "Adicionar organização",
       "export": "Exportar",
       "exportCsv": "Exportar CSV",
@@ -2860,7 +3088,7 @@
     },
     "assignAdmin": {
       "selectAdminsLabel": "Selecionar administradores para atribuir",
-      "searchPlaceholder": "Pesquisar por nome ou e-mail...",
+      "searchPlaceholder": "Pesquisar administradores por nome ou e-mail...",
       "noAdminsMatchingSearch": "Nenhum administrador encontrado para a sua pesquisa",
       "noAdminUsersAvailable": "Nenhum utilizador administrador disponível",
       "selectedAdminsCount": "Administradores selecionados ({count})",

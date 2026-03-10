@@ -84,6 +84,71 @@
       "adminSubtitle": "通过便捷地添加、更新和删除学员，以及分配课程、培训师、雇主、IQA 和 EQA，优化学员管理",
       "defaultSubtitle": "管理并跟踪分配给你的学员"
     },
+    "form": {
+      "firstNameLabel": "名字",
+      "firstNamePlaceholder": "输入名字",
+      "lastNameLabel": "姓氏",
+      "lastNamePlaceholder": "输入姓氏",
+      "usernameLabel": "用户名",
+      "usernamePlaceholder": "输入用户名",
+      "emailLabel": "电子邮件",
+      "emailPlaceholder": "输入电子邮件",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "输入密码",
+      "confirmPasswordLabel": "确认密码",
+      "confirmPasswordPlaceholder": "确认密码",
+      "centreLabel": "中心",
+      "centrePlaceholder": "选择中心",
+      "noCentresAvailable": "该机构暂无可用中心",
+      "mobileLabel": "手机",
+      "mobilePlaceholder": "输入手机号码",
+      "employerLabel": "雇主",
+      "employerPlaceholder": "选择雇主",
+      "loadingEmployers": "正在加载雇主...",
+      "fundingBodyLabel": "资助机构",
+      "fundingBodyPlaceholder": "选择资助机构",
+      "nationalInsuranceLabel": "国家保险号码",
+      "nationalInsurancePlaceholder": "输入国家保险号码",
+      "jobTitleLabel": "职位名称",
+      "jobTitlePlaceholder": "输入职位名称",
+      "commentLabel": "备注",
+      "commentPlaceholder": "输入备注（可选）",
+      "fundingBodyOptions": {
+        "advanceLearningLoan": "Advance Learning Loan",
+        "bursary": "助学金",
+        "commercial": "商业",
+        "communityLearning": "社区学习",
+        "efa": "EFA",
+        "employer": "雇主",
+        "esf": "ESF",
+        "esfa": "ESFA",
+        "feeWaiver": "学费减免",
+        "fwdf": "FWDF",
+        "ita": "ITA",
+        "levy": "Levy",
+        "maFullyFunded": "MA 全额资助",
+        "maEmployer": "MA-雇主",
+        "nonLevy": "Non-Levy",
+        "other": "其他",
+        "saas": "SAAS",
+        "saasEmployer": "SAAS-雇主",
+        "saasSelf": "SAAS-自费",
+        "sds": "SDS",
+        "self": "自费",
+        "sfa": "SFA",
+        "studentLoan": "学生贷款"
+      }
+    },
+    "formDialog": {
+      "titleCreate": "创建新学员",
+      "titleEdit": "编辑学员",
+      "descriptionCreate": "填写下方表单以创建新学员。",
+      "descriptionEdit": "在下方更新学员信息。",
+      "cancel": "取消",
+      "create": "创建",
+      "saveChanges": "保存更改",
+      "saving": "正在保存..."
+    },
     "table": {
       "eqaHeaders": {
         "name": "姓名",
@@ -174,8 +239,69 @@
       }
     },
     "toast": {
+      "createSuccess": "学员创建成功",
+      "updateSuccess": "学员更新成功",
+      "createFailedGeneric": "创建学员失败",
+      "updateFailedGeneric": "更新学员失败",
       "deleteSuccess": "学员删除成功",
       "deleteFailedGeneric": "删除学员失败"
+    },
+    "csvUpload": {
+      "title": "上传学员 CSV",
+      "description": "使用 CSV 格式批量上传学员数据",
+      "sample": {
+        "title": "需要示例 CSV 吗？",
+        "description": "下载我们的模板，其中包含所有必填字段和示例数据，以确保格式正确",
+        "button": "下载示例 CSV"
+      },
+      "upload": {
+        "fileSize": "文件大小：{size} MB",
+        "dragDrop": "将 CSV 文件拖放到此处，或",
+        "browse": "浏览",
+        "maxSize": "允许的最大文件大小为 10MB",
+        "supportedFormats": "支持的格式：仅 CSV"
+      },
+      "summary": {
+        "ready": "已找到学员并准备上传",
+        "formatted": "所有必填字段均已正确格式化"
+      },
+      "actions": {
+        "cancel": "取消",
+        "upload": "上传学员",
+        "uploading": "正在上传..."
+      },
+      "errors": {
+        "missingRequiredFields": "部分学员信息缺失。请确认每一行都包含 {fields}。",
+        "parseError": "解析 CSV 文件时出错：{message}",
+        "noValidData": "未找到任何有效数据。请上传正确的 CSV 文件。"
+      },
+      "toast": {
+        "success": "学员上传成功",
+        "failedGeneric": "上传学员失败"
+      }
+    },
+    "commentDialog": {
+      "title": "为 {name} 添加/编辑备注",
+      "description": "更新该学员的备注。此备注对管理员和培训师可见。",
+      "field": {
+        "label": "备注",
+        "placeholder": "在此输入你的备注..."
+      },
+      "actions": {
+        "cancel": "取消",
+        "save": "保存备注"
+      },
+      "toast": {
+        "success": "备注更新成功",
+        "failedGeneric": "备注更新失败"
+      }
+    },
+    "employerRow": {
+      "id": "ID",
+      "lastLogin": "上次登录",
+      "nextVisit": "下次拜访",
+      "noComment": "暂无备注",
+      "profile": "个人资料"
     }
   },
   "users": {
@@ -335,11 +461,11 @@
       "assignmentFailed": "用户已创建/更新，但分配某些学员失败"
     },
     "pages": {
-      "createTitle": "Create New User",
-      "createSubtitle": "Fill in the form below to create a new user",
-      "editTitle": "Edit User",
-      "editSubtitle": "Update user information below",
-      "userNotFound": "User not found"
+      "createTitle": "创建新用户",
+      "createSubtitle": "填写下方表单以创建新用户",
+      "editTitle": "编辑用户",
+      "editSubtitle": "更新用户信息下方",
+      "userNotFound": "未找到用户"
     }
   },
   "errors": {
@@ -460,100 +586,100 @@
     "pdfExportInfo": "PDF导出功能将实现"
   },
   "employers": {
-    "pageTitle": "Employer Management",
-    "pageSubtitle": "Manage employer information, add, update, and delete employer records, and assign learners to employers",
+    "pageTitle": "雇主管理",
+    "pageSubtitle": "管理雇主信息，添加、更新和删除雇主记录，并为学员分配雇主",
     "table": {
-      "employerName": "Employer Name",
-      "businessDepartment": "Business Department",
-      "email": "Email",
-      "mobile": "Mobile",
-      "actions": "Actions",
-      "searchPlaceholder": "Search by keyword...",
-      "clear": "Clear",
-      "export": "Export",
-      "addNew": "Add New",
-      "uploadCsv": "Upload CSV",
-      "noResults": "No results.",
-      "openMenu": "Open menu",
-      "edit": "Edit",
-      "delete": "Delete",
-      "deleteDialogTitle": "Are you sure?",
-      "deleteDialogDescription": "This action cannot be undone. This will permanently delete the employer",
-      "deleteDialogCancel": "Cancel",
-      "deleteDialogConfirm": "Delete",
-      "deleting": "Deleting...",
-      "employerDeleted": "Employer deleted successfully",
-      "deleteFailed": "Failed to delete employer",
-      "noDataToExport": "No data to export",
-      "csvExported": "CSV exported successfully"
+      "employerName": "雇主名称",
+      "businessDepartment": "商业部门",
+      "email": "电子邮件",
+      "mobile": "手机",
+      "actions": "操作",
+      "searchPlaceholder": "按关键字搜索...",
+      "clear": "清除",
+      "export": "导出",
+      "addNew": "添加新",
+      "uploadCsv": "上传 CSV",
+      "noResults": "没有结果。",
+      "openMenu": "打开菜单",
+      "edit": "编辑",
+      "delete": "删除",
+      "deleteDialogTitle": "您确定吗？",
+      "deleteDialogDescription": "此操作无法撤消。这将永久删除雇主",
+      "deleteDialogCancel": "取消",
+      "deleteDialogConfirm": "删除",
+      "deleting": "正在删除...",
+      "employerDeleted": "雇主已成功删除",
+      "deleteFailed": "删除雇主失败",
+      "noDataToExport": "没有要导出的数据",
+      "csvExported": "CSV已成功导出"
     },
     "form": {
-      "title": "Employer Form",
-      "companyName": "Company Name",
+      "title": "雇主表单",
+      "companyName": "公司名称",
       "companyNamePlaceholder": "Enter company name",
       "misId": "MIS ID",
-      "misIdPlaceholder": "Enter MIS ID",
-      "businessDepartment": "Business Department",
-      "businessDepartmentPlaceholder": "Enter business department",
-      "businessLocation": "Business Location",
-      "businessLocationPlaceholder": "Enter business location",
-      "branchCode": "Branch Code",
-      "branchCodePlaceholder": "Enter branch code",
-      "address1": "Address 1",
-      "address1Placeholder": "Enter address 1",
-      "address2": "Address 2",
-      "address2Placeholder": "Enter address 2",
-      "town": "Town",
-      "townPlaceholder": "Enter town",
+      "misIdPlaceholder": "输入 MIS ID",
+      "businessDepartment": "商业部门",
+      "businessDepartmentPlaceholder": "输入商业部门",
+      "businessLocation": "商业地点",
+      "businessLocationPlaceholder": "输入商业地点",
+      "branchCode": "分支代码",
+      "branchCodePlaceholder": "输入分支代码",
+      "address1": "地址 1",
+      "address1Placeholder": "输入地址 1",
+      "address2": "地址 2",
+      "address2Placeholder": "输入地址 2",
+      "town": "城市",
+      "townPlaceholder": "输入城市",
       "county": "County",
-      "countyPlaceholder": "Enter county",
-      "country": "Country",
+      "countyPlaceholder": "输入县",
+      "country": "国家",
       "countryPlaceholder": "Enter country",
-      "postcode": "Postcode",
-      "postcodePlaceholder": "Enter postcode",
-      "businessCategory": "Business Category",
-      "businessCategoryPlaceholder": "Select business category",
-      "numberOfEmployees": "Number of Employees",
-      "numberOfEmployeesPlaceholder": "Enter number of employees",
-      "telephone": "Telephone",
-      "telephonePlaceholder": "Enter telephone",
-      "website": "Website",
-      "websitePlaceholder": "Enter website",
-      "keyContactName": "Key Contact Name",
-      "keyContactNamePlaceholder": "Enter key contact name",
-      "keyContactNumber": "Key Contact Number",
-      "keyContactNumberPlaceholder": "Enter key contact number",
-      "email": "Email",
-      "emailPlaceholder": "Enter email",
-      "businessDescription": "Business Description",
-      "businessDescriptionPlaceholder": "Enter business description",
-      "comments": "Comments",
-      "commentsPlaceholder": "Enter comments",
-      "assessmentDate": "Assessment Date",
-      "assessmentRenewalDate": "Assessment Renewal Date",
-      "insuranceRenewalDate": "Insurance Renewal Date",
+      "postcode": "邮政编码",
+      "postcodePlaceholder": "输入邮政编码",
+      "businessCategory": "商业类别",
+      "businessCategoryPlaceholder": "选择商业类别",
+      "numberOfEmployees": "员工数量",
+      "numberOfEmployeesPlaceholder": "输入员工数量",
+      "telephone": "电话",
+      "telephonePlaceholder": "输入电话",
+      "website": "网站",
+      "websitePlaceholder": "输入网站",
+      "keyContactName": "关键联系人名称",
+      "keyContactNamePlaceholder": "输入关键联系人名称",
+      "keyContactNumber": "关键联系人号码",
+      "keyContactNumberPlaceholder": "输入关键联系人号码",
+      "email": "电子邮件",
+      "emailPlaceholder": "输入电子邮件",
+      "businessDescription": "商业描述",
+      "businessDescriptionPlaceholder": "输入商业描述",
+      "comments": "Comments评论 意见",
+      "commentsPlaceholder": "输入评论",
+      "assessmentDate": "评估日期",
+      "assessmentRenewalDate": "评估续期日期",
+      "insuranceRenewalDate": "保险续期日期",
       "required": "*",
-      "createEmployer": "Create Employer",
-      "updateEmployer": "Update Employer"
+      "createEmployer": "创建雇主 创建雇主",
+      "updateEmployer": "更新雇主 更新雇主"
     },
     "validation": {
-      "companyNameRequired": "Company Name is required",
+      "companyNameRequired": "公司名称是必填项",
       "misIdRequired": "MIS ID is required",
-      "address1Required": "Address 1 is required",
-      "address2Required": "Address 2 is required",
-      "townRequired": "Town is required",
-      "countyRequired": "County is required",
-      "countryRequired": "Country is required",
-      "postcodeRequired": "Postcode is required",
-      "emailInvalid": "Invalid email address"
+      "address1Required": "地址 1 是必填项",
+      "address2Required": "地址 2 是必填项",
+      "townRequired": "城市是必填项",
+      "countyRequired": "县是必填项",
+      "countryRequired": "国家是必填项",
+      "postcodeRequired": "邮政编码是必填项",
+      "emailInvalid": "无效的电子邮件地址"
     },
     "toast": {
-      "employerCreated": "Employer created successfully",
-      "employerUpdated": "Employer updated successfully",
-      "employerDeleted": "Employer deleted successfully",
-      "createFailed": "Failed to create employer",
-      "updateFailed": "Failed to update employer",
-      "deleteFailed": "Failed to delete employer"
+      "employerCreated": "雇主已成功创建",
+      "employerUpdated": "雇主已成功更新",
+      "employerDeleted": "雇主已成功删除",
+      "createFailed": "创建雇主失败",
+      "updateFailed": "更新雇主失败",
+      "deleteFailed": "删除雇主失败"
     }
   },
   "admin": {
@@ -2701,8 +2827,106 @@
     }
   },
   "broadcast": {
-    "pageTitle": "Broadcast Management",
-    "pageSubtitle": "Create and manage broadcast messages, send notifications to users, learners, or specific courses"
+    "pageTitle": "广播管理",
+    "pageSubtitle": "创建和管理广播消息，并向用户、学员或指定课程发送通知",
+    "dialog": {
+      "createTitle": "创建广播",
+      "editTitle": "编辑广播",
+      "createDescription": "在下方字段中填写广播相关信息。",
+      "editDescription": "在下方字段中更新广播相关信息。"
+    },
+    "form": {
+      "titleLabel": "标题",
+      "descriptionLabel": "描述",
+      "titlePlaceholder": "输入广播标题",
+      "descriptionPlaceholder": "输入广播描述"
+    },
+    "buttons": {
+      "cancel": "取消",
+      "create": "创建",
+      "update": "更新"
+    },
+    "validation": {
+      "titleRequired": "标题为必填项",
+      "descriptionRequired": "描述为必填项"
+    },
+    "toast": {
+      "createSuccess": "广播创建成功",
+      "updateSuccess": "广播更新成功",
+      "createFailed": "广播创建失败",
+      "updateFailed": "广播更新失败",
+      "deleteSuccess": "广播删除成功",
+      "deleteFailed": "广播删除失败"
+    },
+    "dataTable": {
+      "title": "标题",
+      "description": "描述",
+      "email": "邮箱",
+      "userName": "用户名",
+      "date": "日期",
+      "actions": "操作",
+      "broadcast": "发送广播",
+      "edit": "编辑",
+      "delete": "删除",
+      "openMenu": "打开菜单",
+      "searchPlaceholder": "按关键字搜索...",
+      "clear": "清除",
+      "export": "导出",
+      "exportCsv": "导出为 CSV",
+      "exportPdf": "导出为 PDF",
+      "addNew": "添加新广播",
+      "noResults": "暂无结果。",
+      "noDataToExport": "没有可导出的数据",
+      "csvExportSuccess": "CSV 导出成功",
+      "pdfExportComingSoon": "PDF 导出功能即将推出"
+    },
+    "deleteDialog": {
+      "title": "确定要执行此操作吗？",
+      "description": "此操作无法撤销。这将永久删除广播“{title}”。",
+      "delete": "删除",
+      "deleting": "正在删除..."
+    },
+    "messageDialog": {
+      "title": "广播消息",
+      "description": "请选择此广播消息的目标受众。",
+      "readonly": {
+        "titleLabel": "标题：",
+        "descriptionLabel": "描述："
+      },
+      "target": {
+        "label": "向用户发送广播消息",
+        "all": "全部",
+        "allLearner": "所有学员",
+        "allEqa": "所有 EQA",
+        "allTrainer": "所有培训师",
+        "allEmployer": "所有雇主",
+        "allIqa": "所有 IQA",
+        "allLiqa": "所有 LIQA",
+        "individual": "指定用户",
+        "qualification": "资格 / 课程"
+      },
+      "individual": {
+        "selectUsers": "选择用户",
+        "loadingUsers": "正在加载用户...",
+        "selectUsersPlaceholder": "选择用户",
+        "noUsersFound": "未找到用户。"
+      },
+      "qualification": {
+        "selectCourses": "选择课程",
+        "loadingCourses": "正在加载课程...",
+        "selectCoursesPlaceholder": "选择课程",
+        "noCoursesFound": "未找到课程。",
+        "comingSoon": "课程 API 集成完成后，将提供课程选择功能。"
+      },
+      "validation": {
+        "selectUserOrCourse": "请至少选择一个用户或一个课程"
+      },
+      "toast": {
+        "sendSuccess": "广播消息发送成功",
+        "sendFailed": "广播消息发送失败"
+      },
+      "submit": "发送广播"
+    }
   },
   "organisations": {
     "page": {
@@ -2768,28 +2992,28 @@
       "toastLoginAsFailed": "以管理员身份登录失败"
     },
     "form": {
-      "name": "Name",
-      "namePlaceholder": "Enter organisation name",
-      "email": "Email",
-      "emailPlaceholder": "Enter organisation email (optional)",
-      "status": "Status",
-      "statusPlaceholder": "Select status",
-      "statusActive": "Active",
-      "statusSuspended": "Suspended",
-      "createOrganisation": "Create Organisation",
-      "updateOrganisation": "Update Organisation",
+      "name": "名称",
+      "namePlaceholder": "输入组织名称",
+      "email": "电子邮件",
+      "emailPlaceholder": "输入组织电子邮件 (可选)",
+      "status": "状态",
+      "statusPlaceholder": "选择状态",
+      "statusActive": "活跃",
+      "statusSuspended": "已暂停",
+      "createOrganisation": "创建组织",
+      "updateOrganisation": "更新组织",
       "required": "*"
     },
     "validation": {
-      "nameRequired": "Organisation name is required",
-      "emailInvalid": "Invalid email address",
-      "statusRequired": "Status is required"
+      "nameRequired": "组织名称是必填项",
+      "emailInvalid": "无效的电子邮件地址",
+      "statusRequired": "状态是必填项"
     },
     "toast": {
-      "createSuccess": "Organisation created successfully",
-      "createFailed": "Failed to create organisation",
-      "updateSuccess": "Organisation updated successfully",
-      "updateFailed": "Failed to update organisation"
+      "createSuccess": "组织已成功创建",
+      "createFailed": "创建组织失败",
+      "updateSuccess": "组织已成功更新",
+      "updateFailed": "更新组织失败"
     },
     "dataTable": {
       "searchPlaceholder": "搜索组织...",

@@ -920,7 +920,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "Zusatztraining",
+      "pageSubtitle": "Greifen Sie auf Ihre Zusatztrainingsressourcen zu und verfolgen Sie Ihren Fortschritt",
+      "table": {
+        "loading": "Ressourcen werden geladen...",
+        "searchPlaceholder": "Ressourcen suchen...",
+        "noResourcesFound": "Keine Ressourcen gefunden.",
+        "columns": {
+          "resourceName": "Ressourcenname",
+          "description": "Beschreibung",
+          "createdDate": "Erstellungsdatum",
+          "lastOpened": "Zuletzt geöffnet",
+          "feedback": "Feedback",
+          "actions": "Aktionen"
+        },
+        "actions": {
+          "openDownload": "Öffnen / Herunterladen",
+          "visitLink": "Link besuchen",
+          "feedback": "Feedback"
+        },
+        "dates": {
+          "never": "Nie",
+          "invalid": "Ungültiges Datum"
+        },
+        "feedback": {
+          "none": "Kein Feedback",
+          "values": {
+            "veryHelpful": "Sehr hilfreich",
+            "helpful": "Hilfreich",
+            "neutral": "Neutral",
+            "notHelpful": "Nicht hilfreich",
+            "unknown": "Unbekannt"
+          }
+        },
+        "columnVisibility": {
+          "label": "Spaltensichtbarkeit",
+          "button": "Spalten"
+        },
+        "toast": {
+          "trackFailed": "Ressourcenzugriff konnte nicht protokolliert werden"
+        }
+      },
+      "feedbackDialog": {
+        "title": "Wie war diese Ressource für Sie?",
+        "description": "Bitte wählen Sie ein Emoji, um Ihre Erfahrung zu bewerten",
+        "labels": {
+          "veryHelpful": "Sehr hilfreich",
+          "helpful": "Hilfreich",
+          "neutral": "Neutral",
+          "notHelpful": "Nicht hilfreich"
+        },
+        "messages": {
+          "veryHelpful": "Super! Diese Ressource war sehr hilfreich",
+          "helpful": "Gut! Diese Ressource war hilfreich",
+          "neutral": "Okay, diese Ressource war in Ordnung",
+          "notHelpful": "Diese Ressource könnte verbessert werden"
+        },
+        "submit": "Feedback senden",
+        "submitting": "Wird gesendet...",
+        "toast": {
+          "submittedSuccess": "Feedback erfolgreich gesendet!",
+          "submitFailed": "Feedback konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",

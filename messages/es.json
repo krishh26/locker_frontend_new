@@ -1219,7 +1219,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Gestión de Recursos de Formación Complementaria",
-    "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos"
+    "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",
+    "learner": {
+      "pageTitle": "Formación complementaria",
+      "pageSubtitle": "Accede a tus recursos de formación complementaria y haz seguimiento de tu progreso",
+      "table": {
+        "loading": "Cargando recursos...",
+        "searchPlaceholder": "Buscar recursos...",
+        "noResourcesFound": "No se encontraron recursos.",
+        "columns": {
+          "resourceName": "Nombre del recurso",
+          "description": "Descripción",
+          "createdDate": "Fecha de creación",
+          "lastOpened": "Última apertura",
+          "feedback": "Comentarios",
+          "actions": "Acciones"
+        },
+        "actions": {
+          "openDownload": "Abrir / Descargar",
+          "visitLink": "Visitar enlace",
+          "feedback": "Comentarios"
+        },
+        "dates": {
+          "never": "Nunca",
+          "invalid": "Fecha inválida"
+        },
+        "feedback": {
+          "none": "Sin comentarios",
+          "values": {
+            "veryHelpful": "Muy útil",
+            "helpful": "Útil",
+            "neutral": "Neutral",
+            "notHelpful": "Poco útil",
+            "unknown": "Desconocido"
+          }
+        },
+        "columnVisibility": {
+          "label": "Visibilidad de columnas",
+          "button": "Columnas"
+        },
+        "toast": {
+          "trackFailed": "No se pudo registrar el acceso al recurso"
+        }
+      },
+      "feedbackDialog": {
+        "title": "¿Cómo fue este recurso para ti?",
+        "description": "Selecciona un emoji para valorar tu experiencia",
+        "labels": {
+          "veryHelpful": "Muy útil",
+          "helpful": "Útil",
+          "neutral": "Neutral",
+          "notHelpful": "Poco útil"
+        },
+        "messages": {
+          "veryHelpful": "¡Genial! Este recurso fue muy útil",
+          "helpful": "¡Bien! Este recurso fue útil",
+          "neutral": "Está bien, este recurso estuvo bien",
+          "notHelpful": "Este recurso podría mejorar"
+        },
+        "submit": "Enviar comentarios",
+        "submitting": "Enviando...",
+        "toast": {
+          "submittedSuccess": "¡Comentarios enviados correctamente!",
+          "submitFailed": "No se pudieron enviar los comentarios. Inténtalo de nuevo."
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Mensaje de Reconocimiento",

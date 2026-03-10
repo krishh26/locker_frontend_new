@@ -1379,7 +1379,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "التدريب التكميلي",
+      "pageSubtitle": "اطّلع على موارد التدريب التكميلي وتتبع تقدمك",
+      "table": {
+        "loading": "جارٍ تحميل الموارد...",
+        "searchPlaceholder": "ابحث عن الموارد...",
+        "noResourcesFound": "لم يتم العثور على موارد.",
+        "columns": {
+          "resourceName": "اسم المورد",
+          "description": "الوصف",
+          "createdDate": "تاريخ الإنشاء",
+          "lastOpened": "آخر فتح",
+          "feedback": "الملاحظات",
+          "actions": "الإجراءات"
+        },
+        "actions": {
+          "openDownload": "فتح / تنزيل",
+          "visitLink": "زيارة الرابط",
+          "feedback": "الملاحظات"
+        },
+        "dates": {
+          "never": "أبدًا",
+          "invalid": "تاريخ غير صالح"
+        },
+        "feedback": {
+          "none": "لا توجد ملاحظات",
+          "values": {
+            "veryHelpful": "مفيد جدًا",
+            "helpful": "مفيد",
+            "neutral": "محايد",
+            "notHelpful": "غير مفيد",
+            "unknown": "غير معروف"
+          }
+        },
+        "columnVisibility": {
+          "label": "إظهار/إخفاء الأعمدة",
+          "button": "الأعمدة"
+        },
+        "toast": {
+          "trackFailed": "فشل تتبع الوصول إلى المورد"
+        }
+      },
+      "feedbackDialog": {
+        "title": "كيف كان هذا المورد بالنسبة لك؟",
+        "description": "يرجى اختيار رمز تعبيري لتقييم تجربتك",
+        "labels": {
+          "veryHelpful": "مفيد جدًا",
+          "helpful": "مفيد",
+          "neutral": "محايد",
+          "notHelpful": "غير مفيد"
+        },
+        "messages": {
+          "veryHelpful": "رائع! كان هذا المورد مفيدًا جدًا",
+          "helpful": "جيد! كان هذا المورد مفيدًا",
+          "neutral": "حسنًا، كان هذا المورد مقبولًا",
+          "notHelpful": "يمكن تحسين هذا المورد"
+        },
+        "submit": "إرسال الملاحظات",
+        "submitting": "جارٍ الإرسال...",
+        "toast": {
+          "submittedSuccess": "تم إرسال الملاحظات بنجاح!",
+          "submitFailed": "فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى."
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",

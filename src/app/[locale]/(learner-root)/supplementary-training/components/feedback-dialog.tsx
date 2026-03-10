@@ -14,6 +14,7 @@ import { useSubmitSupTrainingFeedbackMutation } from "@/store/api/supplementary-
 import { toast } from "sonner";
 import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface FeedbackDialogProps {
   open: boolean;
@@ -30,17 +31,17 @@ const feedbackMapping = {
 } as const;
 
 const feedbackLabels = {
-  "😊": "Very Helpful",
-  "🙂": "Helpful",
-  "😐": "Neutral",
-  "😕": "Not Helpful",
+  "😊": "veryHelpful",
+  "🙂": "helpful",
+  "😐": "neutral",
+  "😕": "notHelpful",
 } as const;
 
 const feedbackMessages = {
-  "😊": "Great! This resource was very helpful",
-  "🙂": "Good! This resource was helpful",
-  "😐": "Okay, this resource was okay",
-  "😕": "This resource could be improved",
+  "😊": "veryHelpful",
+  "🙂": "helpful",
+  "😐": "neutral",
+  "😕": "notHelpful",
 } as const;
 
 type EmojiKey = keyof typeof feedbackMapping;
@@ -51,6 +52,8 @@ export function FeedbackDialog({
   resource,
   onSuccess,
 }: FeedbackDialogProps) {
+  const t = useTranslations("supplementaryTraining.learner.feedbackDialog");
+  const commonT = useTranslations("common");
   const [selectedEmoji, setSelectedEmoji] = useState<EmojiKey | "">("");
   const [submitFeedback, { isLoading: isSubmitting }] = useSubmitSupTrainingFeedbackMutation();
 
@@ -63,7 +66,7 @@ export function FeedbackDialog({
         feedback: feedbackMapping[selectedEmoji],
       }).unwrap();
 
-      toast.success("Feedback submitted successfully!");
+      toast.success(t("toast.submittedSuccess"));
       setSelectedEmoji("");
       onSuccess?.();
     } catch (error: unknown) {
@@ -71,7 +74,7 @@ export function FeedbackDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { error?: string } }).data?.error
           : undefined;
-      toast.error(errorMessage || "Failed to submit feedback. Please try again.");
+      toast.error(errorMessage || t("toast.submitFailed"));
     }
   };
 
@@ -86,9 +89,9 @@ export function FeedbackDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>How was this resource for you?</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Please select an emoji to rate your experience
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -113,7 +116,7 @@ export function FeedbackDialog({
                     ${isSelected ? "bg-primary text-primary-foreground scale-110" : ""}
                     disabled:opacity-50 disabled:cursor-not-allowed
                   `}
-                  title={feedbackLabels[emojiKey]}
+                  title={t(`labels.${feedbackLabels[emojiKey]}`)}
                 >
                   {emoji}
                 </button>
@@ -124,7 +127,7 @@ export function FeedbackDialog({
           {selectedEmoji && (
             <div className="text-center">
               <p className="text-sm font-medium text-primary">
-                {feedbackMessages[selectedEmoji as EmojiKey]}
+                {t(`messages.${feedbackMessages[selectedEmoji as EmojiKey]}`)}
               </p>
             </div>
           )}
@@ -136,7 +139,7 @@ export function FeedbackDialog({
             onClick={handleClose}
             disabled={isSubmitting}
           >
-            Cancel
+            {commonT("cancel")}
           </Button>
           <Button
             onClick={handleSubmit}
@@ -144,7 +147,7 @@ export function FeedbackDialog({
             className="cursor-pointer"
           >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+            {isSubmitting ? t("submitting") : t("submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

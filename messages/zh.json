@@ -1378,7 +1378,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "补充培训",
+      "pageSubtitle": "访问你的补充培训资源并跟踪你的进度",
+      "table": {
+        "loading": "正在加载资源...",
+        "searchPlaceholder": "搜索资源...",
+        "noResourcesFound": "未找到资源。",
+        "columns": {
+          "resourceName": "资源名称",
+          "description": "描述",
+          "createdDate": "创建日期",
+          "lastOpened": "最后打开",
+          "feedback": "反馈",
+          "actions": "操作"
+        },
+        "actions": {
+          "openDownload": "打开 / 下载",
+          "visitLink": "访问链接",
+          "feedback": "反馈"
+        },
+        "dates": {
+          "never": "从未",
+          "invalid": "无效日期"
+        },
+        "feedback": {
+          "none": "暂无反馈",
+          "values": {
+            "veryHelpful": "非常有帮助",
+            "helpful": "有帮助",
+            "neutral": "一般",
+            "notHelpful": "没有帮助",
+            "unknown": "未知"
+          }
+        },
+        "columnVisibility": {
+          "label": "列可见性",
+          "button": "列"
+        },
+        "toast": {
+          "trackFailed": "记录资源访问失败"
+        }
+      },
+      "feedbackDialog": {
+        "title": "这个资源对你有帮助吗？",
+        "description": "请选择一个表情来评价你的体验",
+        "labels": {
+          "veryHelpful": "非常有帮助",
+          "helpful": "有帮助",
+          "neutral": "一般",
+          "notHelpful": "没有帮助"
+        },
+        "messages": {
+          "veryHelpful": "太棒了！这个资源非常有帮助",
+          "helpful": "不错！这个资源很有帮助",
+          "neutral": "还可以，这个资源一般",
+          "notHelpful": "这个资源还可以改进"
+        },
+        "submit": "提交反馈",
+        "submitting": "提交中...",
+        "toast": {
+          "submittedSuccess": "反馈提交成功！",
+          "submitFailed": "提交反馈失败。请重试。"
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",

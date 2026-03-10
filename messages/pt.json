@@ -1378,7 +1378,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "Formação suplementar",
+      "pageSubtitle": "Aceda aos seus recursos de formação suplementar e acompanhe o seu progresso",
+      "table": {
+        "loading": "A carregar recursos...",
+        "searchPlaceholder": "Pesquisar recursos...",
+        "noResourcesFound": "Nenhum recurso encontrado.",
+        "columns": {
+          "resourceName": "Nome do recurso",
+          "description": "Descrição",
+          "createdDate": "Data de criação",
+          "lastOpened": "Última abertura",
+          "feedback": "Feedback",
+          "actions": "Ações"
+        },
+        "actions": {
+          "openDownload": "Abrir / Transferir",
+          "visitLink": "Visitar link",
+          "feedback": "Feedback"
+        },
+        "dates": {
+          "never": "Nunca",
+          "invalid": "Data inválida"
+        },
+        "feedback": {
+          "none": "Sem feedback",
+          "values": {
+            "veryHelpful": "Muito útil",
+            "helpful": "Útil",
+            "neutral": "Neutro",
+            "notHelpful": "Pouco útil",
+            "unknown": "Desconhecido"
+          }
+        },
+        "columnVisibility": {
+          "label": "Visibilidade das colunas",
+          "button": "Colunas"
+        },
+        "toast": {
+          "trackFailed": "Falha ao registar o acesso ao recurso"
+        }
+      },
+      "feedbackDialog": {
+        "title": "Como foi este recurso para si?",
+        "description": "Selecione um emoji para avaliar a sua experiência",
+        "labels": {
+          "veryHelpful": "Muito útil",
+          "helpful": "Útil",
+          "neutral": "Neutro",
+          "notHelpful": "Pouco útil"
+        },
+        "messages": {
+          "veryHelpful": "Excelente! Este recurso foi muito útil",
+          "helpful": "Bom! Este recurso foi útil",
+          "neutral": "Ok, este recurso foi aceitável",
+          "notHelpful": "Este recurso pode ser melhorado"
+        },
+        "submit": "Enviar feedback",
+        "submitting": "A enviar...",
+        "toast": {
+          "submittedSuccess": "Feedback enviado com sucesso!",
+          "submitFailed": "Falha ao enviar feedback. Tente novamente."
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",

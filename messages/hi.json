@@ -1378,7 +1378,72 @@
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
-    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
+    "learner": {
+      "pageTitle": "पूरक प्रशिक्षण",
+      "pageSubtitle": "अपने पूरक प्रशिक्षण संसाधनों तक पहुँचें और अपनी प्रगति को ट्रैक करें",
+      "table": {
+        "loading": "संसाधन लोड हो रहे हैं...",
+        "searchPlaceholder": "संसाधन खोजें...",
+        "noResourcesFound": "कोई संसाधन नहीं मिला।",
+        "columns": {
+          "resourceName": "संसाधन का नाम",
+          "description": "विवरण",
+          "createdDate": "बनाने की तिथि",
+          "lastOpened": "अंतिम बार खोला गया",
+          "feedback": "फीडबैक",
+          "actions": "कार्रवाई"
+        },
+        "actions": {
+          "openDownload": "खोलें / डाउनलोड करें",
+          "visitLink": "लिंक खोलें",
+          "feedback": "फीडबैक"
+        },
+        "dates": {
+          "never": "कभी नहीं",
+          "invalid": "अमान्य तिथि"
+        },
+        "feedback": {
+          "none": "कोई फीडबैक नहीं",
+          "values": {
+            "veryHelpful": "बहुत उपयोगी",
+            "helpful": "उपयोगी",
+            "neutral": "तटस्थ",
+            "notHelpful": "उपयोगी नहीं",
+            "unknown": "अज्ञात"
+          }
+        },
+        "columnVisibility": {
+          "label": "कॉलम दृश्यता",
+          "button": "कॉलम"
+        },
+        "toast": {
+          "trackFailed": "संसाधन एक्सेस ट्रैक करने में विफल"
+        }
+      },
+      "feedbackDialog": {
+        "title": "यह संसाधन आपके लिए कैसा रहा?",
+        "description": "अपना अनुभव रेट करने के लिए एक इमोजी चुनें",
+        "labels": {
+          "veryHelpful": "बहुत उपयोगी",
+          "helpful": "उपयोगी",
+          "neutral": "तटस्थ",
+          "notHelpful": "उपयोगी नहीं"
+        },
+        "messages": {
+          "veryHelpful": "बहुत बढ़िया! यह संसाधन बहुत उपयोगी था",
+          "helpful": "अच्छा! यह संसाधन उपयोगी था",
+          "neutral": "ठीक है, यह संसाधन ठीक था",
+          "notHelpful": "इस संसाधन में सुधार किया जा सकता है"
+        },
+        "submit": "फीडबैक सबमिट करें",
+        "submitting": "सबमिट हो रहा है...",
+        "toast": {
+          "submittedSuccess": "फीडबैक सफलतापूर्वक सबमिट किया गया!",
+          "submitFailed": "फीडबैक सबमिट करने में विफल। कृपया पुनः प्रयास करें।"
+        }
+      }
+    }
   },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",

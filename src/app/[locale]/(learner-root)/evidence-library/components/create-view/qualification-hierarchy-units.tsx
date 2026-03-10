@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
 
@@ -57,6 +58,7 @@ function QualificationHierarchyUnitsComponent({
   commentHandler,
   getEvidenceCount,
 }: QualificationHierarchyUnitsProps) {
+  const t = useTranslations("evidenceLibrary");
   const [expandedSubUnits, setExpandedSubUnits] = useState<Set<string | number>>(new Set());
 
   const toggleSubUnit = (subUnitId: string | number) => {
@@ -116,7 +118,7 @@ function QualificationHierarchyUnitsComponent({
                           <TableRow>
                             <TableHead>Learner Map</TableHead>
                             <TableHead>Assessment Criteria</TableHead>
-                            <TableHead>Trainer Comment</TableHead>
+                            <TableHead>{t("qualificationHierarchy.trainerCommentPlaceholder")}</TableHead>
                             <TableHead className="text-center">Gap</TableHead>
                             <TableHead className="text-center">Signed Off</TableHead>
                           </TableRow>
@@ -150,11 +152,12 @@ function QualificationHierarchyUnitsComponent({
                                 </TableCell>
                                 <TableCell>
                                   {!canEditTrainerFields ? (
-                                    <span className="text-sm">{comment || "No comment"}</span>
+                                    <span className="text-sm">{comment || t("qualificationHierarchy.noComment")}</span>
                                   ) : (
                                     <Input
                                       value={comment}
                                       disabled={disabled}
+                                      placeholder={t("qualificationHierarchy.trainerCommentPlaceholder")}
                                       onChange={(e) => {
                                         commentHandler(e, topic.id, unit.id, subUnitId);
                                       }}

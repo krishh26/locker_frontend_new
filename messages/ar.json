@@ -3585,7 +3585,162 @@
       "createTitle": "إنشاء دليل",
       "editTitle": "تعديل الدليل",
       "createSubtitle": "إضافة دليل جديد إلى مكتبتك",
-      "editSubtitle": "تحديث تفاصيل الدليل والارتباطات"
+      "editSubtitle": "تحديث تفاصيل الدليل والارتباطات",
+      "cards": {
+        "fileOptions": "خيارات الملف",
+        "basicInformation": "المعلومات الأساسية",
+        "courseSelection": "اختيار الدورة",
+        "unitMappings": "ربط الوحدات",
+        "additionalInformation": "معلومات إضافية",
+        "signatures": "التوقيعات"
+      },
+      "fields": {
+        "title": "العنوان",
+        "description": "الوصف",
+        "trainerFeedback": "ملاحظات المدرب",
+        "pointsForImprovement": "نقاط التحسين",
+        "learnerComments": "تعليقات المتعلم",
+        "uploadFile": "رفع ملف",
+        "additionalEvidence": "دليل إضافي",
+        "session": "الجلسة",
+        "grade": "الدرجة",
+        "evidenceTimeLog": "استخدام هذا الدليل في سجل الوقت؟",
+        "yes": "نعم",
+        "no": "لا",
+        "assessmentMethod": "طريقة التقييم",
+        "declaration": "أقر بأن هذا الدليل من عملي الخاص"
+      },
+      "placeholders": {
+        "title": "أدخل عنوان الدليل",
+        "description": "أدخل الوصف",
+        "trainerFeedback": "ملاحظات المدرب",
+        "pointsForImprovement": "نقاط التحسين",
+        "learnerComments": "تعليقاتك",
+        "session": "اختر الجلسة",
+        "grade": "أدخل الدرجة",
+        "enterName": "أدخل الاسم",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "saving": "جاري الحفظ...",
+        "updateEvidence": "تحديث الدليل",
+        "createEvidence": "إنشاء دليل"
+      },
+      "toast": {
+        "selectOneCourse": "يرجى اختيار دورة واحدة على الأقل",
+        "selectOneTypeForCourse": "يرجى اختيار نوع واحد على الأقل لـ {courseName}",
+        "selectOneUnitForCourse": "يرجى اختيار وحدة واحدة على الأقل لـ {courseName}",
+        "evidenceUpdated": "تم تحديث الدليل بنجاح",
+        "evidenceCreated": "تم إنشاء الدليل بنجاح",
+        "uploadFileOrCreateDoc": "يرجى رفع ملف أو إنشاء مستند",
+        "invalidFile": "ملف غير صالح. يرجى رفع ملف أو إنشاء مستند",
+        "saveFailed": "فشل حفظ الدليل. يرجى المحاولة مرة أخرى.",
+        "documentCreatedSuccess": "تم إنشاء المستند بنجاح! يمكنك متابعة تعبئة النموذج."
+      },
+      "status": {
+        "loadingEvidence": "جاري تحميل الدليل...",
+        "selectSession": "اختر الجلسة",
+        "loadingSessions": "جاري تحميل الجلسات...",
+        "noSessionsAvailable": "لا توجد جلسات متاحة"
+      },
+      "assessmentMethods": {
+        "Obs": "الملاحظات",
+        "PA": "التقييم العملي",
+        "ET": "الامتحانات والاختبارات",
+        "PD": "النقاش المهني",
+        "I": "المقابلة",
+        "Q&A": "الأسئلة والأجوبة",
+        "P": "المشروع",
+        "RA": "الحساب التأملي",
+        "WT": "شهادة الشاهد",
+        "PE": "دليل المنتج",
+        "SI": "المحاكاة",
+        "OT": "أخرى",
+        "RPL": "التعلم السابق المعترف به"
+      },
+      "signature": {
+        "signedInAgreement": "موقع بالاتفاق:",
+        "name": "الاسم:",
+        "signed": "موقع:",
+        "es": "ES:",
+        "date": "التاريخ:",
+        "signatureReq": "التوقيع مطلوب:",
+        "trainer": "المدرب",
+        "learner": "المتعلم",
+        "employer": "صاحب العمل",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "العنوان مطلوب",
+        "fileRequired": "يرجى رفع ملف أو إنشاء مستند قبل الإرسال.",
+        "declarationRequired": "يجب قبول الإقرار",
+        "assessmentMethodRequired": "يرجى اختيار طريقة تقييم واحدة على الأقل",
+        "selectOneCourse": "يرجى اختيار دورة واحدة على الأقل",
+        "selectOneTypePerStandardCourse": "يرجى اختيار نوع واحد على الأقل (المعرفة أو السلوك أو المهارات) لكل دورة قياسية",
+        "learnerMapRequiredStandard": "لدورات المعيار، يجب تحديد خريطة متعلم واحدة على الأقل لكل نوع محدد",
+        "learnerMapRequiredQualification": "لدورات التأهيل، يجب اختيار وحدة واحدة على الأقل وتحديد خريطة متعلم واحدة على الأقل لكل وحدة محددة"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "اختر الدورات",
+      "selectCourseToAdd": "اختر دورة للإضافة",
+      "selectTypeFor": "{courseName} – اختر النوع:",
+      "selectUnitsFor": "{courseName} – اختر الوحدات:",
+      "knowledge": "المعرفة",
+      "behaviour": "السلوك",
+      "skills": "المهارات",
+      "selectOneTypeError": "يرجى اختيار نوع واحد على الأقل لـ {courseName}",
+      "selectOneUnitError": "يرجى اختيار وحدة واحدة على الأقل لـ {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "معاينة المستند",
+      "uploadedFile": "الملف المرفوع",
+      "view": "عرض",
+      "download": "تنزيل",
+      "noFileForPreview": "لا يوجد ملف للمعاينة",
+      "createDocument": "إنشاء مستند",
+      "wordDocument": "مستند Word",
+      "excelSpreadsheet": "جدول Excel",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "تم إنشاء المستند بنجاح",
+      "defaultSlideTitle": "شريحة الدليل 1",
+      "defaultSlideContent": "أدخل محتوى الدليل هنا...",
+      "validation": {
+        "documentTitleRequired": "عنوان المستند مطلوب",
+        "documentContentEmpty": "لا يمكن أن يكون محتوى المستند فارغاً",
+        "sheetNameRequired": "اسم الورقة مطلوب",
+        "addDataToSpreadsheet": "يرجى إضافة بيانات إلى الجدول",
+        "presentationTitleRequired": "عنوان العرض التقديمي مطلوب",
+        "allSlidesTitleAndContent": "يجب أن تحتوي جميع الشرائح على عنوان ومحتوى"
+      },
+      "buttons": {
+        "creating": "جاري الإنشاء...",
+        "createDocument": "إنشاء مستند",
+        "createPresentation": "إنشاء عرض تقديمي",
+        "createSpreadsheet": "إنشاء جدول"
+      },
+      "labels": {
+        "documentTitle": "عنوان المستند",
+        "enterDocumentTitle": "أدخل عنوان المستند",
+        "presentationTitle": "عنوان العرض التقديمي",
+        "enterPresentationTitle": "أدخل عنوان العرض التقديمي",
+        "sheetName": "اسم الورقة",
+        "enterSheetName": "أدخل اسم الورقة",
+        "slides": "الشرائح",
+        "slideTitle": "عنوان الشريحة",
+        "slideContent": "محتوى الشريحة"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "يجب أن يكون حجم الملف أقل من 10 ميجابايت"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "تعليق المدرب"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "تعليق المدرب",
+      "noComment": "لا تعليق"
     },
     "deleteDialog": {
       "title": "حذف الدليل؟",

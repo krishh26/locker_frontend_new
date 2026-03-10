@@ -3504,9 +3504,163 @@
       "createTitle": "Crear evidencia",
       "editTitle": "Editar evidencia",
       "createSubtitle": "Añada nueva evidencia a su biblioteca",
-      "editSubtitle": "Actualice los detalles y mapeos de la evidencia"
+      "editSubtitle": "Actualice los detalles y mapeos de la evidencia",
+      "cards": {
+        "fileOptions": "Opciones de archivo",
+        "basicInformation": "Información básica",
+        "courseSelection": "Selección de curso",
+        "unitMappings": "Mapeos de unidades",
+        "additionalInformation": "Información adicional",
+        "signatures": "Firmas"
+      },
+      "fields": {
+        "title": "Título",
+        "description": "Descripción",
+        "trainerFeedback": "Comentarios del formador",
+        "pointsForImprovement": "Puntos de mejora",
+        "learnerComments": "Comentarios del alumno",
+        "uploadFile": "Subir archivo",
+        "additionalEvidence": "Evidencia adicional",
+        "session": "Sesión",
+        "grade": "Calificación",
+        "evidenceTimeLog": "¿Usar la evidencia en el registro de tiempo?",
+        "yes": "Sí",
+        "no": "No",
+        "assessmentMethod": "Método de evaluación",
+        "declaration": "Declaro que esta evidencia es mi propio trabajo"
+      },
+      "placeholders": {
+        "title": "Introducir título de la evidencia",
+        "description": "Introducir descripción",
+        "trainerFeedback": "Comentarios del formador",
+        "pointsForImprovement": "Puntos de mejora",
+        "learnerComments": "Sus comentarios",
+        "session": "Seleccionar sesión",
+        "grade": "Introducir calificación",
+        "enterName": "Introducir nombre",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "saving": "Guardando...",
+        "updateEvidence": "Actualizar evidencia",
+        "createEvidence": "Crear evidencia"
+      },
+      "toast": {
+        "selectOneCourse": "Seleccione al menos un curso",
+        "selectOneTypeForCourse": "Seleccione al menos un tipo para {courseName}",
+        "selectOneUnitForCourse": "Seleccione al menos una unidad para {courseName}",
+        "evidenceUpdated": "Evidencia actualizada correctamente",
+        "evidenceCreated": "Evidencia creada correctamente",
+        "uploadFileOrCreateDoc": "Suba un archivo o cree un documento",
+        "invalidFile": "Archivo no válido. Suba un archivo o cree un documento",
+        "saveFailed": "No se pudo guardar la evidencia. Inténtelo de nuevo.",
+        "documentCreatedSuccess": "¡Documento creado correctamente! Puede seguir rellenando el formulario."
+      },
+      "status": {
+        "loadingEvidence": "Cargando evidencia...",
+        "selectSession": "Seleccionar sesión",
+        "loadingSessions": "Cargando sesiones...",
+        "noSessionsAvailable": "No hay sesiones disponibles"
+      },
+      "assessmentMethods": {
+        "Obs": "Observaciones",
+        "PA": "Evaluación práctica",
+        "ET": "Exámenes y pruebas",
+        "PD": "Discusión profesional",
+        "I": "Entrevista",
+        "Q&A": "Preguntas y respuestas",
+        "P": "Proyecto",
+        "RA": "Relato reflexivo",
+        "WT": "Testimonio de testigo",
+        "PE": "Evidencia de producto",
+        "SI": "Simulación",
+        "OT": "Otro",
+        "RPL": "Aprendizaje previo reconocido"
+      },
+      "signature": {
+        "signedInAgreement": "Firmado en acuerdo:",
+        "name": "Nombre:",
+        "signed": "Firmado:",
+        "es": "ES:",
+        "date": "Fecha:",
+        "signatureReq": "Firma req.:",
+        "trainer": "Formador",
+        "learner": "Alumno",
+        "employer": "Empleador",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "El título es obligatorio",
+        "fileRequired": "Suba un archivo o cree un documento antes de enviar.",
+        "declarationRequired": "Debe aceptar la declaración",
+        "assessmentMethodRequired": "Seleccione al menos un método de evaluación",
+        "selectOneCourse": "Seleccione al menos un curso",
+        "selectOneTypePerStandardCourse": "Seleccione al menos un tipo (Conocimiento, Comportamiento o Habilidades) para cada curso estándar",
+        "learnerMapRequiredStandard": "En cursos estándar debe marcar al menos un Mapa del alumno por cada tipo seleccionado",
+        "learnerMapRequiredQualification": "En cursos de cualificación debe seleccionar al menos una unidad y marcar al menos un Mapa del alumno por cada unidad seleccionada"
+      }
     },
-    "deleteDialog": {
+    "courseSelection": {
+      "selectCourses": "Seleccionar cursos",
+      "selectCourseToAdd": "Seleccionar un curso para añadir",
+      "selectTypeFor": "{courseName} – Seleccionar tipo:",
+      "selectUnitsFor": "{courseName} – Seleccionar unidades:",
+      "knowledge": "Conocimiento",
+      "behaviour": "Comportamiento",
+      "skills": "Habilidades",
+      "selectOneTypeError": "Seleccione al menos un tipo (Conocimiento, Comportamiento o Habilidades) para {courseName}",
+      "selectOneUnitError": "Seleccione al menos una unidad para {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Vista previa del documento",
+      "uploadedFile": "Archivo subido",
+      "view": "Ver",
+      "download": "Descargar",
+      "noFileForPreview": "No hay archivo disponible para la vista previa",
+      "createDocument": "Crear documento",
+      "wordDocument": "Documento Word",
+      "excelSpreadsheet": "Hoja de cálculo Excel",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Su documento se ha creado correctamente",
+      "defaultSlideTitle": "Diapositiva de evidencia 1",
+      "defaultSlideContent": "Introduzca aquí el contenido de su evidencia...",
+      "validation": {
+        "documentTitleRequired": "El título del documento es obligatorio",
+        "documentContentEmpty": "El contenido del documento no puede estar vacío",
+        "sheetNameRequired": "El nombre de la hoja es obligatorio",
+        "addDataToSpreadsheet": "Añada datos a la hoja de cálculo",
+        "presentationTitleRequired": "El título de la presentación es obligatorio",
+        "allSlidesTitleAndContent": "Todas las diapositivas deben tener título y contenido"
+      },
+      "buttons": {
+        "creating": "Creando...",
+        "createDocument": "Crear documento",
+        "createPresentation": "Crear presentación",
+        "createSpreadsheet": "Crear hoja de cálculo"
+      },
+      "labels": {
+        "documentTitle": "Título del documento",
+        "enterDocumentTitle": "Introducir título del documento",
+        "presentationTitle": "Título de la presentación",
+        "enterPresentationTitle": "Introducir título de la presentación",
+        "sheetName": "Nombre de la hoja",
+        "enterSheetName": "Introducir nombre de la hoja",
+        "slides": "Diapositivas",
+        "slideTitle": "Título de la diapositiva",
+        "slideContent": "Contenido de la diapositiva"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "El tamaño del archivo debe ser inferior a 10 MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Comentario del formador"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Comentario del formador",
+      "noComment": "Sin comentario"
+    },
       "title": "¿Eliminar evidencia?",
       "description": "Al eliminar esta evidencia también se eliminarán todos los datos y relaciones asociados. Esta acción no se puede deshacer. ¿Desea continuar?",
       "cancel": "Cancelar",

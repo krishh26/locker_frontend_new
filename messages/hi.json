@@ -3663,7 +3663,162 @@
       "createTitle": "नया साक्ष्य बनाएँ",
       "editTitle": "साक्ष्य संपादित करें",
       "createSubtitle": "अपनी लाइब्रेरी में नया साक्ष्य जोड़ें",
-      "editSubtitle": "साक्ष्य के विवरण और मैपिंग अपडेट करें"
+      "editSubtitle": "साक्ष्य के विवरण और मैपिंग अपडेट करें",
+      "cards": {
+        "fileOptions": "फ़ाइल विकल्प",
+        "basicInformation": "मूल जानकारी",
+        "courseSelection": "कोर्स चयन",
+        "unitMappings": "यूनिट मैपिंग",
+        "additionalInformation": "अतिरिक्त जानकारी",
+        "signatures": "हस्ताक्षर"
+      },
+      "fields": {
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "trainerFeedback": "ट्रेनर फीडबैक",
+        "pointsForImprovement": "सुधार के बिंदु",
+        "learnerComments": "लर्नर टिप्पणियाँ",
+        "uploadFile": "फ़ाइल अपलोड करें",
+        "additionalEvidence": "अतिरिक्त साक्ष्य",
+        "session": "सत्र",
+        "grade": "ग्रेड",
+        "evidenceTimeLog": "क्या इस साक्ष्य को टाइम लॉग में उपयोग किया जाए?",
+        "yes": "हाँ",
+        "no": "नहीं",
+        "assessmentMethod": "मूल्यांकन विधि",
+        "declaration": "मैं घोषणा करता/करती हूँ कि यह साक्ष्य मेरा अपना काम है"
+      },
+      "placeholders": {
+        "title": "साक्ष्य शीर्षक दर्ज करें",
+        "description": "विवरण दर्ज करें",
+        "trainerFeedback": "ट्रेनर फीडबैक",
+        "pointsForImprovement": "सुधार के बिंदु",
+        "learnerComments": "आपकी टिप्पणियाँ",
+        "session": "सत्र चुनें",
+        "grade": "ग्रेड दर्ज करें",
+        "enterName": "नाम दर्ज करें",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "saving": "सेव हो रहा है...",
+        "updateEvidence": "साक्ष्य अपडेट करें",
+        "createEvidence": "साक्ष्य बनाएँ"
+      },
+      "toast": {
+        "selectOneCourse": "कृपया कम से कम एक कोर्स चुनें",
+        "selectOneTypeForCourse": "कृपया {courseName} के लिए कम से कम एक प्रकार चुनें",
+        "selectOneUnitForCourse": "कृपया {courseName} के लिए कम से कम एक यूनिट चुनें",
+        "evidenceUpdated": "साक्ष्य सफलतापूर्वक अपडेट हुआ",
+        "evidenceCreated": "साक्ष्य सफलतापूर्वक बनाया गया",
+        "uploadFileOrCreateDoc": "कृपया फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ",
+        "invalidFile": "अमान्य फ़ाइल। कृपया फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ",
+        "saveFailed": "साक्ष्य सेव नहीं हो सका। कृपया पुनः प्रयास करें।",
+        "documentCreatedSuccess": "दस्तावेज़ सफलतापूर्वक बनाया गया! आप फॉर्म भरना जारी रख सकते हैं।"
+      },
+      "status": {
+        "loadingEvidence": "साक्ष्य लोड हो रहा है...",
+        "selectSession": "सत्र चुनें",
+        "loadingSessions": "सत्र लोड हो रहे हैं...",
+        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है"
+      },
+      "assessmentMethods": {
+        "Obs": "अवलोकन",
+        "PA": "प्रैक्टिकल असेसमेंट",
+        "ET": "परीक्षा और टेस्ट",
+        "PD": "प्रोफेशनल चर्चा",
+        "I": "इंटरव्यू",
+        "Q&A": "प्रश्न और उत्तर",
+        "P": "प्रोजेक्ट",
+        "RA": "रिफ्लेक्टिव अकाउंट",
+        "WT": "विटनेस टेस्टिमनी",
+        "PE": "प्रोडक्ट एविडेंस",
+        "SI": "सिमुलेशन",
+        "OT": "अन्य",
+        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
+      },
+      "signature": {
+        "signedInAgreement": "समझौते में हस्ताक्षर:",
+        "name": "नाम:",
+        "signed": "हस्ताक्षरित:",
+        "es": "ES:",
+        "date": "तारीख:",
+        "signatureReq": "हस्ताक्षर आवश्यक:",
+        "trainer": "ट्रेनर",
+        "learner": "लर्नर",
+        "employer": "नियोक्ता",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "शीर्षक आवश्यक है",
+        "fileRequired": "कृपया सबमिट करने से पहले फ़ाइल अपलोड करें या दस्तावेज़ बनाएँ।",
+        "declarationRequired": "आपको घोषणा स्वीकार करनी होगी",
+        "assessmentMethodRequired": "कृपया कम से कम एक मूल्यांकन विधि चुनें",
+        "selectOneCourse": "कृपया कम से कम एक कोर्स चुनें",
+        "selectOneTypePerStandardCourse": "कृपया प्रत्येक स्टैंडर्ड कोर्स के लिए कम से कम एक प्रकार (नॉलेज, बिहेवियर या स्किल्स) चुनें",
+        "learnerMapRequiredStandard": "स्टैंडर्ड कोर्स के लिए प्रत्येक चयनित प्रकार में कम से कम एक लर्नर मैप चेक होना चाहिए",
+        "learnerMapRequiredQualification": "क्वालिफिकेशन कोर्स के लिए कम से कम एक यूनिट चुननी होगी और प्रत्येक चयनित यूनिट में कम से कम एक लर्नर मैप चेक होना चाहिए"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "कोर्स चुनें",
+      "selectCourseToAdd": "जोड़ने के लिए कोर्स चुनें",
+      "selectTypeFor": "{courseName} – प्रकार चुनें:",
+      "selectUnitsFor": "{courseName} – यूनिट चुनें:",
+      "knowledge": "नॉलेज",
+      "behaviour": "बिहेवियर",
+      "skills": "स्किल्स",
+      "selectOneTypeError": "कृपया {courseName} के लिए कम से कम एक प्रकार चुनें",
+      "selectOneUnitError": "कृपया {courseName} के लिए कम से कम एक यूनिट चुनें"
+    },
+    "createDocument": {
+      "documentPreview": "दस्तावेज़ पूर्वावलोकन",
+      "uploadedFile": "अपलोड की गई फ़ाइल",
+      "view": "देखें",
+      "download": "डाउनलोड",
+      "noFileForPreview": "पूर्वावलोकन के लिए कोई फ़ाइल उपलब्ध नहीं",
+      "createDocument": "दस्तावेज़ बनाएँ",
+      "wordDocument": "Word दस्तावेज़",
+      "excelSpreadsheet": "Excel स्प्रेडशीट",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "आपका दस्तावेज़ सफलतापूर्वक बनाया गया",
+      "defaultSlideTitle": "साक्ष्य स्लाइड 1",
+      "defaultSlideContent": "अपना साक्ष्य कंटेंट यहाँ दर्ज करें...",
+      "validation": {
+        "documentTitleRequired": "दस्तावेज़ शीर्षक आवश्यक है",
+        "documentContentEmpty": "दस्तावेज़ कंटेंट खाली नहीं हो सकता",
+        "sheetNameRequired": "शीट का नाम आवश्यक है",
+        "addDataToSpreadsheet": "कृपया स्प्रेडशीट में कुछ डेटा जोड़ें",
+        "presentationTitleRequired": "प्रेजेंटेशन शीर्षक आवश्यक है",
+        "allSlidesTitleAndContent": "सभी स्लाइड में शीर्षक और कंटेंट दोनों होने चाहिए"
+      },
+      "buttons": {
+        "creating": "बन रहा है...",
+        "createDocument": "दस्तावेज़ बनाएँ",
+        "createPresentation": "प्रेजेंटेशन बनाएँ",
+        "createSpreadsheet": "स्प्रेडशीट बनाएँ"
+      },
+      "labels": {
+        "documentTitle": "दस्तावेज़ शीर्षक",
+        "enterDocumentTitle": "दस्तावेज़ शीर्षक दर्ज करें",
+        "presentationTitle": "प्रेजेंटेशन शीर्षक",
+        "enterPresentationTitle": "प्रेजेंटेशन शीर्षक दर्ज करें",
+        "sheetName": "शीट का नाम",
+        "enterSheetName": "शीट का नाम दर्ज करें",
+        "slides": "स्लाइड",
+        "slideTitle": "स्लाइड शीर्षक",
+        "slideContent": "स्लाइड कंटेंट"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "ट्रेनर टिप्पणी"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "ट्रेनर टिप्पणी",
+      "noComment": "कोई टिप्पणी नहीं"
     },
     "deleteDialog": {
       "title": "साक्ष्य हटाएँ?",

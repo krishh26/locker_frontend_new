@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import type { EvidenceFormValues, Module, Unit, Task } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
@@ -53,6 +54,7 @@ function QualificationHierarchyComponent({
   canEditTrainerFields = false,
   getEvidenceCount,
 }: QualificationHierarchyProps) {
+  const t = useTranslations("evidenceLibrary");
   const unitsWatch = useWatch({ control, name: "units" }) || [];
   
   // Find the qualification course structure in units array
@@ -187,7 +189,7 @@ function QualificationHierarchyComponent({
                                         <TableRow>
                                           <TableHead className="w-[80px]">Learner Map</TableHead>
                                           <TableHead>Task</TableHead>
-                                          <TableHead>Trainer Comment</TableHead>
+                                          <TableHead>{t("qualificationHierarchy.trainerCommentPlaceholder")}</TableHead>
                                           <TableHead className="text-center w-[100px]">Gap</TableHead>
                                           <TableHead className="text-center w-[100px]">Signed Off</TableHead>
                                         </TableRow>
@@ -234,7 +236,7 @@ function QualificationHierarchyComponent({
                                                   render={({ field }) => (
                                                     <Input
                                                       {...field}
-                                                      placeholder="Trainer comment"
+                                                      placeholder={t("qualificationHierarchy.trainerCommentPlaceholder")}
                                                       disabled={disabled || !canEditTrainerFields}
                                                       className="w-full"
                                                     />

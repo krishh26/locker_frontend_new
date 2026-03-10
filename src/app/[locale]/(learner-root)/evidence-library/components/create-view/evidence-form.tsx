@@ -47,6 +47,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useTranslations } from 'next-intl'
 
 interface EvidenceFormProps {
   evidenceId?: string
@@ -59,6 +60,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const userRole = user?.role || 'Learner'
   const isEmployer = user?.role === "Employer";
   const isEditMode = !!evidenceId && !isEmployer
+  const t = useTranslations('evidenceLibrary')
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fileTab, setFileTab] = useState('upload')
@@ -290,7 +292,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const onSubmit = async (data: EvidenceFormValues) => {
     // Validate course selections before submitting
     if (!data.selectedCourses || data.selectedCourses.length === 0) {
-      toast.error('Please select at least one course')
+      toast.error(t('form.toast.selectOneCourse'))
       return
     }
 
@@ -301,7 +303,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     for (const course of standardCourses) {
       const selectedTypes = data.courseSelectedTypes?.[course.course_id] || []
       if (!Array.isArray(selectedTypes) || selectedTypes.length === 0) {
-        toast.error(`Please select at least one type for ${course.course_name}`)
+        toast.error(t('form.toast.selectOneTypeForCourse', { courseName: course.course_name }))
         return
       }
     }
@@ -316,7 +318,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         (u) => u.course_id === course.course_id
       )
       if (courseUnits.length === 0) {
-        toast.error(`Please select at least one unit for ${course.course_name}`)
+        toast.error(t('form.toast.selectOneUnitForCourse', { courseName: course.course_name }))
         return
       }
     }
@@ -501,18 +503,18 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           }
         }
 
-        toast.success('Evidence updated successfully')
+        toast.success(t('form.toast.evidenceUpdated'))
         router.push('/evidence-library')
       } else {
         // Create new evidence
         if (!data.file) {
-          toast.error('Please upload a file or create a document')
+          toast.error(t('form.toast.uploadFileOrCreateDoc'))
           return
         }
 
         // Validate file is a File instance
         if (!(data.file instanceof File)) {
-          toast.error('Invalid file. Please upload a file or create a document')
+          toast.error(t('form.toast.invalidFile'))
           return
         }
 
@@ -680,11 +682,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           }
         }
 
-        toast.success('Evidence created successfully')
+        toast.success(t('form.toast.evidenceCreated'))
         router.push("/evidence-library");
       }
     } catch (error) {
-      toast.error('Failed to save evidence. Please try again.')
+      toast.error(t('form.toast.saveFailed'))
       console.error('Error saving evidence:', error)
     } finally {
       setIsSubmitting(false)
@@ -729,16 +731,14 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     return (
       <div className='flex items-center justify-center py-12'>
         <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
-        <span className='ml-2 text-muted-foreground'>Loading evidence...</span>
+        <span className='ml-2 text-muted-foreground'>{t('form.status.loadingEvidence')}</span>
       </div>
     )
   }
 
   const handleDocumentCreated = (file: File) => {
     form.setValue('file', file, { shouldValidate: true })
-    toast.success(
-      'Document created successfully! You can continue filling the form.'
-    )
+    toast.success(t('form.toast.documentCreatedSuccess'))
   }
 
   // Get file URL and name from evidence details for edit mode
@@ -782,24 +782,24 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>File Options</CardTitle>
+            <CardTitle>{t('form.cards.fileOptions')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs value={fileTab} onValueChange={setFileTab} className='w-full'>
               <TabsList className='grid w-full grid-cols-2'>
                 <TabsTrigger value='upload' disabled={!canEditLearnerFields}>
                   <Upload className='h-4 w-4 mr-2' />
-                  File Upload
+                  {t('form.fields.uploadFile')}
                 </TabsTrigger>
                 <TabsTrigger value='create' disabled={!canEditLearnerFields}>
                   <FileText className='h-4 w-4 mr-2' />
-                  Create Document
+                  {t('createDocument.createDocument')}
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value='upload' className='mt-4'>
                 <Label>
-                  Upload File <span className='text-destructive'>*</span>
+                  {t('form.fields.uploadFile')} <span className='text-destructive'>*</span>
                 </Label>
                 <div className='mt-2'>
                   <FileUpload
@@ -820,7 +820,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   />
                   {form.formState.errors.file && (
                     <p className='text-sm text-destructive mt-2'>
-                      {form.formState.errors.file.message}
+                      {t(String(form.formState.errors.file.message))}
                     </p>
                   )}
                 </div>
@@ -836,17 +836,17 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           {/* Basic Information */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Information</CardTitle>
+          <CardTitle>{t('form.cards.basicInformation')}</CardTitle>
         </CardHeader>
         <CardContent className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='title'>
-              Title <span className='text-destructive'>*</span>
+              {t('form.fields.title')} <span className='text-destructive'>*</span>
             </Label>
             <Input
               id='title'
               {...form.register('title')}
-              placeholder='Enter evidence title'
+              placeholder={t('form.placeholders.title')}
               disabled={!canEditLearnerFields}
               className={
                 form.formState.errors.title ? 'border-destructive' : ''
@@ -854,17 +854,17 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             />
             {form.formState.errors.title && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.title.message}
+                {t(String(form.formState.errors.title.message))}
               </p>
             )}
           </div>
 
           <div className='space-y-2'>
-            <Label htmlFor='description'>Description</Label>
+            <Label htmlFor='description'>{t('form.fields.description')}</Label>
             <Textarea
               id='description'
               {...form.register('description')}
-              placeholder='Enter description'
+              placeholder={t('form.placeholders.description')}
               rows={4}
               disabled={!canEditLearnerFields}
             />
@@ -872,11 +872,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div className='space-y-2'>
-              <Label htmlFor='trainer_feedback'>Trainer Feedback</Label>
+              <Label htmlFor='trainer_feedback'>{t('form.fields.trainerFeedback')}</Label>
               <Textarea
                 id='trainer_feedback'
                 {...form.register('trainer_feedback')}
-                placeholder='Trainer feedback'
+                placeholder={t('form.placeholders.trainerFeedback')}
                 rows={4}
                 disabled={!canEditTrainerFields}
               />
@@ -884,12 +884,12 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
 
             <div className='space-y-2'>
               <Label htmlFor='points_for_improvement'>
-                Points for Improvement
+                {t('form.fields.pointsForImprovement')}
               </Label>
               <Textarea
                 id='points_for_improvement'
                 {...form.register('points_for_improvement')}
-                placeholder='Points for improvement'
+                placeholder={t('form.placeholders.pointsForImprovement')}
                 rows={4}
                 disabled={!canEditTrainerFields}
               />
@@ -897,11 +897,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           </div>
 
           <div className='space-y-2'>
-            <Label htmlFor='learner_comments'>Learner Comments</Label>
+            <Label htmlFor='learner_comments'>{t('form.fields.learnerComments')}</Label>
             <Textarea
               id='learner_comments'
               {...form.register('learner_comments')}
-              placeholder='Your comments'
+              placeholder={t('form.placeholders.learnerComments')}
               rows={4}
               disabled={!canEditLearnerFields}
             />
@@ -912,7 +912,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       {/* Course Selection */}
       <Card>
         <CardHeader>
-          <CardTitle>Course Selection</CardTitle>
+          <CardTitle>{t('form.cards.courseSelection')}</CardTitle>
         </CardHeader>
         <CardContent>
           <CourseSelection
@@ -931,7 +931,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       {/* Units Table / Qualification Hierarchy */}
       <Card>
         <CardHeader>
-          <CardTitle>Unit Mappings</CardTitle>
+          <CardTitle>{t('form.cards.unitMappings')}</CardTitle>
         </CardHeader>
         <CardContent>
           {(() => {
@@ -978,7 +978,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       </h3>
                       {unitsError?.message && (
                         <p className='text-sm text-white font-medium p-2 bg-destructive border border-destructive rounded'>
-                          {unitsError?.message}
+                          {t(String(unitsError?.message))}
                         </p>
                       )}
                       {displayUnits.length > 0 && (
@@ -1023,11 +1023,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       {/* Additional Fields */}
       <Card>
         <CardHeader>
-          <CardTitle>Additional Information</CardTitle>
+          <CardTitle>{t('form.cards.additionalInformation')}</CardTitle>
         </CardHeader>
         <CardContent className='space-y-4'>
           <div className='space-y-2'>
-            <Label htmlFor='audio'>Additional Evidence</Label>
+            <Label htmlFor='audio'>{t('form.fields.additionalEvidence')}</Label>
             <FileUpload
               control={form.control as any}
               name='audio'
@@ -1041,7 +1041,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div className='space-y-2'>
-              <Label htmlFor='session'>Session</Label>
+              <Label htmlFor='session'>{t('form.fields.session')}</Label>
               <Controller
                 name='session'
                 control={form.control}
@@ -1052,13 +1052,13 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     disabled={isEditMode || !canEditLearnerFields}
                   >
                     <SelectTrigger id='session' className='w-full'>
-                      <SelectValue placeholder='Select session' />
+                      <SelectValue placeholder={t('form.status.selectSession')} />
                     </SelectTrigger>
                     <SelectContent>
                       {isLoadingLearnerPlan ? (
                         <div className='flex items-center justify-center py-2 px-2 text-sm text-muted-foreground'>
                           <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                          Loading sessions...
+                          {t('form.status.loadingSessions')}
                         </div>
                       ) : sessions.length > 0 ? (
                         sessions.map((session) => (
@@ -1068,7 +1068,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                         ))
                       ) : (
                         <div className='py-2 px-2 text-sm text-muted-foreground'>
-                          No sessions available
+                          {t('form.status.noSessionsAvailable')}
                         </div>
                       )}
                     </SelectContent>
@@ -1077,24 +1077,24 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               />
               {form.formState.errors.session && (
                 <p className='text-sm text-destructive'>
-                  {form.formState.errors.session.message}
+                  {t(String(form.formState.errors.session.message))}
                 </p>
               )}
             </div>
 
             <div className='space-y-2'>
-              <Label htmlFor='grade'>Grade</Label>
+              <Label htmlFor='grade'>{t('form.fields.grade')}</Label>
               <Input
                 id='grade'
                 {...form.register('grade')}
-                placeholder='Enter grade'
+                placeholder={t('form.placeholders.grade')}
                 disabled={!canEditLearnerFields}
               />
             </div>
           </div>
 
           <div className='space-y-2'>
-            <Label>Evidence to be used in time log?</Label>
+            <Label>{t('form.fields.evidenceTimeLog')}</Label>
             <Controller
               name='evidence_time_log'
               control={form.control}
@@ -1106,11 +1106,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 >
                   <div className='flex items-center space-x-2'>
                     <RadioGroupItem value='yes' id='yes' />
-                    <Label htmlFor='yes'>Yes</Label>
+                    <Label htmlFor='yes'>{t('form.fields.yes')}</Label>
                   </div>
                   <div className='flex items-center space-x-2'>
                     <RadioGroupItem value='no' id='no' />
-                    <Label htmlFor='no'>No</Label>
+                    <Label htmlFor='no'>{t('form.fields.no')}</Label>
                   </div>
                 </RadioGroup>
               )}
@@ -1118,7 +1118,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           </div>
 
           <div className='space-y-2'>
-            <Label>Assessment Method <span className='text-destructive'>*</span></Label>
+            <Label>{t('form.fields.assessmentMethod')} <span className='text-destructive'>*</span></Label>
             <div className='flex flex-wrap gap-4'>
               {ASSESSMENT_METHODS.map((method) => {
                 const checkboxId = `assessment-method-${method.value
@@ -1148,7 +1148,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       )}
                     />
                     <Label htmlFor={checkboxId} className='cursor-pointer'>
-                      {method.title}
+                      {t(`form.assessmentMethods.${method.value}`)}
                     </Label>
                   </div>
                 )
@@ -1156,7 +1156,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             </div>
             {form.formState.errors.assessment_method && (
               <p className='text-sm text-destructive'>
-                {form.formState.errors.assessment_method.message}
+                {t(String(form.formState.errors.assessment_method.message))}
               </p>
             )}
           </div>
@@ -1180,13 +1180,13 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   htmlFor='declaration-checkbox'
                   className='cursor-pointer'
                 >
-                  I declare that this evidence is my own work{' '}
+                  {t('form.fields.declaration')}{' '}
                   <span className='text-destructive'>*</span>
                 </Label>
               </div>
               {form.formState.errors.declaration && (
                 <p className='text-sm text-destructive'>
-                  {form.formState.errors.declaration.message}
+                  {t(String(form.formState.errors.declaration.message))}
                 </p>
               )}
             </div>
@@ -1197,7 +1197,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       {/* Signatures */}
       <Card>
         <CardHeader>
-          <CardTitle>Signatures</CardTitle>
+          <CardTitle>{t('form.cards.signatures')}</CardTitle>
         </CardHeader>
         <CardContent>
           <SignatureTable
@@ -1218,18 +1218,18 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               onClick={() => router.push('/evidence-library')}
               disabled={isSubmitting}
             >
-              Cancel
+              {t('form.buttons.cancel')}
             </Button>
             <Button type='submit' disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                  Saving...
+                  {t('form.buttons.saving')}
                 </>
               ) : isEditMode ? (
-                'Update Evidence'
+                t('form.buttons.updateEvidence')
               ) : (
-                'Create Evidence'
+                t('form.buttons.createEvidence')
               )}
             </Button>
           </div>

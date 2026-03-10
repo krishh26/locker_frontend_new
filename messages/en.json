@@ -2462,7 +2462,162 @@
       "createTitle": "Create Evidence",
       "editTitle": "Edit Evidence",
       "createSubtitle": "Add new evidence to your library",
-      "editSubtitle": "Update evidence details and mappings"
+      "editSubtitle": "Update evidence details and mappings",
+      "cards": {
+        "fileOptions": "File Options",
+        "basicInformation": "Basic Information",
+        "courseSelection": "Course Selection",
+        "unitMappings": "Unit Mappings",
+        "additionalInformation": "Additional Information",
+        "signatures": "Signatures"
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "trainerFeedback": "Trainer Feedback",
+        "pointsForImprovement": "Points for Improvement",
+        "learnerComments": "Learner Comments",
+        "uploadFile": "Upload File",
+        "additionalEvidence": "Additional Evidence",
+        "session": "Session",
+        "grade": "Grade",
+        "evidenceTimeLog": "Evidence to be used in time log?",
+        "yes": "Yes",
+        "no": "No",
+        "assessmentMethod": "Assessment Method",
+        "declaration": "I declare that this evidence is my own work"
+      },
+      "placeholders": {
+        "title": "Enter evidence title",
+        "description": "Enter description",
+        "trainerFeedback": "Trainer feedback",
+        "pointsForImprovement": "Points for improvement",
+        "learnerComments": "Your comments",
+        "session": "Select session",
+        "grade": "Enter grade",
+        "enterName": "Enter name",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "updateEvidence": "Update Evidence",
+        "createEvidence": "Create Evidence"
+      },
+      "toast": {
+        "selectOneCourse": "Please select at least one course",
+        "selectOneTypeForCourse": "Please select at least one type for {courseName}",
+        "selectOneUnitForCourse": "Please select at least one unit for {courseName}",
+        "evidenceUpdated": "Evidence updated successfully",
+        "evidenceCreated": "Evidence created successfully",
+        "uploadFileOrCreateDoc": "Please upload a file or create a document",
+        "invalidFile": "Invalid file. Please upload a file or create a document",
+        "saveFailed": "Failed to save evidence. Please try again.",
+        "documentCreatedSuccess": "Document created successfully! You can continue filling the form."
+      },
+      "status": {
+        "loadingEvidence": "Loading evidence...",
+        "selectSession": "Select session",
+        "loadingSessions": "Loading sessions...",
+        "noSessionsAvailable": "No sessions available"
+      },
+      "assessmentMethods": {
+        "Obs": "Observations",
+        "PA": "Practical assessment",
+        "ET": "Exams and Tests",
+        "PD": "Professional discussion",
+        "I": "Interview",
+        "Q&A": "Question and Answers",
+        "P": "Project",
+        "RA": "Reflective Account",
+        "WT": "Witness Testimony",
+        "PE": "Product Evidence",
+        "SI": "Simulation",
+        "OT": "Other",
+        "RPL": "Recognised prior learning"
+      },
+      "signature": {
+        "signedInAgreement": "Signed in Agreement:",
+        "name": "Name:",
+        "signed": "Signed:",
+        "es": "ES:",
+        "date": "Date:",
+        "signatureReq": "Signature req:",
+        "trainer": "Trainer",
+        "learner": "Learner",
+        "employer": "Employer",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "fileRequired": "Please upload a file or create a document. You must either upload a file or create a document before submitting.",
+        "declarationRequired": "You must accept the declaration",
+        "assessmentMethodRequired": "Please select at least one assessment method",
+        "selectOneCourse": "Please select at least one course",
+        "selectOneTypePerStandardCourse": "Please select at least one type (Knowledge, Behaviour, or Skills) for each Standard course",
+        "learnerMapRequiredStandard": "For Standard courses, at least one Learner Map must be checked for each selected type (Knowledge, Behaviour, or Skills)",
+        "learnerMapRequiredQualification": "For Qualification courses, at least one unit must be selected and at least one Learner Map must be checked for each selected unit"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "Select Courses",
+      "selectCourseToAdd": "Select a course to add",
+      "selectTypeFor": "{courseName} - Select Type:",
+      "selectUnitsFor": "{courseName} - Select Units:",
+      "knowledge": "Knowledge",
+      "behaviour": "Behaviour",
+      "skills": "Skills",
+      "selectOneTypeError": "Please select at least one type (Knowledge, Behaviour, or Skills) for {courseName}",
+      "selectOneUnitError": "Please select at least one unit for {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Document Preview",
+      "uploadedFile": "Uploaded file",
+      "view": "View",
+      "download": "Download",
+      "noFileForPreview": "No file available for preview",
+      "createDocument": "Create Document",
+      "wordDocument": "Word Document",
+      "excelSpreadsheet": "Excel Spreadsheet",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Your document has been created successfully",
+      "defaultSlideTitle": "Evidence Slide 1",
+      "defaultSlideContent": "Enter your evidence content here...",
+      "validation": {
+        "documentTitleRequired": "Document title is required",
+        "documentContentEmpty": "Document content cannot be empty",
+        "sheetNameRequired": "Sheet name is required",
+        "addDataToSpreadsheet": "Please add some data to the spreadsheet",
+        "presentationTitleRequired": "Presentation title is required",
+        "allSlidesTitleAndContent": "All slides must have both title and content"
+      },
+      "buttons": {
+        "creating": "Creating...",
+        "createDocument": "Create Document",
+        "createPresentation": "Create Presentation",
+        "createSpreadsheet": "Create Spreadsheet"
+      },
+      "labels": {
+        "documentTitle": "Document Title",
+        "enterDocumentTitle": "Enter document title",
+        "presentationTitle": "Presentation Title",
+        "enterPresentationTitle": "Enter presentation title",
+        "sheetName": "Sheet Name",
+        "enterSheetName": "Enter sheet name",
+        "slides": "Slides",
+        "slideTitle": "Slide Title",
+        "slideContent": "Slide Content"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "File size must be less than 10MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Trainer comment"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Trainer comment",
+      "noComment": "No comment"
     },
     "deleteDialog": {
       "title": "Delete Evidence?",

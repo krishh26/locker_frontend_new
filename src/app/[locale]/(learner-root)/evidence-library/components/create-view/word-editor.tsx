@@ -14,6 +14,7 @@ import {
   List,
   ListOrdered,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface WordEditorProps {
@@ -35,6 +36,7 @@ export function WordEditor({
   loading,
   disabled,
 }: WordEditorProps) {
+  const t = useTranslations("evidenceLibrary");
   const editorRef = useRef<HTMLDivElement>(null);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
@@ -86,13 +88,13 @@ export function WordEditor({
       {/* Document Title */}
       <div className="space-y-2">
         <Label htmlFor="document-title">
-          Document Title <span className="text-destructive">*</span>
+          {t("createDocument.labels.documentTitle")} <span className="text-destructive">*</span>
         </Label>
         <Input
           id="document-title"
           value={documentTitle}
           onChange={(e) => setDocumentTitle(e.target.value)}
-          placeholder="Enter document title"
+          placeholder={t("createDocument.labels.enterDocumentTitle")}
           disabled={disabled || loading}
         />
       </div>
@@ -211,7 +213,7 @@ export function WordEditor({
           onClick={onSaveUpload}
           disabled={disabled || loading || !documentTitle.trim() || !wordContent.trim()}
         >
-          {loading ? "Creating..." : "Create Document"}
+          {loading ? t("createDocument.buttons.creating") : t("createDocument.buttons.createDocument")}
         </Button>
       </div>
     </div>

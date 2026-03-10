@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Minus, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -36,6 +37,7 @@ export function ExcelEditor({
   loading,
   disabled,
 }: ExcelEditorProps) {
+  const t = useTranslations("evidenceLibrary");
 
   // Get current columns from existing data
   const getCurrentColumns = () => {
@@ -106,13 +108,13 @@ export function ExcelEditor({
       {/* Sheet Name */}
       <div className="space-y-2">
         <Label htmlFor="sheet-name">
-          Sheet Name <span className="text-destructive">*</span>
+          {t("createDocument.labels.sheetName")} <span className="text-destructive">*</span>
         </Label>
         <Input
           id="sheet-name"
           value={sheetName}
           onChange={(e) => setSheetName(e.target.value)}
-          placeholder="Enter sheet name"
+          placeholder={t("createDocument.labels.enterSheetName")}
           disabled={disabled || loading}
         />
       </div>
@@ -216,7 +218,7 @@ export function ExcelEditor({
           onClick={onSaveUpload}
           disabled={disabled || loading || !sheetName.trim() || !hasData}
         >
-          {loading ? "Creating..." : "Create Spreadsheet"}
+          {loading ? t("createDocument.buttons.creating") : t("createDocument.buttons.createSpreadsheet")}
         </Button>
       </div>
     </div>

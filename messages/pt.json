@@ -3663,7 +3663,162 @@
       "createTitle": "Criar evidência",
       "editTitle": "Editar evidência",
       "createSubtitle": "Adicionar nova evidência à sua biblioteca",
-      "editSubtitle": "Atualizar os detalhes e mapeamentos da evidência"
+      "editSubtitle": "Atualizar os detalhes e mapeamentos da evidência",
+      "cards": {
+        "fileOptions": "Opções de ficheiro",
+        "basicInformation": "Informação básica",
+        "courseSelection": "Seleção de curso",
+        "unitMappings": "Mapeamentos de unidades",
+        "additionalInformation": "Informação adicional",
+        "signatures": "Assinaturas"
+      },
+      "fields": {
+        "title": "Título",
+        "description": "Descrição",
+        "trainerFeedback": "Comentários do formador",
+        "pointsForImprovement": "Pontos de melhoria",
+        "learnerComments": "Comentários do formando",
+        "uploadFile": "Transferir ficheiro",
+        "additionalEvidence": "Evidência adicional",
+        "session": "Sessão",
+        "grade": "Nota",
+        "evidenceTimeLog": "Utilizar esta evidência no registo de tempo?",
+        "yes": "Sim",
+        "no": "Não",
+        "assessmentMethod": "Método de avaliação",
+        "declaration": "Declaro que esta evidência é trabalho meu"
+      },
+      "placeholders": {
+        "title": "Introduza o título da evidência",
+        "description": "Introduza a descrição",
+        "trainerFeedback": "Comentários do formador",
+        "pointsForImprovement": "Pontos de melhoria",
+        "learnerComments": "Os seus comentários",
+        "session": "Selecionar sessão",
+        "grade": "Introduza a nota",
+        "enterName": "Introduza o nome",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "saving": "A guardar...",
+        "updateEvidence": "Atualizar evidência",
+        "createEvidence": "Criar evidência"
+      },
+      "toast": {
+        "selectOneCourse": "Selecione pelo menos um curso",
+        "selectOneTypeForCourse": "Selecione pelo menos um tipo para {courseName}",
+        "selectOneUnitForCourse": "Selecione pelo menos uma unidade para {courseName}",
+        "evidenceUpdated": "Evidência atualizada com sucesso",
+        "evidenceCreated": "Evidência criada com sucesso",
+        "uploadFileOrCreateDoc": "Transfira um ficheiro ou crie um documento",
+        "invalidFile": "Ficheiro inválido. Transfira um ficheiro ou crie um documento",
+        "saveFailed": "Falha ao guardar a evidência. Tente novamente.",
+        "documentCreatedSuccess": "Documento criado com sucesso! Pode continuar a preencher o formulário."
+      },
+      "status": {
+        "loadingEvidence": "A carregar evidência...",
+        "selectSession": "Selecionar sessão",
+        "loadingSessions": "A carregar sessões...",
+        "noSessionsAvailable": "Nenhuma sessão disponível"
+      },
+      "assessmentMethods": {
+        "Obs": "Observações",
+        "PA": "Avaliação prática",
+        "ET": "Exames e testes",
+        "PD": "Discussão profissional",
+        "I": "Entrevista",
+        "Q&A": "Perguntas e respostas",
+        "P": "Projeto",
+        "RA": "Relato reflexivo",
+        "WT": "Depoimento de testemunha",
+        "PE": "Evidência de produto",
+        "SI": "Simulação",
+        "OT": "Outro",
+        "RPL": "Aprendizagem prévia reconhecida"
+      },
+      "signature": {
+        "signedInAgreement": "Assinado em acordo:",
+        "name": "Nome:",
+        "signed": "Assinado:",
+        "es": "ES:",
+        "date": "Data:",
+        "signatureReq": "Assinatura req.:",
+        "trainer": "Formador",
+        "learner": "Formando",
+        "employer": "Empregador",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "O título é obrigatório",
+        "fileRequired": "Transfira um ficheiro ou crie um documento antes de submeter.",
+        "declarationRequired": "Tem de aceitar a declaração",
+        "assessmentMethodRequired": "Selecione pelo menos um método de avaliação",
+        "selectOneCourse": "Selecione pelo menos um curso",
+        "selectOneTypePerStandardCourse": "Selecione pelo menos um tipo (Conhecimento, Comportamento ou Competências) para cada curso standard",
+        "learnerMapRequiredStandard": "Para cursos standard, pelo menos um Mapa do formando deve estar assinalado para cada tipo selecionado",
+        "learnerMapRequiredQualification": "Para cursos de qualificação, pelo menos uma unidade deve ser selecionada e pelo menos um Mapa do formando deve estar assinalado para cada unidade selecionada"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "Selecionar cursos",
+      "selectCourseToAdd": "Selecionar um curso para adicionar",
+      "selectTypeFor": "{courseName} – Selecionar tipo:",
+      "selectUnitsFor": "{courseName} – Selecionar unidades:",
+      "knowledge": "Conhecimento",
+      "behaviour": "Comportamento",
+      "skills": "Competências",
+      "selectOneTypeError": "Selecione pelo menos um tipo para {courseName}",
+      "selectOneUnitError": "Selecione pelo menos uma unidade para {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Pré-visualização do documento",
+      "uploadedFile": "Ficheiro transferido",
+      "view": "Ver",
+      "download": "Transferir",
+      "noFileForPreview": "Nenhum ficheiro disponível para pré-visualização",
+      "createDocument": "Criar documento",
+      "wordDocument": "Documento Word",
+      "excelSpreadsheet": "Folha de cálculo Excel",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "O seu documento foi criado com sucesso",
+      "defaultSlideTitle": "Diapositivo de evidência 1",
+      "defaultSlideContent": "Introduza o conteúdo da sua evidência aqui...",
+      "validation": {
+        "documentTitleRequired": "O título do documento é obrigatório",
+        "documentContentEmpty": "O conteúdo do documento não pode estar vazio",
+        "sheetNameRequired": "O nome da folha é obrigatório",
+        "addDataToSpreadsheet": "Adicione dados à folha de cálculo",
+        "presentationTitleRequired": "O título da apresentação é obrigatório",
+        "allSlidesTitleAndContent": "Todas as diapositivas devem ter título e conteúdo"
+      },
+      "buttons": {
+        "creating": "A criar...",
+        "createDocument": "Criar documento",
+        "createPresentation": "Criar apresentação",
+        "createSpreadsheet": "Criar folha de cálculo"
+      },
+      "labels": {
+        "documentTitle": "Título do documento",
+        "enterDocumentTitle": "Introduza o título do documento",
+        "presentationTitle": "Título da apresentação",
+        "enterPresentationTitle": "Introduza o título da apresentação",
+        "sheetName": "Nome da folha",
+        "enterSheetName": "Introduza o nome da folha",
+        "slides": "Diapositivas",
+        "slideTitle": "Título da diapositiva",
+        "slideContent": "Conteúdo da diapositiva"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "O tamanho do ficheiro deve ser inferior a 10 MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Comentário do formador"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Comentário do formador",
+      "noComment": "Sem comentário"
     },
     "deleteDialog": {
       "title": "Eliminar evidência?",

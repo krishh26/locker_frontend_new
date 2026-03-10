@@ -2829,7 +2829,162 @@
       "createTitle": "Evidenz erstellen",
       "editTitle": "Evidenz bearbeiten",
       "createSubtitle": "Neue Evidenz zu Ihrer Bibliothek hinzufügen",
-      "editSubtitle": "Evidenzdetails und Zuordnungen aktualisieren"
+      "editSubtitle": "Evidenzdetails und Zuordnungen aktualisieren",
+      "cards": {
+        "fileOptions": "Dateioptionen",
+        "basicInformation": "Grundinformationen",
+        "courseSelection": "Kursauswahl",
+        "unitMappings": "Einheitenzuordnungen",
+        "additionalInformation": "Zusätzliche Informationen",
+        "signatures": "Unterschriften"
+      },
+      "fields": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "trainerFeedback": "Trainer-Feedback",
+        "pointsForImprovement": "Verbesserungspunkte",
+        "learnerComments": "Lerner-Kommentare",
+        "uploadFile": "Datei hochladen",
+        "additionalEvidence": "Zusätzliche Evidenz",
+        "session": "Sitzung",
+        "grade": "Note",
+        "evidenceTimeLog": "Soll die Evidenz im Zeitprotokoll verwendet werden?",
+        "yes": "Ja",
+        "no": "Nein",
+        "assessmentMethod": "Bewertungsmethode",
+        "declaration": "Ich bestätige, dass diese Evidenz meine eigene Arbeit ist"
+      },
+      "placeholders": {
+        "title": "Evidenztitel eingeben",
+        "description": "Beschreibung eingeben",
+        "trainerFeedback": "Trainer-Feedback",
+        "pointsForImprovement": "Verbesserungspunkte",
+        "learnerComments": "Ihre Kommentare",
+        "session": "Sitzung auswählen",
+        "grade": "Note eingeben",
+        "enterName": "Name eingeben",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "saving": "Wird gespeichert...",
+        "updateEvidence": "Evidenz aktualisieren",
+        "createEvidence": "Evidenz erstellen"
+      },
+      "toast": {
+        "selectOneCourse": "Bitte wählen Sie mindestens einen Kurs",
+        "selectOneTypeForCourse": "Bitte wählen Sie mindestens einen Typ für {courseName}",
+        "selectOneUnitForCourse": "Bitte wählen Sie mindestens eine Einheit für {courseName}",
+        "evidenceUpdated": "Evidenz erfolgreich aktualisiert",
+        "evidenceCreated": "Evidenz erfolgreich erstellt",
+        "uploadFileOrCreateDoc": "Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument",
+        "invalidFile": "Ungültige Datei. Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument",
+        "saveFailed": "Evidenz konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+        "documentCreatedSuccess": "Dokument erfolgreich erstellt! Sie können das Formular weiter ausfüllen."
+      },
+      "status": {
+        "loadingEvidence": "Evidenz wird geladen...",
+        "selectSession": "Sitzung auswählen",
+        "loadingSessions": "Sitzungen werden geladen...",
+        "noSessionsAvailable": "Keine Sitzungen verfügbar"
+      },
+      "assessmentMethods": {
+        "Obs": "Beobachtungen",
+        "PA": "Praktische Bewertung",
+        "ET": "Prüfungen und Tests",
+        "PD": "Fachgespräch",
+        "I": "Interview",
+        "Q&A": "Fragen und Antworten",
+        "P": "Projekt",
+        "RA": "Reflexiver Bericht",
+        "WT": "Zeugenaussage",
+        "PE": "Produktnachweis",
+        "SI": "Simulation",
+        "OT": "Sonstige",
+        "RPL": "Anerkannte Vorkenntnisse"
+      },
+      "signature": {
+        "signedInAgreement": "Unterzeichnet zur Vereinbarung:",
+        "name": "Name:",
+        "signed": "Unterschrieben:",
+        "es": "ES:",
+        "date": "Datum:",
+        "signatureReq": "Unterschrift erf.:",
+        "trainer": "Trainer",
+        "learner": "Lerner",
+        "employer": "Arbeitgeber",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "Titel ist erforderlich",
+        "fileRequired": "Bitte laden Sie eine Datei hoch oder erstellen Sie ein Dokument.",
+        "declarationRequired": "Sie müssen die Erklärung akzeptieren",
+        "assessmentMethodRequired": "Bitte wählen Sie mindestens eine Bewertungsmethode",
+        "selectOneCourse": "Bitte wählen Sie mindestens einen Kurs",
+        "selectOneTypePerStandardCourse": "Bitte wählen Sie mindestens einen Typ (Wissen, Verhalten oder Fertigkeiten) für jeden Standardkurs",
+        "learnerMapRequiredStandard": "Bei Standardkursen muss für jeden gewählten Typ mindestens eine Lerner-Zuordnung angekreuzt werden",
+        "learnerMapRequiredQualification": "Bei Qualifikationskursen muss mindestens eine Einheit ausgewählt und für jede ausgewählte Einheit mindestens eine Lerner-Zuordnung angekreuzt werden"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "Kurse auswählen",
+      "selectCourseToAdd": "Kurs zum Hinzufügen auswählen",
+      "selectTypeFor": "{courseName} – Typ auswählen:",
+      "selectUnitsFor": "{courseName} – Einheiten auswählen:",
+      "knowledge": "Wissen",
+      "behaviour": "Verhalten",
+      "skills": "Fertigkeiten",
+      "selectOneTypeError": "Bitte wählen Sie mindestens einen Typ (Wissen, Verhalten oder Fertigkeiten) für {courseName}",
+      "selectOneUnitError": "Bitte wählen Sie mindestens eine Einheit für {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Dokumentvorschau",
+      "uploadedFile": "Hochgeladene Datei",
+      "view": "Anzeigen",
+      "download": "Herunterladen",
+      "noFileForPreview": "Keine Datei zur Vorschau verfügbar",
+      "createDocument": "Dokument erstellen",
+      "wordDocument": "Word-Dokument",
+      "excelSpreadsheet": "Excel-Tabelle",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Ihr Dokument wurde erfolgreich erstellt",
+      "defaultSlideTitle": "Evidenz-Folie 1",
+      "defaultSlideContent": "Geben Sie hier Ihren Evidenzinhalt ein...",
+      "validation": {
+        "documentTitleRequired": "Dokumenttitel ist erforderlich",
+        "documentContentEmpty": "Dokumentinhalt darf nicht leer sein",
+        "sheetNameRequired": "Tabellenblattname ist erforderlich",
+        "addDataToSpreadsheet": "Bitte fügen Sie Daten in die Tabelle ein",
+        "presentationTitleRequired": "Präsentationstitel ist erforderlich",
+        "allSlidesTitleAndContent": "Alle Folien müssen Titel und Inhalt haben"
+      },
+      "buttons": {
+        "creating": "Wird erstellt...",
+        "createDocument": "Dokument erstellen",
+        "createPresentation": "Präsentation erstellen",
+        "createSpreadsheet": "Tabelle erstellen"
+      },
+      "labels": {
+        "documentTitle": "Dokumenttitel",
+        "enterDocumentTitle": "Dokumenttitel eingeben",
+        "presentationTitle": "Präsentationstitel",
+        "enterPresentationTitle": "Präsentationstitel eingeben",
+        "sheetName": "Tabellenblattname",
+        "enterSheetName": "Tabellenblattname eingeben",
+        "slides": "Folien",
+        "slideTitle": "Folientitel",
+        "slideContent": "Folieninhalt"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "Die Dateigröße muss unter 10 MB liegen"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Trainer-Kommentar"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Trainer-Kommentar",
+      "noComment": "Kein Kommentar"
     },
     "deleteDialog": {
       "title": "Evidenz löschen?",

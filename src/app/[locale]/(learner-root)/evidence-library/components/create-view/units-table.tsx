@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
@@ -38,6 +39,7 @@ export function UnitsTable({
   disabled,
   error,
 }: UnitsTableProps) {
+  const t = useTranslations("evidenceLibrary");
   // Always call hooks first - before any conditional returns
   const watchedUnits = useWatch({ control, name: "units" });
   const courseSelectedTypes = useWatch({ control, name: "courseSelectedTypes" }) || {};
@@ -91,7 +93,7 @@ export function UnitsTable({
   if (!units || units.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
-        Select courses and units to see mappings
+        {t("courseSelection.selectCourses")}
       </div>
     );
   }
@@ -193,7 +195,7 @@ export function UnitsTable({
                               render={({ field: subField }) => (
                                 <Input
                                   {...subField}
-                                  placeholder="Trainer comment"
+                                  placeholder={t("unitsTable.trainerCommentPlaceholder")}
                                   disabled={disabled}
                                   className="w-full"
                                 />
@@ -260,7 +262,7 @@ export function UnitsTable({
                             render={({ field: unitField }) => (
                               <Input
                                 {...unitField}
-                                placeholder="Trainer comment"
+                                placeholder={t("unitsTable.trainerCommentPlaceholder")}
                                 disabled={disabled}
                                 className="w-full"
                               />
@@ -306,7 +308,7 @@ export function UnitsTable({
                   {hasError && (
                     <div className="mt-2">
                       <p className="text-sm text-destructive font-medium">
-                        Please check at least one Learner Map for {unitType} type
+                        {t("form.validation.learnerMapRequiredStandard")}
                       </p>
                     </div>
                   )}
@@ -376,7 +378,7 @@ export function UnitsTable({
                                 render={({ field: subField }) => (
                                   <Input
                                     {...subField}
-                                    placeholder="Trainer comment"
+                                    placeholder={t("unitsTable.trainerCommentPlaceholder")}
                                     disabled={disabled}
                                     className="w-full"
                                   />
@@ -443,7 +445,7 @@ export function UnitsTable({
                               render={({ field: unitField }) => (
                                 <Input
                                   {...unitField}
-                                  placeholder="Trainer comment"
+                                  placeholder={t("unitsTable.trainerCommentPlaceholder")}
                                   disabled={disabled}
                                   className="w-full"
                                 />
@@ -489,7 +491,7 @@ export function UnitsTable({
           </Card>
         );
       })}
-      {error && <p className="text-sm text-destructive">{error.message}</p>}
+      {error && <p className="text-sm text-destructive">{t(String(error.message))}</p>}
     </div>
   );
 }

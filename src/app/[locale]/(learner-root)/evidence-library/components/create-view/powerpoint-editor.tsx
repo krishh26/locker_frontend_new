@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Trash2, Bold, Italic, Underline } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -33,6 +34,7 @@ export function PowerPointEditor({
   loading,
   disabled,
 }: PowerPointEditorProps) {
+  const t = useTranslations("evidenceLibrary");
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
@@ -87,7 +89,7 @@ export function PowerPointEditor({
     const newSlide: Slide = {
       id: Date.now().toString(),
       title: `Slide ${slides.length + 1}`,
-      content: "Enter your content here...",
+      content: t("createDocument.defaultSlideContent"),
     };
     setSlides([...slides, newSlide]);
     setSelectedSlideIndex(slides.length);
@@ -121,13 +123,13 @@ export function PowerPointEditor({
       {/* Presentation Title */}
       <div className="space-y-2">
         <Label htmlFor="presentation-title">
-          Presentation Title <span className="text-destructive">*</span>
+          {t("createDocument.labels.presentationTitle")} <span className="text-destructive">*</span>
         </Label>
         <Input
           id="presentation-title"
           value={presentationTitle}
           onChange={(e) => setPresentationTitle(e.target.value)}
-          placeholder="Enter presentation title"
+          placeholder={t("createDocument.labels.enterPresentationTitle")}
           disabled={disabled || loading}
         />
       </div>
@@ -137,7 +139,7 @@ export function PowerPointEditor({
         <div className="w-64 border rounded-lg flex flex-col">
           <div className="p-3 border-b bg-muted/50">
             <div className="flex items-center justify-between mb-2">
-              <Label className="text-sm font-semibold">Slides</Label>
+              <Label className="text-sm font-semibold">{t("createDocument.labels.slides")}</Label>
               <Button
                 type="button"
                 variant="outline"
@@ -232,7 +234,7 @@ export function PowerPointEditor({
               {/* Slide Content */}
               <div className="flex-1 p-6 flex flex-col">
                 <div className="mb-4">
-                  <Label>Slide Title</Label>
+                  <Label>{t("createDocument.labels.slideTitle")}</Label>
                   <Input
                     value={selectedSlide.title}
                     onChange={(e) =>
@@ -243,7 +245,7 @@ export function PowerPointEditor({
                   />
                 </div>
                 <div className="flex-1 flex flex-col">
-                  <Label>Slide Content</Label>
+                  <Label>{t("createDocument.labels.slideContent")}</Label>
                   <div
                     ref={contentEditorRef}
                     contentEditable={!disabled && !loading}
@@ -260,7 +262,7 @@ export function PowerPointEditor({
                   >
                     {!selectedSlide.content && (
                       <p className="text-muted-foreground">
-                        Enter your slide content...
+                        {t("createDocument.defaultSlideContent")}
                       </p>
                     )}
                   </div>
@@ -278,7 +280,7 @@ export function PowerPointEditor({
           onClick={onSaveUpload}
           disabled={disabled || loading || !isValid}
         >
-          {loading ? "Creating..." : "Create Presentation"}
+          {loading ? t("createDocument.buttons.creating") : t("createDocument.buttons.createPresentation")}
         </Button>
       </div>
     </div>

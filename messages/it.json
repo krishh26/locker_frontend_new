@@ -557,14 +557,55 @@
   },
   "caseload": {
     "pageTitle": "Gestione caseload",
-    "pageSubtitle": "Gestisci e visualizza responsabili di linea e i loro utenti assegnati",
-    "searchPlaceholder": "Cerca responsabili di linea per nome o email.",
+    "pageSubtitle": "Visualizza ed esporta i carichi di lavoro dei line manager.",
+    "searchPlaceholder": "Cerca line manager...",
     "refresh": "Aggiorna",
-    "clear": "Cancella",
-    "noLineManagersFound": "Nessun responsabile di linea trovato",
-    "noLineManagersMatch": "Nessun responsabile di linea trovato",
-    "noLineManagersInSystem": "Non ci sono responsabili di linea nel sistema.",
-    "failedToLoad": "Impossibile caricare i dati del caseload. Riprova."
+    "clear": "Pulisci",
+    "noLineManagersFound": "Nessun line manager trovato",
+    "noLineManagersMatch": "Nessun line manager corrisponde alla tua ricerca",
+    "noLineManagersInSystem": "Al momento non ci sono line manager nel sistema.",
+    "cards": {
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF",
+      "usersLabel": "Utenti",
+      "learnersLabel": "Discenti",
+      "usersBadge": "{count} utenti",
+      "managedUsersTitle": "Utenti gestiti ({count})",
+      "noUsersAssignedYet": "Nessun utente ancora assegnato",
+      "reportTitle": "Report gestione caseload",
+      "generatedOn": "Generato il: {date}",
+      "totalLearnersLine": "Totale discenti: {count}",
+      "totalUsersLine": "Totale utenti: {count}",
+      "overallCsv": {
+        "lineManagerName": "Nome del line manager",
+        "managedUserEmail": "Email utente gestito",
+        "totalLearners": "Totale discenti",
+        "totalUsers": "Totale utenti"
+      },
+      "managerReportTitle": "{name} - Report caseload",
+      "managerInformation": "Informazioni sul manager:",
+      "nameLabel": "Nome: {name}",
+      "emailLabel": "Email: {email}",
+      "managedUsersHeading": "Utenti gestiti:",
+      "managerTableHeaders": {
+        "name": "Nome",
+        "email": "Email",
+        "role": "Ruolo"
+      },
+      "managerNoUsersAssigned": "Nessun utente assegnato a questo manager.",
+      "managerCsv": {
+        "managerName": "Nome del manager",
+        "managerEmail": "Email del manager",
+        "userName": "Nome utente",
+        "userEmail": "Email utente",
+        "userRole": "Ruolo utente",
+        "totalLearners": "Totale discenti",
+        "totalUsers": "Totale utenti",
+        "defaultUserRole": "Utente",
+        "noUsersAssigned": "Nessun utente assegnato"
+      }
+    }
   },
   "forms": {
     "pageTitle": "Generatore di moduli",
@@ -698,7 +739,12 @@
       "dragComponentsHint": "Trascina i componenti per creare il modulo",
       "field": "campo",
       "fields": "campi",
-      "preview": "Anteprima",
+      "preview": {
+        "noFields": "Nessun campo aggiunto al modulo.",
+        "untitledForm": "Modulo senza titolo",
+        "clearForm": "Svuota modulo",
+        "submitPreview": "Invia (solo anteprima)"
+      },
       "edit": "Modifica",
       "saving": "Salvataggio...",
       "saveAsForm": "Salva come modulo",
@@ -827,12 +873,6 @@
           "email": "E-mail",
           "employee-name": "Nome dipendente"
         }
-      },
-      "preview": {
-        "noFields": "Nessun campo aggiunto al modulo.",
-        "untitledForm": "Modulo senza titolo",
-        "clearForm": "Svuota modulo",
-        "submitPreview": "Invia (solo anteprima)"
       },
       "fieldCard": {
         "selectOption": "Seleziona un'opzione",
@@ -2660,58 +2700,6 @@
       "updateFailed": "Failed to update organisation"
     }
   },
-  "caseload": {
-    "pageTitle": "Gestione caseload",
-    "pageSubtitle": "Visualizza ed esporta i carichi di lavoro dei line manager.",
-    "searchPlaceholder": "Cerca line manager...",
-    "refresh": "Aggiorna",
-    "clear": "Pulisci",
-    "noLineManagersFound": "Nessun line manager trovato",
-    "noLineManagersMatch": "Nessun line manager corrisponde alla tua ricerca",
-    "noLineManagersInSystem": "Al momento non ci sono line manager nel sistema.",
-    "cards": {
-      "export": "Esporta",
-      "exportCsv": "Esporta CSV",
-      "exportPdf": "Esporta PDF",
-      "usersLabel": "Utenti",
-      "learnersLabel": "Discenti",
-      "usersBadge": "{count} utenti",
-      "managedUsersTitle": "Utenti gestiti ({count})",
-      "noUsersAssignedYet": "Nessun utente ancora assegnato",
-      "reportTitle": "Report gestione caseload",
-      "generatedOn": "Generato il: {date}",
-      "totalLearnersLine": "Totale discenti: {count}",
-      "totalUsersLine": "Totale utenti: {count}",
-      "overallCsv": {
-        "lineManagerName": "Nome del line manager",
-        "managedUserEmail": "Email utente gestito",
-        "totalLearners": "Totale discenti",
-        "totalUsers": "Totale utenti"
-      },
-      "managerReportTitle": "{name} - Report caseload",
-      "managerInformation": "Informazioni sul manager:",
-      "nameLabel": "Nome: {name}",
-      "emailLabel": "Email: {email}",
-      "managedUsersHeading": "Utenti gestiti:",
-      "managerTableHeaders": {
-        "name": "Nome",
-        "email": "Email",
-        "role": "Ruolo"
-      },
-      "managerNoUsersAssigned": "Nessun utente assegnato a questo manager.",
-      "managerCsv": {
-        "managerName": "Nome del manager",
-        "managerEmail": "Email del manager",
-        "userName": "Nome utente",
-        "userEmail": "Email utente",
-        "userRole": "Ruolo utente",
-        "totalLearners": "Totale discenti",
-        "totalUsers": "Totale utenti",
-        "defaultUserRole": "Utente",
-        "noUsersAssigned": "Nessun utente assegnato"
-      }
-    }
-  },
   "centres": {
     "form": {
       "organisation": "Organizzazione",
@@ -2829,7 +2817,102 @@
       "createTitle": "Crea evidenza",
       "editTitle": "Modifica evidenza",
       "createSubtitle": "Aggiungi una nuova evidenza alla tua libreria",
-      "editSubtitle": "Aggiorna i dettagli e i mapping dell’evidenza"
+      "editSubtitle": "Aggiorna i dettagli e i mapping dell’evidenza",
+      "cards": {
+        "fileOptions": "Opzioni file",
+        "basicInformation": "Informazioni di base",
+        "courseSelection": "Selezione corso",
+        "unitMappings": "Mapping unità",
+        "additionalInformation": "Informazioni aggiuntive",
+        "signatures": "Firme"
+      },
+      "fields": {
+        "title": "Titolo",
+        "description": "Descrizione",
+        "trainerFeedback": "Feedback del formatore",
+        "pointsForImprovement": "Punti di miglioramento",
+        "learnerComments": "Commenti del discente",
+        "uploadFile": "Carica file",
+        "additionalEvidence": "Evidenza aggiuntiva",
+        "session": "Sessione",
+        "grade": "Voto",
+        "evidenceTimeLog": "Utilizzare questa evidenza nel registro del tempo?",
+        "yes": "Sì",
+        "no": "No",
+        "assessmentMethod": "Metodo di valutazione",
+        "declaration": "Dichiaro che questa evidenza è il mio lavoro"
+      },
+      "placeholders": {
+        "title": "Inserisci il titolo dell'evidenza",
+        "description": "Inserisci la descrizione",
+        "trainerFeedback": "Feedback del formatore",
+        "pointsForImprovement": "Punti di miglioramento",
+        "learnerComments": "I tuoi commenti",
+        "session": "Seleziona sessione",
+        "grade": "Inserisci il voto",
+        "enterName": "Inserisci il nome",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "saving": "Salvataggio in corso...",
+        "updateEvidence": "Aggiorna evidenza",
+        "createEvidence": "Crea evidenza"
+      },
+      "toast": {
+        "selectOneCourse": "Seleziona almeno un corso",
+        "selectOneTypeForCourse": "Seleziona almeno un tipo per {courseName}",
+        "selectOneUnitForCourse": "Seleziona almeno un'unità per {courseName}",
+        "evidenceUpdated": "Evidenza aggiornata con successo",
+        "evidenceCreated": "Evidenza creata con successo",
+        "uploadFileOrCreateDoc": "Carica un file o crea un documento",
+        "invalidFile": "File non valido. Carica un file o crea un documento",
+        "saveFailed": "Impossibile salvare l'evidenza. Riprova.",
+        "documentCreatedSuccess": "Documento creato con successo! Puoi continuare a compilare il modulo."
+      },
+      "status": {
+        "loadingEvidence": "Caricamento evidenza...",
+        "selectSession": "Seleziona sessione",
+        "loadingSessions": "Caricamento sessioni...",
+        "noSessionsAvailable": "Nessuna sessione disponibile"
+      },
+      "assessmentMethods": {
+        "Obs": "Osservazioni",
+        "PA": "Valutazione pratica",
+        "ET": "Esami e test",
+        "PD": "Discussione professionale",
+        "I": "Colloquio",
+        "Q&A": "Domande e risposte",
+        "P": "Progetto",
+        "RA": "Resoconto riflessivo",
+        "WT": "Testimonianza",
+        "PE": "Evidenza di prodotto",
+        "SI": "Simulazione",
+        "OT": "Altro",
+        "RPL": "Apprendimento pregresso riconosciuto"
+      },
+      "signature": {
+        "signedInAgreement": "Firmato in accordo:",
+        "name": "Nome:",
+        "signed": "Firmato:",
+        "es": "ES:",
+        "date": "Data:",
+        "signatureReq": "Firma richiesta:",
+        "trainer": "Formatore",
+        "learner": "Discente",
+        "employer": "Datore di lavoro",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "Il titolo è obbligatorio",
+        "fileRequired": "Carica un file o crea un documento prima di inviare.",
+        "declarationRequired": "Devi accettare la dichiarazione",
+        "assessmentMethodRequired": "Seleziona almeno un metodo di valutazione",
+        "selectOneCourse": "Seleziona almeno un corso",
+        "selectOneTypePerStandardCourse": "Seleziona almeno un tipo (Conoscenza, Comportamento o Competenze) per ogni corso standard",
+        "learnerMapRequiredStandard": "Per i corsi standard, almeno un Mappa discente deve essere selezionata per ogni tipo scelto",
+        "learnerMapRequiredQualification": "Per i corsi di qualifica, almeno un'unità deve essere selezionata e almeno un Mappa discente deve essere selezionata per ogni unità scelta"
+      }
     },
     "deleteDialog": {
       "title": "Eliminare l’evidenza?",
@@ -2890,6 +2973,66 @@
       "downloadZipCorrupt": "Il file ZIP creato è danneggiato",
       "downloadSuccess": "{count} file di evidenza selezionati scaricati con successo",
       "downloadFailed": "Impossibile scaricare i file di evidenza. Riprova."
+    },
+    "courseSelection": {
+      "selectCourses": "Seleziona corsi",
+      "selectCourseToAdd": "Seleziona un corso da aggiungere",
+      "selectTypeFor": "{courseName} – Seleziona tipo:",
+      "selectUnitsFor": "{courseName} – Seleziona unità:",
+      "knowledge": "Conoscenza",
+      "behaviour": "Comportamento",
+      "skills": "Competenze",
+      "selectOneTypeError": "Seleziona almeno un tipo per {courseName}",
+      "selectOneUnitError": "Seleziona almeno un'unità per {courseName}"
+    },
+    "createDocument": {
+      "documentPreview": "Anteprima documento",
+      "uploadedFile": "File caricato",
+      "view": "Visualizza",
+      "download": "Scarica",
+      "noFileForPreview": "Nessun file disponibile per l'anteprima",
+      "createDocument": "Crea documento",
+      "wordDocument": "Documento Word",
+      "excelSpreadsheet": "Foglio Excel",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "Il documento è stato creato con successo",
+      "defaultSlideTitle": "Diapositiva evidenza 1",
+      "defaultSlideContent": "Inserisci qui il contenuto della tua evidenza...",
+      "validation": {
+        "documentTitleRequired": "Il titolo del documento è obbligatorio",
+        "documentContentEmpty": "Il contenuto del documento non può essere vuoto",
+        "sheetNameRequired": "Il nome del foglio è obbligatorio",
+        "addDataToSpreadsheet": "Aggiungi dati al foglio di calcolo",
+        "presentationTitleRequired": "Il titolo della presentazione è obbligatorio",
+        "allSlidesTitleAndContent": "Tutte le diapositive devono avere titolo e contenuto"
+      },
+      "buttons": {
+        "creating": "Creazione in corso...",
+        "createDocument": "Crea documento",
+        "createPresentation": "Crea presentazione",
+        "createSpreadsheet": "Crea foglio di calcolo"
+      },
+      "labels": {
+        "documentTitle": "Titolo documento",
+        "enterDocumentTitle": "Inserisci il titolo del documento",
+        "presentationTitle": "Titolo presentazione",
+        "enterPresentationTitle": "Inserisci il titolo della presentazione",
+        "sheetName": "Nome foglio",
+        "enterSheetName": "Inserisci il nome del foglio",
+        "slides": "Diapositive",
+        "slideTitle": "Titolo diapositiva",
+        "slideContent": "Contenuto diapositiva"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "La dimensione del file deve essere inferiore a 10 MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "Commento del formatore"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "Commento del formatore",
+      "noComment": "Nessun commento"
     }
   },
   "chooseUnits": {

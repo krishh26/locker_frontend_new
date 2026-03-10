@@ -3621,7 +3621,162 @@
       "createTitle": "创建证据",
       "editTitle": "编辑证据",
       "createSubtitle": "向证据库添加新的证据",
-      "editSubtitle": "更新证据详情和映射"
+      "editSubtitle": "更新证据详情和映射",
+      "cards": {
+        "fileOptions": "文件选项",
+        "basicInformation": "基本信息",
+        "courseSelection": "课程选择",
+        "unitMappings": "单元映射",
+        "additionalInformation": "附加信息",
+        "signatures": "签名"
+      },
+      "fields": {
+        "title": "标题",
+        "description": "描述",
+        "trainerFeedback": "培训师反馈",
+        "pointsForImprovement": "改进点",
+        "learnerComments": "学员评论",
+        "uploadFile": "上传文件",
+        "additionalEvidence": "附加证据",
+        "session": "会话",
+        "grade": "成绩",
+        "evidenceTimeLog": "是否在时间记录中使用此证据？",
+        "yes": "是",
+        "no": "否",
+        "assessmentMethod": "评估方法",
+        "declaration": "我声明此证据为本人所作"
+      },
+      "placeholders": {
+        "title": "输入证据标题",
+        "description": "输入描述",
+        "trainerFeedback": "培训师反馈",
+        "pointsForImprovement": "改进点",
+        "learnerComments": "您的评论",
+        "session": "选择会话",
+        "grade": "输入成绩",
+        "enterName": "输入姓名",
+        "es": "ES"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "saving": "保存中...",
+        "updateEvidence": "更新证据",
+        "createEvidence": "创建证据"
+      },
+      "toast": {
+        "selectOneCourse": "请至少选择一个课程",
+        "selectOneTypeForCourse": "请为 {courseName} 至少选择一种类型",
+        "selectOneUnitForCourse": "请为 {courseName} 至少选择一个单元",
+        "evidenceUpdated": "证据更新成功",
+        "evidenceCreated": "证据创建成功",
+        "uploadFileOrCreateDoc": "请上传文件或创建文档",
+        "invalidFile": "无效文件。请上传文件或创建文档",
+        "saveFailed": "证据保存失败。请重试。",
+        "documentCreatedSuccess": "文档创建成功！您可以继续填写表单。"
+      },
+      "status": {
+        "loadingEvidence": "正在加载证据...",
+        "selectSession": "选择会话",
+        "loadingSessions": "正在加载会话...",
+        "noSessionsAvailable": "暂无可用会话"
+      },
+      "assessmentMethods": {
+        "Obs": "观察",
+        "PA": "实践评估",
+        "ET": "考试与测验",
+        "PD": "专业讨论",
+        "I": "访谈",
+        "Q&A": "问答",
+        "P": "项目",
+        "RA": "反思陈述",
+        "WT": "证人证言",
+        "PE": "产品证据",
+        "SI": "模拟",
+        "OT": "其他",
+        "RPL": "认可的先验学习"
+      },
+      "signature": {
+        "signedInAgreement": "同意并签署：",
+        "name": "姓名：",
+        "signed": "已签署：",
+        "es": "ES：",
+        "date": "日期：",
+        "signatureReq": "需要签名：",
+        "trainer": "培训师",
+        "learner": "学员",
+        "employer": "雇主",
+        "iqa": "IQA"
+      },
+      "validation": {
+        "titleRequired": "标题为必填项",
+        "fileRequired": "请在提交前上传文件或创建文档。",
+        "declarationRequired": "您必须接受声明",
+        "assessmentMethodRequired": "请至少选择一种评估方法",
+        "selectOneCourse": "请至少选择一个课程",
+        "selectOneTypePerStandardCourse": "请为每个标准课程至少选择一种类型（知识、行为或技能）",
+        "learnerMapRequiredStandard": "对于标准课程，每种所选类型至少需勾选一个学员映射",
+        "learnerMapRequiredQualification": "对于资格课程，至少需选择一个单元，且每个所选单元至少勾选一个学员映射"
+      }
+    },
+    "courseSelection": {
+      "selectCourses": "选择课程",
+      "selectCourseToAdd": "选择要添加的课程",
+      "selectTypeFor": "{courseName} - 选择类型：",
+      "selectUnitsFor": "{courseName} - 选择单元：",
+      "knowledge": "知识",
+      "behaviour": "行为",
+      "skills": "技能",
+      "selectOneTypeError": "请为 {courseName} 至少选择一种类型",
+      "selectOneUnitError": "请为 {courseName} 至少选择一个单元"
+    },
+    "createDocument": {
+      "documentPreview": "文档预览",
+      "uploadedFile": "已上传文件",
+      "view": "查看",
+      "download": "下载",
+      "noFileForPreview": "暂无文件可预览",
+      "createDocument": "创建文档",
+      "wordDocument": "Word 文档",
+      "excelSpreadsheet": "Excel 电子表格",
+      "powerpoint": "PowerPoint",
+      "documentCreatedSuccess": "您的文档已成功创建",
+      "defaultSlideTitle": "证据幻灯片 1",
+      "defaultSlideContent": "在此输入您的证据内容...",
+      "validation": {
+        "documentTitleRequired": "文档标题为必填项",
+        "documentContentEmpty": "文档内容不能为空",
+        "sheetNameRequired": "工作表名称为必填项",
+        "addDataToSpreadsheet": "请向电子表格添加数据",
+        "presentationTitleRequired": "演示文稿标题为必填项",
+        "allSlidesTitleAndContent": "所有幻灯片均须包含标题和内容"
+      },
+      "buttons": {
+        "creating": "创建中...",
+        "createDocument": "创建文档",
+        "createPresentation": "创建演示文稿",
+        "createSpreadsheet": "创建电子表格"
+      },
+      "labels": {
+        "documentTitle": "文档标题",
+        "enterDocumentTitle": "输入文档标题",
+        "presentationTitle": "演示文稿标题",
+        "enterPresentationTitle": "输入演示文稿标题",
+        "sheetName": "工作表名称",
+        "enterSheetName": "输入工作表名称",
+        "slides": "幻灯片",
+        "slideTitle": "幻灯片标题",
+        "slideContent": "幻灯片内容"
+      }
+    },
+    "fileUpload": {
+      "fileSizeError": "文件大小必须小于 10 MB"
+    },
+    "unitsTable": {
+      "trainerCommentPlaceholder": "培训师评论"
+    },
+    "qualificationHierarchy": {
+      "trainerCommentPlaceholder": "培训师评论",
+      "noComment": "无评论"
     },
     "deleteDialog": {
       "title": "删除证据？",

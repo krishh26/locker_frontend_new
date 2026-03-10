@@ -83,6 +83,99 @@
       "title": "学员管理",
       "adminSubtitle": "通过便捷地添加、更新和删除学员，以及分配课程、培训师、雇主、IQA 和 EQA，优化学员管理",
       "defaultSubtitle": "管理并跟踪分配给你的学员"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "姓名",
+        "course": "课程",
+        "trainer": "培训师",
+        "iqa": "IQA",
+        "status": "状态",
+        "iqaReport": "IQA 报告",
+        "learnerCreated": "学员创建时间",
+        "courseRegistered": "课程注册时间"
+      },
+      "headers": {
+        "learnerName": "学员姓名",
+        "username": "用户名",
+        "email": "电子邮件",
+        "mobile": "手机",
+        "course": "课程",
+        "comment": "备注",
+        "status": "状态",
+        "actions": "操作"
+      },
+      "actions": {
+        "openMenu": "打开菜单",
+        "edit": "编辑",
+        "comment": "备注",
+        "delete": "删除"
+      },
+      "unknownCourse": "未知课程",
+      "qaSamplePlan": "QA 抽样计划",
+      "viewIqaReport": "查看 IQA 报告",
+      "noResults": "暂无结果。"
+    },
+    "filters": {
+      "searchPlaceholder": "按关键字搜索...",
+      "coursePlaceholder": "按课程筛选",
+      "allCourses": "所有课程",
+      "loadingCourses": "正在加载课程...",
+      "employerPlaceholder": "按雇主筛选",
+      "allEmployers": "所有雇主",
+      "loadingEmployers": "正在加载雇主...",
+      "clear": "清除"
+    },
+    "statusFilters": {
+      "title": "状态筛选",
+      "options": {
+        "Awaiting Induction": "等待入职",
+        "Certificated": "已发证书",
+        "Completed": "已完成",
+        "Early Leaver": "提前离开",
+        "Exempt": "豁免",
+        "In Training": "培训中",
+        "IQA Approved": "IQA 已批准",
+        "Training Suspended": "培训暂停",
+        "Transferred": "已转移",
+        "Show only archived users": "仅显示已归档用户"
+      }
+    },
+    "export": {
+      "export": "导出",
+      "exportCsv": "导出为 CSV",
+      "exportPdf": "导出为 PDF",
+      "uploadLearners": "上传学员",
+      "addNew": "添加新学员",
+      "noData": "没有要导出的数据",
+      "csvSuccess": "CSV 已成功导出",
+      "pdfSuccess": "PDF 已成功导出",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "学员",
+      "pdfTitleEqa": "学员（EQA）",
+      "csvHeaders": {
+        "learnerName": "学员姓名",
+        "username": "用户名",
+        "email": "电子邮件",
+        "mobile": "手机",
+        "course": "课程",
+        "status": "状态"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "学员姓名",
+        "course": "课程",
+        "employer": "雇主",
+        "iqa": "IQA",
+        "status": "状态",
+        "iqaReport": "IQA 报告",
+        "learnerCreated": "学员创建时间",
+        "courseRegistered": "课程注册时间"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "学员删除成功",
+      "deleteFailedGeneric": "删除学员失败"
     }
   },
   "users": {

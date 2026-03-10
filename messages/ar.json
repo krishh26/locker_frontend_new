@@ -84,6 +84,99 @@
       "title": "إدارة المتعلمين",
       "adminSubtitle": "قم بتحسين إدارة المتعلمين عن طريق إضافة المتعلمين وتحديثهم وحذفهم بسهولة، مع تسهيل إسناد الدورات والمدربين وأصحاب العمل و IQA و EQA",
       "defaultSubtitle": "إدارة ومتابعة المتعلمين المعيّنين لك"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "الاسم",
+        "course": "الدورة",
+        "trainer": "المدرب",
+        "iqa": "IQA",
+        "status": "الحالة",
+        "iqaReport": "تقرير IQA",
+        "learnerCreated": "تاريخ إنشاء المتعلم",
+        "courseRegistered": "تاريخ تسجيل الدورة"
+      },
+      "headers": {
+        "learnerName": "اسم المتعلم",
+        "username": "اسم المستخدم",
+        "email": "البريد الإلكتروني",
+        "mobile": "الجوال",
+        "course": "الدورة",
+        "comment": "ملاحظة",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "actions": {
+        "openMenu": "فتح القائمة",
+        "edit": "تعديل",
+        "comment": "ملاحظة",
+        "delete": "حذف"
+      },
+      "unknownCourse": "دورة غير معروفة",
+      "qaSamplePlan": "خطة عينة QA",
+      "viewIqaReport": "عرض تقرير IQA",
+      "noResults": "لا توجد نتائج."
+    },
+    "filters": {
+      "searchPlaceholder": "البحث بالكلمة المفتاحية...",
+      "coursePlaceholder": "تصفية حسب الدورة",
+      "allCourses": "جميع الدورات",
+      "loadingCourses": "جاري تحميل الدورات...",
+      "employerPlaceholder": "تصفية حسب صاحب العمل",
+      "allEmployers": "جميع أصحاب العمل",
+      "loadingEmployers": "جاري تحميل أصحاب العمل...",
+      "clear": "مسح"
+    },
+    "statusFilters": {
+      "title": "مرشحات الحالة",
+      "options": {
+        "Awaiting Induction": "في انتظار التعريف",
+        "Certificated": "حصل على شهادة",
+        "Completed": "مكتمل",
+        "Early Leaver": "انسحاب مبكر",
+        "Exempt": "معفى",
+        "In Training": "قيد التدريب",
+        "IQA Approved": "معتمد من IQA",
+        "Training Suspended": "التدريب موقوف",
+        "Transferred": "منقول",
+        "Show only archived users": "عرض المستخدمين المؤرشفين فقط"
+      }
+    },
+    "export": {
+      "export": "تصدير",
+      "exportCsv": "تصدير كـ CSV",
+      "exportPdf": "تصدير كـ PDF",
+      "uploadLearners": "رفع المتعلمين",
+      "addNew": "إضافة جديد",
+      "noData": "لا توجد بيانات للتصدير",
+      "csvSuccess": "تم تصدير CSV بنجاح",
+      "pdfSuccess": "تم تصدير PDF بنجاح",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "المتعلمون",
+      "pdfTitleEqa": "المتعلمون (EQA)",
+      "csvHeaders": {
+        "learnerName": "اسم المتعلم",
+        "username": "اسم المستخدم",
+        "email": "البريد الإلكتروني",
+        "mobile": "الجوال",
+        "course": "الدورة",
+        "status": "الحالة"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "اسم المتعلم",
+        "course": "الدورة",
+        "employer": "صاحب العمل",
+        "iqa": "IQA",
+        "status": "الحالة",
+        "iqaReport": "تقرير IQA",
+        "learnerCreated": "تاريخ إنشاء المتعلم",
+        "courseRegistered": "تاريخ تسجيل الدورة"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "تم حذف المتعلم بنجاح",
+      "deleteFailedGeneric": "فشل في حذف المتعلم"
     }
   },
   "users": {

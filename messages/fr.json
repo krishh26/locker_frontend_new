@@ -83,6 +83,99 @@
       "title": "Gestion des Apprenants",
       "adminSubtitle": "Optimisez la gestion des apprenants en ajoutant, mettant à jour et supprimant des apprenants, tout en facilitant l’attribution des cours, des formateurs, des employeurs, des IQA et des EQA",
       "defaultSubtitle": "Gérez et suivez vos apprenants assignés"
+    },
+    "table": {
+      "eqaHeaders": {
+        "name": "Nom",
+        "course": "Cours",
+        "trainer": "Formateur",
+        "iqa": "IQA",
+        "status": "Statut",
+        "iqaReport": "Rapport IQA",
+        "learnerCreated": "Apprenant créé",
+        "courseRegistered": "Cours enregistré"
+      },
+      "headers": {
+        "learnerName": "Nom de l’Apprenant",
+        "username": "Nom d'utilisateur",
+        "email": "E-mail",
+        "mobile": "Mobile",
+        "course": "Cours",
+        "comment": "Commentaire",
+        "status": "Statut",
+        "actions": "Actions"
+      },
+      "actions": {
+        "openMenu": "Ouvrir le menu",
+        "edit": "Modifier",
+        "comment": "Commentaire",
+        "delete": "Supprimer"
+      },
+      "unknownCourse": "Cours inconnu",
+      "qaSamplePlan": "Plan d’échantillonnage QA",
+      "viewIqaReport": "Voir le rapport IQA",
+      "noResults": "Aucun résultat."
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher par mot-clé...",
+      "coursePlaceholder": "Filtrer par cours",
+      "allCourses": "Tous les cours",
+      "loadingCourses": "Chargement des cours...",
+      "employerPlaceholder": "Filtrer par employeur",
+      "allEmployers": "Tous les employeurs",
+      "loadingEmployers": "Chargement des employeurs...",
+      "clear": "Effacer"
+    },
+    "statusFilters": {
+      "title": "Filtres de statut",
+      "options": {
+        "Awaiting Induction": "En attente d’induction",
+        "Certificated": "Certifié",
+        "Completed": "Terminé",
+        "Early Leaver": "Départ anticipé",
+        "Exempt": "Exempté",
+        "In Training": "En formation",
+        "IQA Approved": "Approuvé par IQA",
+        "Training Suspended": "Formation suspendue",
+        "Transferred": "Transféré",
+        "Show only archived users": "Afficher uniquement les utilisateurs archivés"
+      }
+    },
+    "export": {
+      "export": "Exporter",
+      "exportCsv": "Exporter en CSV",
+      "exportPdf": "Exporter en PDF",
+      "uploadLearners": "Importer des apprenants",
+      "addNew": "Ajouter Nouveau",
+      "noData": "Aucune donnée à exporter",
+      "csvSuccess": "CSV exporté avec succès",
+      "pdfSuccess": "PDF exporté avec succès",
+      "csvFilenamePrefix": "learners_export",
+      "eqaCsvFilenamePrefix": "learners_export_eqa",
+      "pdfTitleDefault": "Apprenants",
+      "pdfTitleEqa": "Apprenants (EQA)",
+      "csvHeaders": {
+        "learnerName": "Nom de l’Apprenant",
+        "username": "Nom d'utilisateur",
+        "email": "E-mail",
+        "mobile": "Mobile",
+        "course": "Cours",
+        "status": "Statut"
+      },
+      "eqaCsvHeaders": {
+        "learnerName": "Nom de l’Apprenant",
+        "course": "Cours",
+        "employer": "Employeur",
+        "iqa": "IQA",
+        "status": "Statut",
+        "iqaReport": "Rapport IQA",
+        "learnerCreated": "Apprenant créé",
+        "courseRegistered": "Cours enregistré"
+      }
+    },
+    "toast": {
+      "deleteSuccess": "Apprenant supprimé avec succès",
+      "deleteFailedGeneric": "Échec de la suppression de l’apprenant"
     }
   },
   "users": {

@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -23,6 +24,7 @@ export const SearchExpandControls = memo(function SearchExpandControls({
   visibleRows,
   isLearnersInFlight,
 }: SearchExpandControlsProps) {
+  const t = useTranslations("qaSamplePlan.learnersTable.searchExpand");
   const dispatch = useAppDispatch();
   const filterState = useAppSelector(selectFilterState);
   const { filterApplied, searchText } = filterState;
@@ -36,7 +38,7 @@ export const SearchExpandControls = memo(function SearchExpandControls({
       <div className="relative flex-1 sm:max-w-sm">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search learners..."
+          placeholder={t("searchPlaceholder")}
           value={searchText}
           onChange={(e) => dispatch(setSearchText(e.target.value))}
           className="pl-9"
@@ -52,12 +54,12 @@ export const SearchExpandControls = memo(function SearchExpandControls({
         {visibleRows && expandedRows.size === visibleRows.length && visibleRows.length > 0 ? (
           <>
             <ChevronUp className="mr-2 h-4 w-4" />
-            Collapse All
+            {t("collapseAll")}
           </>
         ) : (
           <>
             <ChevronDown className="mr-2 h-4 w-4" />
-            Expand All
+            {t("expandAll")}
           </>
         )}
       </Button>

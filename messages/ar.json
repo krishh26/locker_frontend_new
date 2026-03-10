@@ -1076,6 +1076,48 @@
       }
     },
     "learnersTable": {
+      "title": "المتعلمون",
+      "summary": {
+        "viewingPlan": "عرض الخطة {planId}{courseName}",
+        "na": "غير متاح"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "ابحث عن المتعلمين...",
+        "expandAll": "توسيع الكل",
+        "collapseAll": "طي الكل"
+      },
+      "units": {
+        "noUnitsAvailable": "لا توجد وحدات متاحة لهذا المتعلم.",
+        "unitsAvailable": "{count} وحدة(ات) متاحة",
+        "unitDefaultName": "وحدة",
+        "status": {
+          "completed": "مكتمل",
+          "incomplete": "غير مكتمل"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "اختر حالة QA",
+        "selectStatusPlaceholder": "اختر الحالة",
+        "hideCompletedLearners": "عدم عرض المتعلمين ذوي حالة دورة مكتملة",
+        "qaStatus": {
+          "All": "الكل",
+          "QA Approved": "موافق عليه من QA"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "اختر الدورة",
+        "selectPlan": "اختر الخطة",
+        "placeholders": {
+          "selectCourseFirst": "اختر دورة أولاً",
+          "loadingPlans": "جارٍ تحميل الخطط...",
+          "unableLoadPlans": "تعذر تحميل الخطط",
+          "noPlansAvailable": "لا توجد خطط متاحة",
+          "selectPlan": "اختر خطة"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "تعذر تحميل الخطط للدورة المحددة."
+        }
+      },
       "columns": {
         "assessor": "المُقيِّم",
         "riskLevel": "مستوى المخاطر",

@@ -828,6 +828,48 @@
       }
     },
     "learnersTable": {
+      "title": "Discenti",
+      "summary": {
+        "viewingPlan": "Visualizzazione piano {planId}{courseName}",
+        "na": "N/D"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Cerca discenti...",
+        "expandAll": "Espandi tutto",
+        "collapseAll": "Comprimi tutto"
+      },
+      "units": {
+        "noUnitsAvailable": "Nessuna unità disponibile per questo discente.",
+        "unitsAvailable": "{count} unità disponibili",
+        "unitDefaultName": "Unità",
+        "status": {
+          "completed": "Completato",
+          "incomplete": "Incompleto"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "Seleziona stato QA",
+        "selectStatusPlaceholder": "Seleziona stato",
+        "hideCompletedLearners": "Non mostrare i discenti con stato corso completato",
+        "qaStatus": {
+          "All": "Tutti",
+          "QA Approved": "Approvato QA"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Seleziona corso",
+        "selectPlan": "Seleziona piano",
+        "placeholders": {
+          "selectCourseFirst": "Seleziona prima un corso",
+          "loadingPlans": "Caricamento piani...",
+          "unableLoadPlans": "Impossibile caricare i piani",
+          "noPlansAvailable": "Nessun piano disponibile",
+          "selectPlan": "Seleziona un piano"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Impossibile caricare i piani per il corso selezionato."
+        }
+      },
       "columns": {
         "assessor": "Valutatore",
         "riskLevel": "Livello di rischio",

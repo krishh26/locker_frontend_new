@@ -1075,6 +1075,48 @@
       }
     },
     "learnersTable": {
+      "title": "Formandos",
+      "summary": {
+        "viewingPlan": "A ver o plano {planId}{courseName}",
+        "na": "N/D"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Pesquisar formandos...",
+        "expandAll": "Expandir tudo",
+        "collapseAll": "Recolher tudo"
+      },
+      "units": {
+        "noUnitsAvailable": "Não há unidades disponíveis para este formando.",
+        "unitsAvailable": "{count} unidade(s) disponíveis",
+        "unitDefaultName": "Unidade",
+        "status": {
+          "completed": "Concluído",
+          "incomplete": "Incompleto"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "Selecionar estado de QA",
+        "selectStatusPlaceholder": "Selecionar estado",
+        "hideCompletedLearners": "Não mostrar formandos com estado de curso concluído",
+        "qaStatus": {
+          "All": "Todos",
+          "QA Approved": "Aprovado por QA"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Selecionar curso",
+        "selectPlan": "Selecionar plano",
+        "placeholders": {
+          "selectCourseFirst": "Selecione primeiro um curso",
+          "loadingPlans": "A carregar planos...",
+          "unableLoadPlans": "Não foi possível carregar os planos",
+          "noPlansAvailable": "Não há planos disponíveis",
+          "selectPlan": "Selecionar um plano"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Não foi possível carregar os planos para o curso selecionado."
+        }
+      },
       "columns": {
         "assessor": "Avaliador",
         "riskLevel": "Nível de risco",

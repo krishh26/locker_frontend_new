@@ -1075,6 +1075,48 @@
       }
     },
     "learnersTable": {
+      "title": "लर्नर",
+      "summary": {
+        "viewingPlan": "प्लान देख रहे हैं {planId}{courseName}",
+        "na": "उपलब्ध नहीं"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "लर्नर खोजें...",
+        "expandAll": "सभी विस्तृत करें",
+        "collapseAll": "सभी संक्षिप्त करें"
+      },
+      "units": {
+        "noUnitsAvailable": "इस लर्नर के लिए कोई यूनिट उपलब्ध नहीं है।",
+        "unitsAvailable": "{count} यूनिट उपलब्ध",
+        "unitDefaultName": "यूनिट",
+        "status": {
+          "completed": "पूर्ण",
+          "incomplete": "अपूर्ण"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "QA स्टेटस चुनें",
+        "selectStatusPlaceholder": "स्टेटस चुनें",
+        "hideCompletedLearners": "पूर्ण कोर्स स्टेटस वाले लर्नर न दिखाएं",
+        "qaStatus": {
+          "All": "सभी",
+          "QA Approved": "QA अप्रूव्ड"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "कोर्स चुनें",
+        "selectPlan": "प्लान चुनें",
+        "placeholders": {
+          "selectCourseFirst": "पहले कोर्स चुनें",
+          "loadingPlans": "प्लान लोड हो रहे हैं...",
+          "unableLoadPlans": "प्लान लोड नहीं हो सके",
+          "noPlansAvailable": "कोई प्लान उपलब्ध नहीं",
+          "selectPlan": "प्लान चुनें"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "चुने गए कोर्स के लिए प्लान लोड नहीं हो सके।"
+        }
+      },
       "columns": {
         "assessor": "असेसर",
         "riskLevel": "रिस्क लेवल",

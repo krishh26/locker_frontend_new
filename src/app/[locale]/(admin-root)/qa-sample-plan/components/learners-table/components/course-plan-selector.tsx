@@ -3,6 +3,7 @@
 import { memo, useCallback, useMemo, useRef, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -26,6 +27,7 @@ interface CoursePlanSelectorProps {
 }
 
 export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = false }: CoursePlanSelectorProps) {
+  const t = useTranslations("qaSamplePlan.learnersTable.coursePlanSelector");
   const dispatch = useAppDispatch();
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const selectedPlan = useAppSelector(selectSelectedPlan);
@@ -37,12 +39,12 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
 
   // Plan placeholder text
   const planPlaceholderText = useMemo(() => {
-    if (!selectedCourse) return "Select a course first";
-    if (isPlanListLoading) return "Loading plans...";
-    if (plansError) return "Unable to load plans";
-    if (!plans.length) return "No plans available";
-    return "Select a plan";
-  }, [isPlanListLoading, plansError, plans.length, selectedCourse]);
+    if (!selectedCourse) return t("placeholders.selectCourseFirst");
+    if (isPlanListLoading) return t("placeholders.loadingPlans");
+    if (plansError) return t("placeholders.unableLoadPlans");
+    if (!plans.length) return t("placeholders.noPlansAvailable");
+    return t("placeholders.selectPlan");
+  }, [isPlanListLoading, plansError, plans.length, selectedCourse, t]);
 
   // Use refs to track current values without causing re-renders
   const selectedCourseRef = useRef(selectedCourse);
@@ -94,7 +96,7 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="space-y-2">
-        <Label>Select Course</Label>
+        <Label>{t("selectCourse")}</Label>
         <CourseAutocomplete 
           value={courseValue} 
           onValueChange={handleCourseChange} 
@@ -103,7 +105,7 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
       </div>
 
       <div className="space-y-2">
-        <Label>Select Plan</Label>
+        <Label>{t("selectPlan")}</Label>
         <Select
           value={planValue}
           onValueChange={handlePlanChange}
@@ -122,7 +124,7 @@ export const CoursePlanSelector = memo(function CoursePlanSelector({ disabled = 
         </Select>
         {plansError && selectedCourse && (
           <p className="text-sm text-destructive mt-1">
-            Unable to load plans for the selected course.
+            {t("errors.unableLoadPlansForCourse")}
           </p>
         )}
       </div>

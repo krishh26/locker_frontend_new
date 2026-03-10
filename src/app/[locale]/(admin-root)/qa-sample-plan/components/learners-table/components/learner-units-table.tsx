@@ -4,6 +4,7 @@ import { memo } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import type { SamplePlanLearner, SamplePlanLearnerUnit } from "@/store/api/qa-sample-plan/types";
 import { sanitizeText, formatDisplayDate } from "../../../utils/utils";
 import { useAppDispatch } from "@/store/hooks";
@@ -39,6 +40,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
   selectedUnitsSet,
 }: LearnerUnitsTableProps) {
   const dispatch = useAppDispatch();
+  const t = useTranslations("qaSamplePlan.learnersTable.units");
 
   const handleUnitToggle = (unitKey: string) => {
     const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
@@ -104,7 +106,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
   if (units.length === 0) {
     return (
       <p className="text-muted-foreground text-center py-4">
-        No units available for this learner.
+        {t("noUnitsAvailable")}
       </p>
     );
   }
@@ -131,7 +133,7 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
           }}
         />
         <span className="text-sm text-muted-foreground">
-          {units.length} unit(s) available
+          {t("unitsAvailable", { count: units.length })}
         </span>
       </div>
       <div className="flex overflow-x-auto gap-1 pb-2">
@@ -161,16 +163,19 @@ export const LearnerUnitsTable = memo(function LearnerUnitsTable({
                   />
                 </div>
                 <div className="flex-1 min-w-0 overflow-hidden">
-                  <p className="text-sm font-medium leading-tight truncate" title={unitData.unit_name || "Unit"}>
-                    {sanitizeText(unitData.unit_name || "Unit")}
+                  <p
+                    className="text-sm font-medium leading-tight truncate"
+                    title={unitData.unit_name || t("unitDefaultName")}
+                  >
+                    {sanitizeText(unitData.unit_name || t("unitDefaultName"))}
                   </p>
                 </div>
                 <Badge variant={getUnitStatusBadge(unitData.status)} className="text-xs shrink-0">
                   {typeof unitData.status === "string"
                     ? unitData.status
                     : unitData.status
-                      ? "Completed"
-                      : "Incomplete"}
+                      ? t("status.completed")
+                      : t("status.incomplete")}
                 </Badge>
               </div>
               {sampleHistory.length > 0 && (

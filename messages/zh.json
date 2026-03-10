@@ -1075,6 +1075,48 @@
       }
     },
     "learnersTable": {
+      "title": "学员",
+      "summary": {
+        "viewingPlan": "正在查看计划 {planId}{courseName}",
+        "na": "无"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "搜索学员...",
+        "expandAll": "全部展开",
+        "collapseAll": "全部收起"
+      },
+      "units": {
+        "noUnitsAvailable": "该学员暂无可用单元。",
+        "unitsAvailable": "可用单元：{count}",
+        "unitDefaultName": "单元",
+        "status": {
+          "completed": "已完成",
+          "incomplete": "未完成"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "选择 QA 状态",
+        "selectStatusPlaceholder": "选择状态",
+        "hideCompletedLearners": "不显示课程状态已完成的学员",
+        "qaStatus": {
+          "All": "全部",
+          "QA Approved": "QA 已批准"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "选择课程",
+        "selectPlan": "选择计划",
+        "placeholders": {
+          "selectCourseFirst": "请先选择课程",
+          "loadingPlans": "正在加载计划...",
+          "unableLoadPlans": "无法加载计划",
+          "noPlansAvailable": "暂无可用计划",
+          "selectPlan": "选择计划"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "无法加载所选课程的计划。"
+        }
+      },
       "columns": {
         "assessor": "评估员",
         "riskLevel": "风险等级",

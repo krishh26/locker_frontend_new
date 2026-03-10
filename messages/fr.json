@@ -1075,6 +1075,48 @@
       }
     },
     "learnersTable": {
+      "title": "Apprenants",
+      "summary": {
+        "viewingPlan": "Affichage du plan {planId}{courseName}",
+        "na": "N/D"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Rechercher des apprenants...",
+        "expandAll": "Tout développer",
+        "collapseAll": "Tout réduire"
+      },
+      "units": {
+        "noUnitsAvailable": "Aucune unité disponible pour cet apprenant.",
+        "unitsAvailable": "{count} unité(s) disponible(s)",
+        "unitDefaultName": "Unité",
+        "status": {
+          "completed": "Terminé",
+          "incomplete": "Incomplet"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "Sélectionner le statut QA",
+        "selectStatusPlaceholder": "Sélectionner un statut",
+        "hideCompletedLearners": "Ne pas afficher les apprenants avec un statut de cours terminé",
+        "qaStatus": {
+          "All": "Tous",
+          "QA Approved": "Approuvé QA"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Sélectionner un cours",
+        "selectPlan": "Sélectionner un plan",
+        "placeholders": {
+          "selectCourseFirst": "Sélectionnez d’abord un cours",
+          "loadingPlans": "Chargement des plans...",
+          "unableLoadPlans": "Impossible de charger les plans",
+          "noPlansAvailable": "Aucun plan disponible",
+          "selectPlan": "Sélectionner un plan"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Impossible de charger les plans pour le cours sélectionné."
+        }
+      },
       "columns": {
         "assessor": "Évaluateur",
         "riskLevel": "Niveau de risque",

@@ -828,6 +828,48 @@
       }
     },
     "learnersTable": {
+      "title": "Lernende",
+      "summary": {
+        "viewingPlan": "Planansicht {planId}{courseName}",
+        "na": "k. A."
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Lernende suchen...",
+        "expandAll": "Alle erweitern",
+        "collapseAll": "Alle reduzieren"
+      },
+      "units": {
+        "noUnitsAvailable": "Keine Einheiten für diesen Lernenden verfügbar.",
+        "unitsAvailable": "{count} Einheit(en) verfügbar",
+        "unitDefaultName": "Einheit",
+        "status": {
+          "completed": "Abgeschlossen",
+          "incomplete": "Unvollständig"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "QA-Status auswählen",
+        "selectStatusPlaceholder": "Status auswählen",
+        "hideCompletedLearners": "Lernende mit abgeschlossenem Kursstatus nicht anzeigen",
+        "qaStatus": {
+          "All": "Alle",
+          "QA Approved": "QA genehmigt"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Kurs auswählen",
+        "selectPlan": "Plan auswählen",
+        "placeholders": {
+          "selectCourseFirst": "Wählen Sie zuerst einen Kurs aus",
+          "loadingPlans": "Pläne werden geladen...",
+          "unableLoadPlans": "Pläne konnten nicht geladen werden",
+          "noPlansAvailable": "Keine Pläne verfügbar",
+          "selectPlan": "Plan auswählen"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Pläne für den ausgewählten Kurs konnten nicht geladen werden."
+        }
+      },
       "columns": {
         "assessor": "Assessor",
         "riskLevel": "Risikostufe",

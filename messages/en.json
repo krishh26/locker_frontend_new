@@ -1095,6 +1095,48 @@
       }
     },
     "learnersTable": {
+      "title": "Learners",
+      "summary": {
+        "viewingPlan": "Viewing plan {planId}{courseName}",
+        "na": "N/A"
+      },
+      "searchExpand": {
+        "searchPlaceholder": "Search learners...",
+        "expandAll": "Expand All",
+        "collapseAll": "Collapse All"
+      },
+      "units": {
+        "noUnitsAvailable": "No units available for this learner.",
+        "unitsAvailable": "{count} unit(s) available",
+        "unitDefaultName": "Unit",
+        "status": {
+          "completed": "Completed",
+          "incomplete": "Incomplete"
+        }
+      },
+      "filterControls": {
+        "selectQaStatus": "Select QA Status",
+        "selectStatusPlaceholder": "Select status",
+        "hideCompletedLearners": "Do not show learners with completed course status",
+        "qaStatus": {
+          "All": "All",
+          "QA Approved": "QA Approved"
+        }
+      },
+      "coursePlanSelector": {
+        "selectCourse": "Select Course",
+        "selectPlan": "Select Plan",
+        "placeholders": {
+          "selectCourseFirst": "Select a course first",
+          "loadingPlans": "Loading plans...",
+          "unableLoadPlans": "Unable to load plans",
+          "noPlansAvailable": "No plans available",
+          "selectPlan": "Select a plan"
+        },
+        "errors": {
+          "unableLoadPlansForCourse": "Unable to load plans for the selected course."
+        }
+      },
       "columns": {
         "assessor": "Assessor",
         "riskLevel": "Risk Level",

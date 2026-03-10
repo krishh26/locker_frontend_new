@@ -6,7 +6,6 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -38,7 +37,6 @@ type DefaultReviewWeeksFormData = z.infer<ReturnType<typeof defaultReviewWeeksSc
 
 export function DefaultReviewWeeksPageContent() {
     const t = useTranslations("defaultReviewWeeks");
-    const common = useTranslations("common");
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     const {

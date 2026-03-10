@@ -53,6 +53,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface SortableRowProps {
   sessionType: SessionType;
@@ -133,6 +134,8 @@ function SortableTableRow({
 }
 
 export function SessionTypesDataTable() {
+  const t = useTranslations("sessionTypes");
+  const common = useTranslations("common");
   const [sessionTypes, setSessionTypes] = useState<SessionType[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSessionType, setEditingSessionType] = useState<SessionType | null>(null);
@@ -180,12 +183,12 @@ export function SessionTypesDataTable() {
 
     try {
       await deleteSessionType(sessionTypeToDelete).unwrap();
-      toast.success("Session Type deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setSessionTypeToDelete(null);
       refetch();
     } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to delete session type");
+      toast.error(error?.data?.message || t("toast.deleteFailed"));
     }
   };
 
@@ -193,7 +196,7 @@ export function SessionTypesDataTable() {
     try {
       await toggleSessionType({ id, isActive }).unwrap();
       toast.success(
-        `Session Type ${isActive ? "activated" : "deactivated"} successfully`
+        isActive ? t("toast.activatedSuccess") : t("toast.deactivatedSuccess")
       );
       refetch();
     } catch (error: any) {
@@ -240,15 +243,16 @@ export function SessionTypesDataTable() {
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
             <div>
-              <h3 className="text-lg font-semibold mb-1">Session Types</h3>
+              <h3 className="text-lg font-semibold mb-1">
+                {t("table.title")}
+              </h3>
               <p className="text-sm text-muted-foreground">
-                {sessionTypes.length}{" "}
-                {sessionTypes.length === 1 ? "session type" : "session types"}
+                {t("table.count", { count: sessionTypes.length })}
               </p>
             </div>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Session Type
+              {t("table.addButton")}
             </Button>
           </div>
 
@@ -273,11 +277,19 @@ export function SessionTypesDataTable() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[50px]"></TableHead>
-                      <TableHead className="w-[80px]">Order</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead align="center">Off the Job</TableHead>
-                      <TableHead align="center">Active</TableHead>
-                      <TableHead align="center">Actions</TableHead>
+                      <TableHead className="w-[80px]">
+                        {t("table.headers.order")}
+                      </TableHead>
+                      <TableHead>{t("table.headers.name")}</TableHead>
+                      <TableHead align="center">
+                        {t("table.headers.offTheJob")}
+                      </TableHead>
+                      <TableHead align="center">
+                        {t("table.headers.active")}
+                      </TableHead>
+                      <TableHead align="center">
+                        {t("table.headers.actions")}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -306,7 +318,7 @@ export function SessionTypesDataTable() {
             <Alert>
               <Info className="h-4 w-4" />
               <AlertDescription>
-                No session types found. Create one to get started.
+                {t("table.emptyDescription")}
               </AlertDescription>
             </Alert>
           )}
@@ -329,20 +341,19 @@ export function SessionTypesDataTable() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this session type? This action
-              cannot be undone.
+              {t("dialogs.deleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{common("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={isDeleting}
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("dialogs.deleting") : t("dialogs.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

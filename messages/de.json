@@ -692,14 +692,62 @@
     }
   },
   "iqaQuestions": {
-    "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageTitle": "IQA-Fragen verwalten",
+    "pageSubtitle": "IQA-Bewertungsfragen nach Typ verwalten und organisieren",
     "questionTypes": {
-      "all": "All",
-      "observeAssessor": "Observe Assessor",
-      "learnerInterview": "Learner Interview",
-      "employerInterview": "Employer Interview",
-      "finalCheck": "Final Check"
+      "all": "Alle",
+      "observeAssessor": "Assessor beobachten",
+      "learnerInterview": "Interview mit Lernendem",
+      "employerInterview": "Interview mit Arbeitgeber",
+      "finalCheck": "Abschließende Prüfung"
+    },
+    "form": {
+      "questionTypeLabel": "Fragentyp",
+      "requiredBadge": "Erforderlich",
+      "typePlaceholder": "Wählen Sie einen Fragentyp, um Fragen zu verwalten",
+      "questionLabel": "Fragentext",
+      "questionPlaceholder": "Geben Sie hier Ihre Frage ein...",
+      "questionRequired": "Fragentext ist erforderlich",
+      "charactersCount": "{count} Zeichen",
+      "addQuestion": "Frage hinzufügen"
+    },
+    "formDialog": {
+      "createTitle": "Neue Frage hinzufügen",
+      "editTitle": "Frage bearbeiten",
+      "description": "Fragentyp: {type}",
+      "updating": "Wird aktualisiert...",
+      "adding": "Wird hinzugefügt...",
+      "updateQuestion": "Frage aktualisieren",
+      "addQuestion": "Frage hinzufügen"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "Typ",
+        "question": "Frage",
+        "actions": "Aktionen"
+      },
+      "questionsCount": "{count} Frage(n)",
+      "allTypesSuffix": "(alle Typen)",
+      "addQuestion": "Frage hinzufügen",
+      "searchPlaceholder": "Fragen suchen...",
+      "emptyTitle": "Noch keine Fragen",
+      "emptyDescription": "Beginnen Sie, indem Sie Ihre erste Frage für diesen Fragentyp hinzufügen. Klicken Sie oben auf die Schaltfläche „Frage hinzufügen“, um zu starten.",
+      "addFirstQuestion": "Erste Frage hinzufügen"
+    },
+    "dialogs": {
+      "deleteTitle": "Frage löschen?",
+      "deleteDescription": "Sind Sie sicher, dass Sie diese Frage löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "deleting": "Wird gelöscht...",
+      "deleteQuestion": "Frage löschen"
+    },
+    "toast": {
+      "selectTypeFirst": "Bitte wählen Sie zuerst einen Fragentyp aus",
+      "createSuccess": "Frage erfolgreich erstellt!",
+      "updateSuccess": "Frage erfolgreich aktualisiert!",
+      "saveFailed": "Frage konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "deleteSuccess": "Frage erfolgreich gelöscht",
+      "deleteFailed": "Frage konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
     }
   },
   "pricing": {
@@ -1189,8 +1237,58 @@
     }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+    "pageTitle": "Sitzungstypen",
+    "pageSubtitle": "Konfigurationen für Sitzungstypen verwalten",
+    "formDialog": {
+      "createTitle": "Sitzungstyp hinzufügen",
+      "editTitle": "Sitzungstyp bearbeiten",
+      "descriptionCreate": "Einen neuen Sitzungstyp erstellen",
+      "descriptionEdit": "Details des Sitzungstyps aktualisieren"
+    },
+    "form": {
+      "centreLabel": "Zentrum",
+      "centrePlaceholder": "Zentrum auswählen",
+      "centreHelperText": "Der Sitzungstyp wird für das ausgewählte Zentrum erstellt. Zentrum-Admins sehen nur ihr Zentrum, Organisations-Admins sehen alle.",
+      "requiredAsterisk": "*",
+      "nameLabel": "Name des Sitzungstyps",
+      "namePlaceholder": "Name des Sitzungstyps eingeben",
+      "nameRequired": "Name des Sitzungstyps ist erforderlich",
+      "offTheJobLabel": "Off the Job",
+      "activeLabel": "Aktiv",
+      "updating": "Wird aktualisiert...",
+      "creating": "Wird erstellt...",
+      "selectCentre": "Zentrum auswählen",
+      "update": "Aktualisieren",
+      "create": "Erstellen"
+    },
+    "table": {
+      "title": "Sitzungstypen",
+      "count": "{count} Sitzungstyp(en)",
+      "addButton": "Sitzungstyp hinzufügen",
+      "headers": {
+        "order": "Reihenfolge",
+        "name": "Name",
+        "offTheJob": "Off the Job",
+        "active": "Aktiv",
+        "actions": "Aktionen"
+      },
+      "emptyDescription": "Keine Sitzungstypen gefunden. Erstellen Sie einen, um zu beginnen."
+    },
+    "dialogs": {
+      "deleteTitle": "Löschen bestätigen",
+      "deleteDescription": "Sind Sie sicher, dass Sie diesen Sitzungstyp löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "deleting": "Wird gelöscht...",
+      "delete": "Löschen"
+    },
+    "toast": {
+      "updateSuccess": "Sitzungstyp erfolgreich aktualisiert",
+      "createSuccess": "Sitzungstyp erfolgreich erstellt",
+      "saveFailed": "Sitzungstyp konnte nicht gespeichert werden",
+      "deleteSuccess": "Sitzungstyp erfolgreich gelöscht",
+      "deleteFailed": "Sitzungstyp konnte nicht gelöscht werden",
+      "activatedSuccess": "Sitzungstyp erfolgreich aktiviert",
+      "deactivatedSuccess": "Sitzungstyp erfolgreich deaktiviert"
+    }
   },
   "surveys": {
     "pageTitle": "Surveys",
@@ -1466,103 +1564,103 @@
     }
   },
   "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
+    "pageTitle": "Nachricht bestätigen",
+    "pageSubtitle": "Bestätigungsnachrichten für Lernende erstellen und verwalten",
     "form": {
-      "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
+      "message": "Nachricht",
+      "messagePlaceholder": "Geben Sie hier Ihre Bestätigungsnachricht ein...",
+      "messageRequired": "Nachricht ist erforderlich",
+      "messageMaxLength": "Die Nachricht darf höchstens 1000 Zeichen enthalten",
+      "charactersCount": "{count} / 1000 Zeichen",
+      "uploadFile": "Datei hochladen",
+      "dragDrop": "Ziehen Sie Ihre Dateien hierher oder",
+      "browse": "Durchsuchen",
+      "maxFileSize": "Maximal 10 MB (PDF, CSV, DOC, DOCX) sind erlaubt",
+      "fileSizeError": "Die Datei muss kleiner als 10 MB sein",
+      "fileTypeError": "Es sind nur PDF-, CSV-, DOC- und DOCX-Dateien erlaubt",
+      "remove": "Entfernen",
+      "viewCurrentFile": "Aktuelle Datei anzeigen",
+      "clear": "Löschen",
+      "clearAll": "Alle Bestätigungen der Lernenden löschen",
+      "clearing": "Wird gelöscht...",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
       "required": "*"
     },
     "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
+      "deleteTitle": "Bestätigung löschen",
+      "deleteDescription": "Sind Sie sicher, dass Sie diese Bestätigung löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "clearAllTitle": "Alle Bestätigungen der Lernenden löschen",
+      "clearAllDescription": "Sind Sie sicher, dass Sie alle Bestätigungen der Lernenden löschen möchten? Dieser Vorgang entfernt alle Bestätigungen aller Lernenden und kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "clearAll": "Alles löschen"
     },
     "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
+      "messageUpdated": "Nachricht erfolgreich aktualisiert!",
+      "messageAcknowledged": "Nachricht erfolgreich bestätigt!",
+      "acknowledgementDeleted": "Bestätigung erfolgreich gelöscht!",
+      "allCleared": "Alle Bestätigungen der Lernenden wurden erfolgreich gelöscht!",
+      "saveFailed": "Bestätigung der Nachricht fehlgeschlagen. Bitte erneut versuchen.",
+      "deleteFailed": "Löschen der Bestätigung fehlgeschlagen. Bitte erneut versuchen.",
+      "clearFailed": "Löschen der Bestätigungen fehlgeschlagen. Bitte erneut versuchen."
     }
   },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "Standardkonfiguration für Überprüfungswochen",
+    "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "Einstellungen für Überprüfungszeiträume",
+      "reviewPeriodDescription": "Warnzeiträume für Reviews und Einführungen konfigurieren",
+      "noReviewWeeksLabel": "Warnung anzeigen, wenn es seit so vielen Wochen kein Review gab:",
+      "noReviewWeeksPlaceholder": "Wochen eingeben",
+      "weeks": "Wochen",
+      "noInductionWeeksLabel": "Warnung anzeigen, wenn es seit so vielen Wochen keine Einführung gab:",
+      "noInductionWeeksPlaceholder": "Wochen eingeben",
+      "save": "Speichern",
+      "saving": "Wird gespeichert...",
+      "reviewWarningRequired": "Anzahl der Wochen für Review-Warnung ist erforderlich",
+      "mustBeAtLeast1": "Muss mindestens 1 Woche sein",
+      "cannotExceed52": "Darf 52 Wochen nicht überschreiten",
+      "mustBeWholeNumber": "Muss eine ganze Zahl sein",
+      "inductionWarningRequired": "Anzahl der Wochen für Einführungswarnung ist erforderlich"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "Wichtige Informationen",
+      "description": "Diese Einstellungen gelten als Standardüberprüfungszeitraum für alle Lernendentypen ohne eigenen Zeitraum. Änderungen werden nach dem Speichern sofort wirksam und betreffen alle künftigen Review-Sitzungen."
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "Konfiguration erfolgreich gespeichert!",
+      "saveFailed": "Konfiguration konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "loadFailed": "Konfiguration konnte nicht geladen werden. Bitte versuchen Sie es erneut."
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
+    "pageTitle": "Verwaltung von Schutzkontakten",
+    "pageSubtitle": "Kontaktinformationen des Safeguarding-Beauftragten und zusätzliche Details verwalten",
     "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
+      "editingExisting": "Vorhandenen Kontakt bearbeiten",
+      "contactInformation": "Kontaktinformationen",
+      "telephoneNumber": "Telefonnummer",
       "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
+      "mobileNumber": "Handynummer",
       "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
+      "emailAddress": "E‑Mail-Adresse",
       "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
+      "emailRequired": "E‑Mail-Adresse ist erforderlich",
+      "emailInvalid": "Bitte eine gültige E‑Mail-Adresse eingeben",
+      "additionalInformation": "Zusätzliche Informationen",
+      "additionalDetails": "Weitere Details",
+      "additionalDetailsPlaceholder": "Rund um die Uhr für dringende Safeguarding-Anliegen erreichbar",
+      "reset": "Zurücksetzen",
+      "saveContact": "Kontakt speichern",
+      "saving": "Speichern...",
       "required": "*"
     },
     "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
+      "contactSaved": "Safeguarding-Kontakt erfolgreich gespeichert!",
+      "saveFailed": "Fehler beim Speichern der Daten. Bitte erneut versuchen.",
+      "loadFailed": "Safeguarding-Kontakte konnten nicht geladen werden. Bitte erneut versuchen."
     }
   },
   "progressExclusion": {
@@ -1843,6 +1941,58 @@
       "createFailed": "Failed to create organisation",
       "updateSuccess": "Organisation updated successfully",
       "updateFailed": "Failed to update organisation"
+    }
+  },
+  "caseload": {
+    "pageTitle": "Caseload-Verwaltung",
+    "pageSubtitle": "Caseloads von Linienmanagern anzeigen und exportieren.",
+    "searchPlaceholder": "Linienmanager suchen...",
+    "refresh": "Aktualisieren",
+    "clear": "Zurücksetzen",
+    "noLineManagersFound": "Keine Linienmanager gefunden",
+    "noLineManagersMatch": "Keine Linienmanager entsprechen Ihrer Suche",
+    "noLineManagersInSystem": "Derzeit sind keine Linienmanager im System vorhanden.",
+    "cards": {
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "usersLabel": "Benutzer",
+      "learnersLabel": "Lernende",
+      "usersBadge": "{count} Benutzer",
+      "managedUsersTitle": "Verwaltete Benutzer ({count})",
+      "noUsersAssignedYet": "Noch keine Benutzer zugewiesen",
+      "reportTitle": "Caseload-Management-Bericht",
+      "generatedOn": "Erstellt am: {date}",
+      "totalLearnersLine": "Gesamtzahl Lernende: {count}",
+      "totalUsersLine": "Gesamtzahl Benutzer: {count}",
+      "overallCsv": {
+        "lineManagerName": "Name des Linienmanagers",
+        "managedUserEmail": "E-Mail des verwalteten Benutzers",
+        "totalLearners": "Gesamtzahl Lernende",
+        "totalUsers": "Gesamtzahl Benutzer"
+      },
+      "managerReportTitle": "{name} - Caseload-Bericht",
+      "managerInformation": "Managerinformationen:",
+      "nameLabel": "Name: {name}",
+      "emailLabel": "E-Mail: {email}",
+      "managedUsersHeading": "Verwaltete Benutzer:",
+      "managerTableHeaders": {
+        "name": "Name",
+        "email": "E-Mail",
+        "role": "Rolle"
+      },
+      "managerNoUsersAssigned": "Diesem Manager sind keine Benutzer zugewiesen.",
+      "managerCsv": {
+        "managerName": "Managername",
+        "managerEmail": "Manager-E-Mail",
+        "userName": "Benutzername",
+        "userEmail": "Benutzer-E-Mail",
+        "userRole": "Benutzerrolle",
+        "totalLearners": "Gesamtzahl Lernende",
+        "totalUsers": "Gesamtzahl Benutzer",
+        "defaultUserRole": "Benutzer",
+        "noUsersAssigned": "Keine Benutzer zugewiesen"
+      }
     }
   },
   "centres": {

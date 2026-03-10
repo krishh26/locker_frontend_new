@@ -947,6 +947,54 @@
       "learnerInterview": "लर्नर इंटरव्यू",
       "employerInterview": "एम्प्लॉयर इंटरव्यू",
       "finalCheck": "अंतिम जांच"
+    },
+    "form": {
+      "questionTypeLabel": "प्रश्न प्रकार",
+      "requiredBadge": "आवश्यक",
+      "typePlaceholder": "प्रश्न प्रबंधित करने के लिए एक प्रश्न प्रकार चुनें",
+      "questionLabel": "प्रश्न पाठ",
+      "questionPlaceholder": "अपना प्रश्न यहाँ लिखें...",
+      "questionRequired": "प्रश्न पाठ आवश्यक है",
+      "charactersCount": "{count} अक्षर",
+      "addQuestion": "प्रश्न जोड़ें"
+    },
+    "formDialog": {
+      "createTitle": "नया प्रश्न जोड़ें",
+      "editTitle": "प्रश्न संपादित करें",
+      "description": "प्रश्न प्रकार: {type}",
+      "updating": "अपडेट किया जा रहा है...",
+      "adding": "जोड़ा जा रहा है...",
+      "updateQuestion": "प्रश्न अपडेट करें",
+      "addQuestion": "प्रश्न जोड़ें"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "प्रकार",
+        "question": "प्रश्न",
+        "actions": "क्रियाएँ"
+      },
+      "questionsCount": "{count} प्रश्न",
+      "allTypesSuffix": "(सभी प्रकार)",
+      "addQuestion": "प्रश्न जोड़ें",
+      "searchPlaceholder": "प्रश्न खोजें...",
+      "emptyTitle": "अभी तक कोई प्रश्न नहीं",
+      "emptyDescription": "इस प्रश्न प्रकार के लिए अपना पहला प्रश्न जोड़कर शुरू करें। ऊपर दिए गए \"प्रश्न जोड़ें\" बटन पर क्लिक करें।",
+      "addFirstQuestion": "पहला प्रश्न जोड़ें"
+    },
+    "dialogs": {
+      "deleteTitle": "प्रश्न हटाएँ?",
+      "deleteDescription": "क्या आप वाकई इस प्रश्न को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+      "deleting": "हटाया जा रहा है...",
+      "deleteQuestion": "प्रश्न हटाएँ"
+    },
+    "toast": {
+      "selectTypeFirst": "कृपया पहले प्रश्न प्रकार चुनें",
+      "createSuccess": "प्रश्न सफलतापूर्वक बनाया गया!",
+      "updateSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया!",
+      "saveFailed": "प्रश्न सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "deleteSuccess": "प्रश्न सफलतापूर्वक हटाया गया",
+      "deleteFailed": "प्रश्न हटाने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
   "pricing": {
@@ -1436,8 +1484,58 @@
     }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+  "pageTitle": "सेशन प्रकार",
+  "pageSubtitle": "सेशन टाइप कॉन्फ़िगरेशन प्रबंधित करें",
+  "formDialog": {
+    "createTitle": "सेशन प्रकार जोड़ें",
+    "editTitle": "सेशन प्रकार संपादित करें",
+    "descriptionCreate": "नया सेशन प्रकार बनाएं",
+    "descriptionEdit": "सेशन प्रकार विवरण अपडेट करें"
+  },
+  "form": {
+    "centreLabel": "सेंटर",
+    "centrePlaceholder": "सेंटर चुनें",
+    "centreHelperText": "सेशन प्रकार चुने गए सेंटर के लिए बनाया जाएगा। सेंटर एडमिन केवल अपना सेंटर देखते हैं; ऑर्ग एडमिन सभी देखते हैं।",
+    "requiredAsterisk": "*",
+    "nameLabel": "सेशन प्रकार नाम",
+    "namePlaceholder": "सेशन प्रकार का नाम दर्ज करें",
+    "nameRequired": "सेशन प्रकार नाम आवश्यक है",
+    "offTheJobLabel": "ऑफ द जॉब",
+    "activeLabel": "सक्रिय",
+    "updating": "अपडेट हो रहा है...",
+    "creating": "बनाया जा रहा है...",
+    "selectCentre": "सेंटर चुनें",
+    "update": "अपडेट",
+    "create": "बनाएं"
+  },
+  "table": {
+    "title": "सेशन प्रकार",
+    "count": "{count} सेशन प्रकार",
+    "addButton": "सेशन प्रकार जोड़ें",
+    "headers": {
+      "order": "क्रम",
+      "name": "नाम",
+      "offTheJob": "ऑफ द जॉब",
+      "active": "सक्रिय",
+      "actions": "क्रियाएँ"
+    },
+    "emptyDescription": "कोई सेशन प्रकार नहीं मिला। शुरू करने के लिए एक सेशन प्रकार बनाएं।"
+  },
+  "dialogs": {
+    "deleteTitle": "हटाने की पुष्टि करें",
+    "deleteDescription": "क्या आप वाकई इस सेशन प्रकार को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+    "deleting": "हटाया जा रहा है...",
+    "delete": "हटाएँ"
+  },
+  "toast": {
+    "updateSuccess": "सेशन प्रकार सफलतापूर्वक अपडेट हुआ",
+    "createSuccess": "सेशन प्रकार सफलतापूर्वक बनाया गया",
+    "saveFailed": "सेशन प्रकार सहेजने में विफल",
+    "deleteSuccess": "सेशन प्रकार सफलतापूर्वक हटाया गया",
+    "deleteFailed": "सेशन प्रकार हटाने में विफल",
+    "activatedSuccess": "सेशन प्रकार सफलतापूर्वक सक्रिय हुआ",
+    "deactivatedSuccess": "सेशन प्रकार सफलतापूर्वक निष्क्रिय हुआ"
+  }
   },
   "surveys": {
     "pageTitle": "सर्वेक्षण",
@@ -1924,104 +2022,104 @@
     }
   },
   "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
-    "form": {
-      "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
-      "required": "*"
-    },
-    "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
-    },
-    "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
-    }
+  "pageTitle": "संदेश स्वीकार करें",
+  "pageSubtitle": "लर्नर्स के लिए स्वीकृति संदेश बनाएं और प्रबंधित करें",
+  "form": {
+  "message": "संदेश",
+  "messagePlaceholder": "अपना स्वीकृति संदेश यहाँ लिखें...",
+  "messageRequired": "संदेश आवश्यक है",
+  "messageMaxLength": "संदेश अधिकतम 1000 अक्षरों का हो सकता है",
+  "charactersCount": "{count} / 1000 अक्षर",
+  "uploadFile": "फ़ाइल अपलोड करें",
+  "dragDrop": "अपनी फ़ाइलें यहाँ खींचकर छोड़ें या",
+  "browse": "ब्राउज़ करें",
+  "maxFileSize": "अधिकतम 10MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
+  "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए",
+  "fileTypeError": "केवल PDF, CSV, DOC, DOCX फ़ाइलें अनुमत हैं",
+  "remove": "हटाएँ",
+  "viewCurrentFile": "वर्तमान फ़ाइल देखें",
+  "clear": "साफ़ करें",
+  "clearAll": "सभी लर्नर स्वीकृति साफ़ करें",
+  "clearing": "साफ़ किया जा रहा है...",
+  "save": "सहेजें",
+  "saving": "सहेजा जा रहा है...",
+  "required": "*"
+  },
+  "dialogs": {
+  "deleteTitle": "स्वीकृति हटाएँ",
+  "deleteDescription": "क्या आप वाकई इस स्वीकृति को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+  "clearAllTitle": "सभी लर्नर स्वीकृतियाँ साफ़ करें",
+  "clearAllDescription": "क्या आप वाकई सभी लर्नर स्वीकृतियाँ साफ़ करना चाहते हैं? यह क्रिया सभी लर्नर्स से सभी स्वीकृतियाँ हटा देगी और वापस नहीं की जा सकती।",
+  "cancel": "रद्द करें",
+  "delete": "हटाएँ",
+  "clearAll": "सब साफ़ करें"
+  },
+  "toast": {
+  "messageUpdated": "संदेश सफलतापूर्वक अपडेट किया गया!",
+  "messageAcknowledged": "संदेश सफलतापूर्वक स्वीकार किया गया!",
+  "acknowledgementDeleted": "स्वीकृति सफलतापूर्वक हटाई गई!",
+  "allCleared": "सभी लर्नर स्वीकृतियाँ सफलतापूर्वक साफ़ की गईं!",
+  "saveFailed": "संदेश स्वीकार करने में विफल। कृपया पुनः प्रयास करें।",
+  "deleteFailed": "स्वीकृति हटाने में विफल। कृपया पुनः प्रयास करें।",
+  "clearFailed": "स्वीकृतियाँ साफ़ करने में विफल। कृपया पुनः प्रयास करें।"
+  }
   },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
+    "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "रिव्यू पीरियड सेटिंग्स",
+      "reviewPeriodDescription": "रिव्यू और इंडक्शन के लिए चेतावनी अवधि कॉन्फ़िगर करें",
+      "noReviewWeeksLabel": "यदि इस अवधि तक कोई रिव्यू नहीं हुआ तो चेतावनी दिखाएँ:",
+      "noReviewWeeksPlaceholder": "सप्ताह दर्ज करें",
+      "weeks": "सप्ताह",
+      "noInductionWeeksLabel": "यदि इस अवधि तक कोई इंडक्शन नहीं हुआ तो चेतावनी दिखाएँ:",
+      "noInductionWeeksPlaceholder": "सप्ताह दर्ज करें",
+      "save": "सहेजें",
+      "saving": "सहेजा जा रहा है...",
+      "reviewWarningRequired": "रिव्यू चेतावनी सप्ताह आवश्यक है",
+      "mustBeAtLeast1": "कम से कम 1 सप्ताह होना चाहिए",
+      "cannotExceed52": "52 सप्ताह से अधिक नहीं हो सकता",
+      "mustBeWholeNumber": "पूर्णांक होना चाहिए",
+      "inductionWarningRequired": "इंडक्शन चेतावनी सप्ताह आवश्यक है"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "महत्वपूर्ण जानकारी",
+      "description": "ये सेटिंग्स उन सभी लर्नर प्रकारों के लिए डिफॉल्ट रिव्यू पीरियड के रूप में लागू होंगी जिनके लिए कोई कस्टम रिव्यू पीरियड असाइन नहीं है। सहेजने के तुरंत बाद बदलाव प्रभावी होंगे और आगे की नई रिव्यू सत्रों को प्रभावित करेंगे।"
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "कॉन्फ़िगरेशन सफलतापूर्वक सहेजी गई!",
+      "saveFailed": "कॉन्फ़िगरेशन सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
-    "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
-      "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
-      "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
-      "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
-      "required": "*"
-    },
-    "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
-    }
+  "pageTitle": "सुरक्षा संपर्क प्रबंधन",
+  "pageSubtitle": "सुरक्षा अधिकारी के संपर्क विवरण और अतिरिक्त जानकारी प्रबंधित करें",
+  "form": {
+  "editingExisting": "मौजूदा संपर्क को संपादित किया जा रहा है",
+  "contactInformation": "संपर्क जानकारी",
+  "telephoneNumber": "टेलीफोन नंबर",
+  "telephonePlaceholder": "+44 20 1234 5678",
+  "mobileNumber": "मोबाइल नंबर",
+  "mobilePlaceholder": "+44 7700 900123",
+  "emailAddress": "ईमेल पता",
+  "emailPlaceholder": "safeguarding@example.com",
+  "emailRequired": "ईमेल पता आवश्यक है",
+  "emailInvalid": "कृपया मान्य ईमेल पता दर्ज करें",
+  "additionalInformation": "अतिरिक्त जानकारी",
+  "additionalDetails": "अतिरिक्त विवरण",
+  "additionalDetailsPlaceholder": "तत्काल सुरक्षा संबंधी चिंताओं के लिए 24/7 उपलब्ध",
+  "reset": "रीसेट",
+  "saveContact": "संपर्क सहेजें",
+  "saving": "सहेजा जा रहा है...",
+  "required": "*"
+  },
+  "toast": {
+  "contactSaved": "सुरक्षा संपर्क सफलतापूर्वक सहेजा गया!",
+  "saveFailed": "डेटा सहेजने में त्रुटि। कृपया पुनः प्रयास करें।",
+  "loadFailed": "सुरक्षा संपर्क लोड करने में विफल। कृपया पुनः प्रयास करें।"
+  }
   },
   "progressExclusion": {
     "pageTitle": "Exclude From Overall Progress",
@@ -2462,6 +2560,58 @@
       "saving": "सहेज रहा है...",
       "toastSuccess": "व्यवस्थापक सफलतापूर्वक सहेजे गए",
       "toastFailed": "व्यवस्थापक सहेजने में विफल"
+    }
+  },
+  "caseload": {
+    "pageTitle": "केसलोड प्रबंधन",
+    "pageSubtitle": "लाइन मैनेजर के केसलोड देखें और एक्सपोर्ट करें।",
+    "searchPlaceholder": "लाइन मैनेजर खोजें...",
+    "refresh": "रिफ्रेश",
+    "clear": "क्लियर",
+    "noLineManagersFound": "कोई लाइन मैनेजर नहीं मिला",
+    "noLineManagersMatch": "आपकी खोज से कोई लाइन मैनेजर मेल नहीं खाता",
+    "noLineManagersInSystem": "वर्तमान में सिस्टम में कोई लाइन मैनेजर नहीं है।",
+    "cards": {
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट",
+      "exportPdf": "PDF एक्सपोर्ट",
+      "usersLabel": "यूज़र",
+      "learnersLabel": "लर्नर",
+      "usersBadge": "{count} यूज़र",
+      "managedUsersTitle": "मैनेज किए गए यूज़र ({count})",
+      "noUsersAssignedYet": "अभी तक कोई यूज़र असाइन नहीं है",
+      "reportTitle": "केसलोड मैनेजमेंट रिपोर्ट",
+      "generatedOn": "जेनरेट किया गया: {date}",
+      "totalLearnersLine": "कुल लर्नर: {count}",
+      "totalUsersLine": "कुल यूज़र: {count}",
+      "overallCsv": {
+        "lineManagerName": "लाइन मैनेजर का नाम",
+        "managedUserEmail": "मैनेज किए गए यूज़र का ईमेल",
+        "totalLearners": "कुल लर्नर",
+        "totalUsers": "कुल यूज़र"
+      },
+      "managerReportTitle": "{name} - केसलोड रिपोर्ट",
+      "managerInformation": "मैनेजर की जानकारी:",
+      "nameLabel": "नाम: {name}",
+      "emailLabel": "ईमेल: {email}",
+      "managedUsersHeading": "मैनेज किए गए यूज़र:",
+      "managerTableHeaders": {
+        "name": "नाम",
+        "email": "ईमेल",
+        "role": "रोल"
+      },
+      "managerNoUsersAssigned": "इस मैनेजर को कोई यूज़र असाइन नहीं है।",
+      "managerCsv": {
+        "managerName": "मैनेजर का नाम",
+        "managerEmail": "मैनेजर का ईमेल",
+        "userName": "यूज़र का नाम",
+        "userEmail": "यूज़र का ईमेल",
+        "userRole": "यूज़र रोल",
+        "totalLearners": "कुल लर्नर",
+        "totalUsers": "कुल यूज़र",
+        "defaultUserRole": "यूज़र",
+        "noUsersAssigned": "कोई यूज़र असाइन नहीं"
+      }
     }
   },
   "centres": {

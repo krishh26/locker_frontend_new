@@ -947,6 +947,54 @@
       "learnerInterview": "Entretien apprenant",
       "employerInterview": "Entretien employeur",
       "finalCheck": "Vérification finale"
+    },
+    "form": {
+      "questionTypeLabel": "Type de question",
+      "requiredBadge": "Obligatoire",
+      "typePlaceholder": "Sélectionnez un type de question pour gérer les questions",
+      "questionLabel": "Texte de la question",
+      "questionPlaceholder": "Saisissez votre question ici...",
+      "questionRequired": "Le texte de la question est obligatoire",
+      "charactersCount": "{count} caractères",
+      "addQuestion": "Ajouter une question"
+    },
+    "formDialog": {
+      "createTitle": "Ajouter une nouvelle question",
+      "editTitle": "Modifier la question",
+      "description": "Type de question : {type}",
+      "updating": "Mise à jour...",
+      "adding": "Ajout...",
+      "updateQuestion": "Mettre à jour la question",
+      "addQuestion": "Ajouter une question"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "Type",
+        "question": "Question",
+        "actions": "Actions"
+      },
+      "questionsCount": "{count} question(s)",
+      "allTypesSuffix": "(tous les types)",
+      "addQuestion": "Ajouter une question",
+      "searchPlaceholder": "Rechercher des questions...",
+      "emptyTitle": "Aucune question pour le moment",
+      "emptyDescription": "Commencez par ajouter votre première question pour ce type de question. Cliquez sur le bouton « Ajouter une question » ci‑dessus pour commencer.",
+      "addFirstQuestion": "Ajouter la première question"
+    },
+    "dialogs": {
+      "deleteTitle": "Supprimer la question ?",
+      "deleteDescription": "Êtes‑vous sûr de vouloir supprimer cette question ? Cette action est irréversible.",
+      "deleting": "Suppression...",
+      "deleteQuestion": "Supprimer la question"
+    },
+    "toast": {
+      "selectTypeFirst": "Veuillez d’abord sélectionner un type de question",
+      "createSuccess": "Question créée avec succès !",
+      "updateSuccess": "Question mise à jour avec succès !",
+      "saveFailed": "Échec de l’enregistrement de la question. Veuillez réessayer.",
+      "deleteSuccess": "Question supprimée avec succès",
+      "deleteFailed": "Échec de la suppression de la question. Veuillez réessayer."
     }
   },
   "pricing": {
@@ -1436,8 +1484,58 @@
     }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+    "pageTitle": "Types de session",
+    "pageSubtitle": "Gérer les configurations des types de session",
+    "formDialog": {
+      "createTitle": "Ajouter un type de session",
+      "editTitle": "Modifier le type de session",
+      "descriptionCreate": "Créer un nouveau type de session",
+      "descriptionEdit": "Mettre à jour les détails du type de session"
+    },
+    "form": {
+      "centreLabel": "Centre",
+      "centrePlaceholder": "Sélectionner un centre",
+      "centreHelperText": "Le type de session sera créé pour le centre sélectionné. Les administrateurs de centre ne voient que leur centre ; les administrateurs d’organisation voient tous les centres.",
+      "requiredAsterisk": "*",
+      "nameLabel": "Nom du type de session",
+      "namePlaceholder": "Saisir le nom du type de session",
+      "nameRequired": "Le nom du type de session est obligatoire",
+      "offTheJobLabel": "Hors temps de travail",
+      "activeLabel": "Actif",
+      "updating": "Mise à jour...",
+      "creating": "Création...",
+      "selectCentre": "Sélectionner un centre",
+      "update": "Mettre à jour",
+      "create": "Créer"
+    },
+    "table": {
+      "title": "Types de session",
+      "count": "{count} type(s) de session",
+      "addButton": "Ajouter un type de session",
+      "headers": {
+        "order": "Ordre",
+        "name": "Nom",
+        "offTheJob": "Hors temps de travail",
+        "active": "Actif",
+        "actions": "Actions"
+      },
+      "emptyDescription": "Aucun type de session trouvé. Créez-en un pour commencer."
+    },
+    "dialogs": {
+      "deleteTitle": "Confirmer la suppression",
+      "deleteDescription": "Êtes-vous sûr de vouloir supprimer ce type de session ? Cette action est irréversible.",
+      "deleting": "Suppression...",
+      "delete": "Supprimer"
+    },
+    "toast": {
+      "updateSuccess": "Type de session mis à jour avec succès",
+      "createSuccess": "Type de session créé avec succès",
+      "saveFailed": "Échec de l’enregistrement du type de session",
+      "deleteSuccess": "Type de session supprimé avec succès",
+      "deleteFailed": "Échec de la suppression du type de session",
+      "activatedSuccess": "Type de session activé avec succès",
+      "deactivatedSuccess": "Type de session désactivé avec succès"
+    }
   },
   "surveys": {
     "pageTitle": "Sondages",
@@ -1924,103 +2022,103 @@
     }
   },
   "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
+    "pageTitle": "Accuser réception du message",
+    "pageSubtitle": "Créer et gérer des messages d'accusé de réception pour les apprenants",
     "form": {
       "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
+      "messagePlaceholder": "Saisissez ici votre message d'accusé de réception...",
+      "messageRequired": "Le message est obligatoire",
+      "messageMaxLength": "Le message doit contenir au maximum 1000 caractères",
+      "charactersCount": "{count} / 1000 caractères",
+      "uploadFile": "Téléverser un fichier",
+      "dragDrop": "Glissez-déposez vos fichiers ici ou",
+      "browse": "Parcourir",
+      "maxFileSize": "Des fichiers de 10 Mo maximum sont autorisés (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "La taille du fichier doit être inférieure à 10 Mo",
+      "fileTypeError": "Seuls les fichiers PDF, CSV, DOC et DOCX sont autorisés",
+      "remove": "Supprimer",
+      "viewCurrentFile": "Afficher le fichier actuel",
+      "clear": "Effacer",
+      "clearAll": "Effacer toutes les confirmations des apprenants",
+      "clearing": "Effacement...",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
       "required": "*"
     },
     "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
+      "deleteTitle": "Supprimer l'accusé de réception",
+      "deleteDescription": "Êtes-vous sûr de vouloir supprimer cet accusé de réception ? Cette action est irréversible.",
+      "clearAllTitle": "Effacer toutes les confirmations des apprenants",
+      "clearAllDescription": "Êtes-vous sûr de vouloir effacer toutes les confirmations des apprenants ? Cette action supprimera toutes les confirmations de tous les apprenants et est irréversible.",
+      "cancel": "Annuler",
+      "delete": "Supprimer",
+      "clearAll": "Tout effacer"
     },
     "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
+      "messageUpdated": "Message mis à jour avec succès !",
+      "messageAcknowledged": "Message accusé de réception avec succès !",
+      "acknowledgementDeleted": "Accusé de réception supprimé avec succès !",
+      "allCleared": "Toutes les confirmations des apprenants ont été effacées avec succès !",
+      "saveFailed": "Échec de l'accusé de réception du message. Veuillez réessayer.",
+      "deleteFailed": "Échec de la suppression de l'accusé de réception. Veuillez réessayer.",
+      "clearFailed": "Échec de l'effacement des confirmations. Veuillez réessayer."
     }
   },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "Configuration par défaut des semaines de révision",
+    "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "Paramètres de période de révision",
+      "reviewPeriodDescription": "Configurer les périodes d'avertissement pour les révisions et les inductions",
+      "noReviewWeeksLabel": "Afficher un avertissement s'il n'y a pas eu de révision depuis :",
+      "noReviewWeeksPlaceholder": "Saisir le nombre de semaines",
+      "weeks": "Semaines",
+      "noInductionWeeksLabel": "Afficher un avertissement s'il n'y a pas eu d'induction depuis :",
+      "noInductionWeeksPlaceholder": "Saisir le nombre de semaines",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "reviewWarningRequired": "Le nombre de semaines d'avertissement pour la révision est obligatoire",
+      "mustBeAtLeast1": "Doit être au moins de 1 semaine",
+      "cannotExceed52": "Ne peut pas dépasser 52 semaines",
+      "mustBeWholeNumber": "Doit être un nombre entier",
+      "inductionWarningRequired": "Le nombre de semaines d'avertissement pour l'induction est obligatoire"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "Informations importantes",
+      "description": "Ces paramètres seront appliqués comme période de révision par défaut pour tous les types d'apprenants ne disposant pas d'une période personnalisée. Les changements prendront effet immédiatement après l'enregistrement et s'appliqueront aux nouvelles sessions de révision."
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "Configuration enregistrée avec succès !",
+      "saveFailed": "Échec de l'enregistrement de la configuration. Veuillez réessayer.",
+      "loadFailed": "Échec du chargement de la configuration. Veuillez réessayer."
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
+    "pageTitle": "Gestion des contacts de protection",
+    "pageSubtitle": "Gérer les coordonnées du responsable de la protection et les informations supplémentaires",
     "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
+      "editingExisting": "Modification d'un contact existant",
+      "contactInformation": "Informations de contact",
+      "telephoneNumber": "Numéro de téléphone",
       "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
+      "mobileNumber": "Numéro de mobile",
       "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
+      "emailAddress": "Adresse e‑mail",
       "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
+      "emailRequired": "L'adresse e‑mail est obligatoire",
+      "emailInvalid": "Veuillez saisir une adresse e‑mail valide",
+      "additionalInformation": "Informations supplémentaires",
+      "additionalDetails": "Détails supplémentaires",
+      "additionalDetailsPlaceholder": "Disponible 24h/24 et 7j/7 pour les urgences de protection",
+      "reset": "Réinitialiser",
+      "saveContact": "Enregistrer le contact",
+      "saving": "Enregistrement...",
       "required": "*"
     },
     "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
+      "contactSaved": "Contact de protection enregistré avec succès !",
+      "saveFailed": "Erreur lors de l'enregistrement des données. Veuillez réessayer.",
+      "loadFailed": "Échec du chargement des contacts de protection. Veuillez réessayer."
     }
   },
   "progressExclusion": {
@@ -2462,6 +2560,58 @@
       "saving": "Enregistrement...",
       "toastSuccess": "Administrateurs enregistrés avec succès",
       "toastFailed": "Échec de l'enregistrement des administrateurs"
+    }
+  },
+  "caseload": {
+    "pageTitle": "Gestion des caseloads",
+    "pageSubtitle": "Afficher et exporter les charges de travail des responsables de ligne.",
+    "searchPlaceholder": "Rechercher des responsables de ligne...",
+    "refresh": "Actualiser",
+    "clear": "Effacer",
+    "noLineManagersFound": "Aucun responsable de ligne trouvé",
+    "noLineManagersMatch": "Aucun responsable de ligne ne correspond à votre recherche",
+    "noLineManagersInSystem": "Il n'y a actuellement aucun responsable de ligne dans le système.",
+    "cards": {
+      "export": "Exporter",
+      "exportCsv": "Exporter en CSV",
+      "exportPdf": "Exporter en PDF",
+      "usersLabel": "Utilisateurs",
+      "learnersLabel": "Apprenants",
+      "usersBadge": "{count} utilisateur(s)",
+      "managedUsersTitle": "Utilisateurs gérés ({count})",
+      "noUsersAssignedYet": "Aucun utilisateur assigné pour le moment",
+      "reportTitle": "Rapport de gestion des caseloads",
+      "generatedOn": "Généré le : {date}",
+      "totalLearnersLine": "Nombre total d'apprenants : {count}",
+      "totalUsersLine": "Nombre total d'utilisateurs : {count}",
+      "overallCsv": {
+        "lineManagerName": "Nom du responsable de ligne",
+        "managedUserEmail": "E-mail de l'utilisateur géré",
+        "totalLearners": "Nombre total d'apprenants",
+        "totalUsers": "Nombre total d'utilisateurs"
+      },
+      "managerReportTitle": "{name} - Rapport de caseload",
+      "managerInformation": "Informations sur le responsable :",
+      "nameLabel": "Nom : {name}",
+      "emailLabel": "E-mail : {email}",
+      "managedUsersHeading": "Utilisateurs gérés :",
+      "managerTableHeaders": {
+        "name": "Nom",
+        "email": "E-mail",
+        "role": "Rôle"
+      },
+      "managerNoUsersAssigned": "Aucun utilisateur n'est assigné à ce responsable.",
+      "managerCsv": {
+        "managerName": "Nom du responsable",
+        "managerEmail": "E-mail du responsable",
+        "userName": "Nom de l'utilisateur",
+        "userEmail": "E-mail de l'utilisateur",
+        "userRole": "Rôle de l'utilisateur",
+        "totalLearners": "Nombre total d'apprenants",
+        "totalUsers": "Nombre total d'utilisateurs",
+        "defaultUserRole": "Utilisateur",
+        "noUsersAssigned": "Aucun utilisateur assigné"
+      }
     }
   },
   "centres": {

@@ -940,13 +940,23 @@
   },
   "iqaQuestions": {
     "pageTitle": "IQA 维护问题",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageSubtitle": "按类型管理和组织 IQA 评估问题",
     "questionTypes": {
       "all": "全部",
       "observeAssessor": "观察评估员",
       "learnerInterview": "学员访谈",
       "employerInterview": "雇主访谈",
       "finalCheck": "最终检查"
+    },
+    "form": {
+      "questionTypeLabel": "问题类型",
+      "requiredBadge": "必填",
+      "typePlaceholder": "选择问题类型以管理问题",
+      "questionLabel": "问题文本",
+      "questionPlaceholder": "在此输入您的问题…",
+      "questionRequired": "问题文本为必填项",
+      "charactersCount": "{count} 个字符",
+      "addQuestion": "添加问题"
     }
   },
   "pricing": {
@@ -1436,8 +1446,58 @@
     }
   },
   "sessionTypes": {
-    "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+    "pageTitle": "会话类型",
+    "pageSubtitle": "管理会话类型配置",
+    "formDialog": {
+      "createTitle": "添加会话类型",
+      "editTitle": "编辑会话类型",
+      "descriptionCreate": "创建新的会话类型",
+      "descriptionEdit": "更新会话类型详情"
+    },
+    "form": {
+      "centreLabel": "中心",
+      "centrePlaceholder": "选择中心",
+      "centreHelperText": "会话类型将为所选中心创建。中心管理员仅能看到自己的中心；组织管理员可以看到所有中心。",
+      "requiredAsterisk": "*",
+      "nameLabel": "会话类型名称",
+      "namePlaceholder": "输入会话类型名称",
+      "nameRequired": "会话类型名称为必填项",
+      "offTheJobLabel": "非在岗",
+      "activeLabel": "启用",
+      "updating": "正在更新...",
+      "creating": "正在创建...",
+      "selectCentre": "选择中心",
+      "update": "更新",
+      "create": "创建"
+    },
+    "table": {
+      "title": "会话类型",
+      "count": "{count} 个会话类型",
+      "addButton": "添加会话类型",
+      "headers": {
+        "order": "顺序",
+        "name": "名称",
+        "offTheJob": "非在岗",
+        "active": "启用",
+        "actions": "操作"
+      },
+      "emptyDescription": "未找到会话类型。请创建一个以便开始。"
+    },
+    "dialogs": {
+      "deleteTitle": "确认删除",
+      "deleteDescription": "确定要删除此会话类型吗？此操作无法撤销。",
+      "deleting": "删除中...",
+      "delete": "删除"
+    },
+    "toast": {
+      "updateSuccess": "会话类型更新成功",
+      "createSuccess": "会话类型创建成功",
+      "saveFailed": "保存会话类型失败",
+      "deleteSuccess": "会话类型删除成功",
+      "deleteFailed": "删除会话类型失败",
+      "activatedSuccess": "会话类型已成功启用",
+      "deactivatedSuccess": "会话类型已成功停用"
+    }
   },
   "surveys": {
     "pageTitle": "调查",
@@ -1924,103 +1984,103 @@
     }
   },
   "acknowledgeMessage": {
-    "pageTitle": "Acknowledge Message",
-    "pageSubtitle": "Create and manage acknowledgement messages for learners",
+    "pageTitle": "确认消息",
+    "pageSubtitle": "为学员创建并管理确认消息",
     "form": {
-      "message": "Message",
-      "messagePlaceholder": "Enter your acknowledgement message...",
-      "messageRequired": "Message is required",
-      "messageMaxLength": "Message must be at most 1000 characters",
-      "charactersCount": "{count} / 1000 characters",
-      "uploadFile": "Upload File",
-      "dragDrop": "Drag and drop your files here or",
-      "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
-      "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
-      "remove": "Remove",
-      "viewCurrentFile": "View Current File",
-      "clear": "Clear",
-      "clearAll": "Clear all learner acknowledgment",
-      "clearing": "Clearing...",
-      "save": "Save",
-      "saving": "Saving...",
+      "message": "消息",
+      "messagePlaceholder": "在此输入您的确认消息…",
+      "messageRequired": "消息为必填项",
+      "messageMaxLength": "消息最多为 1000 个字符",
+      "charactersCount": "{count} / 1000 个字符",
+      "uploadFile": "上传文件",
+      "dragDrop": "将文件拖放到此处或",
+      "browse": "浏览",
+      "maxFileSize": "允许最大 10MB 的文件（PDF、CSV、DOC、DOCX）",
+      "fileSizeError": "文件大小必须小于 10MB",
+      "fileTypeError": "仅支持 PDF、CSV、DOC、DOCX 文件",
+      "remove": "移除",
+      "viewCurrentFile": "查看当前文件",
+      "clear": "清除",
+      "clearAll": "清除所有学员确认",
+      "clearing": "正在清除…",
+      "save": "保存",
+      "saving": "正在保存…",
       "required": "*"
     },
     "dialogs": {
-      "deleteTitle": "Delete Acknowledgement",
-      "deleteDescription": "Are you sure you want to delete this acknowledgement? This action cannot be undone.",
-      "clearAllTitle": "Clear All Learner Acknowledgments",
-      "clearAllDescription": "Are you sure you want to clear all learner acknowledgments? This action will remove all acknowledgments from all learners and cannot be undone.",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "clearAll": "Clear All"
+      "deleteTitle": "删除确认",
+      "deleteDescription": "确定要删除此确认吗？此操作无法撤销。",
+      "clearAllTitle": "清除所有学员确认",
+      "clearAllDescription": "确定要清除所有学员的确认吗？此操作将删除所有学员的所有确认，且无法撤销。",
+      "cancel": "取消",
+      "delete": "删除",
+      "clearAll": "全部清除"
     },
     "toast": {
-      "messageUpdated": "Message updated successfully!",
-      "messageAcknowledged": "Message acknowledged successfully!",
-      "acknowledgementDeleted": "Acknowledgement deleted successfully!",
-      "allCleared": "All learner acknowledgments cleared successfully!",
-      "saveFailed": "Failed to acknowledge message. Please try again.",
-      "deleteFailed": "Failed to delete acknowledgement. Please try again.",
-      "clearFailed": "Failed to clear acknowledgments. Please try again."
+      "messageUpdated": "消息更新成功！",
+      "messageAcknowledged": "消息确认成功！",
+      "acknowledgementDeleted": "确认删除成功！",
+      "allCleared": "所有学员确认已成功清除！",
+      "saveFailed": "消息确认失败。请重试。",
+      "deleteFailed": "删除确认失败。请重试。",
+      "clearFailed": "清除确认失败。请重试。"
     }
   },
   "defaultReviewWeeks": {
-    "pageTitle": "Default Review Weeks Configuration",
-    "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",
+    "pageTitle": "默认复查周期设置",
+    "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",
     "form": {
-      "reviewPeriodSettings": "Review Period Settings",
-      "reviewPeriodDescription": "Configure warning periods for reviews and inductions",
-      "noReviewWeeksLabel": "Display Warning if there has been no review for:",
-      "noReviewWeeksPlaceholder": "Enter weeks",
-      "weeks": "Weeks",
-      "noInductionWeeksLabel": "Display Warning if there has been no induction for:",
-      "noInductionWeeksPlaceholder": "Enter weeks",
-      "save": "Save",
-      "saving": "Saving...",
-      "reviewWarningRequired": "Review warning weeks is required",
-      "mustBeAtLeast1": "Must be at least 1 week",
-      "cannotExceed52": "Cannot exceed 52 weeks",
-      "mustBeWholeNumber": "Must be a whole number",
-      "inductionWarningRequired": "Induction warning weeks is required"
+      "reviewPeriodSettings": "复查周期设置",
+      "reviewPeriodDescription": "配置复查与入职的预警周期",
+      "noReviewWeeksLabel": "如在以下时间内未进行复查则显示预警：",
+      "noReviewWeeksPlaceholder": "输入周数",
+      "weeks": "周",
+      "noInductionWeeksLabel": "如在以下时间内未进行入职则显示预警：",
+      "noInductionWeeksPlaceholder": "输入周数",
+      "save": "保存",
+      "saving": "正在保存…",
+      "reviewWarningRequired": "复查预警周数为必填项",
+      "mustBeAtLeast1": "必须至少为 1 周",
+      "cannotExceed52": "不能超过 52 周",
+      "mustBeWholeNumber": "必须为整数",
+      "inductionWarningRequired": "入职预警周数为必填项"
     },
     "info": {
-      "title": "Important Information",
-      "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
+      "title": "重要信息",
+      "description": "这些设置将作为所有未配置自定义复查周期的学员类型的默认复查周期。保存后更改将立即生效，并影响之后的新复查会话。"
     },
     "toast": {
-      "configSaved": "Configuration saved successfully!",
-      "saveFailed": "Failed to save configuration. Please try again.",
-      "loadFailed": "Failed to load configuration. Please try again."
+      "configSaved": "配置保存成功！",
+      "saveFailed": "保存配置失败。请重试。",
+      "loadFailed": "加载配置失败。请重试。"
     }
   },
   "safeguarding": {
-    "pageTitle": "Safeguarding Contact Management",
-    "pageSubtitle": "Manage safeguarding officer contact information and additional details",
+    "pageTitle": "安全联络人管理",
+    "pageSubtitle": "管理安全负责人联系方式及附加信息",
     "form": {
-      "editingExisting": "Editing existing contact",
-      "contactInformation": "Contact Information",
-      "telephoneNumber": "Telephone Number",
+      "editingExisting": "正在编辑现有联系人",
+      "contactInformation": "联系信息",
+      "telephoneNumber": "固定电话",
       "telephonePlaceholder": "+44 20 1234 5678",
-      "mobileNumber": "Mobile Number",
+      "mobileNumber": "手机号码",
       "mobilePlaceholder": "+44 7700 900123",
-      "emailAddress": "Email Address",
+      "emailAddress": "电子邮箱",
       "emailPlaceholder": "safeguarding@example.com",
-      "emailRequired": "Email address is required",
-      "emailInvalid": "Please enter a valid email address",
-      "additionalInformation": "Additional Information",
-      "additionalDetails": "Additional Details",
-      "additionalDetailsPlaceholder": "Available 24/7 for urgent safeguarding concerns",
-      "reset": "Reset",
-      "saveContact": "Save Contact",
-      "saving": "Saving...",
+      "emailRequired": "电子邮箱为必填项",
+      "emailInvalid": "请输入有效的电子邮箱地址",
+      "additionalInformation": "附加信息",
+      "additionalDetails": "更多详情",
+      "additionalDetailsPlaceholder": "针对紧急安全问题提供 24/7 服务",
+      "reset": "重置",
+      "saveContact": "保存联系人",
+      "saving": "正在保存...",
       "required": "*"
     },
     "toast": {
-      "contactSaved": "Safeguarding contact saved successfully!",
-      "saveFailed": "Error saving data. Please try again.",
-      "loadFailed": "Failed to load safeguarding contacts. Please try again."
+      "contactSaved": "安全联系人保存成功！",
+      "saveFailed": "保存数据时出错。请重试。",
+      "loadFailed": "加载安全联系人失败。请重试。"
     }
   },
   "progressExclusion": {
@@ -2462,6 +2522,58 @@
       "saving": "保存中...",
       "toastSuccess": "管理员保存成功",
       "toastFailed": "保存管理员失败"
+    }
+  },
+  "caseload": {
+    "pageTitle": "工作负载管理",
+    "pageSubtitle": "查看并导出直线经理的工作负载。",
+    "searchPlaceholder": "搜索直线经理...",
+    "refresh": "刷新",
+    "clear": "清除",
+    "noLineManagersFound": "未找到直线经理",
+    "noLineManagersMatch": "没有直线经理与您的搜索匹配",
+    "noLineManagersInSystem": "系统中当前没有直线经理。",
+    "cards": {
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "usersLabel": "用户",
+      "learnersLabel": "学员",
+      "usersBadge": "{count} 位用户",
+      "managedUsersTitle": "已管理的用户（{count}）",
+      "noUsersAssignedYet": "尚未分配任何用户",
+      "reportTitle": "工作负载管理报告",
+      "generatedOn": "生成时间：{date}",
+      "totalLearnersLine": "学员总数：{count}",
+      "totalUsersLine": "用户总数：{count}",
+      "overallCsv": {
+        "lineManagerName": "直线经理姓名",
+        "managedUserEmail": "被管理用户邮箱",
+        "totalLearners": "学员总数",
+        "totalUsers": "用户总数"
+      },
+      "managerReportTitle": "{name} - 工作负载报告",
+      "managerInformation": "经理信息：",
+      "nameLabel": "姓名：{name}",
+      "emailLabel": "邮箱：{email}",
+      "managedUsersHeading": "已管理的用户：",
+      "managerTableHeaders": {
+        "name": "姓名",
+        "email": "邮箱",
+        "role": "角色"
+      },
+      "managerNoUsersAssigned": "该经理尚未分配任何用户。",
+      "managerCsv": {
+        "managerName": "经理姓名",
+        "managerEmail": "经理邮箱",
+        "userName": "用户姓名",
+        "userEmail": "用户邮箱",
+        "userRole": "用户角色",
+        "totalLearners": "学员总数",
+        "totalUsers": "用户总数",
+        "defaultUserRole": "用户",
+        "noUsersAssigned": "未分配用户"
+      }
     }
   },
   "centres": {

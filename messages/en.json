@@ -967,6 +967,54 @@
       "learnerInterview": "Learner Interview",
       "employerInterview": "Employer Interview",
       "finalCheck": "Final Check"
+    },
+    "form": {
+      "questionTypeLabel": "Question Type",
+      "requiredBadge": "Required",
+      "typePlaceholder": "Select a question type to manage questions",
+      "questionLabel": "Question Text",
+      "questionPlaceholder": "Enter your question here...",
+      "questionRequired": "Question text is required",
+      "charactersCount": "{count} characters",
+      "addQuestion": "Add Question"
+    },
+    "formDialog": {
+      "createTitle": "Add New Question",
+      "editTitle": "Edit Question",
+      "description": "Question Type: {type}",
+      "updating": "Updating...",
+      "adding": "Adding...",
+      "updateQuestion": "Update Question",
+      "addQuestion": "Add Question"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "Type",
+        "question": "Question",
+        "actions": "Actions"
+      },
+      "questionsCount": "{count} question(s)",
+      "allTypesSuffix": "(all types)",
+      "addQuestion": "Add Question",
+      "searchPlaceholder": "Search questions...",
+      "emptyTitle": "No questions yet",
+      "emptyDescription": "Get started by adding your first question for this question type. Click the \"Add Question\" button above to begin.",
+      "addFirstQuestion": "Add First Question"
+    },
+    "dialogs": {
+      "deleteTitle": "Delete Question?",
+      "deleteDescription": "Are you sure you want to delete this question? This action cannot be undone.",
+      "deleting": "Deleting...",
+      "deleteQuestion": "Delete Question"
+    },
+    "toast": {
+      "selectTypeFirst": "Please select a question type first",
+      "createSuccess": "Question created successfully!",
+      "updateSuccess": "Question updated successfully!",
+      "saveFailed": "Failed to save question. Please try again.",
+      "deleteSuccess": "Question deleted successfully",
+      "deleteFailed": "Failed to delete question. Please try again."
     }
   },
   "pricing": {
@@ -1457,7 +1505,57 @@
   },
   "sessionTypes": {
     "pageTitle": "Session Types",
-    "pageSubtitle": "Manage session type configurations"
+    "pageSubtitle": "Manage session type configurations",
+    "formDialog": {
+      "createTitle": "Add Session Type",
+      "editTitle": "Edit Session Type",
+      "descriptionCreate": "Create a new session type",
+      "descriptionEdit": "Update the session type details"
+    },
+    "form": {
+      "centreLabel": "Centre",
+      "centrePlaceholder": "Select centre",
+      "centreHelperText": "Session type will be created for the selected centre. Centre admins see only their centre; organisation admins see all.",
+      "requiredAsterisk": "*",
+      "nameLabel": "Session Type Name",
+      "namePlaceholder": "Enter session type name",
+      "nameRequired": "Session Type name is required",
+      "offTheJobLabel": "Off the Job",
+      "activeLabel": "Active",
+      "updating": "Updating...",
+      "creating": "Creating...",
+      "selectCentre": "Select centre",
+      "update": "Update",
+      "create": "Create"
+    },
+    "table": {
+      "title": "Session Types",
+      "count": "{count} session type(s)",
+      "addButton": "Add Session Type",
+      "headers": {
+        "order": "Order",
+        "name": "Name",
+        "offTheJob": "Off the Job",
+        "active": "Active",
+        "actions": "Actions"
+      },
+      "emptyDescription": "No session types found. Create one to get started."
+    },
+    "dialogs": {
+      "deleteTitle": "Confirm Delete",
+      "deleteDescription": "Are you sure you want to delete this session type? This action cannot be undone.",
+      "deleting": "Deleting...",
+      "delete": "Delete"
+    },
+    "toast": {
+      "updateSuccess": "Session Type updated successfully",
+      "createSuccess": "Session Type created successfully",
+      "saveFailed": "Failed to save Session Type",
+      "deleteSuccess": "Session Type deleted successfully",
+      "deleteFailed": "Failed to delete session type",
+      "activatedSuccess": "Session Type activated successfully",
+      "deactivatedSuccess": "Session Type deactivated successfully"
+    }
   },
   "surveys": {
     "pageTitle": "Surveys",
@@ -2482,6 +2580,58 @@
       "saving": "Saving...",
       "toastSuccess": "Admins saved successfully",
       "toastFailed": "Failed to save admins"
+    }
+  },
+  "caseload": {
+    "pageTitle": "Caseload Management",
+    "pageSubtitle": "View and export line manager caseloads.",
+    "searchPlaceholder": "Search line managers...",
+    "refresh": "Refresh",
+    "clear": "Clear",
+    "noLineManagersFound": "No line managers found",
+    "noLineManagersMatch": "No line managers match your search",
+    "noLineManagersInSystem": "There are currently no line managers in the system.",
+    "cards": {
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF",
+      "usersLabel": "Users",
+      "learnersLabel": "Learners",
+      "usersBadge": "{count} Users",
+      "managedUsersTitle": "Managed Users ({count})",
+      "noUsersAssignedYet": "No users assigned yet",
+      "reportTitle": "Caseload Management Report",
+      "generatedOn": "Generated on: {date}",
+      "totalLearnersLine": "Total Learners: {count}",
+      "totalUsersLine": "Total Users: {count}",
+      "overallCsv": {
+        "lineManagerName": "Line Manager Name",
+        "managedUserEmail": "Managed User Email",
+        "totalLearners": "Total Learners",
+        "totalUsers": "Total Users"
+      },
+      "managerReportTitle": "{name} - Caseload Report",
+      "managerInformation": "Manager Information:",
+      "nameLabel": "Name: {name}",
+      "emailLabel": "Email: {email}",
+      "managedUsersHeading": "Managed Users:",
+      "managerTableHeaders": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role"
+      },
+      "managerNoUsersAssigned": "No users assigned to this manager.",
+      "managerCsv": {
+        "managerName": "Manager Name",
+        "managerEmail": "Manager Email",
+        "userName": "User Name",
+        "userEmail": "User Email",
+        "userRole": "User Role",
+        "totalLearners": "Total Learners",
+        "totalUsers": "Total Users",
+        "defaultUserRole": "User",
+        "noUsersAssigned": "No users assigned"
+      }
     }
   },
   "centres": {

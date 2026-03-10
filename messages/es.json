@@ -788,6 +788,54 @@
       "learnerInterview": "Entrevista con Aprendiz",
       "employerInterview": "Entrevista con Empleador",
       "finalCheck": "Verificación Final"
+    },
+    "form": {
+      "questionTypeLabel": "Tipo de pregunta",
+      "requiredBadge": "Obligatorio",
+      "typePlaceholder": "Seleccione un tipo de pregunta para gestionar las preguntas",
+      "questionLabel": "Texto de la pregunta",
+      "questionPlaceholder": "Escriba aquí su pregunta...",
+      "questionRequired": "El texto de la pregunta es obligatorio",
+      "charactersCount": "{count} caracteres",
+      "addQuestion": "Añadir pregunta"
+    },
+    "formDialog": {
+      "createTitle": "Añadir nueva pregunta",
+      "editTitle": "Editar pregunta",
+      "description": "Tipo de pregunta: {type}",
+      "updating": "Actualizando...",
+      "adding": "Añadiendo...",
+      "updateQuestion": "Actualizar pregunta",
+      "addQuestion": "Añadir pregunta"
+    },
+    "table": {
+      "headers": {
+        "index": "#",
+        "type": "Tipo",
+        "question": "Pregunta",
+        "actions": "Acciones"
+      },
+      "questionsCount": "{count} pregunta(s)",
+      "allTypesSuffix": "(todos los tipos)",
+      "addQuestion": "Añadir pregunta",
+      "searchPlaceholder": "Buscar preguntas...",
+      "emptyTitle": "Aún no hay preguntas",
+      "emptyDescription": "Empiece añadiendo su primera pregunta para este tipo de pregunta. Haga clic en el botón \"Añadir pregunta\" de arriba para comenzar.",
+      "addFirstQuestion": "Añadir primera pregunta"
+    },
+    "dialogs": {
+      "deleteTitle": "¿Eliminar pregunta?",
+      "deleteDescription": "¿Está seguro de que desea eliminar esta pregunta? Esta acción no se puede deshacer.",
+      "deleting": "Eliminando...",
+      "deleteQuestion": "Eliminar pregunta"
+    },
+    "toast": {
+      "selectTypeFirst": "Seleccione primero un tipo de pregunta",
+      "createSuccess": "¡Pregunta creada correctamente!",
+      "updateSuccess": "¡Pregunta actualizada correctamente!",
+      "saveFailed": "No se pudo guardar la pregunta. Por favor, inténtelo de nuevo.",
+      "deleteSuccess": "Pregunta eliminada correctamente",
+      "deleteFailed": "No se pudo eliminar la pregunta. Por favor, inténtelo de nuevo."
     }
   },
   "pricing": {
@@ -1277,8 +1325,58 @@
     }
   },
   "sessionTypes": {
-    "pageTitle": "Tipos de Sesión",
-    "pageSubtitle": "Gestione configuraciones de tipos de sesión"
+  "pageTitle": "Tipos de sesión",
+  "pageSubtitle": "Gestione configuraciones de tipos de sesión",
+  "formDialog": {
+    "createTitle": "Agregar tipo de sesión",
+    "editTitle": "Editar tipo de sesión",
+    "descriptionCreate": "Cree un nuevo tipo de sesión",
+    "descriptionEdit": "Actualice los detalles del tipo de sesión"
+  },
+  "form": {
+    "centreLabel": "Centro",
+    "centrePlaceholder": "Seleccione un centro",
+    "centreHelperText": "El tipo de sesión se creará para el centro seleccionado. Los administradores de centro solo ven su centro; los administradores de organización ven todos.",
+    "requiredAsterisk": "*",
+    "nameLabel": "Nombre del tipo de sesión",
+    "namePlaceholder": "Introduzca el nombre del tipo de sesión",
+    "nameRequired": "El nombre del tipo de sesión es obligatorio",
+    "offTheJobLabel": "Fuera del trabajo",
+    "activeLabel": "Activo",
+    "updating": "Actualizando...",
+    "creating": "Creando...",
+    "selectCentre": "Seleccione un centro",
+    "update": "Actualizar",
+    "create": "Crear"
+  },
+  "table": {
+    "title": "Tipos de sesión",
+    "count": "{count} tipo(s) de sesión",
+    "addButton": "Agregar tipo de sesión",
+    "headers": {
+      "order": "Orden",
+      "name": "Nombre",
+      "offTheJob": "Fuera del trabajo",
+      "active": "Activo",
+      "actions": "Acciones"
+    },
+    "emptyDescription": "No se encontraron tipos de sesión. Cree uno para comenzar."
+  },
+  "dialogs": {
+    "deleteTitle": "Confirmar eliminación",
+    "deleteDescription": "¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.",
+    "deleting": "Eliminando...",
+    "delete": "Eliminar"
+  },
+  "toast": {
+    "updateSuccess": "Tipo de sesión actualizado correctamente",
+    "createSuccess": "Tipo de sesión creado correctamente",
+    "saveFailed": "Error al guardar el tipo de sesión",
+    "deleteSuccess": "Tipo de sesión eliminado correctamente",
+    "deleteFailed": "Error al eliminar el tipo de sesión",
+    "activatedSuccess": "Tipo de sesión activado correctamente",
+    "deactivatedSuccess": "Tipo de sesión desactivado correctamente"
+  }
   },
   "surveys": {
     "pageTitle": "Encuestas",
@@ -2303,6 +2401,58 @@
       "saving": "Guardando...",
       "toastSuccess": "Administradores guardados correctamente",
       "toastFailed": "Error al guardar administradores"
+    }
+  },
+  "caseload": {
+    "pageTitle": "Gestión de caseload",
+    "pageSubtitle": "Ver y exportar las cargas de trabajo de los responsables de línea.",
+    "searchPlaceholder": "Buscar responsables de línea...",
+    "refresh": "Actualizar",
+    "clear": "Borrar",
+    "noLineManagersFound": "No se encontraron responsables de línea",
+    "noLineManagersMatch": "Ningún responsable de línea coincide con tu búsqueda",
+    "noLineManagersInSystem": "Actualmente no hay responsables de línea en el sistema.",
+    "cards": {
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "usersLabel": "Usuarios",
+      "learnersLabel": "Alumnos",
+      "usersBadge": "{count} usuarios",
+      "managedUsersTitle": "Usuarios gestionados ({count})",
+      "noUsersAssignedYet": "Todavía no hay usuarios asignados",
+      "reportTitle": "Informe de gestión de caseload",
+      "generatedOn": "Generado el: {date}",
+      "totalLearnersLine": "Total de alumnos: {count}",
+      "totalUsersLine": "Total de usuarios: {count}",
+      "overallCsv": {
+        "lineManagerName": "Nombre del responsable de línea",
+        "managedUserEmail": "Correo del usuario gestionado",
+        "totalLearners": "Total de alumnos",
+        "totalUsers": "Total de usuarios"
+      },
+      "managerReportTitle": "{name} - Informe de caseload",
+      "managerInformation": "Información del responsable:",
+      "nameLabel": "Nombre: {name}",
+      "emailLabel": "Correo: {email}",
+      "managedUsersHeading": "Usuarios gestionados:",
+      "managerTableHeaders": {
+        "name": "Nombre",
+        "email": "Correo",
+        "role": "Rol"
+      },
+      "managerNoUsersAssigned": "No hay usuarios asignados a este responsable.",
+      "managerCsv": {
+        "managerName": "Nombre del responsable",
+        "managerEmail": "Correo del responsable",
+        "userName": "Nombre del usuario",
+        "userEmail": "Correo del usuario",
+        "userRole": "Rol del usuario",
+        "totalLearners": "Total de alumnos",
+        "totalUsers": "Total de usuarios",
+        "defaultUserRole": "Usuario",
+        "noUsersAssigned": "No hay usuarios asignados"
+      }
     }
   },
   "centres": {

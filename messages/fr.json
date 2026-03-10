@@ -2262,6 +2262,48 @@
       "updateFailed": "Impossible de mettre à jour la ressource"
     }
   },
+  "courseResources": {
+    "pageTitle": "Ressources du cours",
+    "pageSubtitle": "Accédez aux ressources pédagogiques du cours et gérez-les",
+    "filters": {
+      "courseLabel": "Cours :",
+      "coursePlaceholder": "Sélectionnez un cours",
+      "searchPlaceholder": "Rechercher par nom ou description",
+      "jobTypeLabel": "Type de travail : {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Nom",
+        "description": "Description",
+        "hours": "Heures",
+        "minutes": "Minutes",
+        "jobType": "Type de travail",
+        "access": "Accès",
+        "accessStatus": "Statut d’accès",
+        "actions": "Action"
+      },
+      "accessStatus": {
+        "opened": "Ouvert",
+        "notOpened": "Non ouvert"
+      },
+      "export": {
+        "button": "Exporter",
+        "csv": "Exporter en CSV",
+        "pdf": "Exporter en PDF",
+        "noData": "Aucune donnée à exporter",
+        "csvSuccess": "CSV exporté avec succès",
+        "pdfTitle": "Ressources du cours",
+        "pdfSuccess": "PDF exporté avec succès"
+      },
+      "status": {
+        "loading": "Chargement des ressources...",
+        "noResourcesForCourse": "Aucune ressource trouvée pour ce cours.",
+        "selectCourse": "Veuillez sélectionner un cours pour voir les ressources.",
+        "noResults": "Aucun résultat."
+      }
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Soumettre et gérer les demandes de support",

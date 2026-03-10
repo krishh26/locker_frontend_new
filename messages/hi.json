@@ -2262,6 +2262,48 @@
       "updateFailed": "संसाधन अपडेट करने में विफल"
     }
   },
+  "courseResources": {
+    "pageTitle": "कोर्स संसाधन",
+    "pageSubtitle": "कोर्स के लर्निंग संसाधनों तक पहुँचें और उन्हें प्रबंधित करें",
+    "filters": {
+      "courseLabel": "कोर्स:",
+      "coursePlaceholder": "कोर्स चुनें",
+      "searchPlaceholder": "नाम या विवरण द्वारा खोजें",
+      "jobTypeLabel": "जॉब प्रकार: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "नाम",
+        "description": "विवरण",
+        "hours": "घंटे",
+        "minutes": "मिनट",
+        "jobType": "जॉब प्रकार",
+        "access": "पहुँच",
+        "accessStatus": "पहुँच स्थिति",
+        "actions": "क्रिया"
+      },
+      "accessStatus": {
+        "opened": "खोला गया",
+        "notOpened": "नहीं खोला गया"
+      },
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट करें",
+        "pdf": "PDF के रूप में एक्सपोर्ट करें",
+        "noData": "एक्सपोर्ट करने के लिए कोई डेटा नहीं है",
+        "csvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+        "pdfTitle": "कोर्स संसाधन",
+        "pdfSuccess": "PDF सफलतापूर्वक एक्सपोर्ट हुआ"
+      },
+      "status": {
+        "loading": "संसाधन लोड हो रहे हैं...",
+        "noResourcesForCourse": "इस कोर्स के लिए कोई संसाधन नहीं मिले।",
+        "selectCourse": "संसाधन देखने के लिए कृपया कोई कोर्स चुनें।",
+        "noResults": "कोई परिणाम नहीं।"
+      }
+    }
+  },
   "support": {
     "pageTitle": "सहायता",
     "pageSubtitle": "सहायता अनुरोध जमा करें और प्रबंधित करें",

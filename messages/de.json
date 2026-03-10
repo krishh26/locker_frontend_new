@@ -1674,6 +1674,48 @@
       "updateFailed": "Ressource konnte nicht aktualisiert werden"
     }
   },
+  "courseResources": {
+    "pageTitle": "Kursressourcen",
+    "pageSubtitle": "Greifen Sie auf Lernressourcen des Kurses zu und verwalten Sie sie",
+    "filters": {
+      "courseLabel": "Kurs:",
+      "coursePlaceholder": "Kurs auswählen",
+      "searchPlaceholder": "Nach Name oder Beschreibung suchen",
+      "jobTypeLabel": "Jobtyp: {jobType}",
+      "jobTypeOnOff": "Ein/Aus"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "hours": "Stunden",
+        "minutes": "Minuten",
+        "jobType": "Jobtyp",
+        "access": "Zugriff",
+        "accessStatus": "Zugriffsstatus",
+        "actions": "Aktion"
+      },
+      "accessStatus": {
+        "opened": "Geöffnet",
+        "notOpened": "Nicht geöffnet"
+      },
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "noData": "Keine Daten zum Exportieren",
+        "csvSuccess": "CSV erfolgreich exportiert",
+        "pdfTitle": "Kursressourcen",
+        "pdfSuccess": "PDF erfolgreich exportiert"
+      },
+      "status": {
+        "loading": "Ressourcen werden geladen...",
+        "noResourcesForCourse": "Für diesen Kurs wurden keine Ressourcen gefunden.",
+        "selectCourse": "Bitte wählen Sie einen Kurs, um Ressourcen anzuzeigen.",
+        "noResults": "Keine Ergebnisse."
+      }
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Supportanfragen einreichen und verwalten",

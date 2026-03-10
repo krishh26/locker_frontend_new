@@ -2220,6 +2220,48 @@
       "updateFailed": "更新资源失败"
     }
   },
+  "courseResources": {
+    "pageTitle": "课程资源",
+    "pageSubtitle": "访问并管理课程学习资源",
+    "filters": {
+      "courseLabel": "课程：",
+      "coursePlaceholder": "选择课程",
+      "searchPlaceholder": "按名称或描述搜索",
+      "jobTypeLabel": "工作类型：{jobType}",
+      "jobTypeOnOff": "开/关"
+    },
+    "table": {
+      "columns": {
+        "name": "名称",
+        "description": "描述",
+        "hours": "小时",
+        "minutes": "分钟",
+        "jobType": "工作类型",
+        "access": "访问",
+        "accessStatus": "访问状态",
+        "actions": "操作"
+      },
+      "accessStatus": {
+        "opened": "已打开",
+        "notOpened": "未打开"
+      },
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "noData": "没有可导出的数据",
+        "csvSuccess": "CSV 导出成功",
+        "pdfTitle": "课程资源",
+        "pdfSuccess": "PDF 导出成功"
+      },
+      "status": {
+        "loading": "正在加载资源...",
+        "noResourcesForCourse": "未找到该课程的资源。",
+        "selectCourse": "请选择课程以查看资源。",
+        "noResults": "没有结果。"
+      }
+    }
+  },
   "support": {
     "pageTitle": "支持",
     "pageSubtitle": "提交和管理支持请求",

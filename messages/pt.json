@@ -2262,6 +2262,48 @@
       "updateFailed": "Falha ao atualizar o recurso"
     }
   },
+  "courseResources": {
+    "pageTitle": "Recursos do curso",
+    "pageSubtitle": "Aceda e gere os recursos de aprendizagem do curso",
+    "filters": {
+      "courseLabel": "Curso:",
+      "coursePlaceholder": "Selecione um curso",
+      "searchPlaceholder": "Procurar por nome ou descrição",
+      "jobTypeLabel": "Tipo de trabalho: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Nome",
+        "description": "Descrição",
+        "hours": "Horas",
+        "minutes": "Minutos",
+        "jobType": "Tipo de trabalho",
+        "access": "Acesso",
+        "accessStatus": "Estado de acesso",
+        "actions": "Ação"
+      },
+      "accessStatus": {
+        "opened": "Aberto",
+        "notOpened": "Não aberto"
+      },
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "noData": "Sem dados para exportar",
+        "csvSuccess": "CSV exportado com sucesso",
+        "pdfTitle": "Recursos do curso",
+        "pdfSuccess": "PDF exportado com sucesso"
+      },
+      "status": {
+        "loading": "A carregar recursos...",
+        "noResourcesForCourse": "Não foram encontrados recursos para este curso.",
+        "selectCourse": "Selecione um curso para ver os recursos.",
+        "noResults": "Sem resultados."
+      }
+    }
+  },
   "support": {
     "pageTitle": "Suporte",
     "pageSubtitle": "Submeter e gerir pedidos de suporte",

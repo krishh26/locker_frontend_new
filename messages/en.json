@@ -2331,6 +2331,48 @@
       "updateFailed": "Failed to update resource"
     }
   },
+  "courseResources": {
+    "pageTitle": "Course Resources",
+    "pageSubtitle": "Access and manage course learning resources",
+    "filters": {
+      "courseLabel": "Course:",
+      "coursePlaceholder": "Select a course",
+      "searchPlaceholder": "Search by name or description",
+      "jobTypeLabel": "Job Type: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "jobType": "Job Type",
+        "access": "Access",
+        "accessStatus": "Access Status",
+        "actions": "Action"
+      },
+      "accessStatus": {
+        "opened": "Opened",
+        "notOpened": "Not Opened"
+      },
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "noData": "No data to export",
+        "csvSuccess": "CSV exported successfully",
+        "pdfTitle": "Course Resources",
+        "pdfSuccess": "PDF exported successfully"
+      },
+      "status": {
+        "loading": "Loading resources...",
+        "noResourcesForCourse": "No resources found for this course.",
+        "selectCourse": "Please select a course to view resources.",
+        "noResults": "No results."
+      }
+    }
+  },
   "support": {
     "pageTitle": "Support",
     "pageSubtitle": "Submit and manage support requests",

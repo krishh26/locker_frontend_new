@@ -2103,6 +2103,48 @@
       "updateFailed": "No se pudo actualizar el recurso"
     }
   },
+  "courseResources": {
+    "pageTitle": "Recursos del curso",
+    "pageSubtitle": "Acceda y gestione los recursos de aprendizaje del curso",
+    "filters": {
+      "courseLabel": "Curso:",
+      "coursePlaceholder": "Seleccione un curso",
+      "searchPlaceholder": "Buscar por nombre o descripción",
+      "jobTypeLabel": "Tipo de trabajo: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "hours": "Horas",
+        "minutes": "Minutos",
+        "jobType": "Tipo de trabajo",
+        "access": "Acceso",
+        "accessStatus": "Estado de acceso",
+        "actions": "Acción"
+      },
+      "accessStatus": {
+        "opened": "Abierto",
+        "notOpened": "No abierto"
+      },
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "noData": "No hay datos para exportar",
+        "csvSuccess": "CSV exportado correctamente",
+        "pdfTitle": "Recursos del curso",
+        "pdfSuccess": "PDF exportado correctamente"
+      },
+      "status": {
+        "loading": "Cargando recursos...",
+        "noResourcesForCourse": "No se encontraron recursos para este curso.",
+        "selectCourse": "Seleccione un curso para ver los recursos.",
+        "noResults": "Sin resultados."
+      }
+    }
+  },
   "support": {
     "pageTitle": "Soporte",
     "pageSubtitle": "Enviar y gestionar solicitudes de soporte",

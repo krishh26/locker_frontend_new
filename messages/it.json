@@ -2248,6 +2248,48 @@
       "toastPdfInfo": "L'export PDF sarà disponibile a breve"
     }
   },
+  "courseResources": {
+    "pageTitle": "Risorse del corso",
+    "pageSubtitle": "Accedi e gestisci le risorse di apprendimento del corso",
+    "filters": {
+      "courseLabel": "Corso:",
+      "coursePlaceholder": "Seleziona un corso",
+      "searchPlaceholder": "Cerca per nome o descrizione",
+      "jobTypeLabel": "Tipo di lavoro: {jobType}",
+      "jobTypeOnOff": "On/Off"
+    },
+    "table": {
+      "columns": {
+        "name": "Nome",
+        "description": "Descrizione",
+        "hours": "Ore",
+        "minutes": "Minuti",
+        "jobType": "Tipo di lavoro",
+        "access": "Accesso",
+        "accessStatus": "Stato di accesso",
+        "actions": "Azione"
+      },
+      "accessStatus": {
+        "opened": "Aperto",
+        "notOpened": "Non aperto"
+      },
+      "export": {
+        "button": "Esporta",
+        "csv": "Esporta come CSV",
+        "pdf": "Esporta come PDF",
+        "noData": "Nessun dato da esportare",
+        "csvSuccess": "CSV esportato con successo",
+        "pdfTitle": "Risorse del corso",
+        "pdfSuccess": "PDF esportato con successo"
+      },
+      "status": {
+        "loading": "Caricamento delle risorse...",
+        "noResourcesForCourse": "Nessuna risorsa trovata per questo corso.",
+        "selectCourse": "Seleziona un corso per visualizzare le risorse.",
+        "noResults": "Nessun risultato."
+      }
+    }
+  },
   "courseBuilder": {
     "pageTitle": "Course Builder",
     "pageSubtitle": "Create, manage, and organize your courses with ease",

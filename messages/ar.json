@@ -2255,6 +2255,48 @@
       "updateFailed": "فشل تحديث المورد"
     }
   },
+  "courseResources": {
+    "pageTitle": "موارد الدورة",
+    "pageSubtitle": "الوصول إلى موارد التعلم الخاصة بالدورة وإدارتها",
+    "filters": {
+      "courseLabel": "الدورة:",
+      "coursePlaceholder": "اختر دورة",
+      "searchPlaceholder": "البحث حسب الاسم أو الوصف",
+      "jobTypeLabel": "نوع العمل: {jobType}",
+      "jobTypeOnOff": "تشغيل/إيقاف"
+    },
+    "table": {
+      "columns": {
+        "name": "الاسم",
+        "description": "الوصف",
+        "hours": "الساعات",
+        "minutes": "الدقائق",
+        "jobType": "نوع العمل",
+        "access": "الوصول",
+        "accessStatus": "حالة الوصول",
+        "actions": "إجراء"
+      },
+      "accessStatus": {
+        "opened": "تم الفتح",
+        "notOpened": "لم يتم الفتح"
+      },
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كملف CSV",
+        "pdf": "تصدير كملف PDF",
+        "noData": "لا توجد بيانات للتصدير",
+        "csvSuccess": "تم تصدير ملف CSV بنجاح",
+        "pdfTitle": "موارد الدورة",
+        "pdfSuccess": "تم تصدير ملف PDF بنجاح"
+      },
+      "status": {
+        "loading": "جارٍ تحميل الموارد...",
+        "noResourcesForCourse": "لم يتم العثور على موارد لهذه الدورة.",
+        "selectCourse": "يرجى اختيار دورة لعرض الموارد.",
+        "noResults": "لا توجد نتائج."
+      }
+    }
+  },
   "support": {
     "pageTitle": "الدعم",
     "pageSubtitle": "إرسال وإدارة طلبات الدعم",

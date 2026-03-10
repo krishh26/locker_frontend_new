@@ -825,8 +825,98 @@
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "Verwaltung von Wohlbefinden-Ressourcen",
+    "pageSubtitle": "Wohlbefinden-Ressourcen für Lernende verwalten, einschließlich Hinzufügen, Bearbeiten und Umschalten der Verfügbarkeit",
+    "table": {
+      "searchPlaceholder": "Ressourcen nach Name suchen...",
+      "exportFeedbacks": "Feedback exportieren",
+      "addResource": "Ressource hinzufügen",
+      "noResourcesFound": "Keine Ressourcen gefunden.",
+      "openMenu": "Menü öffnen",
+      "invalidDate": "Ungültiges Datum",
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "actions": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+      },
+      "columns": {
+        "name": "Name",
+        "status": "Status",
+        "createdAt": "Erstellt am",
+        "createdBy": "Erstellt von",
+        "actions": "Aktionen"
+      }
+    },
+    "deleteDialog": {
+      "title": "Ressource löschen",
+      "description": "Möchten Sie \"{name}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "deleting": "Wird gelöscht..."
+    },
+    "form": {
+      "titleAdd": "Ressource hinzufügen",
+      "titleEdit": "Ressource bearbeiten",
+      "descriptionAdd": "Füllen Sie die Details aus, um eine neue Wohlbefinden-Ressource hinzuzufügen.",
+      "descriptionEdit": "Aktualisieren Sie unten die Ressourceninformationen.",
+      "resourceName": "Ressourcenname",
+      "resourceType": "Ressourcentyp",
+      "uploadFile": "Datei hochladen",
+      "resourceUrl": "Ressourcen-URL",
+      "description": "Beschreibung",
+      "active": "Aktiv",
+      "addResource": "Ressource hinzufügen",
+      "updateResource": "Ressource aktualisieren",
+      "currentFile": "Aktuelle Datei:",
+      "uploadNewToReplace": "Neue Datei zum Ersetzen hochladen",
+      "dragDrop": "Datei hierher ziehen und ablegen oder",
+      "browse": "Durchsuchen",
+      "maxSizeAndSupported": "Max. {max}MB. Unterstützt: {types}",
+      "resourceTypeOptions": {
+        "url": "URL-Link",
+        "file": "Datei-Upload"
+      },
+      "placeholders": {
+        "resourceName": "Ressourcennamen eingeben",
+        "resourceType": "Ressourcentyp auswählen",
+        "resourceUrl": "https://example.com/resource",
+        "description": "Ressourcenbeschreibung eingeben"
+      },
+      "validation": {
+        "resourceNameRequired": "Ressourcenname ist erforderlich",
+        "pleaseUploadFile": "Bitte laden Sie eine Datei hoch",
+        "urlRequired": "URL ist erforderlich",
+        "fileSizeExceeds": "Dateigröße überschreitet das Limit von {max}MB",
+        "unsupportedFileType": "Nicht unterstützter Dateityp. Erlaubt: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "Ressourcenname",
+        "feedback": "Feedback",
+        "createdAt": "Erstellt am"
+      }
+    },
+    "toast": {
+      "loadFailed": "Wohlbefinden-Ressourcen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "activatedSuccess": "Ressource erfolgreich aktiviert",
+      "deactivatedSuccess": "Ressource erfolgreich deaktiviert",
+      "activateFailed": "Ressource konnte nicht aktiviert werden",
+      "deactivateFailed": "Ressource konnte nicht deaktiviert werden",
+      "deletedSuccess": "Ressource erfolgreich gelöscht",
+      "deleteFailed": "Ressource konnte nicht gelöscht werden",
+      "noDataToExport": "Keine Daten zum Exportieren verfügbar",
+      "noFeedbackToExport": "Keine Feedback-Daten zum Exportieren verfügbar",
+      "exportSuccess": "Feedback-Bericht erfolgreich exportiert",
+      "addedSuccess": "Ressource erfolgreich hinzugefügt",
+      "addFailed": "Ressource konnte nicht hinzugefügt werden",
+      "updatedSuccess": "Ressource erfolgreich aktualisiert",
+      "updateFailed": "Ressource konnte nicht aktualisiert werden"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

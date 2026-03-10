@@ -1284,8 +1284,98 @@
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "إدارة موارد الرفاهية",
+    "pageSubtitle": "إدارة موارد الرفاهية للمتعلمين، بما في ذلك الإضافة والتعديل وتبديل توفر الموارد",
+    "table": {
+      "searchPlaceholder": "ابحث عن الموارد بالاسم...",
+      "exportFeedbacks": "تصدير الملاحظات",
+      "addResource": "إضافة مورد",
+      "noResourcesFound": "لم يتم العثور على موارد.",
+      "openMenu": "فتح القائمة",
+      "invalidDate": "تاريخ غير صالح",
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "columns": {
+        "name": "الاسم",
+        "status": "الحالة",
+        "createdAt": "تاريخ الإنشاء",
+        "createdBy": "أنشئ بواسطة",
+        "actions": "الإجراءات"
+      }
+    },
+    "deleteDialog": {
+      "title": "حذف المورد",
+      "description": "هل أنت متأكد أنك تريد حذف \"{name}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جارٍ الحذف..."
+    },
+    "form": {
+      "titleAdd": "إضافة مورد",
+      "titleEdit": "تعديل المورد",
+      "descriptionAdd": "املأ التفاصيل لإضافة مورد رفاهية جديد.",
+      "descriptionEdit": "حدّث معلومات المورد أدناه.",
+      "resourceName": "اسم المورد",
+      "resourceType": "نوع المورد",
+      "uploadFile": "رفع ملف",
+      "resourceUrl": "رابط المورد",
+      "description": "الوصف",
+      "active": "نشط",
+      "addResource": "إضافة مورد",
+      "updateResource": "تحديث المورد",
+      "currentFile": "الملف الحالي:",
+      "uploadNewToReplace": "ارفع ملفاً جديداً للاستبدال",
+      "dragDrop": "اسحب وأفلت ملفك هنا أو",
+      "browse": "تصفح",
+      "maxSizeAndSupported": "الحد الأقصى {max}MB. المدعوم: {types}",
+      "resourceTypeOptions": {
+        "url": "رابط URL",
+        "file": "رفع ملف"
+      },
+      "placeholders": {
+        "resourceName": "أدخل اسم المورد",
+        "resourceType": "اختر نوع المورد",
+        "resourceUrl": "https://example.com/resource",
+        "description": "أدخل وصف المورد"
+      },
+      "validation": {
+        "resourceNameRequired": "اسم المورد مطلوب",
+        "pleaseUploadFile": "يرجى رفع ملف",
+        "urlRequired": "الرابط مطلوب",
+        "fileSizeExceeds": "حجم الملف يتجاوز حد {max}MB",
+        "unsupportedFileType": "نوع ملف غير مدعوم. المسموح: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "اسم المورد",
+        "feedback": "الملاحظات",
+        "createdAt": "تاريخ الإنشاء"
+      }
+    },
+    "toast": {
+      "loadFailed": "فشل تحميل موارد الرفاهية. يرجى المحاولة مرة أخرى.",
+      "activatedSuccess": "تم تفعيل المورد بنجاح",
+      "deactivatedSuccess": "تم إلغاء تفعيل المورد بنجاح",
+      "activateFailed": "فشل تفعيل المورد",
+      "deactivateFailed": "فشل إلغاء تفعيل المورد",
+      "deletedSuccess": "تم حذف المورد بنجاح",
+      "deleteFailed": "فشل حذف المورد",
+      "noDataToExport": "لا توجد بيانات متاحة للتصدير",
+      "noFeedbackToExport": "لا توجد بيانات ملاحظات للتصدير",
+      "exportSuccess": "تم تصدير تقرير الملاحظات بنجاح",
+      "addedSuccess": "تمت إضافة المورد بنجاح",
+      "addFailed": "فشلت إضافة المورد",
+      "updatedSuccess": "تم تحديث المورد بنجاح",
+      "updateFailed": "فشل تحديث المورد"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

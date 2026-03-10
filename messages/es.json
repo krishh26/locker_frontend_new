@@ -1125,7 +1125,97 @@
   },
   "wellbeing": {
     "pageTitle": "Gestión de Recursos de Bienestar",
-    "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos"
+    "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",
+    "table": {
+      "searchPlaceholder": "Buscar recursos por nombre...",
+      "exportFeedbacks": "Exportar comentarios",
+      "addResource": "Agregar recurso",
+      "noResourcesFound": "No se encontraron recursos.",
+      "openMenu": "Abrir menú",
+      "invalidDate": "Fecha inválida",
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "columns": {
+        "name": "Nombre",
+        "status": "Estado",
+        "createdAt": "Creado el",
+        "createdBy": "Creado por",
+        "actions": "Acciones"
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminar recurso",
+      "description": "¿Está seguro de que desea eliminar \"{name}\"? Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "deleting": "Eliminando..."
+    },
+    "form": {
+      "titleAdd": "Agregar recurso",
+      "titleEdit": "Editar recurso",
+      "descriptionAdd": "Complete los detalles para agregar un nuevo recurso de bienestar.",
+      "descriptionEdit": "Actualice la información del recurso a continuación.",
+      "resourceName": "Nombre del recurso",
+      "resourceType": "Tipo de recurso",
+      "uploadFile": "Subir archivo",
+      "resourceUrl": "URL del recurso",
+      "description": "Descripción",
+      "active": "Activo",
+      "addResource": "Agregar recurso",
+      "updateResource": "Actualizar recurso",
+      "currentFile": "Archivo actual:",
+      "uploadNewToReplace": "Suba un archivo nuevo para reemplazar",
+      "dragDrop": "Arrastre y suelte su archivo aquí o",
+      "browse": "Explorar",
+      "maxSizeAndSupported": "Máx {max}MB. Soportado: {types}",
+      "resourceTypeOptions": {
+        "url": "Enlace URL",
+        "file": "Carga de archivo"
+      },
+      "placeholders": {
+        "resourceName": "Ingrese el nombre del recurso",
+        "resourceType": "Seleccione el tipo de recurso",
+        "resourceUrl": "https://example.com/resource",
+        "description": "Ingrese la descripción del recurso"
+      },
+      "validation": {
+        "resourceNameRequired": "El nombre del recurso es obligatorio",
+        "pleaseUploadFile": "Por favor suba un archivo",
+        "urlRequired": "La URL es obligatoria",
+        "fileSizeExceeds": "El tamaño del archivo excede el límite de {max}MB",
+        "unsupportedFileType": "Tipo de archivo no compatible. Permitidos: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "Nombre del recurso",
+        "feedback": "Comentarios",
+        "createdAt": "Creado el"
+      }
+    },
+    "toast": {
+      "loadFailed": "No se pudieron cargar los recursos de bienestar. Inténtelo de nuevo.",
+      "activatedSuccess": "Recurso activado correctamente",
+      "deactivatedSuccess": "Recurso desactivado correctamente",
+      "activateFailed": "No se pudo activar el recurso",
+      "deactivateFailed": "No se pudo desactivar el recurso",
+      "deletedSuccess": "Recurso eliminado correctamente",
+      "deleteFailed": "No se pudo eliminar el recurso",
+      "noDataToExport": "No hay datos disponibles para exportar",
+      "noFeedbackToExport": "No hay datos de comentarios disponibles para exportar",
+      "exportSuccess": "Informe de comentarios exportado correctamente",
+      "addedSuccess": "Recurso agregado correctamente",
+      "addFailed": "No se pudo agregar el recurso",
+      "updatedSuccess": "Recurso actualizado correctamente",
+      "updateFailed": "No se pudo actualizar el recurso"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Gestión de Recursos de Formación Complementaria",

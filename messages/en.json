@@ -1304,7 +1304,97 @@
   },
   "wellbeing": {
     "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability",
+    "table": {
+      "searchPlaceholder": "Search resources by name...",
+      "exportFeedbacks": "Export Feedbacks",
+      "addResource": "Add Resource",
+      "noResourcesFound": "No resources found.",
+      "openMenu": "Open menu",
+      "invalidDate": "Invalid Date",
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "columns": {
+        "name": "Name",
+        "status": "Status",
+        "createdAt": "Created At",
+        "createdBy": "Created By",
+        "actions": "Actions"
+      }
+    },
+    "deleteDialog": {
+      "title": "Delete Resource",
+      "description": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "form": {
+      "titleAdd": "Add Resource",
+      "titleEdit": "Edit Resource",
+      "descriptionAdd": "Fill in the details to add a new wellbeing resource.",
+      "descriptionEdit": "Update the resource information below.",
+      "resourceName": "Resource Name",
+      "resourceType": "Resource Type",
+      "uploadFile": "Upload File",
+      "resourceUrl": "Resource URL",
+      "description": "Description",
+      "active": "Active",
+      "addResource": "Add Resource",
+      "updateResource": "Update Resource",
+      "currentFile": "Current file:",
+      "uploadNewToReplace": "Upload a new file to replace",
+      "dragDrop": "Drag and drop your file here or",
+      "browse": "Browse",
+      "maxSizeAndSupported": "Max {max}MB. Supported: {types}",
+      "resourceTypeOptions": {
+        "url": "URL Link",
+        "file": "File Upload"
+      },
+      "placeholders": {
+        "resourceName": "Enter resource name",
+        "resourceType": "Select resource type",
+        "resourceUrl": "https://example.com/resource",
+        "description": "Enter resource description"
+      },
+      "validation": {
+        "resourceNameRequired": "Resource name is required",
+        "pleaseUploadFile": "Please upload a file",
+        "urlRequired": "URL is required",
+        "fileSizeExceeds": "File size exceeds {max}MB limit",
+        "unsupportedFileType": "Unsupported file type. Allowed: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "Resource Name",
+        "feedback": "Feedback",
+        "createdAt": "Created At"
+      }
+    },
+    "toast": {
+      "loadFailed": "Failed to load wellbeing resources. Please try again.",
+      "activatedSuccess": "Resource activated successfully",
+      "deactivatedSuccess": "Resource deactivated successfully",
+      "activateFailed": "Failed to activate resource",
+      "deactivateFailed": "Failed to deactivate resource",
+      "deletedSuccess": "Resource deleted successfully",
+      "deleteFailed": "Failed to delete resource",
+      "noDataToExport": "No data available to export",
+      "noFeedbackToExport": "No feedback data available to export",
+      "exportSuccess": "Feedback report exported successfully",
+      "addedSuccess": "Resource added successfully",
+      "addFailed": "Failed to add resource",
+      "updatedSuccess": "Resource updated successfully",
+      "updateFailed": "Failed to update resource"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

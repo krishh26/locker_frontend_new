@@ -1283,8 +1283,98 @@
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "कल्याण संसाधन प्रबंधन",
+    "pageSubtitle": "सीखने वालों के लिए कल्याण संसाधनों का प्रबंधन करें—जोड़ना, संपादित करना और उपलब्धता बदलना",
+    "table": {
+      "searchPlaceholder": "नाम से संसाधन खोजें...",
+      "exportFeedbacks": "फीडबैक एक्सपोर्ट करें",
+      "addResource": "संसाधन जोड़ें",
+      "noResourcesFound": "कोई संसाधन नहीं मिला।",
+      "openMenu": "मेनू खोलें",
+      "invalidDate": "अमान्य तिथि",
+      "status": {
+        "active": "सक्रिय",
+        "inactive": "निष्क्रिय"
+      },
+      "actions": {
+        "edit": "संपादित करें",
+        "delete": "हटाएं"
+      },
+      "columns": {
+        "name": "नाम",
+        "status": "स्थिति",
+        "createdAt": "बनाया गया",
+        "createdBy": "द्वारा बनाया गया",
+        "actions": "कार्रवाई"
+      }
+    },
+    "deleteDialog": {
+      "title": "संसाधन हटाएं",
+      "description": "क्या आप वाकई \"{name}\" हटाना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएं",
+      "deleting": "हटा रहा है..."
+    },
+    "form": {
+      "titleAdd": "संसाधन जोड़ें",
+      "titleEdit": "संसाधन संपादित करें",
+      "descriptionAdd": "नया कल्याण संसाधन जोड़ने के लिए विवरण भरें।",
+      "descriptionEdit": "नीचे संसाधन की जानकारी अपडेट करें।",
+      "resourceName": "संसाधन का नाम",
+      "resourceType": "संसाधन प्रकार",
+      "uploadFile": "फ़ाइल अपलोड करें",
+      "resourceUrl": "संसाधन URL",
+      "description": "विवरण",
+      "active": "सक्रिय",
+      "addResource": "संसाधन जोड़ें",
+      "updateResource": "संसाधन अपडेट करें",
+      "currentFile": "वर्तमान फ़ाइल:",
+      "uploadNewToReplace": "बदलने के लिए नई फ़ाइल अपलोड करें",
+      "dragDrop": "अपनी फ़ाइल यहाँ ड्रैग-ड्रॉप करें या",
+      "browse": "ब्राउज़ करें",
+      "maxSizeAndSupported": "अधिकतम {max}MB. समर्थित: {types}",
+      "resourceTypeOptions": {
+        "url": "URL लिंक",
+        "file": "फ़ाइल अपलोड"
+      },
+      "placeholders": {
+        "resourceName": "संसाधन नाम दर्ज करें",
+        "resourceType": "संसाधन प्रकार चुनें",
+        "resourceUrl": "https://example.com/resource",
+        "description": "संसाधन विवरण दर्ज करें"
+      },
+      "validation": {
+        "resourceNameRequired": "संसाधन नाम आवश्यक है",
+        "pleaseUploadFile": "कृपया एक फ़ाइल अपलोड करें",
+        "urlRequired": "URL आवश्यक है",
+        "fileSizeExceeds": "फ़ाइल आकार {max}MB सीमा से अधिक है",
+        "unsupportedFileType": "असमर्थित फ़ाइल प्रकार। अनुमत: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "संसाधन का नाम",
+        "feedback": "फीडबैक",
+        "createdAt": "बनाया गया"
+      }
+    },
+    "toast": {
+      "loadFailed": "कल्याण संसाधन लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "activatedSuccess": "संसाधन सफलतापूर्वक सक्रिय किया गया",
+      "deactivatedSuccess": "संसाधन सफलतापूर्वक निष्क्रिय किया गया",
+      "activateFailed": "संसाधन सक्रिय करने में विफल",
+      "deactivateFailed": "संसाधन निष्क्रिय करने में विफल",
+      "deletedSuccess": "संसाधन सफलतापूर्वक हटाया गया",
+      "deleteFailed": "संसाधन हटाने में विफल",
+      "noDataToExport": "एक्सपोर्ट करने के लिए डेटा उपलब्ध नहीं है",
+      "noFeedbackToExport": "एक्सपोर्ट करने के लिए फीडबैक डेटा उपलब्ध नहीं है",
+      "exportSuccess": "फीडबैक रिपोर्ट सफलतापूर्वक एक्सपोर्ट की गई",
+      "addedSuccess": "संसाधन सफलतापूर्वक जोड़ा गया",
+      "addFailed": "संसाधन जोड़ने में विफल",
+      "updatedSuccess": "संसाधन सफलतापूर्वक अपडेट किया गया",
+      "updateFailed": "संसाधन अपडेट करने में विफल"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

@@ -1283,8 +1283,98 @@
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "Gestão de recursos de bem-estar",
+    "pageSubtitle": "Gerir recursos de bem-estar para os formandos, incluindo adicionar, editar e alternar disponibilidade",
+    "table": {
+      "searchPlaceholder": "Pesquisar recursos por nome...",
+      "exportFeedbacks": "Exportar feedback",
+      "addResource": "Adicionar recurso",
+      "noResourcesFound": "Nenhum recurso encontrado.",
+      "openMenu": "Abrir menu",
+      "invalidDate": "Data inválida",
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "columns": {
+        "name": "Nome",
+        "status": "Estado",
+        "createdAt": "Criado em",
+        "createdBy": "Criado por",
+        "actions": "Ações"
+      }
+    },
+    "deleteDialog": {
+      "title": "Eliminar recurso",
+      "description": "Tem a certeza de que pretende eliminar \"{name}\"? Esta ação não pode ser desfeita.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "deleting": "A eliminar..."
+    },
+    "form": {
+      "titleAdd": "Adicionar recurso",
+      "titleEdit": "Editar recurso",
+      "descriptionAdd": "Preencha os detalhes para adicionar um novo recurso de bem-estar.",
+      "descriptionEdit": "Atualize as informações do recurso abaixo.",
+      "resourceName": "Nome do recurso",
+      "resourceType": "Tipo de recurso",
+      "uploadFile": "Carregar ficheiro",
+      "resourceUrl": "URL do recurso",
+      "description": "Descrição",
+      "active": "Ativo",
+      "addResource": "Adicionar recurso",
+      "updateResource": "Atualizar recurso",
+      "currentFile": "Ficheiro atual:",
+      "uploadNewToReplace": "Carregue um novo ficheiro para substituir",
+      "dragDrop": "Arraste e largue o seu ficheiro aqui ou",
+      "browse": "Procurar",
+      "maxSizeAndSupported": "Máx {max}MB. Suportado: {types}",
+      "resourceTypeOptions": {
+        "url": "Link URL",
+        "file": "Carregamento de ficheiro"
+      },
+      "placeholders": {
+        "resourceName": "Introduza o nome do recurso",
+        "resourceType": "Selecione o tipo de recurso",
+        "resourceUrl": "https://example.com/resource",
+        "description": "Introduza a descrição do recurso"
+      },
+      "validation": {
+        "resourceNameRequired": "O nome do recurso é obrigatório",
+        "pleaseUploadFile": "Por favor, carregue um ficheiro",
+        "urlRequired": "O URL é obrigatório",
+        "fileSizeExceeds": "O tamanho do ficheiro excede o limite de {max}MB",
+        "unsupportedFileType": "Tipo de ficheiro não suportado. Permitidos: {allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "Nome do recurso",
+        "feedback": "Feedback",
+        "createdAt": "Criado em"
+      }
+    },
+    "toast": {
+      "loadFailed": "Falha ao carregar os recursos de bem-estar. Tente novamente.",
+      "activatedSuccess": "Recurso ativado com sucesso",
+      "deactivatedSuccess": "Recurso desativado com sucesso",
+      "activateFailed": "Falha ao ativar o recurso",
+      "deactivateFailed": "Falha ao desativar o recurso",
+      "deletedSuccess": "Recurso eliminado com sucesso",
+      "deleteFailed": "Falha ao eliminar o recurso",
+      "noDataToExport": "Não há dados disponíveis para exportar",
+      "noFeedbackToExport": "Não há dados de feedback disponíveis para exportar",
+      "exportSuccess": "Relatório de feedback exportado com sucesso",
+      "addedSuccess": "Recurso adicionado com sucesso",
+      "addFailed": "Falha ao adicionar o recurso",
+      "updatedSuccess": "Recurso atualizado com sucesso",
+      "updateFailed": "Falha ao atualizar o recurso"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

@@ -1283,8 +1283,98 @@
     }
   },
   "wellbeing": {
-    "pageTitle": "Wellbeing Resources Management",
-    "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability"
+    "pageTitle": "身心健康资源管理",
+    "pageSubtitle": "管理学习者的身心健康资源，包括添加、编辑以及切换资源可用性",
+    "table": {
+      "searchPlaceholder": "按名称搜索资源...",
+      "exportFeedbacks": "导出反馈",
+      "addResource": "添加资源",
+      "noResourcesFound": "未找到资源。",
+      "openMenu": "打开菜单",
+      "invalidDate": "无效日期",
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "actions": {
+        "edit": "编辑",
+        "delete": "删除"
+      },
+      "columns": {
+        "name": "名称",
+        "status": "状态",
+        "createdAt": "创建时间",
+        "createdBy": "创建者",
+        "actions": "操作"
+      }
+    },
+    "deleteDialog": {
+      "title": "删除资源",
+      "description": "确定要删除“{name}”吗？此操作无法撤销。",
+      "cancel": "取消",
+      "delete": "删除",
+      "deleting": "删除中..."
+    },
+    "form": {
+      "titleAdd": "添加资源",
+      "titleEdit": "编辑资源",
+      "descriptionAdd": "填写详细信息以添加新的身心健康资源。",
+      "descriptionEdit": "在下方更新资源信息。",
+      "resourceName": "资源名称",
+      "resourceType": "资源类型",
+      "uploadFile": "上传文件",
+      "resourceUrl": "资源链接",
+      "description": "描述",
+      "active": "启用",
+      "addResource": "添加资源",
+      "updateResource": "更新资源",
+      "currentFile": "当前文件：",
+      "uploadNewToReplace": "上传新文件以替换",
+      "dragDrop": "将文件拖放到此处或",
+      "browse": "浏览",
+      "maxSizeAndSupported": "最大 {max}MB。支持：{types}",
+      "resourceTypeOptions": {
+        "url": "URL 链接",
+        "file": "文件上传"
+      },
+      "placeholders": {
+        "resourceName": "请输入资源名称",
+        "resourceType": "请选择资源类型",
+        "resourceUrl": "https://example.com/resource",
+        "description": "请输入资源描述"
+      },
+      "validation": {
+        "resourceNameRequired": "资源名称为必填项",
+        "pleaseUploadFile": "请上传文件",
+        "urlRequired": "URL 为必填项",
+        "fileSizeExceeds": "文件大小超过 {max}MB 限制",
+        "unsupportedFileType": "不支持的文件类型。允许：{allowed}"
+      }
+    },
+    "export": {
+      "filenamePrefix": "wellbeing-feedbacks",
+      "headers": {
+        "resourceName": "资源名称",
+        "feedback": "反馈",
+        "createdAt": "创建时间"
+      }
+    },
+    "toast": {
+      "loadFailed": "加载身心健康资源失败。请重试。",
+      "activatedSuccess": "资源已成功启用",
+      "deactivatedSuccess": "资源已成功停用",
+      "activateFailed": "启用资源失败",
+      "deactivateFailed": "停用资源失败",
+      "deletedSuccess": "资源已成功删除",
+      "deleteFailed": "删除资源失败",
+      "noDataToExport": "没有可导出的数据",
+      "noFeedbackToExport": "没有可导出的反馈数据",
+      "exportSuccess": "反馈报告已成功导出",
+      "addedSuccess": "资源已成功添加",
+      "addFailed": "添加资源失败",
+      "updatedSuccess": "资源已成功更新",
+      "updateFailed": "更新资源失败"
+    }
   },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",

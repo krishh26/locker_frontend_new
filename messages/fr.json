@@ -2754,6 +2754,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Santé et bien-être",
+    "pageSubtitle": "Accédez à vos ressources de bien-être et suivez votre progression",
+    "table": {
+      "columns": {
+        "resourceName": "Nom de la ressource",
+        "description": "Description",
+        "createdDate": "Date de création",
+        "lastOpened": "Dernière ouverture",
+        "feedback": "Retour",
+        "actions": "Actions"
+      },
+      "actions": {
+        "openDownload": "Ouvrir / Télécharger",
+        "visitLink": "Visiter le lien",
+        "feedback": "Retour"
+      },
+      "dates": {
+        "never": "Jamais",
+        "invalid": "Date invalide"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Très utile",
+        "helpful": "Utile",
+        "neutral": "Neutre",
+        "notHelpful": "Pas utile",
+        "none": "Aucun retour",
+        "unknown": "Inconnu"
+      },
+      "searchPlaceholder": "Rechercher des ressources...",
+      "columnVisibility": {
+        "label": "Visibilité des colonnes",
+        "button": "Colonnes"
+      },
+      "loading": "Chargement des ressources...",
+      "error": {
+        "loadFailed": "Échec du chargement des ressources. Veuillez réessayer.",
+        "retry": "Réessayer"
+      },
+      "empty": {
+        "noResources": "Aucune ressource disponible",
+        "checkBack": "Revenez plus tard pour de nouvelles ressources de bien-être"
+      },
+      "noResults": "Aucune ressource trouvée.",
+      "toast": {
+        "trackFailed": "Échec du suivi de l'accès à la ressource"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Comment était cette ressource pour vous ?",
+      "description": "Sélectionnez un emoji pour noter votre expérience",
+      "labels": {
+        "veryHelpful": "Très utile",
+        "helpful": "Utile",
+        "neutral": "Neutre",
+        "notHelpful": "Pas utile"
+      },
+      "messages": {
+        "veryHelpful": "Cette ressource était très utile",
+        "helpful": "Cette ressource était utile",
+        "neutral": "Cette ressource était correcte",
+        "notHelpful": "Cette ressource pourrait être améliorée"
+      },
+      "cancel": "Annuler",
+      "submit": "Envoyer le retour",
+      "submitting": "Envoi...",
+      "toast": {
+        "success": "Retour envoyé avec succès !",
+        "failed": "Échec de l'envoi du retour. Veuillez réessayer."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Accuser réception du message",
     "pageSubtitle": "Créer et gérer des messages d'accusé de réception pour les apprenants",

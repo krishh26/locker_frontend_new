@@ -3038,6 +3038,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Health and Wellbeing",
+    "pageSubtitle": "Access your wellbeing resources and track your progress",
+    "table": {
+      "columns": {
+        "resourceName": "Resource Name",
+        "description": "Description",
+        "createdDate": "Created Date",
+        "lastOpened": "Last Opened",
+        "feedback": "Feedback",
+        "actions": "Actions"
+      },
+      "actions": {
+        "openDownload": "Open / Download",
+        "visitLink": "Visit Link",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Never",
+        "invalid": "Invalid date"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Very Helpful",
+        "helpful": "Helpful",
+        "neutral": "Neutral",
+        "notHelpful": "Not Helpful",
+        "none": "No feedback",
+        "unknown": "Unknown"
+      },
+      "searchPlaceholder": "Search resources...",
+      "columnVisibility": {
+        "label": "Column Visibility",
+        "button": "Columns"
+      },
+      "loading": "Loading resources...",
+      "error": {
+        "loadFailed": "Failed to load resources. Please try again.",
+        "retry": "Retry"
+      },
+      "empty": {
+        "noResources": "No resources available",
+        "checkBack": "Check back later for new wellbeing resources"
+      },
+      "noResults": "No resources found.",
+      "toast": {
+        "trackFailed": "Failed to track resource access"
+      }
+    },
+    "feedbackDialog": {
+      "title": "How was this resource for you?",
+      "description": "Please select an emoji to rate your experience",
+      "labels": {
+        "veryHelpful": "Very Helpful",
+        "helpful": "Helpful",
+        "neutral": "Neutral",
+        "notHelpful": "Not Helpful"
+      },
+      "messages": {
+        "veryHelpful": "Great! This resource was very helpful",
+        "helpful": "Good! This resource was helpful",
+        "neutral": "Okay, this resource was okay",
+        "notHelpful": "This resource could be improved"
+      },
+      "cancel": "Cancel",
+      "submit": "Submit Feedback",
+      "submitting": "Submitting...",
+      "toast": {
+        "success": "Feedback submitted successfully!",
+        "failed": "Failed to submit feedback. Please try again."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Acknowledge Message",
     "pageSubtitle": "Create and manage acknowledgement messages for learners",

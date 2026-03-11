@@ -2126,6 +2126,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Gesundheit und Wohlbefinden",
+    "pageSubtitle": "Zugang zu Ihren Wohlfühl-Ressourcen und Fortschrittsverfolgung",
+    "table": {
+      "columns": {
+        "resourceName": "Ressourcenname",
+        "description": "Beschreibung",
+        "createdDate": "Erstellungsdatum",
+        "lastOpened": "Zuletzt geöffnet",
+        "feedback": "Feedback",
+        "actions": "Aktionen"
+      },
+      "actions": {
+        "openDownload": "Öffnen / Herunterladen",
+        "visitLink": "Link besuchen",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Nie",
+        "invalid": "Ungültiges Datum"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Sehr hilfreich",
+        "helpful": "Hilfreich",
+        "neutral": "Neutral",
+        "notHelpful": "Nicht hilfreich",
+        "none": "Kein Feedback",
+        "unknown": "Unbekannt"
+      },
+      "searchPlaceholder": "Ressourcen suchen...",
+      "columnVisibility": {
+        "label": "Spalten Sichtbarkeit",
+        "button": "Spalten"
+      },
+      "loading": "Ressourcen werden geladen...",
+      "error": {
+        "loadFailed": "Ressourcen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+        "retry": "Erneut versuchen"
+      },
+      "empty": {
+        "noResources": "Keine Ressourcen verfügbar",
+        "checkBack": "Schauen Sie später nach neuen Wohlfühl-Ressourcen"
+      },
+      "noResults": "Keine Ressourcen gefunden.",
+      "toast": {
+        "trackFailed": "Ressourcen-Zugriff konnte nicht erfasst werden"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Wie war diese Ressource für Sie?",
+      "description": "Wählen Sie ein Emoji zur Bewertung Ihrer Erfahrung",
+      "labels": {
+        "veryHelpful": "Sehr hilfreich",
+        "helpful": "Hilfreich",
+        "neutral": "Neutral",
+        "notHelpful": "Nicht hilfreich"
+      },
+      "messages": {
+        "veryHelpful": "Diese Ressource war sehr hilfreich",
+        "helpful": "Diese Ressource war hilfreich",
+        "neutral": "Diese Ressource war okay",
+        "notHelpful": "Diese Ressource könnte verbessert werden"
+      },
+      "cancel": "Abbrechen",
+      "submit": "Feedback senden",
+      "submitting": "Wird gesendet...",
+      "toast": {
+        "success": "Feedback erfolgreich gesendet!",
+        "failed": "Feedback konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Nachricht bestätigen",
     "pageSubtitle": "Bestätigungsnachrichten für Lernende erstellen und verwalten",

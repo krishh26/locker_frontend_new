@@ -2555,6 +2555,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Salud y bienestar",
+    "pageSubtitle": "Accede a tus recursos de bienestar y haz seguimiento de tu progreso",
+    "table": {
+      "columns": {
+        "resourceName": "Nombre del recurso",
+        "description": "Descripción",
+        "createdDate": "Fecha de creación",
+        "lastOpened": "Última apertura",
+        "feedback": "Comentarios",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "openDownload": "Abrir / Descargar",
+        "visitLink": "Visitar enlace",
+        "feedback": "Comentarios"
+      },
+      "dates": {
+        "never": "Nunca",
+        "invalid": "Fecha no válida"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Muy útil",
+        "helpful": "Útil",
+        "neutral": "Neutral",
+        "notHelpful": "Poco útil",
+        "none": "Sin comentarios",
+        "unknown": "Desconocido"
+      },
+      "searchPlaceholder": "Buscar recursos...",
+      "columnVisibility": {
+        "label": "Visibilidad de columnas",
+        "button": "Columnas"
+      },
+      "loading": "Cargando recursos...",
+      "error": {
+        "loadFailed": "Error al cargar los recursos. Inténtalo de nuevo.",
+        "retry": "Reintentar"
+      },
+      "empty": {
+        "noResources": "No hay recursos disponibles",
+        "checkBack": "Vuelve más tarde para ver nuevos recursos de bienestar"
+      },
+      "noResults": "No se encontraron recursos.",
+      "toast": {
+        "trackFailed": "Error al registrar el acceso al recurso"
+      }
+    },
+    "feedbackDialog": {
+      "title": "¿Qué te pareció este recurso?",
+      "description": "Selecciona un emoji para valorar tu experiencia",
+      "labels": {
+        "veryHelpful": "Muy útil",
+        "helpful": "Útil",
+        "neutral": "Neutral",
+        "notHelpful": "Poco útil"
+      },
+      "messages": {
+        "veryHelpful": "¡Este recurso fue muy útil!",
+        "helpful": "¡Este recurso fue útil!",
+        "neutral": "Este recurso estuvo bien",
+        "notHelpful": "Este recurso podría mejorarse"
+      },
+      "cancel": "Cancelar",
+      "submit": "Enviar comentarios",
+      "submitting": "Enviando...",
+      "toast": {
+        "success": "¡Comentarios enviados correctamente!",
+        "failed": "No se pudieron enviar los comentarios. Inténtalo de nuevo."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Mensaje de Reconocimiento",
     "pageSubtitle": "Cree y gestione mensajes de reconocimiento para aprendices",

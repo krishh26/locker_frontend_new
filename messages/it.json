@@ -2072,6 +2072,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Salute e benessere",
+    "pageSubtitle": "Accedi alle risorse di benessere e monitora i tuoi progressi",
+    "table": {
+      "columns": {
+        "resourceName": "Nome risorsa",
+        "description": "Descrizione",
+        "createdDate": "Data creazione",
+        "lastOpened": "Ultima apertura",
+        "feedback": "Feedback",
+        "actions": "Azioni"
+      },
+      "actions": {
+        "openDownload": "Apri / Scarica",
+        "visitLink": "Visita link",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Mai",
+        "invalid": "Data non valida"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Molto utile",
+        "helpful": "Utile",
+        "neutral": "Neutrale",
+        "notHelpful": "Poco utile",
+        "none": "Nessun feedback",
+        "unknown": "Sconosciuto"
+      },
+      "searchPlaceholder": "Cerca risorse...",
+      "columnVisibility": {
+        "label": "Visibilità colonne",
+        "button": "Colonne"
+      },
+      "loading": "Caricamento risorse...",
+      "error": {
+        "loadFailed": "Caricamento risorse non riuscito. Riprova.",
+        "retry": "Riprova"
+      },
+      "empty": {
+        "noResources": "Nessuna risorsa disponibile",
+        "checkBack": "Torna più tardi per nuove risorse di benessere"
+      },
+      "noResults": "Nessuna risorsa trovata.",
+      "toast": {
+        "trackFailed": "Impossibile registrare l'accesso alla risorsa"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Come è stata questa risorsa per te?",
+      "description": "Seleziona un'emoji per valutare la tua esperienza",
+      "labels": {
+        "veryHelpful": "Molto utile",
+        "helpful": "Utile",
+        "neutral": "Neutrale",
+        "notHelpful": "Poco utile"
+      },
+      "messages": {
+        "veryHelpful": "Questa risorsa è stata molto utile",
+        "helpful": "Questa risorsa è stata utile",
+        "neutral": "Questa risorsa è stata okay",
+        "notHelpful": "Questa risorsa potrebbe essere migliorata"
+      },
+      "cancel": "Annulla",
+      "submit": "Invia feedback",
+      "submitting": "Invio...",
+      "toast": {
+        "success": "Feedback inviato con successo!",
+        "failed": "Impossibile inviare il feedback. Riprova."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Conferma messaggio",
     "pageSubtitle": "Crea e gestisci messaggi di conferma per i discenti",

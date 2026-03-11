@@ -2714,6 +2714,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "स्वास्थ्य और कल्याण",
+    "pageSubtitle": "अपने कल्याण संसाधनों तक पहुँचें और अपनी प्रगति ट्रैक करें",
+    "table": {
+      "columns": {
+        "resourceName": "संसाधन का नाम",
+        "description": "विवरण",
+        "createdDate": "निर्माण तिथि",
+        "lastOpened": "अंतिम खोला गया",
+        "feedback": "फीडबैक",
+        "actions": "कार्रवाइयाँ"
+      },
+      "actions": {
+        "openDownload": "खोलें / डाउनलोड",
+        "visitLink": "लिंक पर जाएँ",
+        "feedback": "फीडबैक"
+      },
+      "dates": {
+        "never": "कभी नहीं",
+        "invalid": "अमान्य तिथि"
+      },
+      "feedbackValues": {
+        "veryHelpful": "बहुत मददगार",
+        "helpful": "मददगार",
+        "neutral": "तटस्थ",
+        "notHelpful": "मददगार नहीं",
+        "none": "कोई फीडबैक नहीं",
+        "unknown": "अज्ञात"
+      },
+      "searchPlaceholder": "संसाधन खोजें...",
+      "columnVisibility": {
+        "label": "कॉलम दृश्यता",
+        "button": "कॉलम"
+      },
+      "loading": "संसाधन लोड हो रहे हैं...",
+      "error": {
+        "loadFailed": "संसाधन लोड करने में विफल। कृपया पुनः प्रयास करें।",
+        "retry": "पुनः प्रयास करें"
+      },
+      "empty": {
+        "noResources": "कोई संसाधन उपलब्ध नहीं",
+        "checkBack": "नए कल्याण संसाधनों के लिए बाद में देखें"
+      },
+      "noResults": "कोई संसाधन नहीं मिला।",
+      "toast": {
+        "trackFailed": "संसाधन पहुँच ट्रैक करने में विफल"
+      }
+    },
+    "feedbackDialog": {
+      "title": "यह संसाधन आपके लिए कैसा था?",
+      "description": "अपने अनुभव को रेट करने के लिए एक इमोजी चुनें",
+      "labels": {
+        "veryHelpful": "बहुत मददगार",
+        "helpful": "मददगार",
+        "neutral": "तटस्थ",
+        "notHelpful": "मददगार नहीं"
+      },
+      "messages": {
+        "veryHelpful": "यह संसाधन बहुत मददगार था!",
+        "helpful": "यह संसाधन मददगार था!",
+        "neutral": "यह संसाधन ठीक था",
+        "notHelpful": "इस संसाधन में सुधार हो सकता है"
+      },
+      "cancel": "रद्द करें",
+      "submit": "फीडबैक सबमिट करें",
+      "submitting": "सबमिट हो रहा है...",
+      "toast": {
+        "success": "फीडबैक सफलतापूर्वक सबमिट किया गया!",
+        "failed": "फीडबैक सबमिट करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    }
+  },
   "sidebar": {
     "groups": {
       "dashboards": "डैशबोर्ड",

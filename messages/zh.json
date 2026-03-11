@@ -2672,6 +2672,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "健康与福祉",
+    "pageSubtitle": "访问您的福祉资源并跟踪您的进度",
+    "table": {
+      "columns": {
+        "resourceName": "资源名称",
+        "description": "描述",
+        "createdDate": "创建日期",
+        "lastOpened": "上次打开",
+        "feedback": "反馈",
+        "actions": "操作"
+      },
+      "actions": {
+        "openDownload": "打开 / 下载",
+        "visitLink": "访问链接",
+        "feedback": "反馈"
+      },
+      "dates": {
+        "never": "从未",
+        "invalid": "无效日期"
+      },
+      "feedbackValues": {
+        "veryHelpful": "非常有帮助",
+        "helpful": "有帮助",
+        "neutral": "一般",
+        "notHelpful": "没有帮助",
+        "none": "暂无反馈",
+        "unknown": "未知"
+      },
+      "searchPlaceholder": "搜索资源...",
+      "columnVisibility": {
+        "label": "列可见性",
+        "button": "列"
+      },
+      "loading": "正在加载资源...",
+      "error": {
+        "loadFailed": "加载资源失败。请重试。",
+        "retry": "重试"
+      },
+      "empty": {
+        "noResources": "暂无可用资源",
+        "checkBack": "请稍后再查看新的福祉资源"
+      },
+      "noResults": "未找到资源。",
+      "toast": {
+        "trackFailed": "记录资源访问失败"
+      }
+    },
+    "feedbackDialog": {
+      "title": "您觉得这个资源怎么样？",
+      "description": "请选择一个表情来评价您的体验",
+      "labels": {
+        "veryHelpful": "非常有帮助",
+        "helpful": "有帮助",
+        "neutral": "一般",
+        "notHelpful": "没有帮助"
+      },
+      "messages": {
+        "veryHelpful": "这个资源非常有帮助！",
+        "helpful": "这个资源有帮助！",
+        "neutral": "这个资源还可以",
+        "notHelpful": "这个资源可以改进"
+      },
+      "cancel": "取消",
+      "submit": "提交反馈",
+      "submitting": "提交中...",
+      "toast": {
+        "success": "反馈提交成功！",
+        "failed": "提交反馈失败。请重试。"
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "确认消息",
     "pageSubtitle": "为学员创建并管理确认消息",

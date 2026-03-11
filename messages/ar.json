@@ -2707,6 +2707,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "الصحة والرفاهية",
+    "pageSubtitle": "الوصول إلى موارد الرفاهية وتتبع تقدمك",
+    "table": {
+      "columns": {
+        "resourceName": "اسم المورد",
+        "description": "الوصف",
+        "createdDate": "تاريخ الإنشاء",
+        "lastOpened": "آخر فتح",
+        "feedback": "التعليقات",
+        "actions": "الإجراءات"
+      },
+      "actions": {
+        "openDownload": "فتح / تنزيل",
+        "visitLink": "زيارة الرابط",
+        "feedback": "تعليقات"
+      },
+      "dates": {
+        "never": "أبداً",
+        "invalid": "تاريخ غير صالح"
+      },
+      "feedbackValues": {
+        "veryHelpful": "مفيد جداً",
+        "helpful": "مفيد",
+        "neutral": "محايد",
+        "notHelpful": "غير مفيد",
+        "none": "لا توجد تعليقات",
+        "unknown": "غير معروف"
+      },
+      "searchPlaceholder": "البحث في الموارد...",
+      "columnVisibility": {
+        "label": "رؤية الأعمدة",
+        "button": "الأعمدة"
+      },
+      "loading": "جاري تحميل الموارد...",
+      "error": {
+        "loadFailed": "فشل تحميل الموارد. يرجى المحاولة مرة أخرى.",
+        "retry": "إعادة المحاولة"
+      },
+      "empty": {
+        "noResources": "لا توجد موارد متاحة",
+        "checkBack": "عد لاحقاً للحصول على موارد رفاهية جديدة"
+      },
+      "noResults": "لم يتم العثور على موارد.",
+      "toast": {
+        "trackFailed": "فشل تتبع الوصول إلى المورد"
+      }
+    },
+    "feedbackDialog": {
+      "title": "كيف كان هذا المورد بالنسبة لك؟",
+      "description": "اختر رمزاً تعبيرياً لتقييم تجربتك",
+      "labels": {
+        "veryHelpful": "مفيد جداً",
+        "helpful": "مفيد",
+        "neutral": "محايد",
+        "notHelpful": "غير مفيد"
+      },
+      "messages": {
+        "veryHelpful": "كان هذا المورد مفيداً جداً",
+        "helpful": "كان هذا المورد مفيداً",
+        "neutral": "كان هذا المورد جيداً",
+        "notHelpful": "يمكن تحسين هذا المورد"
+      },
+      "cancel": "إلغاء",
+      "submit": "إرسال التعليقات",
+      "submitting": "جاري الإرسال...",
+      "toast": {
+        "success": "تم إرسال التعليقات بنجاح!",
+        "failed": "فشل إرسال التعليقات. يرجى المحاولة مرة أخرى."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "تأكيد الرسالة",
     "pageSubtitle": "إنشاء وإدارة رسائل التأكيد للمتعلمين",

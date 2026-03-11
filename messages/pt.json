@@ -2714,6 +2714,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Saúde e bem-estar",
+    "pageSubtitle": "Aceda aos seus recursos de bem-estar e acompanhe o seu progresso",
+    "table": {
+      "columns": {
+        "resourceName": "Nome do recurso",
+        "description": "Descrição",
+        "createdDate": "Data de criação",
+        "lastOpened": "Última abertura",
+        "feedback": "Feedback",
+        "actions": "Ações"
+      },
+      "actions": {
+        "openDownload": "Abrir / Transferir",
+        "visitLink": "Visitar ligação",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Nunca",
+        "invalid": "Data inválida"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Muito útil",
+        "helpful": "Útil",
+        "neutral": "Neutro",
+        "notHelpful": "Pouco útil",
+        "none": "Sem feedback",
+        "unknown": "Desconhecido"
+      },
+      "searchPlaceholder": "Pesquisar recursos...",
+      "columnVisibility": {
+        "label": "Visibilidade das colunas",
+        "button": "Colunas"
+      },
+      "loading": "A carregar recursos...",
+      "error": {
+        "loadFailed": "Falha ao carregar recursos. Tente novamente.",
+        "retry": "Tentar novamente"
+      },
+      "empty": {
+        "noResources": "Nenhum recurso disponível",
+        "checkBack": "Volte mais tarde para novos recursos de bem-estar"
+      },
+      "noResults": "Nenhum recurso encontrado.",
+      "toast": {
+        "trackFailed": "Falha ao registar o acesso ao recurso"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Como foi este recurso para si?",
+      "description": "Selecione um emoji para avaliar a sua experiência",
+      "labels": {
+        "veryHelpful": "Muito útil",
+        "helpful": "Útil",
+        "neutral": "Neutro",
+        "notHelpful": "Pouco útil"
+      },
+      "messages": {
+        "veryHelpful": "Este recurso foi muito útil!",
+        "helpful": "Este recurso foi útil!",
+        "neutral": "Este recurso foi okay",
+        "notHelpful": "Este recurso poderia ser melhorado"
+      },
+      "cancel": "Cancelar",
+      "submit": "Enviar feedback",
+      "submitting": "A enviar...",
+      "toast": {
+        "success": "Feedback enviado com sucesso!",
+        "failed": "Falha ao enviar feedback. Tente novamente."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Reconhecer mensagem",
     "pageSubtitle": "Crie e faça a gestão de mensagens de reconhecimento para formandos",

@@ -4464,6 +4464,181 @@
     "item": "आइटम",
     "items": "आइटम"
   },
+  "timeLog": {
+    "page": {
+      "title": "समय लॉग",
+      "subtitle": "सभी कोर्स और सामान्य गतिविधियों के लिए ई-टाइमलॉग देखें"
+    },
+    "filters": {
+      "course": {
+        "label": "कोर्स चुनें",
+        "all": "सभी कोर्स"
+      },
+      "jobType": {
+        "label": "जॉब ट्रेनिंग चुनें",
+        "options": {
+          "all": "सभी",
+          "notApplicable": "लागू नहीं",
+          "onTheJob": "काम पर",
+          "offTheJob": "काम से बाहर"
+        }
+      },
+      "approved": {
+        "label": "असेसर द्वारा स्वीकृत",
+        "options": {
+          "all": "सभी",
+          "approved": "स्वीकृत",
+          "notApproved": "अस्वीकृत"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "इस सप्ताह",
+      "thisMonth": "इस माह",
+      "total": "कुल",
+      "hoursLabel": "{hours} घंटे"
+    },
+    "recentActivity": {
+      "title": "हाल की गतिविधि",
+      "empty": "कोई हाल की गतिविधि नहीं मिली।"
+    },
+    "table": {
+      "loading": "टाइम लॉग लोड हो रहे हैं...",
+      "empty": "कोई टाइम लॉग प्रविष्टियाँ नहीं मिलीं।",
+      "columns": {
+        "activityType": "गतिविधि प्रकार",
+        "courseUnit": "कोर्स / यूनिट",
+        "trainer": "ट्रेनर",
+        "timeSpent": "गतिविधि पर लगा समय",
+        "startTime": "गतिविधि शुरू होने का समय",
+        "onOffJob": "जॉब पर/जॉब से बाहर प्रशिक्षण",
+        "approved": "स्वीकृति",
+        "comment": "टिप्पणी",
+        "date": "तारीख",
+        "actions": "कार्रवाई"
+      },
+      "labels": {
+        "assessor": "असेसर",
+        "approved": "स्वीकृत",
+        "notApproved": "अस्वीकृत"
+      }
+    },
+    "actions": {
+      "addButton": "नया टाइम लॉग प्रविष्टि जोड़ें",
+      "columnVisibilityLabel": "कॉलम दृश्यता",
+      "columnsButton": "कॉलम"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "गतिविधि जोड़ें",
+          "edit": "टाइम लॉग संपादित करें"
+        },
+        "description": {
+          "create": "नया टाइम लॉग प्रविष्टि बनाने के लिए विवरण भरें।",
+          "edit": "टाइम लॉग प्रविष्टि के विवरण अपडेट करें।"
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. गतिविधि की तारीख चुनें"
+          },
+          "activityType": {
+            "label": "2. गतिविधि प्रकार चुनें",
+            "placeholder": "गतिविधि प्रकार चुनें"
+          },
+          "course": {
+            "label": "3. कोर्स चुनें",
+            "noneOption": "कोई नहीं",
+            "loading": "कोर्स लोड हो रहे हैं..."
+          },
+          "unit": {
+            "label": "4. यूनिट चुनें",
+            "placeholderDefault": "यूनिट/यूनिट्स चुनें",
+            "placeholderWithCount": "{count} यूनिट चुनी गई",
+            "noUnits": "चुने गए कोर्स के लिए कोई यूनिट उपलब्ध नहीं है"
+          },
+          "trainer": {
+            "label": "5. ट्रेनर चुनें",
+            "noneOption": "कोई नहीं",
+            "loading": "ट्रेनर लोड हो रहे हैं..."
+          },
+          "type": {
+            "label": "6. क्या यह जॉब पर था?",
+            "placeholder": "जॉब प्रकार चुनें",
+            "options": {
+              "notApplicable": "लागू नहीं",
+              "on": "जॉब पर",
+              "off": "जॉब से बाहर"
+            }
+          },
+          "spendTime": {
+            "label": "7. गतिविधि पर लगा समय"
+          },
+          "startTime": {
+            "label": "8. गतिविधि शुरू होने का समय"
+          },
+          "endTime": {
+            "label": "9. गतिविधि समाप्त होने का समय"
+          },
+          "impact": {
+            "label": "10. इस गतिविधि का आपके सीखने पर क्या प्रभाव पड़ा?",
+            "placeholder": "कृपया प्रभाव संबंधी नोट्स टाइप करें।"
+          },
+          "evidence": {
+            "label": "11. एविडेंस लिंक",
+            "placeholder": "एविडेंस लिंक दर्ज करें"
+          }
+        },
+        "buttons": {
+          "cancel": "रद्द करें",
+          "saveCreate": "टाइम लॉग सहेजें",
+          "saveUpdate": "टाइम लॉग अपडेट करें",
+          "loadingCreate": "बना रहा है...",
+          "loadingUpdate": "अपडेट हो रहा है..."
+        },
+        "validation": {
+          "activityDateRequired": "गतिविधि की तारीख आवश्यक है",
+          "activityTypeRequired": "गतिविधि प्रकार आवश्यक है",
+          "jobTypeRequired": "जॉब प्रकार आवश्यक है",
+          "timeSpentRequired": "समय दर्ज करना आवश्यक है",
+          "startTimeRequired": "शुरू होने का समय आवश्यक है",
+          "endTimeRequired": "समाप्त होने का समय आवश्यक है",
+          "impactRequired": "लर्नर पर प्रभाव आवश्यक है"
+        }
+      },
+      "delete": {
+        "title": "टाइम लॉग हटाएँ?",
+        "description": "इस टाइम लॉग को हटाने पर इससे जुड़ा सारा डेटा और संबंध भी हट जाएंगे। क्या आप वाकई हटाना चाहते हैं?",
+        "buttons": {
+          "cancel": "रद्द करें",
+          "confirm": "टाइम लॉग हटाएँ"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "टाइम लॉग सफलतापूर्वक बनाया गया",
+      "updateSuccess": "टाइम लॉग सफलतापूर्वक अपडेट किया गया",
+      "deleteSuccess": "टाइम लॉग सफलतापूर्वक हटाया गया",
+      "createFailed": "टाइम लॉग बनाने में विफल",
+      "updateFailed": "टाइम लॉग अपडेट करने में विफल",
+      "deleteFailed": "टाइम लॉग हटाने में विफल"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "वर्चुअल ट्रेनिंग सेशन",
+        "faceToFace": "पारंपरिक आमने-सामने सेशन",
+        "trainerLed": "ट्रेनर या असेसर द्वारा संचालित ट्रेनिंग",
+        "eLearning": "इलेक्ट्रॉनिक या डिस्टेंस लर्निंग, या स्वयं अध्ययन",
+        "coaching": "कोचिंग या मेंटरिंग",
+        "guidedLearning": "निर्देशित सीखना (कोई ट्रेनर/असेसर उपस्थित नहीं)",
+        "technicalExperience": "अपना काम करके तकनीकी अनुभव प्राप्त करना",
+        "reviewSupport": "रिव्यू/फीडबैक/सपोर्ट",
+        "assessment": "आकलन या परीक्षा",
+        "other": "अन्य",
+        "furloughed": "फरलो (Furloughed)"
+      }
+    }
+  },
   "evidenceLibrary": {
     "pageTitle": "साक्ष्य लाइब्रेरी",
     "pageSubtitle": "अपने साक्ष्य फ़ाइलों को प्रबंधित करें और व्यवस्थित करें",

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface TimeLogSummaryCardsProps {
   thisWeek?: string; // Format: "HH:MM"
   thisMonth?: string; // Format: "HH:MM"
@@ -11,6 +13,8 @@ export function TimeLogSummaryCards({
   thisMonth = "0:0",
   total = "0:0",
 }: TimeLogSummaryCardsProps) {
+  const t = useTranslations("timeLog");
+
   const formatTime = (time: string) => {
     const [hours, minutes] = time.split(":");
     return { hours: hours || "0", minutes: minutes || "0" };
@@ -24,7 +28,9 @@ export function TimeLogSummaryCards({
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
       <div className="rounded-lg border border-border bg-card">
         <div className="p-3 bg-muted border-b">
-          <h4 className="text-sm font-light">This Week:</h4>
+          <h4 className="text-sm font-light">
+            {t("summaryCards.thisWeek")}
+          </h4>
         </div>
         <div className="p-5">
           <div className="flex items-baseline gap-2">
@@ -36,7 +42,9 @@ export function TimeLogSummaryCards({
 
       <div className="rounded-lg border border-border bg-card">
         <div className="p-3 bg-muted border-b">
-          <h4 className="text-sm font-light">This Month:</h4>
+          <h4 className="text-sm font-light">
+            {t("summaryCards.thisMonth")}
+          </h4>
         </div>
         <div className="p-5">
           <div className="flex items-baseline gap-2">
@@ -48,7 +56,9 @@ export function TimeLogSummaryCards({
 
       <div className="rounded-lg border border-border bg-card">
         <div className="p-3 bg-muted border-b">
-          <h4 className="text-sm font-light">Total:</h4>
+          <h4 className="text-sm font-light">
+            {t("summaryCards.total")}
+          </h4>
         </div>
         <div className="p-5">
           <div className="flex items-baseline gap-2">

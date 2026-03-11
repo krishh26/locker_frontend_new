@@ -4386,6 +4386,181 @@
     "item": "عنصر",
     "items": "عناصر"
   },
+  "timeLog": {
+    "page": {
+      "title": "سجل الوقت",
+      "subtitle": "عرض سجل الوقت الإلكتروني لجميع الدورات والأنشطة العامة"
+    },
+    "filters": {
+      "course": {
+        "label": "اختر الدورة",
+        "all": "جميع الدورات"
+      },
+      "jobType": {
+        "label": "اختر نوع التدريب",
+        "options": {
+          "all": "الكل",
+          "notApplicable": "غير مطبق",
+          "onTheJob": "أثناء العمل",
+          "offTheJob": "خارج العمل"
+        }
+      },
+      "approved": {
+        "label": "تمت الموافقة من المقيم",
+        "options": {
+          "all": "الكل",
+          "approved": "مقبول",
+          "notApproved": "غير مقبول"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر",
+      "total": "الإجمالي",
+      "hoursLabel": "{hours} ساعة"
+    },
+    "recentActivity": {
+      "title": "الأنشطة الحديثة",
+      "empty": "لم يتم العثور على أنشطة حديثة."
+    },
+    "table": {
+      "loading": "جارٍ تحميل سجلات الوقت...",
+      "empty": "لم يتم العثور على أي سجلات وقت.",
+      "columns": {
+        "activityType": "نوع النشاط",
+        "courseUnit": "الدورة / الوحدة",
+        "trainer": "المدرب",
+        "timeSpent": "الوقت المستغرق",
+        "startTime": "وقت بدء النشاط",
+        "onOffJob": "تدريب أثناء/خارج العمل",
+        "approved": "الموافقة",
+        "comment": "التعليق",
+        "date": "التاريخ",
+        "actions": "إجراء"
+      },
+      "labels": {
+        "assessor": "المقيم",
+        "approved": "مقبول",
+        "notApproved": "غير مقبول"
+      }
+    },
+    "actions": {
+      "addButton": "إضافة سجل وقت جديد",
+      "columnVisibilityLabel": "إظهار/إخفاء الأعمدة",
+      "columnsButton": "الأعمدة"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "إضافة نشاط",
+          "edit": "تعديل سجل الوقت"
+        },
+        "description": {
+          "create": "املأ التفاصيل لإنشاء سجل وقت جديد.",
+          "edit": "حدّث تفاصيل سجل الوقت."
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. اختر تاريخ النشاط"
+          },
+          "activityType": {
+            "label": "2. اختر نوع النشاط",
+            "placeholder": "اختر نوع النشاط"
+          },
+          "course": {
+            "label": "3. اختر الدورة",
+            "noneOption": "لا يوجد",
+            "loading": "جارٍ تحميل الدورات..."
+          },
+          "unit": {
+            "label": "4. اختر الوحدة",
+            "placeholderDefault": "اختر الوحدة/الوحدات",
+            "placeholderWithCount": "{count} وحدة محددة",
+            "noUnits": "لا توجد وحدات متاحة للدورة المحددة"
+          },
+          "trainer": {
+            "label": "5. اختر المدرب",
+            "noneOption": "لا يوجد",
+            "loading": "جارٍ تحميل المدربين..."
+          },
+          "type": {
+            "label": "6. هل كان أثناء العمل؟",
+            "placeholder": "اختر نوع العمل",
+            "options": {
+              "notApplicable": "غير مطبق",
+              "on": "أثناء العمل",
+              "off": "خارج العمل"
+            }
+          },
+          "spendTime": {
+            "label": "7. الوقت المستغرق في النشاط"
+          },
+          "startTime": {
+            "label": "8. وقت بدء النشاط"
+          },
+          "endTime": {
+            "label": "9. وقت انتهاء النشاط"
+          },
+          "impact": {
+            "label": "10. ما تأثير هذا النشاط على تعلمك؟",
+            "placeholder": "يرجى كتابة أي ملاحظات عن التأثير."
+          },
+          "evidence": {
+            "label": "11. روابط الأدلة",
+            "placeholder": "أدخل رابط الدليل"
+          }
+        },
+        "buttons": {
+          "cancel": "إلغاء",
+          "saveCreate": "حفظ سجل الوقت",
+          "saveUpdate": "تحديث سجل الوقت",
+          "loadingCreate": "جارٍ الإنشاء...",
+          "loadingUpdate": "جارٍ التحديث..."
+        },
+        "validation": {
+          "activityDateRequired": "تاريخ النشاط مطلوب",
+          "activityTypeRequired": "نوع النشاط مطلوب",
+          "jobTypeRequired": "نوع العمل مطلوب",
+          "timeSpentRequired": "الوقت المستغرق مطلوب",
+          "startTimeRequired": "وقت البدء مطلوب",
+          "endTimeRequired": "وقت الانتهاء مطلوب",
+          "impactRequired": "تأثير النشاط على المتعلم مطلوب"
+        }
+      },
+      "delete": {
+        "title": "حذف سجل الوقت؟",
+        "description": "سيؤدي حذف سجل الوقت هذا إلى إزالة جميع البيانات والارتباطات ذات الصلة. هل تريد المتابعة؟",
+        "buttons": {
+          "cancel": "إلغاء",
+          "confirm": "حذف سجل الوقت"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء سجل الوقت بنجاح",
+      "updateSuccess": "تم تحديث سجل الوقت بنجاح",
+      "deleteSuccess": "تم حذف سجل الوقت بنجاح",
+      "createFailed": "فشل إنشاء سجل الوقت",
+      "updateFailed": "فشل تحديث سجل الوقت",
+      "deleteFailed": "فشل حذف سجل الوقت"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "جلسة تدريب افتراضية",
+        "faceToFace": "جلسة تدريب وجاهية تقليدية",
+        "trainerLed": "تدريب يقوده المدرب أو المقيم",
+        "eLearning": "تعلم إلكتروني أو عن بعد أو تعلم ذاتي",
+        "coaching": "تدريب أو إرشاد (Coaching/Mentoring)",
+        "guidedLearning": "تعلم موجه بدون وجود مدرب/مقيم",
+        "technicalExperience": "اكتساب خبرة تقنية من خلال أداء عملي",
+        "reviewSupport": "مراجعة/تغذية راجعة/دعم",
+        "assessment": "تقييم أو امتحان",
+        "other": "أخرى",
+        "furloughed": "مجاز/موقوف مؤقتاً (Furloughed)"
+      }
+    }
+  },
   "evidenceLibrary": {
     "pageTitle": "مكتبة الأدلة",
     "pageSubtitle": "إدارة وتنظيم ملفات الأدلة الخاصة بك",

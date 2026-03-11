@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTranslations } from "next-intl";
 
 interface RecentActivity {
   activity_type: string;
@@ -26,6 +27,8 @@ interface RecentActivitySectionProps {
 export function RecentActivitySection({
   activities,
 }: RecentActivitySectionProps) {
+  const t = useTranslations("timeLog");
+
   const formatDate = (dateString: string) => {
     try {
       return format(new Date(dateString), "MMM dd, yyyy");
@@ -56,7 +59,9 @@ export function RecentActivitySection({
       <div className="rounded-t-lg border border-b-0 bg-primary p-4">
         <div className="flex items-center gap-3">
           <Calendar className="h-6 w-6 text-white" />
-          <h3 className="text-xl font-semibold text-white">Recent Activity</h3>
+          <h3 className="text-xl font-semibold text-white">
+            {t("recentActivity.title")}
+          </h3>
         </div>
       </div>
 
@@ -67,12 +72,20 @@ export function RecentActivitySection({
             <Table>
               <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="font-semibold">Activity Type</TableHead>
                   <TableHead className="font-semibold">
-                    On/Off the Job Training
+                    {t("table.columns.activityType")}
                   </TableHead>
-                  <TableHead className="font-semibold">Time Taken</TableHead>
-                  <TableHead className="font-semibold">Date</TableHead>
+                  <TableHead className="font-semibold">
+                    {t("table.columns.onOffJob")}
+                  </TableHead>
+                  <TableHead className="font-semibold">
+                    {t("recentActivity.timeTakenLabel", {
+                      default: "Time Taken",
+                    })}
+                  </TableHead>
+                  <TableHead className="font-semibold">
+                    {t("table.columns.date")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -95,7 +108,10 @@ export function RecentActivitySection({
                           (() => {
                             const badgeProps = getJobTypeBadgeProps(activity.type);
                             return (
-                              <Badge variant={badgeProps.variant} className={badgeProps.className}>
+                              <Badge
+                                variant={badgeProps.variant}
+                                className={badgeProps.className}
+                              >
                                 {activity.type}
                               </Badge>
                             );
@@ -124,7 +140,7 @@ export function RecentActivitySection({
                   <TableRow>
                     <TableCell colSpan={4} className="text-center py-8">
                       <span className="text-muted-foreground">
-                        No recent activity found
+                        {t("recentActivity.empty")}
                       </span>
                     </TableCell>
                   </TableRow>

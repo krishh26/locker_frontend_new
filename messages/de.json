@@ -3630,6 +3630,181 @@
     "item": "Element",
     "items": "Elemente"
   },
+  "timeLog": {
+    "page": {
+      "title": "Zeitprotokoll",
+      "subtitle": "E-Zeitprotokoll für alle Kurse und allgemeinen Aktivitäten anzeigen"
+    },
+    "filters": {
+      "course": {
+        "label": "Kurs auswählen",
+        "all": "Alle Kurse"
+      },
+      "jobType": {
+        "label": "Art der Schulung auswählen",
+        "options": {
+          "all": "Alle",
+          "notApplicable": "Nicht zutreffend",
+          "onTheJob": "Am Arbeitsplatz",
+          "offTheJob": "Außerhalb des Arbeitsplatzes"
+        }
+      },
+      "approved": {
+        "label": "Von Prüfer genehmigt",
+        "options": {
+          "all": "Alle",
+          "approved": "Genehmigt",
+          "notApproved": "Nicht genehmigt"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "Diese Woche",
+      "thisMonth": "Dieser Monat",
+      "total": "Gesamt",
+      "hoursLabel": "{hours} Stunden"
+    },
+    "recentActivity": {
+      "title": "Aktuelle Aktivitäten",
+      "empty": "Keine aktuellen Aktivitäten gefunden."
+    },
+    "table": {
+      "loading": "Zeitprotokolle werden geladen...",
+      "empty": "Keine Zeitprotokolleinträge gefunden.",
+      "columns": {
+        "activityType": "Aktivitätstyp",
+        "courseUnit": "Kurs / Einheit",
+        "trainer": "Trainer",
+        "timeSpent": "Aufgewendete Zeit",
+        "startTime": "Startzeit der Aktivität",
+        "onOffJob": "Schulung am/außerhalb Arbeitsplatz",
+        "approved": "Genehmigt",
+        "comment": "Kommentar",
+        "date": "Datum",
+        "actions": "Aktion"
+      },
+      "labels": {
+        "assessor": "Prüfer",
+        "approved": "Genehmigt",
+        "notApproved": "Nicht genehmigt"
+      }
+    },
+    "actions": {
+      "addButton": "Neuen Zeitprotokoll-Eintrag hinzufügen",
+      "columnVisibilityLabel": "Spaltensichtbarkeit",
+      "columnsButton": "Spalten"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "Aktivität hinzufügen",
+          "edit": "Zeitprotokoll bearbeiten"
+        },
+        "description": {
+          "create": "Füllen Sie die Details aus, um einen neuen Zeitprotokolleintrag zu erstellen.",
+          "edit": "Aktualisieren Sie die Details des Zeitprotokolleintrags."
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. Aktivitätsdatum auswählen"
+          },
+          "activityType": {
+            "label": "2. Aktivitätstyp auswählen",
+            "placeholder": "Aktivitätstyp auswählen"
+          },
+          "course": {
+            "label": "3. Kurs auswählen",
+            "noneOption": "Keiner",
+            "loading": "Kurse werden geladen..."
+          },
+          "unit": {
+            "label": "4. Einheit auswählen",
+            "placeholderDefault": "Einheit(en) auswählen",
+            "placeholderWithCount": "{count} Einheit(en) ausgewählt",
+            "noUnits": "Für den ausgewählten Kurs sind keine Einheiten verfügbar"
+          },
+          "trainer": {
+            "label": "5. Trainer auswählen",
+            "noneOption": "Keiner",
+            "loading": "Trainer werden geladen..."
+          },
+          "type": {
+            "label": "6. War es am Arbeitsplatz?",
+            "placeholder": "Art der Tätigkeit auswählen",
+            "options": {
+              "notApplicable": "Nicht zutreffend",
+              "on": "Am Arbeitsplatz",
+              "off": "Außerhalb des Arbeitsplatzes"
+            }
+          },
+          "spendTime": {
+            "label": "7. Für die Aktivität aufgewendete Zeit"
+          },
+          "startTime": {
+            "label": "8. Startzeit der Aktivität"
+          },
+          "endTime": {
+            "label": "9. Endzeit der Aktivität"
+          },
+          "impact": {
+            "label": "10. Wie hat diese Aktivität Ihr Lernen beeinflusst?",
+            "placeholder": "Bitte geben Sie Hinweise zur Auswirkung ein."
+          },
+          "evidence": {
+            "label": "11. Nachweis-Links",
+            "placeholder": "Nachweis-Link eingeben"
+          }
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "saveCreate": "Zeitprotokoll speichern",
+          "saveUpdate": "Zeitprotokoll aktualisieren",
+          "loadingCreate": "Wird erstellt...",
+          "loadingUpdate": "Wird aktualisiert..."
+        },
+        "validation": {
+          "activityDateRequired": "Aktivitätsdatum ist erforderlich",
+          "activityTypeRequired": "Aktivitätstyp ist erforderlich",
+          "jobTypeRequired": "Art der Tätigkeit ist erforderlich",
+          "timeSpentRequired": "Aufgewendete Zeit ist erforderlich",
+          "startTimeRequired": "Startzeit ist erforderlich",
+          "endTimeRequired": "Endzeit ist erforderlich",
+          "impactRequired": "Auswirkung auf den Lerner ist erforderlich"
+        }
+      },
+      "delete": {
+        "title": "Zeitprotokoll löschen?",
+        "description": "Wenn Sie dieses Zeitprotokoll löschen, werden auch alle zugehörigen Daten und Verknüpfungen entfernt. Möchten Sie mit dem Löschen fortfahren?",
+        "buttons": {
+          "cancel": "Abbrechen",
+          "confirm": "Zeitprotokoll löschen"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "Zeitprotokoll erfolgreich erstellt",
+      "updateSuccess": "Zeitprotokoll erfolgreich aktualisiert",
+      "deleteSuccess": "Zeitprotokoll erfolgreich gelöscht",
+      "createFailed": "Erstellen des Zeitprotokolls fehlgeschlagen",
+      "updateFailed": "Aktualisieren des Zeitprotokolls fehlgeschlagen",
+      "deleteFailed": "Löschen des Zeitprotokolls fehlgeschlagen"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "Virtuelle Schulungssitzung",
+        "faceToFace": "Klassische Präsenzschulung",
+        "trainerLed": "Trainer- oder Prüfer-geführte Schulung",
+        "eLearning": "Elektronisches Lernen, Fernlernen oder Selbststudium",
+        "coaching": "Coaching oder Mentoring",
+        "guidedLearning": "Geführtes Lernen ohne Trainer/Prüfer vor Ort",
+        "technicalExperience": "Technische Erfahrung durch Ausübung der Arbeit",
+        "reviewSupport": "Überprüfung/Feedback/Unterstützung",
+        "assessment": "Bewertung oder Prüfung",
+        "other": "Sonstiges",
+        "furloughed": "Beurlaubt"
+      }
+    }
+  },
   "evidenceLibrary": {
     "pageTitle": "Evidenzbibliothek",
     "pageSubtitle": "Verwalten und organisieren Sie Ihre Evidenzdateien",

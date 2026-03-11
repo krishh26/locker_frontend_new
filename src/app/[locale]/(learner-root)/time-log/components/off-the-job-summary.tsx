@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import { useGetOtjSummaryQuery } from "@/store/api/time-log/timeLogApi";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 interface OffTheJobSummaryProps {
   courseId?: string | number | null;
@@ -28,6 +29,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
   const user = useAppSelector((state) => state.auth.user);
   const learnerId =
     (user as { learner_id?: string })?.learner_id || user?.id || "";
+  const t = useTranslations("timeLog");
 
   const { data: summaryResponse, isLoading } = useGetOtjSummaryQuery(
     {
@@ -59,7 +61,9 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading summary...</div>
+        <div className="text-muted-foreground">
+          {t("offTheJob.loading")}
+        </div>
       </div>
     );
   }
@@ -91,7 +95,9 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
     <div className="w-full mb-8 space-y-6">
       {/* Header Card */}
       <div className="rounded-t-lg border border-b-0 bg-primary p-4">
-        <h3 className="text-2xl font-semibold text-white">Off the Job Summary</h3>
+        <h3 className="text-2xl font-semibold text-white">
+          {t("offTheJob.title")}
+        </h3>
       </div>
 
       {/* Main Content Card */}
@@ -99,35 +105,40 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
         <div className="p-6 space-y-6">
           {/* Summary Section */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Summary</h4>
+            <h4 className="text-xl font-semibold mb-4">
+              {t("offTheJob.summarySection.title")}
+            </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {/* Duration Card */}
               <Card className="p-4 border-l-4 border-l-white bg-primary">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-white/70">Duration</span>
+                  <span className="text-sm text-white/70">
+                    {t("offTheJob.summarySection.duration.label")}
+                  </span>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
                         <Info className="h-5 w-5 text-white cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
-                        <p>
-                          Calculated from earliest course start date to latest
-                          course end date. Statutory leave has been deducted from
-                          the total duration.
-                        </p>
+                        <p>{t("offTheJob.summarySection.duration.tooltip")}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                <p className="text-lg font-semibold text-white">{formattedDuration} weeks</p>
+                <p className="text-lg font-semibold text-white">
+                  {formattedDuration}{" "}
+                  {t("offTheJob.summarySection.duration.units", {
+                    default: "weeks",
+                  })}
+                </p>
               </Card>
 
               {/* Contracted Work Hours Card */}
               <Card className="p-4 border-l-4 border-l-white bg-secondary">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-white/70">
-                    Contracted Work Hours
+                    {t("offTheJob.summarySection.contractedHours.label")}
                   </span>
                   <TooltipProvider>
                     <Tooltip>
@@ -136,8 +147,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p>
-                          Contracted work hours per week are not set. Please
-                          configure this in the Contract Work Hours section.
+                          {t("offTheJob.summarySection.contractedHours.tooltip")}
                         </p>
                       </TooltipContent>
                     </Tooltip>
@@ -150,7 +160,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               <Card className="p-4 border-l-4 border-l-white bg-primary">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-white/70">
-                    Holiday Entitlement
+                    {t("offTheJob.summarySection.holiday.label")}
                   </span>
                   <TooltipProvider>
                     <Tooltip>
@@ -158,10 +168,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                         <Info className="h-5 w-5 text-white cursor-help" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
-                        <p>
-                          Holiday entitlement is not set. Please configure this
-                          in the Contract Work Hours section.
-                        </p>
+                        <p>{t("offTheJob.summarySection.holiday.tooltip")}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -173,12 +180,14 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               <Card className="p-4 border-l-4 border-l-white bg-accent">
                 <div className="mb-2">
                   <span className="text-sm text-white/70">
-                    Off the Job Hours Required
+                    {t("offTheJob.summarySection.required.label")}
                   </span>
                 </div>
                 <p className="text-lg font-semibold text-white">
                   {summaryData.otjRequired !== undefined
-                    ? `${summaryData.otjRequired.toFixed(0)} hours`
+                    ? `${summaryData.otjRequired.toFixed(0)} ${t(
+                        "offTheJob.common.hours"
+                      )}`
                     : "N/A"}
                 </p>
               </Card>
@@ -187,12 +196,14 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
               <Card className="p-4 border-l-4 border-l-white bg-secondary">
                 <div className="mb-2">
                   <span className="text-sm text-white/70">
-                    Required to Date
+                    {t("offTheJob.summarySection.requiredToDate.label")}
                   </span>
                 </div>
                 <p className="text-lg font-semibold text-white">
                   {summaryData.requiredToDate !== undefined
-                    ? `${summaryData.requiredToDate.toFixed(0)} hours`
+                    ? `${summaryData.requiredToDate.toFixed(0)} ${t(
+                        "offTheJob.common.hours"
+                      )}`
                     : "N/A"}
                 </p>
               </Card>
@@ -206,7 +217,9 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-white mt-0.5" />
                   <div className="flex-1">
-                    <h5 className="text-lg font-semibold mb-2 text-white">Warnings</h5>
+                    <h5 className="text-lg font-semibold mb-2 text-white">
+                      {t("offTheJob.warnings.title")}
+                    </h5>
                     <ul className="list-disc list-inside space-y-1">
                       {summaryData.warnings.map((warning, index) => (
                         <li key={index} className="text-sm text-white/90">
@@ -222,19 +235,23 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
 
           {/* Actual Hours Section */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Actual Hours To Date</h4>
+            <h4 className="text-xl font-semibold mb-4">
+              {t("offTheJob.actualHours.title")}
+            </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {/* Total Logged Hours Card */}
               <Card className="p-5 bg-primary border-primary">
                 <div className="flex items-center gap-2 mb-3">
                   <Clock className="h-5 w-5 text-white" />
                   <span className="text-sm font-medium text-white/70">
-                    Total Logged Hours
+                    {t("offTheJob.actualHours.totalLogged.label")}
                   </span>
                 </div>
                 <p className="text-xl font-bold text-white mb-1">
                   {summaryData.totalLoggedHours !== undefined
-                    ? `${summaryData.totalLoggedHours.toFixed(2)} hours`
+                    ? `${summaryData.totalLoggedHours.toFixed(2)} ${t(
+                        "offTheJob.common.hours"
+                      )}`
                     : "N/A"}
                 </p>
                 {summaryData.totalLoggedHours !== undefined && (
@@ -250,11 +267,12 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <Calendar className="h-5 w-5 text-white" />
                     <span className="text-sm font-medium text-white/70">
-                      Hours This Week
+                      {t("offTheJob.actualHours.thisWeek.label")}
                     </span>
                   </div>
                   <p className="text-xl font-bold text-white mb-1">
-                    {summaryData.hoursThisWeek.toFixed(2)} hours
+                    {summaryData.hoursThisWeek.toFixed(2)}{" "}
+                    {t("offTheJob.common.hours")}
                   </p>
                   <p className="text-xs text-white/70">
                     ({formatHoursToTime(summaryData.hoursThisWeek)})
@@ -268,11 +286,12 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <Calendar className="h-5 w-5 text-white" />
                     <span className="text-sm font-medium text-white/70">
-                      Hours This Month
+                      {t("offTheJob.actualHours.thisMonth.label")}
                     </span>
                   </div>
                   <p className="text-xl font-bold text-white mb-1">
-                    {summaryData.hoursThisMonth.toFixed(2)} hours
+                    {summaryData.hoursThisMonth.toFixed(2)}{" "}
+                    {t("offTheJob.common.hours")}
                   </p>
                   <p className="text-xs text-white/70">
                     ({formatHoursToTime(summaryData.hoursThisMonth)})
@@ -285,7 +304,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="h-5 w-5 text-white" />
                   <span className="text-sm font-medium text-white/70">
-                    Percentage To Date
+                    {t("offTheJob.actualHours.percentage.label")}
                   </span>
                   {actualPercentage === null && (
                     <TooltipProvider>
@@ -295,10 +314,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs">
                           <p>
-                            Percentage cannot be calculated because there are no
-                            required hours to date. This may occur if the
-                            apprenticeship has not started yet or if there is
-                            insufficient data.
+                            {t("offTheJob.actualHours.percentage.tooltip")}
                           </p>
                         </TooltipContent>
                       </Tooltip>
@@ -317,17 +333,23 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
             summaryData.courseSummaries.length > 0 && (
               <div>
                 <h4 className="text-xl font-semibold mb-4">
-                  Course List and Summary
+                  {t("offTheJob.courses.title")}
                 </h4>
                 <Card className="rounded-md border overflow-hidden">
                   <Table>
                     <TableHeader className="bg-muted/50">
                       <TableRow>
-                        <TableHead className="font-semibold">Course</TableHead>
-                        <TableHead className="font-semibold">Type</TableHead>
-                        <TableHead className="font-semibold">Status</TableHead>
                         <TableHead className="font-semibold">
-                          Off the Job Hours
+                          {t("offTheJob.courses.columns.course")}
+                        </TableHead>
+                        <TableHead className="font-semibold">
+                          {t("offTheJob.courses.columns.type")}
+                        </TableHead>
+                        <TableHead className="font-semibold">
+                          {t("offTheJob.courses.columns.status")}
+                        </TableHead>
+                        <TableHead className="font-semibold">
+                          {t("offTheJob.courses.columns.offTheJobHours")}
                         </TableHead>
                       </TableRow>
                     </TableHeader>

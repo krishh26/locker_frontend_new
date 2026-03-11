@@ -2650,6 +2650,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "Risorse",
+      "subtitle": "Gestisci risorse e materiali di apprendimento"
+    },
+    "table": {
+      "columns": {
+        "name": "Nome",
+        "description": "Descrizione",
+        "glh": "GLH",
+        "jobType": "Tipo di lavoro",
+        "resourceType": "Tipo di risorsa",
+        "actions": "Azioni"
+      },
+      "searchPlaceholder": "Cerca risorse...",
+      "filters": {
+        "jobType": {
+          "label": "Tipo di lavoro",
+          "placeholder": "Seleziona tipo di lavoro"
+        },
+        "resourceType": {
+          "label": "Tipo di risorsa",
+          "placeholder": "Seleziona tipo di risorsa",
+          "allTypes": "Tutti i tipi"
+        }
+      },
+      "buttons": {
+        "addResource": "Aggiungi risorsa",
+        "view": "Visualizza",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "download": "Scarica"
+      },
+      "menu": {
+        "view": "Visualizza",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "download": "Scarica",
+        "columns": "Colonne"
+      },
+      "states": {
+        "loading": "Caricamento risorse...",
+        "noResults": "Nessun risultato.",
+        "empty": "Nessuna risorsa trovata."
+      },
+      "confirm": {
+        "deleteTitle": "Sei sicuro di voler eliminare questa risorsa?",
+        "deleteBody": "Questa azione non può essere annullata."
+      },
+      "toast": {
+        "deleted": "Risorsa eliminata con successo",
+        "deleteFailed": "Impossibile eliminare la risorsa",
+        "exportCsvFailed": "Impossibile esportare CSV",
+        "exportPdfFailed": "Impossibile esportare PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Crea nuova risorsa",
+        "edit": "Modifica risorsa"
+      },
+      "description": {
+        "create": "Carica una nuova risorsa di apprendimento. Fai clic su Salva quando hai finito.",
+        "edit": "Aggiorna i dettagli della risorsa. Fai clic su Salva quando hai finito."
+      },
+      "fields": {
+        "course": "Corso",
+        "file": "File",
+        "name": "Nome",
+        "description": "Descrizione",
+        "jobType": "Tipo di lavoro",
+        "resourceType": "Tipo di risorsa",
+        "hours": "Ore",
+        "minutes": "Minuti"
+      },
+      "placeholders": {
+        "selectCourse": "Seleziona corso",
+        "noCourses": "Nessun corso disponibile",
+        "description": "Inserisci descrizione (opzionale)",
+        "jobType": "Seleziona tipo di lavoro",
+        "resourceType": "Seleziona tipo di risorsa"
+      },
+      "helper": {
+        "currentFilePrefix": "File corrente:",
+        "viewFile": "Visualizza file",
+        "maxFileSize": "Dimensione massima file: 10MB",
+        "nameAuto": "Il nome viene impostato automaticamente dal file caricato"
+      },
+      "buttons": {
+        "save": "Salva",
+        "saving": "Salvataggio...",
+        "cancel": "Annulla"
+      },
+      "toast": {
+        "created": "Risorsa creata con successo",
+        "updated": "Risorsa aggiornata con successo",
+        "createFailed": "Impossibile creare la risorsa",
+        "updateFailed": "Impossibile aggiornare la risorsa"
+      },
+      "validation": {
+        "selectCourse": "Seleziona un corso.",
+        "nameRequired": "Il nome è obbligatorio.",
+        "uploadFile": "Carica un file.",
+        "fileTooLarge": "La dimensione del file deve essere inferiore a 10MB.",
+        "hoursMin": "Le ore devono essere 0 o superiori",
+        "hoursMax": "Le ore devono essere inferiori a 24",
+        "minutesMin": "I minuti devono essere 0 o superiori",
+        "minutesMax": "I minuti devono essere inferiori a 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "On",
+        "off": "Off"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Testo",
+        "image": "Immagine"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} h {minutes} min"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configurazione settimane di revisione predefinite",
     "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",

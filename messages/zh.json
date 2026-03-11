@@ -3250,6 +3250,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "资源",
+      "subtitle": "管理学习资源与材料"
+    },
+    "table": {
+      "columns": {
+        "name": "名称",
+        "description": "描述",
+        "glh": "GLH",
+        "jobType": "岗位类型",
+        "resourceType": "资源类型",
+        "actions": "操作"
+      },
+      "searchPlaceholder": "搜索资源...",
+      "filters": {
+        "jobType": {
+          "label": "岗位类型",
+          "placeholder": "选择岗位类型"
+        },
+        "resourceType": {
+          "label": "资源类型",
+          "placeholder": "选择资源类型",
+          "allTypes": "全部类型"
+        }
+      },
+      "buttons": {
+        "addResource": "新增资源",
+        "view": "查看",
+        "edit": "编辑",
+        "delete": "删除",
+        "download": "下载"
+      },
+      "menu": {
+        "view": "查看",
+        "edit": "编辑",
+        "delete": "删除",
+        "download": "下载",
+        "columns": "列"
+      },
+      "states": {
+        "loading": "正在加载资源...",
+        "noResults": "无结果。",
+        "empty": "未找到资源。"
+      },
+      "confirm": {
+        "deleteTitle": "确定要删除该资源吗？",
+        "deleteBody": "此操作无法撤销。"
+      },
+      "toast": {
+        "deleted": "资源删除成功",
+        "deleteFailed": "资源删除失败",
+        "exportCsvFailed": "导出 CSV 失败",
+        "exportPdfFailed": "导出 PDF 失败"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "创建新资源",
+        "edit": "编辑资源"
+      },
+      "description": {
+        "create": "上传新的学习资源。完成后点击保存。",
+        "edit": "更新资源详情。完成后点击保存。"
+      },
+      "fields": {
+        "course": "课程",
+        "file": "文件",
+        "name": "名称",
+        "description": "描述",
+        "jobType": "岗位类型",
+        "resourceType": "资源类型",
+        "hours": "小时",
+        "minutes": "分钟"
+      },
+      "placeholders": {
+        "selectCourse": "选择课程",
+        "noCourses": "暂无可用课程",
+        "description": "输入描述（可选）",
+        "jobType": "选择岗位类型",
+        "resourceType": "选择资源类型"
+      },
+      "helper": {
+        "currentFilePrefix": "当前文件：",
+        "viewFile": "查看文件",
+        "maxFileSize": "最大文件大小：10MB",
+        "nameAuto": "名称会根据上传的文件自动设置"
+      },
+      "buttons": {
+        "save": "保存",
+        "saving": "保存中...",
+        "cancel": "取消"
+      },
+      "toast": {
+        "created": "资源创建成功",
+        "updated": "资源更新成功",
+        "createFailed": "资源创建失败",
+        "updateFailed": "资源更新失败"
+      },
+      "validation": {
+        "selectCourse": "请选择课程。",
+        "nameRequired": "名称为必填项。",
+        "uploadFile": "请上传文件。",
+        "fileTooLarge": "文件大小必须小于 10MB。",
+        "hoursMin": "小时必须大于或等于 0",
+        "hoursMax": "小时必须小于 24",
+        "minutesMin": "分钟必须大于或等于 0",
+        "minutesMax": "分钟必须小于 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "开启",
+        "off": "关闭"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "文本",
+        "image": "图片"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours}小时 {minutes}分钟"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

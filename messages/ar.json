@@ -3285,6 +3285,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "الموارد",
+      "subtitle": "إدارة موارد ومواد التعلم"
+    },
+    "table": {
+      "columns": {
+        "name": "الاسم",
+        "description": "الوصف",
+        "glh": "ساعات التعلم الموجّهة (GLH)",
+        "jobType": "نوع الوظيفة",
+        "resourceType": "نوع المورد",
+        "actions": "الإجراءات"
+      },
+      "searchPlaceholder": "ابحث في الموارد...",
+      "filters": {
+        "jobType": {
+          "label": "نوع الوظيفة",
+          "placeholder": "اختر نوع الوظيفة"
+        },
+        "resourceType": {
+          "label": "نوع المورد",
+          "placeholder": "اختر نوع المورد",
+          "allTypes": "جميع الأنواع"
+        }
+      },
+      "buttons": {
+        "addResource": "إضافة مورد",
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "download": "تنزيل"
+      },
+      "menu": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "download": "تنزيل",
+        "columns": "الأعمدة"
+      },
+      "states": {
+        "loading": "جارٍ تحميل الموارد...",
+        "noResults": "لا توجد نتائج.",
+        "empty": "لم يتم العثور على موارد."
+      },
+      "confirm": {
+        "deleteTitle": "هل أنت متأكد أنك تريد حذف هذا المورد؟",
+        "deleteBody": "لا يمكن التراجع عن هذا الإجراء."
+      },
+      "toast": {
+        "deleted": "تم حذف المورد بنجاح",
+        "deleteFailed": "فشل حذف المورد",
+        "exportCsvFailed": "فشل تصدير CSV",
+        "exportPdfFailed": "فشل تصدير PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "إنشاء مورد جديد",
+        "edit": "تعديل المورد"
+      },
+      "description": {
+        "create": "قم بتحميل مورد تعليمي جديد. انقر على حفظ عند الانتهاء.",
+        "edit": "قم بتحديث تفاصيل المورد. انقر على حفظ عند الانتهاء."
+      },
+      "fields": {
+        "course": "الدورة",
+        "file": "الملف",
+        "name": "الاسم",
+        "description": "الوصف",
+        "jobType": "نوع الوظيفة",
+        "resourceType": "نوع المورد",
+        "hours": "الساعات",
+        "minutes": "الدقائق"
+      },
+      "placeholders": {
+        "selectCourse": "اختر دورة",
+        "noCourses": "لا توجد دورات متاحة",
+        "description": "أدخل الوصف (اختياري)",
+        "jobType": "اختر نوع الوظيفة",
+        "resourceType": "اختر نوع المورد"
+      },
+      "helper": {
+        "currentFilePrefix": "الملف الحالي:",
+        "viewFile": "عرض الملف",
+        "maxFileSize": "الحد الأقصى لحجم الملف: 10MB",
+        "nameAuto": "يتم تعيين الاسم تلقائيًا من الملف الذي تم تحميله"
+      },
+      "buttons": {
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ...",
+        "cancel": "إلغاء"
+      },
+      "toast": {
+        "created": "تم إنشاء المورد بنجاح",
+        "updated": "تم تحديث المورد بنجاح",
+        "createFailed": "فشل إنشاء المورد",
+        "updateFailed": "فشل تحديث المورد"
+      },
+      "validation": {
+        "selectCourse": "يرجى اختيار دورة.",
+        "nameRequired": "الاسم مطلوب.",
+        "uploadFile": "يرجى تحميل ملف.",
+        "fileTooLarge": "يجب أن يكون حجم الملف أقل من 10MB.",
+        "hoursMin": "يجب أن تكون الساعات 0 أو أكثر",
+        "hoursMax": "يجب أن تكون الساعات أقل من 24",
+        "minutesMin": "يجب أن تكون الدقائق 0 أو أكثر",
+        "minutesMax": "يجب أن تكون الدقائق أقل من 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "تشغيل",
+        "off": "إيقاف"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "نص",
+        "image": "صورة"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours}س {minutes} د"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "إعدادات أسابيع المراجعة الافتراضية",
     "pageSubtitle": "تكوين إعدادات فترة المراجعة الافتراضية لجميع أنواع المتعلمين الذين لا يملكون فترة مراجعة مخصصة",

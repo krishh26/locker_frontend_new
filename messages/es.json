@@ -3080,6 +3080,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "Recursos",
+      "subtitle": "Gestiona recursos y materiales de aprendizaje"
+    },
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "glh": "GLH",
+        "jobType": "Tipo de trabajo",
+        "resourceType": "Tipo de recurso",
+        "actions": "Acciones"
+      },
+      "searchPlaceholder": "Buscar recursos...",
+      "filters": {
+        "jobType": {
+          "label": "Tipo de trabajo",
+          "placeholder": "Selecciona tipo de trabajo"
+        },
+        "resourceType": {
+          "label": "Tipo de recurso",
+          "placeholder": "Selecciona tipo de recurso",
+          "allTypes": "Todos los tipos"
+        }
+      },
+      "buttons": {
+        "addResource": "Añadir recurso",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Descargar"
+      },
+      "menu": {
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Descargar",
+        "columns": "Columnas"
+      },
+      "states": {
+        "loading": "Cargando recursos...",
+        "noResults": "Sin resultados.",
+        "empty": "No se encontraron recursos."
+      },
+      "confirm": {
+        "deleteTitle": "¿Estás seguro de que quieres eliminar este recurso?",
+        "deleteBody": "Esta acción no se puede deshacer."
+      },
+      "toast": {
+        "deleted": "Recurso eliminado correctamente",
+        "deleteFailed": "No se pudo eliminar el recurso",
+        "exportCsvFailed": "No se pudo exportar CSV",
+        "exportPdfFailed": "No se pudo exportar PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Crear nuevo recurso",
+        "edit": "Editar recurso"
+      },
+      "description": {
+        "create": "Sube un nuevo recurso de aprendizaje. Haz clic en Guardar cuando termines.",
+        "edit": "Actualiza los detalles del recurso. Haz clic en Guardar cuando termines."
+      },
+      "fields": {
+        "course": "Curso",
+        "file": "Archivo",
+        "name": "Nombre",
+        "description": "Descripción",
+        "jobType": "Tipo de trabajo",
+        "resourceType": "Tipo de recurso",
+        "hours": "Horas",
+        "minutes": "Minutos"
+      },
+      "placeholders": {
+        "selectCourse": "Selecciona curso",
+        "noCourses": "No hay cursos disponibles",
+        "description": "Introduce descripción (opcional)",
+        "jobType": "Selecciona tipo de trabajo",
+        "resourceType": "Selecciona tipo de recurso"
+      },
+      "helper": {
+        "currentFilePrefix": "Archivo actual:",
+        "viewFile": "Ver archivo",
+        "maxFileSize": "Tamaño máximo del archivo: 10MB",
+        "nameAuto": "El nombre se establece automáticamente a partir del archivo subido"
+      },
+      "buttons": {
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "cancel": "Cancelar"
+      },
+      "toast": {
+        "created": "Recurso creado correctamente",
+        "updated": "Recurso actualizado correctamente",
+        "createFailed": "No se pudo crear el recurso",
+        "updateFailed": "No se pudo actualizar el recurso"
+      },
+      "validation": {
+        "selectCourse": "Selecciona un curso.",
+        "nameRequired": "El nombre es obligatorio.",
+        "uploadFile": "Sube un archivo.",
+        "fileTooLarge": "El tamaño del archivo debe ser menor de 10MB.",
+        "hoursMin": "Las horas deben ser 0 o más",
+        "hoursMax": "Las horas deben ser menos de 24",
+        "minutesMin": "Los minutos deben ser 0 o más",
+        "minutesMax": "Los minutos deben ser menos de 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "Activado",
+        "off": "Desactivado"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Texto",
+        "image": "Imagen"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} h {minutes} min"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

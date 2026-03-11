@@ -2651,6 +2651,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "Ressourcen",
+      "subtitle": "Lernressourcen und Materialien verwalten"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "glh": "GLH",
+        "jobType": "Jobtyp",
+        "resourceType": "Ressourcentyp",
+        "actions": "Aktionen"
+      },
+      "searchPlaceholder": "Ressourcen durchsuchen...",
+      "filters": {
+        "jobType": {
+          "label": "Jobtyp",
+          "placeholder": "Jobtyp auswählen"
+        },
+        "resourceType": {
+          "label": "Ressourcentyp",
+          "placeholder": "Ressourcentyp auswählen",
+          "allTypes": "Alle Typen"
+        }
+      },
+      "buttons": {
+        "addResource": "Ressource hinzufügen",
+        "view": "Ansehen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "download": "Herunterladen"
+      },
+      "menu": {
+        "view": "Ansehen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "download": "Herunterladen",
+        "columns": "Spalten"
+      },
+      "states": {
+        "loading": "Ressourcen werden geladen...",
+        "noResults": "Keine Ergebnisse.",
+        "empty": "Keine Ressourcen gefunden."
+      },
+      "confirm": {
+        "deleteTitle": "Möchten Sie diese Ressource wirklich löschen?",
+        "deleteBody": "Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "toast": {
+        "deleted": "Ressource erfolgreich gelöscht",
+        "deleteFailed": "Ressource konnte nicht gelöscht werden",
+        "exportCsvFailed": "CSV-Export fehlgeschlagen",
+        "exportPdfFailed": "PDF-Export fehlgeschlagen"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Neue Ressource erstellen",
+        "edit": "Ressource bearbeiten"
+      },
+      "description": {
+        "create": "Laden Sie eine neue Lernressource hoch. Klicken Sie auf „Speichern“, wenn Sie fertig sind.",
+        "edit": "Aktualisieren Sie die Ressourcendetails. Klicken Sie auf „Speichern“, wenn Sie fertig sind."
+      },
+      "fields": {
+        "course": "Kurs",
+        "file": "Datei",
+        "name": "Name",
+        "description": "Beschreibung",
+        "jobType": "Jobtyp",
+        "resourceType": "Ressourcentyp",
+        "hours": "Stunden",
+        "minutes": "Minuten"
+      },
+      "placeholders": {
+        "selectCourse": "Kurs auswählen",
+        "noCourses": "Keine Kurse verfügbar",
+        "description": "Beschreibung eingeben (optional)",
+        "jobType": "Jobtyp auswählen",
+        "resourceType": "Ressourcentyp auswählen"
+      },
+      "helper": {
+        "currentFilePrefix": "Aktuelle Datei:",
+        "viewFile": "Datei ansehen",
+        "maxFileSize": "Maximale Dateigröße: 10MB",
+        "nameAuto": "Der Name wird automatisch aus der hochgeladenen Datei übernommen"
+      },
+      "buttons": {
+        "save": "Speichern",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen"
+      },
+      "toast": {
+        "created": "Ressource erfolgreich erstellt",
+        "updated": "Ressource erfolgreich aktualisiert",
+        "createFailed": "Ressource konnte nicht erstellt werden",
+        "updateFailed": "Ressource konnte nicht aktualisiert werden"
+      },
+      "validation": {
+        "selectCourse": "Bitte wählen Sie einen Kurs aus.",
+        "nameRequired": "Name ist erforderlich.",
+        "uploadFile": "Bitte laden Sie eine Datei hoch.",
+        "fileTooLarge": "Die Dateigröße muss kleiner als 10MB sein.",
+        "hoursMin": "Stunden müssen 0 oder größer sein",
+        "hoursMax": "Stunden müssen weniger als 24 sein",
+        "minutesMin": "Minuten müssen 0 oder größer sein",
+        "minutesMax": "Minuten müssen weniger als 60 sein"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "An",
+        "off": "Aus"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Text",
+        "image": "Bild"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} Std. {minutes} Min."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

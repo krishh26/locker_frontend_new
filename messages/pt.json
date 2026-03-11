@@ -3292,6 +3292,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "Recursos",
+      "subtitle": "Gerir recursos e materiais de aprendizagem"
+    },
+    "table": {
+      "columns": {
+        "name": "Nome",
+        "description": "Descrição",
+        "glh": "GLH",
+        "jobType": "Tipo de trabalho",
+        "resourceType": "Tipo de recurso",
+        "actions": "Ações"
+      },
+      "searchPlaceholder": "Pesquisar recursos...",
+      "filters": {
+        "jobType": {
+          "label": "Tipo de trabalho",
+          "placeholder": "Selecionar tipo de trabalho"
+        },
+        "resourceType": {
+          "label": "Tipo de recurso",
+          "placeholder": "Selecionar tipo de recurso",
+          "allTypes": "Todos os tipos"
+        }
+      },
+      "buttons": {
+        "addResource": "Adicionar recurso",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Transferir"
+      },
+      "menu": {
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Transferir",
+        "columns": "Colunas"
+      },
+      "states": {
+        "loading": "A carregar recursos...",
+        "noResults": "Sem resultados.",
+        "empty": "Não foram encontrados recursos."
+      },
+      "confirm": {
+        "deleteTitle": "Tem a certeza de que pretende eliminar este recurso?",
+        "deleteBody": "Esta ação não pode ser anulada."
+      },
+      "toast": {
+        "deleted": "Recurso eliminado com sucesso",
+        "deleteFailed": "Falha ao eliminar o recurso",
+        "exportCsvFailed": "Falha ao exportar CSV",
+        "exportPdfFailed": "Falha ao exportar PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Criar novo recurso",
+        "edit": "Editar recurso"
+      },
+      "description": {
+        "create": "Carregue um novo recurso de aprendizagem. Clique em Guardar quando terminar.",
+        "edit": "Atualize os detalhes do recurso. Clique em Guardar quando terminar."
+      },
+      "fields": {
+        "course": "Curso",
+        "file": "Ficheiro",
+        "name": "Nome",
+        "description": "Descrição",
+        "jobType": "Tipo de trabalho",
+        "resourceType": "Tipo de recurso",
+        "hours": "Horas",
+        "minutes": "Minutos"
+      },
+      "placeholders": {
+        "selectCourse": "Selecionar curso",
+        "noCourses": "Não há cursos disponíveis",
+        "description": "Introduzir descrição (opcional)",
+        "jobType": "Selecionar tipo de trabalho",
+        "resourceType": "Selecionar tipo de recurso"
+      },
+      "helper": {
+        "currentFilePrefix": "Ficheiro atual:",
+        "viewFile": "Ver ficheiro",
+        "maxFileSize": "Tamanho máximo do ficheiro: 10MB",
+        "nameAuto": "O nome é definido automaticamente a partir do ficheiro carregado"
+      },
+      "buttons": {
+        "save": "Guardar",
+        "saving": "A guardar...",
+        "cancel": "Cancelar"
+      },
+      "toast": {
+        "created": "Recurso criado com sucesso",
+        "updated": "Recurso atualizado com sucesso",
+        "createFailed": "Falha ao criar o recurso",
+        "updateFailed": "Falha ao atualizar o recurso"
+      },
+      "validation": {
+        "selectCourse": "Selecione um curso.",
+        "nameRequired": "O nome é obrigatório.",
+        "uploadFile": "Carregue um ficheiro.",
+        "fileTooLarge": "O tamanho do ficheiro deve ser inferior a 10MB.",
+        "hoursMin": "As horas devem ser 0 ou mais",
+        "hoursMax": "As horas devem ser menos de 24",
+        "minutesMin": "Os minutos devem ser 0 ou mais",
+        "minutesMax": "Os minutos devem ser menos de 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "Ligado",
+        "off": "Desligado"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Texto",
+        "image": "Imagem"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} h {minutes} min"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuração padrão de semanas de revisão",
     "pageSubtitle": "Configure o período de revisão padrão para todos os tipos de formandos sem períodos personalizados",

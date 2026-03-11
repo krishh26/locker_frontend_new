@@ -3292,6 +3292,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "संसाधन",
+      "subtitle": "लर्निंग संसाधन और सामग्री प्रबंधित करें"
+    },
+    "table": {
+      "columns": {
+        "name": "नाम",
+        "description": "विवरण",
+        "glh": "GLH",
+        "jobType": "जॉब प्रकार",
+        "resourceType": "संसाधन प्रकार",
+        "actions": "क्रियाएँ"
+      },
+      "searchPlaceholder": "संसाधन खोजें...",
+      "filters": {
+        "jobType": {
+          "label": "जॉब प्रकार",
+          "placeholder": "जॉब प्रकार चुनें"
+        },
+        "resourceType": {
+          "label": "संसाधन प्रकार",
+          "placeholder": "संसाधन प्रकार चुनें",
+          "allTypes": "सभी प्रकार"
+        }
+      },
+      "buttons": {
+        "addResource": "संसाधन जोड़ें",
+        "view": "देखें",
+        "edit": "संपादित करें",
+        "delete": "हटाएँ",
+        "download": "डाउनलोड"
+      },
+      "menu": {
+        "view": "देखें",
+        "edit": "संपादित करें",
+        "delete": "हटाएँ",
+        "download": "डाउनलोड",
+        "columns": "कॉलम"
+      },
+      "states": {
+        "loading": "संसाधन लोड हो रहे हैं...",
+        "noResults": "कोई परिणाम नहीं.",
+        "empty": "कोई संसाधन नहीं मिला."
+      },
+      "confirm": {
+        "deleteTitle": "क्या आप वाकई इस संसाधन को हटाना चाहते हैं?",
+        "deleteBody": "यह कार्रवाई वापस नहीं की जा सकती."
+      },
+      "toast": {
+        "deleted": "संसाधन सफलतापूर्वक हटाया गया",
+        "deleteFailed": "संसाधन हटाने में विफल",
+        "exportCsvFailed": "CSV एक्सपोर्ट करने में विफल",
+        "exportPdfFailed": "PDF एक्सपोर्ट करने में विफल"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "नया संसाधन बनाएँ",
+        "edit": "संसाधन संपादित करें"
+      },
+      "description": {
+        "create": "नया लर्निंग संसाधन अपलोड करें। पूरा होने पर सेव पर क्लिक करें।",
+        "edit": "संसाधन विवरण अपडेट करें। पूरा होने पर सेव पर क्लिक करें।"
+      },
+      "fields": {
+        "course": "कोर्स",
+        "file": "फ़ाइल",
+        "name": "नाम",
+        "description": "विवरण",
+        "jobType": "जॉब प्रकार",
+        "resourceType": "संसाधन प्रकार",
+        "hours": "घंटे",
+        "minutes": "मिनट"
+      },
+      "placeholders": {
+        "selectCourse": "कोर्स चुनें",
+        "noCourses": "कोई कोर्स उपलब्ध नहीं",
+        "description": "विवरण दर्ज करें (वैकल्पिक)",
+        "jobType": "जॉब प्रकार चुनें",
+        "resourceType": "संसाधन प्रकार चुनें"
+      },
+      "helper": {
+        "currentFilePrefix": "वर्तमान फ़ाइल:",
+        "viewFile": "फ़ाइल देखें",
+        "maxFileSize": "अधिकतम फ़ाइल आकार: 10MB",
+        "nameAuto": "अपलोड की गई फ़ाइल से नाम अपने आप सेट हो जाता है"
+      },
+      "buttons": {
+        "save": "सेव",
+        "saving": "सेव हो रहा है...",
+        "cancel": "रद्द करें"
+      },
+      "toast": {
+        "created": "संसाधन सफलतापूर्वक बनाया गया",
+        "updated": "संसाधन सफलतापूर्वक अपडेट किया गया",
+        "createFailed": "संसाधन बनाने में विफल",
+        "updateFailed": "संसाधन अपडेट करने में विफल"
+      },
+      "validation": {
+        "selectCourse": "कृपया कोर्स चुनें।",
+        "nameRequired": "नाम आवश्यक है।",
+        "uploadFile": "कृपया फ़ाइल अपलोड करें।",
+        "fileTooLarge": "फ़ाइल का आकार 10MB से कम होना चाहिए।",
+        "hoursMin": "घंटे 0 या उससे अधिक होने चाहिए",
+        "hoursMax": "घंटे 24 से कम होने चाहिए",
+        "minutesMin": "मिनट 0 या उससे अधिक होने चाहिए",
+        "minutesMax": "मिनट 60 से कम होने चाहिए"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "ऑन",
+        "off": "ऑफ"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "टेक्स्ट",
+        "image": "छवि"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours}घं {minutes} मि"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
     "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",

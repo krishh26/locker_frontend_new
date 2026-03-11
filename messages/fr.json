@@ -3332,6 +3332,134 @@
       "dash": "-"
     }
   },
+  "resources": {
+    "page": {
+      "title": "Ressources",
+      "subtitle": "Gérer les ressources et supports d’apprentissage"
+    },
+    "table": {
+      "columns": {
+        "name": "Nom",
+        "description": "Description",
+        "glh": "GLH",
+        "jobType": "Type de poste",
+        "resourceType": "Type de ressource",
+        "actions": "Actions"
+      },
+      "searchPlaceholder": "Rechercher des ressources...",
+      "filters": {
+        "jobType": {
+          "label": "Type de poste",
+          "placeholder": "Sélectionner le type de poste"
+        },
+        "resourceType": {
+          "label": "Type de ressource",
+          "placeholder": "Sélectionner le type de ressource",
+          "allTypes": "Tous les types"
+        }
+      },
+      "buttons": {
+        "addResource": "Ajouter une ressource",
+        "view": "Voir",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "download": "Télécharger"
+      },
+      "menu": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "download": "Télécharger",
+        "columns": "Colonnes"
+      },
+      "states": {
+        "loading": "Chargement des ressources...",
+        "noResults": "Aucun résultat.",
+        "empty": "Aucune ressource trouvée."
+      },
+      "confirm": {
+        "deleteTitle": "Êtes-vous sûr de vouloir supprimer cette ressource ?",
+        "deleteBody": "Cette action est irréversible."
+      },
+      "toast": {
+        "deleted": "Ressource supprimée avec succès",
+        "deleteFailed": "Échec de la suppression de la ressource",
+        "exportCsvFailed": "Échec de l’export CSV",
+        "exportPdfFailed": "Échec de l’export PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Créer une nouvelle ressource",
+        "edit": "Modifier la ressource"
+      },
+      "description": {
+        "create": "Téléversez une nouvelle ressource d’apprentissage. Cliquez sur Enregistrer lorsque vous avez terminé.",
+        "edit": "Mettez à jour les détails de la ressource. Cliquez sur Enregistrer lorsque vous avez terminé."
+      },
+      "fields": {
+        "course": "Cours",
+        "file": "Fichier",
+        "name": "Nom",
+        "description": "Description",
+        "jobType": "Type de poste",
+        "resourceType": "Type de ressource",
+        "hours": "Heures",
+        "minutes": "Minutes"
+      },
+      "placeholders": {
+        "selectCourse": "Sélectionner un cours",
+        "noCourses": "Aucun cours disponible",
+        "description": "Saisir une description (facultatif)",
+        "jobType": "Sélectionner le type de poste",
+        "resourceType": "Sélectionner le type de ressource"
+      },
+      "helper": {
+        "currentFilePrefix": "Fichier actuel :",
+        "viewFile": "Voir le fichier",
+        "maxFileSize": "Taille maximale du fichier : 10MB",
+        "nameAuto": "Le nom est défini automatiquement à partir du fichier téléversé"
+      },
+      "buttons": {
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "cancel": "Annuler"
+      },
+      "toast": {
+        "created": "Ressource créée avec succès",
+        "updated": "Ressource mise à jour avec succès",
+        "createFailed": "Échec de la création de la ressource",
+        "updateFailed": "Échec de la mise à jour de la ressource"
+      },
+      "validation": {
+        "selectCourse": "Veuillez sélectionner un cours.",
+        "nameRequired": "Le nom est obligatoire.",
+        "uploadFile": "Veuillez téléverser un fichier.",
+        "fileTooLarge": "La taille du fichier doit être inférieure à 10MB.",
+        "hoursMin": "Les heures doivent être supérieures ou égales à 0",
+        "hoursMax": "Les heures doivent être inférieures à 24",
+        "minutesMin": "Les minutes doivent être supérieures ou égales à 0",
+        "minutesMax": "Les minutes doivent être inférieures à 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "Activé",
+        "off": "Désactivé"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Texte",
+        "image": "Image"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} h {minutes} min"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuration par défaut des semaines de révision",
     "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",

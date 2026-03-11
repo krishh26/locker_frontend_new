@@ -3378,6 +3378,163 @@
       "glhFormat": "{hours}小时 {minutes}分钟"
     }
   },
+  "skillsScan": {
+    "page": {
+      "title": "技能评估",
+      "subtitle": "培训需求分析"
+    },
+    "userCard": {
+      "summaryLine": "技能评估与培训需求分析",
+      "badge": "培训需求分析",
+      "fallbackUserName": "用户"
+    },
+    "tabs": {
+      "units": {
+        "label": "选择 TNA 单元",
+        "shortLabel": "选择",
+        "description": "选择你的培训单元"
+      },
+      "questionnaire": {
+        "label": "TNA 问卷",
+        "shortLabel": "TNA",
+        "description": "完成评估"
+      },
+      "results": {
+        "label": "查看结果",
+        "shortLabel": "查看",
+        "description": "查看你的结果"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "选择培训课程",
+        "label": "选择课程：",
+        "placeholder": "选择课程以开始...",
+        "noCourses": "暂无可用课程"
+      },
+      "table": {
+        "title": "课程单元",
+        "count": "{count} 个单元可用",
+        "headers": {
+          "unitTitle": {
+            "standard": "标准",
+            "qualification": "标准单元"
+          },
+          "hours": "小时",
+          "credits": "学分",
+          "level": "级别",
+          "code": "代码",
+          "type": "类型",
+          "mandatory": "必修"
+        },
+        "values": {
+          "na": "无",
+          "levelPrefix": "级别 {level}",
+          "yes": "是",
+          "no": "否"
+        }
+      },
+      "empty": {
+        "title": "未找到单元",
+        "body": "请选择课程以查看可用单元"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "继续到问卷"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA 问卷",
+      "topicsCompleted": "已完成 {completed}/{total} 个主题",
+      "highlightBlanks": "高亮空白项",
+      "sidebar": {
+        "title": "评估主题"
+      },
+      "unitIntro": "为每个能力领域对你的技能进行评分",
+      "table": {
+        "headers": {
+          "skill": "需展示的技能",
+          "phases": {
+            "induction": "入职",
+            "first": "第一次复查",
+            "second": "第二次复查",
+            "third": "第三次复查"
+          }
+        },
+        "selectRatingPlaceholder": "选择评分"
+      },
+      "states": {
+        "noCourse": {
+          "title": "未选择课程",
+          "body": "请在“选择 TNA 单元”标签页中选择课程"
+        },
+        "loadingCourseData": "正在加载课程数据...",
+        "noSkillsForUnit": "该单元没有可评估的技能",
+        "noTopic": {
+          "title": "未选择主题",
+          "body": "请从侧边栏选择主题以开始评估"
+        }
+      },
+      "buttons": {
+        "previous": "上一个",
+        "next": "下一个",
+        "saveProgress": "保存进度",
+        "saving": "保存中...",
+        "viewResults": "查看结果"
+      },
+      "toast": {
+        "saved": "进度保存成功",
+        "saveFailed": "进度保存失败"
+      }
+    },
+    "results": {
+      "title": "评估结果",
+      "skillsAssessed": "已评估 {completed}/{total} 项技能",
+      "states": {
+        "noCourse": {
+          "title": "未选择课程",
+          "body": "请在“选择 TNA 单元”标签页中选择课程"
+        },
+        "loading": "正在加载结果...",
+        "contentNotFound": "未找到内容"
+      },
+      "buttons": {
+        "downloadPdf": "下载 PDF"
+      },
+      "toast": {
+        "generatingPdf": "正在生成 PDF...",
+        "pdfDownloaded": "PDF 下载成功",
+        "pdfDownloadFailed": "PDF 下载失败"
+      },
+      "chart": {
+        "title": "进度图表",
+        "selectTopicPlaceholder": "选择主题",
+        "noData": "暂无数据"
+      },
+      "legend": {
+        "title": "图例"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "该主题暂无可用数据。",
+      "phases": {
+        "induction": "入职",
+        "first": "第一次复查",
+        "second": "第二次复查",
+        "third": "第三次复查"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "从不",
+        "notSure": "不确定",
+        "sometimes": "有时",
+        "always": "总是"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

@@ -44,28 +44,23 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { CourseUnit, SubUnit } from "@/store/api/skills-scan/types";
+import { useTranslations } from "next-intl";
 
 interface SkillsScanTnaQuestionnaireProps {
   onTabChange: (tab: string) => void;
 }
 
-const ratingOptions = [
-  { value: 1, label: "😖 - Never" },
-  { value: 2, label: "☹️ - Not sure" },
-  { value: 3, label: "🙂 - Sometimes" },
-  { value: 4, label: "😁 - Always" },
-];
-
-const reviewPhases = [
-  { key: "induction", label: "Induction" },
-  { key: "first", label: "First Review" },
-  { key: "second", label: "Second Review" },
-  { key: "third", label: "Third Review" },
-];
+const ratingEmojiMap: Record<number, string> = {
+  1: "😖",
+  2: "☹️",
+  3: "🙂",
+  4: "😁",
+};
 
 export function SkillsScanTnaQuestionnaire({
   onTabChange,
 }: SkillsScanTnaQuestionnaireProps) {
+  const t = useTranslations("skillsScan");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   const dispatch = useAppDispatch();
@@ -162,7 +157,6 @@ export function SkillsScanTnaQuestionnaire({
       }
       return unit;
     });
-    console.log("🚀 ~ handleSelectChange ~ updatedUnits:", updatedUnits)
 
     // Update local state only (not Redux) - will be saved to Redux after successful API call
     setLocalUnits(updatedUnits);
@@ -214,11 +208,16 @@ export function SkillsScanTnaQuestionnaire({
         }));
       }
 
-      toast.success("Progress saved successfully");
+      toast.success(t("questionnaire.toast.saved"));
     } catch (error: unknown) {
-      const errorMessage = error && typeof error === 'object' && 'data' in error && typeof (error as { data?: { message?: string } }).data?.message === 'string'
+      const errorMessage =
+        error &&
+        typeof error === "object" &&
+        "data" in error &&
+        typeof (error as { data?: { message?: string } }).data?.message ===
+          "string"
         ? (error as { data: { message: string } }).data.message
-        : "Failed to save progress";
+        : t("questionnaire.toast.saveFailed");
       toast.error(errorMessage);
     }
   };
@@ -240,9 +239,11 @@ export function SkillsScanTnaQuestionnaire({
       <Card className="border shadow-sm">
         <CardContent className="flex flex-col items-center justify-center p-12 text-center">
           <FileQuestion className="mb-4 size-16 text-muted-foreground" />
-          <h3 className="mb-2 text-lg font-semibold">No Course Selected</h3>
+          <h3 className="mb-2 text-lg font-semibold">
+            {t("questionnaire.states.noCourse.title")}
+          </h3>
           <p className="text-muted-foreground text-sm">
-            Please select a course from the &quot;Choose TNA Units&quot; tab
+            {t("questionnaire.states.noCourse.body")}
           </p>
         </CardContent>
       </Card>
@@ -256,11 +257,25 @@ export function SkillsScanTnaQuestionnaire({
     return (
       <Card className="border shadow-sm">
         <CardContent className="p-6">
-          <div className="text-center">Loading course data...</div>
+          <div className="text-center">{t("questionnaire.states.loadingCourseData")}</div>
         </CardContent>
       </Card>
     );
   }
+
+  const ratingOptions = [
+    { value: 1, label: `${ratingEmojiMap[1]} - ${t("options.rating.never")}` },
+    { value: 2, label: `${ratingEmojiMap[2]} - ${t("options.rating.notSure")}` },
+    { value: 3, label: `${ratingEmojiMap[3]} - ${t("options.rating.sometimes")}` },
+    { value: 4, label: `${ratingEmojiMap[4]} - ${t("options.rating.always")}` },
+  ];
+
+  const reviewPhases = [
+    { key: "induction", label: t("questionnaire.table.headers.phases.induction") },
+    { key: "first", label: t("questionnaire.table.headers.phases.first") },
+    { key: "second", label: t("questionnaire.table.headers.phases.second") },
+    { key: "third", label: t("questionnaire.table.headers.phases.third") },
+  ];
 
   return (
     <div className="space-y-6">
@@ -270,12 +285,15 @@ export function SkillsScanTnaQuestionnaire({
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <FileQuestion className="size-6 text-primary" />
-              <CardTitle>TNA Questionnaire</CardTitle>
+              <CardTitle>{t("questionnaire.title")}</CardTitle>
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Badge variant="secondary" className="gap-1">
                 <TrendingUp className="size-3" />
-                {completedTopics}/{totalTopics} Topics Completed
+                {t("questionnaire.topicsCompleted", {
+                  completed: completedTopics,
+                  total: totalTopics,
+                })}
               </Badge>
               <div className="flex items-center gap-2">
                 <Checkbox
@@ -290,7 +308,7 @@ export function SkillsScanTnaQuestionnaire({
                     className="flex cursor-pointer items-center gap-1 text-sm"
                   >
                     <Highlighter className="size-4" />
-                    Highlight Blanks
+                    {t("questionnaire.highlightBlanks")}
                   </Label>
               </div>
             </div>
@@ -303,7 +321,9 @@ export function SkillsScanTnaQuestionnaire({
         {/* Topics Sidebar */}
         <Card className="w-full border shadow-sm lg:w-[300px] lg:sticky lg:top-6 lg:h-fit">
           <CardHeader className="">
-            <CardTitle className="text-base">Assessment Topics</CardTitle>
+            <CardTitle className="text-base">
+              {t("questionnaire.sidebar.title")}
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="max-h-[500px] overflow-y-auto">
@@ -348,7 +368,7 @@ export function SkillsScanTnaQuestionnaire({
                   {selectedUnit.title}
                 </CardTitle>
                 <p className="text-sm">
-                  Rate your skills for each competency area
+                  {t("questionnaire.unitIntro")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -357,7 +377,7 @@ export function SkillsScanTnaQuestionnaire({
                     <TableHeader>
                       <TableRow className="bg-muted">
                         <TableHead className="min-w-[250px] font-semibold">
-                          Skill To Be Demonstrated
+                          {t("questionnaire.table.headers.skill")}
                         </TableHead>
                         {reviewPhases.map((phase) => (
                           <TableHead
@@ -400,7 +420,9 @@ export function SkillsScanTnaQuestionnaire({
                                   disabled={isEmployer}
                                 >
                                   <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select rating" />
+                                    <SelectValue
+                                      placeholder={t("questionnaire.table.selectRatingPlaceholder")}
+                                    />
                                   </SelectTrigger>
                                   <SelectContent>
                                     {ratingOptions.map((opt) => (
@@ -449,7 +471,11 @@ export function SkillsScanTnaQuestionnaire({
                                       disabled={isEmployer}
                                     >
                                       <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select rating" />
+                                        <SelectValue
+                                          placeholder={t(
+                                            "questionnaire.table.selectRatingPlaceholder"
+                                          )}
+                                        />
                                       </SelectTrigger>
                                       <SelectContent>
                                         {ratingOptions.map((opt) => (
@@ -470,7 +496,7 @@ export function SkillsScanTnaQuestionnaire({
                         ) : (
                           <TableRow>
                             <TableCell colSpan={reviewPhases.length + 1} className="text-center text-muted-foreground py-8">
-                              No skills to assess for this unit
+                              {t("questionnaire.states.noSkillsForUnit")}
                             </TableCell>
                           </TableRow>
                         )
@@ -484,9 +510,11 @@ export function SkillsScanTnaQuestionnaire({
             <Card className="border shadow-sm">
               <CardContent className="flex flex-col items-center justify-center p-12 text-center">
                 <FileQuestion className="mb-4 size-16 text-muted-foreground" />
-                <h3 className="mb-2 text-lg font-semibold">No Topic Selected</h3>
+                <h3 className="mb-2 text-lg font-semibold">
+                  {t("questionnaire.states.noTopic.title")}
+                </h3>
                 <p className="text-muted-foreground text-sm">
-                  Please select a topic from the sidebar to begin assessment
+                  {t("questionnaire.states.noTopic.body")}
                 </p>
               </CardContent>
             </Card>
@@ -504,7 +532,7 @@ export function SkillsScanTnaQuestionnaire({
                     className="gap-2"
                   >
                     <ChevronLeft className="size-4" />
-                    Previous
+                    {t("questionnaire.buttons.previous")}
                   </Button>
                   <Button
                     variant="outline"
@@ -512,7 +540,7 @@ export function SkillsScanTnaQuestionnaire({
                     disabled={currentIndex === totalTopics - 1}
                     className="gap-2"
                   >
-                    Next
+                    {t("questionnaire.buttons.next")}
                     <ChevronRight className="size-4" />
                   </Button>
                 </div>
@@ -525,14 +553,16 @@ export function SkillsScanTnaQuestionnaire({
                     className="gap-2 bg-accent hover:bg-accent/90"
                   >
                     <Save className="size-4" />
-                    {isSaving ? "Saving..." : "Save Progress"}
+                    {isSaving
+                      ? t("questionnaire.buttons.saving")
+                      : t("questionnaire.buttons.saveProgress")}
                   </Button>
                   <Button
                     onClick={() => onTabChange("results")}
                     className="gap-2"
                   >
                     <CheckCircle2 className="size-4" />
-                    View Results
+                    {t("questionnaire.buttons.viewResults")}
                   </Button>
                 </div>
               </div>

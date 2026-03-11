@@ -3413,6 +3413,163 @@
       "glhFormat": "{hours}س {minutes} د"
     }
   },
+  "skillsScan": {
+    "page": {
+      "title": "تقييم المهارات",
+      "subtitle": "تحليل احتياجات التدريب"
+    },
+    "userCard": {
+      "summaryLine": "تقييم المهارات وتحليل احتياجات التدريب",
+      "badge": "تحليل احتياجات التدريب",
+      "fallbackUserName": "مستخدم"
+    },
+    "tabs": {
+      "units": {
+        "label": "اختيار وحدات TNA",
+        "shortLabel": "اختيار",
+        "description": "حدد وحدات التدريب الخاصة بك"
+      },
+      "questionnaire": {
+        "label": "استبيان TNA",
+        "shortLabel": "TNA",
+        "description": "أكمل التقييم"
+      },
+      "results": {
+        "label": "عرض النتائج",
+        "shortLabel": "عرض",
+        "description": "راجع نتائجك"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "اختيار دورة التدريب",
+        "label": "اختر الدورة:",
+        "placeholder": "اختر دورة للبدء...",
+        "noCourses": "لا توجد دورات متاحة"
+      },
+      "table": {
+        "title": "وحدات الدورة",
+        "count": "{count} وحدة متاحة",
+        "headers": {
+          "unitTitle": {
+            "standard": "المعايير",
+            "qualification": "الوحدات القياسية"
+          },
+          "hours": "الساعات",
+          "credits": "الاعتمادات",
+          "level": "المستوى",
+          "code": "الرمز",
+          "type": "النوع",
+          "mandatory": "إلزامي"
+        },
+        "values": {
+          "na": "غير متاح",
+          "levelPrefix": "المستوى {level}",
+          "yes": "نعم",
+          "no": "لا"
+        }
+      },
+      "empty": {
+        "title": "لم يتم العثور على وحدات",
+        "body": "يرجى اختيار دورة لعرض الوحدات المتاحة"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "المتابعة إلى الاستبيان"
+      }
+    },
+    "questionnaire": {
+      "title": "استبيان TNA",
+      "topicsCompleted": "{completed}/{total} موضوع مكتمل",
+      "highlightBlanks": "تمييز الحقول الفارغة",
+      "sidebar": {
+        "title": "مواضيع التقييم"
+      },
+      "unitIntro": "قيّم مهاراتك لكل مجال كفاءة",
+      "table": {
+        "headers": {
+          "skill": "المهارة المطلوب إظهارها",
+          "phases": {
+            "induction": "التهيئة",
+            "first": "المراجعة الأولى",
+            "second": "المراجعة الثانية",
+            "third": "المراجعة الثالثة"
+          }
+        },
+        "selectRatingPlaceholder": "اختر التقييم"
+      },
+      "states": {
+        "noCourse": {
+          "title": "لم يتم اختيار دورة",
+          "body": "يرجى اختيار دورة من تبويب \"اختيار وحدات TNA\""
+        },
+        "loadingCourseData": "جارٍ تحميل بيانات الدورة...",
+        "noSkillsForUnit": "لا توجد مهارات لتقييمها لهذه الوحدة",
+        "noTopic": {
+          "title": "لم يتم اختيار موضوع",
+          "body": "يرجى اختيار موضوع من الشريط الجانبي لبدء التقييم"
+        }
+      },
+      "buttons": {
+        "previous": "السابق",
+        "next": "التالي",
+        "saveProgress": "حفظ التقدم",
+        "saving": "جارٍ الحفظ...",
+        "viewResults": "عرض النتائج"
+      },
+      "toast": {
+        "saved": "تم حفظ التقدم بنجاح",
+        "saveFailed": "فشل حفظ التقدم"
+      }
+    },
+    "results": {
+      "title": "نتائج التقييم",
+      "skillsAssessed": "{completed}/{total} مهارة تم تقييمها",
+      "states": {
+        "noCourse": {
+          "title": "لم يتم اختيار دورة",
+          "body": "يرجى اختيار دورة من تبويب \"اختيار وحدات TNA\""
+        },
+        "loading": "جارٍ تحميل النتائج...",
+        "contentNotFound": "المحتوى غير موجود"
+      },
+      "buttons": {
+        "downloadPdf": "تنزيل PDF"
+      },
+      "toast": {
+        "generatingPdf": "جارٍ إنشاء ملف PDF...",
+        "pdfDownloaded": "تم تنزيل PDF بنجاح",
+        "pdfDownloadFailed": "فشل تنزيل PDF"
+      },
+      "chart": {
+        "title": "مخطط التقدم",
+        "selectTopicPlaceholder": "اختر موضوعًا",
+        "noData": "لا توجد بيانات متاحة"
+      },
+      "legend": {
+        "title": "المفتاح"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "لا توجد بيانات متاحة لهذا الموضوع.",
+      "phases": {
+        "induction": "التهيئة",
+        "first": "المراجعة الأولى",
+        "second": "المراجعة الثانية",
+        "third": "المراجعة الثالثة"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "أبدًا",
+        "notSure": "غير متأكد",
+        "sometimes": "أحيانًا",
+        "always": "دائمًا"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "إعدادات أسابيع المراجعة الافتراضية",
     "pageSubtitle": "تكوين إعدادات فترة المراجعة الافتراضية لجميع أنواع المتعلمين الذين لا يملكون فترة مراجعة مخصصة",

@@ -30,6 +30,7 @@ import {
   selectSelectedCourse,
   selectCourseData,
 } from "@/store/slices/skillsScanSlice";
+import { useLocale, useTranslations } from "next-intl";
 
 // CourseOption type matches LearnerCourse structure
 type CourseOption = {
@@ -46,7 +47,7 @@ interface SkillsScanTnaUnitsProps {
   onTabChange: (tab: string) => void;
 }
 
-const getQuarterlyProgress = (start: Date, end: Date) => {
+const getQuarterlyProgress = (start: Date, end: Date, locale: string) => {
   const result: Array<{ date: string; isDisabled: boolean }> = [];
   const current = new Date(start);
   const now = new Date();
@@ -56,7 +57,7 @@ const getQuarterlyProgress = (start: Date, end: Date) => {
   while (current <= end) {
     const month = current.getMonth();
     const year = current.getFullYear();
-    const monthName = current.toLocaleString("default", { month: "long" });
+    const monthName = current.toLocaleString(locale, { month: "long" });
 
     const isFuture =
       year > currentYear || (year === currentYear && month > currentMonth);
@@ -75,6 +76,8 @@ const getQuarterlyProgress = (start: Date, end: Date) => {
 export function SkillsScanTnaUnits({
   onTabChange,
 }: SkillsScanTnaUnitsProps) {
+  const t = useTranslations("skillsScan");
+  const locale = useLocale();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const courses = useAppSelector(selectCourses);
@@ -115,7 +118,8 @@ export function SkillsScanTnaUnits({
     if (course) {
       const progressByDate = getQuarterlyProgress(
         new Date(course.start_date),
-        new Date(course.end_date)
+        new Date(course.end_date),
+        locale
       );
 
       const courseWithProgress = {
@@ -158,13 +162,13 @@ export function SkillsScanTnaUnits({
         <CardHeader>
           <div className="flex items-center gap-2">
             <School className="size-6 text-primary" />
-            <CardTitle>Choose Training Course</CardTitle>
+            <CardTitle>{t("units.courseSelection.title")}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <label className="text-sm font-medium sm:min-w-fit">
-              Select Course:
+              {t("units.courseSelection.label")}
             </label>
             <Select
               value={
@@ -175,7 +179,7 @@ export function SkillsScanTnaUnits({
               onValueChange={handleCourseChange}
             >
               <SelectTrigger className="w-full sm:max-w-md">
-                <SelectValue placeholder="Select a course to begin..." />
+                <SelectValue placeholder={t("units.courseSelection.placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 {availableCourses.length > 0 ? (
@@ -189,7 +193,7 @@ export function SkillsScanTnaUnits({
                   ))
                 ) : (
                   <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                    No courses available
+                    {t("units.courseSelection.noCourses")}
                   </div>
                 )}
               </SelectContent>
@@ -211,11 +215,11 @@ export function SkillsScanTnaUnits({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ClipboardList className="size-5 text-primary" />
-                <CardTitle>Course Units</CardTitle>
+                <CardTitle>{t("units.table.title")}</CardTitle>
               </div>
               <Badge variant="secondary" className="gap-1">
                 <TrendingUp className="size-3" />
-                {units.length} Units Available
+                {t("units.table.count", { count: units.length })}
               </Badge>
             </div>
           </CardHeader>
@@ -225,20 +229,34 @@ export function SkillsScanTnaUnits({
                 <TableHeader>
                   <TableRow className="bg-primary text-white">
                     <TableHead className="font-semibold">
-                      {isStandardType ? "Standards" : "Standard Units"}
+                      {isStandardType
+                        ? t("units.table.headers.unitTitle.standard")
+                        : t("units.table.headers.unitTitle.qualification")}
                     </TableHead>
                     {!isStandardType && (
                       <>
-                        <TableHead className="text-center font-semibold">Hours</TableHead>
-                        <TableHead className="text-center font-semibold">Credits</TableHead>
-                        <TableHead className="text-center font-semibold">Level</TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.hours")}
+                        </TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.credits")}
+                        </TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.level")}
+                        </TableHead>
                       </>
                     )}
                     {isStandardType && (
                       <>
-                        <TableHead className="text-center font-semibold">Code</TableHead>
-                        <TableHead className="text-center font-semibold">Type</TableHead>
-                        <TableHead className="text-center font-semibold">Mandatory</TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.code")}
+                        </TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.type")}
+                        </TableHead>
+                        <TableHead className="text-center font-semibold">
+                          {t("units.table.headers.mandatory")}
+                        </TableHead>
                       </>
                     )}
                   </TableRow>
@@ -253,17 +271,21 @@ export function SkillsScanTnaUnits({
                         <>
                           <TableCell className="text-center">
                             <Badge variant="outline" className="bg-primary text-white">
-                              {unit.glh ?? "N/A"}
+                              {unit.glh ?? t("units.table.values.na")}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge variant="outline" className="bg-accent text-white">
-                              {unit.credit_value ?? "N/A"}
+                              {unit.credit_value ?? t("units.table.values.na")}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge variant="outline" className="bg-secondary text-white">
-                              {unit.level ? `Level ${unit.level}` : "N/A"}
+                              {unit.level
+                                ? t("units.table.values.levelPrefix", {
+                                    level: unit.level,
+                                  })
+                                : t("units.table.values.na")}
                             </Badge>
                           </TableCell>
                         </>
@@ -271,17 +293,19 @@ export function SkillsScanTnaUnits({
                         <>
                           <TableCell className="text-center">
                             <Badge variant="outline" className="bg-primary text-white">
-                              {unit.code || "N/A"}
+                              {unit.code || t("units.table.values.na")}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge variant="outline" className="bg-accent text-white">
-                              {unit.type || "N/A"}
+                              {unit.type || t("units.table.values.na")}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge variant="outline" className={unit.mandatory ? "bg-secondary text-white" : "bg-muted text-muted-foreground"}>
-                              {unit.mandatory ? "Yes" : "No"}
+                              {unit.mandatory
+                                ? t("units.table.values.yes")
+                                : t("units.table.values.no")}
                             </Badge>
                           </TableCell>
                         </>
@@ -297,9 +321,11 @@ export function SkillsScanTnaUnits({
         <Card className="border shadow-sm">
           <CardContent className="flex flex-col items-center justify-center p-12 text-center">
             <School className="mb-4 size-16 text-muted-foreground" />
-            <h3 className="mb-2 text-lg font-semibold">No Units Found</h3>
+            <h3 className="mb-2 text-lg font-semibold">
+              {t("units.empty.title")}
+            </h3>
             <p className="text-muted-foreground text-sm">
-              Please select a course to view available units
+              {t("units.empty.body")}
             </p>
           </CardContent>
         </Card>
@@ -315,7 +341,7 @@ export function SkillsScanTnaUnits({
                 size="lg"
                 className="gap-2"
               >
-                Continue to Questionnaire
+                {t("units.buttons.continueToQuestionnaire")}
                 <ArrowRight className="size-4" />
               </Button>
             </div>

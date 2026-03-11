@@ -3732,6 +3732,163 @@
       "glhFormat": "{hours}h {minutes} min"
     }
   },
+  "skillsScan": {
+    "page": {
+      "title": "Skills Assessment",
+      "subtitle": "Training Needs Analysis"
+    },
+    "userCard": {
+      "summaryLine": "Skills Assessment & Training Needs Analysis",
+      "badge": "Training Needs Analysis",
+      "fallbackUserName": "User"
+    },
+    "tabs": {
+      "units": {
+        "label": "Choose TNA Units",
+        "shortLabel": "Choose",
+        "description": "Select your training units"
+      },
+      "questionnaire": {
+        "label": "TNA Questionnaire",
+        "shortLabel": "TNA",
+        "description": "Complete the assessment"
+      },
+      "results": {
+        "label": "View Results",
+        "shortLabel": "View",
+        "description": "Review your results"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "Choose Training Course",
+        "label": "Select Course:",
+        "placeholder": "Select a course to begin...",
+        "noCourses": "No courses available"
+      },
+      "table": {
+        "title": "Course Units",
+        "count": "{count} Units Available",
+        "headers": {
+          "unitTitle": {
+            "standard": "Standards",
+            "qualification": "Standard Units"
+          },
+          "hours": "Hours",
+          "credits": "Credits",
+          "level": "Level",
+          "code": "Code",
+          "type": "Type",
+          "mandatory": "Mandatory"
+        },
+        "values": {
+          "na": "N/A",
+          "levelPrefix": "Level {level}",
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "empty": {
+        "title": "No Units Found",
+        "body": "Please select a course to view available units"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "Continue to Questionnaire"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA Questionnaire",
+      "topicsCompleted": "{completed}/{total} Topics Completed",
+      "highlightBlanks": "Highlight Blanks",
+      "sidebar": {
+        "title": "Assessment Topics"
+      },
+      "unitIntro": "Rate your skills for each competency area",
+      "table": {
+        "headers": {
+          "skill": "Skill To Be Demonstrated",
+          "phases": {
+            "induction": "Induction",
+            "first": "First Review",
+            "second": "Second Review",
+            "third": "Third Review"
+          }
+        },
+        "selectRatingPlaceholder": "Select rating"
+      },
+      "states": {
+        "noCourse": {
+          "title": "No Course Selected",
+          "body": "Please select a course from the \"Choose TNA Units\" tab"
+        },
+        "loadingCourseData": "Loading course data...",
+        "noSkillsForUnit": "No skills to assess for this unit",
+        "noTopic": {
+          "title": "No Topic Selected",
+          "body": "Please select a topic from the sidebar to begin assessment"
+        }
+      },
+      "buttons": {
+        "previous": "Previous",
+        "next": "Next",
+        "saveProgress": "Save Progress",
+        "saving": "Saving...",
+        "viewResults": "View Results"
+      },
+      "toast": {
+        "saved": "Progress saved successfully",
+        "saveFailed": "Failed to save progress"
+      }
+    },
+    "results": {
+      "title": "Assessment Results",
+      "skillsAssessed": "{completed}/{total} Skills Assessed",
+      "states": {
+        "noCourse": {
+          "title": "No Course Selected",
+          "body": "Please select a course from the \"Choose TNA Units\" tab"
+        },
+        "loading": "Loading results...",
+        "contentNotFound": "Content not found"
+      },
+      "buttons": {
+        "downloadPdf": "Download PDF"
+      },
+      "toast": {
+        "generatingPdf": "Generating PDF...",
+        "pdfDownloaded": "PDF downloaded successfully",
+        "pdfDownloadFailed": "Failed to download PDF"
+      },
+      "chart": {
+        "title": "Progress Chart",
+        "selectTopicPlaceholder": "Select topic",
+        "noData": "No data available"
+      },
+      "legend": {
+        "title": "Legend"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "No data available for this topic.",
+      "phases": {
+        "induction": "Induction",
+        "first": "First Review",
+        "second": "Second Review",
+        "third": "Third Review"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "Never",
+        "notSure": "Not sure",
+        "sometimes": "Sometimes",
+        "always": "Always"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

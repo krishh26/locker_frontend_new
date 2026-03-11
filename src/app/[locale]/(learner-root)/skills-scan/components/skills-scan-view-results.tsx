@@ -20,8 +20,10 @@ import { Download, Eye, TrendingUp } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { SkillsScanProgressChart } from "./skills-scan-progress-chart";
+import { useTranslations } from "next-intl";
 
 export function SkillsScanViewResults() {
+  const t = useTranslations("skillsScan");
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const courseData = useAppSelector(selectCourseData);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
@@ -85,12 +87,12 @@ export function SkillsScanViewResults() {
       const element = document.getElementById("results-content");
 
       if (!element) {
-        toast.error("Content not found");
+        toast.error(t("results.states.contentNotFound"));
         return;
       }
 
       // Show loading toast
-      toast.loading("Generating PDF...", { id: "pdf-generating" });
+      toast.loading(t("results.toast.generatingPdf"), { id: "pdf-generating" });
 
       // html2canvas-pro supports oklch colors natively, so we can use it directly
       const canvas = await html2canvas(element, {
@@ -132,9 +134,9 @@ export function SkillsScanViewResults() {
       // Save PDF
       pdf.save(filename);
 
-      toast.success("PDF downloaded successfully", { id: "pdf-generating" });
+      toast.success(t("results.toast.pdfDownloaded"), { id: "pdf-generating" });
     } catch (error) {
-      toast.error("Failed to download PDF", { id: "pdf-generating" });
+      toast.error(t("results.toast.pdfDownloadFailed"), { id: "pdf-generating" });
       console.error("PDF export error:", error);
     }
   };
@@ -144,9 +146,11 @@ export function SkillsScanViewResults() {
       <Card className="border shadow-sm">
         <CardContent className="flex flex-col items-center justify-center p-12 text-center">
           <Eye className="mb-4 size-16 text-muted-foreground" />
-          <h3 className="mb-2 text-lg font-semibold">No Course Selected</h3>
+          <h3 className="mb-2 text-lg font-semibold">
+            {t("results.states.noCourse.title")}
+          </h3>
           <p className="text-muted-foreground text-sm">
-            Please select a course from the &quot;Choose TNA Units&quot; tab
+            {t("results.states.noCourse.body")}
           </p>
         </CardContent>
       </Card>
@@ -160,7 +164,7 @@ export function SkillsScanViewResults() {
     return (
       <Card className="border shadow-sm">
         <CardContent className="p-6">
-          <div className="text-center">Loading results...</div>
+          <div className="text-center">{t("results.states.loading")}</div>
         </CardContent>
       </Card>
     );
@@ -174,16 +178,19 @@ export function SkillsScanViewResults() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <Eye className="size-6 text-primary" />
-              <CardTitle>Assessment Results</CardTitle>
+              <CardTitle>{t("results.title")}</CardTitle>
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Badge variant="secondary" className="gap-1">
                 <TrendingUp className="size-3" />
-                {completedSkills}/{totalSkills} Skills Assessed
+                {t("results.skillsAssessed", {
+                  completed: completedSkills,
+                  total: totalSkills,
+                })}
               </Badge>
               <Button onClick={handleDownloadPdf} variant="default" className="gap-2">
                 <Download className="size-4" />
-                Download PDF
+                {t("results.buttons.downloadPdf")}
               </Button>
             </div>
           </div>
@@ -197,11 +204,11 @@ export function SkillsScanViewResults() {
           <Card className="border shadow-sm">
             <CardHeader className="bg-muted">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <CardTitle className="text-base">Progress Chart</CardTitle>
+                <CardTitle className="text-base">{t("results.chart.title")}</CardTitle>
                 {units.length > 0 && (
                   <Select value={selectedTopic} onValueChange={setSelectedTopic}>
                     <SelectTrigger className="w-full sm:w-[250px]">
-                      <SelectValue placeholder="Select topic" />
+                      <SelectValue placeholder={t("results.chart.selectTopicPlaceholder")} />
                     </SelectTrigger>
                     <SelectContent>
                       {units.map((unit: CourseUnit) => (
@@ -222,7 +229,7 @@ export function SkillsScanViewResults() {
                 />
               ) : (
                 <div className="flex h-[400px] items-center justify-center">
-                  <p className="text-muted-foreground">No data available</p>
+                  <p className="text-muted-foreground">{t("results.chart.noData")}</p>
                 </div>
               )}
             </CardContent>
@@ -232,7 +239,7 @@ export function SkillsScanViewResults() {
         {/* Legend Section */}
         <Card className="w-full border shadow-sm lg:w-[300px]">
           <CardHeader className="bg-muted">
-            <CardTitle className="text-base">Legend</CardTitle>
+            <CardTitle className="text-base">{t("results.legend.title")}</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
             <div className="space-y-4">

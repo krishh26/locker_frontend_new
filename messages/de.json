@@ -2779,6 +2779,163 @@
       "glhFormat": "{hours} Std. {minutes} Min."
     }
   },
+  "skillsScan": {
+    "page": {
+      "title": "Kompetenzbewertung",
+      "subtitle": "Analyse des Trainingsbedarfs"
+    },
+    "userCard": {
+      "summaryLine": "Kompetenzbewertung & Analyse des Trainingsbedarfs",
+      "badge": "Analyse des Trainingsbedarfs",
+      "fallbackUserName": "Benutzer"
+    },
+    "tabs": {
+      "units": {
+        "label": "TNA-Einheiten auswählen",
+        "shortLabel": "Auswahl",
+        "description": "Wählen Sie Ihre Trainingseinheiten aus"
+      },
+      "questionnaire": {
+        "label": "TNA-Fragebogen",
+        "shortLabel": "TNA",
+        "description": "Führen Sie die Bewertung durch"
+      },
+      "results": {
+        "label": "Ergebnisse anzeigen",
+        "shortLabel": "Ansehen",
+        "description": "Überprüfen Sie Ihre Ergebnisse"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "Trainingskurs auswählen",
+        "label": "Kurs auswählen:",
+        "placeholder": "Wählen Sie einen Kurs, um zu beginnen...",
+        "noCourses": "Keine Kurse verfügbar"
+      },
+      "table": {
+        "title": "Kurseinheiten",
+        "count": "{count} Einheiten verfügbar",
+        "headers": {
+          "unitTitle": {
+            "standard": "Standards",
+            "qualification": "Standard-Einheiten"
+          },
+          "hours": "Stunden",
+          "credits": "Credits",
+          "level": "Level",
+          "code": "Code",
+          "type": "Typ",
+          "mandatory": "Pflicht"
+        },
+        "values": {
+          "na": "k. A.",
+          "levelPrefix": "Level {level}",
+          "yes": "Ja",
+          "no": "Nein"
+        }
+      },
+      "empty": {
+        "title": "Keine Einheiten gefunden",
+        "body": "Bitte wählen Sie einen Kurs aus, um verfügbare Einheiten zu sehen"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "Weiter zum Fragebogen"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA-Fragebogen",
+      "topicsCompleted": "{completed}/{total} Themen abgeschlossen",
+      "highlightBlanks": "Leere Felder hervorheben",
+      "sidebar": {
+        "title": "Bewertungsthemen"
+      },
+      "unitIntro": "Bewerten Sie Ihre Fähigkeiten für jeden Kompetenzbereich",
+      "table": {
+        "headers": {
+          "skill": "Zu demonstrierende Fähigkeit",
+          "phases": {
+            "induction": "Einführung",
+            "first": "Erstes Review",
+            "second": "Zweites Review",
+            "third": "Drittes Review"
+          }
+        },
+        "selectRatingPlaceholder": "Bewertung auswählen"
+      },
+      "states": {
+        "noCourse": {
+          "title": "Kein Kurs ausgewählt",
+          "body": "Bitte wählen Sie einen Kurs im Tab \"TNA-Einheiten auswählen\""
+        },
+        "loadingCourseData": "Kursdaten werden geladen...",
+        "noSkillsForUnit": "Keine Fähigkeiten für diese Einheit zu bewerten",
+        "noTopic": {
+          "title": "Kein Thema ausgewählt",
+          "body": "Bitte wählen Sie ein Thema in der Seitenleiste, um zu starten"
+        }
+      },
+      "buttons": {
+        "previous": "Zurück",
+        "next": "Weiter",
+        "saveProgress": "Fortschritt speichern",
+        "saving": "Wird gespeichert...",
+        "viewResults": "Ergebnisse anzeigen"
+      },
+      "toast": {
+        "saved": "Fortschritt erfolgreich gespeichert",
+        "saveFailed": "Fortschritt konnte nicht gespeichert werden"
+      }
+    },
+    "results": {
+      "title": "Bewertungsergebnisse",
+      "skillsAssessed": "{completed}/{total} Fähigkeiten bewertet",
+      "states": {
+        "noCourse": {
+          "title": "Kein Kurs ausgewählt",
+          "body": "Bitte wählen Sie einen Kurs im Tab \"TNA-Einheiten auswählen\""
+        },
+        "loading": "Ergebnisse werden geladen...",
+        "contentNotFound": "Inhalt nicht gefunden"
+      },
+      "buttons": {
+        "downloadPdf": "PDF herunterladen"
+      },
+      "toast": {
+        "generatingPdf": "PDF wird erstellt...",
+        "pdfDownloaded": "PDF erfolgreich heruntergeladen",
+        "pdfDownloadFailed": "PDF-Download fehlgeschlagen"
+      },
+      "chart": {
+        "title": "Fortschrittsdiagramm",
+        "selectTopicPlaceholder": "Thema auswählen",
+        "noData": "Keine Daten verfügbar"
+      },
+      "legend": {
+        "title": "Legende"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "Für dieses Thema sind keine Daten verfügbar.",
+      "phases": {
+        "induction": "Einführung",
+        "first": "Erstes Review",
+        "second": "Zweites Review",
+        "third": "Drittes Review"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "Nie",
+        "notSure": "Nicht sicher",
+        "sometimes": "Manchmal",
+        "always": "Immer"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

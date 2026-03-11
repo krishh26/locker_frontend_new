@@ -3420,6 +3420,163 @@
       "glhFormat": "{hours}घं {minutes} मि"
     }
   },
+  "skillsScan": {
+    "page": {
+      "title": "स्किल्स असेसमेंट",
+      "subtitle": "ट्रेनिंग नीड्स एनालिसिस"
+    },
+    "userCard": {
+      "summaryLine": "स्किल्स असेसमेंट और ट्रेनिंग नीड्स एनालिसिस",
+      "badge": "ट्रेनिंग नीड्स एनालिसिस",
+      "fallbackUserName": "यूज़र"
+    },
+    "tabs": {
+      "units": {
+        "label": "TNA यूनिट्स चुनें",
+        "shortLabel": "चुनें",
+        "description": "अपनी ट्रेनिंग यूनिट्स चुनें"
+      },
+      "questionnaire": {
+        "label": "TNA प्रश्नावली",
+        "shortLabel": "TNA",
+        "description": "असेसमेंट पूरा करें"
+      },
+      "results": {
+        "label": "परिणाम देखें",
+        "shortLabel": "देखें",
+        "description": "अपने परिणाम देखें"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "ट्रेनिंग कोर्स चुनें",
+        "label": "कोर्स चुनें:",
+        "placeholder": "शुरू करने के लिए कोर्स चुनें...",
+        "noCourses": "कोई कोर्स उपलब्ध नहीं"
+      },
+      "table": {
+        "title": "कोर्स यूनिट्स",
+        "count": "{count} यूनिट्स उपलब्ध",
+        "headers": {
+          "unitTitle": {
+            "standard": "स्टैंडर्ड्स",
+            "qualification": "स्टैंडर्ड यूनिट्स"
+          },
+          "hours": "घंटे",
+          "credits": "क्रेडिट्स",
+          "level": "लेवल",
+          "code": "कोड",
+          "type": "टाइप",
+          "mandatory": "अनिवार्य"
+        },
+        "values": {
+          "na": "उपलब्ध नहीं",
+          "levelPrefix": "लेवल {level}",
+          "yes": "हाँ",
+          "no": "नहीं"
+        }
+      },
+      "empty": {
+        "title": "कोई यूनिट नहीं मिली",
+        "body": "उपलब्ध यूनिट्स देखने के लिए कृपया एक कोर्स चुनें"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "प्रश्नावली पर जाएँ"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA प्रश्नावली",
+      "topicsCompleted": "{completed}/{total} टॉपिक पूरे",
+      "highlightBlanks": "खाली फ़ील्ड हाईलाइट करें",
+      "sidebar": {
+        "title": "असेसमेंट टॉपिक्स"
+      },
+      "unitIntro": "हर क्षमता क्षेत्र के लिए अपनी स्किल्स रेट करें",
+      "table": {
+        "headers": {
+          "skill": "दिखाई जाने वाली स्किल",
+          "phases": {
+            "induction": "इंडक्शन",
+            "first": "पहला रिव्यू",
+            "second": "दूसरा रिव्यू",
+            "third": "तीसरा रिव्यू"
+          }
+        },
+        "selectRatingPlaceholder": "रेटिंग चुनें"
+      },
+      "states": {
+        "noCourse": {
+          "title": "कोर्स चयनित नहीं है",
+          "body": "कृपया \"TNA यूनिट्स चुनें\" टैब से कोर्स चुनें"
+        },
+        "loadingCourseData": "कोर्स डेटा लोड हो रहा है...",
+        "noSkillsForUnit": "इस यूनिट के लिए कोई स्किल असेस नहीं करनी है",
+        "noTopic": {
+          "title": "टॉपिक चयनित नहीं है",
+          "body": "असेसमेंट शुरू करने के लिए साइडबार से टॉपिक चुनें"
+        }
+      },
+      "buttons": {
+        "previous": "पिछला",
+        "next": "अगला",
+        "saveProgress": "प्रोग्रेस सेव करें",
+        "saving": "सेव हो रहा है...",
+        "viewResults": "परिणाम देखें"
+      },
+      "toast": {
+        "saved": "प्रोग्रेस सफलतापूर्वक सेव हो गया",
+        "saveFailed": "प्रोग्रेस सेव करने में विफल"
+      }
+    },
+    "results": {
+      "title": "असेसमेंट परिणाम",
+      "skillsAssessed": "{completed}/{total} स्किल्स असेस्ड",
+      "states": {
+        "noCourse": {
+          "title": "कोर्स चयनित नहीं है",
+          "body": "कृपया \"TNA यूनिट्स चुनें\" टैब से कोर्स चुनें"
+        },
+        "loading": "परिणाम लोड हो रहे हैं...",
+        "contentNotFound": "कंटेंट नहीं मिला"
+      },
+      "buttons": {
+        "downloadPdf": "PDF डाउनलोड करें"
+      },
+      "toast": {
+        "generatingPdf": "PDF बन रहा है...",
+        "pdfDownloaded": "PDF सफलतापूर्वक डाउनलोड हो गया",
+        "pdfDownloadFailed": "PDF डाउनलोड करने में विफल"
+      },
+      "chart": {
+        "title": "प्रोग्रेस चार्ट",
+        "selectTopicPlaceholder": "टॉपिक चुनें",
+        "noData": "कोई डेटा उपलब्ध नहीं"
+      },
+      "legend": {
+        "title": "लीजेंड"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "इस टॉपिक के लिए कोई डेटा उपलब्ध नहीं है।",
+      "phases": {
+        "induction": "इंडक्शन",
+        "first": "पहला रिव्यू",
+        "second": "दूसरा रिव्यू",
+        "third": "तीसरा रिव्यू"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "कभी नहीं",
+        "notSure": "पक्का नहीं",
+        "sometimes": "कभी-कभी",
+        "always": "हमेशा"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
     "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",

@@ -13,15 +13,18 @@ import { SkillsScanTnaUnits } from "./skills-scan-tna-units";
 import { SkillsScanTnaQuestionnaire } from "./skills-scan-tna-questionnaire";
 import { SkillsScanViewResults } from "./skills-scan-view-results";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function SkillsScanPageContent() {
+  const t = useTranslations("skillsScan");
   const user = useAppSelector((state) => state.auth.user);
   const selectedCourse = useAppSelector(selectSelectedCourse);
   const [activeTab, setActiveTab] = useState("units");
 
   const userName = user
-    ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || "User"
-    : "User";
+    ? `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+      t("userCard.fallbackUserName")
+    : t("userCard.fallbackUserName");
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -30,23 +33,26 @@ export function SkillsScanPageContent() {
   const tabs = [
     {
       id: "units",
-      label: "Choose TNA Units",
+      label: t("tabs.units.label"),
+      shortLabel: t("tabs.units.shortLabel"),
       icon: FileBarChart,
-      description: "Select your training units",
+      description: t("tabs.units.description"),
       disabled: false,
     },
     {
       id: "questionnaire",
-      label: "TNA Questionnaire",
+      label: t("tabs.questionnaire.label"),
+      shortLabel: t("tabs.questionnaire.shortLabel"),
       icon: FileQuestion,
-      description: "Complete the assessment",
+      description: t("tabs.questionnaire.description"),
       disabled: !selectedCourse,
     },
     {
       id: "results",
-      label: "View Results",
+      label: t("tabs.results.label"),
+      shortLabel: t("tabs.results.shortLabel"),
       icon: Eye,
-      description: "Review your results",
+      description: t("tabs.results.description"),
       disabled: !selectedCourse,
     },
   ];
@@ -55,8 +61,8 @@ export function SkillsScanPageContent() {
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
       <PageHeader
-        title="Skills Assessment"
-        subtitle="Training Needs Analysis"
+        title={t("page.title")}
+        subtitle={t("page.subtitle")}
         icon={FileBarChart}
       />
 
@@ -78,7 +84,7 @@ export function SkillsScanPageContent() {
               <div>
                 <h2 className="text-2xl font-bold">{userName}</h2>
                 <p className="text-primary-foreground/80 text-sm">
-                  Skills Assessment & Training Needs Analysis
+                  {t("userCard.summaryLine")}
                 </p>
               </div>
             </div>
@@ -87,7 +93,7 @@ export function SkillsScanPageContent() {
               className="bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
             >
               <CheckCircle2 className="mr-2 size-4" />
-              Training Needs Analysis
+              {t("userCard.badge")}
             </Badge>
           </div>
         </CardContent>
@@ -111,7 +117,7 @@ export function SkillsScanPageContent() {
                 >
                   <Icon className="size-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">{tab.label.split(" ")[0]}</span>
+                  <span className="sm:hidden">{tab.shortLabel}</span>
                 </TabsTrigger>
               );
             })}

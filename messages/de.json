@@ -2284,6 +2284,21 @@
       "draftFailed": "Entwurf konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Formulare",
+    "pageSubtitle": "Alle Formulare anzeigen und verwalten",
+    "table": {
+      "columns": {
+        "formName": "Formularname",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "createdAt": "Erstellt am",
+        "actions": "Aktionen"
+      },
+      "loading": "Wird geladen...",
+      "noResults": "Keine Formulare gefunden."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

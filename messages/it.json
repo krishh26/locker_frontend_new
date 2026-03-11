@@ -2283,6 +2283,21 @@
       "draftFailed": "Salvataggio bozza non riuscito. Riprova."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Moduli",
+    "pageSubtitle": "Visualizza e gestisci tutti i moduli",
+    "table": {
+      "columns": {
+        "formName": "Nome modulo",
+        "description": "Descrizione",
+        "type": "Tipo",
+        "createdAt": "Creato il",
+        "actions": "Azioni"
+      },
+      "loading": "Caricamento...",
+      "noResults": "Nessun modulo trovato."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configurazione settimane di revisione predefinite",
     "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",

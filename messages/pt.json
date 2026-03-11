@@ -2925,6 +2925,21 @@
       "draftFailed": "Falha ao guardar o rascunho. Tente novamente."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Formulários",
+    "pageSubtitle": "Ver e gerir todos os formulários",
+    "table": {
+      "columns": {
+        "formName": "Nome do formulário",
+        "description": "Descrição",
+        "type": "Tipo",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "loading": "A carregar...",
+      "noResults": "Nenhum formulário encontrado."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuração padrão de semanas de revisão",
     "pageSubtitle": "Configure o período de revisão padrão para todos os tipos de formandos sem períodos personalizados",

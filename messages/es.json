@@ -2713,6 +2713,21 @@
       "draftFailed": "Error al guardar el borrador. Por favor, inténtelo de nuevo."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Formularios",
+    "pageSubtitle": "Ver y gestionar todos los formularios",
+    "table": {
+      "columns": {
+        "formName": "Nombre del formulario",
+        "description": "Descripción",
+        "type": "Tipo",
+        "createdAt": "Creado el",
+        "actions": "Acciones"
+      },
+      "loading": "Cargando...",
+      "noResults": "No se encontraron formularios."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

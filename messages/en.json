@@ -3237,6 +3237,21 @@
       "draftFailed": "Failed to save draft. Please try again."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Forms",
+    "pageSubtitle": "View and manage all forms",
+    "table": {
+      "columns": {
+        "formName": "Form Name",
+        "description": "Description",
+        "type": "Type",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "loading": "Loading...",
+      "noResults": "No forms found."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

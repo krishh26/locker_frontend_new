@@ -16,6 +16,7 @@ import {
 import { Eye } from 'lucide-react'
 import { format } from 'date-fns'
 import { useRouter } from "@/i18n/navigation"
+import { useTranslations } from 'next-intl'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -33,6 +34,7 @@ import { DataTablePagination } from '@/components/data-table-pagination'
 import { useAppSelector } from '@/store/hooks'
 
 export function FormsDataTable() {
+  const t = useTranslations('learnerForms')
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
 
@@ -85,14 +87,14 @@ export function FormsDataTable() {
     () => [
       {
         accessorKey: 'form_name',
-        header: 'Form Name',
+        header: t('table.columns.formName'),
         cell: ({ row }) => (
           <div className='font-medium'>{row.original.form_name}</div>
         ),
       },
       {
         accessorKey: 'description',
-        header: 'Description',
+        header: t('table.columns.description'),
         cell: ({ row }) => (
           <div className='max-w-[300px] truncate text-muted-foreground'>
             {row.original.description || '-'}
@@ -101,17 +103,17 @@ export function FormsDataTable() {
       },
       {
         accessorKey: 'type',
-        header: 'Type',
+        header: t('table.columns.type'),
         cell: ({ row }) => <Badge variant='outline'>{row.original.type}</Badge>,
       },
       {
         accessorKey: 'created_at',
-        header: 'Created At',
+        header: t('table.columns.createdAt'),
         cell: ({ row }) => formatDate(row.original.created_at),
       },
       {
         id: 'actions',
-        header: 'Actions',
+        header: t('table.columns.actions'),
         cell: ({ row }) => (
           <div className='flex items-center gap-2'>
             <Button
@@ -126,7 +128,7 @@ export function FormsDataTable() {
         ),
       },
     ],
-    [handleApply]
+    [handleApply, t]
   )
 
   const table = useReactTable({
@@ -178,7 +180,7 @@ export function FormsDataTable() {
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  Loading...
+                  {t('table.loading')}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -203,7 +205,7 @@ export function FormsDataTable() {
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No forms found.
+                  {t('table.noResults')}
                 </TableCell>
               </TableRow>
             )}

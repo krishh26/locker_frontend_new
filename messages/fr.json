@@ -2965,6 +2965,21 @@
       "draftFailed": "Échec de l'enregistrement du brouillon. Veuillez réessayer."
     }
   },
+  "learnerForms": {
+    "pageTitle": "Formulaires",
+    "pageSubtitle": "Voir et gérer tous les formulaires",
+    "table": {
+      "columns": {
+        "formName": "Nom du formulaire",
+        "description": "Description",
+        "type": "Type",
+        "createdAt": "Créé le",
+        "actions": "Actions"
+      },
+      "loading": "Chargement...",
+      "noResults": "Aucun formulaire trouvé."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuration par défaut des semaines de révision",
     "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",

@@ -2883,6 +2883,21 @@
       "draftFailed": "草稿保存失败，请重试。"
     }
   },
+  "learnerForms": {
+    "pageTitle": "表单",
+    "pageSubtitle": "查看并管理所有表单",
+    "table": {
+      "columns": {
+        "formName": "表单名称",
+        "description": "描述",
+        "type": "类型",
+        "createdAt": "创建时间",
+        "actions": "操作"
+      },
+      "loading": "加载中...",
+      "noResults": "未找到表单。"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

@@ -6,12 +6,14 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface FormSubmitPageContentProps {
   formId: string;
 }
 
 export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
+  const t = useTranslations("learnerFormSubmit");
   const {
     data: formDetails,
     isLoading,
@@ -26,8 +28,8 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
     return (
       <div className="space-y-6 px-4 lg:px-6">
         <PageHeader
-          title="Submit Form"
-          subtitle="Fill out the form below"
+          title={t("page.title")}
+          subtitle={t("page.subtitle")}
           icon={FileText}
           showBackButton
           backButtonHref="/learner-forms"
@@ -49,8 +51,8 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
     return (
       <div className="space-y-6 px-4 lg:px-6">
         <PageHeader
-          title="Submit Form"
-          subtitle="Fill out the form below"
+          title={t("page.title")}
+          subtitle={t("page.subtitle")}
           icon={FileText}
           showBackButton
           backButtonHref="/learner-forms"
@@ -61,8 +63,8 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
               <AlertCircle className="h-4 w-4 text-white" />
               <p className="text-sm text-destructive">
                 {error
-                  ? "Failed to load form. Please try again."
-                  : "Form not found."}
+                  ? t("page.loadFailed")
+                  : t("page.notFound")}
               </p>
             </div>
           </CardContent>
@@ -74,8 +76,8 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
   return (
     <div className="space-y-6 px-4 lg:px-6">
       <PageHeader
-        title={formDetails.data.form_name || "Submit Form"}
-        subtitle={formDetails.data.description || "Fill out the form below"}
+        title={formDetails.data.form_name || t("page.title")}
+        subtitle={formDetails.data.description || t("page.subtitle")}
         icon={FileText}
         showBackButton
         backButtonHref="/learner-forms"

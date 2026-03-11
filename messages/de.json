@@ -2241,6 +2241,49 @@
       "clearFailed": "Löschen der Bestätigungen fehlgeschlagen. Bitte erneut versuchen."
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Formular einreichen",
+      "subtitle": "Füllen Sie das Formular unten aus",
+      "loadFailed": "Formular konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "notFound": "Formular nicht gefunden."
+    },
+    "signature": {
+      "sign": "Unterschreiben",
+      "editSignature": "Unterschrift bearbeiten",
+      "dialogTitle": "Hier unterschreiben",
+      "dialogDescription": "Zeichnen Sie Ihre Unterschrift in das Feld unten",
+      "clear": "Löschen",
+      "saveSignature": "Unterschrift speichern",
+      "alt": "Unterschrift"
+    },
+    "fileUpload": {
+      "chooseFile": "Datei wählen",
+      "selected": "Ausgewählt: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "Dem Formular wurden keine Felder hinzugefügt.",
+      "lockedMessage": "Dieses Formular ist derzeit gesperrt und kann nicht bearbeitet werden. Wenden Sie sich an Ihren Trainer oder Administrator.",
+      "clearForm": "Formular leeren",
+      "saveAsDraft": "Als Entwurf speichern",
+      "saving": "Wird gespeichert...",
+      "submit": "Einreichen",
+      "submitting": "Wird gesendet..."
+    },
+    "validation": {
+      "email": "{label} muss eine gültige E-Mail sein",
+      "number": "{label} muss eine Zahl sein",
+      "phone": "{label} darf nur Zahlen enthalten",
+      "required": "{label} ist erforderlich",
+      "fileTooLarge": "{label} ist zu groß (max. 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "Formular erfolgreich eingereicht!",
+      "submitFailed": "Formular konnte nicht eingereicht werden. Bitte versuchen Sie es erneut.",
+      "draftSuccess": "Formular als Entwurf gespeichert!",
+      "draftFailed": "Entwurf konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

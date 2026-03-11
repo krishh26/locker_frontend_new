@@ -2240,6 +2240,49 @@
       "learnersForms": "Moduli discenti"
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Invia modulo",
+      "subtitle": "Compila il modulo qui sotto",
+      "loadFailed": "Caricamento modulo non riuscito. Riprova.",
+      "notFound": "Modulo non trovato."
+    },
+    "signature": {
+      "sign": "Firma",
+      "editSignature": "Modifica firma",
+      "dialogTitle": "Firma qui",
+      "dialogDescription": "Disegna la tua firma nel riquadro sotto",
+      "clear": "Cancella",
+      "saveSignature": "Salva firma",
+      "alt": "Firma"
+    },
+    "fileUpload": {
+      "chooseFile": "Scegli file",
+      "selected": "Selezionato: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "Nessun campo aggiunto al modulo.",
+      "lockedMessage": "Questo modulo è bloccato e non può essere modificato. Per modifiche, contatta il tuo formatore o l'amministratore.",
+      "clearForm": "Svuota modulo",
+      "saveAsDraft": "Salva come bozza",
+      "saving": "Salvataggio...",
+      "submit": "Invia",
+      "submitting": "Invio in corso..."
+    },
+    "validation": {
+      "email": "{label} deve essere un'email valida",
+      "number": "{label} deve essere un numero",
+      "phone": "{label} deve contenere solo numeri",
+      "required": "{label} è obbligatorio",
+      "fileTooLarge": "{label} è troppo grande (max 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "Modulo inviato con successo!",
+      "submitFailed": "Invio modulo non riuscito. Riprova.",
+      "draftSuccess": "Modulo salvato come bozza!",
+      "draftFailed": "Salvataggio bozza non riuscito. Riprova."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configurazione settimane di revisione predefinite",
     "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",

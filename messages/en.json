@@ -3194,6 +3194,49 @@
       "csvSuccess": "CSV exported successfully"
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Submit Form",
+      "subtitle": "Fill out the form below",
+      "loadFailed": "Failed to load form. Please try again.",
+      "notFound": "Form not found."
+    },
+    "signature": {
+      "sign": "Sign",
+      "editSignature": "Edit Signature",
+      "dialogTitle": "Sign Here",
+      "dialogDescription": "Draw your signature in the box below",
+      "clear": "Clear",
+      "saveSignature": "Save Signature",
+      "alt": "Signature"
+    },
+    "fileUpload": {
+      "chooseFile": "Choose File",
+      "selected": "Selected: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "No fields added to the form.",
+      "lockedMessage": "This form is currently locked and cannot be edited. If you need to make changes, please contact your trainer or administrator for assistance.",
+      "clearForm": "Clear Form",
+      "saveAsDraft": "Save as Draft",
+      "saving": "Saving...",
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    },
+    "validation": {
+      "email": "{label} must be a valid email",
+      "number": "{label} must be a number",
+      "phone": "{label} must contain only numbers",
+      "required": "{label} is required",
+      "fileTooLarge": "{label} is too large (max 10MB)"
+    },
+    "toast": {
+      "submitSuccess": "Form submitted successfully!",
+      "submitFailed": "Failed to submit form. Please try again.",
+      "draftSuccess": "Form saved as draft!",
+      "draftFailed": "Failed to save draft. Please try again."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

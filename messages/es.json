@@ -2670,6 +2670,49 @@
       "clearFailed": "Error al limpiar reconocimientos. Por favor, inténtelo de nuevo."
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Enviar formulario",
+      "subtitle": "Rellene el formulario a continuación",
+      "loadFailed": "Error al cargar el formulario. Por favor, inténtelo de nuevo.",
+      "notFound": "Formulario no encontrado."
+    },
+    "signature": {
+      "sign": "Firmar",
+      "editSignature": "Editar firma",
+      "dialogTitle": "Firme aquí",
+      "dialogDescription": "Dibuje su firma en el recuadro de abajo",
+      "clear": "Borrar",
+      "saveSignature": "Guardar firma",
+      "alt": "Firma"
+    },
+    "fileUpload": {
+      "chooseFile": "Elegir archivo",
+      "selected": "Seleccionado: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "No se han añadido campos al formulario.",
+      "lockedMessage": "Este formulario está bloqueado y no se puede editar. Si necesita cambios, contacte con su formador o administrador.",
+      "clearForm": "Borrar formulario",
+      "saveAsDraft": "Guardar como borrador",
+      "saving": "Guardando...",
+      "submit": "Enviar",
+      "submitting": "Enviando..."
+    },
+    "validation": {
+      "email": "{label} debe ser un correo válido",
+      "number": "{label} debe ser un número",
+      "phone": "{label} solo puede contener números",
+      "required": "{label} es obligatorio",
+      "fileTooLarge": "{label} es demasiado grande (máx. 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "¡Formulario enviado correctamente!",
+      "submitFailed": "Error al enviar el formulario. Por favor, inténtelo de nuevo.",
+      "draftSuccess": "¡Formulario guardado como borrador!",
+      "draftFailed": "Error al guardar el borrador. Por favor, inténtelo de nuevo."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

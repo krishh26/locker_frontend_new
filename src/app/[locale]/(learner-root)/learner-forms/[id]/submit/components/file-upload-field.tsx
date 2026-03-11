@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Upload, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface FileUploadFieldProps {
   name: string;
@@ -24,6 +25,7 @@ export function FileUploadField({
   error,
   disabled,
 }: FileUploadFieldProps) {
+  const t = useTranslations("learnerFormSubmit");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -65,7 +67,7 @@ export function FileUploadField({
                 className="flex-1"
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {file ? file.name : "Choose File"}
+                {file ? file.name : t("fileUpload.chooseFile")}
               </Button>
               {file && (
                 <Button
@@ -87,7 +89,7 @@ export function FileUploadField({
             {error && <p className="text-sm text-destructive">{error}</p>}
             {file && (
               <p className="text-sm text-muted-foreground">
-                Selected: {file.name} ({(file.size / 1024).toFixed(2)} KB)
+                {t("fileUpload.selected", { name: file.name, size: (file.size / 1024).toFixed(2) })}
               </p>
             )}
           </div>

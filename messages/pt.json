@@ -2882,6 +2882,49 @@
       "learnersForms": "Formulários de formandos"
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Submeter formulário",
+      "subtitle": "Preencha o formulário abaixo",
+      "loadFailed": "Falha ao carregar o formulário. Tente novamente.",
+      "notFound": "Formulário não encontrado."
+    },
+    "signature": {
+      "sign": "Assinar",
+      "editSignature": "Editar assinatura",
+      "dialogTitle": "Assine aqui",
+      "dialogDescription": "Desenhe a sua assinatura na caixa abaixo",
+      "clear": "Limpar",
+      "saveSignature": "Guardar assinatura",
+      "alt": "Assinatura"
+    },
+    "fileUpload": {
+      "chooseFile": "Escolher ficheiro",
+      "selected": "Selecionado: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "Nenhum campo adicionado ao formulário.",
+      "lockedMessage": "Este formulário está bloqueado e não pode ser editado. Para alterações, contacte o seu formador ou administrador.",
+      "clearForm": "Limpar formulário",
+      "saveAsDraft": "Guardar como rascunho",
+      "saving": "A guardar...",
+      "submit": "Submeter",
+      "submitting": "A submeter..."
+    },
+    "validation": {
+      "email": "{label} deve ser um e-mail válido",
+      "number": "{label} deve ser um número",
+      "phone": "{label} deve conter apenas números",
+      "required": "{label} é obrigatório",
+      "fileTooLarge": "{label} é demasiado grande (máx. 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "Formulário submetido com sucesso!",
+      "submitFailed": "Falha ao submeter o formulário. Tente novamente.",
+      "draftSuccess": "Formulário guardado como rascunho!",
+      "draftFailed": "Falha ao guardar o rascunho. Tente novamente."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuração padrão de semanas de revisão",
     "pageSubtitle": "Configure o período de revisão padrão para todos os tipos de formandos sem períodos personalizados",

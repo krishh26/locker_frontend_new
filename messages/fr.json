@@ -2922,6 +2922,49 @@
       "learnersForms": "Formulaires apprenant"
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Soumettre le formulaire",
+      "subtitle": "Remplissez le formulaire ci-dessous",
+      "loadFailed": "Échec du chargement du formulaire. Veuillez réessayer.",
+      "notFound": "Formulaire introuvable."
+    },
+    "signature": {
+      "sign": "Signer",
+      "editSignature": "Modifier la signature",
+      "dialogTitle": "Signez ici",
+      "dialogDescription": "Dessinez votre signature dans le cadre ci-dessous",
+      "clear": "Effacer",
+      "saveSignature": "Enregistrer la signature",
+      "alt": "Signature"
+    },
+    "fileUpload": {
+      "chooseFile": "Choisir un fichier",
+      "selected": "Sélectionné : {name} ({size} Ko)"
+    },
+    "form": {
+      "noFields": "Aucun champ ajouté au formulaire.",
+      "lockedMessage": "Ce formulaire est verrouillé et ne peut pas être modifié. Pour toute modification, contactez votre formateur ou l'administrateur.",
+      "clearForm": "Effacer le formulaire",
+      "saveAsDraft": "Enregistrer comme brouillon",
+      "saving": "Enregistrement...",
+      "submit": "Soumettre",
+      "submitting": "Envoi en cours..."
+    },
+    "validation": {
+      "email": "{label} doit être un e-mail valide",
+      "number": "{label} doit être un nombre",
+      "phone": "{label} ne doit contenir que des chiffres",
+      "required": "{label} est obligatoire",
+      "fileTooLarge": "{label} est trop volumineux (max 10 Mo)"
+    },
+    "toast": {
+      "submitSuccess": "Formulaire soumis avec succès !",
+      "submitFailed": "Échec de la soumission du formulaire. Veuillez réessayer.",
+      "draftSuccess": "Formulaire enregistré comme brouillon !",
+      "draftFailed": "Échec de l'enregistrement du brouillon. Veuillez réessayer."
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuration par défaut des semaines de révision",
     "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",

@@ -2840,6 +2840,49 @@
       "learnersForms": "学员表单"
     }
   },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "提交表单",
+      "subtitle": "请填写下方表单",
+      "loadFailed": "加载表单失败，请重试。",
+      "notFound": "未找到表单。"
+    },
+    "signature": {
+      "sign": "签名",
+      "editSignature": "编辑签名",
+      "dialogTitle": "在此签名",
+      "dialogDescription": "在下方方框中绘制您的签名",
+      "clear": "清除",
+      "saveSignature": "保存签名",
+      "alt": "签名"
+    },
+    "fileUpload": {
+      "chooseFile": "选择文件",
+      "selected": "已选：{name}（{size} KB）"
+    },
+    "form": {
+      "noFields": "表单中未添加任何字段。",
+      "lockedMessage": "此表单当前已锁定，无法编辑。如需修改，请联系您的培训师或管理员。",
+      "clearForm": "清空表单",
+      "saveAsDraft": "另存为草稿",
+      "saving": "保存中...",
+      "submit": "提交",
+      "submitting": "提交中..."
+    },
+    "validation": {
+      "email": "{label} 必须是有效的电子邮件",
+      "number": "{label} 必须是数字",
+      "phone": "{label} 只能包含数字",
+      "required": "{label} 为必填项",
+      "fileTooLarge": "{label} 文件过大（最大 10 MB）"
+    },
+    "toast": {
+      "submitSuccess": "表单提交成功！",
+      "submitFailed": "表单提交失败，请重试。",
+      "draftSuccess": "表单已保存为草稿！",
+      "draftFailed": "草稿保存失败，请重试。"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

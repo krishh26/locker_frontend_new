@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -45,6 +46,7 @@ export function ManageSessionFilesDialog({
   learnerPlanId,
   onSuccess,
 }: ManageSessionFilesDialogProps) {
+  const t = useTranslations("learningPlan");
   const [who, setWho] = useState<"This Aim" | "All Aim">("This Aim");
   const [fileType, setFileType] = useState<string>("General Files");
   const [uploadMode, setUploadMode] = useState<"File Upload" | "Form Selection">("File Upload");
@@ -74,7 +76,7 @@ export function ManageSessionFilesDialog({
 
   const handleAddUpload = async () => {
     if (!selectedFile) {
-      toast.error("Please select a file");
+      toast.error(t("dialogs.manageSessionFiles.toast.selectFile"));
       return;
     }
 
@@ -108,19 +110,19 @@ export function ManageSessionFilesDialog({
 
     try {
       await addFormToLearner(formData).unwrap();
-      toast.success("File uploaded successfully");
+      toast.success(t("dialogs.manageSessionFiles.toast.uploadSuccess"));
       refetch();
       onSuccess?.();
       setSelectedFile(null);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to upload file");
+      toast.error(t("dialogs.manageSessionFiles.toast.uploadFailed"));
     }
   };
 
   const handleAddForm = async () => {
     if (!selectedForm) {
-      toast.error("Please select a form");
+      toast.error(t("dialogs.manageSessionFiles.toast.selectForm"));
       return;
     }
 
@@ -157,13 +159,13 @@ export function ManageSessionFilesDialog({
 
     try {
       await addFormToLearner(formData).unwrap();
-      toast.success("Form added successfully");
+      toast.success(t("dialogs.manageSessionFiles.toast.addFormSuccess"));
       refetch();
       onSuccess?.();
       setSelectedForm("");
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add form");
+      toast.error(t("dialogs.manageSessionFiles.toast.addFormFailed"));
     }
   };
 
@@ -171,59 +173,81 @@ export function ManageSessionFilesDialog({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Manage Session Files</DialogTitle>
+          <DialogTitle>{t("dialogs.manageSessionFiles.title")}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
           {/* 1. Who */}
           <div>
-            <Label className="text-base font-semibold mb-2 block">1. Who:</Label>
+            <Label className="text-base font-semibold mb-2 block">
+              {t("dialogs.manageSessionFiles.sections.who")}
+            </Label>
             <RadioGroup value={who} onValueChange={(value) => setWho(value as "This Aim" | "All Aim")}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="This Aim" id="this-aim" />
-                <Label htmlFor="this-aim" className="cursor-pointer">This Aim</Label>
+                <Label htmlFor="this-aim" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.who.thisAim")}
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="All Aim" id="all-aim" />
-                <Label htmlFor="all-aim" className="cursor-pointer">All Aims</Label>
+                <Label htmlFor="all-aim" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.who.allAim")}
+                </Label>
               </div>
             </RadioGroup>
           </div>
 
           {/* 2. File Type */}
           <div>
-            <Label className="text-base font-semibold mb-2 block">2. File Type:</Label>
+            <Label className="text-base font-semibold mb-2 block">
+              {t("dialogs.manageSessionFiles.sections.fileType")}
+            </Label>
             <RadioGroup value={fileType} onValueChange={setFileType}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="ILP File" id="ilp-file" />
-                <Label htmlFor="ilp-file" className="cursor-pointer">ILP files</Label>
+                <Label htmlFor="ilp-file" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.fileTypes.ilpFile")}
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="Review Files" id="review-files" />
-                <Label htmlFor="review-files" className="cursor-pointer">Review files</Label>
+                <Label htmlFor="review-files" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.fileTypes.reviewFiles")}
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="Assessment Files" id="assessment-files" />
-                <Label htmlFor="assessment-files" className="cursor-pointer">Assessment files</Label>
+                <Label htmlFor="assessment-files" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.fileTypes.assessmentFiles")}
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="General Files" id="general-files" />
-                <Label htmlFor="general-files" className="cursor-pointer">General files</Label>
+                <Label htmlFor="general-files" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.fileTypes.generalFiles")}
+                </Label>
               </div>
             </RadioGroup>
           </div>
 
           {/* 3. Upload Type */}
           <div>
-            <Label className="text-base font-semibold mb-2 block">3. Upload Type:</Label>
+            <Label className="text-base font-semibold mb-2 block">
+              {t("dialogs.manageSessionFiles.sections.uploadType")}
+            </Label>
             <RadioGroup value={uploadMode} onValueChange={(value) => setUploadMode(value as "File Upload" | "Form Selection")}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="File Upload" id="file-upload" />
-                <Label htmlFor="file-upload" className="cursor-pointer">Upload file</Label>
+                <Label htmlFor="file-upload" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.uploadModes.fileUpload")}
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="Form Selection" id="form-selection" />
-                <Label htmlFor="form-selection" className="cursor-pointer">Select Form</Label>
+                <Label htmlFor="form-selection" className="cursor-pointer">
+                  {t("dialogs.manageSessionFiles.uploadModes.formSelection")}
+                </Label>
               </div>
             </RadioGroup>
 
@@ -231,7 +255,7 @@ export function ManageSessionFilesDialog({
               <div className="mt-4 flex items-center gap-4">
                 <Button variant="outline" asChild>
                   <label className="cursor-pointer">
-                    Choose File
+                    {t("dialogs.manageSessionFiles.buttons.chooseFile")}
                     <input
                       type="file"
                       className="hidden"
@@ -250,14 +274,16 @@ export function ManageSessionFilesDialog({
                   onClick={handleAddUpload}
                   disabled={!selectedFile || isAddFormToLearnerLoading}
                 >
-                  {isAddFormToLearnerLoading ? "Uploading..." : "Upload"}
+                  {isAddFormToLearnerLoading
+                    ? t("dialogs.manageSessionFiles.buttons.uploading")
+                    : t("dialogs.manageSessionFiles.buttons.upload")}
                 </Button>
               </div>
             ) : (
               <div className="mt-4 flex items-center gap-4">
                 <Select value={selectedForm} onValueChange={setSelectedForm}>
                   <SelectTrigger className="w-[300px]">
-                    <SelectValue placeholder="Select Form" />
+                    <SelectValue placeholder={t("dialogs.manageSessionFiles.placeholders.selectForm")} />
                   </SelectTrigger>
                   <SelectContent>
                     {availableForms.map((form: any) => (
@@ -272,7 +298,9 @@ export function ManageSessionFilesDialog({
                   onClick={handleAddForm}
                   disabled={!selectedForm || isAddFormToLearnerLoading}
                 >
-                  {isAddFormToLearnerLoading ? "Adding..." : "Add Form"}
+                  {isAddFormToLearnerLoading
+                    ? t("dialogs.manageSessionFiles.buttons.adding")
+                    : t("dialogs.manageSessionFiles.buttons.add")}
                 </Button>
               </div>
             )}
@@ -284,10 +312,10 @@ export function ManageSessionFilesDialog({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Date Uploaded</TableHead>
+                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.name")}</TableHead>
+                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.type")}</TableHead>
+                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.description")}</TableHead>
+                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.dateUploaded")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -299,7 +327,7 @@ export function ManageSessionFilesDialog({
                       <TableCell>
                         {file.created_at
                           ? format(new Date(file.created_at), "MM-dd-yyyy")
-                          : "-"}
+                          : t("common.dash")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -311,7 +339,7 @@ export function ManageSessionFilesDialog({
 
         <DialogFooter>
           <Button variant="destructive" onClick={onClose}>
-            Cancel/Close
+            {t("dialogs.manageSessionFiles.buttons.cancelClose")}
           </Button>
         </DialogFooter>
       </DialogContent>

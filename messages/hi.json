@@ -2995,6 +2995,257 @@
       "saveError": "हस्ताक्षर सहेजने में त्रुटि"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "लर्निंग प्लान",
+      "subtitle": "लर्निंग सत्रों को प्रबंधित और ट्रैक करें"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "सत्र नंबर",
+        "title": "शीर्षक",
+        "date": "तारीख",
+        "time": "समय",
+        "type": "प्रकार",
+        "assessor": "असेसर",
+        "attended": "उपस्थिति",
+        "courses": "कोर्स",
+        "feedback": "फीडबैक"
+      },
+      "loadingSessions": "सत्र लोड हो रहे हैं...",
+      "noLearnerSelected": "कोई शिक्षार्थी चयनित नहीं",
+      "noResults": "कोई परिणाम नहीं।",
+      "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं",
+      "searchPlaceholder": "सत्र खोजें...",
+      "learnerLabel": "शिक्षार्थी",
+      "nameLabel": "नाम:",
+      "filters": {
+        "type": {
+          "label": "प्रकार",
+          "placeholder": "प्रकार चुनें"
+        },
+        "attended": {
+          "label": "उपस्थिति स्थिति",
+          "placeholder": "स्थिति चुनें"
+        }
+      },
+      "attendedSelectPlaceholder": "चुनें",
+      "export": {
+        "button": "एक्सपोर्ट",
+        "csv": "CSV के रूप में एक्सपोर्ट",
+        "pdf": "PDF के रूप में एक्सपोर्ट",
+        "csvNotImplemented": "CSV एक्सपोर्ट जल्द लागू किया जाएगा",
+        "pdfNotImplemented": "PDF एक्सपोर्ट जल्द लागू किया जाएगा"
+      },
+      "buttons": {
+        "addSession": "सत्र जोड़ें"
+      },
+      "toast": {
+        "sessionUpdated": "सत्र सफलतापूर्वक अपडेट हुआ",
+        "sessionUpdateFailed": "सत्र अपडेट करने में विफल"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "कोई कोर्स नहीं",
+      "buttons": {
+        "addFiles": "फाइलें जोड़ें",
+        "addAction": "एक्शन जोड़ें"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "कौन",
+          "action": "एक्शन",
+          "description": "विवरण",
+          "file": "फाइल",
+          "units": "यूनिट्स",
+          "targetDate": "लक्ष्य तारीख",
+          "feedback": "फीडबैक",
+          "duration": "अवधि",
+          "status": "स्थिति",
+          "actions": "कार्रवाइयाँ"
+        },
+        "whoLabels": {
+          "learner": "शिक्षार्थी",
+          "employer": "नियोक्ता"
+        },
+        "unitPrefix": "यूनिट {unitName}",
+        "mins": "{count} मिनट",
+        "notStarted": "शुरू नहीं हुआ",
+        "feedbackLabels": {
+          "trainer": "प्रशिक्षक:",
+          "learner": "शिक्षार्थी:"
+        },
+        "tooltips": {
+          "edit": "संपादित करें",
+          "addFile": "फाइल जोड़ें",
+          "delete": "हटाएं"
+        },
+        "toast": {
+          "deleteNotImplemented": "एक्शन हटाने की सुविधा जल्द लागू की जाएगी"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "सत्र जोड़ें",
+        "description": "इस शिक्षार्थी के लिए नया सत्र बनाएं। प्रारंभ तिथि और अवधि आवश्यक है।",
+        "courseContextWarning": "सत्र जोड़ने के लिए कोर्स पेज से लर्निंग प्लान खोलें (कोर्स कॉन्टेक्स्ट आवश्यक है)।",
+        "fields": {
+          "title": "शीर्षक",
+          "description": "विवरण",
+          "location": "स्थान",
+          "startDateTime": "प्रारंभ तिथि और समय",
+          "duration": "अवधि (घंटे:मिनट)",
+          "sessionType": "सत्र प्रकार"
+        },
+        "placeholders": {
+          "title": "सत्र शीर्षक",
+          "description": "वैकल्पिक विवरण",
+          "location": "उदा. कमरा 1, ऑनलाइन",
+          "sessionType": "प्रकार चुनें"
+        },
+        "buttons": {
+          "cancel": "रद्द करें",
+          "submit": "सत्र जोड़ें",
+          "submitting": "जोड़ा जा रहा है..."
+        },
+        "toast": {
+          "courseRequired": "कम से कम एक कोर्स आवश्यक है। सत्र जोड़ने के लिए कोर्स से लर्निंग प्लान खोलें।",
+          "success": "सत्र सफलतापूर्वक जोड़ा गया",
+          "failed": "सत्र जोड़ने में विफल"
+        },
+        "validation": {
+          "titleRequired": "शीर्षक आवश्यक है",
+          "locationRequired": "स्थान आवश्यक है",
+          "startDateRequired": "प्रारंभ तिथि आवश्यक है",
+          "durationRequired": "अवधि आवश्यक है",
+          "sessionTypeRequired": "सत्र प्रकार आवश्यक है"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "एक्शन सफलतापूर्वक जोड़ा गया",
+          "addFailed": "एक्शन जोड़ने में विफल",
+          "updated": "एक्शन सफलतापूर्वक अपडेट हुआ",
+          "updateFailed": "एक्शन अपडेट करने में विफल"
+        },
+        "validation": {
+          "actionNameRequired": "एक्शन नाम आवश्यक है",
+          "descriptionTooLong": "विवरण 1000 अक्षरों से अधिक नहीं हो सकता",
+          "targetDateRequired": "लक्ष्य तारीख आवश्यक है",
+          "whoRequired": "कृपया एक्शन प्रकार चुनें"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "सत्र फाइलें प्रबंधित करें",
+        "sections": {
+          "who": "1. कौन:",
+          "fileType": "2. फाइल प्रकार:",
+          "uploadType": "3. अपलोड प्रकार:"
+        },
+        "tableHeaders": {
+          "name": "नाम",
+          "type": "प्रकार",
+          "description": "विवरण",
+          "dateUploaded": "अपलोड की तारीख"
+        },
+        "who": {
+          "thisAim": "यह लक्ष्य",
+          "allAim": "सभी लक्ष्य"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP फाइलें",
+          "reviewFiles": "रिव्यू फाइलें",
+          "assessmentFiles": "असेसमेंट फाइलें",
+          "generalFiles": "जनरल फाइलें"
+        },
+        "uploadModes": {
+          "fileUpload": "फाइल अपलोड करें",
+          "formSelection": "फॉर्म चुनें"
+        },
+        "buttons": {
+          "chooseFile": "फाइल चुनें",
+          "upload": "अपलोड",
+          "uploading": "अपलोड हो रहा है...",
+          "add": "जोड़ें",
+          "adding": "जोड़ा जा रहा है...",
+          "cancelClose": "रद्द/बंद करें"
+        },
+        "placeholders": {
+          "selectForm": "फॉर्म चुनें"
+        },
+        "toast": {
+          "selectFile": "कृपया एक फाइल चुनें",
+          "uploadSuccess": "फाइल सफलतापूर्वक अपलोड हुई",
+          "uploadFailed": "फाइल अपलोड करने में विफल",
+          "selectForm": "कृपया एक फॉर्म चुनें",
+          "addFormSuccess": "फॉर्म सफलतापूर्वक जोड़ा गया",
+          "addFormFailed": "फॉर्म जोड़ने में विफल"
+        }
+      },
+      "manageActionFile": {
+        "title": "एक्शन फाइलें प्रबंधित करें",
+        "fieldLabel": "फाइल अपलोड",
+        "helper": {
+          "dragDrop": "अपनी फाइलें यहाँ ड्रैग और ड्रॉप करें या",
+          "browse": "ब्राउज़",
+          "maxSize": "अधिकतम 10MB फाइलें अनुमत हैं"
+        },
+        "buttons": {
+          "cancel": "रद्द करें",
+          "upload": "अपलोड",
+          "uploading": "अपलोड हो रहा है..."
+        },
+        "toast": {
+          "uploadSuccess": "फाइल सफलतापूर्वक अपलोड हुई",
+          "uploadFailed": "फाइल अपलोड करने में विफल"
+        },
+        "validation": {
+          "fileRequired": "फाइल आवश्यक है",
+          "fileTooLarge": "फाइल का आकार 10MB से कम होना चाहिए",
+          "unsupportedFormat": "असमर्थित फाइल प्रारूप"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "सभी",
+        "general": "जनरल",
+        "induction": "इंडक्शन",
+        "formalReview": "औपचारिक समीक्षा",
+        "telephone": "टेलीफोन",
+        "exitSession": "एग्जिट सत्र",
+        "outOfTheWorkplace": "कार्यस्थल के बाहर",
+        "testsExams": "टेस्ट/एग्ज़ाम",
+        "learnerSupport": "शिक्षार्थी सहायता",
+        "initialSession": "प्रारंभिक सत्र",
+        "gatewayReady": "गेटवे रेडी",
+        "epa": "EPA",
+        "furloughed": "फर्लो"
+      },
+      "attendedStatuses": {
+        "all": "सभी",
+        "attended": "उपस्थित",
+        "cancelled": "रद्द",
+        "cancelledByTrainer": "प्रशिक्षक द्वारा रद्द",
+        "cancelledByLearner": "शिक्षार्थी द्वारा रद्द",
+        "cancelledByEmployee": "कर्मचारी द्वारा रद्द",
+        "learnerNotAttended": "शिक्षार्थी उपस्थित नहीं"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "असेसमेंट",
+        "reviewFiles": "रिव्यू",
+        "generalFiles": "जनरल",
+        "evidence": "साक्ष्य"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "अज्ञात"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
     "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",

@@ -2988,6 +2988,257 @@
       "saveError": "حدث خطأ أثناء حفظ التوقيع"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "خطة التعلم",
+      "subtitle": "إدارة وتتبع جلسات التعلم"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "رقم الجلسة",
+        "title": "العنوان",
+        "date": "التاريخ",
+        "time": "الوقت",
+        "type": "النوع",
+        "assessor": "المُقيِّم",
+        "attended": "الحضور",
+        "courses": "الدورات",
+        "feedback": "التقييم"
+      },
+      "loadingSessions": "جارٍ تحميل الجلسات...",
+      "noLearnerSelected": "لم يتم اختيار متعلم",
+      "noResults": "لا توجد نتائج.",
+      "noSessionsAvailable": "لا توجد جلسات متاحة",
+      "searchPlaceholder": "ابحث في الجلسات...",
+      "learnerLabel": "المتعلم",
+      "nameLabel": "الاسم:",
+      "filters": {
+        "type": {
+          "label": "النوع",
+          "placeholder": "اختر النوع"
+        },
+        "attended": {
+          "label": "حالة الحضور",
+          "placeholder": "اختر الحالة"
+        }
+      },
+      "attendedSelectPlaceholder": "اختر",
+      "export": {
+        "button": "تصدير",
+        "csv": "تصدير كـ CSV",
+        "pdf": "تصدير كـ PDF",
+        "csvNotImplemented": "سيتم تنفيذ تصدير CSV لاحقًا",
+        "pdfNotImplemented": "سيتم تنفيذ تصدير PDF لاحقًا"
+      },
+      "buttons": {
+        "addSession": "إضافة جلسة"
+      },
+      "toast": {
+        "sessionUpdated": "تم تحديث الجلسة بنجاح",
+        "sessionUpdateFailed": "فشل تحديث الجلسة"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "لا توجد دورات",
+      "buttons": {
+        "addFiles": "إضافة ملفات",
+        "addAction": "إضافة إجراء"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "من",
+          "action": "الإجراء",
+          "description": "الوصف",
+          "file": "ملف",
+          "units": "الوحدات",
+          "targetDate": "تاريخ الاستهداف",
+          "feedback": "التعليقات",
+          "duration": "المدة",
+          "status": "الحالة",
+          "actions": "الإجراءات"
+        },
+        "whoLabels": {
+          "learner": "المتعلم",
+          "employer": "صاحب العمل"
+        },
+        "unitPrefix": "الوحدة {unitName}",
+        "mins": "{count} دقيقة",
+        "notStarted": "لم يبدأ",
+        "feedbackLabels": {
+          "trainer": "المدرب:",
+          "learner": "المتعلم:"
+        },
+        "tooltips": {
+          "edit": "تعديل",
+          "addFile": "إضافة ملف",
+          "delete": "حذف"
+        },
+        "toast": {
+          "deleteNotImplemented": "سيتم تنفيذ وظيفة حذف الإجراء"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "إضافة جلسة",
+        "description": "أنشئ جلسة جديدة لهذا المتعلم. تاريخ البدء والمدة مطلوبة.",
+        "courseContextWarning": "افتح خطة التعلم من صفحة الدورة لإضافة جلسة (سياق الدورة مطلوب).",
+        "fields": {
+          "title": "العنوان",
+          "description": "الوصف",
+          "location": "الموقع",
+          "startDateTime": "تاريخ ووقت البدء",
+          "duration": "المدة (ساعات:دقائق)",
+          "sessionType": "نوع الجلسة"
+        },
+        "placeholders": {
+          "title": "عنوان الجلسة",
+          "description": "وصف اختياري",
+          "location": "مثال: الغرفة 1، عبر الإنترنت",
+          "sessionType": "اختر النوع"
+        },
+        "buttons": {
+          "cancel": "إلغاء",
+          "submit": "إضافة جلسة",
+          "submitting": "جارٍ الإضافة..."
+        },
+        "toast": {
+          "courseRequired": "مطلوب اختيار دورة واحدة على الأقل. افتح خطة التعلم من دورة لإضافة جلسة.",
+          "success": "تمت إضافة الجلسة بنجاح",
+          "failed": "فشل إضافة الجلسة"
+        },
+        "validation": {
+          "titleRequired": "العنوان مطلوب",
+          "locationRequired": "الموقع مطلوب",
+          "startDateRequired": "تاريخ البدء مطلوب",
+          "durationRequired": "المدة مطلوبة",
+          "sessionTypeRequired": "نوع الجلسة مطلوب"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "تمت إضافة الإجراء بنجاح",
+          "addFailed": "فشل إضافة الإجراء",
+          "updated": "تم تحديث الإجراء بنجاح",
+          "updateFailed": "فشل تحديث الإجراء"
+        },
+        "validation": {
+          "actionNameRequired": "اسم الإجراء مطلوب",
+          "descriptionTooLong": "لا يمكن أن يتجاوز الوصف 1000 حرف",
+          "targetDateRequired": "تاريخ الاستهداف مطلوب",
+          "whoRequired": "يرجى اختيار نوع الإجراء"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "إدارة ملفات الجلسة",
+        "sections": {
+          "who": "1. من:",
+          "fileType": "2. نوع الملف:",
+          "uploadType": "3. نوع الرفع:"
+        },
+        "tableHeaders": {
+          "name": "الاسم",
+          "type": "النوع",
+          "description": "الوصف",
+          "dateUploaded": "تاريخ الرفع"
+        },
+        "who": {
+          "thisAim": "هذا الهدف",
+          "allAim": "كل الأهداف"
+        },
+        "fileTypes": {
+          "ilpFile": "ملفات ILP",
+          "reviewFiles": "ملفات المراجعة",
+          "assessmentFiles": "ملفات التقييم",
+          "generalFiles": "ملفات عامة"
+        },
+        "uploadModes": {
+          "fileUpload": "رفع ملف",
+          "formSelection": "اختيار نموذج"
+        },
+        "buttons": {
+          "chooseFile": "اختر ملفًا",
+          "upload": "رفع",
+          "uploading": "جارٍ الرفع...",
+          "add": "إضافة",
+          "adding": "جارٍ الإضافة...",
+          "cancelClose": "إلغاء/إغلاق"
+        },
+        "placeholders": {
+          "selectForm": "اختر نموذجًا"
+        },
+        "toast": {
+          "selectFile": "يرجى اختيار ملف",
+          "uploadSuccess": "تم رفع الملف بنجاح",
+          "uploadFailed": "فشل رفع الملف",
+          "selectForm": "يرجى اختيار نموذج",
+          "addFormSuccess": "تمت إضافة النموذج بنجاح",
+          "addFormFailed": "فشل إضافة النموذج"
+        }
+      },
+      "manageActionFile": {
+        "title": "إدارة ملفات الإجراءات",
+        "fieldLabel": "رفع ملف",
+        "helper": {
+          "dragDrop": "اسحب وأفلت ملفاتك هنا أو",
+          "browse": "تصفح",
+          "maxSize": "يسمح بملفات حتى 10MB"
+        },
+        "buttons": {
+          "cancel": "إلغاء",
+          "upload": "رفع",
+          "uploading": "جارٍ الرفع..."
+        },
+        "toast": {
+          "uploadSuccess": "تم رفع الملف بنجاح",
+          "uploadFailed": "فشل رفع الملف"
+        },
+        "validation": {
+          "fileRequired": "الملف مطلوب",
+          "fileTooLarge": "يجب أن يكون حجم الملف أقل من 10MB",
+          "unsupportedFormat": "تنسيق ملف غير مدعوم"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "الكل",
+        "general": "عام",
+        "induction": "توجيه",
+        "formalReview": "مراجعة رسمية",
+        "telephone": "هاتفي",
+        "exitSession": "جلسة خروج",
+        "outOfTheWorkplace": "خارج مكان العمل",
+        "testsExams": "اختبارات/امتحانات",
+        "learnerSupport": "دعم المتعلم",
+        "initialSession": "جلسة أولية",
+        "gatewayReady": "جاهز للبوابة",
+        "epa": "EPA",
+        "furloughed": "إجازة مؤقتة"
+      },
+      "attendedStatuses": {
+        "all": "الكل",
+        "attended": "حضر",
+        "cancelled": "ملغي",
+        "cancelledByTrainer": "ملغي من المدرب",
+        "cancelledByLearner": "ملغي من المتعلم",
+        "cancelledByEmployee": "ملغي من الموظف",
+        "learnerNotAttended": "لم يحضر المتعلم"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "التقييم",
+        "reviewFiles": "المراجعة",
+        "generalFiles": "عام",
+        "evidence": "دليل"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "غير معروف"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "إعدادات أسابيع المراجعة الافتراضية",
     "pageSubtitle": "تكوين إعدادات فترة المراجعة الافتراضية لجميع أنواع المتعلمين الذين لا يملكون فترة مراجعة مخصصة",

@@ -2953,6 +2953,257 @@
       "saveError": "保存签名时出错"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "学习计划",
+      "subtitle": "管理并跟踪学习会话"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "会话编号",
+        "title": "标题",
+        "date": "日期",
+        "time": "时间",
+        "type": "类型",
+        "assessor": "评估者",
+        "attended": "出席",
+        "courses": "课程",
+        "feedback": "反馈"
+      },
+      "loadingSessions": "正在加载会话...",
+      "noLearnerSelected": "未选择学员",
+      "noResults": "无结果。",
+      "noSessionsAvailable": "暂无可用会话",
+      "searchPlaceholder": "搜索会话...",
+      "learnerLabel": "学员",
+      "nameLabel": "姓名：",
+      "filters": {
+        "type": {
+          "label": "类型",
+          "placeholder": "选择类型"
+        },
+        "attended": {
+          "label": "出席状态",
+          "placeholder": "选择状态"
+        }
+      },
+      "attendedSelectPlaceholder": "选择",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvNotImplemented": "CSV 导出功能将稍后实现",
+        "pdfNotImplemented": "PDF 导出功能将稍后实现"
+      },
+      "buttons": {
+        "addSession": "添加会话"
+      },
+      "toast": {
+        "sessionUpdated": "会话更新成功",
+        "sessionUpdateFailed": "会话更新失败"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "无课程",
+      "buttons": {
+        "addFiles": "添加文件",
+        "addAction": "添加行动"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "对象",
+          "action": "行动",
+          "description": "描述",
+          "file": "文件",
+          "units": "单元",
+          "targetDate": "目标日期",
+          "feedback": "反馈",
+          "duration": "时长",
+          "status": "状态",
+          "actions": "操作"
+        },
+        "whoLabels": {
+          "learner": "学员",
+          "employer": "雇主"
+        },
+        "unitPrefix": "单元 {unitName}",
+        "mins": "{count} 分钟",
+        "notStarted": "未开始",
+        "feedbackLabels": {
+          "trainer": "培训师：",
+          "learner": "学员："
+        },
+        "tooltips": {
+          "edit": "编辑",
+          "addFile": "添加文件",
+          "delete": "删除"
+        },
+        "toast": {
+          "deleteNotImplemented": "删除行动功能将稍后实现"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "添加会话",
+        "description": "为该学员创建新会话。开始日期和时长为必填项。",
+        "courseContextWarning": "请从课程页面打开学习计划以添加会话（需要课程上下文）。",
+        "fields": {
+          "title": "标题",
+          "description": "描述",
+          "location": "地点",
+          "startDateTime": "开始日期和时间",
+          "duration": "时长（小时:分钟）",
+          "sessionType": "会话类型"
+        },
+        "placeholders": {
+          "title": "会话标题",
+          "description": "可选描述",
+          "location": "例如：教室 1，线上",
+          "sessionType": "选择类型"
+        },
+        "buttons": {
+          "cancel": "取消",
+          "submit": "添加会话",
+          "submitting": "添加中..."
+        },
+        "toast": {
+          "courseRequired": "至少需要一个课程。请从课程打开学习计划以添加会话。",
+          "success": "会话添加成功",
+          "failed": "添加会话失败"
+        },
+        "validation": {
+          "titleRequired": "标题为必填项",
+          "locationRequired": "地点为必填项",
+          "startDateRequired": "开始日期为必填项",
+          "durationRequired": "时长为必填项",
+          "sessionTypeRequired": "会话类型为必填项"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "行动添加成功",
+          "addFailed": "添加行动失败",
+          "updated": "行动更新成功",
+          "updateFailed": "更新行动失败"
+        },
+        "validation": {
+          "actionNameRequired": "行动名称为必填项",
+          "descriptionTooLong": "描述不能超过 1000 个字符",
+          "targetDateRequired": "目标日期为必填项",
+          "whoRequired": "请选择行动类型"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "管理会话文件",
+        "sections": {
+          "who": "1. 对象：",
+          "fileType": "2. 文件类型：",
+          "uploadType": "3. 上传类型："
+        },
+        "tableHeaders": {
+          "name": "名称",
+          "type": "类型",
+          "description": "描述",
+          "dateUploaded": "上传日期"
+        },
+        "who": {
+          "thisAim": "本目标",
+          "allAim": "所有目标"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP 文件",
+          "reviewFiles": "复查文件",
+          "assessmentFiles": "评估文件",
+          "generalFiles": "通用文件"
+        },
+        "uploadModes": {
+          "fileUpload": "上传文件",
+          "formSelection": "选择表单"
+        },
+        "buttons": {
+          "chooseFile": "选择文件",
+          "upload": "上传",
+          "uploading": "上传中...",
+          "add": "添加",
+          "adding": "添加中...",
+          "cancelClose": "取消/关闭"
+        },
+        "placeholders": {
+          "selectForm": "选择表单"
+        },
+        "toast": {
+          "selectFile": "请选择一个文件",
+          "uploadSuccess": "文件上传成功",
+          "uploadFailed": "文件上传失败",
+          "selectForm": "请选择一个表单",
+          "addFormSuccess": "表单添加成功",
+          "addFormFailed": "添加表单失败"
+        }
+      },
+      "manageActionFile": {
+        "title": "管理行动文件",
+        "fieldLabel": "文件上传",
+        "helper": {
+          "dragDrop": "将文件拖拽到此处或",
+          "browse": "浏览",
+          "maxSize": "最多允许 10MB 文件"
+        },
+        "buttons": {
+          "cancel": "取消",
+          "upload": "上传",
+          "uploading": "上传中..."
+        },
+        "toast": {
+          "uploadSuccess": "文件上传成功",
+          "uploadFailed": "文件上传失败"
+        },
+        "validation": {
+          "fileRequired": "必须选择文件",
+          "fileTooLarge": "文件大小必须小于 10MB",
+          "unsupportedFormat": "不支持的文件格式"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "全部",
+        "general": "通用",
+        "induction": "入职",
+        "formalReview": "正式复查",
+        "telephone": "电话",
+        "exitSession": "离开会话",
+        "outOfTheWorkplace": "工作场所外",
+        "testsExams": "测试/考试",
+        "learnerSupport": "学员支持",
+        "initialSession": "初始会话",
+        "gatewayReady": "网关就绪",
+        "epa": "EPA",
+        "furloughed": "停薪留职"
+      },
+      "attendedStatuses": {
+        "all": "全部",
+        "attended": "已出席",
+        "cancelled": "已取消",
+        "cancelledByTrainer": "培训师取消",
+        "cancelledByLearner": "学员取消",
+        "cancelledByEmployee": "员工取消",
+        "learnerNotAttended": "学员未出席"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "评估",
+        "reviewFiles": "复查",
+        "generalFiles": "通用",
+        "evidence": "证据"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "未知"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

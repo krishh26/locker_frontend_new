@@ -2354,6 +2354,257 @@
       "saveError": "Fehler beim Speichern der Unterschrift"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "Lernplan",
+      "subtitle": "Lernsitzungen verwalten und verfolgen"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "Sitzungsnr.",
+        "title": "Titel",
+        "date": "Datum",
+        "time": "Zeit",
+        "type": "Typ",
+        "assessor": "Prüfer",
+        "attended": "Teilnahme",
+        "courses": "Kurse",
+        "feedback": "Feedback"
+      },
+      "loadingSessions": "Sitzungen werden geladen...",
+      "noLearnerSelected": "Kein Lernender ausgewählt",
+      "noResults": "Keine Ergebnisse.",
+      "noSessionsAvailable": "Keine Sitzungen verfügbar",
+      "searchPlaceholder": "Sitzungen suchen...",
+      "learnerLabel": "Lernender",
+      "nameLabel": "Name:",
+      "filters": {
+        "type": {
+          "label": "Typ",
+          "placeholder": "Typ auswählen"
+        },
+        "attended": {
+          "label": "Teilnahmestatus",
+          "placeholder": "Status auswählen"
+        }
+      },
+      "attendedSelectPlaceholder": "Auswählen",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvNotImplemented": "CSV-Export wird noch implementiert",
+        "pdfNotImplemented": "PDF-Export wird noch implementiert"
+      },
+      "buttons": {
+        "addSession": "Sitzung hinzufügen"
+      },
+      "toast": {
+        "sessionUpdated": "Sitzung erfolgreich aktualisiert",
+        "sessionUpdateFailed": "Sitzung konnte nicht aktualisiert werden"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "Keine Kurse",
+      "buttons": {
+        "addFiles": "Dateien hinzufügen",
+        "addAction": "Aktion hinzufügen"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "Wer",
+          "action": "Aktion",
+          "description": "Beschreibung",
+          "file": "Datei",
+          "units": "Einheiten",
+          "targetDate": "Zieldatum",
+          "feedback": "Feedback",
+          "duration": "Dauer",
+          "status": "Status",
+          "actions": "Aktionen"
+        },
+        "whoLabels": {
+          "learner": "Lernender",
+          "employer": "Arbeitgeber"
+        },
+        "unitPrefix": "Einheit {unitName}",
+        "mins": "{count} Min.",
+        "notStarted": "Nicht gestartet",
+        "feedbackLabels": {
+          "trainer": "Trainer:",
+          "learner": "Lernender:"
+        },
+        "tooltips": {
+          "edit": "Bearbeiten",
+          "addFile": "Datei hinzufügen",
+          "delete": "Löschen"
+        },
+        "toast": {
+          "deleteNotImplemented": "Die Funktion zum Löschen von Aktionen wird implementiert"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "Sitzung hinzufügen",
+        "description": "Erstellen Sie eine neue Sitzung für diesen Lernenden. Startdatum und Dauer sind erforderlich.",
+        "courseContextWarning": "Öffnen Sie den Lernplan über eine Kursseite, um eine Sitzung hinzuzufügen (Kurskontext erforderlich).",
+        "fields": {
+          "title": "Titel",
+          "description": "Beschreibung",
+          "location": "Ort",
+          "startDateTime": "Startdatum & -zeit",
+          "duration": "Dauer (Stunden:Minuten)",
+          "sessionType": "Sitzungstyp"
+        },
+        "placeholders": {
+          "title": "Sitzungstitel",
+          "description": "Optionale Beschreibung",
+          "location": "z. B. Raum 1, Online",
+          "sessionType": "Typ auswählen"
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "submit": "Sitzung hinzufügen",
+          "submitting": "Wird hinzugefügt..."
+        },
+        "toast": {
+          "courseRequired": "Mindestens ein Kurs ist erforderlich. Öffnen Sie den Lernplan über einen Kurs, um eine Sitzung hinzuzufügen.",
+          "success": "Sitzung erfolgreich hinzugefügt",
+          "failed": "Sitzung konnte nicht hinzugefügt werden"
+        },
+        "validation": {
+          "titleRequired": "Titel ist erforderlich",
+          "locationRequired": "Ort ist erforderlich",
+          "startDateRequired": "Startdatum ist erforderlich",
+          "durationRequired": "Dauer ist erforderlich",
+          "sessionTypeRequired": "Sitzungstyp ist erforderlich"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "Aktion erfolgreich hinzugefügt",
+          "addFailed": "Aktion konnte nicht hinzugefügt werden",
+          "updated": "Aktion erfolgreich aktualisiert",
+          "updateFailed": "Aktion konnte nicht aktualisiert werden"
+        },
+        "validation": {
+          "actionNameRequired": "Aktionsname ist erforderlich",
+          "descriptionTooLong": "Beschreibung darf 1000 Zeichen nicht überschreiten",
+          "targetDateRequired": "Zieldatum ist erforderlich",
+          "whoRequired": "Bitte einen Aktionstyp auswählen"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "Sitzungsdateien verwalten",
+        "sections": {
+          "who": "1. Wer:",
+          "fileType": "2. Dateityp:",
+          "uploadType": "3. Upload-Typ:"
+        },
+        "tableHeaders": {
+          "name": "Name",
+          "type": "Typ",
+          "description": "Beschreibung",
+          "dateUploaded": "Hochgeladen am"
+        },
+        "who": {
+          "thisAim": "Dieses Ziel",
+          "allAim": "Alle Ziele"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP-Dateien",
+          "reviewFiles": "Review-Dateien",
+          "assessmentFiles": "Bewertungsdateien",
+          "generalFiles": "Allgemeine Dateien"
+        },
+        "uploadModes": {
+          "fileUpload": "Datei hochladen",
+          "formSelection": "Formular auswählen"
+        },
+        "buttons": {
+          "chooseFile": "Datei auswählen",
+          "upload": "Hochladen",
+          "uploading": "Wird hochgeladen...",
+          "add": "Hinzufügen",
+          "adding": "Wird hinzugefügt...",
+          "cancelClose": "Abbrechen/Schließen"
+        },
+        "placeholders": {
+          "selectForm": "Formular auswählen"
+        },
+        "toast": {
+          "selectFile": "Bitte eine Datei auswählen",
+          "uploadSuccess": "Datei erfolgreich hochgeladen",
+          "uploadFailed": "Datei konnte nicht hochgeladen werden",
+          "selectForm": "Bitte ein Formular auswählen",
+          "addFormSuccess": "Formular erfolgreich hinzugefügt",
+          "addFormFailed": "Formular konnte nicht hinzugefügt werden"
+        }
+      },
+      "manageActionFile": {
+        "title": "Aktionsdateien verwalten",
+        "fieldLabel": "Datei-Upload",
+        "helper": {
+          "dragDrop": "Dateien hierher ziehen und ablegen oder",
+          "browse": "Durchsuchen",
+          "maxSize": "Max. 10 MB sind erlaubt"
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "upload": "Hochladen",
+          "uploading": "Wird hochgeladen..."
+        },
+        "toast": {
+          "uploadSuccess": "Datei erfolgreich hochgeladen",
+          "uploadFailed": "Datei konnte nicht hochgeladen werden"
+        },
+        "validation": {
+          "fileRequired": "Eine Datei ist erforderlich",
+          "fileTooLarge": "Dateigröße muss unter 10 MB liegen",
+          "unsupportedFormat": "Nicht unterstütztes Dateiformat"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "Alle",
+        "general": "Allgemein",
+        "induction": "Einführung",
+        "formalReview": "Formale Überprüfung",
+        "telephone": "Telefon",
+        "exitSession": "Abschlussgespräch",
+        "outOfTheWorkplace": "Außerhalb des Arbeitsplatzes",
+        "testsExams": "Tests/Prüfungen",
+        "learnerSupport": "Lernendenunterstützung",
+        "initialSession": "Erstsitzung",
+        "gatewayReady": "Gateway bereit",
+        "epa": "EPA",
+        "furloughed": "Beurlaubt"
+      },
+      "attendedStatuses": {
+        "all": "Alle",
+        "attended": "Teilgenommen",
+        "cancelled": "Abgesagt",
+        "cancelledByTrainer": "Vom Trainer abgesagt",
+        "cancelledByLearner": "Vom Lernenden abgesagt",
+        "cancelledByEmployee": "Vom Mitarbeiter abgesagt",
+        "learnerNotAttended": "Lernender nicht erschienen"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "Bewertung",
+        "reviewFiles": "Review",
+        "generalFiles": "Allgemein",
+        "evidence": "Nachweis"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "Unbekannt"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

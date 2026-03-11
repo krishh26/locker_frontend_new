@@ -2783,6 +2783,257 @@
       "saveError": "Error al guardar la firma"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "Plan de aprendizaje",
+      "subtitle": "Gestiona y haz seguimiento de las sesiones de aprendizaje"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "N.º de sesión",
+        "title": "Título",
+        "date": "Fecha",
+        "time": "Hora",
+        "type": "Tipo",
+        "assessor": "Evaluador",
+        "attended": "Asistencia",
+        "courses": "Cursos",
+        "feedback": "Comentarios"
+      },
+      "loadingSessions": "Cargando sesiones...",
+      "noLearnerSelected": "No se ha seleccionado ningún alumno",
+      "noResults": "Sin resultados.",
+      "noSessionsAvailable": "No hay sesiones disponibles",
+      "searchPlaceholder": "Buscar sesiones...",
+      "learnerLabel": "Alumno",
+      "nameLabel": "Nombre:",
+      "filters": {
+        "type": {
+          "label": "Tipo",
+          "placeholder": "Seleccionar tipo"
+        },
+        "attended": {
+          "label": "Estado de asistencia",
+          "placeholder": "Seleccionar estado"
+        }
+      },
+      "attendedSelectPlaceholder": "Seleccionar",
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "csvNotImplemented": "La exportación a CSV se implementará próximamente",
+        "pdfNotImplemented": "La exportación a PDF se implementará próximamente"
+      },
+      "buttons": {
+        "addSession": "Añadir sesión"
+      },
+      "toast": {
+        "sessionUpdated": "Sesión actualizada correctamente",
+        "sessionUpdateFailed": "No se pudo actualizar la sesión"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "Sin cursos",
+      "buttons": {
+        "addFiles": "Añadir archivos",
+        "addAction": "Añadir acción"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "Quién",
+          "action": "Acción",
+          "description": "Descripción",
+          "file": "Archivo",
+          "units": "Unidades",
+          "targetDate": "Fecha objetivo",
+          "feedback": "Feedback",
+          "duration": "Duración",
+          "status": "Estado",
+          "actions": "Acciones"
+        },
+        "whoLabels": {
+          "learner": "Alumno",
+          "employer": "Empleador"
+        },
+        "unitPrefix": "Unidad {unitName}",
+        "mins": "{count} min",
+        "notStarted": "No iniciado",
+        "feedbackLabels": {
+          "trainer": "Formador:",
+          "learner": "Alumno:"
+        },
+        "tooltips": {
+          "edit": "Editar",
+          "addFile": "Añadir archivo",
+          "delete": "Eliminar"
+        },
+        "toast": {
+          "deleteNotImplemented": "La función para eliminar la acción se implementará"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "Añadir sesión",
+        "description": "Crea una nueva sesión para este alumno. La fecha de inicio y la duración son obligatorias.",
+        "courseContextWarning": "Abre el Plan de aprendizaje desde una página de curso para añadir una sesión (se requiere contexto del curso).",
+        "fields": {
+          "title": "Título",
+          "description": "Descripción",
+          "location": "Ubicación",
+          "startDateTime": "Fecha y hora de inicio",
+          "duration": "Duración (horas:minutos)",
+          "sessionType": "Tipo de sesión"
+        },
+        "placeholders": {
+          "title": "Título de la sesión",
+          "description": "Descripción opcional",
+          "location": "p. ej., Aula 1, Online",
+          "sessionType": "Seleccionar tipo"
+        },
+        "buttons": {
+          "cancel": "Cancelar",
+          "submit": "Añadir sesión",
+          "submitting": "Añadiendo..."
+        },
+        "toast": {
+          "courseRequired": "Se requiere al menos un curso. Abre el Plan de aprendizaje desde un curso para añadir una sesión.",
+          "success": "Sesión añadida correctamente",
+          "failed": "No se pudo añadir la sesión"
+        },
+        "validation": {
+          "titleRequired": "El título es obligatorio",
+          "locationRequired": "La ubicación es obligatoria",
+          "startDateRequired": "La fecha de inicio es obligatoria",
+          "durationRequired": "La duración es obligatoria",
+          "sessionTypeRequired": "El tipo de sesión es obligatorio"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "Acción añadida correctamente",
+          "addFailed": "No se pudo añadir la acción",
+          "updated": "Acción actualizada correctamente",
+          "updateFailed": "No se pudo actualizar la acción"
+        },
+        "validation": {
+          "actionNameRequired": "El nombre de la acción es obligatorio",
+          "descriptionTooLong": "La descripción no puede superar los 1000 caracteres",
+          "targetDateRequired": "La fecha objetivo es obligatoria",
+          "whoRequired": "Selecciona un tipo de acción"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "Gestionar archivos de la sesión",
+        "sections": {
+          "who": "1. Quién:",
+          "fileType": "2. Tipo de archivo:",
+          "uploadType": "3. Tipo de carga:"
+        },
+        "tableHeaders": {
+          "name": "Nombre",
+          "type": "Tipo",
+          "description": "Descripción",
+          "dateUploaded": "Fecha de carga"
+        },
+        "who": {
+          "thisAim": "Este objetivo",
+          "allAim": "Todos los objetivos"
+        },
+        "fileTypes": {
+          "ilpFile": "Archivos ILP",
+          "reviewFiles": "Archivos de revisión",
+          "assessmentFiles": "Archivos de evaluación",
+          "generalFiles": "Archivos generales"
+        },
+        "uploadModes": {
+          "fileUpload": "Subir archivo",
+          "formSelection": "Seleccionar formulario"
+        },
+        "buttons": {
+          "chooseFile": "Elegir archivo",
+          "upload": "Subir",
+          "uploading": "Subiendo...",
+          "add": "Añadir",
+          "adding": "Añadiendo...",
+          "cancelClose": "Cancelar/Cerrar"
+        },
+        "placeholders": {
+          "selectForm": "Seleccionar formulario"
+        },
+        "toast": {
+          "selectFile": "Selecciona un archivo",
+          "uploadSuccess": "Archivo subido correctamente",
+          "uploadFailed": "No se pudo subir el archivo",
+          "selectForm": "Selecciona un formulario",
+          "addFormSuccess": "Formulario añadido correctamente",
+          "addFormFailed": "No se pudo añadir el formulario"
+        }
+      },
+      "manageActionFile": {
+        "title": "Gestionar archivos de acciones",
+        "fieldLabel": "Subida de archivo",
+        "helper": {
+          "dragDrop": "Arrastra y suelta tus archivos aquí o",
+          "browse": "Explorar",
+          "maxSize": "Se permiten archivos de hasta 10MB"
+        },
+        "buttons": {
+          "cancel": "Cancelar",
+          "upload": "Subir",
+          "uploading": "Subiendo..."
+        },
+        "toast": {
+          "uploadSuccess": "Archivo subido correctamente",
+          "uploadFailed": "No se pudo subir el archivo"
+        },
+        "validation": {
+          "fileRequired": "Se requiere un archivo",
+          "fileTooLarge": "El tamaño del archivo debe ser menor de 10MB",
+          "unsupportedFormat": "Formato de archivo no compatible"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "Todos",
+        "general": "General",
+        "induction": "Inducción",
+        "formalReview": "Revisión formal",
+        "telephone": "Teléfono",
+        "exitSession": "Sesión de salida",
+        "outOfTheWorkplace": "Fuera del lugar de trabajo",
+        "testsExams": "Pruebas/Exámenes",
+        "learnerSupport": "Apoyo al alumno",
+        "initialSession": "Sesión inicial",
+        "gatewayReady": "Listo para gateway",
+        "epa": "EPA",
+        "furloughed": "En ERTE"
+      },
+      "attendedStatuses": {
+        "all": "Todos",
+        "attended": "Asistió",
+        "cancelled": "Cancelado",
+        "cancelledByTrainer": "Cancelado por el formador",
+        "cancelledByLearner": "Cancelado por el alumno",
+        "cancelledByEmployee": "Cancelado por el empleado",
+        "learnerNotAttended": "El alumno no asistió"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "Evaluación",
+        "reviewFiles": "Revisión",
+        "generalFiles": "General",
+        "evidence": "Evidencia"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "Desconocido"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

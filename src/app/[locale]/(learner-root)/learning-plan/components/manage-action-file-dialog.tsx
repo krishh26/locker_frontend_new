@@ -3,6 +3,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -17,37 +18,9 @@ import { toast } from "sonner";
 import { Upload, X } from "lucide-react";
 import { useState, useRef } from "react";
 
-const fileSchema = z.object({
-  file: z
-    .instanceof(File, { message: "A file is required" })
-    .refine((file) => file.size <= 10 * 1024 * 1024, {
-      message: "File size must be less than 10MB",
-    })
-    .refine(
-      (file) => {
-        const extension = file.name.split(".").pop()?.toUpperCase();
-        const allowedTypes = [
-          "JPG",
-          "JPEG",
-          "PNG",
-          "GIF",
-          "PDF",
-          "DOCX",
-          "XLSX",
-          "PPTX",
-          "TXT",
-          "ZIP",
-          "MP4",
-        ];
-        return extension && allowedTypes.includes(extension);
-      },
-      {
-        message: "Unsupported file format",
-      }
-    ),
-});
-
-type FileFormData = z.infer<typeof fileSchema>;
+type FileFormData = {
+  file: File
+};
 
 interface ManageActionFileDialogProps {
   open: boolean;
@@ -62,9 +35,40 @@ export function ManageActionFileDialog({
   actionId,
   onSuccess,
 }: ManageActionFileDialogProps) {
+  const t = useTranslations("learningPlan");
   const [uploadActionFile, { isLoading }] = useUploadActionFileMutation();
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const fileSchema = z.object({
+    file: z
+      .instanceof(File, { message: t("dialogs.manageActionFile.validation.fileRequired") })
+      .refine((file) => file.size <= 10 * 1024 * 1024, {
+        message: t("dialogs.manageActionFile.validation.fileTooLarge"),
+      })
+      .refine(
+        (file) => {
+          const extension = file.name.split(".").pop()?.toUpperCase();
+          const allowedTypes = [
+            "JPG",
+            "JPEG",
+            "PNG",
+            "GIF",
+            "PDF",
+            "DOCX",
+            "XLSX",
+            "PPTX",
+            "TXT",
+            "ZIP",
+            "MP4",
+          ];
+          return extension && allowedTypes.includes(extension);
+        },
+        {
+          message: t("dialogs.manageActionFile.validation.unsupportedFormat"),
+        }
+      ),
+  });
 
   const {
     control,
@@ -122,13 +126,13 @@ export function ManageActionFileDialog({
         data: formData,
       }).unwrap();
 
-      toast.success("File uploaded successfully");
+      toast.success(t("dialogs.manageActionFile.toast.uploadSuccess"));
       reset();
       onSuccess?.();
       onClose();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to upload file");
+      toast.error(t("dialogs.manageActionFile.toast.uploadFailed"));
     }
   };
 
@@ -141,7 +145,7 @@ export function ManageActionFileDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Manage Actions Files</DialogTitle>
+          <DialogTitle>{t("dialogs.manageActionFile.title")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -151,7 +155,7 @@ export function ManageActionFileDialog({
               control={control}
               render={({ field: { onChange, value } }) => (
                 <div>
-                  <Label className="mb-2">File Upload</Label>
+                  <Label className="mb-2">{t("dialogs.manageActionFile.fieldLabel")}</Label>
                   <div
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
@@ -205,11 +209,13 @@ export function ManageActionFileDialog({
                         <Upload className="h-12 w-12 text-muted-foreground" />
                         <div className="text-center">
                           <p className="text-sm text-muted-foreground">
-                            Drag and drop your files here or{" "}
-                            <span className="text-primary underline">Browse</span>
+                            {t("dialogs.manageActionFile.helper.dragDrop")}{" "}
+                            <span className="text-primary underline">
+                              {t("dialogs.manageActionFile.helper.browse")}
+                            </span>
                           </p>
                           <p className="text-xs text-muted-foreground mt-1">
-                            Max 10MB files are allowed
+                            {t("dialogs.manageActionFile.helper.maxSize")}
                           </p>
                         </div>
                       </div>
@@ -227,10 +233,12 @@ export function ManageActionFileDialog({
 
           <DialogFooter className="mt-6">
             <Button type="button" variant="outline" onClick={handleClose}>
-              Cancel
+              {t("dialogs.manageActionFile.buttons.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading || !selectedFile}>
-              {isLoading ? "Uploading..." : "Upload"}
+              {isLoading
+                ? t("dialogs.manageActionFile.buttons.uploading")
+                : t("dialogs.manageActionFile.buttons.upload")}
             </Button>
           </DialogFooter>
         </form>

@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslations } from 'next-intl'
 import {
   Dialog,
   DialogContent,
@@ -28,16 +29,14 @@ import { Loader2 } from 'lucide-react'
 import { useCreateLearnerPlanMutation } from '@/store/api/learner-plan/learnerPlanApi'
 import { toast } from 'sonner'
 
-const addSessionSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  description: z.string().optional(),
-  location: z.string().min(1, 'Location is required'),
-  startDate: z.string().min(1, 'Start date is required'),
-  Duration: z.string().min(1, 'Duration is required'),
-  type: z.string().min(1, 'Session type is required'),
-})
-
-type AddSessionFormValues = z.infer<typeof addSessionSchema>
+type AddSessionFormValues = {
+  title: string
+  description?: string
+  location: string
+  startDate: string
+  Duration: string
+  type: string
+}
 
 const SESSION_TYPES = [
   'General',
@@ -71,7 +70,21 @@ export function AddSessionDialog({
   defaultCourseIds,
   onSuccess,
 }: AddSessionDialogProps) {
+  const t = useTranslations('learningPlan')
   const [createLearnerPlan, { isLoading: isCreating }] = useCreateLearnerPlanMutation()
+
+  const addSessionSchema = React.useMemo(
+    () =>
+      z.object({
+        title: z.string().min(1, t('dialogs.addSession.validation.titleRequired')),
+        description: z.string().optional(),
+        location: z.string().min(1, t('dialogs.addSession.validation.locationRequired')),
+        startDate: z.string().min(1, t('dialogs.addSession.validation.startDateRequired')),
+        Duration: z.string().min(1, t('dialogs.addSession.validation.durationRequired')),
+        type: z.string().min(1, t('dialogs.addSession.validation.sessionTypeRequired')),
+      }),
+    [t]
+  )
 
   const form = useForm<AddSessionFormValues>({
     resolver: zodResolver(addSessionSchema),
@@ -118,7 +131,7 @@ export function AddSessionDialog({
 
   const onSubmit = async (values: AddSessionFormValues) => {
     if (defaultCourseIds.length === 0) {
-      toast.error('At least one course is required. Open Learning Plan from a course to add a session.')
+      toast.error(t('dialogs.addSession.toast.courseRequired'))
       return
     }
     try {
@@ -132,14 +145,14 @@ export function AddSessionDialog({
         Duration: values.Duration,
         type: values.type,
       }).unwrap()
-      toast.success('Session added successfully')
+      toast.success(t('dialogs.addSession.toast.success'))
       onOpenChange(false)
       onSuccess?.()
     } catch (error: unknown) {
       const message =
         (error as { data?: { message?: string }; message?: string })?.data?.message ??
         (error as Error)?.message ??
-        'Failed to add session'
+        t('dialogs.addSession.toast.failed')
       toast.error(message)
     }
   }
@@ -157,26 +170,26 @@ export function AddSessionDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-lg overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add Session</DialogTitle>
+          <DialogTitle>{t('dialogs.addSession.title')}</DialogTitle>
           <DialogDescription>
-            Create a new session for this learner. Start date and duration are required.
+            {t('dialogs.addSession.description')}
           </DialogDescription>
         </DialogHeader>
 
         {!canSubmit && (
           <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-950/30 dark:text-amber-400 p-2 rounded">
-            Open Learning Plan from a course page to add a session (course context is required).
+            {t('dialogs.addSession.courseContextWarning')}
           </p>
         )}
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title">
-              Title <span className="text-destructive">*</span>
+              {t('dialogs.addSession.fields.title')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="title"
-              placeholder="Session title"
+              placeholder={t('dialogs.addSession.placeholders.title')}
               {...form.register('title')}
               disabled={!canSubmit}
             />
@@ -186,10 +199,10 @@ export function AddSessionDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t('dialogs.addSession.fields.description')}</Label>
             <Textarea
               id="description"
-              placeholder="Optional description"
+              placeholder={t('dialogs.addSession.placeholders.description')}
               rows={2}
               className="resize-none"
               {...form.register('description')}
@@ -199,11 +212,11 @@ export function AddSessionDialog({
 
           <div className="space-y-2">
             <Label htmlFor="location">
-              Location <span className="text-destructive">*</span>
+              {t('dialogs.addSession.fields.location')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="location"
-              placeholder="e.g. Room 1, Online"
+              placeholder={t('dialogs.addSession.placeholders.location')}
               {...form.register('location')}
               disabled={!canSubmit}
             />
@@ -214,7 +227,7 @@ export function AddSessionDialog({
 
           <div className="space-y-2">
             <Label htmlFor="startDate">
-              Start date & time <span className="text-destructive">*</span>
+              {t('dialogs.addSession.fields.startDateTime')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="startDate"
@@ -228,7 +241,7 @@ export function AddSessionDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>Duration (hours:minutes)</Label>
+            <Label>{t('dialogs.addSession.fields.duration')}</Label>
             <div className="flex items-center gap-2">
               <Input
                 type="number"
@@ -256,7 +269,7 @@ export function AddSessionDialog({
 
           <div className="space-y-2">
             <Label htmlFor="type">
-              Session type <span className="text-destructive">*</span>
+              {t('dialogs.addSession.fields.sessionType')} <span className="text-destructive">*</span>
             </Label>
             <Controller
               name="type"
@@ -268,12 +281,36 @@ export function AddSessionDialog({
                   disabled={!canSubmit}
                 >
                   <SelectTrigger id="type">
-                    <SelectValue placeholder="Select type" />
+                    <SelectValue placeholder={t('dialogs.addSession.placeholders.sessionType')} />
                   </SelectTrigger>
                   <SelectContent>
-                    {SESSION_TYPES.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t}
+                    {SESSION_TYPES.map((sessionType) => (
+                      <SelectItem key={sessionType} value={sessionType}>
+                        {sessionType === 'General'
+                          ? t('options.sessionTypes.general')
+                          : sessionType === 'Induction'
+                          ? t('options.sessionTypes.induction')
+                          : sessionType === 'Formal Review'
+                          ? t('options.sessionTypes.formalReview')
+                          : sessionType === 'Telephone'
+                          ? t('options.sessionTypes.telephone')
+                          : sessionType === 'Exit Session'
+                          ? t('options.sessionTypes.exitSession')
+                          : sessionType === 'Out Of the Workplace'
+                          ? t('options.sessionTypes.outOfTheWorkplace')
+                          : sessionType === 'Tests/Exams'
+                          ? t('options.sessionTypes.testsExams')
+                          : sessionType === 'Learner Support'
+                          ? t('options.sessionTypes.learnerSupport')
+                          : sessionType === 'Initial Session'
+                          ? t('options.sessionTypes.initialSession')
+                          : sessionType === 'Gateway Ready'
+                          ? t('options.sessionTypes.gatewayReady')
+                          : sessionType === 'EPA'
+                          ? t('options.sessionTypes.epa')
+                          : sessionType === 'Furloughed'
+                          ? t('options.sessionTypes.furloughed')
+                          : sessionType}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -292,16 +329,16 @@ export function AddSessionDialog({
               onClick={handleClose}
               disabled={isCreating}
             >
-              Cancel
+              {t('dialogs.addSession.buttons.cancel')}
             </Button>
             <Button type="submit" disabled={isCreating || !canSubmit}>
               {isCreating ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Adding...
+                  {t('dialogs.addSession.buttons.submitting')}
                 </>
               ) : (
-                'Add Session'
+                t('dialogs.addSession.buttons.submit')
               )}
             </Button>
           </DialogFooter>

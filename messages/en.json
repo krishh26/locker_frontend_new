@@ -3307,6 +3307,257 @@
       "saveError": "Error saving signature"
     }
   },
+  "learningPlan": {
+    "page": {
+      "title": "Learning Plan",
+      "subtitle": "Manage and track learning sessions"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "Session No",
+        "title": "Title",
+        "date": "Date",
+        "time": "Time",
+        "type": "Type",
+        "assessor": "Assessor",
+        "attended": "Attended",
+        "courses": "Courses",
+        "feedback": "Feedback"
+      },
+      "loadingSessions": "Loading sessions...",
+      "noLearnerSelected": "No learner selected",
+      "noResults": "No results.",
+      "noSessionsAvailable": "No sessions available",
+      "searchPlaceholder": "Search sessions...",
+      "learnerLabel": "Learner",
+      "nameLabel": "Name:",
+      "filters": {
+        "type": {
+          "label": "Type",
+          "placeholder": "Select type"
+        },
+        "attended": {
+          "label": "Attended Status",
+          "placeholder": "Select status"
+        }
+      },
+      "attendedSelectPlaceholder": "Select",
+      "export": {
+        "button": "Export",
+        "csv": "Export as CSV",
+        "pdf": "Export as PDF",
+        "csvNotImplemented": "CSV export functionality will be implemented",
+        "pdfNotImplemented": "PDF export functionality will be implemented"
+      },
+      "buttons": {
+        "addSession": "Add Session"
+      },
+      "toast": {
+        "sessionUpdated": "Session updated successfully",
+        "sessionUpdateFailed": "Failed to update session"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "No courses",
+      "buttons": {
+        "addFiles": "Add Files",
+        "addAction": "Add Action"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "Who",
+          "action": "Action",
+          "description": "Description",
+          "file": "File",
+          "units": "Units",
+          "targetDate": "Target Date",
+          "feedback": "Feedback",
+          "duration": "Duration",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "whoLabels": {
+          "learner": "Learner",
+          "employer": "Employer"
+        },
+        "unitPrefix": "Unit {unitName}",
+        "mins": "{count} mins",
+        "notStarted": "Not Started",
+        "feedbackLabels": {
+          "trainer": "Trainer:",
+          "learner": "Learner:"
+        },
+        "tooltips": {
+          "edit": "Edit",
+          "addFile": "Add File",
+          "delete": "Delete"
+        },
+        "toast": {
+          "deleteNotImplemented": "Delete action functionality will be implemented"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "Add Session",
+        "description": "Create a new session for this learner. Start date and duration are required.",
+        "courseContextWarning": "Open Learning Plan from a course page to add a session (course context is required).",
+        "fields": {
+          "title": "Title",
+          "description": "Description",
+          "location": "Location",
+          "startDateTime": "Start date & time",
+          "duration": "Duration (hours:minutes)",
+          "sessionType": "Session type"
+        },
+        "placeholders": {
+          "title": "Session title",
+          "description": "Optional description",
+          "location": "e.g. Room 1, Online",
+          "sessionType": "Select type"
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "submit": "Add Session",
+          "submitting": "Adding..."
+        },
+        "toast": {
+          "courseRequired": "At least one course is required. Open Learning Plan from a course to add a session.",
+          "success": "Session added successfully",
+          "failed": "Failed to add session"
+        },
+        "validation": {
+          "titleRequired": "Title is required",
+          "locationRequired": "Location is required",
+          "startDateRequired": "Start date is required",
+          "durationRequired": "Duration is required",
+          "sessionTypeRequired": "Session type is required"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "Action added successfully",
+          "addFailed": "Failed to add action",
+          "updated": "Action updated successfully",
+          "updateFailed": "Failed to update action"
+        },
+        "validation": {
+          "actionNameRequired": "Action name is required",
+          "descriptionTooLong": "Description cannot exceed 1000 characters",
+          "targetDateRequired": "Target date is required",
+          "whoRequired": "Please select an action type"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "Manage Session Files",
+        "sections": {
+          "who": "1. Who:",
+          "fileType": "2. File Type:",
+          "uploadType": "3. Upload Type:"
+        },
+        "tableHeaders": {
+          "name": "Name",
+          "type": "Type",
+          "description": "Description",
+          "dateUploaded": "Date Uploaded"
+        },
+        "who": {
+          "thisAim": "This Aim",
+          "allAim": "All Aims"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP files",
+          "reviewFiles": "Review files",
+          "assessmentFiles": "Assessment files",
+          "generalFiles": "General files"
+        },
+        "uploadModes": {
+          "fileUpload": "Upload file",
+          "formSelection": "Select Form"
+        },
+        "buttons": {
+          "chooseFile": "Choose File",
+          "upload": "Upload",
+          "uploading": "Uploading...",
+          "add": "Add",
+          "adding": "Adding...",
+          "cancelClose": "Cancel/Close"
+        },
+        "placeholders": {
+          "selectForm": "Select Form"
+        },
+        "toast": {
+          "selectFile": "Please select a file",
+          "uploadSuccess": "File uploaded successfully",
+          "uploadFailed": "Failed to upload file",
+          "selectForm": "Please select a form",
+          "addFormSuccess": "Form added successfully",
+          "addFormFailed": "Failed to add form"
+        }
+      },
+      "manageActionFile": {
+        "title": "Manage Actions Files",
+        "fieldLabel": "File Upload",
+        "helper": {
+          "dragDrop": "Drag and drop your files here or",
+          "browse": "Browse",
+          "maxSize": "Max 10MB files are allowed"
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "upload": "Upload",
+          "uploading": "Uploading..."
+        },
+        "toast": {
+          "uploadSuccess": "File uploaded successfully",
+          "uploadFailed": "Failed to upload file"
+        },
+        "validation": {
+          "fileRequired": "A file is required",
+          "fileTooLarge": "File size must be less than 10MB",
+          "unsupportedFormat": "Unsupported file format"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "All",
+        "general": "General",
+        "induction": "Induction",
+        "formalReview": "Formal Review",
+        "telephone": "Telephone",
+        "exitSession": "Exit Session",
+        "outOfTheWorkplace": "Out Of the Workplace",
+        "testsExams": "Tests/Exams",
+        "learnerSupport": "Learner Support",
+        "initialSession": "Initial Session",
+        "gatewayReady": "Gateway Ready",
+        "epa": "EPA",
+        "furloughed": "Furloughed"
+      },
+      "attendedStatuses": {
+        "all": "All",
+        "attended": "Attended",
+        "cancelled": "Cancelled",
+        "cancelledByTrainer": "Cancelled by Trainer",
+        "cancelledByLearner": "Cancelled by Learner",
+        "cancelledByEmployee": "Cancelled by Employee",
+        "learnerNotAttended": "Learner not Attended"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "Assessment",
+        "reviewFiles": "Review",
+        "generalFiles": "General",
+        "evidence": "Evidence"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "Unknown"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

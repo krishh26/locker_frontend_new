@@ -1,6 +1,7 @@
 "use client";
 
 import { BookOpen } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { ModuleUnitProgressLearnerInfoCard } from "./module-unit-progress-learner-info-card";
 import { ModuleUnitProgressDataTable } from "./module-unit-progress-data-table";
@@ -10,6 +11,7 @@ import { useGetLearnerUnitsProgressQuery } from "@/store/api/module-unit-progres
 import { Card, CardContent } from "@/components/ui/card";
 
 export function ModuleUnitProgressPageContent() {
+  const t = useTranslations("moduleUnitProgress");
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const learner = useAppSelector((state) => state.auth.learner);
   const learnerId = learner?.learner_id;
@@ -32,8 +34,8 @@ export function ModuleUnitProgressPageContent() {
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
       <PageHeader
-        title="Unit Progress"
-        subtitle="Track learner progress across units"
+        title={t("page.title")}
+        subtitle={t("page.subtitle")}
         icon={BookOpen}
         showBackButton
         backButtonHref={`/course-details/${currentCourseId}`}
@@ -44,7 +46,7 @@ export function ModuleUnitProgressPageContent() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-destructive">
-              Failed to load unit progress. Please try again later.
+              {t("error.loadFailed")}
             </div>
           </CardContent>
         </Card>

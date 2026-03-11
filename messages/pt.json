@@ -3246,6 +3246,52 @@
       "unknown": "Desconhecido"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Progresso das unidades",
+      "subtitle": "Acompanhe o progresso do formando nas unidades"
+    },
+    "error": {
+      "loadFailed": "Falha ao carregar o progresso das unidades. Tente novamente mais tarde."
+    },
+    "learnerInfo": {
+      "noInfo": "Não há informação do formando disponível",
+      "labels": {
+        "learner": "Formando",
+        "uln": "ULN",
+        "registrationNumber": "Número de registo",
+        "trainingProvider": "Entidade formadora",
+        "courseName": "Nome do curso"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar unidades...",
+      "loading": "A carregar unidades...",
+      "noUnits": "Não há unidades disponíveis",
+      "noResults": "Sem resultados.",
+      "columns": {
+        "title": "Título",
+        "signedOffAwaiting": "% Assinado / A aguardar assinatura",
+        "completed": "Concluído",
+        "assessed": "Avaliado",
+        "iqaSignOff": "Assinatura IQA",
+        "claimableStatus": "Estado reclamável"
+      },
+      "progress": {
+        "signedOff": "Assinado",
+        "awaitingSignOff": "A aguardar assinatura"
+      },
+      "status": {
+        "yes": "Sim",
+        "no": "Não",
+        "claimable": "Reclamável",
+        "notClaimable": "Não reclamável"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuração padrão de semanas de revisão",
     "pageSubtitle": "Configure o período de revisão padrão para todos os tipos de formandos sem períodos personalizados",

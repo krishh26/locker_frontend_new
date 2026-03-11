@@ -2604,6 +2604,52 @@
       "unknown": "Sconosciuto"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Avanzamento unità",
+      "subtitle": "Monitora i progressi del discente nelle unità"
+    },
+    "error": {
+      "loadFailed": "Impossibile caricare l'avanzamento delle unità. Riprova più tardi."
+    },
+    "learnerInfo": {
+      "noInfo": "Nessuna informazione sul discente disponibile",
+      "labels": {
+        "learner": "Discente",
+        "uln": "ULN",
+        "registrationNumber": "Numero di registrazione",
+        "trainingProvider": "Ente di formazione",
+        "courseName": "Nome corso"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Cerca unità...",
+      "loading": "Caricamento unità...",
+      "noUnits": "Nessuna unità disponibile",
+      "noResults": "Nessun risultato.",
+      "columns": {
+        "title": "Titolo",
+        "signedOffAwaiting": "% Firmato / In attesa di firma",
+        "completed": "Completato",
+        "assessed": "Valutato",
+        "iqaSignOff": "Firma IQA",
+        "claimableStatus": "Stato reclamabile"
+      },
+      "progress": {
+        "signedOff": "Firmato",
+        "awaitingSignOff": "In attesa di firma"
+      },
+      "status": {
+        "yes": "Sì",
+        "no": "No",
+        "claimable": "Reclamabile",
+        "notClaimable": "Non reclamabile"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configurazione settimane di revisione predefinite",
     "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",

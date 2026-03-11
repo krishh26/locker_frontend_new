@@ -3286,6 +3286,52 @@
       "unknown": "Inconnu"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Progression des unités",
+      "subtitle": "Suivre la progression de l'apprenant à travers les unités"
+    },
+    "error": {
+      "loadFailed": "Impossible de charger la progression des unités. Veuillez réessayer plus tard."
+    },
+    "learnerInfo": {
+      "noInfo": "Aucune information de l'apprenant disponible",
+      "labels": {
+        "learner": "Apprenant",
+        "uln": "ULN",
+        "registrationNumber": "Numéro d'inscription",
+        "trainingProvider": "Organisme de formation",
+        "courseName": "Nom du cours"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Rechercher des unités...",
+      "loading": "Chargement des unités...",
+      "noUnits": "Aucune unité disponible",
+      "noResults": "Aucun résultat.",
+      "columns": {
+        "title": "Titre",
+        "signedOffAwaiting": "% Signé / En attente de signature",
+        "completed": "Terminé",
+        "assessed": "Évalué",
+        "iqaSignOff": "Validation IQA",
+        "claimableStatus": "Statut réclamable"
+      },
+      "progress": {
+        "signedOff": "Signé",
+        "awaitingSignOff": "En attente de signature"
+      },
+      "status": {
+        "yes": "Oui",
+        "no": "Non",
+        "claimable": "Réclamable",
+        "notClaimable": "Non réclamable"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuration par défaut des semaines de révision",
     "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",

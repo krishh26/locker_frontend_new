@@ -3246,6 +3246,52 @@
       "unknown": "अज्ञात"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "यूनिट प्रगति",
+      "subtitle": "यूनिट्स में शिक्षार्थी की प्रगति ट्रैक करें"
+    },
+    "error": {
+      "loadFailed": "यूनिट प्रगति लोड करने में विफल। कृपया बाद में पुनः प्रयास करें।"
+    },
+    "learnerInfo": {
+      "noInfo": "शिक्षार्थी की जानकारी उपलब्ध नहीं है",
+      "labels": {
+        "learner": "शिक्षार्थी",
+        "uln": "ULN",
+        "registrationNumber": "पंजीकरण संख्या",
+        "trainingProvider": "प्रशिक्षण प्रदाता",
+        "courseName": "कोर्स का नाम"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "यूनिट्स खोजें...",
+      "loading": "यूनिट्स लोड हो रहे हैं...",
+      "noUnits": "कोई यूनिट उपलब्ध नहीं",
+      "noResults": "कोई परिणाम नहीं।",
+      "columns": {
+        "title": "शीर्षक",
+        "signedOffAwaiting": "% साइन-ऑफ / साइन-ऑफ प्रतीक्षारत",
+        "completed": "पूर्ण",
+        "assessed": "असेस्ड",
+        "iqaSignOff": "IQA साइन-ऑफ",
+        "claimableStatus": "क्लेमेबल स्थिति"
+      },
+      "progress": {
+        "signedOff": "साइन-ऑफ",
+        "awaitingSignOff": "साइन-ऑफ प्रतीक्षारत"
+      },
+      "status": {
+        "yes": "हाँ",
+        "no": "नहीं",
+        "claimable": "क्लेमेबल",
+        "notClaimable": "क्लेमेबल नहीं"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
     "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",

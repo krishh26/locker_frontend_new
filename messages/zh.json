@@ -3204,6 +3204,52 @@
       "unknown": "未知"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "单元进度",
+      "subtitle": "跟踪学员在各单元中的进度"
+    },
+    "error": {
+      "loadFailed": "加载单元进度失败，请稍后重试。"
+    },
+    "learnerInfo": {
+      "noInfo": "暂无学员信息",
+      "labels": {
+        "learner": "学员",
+        "uln": "ULN",
+        "registrationNumber": "注册号",
+        "trainingProvider": "培训机构",
+        "courseName": "课程名称"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "搜索单元...",
+      "loading": "正在加载单元...",
+      "noUnits": "暂无可用单元",
+      "noResults": "无结果。",
+      "columns": {
+        "title": "标题",
+        "signedOffAwaiting": "已签署% / 待签署%",
+        "completed": "已完成",
+        "assessed": "已评估",
+        "iqaSignOff": "IQA 签署",
+        "claimableStatus": "可申领状态"
+      },
+      "progress": {
+        "signedOff": "已签署",
+        "awaitingSignOff": "待签署"
+      },
+      "status": {
+        "yes": "是",
+        "no": "否",
+        "claimable": "可申领",
+        "notClaimable": "不可申领"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

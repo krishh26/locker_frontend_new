@@ -3239,6 +3239,52 @@
       "unknown": "غير معروف"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "تقدم الوحدات",
+      "subtitle": "تتبّع تقدم المتعلم عبر الوحدات"
+    },
+    "error": {
+      "loadFailed": "فشل تحميل تقدم الوحدات. يرجى المحاولة مرة أخرى لاحقًا."
+    },
+    "learnerInfo": {
+      "noInfo": "لا تتوفر معلومات عن المتعلم",
+      "labels": {
+        "learner": "المتعلم",
+        "uln": "ULN",
+        "registrationNumber": "رقم التسجيل",
+        "trainingProvider": "مزود التدريب",
+        "courseName": "اسم الدورة"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "ابحث في الوحدات...",
+      "loading": "جارٍ تحميل الوحدات...",
+      "noUnits": "لا توجد وحدات متاحة",
+      "noResults": "لا توجد نتائج.",
+      "columns": {
+        "title": "العنوان",
+        "signedOffAwaiting": "٪ تم الاعتماد / بانتظار الاعتماد",
+        "completed": "مكتمل",
+        "assessed": "تم التقييم",
+        "iqaSignOff": "اعتماد IQA",
+        "claimableStatus": "حالة المطالبة"
+      },
+      "progress": {
+        "signedOff": "تم الاعتماد",
+        "awaitingSignOff": "بانتظار الاعتماد"
+      },
+      "status": {
+        "yes": "نعم",
+        "no": "لا",
+        "claimable": "قابل للمطالبة",
+        "notClaimable": "غير قابل للمطالبة"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "إعدادات أسابيع المراجعة الافتراضية",
     "pageSubtitle": "تكوين إعدادات فترة المراجعة الافتراضية لجميع أنواع المتعلمين الذين لا يملكون فترة مراجعة مخصصة",

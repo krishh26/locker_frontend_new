@@ -2605,6 +2605,52 @@
       "unknown": "Unbekannt"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Einheitenfortschritt",
+      "subtitle": "Fortschritt des Lernenden über Einheiten hinweg verfolgen"
+    },
+    "error": {
+      "loadFailed": "Einheitenfortschritt konnte nicht geladen werden. Bitte versuchen Sie es später erneut."
+    },
+    "learnerInfo": {
+      "noInfo": "Keine Informationen zum Lernenden verfügbar",
+      "labels": {
+        "learner": "Lernender",
+        "uln": "ULN",
+        "registrationNumber": "Registrierungsnummer",
+        "trainingProvider": "Bildungsträger",
+        "courseName": "Kursname"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Einheiten suchen...",
+      "loading": "Einheiten werden geladen...",
+      "noUnits": "Keine Einheiten verfügbar",
+      "noResults": "Keine Ergebnisse.",
+      "columns": {
+        "title": "Titel",
+        "signedOffAwaiting": "% Abgezeichnet / Wartet auf Abzeichnung",
+        "completed": "Abgeschlossen",
+        "assessed": "Bewertet",
+        "iqaSignOff": "IQA-Abzeichnung",
+        "claimableStatus": "Anspruchsstatus"
+      },
+      "progress": {
+        "signedOff": "Abgezeichnet",
+        "awaitingSignOff": "Wartet auf Abzeichnung"
+      },
+      "status": {
+        "yes": "Ja",
+        "no": "Nein",
+        "claimable": "Anspruchsberechtigt",
+        "notClaimable": "Nicht anspruchsberechtigt"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

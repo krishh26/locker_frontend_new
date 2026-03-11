@@ -3558,6 +3558,52 @@
       "unknown": "Unknown"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Unit Progress",
+      "subtitle": "Track learner progress across units"
+    },
+    "error": {
+      "loadFailed": "Failed to load unit progress. Please try again later."
+    },
+    "learnerInfo": {
+      "noInfo": "No learner information available",
+      "labels": {
+        "learner": "Learner",
+        "uln": "ULN",
+        "registrationNumber": "Registration Number",
+        "trainingProvider": "Training Provider",
+        "courseName": "Course Name"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Search units...",
+      "loading": "Loading units...",
+      "noUnits": "No units available",
+      "noResults": "No results.",
+      "columns": {
+        "title": "Title",
+        "signedOffAwaiting": "% Signed Off / Awaiting Sign Off",
+        "completed": "Completed",
+        "assessed": "Assessed",
+        "iqaSignOff": "IQA Sign-off",
+        "claimableStatus": "Claimable Status"
+      },
+      "progress": {
+        "signedOff": "Signed Off",
+        "awaitingSignOff": "Awaiting Sign Off"
+      },
+      "status": {
+        "yes": "Yes",
+        "no": "No",
+        "claimable": "Claimable",
+        "notClaimable": "Not Claimable"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

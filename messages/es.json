@@ -3034,6 +3034,52 @@
       "unknown": "Desconocido"
     }
   },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Progreso de unidades",
+      "subtitle": "Haz seguimiento del progreso del alumno en todas las unidades"
+    },
+    "error": {
+      "loadFailed": "No se pudo cargar el progreso de unidades. Por favor, inténtalo de nuevo más tarde."
+    },
+    "learnerInfo": {
+      "noInfo": "No hay información del alumno disponible",
+      "labels": {
+        "learner": "Alumno",
+        "uln": "ULN",
+        "registrationNumber": "Número de registro",
+        "trainingProvider": "Proveedor de formación",
+        "courseName": "Nombre del curso"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Buscar unidades...",
+      "loading": "Cargando unidades...",
+      "noUnits": "No hay unidades disponibles",
+      "noResults": "Sin resultados.",
+      "columns": {
+        "title": "Título",
+        "signedOffAwaiting": "% Firmado / Pendiente de firma",
+        "completed": "Completado",
+        "assessed": "Evaluado",
+        "iqaSignOff": "Validación IQA",
+        "claimableStatus": "Estado reclamable"
+      },
+      "progress": {
+        "signedOff": "Firmado",
+        "awaitingSignOff": "Pendiente de firma"
+      },
+      "status": {
+        "yes": "Sí",
+        "no": "No",
+        "claimable": "Reclamable",
+        "notClaimable": "No reclamable"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

@@ -2898,6 +2898,61 @@
       "noResults": "未找到表单。"
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "学员待签署文件",
+    "pageSubtitle": "查看并签署等待您签名的文件",
+    "table": {
+      "columns": {
+        "courseName": "课程名称",
+        "type": "类型",
+        "dateUploaded": "上传日期",
+        "documentName": "文件名称",
+        "uploadedBy": "上传者",
+        "signedInAgreement": "签署同意",
+        "sessionDateTime": "会话日期/时间",
+        "action": "操作"
+      },
+      "searchPlaceholder": "搜索文件...",
+      "loading": "加载中...",
+      "noResults": "未找到文件。",
+      "noSignaturesRequested": "未请求签名",
+      "pendingSuffix": "(待处理)",
+      "signButton": "签署"
+    },
+    "summary": {
+      "totalDocuments": "文件总数：",
+      "requiringSignatures": "需要签名的文件："
+    },
+    "roles": {
+      "employer": "雇主",
+      "iqa": "IQA",
+      "trainer": "培训师",
+      "learner": "学员"
+    },
+    "types": {
+      "evidence": "证据"
+    },
+    "modal": {
+      "title": "文件签署协议",
+      "documentLabel": "文件：",
+      "courseLabel": "课程：",
+      "tableHeaders": {
+        "signedInAgreement": "签署同意",
+        "name": "姓名",
+        "signed": "已签署",
+        "date": "日期"
+      },
+      "buttons": {
+        "cancel": "取消/关闭",
+        "save": "保存",
+        "saving": "保存中..."
+      }
+    },
+    "toast": {
+      "saved": "签名保存成功！",
+      "saveError": "保存签名时出错"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "默认复查周期设置",
     "pageSubtitle": "为所有没有自定义复查周期的学员类型配置默认复查周期",

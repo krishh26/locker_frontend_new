@@ -2728,6 +2728,61 @@
       "noResults": "No se encontraron formularios."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Documentos de los alumnos para firmar",
+    "pageSubtitle": "Ver y firmar documentos pendientes de tu firma",
+    "table": {
+      "columns": {
+        "courseName": "Nombre del curso",
+        "type": "Tipo",
+        "dateUploaded": "Fecha de carga",
+        "documentName": "Nombre del documento",
+        "uploadedBy": "Cargado por",
+        "signedInAgreement": "Firmado de acuerdo",
+        "sessionDateTime": "Fecha/hora de la sesión",
+        "action": "Acción"
+      },
+      "searchPlaceholder": "Buscar documentos...",
+      "loading": "Cargando...",
+      "noResults": "No se encontraron documentos.",
+      "noSignaturesRequested": "No se solicitaron firmas",
+      "pendingSuffix": "(Pendiente)",
+      "signButton": "Firmar"
+    },
+    "summary": {
+      "totalDocuments": "Total de documentos:",
+      "requiringSignatures": "Documentos que requieren firmas:"
+    },
+    "roles": {
+      "employer": "Empleador",
+      "iqa": "IQA",
+      "trainer": "Formador",
+      "learner": "Alumno"
+    },
+    "types": {
+      "evidence": "Evidencia"
+    },
+    "modal": {
+      "title": "Acuerdo de firma del documento",
+      "documentLabel": "Documento:",
+      "courseLabel": "Curso:",
+      "tableHeaders": {
+        "signedInAgreement": "Firmado de acuerdo",
+        "name": "Nombre",
+        "signed": "Firmado",
+        "date": "Fecha"
+      },
+      "buttons": {
+        "cancel": "Cancelar/Cerrar",
+        "save": "Guardar",
+        "saving": "Guardando..."
+      }
+    },
+    "toast": {
+      "saved": "¡Firma guardada correctamente!",
+      "saveError": "Error al guardar la firma"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuración de Semanas de Revisión Predeterminadas",
     "pageSubtitle": "Configure la configuración del período de revisión predeterminado para todos los tipos de aprendices sin períodos de revisión personalizados",

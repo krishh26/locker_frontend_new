@@ -2940,6 +2940,61 @@
       "noResults": "कोई फॉर्म नहीं मिला।"
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "हस्ताक्षर के लिए शिक्षार्थी दस्तावेज़",
+    "pageSubtitle": "अपने हस्ताक्षर की प्रतीक्षा कर रहे दस्तावेज़ देखें और हस्ताक्षर करें",
+    "table": {
+      "columns": {
+        "courseName": "कोर्स का नाम",
+        "type": "प्रकार",
+        "dateUploaded": "अपलोड की तारीख",
+        "documentName": "दस्तावेज़ का नाम",
+        "uploadedBy": "अपलोड करने वाला",
+        "signedInAgreement": "सहमति में हस्ताक्षर",
+        "sessionDateTime": "सत्र तिथि/समय",
+        "action": "कार्रवाई"
+      },
+      "searchPlaceholder": "दस्तावेज़ खोजें...",
+      "loading": "लोड हो रहा है...",
+      "noResults": "कोई दस्तावेज़ नहीं मिला।",
+      "noSignaturesRequested": "कोई हस्ताक्षर अनुरोधित नहीं",
+      "pendingSuffix": "(लंबित)",
+      "signButton": "हस्ताक्षर करें"
+    },
+    "summary": {
+      "totalDocuments": "कुल दस्तावेज़:",
+      "requiringSignatures": "हस्ताक्षर आवश्यक दस्तावेज़:"
+    },
+    "roles": {
+      "employer": "नियोक्ता",
+      "iqa": "IQA",
+      "trainer": "प्रशिक्षक",
+      "learner": "शिक्षार्थी"
+    },
+    "types": {
+      "evidence": "साक्ष्य"
+    },
+    "modal": {
+      "title": "दस्तावेज़ हस्ताक्षर समझौता",
+      "documentLabel": "दस्तावेज़:",
+      "courseLabel": "कोर्स:",
+      "tableHeaders": {
+        "signedInAgreement": "सहमति में हस्ताक्षर",
+        "name": "नाम",
+        "signed": "हस्ताक्षरित",
+        "date": "तारीख"
+      },
+      "buttons": {
+        "cancel": "रद्द/बंद करें",
+        "save": "सहेजें",
+        "saving": "सहेजा जा रहा है..."
+      }
+    },
+    "toast": {
+      "saved": "हस्ताक्षर सफलतापूर्वक सहेजा गया!",
+      "saveError": "हस्ताक्षर सहेजने में त्रुटि"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "डिफॉल्ट रिव्यू वीक कॉन्फ़िगरेशन",
     "pageSubtitle": "सभी लर्नर प्रकारों के लिए (जहां कस्टम रिव्यू पीरियड नहीं है) डिफॉल्ट रिव्यू अवधि सेटिंग कॉन्फ़िगर करें",

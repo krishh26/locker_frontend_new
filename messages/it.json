@@ -2298,6 +2298,61 @@
       "noResults": "Nessun modulo trovato."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Documenti dei discenti da firmare",
+    "pageSubtitle": "Visualizza e firma i documenti in attesa della tua firma",
+    "table": {
+      "columns": {
+        "courseName": "Nome corso",
+        "type": "Tipo",
+        "dateUploaded": "Data di caricamento",
+        "documentName": "Nome documento",
+        "uploadedBy": "Caricato da",
+        "signedInAgreement": "Firmato in accordo",
+        "sessionDateTime": "Data/ora sessione",
+        "action": "Azione"
+      },
+      "searchPlaceholder": "Cerca documenti...",
+      "loading": "Caricamento...",
+      "noResults": "Nessun documento trovato.",
+      "noSignaturesRequested": "Nessuna firma richiesta",
+      "pendingSuffix": "(In sospeso)",
+      "signButton": "Firma"
+    },
+    "summary": {
+      "totalDocuments": "Totale documenti:",
+      "requiringSignatures": "Documenti che richiedono firme:"
+    },
+    "roles": {
+      "employer": "Datore di lavoro",
+      "iqa": "IQA",
+      "trainer": "Formatore",
+      "learner": "Discente"
+    },
+    "types": {
+      "evidence": "Evidenza"
+    },
+    "modal": {
+      "title": "Accordo di firma del documento",
+      "documentLabel": "Documento:",
+      "courseLabel": "Corso:",
+      "tableHeaders": {
+        "signedInAgreement": "Firmato in accordo",
+        "name": "Nome",
+        "signed": "Firmato",
+        "date": "Data"
+      },
+      "buttons": {
+        "cancel": "Annulla/Chiudi",
+        "save": "Salva",
+        "saving": "Salvataggio..."
+      }
+    },
+    "toast": {
+      "saved": "Firma salvata con successo!",
+      "saveError": "Errore durante il salvataggio della firma"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configurazione settimane di revisione predefinite",
     "pageSubtitle": "Configura le impostazioni del periodo di revisione predefinito per tutti i tipi di discenti senza periodi personalizzati",

@@ -2940,6 +2940,61 @@
       "noResults": "Nenhum formulário encontrado."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Documentos dos formandos para assinar",
+    "pageSubtitle": "Ver e assinar documentos pendentes da sua assinatura",
+    "table": {
+      "columns": {
+        "courseName": "Nome do curso",
+        "type": "Tipo",
+        "dateUploaded": "Data de envio",
+        "documentName": "Nome do documento",
+        "uploadedBy": "Enviado por",
+        "signedInAgreement": "Assinado em acordo",
+        "sessionDateTime": "Data/hora da sessão",
+        "action": "Ação"
+      },
+      "searchPlaceholder": "Pesquisar documentos...",
+      "loading": "A carregar...",
+      "noResults": "Nenhum documento encontrado.",
+      "noSignaturesRequested": "Nenhuma assinatura solicitada",
+      "pendingSuffix": "(Pendente)",
+      "signButton": "Assinar"
+    },
+    "summary": {
+      "totalDocuments": "Total de documentos:",
+      "requiringSignatures": "Documentos que requerem assinaturas:"
+    },
+    "roles": {
+      "employer": "Empregador",
+      "iqa": "IQA",
+      "trainer": "Formador",
+      "learner": "Formando"
+    },
+    "types": {
+      "evidence": "Evidência"
+    },
+    "modal": {
+      "title": "Acordo de assinatura do documento",
+      "documentLabel": "Documento:",
+      "courseLabel": "Curso:",
+      "tableHeaders": {
+        "signedInAgreement": "Assinado em acordo",
+        "name": "Nome",
+        "signed": "Assinado",
+        "date": "Data"
+      },
+      "buttons": {
+        "cancel": "Cancelar/Fechar",
+        "save": "Guardar",
+        "saving": "A guardar..."
+      }
+    },
+    "toast": {
+      "saved": "Assinatura guardada com sucesso!",
+      "saveError": "Erro ao guardar a assinatura"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuração padrão de semanas de revisão",
     "pageSubtitle": "Configure o período de revisão padrão para todos os tipos de formandos sem períodos personalizados",

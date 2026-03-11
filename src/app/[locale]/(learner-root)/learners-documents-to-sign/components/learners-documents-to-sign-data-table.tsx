@@ -13,6 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Search } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -49,6 +50,8 @@ interface TransformedDocument {
 }
 
 export function LearnersDocumentsToSignDataTable() {
+  const t = useTranslations("learnerDocumentsToSign");
+  const locale = useLocale();
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   const userId = user?.id || "";
@@ -124,10 +127,23 @@ export function LearnersDocumentsToSignDataTable() {
     }));
   }, [pendingSignatureData, user]);
 
+  const getRoleLabel = (role: string) => {
+    const key = role.toLowerCase();
+    if (key === "employer" || key === "iqa" || key === "trainer" || key === "learner") {
+      return t(`roles.${key}` as const);
+    }
+    return role;
+  };
+
+  const getTypeLabel = (type: string) => {
+    if (type?.toLowerCase() === "evidence") return t("types.evidence");
+    return type;
+  };
+
   const formatDate = (dateString: string) => {
     if (!dateString || dateString === "N/A") return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", {
+    return date.toLocaleDateString(locale, {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -165,7 +181,7 @@ export function LearnersDocumentsToSignDataTable() {
     () => [
       {
         accessorKey: "courseName",
-        header: "Course Name",
+        header: t("table.columns.courseName"),
         cell: ({ row }) => (
           <div className="font-medium max-w-[200px] truncate">
             {row.getValue("courseName")}
@@ -174,7 +190,7 @@ export function LearnersDocumentsToSignDataTable() {
       },
       {
         accessorKey: "type",
-        header: "Type",
+        header: t("table.columns.type"),
         cell: ({ row }) => {
           const type = row.getValue("type") as string;
           return (
@@ -182,21 +198,21 @@ export function LearnersDocumentsToSignDataTable() {
               variant={type === "Evidence" ? "default" : "secondary"}
               className="text-xs"
             >
-              {type}
+              {getTypeLabel(type)}
             </Badge>
           );
         },
       },
       {
         accessorKey: "dateUploaded",
-        header: "Date Uploaded",
+        header: t("table.columns.dateUploaded"),
         cell: ({ row }) => (
           <div className="text-sm">{formatDate(row.getValue("dateUploaded"))}</div>
         ),
       },
       {
         accessorKey: "documentName",
-        header: "Document Name",
+        header: t("table.columns.documentName"),
         cell: ({ row }) => (
           <div className="font-medium max-w-[200px] truncate">
             {row.getValue("documentName")}
@@ -205,14 +221,14 @@ export function LearnersDocumentsToSignDataTable() {
       },
       {
         accessorKey: "uploadedBy",
-        header: "Uploaded By",
+        header: t("table.columns.uploadedBy"),
         cell: ({ row }) => (
           <div className="text-sm">{row.getValue("uploadedBy")}</div>
         ),
       },
       {
         accessorKey: "signatures",
-        header: "Signed in Agreement",
+        header: t("table.columns.signedInAgreement"),
         cell: ({ row }) => {
           const document = row.original;
           const signedRoles = getSignatureStatus(
@@ -230,7 +246,7 @@ export function LearnersDocumentsToSignDataTable() {
                       variant="default"
                       className="text-[10px] h-5 bg-accent text-white border-accent hover:bg-accent"
                     >
-                      {role}
+                      {getRoleLabel(role)}
                     </Badge>
                   ))}
                   {document.requestedSignatures
@@ -247,13 +263,13 @@ export function LearnersDocumentsToSignDataTable() {
                         variant="outline"
                         className="text-[9px] h-[18px] bg-secondary text-white border-secondary"
                       >
-                        {reqSig.role} (Pending)
+                        {getRoleLabel(reqSig.role)} {t("table.pendingSuffix")}
                       </Badge>
                     ))}
                 </>
               ) : (
                 <span className="text-sm text-muted-foreground italic">
-                  No signatures requested
+                  {t("table.noSignaturesRequested")}
                 </span>
               )}
             </div>
@@ -262,14 +278,14 @@ export function LearnersDocumentsToSignDataTable() {
       },
       {
         accessorKey: "sessionDateTime",
-        header: "Session Date/Time",
+        header: t("table.columns.sessionDateTime"),
         cell: ({ row }) => (
           <div className="text-sm">{row.getValue("sessionDateTime")}</div>
         ),
       },
       {
         id: "actions",
-        header: "Action",
+        header: t("table.columns.action"),
         cell: ({ row }) => {
           const document = row.original;
           return (
@@ -280,13 +296,13 @@ export function LearnersDocumentsToSignDataTable() {
               className="text-primary hover:text-primary"
               disabled={isEmployer}
               >
-              Sign
+              {t("table.signButton")}
             </Button>
           );
         },
       },
     ],
-    [isEmployer]
+    [isEmployer, locale, t]
   );
 
   const table = useReactTable({
@@ -309,7 +325,7 @@ export function LearnersDocumentsToSignDataTable() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading...</div>
+        <div className="text-muted-foreground">{t("table.loading")}</div>
       </div>
     );
   }
@@ -322,7 +338,7 @@ export function LearnersDocumentsToSignDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search documents..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -375,7 +391,7 @@ export function LearnersDocumentsToSignDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No documents found.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -389,10 +405,11 @@ export function LearnersDocumentsToSignDataTable() {
       {/* Summary */}
       <div className="rounded-lg border p-4">
         <div className="text-sm text-muted-foreground">
-          Total documents: <strong className="text-foreground">{documents.length}</strong>
+          {t("summary.totalDocuments")}{" "}
+          <strong className="text-foreground">{documents.length}</strong>
         </div>
         <div className="text-sm text-muted-foreground mt-1">
-          Documents requiring signatures:{" "}
+          {t("summary.requiringSignatures")}{" "}
           <strong className="text-foreground">
             {
               documents.filter((doc) => {

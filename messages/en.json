@@ -3252,6 +3252,61 @@
       "noResults": "No forms found."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Learners Documents to Sign",
+    "pageSubtitle": "View and sign documents pending your signature",
+    "table": {
+      "columns": {
+        "courseName": "Course Name",
+        "type": "Type",
+        "dateUploaded": "Date Uploaded",
+        "documentName": "Document Name",
+        "uploadedBy": "Uploaded By",
+        "signedInAgreement": "Signed in Agreement",
+        "sessionDateTime": "Session Date/Time",
+        "action": "Action"
+      },
+      "searchPlaceholder": "Search documents...",
+      "loading": "Loading...",
+      "noResults": "No documents found.",
+      "noSignaturesRequested": "No signatures requested",
+      "pendingSuffix": "(Pending)",
+      "signButton": "Sign"
+    },
+    "summary": {
+      "totalDocuments": "Total documents:",
+      "requiringSignatures": "Documents requiring signatures:"
+    },
+    "roles": {
+      "employer": "Employer",
+      "iqa": "IQA",
+      "trainer": "Trainer",
+      "learner": "Learner"
+    },
+    "types": {
+      "evidence": "Evidence"
+    },
+    "modal": {
+      "title": "Document Signature Agreement",
+      "documentLabel": "Document:",
+      "courseLabel": "Course:",
+      "tableHeaders": {
+        "signedInAgreement": "Signed in Agreement",
+        "name": "Name",
+        "signed": "Signed",
+        "date": "Date"
+      },
+      "buttons": {
+        "cancel": "Cancel/Close",
+        "save": "Save",
+        "saving": "Saving..."
+      }
+    },
+    "toast": {
+      "saved": "Signature saved successfully!",
+      "saveError": "Error saving signature"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Default Review Weeks Configuration",
     "pageSubtitle": "Configure the default review period settings for all learner types without custom review periods",

@@ -2299,6 +2299,61 @@
       "noResults": "Keine Formulare gefunden."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Dokumente der Lernenden zum Signieren",
+    "pageSubtitle": "Dokumente anzeigen und signieren, die auf Ihre Unterschrift warten",
+    "table": {
+      "columns": {
+        "courseName": "Kursname",
+        "type": "Typ",
+        "dateUploaded": "Hochgeladen am",
+        "documentName": "Dokumentname",
+        "uploadedBy": "Hochgeladen von",
+        "signedInAgreement": "Unterschrieben (Zustimmung)",
+        "sessionDateTime": "Sitzungsdatum/-zeit",
+        "action": "Aktion"
+      },
+      "searchPlaceholder": "Dokumente suchen...",
+      "loading": "Wird geladen...",
+      "noResults": "Keine Dokumente gefunden.",
+      "noSignaturesRequested": "Keine Unterschriften angefordert",
+      "pendingSuffix": "(Ausstehend)",
+      "signButton": "Signieren"
+    },
+    "summary": {
+      "totalDocuments": "Gesamtzahl der Dokumente:",
+      "requiringSignatures": "Dokumente, die Unterschriften benötigen:"
+    },
+    "roles": {
+      "employer": "Arbeitgeber",
+      "iqa": "IQA",
+      "trainer": "Trainer",
+      "learner": "Lernender"
+    },
+    "types": {
+      "evidence": "Nachweis"
+    },
+    "modal": {
+      "title": "Vereinbarung zur Dokumentunterschrift",
+      "documentLabel": "Dokument:",
+      "courseLabel": "Kurs:",
+      "tableHeaders": {
+        "signedInAgreement": "Unterschrieben (Zustimmung)",
+        "name": "Name",
+        "signed": "Unterschrieben",
+        "date": "Datum"
+      },
+      "buttons": {
+        "cancel": "Abbrechen/Schließen",
+        "save": "Speichern",
+        "saving": "Speichern..."
+      }
+    },
+    "toast": {
+      "saved": "Unterschrift erfolgreich gespeichert!",
+      "saveError": "Fehler beim Speichern der Unterschrift"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Standardkonfiguration für Überprüfungswochen",
     "pageSubtitle": "Konfigurieren Sie die Standardüberprüfungszeiträume für alle Lernendentypen ohne eigene Überprüfungszeiträume",

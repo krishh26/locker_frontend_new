@@ -2933,6 +2933,61 @@
       "noResults": "لم يتم العثور على نماذج."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "مستندات المتعلمين للتوقيع",
+    "pageSubtitle": "اعرض ووقّع المستندات المعلّقة لتوقيعك",
+    "table": {
+      "columns": {
+        "courseName": "اسم الدورة",
+        "type": "النوع",
+        "dateUploaded": "تاريخ الرفع",
+        "documentName": "اسم المستند",
+        "uploadedBy": "تم الرفع بواسطة",
+        "signedInAgreement": "تم التوقيع بالموافقة",
+        "sessionDateTime": "تاريخ/وقت الجلسة",
+        "action": "إجراء"
+      },
+      "searchPlaceholder": "ابحث في المستندات...",
+      "loading": "جاري التحميل...",
+      "noResults": "لم يتم العثور على مستندات.",
+      "noSignaturesRequested": "لا توجد توقيعات مطلوبة",
+      "pendingSuffix": "(قيد الانتظار)",
+      "signButton": "وقّع"
+    },
+    "summary": {
+      "totalDocuments": "إجمالي المستندات:",
+      "requiringSignatures": "المستندات التي تتطلب توقيعات:"
+    },
+    "roles": {
+      "employer": "صاحب العمل",
+      "iqa": "IQA",
+      "trainer": "مدرب",
+      "learner": "متعلم"
+    },
+    "types": {
+      "evidence": "دليل"
+    },
+    "modal": {
+      "title": "اتفاقية توقيع المستند",
+      "documentLabel": "المستند:",
+      "courseLabel": "الدورة:",
+      "tableHeaders": {
+        "signedInAgreement": "تم التوقيع بالموافقة",
+        "name": "الاسم",
+        "signed": "تم التوقيع",
+        "date": "التاريخ"
+      },
+      "buttons": {
+        "cancel": "إلغاء/إغلاق",
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ..."
+      }
+    },
+    "toast": {
+      "saved": "تم حفظ التوقيع بنجاح!",
+      "saveError": "حدث خطأ أثناء حفظ التوقيع"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "إعدادات أسابيع المراجعة الافتراضية",
     "pageSubtitle": "تكوين إعدادات فترة المراجعة الافتراضية لجميع أنواع المتعلمين الذين لا يملكون فترة مراجعة مخصصة",

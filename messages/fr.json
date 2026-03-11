@@ -2980,6 +2980,61 @@
       "noResults": "Aucun formulaire trouvé."
     }
   },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Documents des apprenants à signer",
+    "pageSubtitle": "Voir et signer les documents en attente de votre signature",
+    "table": {
+      "columns": {
+        "courseName": "Nom du cours",
+        "type": "Type",
+        "dateUploaded": "Date de téléchargement",
+        "documentName": "Nom du document",
+        "uploadedBy": "Téléchargé par",
+        "signedInAgreement": "Signé en accord",
+        "sessionDateTime": "Date/heure de session",
+        "action": "Action"
+      },
+      "searchPlaceholder": "Rechercher des documents...",
+      "loading": "Chargement...",
+      "noResults": "Aucun document trouvé.",
+      "noSignaturesRequested": "Aucune signature demandée",
+      "pendingSuffix": "(En attente)",
+      "signButton": "Signer"
+    },
+    "summary": {
+      "totalDocuments": "Total des documents :",
+      "requiringSignatures": "Documents nécessitant des signatures :"
+    },
+    "roles": {
+      "employer": "Employeur",
+      "iqa": "IQA",
+      "trainer": "Formateur",
+      "learner": "Apprenant"
+    },
+    "types": {
+      "evidence": "Preuve"
+    },
+    "modal": {
+      "title": "Accord de signature du document",
+      "documentLabel": "Document :",
+      "courseLabel": "Cours :",
+      "tableHeaders": {
+        "signedInAgreement": "Signé en accord",
+        "name": "Nom",
+        "signed": "Signé",
+        "date": "Date"
+      },
+      "buttons": {
+        "cancel": "Annuler/Fermer",
+        "save": "Enregistrer",
+        "saving": "Enregistrement..."
+      }
+    },
+    "toast": {
+      "saved": "Signature enregistrée avec succès !",
+      "saveError": "Erreur lors de l'enregistrement de la signature"
+    }
+  },
   "defaultReviewWeeks": {
     "pageTitle": "Configuration par défaut des semaines de révision",
     "pageSubtitle": "Configurer les paramètres de période de révision par défaut pour tous les types d'apprenants sans période personnalisée",

@@ -1932,6 +1932,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Analisi lacune",
+    "pageSubtitle": "Monitora le lacune dei discenti tra corsi e unità",
+    "learnerInfo": {
+      "name": "Nome",
+      "username": "Nome utente",
+      "email": "Email",
+      "mobile": "Cellulare",
+      "notSpecified": "Non specificato"
+    },
+    "table": {
+      "columns": {
+        "title": "Titolo",
+        "subUnitTitle": "Titolo sotto-unitaria",
+        "code": "Codice",
+        "learnerMap": "Mappa discente",
+        "trainerMap": "Mappa formatore",
+        "gap": "Lacuna",
+        "comment": "Commento"
+      },
+      "yes": "Sì",
+      "no": "No",
+      "gapTooltip": {
+        "complete": "Completo - Entrambe le mappe presenti",
+        "partial": "Parziale - Una mappa presente",
+        "none": "Nessuna mappa presente"
+      },
+      "filters": {
+        "selectCourse": "Seleziona corso",
+        "selectType": "Seleziona tipo",
+        "selectUnit": "Seleziona unità",
+        "noCourses": "Nessun corso disponibile",
+        "selectCoursePlaceholder": "Seleziona un corso",
+        "selectCourseFirst": "Seleziona prima un corso",
+        "selectTypePlaceholder": "Seleziona un tipo",
+        "selectUnitPlaceholder": "Seleziona un'unità",
+        "noUnits": "Nessuna unità disponibile"
+      },
+      "types": {
+        "knowledge": "Conoscenza",
+        "behaviour": "Comportamento",
+        "skills": "Competenze"
+      },
+      "searchPlaceholder": "Cerca sotto-unitarie...",
+      "export": "Esporta",
+      "exportCsv": "Esporta come CSV",
+      "exportPdf": "Esporta come PDF",
+      "pdfTitle": "Progressi modulo/unità",
+      "toast": {
+        "csvNotImplemented": "L'export CSV sarà implementato",
+        "noDataToExport": "Nessun dato da esportare",
+        "pdfSuccess": "PDF esportato con successo"
+      },
+      "pagination": {
+        "showing": "Mostrati {count} di {total} {items}",
+        "items": "elementi",
+        "subUnits": "sotto-unitarie",
+        "page": "Pagina",
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "noResults": "Nessun risultato.",
+      "empty": {
+        "selectCourse": "Seleziona un corso per vedere i progressi",
+        "selectType": "Seleziona un tipo per vedere i progressi",
+        "noItemsForType": "Nessun elemento per il tipo selezionato",
+        "selectUnit": "Seleziona un'unità per vedere i progressi",
+        "noSubUnits": "Nessuna sotto-unità per l'unità selezionata"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

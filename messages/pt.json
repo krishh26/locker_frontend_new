@@ -2574,6 +2574,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Análise de lacunas",
+    "pageSubtitle": "Acompanhar lacunas dos formandos por cursos e unidades",
+    "learnerInfo": {
+      "name": "Nome",
+      "username": "Nome de utilizador",
+      "email": "E-mail",
+      "mobile": "Telemóvel",
+      "notSpecified": "Não especificado"
+    },
+    "table": {
+      "columns": {
+        "title": "Título",
+        "subUnitTitle": "Título subunidade",
+        "code": "Código",
+        "learnerMap": "Mapa formando",
+        "trainerMap": "Mapa formador",
+        "gap": "Lacuna",
+        "comment": "Comentário"
+      },
+      "yes": "Sim",
+      "no": "Não",
+      "gapTooltip": {
+        "complete": "Completo - Ambos os mapas presentes",
+        "partial": "Parcial - Um mapa presente",
+        "none": "Nenhum mapa presente"
+      },
+      "filters": {
+        "selectCourse": "Selecionar curso",
+        "selectType": "Selecionar tipo",
+        "selectUnit": "Selecionar unidade",
+        "noCourses": "Nenhum curso disponível",
+        "selectCoursePlaceholder": "Selecionar um curso",
+        "selectCourseFirst": "Selecione um curso primeiro",
+        "selectTypePlaceholder": "Selecionar um tipo",
+        "selectUnitPlaceholder": "Selecionar uma unidade",
+        "noUnits": "Nenhuma unidade disponível"
+      },
+      "types": {
+        "knowledge": "Conhecimento",
+        "behaviour": "Comportamento",
+        "skills": "Competências"
+      },
+      "searchPlaceholder": "Pesquisar subunidades...",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "pdfTitle": "Progresso módulo/unidade",
+      "toast": {
+        "csvNotImplemented": "A exportação CSV será implementada",
+        "noDataToExport": "Sem dados para exportar",
+        "pdfSuccess": "PDF exportado com sucesso"
+      },
+      "pagination": {
+        "showing": "A mostrar {count} de {total} {items}",
+        "items": "itens",
+        "subUnits": "subunidades",
+        "page": "Página",
+        "previous": "Anterior",
+        "next": "Seguinte"
+      },
+      "noResults": "Sem resultados.",
+      "empty": {
+        "selectCourse": "Selecione um curso para ver o progresso",
+        "selectType": "Selecione um tipo para ver o progresso",
+        "noItemsForType": "Nenhum item para o tipo selecionado",
+        "selectUnit": "Selecione uma unidade para ver o progresso",
+        "noSubUnits": "Nenhuma subunidade para a unidade selecionada"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

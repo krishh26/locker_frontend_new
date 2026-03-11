@@ -1986,6 +1986,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Lückenanalyse",
+    "pageSubtitle": "Lernerlücken über Kurse und Einheiten verfolgen",
+    "learnerInfo": {
+      "name": "Name",
+      "username": "Benutzername",
+      "email": "E-Mail",
+      "mobile": "Mobil",
+      "notSpecified": "Nicht angegeben"
+    },
+    "table": {
+      "columns": {
+        "title": "Titel",
+        "subUnitTitle": "Untereinheit-Titel",
+        "code": "Code",
+        "learnerMap": "Lerner-Karte",
+        "trainerMap": "Trainer-Karte",
+        "gap": "Lücke",
+        "comment": "Kommentar"
+      },
+      "yes": "Ja",
+      "no": "Nein",
+      "gapTooltip": {
+        "complete": "Vollständig - Beide Karten vorhanden",
+        "partial": "Teilweise - Eine Karte vorhanden",
+        "none": "Keine Karten vorhanden"
+      },
+      "filters": {
+        "selectCourse": "Kurs auswählen",
+        "selectType": "Typ auswählen",
+        "selectUnit": "Einheit auswählen",
+        "noCourses": "Keine Kurse verfügbar",
+        "selectCoursePlaceholder": "Kurs auswählen",
+        "selectCourseFirst": "Wählen Sie zuerst einen Kurs",
+        "selectTypePlaceholder": "Typ auswählen",
+        "selectUnitPlaceholder": "Einheit auswählen",
+        "noUnits": "Keine Einheiten verfügbar"
+      },
+      "types": {
+        "knowledge": "Wissen",
+        "behaviour": "Verhalten",
+        "skills": "Fertigkeiten"
+      },
+      "searchPlaceholder": "Untereinheiten suchen...",
+      "export": "Exportieren",
+      "exportCsv": "Als CSV exportieren",
+      "exportPdf": "Als PDF exportieren",
+      "pdfTitle": "Modul-/Einheitenfortschritt",
+      "toast": {
+        "csvNotImplemented": "CSV-Export wird implementiert",
+        "noDataToExport": "Keine Daten zum Exportieren",
+        "pdfSuccess": "PDF erfolgreich exportiert"
+      },
+      "pagination": {
+        "showing": "Zeige {count} von {total} {items}",
+        "items": "Elemente",
+        "subUnits": "Untereinheiten",
+        "page": "Seite",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "noResults": "Keine Ergebnisse.",
+      "empty": {
+        "selectCourse": "Bitte wählen Sie einen Kurs, um den Fortschritt zu sehen",
+        "selectType": "Bitte wählen Sie einen Typ, um den Fortschritt zu sehen",
+        "noItemsForType": "Keine Elemente für den gewählten Typ",
+        "selectUnit": "Bitte wählen Sie eine Einheit, um den Fortschritt zu sehen",
+        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

@@ -2574,6 +2574,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "गैप विश्लेषण",
+    "pageSubtitle": "पाठ्यक्रमों और इकाइयों में शिक्षार्थी अंतराल ट्रैक करें",
+    "learnerInfo": {
+      "name": "नाम",
+      "username": "उपयोगकर्ता नाम",
+      "email": "ईमेल",
+      "mobile": "मोबाइल",
+      "notSpecified": "निर्दिष्ट नहीं"
+    },
+    "table": {
+      "columns": {
+        "title": "शीर्षक",
+        "subUnitTitle": "उप-इकाई शीर्षक",
+        "code": "कोड",
+        "learnerMap": "शिक्षार्थी मानचित्र",
+        "trainerMap": "प्रशिक्षक मानचित्र",
+        "gap": "अंतर",
+        "comment": "टिप्पणी"
+      },
+      "yes": "हाँ",
+      "no": "नहीं",
+      "gapTooltip": {
+        "complete": "पूर्ण - दोनों मानचित्र मौजूद",
+        "partial": "आंशिक - एक मानचित्र मौजूद",
+        "none": "कोई मानचित्र मौजूद नहीं"
+      },
+      "filters": {
+        "selectCourse": "पाठ्यक्रम चुनें",
+        "selectType": "प्रकार चुनें",
+        "selectUnit": "इकाई चुनें",
+        "noCourses": "कोई पाठ्यक्रम उपलब्ध नहीं",
+        "selectCoursePlaceholder": "पाठ्यक्रम चुनें",
+        "selectCourseFirst": "पहले पाठ्यक्रम चुनें",
+        "selectTypePlaceholder": "प्रकार चुनें",
+        "selectUnitPlaceholder": "इकाई चुनें",
+        "noUnits": "कोई इकाई उपलब्ध नहीं"
+      },
+      "types": {
+        "knowledge": "ज्ञान",
+        "behaviour": "व्यवहार",
+        "skills": "कौशल"
+      },
+      "searchPlaceholder": "उप-इकाइयाँ खोजें...",
+      "export": "निर्यात",
+      "exportCsv": "CSV के रूप में निर्यात",
+      "exportPdf": "PDF के रूप में निर्यात",
+      "pdfTitle": "मॉड्यूल/इकाई प्रगति",
+      "toast": {
+        "csvNotImplemented": "CSV निर्यात लागू किया जाएगा",
+        "noDataToExport": "निर्यात के लिए कोई डेटा नहीं",
+        "pdfSuccess": "PDF सफलतापूर्वक निर्यात हुआ"
+      },
+      "pagination": {
+        "showing": "{total} में से {count} {items} दिख रहा है",
+        "items": "आइटम",
+        "subUnits": "उप-इकाइयाँ",
+        "page": "पृष्ठ",
+        "previous": "पिछला",
+        "next": "अगला"
+      },
+      "noResults": "कोई परिणाम नहीं।",
+      "empty": {
+        "selectCourse": "प्रगति देखने के लिए पाठ्यक्रम चुनें",
+        "selectType": "प्रगति देखने के लिए प्रकार चुनें",
+        "noItemsForType": "चयनित प्रकार के लिए कोई आइटम नहीं",
+        "selectUnit": "प्रगति देखने के लिए इकाई चुनें",
+        "noSubUnits": "चयनित इकाई के लिए कोई उप-इकाई नहीं"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

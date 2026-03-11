@@ -2898,6 +2898,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Gap Analysis",
+    "pageSubtitle": "Track learner gaps across courses and units",
+    "learnerInfo": {
+      "name": "Name",
+      "username": "Username",
+      "email": "Email",
+      "mobile": "Mobile",
+      "notSpecified": "Not specified"
+    },
+    "table": {
+      "columns": {
+        "title": "Title",
+        "subUnitTitle": "Sub Unit Title",
+        "code": "Code",
+        "learnerMap": "Learner Map",
+        "trainerMap": "Trainer Map",
+        "gap": "Gap",
+        "comment": "Comment"
+      },
+      "yes": "Yes",
+      "no": "No",
+      "gapTooltip": {
+        "complete": "Complete - Both maps present",
+        "partial": "Partial - One map present",
+        "none": "No maps present"
+      },
+      "filters": {
+        "selectCourse": "Select Course",
+        "selectType": "Select Type",
+        "selectUnit": "Select Unit",
+        "noCourses": "No courses available",
+        "selectCoursePlaceholder": "Select a course",
+        "selectCourseFirst": "Select a course first",
+        "selectTypePlaceholder": "Select a type",
+        "selectUnitPlaceholder": "Select a unit",
+        "noUnits": "No units available"
+      },
+      "types": {
+        "knowledge": "Knowledge",
+        "behaviour": "Behaviour",
+        "skills": "Skills"
+      },
+      "searchPlaceholder": "Search sub-units...",
+      "export": "Export",
+      "exportCsv": "Export as CSV",
+      "exportPdf": "Export as PDF",
+      "pdfTitle": "Module Unit Progress",
+      "toast": {
+        "csvNotImplemented": "CSV export functionality will be implemented",
+        "noDataToExport": "No data to export",
+        "pdfSuccess": "PDF exported successfully"
+      },
+      "pagination": {
+        "showing": "Showing {count} of {total} {items}",
+        "items": "items",
+        "subUnits": "sub-units",
+        "page": "Page",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "noResults": "No results.",
+      "empty": {
+        "selectCourse": "Please select a course to view progress",
+        "selectType": "Please select a type to view progress",
+        "noItemsForType": "No items available for the selected type",
+        "selectUnit": "Please select a unit to view progress",
+        "noSubUnits": "No sub-units available for the selected unit"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

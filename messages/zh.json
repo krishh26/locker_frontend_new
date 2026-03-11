@@ -2532,6 +2532,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "差距分析",
+    "pageSubtitle": "跟踪课程和单元中的学员差距",
+    "learnerInfo": {
+      "name": "姓名",
+      "username": "用户名",
+      "email": "电子邮件",
+      "mobile": "手机",
+      "notSpecified": "未指定"
+    },
+    "table": {
+      "columns": {
+        "title": "标题",
+        "subUnitTitle": "子单元标题",
+        "code": "代码",
+        "learnerMap": "学员图",
+        "trainerMap": "培训师图",
+        "gap": "差距",
+        "comment": "评论"
+      },
+      "yes": "是",
+      "no": "否",
+      "gapTooltip": {
+        "complete": "完整 - 两张图均存在",
+        "partial": "部分 - 一张图存在",
+        "none": "无图存在"
+      },
+      "filters": {
+        "selectCourse": "选择课程",
+        "selectType": "选择类型",
+        "selectUnit": "选择单元",
+        "noCourses": "暂无课程",
+        "selectCoursePlaceholder": "选择课程",
+        "selectCourseFirst": "请先选择课程",
+        "selectTypePlaceholder": "选择类型",
+        "selectUnitPlaceholder": "选择单元",
+        "noUnits": "暂无单元"
+      },
+      "types": {
+        "knowledge": "知识",
+        "behaviour": "行为",
+        "skills": "技能"
+      },
+      "searchPlaceholder": "搜索子单元...",
+      "export": "导出",
+      "exportCsv": "导出为 CSV",
+      "exportPdf": "导出为 PDF",
+      "pdfTitle": "模块/单元进度",
+      "toast": {
+        "csvNotImplemented": "CSV 导出功能将后续实现",
+        "noDataToExport": "无数据可导出",
+        "pdfSuccess": "PDF 导出成功"
+      },
+      "pagination": {
+        "showing": "显示 {count} / {total} {items}",
+        "items": "项",
+        "subUnits": "子单元",
+        "page": "页",
+        "previous": "上一页",
+        "next": "下一页"
+      },
+      "noResults": "无结果。",
+      "empty": {
+        "selectCourse": "请选择课程以查看进度",
+        "selectType": "请选择类型以查看进度",
+        "noItemsForType": "所选类型暂无项目",
+        "selectUnit": "请选择单元以查看进度",
+        "noSubUnits": "所选单元暂无子单元"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

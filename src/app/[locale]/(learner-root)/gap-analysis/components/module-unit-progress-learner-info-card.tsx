@@ -6,6 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
 import { useLazyGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface MetricCardProps {
   title: string;
@@ -37,6 +38,7 @@ function MetricCard({ title, value, icon: Icon, className }: MetricCardProps) {
 }
 
 export function ModuleUnitProgressLearnerInfoCard() {
+    const t = useTranslations("gapAnalysis");
     const leaner = useAppSelector((state) => state.auth.learner);
     console.log("🚀 ~ ModuleUnitProgressLearnerInfoCard ~ leaner:", leaner)
 //   const [getLearnerDetails, { data: progressData, isLoading }] =
@@ -53,23 +55,23 @@ export function ModuleUnitProgressLearnerInfoCard() {
 
   const learnerInfo = [
     {
-      title: "Name",
+      title: t("learnerInfo.name"),
       value: learnerName,
       icon: User,
     },
     {
-      title: "Username",
-      value: leaner?.user_name || "Not specified",
+      title: t("learnerInfo.username"),
+      value: leaner?.user_name || t("learnerInfo.notSpecified"),
       icon: User,
     },
     {
-      title: "Email",
-      value: leaner?.email || "Not specified",
+      title: t("learnerInfo.email"),
+      value: leaner?.email || t("learnerInfo.notSpecified"),
       icon: Mail,
     },
     {
-      title: "Mobile",
-      value: leaner?.mobile || "Not specified",
+      title: t("learnerInfo.mobile"),
+      value: leaner?.mobile || t("learnerInfo.notSpecified"),
       icon: Phone,
     },
   ];

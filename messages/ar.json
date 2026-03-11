@@ -2567,6 +2567,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "تحليل الفجوات",
+    "pageSubtitle": "تتبع فجوات المتعلمين عبر الدورات والوحدات",
+    "learnerInfo": {
+      "name": "الاسم",
+      "username": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "mobile": "الجوال",
+      "notSpecified": "غير محدد"
+    },
+    "table": {
+      "columns": {
+        "title": "العنوان",
+        "subUnitTitle": "عنوان الوحدة الفرعية",
+        "code": "الرمز",
+        "learnerMap": "خريطة المتعلم",
+        "trainerMap": "خريطة المدرب",
+        "gap": "الفجوة",
+        "comment": "تعليق"
+      },
+      "yes": "نعم",
+      "no": "لا",
+      "gapTooltip": {
+        "complete": "كامل - كلا الخريطتين موجودتان",
+        "partial": "جزئي - خريطة واحدة موجودة",
+        "none": "لا توجد خرائط"
+      },
+      "filters": {
+        "selectCourse": "اختر الدورة",
+        "selectType": "اختر النوع",
+        "selectUnit": "اختر الوحدة",
+        "noCourses": "لا توجد دورات متاحة",
+        "selectCoursePlaceholder": "اختر دورة",
+        "selectCourseFirst": "اختر دورة أولاً",
+        "selectTypePlaceholder": "اختر نوعاً",
+        "selectUnitPlaceholder": "اختر وحدة",
+        "noUnits": "لا توجد وحدات متاحة"
+      },
+      "types": {
+        "knowledge": "المعرفة",
+        "behaviour": "السلوك",
+        "skills": "المهارات"
+      },
+      "searchPlaceholder": "البحث في الوحدات الفرعية...",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "pdfTitle": "تقدم الوحدة/الوحدة الفرعية",
+      "toast": {
+        "csvNotImplemented": "سيتم تنفيذ تصدير CSV",
+        "noDataToExport": "لا توجد بيانات للتصدير",
+        "pdfSuccess": "تم تصدير PDF بنجاح"
+      },
+      "pagination": {
+        "showing": "عرض {count} من {total} {items}",
+        "items": "عناصر",
+        "subUnits": "وحدات فرعية",
+        "page": "صفحة",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "noResults": "لا توجد نتائج.",
+      "empty": {
+        "selectCourse": "يرجى اختيار دورة لعرض التقدم",
+        "selectType": "يرجى اختيار نوع لعرض التقدم",
+        "noItemsForType": "لا توجد عناصر للنوع المحدد",
+        "selectUnit": "يرجى اختيار وحدة لعرض التقدم",
+        "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",

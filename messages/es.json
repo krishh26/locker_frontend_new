@@ -2415,6 +2415,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Análisis de brechas",
+    "pageSubtitle": "Seguir las brechas de los aprendices por cursos y unidades",
+    "learnerInfo": {
+      "name": "Nombre",
+      "username": "Usuario",
+      "email": "Correo electrónico",
+      "mobile": "Móvil",
+      "notSpecified": "No especificado"
+    },
+    "table": {
+      "columns": {
+        "title": "Título",
+        "subUnitTitle": "Título subunidad",
+        "code": "Código",
+        "learnerMap": "Mapa aprendiz",
+        "trainerMap": "Mapa formador",
+        "gap": "Brecha",
+        "comment": "Comentario"
+      },
+      "yes": "Sí",
+      "no": "No",
+      "gapTooltip": {
+        "complete": "Completo - Ambas mapas presentes",
+        "partial": "Parcial - Un mapa presente",
+        "none": "Ningún mapa presente"
+      },
+      "filters": {
+        "selectCourse": "Seleccionar curso",
+        "selectType": "Seleccionar tipo",
+        "selectUnit": "Seleccionar unidad",
+        "noCourses": "No hay cursos disponibles",
+        "selectCoursePlaceholder": "Seleccionar un curso",
+        "selectCourseFirst": "Seleccione un curso primero",
+        "selectTypePlaceholder": "Seleccionar un tipo",
+        "selectUnitPlaceholder": "Seleccionar una unidad",
+        "noUnits": "No hay unidades disponibles"
+      },
+      "types": {
+        "knowledge": "Conocimiento",
+        "behaviour": "Comportamiento",
+        "skills": "Habilidades"
+      },
+      "searchPlaceholder": "Buscar subunidades...",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "pdfTitle": "Progreso módulo/unidad",
+      "toast": {
+        "csvNotImplemented": "La exportación CSV se implementará",
+        "noDataToExport": "No hay datos para exportar",
+        "pdfSuccess": "PDF exportado correctamente"
+      },
+      "pagination": {
+        "showing": "Mostrando {count} de {total} {items}",
+        "items": "elementos",
+        "subUnits": "subunidades",
+        "page": "Página",
+        "previous": "Anterior",
+        "next": "Siguiente"
+      },
+      "noResults": "Sin resultados.",
+      "empty": {
+        "selectCourse": "Seleccione un curso para ver el progreso",
+        "selectType": "Seleccione un tipo para ver el progreso",
+        "noItemsForType": "No hay elementos para el tipo seleccionado",
+        "selectUnit": "Seleccione una unidad para ver el progreso",
+        "noSubUnits": "No hay subunidades para la unidad seleccionada"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Gestión de Recursos de Formación Complementaria",
     "pageSubtitle": "Gestione recursos de formación complementaria para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

@@ -5428,6 +5428,63 @@
       "learnerEmailRequired": "O e-mail do formando é obrigatório"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Notificações",
+      "subtitleOne": "1 notificação",
+      "subtitleMany": "{count} notificações",
+      "loadError": "Falha ao carregar notificações",
+      "loadErrorHint": "Tente atualizar a página",
+      "emptyTitle": "Sem notificações",
+      "emptyDescription": "Está em dia! Não há notificações para mostrar.",
+      "markAllRead": "Marcar todas como lidas",
+      "deleteAll": "Eliminar todas",
+      "paginationPageOf": "Página {page} de {pages} ({total} no total)"
+    },
+    "filters": {
+      "typeLabel": "Tipo",
+      "statusLabel": "Estado",
+      "allTypesPlaceholder": "Todos os tipos",
+      "allStatusesPlaceholder": "Todos os estados",
+      "allTypes": "Todos os tipos",
+      "allStatuses": "Todos os estados",
+      "unread": "Por ler",
+      "read": "Lidas"
+    },
+    "types": {
+      "notification": "Notificação",
+      "news": "Notícias",
+      "allocation": "Atribuição"
+    },
+    "item": {
+      "newBadge": "Nova",
+      "markAsRead": "Marcar como lida",
+      "delete": "Eliminar"
+    },
+    "bell": {
+      "srOnly": "Notificações",
+      "heading": "Notificações",
+      "unreadCount": "{count} por ler",
+      "loadError": "Falha ao carregar notificações",
+      "noNotifications": "Sem notificações",
+      "allCaughtUp": "Está em dia!",
+      "viewAll": "Ver todas as notificações",
+      "markAllRead": "Marcar todas como lidas",
+      "deleteAll": "Eliminar todas",
+      "markAsReadTitle": "Marcar como lida",
+      "deleteTitle": "Eliminar"
+    },
+    "toast": {
+      "markedAsRead": "Notificação marcada como lida",
+      "markedAsReadFailed": "Falha ao marcar como lida",
+      "deleted": "Notificação eliminada",
+      "deleteFailed": "Falha ao eliminar notificação",
+      "allMarkedAsRead": "Todas as notificações marcadas como lidas",
+      "allMarkedAsReadFailed": "Falha ao marcar todas como lidas",
+      "allDeleted": "Todas as notificações eliminadas",
+      "allDeleteFailed": "Falha ao eliminar todas as notificações"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informação do curso não encontrada",

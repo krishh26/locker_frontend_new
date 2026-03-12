@@ -5258,6 +5258,63 @@
       "learnerEmailRequired": "El correo del alumno es obligatorio"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Notificaciones",
+      "subtitleOne": "1 notificación",
+      "subtitleMany": "{count} notificaciones",
+      "loadError": "Error al cargar las notificaciones",
+      "loadErrorHint": "Intente actualizar la página",
+      "emptyTitle": "Sin notificaciones",
+      "emptyDescription": "¡Estás al día! No hay notificaciones para mostrar.",
+      "markAllRead": "Marcar todas como leídas",
+      "deleteAll": "Eliminar todas",
+      "paginationPageOf": "Página {page} de {pages} ({total} en total)"
+    },
+    "filters": {
+      "typeLabel": "Tipo",
+      "statusLabel": "Estado",
+      "allTypesPlaceholder": "Todos los tipos",
+      "allStatusesPlaceholder": "Todos los estados",
+      "allTypes": "Todos los tipos",
+      "allStatuses": "Todos los estados",
+      "unread": "No leídas",
+      "read": "Leídas"
+    },
+    "types": {
+      "notification": "Notificación",
+      "news": "Noticias",
+      "allocation": "Asignación"
+    },
+    "item": {
+      "newBadge": "Nueva",
+      "markAsRead": "Marcar como leída",
+      "delete": "Eliminar"
+    },
+    "bell": {
+      "srOnly": "Notificaciones",
+      "heading": "Notificaciones",
+      "unreadCount": "{count} sin leer",
+      "loadError": "Error al cargar las notificaciones",
+      "noNotifications": "Sin notificaciones",
+      "allCaughtUp": "¡Estás al día!",
+      "viewAll": "Ver todas las notificaciones",
+      "markAllRead": "Marcar todas como leídas",
+      "deleteAll": "Eliminar todas",
+      "markAsReadTitle": "Marcar como leída",
+      "deleteTitle": "Eliminar"
+    },
+    "toast": {
+      "markedAsRead": "Notificación marcada como leída",
+      "markedAsReadFailed": "Error al marcar como leída",
+      "deleted": "Notificación eliminada",
+      "deleteFailed": "Error al eliminar la notificación",
+      "allMarkedAsRead": "Todas las notificaciones marcadas como leídas",
+      "allMarkedAsReadFailed": "Error al marcar todas como leídas",
+      "allDeleted": "Todas las notificaciones eliminadas",
+      "allDeleteFailed": "Error al eliminar todas las notificaciones"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Información del curso no encontrada",

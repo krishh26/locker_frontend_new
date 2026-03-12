@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { CheckCheck, Trash2, Loader2, Bell } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -27,6 +28,7 @@ import type { NotificationType } from '@/store/api/notification/types'
 import { PageHeader } from '@/components/dashboard/page-header'
 
 export function NotificationsPageContent() {
+  const t = useTranslations('notifications')
   const [page, setPage] = useState(1)
   const [pageSize] = useState(10)
   const [typeFilter, setTypeFilter] = useState<NotificationType | 'all'>('all')
@@ -60,36 +62,36 @@ export function NotificationsPageContent() {
   const handleRead = async (id: number) => {
     try {
       await readNotification({ notification_id: id }).unwrap()
-      toast.success('Notification marked as read')
+      toast.success(t('toast.markedAsRead'))
     } catch {
-      toast.error('Failed to mark as read')
+      toast.error(t('toast.markedAsReadFailed'))
     }
   }
 
   const handleDelete = async (id: number) => {
     try {
       await deleteNotification({ notification_id: id }).unwrap()
-      toast.success('Notification deleted')
+      toast.success(t('toast.deleted'))
     } catch {
-      toast.error('Failed to delete notification')
+      toast.error(t('toast.deleteFailed'))
     }
   }
 
   const handleReadAll = async () => {
     try {
       await readAll().unwrap()
-      toast.success('All notifications marked as read')
+      toast.success(t('toast.allMarkedAsRead'))
     } catch {
-      toast.error('Failed to mark all as read')
+      toast.error(t('toast.allMarkedAsReadFailed'))
     }
   }
 
   const handleDeleteAll = async () => {
     try {
       await deleteAll().unwrap()
-      toast.success('All notifications deleted')
+      toast.success(t('toast.allDeleted'))
     } catch {
-      toast.error('Failed to delete all notifications')
+      toast.error(t('toast.allDeleteFailed'))
     }
   }
 
@@ -114,10 +116,10 @@ export function NotificationsPageContent() {
       <div className='flex flex-col items-center justify-center py-16 text-center'>
         <Bell className='h-12 w-12 text-muted-foreground mb-4' />
         <h3 className='text-lg font-semibold mb-2'>
-          Failed to load notifications
+          {t('page.loadError')}
         </h3>
         <p className='text-sm text-muted-foreground'>
-          Please try refreshing the page
+          {t('page.loadErrorHint')}
         </p>
       </div>
     )
@@ -128,10 +130,12 @@ export function NotificationsPageContent() {
       {/* Header */}
       <div className='flex items-center justify-between'>
         <PageHeader
-          title='Notifications'
-          subtitle={`${notifications.length} notification${
-            notifications.length !== 1 ? 's' : ''
-          }`}
+          title={t('page.title')}
+          subtitle={
+            notifications.length === 1
+              ? t('page.subtitleOne')
+              : t('page.subtitleMany', { count: notifications.length })
+          }
           showBackButton={true}
         />
         {notifications.length > 0 && (
@@ -146,7 +150,7 @@ export function NotificationsPageContent() {
               ) : (
                 <CheckCheck className='h-4 w-4 mr-2' />
               )}
-              Mark all read
+              {t('page.markAllRead')}
             </Button>
             <Button
               variant='outline'
@@ -159,7 +163,7 @@ export function NotificationsPageContent() {
               ) : (
                 <Trash2 className='h-4 w-4 mr-2' />
               )}
-              Delete all
+              {t('page.deleteAll')}
             </Button>
           </div>
         )}
@@ -177,9 +181,9 @@ export function NotificationsPageContent() {
       {notifications.length === 0 ? (
         <div className='flex flex-col items-center justify-center py-16 text-center'>
           <Bell className='h-12 w-12 text-muted-foreground mb-4' />
-          <h3 className='text-lg font-semibold mb-2'>No notifications</h3>
+          <h3 className='text-lg font-semibold mb-2'>{t('page.emptyTitle')}</h3>
           <p className='text-sm text-muted-foreground'>
-            You&apos;re all caught up! There are no notifications to display.
+            {t('page.emptyDescription')}
           </p>
         </div>
       ) : (
@@ -199,7 +203,11 @@ export function NotificationsPageContent() {
           {pagination && pagination.pages > 1 && (
             <div className='flex items-center justify-between'>
               <div className='text-sm text-muted-foreground'>
-                Page {page} of {pagination.pages} ({pagination.items} total)
+                {t('page.paginationPageOf', {
+                  page,
+                  pages: pagination.pages,
+                  total: pagination.items,
+                })}
               </div>
               <Pagination>
                 <PaginationContent>

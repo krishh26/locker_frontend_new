@@ -5350,6 +5350,63 @@
       "learnerEmailRequired": "البريد الإلكتروني للمتعلم مطلوب"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "الإشعارات",
+      "subtitleOne": "إشعار واحد",
+      "subtitleMany": "{count} إشعارات",
+      "loadError": "فشل تحميل الإشعارات",
+      "loadErrorHint": "يرجى تحديث الصفحة",
+      "emptyTitle": "لا توجد إشعارات",
+      "emptyDescription": "أنت محدث! لا توجد إشعارات لعرضها.",
+      "markAllRead": "تحديد الكل كمقروء",
+      "deleteAll": "حذف الكل",
+      "paginationPageOf": "الصفحة {page} من {pages} ({total} إجمالاً)"
+    },
+    "filters": {
+      "typeLabel": "النوع",
+      "statusLabel": "الحالة",
+      "allTypesPlaceholder": "جميع الأنواع",
+      "allStatusesPlaceholder": "جميع الحالات",
+      "allTypes": "جميع الأنواع",
+      "allStatuses": "جميع الحالات",
+      "unread": "غير مقروءة",
+      "read": "مقروءة"
+    },
+    "types": {
+      "notification": "إشعار",
+      "news": "أخبار",
+      "allocation": "تخصيص"
+    },
+    "item": {
+      "newBadge": "جديد",
+      "markAsRead": "تحديد كمقروء",
+      "delete": "حذف"
+    },
+    "bell": {
+      "srOnly": "الإشعارات",
+      "heading": "الإشعارات",
+      "unreadCount": "{count} غير مقروءة",
+      "loadError": "فشل تحميل الإشعارات",
+      "noNotifications": "لا توجد إشعارات",
+      "allCaughtUp": "أنت محدث!",
+      "viewAll": "عرض جميع الإشعارات",
+      "markAllRead": "تحديد الكل كمقروء",
+      "deleteAll": "حذف الكل",
+      "markAsReadTitle": "تحديد كمقروء",
+      "deleteTitle": "حذف"
+    },
+    "toast": {
+      "markedAsRead": "تم تحديد الإشعار كمقروء",
+      "markedAsReadFailed": "فشل التحديد كمقروء",
+      "deleted": "تم حذف الإشعار",
+      "deleteFailed": "فشل حذف الإشعار",
+      "allMarkedAsRead": "تم تحديد جميع الإشعارات كمقروءة",
+      "allMarkedAsReadFailed": "فشل تحديد الكل كمقروء",
+      "allDeleted": "تم حذف جميع الإشعارات",
+      "allDeleteFailed": "فشل حذف جميع الإشعارات"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

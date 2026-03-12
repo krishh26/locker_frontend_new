@@ -5444,6 +5444,63 @@
       "learnerEmailRequired": "Learner email is required"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Notifications",
+      "subtitleOne": "1 notification",
+      "subtitleMany": "{count} notifications",
+      "loadError": "Failed to load notifications",
+      "loadErrorHint": "Please try refreshing the page",
+      "emptyTitle": "No notifications",
+      "emptyDescription": "You're all caught up! There are no notifications to display.",
+      "markAllRead": "Mark all read",
+      "deleteAll": "Delete all",
+      "paginationPageOf": "Page {page} of {pages} ({total} total)"
+    },
+    "filters": {
+      "typeLabel": "Type",
+      "statusLabel": "Status",
+      "allTypesPlaceholder": "All types",
+      "allStatusesPlaceholder": "All statuses",
+      "allTypes": "All Types",
+      "allStatuses": "All Statuses",
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "types": {
+      "notification": "Notification",
+      "news": "News",
+      "allocation": "Allocation"
+    },
+    "item": {
+      "newBadge": "New",
+      "markAsRead": "Mark as read",
+      "delete": "Delete"
+    },
+    "bell": {
+      "srOnly": "Notifications",
+      "heading": "Notifications",
+      "unreadCount": "{count} unread",
+      "loadError": "Failed to load notifications",
+      "noNotifications": "No notifications",
+      "allCaughtUp": "You're all caught up!",
+      "viewAll": "View all notifications",
+      "markAllRead": "Mark all read",
+      "deleteAll": "Delete all",
+      "markAsReadTitle": "Mark as read",
+      "deleteTitle": "Delete"
+    },
+    "toast": {
+      "markedAsRead": "Notification marked as read",
+      "markedAsReadFailed": "Failed to mark as read",
+      "deleted": "Notification deleted",
+      "deleteFailed": "Failed to delete notification",
+      "allMarkedAsRead": "All notifications marked as read",
+      "allMarkedAsReadFailed": "Failed to mark all as read",
+      "allDeleted": "All notifications deleted",
+      "allDeleteFailed": "Failed to delete all notifications"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

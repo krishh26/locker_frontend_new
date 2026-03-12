@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Label } from "@/components/ui/label"
 import {
   Select,
@@ -23,32 +24,33 @@ export function NotificationFilters({
   readFilter,
   onReadFilterChange,
 }: NotificationFiltersProps) {
+  const t = useTranslations("notifications")
   return (
     <div className="flex flex-wrap items-center gap-4">
       <div className="space-y-2">
-        <Label htmlFor="type-filter">Type</Label>
+        <Label htmlFor="type-filter">{t("filters.typeLabel")}</Label>
         <Select value={typeFilter} onValueChange={onTypeFilterChange}>
           <SelectTrigger id="type-filter" className="w-[180px]">
-            <SelectValue placeholder="All types" />
+            <SelectValue placeholder={t("filters.allTypesPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="notification">Notification</SelectItem>
-            <SelectItem value="news">News</SelectItem>
-            <SelectItem value="allocation">Allocation</SelectItem>
+            <SelectItem value="all">{t("filters.allTypes")}</SelectItem>
+            <SelectItem value="notification">{t("types.notification")}</SelectItem>
+            <SelectItem value="news">{t("types.news")}</SelectItem>
+            <SelectItem value="allocation">{t("types.allocation")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="read-filter">Status</Label>
+        <Label htmlFor="read-filter">{t("filters.statusLabel")}</Label>
         <Select value={readFilter} onValueChange={onReadFilterChange}>
           <SelectTrigger id="read-filter" className="w-[180px]">
-            <SelectValue placeholder="All statuses" />
+            <SelectValue placeholder={t("filters.allStatusesPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="unread">Unread</SelectItem>
-            <SelectItem value="read">Read</SelectItem>
+            <SelectItem value="all">{t("filters.allStatuses")}</SelectItem>
+            <SelectItem value="unread">{t("filters.unread")}</SelectItem>
+            <SelectItem value="read">{t("filters.read")}</SelectItem>
           </SelectContent>
         </Select>
       </div>

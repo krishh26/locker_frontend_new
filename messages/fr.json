@@ -5416,6 +5416,63 @@
       "learnerEmailRequired": "L'e-mail de l'apprenant est obligatoire"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Notifications",
+      "subtitleOne": "1 notification",
+      "subtitleMany": "{count} notifications",
+      "loadError": "Échec du chargement des notifications",
+      "loadErrorHint": "Veuillez actualiser la page",
+      "emptyTitle": "Aucune notification",
+      "emptyDescription": "Vous êtes à jour ! Aucune notification à afficher.",
+      "markAllRead": "Tout marquer comme lu",
+      "deleteAll": "Tout supprimer",
+      "paginationPageOf": "Page {page} sur {pages} ({total} au total)"
+    },
+    "filters": {
+      "typeLabel": "Type",
+      "statusLabel": "État",
+      "allTypesPlaceholder": "Tous les types",
+      "allStatusesPlaceholder": "Tous les états",
+      "allTypes": "Tous les types",
+      "allStatuses": "Tous les états",
+      "unread": "Non lues",
+      "read": "Lues"
+    },
+    "types": {
+      "notification": "Notification",
+      "news": "Actualités",
+      "allocation": "Attribution"
+    },
+    "item": {
+      "newBadge": "Nouvelle",
+      "markAsRead": "Marquer comme lue",
+      "delete": "Supprimer"
+    },
+    "bell": {
+      "srOnly": "Notifications",
+      "heading": "Notifications",
+      "unreadCount": "{count} non lues",
+      "loadError": "Échec du chargement des notifications",
+      "noNotifications": "Aucune notification",
+      "allCaughtUp": "Vous êtes à jour !",
+      "viewAll": "Voir toutes les notifications",
+      "markAllRead": "Tout marquer comme lu",
+      "deleteAll": "Tout supprimer",
+      "markAsReadTitle": "Marquer comme lue",
+      "deleteTitle": "Supprimer"
+    },
+    "toast": {
+      "markedAsRead": "Notification marquée comme lue",
+      "markedAsReadFailed": "Échec du marquage comme lu",
+      "deleted": "Notification supprimée",
+      "deleteFailed": "Échec de la suppression de la notification",
+      "allMarkedAsRead": "Toutes les notifications marquées comme lues",
+      "allMarkedAsReadFailed": "Échec du marquage de toutes comme lues",
+      "allDeleted": "Toutes les notifications supprimées",
+      "allDeleteFailed": "Échec de la suppression de toutes les notifications"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informations sur le cours introuvables",

@@ -5428,6 +5428,63 @@
       "learnerEmailRequired": "सीखने वाले का ईमेल आवश्यक है"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "सूचनाएं",
+      "subtitleOne": "1 सूचना",
+      "subtitleMany": "{count} सूचनाएं",
+      "loadError": "सूचनाएं लोड करने में विफल",
+      "loadErrorHint": "कृपया पृष्ठ को रीफ्रेश करें",
+      "emptyTitle": "कोई सूचना नहीं",
+      "emptyDescription": "आप सब पढ़ चुके हैं! दिखाने के लिए कोई सूचना नहीं है।",
+      "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
+      "deleteAll": "सभी हटाएं",
+      "paginationPageOf": "पृष्ठ {page} / {pages} (कुल {total})"
+    },
+    "filters": {
+      "typeLabel": "प्रकार",
+      "statusLabel": "स्थिति",
+      "allTypesPlaceholder": "सभी प्रकार",
+      "allStatusesPlaceholder": "सभी स्थितियां",
+      "allTypes": "सभी प्रकार",
+      "allStatuses": "सभी स्थितियां",
+      "unread": "अपठित",
+      "read": "पढ़ी हुई"
+    },
+    "types": {
+      "notification": "सूचना",
+      "news": "समाचार",
+      "allocation": "आवंटन"
+    },
+    "item": {
+      "newBadge": "नई",
+      "markAsRead": "पढ़ा हुआ मार्क करें",
+      "delete": "हटाएं"
+    },
+    "bell": {
+      "srOnly": "सूचनाएं",
+      "heading": "सूचनाएं",
+      "unreadCount": "{count} अपठित",
+      "loadError": "सूचनाएं लोड करने में विफल",
+      "noNotifications": "कोई सूचना नहीं",
+      "allCaughtUp": "आप सब पढ़ चुके हैं!",
+      "viewAll": "सभी सूचनाएं देखें",
+      "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
+      "deleteAll": "सभी हटाएं",
+      "markAsReadTitle": "पढ़ा हुआ मार्क करें",
+      "deleteTitle": "हटाएं"
+    },
+    "toast": {
+      "markedAsRead": "सूचना पढ़ा हुआ मार्क की गई",
+      "markedAsReadFailed": "पढ़ा हुआ मार्क करने में विफल",
+      "deleted": "सूचना हटाई गई",
+      "deleteFailed": "सूचना हटाने में विफल",
+      "allMarkedAsRead": "सभी सूचनाएं पढ़ा हुआ मार्क की गईं",
+      "allMarkedAsReadFailed": "सभी को पढ़ा हुआ मार्क करने में विफल",
+      "allDeleted": "सभी सूचनाएं हटाई गईं",
+      "allDeleteFailed": "सभी सूचनाएं हटाने में विफल"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "कोर्स जानकारी नहीं मिली",

@@ -5386,6 +5386,63 @@
       "learnerEmailRequired": "学员邮箱为必填项"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "通知",
+      "subtitleOne": "1 条通知",
+      "subtitleMany": "{count} 条通知",
+      "loadError": "加载通知失败",
+      "loadErrorHint": "请尝试刷新页面",
+      "emptyTitle": "暂无通知",
+      "emptyDescription": "您已全部阅毕！暂无通知可显示。",
+      "markAllRead": "全部标为已读",
+      "deleteAll": "全部删除",
+      "paginationPageOf": "第 {page} 页，共 {pages} 页（共 {total} 条）"
+    },
+    "filters": {
+      "typeLabel": "类型",
+      "statusLabel": "状态",
+      "allTypesPlaceholder": "全部类型",
+      "allStatusesPlaceholder": "全部状态",
+      "allTypes": "全部类型",
+      "allStatuses": "全部状态",
+      "unread": "未读",
+      "read": "已读"
+    },
+    "types": {
+      "notification": "通知",
+      "news": "新闻",
+      "allocation": "分配"
+    },
+    "item": {
+      "newBadge": "新",
+      "markAsRead": "标为已读",
+      "delete": "删除"
+    },
+    "bell": {
+      "srOnly": "通知",
+      "heading": "通知",
+      "unreadCount": "{count} 条未读",
+      "loadError": "加载通知失败",
+      "noNotifications": "暂无通知",
+      "allCaughtUp": "您已全部阅毕！",
+      "viewAll": "查看全部通知",
+      "markAllRead": "全部标为已读",
+      "deleteAll": "全部删除",
+      "markAsReadTitle": "标为已读",
+      "deleteTitle": "删除"
+    },
+    "toast": {
+      "markedAsRead": "已标为已读",
+      "markedAsReadFailed": "标为已读失败",
+      "deleted": "通知已删除",
+      "deleteFailed": "删除通知失败",
+      "allMarkedAsRead": "已全部标为已读",
+      "allMarkedAsReadFailed": "全部标为已读失败",
+      "allDeleted": "已全部删除",
+      "allDeleteFailed": "全部删除失败"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

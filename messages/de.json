@@ -4594,6 +4594,63 @@
       "learnerEmailRequired": "E-Mail des Lernenden ist erforderlich"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Benachrichtigungen",
+      "subtitleOne": "1 Benachrichtigung",
+      "subtitleMany": "{count} Benachrichtigungen",
+      "loadError": "Benachrichtigungen konnten nicht geladen werden",
+      "loadErrorHint": "Bitte Seite aktualisieren",
+      "emptyTitle": "Keine Benachrichtigungen",
+      "emptyDescription": "Sie sind auf dem neuesten Stand! Es gibt keine Benachrichtigungen anzuzeigen.",
+      "markAllRead": "Alle als gelesen markieren",
+      "deleteAll": "Alle löschen",
+      "paginationPageOf": "Seite {page} von {pages} ({total} insgesamt)"
+    },
+    "filters": {
+      "typeLabel": "Typ",
+      "statusLabel": "Status",
+      "allTypesPlaceholder": "Alle Typen",
+      "allStatusesPlaceholder": "Alle Status",
+      "allTypes": "Alle Typen",
+      "allStatuses": "Alle Status",
+      "unread": "Ungelesen",
+      "read": "Gelesen"
+    },
+    "types": {
+      "notification": "Benachrichtigung",
+      "news": "Neuigkeiten",
+      "allocation": "Zuweisung"
+    },
+    "item": {
+      "newBadge": "Neu",
+      "markAsRead": "Als gelesen markieren",
+      "delete": "Löschen"
+    },
+    "bell": {
+      "srOnly": "Benachrichtigungen",
+      "heading": "Benachrichtigungen",
+      "unreadCount": "{count} ungelesen",
+      "loadError": "Benachrichtigungen konnten nicht geladen werden",
+      "noNotifications": "Keine Benachrichtigungen",
+      "allCaughtUp": "Sie sind auf dem neuesten Stand!",
+      "viewAll": "Alle Benachrichtigungen anzeigen",
+      "markAllRead": "Alle als gelesen markieren",
+      "deleteAll": "Alle löschen",
+      "markAsReadTitle": "Als gelesen markieren",
+      "deleteTitle": "Löschen"
+    },
+    "toast": {
+      "markedAsRead": "Benachrichtigung als gelesen markiert",
+      "markedAsReadFailed": "Als gelesen markieren fehlgeschlagen",
+      "deleted": "Benachrichtigung gelöscht",
+      "deleteFailed": "Benachrichtigung löschen fehlgeschlagen",
+      "allMarkedAsRead": "Alle Benachrichtigungen als gelesen markiert",
+      "allMarkedAsReadFailed": "Alle als gelesen markieren fehlgeschlagen",
+      "allDeleted": "Alle Benachrichtigungen gelöscht",
+      "allDeleteFailed": "Alle Benachrichtigungen löschen fehlgeschlagen"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Kursinformationen nicht gefunden",

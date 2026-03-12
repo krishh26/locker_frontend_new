@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import {
   Bell,
@@ -48,9 +49,11 @@ interface NotificationItemProps {
   onRead?: (id: number) => void
   onDelete?: (id: number) => void
   onClickContent?: () => void
+  markAsReadTitle?: string
+  deleteTitle?: string
 }
 
-function NotificationItem({ notification, onRead, onDelete, onClickContent }: NotificationItemProps) {
+function NotificationItem({ notification, onRead, onDelete, onClickContent, markAsReadTitle = "Mark as read", deleteTitle = "Delete" }: NotificationItemProps) {
   const Icon = getNotificationIcon(notification.type)
 
   const content = (
@@ -86,7 +89,7 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent }: No
             size="icon"
             className="h-6 w-6"
             onClick={(e) => { e.stopPropagation(); onRead(notification.notification_id) }}
-            title="Mark as read"
+            title={markAsReadTitle}
           >
             <Check className="h-3 w-3" />
           </Button>
@@ -97,7 +100,7 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent }: No
             size="icon"
             className="h-6 w-6"
             onClick={(e) => { e.stopPropagation(); onDelete(notification.notification_id) }}
-            title="Delete"
+            title={deleteTitle}
           >
             <X className="h-3 w-3" />
           </Button>
@@ -122,6 +125,7 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent }: No
 }
 
 export function NotificationBell() {
+  const t = useTranslations("notifications")
   const router = useRouter()
   const [open, setOpen] = useState(false)
 
@@ -151,16 +155,16 @@ export function NotificationBell() {
     try {
       await readNotification({ notification_id: id }).unwrap()
     } catch {
-      toast.error("Failed to mark as read")
+      toast.error(t("toast.markedAsReadFailed"))
     }
   }
 
   const handleDelete = async (id: number) => {
     try {
       await deleteNotification({ notification_id: id }).unwrap()
-      toast.success("Notification deleted")
+      toast.success(t("toast.deleted"))
     } catch {
-      toast.error("Failed to delete notification")
+      toast.error(t("toast.deleteFailed"))
     }
   }
 
@@ -170,18 +174,18 @@ export function NotificationBell() {
   const handleReadAll = async () => {
     try {
       await readAll().unwrap()
-      toast.success("All notifications marked as read")
+      toast.success(t("toast.allMarkedAsRead"))
     } catch {
-      toast.error("Failed to mark all as read")
+      toast.error(t("toast.allMarkedAsReadFailed"))
     }
   }
 
   const handleDeleteAll = async () => {
     try {
       await deleteAll().unwrap()
-      toast.success("All notifications deleted")
+      toast.success(t("toast.allDeleted"))
     } catch {
-      toast.error("Failed to delete all notifications")
+      toast.error(t("toast.allDeleteFailed"))
     }
   }
 
@@ -218,14 +222,14 @@ export function NotificationBell() {
               {unreadCount > 9 ? "9+" : unreadCount}
             </Badge>
           )}
-          <span className="sr-only">Notifications</span>
+          <span className="sr-only">{t("bell.srOnly")}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-96 p-0" align="end">
         <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="font-semibold">Notifications</h3>
+          <h3 className="font-semibold">{t("bell.heading")}</h3>
           {unreadCount > 0 && (
-            <Badge variant="secondary">{unreadCount} unread</Badge>
+            <Badge variant="secondary">{t("bell.unreadCount", { count: unreadCount })}</Badge>
           )}
         </div>
 
@@ -246,15 +250,15 @@ export function NotificationBell() {
             <div className="flex flex-col items-center justify-center p-8 text-center">
               <Bell className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-sm text-muted-foreground">
-                Failed to load notifications
+                {t("bell.loadError")}
               </p>
             </div>
           ) : notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-8 text-center">
               <Bell className="h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-sm font-medium mb-1">No notifications</p>
+              <p className="text-sm font-medium mb-1">{t("bell.noNotifications")}</p>
               <p className="text-xs text-muted-foreground">
-                You&apos;re all caught up!
+                {t("bell.allCaughtUp")}
               </p>
             </div>
           ) : (
@@ -266,6 +270,8 @@ export function NotificationBell() {
                   onRead={handleRead}
                   onDelete={handleDelete}
                   onClickContent={isTicketNotification(notification) ? handleTicketNotificationClick : undefined}
+                  markAsReadTitle={t("bell.markAsReadTitle")}
+                  deleteTitle={t("bell.deleteTitle")}
                 />
               ))}
             </div>
@@ -281,7 +287,7 @@ export function NotificationBell() {
                 className="w-full justify-start"
                 onClick={handleViewAll}
               >
-                View all notifications
+                {t("bell.viewAll")}
               </Button>
               <div className="flex gap-2">
                 <Button
@@ -296,7 +302,7 @@ export function NotificationBell() {
                   ) : (
                     <CheckCheck className="h-4 w-4 mr-2" />
                   )}
-                  Mark all read
+                  {t("bell.markAllRead")}
                 </Button>
                 <Button
                   variant="ghost"
@@ -310,7 +316,7 @@ export function NotificationBell() {
                   ) : (
                     <Trash2 className="h-4 w-4 mr-2" />
                   )}
-                  Delete all
+                  {t("bell.deleteAll")}
                 </Button>
               </div>
             </div>

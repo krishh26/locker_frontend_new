@@ -4582,6 +4582,63 @@
       "learnerEmailRequired": "L'email del discente è obbligatoria"
     }
   },
+  "notifications": {
+    "page": {
+      "title": "Notifiche",
+      "subtitleOne": "1 notifica",
+      "subtitleMany": "{count} notifiche",
+      "loadError": "Impossibile caricare le notifiche",
+      "loadErrorHint": "Prova ad aggiornare la pagina",
+      "emptyTitle": "Nessuna notifica",
+      "emptyDescription": "Sei in pari! Non ci sono notifiche da mostrare.",
+      "markAllRead": "Segna tutte come lette",
+      "deleteAll": "Elimina tutte",
+      "paginationPageOf": "Pagina {page} di {pages} ({total} in totale)"
+    },
+    "filters": {
+      "typeLabel": "Tipo",
+      "statusLabel": "Stato",
+      "allTypesPlaceholder": "Tutti i tipi",
+      "allStatusesPlaceholder": "Tutti gli stati",
+      "allTypes": "Tutti i tipi",
+      "allStatuses": "Tutti gli stati",
+      "unread": "Non lette",
+      "read": "Lette"
+    },
+    "types": {
+      "notification": "Notifica",
+      "news": "Novità",
+      "allocation": "Assegnazione"
+    },
+    "item": {
+      "newBadge": "Nuova",
+      "markAsRead": "Segna come letta",
+      "delete": "Elimina"
+    },
+    "bell": {
+      "srOnly": "Notifiche",
+      "heading": "Notifiche",
+      "unreadCount": "{count} non lette",
+      "loadError": "Impossibile caricare le notifiche",
+      "noNotifications": "Nessuna notifica",
+      "allCaughtUp": "Sei in pari!",
+      "viewAll": "Visualizza tutte le notifiche",
+      "markAllRead": "Segna tutte come lette",
+      "deleteAll": "Elimina tutte",
+      "markAsReadTitle": "Segna come letta",
+      "deleteTitle": "Elimina"
+    },
+    "toast": {
+      "markedAsRead": "Notifica segnata come letta",
+      "markedAsReadFailed": "Impossibile segnare come letta",
+      "deleted": "Notifica eliminata",
+      "deleteFailed": "Impossibile eliminare la notifica",
+      "allMarkedAsRead": "Tutte le notifiche segnate come lette",
+      "allMarkedAsReadFailed": "Impossibile segnare tutte come lette",
+      "allDeleted": "Tutte le notifiche eliminate",
+      "allDeleteFailed": "Impossibile eliminare tutte le notifiche"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

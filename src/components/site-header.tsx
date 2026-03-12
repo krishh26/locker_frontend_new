@@ -9,9 +9,9 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { CommandSearch, SearchTrigger } from "@/components/command-search"
 import { ModeToggle } from "@/components/mode-toggle"
 import { NotificationBell } from "@/components/notification-bell"
+import { FontSizeControl } from "@/components/font-size-control"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +27,6 @@ import type { User } from "@/store/api/user/types"
 import { LanguageSwitcher } from "./language-switcher"
 
 export function SiteHeader() {
-  const [searchOpen, setSearchOpen] = React.useState(false)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { token, user } = useAppSelector((state) => state.auth)
@@ -103,18 +102,6 @@ export function SiteHeader() {
     [currentRole, changeUserRole, dispatch, router]
   )
 
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setSearchOpen((open) => !open)
-      }
-    }
-
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
-
   return (
     <>
       <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -130,6 +117,7 @@ export function SiteHeader() {
           <div className="ml-auto flex items-center gap-2">
             <ModeToggle variant="outline" />
             {isAuthenticated && <NotificationBell />}
+            <FontSizeControl />
             <LanguageSwitcher />
             {/* Change Role - Only show for non-Learner users */}
             {isAuthenticated &&
@@ -188,7 +176,6 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-      {/* <CommandSearch open={searchOpen} onOpenChange={setSearchOpen} /> */}
     </>
   )
 }

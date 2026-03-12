@@ -14,6 +14,7 @@ import { ImportModal } from './import-modal'
 import { cn } from '@/lib/utils'
 import type { ImportedTheme } from '@/types/theme-customizer'
 import { useTranslations } from 'next-intl'
+import { resetFontScale } from '@/hooks/use-font-scale'
 
 const THEME_PRESET_STORAGE_KEY = "nextjs-ui-theme-preset"
 
@@ -105,7 +106,10 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
     // 5. Reset the radius to default
     applyRadius("0.5rem")
 
-    // 6. Reset sidebar to defaults
+    // 6. Reset font size to default
+    resetFontScale()
+
+    // 7. Reset sidebar to defaults
     updateSidebarConfig({ variant: "inset", collapsible: "offcanvas", side: "left" })
   }
 

@@ -5473,6 +5473,22 @@
       "allDeleteFailed": "Échec de la suppression de toutes les notifications"
     }
   },
+  "themeCustomizer": {
+    "title": "Personnalisation",
+    "srDescription": "Personnalisez le thème et la mise en page de votre tableau de bord.",
+    "tabs": {
+      "theme": "Thème",
+      "layout": "Mise en page"
+    },
+    "themeTab": {
+      "themeLabel": "Thème",
+      "random": "Aléatoire",
+      "chooseTheme": "Choisir un thème",
+      "modeLabel": "Mode",
+      "light": "Clair",
+      "dark": "Sombre"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informations sur le cours introuvables",

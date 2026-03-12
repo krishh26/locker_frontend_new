@@ -5485,6 +5485,22 @@
       "allDeleteFailed": "सभी सूचनाएं हटाने में विफल"
     }
   },
+  "themeCustomizer": {
+    "title": "कस्टमाइज़र",
+    "srDescription": "अपने डैशबोर्ड की थीम और लेआउट को कस्टमाइज़ करें।",
+    "tabs": {
+      "theme": "थीम",
+      "layout": "लेआउट"
+    },
+    "themeTab": {
+      "themeLabel": "थीम",
+      "random": "रैंडम",
+      "chooseTheme": "थीम चुनें",
+      "modeLabel": "मोड",
+      "light": "लाइट",
+      "dark": "डार्क"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "कोर्स जानकारी नहीं मिली",

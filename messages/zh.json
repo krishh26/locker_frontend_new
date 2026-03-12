@@ -5443,6 +5443,22 @@
       "allDeleteFailed": "全部删除失败"
     }
   },
+  "themeCustomizer": {
+    "title": "自定义",
+    "srDescription": "自定义仪表板的主题和布局。",
+    "tabs": {
+      "theme": "主题",
+      "layout": "布局"
+    },
+    "themeTab": {
+      "themeLabel": "主题",
+      "random": "随机",
+      "chooseTheme": "选择主题",
+      "modeLabel": "模式",
+      "light": "浅色",
+      "dark": "深色"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

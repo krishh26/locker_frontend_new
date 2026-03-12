@@ -5501,6 +5501,22 @@
       "allDeleteFailed": "Failed to delete all notifications"
     }
   },
+  "themeCustomizer": {
+    "title": "Customizer",
+    "srDescription": "Customize the theme and layout of your dashboard.",
+    "tabs": {
+      "theme": "Theme",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Theme",
+      "random": "Random",
+      "chooseTheme": "Choose Theme",
+      "modeLabel": "Mode",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

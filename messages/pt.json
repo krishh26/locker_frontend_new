@@ -5485,6 +5485,22 @@
       "allDeleteFailed": "Falha ao eliminar todas as notificações"
     }
   },
+  "themeCustomizer": {
+    "title": "Personalizador",
+    "srDescription": "Personalize o tema e o layout do seu painel.",
+    "tabs": {
+      "theme": "Tema",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Tema",
+      "random": "Aleatório",
+      "chooseTheme": "Escolher tema",
+      "modeLabel": "Modo",
+      "light": "Claro",
+      "dark": "Escuro"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informação do curso não encontrada",

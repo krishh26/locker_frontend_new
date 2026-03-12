@@ -5407,6 +5407,22 @@
       "allDeleteFailed": "فشل حذف جميع الإشعارات"
     }
   },
+  "themeCustomizer": {
+    "title": "المُخصِّص",
+    "srDescription": "خصّص السِمة والتخطيط للوحة التحكم الخاصة بك.",
+    "tabs": {
+      "theme": "السِمة",
+      "layout": "التخطيط"
+    },
+    "themeTab": {
+      "themeLabel": "السِمة",
+      "random": "عشوائي",
+      "chooseTheme": "اختر سِمة",
+      "modeLabel": "الوضع",
+      "light": "فاتح",
+      "dark": "داكن"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

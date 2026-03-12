@@ -4651,6 +4651,22 @@
       "allDeleteFailed": "Alle Benachrichtigungen löschen fehlgeschlagen"
     }
   },
+  "themeCustomizer": {
+    "title": "Customizer",
+    "srDescription": "Passen Sie das Design und Layout Ihres Dashboards an.",
+    "tabs": {
+      "theme": "Design",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Design",
+      "random": "Zufällig",
+      "chooseTheme": "Design auswählen",
+      "modeLabel": "Modus",
+      "light": "Hell",
+      "dark": "Dunkel"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Kursinformationen nicht gefunden",

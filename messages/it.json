@@ -4639,6 +4639,22 @@
       "allDeleteFailed": "Impossibile eliminare tutte le notifiche"
     }
   },
+  "themeCustomizer": {
+    "title": "Personalizzatore",
+    "srDescription": "Personalizza il tema e il layout della tua dashboard.",
+    "tabs": {
+      "theme": "Tema",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Tema",
+      "random": "Casuale",
+      "chooseTheme": "Scegli tema",
+      "modeLabel": "Modalità",
+      "light": "Chiaro",
+      "dark": "Scuro"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

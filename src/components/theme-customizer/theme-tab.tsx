@@ -14,6 +14,7 @@ import { ColorPicker } from '@/components/color-picker'
 import type { ImportedTheme } from '@/types/theme-customizer'
 import React from 'react'
 import "./circular-transition.css"
+import { useTranslations } from 'next-intl'
 
 interface ThemeTabProps {
   selectedTheme: string
@@ -36,6 +37,7 @@ export function ThemeTab({
   setImportedTheme,
   onImportClick
 }: ThemeTabProps) {
+  const t = useTranslations('themeCustomizer')
   const {
     isDarkMode,
     brandColorsValues,
@@ -90,10 +92,10 @@ export function ThemeTab({
       {/* Shadcn UI Theme Presets */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Theme</Label>
+          <Label className="text-sm font-medium">{t('themeTab.themeLabel')}</Label>
           <Button variant="outline" size="sm" onClick={handleRandomShadcn} className="cursor-pointer">
             <Dices className="h-3.5 w-3.5 mr-1.5" />
-            Random
+            {t('themeTab.random')}
           </Button>
         </div>
 
@@ -105,7 +107,7 @@ export function ThemeTab({
           applyTheme(value, isDarkMode)
         }}>
           <SelectTrigger className="w-full cursor-pointer">
-            <SelectValue placeholder="Choose Theme" />
+            <SelectValue placeholder={t('themeTab.chooseTheme')} />
           </SelectTrigger>
           <SelectContent className="max-h-60">
             <div className="p-2">
@@ -144,10 +146,10 @@ export function ThemeTab({
       {/* Tweakcn Theme Presets */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Theme</Label>
+          <Label className="text-sm font-medium">{t('themeTab.themeLabel')}</Label>
           <Button variant="outline" size="sm" onClick={handleRandomTweakcn} className="cursor-pointer">
             <Dices className="h-3.5 w-3.5 mr-1.5" />
-            Random
+            {t('themeTab.random')}
           </Button>
         </div>
 
@@ -162,7 +164,7 @@ export function ThemeTab({
           }
         }}>
           <SelectTrigger className="w-full cursor-pointer">
-            <SelectValue placeholder="Choose Theme" />
+            <SelectValue placeholder={t('themeTab.chooseTheme')} />
           </SelectTrigger>
           <SelectContent className="max-h-60">
             <div className="p-2">
@@ -224,7 +226,7 @@ export function ThemeTab({
 
       {/* Mode Section */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium">Mode</Label>
+        <Label className="text-sm font-medium">{t('themeTab.modeLabel')}</Label>
         <div className="grid grid-cols-2 gap-2">
           <Button
             variant={!isDarkMode ? "secondary" : "outline"}
@@ -233,7 +235,7 @@ export function ThemeTab({
             className="cursor-pointer"
           >
             <Sun className="h-4 w-4 mr-1" />
-            Light
+            {t('themeTab.light')}
           </Button>
           <Button
             variant={isDarkMode ? "secondary" : "outline"}
@@ -242,7 +244,7 @@ export function ThemeTab({
             className="cursor-pointer"
           >
             <Moon className="h-4 w-4 mr-1" />
-            Dark
+            {t('themeTab.dark')}
           </Button>
         </div>
       </div>

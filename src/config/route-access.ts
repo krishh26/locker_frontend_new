@@ -248,11 +248,6 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/tasks(?:\/|$)/,
     roles: R.adminWith("Learner", "Trainer"),
   },
-  // Dashboard 2 (Admin and Trainer)
-  {
-    pattern: /^\/dashboard-2(?:\/|$)/,
-    roles: R.adminWith("Trainer"),
-  },
   // Trainer-only routes (Admin can also access)
   {
     pattern: /^\/learner-overview(?:\/|$)/,

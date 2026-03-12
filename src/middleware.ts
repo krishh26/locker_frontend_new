@@ -39,7 +39,6 @@ const PROTECTED_PATH_PREFIXES = [
   "/chat",
   "/mail",
   "/tasks",
-  "/dashboard-2",
   "/propose-your-innovations",
   "/support",
   "/tickets",

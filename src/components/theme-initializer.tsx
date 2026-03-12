@@ -6,6 +6,8 @@ import { useTheme } from "@/hooks/use-theme"
 
 const THEME_PRESET_STORAGE_KEY = "nextjs-ui-theme-preset"
 const DEFAULT_THEME = "theme-Locker-Pro"
+const FONT_SCALE_STORAGE_KEY = "locker-font-scale"
+const DEFAULT_FONT_SCALE = 1
 
 function getStoredPreset() {
   if (typeof window === "undefined") return null
@@ -27,6 +29,19 @@ function storePreset(selectedTheme: string, selectedTweakcnTheme: string, select
     )
   } catch {
     // ignore
+  }
+}
+
+function getStoredFontScale() {
+  if (typeof window === "undefined") return DEFAULT_FONT_SCALE
+  try {
+    const raw = localStorage.getItem(FONT_SCALE_STORAGE_KEY)
+    const n = raw == null ? DEFAULT_FONT_SCALE : Number(raw)
+    if (!Number.isFinite(n)) return DEFAULT_FONT_SCALE
+    // Clamp to supported range (same as old project slider)
+    return Math.min(1.3, Math.max(0.7, n))
+  } catch {
+    return DEFAULT_FONT_SCALE
   }
 }
 
@@ -68,6 +83,10 @@ export function ThemeInitializer() {
     if (stored?.selectedRadius) {
       document.documentElement.style.setProperty("--radius", stored.selectedRadius)
     }
+
+    // Apply stored font scale (root html font-size)
+    const scale = getStoredFontScale()
+    document.documentElement.style.fontSize = `${scale * 100}%`
   }, [theme])
 
   return null

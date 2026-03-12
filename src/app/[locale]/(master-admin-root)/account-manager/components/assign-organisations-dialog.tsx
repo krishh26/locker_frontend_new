@@ -15,6 +15,7 @@ import { useGetOrganisationsQuery } from "@/store/api/organisations/organisation
 import type { AccountManager } from "@/store/api/account-manager/types"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useTranslations } from "next-intl"
 
 interface AssignOrganisationsDialogProps {
   accountManager: AccountManager
@@ -27,6 +28,7 @@ export function AssignOrganisationsDialog({
   onSuccess,
   onCancel,
 }: AssignOrganisationsDialogProps) {
+  const t = useTranslations("accountManager")
   const { data: organisationsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery()
   const { data: assignedData, isLoading: isLoadingAssigned } = useGetAssignedOrganisationsQuery(
     accountManager.id
@@ -66,7 +68,7 @@ export function AssignOrganisationsDialog({
         accountManagerId: accountManager.id,
         organisationIds: selectedOrgIds,
       }).unwrap()
-      toast.success("Organisations assigned successfully")
+      toast.success(t("toast.assignSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -74,7 +76,7 @@ export function AssignOrganisationsDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to assign organisations"
+          : t("toast.assignFailedFallback")
       toast.error(errorMessage)
     }
   }
@@ -94,16 +96,16 @@ export function AssignOrganisationsDialog({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <Label>Select Organisations</Label>
+        <Label>{t("assign.selectLabel")}</Label>
         <p className="text-sm text-muted-foreground">
-          Choose which organisations this account manager can access.
+          {t("assign.helperText")}
         </p>
       </div>
 
       <ScrollArea className="h-[300px] w-full rounded-md border p-4">
         {displayList.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
-            No organisations available
+            {t("assign.emptyOrgs")}
           </div>
         ) : (
           <div className="space-y-3">
@@ -138,7 +140,7 @@ export function AssignOrganisationsDialog({
 
       {selectedOrgIds.length > 0 && (
         <div className="space-y-2">
-          <Label>Selected ({selectedOrgIds.length})</Label>
+          <Label>{t("assign.selectedCount", { count: selectedOrgIds.length })}</Label>
           <div className="flex flex-wrap gap-2">
             {selectedOrgIds.map((orgId) => {
               const org = displayList.find((o) => o.id === orgId) ?? organisations.find((o) => o.id === orgId)
@@ -170,7 +172,7 @@ export function AssignOrganisationsDialog({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Cancel
+          {t("form.cancel")}
         </Button>
         <Button
           type="button"
@@ -179,7 +181,7 @@ export function AssignOrganisationsDialog({
           className="w-full sm:w-auto"
         >
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Save Assignments
+          {t("assign.save")}
         </Button>
       </div>
     </div>

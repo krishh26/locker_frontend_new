@@ -5459,6 +5459,106 @@
       "dark": "深色"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "客户经理",
+      "subtitle": "管理客户经理用户及其组织分配"
+    },
+    "table": {
+      "searchPlaceholder": "搜索客户经理...",
+      "empty": "未找到客户经理。",
+      "columns": {
+        "email": "邮箱",
+        "name": "姓名",
+        "status": "状态",
+        "assignedOrganisations": "已分配组织",
+        "createdAt": "创建时间",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "assignedOrgCount": {
+        "one": "{count} 个组织",
+        "many": "{count} 个组织"
+      }
+    },
+    "actions": {
+      "add": "添加客户经理",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "edit": "编辑",
+      "assignOrganisations": "分配组织",
+      "activate": "启用",
+      "deactivate": "停用",
+      "delete": "删除"
+    },
+    "dialogs": {
+      "create": {
+        "title": "创建客户经理",
+        "description": "向系统添加新的客户经理用户。只有 MasterAdmin 可以创建客户经理。"
+      },
+      "edit": {
+        "title": "编辑客户经理",
+        "description": "更新客户经理信息。"
+      },
+      "assign": {
+        "title": "分配组织",
+        "description": "选择该客户经理可访问的组织。"
+      },
+      "delete": {
+        "title": "确定要删除吗？",
+        "description": "这将永久删除该客户经理，且无法撤销。",
+        "cancel": "取消",
+        "confirm": "删除",
+        "deleting": "正在删除..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "客户经理已成功启用",
+      "activateFailedFallback": "启用客户经理失败",
+      "deactivateSuccess": "客户经理已成功停用",
+      "deactivateFailedFallback": "停用客户经理失败",
+      "deleteSuccess": "客户经理已成功删除",
+      "deleteFailedFallback": "删除客户经理失败",
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "createSuccess": "客户经理创建成功",
+      "createFailedFallback": "创建客户经理失败",
+      "updateSuccess": "客户经理更新成功",
+      "updateFailedFallback": "更新客户经理失败",
+      "assignSuccess": "组织分配成功",
+      "assignFailedFallback": "分配组织失败"
+    },
+    "form": {
+      "emailLabel": "邮箱",
+      "passwordLabel": "密码",
+      "firstNameLabel": "名",
+      "lastNameLabel": "姓",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "请输入密码（至少 6 个字符）",
+      "firstNamePlaceholder": "名",
+      "lastNamePlaceholder": "姓",
+      "cancel": "取消",
+      "createSubmit": "创建客户经理",
+      "updateSubmit": "更新客户经理"
+    },
+    "validation": {
+      "invalidEmail": "邮箱地址无效",
+      "emailRequired": "邮箱为必填项",
+      "passwordMin": "密码至少为 6 个字符"
+    },
+    "assign": {
+      "selectLabel": "选择组织",
+      "helperText": "选择该客户经理可访问的组织。",
+      "emptyOrgs": "暂无可用组织",
+      "selectedCount": "已选择（{count}）",
+      "save": "保存分配"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

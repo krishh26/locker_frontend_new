@@ -5423,6 +5423,106 @@
       "dark": "داكن"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "مديرو الحسابات",
+      "subtitle": "إدارة مستخدمي مديري الحسابات وتعيينات المؤسسات الخاصة بهم"
+    },
+    "table": {
+      "searchPlaceholder": "ابحث عن مديري الحسابات...",
+      "empty": "لم يتم العثور على مديري حسابات.",
+      "columns": {
+        "email": "البريد الإلكتروني",
+        "name": "الاسم",
+        "status": "الحالة",
+        "assignedOrganisations": "المؤسسات المعيّنة",
+        "createdAt": "تاريخ الإنشاء",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "assignedOrgCount": {
+        "one": "{count} مؤسسة",
+        "many": "{count} مؤسسات"
+      }
+    },
+    "actions": {
+      "add": "إضافة مدير حساب",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "edit": "تعديل",
+      "assignOrganisations": "تعيين المؤسسات",
+      "activate": "تفعيل",
+      "deactivate": "تعطيل",
+      "delete": "حذف"
+    },
+    "dialogs": {
+      "create": {
+        "title": "إنشاء مدير حساب",
+        "description": "أضف مستخدم مدير حساب جديد إلى النظام. يمكن لـ MasterAdmin فقط إنشاء مديري الحسابات."
+      },
+      "edit": {
+        "title": "تعديل مدير الحساب",
+        "description": "تحديث معلومات مدير الحساب."
+      },
+      "assign": {
+        "title": "تعيين المؤسسات",
+        "description": "حدد المؤسسات التي يمكن لمدير الحساب الوصول إليها."
+      },
+      "delete": {
+        "title": "هل أنت متأكد؟",
+        "description": "سيؤدي هذا إلى حذف مدير الحساب نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+        "cancel": "إلغاء",
+        "confirm": "حذف",
+        "deleting": "جارٍ الحذف..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "تم تفعيل مدير الحساب بنجاح",
+      "activateFailedFallback": "فشل تفعيل مدير الحساب",
+      "deactivateSuccess": "تم تعطيل مدير الحساب بنجاح",
+      "deactivateFailedFallback": "فشل تعطيل مدير الحساب",
+      "deleteSuccess": "تم حذف مدير الحساب بنجاح",
+      "deleteFailedFallback": "فشل حذف مدير الحساب",
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح",
+      "createSuccess": "تم إنشاء مدير الحساب بنجاح",
+      "createFailedFallback": "فشل إنشاء مدير الحساب",
+      "updateSuccess": "تم تحديث مدير الحساب بنجاح",
+      "updateFailedFallback": "فشل تحديث مدير الحساب",
+      "assignSuccess": "تم تعيين المؤسسات بنجاح",
+      "assignFailedFallback": "فشل تعيين المؤسسات"
+    },
+    "form": {
+      "emailLabel": "البريد الإلكتروني",
+      "passwordLabel": "كلمة المرور",
+      "firstNameLabel": "الاسم الأول",
+      "lastNameLabel": "اسم العائلة",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "أدخل كلمة المرور (الحد الأدنى 6 أحرف)",
+      "firstNamePlaceholder": "أحمد",
+      "lastNamePlaceholder": "علي",
+      "cancel": "إلغاء",
+      "createSubmit": "إنشاء مدير حساب",
+      "updateSubmit": "تحديث مدير الحساب"
+    },
+    "validation": {
+      "invalidEmail": "عنوان البريد الإلكتروني غير صالح",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
+    },
+    "assign": {
+      "selectLabel": "تحديد المؤسسات",
+      "helperText": "اختر المؤسسات التي يمكن لمدير الحساب الوصول إليها.",
+      "emptyOrgs": "لا توجد مؤسسات متاحة",
+      "selectedCount": "المحددة ({count})",
+      "save": "حفظ التعيينات"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

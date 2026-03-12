@@ -5489,6 +5489,106 @@
       "dark": "Sombre"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Gestionnaires de compte",
+      "subtitle": "Gérez les utilisateurs gestionnaires de compte et leurs affectations d'organisations"
+    },
+    "table": {
+      "searchPlaceholder": "Rechercher des gestionnaires de compte...",
+      "empty": "Aucun gestionnaire de compte trouvé.",
+      "columns": {
+        "email": "Email",
+        "name": "Nom",
+        "status": "Statut",
+        "assignedOrganisations": "Organisations affectées",
+        "createdAt": "Créé le",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organisation",
+        "many": "{count} organisations"
+      }
+    },
+    "actions": {
+      "add": "Ajouter un gestionnaire de compte",
+      "export": "Exporter",
+      "exportCsv": "Exporter CSV",
+      "exportPdf": "Exporter PDF",
+      "edit": "Modifier",
+      "assignOrganisations": "Affecter des organisations",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "delete": "Supprimer"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Créer un gestionnaire de compte",
+        "description": "Ajoutez un nouvel utilisateur gestionnaire de compte au système. Seul MasterAdmin peut créer des gestionnaires de compte."
+      },
+      "edit": {
+        "title": "Modifier le gestionnaire de compte",
+        "description": "Mettez à jour les informations du gestionnaire de compte."
+      },
+      "assign": {
+        "title": "Affecter des organisations",
+        "description": "Sélectionnez les organisations auxquelles ce gestionnaire de compte peut accéder."
+      },
+      "delete": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Cela supprimera définitivement ce gestionnaire de compte. Cette action est irréversible.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer",
+        "deleting": "Suppression..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Gestionnaire de compte activé avec succès",
+      "activateFailedFallback": "Échec de l’activation du gestionnaire de compte",
+      "deactivateSuccess": "Gestionnaire de compte désactivé avec succès",
+      "deactivateFailedFallback": "Échec de la désactivation du gestionnaire de compte",
+      "deleteSuccess": "Gestionnaire de compte supprimé avec succès",
+      "deleteFailedFallback": "Échec de la suppression du gestionnaire de compte",
+      "noDataToExport": "Aucune donnée à exporter",
+      "csvExported": "CSV exporté avec succès",
+      "pdfExported": "PDF exporté avec succès",
+      "createSuccess": "Gestionnaire de compte créé avec succès",
+      "createFailedFallback": "Échec de la création du gestionnaire de compte",
+      "updateSuccess": "Gestionnaire de compte mis à jour avec succès",
+      "updateFailedFallback": "Échec de la mise à jour du gestionnaire de compte",
+      "assignSuccess": "Organisations affectées avec succès",
+      "assignFailedFallback": "Échec de l’affectation des organisations"
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Mot de passe",
+      "firstNameLabel": "Prénom",
+      "lastNameLabel": "Nom",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Saisissez le mot de passe (min. 6 caractères)",
+      "firstNamePlaceholder": "Jean",
+      "lastNamePlaceholder": "Dupont",
+      "cancel": "Annuler",
+      "createSubmit": "Créer un gestionnaire de compte",
+      "updateSubmit": "Mettre à jour le gestionnaire de compte"
+    },
+    "validation": {
+      "invalidEmail": "Adresse email invalide",
+      "emailRequired": "L'email est requis",
+      "passwordMin": "Le mot de passe doit contenir au moins 6 caractères"
+    },
+    "assign": {
+      "selectLabel": "Sélectionner des organisations",
+      "helperText": "Choisissez les organisations auxquelles ce gestionnaire de compte peut accéder.",
+      "emptyOrgs": "Aucune organisation disponible",
+      "selectedCount": "Sélectionnées ({count})",
+      "save": "Enregistrer les affectations"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informations sur le cours introuvables",

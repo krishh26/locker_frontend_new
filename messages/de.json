@@ -4667,6 +4667,106 @@
       "dark": "Dunkel"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Account Manager",
+      "subtitle": "Verwalten Sie Account-Manager-Benutzer und deren Organisationszuweisungen"
+    },
+    "table": {
+      "searchPlaceholder": "Account Manager suchen...",
+      "empty": "Keine Account Manager gefunden.",
+      "columns": {
+        "email": "E-Mail",
+        "name": "Name",
+        "status": "Status",
+        "assignedOrganisations": "Zugewiesene Organisationen",
+        "createdAt": "Erstellt am",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "assignedOrgCount": {
+        "one": "{count} Organisation",
+        "many": "{count} Organisationen"
+      }
+    },
+    "actions": {
+      "add": "Account Manager hinzufügen",
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "edit": "Bearbeiten",
+      "assignOrganisations": "Organisationen zuweisen",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "delete": "Löschen"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Account Manager erstellen",
+        "description": "Fügen Sie dem System einen neuen Account-Manager-Benutzer hinzu. Nur MasterAdmin kann Account Manager erstellen."
+      },
+      "edit": {
+        "title": "Account Manager bearbeiten",
+        "description": "Account-Manager-Informationen aktualisieren."
+      },
+      "assign": {
+        "title": "Organisationen zuweisen",
+        "description": "Wählen Sie aus, auf welche Organisationen dieser Account Manager zugreifen kann."
+      },
+      "delete": {
+        "title": "Sind Sie sicher?",
+        "description": "Dadurch wird dieser Account Manager dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "cancel": "Abbrechen",
+        "confirm": "Löschen",
+        "deleting": "Wird gelöscht..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Account Manager erfolgreich aktiviert",
+      "activateFailedFallback": "Account Manager konnte nicht aktiviert werden",
+      "deactivateSuccess": "Account Manager erfolgreich deaktiviert",
+      "deactivateFailedFallback": "Account Manager konnte nicht deaktiviert werden",
+      "deleteSuccess": "Account Manager erfolgreich gelöscht",
+      "deleteFailedFallback": "Account Manager konnte nicht gelöscht werden",
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert",
+      "createSuccess": "Account Manager erfolgreich erstellt",
+      "createFailedFallback": "Account Manager konnte nicht erstellt werden",
+      "updateSuccess": "Account Manager erfolgreich aktualisiert",
+      "updateFailedFallback": "Account Manager konnte nicht aktualisiert werden",
+      "assignSuccess": "Organisationen erfolgreich zugewiesen",
+      "assignFailedFallback": "Organisationen konnten nicht zugewiesen werden"
+    },
+    "form": {
+      "emailLabel": "E-Mail",
+      "passwordLabel": "Passwort",
+      "firstNameLabel": "Vorname",
+      "lastNameLabel": "Nachname",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Passwort eingeben (mind. 6 Zeichen)",
+      "firstNamePlaceholder": "Max",
+      "lastNamePlaceholder": "Mustermann",
+      "cancel": "Abbrechen",
+      "createSubmit": "Account Manager erstellen",
+      "updateSubmit": "Account Manager aktualisieren"
+    },
+    "validation": {
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "emailRequired": "E-Mail ist erforderlich",
+      "passwordMin": "Passwort muss mindestens 6 Zeichen lang sein"
+    },
+    "assign": {
+      "selectLabel": "Organisationen auswählen",
+      "helperText": "Wählen Sie aus, auf welche Organisationen dieser Account Manager zugreifen kann.",
+      "emptyOrgs": "Keine Organisationen verfügbar",
+      "selectedCount": "Ausgewählt ({count})",
+      "save": "Zuweisungen speichern"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Kursinformationen nicht gefunden",

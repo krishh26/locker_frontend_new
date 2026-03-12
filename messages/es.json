@@ -5331,6 +5331,106 @@
       "dark": "Oscuro"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Gestores de cuenta",
+      "subtitle": "Gestiona usuarios gestores de cuenta y sus asignaciones de organización"
+    },
+    "table": {
+      "searchPlaceholder": "Buscar gestores de cuenta...",
+      "empty": "No se encontraron gestores de cuenta.",
+      "columns": {
+        "email": "Correo",
+        "name": "Nombre",
+        "status": "Estado",
+        "assignedOrganisations": "Organizaciones asignadas",
+        "createdAt": "Creado el",
+        "actions": "Acciones"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organización",
+        "many": "{count} organizaciones"
+      }
+    },
+    "actions": {
+      "add": "Añadir gestor de cuenta",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "edit": "Editar",
+      "assignOrganisations": "Asignar organizaciones",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crear gestor de cuenta",
+        "description": "Añade un nuevo usuario gestor de cuenta al sistema. Solo MasterAdmin puede crear gestores de cuenta."
+      },
+      "edit": {
+        "title": "Editar gestor de cuenta",
+        "description": "Actualiza la información del gestor de cuenta."
+      },
+      "assign": {
+        "title": "Asignar organizaciones",
+        "description": "Selecciona qué organizaciones puede acceder este gestor de cuenta."
+      },
+      "delete": {
+        "title": "¿Estás seguro?",
+        "description": "Esto eliminará permanentemente este gestor de cuenta. Esta acción no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "Eliminando..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Gestor de cuenta activado correctamente",
+      "activateFailedFallback": "No se pudo activar el gestor de cuenta",
+      "deactivateSuccess": "Gestor de cuenta desactivado correctamente",
+      "deactivateFailedFallback": "No se pudo desactivar el gestor de cuenta",
+      "deleteSuccess": "Gestor de cuenta eliminado correctamente",
+      "deleteFailedFallback": "No se pudo eliminar el gestor de cuenta",
+      "noDataToExport": "No hay datos para exportar",
+      "csvExported": "CSV exportado correctamente",
+      "pdfExported": "PDF exportado correctamente",
+      "createSuccess": "Gestor de cuenta creado correctamente",
+      "createFailedFallback": "No se pudo crear el gestor de cuenta",
+      "updateSuccess": "Gestor de cuenta actualizado correctamente",
+      "updateFailedFallback": "No se pudo actualizar el gestor de cuenta",
+      "assignSuccess": "Organizaciones asignadas correctamente",
+      "assignFailedFallback": "No se pudieron asignar las organizaciones"
+    },
+    "form": {
+      "emailLabel": "Correo",
+      "passwordLabel": "Contraseña",
+      "firstNameLabel": "Nombre",
+      "lastNameLabel": "Apellidos",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Introduce la contraseña (mín. 6 caracteres)",
+      "firstNamePlaceholder": "Juan",
+      "lastNamePlaceholder": "Pérez",
+      "cancel": "Cancelar",
+      "createSubmit": "Crear gestor de cuenta",
+      "updateSubmit": "Actualizar gestor de cuenta"
+    },
+    "validation": {
+      "invalidEmail": "Dirección de correo no válida",
+      "emailRequired": "El correo es obligatorio",
+      "passwordMin": "La contraseña debe tener al menos 6 caracteres"
+    },
+    "assign": {
+      "selectLabel": "Seleccionar organizaciones",
+      "helperText": "Elige qué organizaciones puede acceder este gestor de cuenta.",
+      "emptyOrgs": "No hay organizaciones disponibles",
+      "selectedCount": "Seleccionadas ({count})",
+      "save": "Guardar asignaciones"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Información del curso no encontrada",

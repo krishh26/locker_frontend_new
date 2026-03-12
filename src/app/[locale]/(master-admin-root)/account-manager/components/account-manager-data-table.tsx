@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback } from "react"
+import { useTranslations } from "next-intl"
 import {
   type ColumnDef,
   type SortingState,
@@ -68,6 +69,7 @@ import { AssignOrganisationsDialog } from "./assign-organisations-dialog"
 import { format } from "date-fns"
 
 export function AccountManagerDataTable() {
+  const t = useTranslations("accountManager")
   const user = useAppSelector(selectAuthUser)
   const { data, isLoading, refetch } = useGetAccountManagersQuery()
   const [activateManager, { isLoading: isActivating }] = useActivateAccountManagerMutation()
@@ -130,7 +132,7 @@ export function AccountManagerDataTable() {
   const handleActivate = useCallback(async (manager: AccountManager) => {
     try {
       await activateManager(manager.id).unwrap()
-      toast.success("Account manager activated successfully")
+      toast.success(t("toast.activateSuccess"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -138,15 +140,15 @@ export function AccountManagerDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to activate account manager"
+          : t("toast.activateFailedFallback")
       toast.error(errorMessage)
     }
-  }, [activateManager, refetch])
+  }, [activateManager, refetch, t])
 
   const handleDeactivate = useCallback(async (manager: AccountManager) => {
     try {
       await deactivateManager(manager.id).unwrap()
-      toast.success("Account manager deactivated successfully")
+      toast.success(t("toast.deactivateSuccess"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -154,10 +156,10 @@ export function AccountManagerDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to deactivate account manager"
+          : t("toast.deactivateFailedFallback")
       toast.error(errorMessage)
     }
-  }, [deactivateManager, refetch])
+  }, [deactivateManager, refetch, t])
 
   const handleDeleteClick = useCallback((manager: AccountManager) => {
     setSelectedManager(manager)
@@ -168,7 +170,7 @@ export function AccountManagerDataTable() {
     if (!selectedManager) return
     try {
       await deleteManager(selectedManager.id).unwrap()
-      toast.success("Account manager deleted successfully")
+      toast.success(t("toast.deleteSuccess"))
       setIsDeleteDialogOpen(false)
       setSelectedManager(null)
       refetch()
@@ -178,23 +180,30 @@ export function AccountManagerDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to delete account manager"
+            : t("toast.deleteFailedFallback")
       toast.error(errorMessage)
     }
-  }, [selectedManager, deleteManager, refetch])
+  }, [selectedManager, deleteManager, refetch, t])
 
   const handleExportCsv = () => {
     if (accountManagers.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
 
-    const headers = ["Email", "First Name", "Last Name", "Status", "Assigned Organisations", "Created At"]
+    const headers = [
+      t("table.columns.email"),
+      t("form.firstNameLabel"),
+      t("form.lastNameLabel"),
+      t("table.columns.status"),
+      t("table.columns.assignedOrganisations"),
+      t("table.columns.createdAt"),
+    ]
     const rows = accountManagers.map((manager: AccountManager) => [
       manager.email,
       manager.firstName || "",
       manager.lastName || "",
-      manager.isActive ? "Active" : "Inactive",
+      manager.isActive ? t("table.status.active") : t("table.status.inactive"),
       manager.assignedOrganisationIds.length.toString(),
       manager.createdAt ? format(new Date(manager.createdAt), "yyyy-MM-dd") : "",
     ])
@@ -211,39 +220,46 @@ export function AccountManagerDataTable() {
     link.download = `account_managers_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvExported"))
   }
 
   const handleExportPdf = () => {
-    const headers = ["Email", "First Name", "Last Name", "Status", "Assigned Organisations", "Created At"]
+    const headers = [
+      t("table.columns.email"),
+      t("form.firstNameLabel"),
+      t("form.lastNameLabel"),
+      t("table.columns.status"),
+      t("table.columns.assignedOrganisations"),
+      t("table.columns.createdAt"),
+    ]
     const rows = accountManagers.map((manager: AccountManager) => [
       manager.email,
       manager.firstName || "",
       manager.lastName || "",
-      manager.isActive ? "Active" : "Inactive",
+      manager.isActive ? t("table.status.active") : t("table.status.inactive"),
       manager.assignedOrganisationIds.length.toString(),
       manager.createdAt ? format(new Date(manager.createdAt), "yyyy-MM-dd") : "",
     ])
     if (rows.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "Account Managers", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("page.title"), headers, rows })
+    toast.success(t("toast.pdfExported"))
   }
 
   const columns: ColumnDef<AccountManager>[] = useMemo(
     () => [
       {
         accessorKey: "email",
-        header: "Email",
+        header: t("table.columns.email"),
         cell: ({ row }) => {
           return <div className="font-medium">{row.original.email}</div>
         },
       },
       {
         id: "name",
-        header: "Name",
+        header: t("table.columns.name"),
         cell: ({ row }) => {
           const manager = row.original
           const name = [manager.firstName, manager.lastName].filter(Boolean).join(" ") || "—"
@@ -252,31 +268,33 @@ export function AccountManagerDataTable() {
       },
       {
         accessorKey: "isActive",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const isActive = row.original.isActive
           return (
             <Badge variant={isActive ? "default" : "secondary"}>
-              {isActive ? "Active" : "Inactive"}
+              {isActive ? t("table.status.active") : t("table.status.inactive")}
             </Badge>
           )
         },
       },
       {
         id: "assignedOrganisations",
-        header: "Assigned Organisations",
+        header: t("table.columns.assignedOrganisations"),
         cell: ({ row }) => {
           const count = row.original.assignedOrganisationIds.length
           return (
             <Badge variant="outline" className="cursor-pointer">
-              {count} {count === 1 ? "organisation" : "organisations"}
+              {count === 1
+                ? t("table.assignedOrgCount.one", { count })
+                : t("table.assignedOrgCount.many", { count })}
             </Badge>
           )
         },
       },
       {
         accessorKey: "createdAt",
-        header: "Created At",
+        header: t("table.columns.createdAt"),
         cell: ({ row }) => {
           const date = row.original.createdAt
           return date ? format(new Date(date), "MMM dd, yyyy") : "—"
@@ -284,7 +302,7 @@ export function AccountManagerDataTable() {
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const manager = row.original
           return (
@@ -297,21 +315,21 @@ export function AccountManagerDataTable() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleEdit(manager)}>
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                  {t("actions.edit")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleAssign(manager)}>
                   <Building2 className="mr-2 h-4 w-4" />
-                  Assign Organisations
+                  {t("actions.assignOrganisations")}
                 </DropdownMenuItem>
                 {manager.isActive ? (
                   <DropdownMenuItem onClick={() => handleDeactivate(manager)}>
                     <PowerOff className="mr-2 h-4 w-4" />
-                    Deactivate
+                    {t("actions.deactivate")}
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem onClick={() => handleActivate(manager)}>
                     <Power className="mr-2 h-4 w-4" />
-                    Activate
+                    {t("actions.activate")}
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
@@ -320,7 +338,7 @@ export function AccountManagerDataTable() {
                   className="text-destructive"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {t("actions.delete")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -328,7 +346,7 @@ export function AccountManagerDataTable() {
         },
       },
     ],
-    [handleEdit, handleAssign, handleActivate, handleDeactivate, handleDeleteClick]
+    [handleEdit, handleAssign, handleActivate, handleDeactivate, handleDeleteClick, t]
   )
 
   const table = useReactTable({
@@ -369,7 +387,7 @@ export function AccountManagerDataTable() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search account managers..."
+            placeholder={t("table.searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-9"
@@ -382,22 +400,22 @@ export function AccountManagerDataTable() {
               onClick={() => setIsCreateDialogOpen(true)}
             >
               <Plus className="mr-2 h-4 w-4" />
-              Add Account Manager
+              {t("actions.add")}
             </Button>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                {t("actions.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv}>
-                Export CSV
+                {t("actions.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf}>
-                Export PDF
+                {t("actions.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -446,7 +464,7 @@ export function AccountManagerDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No account managers found.
+                  {t("table.empty")}
                 </TableCell>
               </TableRow>
             )}
@@ -461,9 +479,9 @@ export function AccountManagerDataTable() {
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create Account Manager</DialogTitle>
+            <DialogTitle>{t("dialogs.create.title")}</DialogTitle>
             <DialogDescription>
-              Add a new account manager user to the system. Only MasterAdmin can create account managers.
+              {t("dialogs.create.description")}
             </DialogDescription>
           </DialogHeader>
           <CreateAccountManagerForm
@@ -477,9 +495,9 @@ export function AccountManagerDataTable() {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Edit Account Manager</DialogTitle>
+            <DialogTitle>{t("dialogs.edit.title")}</DialogTitle>
             <DialogDescription>
-              Update account manager information.
+              {t("dialogs.edit.description")}
             </DialogDescription>
           </DialogHeader>
           {selectedManager && (
@@ -496,9 +514,9 @@ export function AccountManagerDataTable() {
       <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Assign Organisations</DialogTitle>
+            <DialogTitle>{t("dialogs.assign.title")}</DialogTitle>
             <DialogDescription>
-              Select which organisations this account manager can access.
+              {t("dialogs.assign.description")}
             </DialogDescription>
           </DialogHeader>
           {selectedManager && (
@@ -515,9 +533,9 @@ export function AccountManagerDataTable() {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.delete.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete this account manager. This action cannot be undone.
+              {t("dialogs.delete.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -525,14 +543,14 @@ export function AccountManagerDataTable() {
               setIsDeleteDialogOpen(false)
               setSelectedManager(null)
             }}>
-              Cancel
+              {t("dialogs.delete.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("dialogs.delete.deleting") : t("dialogs.delete.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

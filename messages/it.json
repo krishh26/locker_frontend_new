@@ -4655,6 +4655,106 @@
       "dark": "Scuro"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Account Manager",
+      "subtitle": "Gestisci gli utenti account manager e le loro assegnazioni alle organizzazioni"
+    },
+    "table": {
+      "searchPlaceholder": "Cerca account manager...",
+      "empty": "Nessun account manager trovato.",
+      "columns": {
+        "email": "Email",
+        "name": "Nome",
+        "status": "Stato",
+        "assignedOrganisations": "Organizzazioni assegnate",
+        "createdAt": "Creato il",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organizzazione",
+        "many": "{count} organizzazioni"
+      }
+    },
+    "actions": {
+      "add": "Aggiungi account manager",
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF",
+      "edit": "Modifica",
+      "assignOrganisations": "Assegna organizzazioni",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "delete": "Elimina"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crea account manager",
+        "description": "Aggiungi un nuovo utente account manager al sistema. Solo MasterAdmin può creare account manager."
+      },
+      "edit": {
+        "title": "Modifica account manager",
+        "description": "Aggiorna le informazioni dell'account manager."
+      },
+      "assign": {
+        "title": "Assegna organizzazioni",
+        "description": "Seleziona quali organizzazioni questo account manager può accedere."
+      },
+      "delete": {
+        "title": "Sei sicuro?",
+        "description": "Questo eliminerà permanentemente questo account manager. Questa azione non può essere annullata.",
+        "cancel": "Annulla",
+        "confirm": "Elimina",
+        "deleting": "Eliminazione..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Account manager attivato correttamente",
+      "activateFailedFallback": "Impossibile attivare l'account manager",
+      "deactivateSuccess": "Account manager disattivato correttamente",
+      "deactivateFailedFallback": "Impossibile disattivare l'account manager",
+      "deleteSuccess": "Account manager eliminato correttamente",
+      "deleteFailedFallback": "Impossibile eliminare l'account manager",
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato correttamente",
+      "pdfExported": "PDF esportato correttamente",
+      "createSuccess": "Account manager creato correttamente",
+      "createFailedFallback": "Impossibile creare l'account manager",
+      "updateSuccess": "Account manager aggiornato correttamente",
+      "updateFailedFallback": "Impossibile aggiornare l'account manager",
+      "assignSuccess": "Organizzazioni assegnate correttamente",
+      "assignFailedFallback": "Impossibile assegnare le organizzazioni"
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "firstNameLabel": "Nome",
+      "lastNameLabel": "Cognome",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Inserisci password (min 6 caratteri)",
+      "firstNamePlaceholder": "Giovanni",
+      "lastNamePlaceholder": "Rossi",
+      "cancel": "Annulla",
+      "createSubmit": "Crea account manager",
+      "updateSubmit": "Aggiorna account manager"
+    },
+    "validation": {
+      "invalidEmail": "Indirizzo email non valido",
+      "emailRequired": "L'email è obbligatoria",
+      "passwordMin": "La password deve contenere almeno 6 caratteri"
+    },
+    "assign": {
+      "selectLabel": "Seleziona organizzazioni",
+      "helperText": "Scegli quali organizzazioni questo account manager può accedere.",
+      "emptyOrgs": "Nessuna organizzazione disponibile",
+      "selectedCount": "Selezionate ({count})",
+      "save": "Salva assegnazioni"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

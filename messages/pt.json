@@ -5501,6 +5501,106 @@
       "dark": "Escuro"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Gestores de Conta",
+      "subtitle": "Gerir utilizadores gestores de conta e as respetivas atribuições de organizações"
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar gestores de conta...",
+      "empty": "Não foram encontrados gestores de conta.",
+      "columns": {
+        "email": "Email",
+        "name": "Nome",
+        "status": "Estado",
+        "assignedOrganisations": "Organizações atribuídas",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organização",
+        "many": "{count} organizações"
+      }
+    },
+    "actions": {
+      "add": "Adicionar gestor de conta",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "edit": "Editar",
+      "assignOrganisations": "Atribuir organizações",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Criar gestor de conta",
+        "description": "Adicione um novo utilizador gestor de conta ao sistema. Apenas o MasterAdmin pode criar gestores de conta."
+      },
+      "edit": {
+        "title": "Editar gestor de conta",
+        "description": "Atualize as informações do gestor de conta."
+      },
+      "assign": {
+        "title": "Atribuir organizações",
+        "description": "Selecione quais organizações este gestor de conta pode aceder."
+      },
+      "delete": {
+        "title": "Tem a certeza?",
+        "description": "Isto irá eliminar permanentemente este gestor de conta. Esta ação não pode ser desfeita.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "A eliminar..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Gestor de conta ativado com sucesso",
+      "activateFailedFallback": "Falha ao ativar gestor de conta",
+      "deactivateSuccess": "Gestor de conta desativado com sucesso",
+      "deactivateFailedFallback": "Falha ao desativar gestor de conta",
+      "deleteSuccess": "Gestor de conta eliminado com sucesso",
+      "deleteFailedFallback": "Falha ao eliminar gestor de conta",
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso",
+      "createSuccess": "Gestor de conta criado com sucesso",
+      "createFailedFallback": "Falha ao criar gestor de conta",
+      "updateSuccess": "Gestor de conta atualizado com sucesso",
+      "updateFailedFallback": "Falha ao atualizar gestor de conta",
+      "assignSuccess": "Organizações atribuídas com sucesso",
+      "assignFailedFallback": "Falha ao atribuir organizações"
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Palavra-passe",
+      "firstNameLabel": "Nome",
+      "lastNameLabel": "Apelido",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Introduza a palavra-passe (mín. 6 caracteres)",
+      "firstNamePlaceholder": "João",
+      "lastNamePlaceholder": "Silva",
+      "cancel": "Cancelar",
+      "createSubmit": "Criar gestor de conta",
+      "updateSubmit": "Atualizar gestor de conta"
+    },
+    "validation": {
+      "invalidEmail": "Endereço de email inválido",
+      "emailRequired": "O email é obrigatório",
+      "passwordMin": "A palavra-passe deve ter pelo menos 6 caracteres"
+    },
+    "assign": {
+      "selectLabel": "Selecionar organizações",
+      "helperText": "Escolha quais organizações este gestor de conta pode aceder.",
+      "emptyOrgs": "Não há organizações disponíveis",
+      "selectedCount": "Selecionadas ({count})",
+      "save": "Guardar atribuições"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informação do curso não encontrada",

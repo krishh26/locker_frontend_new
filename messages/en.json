@@ -5517,6 +5517,106 @@
       "dark": "Dark"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "Account Managers",
+      "subtitle": "Manage account manager users and their organisation assignments"
+    },
+    "table": {
+      "searchPlaceholder": "Search account managers...",
+      "empty": "No account managers found.",
+      "columns": {
+        "email": "Email",
+        "name": "Name",
+        "status": "Status",
+        "assignedOrganisations": "Assigned Organisations",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organisation",
+        "many": "{count} organisations"
+      }
+    },
+    "actions": {
+      "add": "Add Account Manager",
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF",
+      "edit": "Edit",
+      "assignOrganisations": "Assign Organisations",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "delete": "Delete"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create Account Manager",
+        "description": "Add a new account manager user to the system. Only MasterAdmin can create account managers."
+      },
+      "edit": {
+        "title": "Edit Account Manager",
+        "description": "Update account manager information."
+      },
+      "assign": {
+        "title": "Assign Organisations",
+        "description": "Select which organisations this account manager can access."
+      },
+      "delete": {
+        "title": "Are you sure?",
+        "description": "This will permanently delete this account manager. This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "deleting": "Deleting..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Account manager activated successfully",
+      "activateFailedFallback": "Failed to activate account manager",
+      "deactivateSuccess": "Account manager deactivated successfully",
+      "deactivateFailedFallback": "Failed to deactivate account manager",
+      "deleteSuccess": "Account manager deleted successfully",
+      "deleteFailedFallback": "Failed to delete account manager",
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully",
+      "pdfExported": "PDF exported successfully",
+      "createSuccess": "Account manager created successfully",
+      "createFailedFallback": "Failed to create account manager",
+      "updateSuccess": "Account manager updated successfully",
+      "updateFailedFallback": "Failed to update account manager",
+      "assignSuccess": "Organisations assigned successfully",
+      "assignFailedFallback": "Failed to assign organisations"
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "firstNameLabel": "First Name",
+      "lastNameLabel": "Last Name",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Enter password (min 6 characters)",
+      "firstNamePlaceholder": "John",
+      "lastNamePlaceholder": "Doe",
+      "cancel": "Cancel",
+      "createSubmit": "Create Account Manager",
+      "updateSubmit": "Update Account Manager"
+    },
+    "validation": {
+      "invalidEmail": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least 6 characters"
+    },
+    "assign": {
+      "selectLabel": "Select Organisations",
+      "helperText": "Choose which organisations this account manager can access.",
+      "emptyOrgs": "No organisations available",
+      "selectedCount": "Selected ({count})",
+      "save": "Save Assignments"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

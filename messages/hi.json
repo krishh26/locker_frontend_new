@@ -5501,6 +5501,106 @@
       "dark": "डार्क"
     }
   },
+  "accountManager": {
+    "page": {
+      "title": "अकाउंट मैनेजर",
+      "subtitle": "अकाउंट मैनेजर यूज़र्स और उनकी ऑर्गनाइज़ेशन असाइनमेंट मैनेज करें"
+    },
+    "table": {
+      "searchPlaceholder": "अकाउंट मैनेजर खोजें...",
+      "empty": "कोई अकाउंट मैनेजर नहीं मिला।",
+      "columns": {
+        "email": "ईमेल",
+        "name": "नाम",
+        "status": "स्थिति",
+        "assignedOrganisations": "असाइन की गई ऑर्गनाइज़ेशन",
+        "createdAt": "बनाया गया",
+        "actions": "एक्शन"
+      },
+      "status": {
+        "active": "सक्रिय",
+        "inactive": "निष्क्रिय"
+      },
+      "assignedOrgCount": {
+        "one": "{count} ऑर्गनाइज़ेशन",
+        "many": "{count} ऑर्गनाइज़ेशन"
+      }
+    },
+    "actions": {
+      "add": "अकाउंट मैनेजर जोड़ें",
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट करें",
+      "exportPdf": "PDF एक्सपोर्ट करें",
+      "edit": "एडिट",
+      "assignOrganisations": "ऑर्गनाइज़ेशन असाइन करें",
+      "activate": "एक्टिवेट",
+      "deactivate": "डीएक्टिवेट",
+      "delete": "डिलीट"
+    },
+    "dialogs": {
+      "create": {
+        "title": "अकाउंट मैनेजर बनाएं",
+        "description": "सिस्टम में नया अकाउंट मैनेजर यूज़र जोड़ें। केवल MasterAdmin अकाउंट मैनेजर बना सकता है।"
+      },
+      "edit": {
+        "title": "अकाउंट मैनेजर एडिट करें",
+        "description": "अकाउंट मैनेजर की जानकारी अपडेट करें।"
+      },
+      "assign": {
+        "title": "ऑर्गनाइज़ेशन असाइन करें",
+        "description": "चुनें कि यह अकाउंट मैनेजर किन ऑर्गनाइज़ेशन तक एक्सेस कर सकता है।"
+      },
+      "delete": {
+        "title": "क्या आप सुनिश्चित हैं?",
+        "description": "यह अकाउंट मैनेजर को स्थायी रूप से डिलीट कर देगा। इस एक्शन को वापस नहीं किया जा सकता।",
+        "cancel": "कैंसल",
+        "confirm": "डिलीट",
+        "deleting": "डिलीट हो रहा है..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "अकाउंट मैनेजर सफलतापूर्वक एक्टिवेट हुआ",
+      "activateFailedFallback": "अकाउंट मैनेजर एक्टिवेट करने में विफल",
+      "deactivateSuccess": "अकाउंट मैनेजर सफलतापूर्वक डीएक्टिवेट हुआ",
+      "deactivateFailedFallback": "अकाउंट मैनेजर डीएक्टिवेट करने में विफल",
+      "deleteSuccess": "अकाउंट मैनेजर सफलतापूर्वक डिलीट हुआ",
+      "deleteFailedFallback": "अकाउंट मैनेजर डिलीट करने में विफल",
+      "noDataToExport": "एक्सपोर्ट करने के लिए डेटा नहीं है",
+      "csvExported": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+      "pdfExported": "PDF सफलतापूर्वक एक्सपोर्ट हुआ",
+      "createSuccess": "अकाउंट मैनेजर सफलतापूर्वक बनाया गया",
+      "createFailedFallback": "अकाउंट मैनेजर बनाने में विफल",
+      "updateSuccess": "अकाउंट मैनेजर सफलतापूर्वक अपडेट हुआ",
+      "updateFailedFallback": "अकाउंट मैनेजर अपडेट करने में विफल",
+      "assignSuccess": "ऑर्गनाइज़ेशन सफलतापूर्वक असाइन हुईं",
+      "assignFailedFallback": "ऑर्गनाइज़ेशन असाइन करने में विफल"
+    },
+    "form": {
+      "emailLabel": "ईमेल",
+      "passwordLabel": "पासवर्ड",
+      "firstNameLabel": "पहला नाम",
+      "lastNameLabel": "अंतिम नाम",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "पासवर्ड दर्ज करें (कम से कम 6 कैरेक्टर)",
+      "firstNamePlaceholder": "राहुल",
+      "lastNamePlaceholder": "शर्मा",
+      "cancel": "कैंसल",
+      "createSubmit": "अकाउंट मैनेजर बनाएं",
+      "updateSubmit": "अकाउंट मैनेजर अपडेट करें"
+    },
+    "validation": {
+      "invalidEmail": "अमान्य ईमेल पता",
+      "emailRequired": "ईमेल आवश्यक है",
+      "passwordMin": "पासवर्ड कम से कम 6 कैरेक्टर का होना चाहिए"
+    },
+    "assign": {
+      "selectLabel": "ऑर्गनाइज़ेशन चुनें",
+      "helperText": "चुनें कि यह अकाउंट मैनेजर किन ऑर्गनाइज़ेशन तक एक्सेस कर सकता है।",
+      "emptyOrgs": "कोई ऑर्गनाइज़ेशन उपलब्ध नहीं है",
+      "selectedCount": "चयनित ({count})",
+      "save": "असाइनमेंट सेव करें"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "कोर्स जानकारी नहीं मिली",

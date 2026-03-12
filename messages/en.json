@@ -5072,6 +5072,13 @@
       "title": "Dashboard",
       "subtitle": "Manage your learning journey and track progress"
     },
+    "viewer": {
+      "errorTitle": "Error Loading Learner Dashboard",
+      "loadError": "Failed to load learner details",
+      "invalidLearnerId": "Invalid learner ID",
+      "backToOverview": "Back to Learner Overview",
+      "pageTitle": "Learner Dashboard - {name}"
+    },
     "buttons": {
       "emailLearner": "Email Learner",
       "awaitingSignature": "Awaiting Signature",

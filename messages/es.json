@@ -4886,6 +4886,13 @@
       "title": "Panel",
       "subtitle": "Gestione su trayectoria de aprendizaje y supervise el progreso"
     },
+    "viewer": {
+      "errorTitle": "Error al cargar el panel del aprendiz",
+      "loadError": "Error al cargar los detalles del aprendiz",
+      "invalidLearnerId": "ID de aprendiz no válido",
+      "backToOverview": "Volver al resumen de aprendices",
+      "pageTitle": "Panel del aprendiz - {name}"
+    },
     "buttons": {
       "emailLearner": "Enviar correo al alumno",
       "awaitingSignature": "Pendiente de firma",

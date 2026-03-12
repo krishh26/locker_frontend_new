@@ -4210,6 +4210,13 @@
       "title": "Dashboard",
       "subtitle": "Gestisci il tuo percorso di apprendimento e monitora i progressi"
     },
+    "viewer": {
+      "errorTitle": "Errore nel caricamento della dashboard dell'apprendista",
+      "loadError": "Impossibile caricare i dettagli dell'apprendista",
+      "invalidLearnerId": "ID apprendista non valido",
+      "backToOverview": "Torna alla panoramica apprendisti",
+      "pageTitle": "Dashboard apprendista - {name}"
+    },
     "buttons": {
       "emailLearner": "Invia email al discente",
       "awaitingSignature": "In attesa di firma",

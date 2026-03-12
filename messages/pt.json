@@ -5056,6 +5056,13 @@
       "title": "Painel",
       "subtitle": "Gira o seu percurso de aprendizagem e acompanhe o progresso"
     },
+    "viewer": {
+      "errorTitle": "Erro ao carregar o painel do formando",
+      "loadError": "Falha ao carregar detalhes do formando",
+      "invalidLearnerId": "ID de formando inválido",
+      "backToOverview": "Voltar ao resumo de formandos",
+      "pageTitle": "Painel do formando - {name}"
+    },
     "buttons": {
       "emailLearner": "Enviar email ao formando",
       "awaitingSignature": "A aguardar assinatura",

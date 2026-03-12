@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PageHeader } from '@/components/dashboard/page-header'
+import { useTranslations } from 'next-intl'
 
 interface LearnerDashboardViewerProps {
   learnerId: string
@@ -19,6 +20,7 @@ interface LearnerDashboardViewerProps {
 export function LearnerDashboardViewer({
   learnerId,
 }: LearnerDashboardViewerProps) {
+  const t = useTranslations('learnerDashboard')
   const router = useRouter()
   const dispatch = useAppDispatch()
 
@@ -66,19 +68,19 @@ export function LearnerDashboardViewer({
       <div className='px-4 lg:px-6 py-6'>
         <Alert variant='destructive'>
           <AlertCircle className='h-4 w-4' />
-          <AlertTitle>Error Loading Learner Dashboard</AlertTitle>
+          <AlertTitle>{t('viewer.errorTitle')}</AlertTitle>
           <AlertDescription className='mt-2'>
             {error
               ? 'message' in error
                 ? String(error.message)
-                : 'Failed to load learner details'
-              : 'Invalid learner ID'}
+                : t('viewer.loadError')
+              : t('viewer.invalidLearnerId')}
             <div className='mt-4'>
               <Button
                 variant='outline'
                 onClick={() => router.push('/learner-overview')}
               >
-                Back to Learner Overview
+                {t('viewer.backToOverview')}
               </Button>
             </div>
           </AlertDescription>
@@ -92,7 +94,9 @@ export function LearnerDashboardViewer({
     <>
       <div className='px-4 lg:px-6'>
         <PageHeader
-          title={`Learner Dashboard - ${learnerResponse?.data?.first_name} ${learnerResponse?.data?.last_name}`}
+          title={t('viewer.pageTitle', {
+            name: `${learnerResponse?.data?.first_name ?? ''} ${learnerResponse?.data?.last_name ?? ''}`.trim() || '—',
+          })}
           backButtonHref='/'
           showBackButton
         />

@@ -4222,6 +4222,13 @@
       "title": "Dashboard",
       "subtitle": "Verwalten Sie Ihren Lernweg und verfolgen Sie den Fortschritt"
     },
+    "viewer": {
+      "errorTitle": "Fehler beim Laden des Lerner-Dashboards",
+      "loadError": "Lernerdetails konnten nicht geladen werden",
+      "invalidLearnerId": "Ungültige Lerner-ID",
+      "backToOverview": "Zurück zur Lerner-Übersicht",
+      "pageTitle": "Lerner-Dashboard - {name}"
+    },
     "buttons": {
       "emailLearner": "Lernenden per E-Mail kontaktieren",
       "awaitingSignature": "Ausstehende Unterschrift",

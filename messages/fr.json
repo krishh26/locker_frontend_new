@@ -5044,6 +5044,13 @@
       "title": "Tableau de bord",
       "subtitle": "Gérez votre parcours d’apprentissage et suivez votre progression"
     },
+    "viewer": {
+      "errorTitle": "Erreur lors du chargement du tableau de bord de l'apprenant",
+      "loadError": "Échec du chargement des détails de l'apprenant",
+      "invalidLearnerId": "ID apprenant invalide",
+      "backToOverview": "Retour à l'aperçu des apprenants",
+      "pageTitle": "Tableau de bord apprenant - {name}"
+    },
     "buttons": {
       "emailLearner": "Envoyer un e-mail à l’apprenant",
       "awaitingSignature": "En attente de signature",

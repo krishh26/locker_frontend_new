@@ -2126,6 +2126,98 @@
       "loFullName": "学习成果"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "学员概览",
+      "subtitle": "管理和监控学员进度",
+      "loadError": "加载学员失败，请稍后重试。",
+      "noMatchingLearners": "未找到匹配的学员",
+      "noLearners": "未找到学员",
+      "adjustSearch": "请尝试调整搜索条件",
+      "noLearnersAssigned": "您的账户下尚无分配的学员"
+    },
+    "filters": {
+      "searchLabel": "按学员搜索",
+      "searchPlaceholder": "输入学员姓名、ID、邮箱或备注"
+    },
+    "card": {
+      "noComment": "无备注",
+      "overallProgress": "整体进度",
+      "viewPortfolio": "查看档案",
+      "editCommentTitle": "编辑备注",
+      "editCommentDescription": "更新 {name} 的备注",
+      "commentLabel": "备注",
+      "commentPlaceholder": "在此输入您的备注...",
+      "cancel": "取消",
+      "saving": "保存中...",
+      "save": "保存",
+      "commentUpdatedSuccess": "备注已成功更新",
+      "commentUpdateFailed": "更新备注失败"
+    }
+  },
+  "learnersForms": {
+    "page": {
+      "title": "学员提交的表单",
+      "subtitle": "查看和管理所有学员提交的表单"
+    }
+  },
+  "iqaReport": {
+    "page": {
+      "title": "IQA 报告",
+      "subtitle": "填写学员单元的 IQA 报告表",
+      "loadingUnits": "正在加载单元...",
+      "loadUnitsError": "加载单元失败，请重试。",
+      "noUnitsForCourse": "未找到此课程的单元。"
+    },
+    "form": {
+      "assessmentInformation": "评估信息",
+      "courseName": "课程名称",
+      "selectCourse": "选择课程",
+      "untitledCourse": "未命名课程",
+      "assessorsName": "评估员姓名",
+      "learnerName": "学员姓名",
+      "batchNoAndCreator": "批次号与创建者",
+      "iqasForBatch": "批次 IQA",
+      "learnerAssessmentForUnits": "学员单元评估",
+      "question": "问题",
+      "alwaysYes": "总是（是）",
+      "sometimes": "有时",
+      "neverNo": "从不（否）",
+      "questions": {
+        "q1": "学员是否由评估员直接观察？",
+        "q2": "是否评估了知识与理解？",
+        "q3": "是否有工作成果证据？",
+        "q4": "学员是否提供了足够的工作/个人详情？",
+        "q5": "学员的评估记录是否持续完成？",
+        "q6": "评估员是否确认了真实性、充分性、准确性、一致性和有效性？"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "单元 {index}",
+      "noDate": "无日期",
+      "noSampleHistory": "该单元暂无抽样历史"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "未找到此课程的单元。",
+      "noCode": "无代码",
+      "noUnitName": "无单元名称",
+      "notStarted": "未开始",
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "sample": "样本",
+      "samples": "样本",
+      "last": "最后"
+    },
+    "toast": {
+      "loadPlanDetailsError": "加载计划详情失败",
+      "unableToDetermineUser": "无法确定当前用户",
+      "questionsSavedSuccess": "问题已成功保存",
+      "saveQuestionsError": "保存问题失败",
+      "missingRequiredInfo": "缺少必填信息",
+      "sampleDetailUpdatedSuccess": "抽样计划详情已成功更新",
+      "updateSampleDetailError": "更新抽样计划详情失败"
+    }
+  },
   "wellbeing": {
     "pageTitle": "身心健康资源管理",
     "pageSubtitle": "管理学习者的身心健康资源，包括添加、编辑以及切换资源可用性",
@@ -2532,6 +2624,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "差距分析",
+    "pageSubtitle": "跟踪课程和单元中的学员差距",
+    "learnerInfo": {
+      "name": "姓名",
+      "username": "用户名",
+      "email": "电子邮件",
+      "mobile": "手机",
+      "notSpecified": "未指定"
+    },
+    "table": {
+      "columns": {
+        "title": "标题",
+        "subUnitTitle": "子单元标题",
+        "code": "代码",
+        "learnerMap": "学员图",
+        "trainerMap": "培训师图",
+        "gap": "差距",
+        "comment": "评论"
+      },
+      "yes": "是",
+      "no": "否",
+      "gapTooltip": {
+        "complete": "完整 - 两张图均存在",
+        "partial": "部分 - 一张图存在",
+        "none": "无图存在"
+      },
+      "filters": {
+        "selectCourse": "选择课程",
+        "selectType": "选择类型",
+        "selectUnit": "选择单元",
+        "noCourses": "暂无课程",
+        "selectCoursePlaceholder": "选择课程",
+        "selectCourseFirst": "请先选择课程",
+        "selectTypePlaceholder": "选择类型",
+        "selectUnitPlaceholder": "选择单元",
+        "noUnits": "暂无单元"
+      },
+      "types": {
+        "knowledge": "知识",
+        "behaviour": "行为",
+        "skills": "技能"
+      },
+      "searchPlaceholder": "搜索子单元...",
+      "export": "导出",
+      "exportCsv": "导出为 CSV",
+      "exportPdf": "导出为 PDF",
+      "pdfTitle": "模块/单元进度",
+      "toast": {
+        "csvNotImplemented": "CSV 导出功能将后续实现",
+        "noDataToExport": "无数据可导出",
+        "pdfSuccess": "PDF 导出成功"
+      },
+      "pagination": {
+        "showing": "显示 {count} / {total} {items}",
+        "items": "项",
+        "subUnits": "子单元",
+        "page": "页",
+        "previous": "上一页",
+        "next": "下一页"
+      },
+      "noResults": "无结果。",
+      "empty": {
+        "selectCourse": "请选择课程以查看进度",
+        "selectType": "请选择类型以查看进度",
+        "noItemsForType": "所选类型暂无项目",
+        "selectUnit": "请选择单元以查看进度",
+        "noSubUnits": "所选单元暂无子单元"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
@@ -2598,6 +2761,78 @@
           "submittedSuccess": "反馈提交成功！",
           "submitFailed": "提交反馈失败。请重试。"
         }
+      }
+    }
+  },
+  "healthAndWellbeing": {
+    "pageTitle": "健康与福祉",
+    "pageSubtitle": "访问您的福祉资源并跟踪您的进度",
+    "table": {
+      "columns": {
+        "resourceName": "资源名称",
+        "description": "描述",
+        "createdDate": "创建日期",
+        "lastOpened": "上次打开",
+        "feedback": "反馈",
+        "actions": "操作"
+      },
+      "actions": {
+        "openDownload": "打开 / 下载",
+        "visitLink": "访问链接",
+        "feedback": "反馈"
+      },
+      "dates": {
+        "never": "从未",
+        "invalid": "无效日期"
+      },
+      "feedbackValues": {
+        "veryHelpful": "非常有帮助",
+        "helpful": "有帮助",
+        "neutral": "一般",
+        "notHelpful": "没有帮助",
+        "none": "暂无反馈",
+        "unknown": "未知"
+      },
+      "searchPlaceholder": "搜索资源...",
+      "columnVisibility": {
+        "label": "列可见性",
+        "button": "列"
+      },
+      "loading": "正在加载资源...",
+      "error": {
+        "loadFailed": "加载资源失败。请重试。",
+        "retry": "重试"
+      },
+      "empty": {
+        "noResources": "暂无可用资源",
+        "checkBack": "请稍后再查看新的福祉资源"
+      },
+      "noResults": "未找到资源。",
+      "toast": {
+        "trackFailed": "记录资源访问失败"
+      }
+    },
+    "feedbackDialog": {
+      "title": "您觉得这个资源怎么样？",
+      "description": "请选择一个表情来评价您的体验",
+      "labels": {
+        "veryHelpful": "非常有帮助",
+        "helpful": "有帮助",
+        "neutral": "一般",
+        "notHelpful": "没有帮助"
+      },
+      "messages": {
+        "veryHelpful": "这个资源非常有帮助！",
+        "helpful": "这个资源有帮助！",
+        "neutral": "这个资源还可以",
+        "notHelpful": "这个资源可以改进"
+      },
+      "cancel": "取消",
+      "submit": "提交反馈",
+      "submitting": "提交中...",
+      "toast": {
+        "success": "反馈提交成功！",
+        "failed": "提交反馈失败。请重试。"
       }
     }
   },
@@ -2695,6 +2930,876 @@
       "learnerOverview": "学员概览",
       "resources": "资源",
       "learnersForms": "学员表单"
+    }
+  },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "提交表单",
+      "subtitle": "请填写下方表单",
+      "loadFailed": "加载表单失败，请重试。",
+      "notFound": "未找到表单。"
+    },
+    "signature": {
+      "sign": "签名",
+      "editSignature": "编辑签名",
+      "dialogTitle": "在此签名",
+      "dialogDescription": "在下方方框中绘制您的签名",
+      "clear": "清除",
+      "saveSignature": "保存签名",
+      "alt": "签名"
+    },
+    "fileUpload": {
+      "chooseFile": "选择文件",
+      "selected": "已选：{name}（{size} KB）"
+    },
+    "form": {
+      "noFields": "表单中未添加任何字段。",
+      "lockedMessage": "此表单当前已锁定，无法编辑。如需修改，请联系您的培训师或管理员。",
+      "clearForm": "清空表单",
+      "saveAsDraft": "另存为草稿",
+      "saving": "保存中...",
+      "submit": "提交",
+      "submitting": "提交中..."
+    },
+    "validation": {
+      "email": "{label} 必须是有效的电子邮件",
+      "number": "{label} 必须是数字",
+      "phone": "{label} 只能包含数字",
+      "required": "{label} 为必填项",
+      "fileTooLarge": "{label} 文件过大（最大 10 MB）"
+    },
+    "toast": {
+      "submitSuccess": "表单提交成功！",
+      "submitFailed": "表单提交失败，请重试。",
+      "draftSuccess": "表单已保存为草稿！",
+      "draftFailed": "草稿保存失败，请重试。"
+    }
+  },
+  "learnerForms": {
+    "pageTitle": "表单",
+    "pageSubtitle": "查看并管理所有表单",
+    "table": {
+      "columns": {
+        "formName": "表单名称",
+        "description": "描述",
+        "type": "类型",
+        "createdAt": "创建时间",
+        "actions": "操作"
+      },
+      "loading": "加载中...",
+      "noResults": "未找到表单。"
+    }
+  },
+  "learnerDocumentsToSign": {
+    "pageTitle": "学员待签署文件",
+    "pageSubtitle": "查看并签署等待您签名的文件",
+    "table": {
+      "columns": {
+        "courseName": "课程名称",
+        "type": "类型",
+        "dateUploaded": "上传日期",
+        "documentName": "文件名称",
+        "uploadedBy": "上传者",
+        "signedInAgreement": "签署同意",
+        "sessionDateTime": "会话日期/时间",
+        "action": "操作"
+      },
+      "searchPlaceholder": "搜索文件...",
+      "loading": "加载中...",
+      "noResults": "未找到文件。",
+      "noSignaturesRequested": "未请求签名",
+      "pendingSuffix": "(待处理)",
+      "signButton": "签署"
+    },
+    "summary": {
+      "totalDocuments": "文件总数：",
+      "requiringSignatures": "需要签名的文件："
+    },
+    "roles": {
+      "employer": "雇主",
+      "iqa": "IQA",
+      "trainer": "培训师",
+      "learner": "学员"
+    },
+    "types": {
+      "evidence": "证据"
+    },
+    "modal": {
+      "title": "文件签署协议",
+      "documentLabel": "文件：",
+      "courseLabel": "课程：",
+      "tableHeaders": {
+        "signedInAgreement": "签署同意",
+        "name": "姓名",
+        "signed": "已签署",
+        "date": "日期"
+      },
+      "buttons": {
+        "cancel": "取消/关闭",
+        "save": "保存",
+        "saving": "保存中..."
+      }
+    },
+    "toast": {
+      "saved": "签名保存成功！",
+      "saveError": "保存签名时出错"
+    }
+  },
+  "learningPlan": {
+    "page": {
+      "title": "学习计划",
+      "subtitle": "管理并跟踪学习会话"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "会话编号",
+        "title": "标题",
+        "date": "日期",
+        "time": "时间",
+        "type": "类型",
+        "assessor": "评估者",
+        "attended": "出席",
+        "courses": "课程",
+        "feedback": "反馈"
+      },
+      "loadingSessions": "正在加载会话...",
+      "noLearnerSelected": "未选择学员",
+      "noResults": "无结果。",
+      "noSessionsAvailable": "暂无可用会话",
+      "searchPlaceholder": "搜索会话...",
+      "learnerLabel": "学员",
+      "nameLabel": "姓名：",
+      "filters": {
+        "type": {
+          "label": "类型",
+          "placeholder": "选择类型"
+        },
+        "attended": {
+          "label": "出席状态",
+          "placeholder": "选择状态"
+        }
+      },
+      "attendedSelectPlaceholder": "选择",
+      "export": {
+        "button": "导出",
+        "csv": "导出为 CSV",
+        "pdf": "导出为 PDF",
+        "csvNotImplemented": "CSV 导出功能将稍后实现",
+        "pdfNotImplemented": "PDF 导出功能将稍后实现"
+      },
+      "buttons": {
+        "addSession": "添加会话"
+      },
+      "toast": {
+        "sessionUpdated": "会话更新成功",
+        "sessionUpdateFailed": "会话更新失败"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "无课程",
+      "buttons": {
+        "addFiles": "添加文件",
+        "addAction": "添加行动"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "对象",
+          "action": "行动",
+          "description": "描述",
+          "file": "文件",
+          "units": "单元",
+          "targetDate": "目标日期",
+          "feedback": "反馈",
+          "duration": "时长",
+          "status": "状态",
+          "actions": "操作"
+        },
+        "whoLabels": {
+          "learner": "学员",
+          "employer": "雇主"
+        },
+        "unitPrefix": "单元 {unitName}",
+        "mins": "{count} 分钟",
+        "notStarted": "未开始",
+        "feedbackLabels": {
+          "trainer": "培训师：",
+          "learner": "学员："
+        },
+        "tooltips": {
+          "edit": "编辑",
+          "addFile": "添加文件",
+          "delete": "删除"
+        },
+        "toast": {
+          "deleteNotImplemented": "删除行动功能将稍后实现"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "添加会话",
+        "description": "为该学员创建新会话。开始日期和时长为必填项。",
+        "courseContextWarning": "请从课程页面打开学习计划以添加会话（需要课程上下文）。",
+        "fields": {
+          "title": "标题",
+          "description": "描述",
+          "location": "地点",
+          "startDateTime": "开始日期和时间",
+          "duration": "时长（小时:分钟）",
+          "sessionType": "会话类型"
+        },
+        "placeholders": {
+          "title": "会话标题",
+          "description": "可选描述",
+          "location": "例如：教室 1，线上",
+          "sessionType": "选择类型"
+        },
+        "buttons": {
+          "cancel": "取消",
+          "submit": "添加会话",
+          "submitting": "添加中..."
+        },
+        "toast": {
+          "courseRequired": "至少需要一个课程。请从课程打开学习计划以添加会话。",
+          "success": "会话添加成功",
+          "failed": "添加会话失败"
+        },
+        "validation": {
+          "titleRequired": "标题为必填项",
+          "locationRequired": "地点为必填项",
+          "startDateRequired": "开始日期为必填项",
+          "durationRequired": "时长为必填项",
+          "sessionTypeRequired": "会话类型为必填项"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "行动添加成功",
+          "addFailed": "添加行动失败",
+          "updated": "行动更新成功",
+          "updateFailed": "更新行动失败"
+        },
+        "validation": {
+          "actionNameRequired": "行动名称为必填项",
+          "descriptionTooLong": "描述不能超过 1000 个字符",
+          "targetDateRequired": "目标日期为必填项",
+          "whoRequired": "请选择行动类型"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "管理会话文件",
+        "sections": {
+          "who": "1. 对象：",
+          "fileType": "2. 文件类型：",
+          "uploadType": "3. 上传类型："
+        },
+        "tableHeaders": {
+          "name": "名称",
+          "type": "类型",
+          "description": "描述",
+          "dateUploaded": "上传日期"
+        },
+        "who": {
+          "thisAim": "本目标",
+          "allAim": "所有目标"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP 文件",
+          "reviewFiles": "复查文件",
+          "assessmentFiles": "评估文件",
+          "generalFiles": "通用文件"
+        },
+        "uploadModes": {
+          "fileUpload": "上传文件",
+          "formSelection": "选择表单"
+        },
+        "buttons": {
+          "chooseFile": "选择文件",
+          "upload": "上传",
+          "uploading": "上传中...",
+          "add": "添加",
+          "adding": "添加中...",
+          "cancelClose": "取消/关闭"
+        },
+        "placeholders": {
+          "selectForm": "选择表单"
+        },
+        "toast": {
+          "selectFile": "请选择一个文件",
+          "uploadSuccess": "文件上传成功",
+          "uploadFailed": "文件上传失败",
+          "selectForm": "请选择一个表单",
+          "addFormSuccess": "表单添加成功",
+          "addFormFailed": "添加表单失败"
+        }
+      },
+      "manageActionFile": {
+        "title": "管理行动文件",
+        "fieldLabel": "文件上传",
+        "helper": {
+          "dragDrop": "将文件拖拽到此处或",
+          "browse": "浏览",
+          "maxSize": "最多允许 10MB 文件"
+        },
+        "buttons": {
+          "cancel": "取消",
+          "upload": "上传",
+          "uploading": "上传中..."
+        },
+        "toast": {
+          "uploadSuccess": "文件上传成功",
+          "uploadFailed": "文件上传失败"
+        },
+        "validation": {
+          "fileRequired": "必须选择文件",
+          "fileTooLarge": "文件大小必须小于 10MB",
+          "unsupportedFormat": "不支持的文件格式"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "全部",
+        "general": "通用",
+        "induction": "入职",
+        "formalReview": "正式复查",
+        "telephone": "电话",
+        "exitSession": "离开会话",
+        "outOfTheWorkplace": "工作场所外",
+        "testsExams": "测试/考试",
+        "learnerSupport": "学员支持",
+        "initialSession": "初始会话",
+        "gatewayReady": "网关就绪",
+        "epa": "EPA",
+        "furloughed": "停薪留职"
+      },
+      "attendedStatuses": {
+        "all": "全部",
+        "attended": "已出席",
+        "cancelled": "已取消",
+        "cancelledByTrainer": "培训师取消",
+        "cancelledByLearner": "学员取消",
+        "cancelledByEmployee": "员工取消",
+        "learnerNotAttended": "学员未出席"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "评估",
+        "reviewFiles": "复查",
+        "generalFiles": "通用",
+        "evidence": "证据"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "未知"
+    }
+  },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "单元进度",
+      "subtitle": "跟踪学员在各单元中的进度"
+    },
+    "error": {
+      "loadFailed": "加载单元进度失败，请稍后重试。"
+    },
+    "learnerInfo": {
+      "noInfo": "暂无学员信息",
+      "labels": {
+        "learner": "学员",
+        "uln": "ULN",
+        "registrationNumber": "注册号",
+        "trainingProvider": "培训机构",
+        "courseName": "课程名称"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "搜索单元...",
+      "loading": "正在加载单元...",
+      "noUnits": "暂无可用单元",
+      "noResults": "无结果。",
+      "columns": {
+        "title": "标题",
+        "signedOffAwaiting": "已签署% / 待签署%",
+        "completed": "已完成",
+        "assessed": "已评估",
+        "iqaSignOff": "IQA 签署",
+        "claimableStatus": "可申领状态"
+      },
+      "progress": {
+        "signedOff": "已签署",
+        "awaitingSignOff": "待签署"
+      },
+      "status": {
+        "yes": "是",
+        "no": "否",
+        "claimable": "可申领",
+        "notClaimable": "不可申领"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
+  "resources": {
+    "page": {
+      "title": "资源",
+      "subtitle": "管理学习资源与材料"
+    },
+    "table": {
+      "columns": {
+        "name": "名称",
+        "description": "描述",
+        "glh": "GLH",
+        "jobType": "岗位类型",
+        "resourceType": "资源类型",
+        "actions": "操作"
+      },
+      "searchPlaceholder": "搜索资源...",
+      "filters": {
+        "jobType": {
+          "label": "岗位类型",
+          "placeholder": "选择岗位类型"
+        },
+        "resourceType": {
+          "label": "资源类型",
+          "placeholder": "选择资源类型",
+          "allTypes": "全部类型"
+        }
+      },
+      "buttons": {
+        "addResource": "新增资源",
+        "view": "查看",
+        "edit": "编辑",
+        "delete": "删除",
+        "download": "下载"
+      },
+      "menu": {
+        "view": "查看",
+        "edit": "编辑",
+        "delete": "删除",
+        "download": "下载",
+        "columns": "列"
+      },
+      "states": {
+        "loading": "正在加载资源...",
+        "noResults": "无结果。",
+        "empty": "未找到资源。"
+      },
+      "confirm": {
+        "deleteTitle": "确定要删除该资源吗？",
+        "deleteBody": "此操作无法撤销。"
+      },
+      "toast": {
+        "deleted": "资源删除成功",
+        "deleteFailed": "资源删除失败",
+        "exportCsvFailed": "导出 CSV 失败",
+        "exportPdfFailed": "导出 PDF 失败"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "创建新资源",
+        "edit": "编辑资源"
+      },
+      "description": {
+        "create": "上传新的学习资源。完成后点击保存。",
+        "edit": "更新资源详情。完成后点击保存。"
+      },
+      "fields": {
+        "course": "课程",
+        "file": "文件",
+        "name": "名称",
+        "description": "描述",
+        "jobType": "岗位类型",
+        "resourceType": "资源类型",
+        "hours": "小时",
+        "minutes": "分钟"
+      },
+      "placeholders": {
+        "selectCourse": "选择课程",
+        "noCourses": "暂无可用课程",
+        "description": "输入描述（可选）",
+        "jobType": "选择岗位类型",
+        "resourceType": "选择资源类型"
+      },
+      "helper": {
+        "currentFilePrefix": "当前文件：",
+        "viewFile": "查看文件",
+        "maxFileSize": "最大文件大小：10MB",
+        "nameAuto": "名称会根据上传的文件自动设置"
+      },
+      "buttons": {
+        "save": "保存",
+        "saving": "保存中...",
+        "cancel": "取消"
+      },
+      "toast": {
+        "created": "资源创建成功",
+        "updated": "资源更新成功",
+        "createFailed": "资源创建失败",
+        "updateFailed": "资源更新失败"
+      },
+      "validation": {
+        "selectCourse": "请选择课程。",
+        "nameRequired": "名称为必填项。",
+        "uploadFile": "请上传文件。",
+        "fileTooLarge": "文件大小必须小于 10MB。",
+        "hoursMin": "小时必须大于或等于 0",
+        "hoursMax": "小时必须小于 24",
+        "minutesMin": "分钟必须大于或等于 0",
+        "minutesMax": "分钟必须小于 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "开启",
+        "off": "关闭"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "文本",
+        "image": "图片"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours}小时 {minutes}分钟"
+    }
+  },
+  "skillsScan": {
+    "page": {
+      "title": "技能评估",
+      "subtitle": "培训需求分析"
+    },
+    "userCard": {
+      "summaryLine": "技能评估与培训需求分析",
+      "badge": "培训需求分析",
+      "fallbackUserName": "用户"
+    },
+    "tabs": {
+      "units": {
+        "label": "选择 TNA 单元",
+        "shortLabel": "选择",
+        "description": "选择你的培训单元"
+      },
+      "questionnaire": {
+        "label": "TNA 问卷",
+        "shortLabel": "TNA",
+        "description": "完成评估"
+      },
+      "results": {
+        "label": "查看结果",
+        "shortLabel": "查看",
+        "description": "查看你的结果"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "选择培训课程",
+        "label": "选择课程：",
+        "placeholder": "选择课程以开始...",
+        "noCourses": "暂无可用课程"
+      },
+      "table": {
+        "title": "课程单元",
+        "count": "{count} 个单元可用",
+        "headers": {
+          "unitTitle": {
+            "standard": "标准",
+            "qualification": "标准单元"
+          },
+          "hours": "小时",
+          "credits": "学分",
+          "level": "级别",
+          "code": "代码",
+          "type": "类型",
+          "mandatory": "必修"
+        },
+        "values": {
+          "na": "无",
+          "levelPrefix": "级别 {level}",
+          "yes": "是",
+          "no": "否"
+        }
+      },
+      "empty": {
+        "title": "未找到单元",
+        "body": "请选择课程以查看可用单元"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "继续到问卷"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA 问卷",
+      "topicsCompleted": "已完成 {completed}/{total} 个主题",
+      "highlightBlanks": "高亮空白项",
+      "sidebar": {
+        "title": "评估主题"
+      },
+      "unitIntro": "为每个能力领域对你的技能进行评分",
+      "table": {
+        "headers": {
+          "skill": "需展示的技能",
+          "phases": {
+            "induction": "入职",
+            "first": "第一次复查",
+            "second": "第二次复查",
+            "third": "第三次复查"
+          }
+        },
+        "selectRatingPlaceholder": "选择评分"
+      },
+      "states": {
+        "noCourse": {
+          "title": "未选择课程",
+          "body": "请在“选择 TNA 单元”标签页中选择课程"
+        },
+        "loadingCourseData": "正在加载课程数据...",
+        "noSkillsForUnit": "该单元没有可评估的技能",
+        "noTopic": {
+          "title": "未选择主题",
+          "body": "请从侧边栏选择主题以开始评估"
+        }
+      },
+      "buttons": {
+        "previous": "上一个",
+        "next": "下一个",
+        "saveProgress": "保存进度",
+        "saving": "保存中...",
+        "viewResults": "查看结果"
+      },
+      "toast": {
+        "saved": "进度保存成功",
+        "saveFailed": "进度保存失败"
+      }
+    },
+    "results": {
+      "title": "评估结果",
+      "skillsAssessed": "已评估 {completed}/{total} 项技能",
+      "states": {
+        "noCourse": {
+          "title": "未选择课程",
+          "body": "请在“选择 TNA 单元”标签页中选择课程"
+        },
+        "loading": "正在加载结果...",
+        "contentNotFound": "未找到内容"
+      },
+      "buttons": {
+        "downloadPdf": "下载 PDF"
+      },
+      "toast": {
+        "generatingPdf": "正在生成 PDF...",
+        "pdfDownloaded": "PDF 下载成功",
+        "pdfDownloadFailed": "PDF 下载失败"
+      },
+      "chart": {
+        "title": "进度图表",
+        "selectTopicPlaceholder": "选择主题",
+        "noData": "暂无数据"
+      },
+      "legend": {
+        "title": "图例"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "该主题暂无可用数据。",
+      "phases": {
+        "induction": "入职",
+        "first": "第一次复查",
+        "second": "第二次复查",
+        "third": "第三次复查"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "从不",
+        "notSure": "不确定",
+        "sometimes": "有时",
+        "always": "总是"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
+  "timeLog": {
+    "page": {
+      "title": "Time Log",
+      "subtitle": "Viewing E-Timelog for All Courses and General Activities"
+    },
+    "filters": {
+      "course": {
+        "label": "Select Course",
+        "all": "All Courses"
+      },
+      "jobType": {
+        "label": "Select Job Training",
+        "options": {
+          "all": "All",
+          "notApplicable": "Not Applicable",
+          "onTheJob": "On the job",
+          "offTheJob": "Off the job"
+        }
+      },
+      "approved": {
+        "label": "Assessor Approved",
+        "options": {
+          "all": "All",
+          "approved": "Approved",
+          "notApproved": "Not Approved"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "total": "Total",
+      "hoursLabel": "{hours} hours"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "empty": "No recent activities found."
+    },
+    "table": {
+      "loading": "Loading time logs...",
+      "empty": "No time log entries found.",
+      "columns": {
+        "activityType": "Activity Type",
+        "courseUnit": "Course / Unit",
+        "trainer": "Trainer",
+        "timeSpent": "Time Spent",
+        "startTime": "Activity Start Time",
+        "onOffJob": "On/Off the Job Training",
+        "approved": "Approved",
+        "comment": "Comment",
+        "date": "Date",
+        "actions": "Action"
+      },
+      "labels": {
+        "assessor": "Assessor",
+        "approved": "Approved",
+        "notApproved": "Not Approved"
+      }
+    },
+    "actions": {
+      "addButton": "Add New Timelog Entry",
+      "columnVisibilityLabel": "Column Visibility",
+      "columnsButton": "Columns"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "Add Activity",
+          "edit": "Edit Time Log"
+        },
+        "description": {
+          "create": "Fill in the details to create a new time log entry.",
+          "edit": "Update the time log entry details."
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. Select Activity Date"
+          },
+          "activityType": {
+            "label": "2. Select Activity Type",
+            "placeholder": "Select Activity Type"
+          },
+          "course": {
+            "label": "3. Select Course",
+            "noneOption": "None",
+            "loading": "Loading courses..."
+          },
+          "unit": {
+            "label": "4. Select Unit",
+            "placeholderDefault": "Select Unit(s)",
+            "placeholderWithCount": "{count} unit(s) selected",
+            "noUnits": "No units available for selected course"
+          },
+          "trainer": {
+            "label": "5. Select Trainer",
+            "noneOption": "None",
+            "loading": "Loading trainers..."
+          },
+          "type": {
+            "label": "6. Was it on the Job?",
+            "placeholder": "Select Job Type",
+            "options": {
+              "notApplicable": "Not Applicable",
+              "on": "On the job",
+              "off": "Off the job"
+            }
+          },
+          "spendTime": {
+            "label": "7. Time Spent on Activity"
+          },
+          "startTime": {
+            "label": "8. Activity Start Time"
+          },
+          "endTime": {
+            "label": "9. Activity End Time"
+          },
+          "impact": {
+            "label": "10. What impact has this activity had on your learning?",
+            "placeholder": "Please type in any impact notes."
+          },
+          "evidence": {
+            "label": "11. Evidence Links",
+            "placeholder": "Enter evidence link"
+          }
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "saveCreate": "Save Time Log",
+          "saveUpdate": "Update Time Log",
+          "loadingCreate": "Creating...",
+          "loadingUpdate": "Updating..."
+        },
+        "validation": {
+          "activityDateRequired": "Activity date is required",
+          "activityTypeRequired": "Activity type is required",
+          "jobTypeRequired": "Job type is required",
+          "timeSpentRequired": "Time spent is required",
+          "startTimeRequired": "Start time is required",
+          "endTimeRequired": "End time is required",
+          "impactRequired": "Impact on learner is required"
+        }
+      },
+      "delete": {
+        "title": "Delete Time Log?",
+        "description": "Deleting this time log will also remove all associated data and relationships. Proceed with deletion?",
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Delete Time Log"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "Time log created successfully",
+      "updateSuccess": "Time log updated successfully",
+      "deleteSuccess": "Time log deleted successfully",
+      "createFailed": "Failed to create time log",
+      "updateFailed": "Failed to update time log",
+      "deleteFailed": "Failed to delete time log"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "Virtual Training Session",
+        "faceToFace": "Traditional face-to-face session",
+        "trainerLed": "Trainer or assessor led training",
+        "eLearning": "Electronic or distance learning, or self-study",
+        "coaching": "Coaching or mentoring",
+        "guidedLearning": "Guided learning with no trainer/assessor present",
+        "technicalExperience": "Gaining technical experience by doing my job",
+        "reviewSupport": "Review/feedback/support",
+        "assessment": "Assessment or examination",
+        "other": "Other",
+        "furloughed": "Furloughed"
+      }
     }
   },
   "defaultReviewWeeks": {
@@ -3909,6 +5014,13 @@
       "title": "仪表盘",
       "subtitle": "管理你的学习旅程并跟踪进度"
     },
+    "viewer": {
+      "errorTitle": "加载学员仪表盘时出错",
+      "loadError": "加载学员详情失败",
+      "invalidLearnerId": "学员 ID 无效",
+      "backToOverview": "返回学员概览",
+      "pageTitle": "学员仪表盘 - {name}"
+    },
     "buttons": {
       "emailLearner": "给学员发邮件",
       "awaitingSignature": "等待签名",
@@ -3993,6 +5105,922 @@
         "success": "确认已成功接受",
         "failed": "更新确认状态失败"
       }
+    }
+  },
+  "learnerProfile": {
+    "page": {
+      "title": "个人资料信息",
+      "subtitle": "查看学员个人资料详情及个人信息",
+      "tabs": {
+        "personalInfo": "个人信息",
+        "courseInformation": "课程信息",
+        "contractedWorkHours": "合同工作小时"
+      },
+      "errorTitle": "加载学员资料出错",
+      "loadError": "无法加载学员详情",
+      "invalidLearnerId": "无效的学员 ID",
+      "noDataTitle": "未找到数据",
+      "noDataDescription": "未找到学员资料数据。",
+      "back": "返回",
+      "save": "保存更改",
+      "saving": "保存中...",
+      "resetPasswordButton": "重置密码",
+      "emailPasswordResetButton": "邮件发送密码重置",
+      "accessProfile": "访问资料",
+      "toastUpdated": "学员资料已成功更新",
+      "toastUpdateFailed": "更新学员资料失败，请重试。"
+    },
+    "validation": {
+      "firstNameRequired": "请输入名字",
+      "lastNameRequired": "请输入姓氏",
+      "userNameRequired": "请输入用户名",
+      "invalidEmail": "无效的电子邮件地址"
+    },
+    "courseInformation": {
+      "emptyState": "未分配课程",
+      "addCourse": "添加课程",
+      "yes": "是",
+      "no": "否",
+      "statusOptions": {
+        "awaitingInduction": "等待入职",
+        "certificated": "已认证",
+        "completed": "已完成",
+        "earlyLeaver": "提前离开",
+        "exempt": "豁免",
+        "inTraining": "培训中",
+        "iqaApproved": "IQA 已批准",
+        "trainingSuspended": "培训已暂停",
+        "transferred": "已转学"
+      },
+      "validation": {
+        "selectCourse": "请选择课程",
+        "selectTrainer": "请选择培训师",
+        "selectIQA": "请选择 IQA",
+        "selectLIQA": "请选择 LIQA",
+        "selectEQA": "请选择 EQA",
+        "selectStartDate": "请选择开始日期",
+        "selectEndDate": "请选择结束日期",
+        "endDateAfterStart": "结束日期必须晚于开始日期",
+        "enterPredictedGrade": "请输入预测成绩",
+        "enterFinalGrade": "请输入最终成绩"
+      },
+      "toast": {
+        "updated": "课程已成功更新",
+        "added": "课程已成功添加",
+        "deleted": "课程已成功删除",
+        "saveFailed": "保存课程失败，请重试。",
+        "deleteFailed": "删除课程失败，请重试。",
+        "sameOrganisation": "学员与课程必须属于同一机构。",
+        "noAccess": "您无权分配此课程。"
+      },
+      "table": {
+        "courseName": "课程名称",
+        "level": "级别",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "status": "状态",
+        "mainCourse": "主修课程",
+        "actions": "操作"
+      },
+      "dialog": {
+        "editTitle": "编辑课程",
+        "addTitle": "添加新课程",
+        "editDescription": "在下方更新课程信息。",
+        "addDescription": "在下方填写课程详情。标有 * 的字段为必填项。"
+      },
+      "form": {
+        "selectCourse": "选择课程",
+        "courseStatus": "课程状态",
+        "trainer": "培训师",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "predictedGrade": "预测成绩",
+        "finalGrade": "最终成绩",
+        "mainAimCourse": "主修课程",
+        "chooseCourse": "选择课程",
+        "selectStatus": "选择课程状态",
+        "enterPredictedGrade": "请输入预测成绩",
+        "enterFinalGrade": "请输入最终成绩",
+        "anotherMainCourse": "已有其他课程设为主修课程"
+      },
+      "deleteDialog": {
+        "title": "确定吗？",
+        "description": "此操作无法撤销。将永久删除 {courseName} 的课程分配。",
+        "cancel": "取消",
+        "delete": "删除"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "updateCourse": "更新课程",
+        "addCourseButton": "添加课程"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "合同工作小时",
+      "setNewHours": "设置新小时数",
+      "emptyState": "未找到合同工作小时。",
+      "loading": "加载中...",
+      "noteText": "请注意：由于该学员的预期脱产小时已设为固定值，合同工作小时和年度假期权利将不影响该学员的脱产计算。",
+      "table": {
+        "company": "公司",
+        "contractStart": "雇佣合同开始日期",
+        "contractEnd": "雇佣合同结束日期",
+        "hoursPerWeek": "每周合同工作小时",
+        "yearlyHoliday": "年度假期权利（小时）",
+        "lastEditedBy": "最后编辑者",
+        "lastEditedDate": "最后编辑日期",
+        "actions": "操作"
+      },
+      "dialog": {
+        "editTitle": "编辑合同工作小时",
+        "setNewTitle": "设置新合同工作小时",
+        "editDescription": "更新合同工作小时信息。",
+        "setNewDescription": "输入该学员的合同工作小时信息。",
+        "companyLabel": "公司 *",
+        "companyPlaceholder": "输入公司名称",
+        "contractStartLabel": "雇佣合同开始日期 *",
+        "contractEndLabel": "雇佣合同结束日期",
+        "hoursPerWeekLabel": "每周合同工作小时 *",
+        "hoursPlaceholder": "输入每周小时数",
+        "pickDate": "选择日期",
+        "pickDateOptional": "选择日期（可选）",
+        "cancel": "取消",
+        "update": "更新",
+        "create": "创建"
+      },
+      "deleteDialog": {
+        "title": "确定吗？",
+        "description": "此操作无法撤销。将永久删除 {company} 的合同工作小时记录。",
+        "cancel": "取消",
+        "delete": "删除"
+      },
+      "validation": {
+        "companyRequired": "公司为必填项",
+        "contractStartRequired": "合同开始日期为必填项",
+        "hoursRequired": "每周工作小时为必填项",
+        "hoursPositive": "必须为正数"
+      },
+      "toast": {
+        "updated": "合同工作小时已成功更新",
+        "created": "合同工作小时已成功创建",
+        "deleted": "合同工作小时已成功删除",
+        "saveFailed": "保存合同工作小时失败，请重试。",
+        "deleteFailed": "删除合同工作小时失败，请重试。"
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "学员 ID",
+        "uln": "ULN",
+        "misLearnerId": "MIS 学员 ID",
+        "studentId": "学员 ID"
+      },
+      "aboutYou": {
+        "title": "关于您",
+        "clickToUpload": "点击上传照片",
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "username": "用户名",
+        "email": "电子邮件",
+        "telephone": "电话",
+        "mobile": "手机",
+        "dateOfBirth": "出生日期",
+        "gender": "性别",
+        "nationalInsuranceNo": "国民保险号",
+        "ethnicity": "民族",
+        "learnerDisability": "学员残疾",
+        "learningDifficulties": "学习困难",
+        "initialAssessmentNumeracy": "初步评估 - 计算",
+        "initialAssessmentLiteracy": "初步评估 - 读写",
+        "initialAssessmentICT": "初步评估 - 信息通信技术",
+        "avatarInvalidFile": "请选择有效的图片文件",
+        "avatarTooLarge": "图片大小应小于 5MB",
+        "avatarSuccess": "头像上传成功",
+        "avatarFailed": "上传头像失败，请重试。"
+      },
+      "address": {
+        "title": "地址",
+        "street": "门牌号/名称及街道",
+        "suburb": "郊区/村庄",
+        "town": "城镇/城市",
+        "country": "国家",
+        "homePostcode": "家庭邮编",
+        "countryOfDomicile": "居住国"
+      },
+      "employer": {
+        "title": "雇主",
+        "employer": "雇主",
+        "employerIdPlaceholder": "雇主 ID",
+        "jobTitle": "职位",
+        "location": "地点",
+        "managerName": "经理姓名",
+        "managerJobTitle": "经理职位",
+        "mentor": "导师"
+      },
+      "fundingBody": {
+        "title": "资助机构",
+        "fundingBody": "资助机构",
+        "awardingBody": "颁证机构",
+        "registrationNumber": "注册号",
+        "registrationDate": "注册日期",
+        "laraCode": "LARA 代码"
+      },
+      "fundingBands": {
+        "title": "资助档次",
+        "originalAmount": "原始金额",
+        "customAmount": "自定义金额",
+        "fundingBandId": "资助档次 ID",
+        "updatedByLearner": "由学员更新",
+        "lastUpdated": "最后更新"
+      },
+      "additionalInfo": {
+        "title": "附加信息",
+        "costCentre": "成本中心",
+        "fundingContractor": "资助承包商",
+        "partner": "合作伙伴",
+        "subArea": "子区域",
+        "cohort": "队列",
+        "curriculumArea": "课程领域",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "课程主任",
+        "learnerType": "学员类型",
+        "expectedOffTheJobHours": "预期脱产小时",
+        "offTheJobTraining": "脱产培训",
+        "guidedLearningHoursAchieved": "已达成指导学习小时"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "重置密码",
+      "descriptionWithName": "为 {name} ({email}) 重置密码",
+      "descriptionEmailOnly": "为 {email} 重置密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "show": "显示",
+      "hide": "隐藏",
+      "cancel": "取消",
+      "resetting": "重置中...",
+      "resetPassword": "重置密码",
+      "hintText": "密码至少 6 个字符，并包含大小写字母和数字。",
+      "validation": {
+        "passwordMin": "密码至少 6 个字符",
+        "passwordPattern": "密码须包含至少一个大写字母、一个小写字母和一个数字",
+        "confirmRequired": "请确认密码",
+        "passwordsMismatch": "两次输入的密码不一致"
+      },
+      "successDefault": "密码已成功重置",
+      "errorDefault": "暂时无法重置密码，请稍后重试。",
+      "learnerEmailRequired": "学员邮箱为必填项"
+    },
+    "emailPasswordResetDialog": {
+      "title": "邮件发送密码重置",
+      "description": "确定要重置密码吗？将向 {email} 发送包含重置说明的邮件。",
+      "cancel": "取消",
+      "sending": "发送中...",
+      "ok": "确定",
+      "successDefault": "密码重置邮件已成功发送",
+      "errorDefault": "暂时无法发送密码重置邮件，请稍后重试。",
+      "learnerEmailRequired": "学员邮箱为必填项"
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "通知",
+      "subtitleOne": "1 条通知",
+      "subtitleMany": "{count} 条通知",
+      "loadError": "加载通知失败",
+      "loadErrorHint": "请尝试刷新页面",
+      "emptyTitle": "暂无通知",
+      "emptyDescription": "您已全部阅毕！暂无通知可显示。",
+      "markAllRead": "全部标为已读",
+      "deleteAll": "全部删除",
+      "paginationPageOf": "第 {page} 页，共 {pages} 页（共 {total} 条）"
+    },
+    "filters": {
+      "typeLabel": "类型",
+      "statusLabel": "状态",
+      "allTypesPlaceholder": "全部类型",
+      "allStatusesPlaceholder": "全部状态",
+      "allTypes": "全部类型",
+      "allStatuses": "全部状态",
+      "unread": "未读",
+      "read": "已读"
+    },
+    "types": {
+      "notification": "通知",
+      "news": "新闻",
+      "allocation": "分配"
+    },
+    "item": {
+      "newBadge": "新",
+      "markAsRead": "标为已读",
+      "delete": "删除"
+    },
+    "bell": {
+      "srOnly": "通知",
+      "heading": "通知",
+      "unreadCount": "{count} 条未读",
+      "loadError": "加载通知失败",
+      "noNotifications": "暂无通知",
+      "allCaughtUp": "您已全部阅毕！",
+      "viewAll": "查看全部通知",
+      "markAllRead": "全部标为已读",
+      "deleteAll": "全部删除",
+      "markAsReadTitle": "标为已读",
+      "deleteTitle": "删除"
+    },
+    "toast": {
+      "markedAsRead": "已标为已读",
+      "markedAsReadFailed": "标为已读失败",
+      "deleted": "通知已删除",
+      "deleteFailed": "删除通知失败",
+      "allMarkedAsRead": "已全部标为已读",
+      "allMarkedAsReadFailed": "全部标为已读失败",
+      "allDeleted": "已全部删除",
+      "allDeleteFailed": "全部删除失败"
+    }
+  },
+  "themeCustomizer": {
+    "title": "自定义",
+    "srDescription": "自定义仪表板的主题和布局。",
+    "tabs": {
+      "theme": "主题",
+      "layout": "布局"
+    },
+    "themeTab": {
+      "themeLabel": "主题",
+      "random": "随机",
+      "chooseTheme": "选择主题",
+      "modeLabel": "模式",
+      "light": "浅色",
+      "dark": "深色"
+    }
+  },
+  "accountManager": {
+    "page": {
+      "title": "客户经理",
+      "subtitle": "管理客户经理用户及其组织分配"
+    },
+    "table": {
+      "searchPlaceholder": "搜索客户经理...",
+      "empty": "未找到客户经理。",
+      "columns": {
+        "email": "邮箱",
+        "name": "姓名",
+        "status": "状态",
+        "assignedOrganisations": "已分配组织",
+        "createdAt": "创建时间",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "assignedOrgCount": {
+        "one": "{count} 个组织",
+        "many": "{count} 个组织"
+      }
+    },
+    "actions": {
+      "add": "添加客户经理",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "edit": "编辑",
+      "assignOrganisations": "分配组织",
+      "activate": "启用",
+      "deactivate": "停用",
+      "delete": "删除"
+    },
+    "dialogs": {
+      "create": {
+        "title": "创建客户经理",
+        "description": "向系统添加新的客户经理用户。只有 MasterAdmin 可以创建客户经理。"
+      },
+      "edit": {
+        "title": "编辑客户经理",
+        "description": "更新客户经理信息。"
+      },
+      "assign": {
+        "title": "分配组织",
+        "description": "选择该客户经理可访问的组织。"
+      },
+      "delete": {
+        "title": "确定要删除吗？",
+        "description": "这将永久删除该客户经理，且无法撤销。",
+        "cancel": "取消",
+        "confirm": "删除",
+        "deleting": "正在删除..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "客户经理已成功启用",
+      "activateFailedFallback": "启用客户经理失败",
+      "deactivateSuccess": "客户经理已成功停用",
+      "deactivateFailedFallback": "停用客户经理失败",
+      "deleteSuccess": "客户经理已成功删除",
+      "deleteFailedFallback": "删除客户经理失败",
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "createSuccess": "客户经理创建成功",
+      "createFailedFallback": "创建客户经理失败",
+      "updateSuccess": "客户经理更新成功",
+      "updateFailedFallback": "更新客户经理失败",
+      "assignSuccess": "组织分配成功",
+      "assignFailedFallback": "分配组织失败"
+    },
+    "form": {
+      "emailLabel": "邮箱",
+      "passwordLabel": "密码",
+      "firstNameLabel": "名",
+      "lastNameLabel": "姓",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "请输入密码（至少 6 个字符）",
+      "firstNamePlaceholder": "名",
+      "lastNamePlaceholder": "姓",
+      "cancel": "取消",
+      "createSubmit": "创建客户经理",
+      "updateSubmit": "更新客户经理"
+    },
+    "validation": {
+      "invalidEmail": "邮箱地址无效",
+      "emailRequired": "邮箱为必填项",
+      "passwordMin": "密码至少为 6 个字符"
+    },
+    "assign": {
+      "selectLabel": "选择组织",
+      "helperText": "选择该客户经理可访问的组织。",
+      "emptyOrgs": "暂无可用组织",
+      "selectedCount": "已选择（{count}）",
+      "save": "保存分配"
+    }
+  },
+  "auditLogs": {
+    "page": {
+      "title": "审计日志",
+      "subtitle": "查看系统活动与变更"
+    },
+    "common": {
+      "notAvailable": "不适用",
+      "unknown": "未知",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "按用户或详情搜索...",
+      "empty": "未找到审计日志。",
+      "filters": {
+        "actionPlaceholder": "按操作筛选",
+        "orgPlaceholder": "按组织筛选",
+        "allActions": "全部操作",
+        "allOrganisations": "全部组织"
+      },
+      "columns": {
+        "timestamp": "时间戳",
+        "organisation": "组织",
+        "action": "操作",
+        "user": "用户",
+        "details": "详情"
+      }
+    },
+    "actions": {
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功"
+    },
+    "actionTypes": {
+      "system_action": "系统操作",
+      "account_manager_action": "客户经理操作",
+      "organisation_change": "组织变更",
+      "access_change": "访问变更",
+      "centre_change": "中心变更",
+      "subscription_change": "订阅变更",
+      "feature_change": "功能变更"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "付款",
+      "subtitle": "查看付款记录与交易"
+    },
+    "addPage": {
+      "title": "添加发票",
+      "subtitle": "记录哪个组织为哪个方案付款。"
+    },
+    "editPage": {
+      "title": "编辑发票",
+      "subtitle": "更新付款与明细行。"
+    },
+    "common": {
+      "unknown": "未知",
+      "notAvailable": "不适用",
+      "dash": "—",
+      "loading": "加载中..."
+    },
+    "table": {
+      "searchPlaceholder": "按发票号搜索...",
+      "empty": "未找到付款记录。",
+      "filters": {
+        "statusPlaceholder": "按状态筛选",
+        "orgPlaceholder": "按组织筛选",
+        "allStatuses": "全部状态",
+        "allOrganisations": "全部组织"
+      },
+      "columns": {
+        "date": "日期",
+        "organisation": "组织",
+        "plan": "方案",
+        "subtotal": "小计",
+        "discount": "折扣",
+        "tax": "税费",
+        "amountTotal": "金额 / 总计",
+        "status": "状态",
+        "invoiceNumber": "发票号",
+        "paymentMethod": "付款方式",
+        "actions": "操作"
+      }
+    },
+    "actions": {
+      "addInvoice": "添加发票",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "openMenuSrOnly": "打开菜单",
+      "edit": "编辑"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "selectOrgAndPlan": "请选择组织和方案",
+      "addAtLeastOneRow": "请至少添加一行",
+      "invoiceCreated": "发票创建成功",
+      "invoiceUpdated": "发票更新成功",
+      "createFailedFallback": "创建发票失败",
+      "updateFailedFallback": "更新发票失败"
+    },
+    "status": {
+      "draft": "草稿",
+      "sent": "已发送",
+      "failed": "失败",
+      "refunded": "已退款"
+    },
+    "paymentMethod": {
+      "bank_transfer": "银行转账",
+      "card": "银行卡",
+      "invoice": "发票",
+      "other": "其他"
+    },
+    "lineStatus": {
+      "pending": "待处理",
+      "paid": "已支付"
+    },
+    "invoiceForm": {
+      "invoiceDate": "发票日期",
+      "organisation": "组织",
+      "plan": "方案",
+      "status": "状态",
+      "paymentRows": "付款明细行",
+      "addRow": "添加行",
+      "period": "周期",
+      "dueDate": "到期日",
+      "amount": "金额",
+      "discountPercent": "折扣 (%)",
+      "taxPercent": "税率 (%)",
+      "rowTotal": "行合计",
+      "lineStatus": "状态",
+      "selectOrganisation": "选择组织",
+      "selectOrganisationFirst": "请先选择组织",
+      "noPlanAssigned": "该组织未分配方案",
+      "selectPlan": "选择方案",
+      "selectMethod": "选择方式",
+      "optionalNotes": "可选备注",
+      "removeRowAria": "移除行",
+      "emptyLinesHelp": "尚未添加付款明细行。点击“添加行”为该发票插入付款项目。每行金额将根据所选方案自动填充：月付方案为全价，年付方案则按月均分。",
+      "totals": {
+        "subtotal": "小计",
+        "totalDiscount": "折扣总计",
+        "totalTax": "税费总计",
+        "total": "总计"
+      },
+      "paymentMethod": "付款方式",
+      "notes": "备注",
+      "back": "返回",
+      "createInvoice": "创建发票",
+      "updateInvoice": "更新发票"
+    }
+  },
+  "subscriptions": {
+    "page": {
+      "title": "订阅",
+      "subtitle": "查看并管理组织订阅与方案"
+    },
+    "tabs": {
+      "subscriptions": "订阅",
+      "plans": "方案"
+    },
+    "common": {
+      "unknown": "未知",
+      "notAvailable": "不适用",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "搜索订阅...",
+      "empty": "未找到订阅。",
+      "columns": {
+        "organisation": "组织",
+        "plan": "方案",
+        "users": "用户",
+        "status": "状态",
+        "expiryDate": "到期日",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "有效",
+        "expired": "已过期"
+      },
+      "actionsMenu": {
+        "changePlan": "更换方案",
+        "suspendAccess": "暂停访问"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "为组织分配方案",
+          "description": "选择要分配的组织与方案。"
+        },
+        "changePlan": {
+          "title": "更换方案",
+          "description": "为该组织选择新的方案。"
+        },
+        "suspendAccess": {
+          "title": "暂停组织访问",
+          "description": "限制该组织的使用。可选填写原因。"
+        }
+      },
+      "buttons": {
+        "assignPlan": "分配方案"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "搜索方案...",
+      "empty": "未找到方案。",
+      "columns": {
+        "name": "名称",
+        "code": "代码",
+        "price": "价格",
+        "userLimit": "用户上限",
+        "status": "状态",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "actions": {
+        "create": "创建方案",
+        "edit": "编辑",
+        "activate": "启用",
+        "deactivate": "停用"
+      },
+      "dialogs": {
+        "create": {
+          "title": "创建方案",
+          "description": "定义新的订阅方案。"
+        },
+        "edit": {
+          "title": "编辑方案",
+          "description": "更新方案配置。"
+        }
+      },
+      "toast": {
+        "planActivated": "方案已启用",
+        "planDeactivated": "方案已停用",
+        "activateFailedFallback": "启用方案失败",
+        "deactivateFailedFallback": "停用方案失败"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "组织 *",
+        "plan": "方案 *"
+      },
+      "placeholders": {
+        "organisation": "选择组织",
+        "plan": "选择方案"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "仅显示尚未分配方案的组织。"
+      },
+      "empty": {
+        "allAssigned": "所有启用的组织都已分配方案。"
+      },
+      "buttons": {
+        "close": "关闭",
+        "cancel": "取消",
+        "submit": "分配方案"
+      },
+      "toast": {
+        "selectOrgAndPlan": "请选择组织与方案",
+        "assignedSuccess": "方案分配成功",
+        "assignFailedFallback": "分配方案失败"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "组织",
+        "newPlan": "新方案 *"
+      },
+      "placeholders": {
+        "plan": "选择方案"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "submit": "更换方案"
+      },
+      "toast": {
+        "selectPlan": "请选择方案",
+        "changedSuccess": "方案更换成功",
+        "changeFailedFallback": "更换方案失败"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "组织",
+        "reasonOptional": "原因（可选）"
+      },
+      "placeholders": {
+        "reason": "例如：付款逾期"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "submit": "暂停访问"
+      },
+      "toast": {
+        "suspendedSuccess": "组织访问已暂停",
+        "suspendFailedFallback": "暂停访问失败"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "名称 *",
+        "code": "代码 *",
+        "codeReadonly": "代码",
+        "description": "描述",
+        "priceGbp": "价格 *（GBP）",
+        "price": "价格 *",
+        "currency": "币种 *",
+        "billingCycle": "计费周期 *",
+        "userLimit": "用户上限",
+        "centreLimit": "中心上限",
+        "organisationLimit": "组织上限",
+        "features": "功能（逗号分隔）"
+      },
+      "placeholders": {
+        "nameExample": "例如：Pro",
+        "codeExample": "例如：PRO",
+        "description": "方案描述",
+        "currency": "选择币种"
+      },
+      "help": {
+        "codeCannotChange": "代码不可更改。"
+      },
+      "billingCycle": {
+        "monthly": "按月",
+        "yearly": "按年"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "create": "创建方案",
+        "update": "更新方案"
+      },
+      "toast": {
+        "createdSuccess": "方案创建成功",
+        "updatedSuccess": "方案更新成功",
+        "createFailedFallback": "创建方案失败",
+        "updateFailedFallback": "更新方案失败"
+      }
+    },
+    "validation": {
+      "nameRequired": "名称为必填项",
+      "codeRequired": "代码为必填项",
+      "currencyRequired": "币种为必填项",
+      "priceMin0": "价格必须 ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "系统管理员",
+      "subtitle": "管理主管理员用户"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "搜索系统管理员...",
+      "empty": "未找到系统管理员。",
+      "columns": {
+        "email": "邮箱",
+        "name": "姓名",
+        "status": "状态",
+        "protected": "受保护",
+        "createdAt": "创建日期",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "protected": {
+        "yes": "是",
+        "no": "否"
+      }
+    },
+    "actions": {
+      "add": "添加系统管理员",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "view": "查看",
+      "edit": "编辑",
+      "activate": "启用",
+      "deactivate": "停用",
+      "delete": "删除"
+    },
+    "dialogs": {
+      "create": {
+        "title": "创建系统管理员",
+        "description": "向系统添加新的主管理员用户。只有 MasterAdmin 可以创建系统管理员。"
+      },
+      "edit": {
+        "title": "编辑系统管理员",
+        "description": "更新系统管理员信息。"
+      },
+      "delete": {
+        "title": "确定要继续吗？",
+        "description": "这将移除该用户的主管理员角色。此操作无法撤销。",
+        "protectedNote": "该管理员受保护，无法删除。",
+        "cancel": "取消",
+        "confirm": "删除",
+        "deleting": "正在移除..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "activatedSuccess": "系统管理员已启用",
+      "deactivatedSuccess": "系统管理员已停用",
+      "removedSuccess": "系统管理员已移除",
+      "activateFailedFallback": "启用系统管理员失败",
+      "deactivateFailedFallback": "停用系统管理员失败",
+      "removeFailedFallback": "移除系统管理员失败",
+      "protectedDeleteFallback": "无法删除受保护的系统管理员",
+      "createdSuccess": "系统管理员创建成功",
+      "updatedSuccess": "系统管理员更新成功",
+      "createFailedFallback": "创建系统管理员失败",
+      "updateFailedFallback": "更新系统管理员失败"
+    },
+    "form": {
+      "labels": {
+        "email": "邮箱 *",
+        "password": "密码 *",
+        "firstName": "名",
+        "lastName": "姓"
+      },
+      "placeholders": {
+        "email": "例如：admin@example.com",
+        "password": "输入密码",
+        "firstName": "例如：三",
+        "lastName": "例如：张"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "create": "创建",
+        "update": "更新"
+      }
+    },
+    "validation": {
+      "invalidEmail": "邮箱地址无效",
+      "emailRequired": "邮箱为必填项",
+      "passwordMin": "密码至少需要 {min} 个字符"
     }
   },
   "courseDetails": {

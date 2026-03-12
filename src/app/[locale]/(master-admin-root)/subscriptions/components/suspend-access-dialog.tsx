@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { useSuspendOrganisationAccessMutation } from "@/store/api/subscriptions/subscriptionApi"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 interface SuspendAccessDialogProps {
   organisationId: number
@@ -21,6 +22,7 @@ export function SuspendAccessDialog({
   onSuccess,
   onCancel,
 }: SuspendAccessDialogProps) {
+  const t = useTranslations("subscriptions")
   const [suspendAccessMutation, { isLoading: isSuspending }] = useSuspendOrganisationAccessMutation()
   const [reason, setReason] = useState("")
 
@@ -28,7 +30,7 @@ export function SuspendAccessDialog({
     e.preventDefault()
     try {
       await suspendAccessMutation({ organisationId, reason: reason || undefined }).unwrap()
-      toast.success("Organisation access suspended")
+      toast.success(t("suspendAccess.toast.suspendedSuccess"))
       setReason("")
       onSuccess?.()
     } catch (error: unknown) {
@@ -37,7 +39,7 @@ export function SuspendAccessDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to suspend access"
+            : t("suspendAccess.toast.suspendFailedFallback")
       toast.error(msg)
     }
   }
@@ -46,15 +48,15 @@ export function SuspendAccessDialog({
     <form onSubmit={handleSubmit} className="space-y-6">
       {organisationName && (
         <div className="space-y-2">
-          <Label>Organisation</Label>
+          <Label>{t("suspendAccess.labels.organisation")}</Label>
           <p className="text-sm font-medium">{organisationName}</p>
         </div>
       )}
       <div className="space-y-2">
-        <Label htmlFor="reason">Reason (optional)</Label>
+        <Label htmlFor="reason">{t("suspendAccess.labels.reasonOptional")}</Label>
         <Input
           id="reason"
-          placeholder="e.g. Payment overdue"
+          placeholder={t("suspendAccess.placeholders.reason")}
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           disabled={isSuspending}
@@ -62,11 +64,11 @@ export function SuspendAccessDialog({
       </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isSuspending}>
-          Cancel
+          {t("suspendAccess.buttons.cancel")}
         </Button>
         <Button type="submit" variant="destructive" disabled={isSuspending}>
           {isSuspending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Suspend Access
+          {t("suspendAccess.buttons.submit")}
         </Button>
       </div>
     </form>

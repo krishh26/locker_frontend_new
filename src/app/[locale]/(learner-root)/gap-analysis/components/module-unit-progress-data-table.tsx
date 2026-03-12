@@ -43,6 +43,7 @@ import { toast } from "sonner";
 import { exportTableToPdf } from "@/utils/pdfExport";
 import { LearnerCourse } from "@/store/api/learner/types";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { useTranslations } from "next-intl";
 
 export type SubUnitRow = {
   id: string | number;
@@ -142,6 +143,7 @@ type UnitWithSubUnits = {
 };
 
 export function ModuleUnitProgressDataTable() {
+  const t = useTranslations("gapAnalysis");
   const courses = useAppSelector((state) => state.auth.courses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(currentCourseId ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null : null);
@@ -285,7 +287,7 @@ export function ModuleUnitProgressDataTable() {
     const baseColumns: ColumnDef<SubUnitRow>[] = [
       {
         accessorKey: "subTitle",
-        header: isStandardCourse ? "Title" : "Sub Unit Title",
+        header: isStandardCourse ? t("table.columns.title") : t("table.columns.subUnitTitle"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => (
           <div className="font-medium">{row.getValue("subTitle")}</div>
         ),
@@ -295,7 +297,7 @@ export function ModuleUnitProgressDataTable() {
     if (isStandardCourse) {
       baseColumns.push({
         accessorKey: "comment",
-        header: "Code",
+        header: t("table.columns.code"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const code = row.getValue("comment") as string;
           return (
@@ -308,7 +310,7 @@ export function ModuleUnitProgressDataTable() {
     baseColumns.push(
       {
         accessorKey: "learnerMap",
-        header: "Learner Map",
+        header: t("table.columns.learnerMap"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const learnerMap = row.getValue("learnerMap") as boolean;
           const isHeader = row.original.isSubUnitHeader;
@@ -318,9 +320,9 @@ export function ModuleUnitProgressDataTable() {
           return (
             <div className="text-center">
               {learnerMap ? (
-                <span className="text-accent">Yes</span>
+                <span className="text-accent">{t("table.yes")}</span>
               ) : (
-                <span className="text-muted-foreground">No</span>
+                <span className="text-muted-foreground">{t("table.no")}</span>
               )}
             </div>
           );
@@ -328,7 +330,7 @@ export function ModuleUnitProgressDataTable() {
       },
       {
         accessorKey: "trainerMap",
-        header: "Trainer Map",
+        header: t("table.columns.trainerMap"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const trainerMap = row.getValue("trainerMap") as boolean;
           const isHeader = row.original.isSubUnitHeader;
@@ -338,9 +340,9 @@ export function ModuleUnitProgressDataTable() {
           return (
             <div className="text-center">
               {trainerMap ? (
-                <span className="text-accent">Yes</span>
+                <span className="text-accent">{t("table.yes")}</span>
               ) : (
-                <span className="text-muted-foreground">No</span>
+                <span className="text-muted-foreground">{t("table.no")}</span>
               )}
             </div>
           );
@@ -348,7 +350,7 @@ export function ModuleUnitProgressDataTable() {
       },
       {
         accessorKey: "gap",
-        header: "Gap",
+        header: t("table.columns.gap"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const gap = row.getValue("gap") as "complete" | "partial" | "none";
           const isHeader = row.original.isSubUnitHeader;
@@ -374,10 +376,10 @@ export function ModuleUnitProgressDataTable() {
                 className={`h-6 w-full max-w-[100px] rounded ${getGapColor()}`}
                 title={
                   gap === "complete"
-                    ? "Complete - Both maps present"
+                    ? t("table.gapTooltip.complete")
                     : gap === "partial"
-                    ? "Partial - One map present"
-                    : "No maps present"
+                    ? t("table.gapTooltip.partial")
+                    : t("table.gapTooltip.none")
                 }
               />
             </div>
@@ -389,7 +391,7 @@ export function ModuleUnitProgressDataTable() {
     if (!isStandardCourse) {
       baseColumns.push({
         accessorKey: "comment",
-        header: "Comment",
+        header: t("table.columns.comment"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const comment = row.getValue("comment") as string;
           return (
@@ -402,7 +404,7 @@ export function ModuleUnitProgressDataTable() {
     }
 
     return baseColumns;
-  }, [isStandardCourse]);
+  }, [isStandardCourse, t]);
 
   const table = useReactTable({
     data: filteredData,
@@ -418,36 +420,36 @@ export function ModuleUnitProgressDataTable() {
   });
 
   const handleExportCsv = () => {
-    toast.info("CSV export functionality will be implemented");
+    toast.info(t("table.toast.csvNotImplemented"));
   };
 
   const handleExportPdf = () => {
     const headers = isStandardCourse
-      ? ["Title", "Code", "Learner Map", "Trainer Map", "Gap"]
-      : ["Sub Unit Title", "Learner Map", "Trainer Map", "Gap", "Comment"];
+      ? [t("table.columns.title"), t("table.columns.code"), t("table.columns.learnerMap"), t("table.columns.trainerMap"), t("table.columns.gap")]
+      : [t("table.columns.subUnitTitle"), t("table.columns.learnerMap"), t("table.columns.trainerMap"), t("table.columns.gap"), t("table.columns.comment")];
     const rows = filteredData.map((row) =>
       isStandardCourse
         ? [
             row.subTitle,
             row.comment,
-            row.learnerMap ? "Yes" : "No",
-            row.trainerMap ? "Yes" : "No",
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
             row.gap,
           ]
         : [
             row.subTitle,
-            row.learnerMap ? "Yes" : "No",
-            row.trainerMap ? "Yes" : "No",
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
             row.gap,
             row.comment,
           ]
     );
     if (rows.length === 0) {
-      toast.info("No data to export");
+      toast.info(t("table.toast.noDataToExport"));
       return;
     }
-    exportTableToPdf({ title: "Module Unit Progress", headers, rows });
-    toast.success("PDF exported successfully");
+    exportTableToPdf({ title: t("table.pdfTitle"), headers, rows });
+    toast.success(t("table.toast.pdfSuccess"));
   };
 
   return (
@@ -458,7 +460,7 @@ export function ModuleUnitProgressDataTable() {
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="course-select" className="text-sm font-medium">
-                Select Course
+                {t("table.filters.selectCourse")}
               </Label>
               <Select
                 value={selectedCourse?.course_id?.toString() || ""}
@@ -471,7 +473,7 @@ export function ModuleUnitProgressDataTable() {
                 disabled={!courses || courses.length === 0}
               >
                 <SelectTrigger id="course-select" className="cursor-pointer">
-                  <SelectValue placeholder={!courses ? "No courses available" : "Select a course"} />
+                  <SelectValue placeholder={!courses ? t("table.filters.noCourses") : t("table.filters.selectCoursePlaceholder")} />
                   <SelectContent>
                     {courses.map((course: LearnerCourse, index: number) => (
                       <SelectItem
@@ -488,7 +490,7 @@ export function ModuleUnitProgressDataTable() {
             {isStandardCourse ? (
               <div className="space-y-2">
                 <Label htmlFor="type-select" className="text-sm font-medium">
-                  Select Type
+                  {t("table.filters.selectType")}
                 </Label>
                 <Select
                   value={selectedType}
@@ -501,22 +503,22 @@ export function ModuleUnitProgressDataTable() {
                     <SelectValue
                       placeholder={
                         !selectedCourse
-                          ? "Select a course first"
-                          : "Select a type"
+                          ? t("table.filters.selectCourseFirst")
+                          : t("table.filters.selectTypePlaceholder")
                       }
                     />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Knowledge">Knowledge</SelectItem>
-                    <SelectItem value="Behaviour">Behaviour</SelectItem>
-                    <SelectItem value="Skills">Skills</SelectItem>
+                    <SelectItem value="Knowledge">{t("table.types.knowledge")}</SelectItem>
+                    <SelectItem value="Behaviour">{t("table.types.behaviour")}</SelectItem>
+                    <SelectItem value="Skills">{t("table.types.skills")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             ) : (
               <div className="space-y-2">
                 <Label htmlFor="unit-select" className="text-sm font-medium">
-                  Select Unit
+                  {t("table.filters.selectUnit")}
                 </Label>
                 <Select
                   value={selectedUnit?.id?.toString() || ""}
@@ -530,10 +532,10 @@ export function ModuleUnitProgressDataTable() {
                     <SelectValue
                       placeholder={
                         !selectedCourse
-                          ? "Select a course first"
+                          ? t("table.filters.selectCourseFirst")
                           : units.length === 0
-                          ? "No units available"
-                          : "Select a unit"
+                          ? t("table.filters.noUnits")
+                          : t("table.filters.selectUnitPlaceholder")
                       }
                     />
                   </SelectTrigger>
@@ -557,7 +559,7 @@ export function ModuleUnitProgressDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search sub-units..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -569,15 +571,15 @@ export function ModuleUnitProgressDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
                 <Download className="mr-2 size-4" />
-                Export
+                {t("table.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                Export as CSV
+                {t("table.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                Export as PDF
+                {t("table.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -632,7 +634,7 @@ export function ModuleUnitProgressDataTable() {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("table.noResults")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -643,12 +645,15 @@ export function ModuleUnitProgressDataTable() {
           {/* Pagination */}
           <div className="flex items-center justify-between space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
-              Showing {table.getRowModel().rows.length} of {filteredData.length}{" "}
-              {isStandardCourse ? "items" : "sub-units"}
+              {t("table.pagination.showing", {
+                count: table.getRowModel().rows.length,
+                total: filteredData.length,
+                items: t(isStandardCourse ? "table.pagination.items" : "table.pagination.subUnits"),
+              })}
             </div>
             <div className="flex items-center space-x-6 lg:space-x-8">
               <div className="flex items-center space-x-2">
-                <p className="text-sm font-medium">Page</p>
+                <p className="text-sm font-medium">{t("table.pagination.page")}</p>
                 <strong className="text-sm">
                   {table.getState().pagination.pageIndex + 1} of{" "}
                   {table.getPageCount()}
@@ -662,7 +667,7 @@ export function ModuleUnitProgressDataTable() {
                   disabled={!table.getCanPreviousPage()}
                   className="cursor-pointer"
                 >
-                  Previous
+                  {t("table.pagination.previous")}
                 </Button>
                 <Button
                   variant="outline"
@@ -671,7 +676,7 @@ export function ModuleUnitProgressDataTable() {
                   disabled={!table.getCanNextPage()}
                   className="cursor-pointer"
                 >
-                  Next
+                  {t("table.pagination.next")}
                 </Button>
               </div>
             </div>
@@ -682,18 +687,18 @@ export function ModuleUnitProgressDataTable() {
           <CardContent className="p-12">
             <div className="text-center text-muted-foreground">
               {!selectedCourse
-                ? "Please select a course to view progress"
+                ? t("table.empty.selectCourse")
                 : isStandardCourse
                 ? !selectedType
-                  ? "Please select a type to view progress"
-                  : "No items available for the selected type"
+                  ? t("table.empty.selectType")
+                  : t("table.empty.noItemsForType")
                 : isQualificationCourse
                 ? !selectedUnit
-                  ? "Please select a unit to view progress"
-                  : "No sub-units available for the selected unit"
+                  ? t("table.empty.selectUnit")
+                  : t("table.empty.noSubUnits")
                 : !selectedUnit
-                ? "Please select a unit to view progress"
-                : "No sub-units available for the selected unit"}
+                ? t("table.empty.selectUnit")
+                : t("table.empty.noSubUnits")}
             </div>
           </CardContent>
         </Card>

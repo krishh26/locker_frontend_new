@@ -40,18 +40,19 @@ import { useAppSelector } from "@/store/hooks";
 import type { TimeLogEntry, TimeLogCreateRequest } from "@/store/api/time-log/types";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
+import { useTranslations } from "next-intl";
 
 const timeLogFormSchema = z.object({
-  activity_date: z.string().min(1, "Activity date is required"),
-  activity_type: z.string().min(1, "Activity type is required"),
+  activity_date: z.string().min(1, "validation.activityDateRequired"),
+  activity_type: z.string().min(1, "validation.activityTypeRequired"),
   course_id: z.string().nullable().optional(),
   unit: z.array(z.string()).optional(),
   trainer_id: z.string().nullable().optional(),
-  type: z.string().min(1, "Job type is required"),
-  spend_time: z.string().min(1, "Time spent is required"),
-  start_time: z.string().min(1, "Start time is required"),
-  end_time: z.string().min(1, "End time is required"),
-  impact_on_learner: z.string().min(1, "Impact on learner is required"),
+  type: z.string().min(1, "validation.jobTypeRequired"),
+  spend_time: z.string().min(1, "validation.timeSpentRequired"),
+  start_time: z.string().min(1, "validation.startTimeRequired"),
+  end_time: z.string().min(1, "validation.endTimeRequired"),
+  impact_on_learner: z.string().min(1, "validation.impactRequired"),
   evidence_link: z.string().optional(),
 });
 
@@ -102,6 +103,7 @@ export function TimeLogFormDialog({
 }: TimeLogFormDialogProps) {
   const user = useAppSelector((state) => state.auth.user);
   const userId = user?.id || "";
+  const t = useTranslations("timeLog");
 
   const [createTimeLog, { isLoading: isCreating }] = useCreateTimeLogMutation();
   const [updateTimeLog, { isLoading: isUpdating }] = useUpdateTimeLogMutation();
@@ -222,10 +224,10 @@ export function TimeLogFormDialog({
           id: timeLog.id,
           ...payload,
         }).unwrap();
-        toast.success("Time log updated successfully");
+        toast.success(t("toast.updateSuccess"));
       } else {
         await createTimeLog(payload).unwrap();
-        toast.success("Time log created successfully");
+        toast.success(t("toast.createSuccess"));
       }
 
       onSuccess?.();
@@ -234,7 +236,10 @@ export function TimeLogFormDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { error?: string } }).data?.error
           : undefined;
-      toast.error(errorMessage || `Failed to ${editMode ? "update" : "create"} time log`);
+      toast.error(
+        errorMessage ||
+          (editMode ? t("toast.updateFailed") : t("toast.createFailed"))
+      );
     }
   }
 
@@ -261,11 +266,15 @@ export function TimeLogFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{editMode ? "Edit Time Log" : "Add Activity"}</DialogTitle>
+          <DialogTitle>
+            {editMode
+              ? t("dialog.form.title.edit")
+              : t("dialog.form.title.create")}
+          </DialogTitle>
           <DialogDescription>
             {editMode
-              ? "Update the time log entry details."
-              : "Fill in the details to create a new time log entry."}
+              ? t("dialog.form.description.edit")
+              : t("dialog.form.description.create")}
           </DialogDescription>
         </DialogHeader>
 
@@ -277,7 +286,9 @@ export function TimeLogFormDialog({
                 name="activity_date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>1. Select Activity Date</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.activityDate.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
                     </FormControl>
@@ -291,11 +302,17 @@ export function TimeLogFormDialog({
                 name="activity_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>2. Select Activity Type</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.activityType.label")}
+                    </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Select Activity Type" />
+                          <SelectValue
+                            placeholder={t(
+                              "dialog.form.fields.activityType.placeholder"
+                            )}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -316,7 +333,9 @@ export function TimeLogFormDialog({
                 name="course_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>3. Select Course</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.course.label")}
+                    </FormLabel>
                     <Select
                       onValueChange={(value) => {
                         field.onChange(value === "none" ? null : value);
@@ -326,14 +345,18 @@ export function TimeLogFormDialog({
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Select Course" />
+                          <SelectValue
+                            placeholder={t("dialog.form.fields.course.label")}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="none">None</SelectItem>
+                        <SelectItem value="none">
+                          {t("dialog.form.fields.course.noneOption")}
+                        </SelectItem>
                         {isLoadingCourses ? (
                           <SelectItem value="loading" disabled>
-                            Loading courses...
+                            {t("dialog.form.fields.course.loading")}
                           </SelectItem>
                         ) : (
                           courses.map((course) => (
@@ -354,7 +377,9 @@ export function TimeLogFormDialog({
                 name="unit"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>4. Select Unit</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.unit.label")}
+                    </FormLabel>
                     <Select
                       onValueChange={(value) => {
                         const currentUnits = field.value || [];
@@ -371,8 +396,13 @@ export function TimeLogFormDialog({
                           <SelectValue
                             placeholder={
                               selectedUnits.length > 0
-                                ? `${selectedUnits.length} unit(s) selected`
-                                : "Select Unit(s)"
+                                ? t(
+                                    "dialog.form.fields.unit.placeholderWithCount",
+                                    { count: selectedUnits.length }
+                                  )
+                                : t(
+                                    "dialog.form.fields.unit.placeholderDefault"
+                                  )
                             }
                           />
                         </SelectTrigger>
@@ -401,7 +431,7 @@ export function TimeLogFormDialog({
                           ))
                           ) : (
                             <div className="p-2 text-sm text-muted-foreground">
-                              No units available for selected course
+                              {t("dialog.form.fields.unit.noUnits")}
                             </div>
                           );
                         })()}
@@ -417,7 +447,9 @@ export function TimeLogFormDialog({
                 name="trainer_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>5. Select Trainer</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.trainer.label")}
+                    </FormLabel>
                     <Select
                       onValueChange={(value) => {
                         field.onChange(value === "none" ? null : value);
@@ -426,14 +458,20 @@ export function TimeLogFormDialog({
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Select Trainer" />
+                          <SelectValue
+                            placeholder={t(
+                              "dialog.form.fields.trainer.label"
+                            )}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="none">None</SelectItem>
+                        <SelectItem value="none">
+                          {t("dialog.form.fields.trainer.noneOption")}
+                        </SelectItem>
                         {isLoadingUsers ? (
                           <SelectItem value="loading" disabled>
-                            Loading trainers...
+                            {t("dialog.form.fields.trainer.loading")}
                           </SelectItem>
                         ) : (
                           trainers.map((trainer) => (
@@ -454,17 +492,29 @@ export function TimeLogFormDialog({
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>6. Was it on the Job?</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.type.label")}
+                    </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="cursor-pointer">
-                          <SelectValue placeholder="Select Job Type" />
+                          <SelectValue
+                            placeholder={t(
+                              "dialog.form.fields.type.placeholder"
+                            )}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Not Applicable">Not Applicable</SelectItem>
-                        <SelectItem value="On the job">On the job</SelectItem>
-                        <SelectItem value="Off the job">Off the job</SelectItem>
+                        <SelectItem value="Not Applicable">
+                          {t("dialog.form.fields.type.options.notApplicable")}
+                        </SelectItem>
+                        <SelectItem value="On the job">
+                          {t("dialog.form.fields.type.options.on")}
+                        </SelectItem>
+                        <SelectItem value="Off the job">
+                          {t("dialog.form.fields.type.options.off")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -477,7 +527,9 @@ export function TimeLogFormDialog({
                 name="spend_time"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>7. Time Spent on Activity</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.spendTime.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="time"
@@ -498,7 +550,9 @@ export function TimeLogFormDialog({
                 name="start_time"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>8. Activity Start Time</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.startTime.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="time"
@@ -519,7 +573,9 @@ export function TimeLogFormDialog({
                 name="end_time"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>9. Activity End Time</FormLabel>
+                    <FormLabel>
+                      {t("dialog.form.fields.endTime.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input type="time" {...field} disabled />
                     </FormControl>
@@ -535,11 +591,13 @@ export function TimeLogFormDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    10. What impact has this activity had on your learning?
+                    {t("dialog.form.fields.impact.label")}
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Please type in any impact notes."
+                      placeholder={t(
+                        "dialog.form.fields.impact.placeholder"
+                      )}
                       className="resize-none"
                       rows={7}
                       {...field}
@@ -555,10 +613,14 @@ export function TimeLogFormDialog({
               name="evidence_link"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>11. Evidence Links</FormLabel>
+                  <FormLabel>
+                    {t("dialog.form.fields.evidence.label")}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter evidence link"
+                      placeholder={t(
+                        "dialog.form.fields.evidence.placeholder"
+                      )}
                       {...field}
                       value={field.value || ""}
                     />
@@ -575,16 +637,16 @@ export function TimeLogFormDialog({
                 onClick={() => onOpenChange(false)}
                 disabled={isLoading}
               >
-                Cancel
+                {t("dialog.form.buttons.cancel")}
               </Button>
               <Button type="submit" disabled={isLoading}>
                 {isLoading
                   ? editMode
-                    ? "Updating..."
-                    : "Creating..."
+                    ? t("dialog.form.buttons.loadingUpdate")
+                    : t("dialog.form.buttons.loadingCreate")
                   : editMode
-                  ? "Update Time Log"
-                  : "Save Time Log"}
+                  ? t("dialog.form.buttons.saveUpdate")
+                  : t("dialog.form.buttons.saveCreate")}
               </Button>
             </DialogFooter>
           </form>

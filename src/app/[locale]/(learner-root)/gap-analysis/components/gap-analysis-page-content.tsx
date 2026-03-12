@@ -6,15 +6,17 @@ import { ModuleUnitProgressLearnerInfoCard } from "./module-unit-progress-learne
 import { ModuleUnitProgressDataTable } from "./module-unit-progress-data-table";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { useTranslations } from "next-intl";
 
 export function GapAnalysisPageContent() {
+  const t = useTranslations("gapAnalysis");
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   return (
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
       <PageHeader
-        title="Gap Analysis"
-        subtitle="Track learner gaps across courses and units"
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
         icon={BookOpen}
         showBackButton
         backButtonHref={`/course-details/${currentCourseId}`}

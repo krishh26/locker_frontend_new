@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Search, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface LearnerOverviewFiltersProps {
   searchQuery: string;
@@ -15,13 +16,15 @@ export function LearnerOverviewFilters({
   onSearchChange,
   isSearching,
 }: LearnerOverviewFiltersProps) {
+  const t = useTranslations("learnerOverview");
+
   return (
     <div className="space-y-2 sm:w-1/4 w-full">
-      <label className="text-sm font-medium">Search by Learner</label>
+      <label className="text-sm font-medium">{t("filters.searchLabel")}</label>
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Enter learner name, ID, email, or comment"
+          placeholder={t("filters.searchPlaceholder")}
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           className="pl-8 pr-8"

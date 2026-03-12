@@ -1580,6 +1580,98 @@
       "loFullName": "Lernergebnis"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Lerner-Übersicht",
+      "subtitle": "Lernerfortschritt verwalten und überwachen",
+      "loadError": "Lerner konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "noMatchingLearners": "Keine passenden Lerner gefunden",
+      "noLearners": "Keine Lerner gefunden",
+      "adjustSearch": "Versuchen Sie, Ihre Suchkriterien anzupassen",
+      "noLearnersAssigned": "Ihrem Konto sind noch keine Lerner zugewiesen"
+    },
+    "filters": {
+      "searchLabel": "Nach Lerner suchen",
+      "searchPlaceholder": "Name, ID, E-Mail oder Kommentar des Lerners eingeben"
+    },
+    "card": {
+      "noComment": "Kein Kommentar",
+      "overallProgress": "Gesamtfortschritt",
+      "viewPortfolio": "Portfolio anzeigen",
+      "editCommentTitle": "Kommentar bearbeiten",
+      "editCommentDescription": "Kommentar für {name} aktualisieren",
+      "commentLabel": "Kommentar",
+      "commentPlaceholder": "Geben Sie hier Ihren Kommentar ein...",
+      "cancel": "Abbrechen",
+      "saving": "Wird gespeichert...",
+      "save": "Speichern",
+      "commentUpdatedSuccess": "Kommentar erfolgreich aktualisiert",
+      "commentUpdateFailed": "Kommentar konnte nicht aktualisiert werden"
+    }
+  },
+  "learnersForms": {
+    "page": {
+      "title": "Von Lernern eingereichte Formulare",
+      "subtitle": "Alle von Lernern eingereichten Formulare anzeigen und verwalten"
+    }
+  },
+  "iqaReport": {
+    "page": {
+      "title": "IQA-Bericht",
+      "subtitle": "Füllen Sie das IQA-Berichtsformular für Lerner-Einheiten aus",
+      "loadingUnits": "Einheiten werden geladen...",
+      "loadUnitsError": "Einheiten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noUnitsForCourse": "Keine Einheiten für diesen Kurs gefunden."
+    },
+    "form": {
+      "assessmentInformation": "Bewertungsinformationen",
+      "courseName": "Kursname",
+      "selectCourse": "Kurs auswählen",
+      "untitledCourse": "Unbenannter Kurs",
+      "assessorsName": "Name des/der Bewerter(s)",
+      "learnerName": "Name des Lerners",
+      "batchNoAndCreator": "Chargennr. und Ersteller",
+      "iqasForBatch": "IQAs für die Charge",
+      "learnerAssessmentForUnits": "Lernerbewertung für Einheit(en)",
+      "question": "Frage",
+      "alwaysYes": "Immer (Ja)",
+      "sometimes": "Manchmal",
+      "neverNo": "Nie (Nein)",
+      "questions": {
+        "q1": "Wurde der Lerner direkt von einem Bewerter beobachtet?",
+        "q2": "Wurden Wissen und Verständnis bewertet?",
+        "q3": "Liegen Arbeitsproduktnachweise vor?",
+        "q4": "Hat der Lerner ausreichend Berufs-/Persönliche Angaben geliefert?",
+        "q5": "Werden die Bewertungsunterlagen des Lerners fortlaufend geführt?",
+        "q6": "Hat der Bewerter Authentizität, Ausreichendheit, Genauigkeit, Konsistenz und Gültigkeit bestätigt?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Einheit {index}",
+      "noDate": "Kein Datum",
+      "noSampleHistory": "Keine Probenverlauf für diese Einheit"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Keine Einheiten für diesen Kurs gefunden.",
+      "noCode": "Kein Code",
+      "noUnitName": "Kein Einheitenname",
+      "notStarted": "Nicht begonnen",
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "sample": "Stichprobe",
+      "samples": "Stichproben",
+      "last": "Zuletzt"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Plandetails konnten nicht geladen werden",
+      "unableToDetermineUser": "Aktueller Benutzer konnte nicht ermittelt werden",
+      "questionsSavedSuccess": "Fragen erfolgreich gespeichert",
+      "saveQuestionsError": "Fragen konnten nicht gespeichert werden",
+      "missingRequiredInfo": "Erforderliche Angaben fehlen",
+      "sampleDetailUpdatedSuccess": "Stichprobenplandetail erfolgreich aktualisiert",
+      "updateSampleDetailError": "Stichprobenplandetail konnte nicht aktualisiert werden"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Verwaltung von Wohlbefinden-Ressourcen",
     "pageSubtitle": "Wohlbefinden-Ressourcen für Lernende verwalten, einschließlich Hinzufügen, Bearbeiten und Umschalten der Verfügbarkeit",
@@ -1986,6 +2078,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Lückenanalyse",
+    "pageSubtitle": "Lernerlücken über Kurse und Einheiten verfolgen",
+    "learnerInfo": {
+      "name": "Name",
+      "username": "Benutzername",
+      "email": "E-Mail",
+      "mobile": "Mobil",
+      "notSpecified": "Nicht angegeben"
+    },
+    "table": {
+      "columns": {
+        "title": "Titel",
+        "subUnitTitle": "Untereinheit-Titel",
+        "code": "Code",
+        "learnerMap": "Lerner-Karte",
+        "trainerMap": "Trainer-Karte",
+        "gap": "Lücke",
+        "comment": "Kommentar"
+      },
+      "yes": "Ja",
+      "no": "Nein",
+      "gapTooltip": {
+        "complete": "Vollständig - Beide Karten vorhanden",
+        "partial": "Teilweise - Eine Karte vorhanden",
+        "none": "Keine Karten vorhanden"
+      },
+      "filters": {
+        "selectCourse": "Kurs auswählen",
+        "selectType": "Typ auswählen",
+        "selectUnit": "Einheit auswählen",
+        "noCourses": "Keine Kurse verfügbar",
+        "selectCoursePlaceholder": "Kurs auswählen",
+        "selectCourseFirst": "Wählen Sie zuerst einen Kurs",
+        "selectTypePlaceholder": "Typ auswählen",
+        "selectUnitPlaceholder": "Einheit auswählen",
+        "noUnits": "Keine Einheiten verfügbar"
+      },
+      "types": {
+        "knowledge": "Wissen",
+        "behaviour": "Verhalten",
+        "skills": "Fertigkeiten"
+      },
+      "searchPlaceholder": "Untereinheiten suchen...",
+      "export": "Exportieren",
+      "exportCsv": "Als CSV exportieren",
+      "exportPdf": "Als PDF exportieren",
+      "pdfTitle": "Modul-/Einheitenfortschritt",
+      "toast": {
+        "csvNotImplemented": "CSV-Export wird implementiert",
+        "noDataToExport": "Keine Daten zum Exportieren",
+        "pdfSuccess": "PDF erfolgreich exportiert"
+      },
+      "pagination": {
+        "showing": "Zeige {count} von {total} {items}",
+        "items": "Elemente",
+        "subUnits": "Untereinheiten",
+        "page": "Seite",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "noResults": "Keine Ergebnisse.",
+      "empty": {
+        "selectCourse": "Bitte wählen Sie einen Kurs, um den Fortschritt zu sehen",
+        "selectType": "Bitte wählen Sie einen Typ, um den Fortschritt zu sehen",
+        "noItemsForType": "Keine Elemente für den gewählten Typ",
+        "selectUnit": "Bitte wählen Sie eine Einheit, um den Fortschritt zu sehen",
+        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
@@ -2055,6 +2218,78 @@
       }
     }
   },
+  "healthAndWellbeing": {
+    "pageTitle": "Gesundheit und Wohlbefinden",
+    "pageSubtitle": "Zugang zu Ihren Wohlfühl-Ressourcen und Fortschrittsverfolgung",
+    "table": {
+      "columns": {
+        "resourceName": "Ressourcenname",
+        "description": "Beschreibung",
+        "createdDate": "Erstellungsdatum",
+        "lastOpened": "Zuletzt geöffnet",
+        "feedback": "Feedback",
+        "actions": "Aktionen"
+      },
+      "actions": {
+        "openDownload": "Öffnen / Herunterladen",
+        "visitLink": "Link besuchen",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Nie",
+        "invalid": "Ungültiges Datum"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Sehr hilfreich",
+        "helpful": "Hilfreich",
+        "neutral": "Neutral",
+        "notHelpful": "Nicht hilfreich",
+        "none": "Kein Feedback",
+        "unknown": "Unbekannt"
+      },
+      "searchPlaceholder": "Ressourcen suchen...",
+      "columnVisibility": {
+        "label": "Spalten Sichtbarkeit",
+        "button": "Spalten"
+      },
+      "loading": "Ressourcen werden geladen...",
+      "error": {
+        "loadFailed": "Ressourcen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+        "retry": "Erneut versuchen"
+      },
+      "empty": {
+        "noResources": "Keine Ressourcen verfügbar",
+        "checkBack": "Schauen Sie später nach neuen Wohlfühl-Ressourcen"
+      },
+      "noResults": "Keine Ressourcen gefunden.",
+      "toast": {
+        "trackFailed": "Ressourcen-Zugriff konnte nicht erfasst werden"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Wie war diese Ressource für Sie?",
+      "description": "Wählen Sie ein Emoji zur Bewertung Ihrer Erfahrung",
+      "labels": {
+        "veryHelpful": "Sehr hilfreich",
+        "helpful": "Hilfreich",
+        "neutral": "Neutral",
+        "notHelpful": "Nicht hilfreich"
+      },
+      "messages": {
+        "veryHelpful": "Diese Ressource war sehr hilfreich",
+        "helpful": "Diese Ressource war hilfreich",
+        "neutral": "Diese Ressource war okay",
+        "notHelpful": "Diese Ressource könnte verbessert werden"
+      },
+      "cancel": "Abbrechen",
+      "submit": "Feedback senden",
+      "submitting": "Wird gesendet...",
+      "toast": {
+        "success": "Feedback erfolgreich gesendet!",
+        "failed": "Feedback konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+      }
+    }
+  },
   "acknowledgeMessage": {
     "pageTitle": "Nachricht bestätigen",
     "pageSubtitle": "Bestätigungsnachrichten für Lernende erstellen und verwalten",
@@ -2096,6 +2331,701 @@
       "saveFailed": "Bestätigung der Nachricht fehlgeschlagen. Bitte erneut versuchen.",
       "deleteFailed": "Löschen der Bestätigung fehlgeschlagen. Bitte erneut versuchen.",
       "clearFailed": "Löschen der Bestätigungen fehlgeschlagen. Bitte erneut versuchen."
+    }
+  },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Formular einreichen",
+      "subtitle": "Füllen Sie das Formular unten aus",
+      "loadFailed": "Formular konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "notFound": "Formular nicht gefunden."
+    },
+    "signature": {
+      "sign": "Unterschreiben",
+      "editSignature": "Unterschrift bearbeiten",
+      "dialogTitle": "Hier unterschreiben",
+      "dialogDescription": "Zeichnen Sie Ihre Unterschrift in das Feld unten",
+      "clear": "Löschen",
+      "saveSignature": "Unterschrift speichern",
+      "alt": "Unterschrift"
+    },
+    "fileUpload": {
+      "chooseFile": "Datei wählen",
+      "selected": "Ausgewählt: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "Dem Formular wurden keine Felder hinzugefügt.",
+      "lockedMessage": "Dieses Formular ist derzeit gesperrt und kann nicht bearbeitet werden. Wenden Sie sich an Ihren Trainer oder Administrator.",
+      "clearForm": "Formular leeren",
+      "saveAsDraft": "Als Entwurf speichern",
+      "saving": "Wird gespeichert...",
+      "submit": "Einreichen",
+      "submitting": "Wird gesendet..."
+    },
+    "validation": {
+      "email": "{label} muss eine gültige E-Mail sein",
+      "number": "{label} muss eine Zahl sein",
+      "phone": "{label} darf nur Zahlen enthalten",
+      "required": "{label} ist erforderlich",
+      "fileTooLarge": "{label} ist zu groß (max. 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "Formular erfolgreich eingereicht!",
+      "submitFailed": "Formular konnte nicht eingereicht werden. Bitte versuchen Sie es erneut.",
+      "draftSuccess": "Formular als Entwurf gespeichert!",
+      "draftFailed": "Entwurf konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+    }
+  },
+  "learnerForms": {
+    "pageTitle": "Formulare",
+    "pageSubtitle": "Alle Formulare anzeigen und verwalten",
+    "table": {
+      "columns": {
+        "formName": "Formularname",
+        "description": "Beschreibung",
+        "type": "Typ",
+        "createdAt": "Erstellt am",
+        "actions": "Aktionen"
+      },
+      "loading": "Wird geladen...",
+      "noResults": "Keine Formulare gefunden."
+    }
+  },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Dokumente der Lernenden zum Signieren",
+    "pageSubtitle": "Dokumente anzeigen und signieren, die auf Ihre Unterschrift warten",
+    "table": {
+      "columns": {
+        "courseName": "Kursname",
+        "type": "Typ",
+        "dateUploaded": "Hochgeladen am",
+        "documentName": "Dokumentname",
+        "uploadedBy": "Hochgeladen von",
+        "signedInAgreement": "Unterschrieben (Zustimmung)",
+        "sessionDateTime": "Sitzungsdatum/-zeit",
+        "action": "Aktion"
+      },
+      "searchPlaceholder": "Dokumente suchen...",
+      "loading": "Wird geladen...",
+      "noResults": "Keine Dokumente gefunden.",
+      "noSignaturesRequested": "Keine Unterschriften angefordert",
+      "pendingSuffix": "(Ausstehend)",
+      "signButton": "Signieren"
+    },
+    "summary": {
+      "totalDocuments": "Gesamtzahl der Dokumente:",
+      "requiringSignatures": "Dokumente, die Unterschriften benötigen:"
+    },
+    "roles": {
+      "employer": "Arbeitgeber",
+      "iqa": "IQA",
+      "trainer": "Trainer",
+      "learner": "Lernender"
+    },
+    "types": {
+      "evidence": "Nachweis"
+    },
+    "modal": {
+      "title": "Vereinbarung zur Dokumentunterschrift",
+      "documentLabel": "Dokument:",
+      "courseLabel": "Kurs:",
+      "tableHeaders": {
+        "signedInAgreement": "Unterschrieben (Zustimmung)",
+        "name": "Name",
+        "signed": "Unterschrieben",
+        "date": "Datum"
+      },
+      "buttons": {
+        "cancel": "Abbrechen/Schließen",
+        "save": "Speichern",
+        "saving": "Speichern..."
+      }
+    },
+    "toast": {
+      "saved": "Unterschrift erfolgreich gespeichert!",
+      "saveError": "Fehler beim Speichern der Unterschrift"
+    }
+  },
+  "learningPlan": {
+    "page": {
+      "title": "Lernplan",
+      "subtitle": "Lernsitzungen verwalten und verfolgen"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "Sitzungsnr.",
+        "title": "Titel",
+        "date": "Datum",
+        "time": "Zeit",
+        "type": "Typ",
+        "assessor": "Prüfer",
+        "attended": "Teilnahme",
+        "courses": "Kurse",
+        "feedback": "Feedback"
+      },
+      "loadingSessions": "Sitzungen werden geladen...",
+      "noLearnerSelected": "Kein Lernender ausgewählt",
+      "noResults": "Keine Ergebnisse.",
+      "noSessionsAvailable": "Keine Sitzungen verfügbar",
+      "searchPlaceholder": "Sitzungen suchen...",
+      "learnerLabel": "Lernender",
+      "nameLabel": "Name:",
+      "filters": {
+        "type": {
+          "label": "Typ",
+          "placeholder": "Typ auswählen"
+        },
+        "attended": {
+          "label": "Teilnahmestatus",
+          "placeholder": "Status auswählen"
+        }
+      },
+      "attendedSelectPlaceholder": "Auswählen",
+      "export": {
+        "button": "Exportieren",
+        "csv": "Als CSV exportieren",
+        "pdf": "Als PDF exportieren",
+        "csvNotImplemented": "CSV-Export wird noch implementiert",
+        "pdfNotImplemented": "PDF-Export wird noch implementiert"
+      },
+      "buttons": {
+        "addSession": "Sitzung hinzufügen"
+      },
+      "toast": {
+        "sessionUpdated": "Sitzung erfolgreich aktualisiert",
+        "sessionUpdateFailed": "Sitzung konnte nicht aktualisiert werden"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "Keine Kurse",
+      "buttons": {
+        "addFiles": "Dateien hinzufügen",
+        "addAction": "Aktion hinzufügen"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "Wer",
+          "action": "Aktion",
+          "description": "Beschreibung",
+          "file": "Datei",
+          "units": "Einheiten",
+          "targetDate": "Zieldatum",
+          "feedback": "Feedback",
+          "duration": "Dauer",
+          "status": "Status",
+          "actions": "Aktionen"
+        },
+        "whoLabels": {
+          "learner": "Lernender",
+          "employer": "Arbeitgeber"
+        },
+        "unitPrefix": "Einheit {unitName}",
+        "mins": "{count} Min.",
+        "notStarted": "Nicht gestartet",
+        "feedbackLabels": {
+          "trainer": "Trainer:",
+          "learner": "Lernender:"
+        },
+        "tooltips": {
+          "edit": "Bearbeiten",
+          "addFile": "Datei hinzufügen",
+          "delete": "Löschen"
+        },
+        "toast": {
+          "deleteNotImplemented": "Die Funktion zum Löschen von Aktionen wird implementiert"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "Sitzung hinzufügen",
+        "description": "Erstellen Sie eine neue Sitzung für diesen Lernenden. Startdatum und Dauer sind erforderlich.",
+        "courseContextWarning": "Öffnen Sie den Lernplan über eine Kursseite, um eine Sitzung hinzuzufügen (Kurskontext erforderlich).",
+        "fields": {
+          "title": "Titel",
+          "description": "Beschreibung",
+          "location": "Ort",
+          "startDateTime": "Startdatum & -zeit",
+          "duration": "Dauer (Stunden:Minuten)",
+          "sessionType": "Sitzungstyp"
+        },
+        "placeholders": {
+          "title": "Sitzungstitel",
+          "description": "Optionale Beschreibung",
+          "location": "z. B. Raum 1, Online",
+          "sessionType": "Typ auswählen"
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "submit": "Sitzung hinzufügen",
+          "submitting": "Wird hinzugefügt..."
+        },
+        "toast": {
+          "courseRequired": "Mindestens ein Kurs ist erforderlich. Öffnen Sie den Lernplan über einen Kurs, um eine Sitzung hinzuzufügen.",
+          "success": "Sitzung erfolgreich hinzugefügt",
+          "failed": "Sitzung konnte nicht hinzugefügt werden"
+        },
+        "validation": {
+          "titleRequired": "Titel ist erforderlich",
+          "locationRequired": "Ort ist erforderlich",
+          "startDateRequired": "Startdatum ist erforderlich",
+          "durationRequired": "Dauer ist erforderlich",
+          "sessionTypeRequired": "Sitzungstyp ist erforderlich"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "Aktion erfolgreich hinzugefügt",
+          "addFailed": "Aktion konnte nicht hinzugefügt werden",
+          "updated": "Aktion erfolgreich aktualisiert",
+          "updateFailed": "Aktion konnte nicht aktualisiert werden"
+        },
+        "validation": {
+          "actionNameRequired": "Aktionsname ist erforderlich",
+          "descriptionTooLong": "Beschreibung darf 1000 Zeichen nicht überschreiten",
+          "targetDateRequired": "Zieldatum ist erforderlich",
+          "whoRequired": "Bitte einen Aktionstyp auswählen"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "Sitzungsdateien verwalten",
+        "sections": {
+          "who": "1. Wer:",
+          "fileType": "2. Dateityp:",
+          "uploadType": "3. Upload-Typ:"
+        },
+        "tableHeaders": {
+          "name": "Name",
+          "type": "Typ",
+          "description": "Beschreibung",
+          "dateUploaded": "Hochgeladen am"
+        },
+        "who": {
+          "thisAim": "Dieses Ziel",
+          "allAim": "Alle Ziele"
+        },
+        "fileTypes": {
+          "ilpFile": "ILP-Dateien",
+          "reviewFiles": "Review-Dateien",
+          "assessmentFiles": "Bewertungsdateien",
+          "generalFiles": "Allgemeine Dateien"
+        },
+        "uploadModes": {
+          "fileUpload": "Datei hochladen",
+          "formSelection": "Formular auswählen"
+        },
+        "buttons": {
+          "chooseFile": "Datei auswählen",
+          "upload": "Hochladen",
+          "uploading": "Wird hochgeladen...",
+          "add": "Hinzufügen",
+          "adding": "Wird hinzugefügt...",
+          "cancelClose": "Abbrechen/Schließen"
+        },
+        "placeholders": {
+          "selectForm": "Formular auswählen"
+        },
+        "toast": {
+          "selectFile": "Bitte eine Datei auswählen",
+          "uploadSuccess": "Datei erfolgreich hochgeladen",
+          "uploadFailed": "Datei konnte nicht hochgeladen werden",
+          "selectForm": "Bitte ein Formular auswählen",
+          "addFormSuccess": "Formular erfolgreich hinzugefügt",
+          "addFormFailed": "Formular konnte nicht hinzugefügt werden"
+        }
+      },
+      "manageActionFile": {
+        "title": "Aktionsdateien verwalten",
+        "fieldLabel": "Datei-Upload",
+        "helper": {
+          "dragDrop": "Dateien hierher ziehen und ablegen oder",
+          "browse": "Durchsuchen",
+          "maxSize": "Max. 10 MB sind erlaubt"
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "upload": "Hochladen",
+          "uploading": "Wird hochgeladen..."
+        },
+        "toast": {
+          "uploadSuccess": "Datei erfolgreich hochgeladen",
+          "uploadFailed": "Datei konnte nicht hochgeladen werden"
+        },
+        "validation": {
+          "fileRequired": "Eine Datei ist erforderlich",
+          "fileTooLarge": "Dateigröße muss unter 10 MB liegen",
+          "unsupportedFormat": "Nicht unterstütztes Dateiformat"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "Alle",
+        "general": "Allgemein",
+        "induction": "Einführung",
+        "formalReview": "Formale Überprüfung",
+        "telephone": "Telefon",
+        "exitSession": "Abschlussgespräch",
+        "outOfTheWorkplace": "Außerhalb des Arbeitsplatzes",
+        "testsExams": "Tests/Prüfungen",
+        "learnerSupport": "Lernendenunterstützung",
+        "initialSession": "Erstsitzung",
+        "gatewayReady": "Gateway bereit",
+        "epa": "EPA",
+        "furloughed": "Beurlaubt"
+      },
+      "attendedStatuses": {
+        "all": "Alle",
+        "attended": "Teilgenommen",
+        "cancelled": "Abgesagt",
+        "cancelledByTrainer": "Vom Trainer abgesagt",
+        "cancelledByLearner": "Vom Lernenden abgesagt",
+        "cancelledByEmployee": "Vom Mitarbeiter abgesagt",
+        "learnerNotAttended": "Lernender nicht erschienen"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "Bewertung",
+        "reviewFiles": "Review",
+        "generalFiles": "Allgemein",
+        "evidence": "Nachweis"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "Unbekannt"
+    }
+  },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Einheitenfortschritt",
+      "subtitle": "Fortschritt des Lernenden über Einheiten hinweg verfolgen"
+    },
+    "error": {
+      "loadFailed": "Einheitenfortschritt konnte nicht geladen werden. Bitte versuchen Sie es später erneut."
+    },
+    "learnerInfo": {
+      "noInfo": "Keine Informationen zum Lernenden verfügbar",
+      "labels": {
+        "learner": "Lernender",
+        "uln": "ULN",
+        "registrationNumber": "Registrierungsnummer",
+        "trainingProvider": "Bildungsträger",
+        "courseName": "Kursname"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Einheiten suchen...",
+      "loading": "Einheiten werden geladen...",
+      "noUnits": "Keine Einheiten verfügbar",
+      "noResults": "Keine Ergebnisse.",
+      "columns": {
+        "title": "Titel",
+        "signedOffAwaiting": "% Abgezeichnet / Wartet auf Abzeichnung",
+        "completed": "Abgeschlossen",
+        "assessed": "Bewertet",
+        "iqaSignOff": "IQA-Abzeichnung",
+        "claimableStatus": "Anspruchsstatus"
+      },
+      "progress": {
+        "signedOff": "Abgezeichnet",
+        "awaitingSignOff": "Wartet auf Abzeichnung"
+      },
+      "status": {
+        "yes": "Ja",
+        "no": "Nein",
+        "claimable": "Anspruchsberechtigt",
+        "notClaimable": "Nicht anspruchsberechtigt"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
+  "resources": {
+    "page": {
+      "title": "Ressourcen",
+      "subtitle": "Lernressourcen und Materialien verwalten"
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "glh": "GLH",
+        "jobType": "Jobtyp",
+        "resourceType": "Ressourcentyp",
+        "actions": "Aktionen"
+      },
+      "searchPlaceholder": "Ressourcen durchsuchen...",
+      "filters": {
+        "jobType": {
+          "label": "Jobtyp",
+          "placeholder": "Jobtyp auswählen"
+        },
+        "resourceType": {
+          "label": "Ressourcentyp",
+          "placeholder": "Ressourcentyp auswählen",
+          "allTypes": "Alle Typen"
+        }
+      },
+      "buttons": {
+        "addResource": "Ressource hinzufügen",
+        "view": "Ansehen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "download": "Herunterladen"
+      },
+      "menu": {
+        "view": "Ansehen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "download": "Herunterladen",
+        "columns": "Spalten"
+      },
+      "states": {
+        "loading": "Ressourcen werden geladen...",
+        "noResults": "Keine Ergebnisse.",
+        "empty": "Keine Ressourcen gefunden."
+      },
+      "confirm": {
+        "deleteTitle": "Möchten Sie diese Ressource wirklich löschen?",
+        "deleteBody": "Diese Aktion kann nicht rückgängig gemacht werden."
+      },
+      "toast": {
+        "deleted": "Ressource erfolgreich gelöscht",
+        "deleteFailed": "Ressource konnte nicht gelöscht werden",
+        "exportCsvFailed": "CSV-Export fehlgeschlagen",
+        "exportPdfFailed": "PDF-Export fehlgeschlagen"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Neue Ressource erstellen",
+        "edit": "Ressource bearbeiten"
+      },
+      "description": {
+        "create": "Laden Sie eine neue Lernressource hoch. Klicken Sie auf „Speichern“, wenn Sie fertig sind.",
+        "edit": "Aktualisieren Sie die Ressourcendetails. Klicken Sie auf „Speichern“, wenn Sie fertig sind."
+      },
+      "fields": {
+        "course": "Kurs",
+        "file": "Datei",
+        "name": "Name",
+        "description": "Beschreibung",
+        "jobType": "Jobtyp",
+        "resourceType": "Ressourcentyp",
+        "hours": "Stunden",
+        "minutes": "Minuten"
+      },
+      "placeholders": {
+        "selectCourse": "Kurs auswählen",
+        "noCourses": "Keine Kurse verfügbar",
+        "description": "Beschreibung eingeben (optional)",
+        "jobType": "Jobtyp auswählen",
+        "resourceType": "Ressourcentyp auswählen"
+      },
+      "helper": {
+        "currentFilePrefix": "Aktuelle Datei:",
+        "viewFile": "Datei ansehen",
+        "maxFileSize": "Maximale Dateigröße: 10MB",
+        "nameAuto": "Der Name wird automatisch aus der hochgeladenen Datei übernommen"
+      },
+      "buttons": {
+        "save": "Speichern",
+        "saving": "Wird gespeichert...",
+        "cancel": "Abbrechen"
+      },
+      "toast": {
+        "created": "Ressource erfolgreich erstellt",
+        "updated": "Ressource erfolgreich aktualisiert",
+        "createFailed": "Ressource konnte nicht erstellt werden",
+        "updateFailed": "Ressource konnte nicht aktualisiert werden"
+      },
+      "validation": {
+        "selectCourse": "Bitte wählen Sie einen Kurs aus.",
+        "nameRequired": "Name ist erforderlich.",
+        "uploadFile": "Bitte laden Sie eine Datei hoch.",
+        "fileTooLarge": "Die Dateigröße muss kleiner als 10MB sein.",
+        "hoursMin": "Stunden müssen 0 oder größer sein",
+        "hoursMax": "Stunden müssen weniger als 24 sein",
+        "minutesMin": "Minuten müssen 0 oder größer sein",
+        "minutesMax": "Minuten müssen weniger als 60 sein"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "An",
+        "off": "Aus"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Text",
+        "image": "Bild"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} Std. {minutes} Min."
+    }
+  },
+  "skillsScan": {
+    "page": {
+      "title": "Kompetenzbewertung",
+      "subtitle": "Analyse des Trainingsbedarfs"
+    },
+    "userCard": {
+      "summaryLine": "Kompetenzbewertung & Analyse des Trainingsbedarfs",
+      "badge": "Analyse des Trainingsbedarfs",
+      "fallbackUserName": "Benutzer"
+    },
+    "tabs": {
+      "units": {
+        "label": "TNA-Einheiten auswählen",
+        "shortLabel": "Auswahl",
+        "description": "Wählen Sie Ihre Trainingseinheiten aus"
+      },
+      "questionnaire": {
+        "label": "TNA-Fragebogen",
+        "shortLabel": "TNA",
+        "description": "Führen Sie die Bewertung durch"
+      },
+      "results": {
+        "label": "Ergebnisse anzeigen",
+        "shortLabel": "Ansehen",
+        "description": "Überprüfen Sie Ihre Ergebnisse"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "Trainingskurs auswählen",
+        "label": "Kurs auswählen:",
+        "placeholder": "Wählen Sie einen Kurs, um zu beginnen...",
+        "noCourses": "Keine Kurse verfügbar"
+      },
+      "table": {
+        "title": "Kurseinheiten",
+        "count": "{count} Einheiten verfügbar",
+        "headers": {
+          "unitTitle": {
+            "standard": "Standards",
+            "qualification": "Standard-Einheiten"
+          },
+          "hours": "Stunden",
+          "credits": "Credits",
+          "level": "Level",
+          "code": "Code",
+          "type": "Typ",
+          "mandatory": "Pflicht"
+        },
+        "values": {
+          "na": "k. A.",
+          "levelPrefix": "Level {level}",
+          "yes": "Ja",
+          "no": "Nein"
+        }
+      },
+      "empty": {
+        "title": "Keine Einheiten gefunden",
+        "body": "Bitte wählen Sie einen Kurs aus, um verfügbare Einheiten zu sehen"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "Weiter zum Fragebogen"
+      }
+    },
+    "questionnaire": {
+      "title": "TNA-Fragebogen",
+      "topicsCompleted": "{completed}/{total} Themen abgeschlossen",
+      "highlightBlanks": "Leere Felder hervorheben",
+      "sidebar": {
+        "title": "Bewertungsthemen"
+      },
+      "unitIntro": "Bewerten Sie Ihre Fähigkeiten für jeden Kompetenzbereich",
+      "table": {
+        "headers": {
+          "skill": "Zu demonstrierende Fähigkeit",
+          "phases": {
+            "induction": "Einführung",
+            "first": "Erstes Review",
+            "second": "Zweites Review",
+            "third": "Drittes Review"
+          }
+        },
+        "selectRatingPlaceholder": "Bewertung auswählen"
+      },
+      "states": {
+        "noCourse": {
+          "title": "Kein Kurs ausgewählt",
+          "body": "Bitte wählen Sie einen Kurs im Tab \"TNA-Einheiten auswählen\""
+        },
+        "loadingCourseData": "Kursdaten werden geladen...",
+        "noSkillsForUnit": "Keine Fähigkeiten für diese Einheit zu bewerten",
+        "noTopic": {
+          "title": "Kein Thema ausgewählt",
+          "body": "Bitte wählen Sie ein Thema in der Seitenleiste, um zu starten"
+        }
+      },
+      "buttons": {
+        "previous": "Zurück",
+        "next": "Weiter",
+        "saveProgress": "Fortschritt speichern",
+        "saving": "Wird gespeichert...",
+        "viewResults": "Ergebnisse anzeigen"
+      },
+      "toast": {
+        "saved": "Fortschritt erfolgreich gespeichert",
+        "saveFailed": "Fortschritt konnte nicht gespeichert werden"
+      }
+    },
+    "results": {
+      "title": "Bewertungsergebnisse",
+      "skillsAssessed": "{completed}/{total} Fähigkeiten bewertet",
+      "states": {
+        "noCourse": {
+          "title": "Kein Kurs ausgewählt",
+          "body": "Bitte wählen Sie einen Kurs im Tab \"TNA-Einheiten auswählen\""
+        },
+        "loading": "Ergebnisse werden geladen...",
+        "contentNotFound": "Inhalt nicht gefunden"
+      },
+      "buttons": {
+        "downloadPdf": "PDF herunterladen"
+      },
+      "toast": {
+        "generatingPdf": "PDF wird erstellt...",
+        "pdfDownloaded": "PDF erfolgreich heruntergeladen",
+        "pdfDownloadFailed": "PDF-Download fehlgeschlagen"
+      },
+      "chart": {
+        "title": "Fortschrittsdiagramm",
+        "selectTopicPlaceholder": "Thema auswählen",
+        "noData": "Keine Daten verfügbar"
+      },
+      "legend": {
+        "title": "Legende"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "Für dieses Thema sind keine Daten verfügbar.",
+      "phases": {
+        "induction": "Einführung",
+        "first": "Erstes Review",
+        "second": "Zweites Review",
+        "third": "Drittes Review"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "Nie",
+        "notSure": "Nicht sicher",
+        "sometimes": "Manchmal",
+        "always": "Immer"
+      }
+    },
+    "common": {
+      "dash": "-"
     }
   },
   "defaultReviewWeeks": {
@@ -2792,6 +3722,181 @@
     "item": "Element",
     "items": "Elemente"
   },
+  "timeLog": {
+    "page": {
+      "title": "Zeitprotokoll",
+      "subtitle": "E-Zeitprotokoll für alle Kurse und allgemeinen Aktivitäten anzeigen"
+    },
+    "filters": {
+      "course": {
+        "label": "Kurs auswählen",
+        "all": "Alle Kurse"
+      },
+      "jobType": {
+        "label": "Art der Schulung auswählen",
+        "options": {
+          "all": "Alle",
+          "notApplicable": "Nicht zutreffend",
+          "onTheJob": "Am Arbeitsplatz",
+          "offTheJob": "Außerhalb des Arbeitsplatzes"
+        }
+      },
+      "approved": {
+        "label": "Von Prüfer genehmigt",
+        "options": {
+          "all": "Alle",
+          "approved": "Genehmigt",
+          "notApproved": "Nicht genehmigt"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "Diese Woche",
+      "thisMonth": "Dieser Monat",
+      "total": "Gesamt",
+      "hoursLabel": "{hours} Stunden"
+    },
+    "recentActivity": {
+      "title": "Aktuelle Aktivitäten",
+      "empty": "Keine aktuellen Aktivitäten gefunden."
+    },
+    "table": {
+      "loading": "Zeitprotokolle werden geladen...",
+      "empty": "Keine Zeitprotokolleinträge gefunden.",
+      "columns": {
+        "activityType": "Aktivitätstyp",
+        "courseUnit": "Kurs / Einheit",
+        "trainer": "Trainer",
+        "timeSpent": "Aufgewendete Zeit",
+        "startTime": "Startzeit der Aktivität",
+        "onOffJob": "Schulung am/außerhalb Arbeitsplatz",
+        "approved": "Genehmigt",
+        "comment": "Kommentar",
+        "date": "Datum",
+        "actions": "Aktion"
+      },
+      "labels": {
+        "assessor": "Prüfer",
+        "approved": "Genehmigt",
+        "notApproved": "Nicht genehmigt"
+      }
+    },
+    "actions": {
+      "addButton": "Neuen Zeitprotokoll-Eintrag hinzufügen",
+      "columnVisibilityLabel": "Spaltensichtbarkeit",
+      "columnsButton": "Spalten"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "Aktivität hinzufügen",
+          "edit": "Zeitprotokoll bearbeiten"
+        },
+        "description": {
+          "create": "Füllen Sie die Details aus, um einen neuen Zeitprotokolleintrag zu erstellen.",
+          "edit": "Aktualisieren Sie die Details des Zeitprotokolleintrags."
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. Aktivitätsdatum auswählen"
+          },
+          "activityType": {
+            "label": "2. Aktivitätstyp auswählen",
+            "placeholder": "Aktivitätstyp auswählen"
+          },
+          "course": {
+            "label": "3. Kurs auswählen",
+            "noneOption": "Keiner",
+            "loading": "Kurse werden geladen..."
+          },
+          "unit": {
+            "label": "4. Einheit auswählen",
+            "placeholderDefault": "Einheit(en) auswählen",
+            "placeholderWithCount": "{count} Einheit(en) ausgewählt",
+            "noUnits": "Für den ausgewählten Kurs sind keine Einheiten verfügbar"
+          },
+          "trainer": {
+            "label": "5. Trainer auswählen",
+            "noneOption": "Keiner",
+            "loading": "Trainer werden geladen..."
+          },
+          "type": {
+            "label": "6. War es am Arbeitsplatz?",
+            "placeholder": "Art der Tätigkeit auswählen",
+            "options": {
+              "notApplicable": "Nicht zutreffend",
+              "on": "Am Arbeitsplatz",
+              "off": "Außerhalb des Arbeitsplatzes"
+            }
+          },
+          "spendTime": {
+            "label": "7. Für die Aktivität aufgewendete Zeit"
+          },
+          "startTime": {
+            "label": "8. Startzeit der Aktivität"
+          },
+          "endTime": {
+            "label": "9. Endzeit der Aktivität"
+          },
+          "impact": {
+            "label": "10. Wie hat diese Aktivität Ihr Lernen beeinflusst?",
+            "placeholder": "Bitte geben Sie Hinweise zur Auswirkung ein."
+          },
+          "evidence": {
+            "label": "11. Nachweis-Links",
+            "placeholder": "Nachweis-Link eingeben"
+          }
+        },
+        "buttons": {
+          "cancel": "Abbrechen",
+          "saveCreate": "Zeitprotokoll speichern",
+          "saveUpdate": "Zeitprotokoll aktualisieren",
+          "loadingCreate": "Wird erstellt...",
+          "loadingUpdate": "Wird aktualisiert..."
+        },
+        "validation": {
+          "activityDateRequired": "Aktivitätsdatum ist erforderlich",
+          "activityTypeRequired": "Aktivitätstyp ist erforderlich",
+          "jobTypeRequired": "Art der Tätigkeit ist erforderlich",
+          "timeSpentRequired": "Aufgewendete Zeit ist erforderlich",
+          "startTimeRequired": "Startzeit ist erforderlich",
+          "endTimeRequired": "Endzeit ist erforderlich",
+          "impactRequired": "Auswirkung auf den Lerner ist erforderlich"
+        }
+      },
+      "delete": {
+        "title": "Zeitprotokoll löschen?",
+        "description": "Wenn Sie dieses Zeitprotokoll löschen, werden auch alle zugehörigen Daten und Verknüpfungen entfernt. Möchten Sie mit dem Löschen fortfahren?",
+        "buttons": {
+          "cancel": "Abbrechen",
+          "confirm": "Zeitprotokoll löschen"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "Zeitprotokoll erfolgreich erstellt",
+      "updateSuccess": "Zeitprotokoll erfolgreich aktualisiert",
+      "deleteSuccess": "Zeitprotokoll erfolgreich gelöscht",
+      "createFailed": "Erstellen des Zeitprotokolls fehlgeschlagen",
+      "updateFailed": "Aktualisieren des Zeitprotokolls fehlgeschlagen",
+      "deleteFailed": "Löschen des Zeitprotokolls fehlgeschlagen"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "Virtuelle Schulungssitzung",
+        "faceToFace": "Klassische Präsenzschulung",
+        "trainerLed": "Trainer- oder Prüfer-geführte Schulung",
+        "eLearning": "Elektronisches Lernen, Fernlernen oder Selbststudium",
+        "coaching": "Coaching oder Mentoring",
+        "guidedLearning": "Geführtes Lernen ohne Trainer/Prüfer vor Ort",
+        "technicalExperience": "Technische Erfahrung durch Ausübung der Arbeit",
+        "reviewSupport": "Überprüfung/Feedback/Unterstützung",
+        "assessment": "Bewertung oder Prüfung",
+        "other": "Sonstiges",
+        "furloughed": "Beurlaubt"
+      }
+    }
+  },
   "evidenceLibrary": {
     "pageTitle": "Evidenzbibliothek",
     "pageSubtitle": "Verwalten und organisieren Sie Ihre Evidenzdateien",
@@ -3117,6 +4222,13 @@
       "title": "Dashboard",
       "subtitle": "Verwalten Sie Ihren Lernweg und verfolgen Sie den Fortschritt"
     },
+    "viewer": {
+      "errorTitle": "Fehler beim Laden des Lerner-Dashboards",
+      "loadError": "Lernerdetails konnten nicht geladen werden",
+      "invalidLearnerId": "Ungültige Lerner-ID",
+      "backToOverview": "Zurück zur Lerner-Übersicht",
+      "pageTitle": "Lerner-Dashboard - {name}"
+    },
     "buttons": {
       "emailLearner": "Lernenden per E-Mail kontaktieren",
       "awaitingSignature": "Ausstehende Unterschrift",
@@ -3201,6 +4313,922 @@
         "success": "Bestätigung erfolgreich angenommen",
         "failed": "Bestätigungsstatus konnte nicht aktualisiert werden"
       }
+    }
+  },
+  "learnerProfile": {
+    "page": {
+      "title": "Profilinformationen",
+      "subtitle": "Lernenden-Profil und persönliche Daten anzeigen",
+      "tabs": {
+        "personalInfo": "Persönliche Informationen",
+        "courseInformation": "Kursinformationen",
+        "contractedWorkHours": "Vertragliche Arbeitsstunden"
+      },
+      "errorTitle": "Fehler beim Laden des Lernendenprofils",
+      "loadError": "Lernendendaten konnten nicht geladen werden",
+      "invalidLearnerId": "Ungültige Lernenden-ID",
+      "noDataTitle": "Keine Daten gefunden",
+      "noDataDescription": "Lernenden-Profil nicht gefunden.",
+      "back": "Zurück",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "resetPasswordButton": "Passwort zurücksetzen",
+      "emailPasswordResetButton": "Zurücksetzung per E-Mail senden",
+      "accessProfile": "Profil öffnen",
+      "toastUpdated": "Lernenden-Profil erfolgreich aktualisiert",
+      "toastUpdateFailed": "Profil konnte nicht aktualisiert werden. Bitte erneut versuchen."
+    },
+    "validation": {
+      "firstNameRequired": "Vorname ist erforderlich",
+      "lastNameRequired": "Nachname ist erforderlich",
+      "userNameRequired": "Benutzername ist erforderlich",
+      "invalidEmail": "Ungültige E-Mail-Adresse"
+    },
+    "courseInformation": {
+      "emptyState": "Keine Kurse zugewiesen",
+      "addCourse": "Kurs hinzufügen",
+      "yes": "Ja",
+      "no": "Nein",
+      "statusOptions": {
+        "awaitingInduction": "Wartet auf Einführung",
+        "certificated": "Zertifiziert",
+        "completed": "Abgeschlossen",
+        "earlyLeaver": "Frühaussteiger",
+        "exempt": "Befreit",
+        "inTraining": "In Ausbildung",
+        "iqaApproved": "Von IQA genehmigt",
+        "trainingSuspended": "Ausbildung ausgesetzt",
+        "transferred": "Übertragen"
+      },
+      "validation": {
+        "selectCourse": "Bitte Kurs auswählen",
+        "selectTrainer": "Bitte Trainer auswählen",
+        "selectIQA": "Bitte IQA auswählen",
+        "selectLIQA": "Bitte LIQA auswählen",
+        "selectEQA": "Bitte EQA auswählen",
+        "selectStartDate": "Bitte Startdatum auswählen",
+        "selectEndDate": "Bitte Enddatum auswählen",
+        "endDateAfterStart": "Enddatum muss nach Startdatum liegen",
+        "enterPredictedGrade": "Bitte voraussichtliche Note eingeben",
+        "enterFinalGrade": "Bitte Abschlussnote eingeben"
+      },
+      "toast": {
+        "updated": "Kurs erfolgreich aktualisiert",
+        "added": "Kurs erfolgreich hinzugefügt",
+        "deleted": "Kurs erfolgreich gelöscht",
+        "saveFailed": "Kurs konnte nicht gespeichert werden. Bitte erneut versuchen.",
+        "deleteFailed": "Kurs konnte nicht gelöscht werden. Bitte erneut versuchen.",
+        "sameOrganisation": "Lernender und Kurs müssen derselben Organisation angehören.",
+        "noAccess": "Sie haben keine Berechtigung, diesen Kurs zuzuweisen."
+      },
+      "table": {
+        "courseName": "Kursname",
+        "level": "Niveau",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "status": "Status",
+        "mainCourse": "Hauptkurs",
+        "actions": "Aktionen"
+      },
+      "dialog": {
+        "editTitle": "Kurs bearbeiten",
+        "addTitle": "Neuen Kurs hinzufügen",
+        "editDescription": "Aktualisieren Sie die Kursinformationen unten.",
+        "addDescription": "Füllen Sie die Kursdetails unten aus. Mit * markierte Felder sind Pflichtfelder."
+      },
+      "form": {
+        "selectCourse": "Kurs auswählen",
+        "courseStatus": "Kursstatus",
+        "trainer": "Trainer",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "predictedGrade": "Voraussichtliche Note",
+        "finalGrade": "Abschlussnote",
+        "mainAimCourse": "Hauptkurs",
+        "chooseCourse": "Kurs wählen",
+        "selectStatus": "Kursstatus auswählen",
+        "enterPredictedGrade": "Voraussichtliche Note eingeben",
+        "enterFinalGrade": "Abschlussnote eingeben",
+        "anotherMainCourse": "Ein anderer Kurs ist bereits als Hauptkurs festgelegt"
+      },
+      "deleteDialog": {
+        "title": "Sind Sie sicher?",
+        "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die Kurszuweisung für {courseName} wird dauerhaft gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "updateCourse": "Kurs aktualisieren",
+        "addCourseButton": "Kurs hinzufügen"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "Vertragliche Arbeitsstunden",
+      "setNewHours": "Neue Stunden festlegen",
+      "emptyState": "Keine vertraglichen Arbeitsstunden gefunden.",
+      "loading": "Wird geladen...",
+      "noteText": "Hinweis: Da die erwarteten Off-the-Job-Stunden dieses Lernenden als fester Wert gesetzt sind, beeinflussen vertragliche Stunden und Jahresurlaubsanspruch die Off-the-Job-Berechnung nicht.",
+      "table": {
+        "company": "Unternehmen",
+        "contractStart": "Arbeitsvertragsbeginn",
+        "contractEnd": "Arbeitsvertragsende",
+        "hoursPerWeek": "Vertragliche Arbeitsstunden pro Woche",
+        "yearlyHoliday": "Jahresurlaubsanspruch (Stunden)",
+        "lastEditedBy": "Zuletzt bearbeitet von",
+        "lastEditedDate": "Letzte Bearbeitung",
+        "actions": "Aktionen"
+      },
+      "dialog": {
+        "editTitle": "Vertragliche Arbeitsstunden bearbeiten",
+        "setNewTitle": "Neue vertragliche Arbeitsstunden festlegen",
+        "editDescription": "Informationen zu den vertraglichen Arbeitsstunden aktualisieren.",
+        "setNewDescription": "Vertragliche Arbeitsstunden für diesen Lernenden eingeben.",
+        "companyLabel": "Unternehmen *",
+        "companyPlaceholder": "Unternehmensname eingeben",
+        "contractStartLabel": "Vertragsbeginn *",
+        "contractEndLabel": "Vertragsende",
+        "hoursPerWeekLabel": "Arbeitsstunden pro Woche *",
+        "hoursPlaceholder": "Stunden pro Woche eingeben",
+        "pickDate": "Datum wählen",
+        "pickDateOptional": "Datum wählen (optional)",
+        "cancel": "Abbrechen",
+        "update": "Aktualisieren",
+        "create": "Erstellen"
+      },
+      "deleteDialog": {
+        "title": "Sind Sie sicher?",
+        "description": "Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag zu den vertraglichen Arbeitsstunden für {company} wird dauerhaft gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      },
+      "validation": {
+        "companyRequired": "Unternehmen ist erforderlich",
+        "contractStartRequired": "Vertragsbeginn ist erforderlich",
+        "hoursRequired": "Arbeitsstunden pro Woche sind erforderlich",
+        "hoursPositive": "Muss eine positive Zahl sein"
+      },
+      "toast": {
+        "updated": "Vertragliche Arbeitsstunden erfolgreich aktualisiert",
+        "created": "Vertragliche Arbeitsstunden erfolgreich erstellt",
+        "deleted": "Vertragliche Arbeitsstunden erfolgreich gelöscht",
+        "saveFailed": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+        "deleteFailed": "Löschen fehlgeschlagen. Bitte erneut versuchen."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "Lernenden-ID",
+        "uln": "ULN",
+        "misLearnerId": "MIS-Lernenden-ID",
+        "studentId": "Lernenden-ID"
+      },
+      "aboutYou": {
+        "title": "Über Sie",
+        "clickToUpload": "Klicken zum Hochladen eines Fotos",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "username": "Benutzername",
+        "email": "E-Mail",
+        "telephone": "Telefon",
+        "mobile": "Mobil",
+        "dateOfBirth": "Geburtsdatum",
+        "gender": "Geschlecht",
+        "nationalInsuranceNo": "Sozialversicherungsnummer",
+        "ethnicity": "Ethnizität",
+        "learnerDisability": "Behinderung des Lernenden",
+        "learningDifficulties": "Lernschwierigkeiten",
+        "initialAssessmentNumeracy": "Ersteinschätzung – Rechnen",
+        "initialAssessmentLiteracy": "Ersteinschätzung – Lesen/Schreiben",
+        "initialAssessmentICT": "Ersteinschätzung – IKT",
+        "avatarInvalidFile": "Bitte gültige Bilddatei auswählen",
+        "avatarTooLarge": "Bildgröße muss unter 5 MB liegen",
+        "avatarSuccess": "Avatar erfolgreich hochgeladen",
+        "avatarFailed": "Avatar konnte nicht hochgeladen werden. Bitte erneut versuchen."
+      },
+      "address": {
+        "title": "Adresse",
+        "street": "Hausnummer/Name und Straße",
+        "suburb": "Stadtteil/Ort",
+        "town": "Stadt",
+        "country": "Land",
+        "homePostcode": "Postleitzahl",
+        "countryOfDomicile": "Wohnsitzland"
+      },
+      "employer": {
+        "title": "Arbeitgeber",
+        "employer": "Arbeitgeber",
+        "employerIdPlaceholder": "Arbeitgeber-ID",
+        "jobTitle": "Berufsbezeichnung",
+        "location": "Standort",
+        "managerName": "Name des Vorgesetzten",
+        "managerJobTitle": "Position des Vorgesetzten",
+        "mentor": "Mentor"
+      },
+      "fundingBody": {
+        "title": "Förderstelle",
+        "fundingBody": "Förderstelle",
+        "awardingBody": "Zertifizierungsstelle",
+        "registrationNumber": "Registrierungsnummer",
+        "registrationDate": "Registrierungsdatum",
+        "laraCode": "LARA-Code"
+      },
+      "fundingBands": {
+        "title": "Förderstufen",
+        "originalAmount": "Ursprünglicher Betrag",
+        "customAmount": "Individueller Betrag",
+        "fundingBandId": "Förderstufen-ID",
+        "updatedByLearner": "Vom Lernenden aktualisiert",
+        "lastUpdated": "Letzte Aktualisierung"
+      },
+      "additionalInfo": {
+        "title": "Zusätzliche Informationen",
+        "costCentre": "Kostenstelle",
+        "fundingContractor": "Förderauftragnehmer",
+        "partner": "Partner",
+        "subArea": "Unterbereich",
+        "cohort": "Kohorte",
+        "curriculumArea": "Curriculumbereich",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "Curriculumleiter",
+        "learnerType": "Lernendentyp",
+        "expectedOffTheJobHours": "Erwartete Off-the-Job-Stunden",
+        "offTheJobTraining": "Off-the-Job-Schulung",
+        "guidedLearningHoursAchieved": "Erreichte geführte Lernstunden"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "Passwort zurücksetzen",
+      "descriptionWithName": "Passwort für {name} ({email}) zurücksetzen",
+      "descriptionEmailOnly": "Passwort für {email} zurücksetzen",
+      "newPassword": "Neues Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "cancel": "Abbrechen",
+      "resetting": "Wird zurückgesetzt...",
+      "resetPassword": "Passwort zurücksetzen",
+      "hintText": "Das Passwort muss mindestens 6 Zeichen haben und Groß- und Kleinbuchstaben sowie eine Zahl enthalten.",
+      "validation": {
+        "passwordMin": "Passwort muss mindestens 6 Zeichen haben",
+        "passwordPattern": "Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten",
+        "confirmRequired": "Bitte Passwort bestätigen",
+        "passwordsMismatch": "Passwörter stimmen nicht überein"
+      },
+      "successDefault": "Passwort erfolgreich zurückgesetzt",
+      "errorDefault": "Passwort konnte nicht zurückgesetzt werden. Bitte in Kürze erneut versuchen.",
+      "learnerEmailRequired": "E-Mail des Lernenden ist erforderlich"
+    },
+    "emailPasswordResetDialog": {
+      "title": "Zurücksetzung per E-Mail senden",
+      "description": "Möchten Sie das Passwort wirklich zurücksetzen? An {email} wird eine E-Mail mit Anweisungen gesendet.",
+      "cancel": "Abbrechen",
+      "sending": "Wird gesendet...",
+      "ok": "OK",
+      "successDefault": "E-Mail zur Passwortzurücksetzung erfolgreich gesendet",
+      "errorDefault": "E-Mail konnte nicht gesendet werden. Bitte in Kürze erneut versuchen.",
+      "learnerEmailRequired": "E-Mail des Lernenden ist erforderlich"
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Benachrichtigungen",
+      "subtitleOne": "1 Benachrichtigung",
+      "subtitleMany": "{count} Benachrichtigungen",
+      "loadError": "Benachrichtigungen konnten nicht geladen werden",
+      "loadErrorHint": "Bitte Seite aktualisieren",
+      "emptyTitle": "Keine Benachrichtigungen",
+      "emptyDescription": "Sie sind auf dem neuesten Stand! Es gibt keine Benachrichtigungen anzuzeigen.",
+      "markAllRead": "Alle als gelesen markieren",
+      "deleteAll": "Alle löschen",
+      "paginationPageOf": "Seite {page} von {pages} ({total} insgesamt)"
+    },
+    "filters": {
+      "typeLabel": "Typ",
+      "statusLabel": "Status",
+      "allTypesPlaceholder": "Alle Typen",
+      "allStatusesPlaceholder": "Alle Status",
+      "allTypes": "Alle Typen",
+      "allStatuses": "Alle Status",
+      "unread": "Ungelesen",
+      "read": "Gelesen"
+    },
+    "types": {
+      "notification": "Benachrichtigung",
+      "news": "Neuigkeiten",
+      "allocation": "Zuweisung"
+    },
+    "item": {
+      "newBadge": "Neu",
+      "markAsRead": "Als gelesen markieren",
+      "delete": "Löschen"
+    },
+    "bell": {
+      "srOnly": "Benachrichtigungen",
+      "heading": "Benachrichtigungen",
+      "unreadCount": "{count} ungelesen",
+      "loadError": "Benachrichtigungen konnten nicht geladen werden",
+      "noNotifications": "Keine Benachrichtigungen",
+      "allCaughtUp": "Sie sind auf dem neuesten Stand!",
+      "viewAll": "Alle Benachrichtigungen anzeigen",
+      "markAllRead": "Alle als gelesen markieren",
+      "deleteAll": "Alle löschen",
+      "markAsReadTitle": "Als gelesen markieren",
+      "deleteTitle": "Löschen"
+    },
+    "toast": {
+      "markedAsRead": "Benachrichtigung als gelesen markiert",
+      "markedAsReadFailed": "Als gelesen markieren fehlgeschlagen",
+      "deleted": "Benachrichtigung gelöscht",
+      "deleteFailed": "Benachrichtigung löschen fehlgeschlagen",
+      "allMarkedAsRead": "Alle Benachrichtigungen als gelesen markiert",
+      "allMarkedAsReadFailed": "Alle als gelesen markieren fehlgeschlagen",
+      "allDeleted": "Alle Benachrichtigungen gelöscht",
+      "allDeleteFailed": "Alle Benachrichtigungen löschen fehlgeschlagen"
+    }
+  },
+  "themeCustomizer": {
+    "title": "Customizer",
+    "srDescription": "Passen Sie das Design und Layout Ihres Dashboards an.",
+    "tabs": {
+      "theme": "Design",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Design",
+      "random": "Zufällig",
+      "chooseTheme": "Design auswählen",
+      "modeLabel": "Modus",
+      "light": "Hell",
+      "dark": "Dunkel"
+    }
+  },
+  "accountManager": {
+    "page": {
+      "title": "Account Manager",
+      "subtitle": "Verwalten Sie Account-Manager-Benutzer und deren Organisationszuweisungen"
+    },
+    "table": {
+      "searchPlaceholder": "Account Manager suchen...",
+      "empty": "Keine Account Manager gefunden.",
+      "columns": {
+        "email": "E-Mail",
+        "name": "Name",
+        "status": "Status",
+        "assignedOrganisations": "Zugewiesene Organisationen",
+        "createdAt": "Erstellt am",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "assignedOrgCount": {
+        "one": "{count} Organisation",
+        "many": "{count} Organisationen"
+      }
+    },
+    "actions": {
+      "add": "Account Manager hinzufügen",
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "edit": "Bearbeiten",
+      "assignOrganisations": "Organisationen zuweisen",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "delete": "Löschen"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Account Manager erstellen",
+        "description": "Fügen Sie dem System einen neuen Account-Manager-Benutzer hinzu. Nur MasterAdmin kann Account Manager erstellen."
+      },
+      "edit": {
+        "title": "Account Manager bearbeiten",
+        "description": "Account-Manager-Informationen aktualisieren."
+      },
+      "assign": {
+        "title": "Organisationen zuweisen",
+        "description": "Wählen Sie aus, auf welche Organisationen dieser Account Manager zugreifen kann."
+      },
+      "delete": {
+        "title": "Sind Sie sicher?",
+        "description": "Dadurch wird dieser Account Manager dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "cancel": "Abbrechen",
+        "confirm": "Löschen",
+        "deleting": "Wird gelöscht..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Account Manager erfolgreich aktiviert",
+      "activateFailedFallback": "Account Manager konnte nicht aktiviert werden",
+      "deactivateSuccess": "Account Manager erfolgreich deaktiviert",
+      "deactivateFailedFallback": "Account Manager konnte nicht deaktiviert werden",
+      "deleteSuccess": "Account Manager erfolgreich gelöscht",
+      "deleteFailedFallback": "Account Manager konnte nicht gelöscht werden",
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert",
+      "createSuccess": "Account Manager erfolgreich erstellt",
+      "createFailedFallback": "Account Manager konnte nicht erstellt werden",
+      "updateSuccess": "Account Manager erfolgreich aktualisiert",
+      "updateFailedFallback": "Account Manager konnte nicht aktualisiert werden",
+      "assignSuccess": "Organisationen erfolgreich zugewiesen",
+      "assignFailedFallback": "Organisationen konnten nicht zugewiesen werden"
+    },
+    "form": {
+      "emailLabel": "E-Mail",
+      "passwordLabel": "Passwort",
+      "firstNameLabel": "Vorname",
+      "lastNameLabel": "Nachname",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Passwort eingeben (mind. 6 Zeichen)",
+      "firstNamePlaceholder": "Max",
+      "lastNamePlaceholder": "Mustermann",
+      "cancel": "Abbrechen",
+      "createSubmit": "Account Manager erstellen",
+      "updateSubmit": "Account Manager aktualisieren"
+    },
+    "validation": {
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "emailRequired": "E-Mail ist erforderlich",
+      "passwordMin": "Passwort muss mindestens 6 Zeichen lang sein"
+    },
+    "assign": {
+      "selectLabel": "Organisationen auswählen",
+      "helperText": "Wählen Sie aus, auf welche Organisationen dieser Account Manager zugreifen kann.",
+      "emptyOrgs": "Keine Organisationen verfügbar",
+      "selectedCount": "Ausgewählt ({count})",
+      "save": "Zuweisungen speichern"
+    }
+  },
+  "auditLogs": {
+    "page": {
+      "title": "Audit-Logs",
+      "subtitle": "Systemaktivitäten und Änderungen anzeigen"
+    },
+    "common": {
+      "notAvailable": "k. A.",
+      "unknown": "Unbekannt",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Nach Benutzer oder Details suchen...",
+      "empty": "Keine Audit-Logs gefunden.",
+      "filters": {
+        "actionPlaceholder": "Nach Aktion filtern",
+        "orgPlaceholder": "Nach Organisation filtern",
+        "allActions": "Alle Aktionen",
+        "allOrganisations": "Alle Organisationen"
+      },
+      "columns": {
+        "timestamp": "Zeitstempel",
+        "organisation": "Organisation",
+        "action": "Aktion",
+        "user": "Benutzer",
+        "details": "Details"
+      }
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert"
+    },
+    "actionTypes": {
+      "system_action": "Systemaktion",
+      "account_manager_action": "Account-Manager-Aktion",
+      "organisation_change": "Organisationsänderung",
+      "access_change": "Zugriffsänderung",
+      "centre_change": "Zentrumsänderung",
+      "subscription_change": "Abonnementänderung",
+      "feature_change": "Feature-Änderung"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "Zahlungen",
+      "subtitle": "Zahlungshistorie und Transaktionen anzeigen"
+    },
+    "addPage": {
+      "title": "Rechnung hinzufügen",
+      "subtitle": "Erfassen, welche Organisation welchen Plan bezahlt hat."
+    },
+    "editPage": {
+      "title": "Rechnung bearbeiten",
+      "subtitle": "Zahlung und Positionen aktualisieren."
+    },
+    "common": {
+      "unknown": "Unbekannt",
+      "notAvailable": "k. A.",
+      "dash": "—",
+      "loading": "Wird geladen..."
+    },
+    "table": {
+      "searchPlaceholder": "Nach Rechnungsnummer suchen...",
+      "empty": "Keine Zahlungen gefunden.",
+      "filters": {
+        "statusPlaceholder": "Nach Status filtern",
+        "orgPlaceholder": "Nach Organisation filtern",
+        "allStatuses": "Alle Status",
+        "allOrganisations": "Alle Organisationen"
+      },
+      "columns": {
+        "date": "Datum",
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "subtotal": "Zwischensumme",
+        "discount": "Rabatt",
+        "tax": "Steuer",
+        "amountTotal": "Betrag / Gesamt",
+        "status": "Status",
+        "invoiceNumber": "Rechnungsnummer",
+        "paymentMethod": "Zahlungsmethode",
+        "actions": "Aktionen"
+      }
+    },
+    "actions": {
+      "addInvoice": "Rechnung hinzufügen",
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "openMenuSrOnly": "Menü öffnen",
+      "edit": "Bearbeiten"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert",
+      "selectOrgAndPlan": "Bitte Organisation und Plan auswählen",
+      "addAtLeastOneRow": "Bitte mindestens eine Zeile hinzufügen",
+      "invoiceCreated": "Rechnung erfolgreich erstellt",
+      "invoiceUpdated": "Rechnung erfolgreich aktualisiert",
+      "createFailedFallback": "Rechnung konnte nicht erstellt werden",
+      "updateFailedFallback": "Rechnung konnte nicht aktualisiert werden"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Gesendet",
+      "failed": "Fehlgeschlagen",
+      "refunded": "Erstattet"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Banküberweisung",
+      "card": "Karte",
+      "invoice": "Rechnung",
+      "other": "Sonstiges"
+    },
+    "lineStatus": {
+      "pending": "Ausstehend",
+      "paid": "Bezahlt"
+    },
+    "invoiceForm": {
+      "invoiceDate": "Rechnungsdatum",
+      "organisation": "Organisation",
+      "plan": "Plan",
+      "status": "Status",
+      "paymentRows": "Zahlungszeilen",
+      "addRow": "Zeile hinzufügen",
+      "period": "Periode",
+      "dueDate": "Fälligkeitsdatum",
+      "amount": "Betrag",
+      "discountPercent": "Rabatt (%)",
+      "taxPercent": "Steuer (%)",
+      "rowTotal": "Zeilensumme",
+      "lineStatus": "Status",
+      "selectOrganisation": "Organisation auswählen",
+      "selectOrganisationFirst": "Zuerst Organisation auswählen",
+      "noPlanAssigned": "Kein Plan dieser Organisation zugewiesen",
+      "selectPlan": "Plan auswählen",
+      "selectMethod": "Methode auswählen",
+      "optionalNotes": "Optionale Notizen",
+      "removeRowAria": "Zeile entfernen",
+      "emptyLinesHelp": "Es wurden noch keine Zahlungszeilen hinzugefügt. Klicken Sie auf \"Zeile hinzufügen\", um einen Zahlungsposten für diese Rechnung einzufügen. Der Betrag pro Zeile wird automatisch anhand des ausgewählten Plans ausgefüllt: voller Preis für monatliche Pläne oder gleichmäßig (pro Monat) aufgeteilt für jährliche Pläne.",
+      "totals": {
+        "subtotal": "Zwischensumme",
+        "totalDiscount": "Gesamtrabatt",
+        "totalTax": "Gesamtsteuer",
+        "total": "Gesamt"
+      },
+      "paymentMethod": "Zahlungsmethode",
+      "notes": "Notizen",
+      "back": "Zurück",
+      "createInvoice": "Rechnung erstellen",
+      "updateInvoice": "Rechnung aktualisieren"
+    }
+  },
+  "subscriptions": {
+    "page": {
+      "title": "Abonnements",
+      "subtitle": "Organisationsabonnements und -pläne ansehen und verwalten"
+    },
+    "tabs": {
+      "subscriptions": "Abonnements",
+      "plans": "Pläne"
+    },
+    "common": {
+      "unknown": "Unbekannt",
+      "notAvailable": "k. A.",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Abonnements suchen...",
+      "empty": "Keine Abonnements gefunden.",
+      "columns": {
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "users": "Benutzer",
+        "status": "Status",
+        "expiryDate": "Ablaufdatum",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "active": "Aktiv",
+        "expired": "Abgelaufen"
+      },
+      "actionsMenu": {
+        "changePlan": "Plan ändern",
+        "suspendAccess": "Zugriff sperren"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Plan der Organisation zuweisen",
+          "description": "Wählen Sie eine Organisation und einen Plan zur Zuweisung aus."
+        },
+        "changePlan": {
+          "title": "Plan ändern",
+          "description": "Wählen Sie einen neuen Plan für diese Organisation aus."
+        },
+        "suspendAccess": {
+          "title": "Organisationszugriff sperren",
+          "description": "Nutzung für diese Organisation einschränken. Optional können Sie einen Grund angeben."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Plan zuweisen"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Pläne suchen...",
+      "empty": "Keine Pläne gefunden.",
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "price": "Preis",
+        "userLimit": "Benutzerlimit",
+        "status": "Status",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "actions": {
+        "create": "Plan erstellen",
+        "edit": "Bearbeiten",
+        "activate": "Aktivieren",
+        "deactivate": "Deaktivieren"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Plan erstellen",
+          "description": "Einen neuen Abonnementplan definieren."
+        },
+        "edit": {
+          "title": "Plan bearbeiten",
+          "description": "Plankonfiguration aktualisieren."
+        }
+      },
+      "toast": {
+        "planActivated": "Plan aktiviert",
+        "planDeactivated": "Plan deaktiviert",
+        "activateFailedFallback": "Plan konnte nicht aktiviert werden",
+        "deactivateFailedFallback": "Plan konnte nicht deaktiviert werden"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organisation *",
+        "plan": "Plan *"
+      },
+      "placeholders": {
+        "organisation": "Organisation auswählen",
+        "plan": "Plan auswählen"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Es werden nur Organisationen ohne Plan angezeigt."
+      },
+      "empty": {
+        "allAssigned": "Alle aktiven Organisationen haben bereits einen Plan zugewiesen."
+      },
+      "buttons": {
+        "close": "Schließen",
+        "cancel": "Abbrechen",
+        "submit": "Plan zuweisen"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Bitte Organisation und Plan auswählen",
+        "assignedSuccess": "Plan erfolgreich zugewiesen",
+        "assignFailedFallback": "Plan konnte nicht zugewiesen werden"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organisation",
+        "newPlan": "Neuer Plan *"
+      },
+      "placeholders": {
+        "plan": "Plan auswählen"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "submit": "Plan ändern"
+      },
+      "toast": {
+        "selectPlan": "Bitte einen Plan auswählen",
+        "changedSuccess": "Plan erfolgreich geändert",
+        "changeFailedFallback": "Plan konnte nicht geändert werden"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organisation",
+        "reasonOptional": "Grund (optional)"
+      },
+      "placeholders": {
+        "reason": "z. B. Zahlung überfällig"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "submit": "Zugriff sperren"
+      },
+      "toast": {
+        "suspendedSuccess": "Organisationszugriff gesperrt",
+        "suspendFailedFallback": "Zugriff konnte nicht gesperrt werden"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Name *",
+        "code": "Code *",
+        "codeReadonly": "Code",
+        "description": "Beschreibung",
+        "priceGbp": "Preis * (GBP)",
+        "price": "Preis *",
+        "currency": "Währung *",
+        "billingCycle": "Abrechnungszyklus *",
+        "userLimit": "Benutzerlimit",
+        "centreLimit": "Zentrenlimit",
+        "organisationLimit": "Organisationslimit",
+        "features": "Funktionen (kommagetrennt)"
+      },
+      "placeholders": {
+        "nameExample": "z. B. Pro",
+        "codeExample": "z. B. PRO",
+        "description": "Planbeschreibung",
+        "currency": "Währung auswählen"
+      },
+      "help": {
+        "codeCannotChange": "Der Code kann nicht geändert werden."
+      },
+      "billingCycle": {
+        "monthly": "Monatlich",
+        "yearly": "Jährlich"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "create": "Plan erstellen",
+        "update": "Plan aktualisieren"
+      },
+      "toast": {
+        "createdSuccess": "Plan erfolgreich erstellt",
+        "updatedSuccess": "Plan erfolgreich aktualisiert",
+        "createFailedFallback": "Plan konnte nicht erstellt werden",
+        "updateFailedFallback": "Plan konnte nicht aktualisiert werden"
+      }
+    },
+    "validation": {
+      "nameRequired": "Name ist erforderlich",
+      "codeRequired": "Code ist erforderlich",
+      "currencyRequired": "Währung ist erforderlich",
+      "priceMin0": "Preis muss ≥ 0 sein"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "Systemadministratoren",
+      "subtitle": "Master-Admin-Benutzer verwalten"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Systemadministratoren suchen...",
+      "empty": "Keine Systemadministratoren gefunden.",
+      "columns": {
+        "email": "E-Mail",
+        "name": "Name",
+        "status": "Status",
+        "protected": "Geschützt",
+        "createdAt": "Erstellt am",
+        "actions": "Aktionen"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "protected": {
+        "yes": "Ja",
+        "no": "Nein"
+      }
+    },
+    "actions": {
+      "add": "Systemadministrator hinzufügen",
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "view": "Ansehen",
+      "edit": "Bearbeiten",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "delete": "Löschen"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Systemadministrator erstellen",
+        "description": "Fügen Sie einen neuen Master-Admin-Benutzer zum System hinzu. Nur MasterAdmin kann Systemadministratoren erstellen."
+      },
+      "edit": {
+        "title": "Systemadministrator bearbeiten",
+        "description": "Systemadministrator-Informationen aktualisieren."
+      },
+      "delete": {
+        "title": "Sind Sie sicher?",
+        "description": "Dadurch wird diesem Benutzer die Master-Admin-Rolle entzogen. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "protectedNote": "Dieser Administrator ist geschützt und kann nicht gelöscht werden.",
+        "cancel": "Abbrechen",
+        "confirm": "Löschen",
+        "deleting": "Entfernen..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert",
+      "activatedSuccess": "Systemadministrator erfolgreich aktiviert",
+      "deactivatedSuccess": "Systemadministrator erfolgreich deaktiviert",
+      "removedSuccess": "Systemadministrator erfolgreich entfernt",
+      "activateFailedFallback": "Systemadministrator konnte nicht aktiviert werden",
+      "deactivateFailedFallback": "Systemadministrator konnte nicht deaktiviert werden",
+      "removeFailedFallback": "Systemadministrator konnte nicht entfernt werden",
+      "protectedDeleteFallback": "Geschützten Systemadministrator kann nicht gelöscht werden",
+      "createdSuccess": "Systemadministrator erfolgreich erstellt",
+      "updatedSuccess": "Systemadministrator erfolgreich aktualisiert",
+      "createFailedFallback": "Systemadministrator konnte nicht erstellt werden",
+      "updateFailedFallback": "Systemadministrator konnte nicht aktualisiert werden"
+    },
+    "form": {
+      "labels": {
+        "email": "E-Mail *",
+        "password": "Passwort *",
+        "firstName": "Vorname",
+        "lastName": "Nachname"
+      },
+      "placeholders": {
+        "email": "z. B. admin@example.com",
+        "password": "Passwort eingeben",
+        "firstName": "z. B. Max",
+        "lastName": "z. B. Mustermann"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "create": "Erstellen",
+        "update": "Aktualisieren"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "emailRequired": "E-Mail ist erforderlich",
+      "passwordMin": "Passwort muss mindestens {min} Zeichen lang sein"
     }
   },
   "courseDetails": {

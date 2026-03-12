@@ -11,14 +11,14 @@ import { useUpdateAccountManagerMutation } from "@/store/api/account-manager/acc
 import type { UpdateAccountManagerRequest, AccountManager } from "@/store/api/account-manager/types"
 import { toast } from "sonner"
 import { useEffect } from "react"
+import { useTranslations } from "next-intl"
+import { useMemo } from "react"
 
-const editAccountManagerSchema = z.object({
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-})
-
-type EditAccountManagerFormValues = z.infer<typeof editAccountManagerSchema>
+type EditAccountManagerFormValues = {
+  email: string
+  firstName?: string
+  lastName?: string
+}
 
 interface EditAccountManagerFormProps {
   accountManager: AccountManager
@@ -31,10 +31,24 @@ export function EditAccountManagerForm({
   onSuccess,
   onCancel,
 }: EditAccountManagerFormProps) {
+  const t = useTranslations("accountManager")
   const [updateAccountManager, { isLoading: isUpdating }] = useUpdateAccountManagerMutation()
 
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z
+          .string()
+          .email(t("validation.invalidEmail"))
+          .min(1, t("validation.emailRequired")),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+      }),
+    [t]
+  )
+
   const form = useForm<EditAccountManagerFormValues>({
-    resolver: zodResolver(editAccountManagerSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       email: accountManager.email,
       firstName: accountManager.firstName || "",
@@ -59,7 +73,7 @@ export function EditAccountManagerForm({
       }
 
       await updateAccountManager({ id: accountManager.id, data: updateData }).unwrap()
-      toast.success("Account manager updated successfully")
+      toast.success(t("toast.updateSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -67,7 +81,7 @@ export function EditAccountManagerForm({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to update account manager"
+          : t("toast.updateFailedFallback")
       toast.error(errorMessage)
     }
   }
@@ -80,7 +94,7 @@ export function EditAccountManagerForm({
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email">
-          Email <span className="text-destructive">*</span>
+          {t("form.emailLabel")} <span className="text-destructive">*</span>
         </Label>
         <Controller
           name="email"
@@ -90,7 +104,7 @@ export function EditAccountManagerForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="manager@example.com"
+                placeholder={t("form.emailPlaceholder")}
                 {...field}
                 className={form.formState.errors.email ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -107,14 +121,14 @@ export function EditAccountManagerForm({
 
       {/* First Name */}
       <div className="space-y-2">
-        <Label htmlFor="firstName">First Name</Label>
+        <Label htmlFor="firstName">{t("form.firstNameLabel")}</Label>
         <Controller
           name="firstName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="firstName"
-              placeholder="John"
+              placeholder={t("form.firstNamePlaceholder")}
               {...field}
               disabled={isLoading}
             />
@@ -124,14 +138,14 @@ export function EditAccountManagerForm({
 
       {/* Last Name */}
       <div className="space-y-2">
-        <Label htmlFor="lastName">Last Name</Label>
+        <Label htmlFor="lastName">{t("form.lastNameLabel")}</Label>
         <Controller
           name="lastName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="lastName"
-              placeholder="Doe"
+              placeholder={t("form.lastNamePlaceholder")}
               {...field}
               disabled={isLoading}
             />
@@ -148,11 +162,11 @@ export function EditAccountManagerForm({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Cancel
+          {t("form.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Update Account Manager
+          {t("form.updateSubmit")}
         </Button>
       </div>
     </form>

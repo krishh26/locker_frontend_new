@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -37,41 +37,18 @@ import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import type { Resource } from "@/store/api/resources/types";
+import { useTranslations } from "next-intl";
 
-const resourceFormSchema = z.object({
-  course_id: z.string().min(1, {
-    message: "Please select a course.",
-  }),
-  name: z.string().min(1, {
-    message: "Name is required.",
-  }),
-  description: z.string().optional(),
-  job_type: z.enum(["On", "Off"]),
-  resource_type: z.enum(["PDF", "WORD", "PPT", "Text", "Image"]),
-  hours: z.number().min(0, "Hours must be 0 or greater").max(23, "Hours must be less than 24"),
-  minute: z.number().min(0, "Minutes must be 0 or greater").max(59, "Minutes must be less than 60"),
-  file: z
-    .instanceof(File, {
-      message: "Please upload a file.",
-    })
-    .refine((file) => file.size <= 10 * 1024 * 1024, {
-      message: "File size must be less than 10MB.",
-    })
-    .optional(),
-});
-
-// Create mode requires file, edit mode doesn't
-const createResourceSchema = resourceFormSchema.extend({
-  file: z
-    .instanceof(File, {
-      message: "Please upload a file.",
-    })
-    .refine((file) => file.size <= 10 * 1024 * 1024, {
-      message: "File size must be less than 10MB.",
-    }),
-});
-
-type ResourceFormValues = z.infer<typeof resourceFormSchema>;
+type ResourceFormValues = {
+  course_id: string;
+  name: string;
+  description?: string;
+  job_type: "On" | "Off";
+  resource_type: "PDF" | "WORD" | "PPT" | "Text" | "Image";
+  hours: number;
+  minute: number;
+  file?: File;
+};
 
 interface ResourceFormDialogProps {
   onSuccess?: () => void;
@@ -90,6 +67,7 @@ export function ResourceFormDialog({
   resource,
   mode = "create",
 }: ResourceFormDialogProps) {
+  const t = useTranslations("resources");
   const isEditMode = mode === "edit" && !!resource;
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
@@ -102,6 +80,52 @@ export function ResourceFormDialog({
   const { data: coursesResponse, isLoading: isLoadingCourses } = useCachedCoursesList();
   
   const courses = coursesResponse?.data || [];
+
+  const resourceFormSchema = useMemo(
+    () =>
+      z.object({
+        course_id: z.string().min(1, {
+          message: t("form.validation.selectCourse"),
+        }),
+        name: z.string().min(1, {
+          message: t("form.validation.nameRequired"),
+        }),
+        description: z.string().optional(),
+        job_type: z.enum(["On", "Off"]),
+        resource_type: z.enum(["PDF", "WORD", "PPT", "Text", "Image"]),
+        hours: z
+          .number()
+          .min(0, t("form.validation.hoursMin"))
+          .max(23, t("form.validation.hoursMax")),
+        minute: z
+          .number()
+          .min(0, t("form.validation.minutesMin"))
+          .max(59, t("form.validation.minutesMax")),
+        file: z
+          .instanceof(File, {
+            message: t("form.validation.uploadFile"),
+          })
+          .refine((file) => file.size <= 10 * 1024 * 1024, {
+            message: t("form.validation.fileTooLarge"),
+          })
+          .optional(),
+      }),
+    [t]
+  );
+
+  const createResourceSchema = useMemo(
+    () =>
+      resourceFormSchema.extend({
+        file: z
+          .instanceof(File, {
+            message: t("form.validation.uploadFile"),
+          })
+          .refine((file) => file.size <= 10 * 1024 * 1024, {
+            message: t("form.validation.fileTooLarge"),
+          }),
+      }),
+    [resourceFormSchema, t]
+  );
 
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(isEditMode ? resourceFormSchema : createResourceSchema),
@@ -117,7 +141,7 @@ export function ResourceFormDialog({
   });
 
   // Reset form when resource changes or dialog opens
-  useState(() => {
+  useEffect(() => {
     if (open && isEditMode && resource) {
       form.reset({
         course_id: String(resource.course_id ?? ""),
@@ -129,7 +153,7 @@ export function ResourceFormDialog({
         minute: Number(resource.minute ?? 0),
       });
     }
-  });
+  }, [form, isEditMode, open, resource]);
 
   const fileRef = form.register("file");
 
@@ -164,7 +188,7 @@ export function ResourceFormDialog({
             data: updateData 
           }).unwrap();
         }
-        toast.success("Resource updated successfully");
+        toast.success(t("form.toast.updated"));
       } else {
         // Create new resource
         const formData = new FormData();
@@ -180,7 +204,7 @@ export function ResourceFormDialog({
         formData.append("file", data.file!);
 
         await createResource(formData as FormData).unwrap();
-        toast.success("Resource created successfully");
+        toast.success(t("form.toast.created"));
       }
       
       form.reset({
@@ -199,7 +223,10 @@ export function ResourceFormDialog({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { error?: string } }).data?.error
           : undefined;
-      toast.error(errorMessage || `Failed to ${isEditMode ? "update" : "create"} resource`);
+      toast.error(
+        errorMessage ||
+          (isEditMode ? t("form.toast.updateFailed") : t("form.toast.createFailed"))
+      );
     }
   }
 
@@ -208,11 +235,13 @@ export function ResourceFormDialog({
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEditMode ? "Edit Resource" : "Create New Resource"}</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? t("form.title.edit") : t("form.title.create")}
+          </DialogTitle>
           <DialogDescription>
             {isEditMode 
-              ? "Update the resource details. Click save when you're done." 
-              : "Upload a new learning resource. Click save when you're done."}
+              ? t("form.description.edit")
+              : t("form.description.create")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -222,11 +251,14 @@ export function ResourceFormDialog({
               name="course_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course <span className="text-destructive">*</span></FormLabel>
+                  <FormLabel>
+                    {t("form.fields.course")}{" "}
+                    <span className="text-destructive">*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="cursor-pointer w-full">
-                        <SelectValue placeholder="Select course" />
+                        <SelectValue placeholder={t("form.placeholders.selectCourse")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -245,7 +277,7 @@ export function ResourceFormDialog({
                         ))
                       ) : (
                         <SelectItem value="" disabled>
-                          No courses available
+                          {t("form.placeholders.noCourses")}
                         </SelectItem>
                       )}
                     </SelectContent>
@@ -260,12 +292,23 @@ export function ResourceFormDialog({
                 name="file"
                 render={({ field: { onChange } }) => (
                 <FormItem>
-                  <FormLabel>File {!isEditMode && <span className="text-destructive">*</span>}</FormLabel>
+                  <FormLabel>
+                    {t("form.fields.file")}{" "}
+                    {!isEditMode && <span className="text-destructive">*</span>}
+                  </FormLabel>
                   <FormControl>
                     <div className="flex flex-col gap-2">
                       {isEditMode && resource?.url?.url && (
                         <div className="text-sm text-muted-foreground mb-2">
-                          Current file: <a href={resource.url.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{resource.url?.key || "View file"}</a>
+                          {t("form.helper.currentFilePrefix")}{" "}
+                          <a
+                            href={resource.url.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
+                            {resource.url?.key || t("form.helper.viewFile")}
+                          </a>
                         </div>
                       )}
                       <div className="flex items-center gap-2">
@@ -286,7 +329,7 @@ export function ResourceFormDialog({
                     </div>
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Max file size: 10MB
+                    {t("form.helper.maxFileSize")}
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -298,17 +341,17 @@ export function ResourceFormDialog({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("form.fields.name")}</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Enter resource name" 
+                      placeholder={t("common.dash")}
                       {...field}
                       readOnly
                       className="bg-muted"
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Name is automatically set from the uploaded file
+                    {t("form.helper.nameAuto")}
                   </p>
                 </FormItem>
               )}
@@ -319,10 +362,10 @@ export function ResourceFormDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("form.fields.description")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter resource description"
+                      placeholder={t("form.placeholders.description")}
                       className="resize-none"
                       {...field}
                     />
@@ -338,7 +381,7 @@ export function ResourceFormDialog({
                 name="hours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Hours (GLH)</FormLabel>
+                    <FormLabel>{t("form.fields.hours")}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -360,7 +403,7 @@ export function ResourceFormDialog({
                 name="minute"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Minutes (GLH)</FormLabel>
+                    <FormLabel>{t("form.fields.minutes")}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -385,19 +428,19 @@ export function ResourceFormDialog({
                 name="job_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Type</FormLabel>
+                    <FormLabel>{t("form.fields.jobType")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select job type" />
+                          <SelectValue placeholder={t("form.placeholders.jobType")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="On">On</SelectItem>
-                        <SelectItem value="Off">Off</SelectItem>
+                        <SelectItem value="On">{t("options.jobType.on")}</SelectItem>
+                        <SelectItem value="Off">{t("options.jobType.off")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -409,22 +452,22 @@ export function ResourceFormDialog({
                 name="resource_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Resource Type</FormLabel>
+                    <FormLabel>{t("form.fields.resourceType")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select resource type" />
+                          <SelectValue placeholder={t("form.placeholders.resourceType")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="PDF">PDF</SelectItem>
-                        <SelectItem value="WORD">WORD</SelectItem>
-                        <SelectItem value="PPT">PPT</SelectItem>
-                        <SelectItem value="Text">Text</SelectItem>
-                        <SelectItem value="Image">Image</SelectItem>
+                        <SelectItem value="PDF">{t("options.resourceType.pdf")}</SelectItem>
+                        <SelectItem value="WORD">{t("options.resourceType.word")}</SelectItem>
+                        <SelectItem value="PPT">{t("options.resourceType.ppt")}</SelectItem>
+                        <SelectItem value="Text">{t("options.resourceType.text")}</SelectItem>
+                        <SelectItem value="Image">{t("options.resourceType.image")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -440,10 +483,10 @@ export function ResourceFormDialog({
                 onClick={() => setOpen(false)}
                 disabled={isLoading}
               >
-                Cancel
+                {t("form.buttons.cancel")}
               </Button>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Creating..." : "Create Resource"}
+                {isLoading ? t("form.buttons.saving") : t("form.buttons.save")}
               </Button>
             </DialogFooter>
           </form>

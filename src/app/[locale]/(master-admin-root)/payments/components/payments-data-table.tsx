@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectAuthUser } from "@/store/slices/authSlice"
 import { clearMasterAdminOrganisationId } from "@/store/slices/orgContextSlice"
 import { isMasterAdmin, type UserWithOrganisations } from "@/utils/permissions"
+import { useTranslations } from "next-intl"
 import {
   type ColumnDef,
   type SortingState,
@@ -51,6 +52,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { exportTableToPdf } from "@/utils/pdfExport"
 
 export function PaymentsDataTable() {
+  const t = useTranslations("payments")
   const router = useRouter()
   const dispatch = useAppDispatch()
   const user = useAppSelector(selectAuthUser)
@@ -93,22 +95,41 @@ export function PaymentsDataTable() {
 
   const handleExportCsv = () => {
     if (filteredPayments.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
 
-    const headers = ["Date", "Organisation", "Plan", "Subtotal", "Discount", "Tax", "Amount/Total", "Status", "Invoice Number", "Payment Method"]
+    const headers = [
+      t("table.columns.date"),
+      t("table.columns.organisation"),
+      t("table.columns.plan"),
+      t("table.columns.subtotal"),
+      t("table.columns.discount"),
+      t("table.columns.tax"),
+      t("table.columns.amountTotal"),
+      t("table.columns.status"),
+      t("table.columns.invoiceNumber"),
+      t("table.columns.paymentMethod"),
+    ]
     const rows = filteredPayments.map((payment: Payment) => [
       new Date(payment.date).toLocaleDateString(),
-      orgMap.get(payment.organisationId) || "Unknown",
-      payment.planName ?? "—",
+      orgMap.get(payment.organisationId) || t("common.unknown"),
+      payment.planName ?? t("common.dash"),
       payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
-      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : "—",
-      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : "—",
+      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : t("common.dash"),
+      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : t("common.dash"),
       payment.total != null ? `£${Number(payment.total).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
-      payment.status === "sent" ? "Sent" : payment.status === "failed" ? "Failed" : payment.status === "refunded" ? "Refunded" : "Draft",
-      payment.invoiceNumber || "N/A",
-      payment.paymentMethod || "N/A",
+      payment.status === "sent"
+        ? t("status.sent")
+        : payment.status === "failed"
+          ? t("status.failed")
+          : payment.status === "refunded"
+            ? t("status.refunded")
+            : t("status.draft"),
+      payment.invoiceNumber || t("common.notAvailable"),
+      payment.paymentMethod
+        ? t(`paymentMethod.${payment.paymentMethod}` as never)
+        : t("common.notAvailable"),
     ])
 
     const csvContent = [
@@ -123,45 +144,64 @@ export function PaymentsDataTable() {
     link.download = `payments_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvExported"))
   }
 
   const handleExportPdf = () => {
-    const headers = ["Date", "Organisation", "Plan", "Subtotal", "Discount", "Tax", "Amount/Total", "Status", "Invoice Number", "Payment Method"]
+    const headers = [
+      t("table.columns.date"),
+      t("table.columns.organisation"),
+      t("table.columns.plan"),
+      t("table.columns.subtotal"),
+      t("table.columns.discount"),
+      t("table.columns.tax"),
+      t("table.columns.amountTotal"),
+      t("table.columns.status"),
+      t("table.columns.invoiceNumber"),
+      t("table.columns.paymentMethod"),
+    ]
     const rows = filteredPayments.map((payment: Payment) => [
       new Date(payment.date).toLocaleDateString(),
-      orgMap.get(payment.organisationId) || "Unknown",
-      payment.planName ?? "—",
+      orgMap.get(payment.organisationId) || t("common.unknown"),
+      payment.planName ?? t("common.dash"),
       payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
-      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : "—",
-      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : "—",
+      payment.discountValue != null ? `£${Number(payment.discountValue).toLocaleString()}` : t("common.dash"),
+      payment.taxValue != null ? `£${Number(payment.taxValue).toLocaleString()}` : t("common.dash"),
       payment.total != null ? `£${Number(payment.total).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
-      payment.status === "sent" ? "Sent" : payment.status === "failed" ? "Failed" : payment.status === "refunded" ? "Refunded" : "Draft",
-      payment.invoiceNumber || "N/A",
-      payment.paymentMethod || "N/A",
+      payment.status === "sent"
+        ? t("status.sent")
+        : payment.status === "failed"
+          ? t("status.failed")
+          : payment.status === "refunded"
+            ? t("status.refunded")
+            : t("status.draft"),
+      payment.invoiceNumber || t("common.notAvailable"),
+      payment.paymentMethod
+        ? t(`paymentMethod.${payment.paymentMethod}` as never)
+        : t("common.notAvailable"),
     ])
     if (rows.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "Payments", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("page.title"), headers, rows })
+    toast.success(t("toast.pdfExported"))
   }
 
   const columns: ColumnDef<Payment>[] = useMemo(
     () => [
       {
         accessorKey: "date",
-        header: "Date",
+        header: t("table.columns.date"),
         cell: ({ row }) => {
           return new Date(row.original.date).toLocaleDateString()
         },
       },
       {
         accessorKey: "organisationId",
-        header: "Organisation",
+        header: t("table.columns.organisation"),
         cell: ({ row }) => {
-          const orgName = orgMap.get(row.original.organisationId) || "Unknown"
+          const orgName = orgMap.get(row.original.organisationId) || t("common.unknown")
           return (
             <Button
               variant="link"
@@ -178,39 +218,39 @@ export function PaymentsDataTable() {
       },
       {
         accessorKey: "planName",
-        header: "Plan",
-        cell: ({ row }) => row.original.planName ?? "—",
+        header: t("table.columns.plan"),
+        cell: ({ row }) => row.original.planName ?? t("common.dash"),
       },
       {
         accessorKey: "subtotal",
-        header: "Subtotal",
+        header: t("table.columns.subtotal"),
         cell: ({ row }) => {
           const v = row.original.subtotal
           if (v != null) return `£${Number(v).toLocaleString()}`
-          return "—"
+          return t("common.dash")
         },
       },
       {
         accessorKey: "discountValue",
-        header: "Discount",
+        header: t("table.columns.discount"),
         cell: ({ row }) => {
           const v = row.original.discountValue
-          if (v == null) return "—"
+          if (v == null) return t("common.dash")
           return `£${Number(v).toLocaleString()}`
         },
       },
       {
         accessorKey: "taxValue",
-        header: "Tax",
+        header: t("table.columns.tax"),
         cell: ({ row }) => {
           const v = row.original.taxValue
-          if (v == null) return "—"
+          if (v == null) return t("common.dash")
           return `£${Number(v).toLocaleString()}`
         },
       },
       {
         accessorKey: "amount",
-        header: "Amount / Total",
+        header: t("table.columns.amountTotal"),
         cell: ({ row }) => {
           const total = row.original.total
           const amount = row.original.amount
@@ -225,10 +265,10 @@ export function PaymentsDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const status = row.original.status
-          const label = status === "sent" ? "Sent" : status === "failed" ? "Failed" : status === "refunded" ? "Refunded" : "Draft"
+          const label = status === "sent" ? t("status.sent") : status === "failed" ? t("status.failed") : status === "refunded" ? t("status.refunded") : t("status.draft")
           const variant = status === "sent" ? "default" : status === "failed" || status === "refunded" ? "destructive" : "secondary"
           return (
             <Badge variant={variant}>
@@ -239,27 +279,28 @@ export function PaymentsDataTable() {
       },
       {
         accessorKey: "invoiceNumber",
-        header: "Invoice Number",
+        header: t("table.columns.invoiceNumber"),
         cell: ({ row }) => {
-          return row.original.invoiceNumber || "N/A"
+          return row.original.invoiceNumber || t("common.notAvailable")
         },
       },
       {
         accessorKey: "paymentMethod",
-        header: "Payment Method",
+        header: t("table.columns.paymentMethod"),
         cell: ({ row }) => {
-          return row.original.paymentMethod || "N/A"
+          if (!row.original.paymentMethod) return t("common.notAvailable")
+          return t(`paymentMethod.${row.original.paymentMethod}` as never)
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }) => (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t("actions.openMenuSrOnly")}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -267,14 +308,14 @@ export function PaymentsDataTable() {
                 onClick={() => router.push(`/payments/${row.original.id}/edit`)}
               >
                 <Pencil className="mr-2 h-4 w-4" />
-                Edit
+                {t("actions.edit")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ),
       },
     ],
-    [orgMap, router]
+    [orgMap, router, t]
   )
 
   const table = useReactTable({
@@ -316,7 +357,7 @@ export function PaymentsDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by invoice number..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               className="pl-9"
@@ -325,26 +366,26 @@ export function PaymentsDataTable() {
           <div className="flex items-center gap-2">
             <Button size="sm" onClick={() => router.push("/payments/add")}>
               <Plus className="mr-2 h-4 w-4" />
-              Add invoice
+              {t("actions.addInvoice")}
             </Button>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder={t("table.filters.statusPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="sent">Sent</SelectItem>
-                <SelectItem value="failed">Failed</SelectItem>
-                <SelectItem value="refunded">Refunded</SelectItem>
+                <SelectItem value="all">{t("table.filters.allStatuses")}</SelectItem>
+                <SelectItem value="draft">{t("status.draft")}</SelectItem>
+                <SelectItem value="sent">{t("status.sent")}</SelectItem>
+                <SelectItem value="failed">{t("status.failed")}</SelectItem>
+                <SelectItem value="refunded">{t("status.refunded")}</SelectItem>
               </SelectContent>
             </Select>
             <Select value={orgFilter} onValueChange={setOrgFilter}>
               <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Filter by organisation" />
+                <SelectValue placeholder={t("table.filters.orgPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Organisations</SelectItem>
+                <SelectItem value="all">{t("table.filters.allOrganisations")}</SelectItem>
                 {organisations.map((org: { id: number; name: string }) => (
                   <SelectItem key={org.id} value={String(org.id)}>
                     {org.name}
@@ -356,15 +397,15 @@ export function PaymentsDataTable() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Download className="mr-2 h-4 w-4" />
-                  Export
+                  {t("actions.export")}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleExportCsv}>
-                  Export CSV
+                  {t("actions.exportCsv")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleExportPdf}>
-                  Export PDF
+                  {t("actions.exportPdf")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -414,7 +455,7 @@ export function PaymentsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No payments found.
+                  {t("table.empty")}
                 </TableCell>
               </TableRow>
             )}

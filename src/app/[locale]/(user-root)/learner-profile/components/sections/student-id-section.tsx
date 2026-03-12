@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface StudentIdSectionProps {
 }
 
 export function StudentIdSection({ learner, canEdit = false }: StudentIdSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const uln = (learner as { uln?: string }).uln || "";
   const misLearnerId = (learner as { mis_learner_id?: string }).mis_learner_id || "";
@@ -20,12 +22,12 @@ export function StudentIdSection({ learner, canEdit = false }: StudentIdSectionP
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Student ID</CardTitle>
+        <CardTitle>{t("sections.studentId.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">ULN</Label>
+            <Label className="text-sm font-medium">{t("sections.studentId.uln")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -46,7 +48,7 @@ export function StudentIdSection({ learner, canEdit = false }: StudentIdSectionP
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">MIS Learner ID</Label>
+            <Label className="text-sm font-medium">{t("sections.studentId.misLearnerId")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -67,7 +69,7 @@ export function StudentIdSection({ learner, canEdit = false }: StudentIdSectionP
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Student ID</Label>
+            <Label className="text-sm font-medium">{t("sections.studentId.studentId")}</Label>
             {canEdit ? (
               <>
                 <Input

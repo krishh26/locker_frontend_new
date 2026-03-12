@@ -47,8 +47,10 @@ import { toast } from "sonner"
 import { AssignPlanDialog } from "./assign-plan-dialog"
 import { ChangePlanDialog } from "./change-plan-dialog"
 import { SuspendAccessDialog } from "./suspend-access-dialog"
+import { useTranslations } from "next-intl"
 
 export function SubscriptionsDataTable() {
+  const t = useTranslations("subscriptions")
   const router = useRouter()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -79,16 +81,24 @@ export function SubscriptionsDataTable() {
 
   const handleExportCsv = () => {
     if (filteredSubscriptions.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
 
-    const headers = ["Organisation", "Plan", "Users", "Status", "Expiry Date"]
+    const headers = [
+      t("subscriptionsTable.columns.organisation"),
+      t("subscriptionsTable.columns.plan"),
+      t("subscriptionsTable.columns.users"),
+      t("subscriptionsTable.columns.status"),
+      t("subscriptionsTable.columns.expiryDate"),
+    ]
     const rows = filteredSubscriptions.map((sub) => [
-      orgMap.get(sub.organisationId) || "Unknown",
+      orgMap.get(sub.organisationId) || t("common.unknown"),
       sub.plan,
       `${sub.usedUsers}/${sub.userLimit}`,
-      sub.isExpired ? "Expired" : "Active",
+      sub.isExpired
+        ? t("subscriptionsTable.status.expired")
+        : t("subscriptionsTable.status.active"),
       new Date(sub.expiryDate).toLocaleDateString(),
     ])
 
@@ -104,24 +114,32 @@ export function SubscriptionsDataTable() {
     link.download = `subscriptions_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvExported"))
   }
 
   const handleExportPdf = () => {
     if (filteredSubscriptions.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
-    const headers = ["Organisation", "Plan", "Users", "Status", "Expiry Date"]
+    const headers = [
+      t("subscriptionsTable.columns.organisation"),
+      t("subscriptionsTable.columns.plan"),
+      t("subscriptionsTable.columns.users"),
+      t("subscriptionsTable.columns.status"),
+      t("subscriptionsTable.columns.expiryDate"),
+    ]
     const rows = filteredSubscriptions.map((sub) => [
-      orgMap.get(sub.organisationId) || "Unknown",
+      orgMap.get(sub.organisationId) || t("common.unknown"),
       sub.plan,
       `${sub.usedUsers}/${sub.userLimit}`,
-      sub.isExpired ? "Expired" : "Active",
+      sub.isExpired
+        ? t("subscriptionsTable.status.expired")
+        : t("subscriptionsTable.status.active"),
       new Date(sub.expiryDate).toLocaleDateString(),
     ])
-    exportTableToPdf({ title: "Subscriptions", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("page.title"), headers, rows })
+    toast.success(t("toast.pdfExported"))
   }
 
   const handleAssignPlanSuccess = useCallback(() => {
@@ -143,9 +161,9 @@ export function SubscriptionsDataTable() {
     () => [
       {
         accessorKey: "organisationId",
-        header: "Organisation",
+        header: t("subscriptionsTable.columns.organisation"),
         cell: ({ row }) => {
-          const orgName = orgMap.get(row.original.organisationId) || "Unknown"
+          const orgName = orgMap.get(row.original.organisationId) || t("common.unknown")
           return (
             <Button
               variant="link"
@@ -162,7 +180,7 @@ export function SubscriptionsDataTable() {
       },
       {
         accessorKey: "plan",
-        header: "Plan",
+        header: t("subscriptionsTable.columns.plan"),
         cell: ({ row }) => {
           return (
             <div className="font-medium flex items-center gap-2">
@@ -174,7 +192,7 @@ export function SubscriptionsDataTable() {
       },
       {
         accessorKey: "users",
-        header: "Users",
+        header: t("subscriptionsTable.columns.users"),
         cell: ({ row }) => {
           const sub = row.original
           const isLimitReached = sub.usedUsers >= sub.userLimit
@@ -192,26 +210,28 @@ export function SubscriptionsDataTable() {
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("subscriptionsTable.columns.status"),
         cell: ({ row }) => {
           const isExpired = row.original.isExpired
           return (
             <Badge variant={isExpired ? "destructive" : "default"}>
-              {isExpired ? "Expired" : "Active"}
+              {isExpired
+                ? t("subscriptionsTable.status.expired")
+                : t("subscriptionsTable.status.active")}
             </Badge>
           )
         },
       },
       {
         accessorKey: "expiryDate",
-        header: "Expiry Date",
+        header: t("subscriptionsTable.columns.expiryDate"),
         cell: ({ row }) => {
           return new Date(row.original.expiryDate).toLocaleDateString()
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("subscriptionsTable.columns.actions"),
         cell: ({ row }) => {
           const sub = row.original
           return (
@@ -224,11 +244,11 @@ export function SubscriptionsDataTable() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setChangePlanSub(sub)}>
                   <RefreshCw className="h-4 w-4 mr-2" />
-                  Change Plan
+                  {t("subscriptionsTable.actionsMenu.changePlan")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setSuspendAccessSub(sub)}>
                   <Ban className="h-4 w-4 mr-2" />
-                  Suspend Access
+                  {t("subscriptionsTable.actionsMenu.suspendAccess")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -236,7 +256,7 @@ export function SubscriptionsDataTable() {
         },
       },
     ],
-    [orgMap, router]
+    [orgMap, router, t]
   )
 
   const table = useReactTable({
@@ -263,7 +283,7 @@ export function SubscriptionsDataTable() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search subscriptions..."
+            placeholder={t("subscriptionsTable.searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-9"
@@ -272,21 +292,21 @@ export function SubscriptionsDataTable() {
         <div className="flex items-center gap-2">
           <Button variant="default" size="sm" onClick={() => setIsAssignPlanOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Assign Plan
+            {t("subscriptionsTable.buttons.assignPlan")}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                {t("actions.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv}>
-                Export CSV
+                {t("actions.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf}>
-                Export PDF
+                {t("actions.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -335,7 +355,7 @@ export function SubscriptionsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No subscriptions found.
+                  {t("subscriptionsTable.empty")}
                 </TableCell>
               </TableRow>
             )}
@@ -350,9 +370,9 @@ export function SubscriptionsDataTable() {
       <Dialog open={isAssignPlanOpen} onOpenChange={setIsAssignPlanOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Assign Plan to Organisation</DialogTitle>
+            <DialogTitle>{t("subscriptionsTable.dialogs.assignPlan.title")}</DialogTitle>
             <DialogDescription>
-              Select an organisation and a plan to assign.
+              {t("subscriptionsTable.dialogs.assignPlan.description")}
             </DialogDescription>
           </DialogHeader>
           <AssignPlanDialog onSuccess={handleAssignPlanSuccess} onCancel={() => setIsAssignPlanOpen(false)} />
@@ -364,9 +384,9 @@ export function SubscriptionsDataTable() {
         <Dialog open={!!changePlanSub} onOpenChange={(open) => !open && setChangePlanSub(null)}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Change Plan</DialogTitle>
+              <DialogTitle>{t("subscriptionsTable.dialogs.changePlan.title")}</DialogTitle>
               <DialogDescription>
-                Select a new plan for this organisation.
+                {t("subscriptionsTable.dialogs.changePlan.description")}
               </DialogDescription>
             </DialogHeader>
             <ChangePlanDialog
@@ -384,9 +404,9 @@ export function SubscriptionsDataTable() {
         <Dialog open={!!suspendAccessSub} onOpenChange={(open) => !open && setSuspendAccessSub(null)}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Suspend Organisation Access</DialogTitle>
+              <DialogTitle>{t("subscriptionsTable.dialogs.suspendAccess.title")}</DialogTitle>
               <DialogDescription>
-                Restrict usage for this organisation. Optionally provide a reason.
+                {t("subscriptionsTable.dialogs.suspendAccess.description")}
               </DialogDescription>
             </DialogHeader>
             <SuspendAccessDialog

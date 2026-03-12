@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
@@ -13,16 +14,17 @@ interface ModuleUnitProgressLearnerInfoCardProps {
 export function ModuleUnitProgressLearnerInfoCard({
   isLoading,
 }: ModuleUnitProgressLearnerInfoCardProps) {
+  const t = useTranslations("moduleUnitProgress");
   const learner = useAppSelector((state) => state.auth.learner);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
 
   const courseName = useMemo(() => {
-    if (!learner?.course || !currentCourseId) return "-";
+    if (!learner?.course || !currentCourseId) return t("common.dash");
     const course = learner.course.find(
       (c) => c.course?.course_id === currentCourseId
     );
-    return course?.course?.course_name || "-";
-  }, [learner?.course, currentCourseId]);
+    return course?.course?.course_name || t("common.dash");
+  }, [learner?.course, currentCourseId, t]);
 
   if (isLoading) {
     return (
@@ -45,23 +47,33 @@ export function ModuleUnitProgressLearnerInfoCard({
     return (
       <Card>
         <CardContent className="p-6">
-          <p className="text-muted-foreground">No learner information available</p>
+          <p className="text-muted-foreground">{t("learnerInfo.noInfo")}</p>
         </CardContent>
       </Card>
     );
   }
 
-  const learnerName = `${learner.first_name || ""} ${learner.last_name || ""}`.trim() || "-";
-  const uln = (learner as LearnerData & { uln?: string }).uln || "-";
-  const registrationNumber = (learner as LearnerData & { registration_number?: string }).registration_number || "-";
-  const trainingProvider = (learner as LearnerData & { training_provider?: string }).training_provider || "-";
+  const learnerName =
+    `${learner.first_name || ""} ${learner.last_name || ""}`.trim() ||
+    t("common.dash");
+  const uln =
+    (learner as LearnerData & { uln?: string }).uln || t("common.dash");
+  const registrationNumber =
+    (learner as LearnerData & { registration_number?: string })
+      .registration_number || t("common.dash");
+  const trainingProvider =
+    (learner as LearnerData & { training_provider?: string })
+      .training_provider || t("common.dash");
 
   const infoItems = [
-    { label: "Learner", value: learnerName },
-    { label: "ULN", value: uln },
-    { label: "Registration Number", value: registrationNumber },
-    { label: "Training Provider", value: trainingProvider },
-    { label: "Course Name", value: courseName },
+    { label: t("learnerInfo.labels.learner"), value: learnerName },
+    { label: t("learnerInfo.labels.uln"), value: uln },
+    {
+      label: t("learnerInfo.labels.registrationNumber"),
+      value: registrationNumber,
+    },
+    { label: t("learnerInfo.labels.trainingProvider"), value: trainingProvider },
+    { label: t("learnerInfo.labels.courseName"), value: courseName },
   ];
 
   return (

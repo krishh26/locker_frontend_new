@@ -13,6 +13,7 @@ import { LayoutTab } from './layout-tab'
 import { ImportModal } from './import-modal'
 import { cn } from '@/lib/utils'
 import type { ImportedTheme } from '@/types/theme-customizer'
+import { useTranslations } from 'next-intl'
 
 const THEME_PRESET_STORAGE_KEY = "nextjs-ui-theme-preset"
 
@@ -45,6 +46,7 @@ interface ThemeCustomizerProps {
 }
 
 export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
+  const t = useTranslations('themeCustomizer')
   const { applyImportedTheme, isDarkMode, resetTheme, applyRadius, setBrandColorsValues, applyTheme, applyTweakcnTheme } = useThemeManager()
   const { config: sidebarConfig, updateConfig: updateSidebarConfig } = useSidebarConfig()
 
@@ -158,7 +160,7 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
               <div className="p-2 bg-primary text-primary-foreground rounded-lg">
                 <Settings className="h-4 w-4" />
               </div>
-              <SheetTitle className="text-lg font-semibold">Customizer</SheetTitle>
+              <SheetTitle className="text-lg font-semibold">{t('title')}</SheetTitle>
               <div className="ml-auto flex items-center gap-2">
                 <Button variant="outline" size="icon" onClick={handleReset} className="cursor-pointer h-8 w-8">
                   <RotateCcw className="h-4 w-4" />
@@ -169,7 +171,7 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
               </div>
             </div>
             <SheetDescription className="text-sm text-muted-foreground sr-only">
-              Customize the them and layout of your dashboard.
+              {t('srDescription')}
             </SheetDescription>
           </SheetHeader>
 
@@ -177,8 +179,8 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
               <div className="py-2">
                 <TabsList className="grid w-full grid-cols-2 rounded-none h-12 p-1.5">
-                  <TabsTrigger value="theme" className="cursor-pointer data-[state=active]:bg-background"><Palette className="h-4 w-4 mr-1" /> Theme</TabsTrigger>
-                  <TabsTrigger value="layout" className="cursor-pointer data-[state=active]:bg-background"><Layout className="h-4 w-4 mr-1" /> Layout</TabsTrigger>
+                  <TabsTrigger value="theme" className="cursor-pointer data-[state=active]:bg-background"><Palette className="h-4 w-4 mr-1" /> {t('tabs.theme')}</TabsTrigger>
+                  <TabsTrigger value="layout" className="cursor-pointer data-[state=active]:bg-background"><Layout className="h-4 w-4 mr-1" /> {t('tabs.layout')}</TabsTrigger>
                 </TabsList>
                 {/* <TabsList className="grid w-full grid-cols-2 rounded-none h-12 p-1.5">
                   <TabsTrigger value="theme" className="cursor-pointer data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"><Palette className="h-4 w-4 mr-1" /> Theme</TabsTrigger>

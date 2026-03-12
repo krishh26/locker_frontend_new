@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText, File } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useRouter } from "@/i18n/navigation";
@@ -38,12 +39,30 @@ const categories = [
 ];
 
 export function FileCategorySummary({ data }: FileCategorySummaryProps) {
+  const t = useTranslations("learningPlan");
   const router = useRouter();
+
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case "ILP File":
+        return t("options.fileCategories.ilpFile");
+      case "Assessment Files":
+        return t("options.fileCategories.assessmentFiles");
+      case "Review Files":
+        return t("options.fileCategories.reviewFiles");
+      case "General Files":
+        return t("options.fileCategories.generalFiles");
+      case "Evidence":
+        return t("options.fileCategories.evidence");
+      default:
+        return category;
+    }
+  };
 
   if (!data || data.length === 0) {
     return (
       <div className="border rounded-lg p-4 w-full max-w-[250px] bg-muted/50">
-        <p className="text-sm text-muted-foreground">No documents available</p>
+        <p className="text-sm text-muted-foreground">{t("table.noResults")}</p>
       </div>
     );
   }
@@ -58,7 +77,7 @@ export function FileCategorySummary({ data }: FileCategorySummaryProps) {
           return (
             <div key={idx} className="mb-4 last:mb-0">
               <p className="text-sm font-semibold mb-2">
-                {idx + 1}. {category.replace(" Files", "")}:
+                {idx + 1}. {getCategoryLabel(category)}:
               </p>
               <div className="flex gap-1 flex-wrap">
                 {categoryDocs.map((doc) => {

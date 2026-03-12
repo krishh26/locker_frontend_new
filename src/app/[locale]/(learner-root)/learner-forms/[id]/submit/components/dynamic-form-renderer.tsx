@@ -30,6 +30,7 @@ import { useAppSelector } from "@/store/hooks"
 import type { FormField } from "@/store/api/forms/types"
 import { FileUploadField } from "./file-upload-field"
 import { SignatureInput } from "./signature-input"
+import { useTranslations } from "next-intl"
 
 interface DynamicFormRendererProps {
   formId: string
@@ -49,7 +50,10 @@ const widthToClass = (width?: string) => {
   }
 }
 
-const getDynamicZodSchema = (fields: FormField[]) => {
+const getDynamicZodSchema = (
+  fields: FormField[],
+  t: (key: string, values?: Record<string, string>) => string
+) => {
   const schemaObject: Record<string, z.ZodTypeAny> = {}
 
   fields.forEach((field) => {
@@ -59,40 +63,40 @@ const getDynamicZodSchema = (fields: FormField[]) => {
 
     switch (type) {
       case "email":
-        schema = z.string().email(`${label} must be a valid email`)
+        schema = z.string().email(t("validation.email", { label }))
         break
       case "number":
         schema = z.coerce
           .number()
           .refine((val) => !isNaN(val), {
-            message: `${label} must be a number`,
+            message: t("validation.number", { label }),
           })
         break
       case "phone":
         schema = z
           .string()
-          .regex(/^\+?[0-9]*$/, `${label} must contain only numbers`)
+          .regex(/^\+?[0-9]*$/, t("validation.phone", { label }))
         break
       case "checkbox":
         schema = z.array(z.string())
         break
       case "file":
         schema = z
-          .instanceof(File, { message: `${label} is required` })
+          .instanceof(File, { message: t("validation.required", { label }) })
           .optional()
           .refine(
             (file) => {
               if (!required) return true
               return file !== undefined
             },
-            { message: `${label} is required` }
+            { message: t("validation.required", { label }) }
           )
           .refine(
             (file) => {
               if (!file) return true
               return file.size <= 10 * 1024 * 1024 // 10MB
             },
-            { message: `${label} is too large (max 10MB)` }
+            { message: t("validation.fileTooLarge", { label }) }
           )
         break
       case "signature":
@@ -107,7 +111,7 @@ const getDynamicZodSchema = (fields: FormField[]) => {
 
     if (required && type !== "file" && type !== "signature") {
       if (z.string().safeParse("").success) {
-        schema = (schema as z.ZodString).min(1, `${label} is required`)
+        schema = (schema as z.ZodString).min(1, t("validation.required", { label }))
       }
     }
 
@@ -123,6 +127,7 @@ export function DynamicFormRenderer({
   description,
   fields,
 }: DynamicFormRendererProps) {
+  const t = useTranslations("learnerFormSubmit")
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
@@ -130,7 +135,7 @@ export function DynamicFormRenderer({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDraftLoading, setIsDraftLoading] = useState(false)
 
-  const validationSchema = getDynamicZodSchema(fields)
+  const validationSchema = getDynamicZodSchema(fields, t)
 
   const { data: formDataDetails } = useGetFormDataDetailsQuery(
     {
@@ -304,7 +309,7 @@ export function DynamicFormRenderer({
         submit: user.role === "Learner",
       }).unwrap()
 
-      toast.success("Form submitted successfully!")
+      toast.success(t("toast.submitSuccess"))
 
       if (user.role === "Learner") {
         setTimeout(() => {
@@ -319,7 +324,7 @@ export function DynamicFormRenderer({
         typeof (error as { data?: { message?: string } }).data?.message ===
           "string"
           ? (error as { data: { message: string } }).data.message
-          : "Failed to submit form. Please try again."
+          : t("toast.submitFailed")
       toast.error(errorMessage)
     } finally {
       setIsSubmitting(false)
@@ -373,7 +378,7 @@ export function DynamicFormRenderer({
         submit: false,
       }).unwrap()
 
-      toast.success("Form saved as draft!")
+      toast.success(t("toast.draftSuccess"))
       setTimeout(() => {
         router.push("/learner-forms")
       }, 2000)
@@ -385,7 +390,7 @@ export function DynamicFormRenderer({
         typeof (error as { data?: { message?: string } }).data?.message ===
           "string"
           ? (error as { data: { message: string } }).data.message
-          : "Failed to save draft. Please try again."
+          : t("toast.draftFailed")
       toast.error(errorMessage)
     } finally {
       setIsDraftLoading(false)
@@ -407,7 +412,7 @@ export function DynamicFormRenderer({
         <CardContent className="p-6">
           <div className="rounded-md bg-muted p-4">
             <p className="text-sm text-muted-foreground">
-              No fields added to the form.
+              {t("form.noFields")}
             </p>
           </div>
         </CardContent>
@@ -423,9 +428,7 @@ export function DynamicFormRenderer({
             <div className="flex items-start gap-2">
               <Lock className="h-4 w-4 text-secondary mt-0.5" />
               <p className="text-sm text-secondary">
-                This form is currently locked and cannot be edited. If you need
-                to make changes, please contact your trainer or administrator
-                for assistance.
+                {t("form.lockedMessage")}
               </p>
             </div>
           </div>
@@ -757,7 +760,7 @@ export function DynamicFormRenderer({
               onClick={onClear}
               disabled={isLocked || isSubmitting || isDraftLoading || isEmployer}
             >
-              Clear Form
+              {t("form.clearForm")}
             </Button>
 
             {user?.role === "Learner" && (
@@ -770,10 +773,10 @@ export function DynamicFormRenderer({
                 {isDraftLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
+                    {t("form.saving")}
                   </>
                 ) : (
-                  "Save as Draft"
+                  t("form.saveAsDraft")
                 )}
               </Button>
             )}
@@ -785,10 +788,10 @@ export function DynamicFormRenderer({
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Submitting...
+                  {t("form.submitting")}
                 </>
               ) : (
-                "Submit"
+                t("form.submit")
               )}
             </Button>
           </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { format } from "date-fns"
 import { Check, X, Bell, BellRing, Newspaper, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -67,25 +68,26 @@ const getNotificationIcon = (type: NotificationType) => {
   }
 }
 
-const getTypeLabel = (type: NotificationType): string => {
-  switch (type) {
-    case "notification":
-      return "Notification"
-    case "news":
-      return "News"
-    case "allocation":
-      return "Allocation"
-    default:
-      return "Notification"
-  }
-}
-
 export function NotificationItem({
   notification,
   onRead,
   onDelete,
 }: NotificationItemProps) {
+  const t = useTranslations("notifications")
   const Icon = getNotificationIcon(notification.type)
+
+  const getTypeLabel = (type: NotificationType): string => {
+    switch (type) {
+      case "notification":
+        return t("types.notification")
+      case "news":
+        return t("types.news")
+      case "allocation":
+        return t("types.allocation")
+      default:
+        return t("types.notification")
+    }
+  }
 
   // Parse message to extract URLs
   const messageParts = useMemo(
@@ -117,7 +119,7 @@ export function NotificationItem({
               </h4>
               {!notification.read && (
                 <Badge variant="secondary" className="text-xs">
-                  New
+                  {t("item.newBadge")}
                 </Badge>
               )}
               <Badge variant="outline" className="text-xs">
@@ -161,7 +163,7 @@ export function NotificationItem({
               onClick={() => onRead(notification.notification_id)}
             >
               <Check className="h-4 w-4 mr-2" />
-              Mark as read
+              {t("item.markAsRead")}
             </Button>
           )}
           {onDelete && (
@@ -172,7 +174,7 @@ export function NotificationItem({
               className="text-destructive hover:text-destructive"
             >
               <X className="h-4 w-4 mr-2" />
-              Delete
+              {t("item.delete")}
             </Button>
           )}
         </div>

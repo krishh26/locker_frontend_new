@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { useRouter } from "@/i18n/navigation"
+import { useTranslations } from "next-intl"
 import {
   type ColumnDef,
   type SortingState,
@@ -46,35 +47,32 @@ import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { exportTableToPdf } from "@/utils/pdfExport"
 
-/** Format details for display (backend may return an object or string) */
-function formatDetails(details: AuditLog["details"]): string {
-  if (details == null) return "N/A"
-  if (typeof details === "string") return details
-  return JSON.stringify(details, null, 2)
-}
-
-/** Map backend AuditActionType enum to human-readable labels */
-const ACTION_TYPE_LABELS: Record<string, string> = {
-  system_action: "System Action",
-  account_manager_action: "Account Manager Action",
-  organisation_change: "Organisation Change",
-  access_change: "Access Change",
-  centre_change: "Centre Change",
-  subscription_change: "Subscription Change",
-  feature_change: "Feature Change",
-}
-
-function getActionTypeLabel(value: string): string {
-  return ACTION_TYPE_LABELS[value] ?? value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
-}
-
 export function AuditLogsDataTable() {
+  const t = useTranslations("auditLogs")
   const router = useRouter()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState("")
   const [orgFilter, setOrgFilter] = useState<string>("all")
   const [actionFilter, setActionFilter] = useState<string>("all")
+
+  const formatDetails = (details: AuditLog["details"]): string => {
+    if (details == null) return t("common.notAvailable")
+    if (typeof details === "string") return details
+    return JSON.stringify(details, null, 2)
+  }
+
+  const getActionTypeLabel = (value: string): string => {
+    if (!value) return t("common.dash")
+    const key = `actionTypes.${value}` as const
+    const translated = t(key, {
+      // allow unknown keys to fall back via catch below
+    } as never)
+    if (translated && translated !== key) return translated
+    return value
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+  }
 
   // API queries with filters
   const { data: logsData, isLoading } = useGetAuditLogsQuery({
@@ -107,14 +105,22 @@ export function AuditLogsDataTable() {
 
   const handleExportCsv = () => {
     if (filteredLogs.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
 
-    const headers = ["Timestamp", "Organisation", "Action", "User", "Details"]
+    const headers = [
+      t("table.columns.timestamp"),
+      t("table.columns.organisation"),
+      t("table.columns.action"),
+      t("table.columns.user"),
+      t("table.columns.details"),
+    ]
     const rows = filteredLogs.map((log: AuditLog) => [
       new Date(log.createdAt).toLocaleString(),
-      log.organisationName ?? orgMap.get(log.organisationId ?? 0) ?? "—",
+      log.organisationName ??
+        orgMap.get(log.organisationId ?? 0) ??
+        t("common.dash"),
       getActionTypeLabel(log.actionType),
       log.userName,
       formatDetails(log.details),
@@ -132,31 +138,39 @@ export function AuditLogsDataTable() {
     link.download = `audit-logs_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvExported"))
   }
 
   const handleExportPdf = () => {
-    const headers = ["Timestamp", "Organisation", "Action", "User", "Details"]
+    const headers = [
+      t("table.columns.timestamp"),
+      t("table.columns.organisation"),
+      t("table.columns.action"),
+      t("table.columns.user"),
+      t("table.columns.details"),
+    ]
     const rows = filteredLogs.map((log: AuditLog) => [
       new Date(log.createdAt).toLocaleString(),
-      log.organisationName ?? orgMap.get(log.organisationId ?? 0) ?? "—",
+      log.organisationName ??
+        orgMap.get(log.organisationId ?? 0) ??
+        t("common.dash"),
       getActionTypeLabel(log.actionType),
       log.userName,
       formatDetails(log.details),
     ])
     if (rows.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "Audit Logs", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("page.title"), headers, rows })
+    toast.success(t("toast.pdfExported"))
   }
 
   const columns: ColumnDef<AuditLog>[] = useMemo(
     () => [
       {
         accessorKey: "createdAt",
-        header: "Timestamp",
+        header: t("table.columns.timestamp"),
         cell: ({ row }) => {
           return (
             <div className="flex items-center gap-2">
@@ -168,14 +182,14 @@ export function AuditLogsDataTable() {
       },
       {
         accessorKey: "organisationId",
-        header: "Organisation",
+        header: t("table.columns.organisation"),
         cell: ({ row }) => {
           const orgName =
             row.original.organisationName ??
             (row.original.organisationId != null
               ? orgMap.get(row.original.organisationId)
               : null) ??
-            "—"
+            t("common.dash")
           const orgId = row.original.organisationId
           if (orgId != null) {
             return (
@@ -199,7 +213,7 @@ export function AuditLogsDataTable() {
       },
       {
         accessorKey: "actionType",
-        header: "Action",
+        header: t("table.columns.action"),
         cell: ({ row }) => {
           return (
             <Badge variant="outline" className="flex items-center gap-1">
@@ -211,7 +225,7 @@ export function AuditLogsDataTable() {
       },
       {
         accessorKey: "userName",
-        header: "User",
+        header: t("table.columns.user"),
         cell: ({ row }) => {
           const log = row.original
           return (
@@ -228,7 +242,7 @@ export function AuditLogsDataTable() {
       },
       {
         accessorKey: "details",
-        header: "Details",
+        header: t("table.columns.details"),
         cell: ({ row }) => {
           return (
             <div className="max-w-md truncate font-mono text-xs">
@@ -238,7 +252,7 @@ export function AuditLogsDataTable() {
         },
       },
     ],
-    [orgMap, router]
+    [orgMap, router, t]
   )
 
   const table = useReactTable({
@@ -280,7 +294,7 @@ export function AuditLogsDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search by user or details..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
               className="pl-9"
@@ -289,10 +303,10 @@ export function AuditLogsDataTable() {
           <div className="flex items-center gap-2">
             <Select value={actionFilter} onValueChange={setActionFilter}>
               <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Filter by action" />
+                <SelectValue placeholder={t("table.filters.actionPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Actions</SelectItem>
+                <SelectItem value="all">{t("table.filters.allActions")}</SelectItem>
                 {uniqueActions.map((action: string) => (
                   <SelectItem key={action} value={action}>
                     {getActionTypeLabel(action)}
@@ -302,10 +316,10 @@ export function AuditLogsDataTable() {
             </Select>
             <Select value={orgFilter} onValueChange={setOrgFilter}>
               <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Filter by organisation" />
+                <SelectValue placeholder={t("table.filters.orgPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Organisations</SelectItem>
+                <SelectItem value="all">{t("table.filters.allOrganisations")}</SelectItem>
                 {organisations.map((org: { id: number; name: string }) => (
                   <SelectItem key={org.id} value={String(org.id)}>
                     {org.name}
@@ -317,15 +331,15 @@ export function AuditLogsDataTable() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Download className="mr-2 h-4 w-4" />
-                  Export
+                  {t("actions.export")}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleExportCsv}>
-                  Export CSV
+                  {t("actions.exportCsv")}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleExportPdf}>
-                  Export PDF
+                  {t("actions.exportPdf")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -375,7 +389,7 @@ export function AuditLogsDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No audit logs found.
+                  {t("table.empty")}
                 </TableCell>
               </TableRow>
             )}

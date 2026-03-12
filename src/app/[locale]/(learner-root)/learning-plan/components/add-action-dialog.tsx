@@ -4,6 +4,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -35,32 +36,24 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const actionSchema = z.object({
-  actionName: z.string().min(1, "Action name is required"),
-  actionDescription: z.string().max(1000, "Description cannot exceed 1000 characters").optional(),
-  targetDate: z.date({
-    message: "Target date is required",
-  }),
-  onOffJob: z.string().optional(),
-  who: z.enum(["learner", "assessor", "employer", "sessionLearner"], {
-    message: "Please select an action type",
-  }),
-  unit: z.string().optional(),
-});
-
-const editActionSchema = z.object({
-  actionDescription: z.string().max(1000, "Description cannot exceed 1000 characters").optional(),
-  targetDate: z.date().nullable().optional(),
-  onOffJob: z.string().optional(),
-  time_spent: z.number().nullable().optional(),
-  trainer_feedback: z.string().nullable().optional(),
-  learner_feedback: z.string().nullable().optional(),
-  learner_status: z.string().optional(),
-  status: z.string().optional(),
-});
-
-type ActionFormData = z.infer<typeof actionSchema>;
-type EditActionFormData = z.infer<typeof editActionSchema>;
+type ActionFormData = {
+  actionName: string;
+  actionDescription?: string;
+  targetDate: Date;
+  onOffJob?: string;
+  who: "learner" | "assessor" | "employer" | "sessionLearner";
+  unit?: string;
+};
+type EditActionFormData = {
+  actionDescription?: string;
+  targetDate?: Date | null;
+  onOffJob?: string;
+  time_spent?: number | null;
+  trainer_feedback?: string | null;
+  learner_feedback?: string | null;
+  learner_status?: string;
+  status?: string;
+};
 
 interface AddActionDialogProps {
   open: boolean;
@@ -84,11 +77,50 @@ export function AddActionDialog({
   editAction,
   userRole,
 }: AddActionDialogProps) {
+  const t = useTranslations("learningPlan");
   const [addAction, { isLoading: isAdding }] = useAddActionMutation();
   const [editActionMutation, { isLoading: isEditing }] = useEditActionMutation();
   
   const isEditMode = !!editAction;
   const isLoading = isAdding || isEditing;
+
+  const actionSchema = React.useMemo(
+    () =>
+      z.object({
+        actionName: z.string().min(1, t("dialogs.addAction.validation.actionNameRequired")),
+        actionDescription: z
+          .string()
+          .max(1000, t("dialogs.addAction.validation.descriptionTooLong"))
+          .optional(),
+        targetDate: z.date({
+          message: t("dialogs.addAction.validation.targetDateRequired"),
+        }),
+        onOffJob: z.string().optional(),
+        who: z.enum(["learner", "assessor", "employer", "sessionLearner"], {
+          message: t("dialogs.addAction.validation.whoRequired"),
+        }),
+        unit: z.string().optional(),
+      }),
+    [t]
+  );
+
+  const editActionSchema = React.useMemo(
+    () =>
+      z.object({
+        actionDescription: z
+          .string()
+          .max(1000, t("dialogs.addAction.validation.descriptionTooLong"))
+          .optional(),
+        targetDate: z.date().nullable().optional(),
+        onOffJob: z.string().optional(),
+        time_spent: z.number().nullable().optional(),
+        trainer_feedback: z.string().nullable().optional(),
+        learner_feedback: z.string().nullable().optional(),
+        learner_status: z.string().optional(),
+        status: z.string().optional(),
+      }),
+    [t]
+  );
 
   // Add mode form
   const {
@@ -173,13 +205,13 @@ export function AddActionDialog({
 
     try {
       await addAction(payload).unwrap();
-      toast.success("Action added successfully");
+      toast.success(t("dialogs.addAction.toast.added"));
       reset();
       onSuccess?.();
       onClose();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add action");
+      toast.error(t("dialogs.addAction.toast.addFailed"));
     }
   };
 
@@ -208,13 +240,13 @@ export function AddActionDialog({
 
     try {
       await editActionMutation(payload).unwrap();
-      toast.success("Action updated successfully");
+      toast.success(t("dialogs.addAction.toast.updated"));
       editReset();
       onSuccess?.();
       onClose();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to update action");
+      toast.error(t("dialogs.addAction.toast.updateFailed"));
     }
   };
 

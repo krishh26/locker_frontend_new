@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -10,15 +11,7 @@ import { Label } from "@/components/ui/label"
 import { useCreateSystemAdminMutation } from "@/store/api/system-admin/systemAdminApi"
 import type { CreateSystemAdminRequest } from "@/store/api/system-admin/types"
 import { toast } from "sonner"
-
-const createSystemAdminSchema = z.object({
-  email: z.email("Invalid email address").min(1, "Email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-})
-
-type CreateSystemAdminFormValues = z.infer<typeof createSystemAdminSchema>
+import { useTranslations } from "next-intl"
 
 interface CreateSystemAdminFormProps {
   onSuccess?: () => void
@@ -29,7 +22,22 @@ export function CreateSystemAdminForm({
   onSuccess,
   onCancel,
 }: CreateSystemAdminFormProps) {
+  const t = useTranslations("systemAdmin")
   const [createSystemAdmin, { isLoading: isCreating }] = useCreateSystemAdminMutation()
+
+  const createSystemAdminSchema = useMemo(() => {
+    return z.object({
+      email: z
+        .string()
+        .email(t("validation.invalidEmail"))
+        .min(1, t("validation.emailRequired")),
+      password: z.string().min(6, t("validation.passwordMin", { min: 6 })),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+    })
+  }, [t])
+
+  type CreateSystemAdminFormValues = z.infer<typeof createSystemAdminSchema>
 
   const form = useForm<CreateSystemAdminFormValues>({
     resolver: zodResolver(createSystemAdminSchema),
@@ -51,7 +59,7 @@ export function CreateSystemAdminForm({
       }
 
       await createSystemAdmin(createData).unwrap()
-      toast.success("System admin created successfully")
+      toast.success(t("toast.createdSuccess"))
       form.reset()
       onSuccess?.()
     } catch (error: unknown) {
@@ -60,7 +68,7 @@ export function CreateSystemAdminForm({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to create system admin"
+          : t("toast.createFailedFallback")
       toast.error(errorMessage)
     }
   }
@@ -73,7 +81,7 @@ export function CreateSystemAdminForm({
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email">
-          Email <span className="text-destructive">*</span>
+          {t("form.labels.email")}
         </Label>
         <Controller
           name="email"
@@ -83,7 +91,7 @@ export function CreateSystemAdminForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@example.com"
+                placeholder={t("form.placeholders.email")}
                 {...field}
                 className={form.formState.errors.email ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -101,7 +109,7 @@ export function CreateSystemAdminForm({
       {/* Password */}
       <div className="space-y-2">
         <Label htmlFor="password">
-          Password <span className="text-destructive">*</span>
+          {t("form.labels.password")}
         </Label>
         <Controller
           name="password"
@@ -111,7 +119,7 @@ export function CreateSystemAdminForm({
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter password (min 6 characters)"
+                placeholder={t("form.placeholders.password")}
                 {...field}
                 className={form.formState.errors.password ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -128,14 +136,14 @@ export function CreateSystemAdminForm({
 
       {/* First Name */}
       <div className="space-y-2">
-        <Label htmlFor="firstName">First Name</Label>
+        <Label htmlFor="firstName">{t("form.labels.firstName")}</Label>
         <Controller
           name="firstName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="firstName"
-              placeholder="John"
+              placeholder={t("form.placeholders.firstName")}
               {...field}
               disabled={isLoading}
             />
@@ -145,14 +153,14 @@ export function CreateSystemAdminForm({
 
       {/* Last Name */}
       <div className="space-y-2">
-        <Label htmlFor="lastName">Last Name</Label>
+        <Label htmlFor="lastName">{t("form.labels.lastName")}</Label>
         <Controller
           name="lastName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="lastName"
-              placeholder="Doe"
+              placeholder={t("form.placeholders.lastName")}
               {...field}
               disabled={isLoading}
             />
@@ -169,11 +177,11 @@ export function CreateSystemAdminForm({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Cancel
+          {t("form.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Create System Admin
+          {t("form.buttons.create")}
         </Button>
       </div>
     </form>

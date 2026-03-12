@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import {
   LineChart,
   Line,
@@ -65,7 +66,6 @@ const transformProgressDataByTopic = (
   });
 
   const reviewOrder = ["induction", "first", "second", "third"];
-  console.log("🚀 ~ transformProgressDataByTopic ~ dateMap:", dateMap)
   return Object.values(dateMap).sort(
     (a, b) =>
       reviewOrder.indexOf(a.date.toString()) -
@@ -77,6 +77,7 @@ export function SkillsScanProgressChart({
   learnerData,
   selectedTopic,
 }: SkillsScanProgressChartProps) {
+  const t = useTranslations("skillsScan");
   const graphData = useMemo(() => {
     if (!selectedTopic) return [];
     return transformProgressDataByTopic(learnerData, selectedTopic);
@@ -90,7 +91,7 @@ export function SkillsScanProgressChart({
   if (graphData.length === 0) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <p className="text-muted-foreground">No data available for this topic.</p>
+        <p className="text-muted-foreground">{t("progressChart.noDataForTopic")}</p>
       </div>
     );
   }
@@ -101,13 +102,18 @@ export function SkillsScanProgressChart({
         <XAxis
           dataKey="date"
           tickFormatter={(value) => {
-            const labelMap: Record<string, string> = {
-              induction: "Induction",
-              first: "First Review",
-              second: "Second Review",
-              third: "Third Review",
-            };
-            return labelMap[value] || value;
+            switch (value) {
+              case "induction":
+                return t("progressChart.phases.induction");
+              case "first":
+                return t("progressChart.phases.first");
+              case "second":
+                return t("progressChart.phases.second");
+              case "third":
+                return t("progressChart.phases.third");
+              default:
+                return value;
+            }
           }}
         />
         <YAxis

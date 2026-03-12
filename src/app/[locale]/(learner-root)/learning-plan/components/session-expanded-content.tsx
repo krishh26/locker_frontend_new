@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -46,6 +47,7 @@ export function SessionExpandedContent({
   userRole,
   onRefresh,
 }: SessionExpandedContentProps) {
+  const t = useTranslations("learningPlan");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   const [isFilesDialogOpen, setIsFilesDialogOpen] = useState(false);
@@ -58,7 +60,7 @@ export function SessionExpandedContent({
     <div className="p-6 space-y-6">
       {/* Course Header */}
       <div>
-        <h3 className="font-bold text-lg">{courses || "No courses"}</h3>
+        <h3 className="font-bold text-lg">{courses || t("sessionExpanded.noCourses")}</h3>
         {description && (
           <p className="text-sm text-muted-foreground mt-1">{description}</p>
         )}
@@ -75,7 +77,7 @@ export function SessionExpandedContent({
             disabled={isEmployer}
           >
             <Plus className="mr-2 h-4 w-4" />
-            Add Files
+            {t("sessionExpanded.buttons.addFiles")}
           </Button>
           <Button
             variant="default"
@@ -87,7 +89,7 @@ export function SessionExpandedContent({
             disabled={isEmployer}
           >
             <Plus className="mr-2 h-4 w-4" />
-            Add Action
+            {t("sessionExpanded.buttons.addAction")}
           </Button>
         </div>
       </div>
@@ -98,16 +100,16 @@ export function SessionExpandedContent({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Who</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>File</TableHead>
-                <TableHead>Units</TableHead>
-                <TableHead>Target Date</TableHead>
-                <TableHead>Feedback</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.who")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.action")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.description")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.file")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.units")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.targetDate")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.feedback")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.duration")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.status")}</TableHead>
+                <TableHead>{t("sessionExpanded.actionTable.headers.actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -116,9 +118,9 @@ export function SessionExpandedContent({
                   action.who === "learner" ||
                   action.who === "assessor" ||
                   action.sessionLearner === "sessionLearner"
-                    ? "Learner"
+                    ? t("sessionExpanded.actionTable.whoLabels.learner")
                     : action.employer
-                    ? "Employer"
+                    ? t("sessionExpanded.actionTable.whoLabels.employer")
                     : action.who;
 
                 const unitName = action.unit
@@ -131,10 +133,10 @@ export function SessionExpandedContent({
                   <TableRow key={action.action_id}>
                     <TableCell className="text-sm">{who}</TableCell>
                     <TableCell className="text-sm">
-                      {action.action_name || "-"}
+                      {action.action_name || t("common.dash")}
                     </TableCell>
                     <TableCell className="text-sm max-w-[200px] truncate">
-                      {action.action_description || "-"}
+                      {action.action_description || t("common.dash")}
                     </TableCell>
                     <TableCell>
                       {action.file_attachment ? (
@@ -162,36 +164,40 @@ export function SessionExpandedContent({
                           </Tooltip>
                         </TooltipProvider>
                       ) : (
-                        "-"
+                        t("common.dash")
                       )}
                     </TableCell>
                     <TableCell className="text-sm">
-                      {unitName ? `Unit ${unitName}` : "-"}
+                      {unitName ? t("sessionExpanded.actionTable.unitPrefix", { unitName }) : t("common.dash")}
                     </TableCell>
                     <TableCell className="text-sm">
                       {action.target_date
                         ? format(new Date(action.target_date), "dd/MM/yyyy")
-                        : "-"}
+                        : t("common.dash")}
                     </TableCell>
                     <TableCell className="text-sm max-w-[200px]">
                       <div className="space-y-1">
                         {action.trainer_feedback && (
                           <div>
-                            <strong>Trainer:</strong> {action.trainer_feedback}
+                            <strong>{t("sessionExpanded.actionTable.feedbackLabels.trainer")}</strong>{" "}
+                            {action.trainer_feedback}
                           </div>
                         )}
                         {action.learner_feedback && (
                           <div>
-                            <strong>Learner:</strong> {action.learner_feedback}
+                            <strong>{t("sessionExpanded.actionTable.feedbackLabels.learner")}</strong>{" "}
+                            {action.learner_feedback}
                           </div>
                         )}
                         {!action.trainer_feedback && !action.learner_feedback && (
-                          <span>-</span>
+                          <span>{t("common.dash")}</span>
                         )}
                       </div>
                     </TableCell>
                     <TableCell className="text-sm">
-                      {action.time_spent ? `${action.time_spent} mins` : "-"}
+                      {action.time_spent
+                        ? t("sessionExpanded.actionTable.mins", { count: action.time_spent })
+                        : t("common.dash")}
                     </TableCell>
                     <TableCell>
                       {action.status === false ||
@@ -209,12 +215,12 @@ export function SessionExpandedContent({
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Not Started</p>
+                              <p>{t("sessionExpanded.actionTable.notStarted")}</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
                       ) : (
-                        "-"
+                        t("common.dash")
                       )}
                     </TableCell>
                     <TableCell>
@@ -236,7 +242,7 @@ export function SessionExpandedContent({
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Edit</p>
+                              <p>{t("sessionExpanded.actionTable.tooltips.edit")}</p>
                             </TooltipContent>
                           </Tooltip>
                           <Tooltip>
@@ -254,7 +260,7 @@ export function SessionExpandedContent({
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Add File</p>
+                              <p>{t("sessionExpanded.actionTable.tooltips.addFile")}</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -268,7 +274,7 @@ export function SessionExpandedContent({
                                   className="h-8 w-8 text-destructive hover:text-destructive"
                                   onClick={() => {
                                     toast.info(
-                                      "Delete action functionality will be implemented"
+                                      t("sessionExpanded.actionTable.toast.deleteNotImplemented")
                                     );
                                   }}
                                   disabled={isEmployer}
@@ -277,7 +283,7 @@ export function SessionExpandedContent({
                                 </Button>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Delete</p>
+                                <p>{t("sessionExpanded.actionTable.tooltips.delete")}</p>
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>

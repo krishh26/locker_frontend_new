@@ -5,10 +5,12 @@ import { useRouter } from "@/i18n/navigation"
 import { useEffect } from "react"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { AddInvoiceForm } from "@/app/[locale]/(master-admin-root)/payments/components/add-invoice-form"
+import { useTranslations } from "next-intl"
 
 export default function EditInvoicePage() {
   const params = useParams()
   const router = useRouter()
+  const t = useTranslations("payments")
   const id = params?.id
 
   const paymentId =
@@ -27,8 +29,8 @@ export default function EditInvoicePage() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Edit invoice"
-        subtitle="Update payment and line items."
+        title={t("editPage.title")}
+        subtitle={t("editPage.subtitle")}
       />
       <AddInvoiceForm paymentId={paymentId} />
     </div>

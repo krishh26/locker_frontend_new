@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from "@/i18n/navigation"
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -43,69 +44,63 @@ import type {
   UpdateLearnerRequest,
 } from '@/store/api/learner/types'
 
-// Form schema for learner profile
-const learnerProfileSchema = z.object({
-  // Student ID
-  uln: z.string().optional(),
-  mis_learner_id: z.string().optional(),
-  student_id: z.string().optional(),
-  // About You
-  first_name: z.string().min(1, 'First name is required').optional(),
-  last_name: z.string().min(1, 'Last name is required').optional(),
-  user_name: z.string().min(1, 'Username is required').optional(),
-  email: z.string().email('Invalid email address').optional(),
-  telephone: z.string().optional(),
-  mobile: z.string().optional(),
-  dob: z.string().optional(),
-  gender: z.string().optional(),
-  national_ins_no: z.string().optional(),
-  ethnicity: z.string().optional(),
-  learner_disability: z.string().optional(),
-  learner_difficulity: z.string().optional(),
-  Initial_Assessment_Numeracy: z.string().optional(),
-  Initial_Assessment_Literacy: z.string().optional(),
-  Initial_Assessment_ICT: z.string().optional(),
-  // Address
-  street: z.string().optional(),
-  suburb: z.string().optional(),
-  town: z.string().optional(),
-  country: z.string().optional(),
-  home_postcode: z.string().optional(),
-  country_of_domicile: z.string().optional(),
-  // Employer
-  employer_id: z.string().optional(),
-  job_title: z.string().optional(),
-  location: z.string().optional(),
-  manager_name: z.string().optional(),
-  manager_job_title: z.string().optional(),
-  mentor: z.string().optional(),
-  // Funding Body
-  funding_body: z.string().optional(),
-  awarding_body: z.string().optional(),
-  registration_number: z.string().optional(),
-  registration_date: z.string().optional(),
-  lara_code: z.string().optional(),
-  // Additional Info
-  cost_centre: z.string().optional(),
-  funding_contractor: z.string().optional(),
-  partner: z.string().optional(),
-  sub_area: z.string().optional(),
-  cohort: z.string().optional(),
-  curriculum_area: z.string().optional(),
-  ssa1: z.string().optional(),
-  ssa2: z.string().optional(),
-  director_of_curriculum: z.string().optional(),
-  learner_type: z.string().optional(),
-  expected_off_the_job_hours: z.string().optional(),
-  off_the_job_training: z.string().optional(),
-  guided_learning_hours_achieved: z.string().optional(),
-  // Funding Bands
-  custom_amount: z.number().optional(),
-  original_amount: z.number().optional(),
-  funding_band_id: z.number().optional(),
-})
+function getLearnerProfileSchema(t: (key: string) => string) {
+  return z.object({
+    uln: z.string().optional(),
+    mis_learner_id: z.string().optional(),
+    student_id: z.string().optional(),
+    first_name: z.string().min(1, t('validation.firstNameRequired')).optional(),
+    last_name: z.string().min(1, t('validation.lastNameRequired')).optional(),
+    user_name: z.string().min(1, t('validation.userNameRequired')).optional(),
+    email: z.string().email(t('validation.invalidEmail')).optional(),
+    telephone: z.string().optional(),
+    mobile: z.string().optional(),
+    dob: z.string().optional(),
+    gender: z.string().optional(),
+    national_ins_no: z.string().optional(),
+    ethnicity: z.string().optional(),
+    learner_disability: z.string().optional(),
+    learner_difficulity: z.string().optional(),
+    Initial_Assessment_Numeracy: z.string().optional(),
+    Initial_Assessment_Literacy: z.string().optional(),
+    Initial_Assessment_ICT: z.string().optional(),
+    street: z.string().optional(),
+    suburb: z.string().optional(),
+    town: z.string().optional(),
+    country: z.string().optional(),
+    home_postcode: z.string().optional(),
+    country_of_domicile: z.string().optional(),
+    employer_id: z.string().optional(),
+    job_title: z.string().optional(),
+    location: z.string().optional(),
+    manager_name: z.string().optional(),
+    manager_job_title: z.string().optional(),
+    mentor: z.string().optional(),
+    funding_body: z.string().optional(),
+    awarding_body: z.string().optional(),
+    registration_number: z.string().optional(),
+    registration_date: z.string().optional(),
+    lara_code: z.string().optional(),
+    cost_centre: z.string().optional(),
+    funding_contractor: z.string().optional(),
+    partner: z.string().optional(),
+    sub_area: z.string().optional(),
+    cohort: z.string().optional(),
+    curriculum_area: z.string().optional(),
+    ssa1: z.string().optional(),
+    ssa2: z.string().optional(),
+    director_of_curriculum: z.string().optional(),
+    learner_type: z.string().optional(),
+    expected_off_the_job_hours: z.string().optional(),
+    off_the_job_training: z.string().optional(),
+    guided_learning_hours_achieved: z.string().optional(),
+    custom_amount: z.number().optional(),
+    original_amount: z.number().optional(),
+    funding_band_id: z.number().optional(),
+  })
+}
 
-type LearnerProfileFormValues = z.infer<typeof learnerProfileSchema>
+type LearnerProfileFormValues = z.infer<ReturnType<typeof getLearnerProfileSchema>>
 
 interface LearnerProfilePageContentProps {
   learnerId: string | null
@@ -217,6 +212,8 @@ const getDefaultValues = (
 export function LearnerProfilePageContent({
   learnerId,
 }: LearnerProfilePageContentProps) {
+  const t = useTranslations('learnerProfile')
+  const schema = useMemo(() => getLearnerProfileSchema((key) => t(key)), [t])
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const userRole = user?.role
@@ -244,7 +241,7 @@ export function LearnerProfilePageContent({
 
   // Set up form
   const form = useForm<LearnerProfileFormValues>({
-    resolver: zodResolver(learnerProfileSchema),
+    resolver: zodResolver(schema),
     defaultValues: getDefaultValues(learner),
   })
 
@@ -288,10 +285,10 @@ export function LearnerProfilePageContent({
         data: updateData as Partial<UpdateLearnerRequest>,
       }).unwrap()
 
-      toast.success('Learner profile updated successfully')
+      toast.success(t('page.toastUpdated'))
     } catch (error) {
       console.error('Failed to update learner:', error)
-      toast.error('Failed to update learner profile. Please try again.')
+      toast.error(t('page.toastUpdateFailed'))
     }
   })
 
@@ -314,19 +311,19 @@ export function LearnerProfilePageContent({
       <div className='px-4 lg:px-6 py-6'>
         <Alert variant='destructive'>
           <AlertCircle className='h-4 w-4' />
-          <AlertTitle>Error Loading Learner Profile</AlertTitle>
+          <AlertTitle>{t('page.errorTitle')}</AlertTitle>
           <AlertDescription className='mt-2'>
             {error
               ? 'message' in error
                 ? String(error.message)
-                : 'Failed to load learner details'
-              : 'Invalid learner ID'}
+                : t('page.loadError')
+              : t('page.invalidLearnerId')}
             <div className='mt-4'>
               <Button
                 variant='outline'
                 onClick={() => router.push(backButtonHref)}
               >
-                Back
+                {t('page.back')}
               </Button>
             </div>
           </AlertDescription>
@@ -340,15 +337,15 @@ export function LearnerProfilePageContent({
       <div className='px-4 lg:px-6 py-6'>
         <Alert>
           <AlertCircle className='h-4 w-4' />
-          <AlertTitle>No Data Found</AlertTitle>
+          <AlertTitle>{t('page.noDataTitle')}</AlertTitle>
           <AlertDescription className='mt-2'>
-            Learner profile data not found.
+            {t('page.noDataDescription')}
             <div className='mt-4'>
               <Button
                 variant='outline'
                 onClick={() => router.push(backButtonHref)}
               >
-                Back
+                {t('page.back')}
               </Button>
             </div>
           </AlertDescription>
@@ -362,8 +359,8 @@ export function LearnerProfilePageContent({
       {/* Page Header */}
       <div className='flex justify-between items-center'>
         <PageHeader
-          title='Profile Information'
-          subtitle='View learner profile details and personal information'
+          title={t('page.title')}
+          subtitle={t('page.subtitle')}
           icon={User}
           showBackButton
           backButtonHref={backButtonHref}
@@ -374,9 +371,9 @@ export function LearnerProfilePageContent({
             <Button
               variant='outline'
               onClick={() => setIsResetPasswordDialogOpen(true)}
-              >
+            >
               <KeyRound className='h-4 w-4' />
-              Reset Password
+              {t('page.resetPasswordButton')}
             </Button>
             
               <Button
@@ -384,7 +381,7 @@ export function LearnerProfilePageContent({
                 onClick={() => setIsEmailPasswordResetDialogOpen(true)}
               >
                 <Mail className='h-4 w-4' />
-                Email Password Reset
+                {t('page.emailPasswordResetButton')}
               </Button>
             
               {!isLearner && (
@@ -395,7 +392,7 @@ export function LearnerProfilePageContent({
               }
             >
               <User className='h-4 w-4' />
-              Access Profile
+              {t('page.accessProfile')}
               <ArrowRight className='h-4 w-4' />
             </Button>
         )}
@@ -413,14 +410,14 @@ export function LearnerProfilePageContent({
             className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
           >
             <User className='h-4 w-4' />
-            Personal Information
+            {t('page.tabs.personalInfo')}
           </TabsTrigger>
           <TabsTrigger
             value='course'
             className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
           >
             <BookOpen className='h-4 w-4' />
-            Course Information
+            {t('page.tabs.courseInformation')}
           </TabsTrigger>
           {!isLearner && (
             <TabsTrigger
@@ -428,7 +425,7 @@ export function LearnerProfilePageContent({
               className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
             >
               <Briefcase className='h-4 w-4' />
-              Contracted Work Hours
+              {t('page.tabs.contractedWorkHours')}
             </TabsTrigger>
           )}
         </TabsList>
@@ -448,7 +445,7 @@ export function LearnerProfilePageContent({
                   <div className='flex justify-end pt-4 border-t'>
                     <Button type='submit' disabled={isUpdating}>
                       <Save className='h-4 w-4 mr-2' />
-                      {isUpdating ? 'Saving...' : 'Save Changes'}
+                      {isUpdating ? t('page.saving') : t('page.save')}
                     </Button>
                   </div>
                 )}

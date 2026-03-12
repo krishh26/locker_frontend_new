@@ -40,15 +40,26 @@ import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { FeedbackDialog } from "./feedback-dialog";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
-const feedbackDisplayMapping = {
-  very_helpful: "Very Helpful",
-  helpful: "Helpful",
-  neutral: "Neutral",
-  not_helpful: "Not Helpful",
+const FEEDBACK_API_TO_KEY: Record<string, "veryHelpful" | "helpful" | "neutral" | "notHelpful"> = {
+  very_helpful: "veryHelpful",
+  helpful: "helpful",
+  neutral: "neutral",
+  not_helpful: "notHelpful",
+};
+
+const COLUMN_ID_TO_KEY: Record<string, string> = {
+  resource_name: "resourceName",
+  description: "description",
+  createdAt: "createdDate",
+  lastOpenedDate: "lastOpened",
+  feedbacks: "feedback",
+  actions: "actions",
 };
 
 export function HealthWellbeingDataTable() {
+  const t = useTranslations("healthAndWellbeing");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -80,7 +91,7 @@ export function HealthWellbeingDataTable() {
           error && typeof error === "object" && "data" in error
             ? (error as { data?: { error?: string } }).data?.error
             : undefined;
-        toast.error(errorMessage || "Failed to track resource access");
+        toast.error(errorMessage || t("table.toast.trackFailed"));
       }
     },
     [trackResourceOpen]
@@ -97,11 +108,11 @@ export function HealthWellbeingDataTable() {
   }, []);
 
   const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return "Never";
+    if (!dateString) return t("table.dates.never");
     try {
       return format(new Date(dateString), "MMM dd, yyyy");
     } catch {
-      return "Invalid date";
+      return t("table.dates.invalid");
     }
   };
 
@@ -109,7 +120,7 @@ export function HealthWellbeingDataTable() {
     () => [
       {
         accessorKey: "resource_name",
-        header: "Resource Name",
+        header: t("table.columns.resourceName"),
         cell: ({ row }) => {
           return (
             <span className="font-semibold">{row.getValue("resource_name")}</span>
@@ -118,7 +129,7 @@ export function HealthWellbeingDataTable() {
       },
       {
         accessorKey: "description",
-        header: "Description",
+        header: t("table.columns.description"),
         cell: ({ row }) => {
           const description = row.getValue("description") as string;
           return (
@@ -130,7 +141,7 @@ export function HealthWellbeingDataTable() {
       },
       {
         accessorKey: "createdAt",
-        header: "Created Date",
+        header: t("table.columns.createdDate"),
         cell: ({ row }) => {
           const date = row.getValue("createdAt") as string;
           return (
@@ -142,7 +153,7 @@ export function HealthWellbeingDataTable() {
       },
       {
         accessorKey: "lastOpenedDate",
-        header: "Last Opened",
+        header: t("table.columns.lastOpened"),
         cell: ({ row }) => {
           const date = row.getValue("lastOpenedDate") as string | undefined;
           return (
@@ -154,25 +165,27 @@ export function HealthWellbeingDataTable() {
       },
       {
         accessorKey: "feedbacks",
-        header: "Feedback",
+        header: t("table.columns.feedback"),
         cell: ({ row }) => {
           const resource = row.original;
-          const feedback = resource
+          const feedback = resource.feedback;
 
           if (!feedback) {
-            return <span className="text-sm text-muted-foreground">No feedback</span>;
+            return <span className="text-sm text-muted-foreground">{t("table.feedbackValues.none")}</span>;
           }
 
+          const key = FEEDBACK_API_TO_KEY[feedback.feedback];
+          const label = key ? t(`table.feedbackValues.${key}`) : t("table.feedbackValues.unknown");
           return (
             <span className="text-sm">
-              {feedbackDisplayMapping[feedback.feedback as unknown as keyof typeof feedbackDisplayMapping] || "Unknown"}
+              {label}
             </span>
           );
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const resource = row.original;
           return (
@@ -187,12 +200,12 @@ export function HealthWellbeingDataTable() {
                 {resource.resourceType === "FILE" ? (
                   <>
                     <Download className="mr-2 h-4 w-4" />
-                    Open / Download
+                    {t("table.actions.openDownload")}
                   </>
                 ) : (
                   <>
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    Visit Link
+                    {t("table.actions.visitLink")}
                   </>
                 )}
               </Button>
@@ -203,14 +216,14 @@ export function HealthWellbeingDataTable() {
                 disabled={isEmployer}
                 className="cursor-pointer"
               >
-                Feedback
+                {t("table.actions.feedback")}
               </Button>
             </div>
           );
         },
       },
     ],
-    [handleResourceAction, handleOpenFeedback, isTracking, isEmployer]
+    [handleResourceAction, handleOpenFeedback, isTracking, isEmployer, t]
   );
 
   const table = useReactTable({
@@ -241,7 +254,7 @@ export function HealthWellbeingDataTable() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading resources...</div>
+        <div className="text-muted-foreground">{t("table.loading")}</div>
       </div>
     );
   }
@@ -249,9 +262,9 @@ export function HealthWellbeingDataTable() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-4">
-        <div className="text-destructive">Failed to load resources. Please try again.</div>
+        <div className="text-destructive">{t("table.error.loadFailed")}</div>
         <Button onClick={() => refetch()} variant="outline">
-          Retry
+          {t("table.error.retry")}
         </Button>
       </div>
     );
@@ -260,9 +273,9 @@ export function HealthWellbeingDataTable() {
   if (!resources || resources.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-4 text-center">
-        <div className="text-muted-foreground text-lg">No resources available</div>
+        <div className="text-muted-foreground text-lg">{t("table.empty.noResources")}</div>
         <div className="text-muted-foreground text-sm">
-          Check back later for new wellbeing resources
+          {t("table.empty.checkBack")}
         </div>
       </div>
     );
@@ -275,7 +288,7 @@ export function HealthWellbeingDataTable() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search resources..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -284,12 +297,12 @@ export function HealthWellbeingDataTable() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="column-visibility" className="text-sm font-medium">
-            Column Visibility
+            {t("table.columnVisibility.label")}
           </Label>
           <DropdownMenu>
             <DropdownMenuTrigger asChild id="column-visibility">
               <Button variant="outline" className="cursor-pointer">
-                Columns <ChevronDown className="ml-2 size-4" />
+                {t("table.columnVisibility.button")} <ChevronDown className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -297,6 +310,8 @@ export function HealthWellbeingDataTable() {
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
                 .map((column) => {
+                  const labelKey = COLUMN_ID_TO_KEY[column.id] ?? column.id;
+                  const label = t(`table.columns.${labelKey}`);
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
@@ -306,7 +321,7 @@ export function HealthWellbeingDataTable() {
                         column.toggleVisibility(!!value)
                       }
                     >
-                      {column.id}
+                      {label}
                     </DropdownMenuCheckboxItem>
                   );
                 })}
@@ -358,7 +373,7 @@ export function HealthWellbeingDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No resources found.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

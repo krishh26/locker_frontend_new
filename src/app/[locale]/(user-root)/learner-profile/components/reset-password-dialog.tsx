@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useTranslations } from "next-intl"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -23,32 +24,30 @@ import { extractBaseQueryErrorMessage } from "@/lib/utils"
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/
 
-const resetPasswordSchema = z
-  .object({
-    password: z
-      .string()
-      .min(6, "Password must be at least 6 characters long")
-      .refine(
-        (value) => PASSWORD_REGEX.test(value),
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-      ),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-  })
-  .superRefine((data, ctx) => {
-    if (data.password !== data.confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["confirmPassword"],
-        message: "Passwords do not match",
-      })
-    }
-  })
+function getResetPasswordSchema(t: (key: string) => string) {
+  return z
+    .object({
+      password: z
+        .string()
+        .min(6, t("resetPasswordDialog.validation.passwordMin"))
+        .refine(
+          (value) => PASSWORD_REGEX.test(value),
+          t("resetPasswordDialog.validation.passwordPattern"),
+        ),
+      confirmPassword: z.string().min(1, t("resetPasswordDialog.validation.confirmRequired")),
+    })
+    .superRefine((data, ctx) => {
+      if (data.password !== data.confirmPassword) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["confirmPassword"],
+          message: t("resetPasswordDialog.validation.passwordsMismatch"),
+        })
+      }
+    })
+}
 
-type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>
-
-const DEFAULT_SUCCESS_MESSAGE = "Password reset successfully"
-const DEFAULT_ERROR_MESSAGE =
-  "We couldn't reset the password right now. Please try again in a moment."
+type ResetPasswordFormValues = z.infer<ReturnType<typeof getResetPasswordSchema>>
 
 interface ResetPasswordDialogProps {
   open: boolean
@@ -63,6 +62,11 @@ export function ResetPasswordDialog({
   learnerEmail,
   learnerName,
 }: ResetPasswordDialogProps) {
+  const t = useTranslations("learnerProfile")
+  const resetPasswordSchema = useMemo(
+    () => getResetPasswordSchema((key) => t(key)),
+    [t],
+  )
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -88,7 +92,7 @@ export function ResetPasswordDialog({
         ? extractedMessage
         : error instanceof Error && error.message.trim().length > 0
           ? error.message
-          : DEFAULT_ERROR_MESSAGE
+          : t("resetPasswordDialog.errorDefault")
 
     setErrorMessage(message)
     toast.error(message)
@@ -96,7 +100,7 @@ export function ResetPasswordDialog({
 
   const onSubmit = form.handleSubmit(async (values) => {
     if (!learnerEmail) {
-      handleApiError(new Error("Learner email is required"))
+      handleApiError(new Error(t("resetPasswordDialog.learnerEmailRequired")))
       return
     }
 
@@ -111,7 +115,7 @@ export function ResetPasswordDialog({
       const message =
         typeof response?.message === "string" && response.message.trim().length > 0
           ? response.message
-          : DEFAULT_SUCCESS_MESSAGE
+          : t("resetPasswordDialog.successDefault")
 
       toast.success(message)
 
@@ -125,13 +129,13 @@ export function ResetPasswordDialog({
   })
 
   const passwordToggleLabel = useMemo(
-    () => (showPassword ? "Hide" : "Show"),
-    [showPassword],
+    () => (showPassword ? t("resetPasswordDialog.hide") : t("resetPasswordDialog.show")),
+    [showPassword, t],
   )
 
   const confirmPasswordToggleLabel = useMemo(
-    () => (showConfirmPassword ? "Hide" : "Show"),
-    [showConfirmPassword],
+    () => (showConfirmPassword ? t("resetPasswordDialog.hide") : t("resetPasswordDialog.show")),
+    [showConfirmPassword, t],
   )
 
   // Reset form when dialog opens/closes
@@ -149,20 +153,16 @@ export function ResetPasswordDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Reset Password</DialogTitle>
+          <DialogTitle>{t("resetPasswordDialog.title")}</DialogTitle>
           <DialogDescription>
-            {learnerName ? (
-              <>
-                Reset password for <span className="font-medium">{learnerName}</span> ({learnerEmail})
-              </>
-            ) : (
-              <>Reset password for {learnerEmail}</>
-            )}
+            {learnerName
+              ? t("resetPasswordDialog.descriptionWithName", { name: learnerName, email: learnerEmail })
+              : t("resetPasswordDialog.descriptionEmailOnly", { email: learnerEmail })}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="grid gap-3">
-            <Label htmlFor="password">New password</Label>
+            <Label htmlFor="password">{t("resetPasswordDialog.newPassword")}</Label>
             <div className="relative">
               <Input
                 id="password"
@@ -192,7 +192,7 @@ export function ResetPasswordDialog({
             ) : null}
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="confirmPassword">Confirm password</Label>
+            <Label htmlFor="confirmPassword">{t("resetPasswordDialog.confirmPassword")}</Label>
             <div className="relative">
               <Input
                 id="confirmPassword"
@@ -222,8 +222,7 @@ export function ResetPasswordDialog({
             ) : null}
           </div>
           <p className="text-muted-foreground text-sm">
-            Password must be at least 6 characters long and include upper & lower case letters
-            and a number.
+            {t("resetPasswordDialog.hintText")}
           </p>
           {errorMessage ? (
             <p className="text-destructive text-sm" role="alert">
@@ -237,10 +236,10 @@ export function ResetPasswordDialog({
               onClick={() => handleOpenChange(false)}
               disabled={isSubmitting}
             >
-              Cancel
+              {t("resetPasswordDialog.cancel")}
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Resetting..." : "Reset Password"}
+              {isSubmitting ? t("resetPasswordDialog.resetting") : t("resetPasswordDialog.resetPassword")}
             </Button>
           </DialogFooter>
         </form>

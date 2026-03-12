@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import {
   type ColumnDef,
   flexRender,
@@ -97,6 +98,7 @@ const attendedStatuses = [
 ]
 
 export function LearningPlanDataTable() {
+  const t = useTranslations('learningPlan')
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
   const [typeFilter, setTypeFilter] = useState<string>('')
@@ -108,6 +110,66 @@ export function LearningPlanDataTable() {
   const currentCourseId = useAppSelector(selectCurrentCourseId)
 
   const learnerId = learner?.learner_id || user?.id
+
+  const getSessionTypeLabel = useCallback(
+    (value: string) => {
+      switch (value) {
+        case 'All':
+          return t('options.sessionTypes.all')
+        case 'General':
+          return t('options.sessionTypes.general')
+        case 'Induction':
+          return t('options.sessionTypes.induction')
+        case 'Formal Review':
+          return t('options.sessionTypes.formalReview')
+        case 'Telephone':
+          return t('options.sessionTypes.telephone')
+        case 'Exit Session':
+          return t('options.sessionTypes.exitSession')
+        case 'Out Of the Workplace':
+          return t('options.sessionTypes.outOfTheWorkplace')
+        case 'Tests/Exams':
+          return t('options.sessionTypes.testsExams')
+        case 'Learner Support':
+          return t('options.sessionTypes.learnerSupport')
+        case 'Initial Session':
+          return t('options.sessionTypes.initialSession')
+        case 'Gateway Ready':
+          return t('options.sessionTypes.gatewayReady')
+        case 'EPA':
+          return t('options.sessionTypes.epa')
+        case 'Furloughed':
+          return t('options.sessionTypes.furloughed')
+        default:
+          return value
+      }
+    },
+    [t]
+  )
+
+  const getAttendedStatusLabel = useCallback(
+    (value: string) => {
+      switch (value) {
+        case 'All':
+          return t('options.attendedStatuses.all')
+        case 'Attended':
+          return t('options.attendedStatuses.attended')
+        case 'Cancelled':
+          return t('options.attendedStatuses.cancelled')
+        case 'Cancelled by Trainer':
+          return t('options.attendedStatuses.cancelledByTrainer')
+        case 'Cancelled by Learner':
+          return t('options.attendedStatuses.cancelledByLearner')
+        case 'Cancelled by Employee':
+          return t('options.attendedStatuses.cancelledByEmployee')
+        case 'Learner not Attended':
+          return t('options.attendedStatuses.learnerNotAttended')
+        default:
+          return value
+      }
+    },
+    [t]
+  )
 
   const { data, isLoading } = useGetLearnerPlanListQuery(
     {
@@ -131,13 +193,13 @@ export function LearningPlanDataTable() {
     }) => {
       try {
         await updateSession(payload).unwrap()
-        toast.success('Session updated successfully')
+        toast.success(t('table.toast.sessionUpdated'))
       } catch (error) {
         console.error(error)
-        toast.error('Failed to update session')
+        toast.error(t('table.toast.sessionUpdateFailed'))
       }
     },
-    [updateSession]
+    [updateSession, t]
   )
 
   const tableData: SessionRow[] = useMemo(() => {
@@ -224,7 +286,7 @@ export function LearningPlanDataTable() {
     () => [
       {
         id: 'expand',
-        header: '',
+        header: t('table.columns.expand'),
         cell: ({ row }) => {
           const isExpanded = expandedRows.has(row.original.sessionNo)
           return (
@@ -246,14 +308,14 @@ export function LearningPlanDataTable() {
       },
       {
         accessorKey: 'sessionNo',
-        header: 'Session No',
+        header: t('table.columns.sessionNo'),
         cell: ({ row }) => (
           <div className='font-medium'>{row.getValue('sessionNo')}</div>
         ),
       },
       {
         accessorKey: 'title',
-        header: 'Title',
+        header: t('table.columns.title'),
         cell: ({ row }) => (
           <div className='font-medium max-w-[200px] truncate'>
             {row.getValue('title')}
@@ -262,14 +324,14 @@ export function LearningPlanDataTable() {
       },
       {
         accessorKey: 'dateFormatted',
-        header: 'Date',
+        header: t('table.columns.date'),
         cell: ({ row }) => (
           <div className='text-sm'>{row.getValue('dateFormatted')}</div>
         ),
       },
       {
         accessorKey: 'timeStart',
-        header: 'Time',
+        header: t('table.columns.time'),
         cell: ({ row }) => {
           const start = row.getValue('timeStart') as string
           const end = row.original.timeEnd
@@ -282,26 +344,26 @@ export function LearningPlanDataTable() {
       },
       {
         accessorKey: 'type',
-        header: 'Type',
+        header: t('table.columns.type'),
         cell: ({ row }) => {
           const type = row.getValue('type') as string
           return (
             <Badge variant='secondary' className='capitalize'>
-              {type}
+              {getSessionTypeLabel(type)}
             </Badge>
           )
         },
       },
       {
         accessorKey: 'assessor',
-        header: 'Assessor',
+        header: t('table.columns.assessor'),
         cell: ({ row }) => (
           <div className='text-sm'>{row.getValue('assessor') || '-'}</div>
         ),
       },
       {
         accessorKey: 'attended',
-        header: 'Attended',
+        header: t('table.columns.attended'),
         cell: ({ row }) => {
           const attended = row.getValue('attended') as string | null
           const sessionId = row.original.id
@@ -317,22 +379,26 @@ export function LearningPlanDataTable() {
               disabled={user?.role === 'Learner' || user?.role === 'Employer'}
             >
               <SelectTrigger className='w-[150px]'>
-                <SelectValue placeholder='Select' />
+                <SelectValue placeholder={t('table.attendedSelectPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='Attended'>Attended</SelectItem>
-                <SelectItem value='Cancelled'>Cancelled</SelectItem>
+                <SelectItem value='Attended'>
+                  {t('options.attendedStatuses.attended')}
+                </SelectItem>
+                <SelectItem value='Cancelled'>
+                  {t('options.attendedStatuses.cancelled')}
+                </SelectItem>
                 <SelectItem value='Cancelled by Trainer'> 
-                  Cancelled by Trainer
+                  {t('options.attendedStatuses.cancelledByTrainer')}
                 </SelectItem>
                 <SelectItem value='Cancelled by Learner'>
-                  Cancelled by Learner
+                  {t('options.attendedStatuses.cancelledByLearner')}
                 </SelectItem>
                 <SelectItem value='Cancelled by Employee'>
-                  Cancelled by Employee
+                  {t('options.attendedStatuses.cancelledByEmployee')}
                 </SelectItem>
                 <SelectItem value='Learner not Attended'>
-                  Learner not Attended
+                  {t('options.attendedStatuses.learnerNotAttended')}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -341,7 +407,7 @@ export function LearningPlanDataTable() {
       },
       {
         accessorKey: 'courses',
-        header: 'Courses',
+        header: t('table.columns.courses'),
         cell: ({ row }) => (
           <div className='text-sm max-w-[200px] truncate'>
             {row.getValue('courses') || '-'}
@@ -350,7 +416,7 @@ export function LearningPlanDataTable() {
       },
       {
         accessorKey: 'feedback',
-        header: 'Feedback',
+        header: t('table.columns.feedback'),
         cell: ({ row }) => {
           const feedback = row.getValue('feedback') as string
           const sessionId = row.original.id
@@ -409,7 +475,7 @@ export function LearningPlanDataTable() {
         },
       },
     ],
-    [expandedRows, user?.role, handleUpdateSubmit]
+    [expandedRows, getSessionTypeLabel, getAttendedStatusLabel, user?.role, handleUpdateSubmit, t]
   )
 
   const table = useReactTable({
@@ -437,18 +503,18 @@ export function LearningPlanDataTable() {
   }
 
   const handleExportCsv = () => {
-    toast.info('CSV export functionality will be implemented')
+    toast.info(t('table.export.csvNotImplemented'))
   }
 
   const handleExportPdf = () => {
-    toast.info('PDF export functionality will be implemented')
+    toast.info(t('table.export.pdfNotImplemented'))
   }
 
   if (isLoading) {
     return (
       <div className='w-full space-y-4'>
         <div className='flex items-center justify-center py-12'>
-          <p className='text-muted-foreground'>Loading sessions...</p>
+          <p className='text-muted-foreground'>{t('table.loadingSessions')}</p>
         </div>
       </div>
     )
@@ -458,7 +524,7 @@ export function LearningPlanDataTable() {
     return (
       <div className='w-full space-y-4'>
         <div className='flex items-center justify-center py-12'>
-          <p className='text-muted-foreground'>No learner selected</p>
+          <p className='text-muted-foreground'>{t('table.noLearnerSelected')}</p>
         </div>
       </div>
     )
@@ -472,10 +538,10 @@ export function LearningPlanDataTable() {
           <div className='flex flex-wrap gap-4 items-center justify-between'>
             <div className='space-y-2'>
               <Label htmlFor='learner-name' className='text-sm font-medium'>
-                Learner
+                {t('table.learnerLabel')}
               </Label>
               <div className='pt-2 text-sm'>
-                <strong>Name:</strong>{' '}
+                <strong>{t('table.nameLabel')}</strong>{' '}
                 <span className='capitalize'>
                   {learner?.first_name} {learner?.last_name}
                 </span>
@@ -484,7 +550,7 @@ export function LearningPlanDataTable() {
             <div className='flex flex-wrap gap-4'>
               <div className='space-y-2'>
                 <Label htmlFor='type-filter' className='text-sm font-medium'>
-                  Type
+                  {t('table.filters.type.label')}
                 </Label>
                 <Select
                   value={typeFilter || 'All'}
@@ -493,12 +559,12 @@ export function LearningPlanDataTable() {
                   }
                 >
                   <SelectTrigger id='type-filter' className='cursor-pointer'>
-                    <SelectValue placeholder='Select type' />
+                    <SelectValue placeholder={t('table.filters.type.placeholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {sessionTypes.map((type) => (
                       <SelectItem key={type} value={type}>
-                        {type}
+                        {getSessionTypeLabel(type)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -509,7 +575,7 @@ export function LearningPlanDataTable() {
                   htmlFor='attended-filter'
                   className='text-sm font-medium'
                 >
-                  Attended Status
+                  {t('table.filters.attended.label')}
                 </Label>
                 <Select
                   value={attendedFilter || 'All'}
@@ -521,12 +587,12 @@ export function LearningPlanDataTable() {
                     id='attended-filter'
                     className='cursor-pointer'
                   >
-                    <SelectValue placeholder='Select status' />
+                    <SelectValue placeholder={t('table.filters.attended.placeholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {attendedStatuses.map((status) => (
                       <SelectItem key={status} value={status}>
-                        {status}
+                        {getAttendedStatusLabel(status)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -543,7 +609,7 @@ export function LearningPlanDataTable() {
           <div className='relative flex-1 max-w-sm'>
             <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground' />
             <Input
-              placeholder='Search sessions...'
+              placeholder={t('table.searchPlaceholder')}
               value={globalFilter ?? ''}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className='pl-9'
@@ -555,7 +621,7 @@ export function LearningPlanDataTable() {
             <DropdownMenuTrigger asChild>
               <Button variant='outline' className='cursor-pointer'>
                 <Download className='mr-2 size-4' />
-                Export
+                {t('table.export.button')}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
@@ -563,13 +629,13 @@ export function LearningPlanDataTable() {
                 onClick={handleExportCsv}
                 className='cursor-pointer'
               >
-                Export as CSV
+                {t('table.export.csv')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleExportPdf}
                 className='cursor-pointer'
               >
-                Export as PDF
+                {t('table.export.pdf')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -580,7 +646,7 @@ export function LearningPlanDataTable() {
               onClick={() => setAddSessionDialogOpen(true)}
             >
               <Plus className="mr-2 size-4" />
-              Add Session
+              {t('table.buttons.addSession')}
             </Button>
           )}
         </div>
@@ -669,7 +735,7 @@ export function LearningPlanDataTable() {
                       colSpan={columns.length}
                       className='h-24 text-center'
                     >
-                      No results.
+                      {t('table.noResults')}
                     </TableCell>
                   </TableRow>
                 )}
@@ -691,7 +757,7 @@ export function LearningPlanDataTable() {
         <Card>
           <CardContent className='p-12'>
             <div className='text-center text-muted-foreground'>
-              No sessions available
+              {t('table.noSessionsAvailable')}
             </div>
           </CardContent>
         </Card>

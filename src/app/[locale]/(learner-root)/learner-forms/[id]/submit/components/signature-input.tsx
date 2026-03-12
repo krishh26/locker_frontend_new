@@ -14,6 +14,7 @@ import { PenTool, X } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Control, Controller } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 interface SignatureInputProps {
   name: string;
@@ -32,6 +33,7 @@ export function SignatureInput({
   error,
   disabled,
 }: SignatureInputProps) {
+  const t = useTranslations("learnerFormSubmit");
   const [isOpen, setIsOpen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -108,7 +110,7 @@ export function SignatureInput({
                 className="flex-1"
               >
                 <PenTool className="mr-2 h-4 w-4" />
-                {hasSignature ? "Edit Signature" : "Sign"}
+                {hasSignature ? t("signature.editSignature") : t("signature.sign")}
               </Button>
               {hasSignature && (
                 <Button
@@ -126,7 +128,7 @@ export function SignatureInput({
               <div className="border rounded-md p-2">
                 <Image
                   src={(value as unknown as { dataURL?: string }).dataURL || "" }
-                  alt="Signature"
+                  alt={t("signature.alt")}
                   width={200}
                   height={80}
                   className="max-h-20 object-contain"
@@ -141,9 +143,9 @@ export function SignatureInput({
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                  <DialogTitle>Sign Here</DialogTitle>
+                  <DialogTitle>{t("signature.dialogTitle")}</DialogTitle>
                   <DialogDescription>
-                    Draw your signature in the box below
+                    {t("signature.dialogDescription")}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
@@ -167,13 +169,13 @@ export function SignatureInput({
                     variant="outline"
                     onClick={clearSignature}
                   >
-                    Clear
+                    {t("signature.clear")}
                   </Button>
                   <Button
                     type="button"
                     onClick={() => saveSignature(onChange)}
                   >
-                    Save Signature
+                    {t("signature.saveSignature")}
                   </Button>
                 </DialogFooter>
               </DialogContent>

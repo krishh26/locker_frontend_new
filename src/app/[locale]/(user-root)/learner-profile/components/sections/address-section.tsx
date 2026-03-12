@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface AddressSectionProps {
 }
 
 export function AddressSection({ learner, canEdit = false }: AddressSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const street = (learner as { street?: string }).street || "-";
   const suburb = (learner as { suburb?: string }).suburb || "-";
@@ -23,12 +25,12 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Address</CardTitle>
+        <CardTitle>{t("sections.address.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">House No/Name and Street</Label>
+            <Label className="text-sm font-medium">{t("sections.address.street")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -49,7 +51,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Suburb/Village</Label>
+            <Label className="text-sm font-medium">{t("sections.address.suburb")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -73,7 +75,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Town/City</Label>
+            <Label className="text-sm font-medium">{t("sections.address.town")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -94,7 +96,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Country</Label>
+            <Label className="text-sm font-medium">{t("sections.address.country")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -118,7 +120,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Home Postcode</Label>
+            <Label className="text-sm font-medium">{t("sections.address.homePostcode")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -139,7 +141,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Country of Domicile</Label>
+            <Label className="text-sm font-medium">{t("sections.address.countryOfDomicile")}</Label>
             {canEdit ? (
               <>
                 <Input

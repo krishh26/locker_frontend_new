@@ -2168,6 +2168,98 @@
       "loFullName": "Resultado de aprendizagem"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Visão geral do formando",
+      "subtitle": "Gerir e monitorizar o progresso do formando",
+      "loadError": "Falha ao carregar formandos. Tente novamente mais tarde.",
+      "noMatchingLearners": "Nenhum formando correspondente encontrado",
+      "noLearners": "Nenhum formando encontrado",
+      "adjustSearch": "Tente ajustar os critérios de pesquisa",
+      "noLearnersAssigned": "Ainda não há formandos atribuídos à sua conta"
+    },
+    "filters": {
+      "searchLabel": "Pesquisar por formando",
+      "searchPlaceholder": "Introduza nome, ID, email ou comentário do formando"
+    },
+    "card": {
+      "noComment": "Sem comentário",
+      "overallProgress": "Progresso geral",
+      "viewPortfolio": "Ver portfólio",
+      "editCommentTitle": "Editar comentário",
+      "editCommentDescription": "Atualizar o comentário de {name}",
+      "commentLabel": "Comentário",
+      "commentPlaceholder": "Introduza o seu comentário aqui...",
+      "cancel": "Cancelar",
+      "saving": "A guardar...",
+      "save": "Guardar",
+      "commentUpdatedSuccess": "Comentário atualizado com sucesso",
+      "commentUpdateFailed": "Falha ao atualizar o comentário"
+    }
+  },
+  "learnersForms": {
+    "page": {
+      "title": "Formulários enviados por formandos",
+      "subtitle": "Ver e gerir todos os formulários enviados por formandos"
+    }
+  },
+  "iqaReport": {
+    "page": {
+      "title": "Relatório IQA",
+      "subtitle": "Preencha o formulário do relatório IQA para as unidades do formando",
+      "loadingUnits": "A carregar unidades...",
+      "loadUnitsError": "Falha ao carregar unidades. Tente novamente.",
+      "noUnitsForCourse": "Nenhuma unidade encontrada para este curso."
+    },
+    "form": {
+      "assessmentInformation": "Informação de avaliação",
+      "courseName": "Nome do curso",
+      "selectCourse": "Selecionar curso",
+      "untitledCourse": "Curso sem título",
+      "assessorsName": "Nome do(s) avaliador(es)",
+      "learnerName": "Nome do formando",
+      "batchNoAndCreator": "Nº do lote e criador",
+      "iqasForBatch": "IQAs para o lote",
+      "learnerAssessmentForUnits": "Avaliação do formando para unidade(s)",
+      "question": "Pergunta",
+      "alwaysYes": "Sempre (Sim)",
+      "sometimes": "Por vezes",
+      "neverNo": "Nunca (Não)",
+      "questions": {
+        "q1": "O formando foi observado diretamente por um avaliador?",
+        "q2": "Foram avaliados conhecimentos e compreensão?",
+        "q3": "Existe evidência de produto de trabalho disponível?",
+        "q4": "O formando forneceu detalhes profissionais/pessoais suficientes?",
+        "q5": "Os registos de avaliação do formando estão a ser completados de forma contínua?",
+        "q6": "O avaliador confirmou autenticidade, suficiência, precisão, consistência e validade?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unidade {index}",
+      "noDate": "Sem data",
+      "noSampleHistory": "Sem histórico de amostras para esta unidade"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Nenhuma unidade encontrada para este curso.",
+      "noCode": "Sem código",
+      "noUnitName": "Sem nome da unidade",
+      "notStarted": "Não iniciado",
+      "completed": "Concluído",
+      "inProgress": "Em progresso",
+      "sample": "amostra",
+      "samples": "amostras",
+      "last": "Último"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Falha ao carregar detalhes do plano",
+      "unableToDetermineUser": "Não foi possível determinar o utilizador atual",
+      "questionsSavedSuccess": "Perguntas guardadas com sucesso",
+      "saveQuestionsError": "Falha ao guardar as perguntas",
+      "missingRequiredInfo": "Falta informação obrigatória",
+      "sampleDetailUpdatedSuccess": "Detalhe do plano de amostra atualizado com sucesso",
+      "updateSampleDetailError": "Falha ao atualizar o detalhe do plano de amostra"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestão de recursos de bem-estar",
     "pageSubtitle": "Gerir recursos de bem-estar para os formandos, incluindo adicionar, editar e alternar disponibilidade",
@@ -2574,6 +2666,77 @@
       }
     }
   },
+  "gapAnalysis": {
+    "pageTitle": "Análise de lacunas",
+    "pageSubtitle": "Acompanhar lacunas dos formandos por cursos e unidades",
+    "learnerInfo": {
+      "name": "Nome",
+      "username": "Nome de utilizador",
+      "email": "E-mail",
+      "mobile": "Telemóvel",
+      "notSpecified": "Não especificado"
+    },
+    "table": {
+      "columns": {
+        "title": "Título",
+        "subUnitTitle": "Título subunidade",
+        "code": "Código",
+        "learnerMap": "Mapa formando",
+        "trainerMap": "Mapa formador",
+        "gap": "Lacuna",
+        "comment": "Comentário"
+      },
+      "yes": "Sim",
+      "no": "Não",
+      "gapTooltip": {
+        "complete": "Completo - Ambos os mapas presentes",
+        "partial": "Parcial - Um mapa presente",
+        "none": "Nenhum mapa presente"
+      },
+      "filters": {
+        "selectCourse": "Selecionar curso",
+        "selectType": "Selecionar tipo",
+        "selectUnit": "Selecionar unidade",
+        "noCourses": "Nenhum curso disponível",
+        "selectCoursePlaceholder": "Selecionar um curso",
+        "selectCourseFirst": "Selecione um curso primeiro",
+        "selectTypePlaceholder": "Selecionar um tipo",
+        "selectUnitPlaceholder": "Selecionar uma unidade",
+        "noUnits": "Nenhuma unidade disponível"
+      },
+      "types": {
+        "knowledge": "Conhecimento",
+        "behaviour": "Comportamento",
+        "skills": "Competências"
+      },
+      "searchPlaceholder": "Pesquisar subunidades...",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "pdfTitle": "Progresso módulo/unidade",
+      "toast": {
+        "csvNotImplemented": "A exportação CSV será implementada",
+        "noDataToExport": "Sem dados para exportar",
+        "pdfSuccess": "PDF exportado com sucesso"
+      },
+      "pagination": {
+        "showing": "A mostrar {count} de {total} {items}",
+        "items": "itens",
+        "subUnits": "subunidades",
+        "page": "Página",
+        "previous": "Anterior",
+        "next": "Seguinte"
+      },
+      "noResults": "Sem resultados.",
+      "empty": {
+        "selectCourse": "Selecione um curso para ver o progresso",
+        "selectType": "Selecione um tipo para ver o progresso",
+        "noItemsForType": "Nenhum item para o tipo selecionado",
+        "selectUnit": "Selecione uma unidade para ver o progresso",
+        "noSubUnits": "Nenhuma subunidade para a unidade selecionada"
+      }
+    }
+  },
   "supplementaryTraining": {
     "pageTitle": "Supplementary Training Resources Management",
     "pageSubtitle": "Manage supplementary training resources for learners, including adding, editing, and toggling resource availability",
@@ -2640,6 +2803,78 @@
           "submittedSuccess": "Feedback enviado com sucesso!",
           "submitFailed": "Falha ao enviar feedback. Tente novamente."
         }
+      }
+    }
+  },
+  "healthAndWellbeing": {
+    "pageTitle": "Saúde e bem-estar",
+    "pageSubtitle": "Aceda aos seus recursos de bem-estar e acompanhe o seu progresso",
+    "table": {
+      "columns": {
+        "resourceName": "Nome do recurso",
+        "description": "Descrição",
+        "createdDate": "Data de criação",
+        "lastOpened": "Última abertura",
+        "feedback": "Feedback",
+        "actions": "Ações"
+      },
+      "actions": {
+        "openDownload": "Abrir / Transferir",
+        "visitLink": "Visitar ligação",
+        "feedback": "Feedback"
+      },
+      "dates": {
+        "never": "Nunca",
+        "invalid": "Data inválida"
+      },
+      "feedbackValues": {
+        "veryHelpful": "Muito útil",
+        "helpful": "Útil",
+        "neutral": "Neutro",
+        "notHelpful": "Pouco útil",
+        "none": "Sem feedback",
+        "unknown": "Desconhecido"
+      },
+      "searchPlaceholder": "Pesquisar recursos...",
+      "columnVisibility": {
+        "label": "Visibilidade das colunas",
+        "button": "Colunas"
+      },
+      "loading": "A carregar recursos...",
+      "error": {
+        "loadFailed": "Falha ao carregar recursos. Tente novamente.",
+        "retry": "Tentar novamente"
+      },
+      "empty": {
+        "noResources": "Nenhum recurso disponível",
+        "checkBack": "Volte mais tarde para novos recursos de bem-estar"
+      },
+      "noResults": "Nenhum recurso encontrado.",
+      "toast": {
+        "trackFailed": "Falha ao registar o acesso ao recurso"
+      }
+    },
+    "feedbackDialog": {
+      "title": "Como foi este recurso para si?",
+      "description": "Selecione um emoji para avaliar a sua experiência",
+      "labels": {
+        "veryHelpful": "Muito útil",
+        "helpful": "Útil",
+        "neutral": "Neutro",
+        "notHelpful": "Pouco útil"
+      },
+      "messages": {
+        "veryHelpful": "Este recurso foi muito útil!",
+        "helpful": "Este recurso foi útil!",
+        "neutral": "Este recurso foi okay",
+        "notHelpful": "Este recurso poderia ser melhorado"
+      },
+      "cancel": "Cancelar",
+      "submit": "Enviar feedback",
+      "submitting": "A enviar...",
+      "toast": {
+        "success": "Feedback enviado com sucesso!",
+        "failed": "Falha ao enviar feedback. Tente novamente."
       }
     }
   },
@@ -2737,6 +2972,876 @@
       "learnerOverview": "Visão geral do formando",
       "resources": "Recursos",
       "learnersForms": "Formulários de formandos"
+    }
+  },
+  "learnerFormSubmit": {
+    "page": {
+      "title": "Submeter formulário",
+      "subtitle": "Preencha o formulário abaixo",
+      "loadFailed": "Falha ao carregar o formulário. Tente novamente.",
+      "notFound": "Formulário não encontrado."
+    },
+    "signature": {
+      "sign": "Assinar",
+      "editSignature": "Editar assinatura",
+      "dialogTitle": "Assine aqui",
+      "dialogDescription": "Desenhe a sua assinatura na caixa abaixo",
+      "clear": "Limpar",
+      "saveSignature": "Guardar assinatura",
+      "alt": "Assinatura"
+    },
+    "fileUpload": {
+      "chooseFile": "Escolher ficheiro",
+      "selected": "Selecionado: {name} ({size} KB)"
+    },
+    "form": {
+      "noFields": "Nenhum campo adicionado ao formulário.",
+      "lockedMessage": "Este formulário está bloqueado e não pode ser editado. Para alterações, contacte o seu formador ou administrador.",
+      "clearForm": "Limpar formulário",
+      "saveAsDraft": "Guardar como rascunho",
+      "saving": "A guardar...",
+      "submit": "Submeter",
+      "submitting": "A submeter..."
+    },
+    "validation": {
+      "email": "{label} deve ser um e-mail válido",
+      "number": "{label} deve ser um número",
+      "phone": "{label} deve conter apenas números",
+      "required": "{label} é obrigatório",
+      "fileTooLarge": "{label} é demasiado grande (máx. 10 MB)"
+    },
+    "toast": {
+      "submitSuccess": "Formulário submetido com sucesso!",
+      "submitFailed": "Falha ao submeter o formulário. Tente novamente.",
+      "draftSuccess": "Formulário guardado como rascunho!",
+      "draftFailed": "Falha ao guardar o rascunho. Tente novamente."
+    }
+  },
+  "learnerForms": {
+    "pageTitle": "Formulários",
+    "pageSubtitle": "Ver e gerir todos os formulários",
+    "table": {
+      "columns": {
+        "formName": "Nome do formulário",
+        "description": "Descrição",
+        "type": "Tipo",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "loading": "A carregar...",
+      "noResults": "Nenhum formulário encontrado."
+    }
+  },
+  "learnerDocumentsToSign": {
+    "pageTitle": "Documentos dos formandos para assinar",
+    "pageSubtitle": "Ver e assinar documentos pendentes da sua assinatura",
+    "table": {
+      "columns": {
+        "courseName": "Nome do curso",
+        "type": "Tipo",
+        "dateUploaded": "Data de envio",
+        "documentName": "Nome do documento",
+        "uploadedBy": "Enviado por",
+        "signedInAgreement": "Assinado em acordo",
+        "sessionDateTime": "Data/hora da sessão",
+        "action": "Ação"
+      },
+      "searchPlaceholder": "Pesquisar documentos...",
+      "loading": "A carregar...",
+      "noResults": "Nenhum documento encontrado.",
+      "noSignaturesRequested": "Nenhuma assinatura solicitada",
+      "pendingSuffix": "(Pendente)",
+      "signButton": "Assinar"
+    },
+    "summary": {
+      "totalDocuments": "Total de documentos:",
+      "requiringSignatures": "Documentos que requerem assinaturas:"
+    },
+    "roles": {
+      "employer": "Empregador",
+      "iqa": "IQA",
+      "trainer": "Formador",
+      "learner": "Formando"
+    },
+    "types": {
+      "evidence": "Evidência"
+    },
+    "modal": {
+      "title": "Acordo de assinatura do documento",
+      "documentLabel": "Documento:",
+      "courseLabel": "Curso:",
+      "tableHeaders": {
+        "signedInAgreement": "Assinado em acordo",
+        "name": "Nome",
+        "signed": "Assinado",
+        "date": "Data"
+      },
+      "buttons": {
+        "cancel": "Cancelar/Fechar",
+        "save": "Guardar",
+        "saving": "A guardar..."
+      }
+    },
+    "toast": {
+      "saved": "Assinatura guardada com sucesso!",
+      "saveError": "Erro ao guardar a assinatura"
+    }
+  },
+  "learningPlan": {
+    "page": {
+      "title": "Plano de aprendizagem",
+      "subtitle": "Gerir e acompanhar sessões de aprendizagem"
+    },
+    "table": {
+      "columns": {
+        "expand": "",
+        "sessionNo": "N.º da sessão",
+        "title": "Título",
+        "date": "Data",
+        "time": "Hora",
+        "type": "Tipo",
+        "assessor": "Avaliador",
+        "attended": "Presença",
+        "courses": "Cursos",
+        "feedback": "Feedback"
+      },
+      "loadingSessions": "A carregar sessões...",
+      "noLearnerSelected": "Nenhum formando selecionado",
+      "noResults": "Sem resultados.",
+      "noSessionsAvailable": "Não há sessões disponíveis",
+      "searchPlaceholder": "Pesquisar sessões...",
+      "learnerLabel": "Formando",
+      "nameLabel": "Nome:",
+      "filters": {
+        "type": {
+          "label": "Tipo",
+          "placeholder": "Selecionar tipo"
+        },
+        "attended": {
+          "label": "Estado de presença",
+          "placeholder": "Selecionar estado"
+        }
+      },
+      "attendedSelectPlaceholder": "Selecionar",
+      "export": {
+        "button": "Exportar",
+        "csv": "Exportar como CSV",
+        "pdf": "Exportar como PDF",
+        "csvNotImplemented": "A exportação CSV será implementada",
+        "pdfNotImplemented": "A exportação PDF será implementada"
+      },
+      "buttons": {
+        "addSession": "Adicionar sessão"
+      },
+      "toast": {
+        "sessionUpdated": "Sessão atualizada com sucesso",
+        "sessionUpdateFailed": "Falha ao atualizar a sessão"
+      }
+    },
+    "sessionExpanded": {
+      "noCourses": "Sem cursos",
+      "buttons": {
+        "addFiles": "Adicionar ficheiros",
+        "addAction": "Adicionar ação"
+      },
+      "actionTable": {
+        "headers": {
+          "who": "Quem",
+          "action": "Ação",
+          "description": "Descrição",
+          "file": "Ficheiro",
+          "units": "Unidades",
+          "targetDate": "Data alvo",
+          "feedback": "Feedback",
+          "duration": "Duração",
+          "status": "Estado",
+          "actions": "Ações"
+        },
+        "whoLabels": {
+          "learner": "Formando",
+          "employer": "Empregador"
+        },
+        "unitPrefix": "Unidade {unitName}",
+        "mins": "{count} min",
+        "notStarted": "Não iniciado",
+        "feedbackLabels": {
+          "trainer": "Formador:",
+          "learner": "Formando:"
+        },
+        "tooltips": {
+          "edit": "Editar",
+          "addFile": "Adicionar ficheiro",
+          "delete": "Eliminar"
+        },
+        "toast": {
+          "deleteNotImplemented": "A funcionalidade de eliminar ação será implementada"
+        }
+      }
+    },
+    "dialogs": {
+      "addSession": {
+        "title": "Adicionar sessão",
+        "description": "Crie uma nova sessão para este formando. A data de início e a duração são obrigatórias.",
+        "courseContextWarning": "Abra o Plano de aprendizagem a partir de uma página de curso para adicionar uma sessão (contexto do curso obrigatório).",
+        "fields": {
+          "title": "Título",
+          "description": "Descrição",
+          "location": "Localização",
+          "startDateTime": "Data e hora de início",
+          "duration": "Duração (horas:minutos)",
+          "sessionType": "Tipo de sessão"
+        },
+        "placeholders": {
+          "title": "Título da sessão",
+          "description": "Descrição opcional",
+          "location": "ex.: Sala 1, Online",
+          "sessionType": "Selecionar tipo"
+        },
+        "buttons": {
+          "cancel": "Cancelar",
+          "submit": "Adicionar sessão",
+          "submitting": "A adicionar..."
+        },
+        "toast": {
+          "courseRequired": "É necessário pelo menos um curso. Abra o Plano de aprendizagem a partir de um curso para adicionar uma sessão.",
+          "success": "Sessão adicionada com sucesso",
+          "failed": "Falha ao adicionar a sessão"
+        },
+        "validation": {
+          "titleRequired": "O título é obrigatório",
+          "locationRequired": "A localização é obrigatória",
+          "startDateRequired": "A data de início é obrigatória",
+          "durationRequired": "A duração é obrigatória",
+          "sessionTypeRequired": "O tipo de sessão é obrigatório"
+        }
+      },
+      "addAction": {
+        "toast": {
+          "added": "Ação adicionada com sucesso",
+          "addFailed": "Falha ao adicionar a ação",
+          "updated": "Ação atualizada com sucesso",
+          "updateFailed": "Falha ao atualizar a ação"
+        },
+        "validation": {
+          "actionNameRequired": "O nome da ação é obrigatório",
+          "descriptionTooLong": "A descrição não pode exceder 1000 caracteres",
+          "targetDateRequired": "A data alvo é obrigatória",
+          "whoRequired": "Selecione um tipo de ação"
+        }
+      },
+      "manageSessionFiles": {
+        "title": "Gerir ficheiros da sessão",
+        "sections": {
+          "who": "1. Quem:",
+          "fileType": "2. Tipo de ficheiro:",
+          "uploadType": "3. Tipo de envio:"
+        },
+        "tableHeaders": {
+          "name": "Nome",
+          "type": "Tipo",
+          "description": "Descrição",
+          "dateUploaded": "Data de envio"
+        },
+        "who": {
+          "thisAim": "Este objetivo",
+          "allAim": "Todos os objetivos"
+        },
+        "fileTypes": {
+          "ilpFile": "Ficheiros ILP",
+          "reviewFiles": "Ficheiros de revisão",
+          "assessmentFiles": "Ficheiros de avaliação",
+          "generalFiles": "Ficheiros gerais"
+        },
+        "uploadModes": {
+          "fileUpload": "Enviar ficheiro",
+          "formSelection": "Selecionar formulário"
+        },
+        "buttons": {
+          "chooseFile": "Escolher ficheiro",
+          "upload": "Enviar",
+          "uploading": "A enviar...",
+          "add": "Adicionar",
+          "adding": "A adicionar...",
+          "cancelClose": "Cancelar/Fechar"
+        },
+        "placeholders": {
+          "selectForm": "Selecionar formulário"
+        },
+        "toast": {
+          "selectFile": "Selecione um ficheiro",
+          "uploadSuccess": "Ficheiro enviado com sucesso",
+          "uploadFailed": "Falha ao enviar o ficheiro",
+          "selectForm": "Selecione um formulário",
+          "addFormSuccess": "Formulário adicionado com sucesso",
+          "addFormFailed": "Falha ao adicionar o formulário"
+        }
+      },
+      "manageActionFile": {
+        "title": "Gerir ficheiros de ações",
+        "fieldLabel": "Envio de ficheiro",
+        "helper": {
+          "dragDrop": "Arraste e largue os seus ficheiros aqui ou",
+          "browse": "Procurar",
+          "maxSize": "São permitidos ficheiros até 10MB"
+        },
+        "buttons": {
+          "cancel": "Cancelar",
+          "upload": "Enviar",
+          "uploading": "A enviar..."
+        },
+        "toast": {
+          "uploadSuccess": "Ficheiro enviado com sucesso",
+          "uploadFailed": "Falha ao enviar o ficheiro"
+        },
+        "validation": {
+          "fileRequired": "É necessário um ficheiro",
+          "fileTooLarge": "O tamanho do ficheiro deve ser inferior a 10MB",
+          "unsupportedFormat": "Formato de ficheiro não suportado"
+        }
+      }
+    },
+    "options": {
+      "sessionTypes": {
+        "all": "Todos",
+        "general": "Geral",
+        "induction": "Indução",
+        "formalReview": "Revisão formal",
+        "telephone": "Telefone",
+        "exitSession": "Sessão de saída",
+        "outOfTheWorkplace": "Fora do local de trabalho",
+        "testsExams": "Testes/Exames",
+        "learnerSupport": "Apoio ao formando",
+        "initialSession": "Sessão inicial",
+        "gatewayReady": "Pronto para gateway",
+        "epa": "EPA",
+        "furloughed": "Em layoff"
+      },
+      "attendedStatuses": {
+        "all": "Todos",
+        "attended": "Presente",
+        "cancelled": "Cancelado",
+        "cancelledByTrainer": "Cancelado pelo formador",
+        "cancelledByLearner": "Cancelado pelo formando",
+        "cancelledByEmployee": "Cancelado pelo empregado",
+        "learnerNotAttended": "Formando não compareceu"
+      },
+      "fileCategories": {
+        "ilpFile": "ILP",
+        "assessmentFiles": "Avaliação",
+        "reviewFiles": "Revisão",
+        "generalFiles": "Geral",
+        "evidence": "Evidência"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "unknown": "Desconhecido"
+    }
+  },
+  "moduleUnitProgress": {
+    "page": {
+      "title": "Progresso das unidades",
+      "subtitle": "Acompanhe o progresso do formando nas unidades"
+    },
+    "error": {
+      "loadFailed": "Falha ao carregar o progresso das unidades. Tente novamente mais tarde."
+    },
+    "learnerInfo": {
+      "noInfo": "Não há informação do formando disponível",
+      "labels": {
+        "learner": "Formando",
+        "uln": "ULN",
+        "registrationNumber": "Número de registo",
+        "trainingProvider": "Entidade formadora",
+        "courseName": "Nome do curso"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar unidades...",
+      "loading": "A carregar unidades...",
+      "noUnits": "Não há unidades disponíveis",
+      "noResults": "Sem resultados.",
+      "columns": {
+        "title": "Título",
+        "signedOffAwaiting": "% Assinado / A aguardar assinatura",
+        "completed": "Concluído",
+        "assessed": "Avaliado",
+        "iqaSignOff": "Assinatura IQA",
+        "claimableStatus": "Estado reclamável"
+      },
+      "progress": {
+        "signedOff": "Assinado",
+        "awaitingSignOff": "A aguardar assinatura"
+      },
+      "status": {
+        "yes": "Sim",
+        "no": "Não",
+        "claimable": "Reclamável",
+        "notClaimable": "Não reclamável"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
+  "resources": {
+    "page": {
+      "title": "Recursos",
+      "subtitle": "Gerir recursos e materiais de aprendizagem"
+    },
+    "table": {
+      "columns": {
+        "name": "Nome",
+        "description": "Descrição",
+        "glh": "GLH",
+        "jobType": "Tipo de trabalho",
+        "resourceType": "Tipo de recurso",
+        "actions": "Ações"
+      },
+      "searchPlaceholder": "Pesquisar recursos...",
+      "filters": {
+        "jobType": {
+          "label": "Tipo de trabalho",
+          "placeholder": "Selecionar tipo de trabalho"
+        },
+        "resourceType": {
+          "label": "Tipo de recurso",
+          "placeholder": "Selecionar tipo de recurso",
+          "allTypes": "Todos os tipos"
+        }
+      },
+      "buttons": {
+        "addResource": "Adicionar recurso",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Transferir"
+      },
+      "menu": {
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "download": "Transferir",
+        "columns": "Colunas"
+      },
+      "states": {
+        "loading": "A carregar recursos...",
+        "noResults": "Sem resultados.",
+        "empty": "Não foram encontrados recursos."
+      },
+      "confirm": {
+        "deleteTitle": "Tem a certeza de que pretende eliminar este recurso?",
+        "deleteBody": "Esta ação não pode ser anulada."
+      },
+      "toast": {
+        "deleted": "Recurso eliminado com sucesso",
+        "deleteFailed": "Falha ao eliminar o recurso",
+        "exportCsvFailed": "Falha ao exportar CSV",
+        "exportPdfFailed": "Falha ao exportar PDF"
+      }
+    },
+    "form": {
+      "title": {
+        "create": "Criar novo recurso",
+        "edit": "Editar recurso"
+      },
+      "description": {
+        "create": "Carregue um novo recurso de aprendizagem. Clique em Guardar quando terminar.",
+        "edit": "Atualize os detalhes do recurso. Clique em Guardar quando terminar."
+      },
+      "fields": {
+        "course": "Curso",
+        "file": "Ficheiro",
+        "name": "Nome",
+        "description": "Descrição",
+        "jobType": "Tipo de trabalho",
+        "resourceType": "Tipo de recurso",
+        "hours": "Horas",
+        "minutes": "Minutos"
+      },
+      "placeholders": {
+        "selectCourse": "Selecionar curso",
+        "noCourses": "Não há cursos disponíveis",
+        "description": "Introduzir descrição (opcional)",
+        "jobType": "Selecionar tipo de trabalho",
+        "resourceType": "Selecionar tipo de recurso"
+      },
+      "helper": {
+        "currentFilePrefix": "Ficheiro atual:",
+        "viewFile": "Ver ficheiro",
+        "maxFileSize": "Tamanho máximo do ficheiro: 10MB",
+        "nameAuto": "O nome é definido automaticamente a partir do ficheiro carregado"
+      },
+      "buttons": {
+        "save": "Guardar",
+        "saving": "A guardar...",
+        "cancel": "Cancelar"
+      },
+      "toast": {
+        "created": "Recurso criado com sucesso",
+        "updated": "Recurso atualizado com sucesso",
+        "createFailed": "Falha ao criar o recurso",
+        "updateFailed": "Falha ao atualizar o recurso"
+      },
+      "validation": {
+        "selectCourse": "Selecione um curso.",
+        "nameRequired": "O nome é obrigatório.",
+        "uploadFile": "Carregue um ficheiro.",
+        "fileTooLarge": "O tamanho do ficheiro deve ser inferior a 10MB.",
+        "hoursMin": "As horas devem ser 0 ou mais",
+        "hoursMax": "As horas devem ser menos de 24",
+        "minutesMin": "Os minutos devem ser 0 ou mais",
+        "minutesMax": "Os minutos devem ser menos de 60"
+      }
+    },
+    "options": {
+      "jobType": {
+        "on": "Ligado",
+        "off": "Desligado"
+      },
+      "resourceType": {
+        "pdf": "PDF",
+        "word": "Word",
+        "ppt": "PowerPoint",
+        "text": "Texto",
+        "image": "Imagem"
+      }
+    },
+    "common": {
+      "dash": "-",
+      "glhFormat": "{hours} h {minutes} min"
+    }
+  },
+  "skillsScan": {
+    "page": {
+      "title": "Avaliação de competências",
+      "subtitle": "Análise de necessidades de formação"
+    },
+    "userCard": {
+      "summaryLine": "Avaliação de competências e análise de necessidades de formação",
+      "badge": "Análise de necessidades de formação",
+      "fallbackUserName": "Utilizador"
+    },
+    "tabs": {
+      "units": {
+        "label": "Escolher unidades TNA",
+        "shortLabel": "Escolher",
+        "description": "Selecione as suas unidades de formação"
+      },
+      "questionnaire": {
+        "label": "Questionário TNA",
+        "shortLabel": "TNA",
+        "description": "Conclua a avaliação"
+      },
+      "results": {
+        "label": "Ver resultados",
+        "shortLabel": "Ver",
+        "description": "Reveja os seus resultados"
+      }
+    },
+    "units": {
+      "courseSelection": {
+        "title": "Escolher curso de formação",
+        "label": "Selecionar curso:",
+        "placeholder": "Selecione um curso para começar...",
+        "noCourses": "Não há cursos disponíveis"
+      },
+      "table": {
+        "title": "Unidades do curso",
+        "count": "{count} unidades disponíveis",
+        "headers": {
+          "unitTitle": {
+            "standard": "Padrões",
+            "qualification": "Unidades padrão"
+          },
+          "hours": "Horas",
+          "credits": "Créditos",
+          "level": "Nível",
+          "code": "Código",
+          "type": "Tipo",
+          "mandatory": "Obrigatório"
+        },
+        "values": {
+          "na": "N/D",
+          "levelPrefix": "Nível {level}",
+          "yes": "Sim",
+          "no": "Não"
+        }
+      },
+      "empty": {
+        "title": "Nenhuma unidade encontrada",
+        "body": "Selecione um curso para ver as unidades disponíveis"
+      },
+      "buttons": {
+        "continueToQuestionnaire": "Continuar para o questionário"
+      }
+    },
+    "questionnaire": {
+      "title": "Questionário TNA",
+      "topicsCompleted": "{completed}/{total} tópicos concluídos",
+      "highlightBlanks": "Destacar campos em branco",
+      "sidebar": {
+        "title": "Tópicos de avaliação"
+      },
+      "unitIntro": "Avalie as suas competências para cada área",
+      "table": {
+        "headers": {
+          "skill": "Competência a demonstrar",
+          "phases": {
+            "induction": "Indução",
+            "first": "Primeira revisão",
+            "second": "Segunda revisão",
+            "third": "Terceira revisão"
+          }
+        },
+        "selectRatingPlaceholder": "Selecionar avaliação"
+      },
+      "states": {
+        "noCourse": {
+          "title": "Nenhum curso selecionado",
+          "body": "Selecione um curso no separador \"Escolher unidades TNA\""
+        },
+        "loadingCourseData": "A carregar dados do curso...",
+        "noSkillsForUnit": "Não há competências para avaliar nesta unidade",
+        "noTopic": {
+          "title": "Nenhum tópico selecionado",
+          "body": "Selecione um tópico na barra lateral para começar"
+        }
+      },
+      "buttons": {
+        "previous": "Anterior",
+        "next": "Seguinte",
+        "saveProgress": "Guardar progresso",
+        "saving": "A guardar...",
+        "viewResults": "Ver resultados"
+      },
+      "toast": {
+        "saved": "Progresso guardado com sucesso",
+        "saveFailed": "Falha ao guardar o progresso"
+      }
+    },
+    "results": {
+      "title": "Resultados da avaliação",
+      "skillsAssessed": "{completed}/{total} competências avaliadas",
+      "states": {
+        "noCourse": {
+          "title": "Nenhum curso selecionado",
+          "body": "Selecione um curso no separador \"Escolher unidades TNA\""
+        },
+        "loading": "A carregar resultados...",
+        "contentNotFound": "Conteúdo não encontrado"
+      },
+      "buttons": {
+        "downloadPdf": "Transferir PDF"
+      },
+      "toast": {
+        "generatingPdf": "A gerar PDF...",
+        "pdfDownloaded": "PDF transferido com sucesso",
+        "pdfDownloadFailed": "Falha ao transferir o PDF"
+      },
+      "chart": {
+        "title": "Gráfico de progresso",
+        "selectTopicPlaceholder": "Selecionar tópico",
+        "noData": "Sem dados disponíveis"
+      },
+      "legend": {
+        "title": "Legenda"
+      }
+    },
+    "progressChart": {
+      "noDataForTopic": "Sem dados disponíveis para este tópico.",
+      "phases": {
+        "induction": "Indução",
+        "first": "Primeira revisão",
+        "second": "Segunda revisão",
+        "third": "Terceira revisão"
+      }
+    },
+    "options": {
+      "rating": {
+        "never": "Nunca",
+        "notSure": "Não tenho a certeza",
+        "sometimes": "Às vezes",
+        "always": "Sempre"
+      }
+    },
+    "common": {
+      "dash": "-"
+    }
+  },
+  "timeLog": {
+    "page": {
+      "title": "Time Log",
+      "subtitle": "Viewing E-Timelog for All Courses and General Activities"
+    },
+    "filters": {
+      "course": {
+        "label": "Select Course",
+        "all": "All Courses"
+      },
+      "jobType": {
+        "label": "Select Job Training",
+        "options": {
+          "all": "All",
+          "notApplicable": "Not Applicable",
+          "onTheJob": "On the job",
+          "offTheJob": "Off the job"
+        }
+      },
+      "approved": {
+        "label": "Assessor Approved",
+        "options": {
+          "all": "All",
+          "approved": "Approved",
+          "notApproved": "Not Approved"
+        }
+      }
+    },
+    "summaryCards": {
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "total": "Total",
+      "hoursLabel": "{hours} hours"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "empty": "No recent activities found."
+    },
+    "table": {
+      "loading": "Loading time logs...",
+      "empty": "No time log entries found.",
+      "columns": {
+        "activityType": "Activity Type",
+        "courseUnit": "Course / Unit",
+        "trainer": "Trainer",
+        "timeSpent": "Time Spent",
+        "startTime": "Activity Start Time",
+        "onOffJob": "On/Off the Job Training",
+        "approved": "Approved",
+        "comment": "Comment",
+        "date": "Date",
+        "actions": "Action"
+      },
+      "labels": {
+        "assessor": "Assessor",
+        "approved": "Approved",
+        "notApproved": "Not Approved"
+      }
+    },
+    "actions": {
+      "addButton": "Add New Timelog Entry",
+      "columnVisibilityLabel": "Column Visibility",
+      "columnsButton": "Columns"
+    },
+    "dialog": {
+      "form": {
+        "title": {
+          "create": "Add Activity",
+          "edit": "Edit Time Log"
+        },
+        "description": {
+          "create": "Fill in the details to create a new time log entry.",
+          "edit": "Update the time log entry details."
+        },
+        "fields": {
+          "activityDate": {
+            "label": "1. Select Activity Date"
+          },
+          "activityType": {
+            "label": "2. Select Activity Type",
+            "placeholder": "Select Activity Type"
+          },
+          "course": {
+            "label": "3. Select Course",
+            "noneOption": "None",
+            "loading": "Loading courses..."
+          },
+          "unit": {
+            "label": "4. Select Unit",
+            "placeholderDefault": "Select Unit(s)",
+            "placeholderWithCount": "{count} unit(s) selected",
+            "noUnits": "No units available for selected course"
+          },
+          "trainer": {
+            "label": "5. Select Trainer",
+            "noneOption": "None",
+            "loading": "Loading trainers..."
+          },
+          "type": {
+            "label": "6. Was it on the Job?",
+            "placeholder": "Select Job Type",
+            "options": {
+              "notApplicable": "Not Applicable",
+              "on": "On the job",
+              "off": "Off the job"
+            }
+          },
+          "spendTime": {
+            "label": "7. Time Spent on Activity"
+          },
+          "startTime": {
+            "label": "8. Activity Start Time"
+          },
+          "endTime": {
+            "label": "9. Activity End Time"
+          },
+          "impact": {
+            "label": "10. What impact has this activity had on your learning?",
+            "placeholder": "Please type in any impact notes."
+          },
+          "evidence": {
+            "label": "11. Evidence Links",
+            "placeholder": "Enter evidence link"
+          }
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "saveCreate": "Save Time Log",
+          "saveUpdate": "Update Time Log",
+          "loadingCreate": "Creating...",
+          "loadingUpdate": "Updating..."
+        },
+        "validation": {
+          "activityDateRequired": "Activity date is required",
+          "activityTypeRequired": "Activity type is required",
+          "jobTypeRequired": "Job type is required",
+          "timeSpentRequired": "Time spent is required",
+          "startTimeRequired": "Start time is required",
+          "endTimeRequired": "End time is required",
+          "impactRequired": "Impact on learner is required"
+        }
+      },
+      "delete": {
+        "title": "Delete Time Log?",
+        "description": "Deleting this time log will also remove all associated data and relationships. Proceed with deletion?",
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Delete Time Log"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "Time log created successfully",
+      "updateSuccess": "Time log updated successfully",
+      "deleteSuccess": "Time log deleted successfully",
+      "createFailed": "Failed to create time log",
+      "updateFailed": "Failed to update time log",
+      "deleteFailed": "Failed to delete time log"
+    },
+    "options": {
+      "activityTypes": {
+        "virtualTraining": "Virtual Training Session",
+        "faceToFace": "Traditional face-to-face session",
+        "trainerLed": "Trainer or assessor led training",
+        "eLearning": "Electronic or distance learning, or self-study",
+        "coaching": "Coaching or mentoring",
+        "guidedLearning": "Guided learning with no trainer/assessor present",
+        "technicalExperience": "Gaining technical experience by doing my job",
+        "reviewSupport": "Review/feedback/support",
+        "assessment": "Assessment or examination",
+        "other": "Other",
+        "furloughed": "Furloughed"
+      }
     }
   },
   "defaultReviewWeeks": {
@@ -3951,6 +5056,13 @@
       "title": "Painel",
       "subtitle": "Gira o seu percurso de aprendizagem e acompanhe o progresso"
     },
+    "viewer": {
+      "errorTitle": "Erro ao carregar o painel do formando",
+      "loadError": "Falha ao carregar detalhes do formando",
+      "invalidLearnerId": "ID de formando inválido",
+      "backToOverview": "Voltar ao resumo de formandos",
+      "pageTitle": "Painel do formando - {name}"
+    },
     "buttons": {
       "emailLearner": "Enviar email ao formando",
       "awaitingSignature": "A aguardar assinatura",
@@ -4035,6 +5147,922 @@
         "success": "Confirmação aceite com sucesso",
         "failed": "Falha ao atualizar o estado de confirmação"
       }
+    }
+  },
+  "learnerProfile": {
+    "page": {
+      "title": "Informação do perfil",
+      "subtitle": "Ver detalhes do perfil do formando e informação pessoal",
+      "tabs": {
+        "personalInfo": "Informação pessoal",
+        "courseInformation": "Informação do curso",
+        "contractedWorkHours": "Horas de trabalho contratadas"
+      },
+      "errorTitle": "Erro ao carregar perfil do formando",
+      "loadError": "Falha ao carregar detalhes do formando",
+      "invalidLearnerId": "ID de formando inválido",
+      "noDataTitle": "Nenhum dado encontrado",
+      "noDataDescription": "Dados do perfil do formando não encontrados.",
+      "back": "Voltar",
+      "save": "Guardar alterações",
+      "saving": "A guardar...",
+      "resetPasswordButton": "Repor palavra-passe",
+      "emailPasswordResetButton": "Enviar reposição por e-mail",
+      "accessProfile": "Aceder ao perfil",
+      "toastUpdated": "Perfil do formando atualizado com sucesso",
+      "toastUpdateFailed": "Falha ao atualizar o perfil do formando. Tente novamente."
+    },
+    "validation": {
+      "firstNameRequired": "O primeiro nome é obrigatório",
+      "lastNameRequired": "O apelido é obrigatório",
+      "userNameRequired": "O nome de utilizador é obrigatório",
+      "invalidEmail": "Endereço de e-mail inválido"
+    },
+    "courseInformation": {
+      "emptyState": "Nenhum curso atribuído",
+      "addCourse": "Adicionar curso",
+      "yes": "Sim",
+      "no": "Não",
+      "statusOptions": {
+        "awaitingInduction": "À espera de indução",
+        "certificated": "Certificado",
+        "completed": "Concluído",
+        "earlyLeaver": "Saída antecipada",
+        "exempt": "Isento",
+        "inTraining": "Em formação",
+        "iqaApproved": "Aprovado pelo IQA",
+        "trainingSuspended": "Formação suspensa",
+        "transferred": "Transferido"
+      },
+      "validation": {
+        "selectCourse": "Selecione um curso",
+        "selectTrainer": "Selecione um formador",
+        "selectIQA": "Selecione um IQA",
+        "selectLIQA": "Selecione um LIQA",
+        "selectEQA": "Selecione um EQA",
+        "selectStartDate": "Selecione a data de início",
+        "selectEndDate": "Selecione a data de fim",
+        "endDateAfterStart": "A data de fim deve ser posterior à de início",
+        "enterPredictedGrade": "Introduza a nota prevista",
+        "enterFinalGrade": "Introduza a nota final"
+      },
+      "toast": {
+        "updated": "Curso atualizado com sucesso",
+        "added": "Curso adicionado com sucesso",
+        "deleted": "Curso eliminado com sucesso",
+        "saveFailed": "Falha ao guardar o curso. Tente novamente.",
+        "deleteFailed": "Falha ao eliminar o curso. Tente novamente.",
+        "sameOrganisation": "O formando e o curso devem pertencer à mesma organização.",
+        "noAccess": "Não tem acesso para atribuir este curso."
+      },
+      "table": {
+        "courseName": "Nome do curso",
+        "level": "Nível",
+        "startDate": "Data de início",
+        "endDate": "Data de fim",
+        "status": "Estado",
+        "mainCourse": "Curso principal",
+        "actions": "Ações"
+      },
+      "dialog": {
+        "editTitle": "Editar curso",
+        "addTitle": "Adicionar novo curso",
+        "editDescription": "Atualize as informações do curso abaixo.",
+        "addDescription": "Preencha os detalhes do curso abaixo. Os campos marcados com * são obrigatórios."
+      },
+      "form": {
+        "selectCourse": "Selecionar curso",
+        "courseStatus": "Estado do curso",
+        "trainer": "Formador",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "Data de início",
+        "endDate": "Data de fim",
+        "predictedGrade": "Nota prevista",
+        "finalGrade": "Nota final",
+        "mainAimCourse": "Curso principal",
+        "chooseCourse": "Escolher um curso",
+        "selectStatus": "Selecionar estado do curso",
+        "enterPredictedGrade": "Introduza a nota prevista",
+        "enterFinalGrade": "Introduza a nota final",
+        "anotherMainCourse": "Outro curso já está definido como curso principal"
+      },
+      "deleteDialog": {
+        "title": "Tem a certeza?",
+        "description": "Esta ação não pode ser desfeita. Será eliminada permanentemente a atribuição do curso para {courseName}.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "updateCourse": "Atualizar curso",
+        "addCourseButton": "Adicionar curso"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "Horas de trabalho contratadas",
+      "setNewHours": "Definir novas horas",
+      "emptyState": "Nenhuma hora de trabalho contratada encontrada.",
+      "loading": "A carregar...",
+      "noteText": "Nota: como as horas fora do trabalho esperadas deste formando foram definidas como valor fixo, as horas contratadas e o direito a férias anuais não afetarão o cálculo fora do trabalho para este formando.",
+      "table": {
+        "company": "Empresa",
+        "contractStart": "Data de início do contrato",
+        "contractEnd": "Data de fim do contrato",
+        "hoursPerWeek": "Horas de trabalho por semana",
+        "yearlyHoliday": "Direito a férias anuais (horas)",
+        "lastEditedBy": "Última edição por",
+        "lastEditedDate": "Data da última edição",
+        "actions": "Ações"
+      },
+      "dialog": {
+        "editTitle": "Editar horas contratadas",
+        "setNewTitle": "Definir novas horas contratadas",
+        "editDescription": "Atualize a informação das horas contratadas.",
+        "setNewDescription": "Introduza a informação das horas contratadas deste formando.",
+        "companyLabel": "Empresa *",
+        "companyPlaceholder": "Introduza o nome da empresa",
+        "contractStartLabel": "Data de início do contrato *",
+        "contractEndLabel": "Data de fim do contrato",
+        "hoursPerWeekLabel": "Horas de trabalho por semana *",
+        "hoursPlaceholder": "Introduza as horas por semana",
+        "pickDate": "Escolher data",
+        "pickDateOptional": "Escolher data (opcional)",
+        "cancel": "Cancelar",
+        "update": "Atualizar",
+        "create": "Criar"
+      },
+      "deleteDialog": {
+        "title": "Tem a certeza?",
+        "description": "Esta ação não pode ser desfeita. Será eliminada permanentemente a entrada de horas contratadas de {company}.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      },
+      "validation": {
+        "companyRequired": "A empresa é obrigatória",
+        "contractStartRequired": "A data de início do contrato é obrigatória",
+        "hoursRequired": "As horas de trabalho por semana são obrigatórias",
+        "hoursPositive": "Deve ser um número positivo"
+      },
+      "toast": {
+        "updated": "Horas contratadas atualizadas com sucesso",
+        "created": "Horas contratadas criadas com sucesso",
+        "deleted": "Horas contratadas eliminadas com sucesso",
+        "saveFailed": "Falha ao guardar as horas contratadas. Tente novamente.",
+        "deleteFailed": "Falha ao eliminar as horas contratadas. Tente novamente."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "ID do formando",
+        "uln": "ULN",
+        "misLearnerId": "ID MIS do formando",
+        "studentId": "ID do formando"
+      },
+      "aboutYou": {
+        "title": "Sobre si",
+        "clickToUpload": "Clique para carregar foto",
+        "firstName": "Primeiro nome",
+        "lastName": "Apelido",
+        "username": "Nome de utilizador",
+        "email": "E-mail",
+        "telephone": "Telefone",
+        "mobile": "Telemóvel",
+        "dateOfBirth": "Data de nascimento",
+        "gender": "Género",
+        "nationalInsuranceNo": "N.º de Segurança Social",
+        "ethnicity": "Etnia",
+        "learnerDisability": "Deficiência do formando",
+        "learningDifficulties": "Dificuldades de aprendizagem",
+        "initialAssessmentNumeracy": "Avaliação inicial - Numeracia",
+        "initialAssessmentLiteracy": "Avaliação inicial - Literacia",
+        "initialAssessmentICT": "Avaliação inicial - TIC",
+        "avatarInvalidFile": "Selecione um ficheiro de imagem válido",
+        "avatarTooLarge": "O tamanho da imagem deve ser inferior a 5 MB",
+        "avatarSuccess": "Avatar carregado com sucesso",
+        "avatarFailed": "Falha ao carregar o avatar. Tente novamente."
+      },
+      "address": {
+        "title": "Morada",
+        "street": "N.º/nome da casa e rua",
+        "suburb": "Bairro/Localidade",
+        "town": "Cidade",
+        "country": "País",
+        "homePostcode": "Código postal",
+        "countryOfDomicile": "País de domicílio"
+      },
+      "employer": {
+        "title": "Empregador",
+        "employer": "Empregador",
+        "employerIdPlaceholder": "ID do empregador",
+        "jobTitle": "Função",
+        "location": "Localização",
+        "managerName": "Nome do responsável",
+        "managerJobTitle": "Função do responsável",
+        "mentor": "Mentor"
+      },
+      "fundingBody": {
+        "title": "Entidade financiadora",
+        "fundingBody": "Entidade financiadora",
+        "awardingBody": "Entidade certificadora",
+        "registrationNumber": "N.º de registo",
+        "registrationDate": "Data de registo",
+        "laraCode": "Código LARA"
+      },
+      "fundingBands": {
+        "title": "Bandas de financiamento",
+        "originalAmount": "Montante original",
+        "customAmount": "Montante personalizado",
+        "fundingBandId": "ID da banda de financiamento",
+        "updatedByLearner": "Atualizado pelo formando",
+        "lastUpdated": "Última atualização"
+      },
+      "additionalInfo": {
+        "title": "Informação adicional",
+        "costCentre": "Centro de custos",
+        "fundingContractor": "Contratante de financiamento",
+        "partner": "Parceiro",
+        "subArea": "Subárea",
+        "cohort": "Cohorte",
+        "curriculumArea": "Área curricular",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "Diretor de currículo",
+        "learnerType": "Tipo de formando",
+        "expectedOffTheJobHours": "Horas fora do trabalho esperadas",
+        "offTheJobTraining": "Formação fora do trabalho",
+        "guidedLearningHoursAchieved": "Horas de aprendizagem guiada alcançadas"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "Repor palavra-passe",
+      "descriptionWithName": "Repor palavra-passe de {name} ({email})",
+      "descriptionEmailOnly": "Repor palavra-passe de {email}",
+      "newPassword": "Nova palavra-passe",
+      "confirmPassword": "Confirmar palavra-passe",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "cancel": "Cancelar",
+      "resetting": "A repor...",
+      "resetPassword": "Repor palavra-passe",
+      "hintText": "A palavra-passe deve ter pelo menos 6 caracteres e incluir letras maiúsculas, minúsculas e um número.",
+      "validation": {
+        "passwordMin": "A palavra-passe deve ter pelo menos 6 caracteres",
+        "passwordPattern": "A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula e um número",
+        "confirmRequired": "Confirme a sua palavra-passe",
+        "passwordsMismatch": "As palavras-passe não coincidem"
+      },
+      "successDefault": "Palavra-passe reposta com sucesso",
+      "errorDefault": "Não foi possível repor a palavra-passe. Tente novamente dentro de momentos.",
+      "learnerEmailRequired": "O e-mail do formando é obrigatório"
+    },
+    "emailPasswordResetDialog": {
+      "title": "Enviar reposição de palavra-passe por e-mail",
+      "description": "Tem a certeza que deseja repor a palavra-passe? Será enviado um e-mail para {email} com as instruções.",
+      "cancel": "Cancelar",
+      "sending": "A enviar...",
+      "ok": "OK",
+      "successDefault": "E-mail de reposição enviado com sucesso",
+      "errorDefault": "Não foi possível enviar o e-mail de reposição. Tente novamente dentro de momentos.",
+      "learnerEmailRequired": "O e-mail do formando é obrigatório"
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "Notificações",
+      "subtitleOne": "1 notificação",
+      "subtitleMany": "{count} notificações",
+      "loadError": "Falha ao carregar notificações",
+      "loadErrorHint": "Tente atualizar a página",
+      "emptyTitle": "Sem notificações",
+      "emptyDescription": "Está em dia! Não há notificações para mostrar.",
+      "markAllRead": "Marcar todas como lidas",
+      "deleteAll": "Eliminar todas",
+      "paginationPageOf": "Página {page} de {pages} ({total} no total)"
+    },
+    "filters": {
+      "typeLabel": "Tipo",
+      "statusLabel": "Estado",
+      "allTypesPlaceholder": "Todos os tipos",
+      "allStatusesPlaceholder": "Todos os estados",
+      "allTypes": "Todos os tipos",
+      "allStatuses": "Todos os estados",
+      "unread": "Por ler",
+      "read": "Lidas"
+    },
+    "types": {
+      "notification": "Notificação",
+      "news": "Notícias",
+      "allocation": "Atribuição"
+    },
+    "item": {
+      "newBadge": "Nova",
+      "markAsRead": "Marcar como lida",
+      "delete": "Eliminar"
+    },
+    "bell": {
+      "srOnly": "Notificações",
+      "heading": "Notificações",
+      "unreadCount": "{count} por ler",
+      "loadError": "Falha ao carregar notificações",
+      "noNotifications": "Sem notificações",
+      "allCaughtUp": "Está em dia!",
+      "viewAll": "Ver todas as notificações",
+      "markAllRead": "Marcar todas como lidas",
+      "deleteAll": "Eliminar todas",
+      "markAsReadTitle": "Marcar como lida",
+      "deleteTitle": "Eliminar"
+    },
+    "toast": {
+      "markedAsRead": "Notificação marcada como lida",
+      "markedAsReadFailed": "Falha ao marcar como lida",
+      "deleted": "Notificação eliminada",
+      "deleteFailed": "Falha ao eliminar notificação",
+      "allMarkedAsRead": "Todas as notificações marcadas como lidas",
+      "allMarkedAsReadFailed": "Falha ao marcar todas como lidas",
+      "allDeleted": "Todas as notificações eliminadas",
+      "allDeleteFailed": "Falha ao eliminar todas as notificações"
+    }
+  },
+  "themeCustomizer": {
+    "title": "Personalizador",
+    "srDescription": "Personalize o tema e o layout do seu painel.",
+    "tabs": {
+      "theme": "Tema",
+      "layout": "Layout"
+    },
+    "themeTab": {
+      "themeLabel": "Tema",
+      "random": "Aleatório",
+      "chooseTheme": "Escolher tema",
+      "modeLabel": "Modo",
+      "light": "Claro",
+      "dark": "Escuro"
+    }
+  },
+  "accountManager": {
+    "page": {
+      "title": "Gestores de Conta",
+      "subtitle": "Gerir utilizadores gestores de conta e as respetivas atribuições de organizações"
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar gestores de conta...",
+      "empty": "Não foram encontrados gestores de conta.",
+      "columns": {
+        "email": "Email",
+        "name": "Nome",
+        "status": "Estado",
+        "assignedOrganisations": "Organizações atribuídas",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "assignedOrgCount": {
+        "one": "{count} organização",
+        "many": "{count} organizações"
+      }
+    },
+    "actions": {
+      "add": "Adicionar gestor de conta",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "edit": "Editar",
+      "assignOrganisations": "Atribuir organizações",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Criar gestor de conta",
+        "description": "Adicione um novo utilizador gestor de conta ao sistema. Apenas o MasterAdmin pode criar gestores de conta."
+      },
+      "edit": {
+        "title": "Editar gestor de conta",
+        "description": "Atualize as informações do gestor de conta."
+      },
+      "assign": {
+        "title": "Atribuir organizações",
+        "description": "Selecione quais organizações este gestor de conta pode aceder."
+      },
+      "delete": {
+        "title": "Tem a certeza?",
+        "description": "Isto irá eliminar permanentemente este gestor de conta. Esta ação não pode ser desfeita.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "A eliminar..."
+      }
+    },
+    "toast": {
+      "activateSuccess": "Gestor de conta ativado com sucesso",
+      "activateFailedFallback": "Falha ao ativar gestor de conta",
+      "deactivateSuccess": "Gestor de conta desativado com sucesso",
+      "deactivateFailedFallback": "Falha ao desativar gestor de conta",
+      "deleteSuccess": "Gestor de conta eliminado com sucesso",
+      "deleteFailedFallback": "Falha ao eliminar gestor de conta",
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso",
+      "createSuccess": "Gestor de conta criado com sucesso",
+      "createFailedFallback": "Falha ao criar gestor de conta",
+      "updateSuccess": "Gestor de conta atualizado com sucesso",
+      "updateFailedFallback": "Falha ao atualizar gestor de conta",
+      "assignSuccess": "Organizações atribuídas com sucesso",
+      "assignFailedFallback": "Falha ao atribuir organizações"
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Palavra-passe",
+      "firstNameLabel": "Nome",
+      "lastNameLabel": "Apelido",
+      "emailPlaceholder": "manager@example.com",
+      "passwordPlaceholder": "Introduza a palavra-passe (mín. 6 caracteres)",
+      "firstNamePlaceholder": "João",
+      "lastNamePlaceholder": "Silva",
+      "cancel": "Cancelar",
+      "createSubmit": "Criar gestor de conta",
+      "updateSubmit": "Atualizar gestor de conta"
+    },
+    "validation": {
+      "invalidEmail": "Endereço de email inválido",
+      "emailRequired": "O email é obrigatório",
+      "passwordMin": "A palavra-passe deve ter pelo menos 6 caracteres"
+    },
+    "assign": {
+      "selectLabel": "Selecionar organizações",
+      "helperText": "Escolha quais organizações este gestor de conta pode aceder.",
+      "emptyOrgs": "Não há organizações disponíveis",
+      "selectedCount": "Selecionadas ({count})",
+      "save": "Guardar atribuições"
+    }
+  },
+  "auditLogs": {
+    "page": {
+      "title": "Registos de auditoria",
+      "subtitle": "Ver atividade e alterações do sistema"
+    },
+    "common": {
+      "notAvailable": "N/D",
+      "unknown": "Desconhecido",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar por utilizador ou detalhes...",
+      "empty": "Não foram encontrados registos de auditoria.",
+      "filters": {
+        "actionPlaceholder": "Filtrar por ação",
+        "orgPlaceholder": "Filtrar por organização",
+        "allActions": "Todas as ações",
+        "allOrganisations": "Todas as organizações"
+      },
+      "columns": {
+        "timestamp": "Carimbo de data/hora",
+        "organisation": "Organização",
+        "action": "Ação",
+        "user": "Utilizador",
+        "details": "Detalhes"
+      }
+    },
+    "actions": {
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF"
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso"
+    },
+    "actionTypes": {
+      "system_action": "Ação do sistema",
+      "account_manager_action": "Ação do gestor de conta",
+      "organisation_change": "Alteração de organização",
+      "access_change": "Alteração de acesso",
+      "centre_change": "Alteração de centro",
+      "subscription_change": "Alteração de subscrição",
+      "feature_change": "Alteração de funcionalidade"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "Pagamentos",
+      "subtitle": "Ver histórico de pagamentos e transações"
+    },
+    "addPage": {
+      "title": "Adicionar fatura",
+      "subtitle": "Registe que organização pagou por que plano."
+    },
+    "editPage": {
+      "title": "Editar fatura",
+      "subtitle": "Atualize o pagamento e as linhas."
+    },
+    "common": {
+      "unknown": "Desconhecido",
+      "notAvailable": "N/D",
+      "dash": "—",
+      "loading": "A carregar..."
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar por número de fatura...",
+      "empty": "Não foram encontrados pagamentos.",
+      "filters": {
+        "statusPlaceholder": "Filtrar por estado",
+        "orgPlaceholder": "Filtrar por organização",
+        "allStatuses": "Todos os estados",
+        "allOrganisations": "Todas as organizações"
+      },
+      "columns": {
+        "date": "Data",
+        "organisation": "Organização",
+        "plan": "Plano",
+        "subtotal": "Subtotal",
+        "discount": "Desconto",
+        "tax": "Imposto",
+        "amountTotal": "Valor / Total",
+        "status": "Estado",
+        "invoiceNumber": "Número da fatura",
+        "paymentMethod": "Método de pagamento",
+        "actions": "Ações"
+      }
+    },
+    "actions": {
+      "addInvoice": "Adicionar fatura",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "openMenuSrOnly": "Abrir menu",
+      "edit": "Editar"
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso",
+      "selectOrgAndPlan": "Selecione organização e plano",
+      "addAtLeastOneRow": "Adicione pelo menos uma linha",
+      "invoiceCreated": "Fatura criada com sucesso",
+      "invoiceUpdated": "Fatura atualizada com sucesso",
+      "createFailedFallback": "Falha ao criar fatura",
+      "updateFailedFallback": "Falha ao atualizar fatura"
+    },
+    "status": {
+      "draft": "Rascunho",
+      "sent": "Enviado",
+      "failed": "Falhou",
+      "refunded": "Reembolsado"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Transferência bancária",
+      "card": "Cartão",
+      "invoice": "Fatura",
+      "other": "Outro"
+    },
+    "lineStatus": {
+      "pending": "Pendente",
+      "paid": "Pago"
+    },
+    "invoiceForm": {
+      "invoiceDate": "Data da fatura",
+      "organisation": "Organização",
+      "plan": "Plano",
+      "status": "Estado",
+      "paymentRows": "Linhas de pagamento",
+      "addRow": "Adicionar linha",
+      "period": "Período",
+      "dueDate": "Data de vencimento",
+      "amount": "Valor",
+      "discountPercent": "Desconto (%)",
+      "taxPercent": "Imposto (%)",
+      "rowTotal": "Total da linha",
+      "lineStatus": "Estado",
+      "selectOrganisation": "Selecionar organização",
+      "selectOrganisationFirst": "Selecione primeiro a organização",
+      "noPlanAssigned": "Nenhum plano atribuído a esta organização",
+      "selectPlan": "Selecionar plano",
+      "selectMethod": "Selecionar método",
+      "optionalNotes": "Notas opcionais",
+      "removeRowAria": "Remover linha",
+      "emptyLinesHelp": "Ainda não foram adicionadas linhas de pagamento. Clique em \"Adicionar linha\" para inserir um item de pagamento para esta fatura. O valor de cada linha será preenchido automaticamente com base no plano selecionado: preço total para planos mensais ou dividido uniformemente (por mês) para planos anuais.",
+      "totals": {
+        "subtotal": "Subtotal",
+        "totalDiscount": "Desconto total",
+        "totalTax": "Imposto total",
+        "total": "Total"
+      },
+      "paymentMethod": "Método de pagamento",
+      "notes": "Notas",
+      "back": "Voltar",
+      "createInvoice": "Criar fatura",
+      "updateInvoice": "Atualizar fatura"
+    }
+  },
+  "subscriptions": {
+    "page": {
+      "title": "Subscrições",
+      "subtitle": "Ver e gerir subscrições e planos das organizações"
+    },
+    "tabs": {
+      "subscriptions": "Subscrições",
+      "plans": "Planos"
+    },
+    "common": {
+      "unknown": "Desconhecido",
+      "notAvailable": "N/D",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF"
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Pesquisar subscrições...",
+      "empty": "Nenhuma subscrição encontrada.",
+      "columns": {
+        "organisation": "Organização",
+        "plan": "Plano",
+        "users": "Utilizadores",
+        "status": "Estado",
+        "expiryDate": "Data de expiração",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativa",
+        "expired": "Expirada"
+      },
+      "actionsMenu": {
+        "changePlan": "Alterar plano",
+        "suspendAccess": "Suspender acesso"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Atribuir plano à organização",
+          "description": "Selecione uma organização e um plano para atribuir."
+        },
+        "changePlan": {
+          "title": "Alterar plano",
+          "description": "Selecione um novo plano para esta organização."
+        },
+        "suspendAccess": {
+          "title": "Suspender acesso da organização",
+          "description": "Restringir a utilização desta organização. Opcionalmente, indique um motivo."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Atribuir plano"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Pesquisar planos...",
+      "empty": "Nenhum plano encontrado.",
+      "columns": {
+        "name": "Nome",
+        "code": "Código",
+        "price": "Preço",
+        "userLimit": "Limite de utilizadores",
+        "status": "Estado",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "actions": {
+        "create": "Criar plano",
+        "edit": "Editar",
+        "activate": "Ativar",
+        "deactivate": "Desativar"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Criar plano",
+          "description": "Defina um novo plano de subscrição."
+        },
+        "edit": {
+          "title": "Editar plano",
+          "description": "Atualize a configuração do plano."
+        }
+      },
+      "toast": {
+        "planActivated": "Plano ativado",
+        "planDeactivated": "Plano desativado",
+        "activateFailedFallback": "Falha ao ativar o plano",
+        "deactivateFailedFallback": "Falha ao desativar o plano"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organização *",
+        "plan": "Plano *"
+      },
+      "placeholders": {
+        "organisation": "Selecionar organização",
+        "plan": "Selecionar plano"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Apenas são mostradas organizações sem plano."
+      },
+      "empty": {
+        "allAssigned": "Todas as organizações ativas já têm um plano atribuído."
+      },
+      "buttons": {
+        "close": "Fechar",
+        "cancel": "Cancelar",
+        "submit": "Atribuir plano"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Selecione a organização e o plano",
+        "assignedSuccess": "Plano atribuído com sucesso",
+        "assignFailedFallback": "Falha ao atribuir o plano"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organização",
+        "newPlan": "Novo plano *"
+      },
+      "placeholders": {
+        "plan": "Selecionar plano"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "submit": "Alterar plano"
+      },
+      "toast": {
+        "selectPlan": "Selecione um plano",
+        "changedSuccess": "Plano alterado com sucesso",
+        "changeFailedFallback": "Falha ao alterar o plano"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organização",
+        "reasonOptional": "Motivo (opcional)"
+      },
+      "placeholders": {
+        "reason": "ex.: Pagamento em atraso"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "submit": "Suspender acesso"
+      },
+      "toast": {
+        "suspendedSuccess": "Acesso da organização suspenso",
+        "suspendFailedFallback": "Falha ao suspender o acesso"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Nome *",
+        "code": "Código *",
+        "codeReadonly": "Código",
+        "description": "Descrição",
+        "priceGbp": "Preço * (GBP)",
+        "price": "Preço *",
+        "currency": "Moeda *",
+        "billingCycle": "Ciclo de faturação *",
+        "userLimit": "Limite de utilizadores",
+        "centreLimit": "Limite de centros",
+        "organisationLimit": "Limite de organizações",
+        "features": "Funcionalidades (separadas por vírgulas)"
+      },
+      "placeholders": {
+        "nameExample": "ex.: Pro",
+        "codeExample": "ex.: PRO",
+        "description": "Descrição do plano",
+        "currency": "Selecionar moeda"
+      },
+      "help": {
+        "codeCannotChange": "O código não pode ser alterado."
+      },
+      "billingCycle": {
+        "monthly": "Mensal",
+        "yearly": "Anual"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "create": "Criar plano",
+        "update": "Atualizar plano"
+      },
+      "toast": {
+        "createdSuccess": "Plano criado com sucesso",
+        "updatedSuccess": "Plano atualizado com sucesso",
+        "createFailedFallback": "Falha ao criar o plano",
+        "updateFailedFallback": "Falha ao atualizar o plano"
+      }
+    },
+    "validation": {
+      "nameRequired": "O nome é obrigatório",
+      "codeRequired": "O código é obrigatório",
+      "currencyRequired": "A moeda é obrigatória",
+      "priceMin0": "O preço deve ser ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "Administradores do sistema",
+      "subtitle": "Gerir utilizadores de administrador mestre"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar administradores do sistema...",
+      "empty": "Nenhum administrador do sistema encontrado.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Nome",
+        "status": "Estado",
+        "protected": "Protegido",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "protected": {
+        "yes": "Sim",
+        "no": "Não"
+      }
+    },
+    "actions": {
+      "add": "Adicionar administrador do sistema",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "view": "Ver",
+      "edit": "Editar",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Criar administrador do sistema",
+        "description": "Adicione um novo utilizador administrador mestre ao sistema. Apenas MasterAdmin pode criar administradores do sistema."
+      },
+      "edit": {
+        "title": "Editar administrador do sistema",
+        "description": "Atualizar as informações do administrador do sistema."
+      },
+      "delete": {
+        "title": "Tem a certeza?",
+        "description": "Isto removerá a função de administrador mestre deste utilizador. Esta ação não pode ser anulada.",
+        "protectedNote": "Este administrador é protegido e não pode ser eliminado.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "A remover..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso",
+      "activatedSuccess": "Administrador do sistema ativado com sucesso",
+      "deactivatedSuccess": "Administrador do sistema desativado com sucesso",
+      "removedSuccess": "Administrador do sistema removido com sucesso",
+      "activateFailedFallback": "Falha ao ativar o administrador do sistema",
+      "deactivateFailedFallback": "Falha ao desativar o administrador do sistema",
+      "removeFailedFallback": "Falha ao remover o administrador do sistema",
+      "protectedDeleteFallback": "Não é possível eliminar um administrador do sistema protegido",
+      "createdSuccess": "Administrador do sistema criado com sucesso",
+      "updatedSuccess": "Administrador do sistema atualizado com sucesso",
+      "createFailedFallback": "Falha ao criar o administrador do sistema",
+      "updateFailedFallback": "Falha ao atualizar o administrador do sistema"
+    },
+    "form": {
+      "labels": {
+        "email": "E-mail *",
+        "password": "Palavra-passe *",
+        "firstName": "Nome próprio",
+        "lastName": "Apelido"
+      },
+      "placeholders": {
+        "email": "ex.: admin@example.com",
+        "password": "Introduza a palavra-passe",
+        "firstName": "ex.: João",
+        "lastName": "ex.: Silva"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "create": "Criar",
+        "update": "Atualizar"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Endereço de e-mail inválido",
+      "emailRequired": "O e-mail é obrigatório",
+      "passwordMin": "A palavra-passe deve ter pelo menos {min} caracteres"
     }
   },
   "courseDetails": {

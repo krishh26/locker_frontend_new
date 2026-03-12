@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { toast } from "sonner"
 import { Mail } from "lucide-react"
@@ -16,10 +17,6 @@ import { Button } from "@/components/ui/button"
 import { useSendPasswordResetEmailMutation } from "@/store/api/user/userApi"
 import { extractBaseQueryErrorMessage } from "@/lib/utils"
 
-const DEFAULT_SUCCESS_MESSAGE = "Password reset email sent successfully"
-const DEFAULT_ERROR_MESSAGE =
-  "We couldn't send the password reset email right now. Please try again in a moment."
-
 interface EmailPasswordResetDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -33,6 +30,7 @@ export function EmailPasswordResetDialog({
   learnerEmail,
   learnerName,
 }: EmailPasswordResetDialogProps) {
+  const t = useTranslations("learnerProfile")
   const [sendPasswordResetEmail, { isLoading }] = useSendPasswordResetEmailMutation()
 
   const handleApiError = (error: unknown) => {
@@ -44,14 +42,14 @@ export function EmailPasswordResetDialog({
         ? extractedMessage
         : error instanceof Error && error.message.trim().length > 0
           ? error.message
-          : DEFAULT_ERROR_MESSAGE
+          : t("emailPasswordResetDialog.errorDefault")
 
     toast.error(message)
   }
 
   const handleConfirm = async () => {
     if (!learnerEmail) {
-      toast.error("Learner email is required")
+      toast.error(t("emailPasswordResetDialog.learnerEmailRequired"))
       return
     }
 
@@ -63,7 +61,7 @@ export function EmailPasswordResetDialog({
       const message =
         typeof response?.message === "string" && response.message.trim().length > 0
           ? response.message
-          : DEFAULT_SUCCESS_MESSAGE
+          : t("emailPasswordResetDialog.successDefault")
 
       toast.success(message)
       onOpenChange(false)
@@ -78,22 +76,10 @@ export function EmailPasswordResetDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5" />
-            Email Password Reset
+            {t("emailPasswordResetDialog.title")}
           </DialogTitle>
           <DialogDescription>
-            {learnerName ? (
-              <>
-                Are you sure you wish to reset the password?
-                <br />
-                An email will be sent to <span className="font-medium">{learnerEmail}</span> with reset instructions.
-              </>
-            ) : (
-              <>
-                Are you sure you wish to reset the password?
-                <br />
-                An email will be sent to <span className="font-medium">{learnerEmail}</span> with reset instructions.
-              </>
-            )}
+            {t("emailPasswordResetDialog.description", { email: learnerEmail })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -103,10 +89,10 @@ export function EmailPasswordResetDialog({
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
           >
-            Cancel
+            {t("emailPasswordResetDialog.cancel")}
           </Button>
           <Button type="button" onClick={handleConfirm} disabled={isLoading}>
-            {isLoading ? "Sending..." : "OK"}
+            {isLoading ? t("emailPasswordResetDialog.sending") : t("emailPasswordResetDialog.ok")}
           </Button>
         </DialogFooter>
       </DialogContent>

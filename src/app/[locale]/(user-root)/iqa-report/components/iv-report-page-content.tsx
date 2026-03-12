@@ -9,8 +9,10 @@ import { UnitTabs } from "./unit-tabs";
 import { InlineEditSampleContent } from "./inline-edit-sample-content";
 import { useIVReportData} from "../hooks/use-iv-report-data";
 import { useEditSampleState } from "../hooks/use-edit-sample-state";
+import { useTranslations } from "next-intl";
 
 export function IVReportPageContent() {
+  const t = useTranslations("iqaReport");
   const searchParams = useSearchParams();
   const courseIdFromUrl = searchParams.get("course_id");
 
@@ -66,8 +68,8 @@ export function IVReportPageContent() {
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
-        title="IQA Report"
-        subtitle="Complete the IQA report form for learner units"
+        title={t("page.title")}
+        subtitle={t("page.subtitle")}
         icon={FileText}
         showBackButton
       />
@@ -82,19 +84,19 @@ export function IVReportPageContent() {
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <span className="ml-2 text-muted-foreground">Loading units...</span>
+            <span className="ml-2 text-muted-foreground">{t("page.loadingUnits")}</span>
           </div>
         ) : isError ? (
           <div className="text-center py-12">
             <p className="text-destructive">
               {error && typeof error === "object" && "message" in error
                 ? String(error.message)
-                : "Failed to load units. Please try again."}
+                : t("page.loadUnitsError")}
             </p>
           </div>
         ) : units.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">No units found for this course.</p>
+            <p className="text-muted-foreground">{t("page.noUnitsForCourse")}</p>
           </div>
         ) : (
           <>

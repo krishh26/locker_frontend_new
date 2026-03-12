@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -61,6 +62,7 @@ export function SignatureModal({
   document,
   onSave,
 }: SignatureModalProps) {
+  const t = useTranslations("learnerDocumentsToSign");
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role || "";
   const [signatures, setSignatures] = useState<DocumentSignatures>(
@@ -130,6 +132,14 @@ export function SignatureModal({
 
   const signatureRoles = getSignatureRoles();
 
+  const getRoleLabel = (roleKey: string, fallback: string) => {
+    const key = roleKey.toLowerCase();
+    if (key === "employer" || key === "iqa" || key === "trainer" || key === "learner") {
+      return t(`roles.${key}` as const);
+    }
+    return fallback;
+  };
+
   const handleSave = async () => {
     if (!document?.id) {
       onClose();
@@ -155,7 +165,7 @@ export function SignatureModal({
           }).unwrap();
         }
 
-        toast.success("Signature saved successfully!");
+        toast.success(t("toast.saved"));
         onSave();
         onClose();
       } else {
@@ -163,7 +173,7 @@ export function SignatureModal({
       }
     } catch (error) {
       console.error("Error saving signature:", error);
-      toast.error("Error saving signature");
+      toast.error(t("toast.saveError"));
     }
   };
 
@@ -171,15 +181,17 @@ export function SignatureModal({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Document Signature Agreement</DialogTitle>
+          <DialogTitle>{t("modal.title")}</DialogTitle>
         </DialogHeader>
 
         {document && (
           <div className="space-y-4 py-4">
             <div>
-              <p className="font-semibold">Document: {document.documentName}</p>
+              <p className="font-semibold">
+                {t("modal.documentLabel")} {document.documentName}
+              </p>
               <p className="text-sm text-muted-foreground">
-                Course: {document.courseName}
+                {t("modal.courseLabel")} {document.courseName}
               </p>
             </div>
 
@@ -187,10 +199,10 @@ export function SignatureModal({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Signed in Agreement</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Signed</TableHead>
-                    <TableHead>Date</TableHead>
+                    <TableHead>{t("modal.tableHeaders.signedInAgreement")}</TableHead>
+                    <TableHead>{t("modal.tableHeaders.name")}</TableHead>
+                    <TableHead>{t("modal.tableHeaders.signed")}</TableHead>
+                    <TableHead>{t("modal.tableHeaders.date")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -206,7 +218,7 @@ export function SignatureModal({
                     return (
                       <TableRow key={role.key}>
                         <TableCell className="font-medium">
-                          {role.label}
+                          {getRoleLabel(role.key, role.label)}
                         </TableCell>
                         <TableCell>{signature?.name || ""}</TableCell>
                         <TableCell>
@@ -240,10 +252,10 @@ export function SignatureModal({
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Cancel/Close
+            {t("modal.buttons.cancel")}
           </Button>
           <Button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? "Saving..." : "Save"}
+            {isSaving ? t("modal.buttons.saving") : t("modal.buttons.save")}
           </Button>
         </DialogFooter>
       </DialogContent>

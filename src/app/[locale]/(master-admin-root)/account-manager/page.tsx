@@ -2,13 +2,15 @@
 
 import { PageHeader } from "@/components/dashboard/page-header"
 import { AccountManagerDataTable } from "./components/account-manager-data-table"
+import { useTranslations } from "next-intl"
 
 export default function AccountManagerPage() {
+  const t = useTranslations("accountManager")
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Account Managers"
-        subtitle="Manage account manager users and their organisation assignments"
+        title={t("page.title")}
+        subtitle={t("page.subtitle")}
       />
       <AccountManagerDataTable />
     </div>

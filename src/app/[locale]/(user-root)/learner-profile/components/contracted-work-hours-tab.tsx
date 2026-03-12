@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -64,27 +65,34 @@ interface ContractedWorkHoursTabProps {
   canEdit?: boolean;
 }
 
-const contractedWorkSchema = z.object({
-  company: z.string().min(1, "Company is required"),
-  contract_start: z.date({
-    message: "Contract start date is required",
-  }),
-  contract_end: z.date().optional().nullable(),
-  contracted_work_hours_per_week: z
-    .string()
-    .min(1, "Work hours per week is required")
-    .refine(
-      (val) => !isNaN(Number(val)) && Number(val) > 0,
-      "Must be a positive number"
-    ),
-});
+function getContractedWorkSchema(t: (key: string) => string) {
+  return z.object({
+    company: z.string().min(1, t("contractedWorkHours.validation.companyRequired")),
+    contract_start: z.date({
+      message: t("contractedWorkHours.validation.contractStartRequired"),
+    }),
+    contract_end: z.date().optional().nullable(),
+    contracted_work_hours_per_week: z
+      .string()
+      .min(1, t("contractedWorkHours.validation.hoursRequired"))
+      .refine(
+        (val) => !isNaN(Number(val)) && Number(val) > 0,
+        t("contractedWorkHours.validation.hoursPositive")
+      ),
+  });
+}
 
-type ContractedWorkFormValues = z.infer<typeof contractedWorkSchema>;
+type ContractedWorkFormValues = z.infer<ReturnType<typeof getContractedWorkSchema>>;
 
 export function ContractedWorkHoursTab({
   learnerId,
   canEdit = false,
 }: ContractedWorkHoursTabProps) {
+  const t = useTranslations("learnerProfile");
+  const contractedWorkSchema = useMemo(
+    () => getContractedWorkSchema((key) => t(key)),
+    [t]
+  );
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState<ContractedWork | null>(
@@ -186,21 +194,17 @@ export function ContractedWorkHoursTab({
           id: selectedWork.id,
           data: payload,
         }).unwrap();
-        toast.success("Contracted work hours updated successfully");
+        toast.success(t("contractedWorkHours.toast.updated"));
       } else {
         await createContractedWork(payload).unwrap();
-        toast.success("Contracted work hours created successfully");
+        toast.success(t("contractedWorkHours.toast.created"));
       }
 
       handleCloseDialog();
       refetch();
     } catch (error) {
       console.error("Failed to save contracted work hours:", error);
-      toast.error(
-        `Failed to ${
-          selectedWork ? "update" : "create"
-        } contracted work hours. Please try again.`
-      );
+      toast.error(t("contractedWorkHours.toast.saveFailed"));
     }
   });
 
@@ -209,13 +213,13 @@ export function ContractedWorkHoursTab({
 
     try {
       await deleteContractedWork(selectedWork.id).unwrap();
-      toast.success("Contracted work hours deleted successfully");
+      toast.success(t("contractedWorkHours.toast.deleted"));
       setDeleteDialogOpen(false);
       setSelectedWork(null);
       refetch();
     } catch (error) {
       console.error("Failed to delete contracted work hours:", error);
-      toast.error("Failed to delete contracted work hours. Please try again.");
+      toast.error(t("contractedWorkHours.toast.deleteFailed"));
     }
   };
 
@@ -228,7 +232,7 @@ export function ContractedWorkHoursTab({
     return (
       <Card>
         <CardContent className="py-8">
-          <div className="text-center text-muted-foreground">Loading...</div>
+          <div className="text-center text-muted-foreground">{t("contractedWorkHours.loading")}</div>
         </CardContent>
       </Card>
     );
@@ -238,7 +242,7 @@ export function ContractedWorkHoursTab({
     <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle>Contracted Work Hours</CardTitle>
+          <CardTitle>{t("contractedWorkHours.cardTitle")}</CardTitle>
           {canEdit && (
             <Button
               type="button"
@@ -246,28 +250,28 @@ export function ContractedWorkHoursTab({
               size="sm"
             >
               <Plus className="mr-2 h-4 w-4" />
-              Set New Hours
+              {t("contractedWorkHours.setNewHours")}
             </Button>
           )}
         </CardHeader>
         <CardContent>
           {contractedWorkList.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No contracted work hours found.
+              {t("contractedWorkHours.emptyState")}
             </div>
           ) : (
             <div className="rounded-md border overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Company</TableHead>
-                    <TableHead>Employment Contract Start Date</TableHead>
-                    <TableHead>Employment Contract End Date</TableHead>
-                    <TableHead>Contracted Work Hours per Week</TableHead>
-                    <TableHead>Yearly Holiday Entitlement (Hours)</TableHead>
-                    <TableHead>Last Edited By</TableHead>
-                    <TableHead>Last Edited Date</TableHead>
-                    {canEdit && <TableHead>Actions</TableHead>}
+                    <TableHead>{t("contractedWorkHours.table.company")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.contractStart")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.contractEnd")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.hoursPerWeek")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.yearlyHoliday")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.lastEditedBy")}</TableHead>
+                    <TableHead>{t("contractedWorkHours.table.lastEditedDate")}</TableHead>
+                    {canEdit && <TableHead>{t("contractedWorkHours.table.actions")}</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -320,10 +324,7 @@ export function ContractedWorkHoursTab({
           {contractedWorkList.length > 0 && (
             <div className="mt-6 p-4 bg-muted/50 rounded-md">
               <p className="text-sm text-muted-foreground">
-                Please note: as this learner&apos;s expected off the job hours
-                have been set as a fixed value, the contracted work hours and
-                yearly holiday entitlement will not impact the off the job
-                calculation for this learner.
+                {t("contractedWorkHours.noteText")}
               </p>
             </div>
           )}
@@ -342,12 +343,12 @@ export function ContractedWorkHoursTab({
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {selectedWork ? "Edit" : "Set New"} Contracted Work Hours
+              {selectedWork ? t("contractedWorkHours.dialog.editTitle") : t("contractedWorkHours.dialog.setNewTitle")}
             </DialogTitle>
             <DialogDescription>
               {selectedWork
-                ? "Update the contracted work hours information."
-                : "Enter the contracted work hours information for this learner."}
+                ? t("contractedWorkHours.dialog.editDescription")
+                : t("contractedWorkHours.dialog.setNewDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -358,9 +359,9 @@ export function ContractedWorkHoursTab({
                 name="company"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company *</FormLabel>
+                    <FormLabel>{t("contractedWorkHours.dialog.companyLabel")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter company name" {...field} />
+                      <Input placeholder={t("contractedWorkHours.dialog.companyPlaceholder")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -372,7 +373,7 @@ export function ContractedWorkHoursTab({
                 name="contract_start"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Employment Contract Start Date *</FormLabel>
+                    <FormLabel>{t("contractedWorkHours.dialog.contractStartLabel")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -386,7 +387,7 @@ export function ContractedWorkHoursTab({
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>{t("contractedWorkHours.dialog.pickDate")}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -414,7 +415,7 @@ export function ContractedWorkHoursTab({
                 name="contract_end"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Employment Contract End Date</FormLabel>
+                    <FormLabel>{t("contractedWorkHours.dialog.contractEndLabel")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -428,7 +429,7 @@ export function ContractedWorkHoursTab({
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date (optional)</span>
+                              <span>{t("contractedWorkHours.dialog.pickDateOptional")}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -456,11 +457,11 @@ export function ContractedWorkHoursTab({
                 name="contracted_work_hours_per_week"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contracted Work Hours per Week *</FormLabel>
+                    <FormLabel>{t("contractedWorkHours.dialog.hoursPerWeekLabel")}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Enter hours per week"
+                        placeholder={t("contractedWorkHours.dialog.hoursPlaceholder")}
                         {...field}
                         min="0"
                         step="0.5"
@@ -478,13 +479,13 @@ export function ContractedWorkHoursTab({
                   onClick={handleCloseDialog}
                   disabled={isCreating || isUpdating}
                 >
-                  Cancel
+                  {t("contractedWorkHours.dialog.cancel")}
                 </Button>
                 <Button type="submit" disabled={isCreating || isUpdating}>
                   {(isCreating || isUpdating) && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {selectedWork ? "Update" : "Create"}
+                  {selectedWork ? t("contractedWorkHours.dialog.update") : t("contractedWorkHours.dialog.create")}
                 </Button>
               </DialogFooter>
             </form>
@@ -496,10 +497,11 @@ export function ContractedWorkHoursTab({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("contractedWorkHours.deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              contracted work hours entry for {selectedWork?.company}.
+              {t("contractedWorkHours.deleteDialog.description", {
+                company: selectedWork?.company ?? "",
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -510,7 +512,7 @@ export function ContractedWorkHoursTab({
               }}
               disabled={isDeleting}
             >
-              Cancel
+              {t("contractedWorkHours.deleteDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
@@ -520,7 +522,7 @@ export function ContractedWorkHoursTab({
               {isDeleting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Delete
+              {t("contractedWorkHours.deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

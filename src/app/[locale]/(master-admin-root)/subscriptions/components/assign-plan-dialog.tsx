@@ -19,6 +19,7 @@ import {
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useTranslations } from "next-intl"
 
 interface AssignPlanDialogProps {
   onSuccess?: () => void
@@ -26,6 +27,7 @@ interface AssignPlanDialogProps {
 }
 
 export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps) {
+  const t = useTranslations("subscriptions")
   const { data: orgsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery({
     status: "active",
     page: 1,
@@ -56,7 +58,7 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!organisationId || !planId) {
-      toast.error("Please select organisation and plan")
+      toast.error(t("assignPlan.toast.selectOrgAndPlan"))
       return
     }
     try {
@@ -64,7 +66,7 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
         organisationId: Number(organisationId),
         planId: Number(planId),
       }).unwrap()
-      toast.success("Plan assigned successfully")
+      toast.success(t("assignPlan.toast.assignedSuccess"))
       setOrganisationId("")
       setPlanId("")
       onSuccess?.()
@@ -74,7 +76,7 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to assign plan"
+            : t("assignPlan.toast.assignFailedFallback")
       toast.error(msg)
     }
   }
@@ -95,11 +97,11 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     return (
       <div className="space-y-4">
         <p className="text-muted-foreground text-center py-4">
-          All active organisations already have a plan assigned.
+          {t("assignPlan.empty.allAssigned")}
         </p>
         <div className="flex justify-end">
           <Button type="button" variant="outline" onClick={onCancel}>
-            Close
+            {t("assignPlan.buttons.close")}
           </Button>
         </div>
       </div>
@@ -109,10 +111,10 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <Label>Organisation *</Label>
+        <Label>{t("assignPlan.labels.organisation")}</Label>
         <Select value={organisationId} onValueChange={setOrganisationId} required>
           <SelectTrigger>
-            <SelectValue placeholder="Select organisation" />
+            <SelectValue placeholder={t("assignPlan.placeholders.organisation")} />
           </SelectTrigger>
           <SelectContent>
             {organisations.map((org) => (
@@ -123,14 +125,14 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
           </SelectContent>
         </Select>
         <p className="text-xs text-muted-foreground">
-          Only organisations without a plan are shown.
+          {t("assignPlan.helper.orgsWithoutPlanOnly")}
         </p>
       </div>
       <div className="space-y-2">
-        <Label>Plan *</Label>
+        <Label>{t("assignPlan.labels.plan")}</Label>
         <Select value={planId} onValueChange={setPlanId} required>
           <SelectTrigger>
-            <SelectValue placeholder="Select plan" />
+            <SelectValue placeholder={t("assignPlan.placeholders.plan")} />
           </SelectTrigger>
           <SelectContent>
             {plans.map((plan) => (
@@ -143,11 +145,11 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isAssigning}>
-          Cancel
+          {t("assignPlan.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isAssigning || !organisationId || !planId}>
           {isAssigning && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Assign Plan
+          {t("assignPlan.buttons.submit")}
         </Button>
       </div>
     </form>

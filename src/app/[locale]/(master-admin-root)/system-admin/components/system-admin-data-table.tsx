@@ -65,8 +65,10 @@ import { isMasterAdmin } from "@/utils/permissions"
 import { CreateSystemAdminForm } from "./create-system-admin-form"
 import { EditSystemAdminForm } from "./edit-system-admin-form"
 import { format } from "date-fns"
+import { useTranslations } from "next-intl"
 
 export function SystemAdminDataTable() {
+  const t = useTranslations("systemAdmin")
   const user = useAppSelector(selectAuthUser)
   const { data, isLoading, refetch } = useGetSystemAdminsQuery()
   const [activateAdmin, { isLoading: isActivating }] = useActivateSystemAdminMutation()
@@ -112,7 +114,7 @@ export function SystemAdminDataTable() {
   const handleActivate = useCallback(async (admin: SystemAdmin) => {
     try {
       await activateAdmin(admin.id).unwrap()
-      toast.success("System admin activated successfully")
+      toast.success(t("toast.activatedSuccess"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -120,15 +122,15 @@ export function SystemAdminDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to activate system admin"
+          : t("toast.activateFailedFallback")
       toast.error(errorMessage)
     }
-  }, [activateAdmin, refetch])
+  }, [activateAdmin, refetch, t])
 
   const handleDeactivate = useCallback(async (admin: SystemAdmin) => {
     try {
       await deactivateAdmin(admin.id).unwrap()
-      toast.success("System admin deactivated successfully")
+      toast.success(t("toast.deactivatedSuccess"))
       refetch()
     } catch (error: unknown) {
       const errorMessage =
@@ -136,10 +138,10 @@ export function SystemAdminDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to deactivate system admin"
+          : t("toast.deactivateFailedFallback")
       toast.error(errorMessage)
     }
-  }, [deactivateAdmin, refetch])
+  }, [deactivateAdmin, refetch, t])
 
   const handleDeleteClick = useCallback((admin: SystemAdmin) => {
     setSelectedAdmin(admin)
@@ -150,7 +152,7 @@ export function SystemAdminDataTable() {
     if (!selectedAdmin) return
 
     if (selectedAdmin.isProtected) {
-      toast.error("Cannot delete protected system admin")
+      toast.error(t("toast.protectedDeleteFallback"))
       setIsDeleteDialogOpen(false)
       setSelectedAdmin(null)
       return
@@ -158,7 +160,7 @@ export function SystemAdminDataTable() {
 
     try {
       await removeRole({ adminId: selectedAdmin.id }).unwrap()
-      toast.success("System admin removed successfully")
+      toast.success(t("toast.removedSuccess"))
       setIsDeleteDialogOpen(false)
       setSelectedAdmin(null)
       refetch()
@@ -168,24 +170,31 @@ export function SystemAdminDataTable() {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to remove system admin"
+          : t("toast.removeFailedFallback")
       toast.error(errorMessage)
     }
-  }, [selectedAdmin, removeRole, refetch])
+  }, [selectedAdmin, removeRole, refetch, t])
 
   const handleExportCsv = () => {
     if (systemAdmins.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
 
-    const headers = ["Email", "First Name", "Last Name", "Status", "Protected", "Created At"]
+    const headers = [
+      t("table.columns.email"),
+      "First Name",
+      "Last Name",
+      t("table.columns.status"),
+      t("table.columns.protected"),
+      t("table.columns.createdAt"),
+    ]
     const rows = systemAdmins.map((admin: SystemAdmin) => [
       admin.email,
       admin.firstName || "",
       admin.lastName || "",
-      admin.isActive ? "Active" : "Inactive",
-      admin.isProtected ? "Yes" : "No",
+      admin.isActive ? t("table.status.active") : t("table.status.inactive"),
+      admin.isProtected ? t("table.protected.yes") : t("table.protected.no"),
       admin.createdAt ? format(new Date(admin.createdAt), "yyyy-MM-dd") : "",
     ])
 
@@ -201,80 +210,87 @@ export function SystemAdminDataTable() {
     link.download = `system_admins_export_${new Date().toISOString().split("T")[0]}.csv`
     link.click()
     URL.revokeObjectURL(url)
-    toast.success("CSV exported successfully")
+    toast.success(t("toast.csvExported"))
   }
 
   const handleExportPdf = () => {
-    const headers = ["Email", "First Name", "Last Name", "Status", "Protected", "Created At"]
+    const headers = [
+      t("table.columns.email"),
+      "First Name",
+      "Last Name",
+      t("table.columns.status"),
+      t("table.columns.protected"),
+      t("table.columns.createdAt"),
+    ]
     const rows = systemAdmins.map((admin: SystemAdmin) => [
       admin.email,
       admin.firstName || "",
       admin.lastName || "",
-      admin.isActive ? "Active" : "Inactive",
-      admin.isProtected ? "Yes" : "No",
+      admin.isActive ? t("table.status.active") : t("table.status.inactive"),
+      admin.isProtected ? t("table.protected.yes") : t("table.protected.no"),
       admin.createdAt ? format(new Date(admin.createdAt), "yyyy-MM-dd") : "",
     ])
     if (rows.length === 0) {
-      toast.info("No data to export")
+      toast.info(t("toast.noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "System Admins", headers, rows })
-    toast.success("PDF exported successfully")
+    exportTableToPdf({ title: t("page.title"), headers, rows })
+    toast.success(t("toast.pdfExported"))
   }
 
   const columns: ColumnDef<SystemAdmin>[] = useMemo(
     () => [
       {
         accessorKey: "email",
-        header: "Email",
+        header: t("table.columns.email"),
         cell: ({ row }) => {
           return <div className="font-medium">{row.original.email}</div>
         },
       },
       {
         id: "name",
-        header: "Name",
+        header: t("table.columns.name"),
         cell: ({ row }) => {
           const admin = row.original
-          const name = [admin.firstName, admin.lastName].filter(Boolean).join(" ") || "—"
+          const name = [admin.firstName, admin.lastName].filter(Boolean).join(" ") || t("common.dash")
           return <div>{name}</div>
         },
       },
       {
         accessorKey: "isActive",
-        header: "Status",
+        header: t("table.columns.status"),
         cell: ({ row }) => {
           const isActive = row.original.isActive
           return (
             <Badge variant={isActive ? "default" : "secondary"}>
-              {isActive ? "Active" : "Inactive"}
+              {isActive ? t("table.status.active") : t("table.status.inactive")}
             </Badge>
           )
         },
       },
       {
         accessorKey: "isProtected",
-        header: "Protected",
+        header: t("table.columns.protected"),
         cell: ({ row }) => {
           const isProtected = row.original.isProtected
           return (
             <Badge variant={isProtected ? "default" : "outline"}>
-              {isProtected ? "Yes" : "No"}
+              {isProtected ? t("table.protected.yes") : t("table.protected.no")}
             </Badge>
           )
         },
       },
       {
         accessorKey: "createdAt",
-        header: "Created At",
+        header: t("table.columns.createdAt"),
         cell: ({ row }) => {
           const date = row.original.createdAt
-          return date ? format(new Date(date), "MMM dd, yyyy") : "—"
+          return date ? format(new Date(date), "MMM dd, yyyy") : t("common.dash")
         },
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const admin = row.original
           return (
@@ -287,17 +303,17 @@ export function SystemAdminDataTable() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => handleEdit(admin)}>
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                    {t("actions.edit")}
                 </DropdownMenuItem>
                 {admin.isActive ? (
                   <DropdownMenuItem onClick={() => handleDeactivate(admin)}>
                     <PowerOff className="mr-2 h-4 w-4" />
-                    Deactivate
+                      {t("actions.deactivate")}
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem onClick={() => handleActivate(admin)}>
                     <Power className="mr-2 h-4 w-4" />
-                    Activate
+                      {t("actions.activate")}
                   </DropdownMenuItem>
                 )}
                 {!admin.isProtected && (
@@ -308,7 +324,7 @@ export function SystemAdminDataTable() {
                       className="text-destructive"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
+                      {t("actions.delete")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -318,7 +334,7 @@ export function SystemAdminDataTable() {
         },
       },
     ],
-    [handleEdit, handleActivate, handleDeactivate, handleDeleteClick]
+    [handleEdit, handleActivate, handleDeactivate, handleDeleteClick, t]
   )
 
   const table = useReactTable({
@@ -359,7 +375,7 @@ export function SystemAdminDataTable() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search system admins..."
+            placeholder={t("table.searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-9"
@@ -372,22 +388,22 @@ export function SystemAdminDataTable() {
               onClick={() => setIsCreateDialogOpen(true)}
             >
               <Plus className="mr-2 h-4 w-4" />
-              Add System Admin
+              {t("actions.add")}
             </Button>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                {t("actions.export")}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExportCsv}>
-                Export CSV
+                {t("actions.exportCsv")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportPdf}>
-                Export PDF
+                {t("actions.exportPdf")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -436,7 +452,7 @@ export function SystemAdminDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No system admins found.
+                  {t("table.empty")}
                 </TableCell>
               </TableRow>
             )}
@@ -451,10 +467,8 @@ export function SystemAdminDataTable() {
       <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create System Admin</DialogTitle>
-            <DialogDescription>
-              Add a new master admin user to the system. Only MasterAdmin can create system admins.
-            </DialogDescription>
+            <DialogTitle>{t("dialogs.create.title")}</DialogTitle>
+            <DialogDescription>{t("dialogs.create.description")}</DialogDescription>
           </DialogHeader>
           <CreateSystemAdminForm
             onSuccess={handleCreateSuccess}
@@ -467,10 +481,8 @@ export function SystemAdminDataTable() {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Edit System Admin</DialogTitle>
-            <DialogDescription>
-              Update system admin information.
-            </DialogDescription>
+            <DialogTitle>{t("dialogs.edit.title")}</DialogTitle>
+            <DialogDescription>{t("dialogs.edit.description")}</DialogDescription>
           </DialogHeader>
           {selectedAdmin && (
             <EditSystemAdminForm
@@ -486,12 +498,12 @@ export function SystemAdminDataTable() {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialogs.delete.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will remove the master admin role from this user. This action cannot be undone.
+              {t("dialogs.delete.description")}
               {selectedAdmin?.isProtected && (
                 <span className="block mt-2 text-destructive font-semibold">
-                  This admin is protected and cannot be deleted.
+                  {t("dialogs.delete.protectedNote")}
                 </span>
               )}
             </AlertDialogDescription>
@@ -501,14 +513,14 @@ export function SystemAdminDataTable() {
               setIsDeleteDialogOpen(false)
               setSelectedAdmin(null)
             }}>
-              Cancel
+              {t("dialogs.delete.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={selectedAdmin?.isProtected || isRemoving}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isRemoving ? "Removing..." : "Delete"}
+              {isRemoving ? t("dialogs.delete.deleting") : t("dialogs.delete.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

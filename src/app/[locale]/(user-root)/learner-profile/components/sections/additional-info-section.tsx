@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface AdditionalInfoSectionProps {
 }
 
 export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalInfoSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const costCentre = (learner as { cost_centre?: string }).cost_centre || "-";
   const fundingContractor = (learner as { funding_contractor?: string }).funding_contractor || "-";
@@ -51,12 +53,12 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Additional Information</CardTitle>
+        <CardTitle>{t("sections.additionalInfo.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Cost Centre</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.costCentre")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -77,7 +79,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Funding Contractor</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.fundingContractor")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -101,7 +103,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Partner</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.partner")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -122,7 +124,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Sub Area</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.subArea")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -146,7 +148,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Cohort</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.cohort")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -167,7 +169,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Curriculum Area</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.curriculumArea")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -191,7 +193,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">SSA1</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.ssa1")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -212,7 +214,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">SSA2</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.ssa2")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -236,7 +238,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Director of Curriculum</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.directorOfCurriculum")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -257,7 +259,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Learner Type</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.learnerType")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -281,7 +283,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Expected Off the Job Hours</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.expectedOffTheJobHours")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -302,7 +304,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Off the Job Training</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.offTheJobTraining")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -323,7 +325,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Guided Learning Hours Achieved</Label>
+            <Label className="text-sm font-medium">{t("sections.additionalInfo.guidedLearningHoursAchieved")}</Label>
             {canEdit ? (
               <>
                 <Input

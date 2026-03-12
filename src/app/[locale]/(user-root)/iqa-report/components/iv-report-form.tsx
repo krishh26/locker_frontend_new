@@ -22,42 +22,26 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface AssessmentQuestion {
   id: string;
-  question: string;
+  questionKey: string;
 }
 
-const assessmentQuestions: AssessmentQuestion[] = [
-  {
-    id: "q1",
-    question: "Was the learner observed directly by an assessor?",
-  },
-  {
-    id: "q2",
-    question: "Was knowledge and understanding assessed?",
-  },
-  {
-    id: "q3",
-    question: "Is work product evidence available?",
-  },
-  {
-    id: "q4",
-    question: "Has the learner supplied sufficient job/personal details?",
-  },
-  {
-    id: "q5",
-    question: "Are the learner's assessment records being completed on an ongoing basis?",
-  },
-  {
-    id: "q6",
-    question: "Has the assessor confirmed authenticity, sufficiency, accuracy, consistency and validity?",
-  },
+const ASSESSMENT_QUESTION_IDS: AssessmentQuestion[] = [
+  { id: "q1", questionKey: "q1" },
+  { id: "q2", questionKey: "q2" },
+  { id: "q3", questionKey: "q3" },
+  { id: "q4", questionKey: "q4" },
+  { id: "q5", questionKey: "q5" },
+  { id: "q6", questionKey: "q6" },
 ];
 
 type AssessmentAnswer = "always" | "sometimes" | "never" | "";
 
 export function IVReportForm() {
+  const t = useTranslations("iqaReport");
   const searchParams = useSearchParams();
   const courseIdFromUrl = searchParams.get("course_id");
 
@@ -83,7 +67,7 @@ export function IVReportForm() {
   // Initialize answers
   useEffect(() => {
     const initialAnswers: Record<string, AssessmentAnswer> = {};
-    assessmentQuestions.forEach((q) => {
+    ASSESSMENT_QUESTION_IDS.forEach((q) => {
       initialAnswers[q.id] = "";
     });
     setAnswers(initialAnswers);
@@ -102,17 +86,17 @@ export function IVReportForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            Assessment Information
+            {t("form.assessmentInformation")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {/* Course Name */}
             <div className="space-y-2">
-              <Label htmlFor="course-name">Course Name</Label>
+              <Label htmlFor="course-name">{t("form.courseName")}</Label>
               <Select value={courseName} onValueChange={setCourseName} disabled={!selectedCourse}>
                 <SelectTrigger id="course-name" className="w-full">
-                  <SelectValue placeholder="Select course" />
+                  <SelectValue placeholder={t("form.selectCourse")} />
                 </SelectTrigger>
                 <SelectContent>
                   {selectedCourse && (
@@ -120,7 +104,7 @@ export function IVReportForm() {
                       key={selectedCourse.course_id}
                       value={selectedCourse.course_id.toString()}
                     >
-                      {selectedCourse.course_name || "Untitled Course"}
+                      {selectedCourse.course_name || t("form.untitledCourse")}
                     </SelectItem>
                   )}
                 </SelectContent>
@@ -129,7 +113,7 @@ export function IVReportForm() {
 
             {/* Assessor(s) Name */}
             <div className="space-y-2">
-              <Label htmlFor="assessor-name">Assessor(s) Name</Label>
+              <Label htmlFor="assessor-name">{t("form.assessorsName")}</Label>
               <p id="assessor-name" className="text-sm text-muted-foreground py-2">
                 {/* Will be populated from API */}
               </p>
@@ -137,7 +121,7 @@ export function IVReportForm() {
 
             {/* Learner Name */}
             <div className="space-y-2">
-              <Label htmlFor="learner-name">Learner Name</Label>
+              <Label htmlFor="learner-name">{t("form.learnerName")}</Label>
               <p id="learner-name" className="text-sm text-muted-foreground py-2">
                 {/* Will be populated from API */}
               </p>
@@ -145,7 +129,7 @@ export function IVReportForm() {
 
             {/* Batch No & Creator */}
             <div className="space-y-2">
-              <Label htmlFor="batch-creator">Batch No & Creator</Label>
+              <Label htmlFor="batch-creator">{t("form.batchNoAndCreator")}</Label>
               <p id="batch-creator" className="text-sm text-muted-foreground py-2">
                 {/* Will be populated from API */}
               </p>
@@ -153,7 +137,7 @@ export function IVReportForm() {
 
             {/* IQAs for Batch */}
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="iqas-batch">IQAs for Batch</Label>
+              <Label htmlFor="iqas-batch">{t("form.iqasForBatch")}</Label>
               <p id="iqas-batch" className="text-sm text-muted-foreground py-2">
                 {/* Will be populated from API */}
               </p>
@@ -166,7 +150,7 @@ export function IVReportForm() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            Learner Assessment for Unit(s)
+            {t("form.learnerAssessmentForUnits")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -175,15 +159,15 @@ export function IVReportForm() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[50%] min-w-[300px]">
-                    Question
+                    {t("form.question")}
                   </TableHead>
-                  <TableHead className="text-center">Always (Yes)</TableHead>
-                  <TableHead className="text-center">Sometimes</TableHead>
-                  <TableHead className="text-center">Never (No)</TableHead>
+                  <TableHead className="text-center">{t("form.alwaysYes")}</TableHead>
+                  <TableHead className="text-center">{t("form.sometimes")}</TableHead>
+                  <TableHead className="text-center">{t("form.neverNo")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {assessmentQuestions.map((question, index) => (
+                {ASSESSMENT_QUESTION_IDS.map((question, index) => (
                   <TableRow
                     key={question.id}
                     className={cn(
@@ -191,7 +175,7 @@ export function IVReportForm() {
                     )}
                   >
                     <TableCell className="font-medium">
-                      {question.question}
+                      {t(`form.questions.${question.questionKey}`)}
                     </TableCell>
                     <TableCell colSpan={3} className="p-0">
                       <RadioGroup

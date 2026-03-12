@@ -10,15 +10,15 @@ import { Label } from "@/components/ui/label"
 import { useCreateAccountManagerMutation } from "@/store/api/account-manager/accountManagerApi"
 import type { CreateAccountManagerRequest } from "@/store/api/account-manager/types"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
+import { useMemo } from "react"
 
-const createAccountManagerSchema = z.object({
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-})
-
-type CreateAccountManagerFormValues = z.infer<typeof createAccountManagerSchema>
+type CreateAccountManagerFormValues = {
+  email: string
+  password: string
+  firstName?: string
+  lastName?: string
+}
 
 interface CreateAccountManagerFormProps {
   onSuccess?: () => void
@@ -29,10 +29,25 @@ export function CreateAccountManagerForm({
   onSuccess,
   onCancel,
 }: CreateAccountManagerFormProps) {
+  const t = useTranslations("accountManager")
   const [createAccountManager, { isLoading: isCreating }] = useCreateAccountManagerMutation()
 
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z
+          .string()
+          .email(t("validation.invalidEmail"))
+          .min(1, t("validation.emailRequired")),
+        password: z.string().min(6, t("validation.passwordMin")),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+      }),
+    [t]
+  )
+
   const form = useForm<CreateAccountManagerFormValues>({
-    resolver: zodResolver(createAccountManagerSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
@@ -51,7 +66,7 @@ export function CreateAccountManagerForm({
       }
 
       await createAccountManager(createData).unwrap()
-      toast.success("Account manager created successfully")
+      toast.success(t("toast.createSuccess"))
       form.reset()
       onSuccess?.()
     } catch (error: unknown) {
@@ -60,7 +75,7 @@ export function CreateAccountManagerForm({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to create account manager"
+          : t("toast.createFailedFallback")
       toast.error(errorMessage)
     }
   }
@@ -73,7 +88,7 @@ export function CreateAccountManagerForm({
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email">
-          Email <span className="text-destructive">*</span>
+          {t("form.emailLabel")} <span className="text-destructive">*</span>
         </Label>
         <Controller
           name="email"
@@ -83,7 +98,7 @@ export function CreateAccountManagerForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="manager@example.com"
+                placeholder={t("form.emailPlaceholder")}
                 {...field}
                 className={form.formState.errors.email ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -101,7 +116,7 @@ export function CreateAccountManagerForm({
       {/* Password */}
       <div className="space-y-2">
         <Label htmlFor="password">
-          Password <span className="text-destructive">*</span>
+          {t("form.passwordLabel")} <span className="text-destructive">*</span>
         </Label>
         <Controller
           name="password"
@@ -111,7 +126,7 @@ export function CreateAccountManagerForm({
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter password (min 6 characters)"
+                placeholder={t("form.passwordPlaceholder")}
                 {...field}
                 className={form.formState.errors.password ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -128,14 +143,14 @@ export function CreateAccountManagerForm({
 
       {/* First Name */}
       <div className="space-y-2">
-        <Label htmlFor="firstName">First Name</Label>
+        <Label htmlFor="firstName">{t("form.firstNameLabel")}</Label>
         <Controller
           name="firstName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="firstName"
-              placeholder="John"
+              placeholder={t("form.firstNamePlaceholder")}
               {...field}
               disabled={isLoading}
             />
@@ -145,14 +160,14 @@ export function CreateAccountManagerForm({
 
       {/* Last Name */}
       <div className="space-y-2">
-        <Label htmlFor="lastName">Last Name</Label>
+        <Label htmlFor="lastName">{t("form.lastNameLabel")}</Label>
         <Controller
           name="lastName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="lastName"
-              placeholder="Doe"
+              placeholder={t("form.lastNamePlaceholder")}
               {...field}
               disabled={isLoading}
             />
@@ -169,11 +184,11 @@ export function CreateAccountManagerForm({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Cancel
+          {t("form.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Create Account Manager
+          {t("form.createSubmit")}
         </Button>
       </div>
     </form>

@@ -66,12 +66,14 @@ import { TimeLogSummaryCards } from "./time-log-summary-cards";
 import { RecentActivitySection } from "./recent-activity-section";
 import { TimeLogFormDialog } from "./time-log-form-dialog";
 import { OffTheJobSummary } from "./off-the-job-summary";
+import { useTranslations } from "next-intl";
 
 export function TimeLogDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const courses = useAppSelector(selectCourses);
   const userId = user?.id || "";
   const isEmployer = user?.role === "Employer";
+  const t = useTranslations("timeLog");
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -135,7 +137,7 @@ export function TimeLogDataTable() {
 
     try {
       await deleteTimeLog(selectedTimeLog.id).unwrap();
-      toast.success("Time log deleted successfully");
+      toast.success(t("toast.deleteSuccess"));
       setDeleteDialogOpen(false);
       setSelectedTimeLog(null);
       refetch();
@@ -144,9 +146,9 @@ export function TimeLogDataTable() {
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { error?: string } }).data?.error
           : undefined;
-      toast.error(errorMessage || "Failed to delete time log");
+      toast.error(errorMessage || t("toast.deleteFailed"));
     }
-  }, [deleteTimeLog, selectedTimeLog, refetch]);
+  }, [deleteTimeLog, selectedTimeLog, refetch, t]);
 
   const handleEdit = useCallback((timeLog: TimeLogEntry) => {
     setSelectedTimeLog(timeLog);
@@ -170,7 +172,9 @@ export function TimeLogDataTable() {
           verified: checked,
         }).unwrap();
         toast.success(
-          checked ? "Time log approved" : "Time log approval removed"
+          checked
+            ? t("toast.updateSuccess")
+            : t("toast.updateSuccess")
         );
         refetch();
       } catch (error: unknown) {
@@ -178,10 +182,10 @@ export function TimeLogDataTable() {
           error && typeof error === "object" && "data" in error
             ? (error as { data?: { error?: string } }).data?.error
             : undefined;
-        toast.error(errorMessage || "Failed to update time log");
+        toast.error(errorMessage || t("toast.updateFailed"));
       }
     },
-    [updateTimeLog, refetch]
+    [updateTimeLog, refetch, t]
   );
 
   const formatDate = (dateString: string | undefined) => {
@@ -213,7 +217,7 @@ export function TimeLogDataTable() {
     () => [
       {
         accessorKey: "activity_type",
-        header: "Activity Type",
+        header: t("table.columns.activityType"),
         cell: ({ row }) => {
           return (
             <span className="font-medium">
@@ -224,7 +228,7 @@ export function TimeLogDataTable() {
       },
       {
         id: "course_unit",
-        header: "Course / Unit",
+        header: t("table.columns.courseUnit"),
         cell: ({ row }) => {
           const course = row.original.course_id;
           const courseName =
@@ -236,7 +240,7 @@ export function TimeLogDataTable() {
       },
       {
         id: "trainer",
-        header: "Trainer",
+        header: t("table.columns.trainer"),
         cell: ({ row }) => {
           const trainer = row.original.trainer_id;
           const trainerName =
@@ -248,7 +252,7 @@ export function TimeLogDataTable() {
       },
       {
         accessorKey: "spend_time",
-        header: "Time Spent",
+        header: t("table.columns.timeSpent"),
         cell: ({ row }) => {
           return (
             <span className="font-medium">
@@ -259,14 +263,14 @@ export function TimeLogDataTable() {
       },
       {
         accessorKey: "start_time",
-        header: "Activity Start Time",
+        header: t("table.columns.startTime"),
         cell: ({ row }) => {
           return <span className="text-sm">{row.getValue("start_time") || "-"}</span>;
         },
       },
       {
         accessorKey: "type",
-        header: "On/Off the Job Training",
+        header: t("table.columns.onOffJob"),
         cell: ({ row }) => {
           const type = row.getValue("type") as string;
           if (!type) return <span>-</span>;
@@ -280,7 +284,7 @@ export function TimeLogDataTable() {
       },
       {
         accessorKey: "verified",
-        header: "Approved",
+        header: t("table.columns.approved"),
         cell: ({ row }) => {
           const timeLog = row.original;
           const isTrainer = user?.role === "Trainer";
@@ -297,21 +301,25 @@ export function TimeLogDataTable() {
                     handleVerifyChange(checked as boolean, timeLog)
                   }
                 />
-                <span className="text-sm">Assessor</span>
+                <span className="text-sm">
+                  {t("table.labels.assessor")}
+                </span>
               </div>
             );
           }
 
           return (
             <span className="text-sm">
-              {timeLog.verified ? "Approved" : "Not Approved"}
+              {timeLog.verified
+                ? t("table.labels.approved")
+                : t("table.labels.notApproved")}
             </span>
           );
         },
       },
       {
         accessorKey: "impact_on_learner",
-        header: "Comment",
+        header: t("table.columns.comment"),
         cell: ({ row }) => {
           const comment = row.getValue("impact_on_learner") as string;
           return (
@@ -323,7 +331,7 @@ export function TimeLogDataTable() {
       },
       {
         accessorKey: "activity_date",
-        header: "Date",
+        header: t("table.columns.date"),
         cell: ({ row }) => {
           const date = row.getValue("activity_date") as string;
           return <span className="text-sm">{formatDate(date)}</span>;
@@ -331,7 +339,7 @@ export function TimeLogDataTable() {
       },
       {
         id: "actions",
-        header: "Action",
+        header: t("table.columns.actions"),
         cell: ({ row }) => {
           const timeLog = row.original;
           return (
@@ -348,7 +356,7 @@ export function TimeLogDataTable() {
                     onClick={() => handleEdit(timeLog)}
                   >
                     <Edit className="mr-2 h-4 w-4" />
-                    Edit
+                    {t("common.edit", { default: "Edit" })}
                   </DropdownMenuItem>
                 )}
                 {!isEmployer && (
@@ -363,7 +371,7 @@ export function TimeLogDataTable() {
                       }}
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
+                      {t("dialog.delete.buttons.confirm")}
                     </DropdownMenuItem>
                   </>
                 )}
@@ -373,7 +381,7 @@ export function TimeLogDataTable() {
         },
       },
     ],
-    [user?.role, userId, isEmployer, handleVerifyChange, handleEdit]
+    [user?.role, userId, isEmployer, handleVerifyChange, handleEdit, t]
   );
 
   const table = useReactTable({
@@ -399,7 +407,7 @@ export function TimeLogDataTable() {
   if (isLoading && !timeLogs.length) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-muted-foreground">Loading time logs...</div>
+        <div className="text-muted-foreground">{t("table.loading")}</div>
       </div>
     );
   }
@@ -410,14 +418,14 @@ export function TimeLogDataTable() {
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
           <Label htmlFor="course-filter" className="text-sm font-medium">
-            Select Course
+            {t("filters.course.label")}
           </Label>
           <Select value={courseFilter || "all"} onValueChange={(value) => setCourseFilter(value === "all" ? "" : value)}>
             <SelectTrigger id="course-filter" className="cursor-pointer">
-              <SelectValue placeholder="All Courses" />
+              <SelectValue placeholder={t("filters.course.all")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Courses</SelectItem>
+              <SelectItem value="all">{t("filters.course.all")}</SelectItem>
               {courses.map((learnerCourse,index) => (
                 <SelectItem
                   key={index}
@@ -432,33 +440,45 @@ export function TimeLogDataTable() {
 
         <div className="space-y-2">
           <Label htmlFor="job-type-filter" className="text-sm font-medium">
-            Select Job Training
+            {t("filters.jobType.label")}
           </Label>
           <Select value={jobTypeFilter} onValueChange={setJobTypeFilter}>
             <SelectTrigger id="job-type-filter" className="cursor-pointer">
-              <SelectValue placeholder="All" />
+              <SelectValue placeholder={t("filters.jobType.options.all")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="All">All</SelectItem>
-              <SelectItem value="Not Applicable">Not Applicable</SelectItem>
-              <SelectItem value="On the job">On the job</SelectItem>
-              <SelectItem value="Off the job">Off the job</SelectItem>
+              <SelectItem value="All">{t("filters.jobType.options.all")}</SelectItem>
+              <SelectItem value="Not Applicable">
+                {t("filters.jobType.options.notApplicable")}
+              </SelectItem>
+              <SelectItem value="On the job">
+                {t("filters.jobType.options.onTheJob")}
+              </SelectItem>
+              <SelectItem value="Off the job">
+                {t("filters.jobType.options.offTheJob")}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="approved-filter" className="text-sm font-medium">
-            Assessor Approved
+            {t("filters.approved.label")}
           </Label>
           <Select value={approvedFilter} onValueChange={setApprovedFilter}>
             <SelectTrigger id="approved-filter" className="cursor-pointer">
-              <SelectValue placeholder="All" />
+              <SelectValue placeholder={t("filters.approved.options.all")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="All">All</SelectItem>
-              <SelectItem value="true">Approved</SelectItem>
-              <SelectItem value="false">Not Approved</SelectItem>
+              <SelectItem value="All">
+                {t("filters.approved.options.all")}
+              </SelectItem>
+              <SelectItem value="true">
+                {t("filters.approved.options.approved")}
+              </SelectItem>
+              <SelectItem value="false">
+                {t("filters.approved.options.notApproved")}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -482,17 +502,18 @@ export function TimeLogDataTable() {
         {!isEmployer && (
           <Button onClick={handleAdd} className="cursor-pointer">
             <Plus className="mr-2 h-4 w-4" />
-            Add New Timelog Entry
+            {t("actions.addButton")}
           </Button>
         )}
         <div className="space-y-2">
           <Label htmlFor="column-visibility" className="text-sm font-medium">
-            Column Visibility
+            {t("actions.columnVisibilityLabel")}
           </Label>
           <DropdownMenu>
             <DropdownMenuTrigger asChild id="column-visibility">
               <Button variant="outline" className="cursor-pointer">
-                Columns <ChevronDown className="ml-2 size-4" />
+                {t("actions.columnsButton")}{" "}
+                <ChevronDown className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -562,7 +583,7 @@ export function TimeLogDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No time log entries found.
+                  {t("table.empty")}
                 </TableCell>
               </TableRow>
             )}
@@ -592,21 +613,20 @@ export function TimeLogDataTable() {
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Time Log?</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialog.delete.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Deleting this time log will also remove all associated data and
-              relationships. Proceed with deletion?
+              {t("dialog.delete.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
+              {t("dialog.delete.buttons.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete Time Log
+              {t("dialog.delete.buttons.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

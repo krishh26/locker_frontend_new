@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import {
   type ColumnDef,
   type Row,
@@ -38,6 +39,7 @@ export function ModuleUnitProgressDataTable({
   units = [],
   isLoading = false,
 }: ModuleUnitProgressDataTableProps) {
+  const t = useTranslations("moduleUnitProgress");
   const [globalFilter, setGlobalFilter] = React.useState("");
 
   const filteredData = useMemo(() => {
@@ -52,14 +54,14 @@ export function ModuleUnitProgressDataTable({
     () => [
       {
         accessorKey: "title",
-        header: "Title",
+        header: t("table.columns.title"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => (
           <div className="font-medium">{row.getValue("title")}</div>
         ),
       },
       {
         id: "signed_off_awaiting",
-        header: "% Signed Off / Awaiting Sign Off",
+        header: t("table.columns.signedOffAwaiting"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const learnerProgress = row.original.learner_progress_percent ?? 0;
           const trainerProgress = row.original.trainer_progress_percent ?? 0;
@@ -71,14 +73,14 @@ export function ModuleUnitProgressDataTable({
             <div className="space-y-2 min-w-[200px]">
               <div className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Signed Off</span>
+                  <span className="text-muted-foreground">{t("table.progress.signedOff")}</span>
                   <span className="font-medium">{signedOff}%</span>
                 </div>
                 <Progress value={signedOff} className="h-2" />
               </div>
               <div className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Awaiting Sign Off</span>
+                  <span className="text-muted-foreground">{t("table.progress.awaitingSignOff")}</span>
                   <span className="font-medium">{awaitingSignOff}%</span>
                 </div>
                 <Progress value={awaitingSignOff} className="h-2" />
@@ -89,43 +91,47 @@ export function ModuleUnitProgressDataTable({
       },
       {
         accessorKey: "fully_completed",
-        header: "Completed",
+        header: t("table.columns.completed"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const completed = row.original.fully_completed;
           if (completed === true) {
-            return <span className="text-accent">Yes</span>;
+            return <span className="text-accent">{t("table.status.yes")}</span>;
           }
-          return <span className="text-muted-foreground">No</span>;
+          return <span className="text-muted-foreground">{t("table.status.no")}</span>;
         },
       },
       {
         accessorKey: "assessed_date",
-        header: "Assessed",
+        header: t("table.columns.assessed"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const assessedDate = row.original.assessed_date;
           if (assessedDate) {
-            return <span className="text-accent">Yes</span>;
+            return <span className="text-accent">{t("table.status.yes")}</span>;
           }
-          return <span className="text-muted-foreground">No</span>;
+          return <span className="text-muted-foreground">{t("table.status.no")}</span>;
         },
       },
       {
         accessorKey: "iqa_sign_off",
-        header: "IQA Sign-off",
+        header: t("table.columns.iqaSignOff"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           const iqaSignOff = row.original.iqa_sign_off;
           if (iqaSignOff === true || iqaSignOff === "Yes" || iqaSignOff === "yes") {
-            return <span className="text-accent">Yes</span>;
+            return <span className="text-accent">{t("table.status.yes")}</span>;
           }
           if (iqaSignOff === false || iqaSignOff === "No" || iqaSignOff === "no" || iqaSignOff === null) {
-            return <span className="text-muted-foreground">No</span>;
+            return <span className="text-muted-foreground">{t("table.status.no")}</span>;
           }
-          return <span className="text-muted-foreground">{String(iqaSignOff) || "-"}</span>;
+          return (
+            <span className="text-muted-foreground">
+              {String(iqaSignOff) || t("common.dash")}
+            </span>
+          );
         },
       },
       {
         id: "claimable_status",
-        header: "Claimable Status",
+        header: t("table.columns.claimableStatus"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => {
           // Derive claimable status from unit completion and sign-off
           const fullyCompleted = row.original.fully_completed;
@@ -133,13 +139,13 @@ export function ModuleUnitProgressDataTable({
           const assessedDate = row.original.assessed_date;
           
           if (fullyCompleted && iqaSignOff && assessedDate) {
-            return <span className="text-sm text-accent">Claimable</span>;
+            return <span className="text-sm text-accent">{t("table.status.claimable")}</span>;
           }
-          return <span className="text-sm text-muted-foreground">Not Claimable</span>;
+          return <span className="text-sm text-muted-foreground">{t("table.status.notClaimable")}</span>;
         },
       },
     ],
-    []
+    [t]
   );
 
   const table = useReactTable({
@@ -160,7 +166,7 @@ export function ModuleUnitProgressDataTable({
       <Card>
         <CardContent className="p-12">
           <div className="text-center text-muted-foreground animate-pulse">
-            Loading units...
+            {t("table.loading")}
           </div>
         </CardContent>
       </Card>
@@ -172,7 +178,7 @@ export function ModuleUnitProgressDataTable({
       <Card>
         <CardContent className="p-12">
           <div className="text-center text-muted-foreground">
-            No units available
+            {t("table.noUnits")}
           </div>
         </CardContent>
       </Card>
@@ -187,7 +193,7 @@ export function ModuleUnitProgressDataTable({
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search units..."
+              placeholder={t("table.searchPlaceholder")}
               value={globalFilter ?? ""}
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
@@ -240,7 +246,7 @@ export function ModuleUnitProgressDataTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("table.noResults")}
                 </TableCell>
               </TableRow>
             )}

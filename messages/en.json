@@ -5617,6 +5617,165 @@
       "save": "Save Assignments"
     }
   },
+  "auditLogs": {
+    "page": {
+      "title": "Audit Logs",
+      "subtitle": "View system activity and changes"
+    },
+    "common": {
+      "notAvailable": "N/A",
+      "unknown": "Unknown",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Search by user or details...",
+      "empty": "No audit logs found.",
+      "filters": {
+        "actionPlaceholder": "Filter by action",
+        "orgPlaceholder": "Filter by organisation",
+        "allActions": "All Actions",
+        "allOrganisations": "All Organisations"
+      },
+      "columns": {
+        "timestamp": "Timestamp",
+        "organisation": "Organisation",
+        "action": "Action",
+        "user": "User",
+        "details": "Details"
+      }
+    },
+    "actions": {
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF"
+    },
+    "toast": {
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully",
+      "pdfExported": "PDF exported successfully"
+    },
+    "actionTypes": {
+      "system_action": "System Action",
+      "account_manager_action": "Account Manager Action",
+      "organisation_change": "Organisation Change",
+      "access_change": "Access Change",
+      "centre_change": "Centre Change",
+      "subscription_change": "Subscription Change",
+      "feature_change": "Feature Change"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "Payments",
+      "subtitle": "View payment history and transactions"
+    },
+    "addPage": {
+      "title": "Add invoice",
+      "subtitle": "Record which organisation paid for which plan."
+    },
+    "editPage": {
+      "title": "Edit invoice",
+      "subtitle": "Update payment and line items."
+    },
+    "common": {
+      "unknown": "Unknown",
+      "notAvailable": "N/A",
+      "dash": "—",
+      "loading": "Loading..."
+    },
+    "table": {
+      "searchPlaceholder": "Search by invoice number...",
+      "empty": "No payments found.",
+      "filters": {
+        "statusPlaceholder": "Filter by status",
+        "orgPlaceholder": "Filter by organisation",
+        "allStatuses": "All Status",
+        "allOrganisations": "All Organisations"
+      },
+      "columns": {
+        "date": "Date",
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "subtotal": "Subtotal",
+        "discount": "Discount",
+        "tax": "Tax",
+        "amountTotal": "Amount / Total",
+        "status": "Status",
+        "invoiceNumber": "Invoice Number",
+        "paymentMethod": "Payment Method",
+        "actions": "Actions"
+      }
+    },
+    "actions": {
+      "addInvoice": "Add invoice",
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF",
+      "openMenuSrOnly": "Open menu",
+      "edit": "Edit"
+    },
+    "toast": {
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully",
+      "pdfExported": "PDF exported successfully",
+      "selectOrgAndPlan": "Please select organisation and plan",
+      "addAtLeastOneRow": "Please add at least one row",
+      "invoiceCreated": "Invoice created successfully",
+      "invoiceUpdated": "Invoice updated successfully",
+      "createFailedFallback": "Failed to create invoice",
+      "updateFailedFallback": "Failed to update invoice"
+    },
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bank transfer",
+      "card": "Card",
+      "invoice": "Invoice",
+      "other": "Other"
+    },
+    "lineStatus": {
+      "pending": "Pending",
+      "paid": "Paid"
+    },
+    "invoiceForm": {
+      "invoiceDate": "Invoice date",
+      "organisation": "Organisation",
+      "plan": "Plan",
+      "status": "Status",
+      "paymentRows": "Payment rows",
+      "addRow": "Add row",
+      "period": "Period",
+      "dueDate": "Due date",
+      "amount": "Amount",
+      "discountPercent": "Discount (%)",
+      "taxPercent": "Tax (%)",
+      "rowTotal": "Row total",
+      "lineStatus": "Status",
+      "selectOrganisation": "Select organisation",
+      "selectOrganisationFirst": "Select organisation first",
+      "noPlanAssigned": "No plan assigned to this organisation",
+      "selectPlan": "Select plan",
+      "selectMethod": "Select method",
+      "optionalNotes": "Optional notes",
+      "removeRowAria": "Remove row",
+      "emptyLinesHelp": "No payment lines added yet. Click \"Add row\" to insert a payment item for this invoice. The amount for each row will be automatically filled based on the selected plan: full price for monthly plans, or evenly divided (per month) for yearly plans.",
+      "totals": {
+        "subtotal": "Subtotal",
+        "totalDiscount": "Total discount",
+        "totalTax": "Total tax",
+        "total": "Total"
+      },
+      "paymentMethod": "Payment method",
+      "notes": "Notes",
+      "back": "Back",
+      "createInvoice": "Create invoice",
+      "updateInvoice": "Update invoice"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

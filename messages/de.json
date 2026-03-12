@@ -4767,6 +4767,165 @@
       "save": "Zuweisungen speichern"
     }
   },
+  "auditLogs": {
+    "page": {
+      "title": "Audit-Logs",
+      "subtitle": "Systemaktivitäten und Änderungen anzeigen"
+    },
+    "common": {
+      "notAvailable": "k. A.",
+      "unknown": "Unbekannt",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Nach Benutzer oder Details suchen...",
+      "empty": "Keine Audit-Logs gefunden.",
+      "filters": {
+        "actionPlaceholder": "Nach Aktion filtern",
+        "orgPlaceholder": "Nach Organisation filtern",
+        "allActions": "Alle Aktionen",
+        "allOrganisations": "Alle Organisationen"
+      },
+      "columns": {
+        "timestamp": "Zeitstempel",
+        "organisation": "Organisation",
+        "action": "Aktion",
+        "user": "Benutzer",
+        "details": "Details"
+      }
+    },
+    "actions": {
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert"
+    },
+    "actionTypes": {
+      "system_action": "Systemaktion",
+      "account_manager_action": "Account-Manager-Aktion",
+      "organisation_change": "Organisationsänderung",
+      "access_change": "Zugriffsänderung",
+      "centre_change": "Zentrumsänderung",
+      "subscription_change": "Abonnementänderung",
+      "feature_change": "Feature-Änderung"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "Zahlungen",
+      "subtitle": "Zahlungshistorie und Transaktionen anzeigen"
+    },
+    "addPage": {
+      "title": "Rechnung hinzufügen",
+      "subtitle": "Erfassen, welche Organisation welchen Plan bezahlt hat."
+    },
+    "editPage": {
+      "title": "Rechnung bearbeiten",
+      "subtitle": "Zahlung und Positionen aktualisieren."
+    },
+    "common": {
+      "unknown": "Unbekannt",
+      "notAvailable": "k. A.",
+      "dash": "—",
+      "loading": "Wird geladen..."
+    },
+    "table": {
+      "searchPlaceholder": "Nach Rechnungsnummer suchen...",
+      "empty": "Keine Zahlungen gefunden.",
+      "filters": {
+        "statusPlaceholder": "Nach Status filtern",
+        "orgPlaceholder": "Nach Organisation filtern",
+        "allStatuses": "Alle Status",
+        "allOrganisations": "Alle Organisationen"
+      },
+      "columns": {
+        "date": "Datum",
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "subtotal": "Zwischensumme",
+        "discount": "Rabatt",
+        "tax": "Steuer",
+        "amountTotal": "Betrag / Gesamt",
+        "status": "Status",
+        "invoiceNumber": "Rechnungsnummer",
+        "paymentMethod": "Zahlungsmethode",
+        "actions": "Aktionen"
+      }
+    },
+    "actions": {
+      "addInvoice": "Rechnung hinzufügen",
+      "export": "Exportieren",
+      "exportCsv": "CSV exportieren",
+      "exportPdf": "PDF exportieren",
+      "openMenuSrOnly": "Menü öffnen",
+      "edit": "Bearbeiten"
+    },
+    "toast": {
+      "noDataToExport": "Keine Daten zum Exportieren",
+      "csvExported": "CSV erfolgreich exportiert",
+      "pdfExported": "PDF erfolgreich exportiert",
+      "selectOrgAndPlan": "Bitte Organisation und Plan auswählen",
+      "addAtLeastOneRow": "Bitte mindestens eine Zeile hinzufügen",
+      "invoiceCreated": "Rechnung erfolgreich erstellt",
+      "invoiceUpdated": "Rechnung erfolgreich aktualisiert",
+      "createFailedFallback": "Rechnung konnte nicht erstellt werden",
+      "updateFailedFallback": "Rechnung konnte nicht aktualisiert werden"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Gesendet",
+      "failed": "Fehlgeschlagen",
+      "refunded": "Erstattet"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Banküberweisung",
+      "card": "Karte",
+      "invoice": "Rechnung",
+      "other": "Sonstiges"
+    },
+    "lineStatus": {
+      "pending": "Ausstehend",
+      "paid": "Bezahlt"
+    },
+    "invoiceForm": {
+      "invoiceDate": "Rechnungsdatum",
+      "organisation": "Organisation",
+      "plan": "Plan",
+      "status": "Status",
+      "paymentRows": "Zahlungszeilen",
+      "addRow": "Zeile hinzufügen",
+      "period": "Periode",
+      "dueDate": "Fälligkeitsdatum",
+      "amount": "Betrag",
+      "discountPercent": "Rabatt (%)",
+      "taxPercent": "Steuer (%)",
+      "rowTotal": "Zeilensumme",
+      "lineStatus": "Status",
+      "selectOrganisation": "Organisation auswählen",
+      "selectOrganisationFirst": "Zuerst Organisation auswählen",
+      "noPlanAssigned": "Kein Plan dieser Organisation zugewiesen",
+      "selectPlan": "Plan auswählen",
+      "selectMethod": "Methode auswählen",
+      "optionalNotes": "Optionale Notizen",
+      "removeRowAria": "Zeile entfernen",
+      "emptyLinesHelp": "Es wurden noch keine Zahlungszeilen hinzugefügt. Klicken Sie auf \"Zeile hinzufügen\", um einen Zahlungsposten für diese Rechnung einzufügen. Der Betrag pro Zeile wird automatisch anhand des ausgewählten Plans ausgefüllt: voller Preis für monatliche Pläne oder gleichmäßig (pro Monat) aufgeteilt für jährliche Pläne.",
+      "totals": {
+        "subtotal": "Zwischensumme",
+        "totalDiscount": "Gesamtrabatt",
+        "totalTax": "Gesamtsteuer",
+        "total": "Gesamt"
+      },
+      "paymentMethod": "Zahlungsmethode",
+      "notes": "Notizen",
+      "back": "Zurück",
+      "createInvoice": "Rechnung erstellen",
+      "updateInvoice": "Rechnung aktualisieren"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Kursinformationen nicht gefunden",

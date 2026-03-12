@@ -4755,6 +4755,165 @@
       "save": "Salva assegnazioni"
     }
   },
+  "auditLogs": {
+    "page": {
+      "title": "Log di audit",
+      "subtitle": "Visualizza attività e modifiche del sistema"
+    },
+    "common": {
+      "notAvailable": "N/D",
+      "unknown": "Sconosciuto",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Cerca per utente o dettagli...",
+      "empty": "Nessun log di audit trovato.",
+      "filters": {
+        "actionPlaceholder": "Filtra per azione",
+        "orgPlaceholder": "Filtra per organizzazione",
+        "allActions": "Tutte le azioni",
+        "allOrganisations": "Tutte le organizzazioni"
+      },
+      "columns": {
+        "timestamp": "Data/ora",
+        "organisation": "Organizzazione",
+        "action": "Azione",
+        "user": "Utente",
+        "details": "Dettagli"
+      }
+    },
+    "actions": {
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF"
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato correttamente",
+      "pdfExported": "PDF esportato correttamente"
+    },
+    "actionTypes": {
+      "system_action": "Azione di sistema",
+      "account_manager_action": "Azione account manager",
+      "organisation_change": "Modifica organizzazione",
+      "access_change": "Modifica accesso",
+      "centre_change": "Modifica centro",
+      "subscription_change": "Modifica abbonamento",
+      "feature_change": "Modifica funzionalità"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "Pagamenti",
+      "subtitle": "Visualizza la cronologia dei pagamenti e le transazioni"
+    },
+    "addPage": {
+      "title": "Aggiungi fattura",
+      "subtitle": "Registra quale organizzazione ha pagato quale piano."
+    },
+    "editPage": {
+      "title": "Modifica fattura",
+      "subtitle": "Aggiorna il pagamento e le righe."
+    },
+    "common": {
+      "unknown": "Sconosciuto",
+      "notAvailable": "N/D",
+      "dash": "—",
+      "loading": "Caricamento..."
+    },
+    "table": {
+      "searchPlaceholder": "Cerca per numero fattura...",
+      "empty": "Nessun pagamento trovato.",
+      "filters": {
+        "statusPlaceholder": "Filtra per stato",
+        "orgPlaceholder": "Filtra per organizzazione",
+        "allStatuses": "Tutti gli stati",
+        "allOrganisations": "Tutte le organizzazioni"
+      },
+      "columns": {
+        "date": "Data",
+        "organisation": "Organizzazione",
+        "plan": "Piano",
+        "subtotal": "Subtotale",
+        "discount": "Sconto",
+        "tax": "Imposta",
+        "amountTotal": "Importo / Totale",
+        "status": "Stato",
+        "invoiceNumber": "Numero fattura",
+        "paymentMethod": "Metodo di pagamento",
+        "actions": "Azioni"
+      }
+    },
+    "actions": {
+      "addInvoice": "Aggiungi fattura",
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF",
+      "openMenuSrOnly": "Apri menu",
+      "edit": "Modifica"
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato correttamente",
+      "pdfExported": "PDF esportato correttamente",
+      "selectOrgAndPlan": "Seleziona organizzazione e piano",
+      "addAtLeastOneRow": "Aggiungi almeno una riga",
+      "invoiceCreated": "Fattura creata correttamente",
+      "invoiceUpdated": "Fattura aggiornata correttamente",
+      "createFailedFallback": "Impossibile creare la fattura",
+      "updateFailedFallback": "Impossibile aggiornare la fattura"
+    },
+    "status": {
+      "draft": "Bozza",
+      "sent": "Inviata",
+      "failed": "Non riuscita",
+      "refunded": "Rimborsata"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bonifico bancario",
+      "card": "Carta",
+      "invoice": "Fattura",
+      "other": "Altro"
+    },
+    "lineStatus": {
+      "pending": "In sospeso",
+      "paid": "Pagata"
+    },
+    "invoiceForm": {
+      "invoiceDate": "Data fattura",
+      "organisation": "Organizzazione",
+      "plan": "Piano",
+      "status": "Stato",
+      "paymentRows": "Righe di pagamento",
+      "addRow": "Aggiungi riga",
+      "period": "Periodo",
+      "dueDate": "Scadenza",
+      "amount": "Importo",
+      "discountPercent": "Sconto (%)",
+      "taxPercent": "Imposta (%)",
+      "rowTotal": "Totale riga",
+      "lineStatus": "Stato",
+      "selectOrganisation": "Seleziona organizzazione",
+      "selectOrganisationFirst": "Seleziona prima l'organizzazione",
+      "noPlanAssigned": "Nessun piano assegnato a questa organizzazione",
+      "selectPlan": "Seleziona piano",
+      "selectMethod": "Seleziona metodo",
+      "optionalNotes": "Note opzionali",
+      "removeRowAria": "Rimuovi riga",
+      "emptyLinesHelp": "Nessuna riga di pagamento aggiunta. Fai clic su \"Aggiungi riga\" per inserire un elemento di pagamento per questa fattura. L'importo di ogni riga verrà compilato automaticamente in base al piano selezionato: prezzo pieno per piani mensili oppure diviso uniformemente (per mese) per piani annuali.",
+      "totals": {
+        "subtotal": "Subtotale",
+        "totalDiscount": "Sconto totale",
+        "totalTax": "Imposta totale",
+        "total": "Totale"
+      },
+      "paymentMethod": "Metodo di pagamento",
+      "notes": "Note",
+      "back": "Indietro",
+      "createInvoice": "Crea fattura",
+      "updateInvoice": "Aggiorna fattura"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

@@ -5559,6 +5559,165 @@
       "save": "保存分配"
     }
   },
+  "auditLogs": {
+    "page": {
+      "title": "审计日志",
+      "subtitle": "查看系统活动与变更"
+    },
+    "common": {
+      "notAvailable": "不适用",
+      "unknown": "未知",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "按用户或详情搜索...",
+      "empty": "未找到审计日志。",
+      "filters": {
+        "actionPlaceholder": "按操作筛选",
+        "orgPlaceholder": "按组织筛选",
+        "allActions": "全部操作",
+        "allOrganisations": "全部组织"
+      },
+      "columns": {
+        "timestamp": "时间戳",
+        "organisation": "组织",
+        "action": "操作",
+        "user": "用户",
+        "details": "详情"
+      }
+    },
+    "actions": {
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功"
+    },
+    "actionTypes": {
+      "system_action": "系统操作",
+      "account_manager_action": "客户经理操作",
+      "organisation_change": "组织变更",
+      "access_change": "访问变更",
+      "centre_change": "中心变更",
+      "subscription_change": "订阅变更",
+      "feature_change": "功能变更"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "付款",
+      "subtitle": "查看付款记录与交易"
+    },
+    "addPage": {
+      "title": "添加发票",
+      "subtitle": "记录哪个组织为哪个方案付款。"
+    },
+    "editPage": {
+      "title": "编辑发票",
+      "subtitle": "更新付款与明细行。"
+    },
+    "common": {
+      "unknown": "未知",
+      "notAvailable": "不适用",
+      "dash": "—",
+      "loading": "加载中..."
+    },
+    "table": {
+      "searchPlaceholder": "按发票号搜索...",
+      "empty": "未找到付款记录。",
+      "filters": {
+        "statusPlaceholder": "按状态筛选",
+        "orgPlaceholder": "按组织筛选",
+        "allStatuses": "全部状态",
+        "allOrganisations": "全部组织"
+      },
+      "columns": {
+        "date": "日期",
+        "organisation": "组织",
+        "plan": "方案",
+        "subtotal": "小计",
+        "discount": "折扣",
+        "tax": "税费",
+        "amountTotal": "金额 / 总计",
+        "status": "状态",
+        "invoiceNumber": "发票号",
+        "paymentMethod": "付款方式",
+        "actions": "操作"
+      }
+    },
+    "actions": {
+      "addInvoice": "添加发票",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "openMenuSrOnly": "打开菜单",
+      "edit": "编辑"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "selectOrgAndPlan": "请选择组织和方案",
+      "addAtLeastOneRow": "请至少添加一行",
+      "invoiceCreated": "发票创建成功",
+      "invoiceUpdated": "发票更新成功",
+      "createFailedFallback": "创建发票失败",
+      "updateFailedFallback": "更新发票失败"
+    },
+    "status": {
+      "draft": "草稿",
+      "sent": "已发送",
+      "failed": "失败",
+      "refunded": "已退款"
+    },
+    "paymentMethod": {
+      "bank_transfer": "银行转账",
+      "card": "银行卡",
+      "invoice": "发票",
+      "other": "其他"
+    },
+    "lineStatus": {
+      "pending": "待处理",
+      "paid": "已支付"
+    },
+    "invoiceForm": {
+      "invoiceDate": "发票日期",
+      "organisation": "组织",
+      "plan": "方案",
+      "status": "状态",
+      "paymentRows": "付款明细行",
+      "addRow": "添加行",
+      "period": "周期",
+      "dueDate": "到期日",
+      "amount": "金额",
+      "discountPercent": "折扣 (%)",
+      "taxPercent": "税率 (%)",
+      "rowTotal": "行合计",
+      "lineStatus": "状态",
+      "selectOrganisation": "选择组织",
+      "selectOrganisationFirst": "请先选择组织",
+      "noPlanAssigned": "该组织未分配方案",
+      "selectPlan": "选择方案",
+      "selectMethod": "选择方式",
+      "optionalNotes": "可选备注",
+      "removeRowAria": "移除行",
+      "emptyLinesHelp": "尚未添加付款明细行。点击“添加行”为该发票插入付款项目。每行金额将根据所选方案自动填充：月付方案为全价，年付方案则按月均分。",
+      "totals": {
+        "subtotal": "小计",
+        "totalDiscount": "折扣总计",
+        "totalTax": "税费总计",
+        "total": "总计"
+      },
+      "paymentMethod": "付款方式",
+      "notes": "备注",
+      "back": "返回",
+      "createInvoice": "创建发票",
+      "updateInvoice": "更新发票"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

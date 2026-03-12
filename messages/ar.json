@@ -5523,6 +5523,165 @@
       "save": "حفظ التعيينات"
     }
   },
+  "auditLogs": {
+    "page": {
+      "title": "سجلات التدقيق",
+      "subtitle": "عرض نشاط النظام والتغييرات"
+    },
+    "common": {
+      "notAvailable": "غير متاح",
+      "unknown": "غير معروف",
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "ابحث حسب المستخدم أو التفاصيل...",
+      "empty": "لم يتم العثور على سجلات تدقيق.",
+      "filters": {
+        "actionPlaceholder": "تصفية حسب الإجراء",
+        "orgPlaceholder": "تصفية حسب المؤسسة",
+        "allActions": "كل الإجراءات",
+        "allOrganisations": "كل المؤسسات"
+      },
+      "columns": {
+        "timestamp": "الوقت",
+        "organisation": "المؤسسة",
+        "action": "الإجراء",
+        "user": "المستخدم",
+        "details": "التفاصيل"
+      }
+    },
+    "actions": {
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF"
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح"
+    },
+    "actionTypes": {
+      "system_action": "إجراء النظام",
+      "account_manager_action": "إجراء مدير الحساب",
+      "organisation_change": "تغيير المؤسسة",
+      "access_change": "تغيير الوصول",
+      "centre_change": "تغيير المركز",
+      "subscription_change": "تغيير الاشتراك",
+      "feature_change": "تغيير الميزة"
+    }
+  },
+  "payments": {
+    "page": {
+      "title": "المدفوعات",
+      "subtitle": "عرض سجل المدفوعات والمعاملات"
+    },
+    "addPage": {
+      "title": "إضافة فاتورة",
+      "subtitle": "سجّل أي مؤسسة دفعت لأي خطة."
+    },
+    "editPage": {
+      "title": "تعديل الفاتورة",
+      "subtitle": "تحديث الدفع وبنود الفاتورة."
+    },
+    "common": {
+      "unknown": "غير معروف",
+      "notAvailable": "غير متاح",
+      "dash": "—",
+      "loading": "جارٍ التحميل..."
+    },
+    "table": {
+      "searchPlaceholder": "ابحث برقم الفاتورة...",
+      "empty": "لم يتم العثور على مدفوعات.",
+      "filters": {
+        "statusPlaceholder": "تصفية حسب الحالة",
+        "orgPlaceholder": "تصفية حسب المؤسسة",
+        "allStatuses": "كل الحالات",
+        "allOrganisations": "كل المؤسسات"
+      },
+      "columns": {
+        "date": "التاريخ",
+        "organisation": "المؤسسة",
+        "plan": "الخطة",
+        "subtotal": "الإجمالي الفرعي",
+        "discount": "الخصم",
+        "tax": "الضريبة",
+        "amountTotal": "المبلغ / الإجمالي",
+        "status": "الحالة",
+        "invoiceNumber": "رقم الفاتورة",
+        "paymentMethod": "طريقة الدفع",
+        "actions": "الإجراءات"
+      }
+    },
+    "actions": {
+      "addInvoice": "إضافة فاتورة",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "openMenuSrOnly": "فتح القائمة",
+      "edit": "تعديل"
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح",
+      "selectOrgAndPlan": "يرجى اختيار المؤسسة والخطة",
+      "addAtLeastOneRow": "يرجى إضافة صف واحد على الأقل",
+      "invoiceCreated": "تم إنشاء الفاتورة بنجاح",
+      "invoiceUpdated": "تم تحديث الفاتورة بنجاح",
+      "createFailedFallback": "فشل إنشاء الفاتورة",
+      "updateFailedFallback": "فشل تحديث الفاتورة"
+    },
+    "status": {
+      "draft": "مسودة",
+      "sent": "مرسلة",
+      "failed": "فشل",
+      "refunded": "مستردة"
+    },
+    "paymentMethod": {
+      "bank_transfer": "تحويل بنكي",
+      "card": "بطاقة",
+      "invoice": "فاتورة",
+      "other": "أخرى"
+    },
+    "lineStatus": {
+      "pending": "معلّقة",
+      "paid": "مدفوعة"
+    },
+    "invoiceForm": {
+      "invoiceDate": "تاريخ الفاتورة",
+      "organisation": "المؤسسة",
+      "plan": "الخطة",
+      "status": "الحالة",
+      "paymentRows": "صفوف الدفع",
+      "addRow": "إضافة صف",
+      "period": "الفترة",
+      "dueDate": "تاريخ الاستحقاق",
+      "amount": "المبلغ",
+      "discountPercent": "الخصم (%)",
+      "taxPercent": "الضريبة (%)",
+      "rowTotal": "إجمالي الصف",
+      "lineStatus": "الحالة",
+      "selectOrganisation": "اختر المؤسسة",
+      "selectOrganisationFirst": "اختر المؤسسة أولاً",
+      "noPlanAssigned": "لا توجد خطة مخصصة لهذه المؤسسة",
+      "selectPlan": "اختر الخطة",
+      "selectMethod": "اختر الطريقة",
+      "optionalNotes": "ملاحظات اختيارية",
+      "removeRowAria": "إزالة الصف",
+      "emptyLinesHelp": "لم تتم إضافة أي بنود دفع بعد. اضغط على \"إضافة صف\" لإدراج بند دفع لهذه الفاتورة. سيتم تعبئة مبلغ كل صف تلقائيًا بناءً على الخطة المحددة: السعر الكامل للخطط الشهرية أو مقسّم بالتساوي (شهريًا) للخطط السنوية.",
+      "totals": {
+        "subtotal": "الإجمالي الفرعي",
+        "totalDiscount": "إجمالي الخصم",
+        "totalTax": "إجمالي الضريبة",
+        "total": "الإجمالي"
+      },
+      "paymentMethod": "طريقة الدفع",
+      "notes": "ملاحظات",
+      "back": "رجوع",
+      "createInvoice": "إنشاء فاتورة",
+      "updateInvoice": "تحديث الفاتورة"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

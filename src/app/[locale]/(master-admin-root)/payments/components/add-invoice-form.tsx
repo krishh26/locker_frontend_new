@@ -39,6 +39,7 @@ import { useGetOrganisationsQuery } from '@/store/api/organisations/organisation
 import { toast } from 'sonner'
 import { Skeleton } from '@/components/ui/skeleton'
 import { exportInvoiceToPdf } from '@/utils/pdfExport'
+import { useTranslations } from 'next-intl'
 
 function getDefaultDueDateForMonth(offsetMonths: number): string {
   const d = new Date()
@@ -62,6 +63,7 @@ export interface AddInvoiceFormProps {
 }
 
 export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
+  const t = useTranslations('payments')
   const router = useRouter()
   const { data: orgsData, isLoading: isLoadingOrgs } = useGetOrganisationsQuery(
     {
@@ -270,11 +272,11 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!organisationId || !planId) {
-      toast.error('Please select organisation and plan')
+      toast.error(t('toast.selectOrgAndPlan'))
       return
     }
     if (lineItems.length === 0) {
-      toast.error('Please add at least one row')
+      toast.error(t('toast.addAtLeastOneRow'))
       return
     }
     const payload: CreatePaymentRequest = {
@@ -305,17 +307,17 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           data: payload,
         }).unwrap()
         invoiceNumber = response?.data?.invoiceNumber ?? ''
-        toast.success('Invoice updated successfully')
+        toast.success(t('toast.invoiceUpdated'))
       } else {
         const response = await createPaymentMutation(payload).unwrap()
         invoiceNumber = response?.data?.invoiceNumber ?? ''
-        toast.success('Invoice created successfully')
+        toast.success(t('toast.invoiceCreated'))
       }
       // Auto-generate and download invoice PDF after create
       const orgName =
         organisations.find((o) => String(o.id) === organisationId)?.name ??
-        'Unknown'
-      const planName = selectedPlan?.name ?? 'Unknown'
+        t('common.unknown')
+      const planName = selectedPlan?.name ?? t('common.unknown')
       exportInvoiceToPdf({
         organisationName: orgName,
         planName,
@@ -344,8 +346,8 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           : error instanceof Error
           ? error.message
           : paymentId
-          ? 'Failed to update invoice'
-          : 'Failed to create invoice'
+          ? t('toast.updateFailedFallback')
+          : t('toast.createFailedFallback')
       toast.error(String(msg))
     }
   }
@@ -367,7 +369,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
     <form onSubmit={handleSubmit} className='space-y-6'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-4'>
         <div className='space-y-2'>
-          <Label>Invoice date *</Label>
+          <Label>{t('invoiceForm.invoiceDate')} *</Label>
           <Input
             type='date'
             value={invoiceDate}
@@ -376,7 +378,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           />
         </div>
         <div className='space-y-2'>
-          <Label>Organisation *</Label>
+          <Label>{t('invoiceForm.organisation')} *</Label>
           <Select
             value={organisationId}
             onValueChange={(v) => {
@@ -389,7 +391,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
             required
           >
             <SelectTrigger className='w-full'>
-              <SelectValue placeholder='Select organisation' />
+              <SelectValue placeholder={t('invoiceForm.selectOrganisation')} />
             </SelectTrigger>
             <SelectContent>
               {organisations.map((org) => (
@@ -401,7 +403,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           </Select>
         </div>
         <div className='space-y-2'>
-          <Label>Plan *</Label>
+          <Label>{t('invoiceForm.plan')} *</Label>
           <Select
             value={planId}
             onValueChange={handlePlanChange}
@@ -414,12 +416,12 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
               <SelectValue
                 placeholder={
                   !organisationId
-                    ? 'Select organisation first'
+                    ? t('invoiceForm.selectOrganisationFirst')
                     : isLoadingSubscription
-                    ? 'Loading...'
+                    ? t('common.loading')
                     : plans.length === 0 && !paymentId
-                    ? 'No plan assigned to this organisation'
-                    : 'Select plan'
+                    ? t('invoiceForm.noPlanAssigned')
+                    : t('invoiceForm.selectPlan')
                 }
               />
             </SelectTrigger>
@@ -433,16 +435,16 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           </Select>
         </div>
         <div className='space-y-2'>
-          <Label>Status</Label>
+          <Label>{t('invoiceForm.status')}</Label>
           <Select value={status} onValueChange={(v) => setStatus(v as PaymentStatus)}>
             <SelectTrigger className='w-full'>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value='draft'>Draft</SelectItem>
-              <SelectItem value='sent'>Sent</SelectItem>
-              <SelectItem value='failed'>Failed</SelectItem>
-              <SelectItem value='refunded'>Refunded</SelectItem>
+              <SelectItem value='draft'>{t('status.draft')}</SelectItem>
+              <SelectItem value='sent'>{t('status.sent')}</SelectItem>
+              <SelectItem value='failed'>{t('status.failed')}</SelectItem>
+              <SelectItem value='refunded'>{t('status.refunded')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -450,23 +452,23 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
 
       <div className='space-y-2'>
         <div className='flex items-center justify-between gap-2'>
-          <Label>Payment rows</Label>
+          <Label>{t('invoiceForm.paymentRows')}</Label>
           <Button type='button' variant='outline' size='sm' onClick={addRow}>
             <Plus className='mr-2 h-4 w-4' />
-            Add row
+            {t('invoiceForm.addRow')}
           </Button>
         </div>
         <div className='rounded-md border overflow-x-auto max-h-[320px] overflow-y-auto'>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[100px]'>Period</TableHead>
-                <TableHead className='w-[100px]'>Due date</TableHead>
-                <TableHead className='w-[100px]'>Amount</TableHead>
-                <TableHead className='w-[90px]'>Discount (%)</TableHead>
-                <TableHead className='w-[80px]'>Tax (%)</TableHead>
-                <TableHead className='w-[100px]'>Row total</TableHead>
-                <TableHead className='w-[100px]'>Status</TableHead>
+                <TableHead className='w-[100px]'>{t('invoiceForm.period')}</TableHead>
+                <TableHead className='w-[100px]'>{t('invoiceForm.dueDate')}</TableHead>
+                <TableHead className='w-[100px]'>{t('invoiceForm.amount')}</TableHead>
+                <TableHead className='w-[90px]'>{t('invoiceForm.discountPercent')}</TableHead>
+                <TableHead className='w-[80px]'>{t('invoiceForm.taxPercent')}</TableHead>
+                <TableHead className='w-[100px]'>{t('invoiceForm.rowTotal')}</TableHead>
+                <TableHead className='w-[100px]'>{t('invoiceForm.lineStatus')}</TableHead>
                 <TableHead className='w-[60px]'></TableHead>
               </TableRow>
             </TableHeader>
@@ -557,8 +559,8 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value='pending'>Pending</SelectItem>
-                        <SelectItem value='paid'>Paid</SelectItem>
+                        <SelectItem value='pending'>{t('lineStatus.pending')}</SelectItem>
+                        <SelectItem value='paid'>{t('lineStatus.paid')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </TableCell>
@@ -569,7 +571,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
                       size='icon'
                       className='h-8 w-8 text-muted-foreground hover:text-destructive'
                       onClick={() => removeRow(index)}
-                      aria-label='Remove row'
+                      aria-label={t('invoiceForm.removeRowAria')}
                     >
                       <Trash2 className='h-4 w-4' />
                     </Button>
@@ -581,10 +583,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
         </div>
         {lineItems.length === 0 && (
           <p className='text-sm text-muted-foreground'>
-            No payment lines added yet. Click &quot;Add row&quot; to insert a
-            payment item for this invoice. The amount for each row will be
-            automatically filled based on the selected plan: full price for
-            monthly plans, or evenly divided (per month) for yearly plans.
+            {t('invoiceForm.emptyLinesHelp')}
           </p>
         )}
       </div>
@@ -592,14 +591,14 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
       <div className='flex items-end justify-end w-full'>
         <div className='rounded-md border bg-muted/40 p-3 w-1/4 text-sm'>
           <div className='flex justify-between gap-2'>
-            <span>Subtotal</span>
+            <span>{t('invoiceForm.totals.subtotal')}</span>
             <span>
               {CURRENCY} {subtotal.toFixed(2)}
             </span>
           </div>
           {totalDiscount > 0 && (
             <div className='flex justify-between gap-2 text-muted-foreground'>
-              <span>Total discount</span>
+              <span>{t('invoiceForm.totals.totalDiscount')}</span>
               <span>
                 -{CURRENCY} {totalDiscount.toFixed(2)}
               </span>
@@ -607,14 +606,14 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           )}
           {totalTax > 0 && (
             <div className='flex justify-between gap-2 text-muted-foreground'>
-              <span>Total tax</span>
+              <span>{t('invoiceForm.totals.totalTax')}</span>
               <span>
                 +{CURRENCY} {totalTax.toFixed(2)}
               </span>
             </div>
           )}
           <div className='flex justify-between gap-2 font-semibold mt-2 pt-2 border-t'>
-            <span>Total</span>
+            <span>{t('invoiceForm.totals.total')}</span>
             <span>
               {CURRENCY} {total.toFixed(2)}
             </span>
@@ -624,27 +623,27 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
 
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         <div className='space-y-2'>
-          <Label>Payment method</Label>
+          <Label>{t('invoiceForm.paymentMethod')}</Label>
           <Select value={paymentMethod} onValueChange={setPaymentMethod}>
             <SelectTrigger className='w-full'>
-              <SelectValue placeholder='Select method' />
+              <SelectValue placeholder={t('invoiceForm.selectMethod')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value='bank_transfer'>Bank transfer</SelectItem>
-              <SelectItem value='card'>Card</SelectItem>
-              <SelectItem value='invoice'>Invoice</SelectItem>
-              <SelectItem value='other'>Other</SelectItem>
+              <SelectItem value='bank_transfer'>{t('paymentMethod.bank_transfer')}</SelectItem>
+              <SelectItem value='card'>{t('paymentMethod.card')}</SelectItem>
+              <SelectItem value='invoice'>{t('paymentMethod.invoice')}</SelectItem>
+              <SelectItem value='other'>{t('paymentMethod.other')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
 
       <div className='space-y-2 w-1/2'>
-        <Label>Notes</Label>
+        <Label>{t('invoiceForm.notes')}</Label>
         <Input
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder='Optional notes'
+          placeholder={t('invoiceForm.optionalNotes')}
         />
       </div>
 
@@ -655,7 +654,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           onClick={() => router.push('/payments')}
           disabled={isSubmitting}
         >
-          Back
+          {t('invoiceForm.back')}
         </Button>
         <Button
           type='submit'
@@ -664,7 +663,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
           }
         >
           {isSubmitting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-          {paymentId ? 'Update invoice' : 'Create invoice'}
+          {paymentId ? t('invoiceForm.updateInvoice') : t('invoiceForm.createInvoice')}
         </Button>
       </div>
     </form>

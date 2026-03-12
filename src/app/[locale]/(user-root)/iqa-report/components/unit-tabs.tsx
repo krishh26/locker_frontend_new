@@ -3,6 +3,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatDate } from "@/app/[locale]/(admin-root)/qa-sample-plan/utils/constants";
 import type { UnitWithHistory } from "../hooks/use-iv-report-data";
+import { useTranslations } from "next-intl";
 
 interface UnitTabsProps {
   units: UnitWithHistory[];
@@ -19,6 +20,7 @@ export function UnitTabs({
   onUnitSelect,
   onTabChange,
 }: UnitTabsProps) {
+  const t = useTranslations("iqaReport");
   const selectedUnit = units[selectedUnitIndex] || null;
   const sampleHistory = selectedUnit && Array.isArray(selectedUnit.sample_history)
     ? selectedUnit.sample_history
@@ -53,7 +55,7 @@ export function UnitTabs({
             {units.map((unit, index) => {
               const unitCode = String(unit.unit_code || unit.code || "");
               const unitName = String(unit.unit_name || "");
-              const displayLabel = unitCode || unitName || `Unit ${index + 1}`;
+              const displayLabel = unitCode || unitName || t("unitTabs.unitLabel", { index: index + 1 });
               
               return (
                 <TabsTrigger
@@ -88,7 +90,7 @@ export function UnitTabs({
                       value={String(index)}
                       className="whitespace-nowrap"
                     >
-                      FS {index + 1} - {plannedDate ? formatDate(plannedDate) : "No Date"}
+                      FS {index + 1} - {plannedDate ? formatDate(plannedDate) : t("unitTabs.noDate")}
                       {sampleType && ` (${sampleType})`}
                     </TabsTrigger>
                   );
@@ -97,7 +99,7 @@ export function UnitTabs({
             </Tabs>
           ) : (
             <div className="text-sm text-muted-foreground py-2">
-              No sample history available for this unit
+              {t("unitTabs.noSampleHistory")}
             </div>
           )}
         </div>

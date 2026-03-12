@@ -1615,6 +1615,63 @@
       "subtitle": "Alle von Lernern eingereichten Formulare anzeigen und verwalten"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "IQA-Bericht",
+      "subtitle": "Füllen Sie das IQA-Berichtsformular für Lerner-Einheiten aus",
+      "loadingUnits": "Einheiten werden geladen...",
+      "loadUnitsError": "Einheiten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noUnitsForCourse": "Keine Einheiten für diesen Kurs gefunden."
+    },
+    "form": {
+      "assessmentInformation": "Bewertungsinformationen",
+      "courseName": "Kursname",
+      "selectCourse": "Kurs auswählen",
+      "untitledCourse": "Unbenannter Kurs",
+      "assessorsName": "Name des/der Bewerter(s)",
+      "learnerName": "Name des Lerners",
+      "batchNoAndCreator": "Chargennr. und Ersteller",
+      "iqasForBatch": "IQAs für die Charge",
+      "learnerAssessmentForUnits": "Lernerbewertung für Einheit(en)",
+      "question": "Frage",
+      "alwaysYes": "Immer (Ja)",
+      "sometimes": "Manchmal",
+      "neverNo": "Nie (Nein)",
+      "questions": {
+        "q1": "Wurde der Lerner direkt von einem Bewerter beobachtet?",
+        "q2": "Wurden Wissen und Verständnis bewertet?",
+        "q3": "Liegen Arbeitsproduktnachweise vor?",
+        "q4": "Hat der Lerner ausreichend Berufs-/Persönliche Angaben geliefert?",
+        "q5": "Werden die Bewertungsunterlagen des Lerners fortlaufend geführt?",
+        "q6": "Hat der Bewerter Authentizität, Ausreichendheit, Genauigkeit, Konsistenz und Gültigkeit bestätigt?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Einheit {index}",
+      "noDate": "Kein Datum",
+      "noSampleHistory": "Keine Probenverlauf für diese Einheit"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Keine Einheiten für diesen Kurs gefunden.",
+      "noCode": "Kein Code",
+      "noUnitName": "Kein Einheitenname",
+      "notStarted": "Nicht begonnen",
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "sample": "Stichprobe",
+      "samples": "Stichproben",
+      "last": "Zuletzt"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Plandetails konnten nicht geladen werden",
+      "unableToDetermineUser": "Aktueller Benutzer konnte nicht ermittelt werden",
+      "questionsSavedSuccess": "Fragen erfolgreich gespeichert",
+      "saveQuestionsError": "Fragen konnten nicht gespeichert werden",
+      "missingRequiredInfo": "Erforderliche Angaben fehlen",
+      "sampleDetailUpdatedSuccess": "Stichprobenplandetail erfolgreich aktualisiert",
+      "updateSampleDetailError": "Stichprobenplandetail konnte nicht aktualisiert werden"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Verwaltung von Wohlbefinden-Ressourcen",
     "pageSubtitle": "Wohlbefinden-Ressourcen für Lernende verwalten, einschließlich Hinzufügen, Bearbeiten und Umschalten der Verfügbarkeit",

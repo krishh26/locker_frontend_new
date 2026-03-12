@@ -2033,6 +2033,63 @@
       "subtitle": "Ver y gestionar todos los formularios enviados por aprendices"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "Informe IQA",
+      "subtitle": "Complete el formulario del informe IQA para las unidades del aprendiz",
+      "loadingUnits": "Cargando unidades...",
+      "loadUnitsError": "Error al cargar las unidades. Inténtelo de nuevo.",
+      "noUnitsForCourse": "No se encontraron unidades para este curso."
+    },
+    "form": {
+      "assessmentInformation": "Información de evaluación",
+      "courseName": "Nombre del curso",
+      "selectCourse": "Seleccionar curso",
+      "untitledCourse": "Curso sin título",
+      "assessorsName": "Nombre del evaluador(es)",
+      "learnerName": "Nombre del aprendiz",
+      "batchNoAndCreator": "Nº de lote y creador",
+      "iqasForBatch": "IQA para el lote",
+      "learnerAssessmentForUnits": "Evaluación del aprendiz para unidad(es)",
+      "question": "Pregunta",
+      "alwaysYes": "Siempre (Sí)",
+      "sometimes": "A veces",
+      "neverNo": "Nunca (No)",
+      "questions": {
+        "q1": "¿Fue el aprendiz observado directamente por un evaluador?",
+        "q2": "¿Se evaluaron los conocimientos y la comprensión?",
+        "q3": "¿Hay evidencia de producto de trabajo disponible?",
+        "q4": "¿Ha proporcionado el aprendiz suficientes datos laborales/personales?",
+        "q5": "¿Se están completando los registros de evaluación del aprendiz de forma continua?",
+        "q6": "¿Ha confirmado el evaluador autenticidad, suficiencia, precisión, coherencia y validez?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unidad {index}",
+      "noDate": "Sin fecha",
+      "noSampleHistory": "No hay historial de muestras para esta unidad"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "No se encontraron unidades para este curso.",
+      "noCode": "Sin código",
+      "noUnitName": "Sin nombre de unidad",
+      "notStarted": "No iniciado",
+      "completed": "Completado",
+      "inProgress": "En curso",
+      "sample": "muestra",
+      "samples": "muestras",
+      "last": "Último"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Error al cargar los detalles del plan",
+      "unableToDetermineUser": "No se puede determinar el usuario actual",
+      "questionsSavedSuccess": "Preguntas guardadas correctamente",
+      "saveQuestionsError": "Error al guardar las preguntas",
+      "missingRequiredInfo": "Falta información requerida",
+      "sampleDetailUpdatedSuccess": "Detalle del plan de muestra actualizado correctamente",
+      "updateSampleDetailError": "Error al actualizar el detalle del plan de muestra"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestión de Recursos de Bienestar",
     "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

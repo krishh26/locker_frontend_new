@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import {
   useLazyGetPlanDetailsQuery,
   useUpdateSamplePlanDetailMutation,
@@ -22,6 +23,7 @@ export function useEditSampleState(
   unit: UnitWithHistory | null,
   activeTabIndex: number
 ) {
+  const t = useTranslations("iqaReport");
   const user = useAppSelector((state) => state.auth.user);
   const iqaId = user?.user_id;
 
@@ -60,13 +62,13 @@ export function useEditSampleState(
         const errorMessage =
           (error as { data?: { message?: string }; message?: string })?.data?.message ||
           (error as { message?: string })?.message ||
-          "Failed to load plan details";
+          t("toast.loadPlanDetailsError");
         toast.error(errorMessage);
       }
     };
 
     fetchPlanDetails();
-  }, [planId, currentDetailId, currentSampleHistory, triggerGetPlanDetails]);
+  }, [planId, currentDetailId, currentSampleHistory, triggerGetPlanDetails, t]);
 
   // Fetch sample questions when tab changes
   useEffect(() => {
@@ -139,7 +141,7 @@ export function useEditSampleState(
 
   const handleSaveQuestions = useCallback(async () => {
     if (!currentDetailId || !iqaId) {
-      toast.error("Unable to determine current user");
+      toast.error(t("toast.unableToDetermineUser"));
       return;
     }
 
@@ -178,20 +180,20 @@ export function useEditSampleState(
         }
       }
 
-      toast.success("Questions saved successfully");
+      toast.success(t("toast.questionsSavedSuccess"));
     } catch (error: unknown) {
       const errorMessage =
         (error as { data?: { message?: string }; message?: string })?.data?.message ||
         (error as { message?: string })?.message ||
-        "Failed to save questions";
+        t("toast.saveQuestionsError");
       toast.error(errorMessage);
     }
-  }, [currentDetailId, sampleQuestions, iqaId, createSampleQuestions, updateSampleQuestion]);
+  }, [currentDetailId, sampleQuestions, iqaId, createSampleQuestions, updateSampleQuestion, t]);
 
   // Save handler
   const handleSave = useCallback(async () => {
     if (!currentDetailId) {
-      toast.error("Missing required information");
+      toast.error(t("toast.missingRequiredInfo"));
       return;
     }
 
@@ -230,17 +232,17 @@ export function useEditSampleState(
         plannedDate: modalFormData.plannedDate || undefined,
         type: modalFormData.type || undefined,
       }).unwrap();
-      toast.success("Sample plan detail updated successfully");
+      toast.success(t("toast.sampleDetailUpdatedSuccess"));
     } catch (error: unknown) {
       const errorMessage =
         (error as { data?: { message?: string }; message?: string })?.data?.message ||
         (error as { message?: string })?.message ||
-        "Failed to update sample plan detail";
+        t("toast.updateSampleDetailError");
       toast.error(errorMessage);
     } finally {
       setIsSaving(false);
     }
-  }, [currentDetailId, modalFormData, updateSamplePlanDetail]);
+  }, [currentDetailId, modalFormData, updateSamplePlanDetail, t]);
 
   const isLoading = isLoadingPlanDetails || isLoadingQuestions;
 

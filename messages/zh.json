@@ -2161,6 +2161,63 @@
       "subtitle": "查看和管理所有学员提交的表单"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "IQA 报告",
+      "subtitle": "填写学员单元的 IQA 报告表",
+      "loadingUnits": "正在加载单元...",
+      "loadUnitsError": "加载单元失败，请重试。",
+      "noUnitsForCourse": "未找到此课程的单元。"
+    },
+    "form": {
+      "assessmentInformation": "评估信息",
+      "courseName": "课程名称",
+      "selectCourse": "选择课程",
+      "untitledCourse": "未命名课程",
+      "assessorsName": "评估员姓名",
+      "learnerName": "学员姓名",
+      "batchNoAndCreator": "批次号与创建者",
+      "iqasForBatch": "批次 IQA",
+      "learnerAssessmentForUnits": "学员单元评估",
+      "question": "问题",
+      "alwaysYes": "总是（是）",
+      "sometimes": "有时",
+      "neverNo": "从不（否）",
+      "questions": {
+        "q1": "学员是否由评估员直接观察？",
+        "q2": "是否评估了知识与理解？",
+        "q3": "是否有工作成果证据？",
+        "q4": "学员是否提供了足够的工作/个人详情？",
+        "q5": "学员的评估记录是否持续完成？",
+        "q6": "评估员是否确认了真实性、充分性、准确性、一致性和有效性？"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "单元 {index}",
+      "noDate": "无日期",
+      "noSampleHistory": "该单元暂无抽样历史"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "未找到此课程的单元。",
+      "noCode": "无代码",
+      "noUnitName": "无单元名称",
+      "notStarted": "未开始",
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "sample": "样本",
+      "samples": "样本",
+      "last": "最后"
+    },
+    "toast": {
+      "loadPlanDetailsError": "加载计划详情失败",
+      "unableToDetermineUser": "无法确定当前用户",
+      "questionsSavedSuccess": "问题已成功保存",
+      "saveQuestionsError": "保存问题失败",
+      "missingRequiredInfo": "缺少必填信息",
+      "sampleDetailUpdatedSuccess": "抽样计划详情已成功更新",
+      "updateSampleDetailError": "更新抽样计划详情失败"
+    }
+  },
   "wellbeing": {
     "pageTitle": "身心健康资源管理",
     "pageSubtitle": "管理学习者的身心健康资源，包括添加、编辑以及切换资源可用性",

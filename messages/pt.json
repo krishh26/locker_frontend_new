@@ -2203,6 +2203,63 @@
       "subtitle": "Ver e gerir todos os formulários enviados por formandos"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "Relatório IQA",
+      "subtitle": "Preencha o formulário do relatório IQA para as unidades do formando",
+      "loadingUnits": "A carregar unidades...",
+      "loadUnitsError": "Falha ao carregar unidades. Tente novamente.",
+      "noUnitsForCourse": "Nenhuma unidade encontrada para este curso."
+    },
+    "form": {
+      "assessmentInformation": "Informação de avaliação",
+      "courseName": "Nome do curso",
+      "selectCourse": "Selecionar curso",
+      "untitledCourse": "Curso sem título",
+      "assessorsName": "Nome do(s) avaliador(es)",
+      "learnerName": "Nome do formando",
+      "batchNoAndCreator": "Nº do lote e criador",
+      "iqasForBatch": "IQAs para o lote",
+      "learnerAssessmentForUnits": "Avaliação do formando para unidade(s)",
+      "question": "Pergunta",
+      "alwaysYes": "Sempre (Sim)",
+      "sometimes": "Por vezes",
+      "neverNo": "Nunca (Não)",
+      "questions": {
+        "q1": "O formando foi observado diretamente por um avaliador?",
+        "q2": "Foram avaliados conhecimentos e compreensão?",
+        "q3": "Existe evidência de produto de trabalho disponível?",
+        "q4": "O formando forneceu detalhes profissionais/pessoais suficientes?",
+        "q5": "Os registos de avaliação do formando estão a ser completados de forma contínua?",
+        "q6": "O avaliador confirmou autenticidade, suficiência, precisão, consistência e validade?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unidade {index}",
+      "noDate": "Sem data",
+      "noSampleHistory": "Sem histórico de amostras para esta unidade"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Nenhuma unidade encontrada para este curso.",
+      "noCode": "Sem código",
+      "noUnitName": "Sem nome da unidade",
+      "notStarted": "Não iniciado",
+      "completed": "Concluído",
+      "inProgress": "Em progresso",
+      "sample": "amostra",
+      "samples": "amostras",
+      "last": "Último"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Falha ao carregar detalhes do plano",
+      "unableToDetermineUser": "Não foi possível determinar o utilizador atual",
+      "questionsSavedSuccess": "Perguntas guardadas com sucesso",
+      "saveQuestionsError": "Falha ao guardar as perguntas",
+      "missingRequiredInfo": "Falta informação obrigatória",
+      "sampleDetailUpdatedSuccess": "Detalhe do plano de amostra atualizado com sucesso",
+      "updateSampleDetailError": "Falha ao atualizar o detalhe do plano de amostra"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestão de recursos de bem-estar",
     "pageSubtitle": "Gerir recursos de bem-estar para os formandos, incluindo adicionar, editar e alternar disponibilidade",

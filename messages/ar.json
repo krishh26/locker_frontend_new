@@ -2196,6 +2196,63 @@
       "subtitle": "عرض وإدارة جميع النماذج المقدمة من المتعلمين"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "تقرير IQA",
+      "subtitle": "أكمل نموذج تقرير IQA لوحدات المتعلم",
+      "loadingUnits": "جاري تحميل الوحدات...",
+      "loadUnitsError": "فشل تحميل الوحدات. يرجى المحاولة مرة أخرى.",
+      "noUnitsForCourse": "لم يتم العثور على وحدات لهذه الدورة."
+    },
+    "form": {
+      "assessmentInformation": "معلومات التقييم",
+      "courseName": "اسم الدورة",
+      "selectCourse": "اختر الدورة",
+      "untitledCourse": "دورة بدون عنوان",
+      "assessorsName": "اسم المقيّم/المقيّمين",
+      "learnerName": "اسم المتعلم",
+      "batchNoAndCreator": "رقم الدفعة والمنشئ",
+      "iqasForBatch": "IQA للدفعة",
+      "learnerAssessmentForUnits": "تقييم المتعلم للوحدة/الوحدات",
+      "question": "السؤال",
+      "alwaysYes": "دائماً (نعم)",
+      "sometimes": "أحياناً",
+      "neverNo": "أبداً (لا)",
+      "questions": {
+        "q1": "هل تمت مراقبة المتعلم مباشرة من قبل مقيّم؟",
+        "q2": "هل تم تقييم المعرفة والفهم؟",
+        "q3": "هل تتوفر أدلة على منتج العمل؟",
+        "q4": "هل زوّد المتعلم تفاصيل وظيفية/شخصية كافية؟",
+        "q5": "هل يتم إكمال سجلات تقييم المتعلم بشكل مستمر؟",
+        "q6": "هل أكد المقيّم الصحة والكفاية والدقة والاتساق والصلاحية؟"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "الوحدة {index}",
+      "noDate": "بدون تاريخ",
+      "noSampleHistory": "لا يوجد سجل عينات لهذه الوحدة"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "لم يتم العثور على وحدات لهذه الدورة.",
+      "noCode": "بدون رمز",
+      "noUnitName": "بدون اسم وحدة",
+      "notStarted": "لم يبدأ",
+      "completed": "مكتمل",
+      "inProgress": "قيد التقدم",
+      "sample": "عينة",
+      "samples": "عينات",
+      "last": "آخر"
+    },
+    "toast": {
+      "loadPlanDetailsError": "فشل تحميل تفاصيل الخطة",
+      "unableToDetermineUser": "تعذر تحديد المستخدم الحالي",
+      "questionsSavedSuccess": "تم حفظ الأسئلة بنجاح",
+      "saveQuestionsError": "فشل حفظ الأسئلة",
+      "missingRequiredInfo": "معلومات مطلوبة ناقصة",
+      "sampleDetailUpdatedSuccess": "تم تحديث تفاصيل خطة العينة بنجاح",
+      "updateSampleDetailError": "فشل تحديث تفاصيل خطة العينة"
+    }
+  },
   "wellbeing": {
     "pageTitle": "إدارة موارد الرفاهية",
     "pageSubtitle": "إدارة موارد الرفاهية للمتعلمين، بما في ذلك الإضافة والتعديل وتبديل توفر الموارد",

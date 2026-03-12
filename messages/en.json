@@ -2272,6 +2272,63 @@
       "subtitle": "View and manage all learner submitted forms"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "IQA Report",
+      "subtitle": "Complete the IQA report form for learner units",
+      "loadingUnits": "Loading units...",
+      "loadUnitsError": "Failed to load units. Please try again.",
+      "noUnitsForCourse": "No units found for this course."
+    },
+    "form": {
+      "assessmentInformation": "Assessment Information",
+      "courseName": "Course Name",
+      "selectCourse": "Select course",
+      "untitledCourse": "Untitled Course",
+      "assessorsName": "Assessor(s) Name",
+      "learnerName": "Learner Name",
+      "batchNoAndCreator": "Batch No & Creator",
+      "iqasForBatch": "IQAs for Batch",
+      "learnerAssessmentForUnits": "Learner Assessment for Unit(s)",
+      "question": "Question",
+      "alwaysYes": "Always (Yes)",
+      "sometimes": "Sometimes",
+      "neverNo": "Never (No)",
+      "questions": {
+        "q1": "Was the learner observed directly by an assessor?",
+        "q2": "Was knowledge and understanding assessed?",
+        "q3": "Is work product evidence available?",
+        "q4": "Has the learner supplied sufficient job/personal details?",
+        "q5": "Are the learner's assessment records being completed on an ongoing basis?",
+        "q6": "Has the assessor confirmed authenticity, sufficiency, accuracy, consistency and validity?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unit {index}",
+      "noDate": "No Date",
+      "noSampleHistory": "No sample history available for this unit"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "No units found for this course.",
+      "noCode": "No Code",
+      "noUnitName": "No unit name",
+      "notStarted": "Not Started",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "sample": "sample",
+      "samples": "samples",
+      "last": "Last"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Failed to load plan details",
+      "unableToDetermineUser": "Unable to determine current user",
+      "questionsSavedSuccess": "Questions saved successfully",
+      "saveQuestionsError": "Failed to save questions",
+      "missingRequiredInfo": "Missing required information",
+      "sampleDetailUpdatedSuccess": "Sample plan detail updated successfully",
+      "updateSampleDetailError": "Failed to update sample plan detail"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Wellbeing Resources Management",
     "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability",

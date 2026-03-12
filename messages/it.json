@@ -1655,6 +1655,63 @@
       "subtitle": "Visualizza e gestisci tutti i moduli inviati dagli apprendisti"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "Report IQA",
+      "subtitle": "Completa il modulo del report IQA per le unità degli apprendisti",
+      "loadingUnits": "Caricamento unità...",
+      "loadUnitsError": "Impossibile caricare le unità. Riprova.",
+      "noUnitsForCourse": "Nessuna unità trovata per questo corso."
+    },
+    "form": {
+      "assessmentInformation": "Informazioni sulla valutazione",
+      "courseName": "Nome del corso",
+      "selectCourse": "Seleziona corso",
+      "untitledCourse": "Corso senza titolo",
+      "assessorsName": "Nome valutatore/i",
+      "learnerName": "Nome apprendista",
+      "batchNoAndCreator": "N. lotto e creatore",
+      "iqasForBatch": "IQA per il lotto",
+      "learnerAssessmentForUnits": "Valutazione apprendista per unità",
+      "question": "Domanda",
+      "alwaysYes": "Sempre (Sì)",
+      "sometimes": "A volte",
+      "neverNo": "Mai (No)",
+      "questions": {
+        "q1": "L'apprendista è stato osservato direttamente da un valutatore?",
+        "q2": "Sono stati valutati conoscenza e comprensione?",
+        "q3": "È disponibile evidenza del prodotto di lavoro?",
+        "q4": "L'apprendista ha fornito dettagli lavorativi/personali sufficienti?",
+        "q5": "I registri di valutazione dell'apprendista vengono compilati con continuità?",
+        "q6": "Il valutatore ha confermato autenticità, sufficienza, accuratezza, coerenza e validità?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unità {index}",
+      "noDate": "Nessuna data",
+      "noSampleHistory": "Nessuna cronologia campioni per questa unità"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Nessuna unità trovata per questo corso.",
+      "noCode": "Nessun codice",
+      "noUnitName": "Nessun nome unità",
+      "notStarted": "Non iniziato",
+      "completed": "Completato",
+      "inProgress": "In corso",
+      "sample": "campione",
+      "samples": "campioni",
+      "last": "Ultimo"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Impossibile caricare i dettagli del piano",
+      "unableToDetermineUser": "Impossibile determinare l'utente corrente",
+      "questionsSavedSuccess": "Domande salvate con successo",
+      "saveQuestionsError": "Impossibile salvare le domande",
+      "missingRequiredInfo": "Informazioni obbligatorie mancanti",
+      "sampleDetailUpdatedSuccess": "Dettaglio piano campione aggiornato con successo",
+      "updateSampleDetailError": "Impossibile aggiornare il dettaglio del piano campione"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestione delle risorse di benessere",
     "pageSubtitle": "Gestisci le risorse di benessere per gli studenti, inclusi aggiunta, modifica e attivazione/disattivazione",

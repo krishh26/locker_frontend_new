@@ -2243,6 +2243,63 @@
       "subtitle": "Voir et gérer tous les formulaires soumis par les apprenants"
     }
   },
+  "iqaReport": {
+    "page": {
+      "title": "Rapport IQA",
+      "subtitle": "Complétez le formulaire du rapport IQA pour les unités des apprenants",
+      "loadingUnits": "Chargement des unités...",
+      "loadUnitsError": "Échec du chargement des unités. Veuillez réessayer.",
+      "noUnitsForCourse": "Aucune unité trouvée pour ce cours."
+    },
+    "form": {
+      "assessmentInformation": "Informations d'évaluation",
+      "courseName": "Nom du cours",
+      "selectCourse": "Sélectionner un cours",
+      "untitledCourse": "Cours sans titre",
+      "assessorsName": "Nom du/des évaluateur(s)",
+      "learnerName": "Nom de l'apprenant",
+      "batchNoAndCreator": "N° de lot et créateur",
+      "iqasForBatch": "IQA pour le lot",
+      "learnerAssessmentForUnits": "Évaluation de l'apprenant pour l'unité(s)",
+      "question": "Question",
+      "alwaysYes": "Toujours (Oui)",
+      "sometimes": "Parfois",
+      "neverNo": "Jamais (Non)",
+      "questions": {
+        "q1": "L'apprenant a-t-il été observé directement par un évaluateur ?",
+        "q2": "Les connaissances et la compréhension ont-elles été évaluées ?",
+        "q3": "Des preuves de produit de travail sont-elles disponibles ?",
+        "q4": "L'apprenant a-t-il fourni suffisamment de détails professionnels/personnels ?",
+        "q5": "Les dossiers d'évaluation de l'apprenant sont-ils complétés de manière continue ?",
+        "q6": "L'évaluateur a-t-il confirmé l'authenticité, la suffisance, l'exactitude, la cohérence et la validité ?"
+      }
+    },
+    "unitTabs": {
+      "unitLabel": "Unité {index}",
+      "noDate": "Aucune date",
+      "noSampleHistory": "Aucun historique d'échantillon pour cette unité"
+    },
+    "unitCards": {
+      "noUnitsForCourse": "Aucune unité trouvée pour ce cours.",
+      "noCode": "Aucun code",
+      "noUnitName": "Aucun nom d'unité",
+      "notStarted": "Non commencé",
+      "completed": "Terminé",
+      "inProgress": "En cours",
+      "sample": "échantillon",
+      "samples": "échantillons",
+      "last": "Dernier"
+    },
+    "toast": {
+      "loadPlanDetailsError": "Échec du chargement des détails du plan",
+      "unableToDetermineUser": "Impossible de déterminer l'utilisateur actuel",
+      "questionsSavedSuccess": "Questions enregistrées avec succès",
+      "saveQuestionsError": "Échec de l'enregistrement des questions",
+      "missingRequiredInfo": "Informations requises manquantes",
+      "sampleDetailUpdatedSuccess": "Détail du plan d'échantillon mis à jour avec succès",
+      "updateSampleDetailError": "Échec de la mise à jour du détail du plan d'échantillon"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestion des ressources de bien-être",
     "pageSubtitle": "Gérer les ressources de bien-être pour les apprenants, y compris l’ajout, la modification et l’activation/désactivation",

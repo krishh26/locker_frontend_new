@@ -4303,6 +4303,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "Informazioni sul profilo",
+      "subtitle": "Visualizza i dettagli del profilo del discente e le informazioni personali",
+      "tabs": {
+        "personalInfo": "Informazioni personali",
+        "courseInformation": "Informazioni sul corso",
+        "contractedWorkHours": "Ore di lavoro contrattuali"
+      },
+      "errorTitle": "Errore nel caricamento del profilo del discente",
+      "loadError": "Impossibile caricare i dettagli del discente",
+      "invalidLearnerId": "ID discente non valido",
+      "noDataTitle": "Nessun dato trovato",
+      "noDataDescription": "Dati del profilo del discente non trovati.",
+      "back": "Indietro",
+      "save": "Salva modifiche",
+      "saving": "Salvataggio in corso...",
+      "resetPasswordButton": "Reimposta password",
+      "emailPasswordResetButton": "Invia reimpostazione via email",
+      "accessProfile": "Accedi al profilo",
+      "toastUpdated": "Profilo del discente aggiornato con successo",
+      "toastUpdateFailed": "Impossibile aggiornare il profilo del discente. Riprova."
+    },
+    "validation": {
+      "firstNameRequired": "Il nome è obbligatorio",
+      "lastNameRequired": "Il cognome è obbligatorio",
+      "userNameRequired": "Il nome utente è obbligatorio",
+      "invalidEmail": "Indirizzo email non valido"
+    },
+    "courseInformation": {
+      "emptyState": "Nessun corso assegnato",
+      "addCourse": "Aggiungi corso",
+      "yes": "Sì",
+      "no": "No",
+      "statusOptions": {
+        "awaitingInduction": "In attesa di induzione",
+        "certificated": "Certificato",
+        "completed": "Completato",
+        "earlyLeaver": "Uscita anticipata",
+        "exempt": "Esonerato",
+        "inTraining": "In formazione",
+        "iqaApproved": "Approvato da IQA",
+        "trainingSuspended": "Formazione sospesa",
+        "transferred": "Trasferito"
+      },
+      "validation": {
+        "selectCourse": "Seleziona un corso",
+        "selectTrainer": "Seleziona un formatore",
+        "selectIQA": "Seleziona un IQA",
+        "selectLIQA": "Seleziona un LIQA",
+        "selectEQA": "Seleziona un EQA",
+        "selectStartDate": "Seleziona la data di inizio",
+        "selectEndDate": "Seleziona la data di fine",
+        "endDateAfterStart": "La data di fine deve essere successiva a quella di inizio",
+        "enterPredictedGrade": "Inserisci il voto previsto",
+        "enterFinalGrade": "Inserisci il voto finale"
+      },
+      "toast": {
+        "updated": "Corso aggiornato con successo",
+        "added": "Corso aggiunto con successo",
+        "deleted": "Corso eliminato con successo",
+        "saveFailed": "Impossibile salvare il corso. Riprova.",
+        "deleteFailed": "Impossibile eliminare il corso. Riprova.",
+        "sameOrganisation": "Il discente e il corso devono appartenere alla stessa organizzazione.",
+        "noAccess": "Non hai accesso per assegnare questo corso."
+      },
+      "table": {
+        "courseName": "Nome del corso",
+        "level": "Livello",
+        "startDate": "Data di inizio",
+        "endDate": "Data di fine",
+        "status": "Stato",
+        "mainCourse": "Corso principale",
+        "actions": "Azioni"
+      },
+      "dialog": {
+        "editTitle": "Modifica corso",
+        "addTitle": "Aggiungi nuovo corso",
+        "editDescription": "Aggiorna le informazioni del corso di seguito.",
+        "addDescription": "Compila i dettagli del corso di seguito. I campi contrassegnati con * sono obbligatori."
+      },
+      "form": {
+        "selectCourse": "Seleziona corso",
+        "courseStatus": "Stato del corso",
+        "trainer": "Formatore",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "Data di inizio",
+        "endDate": "Data di fine",
+        "predictedGrade": "Voto previsto",
+        "finalGrade": "Voto finale",
+        "mainAimCourse": "Corso principale",
+        "chooseCourse": "Scegli un corso",
+        "selectStatus": "Seleziona stato del corso",
+        "enterPredictedGrade": "Inserisci il voto previsto",
+        "enterFinalGrade": "Inserisci il voto finale",
+        "anotherMainCourse": "Un altro corso è già impostato come corso principale"
+      },
+      "deleteDialog": {
+        "title": "Sei sicuro?",
+        "description": "Questa azione non può essere annullata. Verrà eliminata permanentemente l'assegnazione del corso per {courseName}.",
+        "cancel": "Annulla",
+        "delete": "Elimina"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "updateCourse": "Aggiorna corso",
+        "addCourseButton": "Aggiungi corso"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "Ore di lavoro contrattuali",
+      "setNewHours": "Imposta nuove ore",
+      "emptyState": "Nessuna ora di lavoro contrattuale trovata.",
+      "loading": "Caricamento...",
+      "noteText": "Nota: poiché le ore fuori dal lavoro previste per questo discente sono state impostate come valore fisso, le ore contrattuali e il diritto alle ferie annuali non influenzeranno il calcolo fuori dal lavoro per questo discente.",
+      "table": {
+        "company": "Azienda",
+        "contractStart": "Data di inizio del contratto",
+        "contractEnd": "Data di fine del contratto",
+        "hoursPerWeek": "Ore di lavoro settimanali",
+        "yearlyHoliday": "Diritto alle ferie annuali (ore)",
+        "lastEditedBy": "Ultima modifica da",
+        "lastEditedDate": "Data ultima modifica",
+        "actions": "Azioni"
+      },
+      "dialog": {
+        "editTitle": "Modifica ore contrattuali",
+        "setNewTitle": "Imposta nuove ore contrattuali",
+        "editDescription": "Aggiorna le informazioni sulle ore contrattuali.",
+        "setNewDescription": "Inserisci le informazioni sulle ore contrattuali per questo discente.",
+        "companyLabel": "Azienda *",
+        "companyPlaceholder": "Inserisci il nome dell'azienda",
+        "contractStartLabel": "Data di inizio del contratto *",
+        "contractEndLabel": "Data di fine del contratto",
+        "hoursPerWeekLabel": "Ore di lavoro settimanali *",
+        "hoursPlaceholder": "Inserisci le ore settimanali",
+        "pickDate": "Scegli data",
+        "pickDateOptional": "Scegli data (opzionale)",
+        "cancel": "Annulla",
+        "update": "Aggiorna",
+        "create": "Crea"
+      },
+      "deleteDialog": {
+        "title": "Sei sicuro?",
+        "description": "Questa azione non può essere annullata. Verrà eliminata permanentemente la voce delle ore contrattuali per {company}.",
+        "cancel": "Annulla",
+        "delete": "Elimina"
+      },
+      "validation": {
+        "companyRequired": "L'azienda è obbligatoria",
+        "contractStartRequired": "La data di inizio del contratto è obbligatoria",
+        "hoursRequired": "Le ore di lavoro settimanali sono obbligatorie",
+        "hoursPositive": "Deve essere un numero positivo"
+      },
+      "toast": {
+        "updated": "Ore contrattuali aggiornate con successo",
+        "created": "Ore contrattuali create con successo",
+        "deleted": "Ore contrattuali eliminate con successo",
+        "saveFailed": "Impossibile salvare le ore contrattuali. Riprova.",
+        "deleteFailed": "Impossibile eliminare le ore contrattuali. Riprova."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "ID discente",
+        "uln": "ULN",
+        "misLearnerId": "ID MIS discente",
+        "studentId": "ID discente"
+      },
+      "aboutYou": {
+        "title": "Su di te",
+        "clickToUpload": "Clicca per caricare foto",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "username": "Nome utente",
+        "email": "Email",
+        "telephone": "Telefono",
+        "mobile": "Cellulare",
+        "dateOfBirth": "Data di nascita",
+        "gender": "Genere",
+        "nationalInsuranceNo": "Codice fiscale",
+        "ethnicity": "Etnia",
+        "learnerDisability": "Disabilità del discente",
+        "learningDifficulties": "Difficoltà di apprendimento",
+        "initialAssessmentNumeracy": "Valutazione iniziale - Numeracy",
+        "initialAssessmentLiteracy": "Valutazione iniziale - Literacy",
+        "initialAssessmentICT": "Valutazione iniziale - ICT",
+        "avatarInvalidFile": "Seleziona un file immagine valido",
+        "avatarTooLarge": "La dimensione dell'immagine deve essere inferiore a 5 MB",
+        "avatarSuccess": "Avatar caricato con successo",
+        "avatarFailed": "Impossibile caricare l'avatar. Riprova."
+      },
+      "address": {
+        "title": "Indirizzo",
+        "street": "Civico e via",
+        "suburb": "Frazione/Paese",
+        "town": "Città",
+        "country": "Paese",
+        "homePostcode": "CAP",
+        "countryOfDomicile": "Paese di domicilio"
+      },
+      "employer": {
+        "title": "Datore di lavoro",
+        "employer": "Datore di lavoro",
+        "employerIdPlaceholder": "ID datore di lavoro",
+        "jobTitle": "Mansione",
+        "location": "Sede",
+        "managerName": "Nome del responsabile",
+        "managerJobTitle": "Mansione del responsabile",
+        "mentor": "Mentore"
+      },
+      "fundingBody": {
+        "title": "Ente finanziatore",
+        "fundingBody": "Ente finanziatore",
+        "awardingBody": "Ente certificatore",
+        "registrationNumber": "Numero di registrazione",
+        "registrationDate": "Data di registrazione",
+        "laraCode": "Codice LARA"
+      },
+      "fundingBands": {
+        "title": "Fasce di finanziamento",
+        "originalAmount": "Importo originale",
+        "customAmount": "Importo personalizzato",
+        "fundingBandId": "ID fascia di finanziamento",
+        "updatedByLearner": "Aggiornato dal discente",
+        "lastUpdated": "Ultimo aggiornamento"
+      },
+      "additionalInfo": {
+        "title": "Informazioni aggiuntive",
+        "costCentre": "Centro di costo",
+        "fundingContractor": "Appaltatore di finanziamento",
+        "partner": "Partner",
+        "subArea": "Sottoarea",
+        "cohort": "Cohort",
+        "curriculumArea": "Area curriculare",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "Direttore del curriculum",
+        "learnerType": "Tipo di discente",
+        "expectedOffTheJobHours": "Ore fuori dal lavoro previste",
+        "offTheJobTraining": "Formazione fuori dal lavoro",
+        "guidedLearningHoursAchieved": "Ore di apprendimento guidato raggiunte"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "Reimposta password",
+      "descriptionWithName": "Reimposta password per {name} ({email})",
+      "descriptionEmailOnly": "Reimposta password per {email}",
+      "newPassword": "Nuova password",
+      "confirmPassword": "Conferma password",
+      "show": "Mostra",
+      "hide": "Nascondi",
+      "cancel": "Annulla",
+      "resetting": "Reimpostazione in corso...",
+      "resetPassword": "Reimposta password",
+      "hintText": "La password deve essere di almeno 6 caratteri e includere lettere maiuscole, minuscole e un numero.",
+      "validation": {
+        "passwordMin": "La password deve essere di almeno 6 caratteri",
+        "passwordPattern": "La password deve contenere almeno una maiuscola, una minuscola e un numero",
+        "confirmRequired": "Conferma la password",
+        "passwordsMismatch": "Le password non coincidono"
+      },
+      "successDefault": "Password reimpostata con successo",
+      "errorDefault": "Impossibile reimpostare la password. Riprova tra poco.",
+      "learnerEmailRequired": "L'email del discente è obbligatoria"
+    },
+    "emailPasswordResetDialog": {
+      "title": "Invia reimpostazione password via email",
+      "description": "Sei sicuro di voler reimpostare la password? Verrà inviata un'email a {email} con le istruzioni.",
+      "cancel": "Annulla",
+      "sending": "Invio in corso...",
+      "ok": "OK",
+      "successDefault": "Email di reimpostazione inviata con successo",
+      "errorDefault": "Impossibile inviare l'email di reimpostazione. Riprova tra poco.",
+      "learnerEmailRequired": "L'email del discente è obbligatoria"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

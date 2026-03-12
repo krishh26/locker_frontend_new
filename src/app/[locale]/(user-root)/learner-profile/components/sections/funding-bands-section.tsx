@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface FundingBandsSectionProps {
 }
 
 export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const customFundingData = learner.custom_funding_data;
 
@@ -32,12 +34,12 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Funding Bands</CardTitle>
+        <CardTitle>{t("sections.fundingBands.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Original Amount</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBands.originalAmount")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -59,7 +61,7 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Custom Amount</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBands.customAmount")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -84,7 +86,7 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Funding Band ID</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBands.fundingBandId")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -105,9 +107,9 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Updated by Learner</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBands.updatedByLearner")}</Label>
             <div className="flex items-center">
-              {customFundingData.updated_by_learner ? "Yes" : "No"}
+              {customFundingData.updated_by_learner ? t("courseInformation.yes") : t("courseInformation.no")}
             </div>
           </div>
         </div>
@@ -115,7 +117,7 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
         {customFundingData.updated_at && (
           <div className="mt-4">
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Last Updated</Label>
+              <Label className="text-sm font-medium">{t("sections.fundingBands.lastUpdated")}</Label>
               <div className="flex items-center">
                 {formatDate(customFundingData.updated_at)}
               </div>

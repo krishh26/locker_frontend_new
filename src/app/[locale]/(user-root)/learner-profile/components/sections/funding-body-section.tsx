@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface FundingBodySectionProps {
 }
 
 export function FundingBodySection({ learner, canEdit = false }: FundingBodySectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const fundingBody = learner.funding_body || "-";
   const awardingBody = (learner as { awarding_body?: string }).awarding_body || "-";
@@ -32,12 +34,12 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Funding Body</CardTitle>
+        <CardTitle>{t("sections.fundingBody.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Funding Body</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBody.fundingBody")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -58,7 +60,7 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Awarding Body</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBody.awardingBody")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -82,7 +84,7 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Registration Number</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBody.registrationNumber")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -103,7 +105,7 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Registration Date</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBody.registrationDate")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -124,7 +126,7 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">LARA Code</Label>
+            <Label className="text-sm font-medium">{t("sections.fundingBody.laraCode")}</Label>
             {canEdit ? (
               <>
                 <Input

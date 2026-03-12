@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,7 @@ interface AboutYouSectionProps {
 }
 
 export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -49,13 +51,13 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
       
       // Validate file type
       if (!file.type.startsWith("image/")) {
-        toast.error("Please select a valid image file");
+        toast.error(t("sections.aboutYou.avatarInvalidFile"));
         return;
       }
 
       // Validate file size (e.g., max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        toast.error("Image size should be less than 5MB");
+        toast.error(t("sections.aboutYou.avatarTooLarge"));
         return;
       }
 
@@ -68,10 +70,10 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           learnerId: learner.learner_id,
           file,
         }).unwrap();
-        toast.success("Avatar uploaded successfully");
+        toast.success(t("sections.aboutYou.avatarSuccess"));
       } catch (error) {
         console.error("Failed to upload avatar:", error);
-        toast.error("Failed to upload avatar. Please try again.");
+        toast.error(t("sections.aboutYou.avatarFailed"));
         setPreviewImage(null);
       }
     }
@@ -106,7 +108,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
   return (
     <Card>
       <CardHeader>
-        <CardTitle>About You</CardTitle>
+        <CardTitle>{t("sections.aboutYou.title")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Photo Upload Section */}
@@ -158,14 +160,14 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
           {canEdit && (
             <p className="mt-2 text-sm text-muted-foreground text-center">
-              Click to upload photo
+              {t("sections.aboutYou.clickToUpload")}
             </p>
           )}
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">First Name</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.firstName")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -186,7 +188,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Last Name</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.lastName")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -210,7 +212,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Username</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.username")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -231,7 +233,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Email</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.email")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -255,7 +257,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Telephone</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.telephone")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -276,7 +278,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Mobile</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.mobile")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -300,7 +302,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Date of Birth</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.dateOfBirth")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -321,7 +323,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Gender</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.gender")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -345,7 +347,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">National Insurance No</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.nationalInsuranceNo")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -366,7 +368,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Ethnicity</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.ethnicity")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -387,7 +389,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Learner Disability</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.learnerDisability")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -411,7 +413,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Learning Difficulties</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.learningDifficulties")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -432,7 +434,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Initial Assessment Numeracy</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.initialAssessmentNumeracy")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -453,7 +455,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Initial Assessment Literacy</Label>
+            <Label className="text-sm font-medium">{t("sections.aboutYou.initialAssessmentLiteracy")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -478,7 +480,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
         {initialAssessmentICT && initialAssessmentICT !== "-" && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <Label className="text-sm font-medium">Initial Assessment ICT</Label>
+              <Label className="text-sm font-medium">{t("sections.aboutYou.initialAssessmentICT")}</Label>
               {canEdit ? (
                 <>
                   <Input

@@ -5165,6 +5165,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "Profile Information",
+      "subtitle": "View learner profile details and personal information",
+      "tabs": {
+        "personalInfo": "Personal Information",
+        "courseInformation": "Course Information",
+        "contractedWorkHours": "Contracted Work Hours"
+      },
+      "errorTitle": "Error Loading Learner Profile",
+      "loadError": "Failed to load learner details",
+      "invalidLearnerId": "Invalid learner ID",
+      "noDataTitle": "No Data Found",
+      "noDataDescription": "Learner profile data not found.",
+      "back": "Back",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "resetPasswordButton": "Reset Password",
+      "emailPasswordResetButton": "Email Password Reset",
+      "accessProfile": "Access Profile",
+      "toastUpdated": "Learner profile updated successfully",
+      "toastUpdateFailed": "Failed to update learner profile. Please try again."
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "userNameRequired": "Username is required",
+      "invalidEmail": "Invalid email address"
+    },
+    "courseInformation": {
+      "emptyState": "No courses assigned",
+      "addCourse": "Add Course",
+      "yes": "Yes",
+      "no": "No",
+      "statusOptions": {
+        "awaitingInduction": "Awaiting Induction",
+        "certificated": "Certificated",
+        "completed": "Completed",
+        "earlyLeaver": "Early Leaver",
+        "exempt": "Exempt",
+        "inTraining": "In Training",
+        "iqaApproved": "IQA Approved",
+        "trainingSuspended": "Training Suspended",
+        "transferred": "Transferred"
+      },
+      "validation": {
+        "selectCourse": "Please select a course",
+        "selectTrainer": "Please select a trainer",
+        "selectIQA": "Please select an IQA",
+        "selectLIQA": "Please select a LIQA",
+        "selectEQA": "Please select an EQA",
+        "selectStartDate": "Please select a start date",
+        "selectEndDate": "Please select an end date",
+        "endDateAfterStart": "End date must be after start date",
+        "enterPredictedGrade": "Please enter predicted grade",
+        "enterFinalGrade": "Please enter final grade"
+      },
+      "toast": {
+        "updated": "Course updated successfully",
+        "added": "Course added successfully",
+        "deleted": "Course deleted successfully",
+        "saveFailed": "Failed to save course. Please try again.",
+        "deleteFailed": "Failed to delete course. Please try again.",
+        "sameOrganisation": "Learner and course must belong to the same organisation.",
+        "noAccess": "You do not have access to assign this course."
+      },
+      "table": {
+        "courseName": "Course Name",
+        "level": "Level",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "status": "Status",
+        "mainCourse": "Main Course",
+        "actions": "Actions"
+      },
+      "dialog": {
+        "editTitle": "Edit Course",
+        "addTitle": "Add New Course",
+        "editDescription": "Update the course information below.",
+        "addDescription": "Fill in the course details below. Fields marked with * are required."
+      },
+      "form": {
+        "selectCourse": "Select Course",
+        "courseStatus": "Course Status",
+        "trainer": "Trainer",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "predictedGrade": "Predicted Grade",
+        "finalGrade": "Final Grade",
+        "mainAimCourse": "Main Aim Course",
+        "chooseCourse": "Choose a course",
+        "selectStatus": "Select course status",
+        "enterPredictedGrade": "Enter predicted grade",
+        "enterFinalGrade": "Enter final grade",
+        "anotherMainCourse": "Another course is already set as main course"
+      },
+      "deleteDialog": {
+        "title": "Are you sure?",
+        "description": "This action cannot be undone. This will permanently delete the course allocation for {courseName}.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "updateCourse": "Update Course",
+        "addCourseButton": "Add Course"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "Contracted Work Hours",
+      "setNewHours": "Set New Hours",
+      "emptyState": "No contracted work hours found.",
+      "loading": "Loading...",
+      "noteText": "Please note: as this learner's expected off the job hours have been set as a fixed value, the contracted work hours and yearly holiday entitlement will not impact the off the job calculation for this learner.",
+      "table": {
+        "company": "Company",
+        "contractStart": "Employment Contract Start Date",
+        "contractEnd": "Employment Contract End Date",
+        "hoursPerWeek": "Contracted Work Hours per Week",
+        "yearlyHoliday": "Yearly Holiday Entitlement (Hours)",
+        "lastEditedBy": "Last Edited By",
+        "lastEditedDate": "Last Edited Date",
+        "actions": "Actions"
+      },
+      "dialog": {
+        "editTitle": "Edit Contracted Work Hours",
+        "setNewTitle": "Set New Contracted Work Hours",
+        "editDescription": "Update the contracted work hours information.",
+        "setNewDescription": "Enter the contracted work hours information for this learner.",
+        "companyLabel": "Company *",
+        "companyPlaceholder": "Enter company name",
+        "contractStartLabel": "Employment Contract Start Date *",
+        "contractEndLabel": "Employment Contract End Date",
+        "hoursPerWeekLabel": "Contracted Work Hours per Week *",
+        "hoursPlaceholder": "Enter hours per week",
+        "pickDate": "Pick a date",
+        "pickDateOptional": "Pick a date (optional)",
+        "cancel": "Cancel",
+        "update": "Update",
+        "create": "Create"
+      },
+      "deleteDialog": {
+        "title": "Are you sure?",
+        "description": "This action cannot be undone. This will permanently delete the contracted work hours entry for {company}.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "validation": {
+        "companyRequired": "Company is required",
+        "contractStartRequired": "Contract start date is required",
+        "hoursRequired": "Work hours per week is required",
+        "hoursPositive": "Must be a positive number"
+      },
+      "toast": {
+        "updated": "Contracted work hours updated successfully",
+        "created": "Contracted work hours created successfully",
+        "deleted": "Contracted work hours deleted successfully",
+        "saveFailed": "Failed to save contracted work hours. Please try again.",
+        "deleteFailed": "Failed to delete contracted work hours. Please try again."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "Student ID",
+        "uln": "ULN",
+        "misLearnerId": "MIS Learner ID",
+        "studentId": "Student ID"
+      },
+      "aboutYou": {
+        "title": "About You",
+        "clickToUpload": "Click to upload photo",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "username": "Username",
+        "email": "Email",
+        "telephone": "Telephone",
+        "mobile": "Mobile",
+        "dateOfBirth": "Date of Birth",
+        "gender": "Gender",
+        "nationalInsuranceNo": "National Insurance No",
+        "ethnicity": "Ethnicity",
+        "learnerDisability": "Learner Disability",
+        "learningDifficulties": "Learning Difficulties",
+        "initialAssessmentNumeracy": "Initial Assessment Numeracy",
+        "initialAssessmentLiteracy": "Initial Assessment Literacy",
+        "initialAssessmentICT": "Initial Assessment ICT",
+        "avatarInvalidFile": "Please select a valid image file",
+        "avatarTooLarge": "Image size should be less than 5MB",
+        "avatarSuccess": "Avatar uploaded successfully",
+        "avatarFailed": "Failed to upload avatar. Please try again."
+      },
+      "address": {
+        "title": "Address",
+        "street": "House No/Name and Street",
+        "suburb": "Suburb/Village",
+        "town": "Town/City",
+        "country": "Country",
+        "homePostcode": "Home Postcode",
+        "countryOfDomicile": "Country of Domicile"
+      },
+      "employer": {
+        "title": "Employer",
+        "employer": "Employer",
+        "employerIdPlaceholder": "Employer ID",
+        "jobTitle": "Job Title",
+        "location": "Location",
+        "managerName": "Manager Name",
+        "managerJobTitle": "Manager Job Title",
+        "mentor": "Mentor"
+      },
+      "fundingBody": {
+        "title": "Funding Body",
+        "fundingBody": "Funding Body",
+        "awardingBody": "Awarding Body",
+        "registrationNumber": "Registration Number",
+        "registrationDate": "Registration Date",
+        "laraCode": "LARA Code"
+      },
+      "fundingBands": {
+        "title": "Funding Bands",
+        "originalAmount": "Original Amount",
+        "customAmount": "Custom Amount",
+        "fundingBandId": "Funding Band ID",
+        "updatedByLearner": "Updated by Learner",
+        "lastUpdated": "Last Updated"
+      },
+      "additionalInfo": {
+        "title": "Additional Information",
+        "costCentre": "Cost Centre",
+        "fundingContractor": "Funding Contractor",
+        "partner": "Partner",
+        "subArea": "Sub Area",
+        "cohort": "Cohort",
+        "curriculumArea": "Curriculum Area",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "Director of Curriculum",
+        "learnerType": "Learner Type",
+        "expectedOffTheJobHours": "Expected Off the Job Hours",
+        "offTheJobTraining": "Off the Job Training",
+        "guidedLearningHoursAchieved": "Guided Learning Hours Achieved"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "Reset Password",
+      "descriptionWithName": "Reset password for {name} ({email})",
+      "descriptionEmailOnly": "Reset password for {email}",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "show": "Show",
+      "hide": "Hide",
+      "cancel": "Cancel",
+      "resetting": "Resetting...",
+      "resetPassword": "Reset Password",
+      "hintText": "Password must be at least 6 characters long and include upper & lower case letters and a number.",
+      "validation": {
+        "passwordMin": "Password must be at least 6 characters long",
+        "passwordPattern": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+        "confirmRequired": "Please confirm your password",
+        "passwordsMismatch": "Passwords do not match"
+      },
+      "successDefault": "Password reset successfully",
+      "errorDefault": "We couldn't reset the password right now. Please try again in a moment.",
+      "learnerEmailRequired": "Learner email is required"
+    },
+    "emailPasswordResetDialog": {
+      "title": "Email Password Reset",
+      "description": "Are you sure you wish to reset the password? An email will be sent to {email} with reset instructions.",
+      "cancel": "Cancel",
+      "sending": "Sending...",
+      "ok": "OK",
+      "successDefault": "Password reset email sent successfully",
+      "errorDefault": "We couldn't send the password reset email right now. Please try again in a moment.",
+      "learnerEmailRequired": "Learner email is required"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

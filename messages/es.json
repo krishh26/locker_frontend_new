@@ -4979,6 +4979,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "Información del perfil",
+      "subtitle": "Ver detalles del perfil del alumno e información personal",
+      "tabs": {
+        "personalInfo": "Información personal",
+        "courseInformation": "Información del curso",
+        "contractedWorkHours": "Horas de trabajo contratadas"
+      },
+      "errorTitle": "Error al cargar el perfil del alumno",
+      "loadError": "No se pudieron cargar los detalles del alumno",
+      "invalidLearnerId": "ID de alumno no válido",
+      "noDataTitle": "No se encontraron datos",
+      "noDataDescription": "No se encontraron datos del perfil del alumno.",
+      "back": "Atrás",
+      "save": "Guardar cambios",
+      "saving": "Guardando...",
+      "resetPasswordButton": "Restablecer contraseña",
+      "emailPasswordResetButton": "Enviar restablecimiento por correo",
+      "accessProfile": "Acceder al perfil",
+      "toastUpdated": "Perfil del alumno actualizado correctamente",
+      "toastUpdateFailed": "No se pudo actualizar el perfil del alumno. Inténtelo de nuevo."
+    },
+    "validation": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "Los apellidos son obligatorios",
+      "userNameRequired": "El nombre de usuario es obligatorio",
+      "invalidEmail": "Dirección de correo no válida"
+    },
+    "courseInformation": {
+      "emptyState": "No hay cursos asignados",
+      "addCourse": "Añadir curso",
+      "yes": "Sí",
+      "no": "No",
+      "statusOptions": {
+        "awaitingInduction": "Pendiente de inducción",
+        "certificated": "Certificado",
+        "completed": "Completado",
+        "earlyLeaver": "Baja anticipada",
+        "exempt": "Exento",
+        "inTraining": "En formación",
+        "iqaApproved": "Aprobado por IQA",
+        "trainingSuspended": "Formación suspendida",
+        "transferred": "Transferido"
+      },
+      "validation": {
+        "selectCourse": "Seleccione un curso",
+        "selectTrainer": "Seleccione un formador",
+        "selectIQA": "Seleccione un IQA",
+        "selectLIQA": "Seleccione un LIQA",
+        "selectEQA": "Seleccione un EQA",
+        "selectStartDate": "Seleccione la fecha de inicio",
+        "selectEndDate": "Seleccione la fecha de fin",
+        "endDateAfterStart": "La fecha de fin debe ser posterior a la de inicio",
+        "enterPredictedGrade": "Introduzca la nota prevista",
+        "enterFinalGrade": "Introduzca la nota final"
+      },
+      "toast": {
+        "updated": "Curso actualizado correctamente",
+        "added": "Curso añadido correctamente",
+        "deleted": "Curso eliminado correctamente",
+        "saveFailed": "No se pudo guardar el curso. Inténtelo de nuevo.",
+        "deleteFailed": "No se pudo eliminar el curso. Inténtelo de nuevo.",
+        "sameOrganisation": "El alumno y el curso deben pertenecer a la misma organización.",
+        "noAccess": "No tiene permiso para asignar este curso."
+      },
+      "table": {
+        "courseName": "Nombre del curso",
+        "level": "Nivel",
+        "startDate": "Fecha de inicio",
+        "endDate": "Fecha de fin",
+        "status": "Estado",
+        "mainCourse": "Curso principal",
+        "actions": "Acciones"
+      },
+      "dialog": {
+        "editTitle": "Editar curso",
+        "addTitle": "Añadir nuevo curso",
+        "editDescription": "Actualice la información del curso a continuación.",
+        "addDescription": "Complete los detalles del curso a continuación. Los campos marcados con * son obligatorios."
+      },
+      "form": {
+        "selectCourse": "Seleccionar curso",
+        "courseStatus": "Estado del curso",
+        "trainer": "Formador",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "Fecha de inicio",
+        "endDate": "Fecha de fin",
+        "predictedGrade": "Nota prevista",
+        "finalGrade": "Nota final",
+        "mainAimCourse": "Curso principal",
+        "chooseCourse": "Elegir un curso",
+        "selectStatus": "Seleccionar estado del curso",
+        "enterPredictedGrade": "Introduzca la nota prevista",
+        "enterFinalGrade": "Introduzca la nota final",
+        "anotherMainCourse": "Otro curso ya está establecido como curso principal"
+      },
+      "deleteDialog": {
+        "title": "¿Está seguro?",
+        "description": "Esta acción no se puede deshacer. Se eliminará permanentemente la asignación del curso para {courseName}.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "updateCourse": "Actualizar curso",
+        "addCourseButton": "Añadir curso"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "Horas de trabajo contratadas",
+      "setNewHours": "Establecer nuevas horas",
+      "emptyState": "No se encontraron horas de trabajo contratadas.",
+      "loading": "Cargando...",
+      "noteText": "Tenga en cuenta: al tener las horas fuera del trabajo esperadas como valor fijo, las horas contratadas y la asignación anual de vacaciones no afectarán al cálculo fuera del trabajo de este alumno.",
+      "table": {
+        "company": "Empresa",
+        "contractStart": "Fecha de inicio del contrato",
+        "contractEnd": "Fecha de fin del contrato",
+        "hoursPerWeek": "Horas de trabajo por semana",
+        "yearlyHoliday": "Derecho a vacaciones anuales (horas)",
+        "lastEditedBy": "Última edición por",
+        "lastEditedDate": "Fecha de última edición",
+        "actions": "Acciones"
+      },
+      "dialog": {
+        "editTitle": "Editar horas contratadas",
+        "setNewTitle": "Establecer nuevas horas contratadas",
+        "editDescription": "Actualice la información de horas contratadas.",
+        "setNewDescription": "Introduzca la información de horas contratadas de este alumno.",
+        "companyLabel": "Empresa *",
+        "companyPlaceholder": "Introduzca el nombre de la empresa",
+        "contractStartLabel": "Fecha de inicio del contrato *",
+        "contractEndLabel": "Fecha de fin del contrato",
+        "hoursPerWeekLabel": "Horas de trabajo por semana *",
+        "hoursPlaceholder": "Introduzca las horas por semana",
+        "pickDate": "Elegir fecha",
+        "pickDateOptional": "Elegir fecha (opcional)",
+        "cancel": "Cancelar",
+        "update": "Actualizar",
+        "create": "Crear"
+      },
+      "deleteDialog": {
+        "title": "¿Está seguro?",
+        "description": "Esta acción no se puede deshacer. Se eliminará permanentemente la entrada de horas contratadas de {company}.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      },
+      "validation": {
+        "companyRequired": "La empresa es obligatoria",
+        "contractStartRequired": "La fecha de inicio del contrato es obligatoria",
+        "hoursRequired": "Las horas de trabajo por semana son obligatorias",
+        "hoursPositive": "Debe ser un número positivo"
+      },
+      "toast": {
+        "updated": "Horas contratadas actualizadas correctamente",
+        "created": "Horas contratadas creadas correctamente",
+        "deleted": "Horas contratadas eliminadas correctamente",
+        "saveFailed": "No se pudieron guardar las horas contratadas. Inténtelo de nuevo.",
+        "deleteFailed": "No se pudieron eliminar las horas contratadas. Inténtelo de nuevo."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "ID de alumno",
+        "uln": "ULN",
+        "misLearnerId": "ID MIS del alumno",
+        "studentId": "ID de alumno"
+      },
+      "aboutYou": {
+        "title": "Sobre usted",
+        "clickToUpload": "Haga clic para subir foto",
+        "firstName": "Nombre",
+        "lastName": "Apellidos",
+        "username": "Nombre de usuario",
+        "email": "Correo electrónico",
+        "telephone": "Teléfono",
+        "mobile": "Móvil",
+        "dateOfBirth": "Fecha de nacimiento",
+        "gender": "Género",
+        "nationalInsuranceNo": "N.º de Seguridad Social",
+        "ethnicity": "Etnia",
+        "learnerDisability": "Discapacidad del alumno",
+        "learningDifficulties": "Dificultades de aprendizaje",
+        "initialAssessmentNumeracy": "Evaluación inicial - Numeración",
+        "initialAssessmentLiteracy": "Evaluación inicial - Lectoescritura",
+        "initialAssessmentICT": "Evaluación inicial - TIC",
+        "avatarInvalidFile": "Seleccione un archivo de imagen válido",
+        "avatarTooLarge": "El tamaño de la imagen debe ser inferior a 5 MB",
+        "avatarSuccess": "Avatar subido correctamente",
+        "avatarFailed": "No se pudo subir el avatar. Inténtelo de nuevo."
+      },
+      "address": {
+        "title": "Dirección",
+        "street": "N.º/nombre de casa y calle",
+        "suburb": "Barrio/Localidad",
+        "town": "Ciudad",
+        "country": "País",
+        "homePostcode": "Código postal",
+        "countryOfDomicile": "País de domicilio"
+      },
+      "employer": {
+        "title": "Empleador",
+        "employer": "Empleador",
+        "employerIdPlaceholder": "ID de empleador",
+        "jobTitle": "Puesto de trabajo",
+        "location": "Ubicación",
+        "managerName": "Nombre del responsable",
+        "managerJobTitle": "Puesto del responsable",
+        "mentor": "Mentor"
+      },
+      "fundingBody": {
+        "title": "Organismo de financiación",
+        "fundingBody": "Organismo de financiación",
+        "awardingBody": "Organismo certificador",
+        "registrationNumber": "N.º de registro",
+        "registrationDate": "Fecha de registro",
+        "laraCode": "Código LARA"
+      },
+      "fundingBands": {
+        "title": "Bandas de financiación",
+        "originalAmount": "Importe original",
+        "customAmount": "Importe personalizado",
+        "fundingBandId": "ID de banda de financiación",
+        "updatedByLearner": "Actualizado por el alumno",
+        "lastUpdated": "Última actualización"
+      },
+      "additionalInfo": {
+        "title": "Información adicional",
+        "costCentre": "Centro de coste",
+        "fundingContractor": "Contratista de financiación",
+        "partner": "Socio",
+        "subArea": "Subárea",
+        "cohort": "Cohorte",
+        "curriculumArea": "Área curricular",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "Director de currículo",
+        "learnerType": "Tipo de alumno",
+        "expectedOffTheJobHours": "Horas fuera del trabajo esperadas",
+        "offTheJobTraining": "Formación fuera del trabajo",
+        "guidedLearningHoursAchieved": "Horas de aprendizaje guiado alcanzadas"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "Restablecer contraseña",
+      "descriptionWithName": "Restablecer contraseña de {name} ({email})",
+      "descriptionEmailOnly": "Restablecer contraseña de {email}",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "cancel": "Cancelar",
+      "resetting": "Restableciendo...",
+      "resetPassword": "Restablecer contraseña",
+      "hintText": "La contraseña debe tener al menos 6 caracteres e incluir mayúsculas, minúsculas y un número.",
+      "validation": {
+        "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+        "passwordPattern": "La contraseña debe contener al menos una mayúscula, una minúscula y un número",
+        "confirmRequired": "Confirme su contraseña",
+        "passwordsMismatch": "Las contraseñas no coinciden"
+      },
+      "successDefault": "Contraseña restablecida correctamente",
+      "errorDefault": "No pudimos restablecer la contraseña. Inténtelo de nuevo en un momento.",
+      "learnerEmailRequired": "El correo del alumno es obligatorio"
+    },
+    "emailPasswordResetDialog": {
+      "title": "Enviar restablecimiento de contraseña por correo",
+      "description": "¿Está seguro de que desea restablecer la contraseña? Se enviará un correo a {email} con las instrucciones.",
+      "cancel": "Cancelar",
+      "sending": "Enviando...",
+      "ok": "OK",
+      "successDefault": "Correo de restablecimiento enviado correctamente",
+      "errorDefault": "No pudimos enviar el correo de restablecimiento. Inténtelo de nuevo en un momento.",
+      "learnerEmailRequired": "El correo del alumno es obligatorio"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Información del curso no encontrada",

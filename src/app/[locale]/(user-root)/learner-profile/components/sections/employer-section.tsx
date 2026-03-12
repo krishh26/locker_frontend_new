@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ interface EmployerSectionProps {
 }
 
 export function EmployerSection({ learner, canEdit = false }: EmployerSectionProps) {
+  const t = useTranslations("learnerProfile");
   const form = useFormContext();
   const employerId = (learner as { employer_id?: number }).employer_id;
   const employer = (learner as { employer?: { employer_id: number; employer_name: string } }).employer;
@@ -26,19 +28,19 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Employer</CardTitle>
+        <CardTitle>{t("sections.employer.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Employer</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.employer")}</Label>
             {canEdit ? (
               <>
                 <Input
                   type="text"
                   {...form.register("employer_id")}
                   className="min-h-10"
-                  placeholder="Employer ID"
+                  placeholder={t("sections.employer.employerIdPlaceholder")}
                 />
                 {form.formState.errors.employer_id && (
                   <p className="text-destructive text-sm">
@@ -53,7 +55,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Job Title</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.jobTitle")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -77,7 +79,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Location</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.location")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -98,7 +100,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Manager Name</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.managerName")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -122,7 +124,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Manager Job Title</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.managerJobTitle")}</Label>
             {canEdit ? (
               <>
                 <Input
@@ -143,7 +145,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Mentor</Label>
+            <Label className="text-sm font-medium">{t("sections.employer.mentor")}</Label>
             {canEdit ? (
               <>
                 <Input

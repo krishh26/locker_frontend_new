@@ -5107,6 +5107,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "个人资料信息",
+      "subtitle": "查看学员个人资料详情及个人信息",
+      "tabs": {
+        "personalInfo": "个人信息",
+        "courseInformation": "课程信息",
+        "contractedWorkHours": "合同工作小时"
+      },
+      "errorTitle": "加载学员资料出错",
+      "loadError": "无法加载学员详情",
+      "invalidLearnerId": "无效的学员 ID",
+      "noDataTitle": "未找到数据",
+      "noDataDescription": "未找到学员资料数据。",
+      "back": "返回",
+      "save": "保存更改",
+      "saving": "保存中...",
+      "resetPasswordButton": "重置密码",
+      "emailPasswordResetButton": "邮件发送密码重置",
+      "accessProfile": "访问资料",
+      "toastUpdated": "学员资料已成功更新",
+      "toastUpdateFailed": "更新学员资料失败，请重试。"
+    },
+    "validation": {
+      "firstNameRequired": "请输入名字",
+      "lastNameRequired": "请输入姓氏",
+      "userNameRequired": "请输入用户名",
+      "invalidEmail": "无效的电子邮件地址"
+    },
+    "courseInformation": {
+      "emptyState": "未分配课程",
+      "addCourse": "添加课程",
+      "yes": "是",
+      "no": "否",
+      "statusOptions": {
+        "awaitingInduction": "等待入职",
+        "certificated": "已认证",
+        "completed": "已完成",
+        "earlyLeaver": "提前离开",
+        "exempt": "豁免",
+        "inTraining": "培训中",
+        "iqaApproved": "IQA 已批准",
+        "trainingSuspended": "培训已暂停",
+        "transferred": "已转学"
+      },
+      "validation": {
+        "selectCourse": "请选择课程",
+        "selectTrainer": "请选择培训师",
+        "selectIQA": "请选择 IQA",
+        "selectLIQA": "请选择 LIQA",
+        "selectEQA": "请选择 EQA",
+        "selectStartDate": "请选择开始日期",
+        "selectEndDate": "请选择结束日期",
+        "endDateAfterStart": "结束日期必须晚于开始日期",
+        "enterPredictedGrade": "请输入预测成绩",
+        "enterFinalGrade": "请输入最终成绩"
+      },
+      "toast": {
+        "updated": "课程已成功更新",
+        "added": "课程已成功添加",
+        "deleted": "课程已成功删除",
+        "saveFailed": "保存课程失败，请重试。",
+        "deleteFailed": "删除课程失败，请重试。",
+        "sameOrganisation": "学员与课程必须属于同一机构。",
+        "noAccess": "您无权分配此课程。"
+      },
+      "table": {
+        "courseName": "课程名称",
+        "level": "级别",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "status": "状态",
+        "mainCourse": "主修课程",
+        "actions": "操作"
+      },
+      "dialog": {
+        "editTitle": "编辑课程",
+        "addTitle": "添加新课程",
+        "editDescription": "在下方更新课程信息。",
+        "addDescription": "在下方填写课程详情。标有 * 的字段为必填项。"
+      },
+      "form": {
+        "selectCourse": "选择课程",
+        "courseStatus": "课程状态",
+        "trainer": "培训师",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "predictedGrade": "预测成绩",
+        "finalGrade": "最终成绩",
+        "mainAimCourse": "主修课程",
+        "chooseCourse": "选择课程",
+        "selectStatus": "选择课程状态",
+        "enterPredictedGrade": "请输入预测成绩",
+        "enterFinalGrade": "请输入最终成绩",
+        "anotherMainCourse": "已有其他课程设为主修课程"
+      },
+      "deleteDialog": {
+        "title": "确定吗？",
+        "description": "此操作无法撤销。将永久删除 {courseName} 的课程分配。",
+        "cancel": "取消",
+        "delete": "删除"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "updateCourse": "更新课程",
+        "addCourseButton": "添加课程"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "合同工作小时",
+      "setNewHours": "设置新小时数",
+      "emptyState": "未找到合同工作小时。",
+      "loading": "加载中...",
+      "noteText": "请注意：由于该学员的预期脱产小时已设为固定值，合同工作小时和年度假期权利将不影响该学员的脱产计算。",
+      "table": {
+        "company": "公司",
+        "contractStart": "雇佣合同开始日期",
+        "contractEnd": "雇佣合同结束日期",
+        "hoursPerWeek": "每周合同工作小时",
+        "yearlyHoliday": "年度假期权利（小时）",
+        "lastEditedBy": "最后编辑者",
+        "lastEditedDate": "最后编辑日期",
+        "actions": "操作"
+      },
+      "dialog": {
+        "editTitle": "编辑合同工作小时",
+        "setNewTitle": "设置新合同工作小时",
+        "editDescription": "更新合同工作小时信息。",
+        "setNewDescription": "输入该学员的合同工作小时信息。",
+        "companyLabel": "公司 *",
+        "companyPlaceholder": "输入公司名称",
+        "contractStartLabel": "雇佣合同开始日期 *",
+        "contractEndLabel": "雇佣合同结束日期",
+        "hoursPerWeekLabel": "每周合同工作小时 *",
+        "hoursPlaceholder": "输入每周小时数",
+        "pickDate": "选择日期",
+        "pickDateOptional": "选择日期（可选）",
+        "cancel": "取消",
+        "update": "更新",
+        "create": "创建"
+      },
+      "deleteDialog": {
+        "title": "确定吗？",
+        "description": "此操作无法撤销。将永久删除 {company} 的合同工作小时记录。",
+        "cancel": "取消",
+        "delete": "删除"
+      },
+      "validation": {
+        "companyRequired": "公司为必填项",
+        "contractStartRequired": "合同开始日期为必填项",
+        "hoursRequired": "每周工作小时为必填项",
+        "hoursPositive": "必须为正数"
+      },
+      "toast": {
+        "updated": "合同工作小时已成功更新",
+        "created": "合同工作小时已成功创建",
+        "deleted": "合同工作小时已成功删除",
+        "saveFailed": "保存合同工作小时失败，请重试。",
+        "deleteFailed": "删除合同工作小时失败，请重试。"
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "学员 ID",
+        "uln": "ULN",
+        "misLearnerId": "MIS 学员 ID",
+        "studentId": "学员 ID"
+      },
+      "aboutYou": {
+        "title": "关于您",
+        "clickToUpload": "点击上传照片",
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "username": "用户名",
+        "email": "电子邮件",
+        "telephone": "电话",
+        "mobile": "手机",
+        "dateOfBirth": "出生日期",
+        "gender": "性别",
+        "nationalInsuranceNo": "国民保险号",
+        "ethnicity": "民族",
+        "learnerDisability": "学员残疾",
+        "learningDifficulties": "学习困难",
+        "initialAssessmentNumeracy": "初步评估 - 计算",
+        "initialAssessmentLiteracy": "初步评估 - 读写",
+        "initialAssessmentICT": "初步评估 - 信息通信技术",
+        "avatarInvalidFile": "请选择有效的图片文件",
+        "avatarTooLarge": "图片大小应小于 5MB",
+        "avatarSuccess": "头像上传成功",
+        "avatarFailed": "上传头像失败，请重试。"
+      },
+      "address": {
+        "title": "地址",
+        "street": "门牌号/名称及街道",
+        "suburb": "郊区/村庄",
+        "town": "城镇/城市",
+        "country": "国家",
+        "homePostcode": "家庭邮编",
+        "countryOfDomicile": "居住国"
+      },
+      "employer": {
+        "title": "雇主",
+        "employer": "雇主",
+        "employerIdPlaceholder": "雇主 ID",
+        "jobTitle": "职位",
+        "location": "地点",
+        "managerName": "经理姓名",
+        "managerJobTitle": "经理职位",
+        "mentor": "导师"
+      },
+      "fundingBody": {
+        "title": "资助机构",
+        "fundingBody": "资助机构",
+        "awardingBody": "颁证机构",
+        "registrationNumber": "注册号",
+        "registrationDate": "注册日期",
+        "laraCode": "LARA 代码"
+      },
+      "fundingBands": {
+        "title": "资助档次",
+        "originalAmount": "原始金额",
+        "customAmount": "自定义金额",
+        "fundingBandId": "资助档次 ID",
+        "updatedByLearner": "由学员更新",
+        "lastUpdated": "最后更新"
+      },
+      "additionalInfo": {
+        "title": "附加信息",
+        "costCentre": "成本中心",
+        "fundingContractor": "资助承包商",
+        "partner": "合作伙伴",
+        "subArea": "子区域",
+        "cohort": "队列",
+        "curriculumArea": "课程领域",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "课程主任",
+        "learnerType": "学员类型",
+        "expectedOffTheJobHours": "预期脱产小时",
+        "offTheJobTraining": "脱产培训",
+        "guidedLearningHoursAchieved": "已达成指导学习小时"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "重置密码",
+      "descriptionWithName": "为 {name} ({email}) 重置密码",
+      "descriptionEmailOnly": "为 {email} 重置密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "show": "显示",
+      "hide": "隐藏",
+      "cancel": "取消",
+      "resetting": "重置中...",
+      "resetPassword": "重置密码",
+      "hintText": "密码至少 6 个字符，并包含大小写字母和数字。",
+      "validation": {
+        "passwordMin": "密码至少 6 个字符",
+        "passwordPattern": "密码须包含至少一个大写字母、一个小写字母和一个数字",
+        "confirmRequired": "请确认密码",
+        "passwordsMismatch": "两次输入的密码不一致"
+      },
+      "successDefault": "密码已成功重置",
+      "errorDefault": "暂时无法重置密码，请稍后重试。",
+      "learnerEmailRequired": "学员邮箱为必填项"
+    },
+    "emailPasswordResetDialog": {
+      "title": "邮件发送密码重置",
+      "description": "确定要重置密码吗？将向 {email} 发送包含重置说明的邮件。",
+      "cancel": "取消",
+      "sending": "发送中...",
+      "ok": "确定",
+      "successDefault": "密码重置邮件已成功发送",
+      "errorDefault": "暂时无法发送密码重置邮件，请稍后重试。",
+      "learnerEmailRequired": "学员邮箱为必填项"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -70,8 +71,8 @@ interface CourseInformationTabProps {
   canEdit?: boolean;
 }
 
-// Course status options
-const COURSE_STATUS_OPTIONS = [
+// API expects these exact values; we use translation keys for display only
+const COURSE_STATUS_VALUES = [
   "Awaiting Induction",
   "Certificated",
   "Completed",
@@ -81,36 +82,60 @@ const COURSE_STATUS_OPTIONS = [
   "IQA Approved",
   "Training Suspended",
   "Transferred",
-];
+] as const;
 
-const courseSchema = z.object({
-  course_id: z.string().min(1, "Please select a course"),
-  trainer_id: z.string().min(1, "Please select a trainer"),
-  IQA_id: z.string().min(1, "Please select an IQA"),
-  LIQA_id: z.string().min(1, "Please select a LIQA"),
-  EQA_id: z.string().min(1, "Please select an EQA"),
-  start_date: z.string().min(1, "Please select a start date"),
-  end_date: z.string().min(1, "Please select an end date"),
-  predicted_grade: z.string().min(1, "Please enter predicted grade"),
-  final_grade: z.string().min(1, "Please enter final grade"),
-  is_main_course: z.boolean().optional(),
-  course_status: z.string().optional(),
-}).refine((data) => {
-  if (data.start_date && data.end_date) {
-    return new Date(data.end_date) > new Date(data.start_date);
-  }
-  return true;
-}, {
-  message: "End date must be after start date",
-  path: ["end_date"],
-});
+const STATUS_VALUE_TO_KEY: Record<string, string> = {
+  "Awaiting Induction": "awaitingInduction",
+  Certificated: "certificated",
+  Completed: "completed",
+  "Early Leaver": "earlyLeaver",
+  Exempt: "exempt",
+  "In Training": "inTraining",
+  "IQA Approved": "iqaApproved",
+  "Training Suspended": "trainingSuspended",
+  Transferred: "transferred",
+};
 
-type CourseFormValues = z.infer<typeof courseSchema>;
+function getCourseSchema(t: (key: string) => string) {
+  return z
+    .object({
+      course_id: z.string().min(1, t("courseInformation.validation.selectCourse")),
+      trainer_id: z.string().min(1, t("courseInformation.validation.selectTrainer")),
+      IQA_id: z.string().min(1, t("courseInformation.validation.selectIQA")),
+      LIQA_id: z.string().min(1, t("courseInformation.validation.selectLIQA")),
+      EQA_id: z.string().min(1, t("courseInformation.validation.selectEQA")),
+      start_date: z.string().min(1, t("courseInformation.validation.selectStartDate")),
+      end_date: z.string().min(1, t("courseInformation.validation.selectEndDate")),
+      predicted_grade: z.string().min(1, t("courseInformation.validation.enterPredictedGrade")),
+      final_grade: z.string().min(1, t("courseInformation.validation.enterFinalGrade")),
+      is_main_course: z.boolean().optional(),
+      course_status: z.string().optional(),
+    })
+    .refine(
+      (data) => {
+        if (data.start_date && data.end_date) {
+          return new Date(data.end_date) > new Date(data.start_date);
+        }
+        return true;
+      },
+      {
+        message: t("courseInformation.validation.endDateAfterStart"),
+        path: ["end_date"],
+      }
+    );
+}
+
+type CourseFormValues = z.infer<ReturnType<typeof getCourseSchema>>;
 
 export function CourseInformationTab({
   learner,
   canEdit = false,
 }: CourseInformationTabProps) {
+  const t = useTranslations("learnerProfile");
+  const courseSchema = useMemo(
+    () => getCourseSchema((key) => t(key)),
+    [t]
+  );
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<LearnerCourse | null>(
@@ -306,7 +331,7 @@ export function CourseInformationTab({
             course_status: data.course_status || undefined,
           },
         }).unwrap();
-        toast.success("Course updated successfully");
+        toast.success(t("courseInformation.toast.updated"));
       } else {
         await createUserCourse({
           learner_id: learner.learner_id,
@@ -321,7 +346,7 @@ export function CourseInformationTab({
           final_grade: data.final_grade,
           is_main_course: data.is_main_course || false,
         }).unwrap();
-        toast.success("Course added successfully");
+        toast.success(t("courseInformation.toast.added"));
       }
 
       handleCloseDialog();
@@ -329,13 +354,11 @@ export function CourseInformationTab({
       console.error("Failed to save course:", error);
       const err = error as { status?: number; data?: { message?: string } };
       if (!isEditMode && err?.status === 400) {
-        toast.error(err?.data?.message ?? "Learner and course must belong to the same organisation.");
+        toast.error(err?.data?.message ?? t("courseInformation.toast.sameOrganisation"));
       } else if (!isEditMode && err?.status === 403) {
-        toast.error(err?.data?.message ?? "You do not have access to assign this course.");
+        toast.error(err?.data?.message ?? t("courseInformation.toast.noAccess"));
       } else {
-        toast.error(
-          `Failed to ${isEditMode ? "update" : "add"} course. Please try again.`
-        );
+        toast.error(t("courseInformation.toast.saveFailed"));
       }
     }
   });
@@ -345,12 +368,12 @@ export function CourseInformationTab({
 
     try {
       await deleteUserCourse(selectedCourse.user_course_id).unwrap();
-      toast.success("Course deleted successfully");
+      toast.success(t("courseInformation.toast.deleted"));
       setDeleteDialogOpen(false);
       setSelectedCourse(null);
     } catch (error) {
       console.error("Failed to delete course:", error);
-      toast.error("Failed to delete course. Please try again.");
+      toast.error(t("courseInformation.toast.deleteFailed"));
     }
   };
 
@@ -368,7 +391,7 @@ export function CourseInformationTab({
       <Card>
         <CardContent className="py-8">
           <div className="text-center text-muted-foreground">
-            No course information available.
+            {t("courseInformation.emptyState")}
           </div>
         </CardContent>
       </Card>
@@ -379,7 +402,7 @@ export function CourseInformationTab({
     <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle>Course Information</CardTitle>
+          <CardTitle>{t("page.tabs.courseInformation")}</CardTitle>
           {canEdit && (
             <Button
               type="button"
@@ -387,14 +410,14 @@ export function CourseInformationTab({
               size="sm"
             >
               <Plus className="mr-2 h-4 w-4" />
-              Add New Course
+              {t("courseInformation.addCourse")}
             </Button>
           )}
         </CardHeader>
         <CardContent>
           {courses.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No course information available.
+              {t("courseInformation.emptyState")}
               {canEdit && (
                 <Button
                   type="button"
@@ -402,7 +425,7 @@ export function CourseInformationTab({
                   className="mt-4"
                   onClick={() => handleOpenDialog()}
                 >
-                  Add Your First Course
+                  {t("courseInformation.addCourse")}
                 </Button>
               )}
             </div>
@@ -411,13 +434,13 @@ export function CourseInformationTab({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Course Name</TableHead>
-                    <TableHead>Level</TableHead>
-                    <TableHead>Start Date</TableHead>
-                    <TableHead>End Date</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Main Course</TableHead>
-                    {canEdit && <TableHead>Actions</TableHead>}
+                    <TableHead>{t("courseInformation.table.courseName")}</TableHead>
+                    <TableHead>{t("courseInformation.table.level")}</TableHead>
+                    <TableHead>{t("courseInformation.table.startDate")}</TableHead>
+                    <TableHead>{t("courseInformation.table.endDate")}</TableHead>
+                    <TableHead>{t("courseInformation.table.status")}</TableHead>
+                    <TableHead>{t("courseInformation.table.mainCourse")}</TableHead>
+                    {canEdit && <TableHead>{t("courseInformation.table.actions")}</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -447,14 +470,18 @@ export function CourseInformationTab({
                               : ""
                           )}
                         >
-                          {course.course_status || "-"}
+                          {course.course_status
+                            ? (STATUS_VALUE_TO_KEY[course.course_status]
+                                ? t(`courseInformation.statusOptions.${STATUS_VALUE_TO_KEY[course.course_status]}`)
+                                : course.course_status)
+                            : "-"}
                         </Badge>
                       </TableCell>
                       <TableCell>
                         {course.is_main_course ? (
-                          <Badge variant="default">Yes</Badge>
+                          <Badge variant="default">{t("courseInformation.yes")}</Badge>
                         ) : (
-                          <span className="text-muted-foreground">No</span>
+                          <span className="text-muted-foreground">{t("courseInformation.no")}</span>
                         )}
                       </TableCell>
                       {canEdit && (
@@ -542,12 +569,12 @@ export function CourseInformationTab({
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {isEditMode ? "Edit Course" : "Add New Course"}
+              {isEditMode ? t("courseInformation.dialog.editTitle") : t("courseInformation.dialog.addTitle")}
             </DialogTitle>
             <DialogDescription>
               {isEditMode
-                ? "Update the course information below."
-                : "Fill in the course details below. Fields marked with * are required."}
+                ? t("courseInformation.dialog.editDescription")
+                : t("courseInformation.dialog.addDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -560,7 +587,7 @@ export function CourseInformationTab({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Select Course <span className="text-destructive">*</span>
+                      {t("courseInformation.form.selectCourse")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -569,7 +596,7 @@ export function CourseInformationTab({
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Choose a course" />
+                          <SelectValue placeholder={t("courseInformation.form.chooseCourse")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -595,20 +622,20 @@ export function CourseInformationTab({
                   name="course_status"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Course Status</FormLabel>
+                      <FormLabel>{t("courseInformation.form.courseStatus")}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select course status" />
+                            <SelectValue placeholder={t("courseInformation.form.selectStatus")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {COURSE_STATUS_OPTIONS.map((status) => (
+                          {COURSE_STATUS_VALUES.map((status) => (
                             <SelectItem key={status} value={status}>
-                              {status}
+                              {t(`courseInformation.statusOptions.${STATUS_VALUE_TO_KEY[status]}`)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -627,7 +654,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Trainer <span className="text-destructive">*</span>
+                        {t("courseInformation.form.trainer")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -635,7 +662,7 @@ export function CourseInformationTab({
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select trainer" />
+                            <SelectValue placeholder={t("courseInformation.form.trainer")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -661,7 +688,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        IQA <span className="text-destructive">*</span>
+                        {t("courseInformation.form.iqa")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -669,7 +696,7 @@ export function CourseInformationTab({
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select IQA" />
+                            <SelectValue placeholder={t("courseInformation.form.iqa")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -697,7 +724,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        LIQA <span className="text-destructive">*</span>
+                        {t("courseInformation.form.liqa")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -705,7 +732,7 @@ export function CourseInformationTab({
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select LIQA" />
+                            <SelectValue placeholder={t("courseInformation.form.liqa")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -731,7 +758,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        EQA <span className="text-destructive">*</span>
+                        {t("courseInformation.form.eqa")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -739,7 +766,7 @@ export function CourseInformationTab({
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select EQA" />
+                            <SelectValue placeholder={t("courseInformation.form.eqa")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -767,7 +794,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Start Date <span className="text-destructive">*</span>
+                        {t("courseInformation.form.startDate")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="date" {...field} />
@@ -784,7 +811,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        End Date <span className="text-destructive">*</span>
+                        {t("courseInformation.form.endDate")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="date" {...field} />
@@ -803,11 +830,11 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Predicted Grade{" "}
+                        {t("courseInformation.form.predictedGrade")}{" "}
                         <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter predicted grade" {...field} />
+                        <Input placeholder={t("courseInformation.form.enterPredictedGrade")} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -821,10 +848,10 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Final Grade <span className="text-destructive">*</span>
+                        {t("courseInformation.form.finalGrade")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter final grade" {...field} />
+                        <Input placeholder={t("courseInformation.form.enterFinalGrade")} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -850,12 +877,12 @@ export function CourseInformationTab({
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>Main Aim Course</FormLabel>
+                      <FormLabel>{t("courseInformation.form.mainAimCourse")}</FormLabel>
                       {isEditMode &&
                         !isSelectedCourseMain &&
                         hasMainCourse && (
                           <p className="text-sm text-muted-foreground">
-                            Another course is already set as main course
+                            {t("courseInformation.form.anotherMainCourse")}
                           </p>
                         )}
                     </div>
@@ -870,13 +897,13 @@ export function CourseInformationTab({
                   onClick={handleCloseDialog}
                   disabled={isCreating || isUpdating}
                 >
-                  Cancel
+                  {t("courseInformation.buttons.cancel")}
                 </Button>
                 <Button type="submit" disabled={isCreating || isUpdating}>
                   {(isCreating || isUpdating) && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {isEditMode ? "Update Course" : "Add Course"}
+                  {isEditMode ? t("courseInformation.buttons.updateCourse") : t("courseInformation.buttons.addCourseButton")}
                 </Button>
               </DialogFooter>
             </form>
@@ -888,11 +915,11 @@ export function CourseInformationTab({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("courseInformation.deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              course allocation for{" "}
-              {selectedCourse?.course?.course_name || "this course"}.
+              {t("courseInformation.deleteDialog.description", {
+                courseName: selectedCourse?.course?.course_name || "this course",
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -903,7 +930,7 @@ export function CourseInformationTab({
               }}
               disabled={isDeleting}
             >
-              Cancel
+              {t("courseInformation.deleteDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
@@ -913,7 +940,7 @@ export function CourseInformationTab({
               {isDeleting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Delete
+              {t("courseInformation.deleteDialog.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

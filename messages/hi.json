@@ -5149,6 +5149,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "प्रोफ़ाइल जानकारी",
+      "subtitle": "सीखने वाले की प्रोफ़ाइल विवरण और व्यक्तिगत जानकारी देखें",
+      "tabs": {
+        "personalInfo": "व्यक्तिगत जानकारी",
+        "courseInformation": "कोर्स जानकारी",
+        "contractedWorkHours": "अनुबंधित कार्य घंटे"
+      },
+      "errorTitle": "प्रोफ़ाइल लोड करने में त्रुटि",
+      "loadError": "सीखने वाले का विवरण लोड करने में विफल",
+      "invalidLearnerId": "अमान्य सीखने वाले का ID",
+      "noDataTitle": "कोई डेटा नहीं मिला",
+      "noDataDescription": "सीखने वाले की प्रोफ़ाइल डेटा नहीं मिला।",
+      "back": "वापस",
+      "save": "परिवर्तन सहेजें",
+      "saving": "सहेज रहे हैं...",
+      "resetPasswordButton": "पासवर्ड रीसेट करें",
+      "emailPasswordResetButton": "ईमेल से पासवर्ड रीसेट भेजें",
+      "accessProfile": "प्रोफ़ाइल एक्सेस करें",
+      "toastUpdated": "सीखने वाले की प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई",
+      "toastUpdateFailed": "प्रोफ़ाइल अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "validation": {
+      "firstNameRequired": "पहला नाम आवश्यक है",
+      "lastNameRequired": "उपनाम आवश्यक है",
+      "userNameRequired": "उपयोगकर्ता नाम आवश्यक है",
+      "invalidEmail": "अमान्य ईमेल पता"
+    },
+    "courseInformation": {
+      "emptyState": "कोई कोर्स निर्दिष्ट नहीं",
+      "addCourse": "कोर्स जोड़ें",
+      "yes": "हाँ",
+      "no": "नहीं",
+      "statusOptions": {
+        "awaitingInduction": "इंडक्शन की प्रतीक्षा",
+        "certificated": "प्रमाणित",
+        "completed": "पूर्ण",
+        "earlyLeaver": "जल्दी छोड़ने वाला",
+        "exempt": "छूट",
+        "inTraining": "प्रशिक्षण में",
+        "iqaApproved": "IQA द्वारा अनुमोदित",
+        "trainingSuspended": "प्रशिक्षण निलंबित",
+        "transferred": "स्थानांतरित"
+      },
+      "validation": {
+        "selectCourse": "कृपया कोर्स चुनें",
+        "selectTrainer": "कृपया ट्रेनर चुनें",
+        "selectIQA": "कृपया IQA चुनें",
+        "selectLIQA": "कृपया LIQA चुनें",
+        "selectEQA": "कृपया EQA चुनें",
+        "selectStartDate": "कृपया प्रारंभ तिथि चुनें",
+        "selectEndDate": "कृपया समाप्ति तिथि चुनें",
+        "endDateAfterStart": "समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए",
+        "enterPredictedGrade": "कृपया अनुमानित ग्रेड दर्ज करें",
+        "enterFinalGrade": "कृपया अंतिम ग्रेड दर्ज करें"
+      },
+      "toast": {
+        "updated": "कोर्स सफलतापूर्वक अपडेट हो गया",
+        "added": "कोर्स सफलतापूर्वक जोड़ा गया",
+        "deleted": "कोर्स सफलतापूर्वक हटाया गया",
+        "saveFailed": "कोर्स सहेजने में विफल। कृपया पुनः प्रयास करें।",
+        "deleteFailed": "कोर्स हटाने में विफल। कृपया पुनः प्रयास करें।",
+        "sameOrganisation": "सीखने वाले और कोर्स एक ही संगठन के होने चाहिए।",
+        "noAccess": "आपको इस कोर्स को निर्दिष्ट करने की पहुंच नहीं है।"
+      },
+      "table": {
+        "courseName": "कोर्स का नाम",
+        "level": "स्तर",
+        "startDate": "प्रारंभ तिथि",
+        "endDate": "समाप्ति तिथि",
+        "status": "स्थिति",
+        "mainCourse": "मुख्य कोर्स",
+        "actions": "कार्रवाई"
+      },
+      "dialog": {
+        "editTitle": "कोर्स संपादित करें",
+        "addTitle": "नया कोर्स जोड़ें",
+        "editDescription": "नीचे कोर्स जानकारी अपडेट करें।",
+        "addDescription": "नीचे कोर्स विवरण भरें। * से चिह्नित फ़ील्ड आवश्यक हैं।"
+      },
+      "form": {
+        "selectCourse": "कोर्स चुनें",
+        "courseStatus": "कोर्स की स्थिति",
+        "trainer": "ट्रेनर",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "प्रारंभ तिथि",
+        "endDate": "समाप्ति तिथि",
+        "predictedGrade": "अनुमानित ग्रेड",
+        "finalGrade": "अंतिम ग्रेड",
+        "mainAimCourse": "मुख्य कोर्स",
+        "chooseCourse": "कोर्स चुनें",
+        "selectStatus": "कोर्स स्थिति चुनें",
+        "enterPredictedGrade": "अनुमानित ग्रेड दर्ज करें",
+        "enterFinalGrade": "अंतिम ग्रेड दर्ज करें",
+        "anotherMainCourse": "दूसरा कोर्स पहले से मुख्य कोर्स के रूप में सेट है"
+      },
+      "deleteDialog": {
+        "title": "क्या आप सुनिश्चित हैं?",
+        "description": "इस क्रिया को पूर्ववत नहीं किया जा सकता। {courseName} के लिए कोर्स आवंटन स्थायी रूप से हटा दिया जाएगा।",
+        "cancel": "रद्द करें",
+        "delete": "हटाएं"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "updateCourse": "कोर्स अपडेट करें",
+        "addCourseButton": "कोर्स जोड़ें"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "अनुबंधित कार्य घंटे",
+      "setNewHours": "नए घंटे सेट करें",
+      "emptyState": "कोई अनुबंधित कार्य घंटे नहीं मिले।",
+      "loading": "लोड हो रहा है...",
+      "noteText": "कृपया ध्यान दें: इस सीखने वाले के अपेक्षित ऑफ द जॉब घंटे निश्चित मान के रूप में सेट हैं, अनुबंधित घंटे और वार्षिक छुट्टी अधिकार इस सीखने वाले की ऑफ द जॉब गणना को प्रभावित नहीं करेंगे।",
+      "table": {
+        "company": "कंपनी",
+        "contractStart": "रोजगार अनुबंध प्रारंभ तिथि",
+        "contractEnd": "रोजगार अनुबंध समाप्ति तिथि",
+        "hoursPerWeek": "प्रति सप्ताह अनुबंधित कार्य घंटे",
+        "yearlyHoliday": "वार्षिक छुट्टी अधिकार (घंटे)",
+        "lastEditedBy": "अंतिम संपादन द्वारा",
+        "lastEditedDate": "अंतिम संपादन तिथि",
+        "actions": "कार्रवाई"
+      },
+      "dialog": {
+        "editTitle": "अनुबंधित कार्य घंटे संपादित करें",
+        "setNewTitle": "नए अनुबंधित कार्य घंटे सेट करें",
+        "editDescription": "अनुबंधित कार्य घंटे की जानकारी अपडेट करें।",
+        "setNewDescription": "इस सीखने वाले के लिए अनुबंधित कार्य घंटे की जानकारी दर्ज करें।",
+        "companyLabel": "कंपनी *",
+        "companyPlaceholder": "कंपनी का नाम दर्ज करें",
+        "contractStartLabel": "अनुबंध प्रारंभ तिथि *",
+        "contractEndLabel": "अनुबंध समाप्ति तिथि",
+        "hoursPerWeekLabel": "प्रति सप्ताह कार्य घंटे *",
+        "hoursPlaceholder": "प्रति सप्ताह घंटे दर्ज करें",
+        "pickDate": "तिथि चुनें",
+        "pickDateOptional": "तिथि चुनें (वैकल्पिक)",
+        "cancel": "रद्द करें",
+        "update": "अपडेट करें",
+        "create": "बनाएं"
+      },
+      "deleteDialog": {
+        "title": "क्या आप सुनिश्चित हैं?",
+        "description": "इस क्रिया को पूर्ववत नहीं किया जा सकता। {company} के लिए अनुबंधित कार्य घंटे प्रविष्टि स्थायी रूप से हटा दी जाएगी।",
+        "cancel": "रद्द करें",
+        "delete": "हटाएं"
+      },
+      "validation": {
+        "companyRequired": "कंपनी आवश्यक है",
+        "contractStartRequired": "अनुबंध प्रारंभ तिथि आवश्यक है",
+        "hoursRequired": "प्रति सप्ताह कार्य घंटे आवश्यक हैं",
+        "hoursPositive": "धनात्मक संख्या होनी चाहिए"
+      },
+      "toast": {
+        "updated": "अनुबंधित कार्य घंटे सफलतापूर्वक अपडेट हो गए",
+        "created": "अनुबंधित कार्य घंटे सफलतापूर्वक बनाए गए",
+        "deleted": "अनुबंधित कार्य घंटे सफलतापूर्वक हटाए गए",
+        "saveFailed": "अनुबंधित घंटे सहेजने में विफल। कृपया पुनः प्रयास करें।",
+        "deleteFailed": "अनुबंधित घंटे हटाने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "सीखने वाले का ID",
+        "uln": "ULN",
+        "misLearnerId": "MIS सीखने वाले का ID",
+        "studentId": "सीखने वाले का ID"
+      },
+      "aboutYou": {
+        "title": "आपके बारे में",
+        "clickToUpload": "फोटो अपलोड करने के लिए क्लिक करें",
+        "firstName": "पहला नाम",
+        "lastName": "उपनाम",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "telephone": "टेलीफोन",
+        "mobile": "मोबाइल",
+        "dateOfBirth": "जन्म तिथि",
+        "gender": "लिंग",
+        "nationalInsuranceNo": "राष्ट्रीय बीमा नंबर",
+        "ethnicity": "जाति",
+        "learnerDisability": "सीखने वाले की अक्षमता",
+        "learningDifficulties": "सीखने की कठिनाइयाँ",
+        "initialAssessmentNumeracy": "प्रारंभिक मूल्यांकन - अंकगणित",
+        "initialAssessmentLiteracy": "प्रारंभिक मूल्यांकन - साक्षरता",
+        "initialAssessmentICT": "प्रारंभिक मूल्यांकन - आईसीटी",
+        "avatarInvalidFile": "कृपया एक वैध छवि फ़ाइल चुनें",
+        "avatarTooLarge": "छवि का आकार 5MB से कम होना चाहिए",
+        "avatarSuccess": "अवतार सफलतापूर्वक अपलोड हो गया",
+        "avatarFailed": "अवतार अपलोड करने में विफल। कृपया पुनः प्रयास करें।"
+      },
+      "address": {
+        "title": "पता",
+        "street": "मकान नंबर/नाम और गली",
+        "suburb": "उपनगर/गाँव",
+        "town": "शहर",
+        "country": "देश",
+        "homePostcode": "होम पोस्टकोड",
+        "countryOfDomicile": "निवास देश"
+      },
+      "employer": {
+        "title": "नियोक्ता",
+        "employer": "नियोक्ता",
+        "employerIdPlaceholder": "नियोक्ता ID",
+        "jobTitle": "नौकरी का शीर्षक",
+        "location": "स्थान",
+        "managerName": "मैनेजर का नाम",
+        "managerJobTitle": "मैनेजर का पद",
+        "mentor": "मेंटर"
+      },
+      "fundingBody": {
+        "title": "फंडिंग बॉडी",
+        "fundingBody": "फंडिंग बॉडी",
+        "awardingBody": "पुरस्कार देने वाली संस्था",
+        "registrationNumber": "पंजीकरण संख्या",
+        "registrationDate": "पंजीकरण तिथि",
+        "laraCode": "LARA कोड"
+      },
+      "fundingBands": {
+        "title": "फंडिंग बैंड",
+        "originalAmount": "मूल राशि",
+        "customAmount": "कस्टम राशि",
+        "fundingBandId": "फंडिंग बैंड ID",
+        "updatedByLearner": "सीखने वाले द्वारा अपडेट",
+        "lastUpdated": "अंतिम अपडेट"
+      },
+      "additionalInfo": {
+        "title": "अतिरिक्त जानकारी",
+        "costCentre": "लागत केंद्र",
+        "fundingContractor": "फंडिंग ठेकेदार",
+        "partner": "साझेदार",
+        "subArea": "उप-क्षेत्र",
+        "cohort": "कोहॉर्ट",
+        "curriculumArea": "पाठ्यक्रम क्षेत्र",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "पाठ्यक्रम निदेशक",
+        "learnerType": "सीखने वाले का प्रकार",
+        "expectedOffTheJobHours": "अपेक्षित ऑफ द जॉब घंटे",
+        "offTheJobTraining": "ऑफ द जॉब प्रशिक्षण",
+        "guidedLearningHoursAchieved": "गाइडेड लर्निंग घंटे प्राप्त"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "पासवर्ड रीसेट करें",
+      "descriptionWithName": "{name} ({email}) के लिए पासवर्ड रीसेट करें",
+      "descriptionEmailOnly": "{email} के लिए पासवर्ड रीसेट करें",
+      "newPassword": "नया पासवर्ड",
+      "confirmPassword": "पासवर्ड की पुष्टि करें",
+      "show": "दिखाएं",
+      "hide": "छिपाएं",
+      "cancel": "रद्द करें",
+      "resetting": "रीसेट हो रहा है...",
+      "resetPassword": "पासवर्ड रीसेट करें",
+      "hintText": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए और बड़े व छोटे अक्षर और एक संख्या शामिल होनी चाहिए।",
+      "validation": {
+        "passwordMin": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए",
+        "passwordPattern": "पासवर्ड में कम से कम एक बड़ा अक्षर, एक छोटा अक्षर और एक संख्या होनी चाहिए",
+        "confirmRequired": "कृपया अपने पासवर्ड की पुष्टि करें",
+        "passwordsMismatch": "पासवर्ड मेल नहीं खाते"
+      },
+      "successDefault": "पासवर्ड सफलतापूर्वक रीसेट हो गया",
+      "errorDefault": "पासवर्ड रीसेट नहीं हो सका। कृपया कुछ समय बाद पुनः प्रयास करें।",
+      "learnerEmailRequired": "सीखने वाले का ईमेल आवश्यक है"
+    },
+    "emailPasswordResetDialog": {
+      "title": "ईमेल से पासवर्ड रीसेट",
+      "description": "क्या आप पासवर्ड रीसेट करना चाहते हैं? {email} पर निर्देशों के साथ एक ईमेल भेजा जाएगा।",
+      "cancel": "रद्द करें",
+      "sending": "भेज रहे हैं...",
+      "ok": "ठीक है",
+      "successDefault": "पासवर्ड रीसेट ईमेल सफलतापूर्वक भेजा गया",
+      "errorDefault": "पासवर्ड रीसेट ईमेल भेजने में विफल। कृपया कुछ समय बाद पुनः प्रयास करें।",
+      "learnerEmailRequired": "सीखने वाले का ईमेल आवश्यक है"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "कोर्स जानकारी नहीं मिली",

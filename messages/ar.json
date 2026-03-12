@@ -5071,6 +5071,285 @@
       }
     }
   },
+  "learnerProfile": {
+    "page": {
+      "title": "معلومات الملف الشخصي",
+      "subtitle": "عرض تفاصيل ملف المتعلم والمعلومات الشخصية",
+      "tabs": {
+        "personalInfo": "المعلومات الشخصية",
+        "courseInformation": "معلومات الدورة",
+        "contractedWorkHours": "ساعات العمل التعاقدية"
+      },
+      "errorTitle": "خطأ في تحميل ملف المتعلم",
+      "loadError": "فشل تحميل تفاصيل المتعلم",
+      "invalidLearnerId": "معرف المتعلم غير صالح",
+      "noDataTitle": "لم يتم العثور على بيانات",
+      "noDataDescription": "لم يتم العثور على بيانات ملف المتعلم.",
+      "back": "رجوع",
+      "save": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "resetPasswordButton": "إعادة تعيين كلمة المرور",
+      "emailPasswordResetButton": "إرسال إعادة التعيين بالبريد",
+      "accessProfile": "الوصول إلى الملف الشخصي",
+      "toastUpdated": "تم تحديث ملف المتعلم بنجاح",
+      "toastUpdateFailed": "فشل تحديث ملف المتعلم. يرجى المحاولة مرة أخرى."
+    },
+    "validation": {
+      "firstNameRequired": "الاسم الأول مطلوب",
+      "lastNameRequired": "اسم العائلة مطلوب",
+      "userNameRequired": "اسم المستخدم مطلوب",
+      "invalidEmail": "عنوان البريد الإلكتروني غير صالح"
+    },
+    "courseInformation": {
+      "emptyState": "لا توجد دورات معينة",
+      "addCourse": "إضافة دورة",
+      "yes": "نعم",
+      "no": "لا",
+      "statusOptions": {
+        "awaitingInduction": "في انتظار التعريف",
+        "certificated": "معتمد",
+        "completed": "مكتمل",
+        "earlyLeaver": "مغادر مبكر",
+        "exempt": "معفى",
+        "inTraining": "قيد التدريب",
+        "iqaApproved": "معتمد من IQA",
+        "trainingSuspended": "التدريب معلق",
+        "transferred": "منقول"
+      },
+      "validation": {
+        "selectCourse": "يرجى اختيار دورة",
+        "selectTrainer": "يرجى اختيار مدرب",
+        "selectIQA": "يرجى اختيار IQA",
+        "selectLIQA": "يرجى اختيار LIQA",
+        "selectEQA": "يرجى اختيار EQA",
+        "selectStartDate": "يرجى اختيار تاريخ البدء",
+        "selectEndDate": "يرجى اختيار تاريخ الانتهاء",
+        "endDateAfterStart": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
+        "enterPredictedGrade": "يرجى إدخال الدرجة المتوقعة",
+        "enterFinalGrade": "يرجى إدخال الدرجة النهائية"
+      },
+      "toast": {
+        "updated": "تم تحديث الدورة بنجاح",
+        "added": "تمت إضافة الدورة بنجاح",
+        "deleted": "تم حذف الدورة بنجاح",
+        "saveFailed": "فشل حفظ الدورة. يرجى المحاولة مرة أخرى.",
+        "deleteFailed": "فشل حذف الدورة. يرجى المحاولة مرة أخرى.",
+        "sameOrganisation": "يجب أن ينتمي المتعلم والدورة إلى نفس المنظمة.",
+        "noAccess": "ليس لديك صلاحية لتعيين هذه الدورة."
+      },
+      "table": {
+        "courseName": "اسم الدورة",
+        "level": "المستوى",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "status": "الحالة",
+        "mainCourse": "الدورة الرئيسية",
+        "actions": "إجراءات"
+      },
+      "dialog": {
+        "editTitle": "تعديل الدورة",
+        "addTitle": "إضافة دورة جديدة",
+        "editDescription": "قم بتحديث معلومات الدورة أدناه.",
+        "addDescription": "املأ تفاصيل الدورة أدناه. الحقول المميزة بـ * مطلوبة."
+      },
+      "form": {
+        "selectCourse": "اختر الدورة",
+        "courseStatus": "حالة الدورة",
+        "trainer": "المدرب",
+        "iqa": "IQA",
+        "liqa": "LIQA",
+        "eqa": "EQA",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "predictedGrade": "الدرجة المتوقعة",
+        "finalGrade": "الدرجة النهائية",
+        "mainAimCourse": "الدورة الرئيسية",
+        "chooseCourse": "اختر دورة",
+        "selectStatus": "اختر حالة الدورة",
+        "enterPredictedGrade": "أدخل الدرجة المتوقعة",
+        "enterFinalGrade": "أدخل الدرجة النهائية",
+        "anotherMainCourse": "دورة أخرى محددة بالفعل كدورة رئيسية"
+      },
+      "deleteDialog": {
+        "title": "هل أنت متأكد؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف تخصيص الدورة لـ {courseName} نهائياً.",
+        "cancel": "إلغاء",
+        "delete": "حذف"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "updateCourse": "تحديث الدورة",
+        "addCourseButton": "إضافة الدورة"
+      }
+    },
+    "contractedWorkHours": {
+      "cardTitle": "ساعات العمل التعاقدية",
+      "setNewHours": "تعيين ساعات جديدة",
+      "emptyState": "لم يتم العثور على ساعات عمل تعاقدية.",
+      "loading": "جاري التحميل...",
+      "noteText": "يرجى الملاحظة: بما أن ساعات العمل خارج الوظيفة المتوقعة لهذا المتعلم محددة كقيمة ثابتة، فإن الساعات التعاقدية وحق الإجازة السنوية لن تؤثر على حساب العمل خارج الوظيفة.",
+      "table": {
+        "company": "الشركة",
+        "contractStart": "تاريخ بدء عقد العمل",
+        "contractEnd": "تاريخ انتهاء عقد العمل",
+        "hoursPerWeek": "ساعات العمل أسبوعياً",
+        "yearlyHoliday": "حق الإجازة السنوية (ساعات)",
+        "lastEditedBy": "آخر تعديل بواسطة",
+        "lastEditedDate": "تاريخ آخر تعديل",
+        "actions": "إجراءات"
+      },
+      "dialog": {
+        "editTitle": "تعديل ساعات العمل التعاقدية",
+        "setNewTitle": "تعيين ساعات عمل تعاقدية جديدة",
+        "editDescription": "تحديث معلومات ساعات العمل التعاقدية.",
+        "setNewDescription": "أدخل معلومات ساعات العمل التعاقدية لهذا المتعلم.",
+        "companyLabel": "الشركة *",
+        "companyPlaceholder": "أدخل اسم الشركة",
+        "contractStartLabel": "تاريخ بدء العقد *",
+        "contractEndLabel": "تاريخ انتهاء العقد",
+        "hoursPerWeekLabel": "ساعات العمل أسبوعياً *",
+        "hoursPlaceholder": "أدخل الساعات أسبوعياً",
+        "pickDate": "اختر تاريخاً",
+        "pickDateOptional": "اختر تاريخاً (اختياري)",
+        "cancel": "إلغاء",
+        "update": "تحديث",
+        "create": "إنشاء"
+      },
+      "deleteDialog": {
+        "title": "هل أنت متأكد؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف إدخال ساعات العمل التعاقدية لـ {company} نهائياً.",
+        "cancel": "إلغاء",
+        "delete": "حذف"
+      },
+      "validation": {
+        "companyRequired": "الشركة مطلوبة",
+        "contractStartRequired": "تاريخ بدء العقد مطلوب",
+        "hoursRequired": "ساعات العمل أسبوعياً مطلوبة",
+        "hoursPositive": "يجب أن يكون رقماً موجباً"
+      },
+      "toast": {
+        "updated": "تم تحديث ساعات العمل التعاقدية بنجاح",
+        "created": "تم إنشاء ساعات العمل التعاقدية بنجاح",
+        "deleted": "تم حذف ساعات العمل التعاقدية بنجاح",
+        "saveFailed": "فشل حفظ ساعات العمل التعاقدية. يرجى المحاولة مرة أخرى.",
+        "deleteFailed": "فشل حذف ساعات العمل التعاقدية. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "sections": {
+      "studentId": {
+        "title": "معرف المتعلم",
+        "uln": "ULN",
+        "misLearnerId": "معرف MIS للمتعلم",
+        "studentId": "معرف المتعلم"
+      },
+      "aboutYou": {
+        "title": "معلومات عنك",
+        "clickToUpload": "انقر لتحميل الصورة",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "username": "اسم المستخدم",
+        "email": "البريد الإلكتروني",
+        "telephone": "الهاتف",
+        "mobile": "الجوال",
+        "dateOfBirth": "تاريخ الميلاد",
+        "gender": "الجنس",
+        "nationalInsuranceNo": "رقم التأمين الوطني",
+        "ethnicity": "العرق",
+        "learnerDisability": "إعاقة المتعلم",
+        "learningDifficulties": "صعوبات التعلم",
+        "initialAssessmentNumeracy": "التقييم الأولي - الحساب",
+        "initialAssessmentLiteracy": "التقييم الأولي - القراءة والكتابة",
+        "initialAssessmentICT": "التقييم الأولي - تكنولوجيا المعلومات",
+        "avatarInvalidFile": "يرجى اختيار ملف صورة صالح",
+        "avatarTooLarge": "يجب أن يكون حجم الصورة أقل من 5 ميجابايت",
+        "avatarSuccess": "تم تحميل الصورة الرمزية بنجاح",
+        "avatarFailed": "فشل تحميل الصورة الرمزية. يرجى المحاولة مرة أخرى."
+      },
+      "address": {
+        "title": "العنوان",
+        "street": "رقم/اسم المنزل والشارع",
+        "suburb": "الضاحية/القرية",
+        "town": "المدينة",
+        "country": "الدولة",
+        "homePostcode": "الرمز البريدي",
+        "countryOfDomicile": "دولة الإقامة"
+      },
+      "employer": {
+        "title": "صاحب العمل",
+        "employer": "صاحب العمل",
+        "employerIdPlaceholder": "معرف صاحب العمل",
+        "jobTitle": "المسمى الوظيفي",
+        "location": "الموقع",
+        "managerName": "اسم المدير",
+        "managerJobTitle": "المسمى الوظيفي للمدير",
+        "mentor": "المرشد"
+      },
+      "fundingBody": {
+        "title": "جهة التمويل",
+        "fundingBody": "جهة التمويل",
+        "awardingBody": "الجهة المانحة",
+        "registrationNumber": "رقم التسجيل",
+        "registrationDate": "تاريخ التسجيل",
+        "laraCode": "رمز LARA"
+      },
+      "fundingBands": {
+        "title": "شرائح التمويل",
+        "originalAmount": "المبلغ الأصلي",
+        "customAmount": "المبلغ المخصص",
+        "fundingBandId": "معرف شريحة التمويل",
+        "updatedByLearner": "تم التحديث بواسطة المتعلم",
+        "lastUpdated": "آخر تحديث"
+      },
+      "additionalInfo": {
+        "title": "معلومات إضافية",
+        "costCentre": "مركز التكلفة",
+        "fundingContractor": "مقاول التمويل",
+        "partner": "الشريك",
+        "subArea": "المنطقة الفرعية",
+        "cohort": "المجموعة",
+        "curriculumArea": "مجال المنهج",
+        "ssa1": "SSA1",
+        "ssa2": "SSA2",
+        "directorOfCurriculum": "مدير المنهج",
+        "learnerType": "نوع المتعلم",
+        "expectedOffTheJobHours": "ساعات العمل خارج الوظيفة المتوقعة",
+        "offTheJobTraining": "التدريب خارج الوظيفة",
+        "guidedLearningHoursAchieved": "ساعات التعلم الموجهة المحققة"
+      }
+    },
+    "resetPasswordDialog": {
+      "title": "إعادة تعيين كلمة المرور",
+      "descriptionWithName": "إعادة تعيين كلمة المرور لـ {name} ({email})",
+      "descriptionEmailOnly": "إعادة تعيين كلمة المرور لـ {email}",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "show": "إظهار",
+      "hide": "إخفاء",
+      "cancel": "إلغاء",
+      "resetting": "جاري إعادة التعيين...",
+      "resetPassword": "إعادة تعيين كلمة المرور",
+      "hintText": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل وتتضمن أحرفاً كبيرة وصغيرة ورقماً.",
+      "validation": {
+        "passwordMin": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+        "passwordPattern": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم واحد على الأقل",
+        "confirmRequired": "يرجى تأكيد كلمة المرور",
+        "passwordsMismatch": "كلمات المرور غير متطابقة"
+      },
+      "successDefault": "تم إعادة تعيين كلمة المرور بنجاح",
+      "errorDefault": "تعذر إعادة تعيين كلمة المرور. يرجى المحاولة بعد قليل.",
+      "learnerEmailRequired": "البريد الإلكتروني للمتعلم مطلوب"
+    },
+    "emailPasswordResetDialog": {
+      "title": "إرسال إعادة تعيين كلمة المرور بالبريد",
+      "description": "هل أنت متأكد من رغبتك في إعادة تعيين كلمة المرور؟ سيتم إرسال بريد إلكتروني إلى {email} يتضمن التعليمات.",
+      "cancel": "إلغاء",
+      "sending": "جاري الإرسال...",
+      "ok": "موافق",
+      "successDefault": "تم إرسال بريد إعادة التعيين بنجاح",
+      "errorDefault": "تعذر إرسال بريد إعادة التعيين. يرجى المحاولة بعد قليل.",
+      "learnerEmailRequired": "البريد الإلكتروني للمتعلم مطلوب"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

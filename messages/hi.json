@@ -5760,6 +5760,311 @@
       "updateInvoice": "इनवॉइस अपडेट करें"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "सब्सक्रिप्शन्स",
+      "subtitle": "ऑर्गनाइज़ेशन सब्सक्रिप्शन्स और प्लान देखें व मैनेज करें"
+    },
+    "tabs": {
+      "subscriptions": "सब्सक्रिप्शन्स",
+      "plans": "प्लान्स"
+    },
+    "common": {
+      "unknown": "अज्ञात",
+      "notAvailable": "उपलब्ध नहीं",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट करें",
+      "exportPdf": "PDF एक्सपोर्ट करें"
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए डेटा नहीं है",
+      "csvExported": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+      "pdfExported": "PDF सफलतापूर्वक एक्सपोर्ट हुआ"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "सब्सक्रिप्शन्स खोजें...",
+      "empty": "कोई सब्सक्रिप्शन नहीं मिला।",
+      "columns": {
+        "organisation": "ऑर्गनाइज़ेशन",
+        "plan": "प्लान",
+        "users": "यूज़र्स",
+        "status": "स्टेटस",
+        "expiryDate": "एक्सपायरी डेट",
+        "actions": "एक्शन्स"
+      },
+      "status": {
+        "active": "एक्टिव",
+        "expired": "एक्सपायर्ड"
+      },
+      "actionsMenu": {
+        "changePlan": "प्लान बदलें",
+        "suspendAccess": "एक्सेस सस्पेंड करें"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "ऑर्गनाइज़ेशन को प्लान असाइन करें",
+          "description": "असाइन करने के लिए ऑर्गनाइज़ेशन और प्लान चुनें।"
+        },
+        "changePlan": {
+          "title": "प्लान बदलें",
+          "description": "इस ऑर्गनाइज़ेशन के लिए नया प्लान चुनें।"
+        },
+        "suspendAccess": {
+          "title": "ऑर्गनाइज़ेशन एक्सेस सस्पेंड करें",
+          "description": "इस ऑर्गनाइज़ेशन के लिए उपयोग सीमित करें। चाहें तो कारण जोड़ें।"
+        }
+      },
+      "buttons": {
+        "assignPlan": "प्लान असाइन करें"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "प्लान्स खोजें...",
+      "empty": "कोई प्लान नहीं मिला।",
+      "columns": {
+        "name": "नाम",
+        "code": "कोड",
+        "price": "प्राइस",
+        "userLimit": "यूज़र लिमिट",
+        "status": "स्टेटस",
+        "actions": "एक्शन्स"
+      },
+      "status": {
+        "active": "एक्टिव",
+        "inactive": "इनएक्टिव"
+      },
+      "actions": {
+        "create": "प्लान बनाएं",
+        "edit": "एडिट",
+        "activate": "एक्टिवेट",
+        "deactivate": "डीएक्टिवेट"
+      },
+      "dialogs": {
+        "create": {
+          "title": "प्लान बनाएं",
+          "description": "नया सब्सक्रिप्शन प्लान परिभाषित करें।"
+        },
+        "edit": {
+          "title": "प्लान एडिट करें",
+          "description": "प्लान कॉन्फ़िगरेशन अपडेट करें।"
+        }
+      },
+      "toast": {
+        "planActivated": "प्लान एक्टिवेट हुआ",
+        "planDeactivated": "प्लान डीएक्टिवेट हुआ",
+        "activateFailedFallback": "प्लान एक्टिवेट करने में विफल",
+        "deactivateFailedFallback": "प्लान डीएक्टिवेट करने में विफल"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "ऑर्गनाइज़ेशन *",
+        "plan": "प्लान *"
+      },
+      "placeholders": {
+        "organisation": "ऑर्गनाइज़ेशन चुनें",
+        "plan": "प्लान चुनें"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "सिर्फ वही ऑर्गनाइज़ेशन दिखाए जाते हैं जिनके पास प्लान नहीं है।"
+      },
+      "empty": {
+        "allAssigned": "सभी एक्टिव ऑर्गनाइज़ेशन के पास पहले से प्लान असाइन है।"
+      },
+      "buttons": {
+        "close": "बंद करें",
+        "cancel": "कैंसल",
+        "submit": "प्लान असाइन करें"
+      },
+      "toast": {
+        "selectOrgAndPlan": "कृपया ऑर्गनाइज़ेशन और प्लान चुनें",
+        "assignedSuccess": "प्लान सफलतापूर्वक असाइन हुआ",
+        "assignFailedFallback": "प्लान असाइन करने में विफल"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "ऑर्गनाइज़ेशन",
+        "newPlan": "नया प्लान *"
+      },
+      "placeholders": {
+        "plan": "प्लान चुनें"
+      },
+      "buttons": {
+        "cancel": "कैंसल",
+        "submit": "प्लान बदलें"
+      },
+      "toast": {
+        "selectPlan": "कृपया एक प्लान चुनें",
+        "changedSuccess": "प्लान सफलतापूर्वक बदला गया",
+        "changeFailedFallback": "प्लान बदलने में विफल"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "ऑर्गनाइज़ेशन",
+        "reasonOptional": "कारण (वैकल्पिक)"
+      },
+      "placeholders": {
+        "reason": "जैसे: पेमेंट ओवरड्यू"
+      },
+      "buttons": {
+        "cancel": "कैंसल",
+        "submit": "एक्सेस सस्पेंड करें"
+      },
+      "toast": {
+        "suspendedSuccess": "ऑर्गनाइज़ेशन एक्सेस सस्पेंड हुआ",
+        "suspendFailedFallback": "एक्सेस सस्पेंड करने में विफल"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "नाम *",
+        "code": "कोड *",
+        "codeReadonly": "कोड",
+        "description": "विवरण",
+        "priceGbp": "प्राइस * (GBP)",
+        "price": "प्राइस *",
+        "currency": "करेंसी *",
+        "billingCycle": "बिलिंग साइकिल *",
+        "userLimit": "यूज़र लिमिट",
+        "centreLimit": "सेंटर लिमिट",
+        "organisationLimit": "ऑर्गनाइज़ेशन लिमिट",
+        "features": "फीचर्स (कॉमा से अलग)"
+      },
+      "placeholders": {
+        "nameExample": "जैसे: Pro",
+        "codeExample": "जैसे: PRO",
+        "description": "प्लान विवरण",
+        "currency": "करेंसी चुनें"
+      },
+      "help": {
+        "codeCannotChange": "कोड बदला नहीं जा सकता।"
+      },
+      "billingCycle": {
+        "monthly": "मासिक",
+        "yearly": "वार्षिक"
+      },
+      "buttons": {
+        "cancel": "कैंसल",
+        "create": "प्लान बनाएं",
+        "update": "प्लान अपडेट करें"
+      },
+      "toast": {
+        "createdSuccess": "प्लान सफलतापूर्वक बना",
+        "updatedSuccess": "प्लान सफलतापूर्वक अपडेट हुआ",
+        "createFailedFallback": "प्लान बनाने में विफल",
+        "updateFailedFallback": "प्लान अपडेट करने में विफल"
+      }
+    },
+    "validation": {
+      "nameRequired": "नाम आवश्यक है",
+      "codeRequired": "कोड आवश्यक है",
+      "currencyRequired": "करेंसी आवश्यक है",
+      "priceMin0": "प्राइस ≥ 0 होना चाहिए"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "सिस्टम एडमिन्स",
+      "subtitle": "मास्टर एडमिन यूज़र्स मैनेज करें"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "सिस्टम एडमिन्स खोजें...",
+      "empty": "कोई सिस्टम एडमिन नहीं मिला।",
+      "columns": {
+        "email": "ईमेल",
+        "name": "नाम",
+        "status": "स्टेटस",
+        "protected": "प्रोटेक्टेड",
+        "createdAt": "बनाया गया",
+        "actions": "एक्शन्स"
+      },
+      "status": {
+        "active": "एक्टिव",
+        "inactive": "इनएक्टिव"
+      },
+      "protected": {
+        "yes": "हाँ",
+        "no": "नहीं"
+      }
+    },
+    "actions": {
+      "add": "सिस्टम एडमिन जोड़ें",
+      "export": "एक्सपोर्ट",
+      "exportCsv": "CSV एक्सपोर्ट करें",
+      "exportPdf": "PDF एक्सपोर्ट करें",
+      "view": "देखें",
+      "edit": "एडिट",
+      "activate": "एक्टिवेट",
+      "deactivate": "डीएक्टिवेट",
+      "delete": "डिलीट"
+    },
+    "dialogs": {
+      "create": {
+        "title": "सिस्टम एडमिन बनाएं",
+        "description": "सिस्टम में नया मास्टर एडमिन यूज़र जोड़ें। केवल MasterAdmin सिस्टम एडमिन्स बना सकता है।"
+      },
+      "edit": {
+        "title": "सिस्टम एडमिन एडिट करें",
+        "description": "सिस्टम एडमिन जानकारी अपडेट करें।"
+      },
+      "delete": {
+        "title": "क्या आप सुनिश्चित हैं?",
+        "description": "यह इस यूज़र से मास्टर एडमिन रोल हटाएगा। यह कार्रवाई वापस नहीं की जा सकती।",
+        "protectedNote": "यह एडमिन प्रोटेक्टेड है और डिलीट नहीं किया जा सकता।",
+        "cancel": "कैंसल",
+        "confirm": "डिलीट",
+        "deleting": "हटाया जा रहा है..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "एक्सपोर्ट करने के लिए डेटा नहीं है",
+      "csvExported": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+      "pdfExported": "PDF सफलतापूर्वक एक्सपोर्ट हुआ",
+      "activatedSuccess": "सिस्टम एडमिन सफलतापूर्वक एक्टिवेट हुआ",
+      "deactivatedSuccess": "सिस्टम एडमिन सफलतापूर्वक डीएक्टिवेट हुआ",
+      "removedSuccess": "सिस्टम एडमिन सफलतापूर्वक हटाया गया",
+      "activateFailedFallback": "सिस्टम एडमिन एक्टिवेट करने में विफल",
+      "deactivateFailedFallback": "सिस्टम एडमिन डीएक्टिवेट करने में विफल",
+      "removeFailedFallback": "सिस्टम एडमिन हटाने में विफल",
+      "protectedDeleteFallback": "प्रोटेक्टेड सिस्टम एडमिन को डिलीट नहीं किया जा सकता",
+      "createdSuccess": "सिस्टम एडमिन सफलतापूर्वक बना",
+      "updatedSuccess": "सिस्टम एडमिन सफलतापूर्वक अपडेट हुआ",
+      "createFailedFallback": "सिस्टम एडमिन बनाने में विफल",
+      "updateFailedFallback": "सिस्टम एडमिन अपडेट करने में विफल"
+    },
+    "form": {
+      "labels": {
+        "email": "ईमेल *",
+        "password": "पासवर्ड *",
+        "firstName": "पहला नाम",
+        "lastName": "अंतिम नाम"
+      },
+      "placeholders": {
+        "email": "जैसे: admin@example.com",
+        "password": "पासवर्ड दर्ज करें",
+        "firstName": "जैसे: राहुल",
+        "lastName": "जैसे: शर्मा"
+      },
+      "buttons": {
+        "cancel": "कैंसल",
+        "create": "बनाएं",
+        "update": "अपडेट"
+      }
+    },
+    "validation": {
+      "invalidEmail": "अमान्य ईमेल पता",
+      "emailRequired": "ईमेल आवश्यक है",
+      "passwordMin": "पासवर्ड कम से कम {min} अक्षरों का होना चाहिए"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "कोर्स जानकारी नहीं मिली",

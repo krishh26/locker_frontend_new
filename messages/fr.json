@@ -5748,6 +5748,311 @@
       "updateInvoice": "Mettre à jour la facture"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "Abonnements",
+      "subtitle": "Afficher et gérer les abonnements et plans des organisations"
+    },
+    "tabs": {
+      "subscriptions": "Abonnements",
+      "plans": "Plans"
+    },
+    "common": {
+      "unknown": "Inconnu",
+      "notAvailable": "N/D",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Exporter",
+      "exportCsv": "Exporter CSV",
+      "exportPdf": "Exporter PDF"
+    },
+    "toast": {
+      "noDataToExport": "Aucune donnée à exporter",
+      "csvExported": "CSV exporté avec succès",
+      "pdfExported": "PDF exporté avec succès"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Rechercher des abonnements...",
+      "empty": "Aucun abonnement trouvé.",
+      "columns": {
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "users": "Utilisateurs",
+        "status": "Statut",
+        "expiryDate": "Date d’expiration",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Actif",
+        "expired": "Expiré"
+      },
+      "actionsMenu": {
+        "changePlan": "Changer de plan",
+        "suspendAccess": "Suspendre l’accès"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Attribuer un plan à l’organisation",
+          "description": "Sélectionnez une organisation et un plan à attribuer."
+        },
+        "changePlan": {
+          "title": "Changer de plan",
+          "description": "Sélectionnez un nouveau plan pour cette organisation."
+        },
+        "suspendAccess": {
+          "title": "Suspendre l’accès de l’organisation",
+          "description": "Restreindre l’utilisation pour cette organisation. Vous pouvez éventuellement indiquer une raison."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Attribuer un plan"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Rechercher des plans...",
+      "empty": "Aucun plan trouvé.",
+      "columns": {
+        "name": "Nom",
+        "code": "Code",
+        "price": "Prix",
+        "userLimit": "Limite d’utilisateurs",
+        "status": "Statut",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif"
+      },
+      "actions": {
+        "create": "Créer un plan",
+        "edit": "Modifier",
+        "activate": "Activer",
+        "deactivate": "Désactiver"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Créer un plan",
+          "description": "Définir un nouveau plan d’abonnement."
+        },
+        "edit": {
+          "title": "Modifier le plan",
+          "description": "Mettre à jour la configuration du plan."
+        }
+      },
+      "toast": {
+        "planActivated": "Plan activé",
+        "planDeactivated": "Plan désactivé",
+        "activateFailedFallback": "Échec de l’activation du plan",
+        "deactivateFailedFallback": "Échec de la désactivation du plan"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organisation *",
+        "plan": "Plan *"
+      },
+      "placeholders": {
+        "organisation": "Sélectionner une organisation",
+        "plan": "Sélectionner un plan"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Seules les organisations sans plan sont affichées."
+      },
+      "empty": {
+        "allAssigned": "Toutes les organisations actives ont déjà un plan attribué."
+      },
+      "buttons": {
+        "close": "Fermer",
+        "cancel": "Annuler",
+        "submit": "Attribuer le plan"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Veuillez sélectionner une organisation et un plan",
+        "assignedSuccess": "Plan attribué avec succès",
+        "assignFailedFallback": "Échec de l’attribution du plan"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organisation",
+        "newPlan": "Nouveau plan *"
+      },
+      "placeholders": {
+        "plan": "Sélectionner un plan"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "submit": "Changer de plan"
+      },
+      "toast": {
+        "selectPlan": "Veuillez sélectionner un plan",
+        "changedSuccess": "Plan changé avec succès",
+        "changeFailedFallback": "Échec du changement de plan"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organisation",
+        "reasonOptional": "Raison (facultatif)"
+      },
+      "placeholders": {
+        "reason": "ex. Paiement en retard"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "submit": "Suspendre l’accès"
+      },
+      "toast": {
+        "suspendedSuccess": "Accès de l’organisation suspendu",
+        "suspendFailedFallback": "Échec de la suspension de l’accès"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Nom *",
+        "code": "Code *",
+        "codeReadonly": "Code",
+        "description": "Description",
+        "priceGbp": "Prix * (GBP)",
+        "price": "Prix *",
+        "currency": "Devise *",
+        "billingCycle": "Cycle de facturation *",
+        "userLimit": "Limite d’utilisateurs",
+        "centreLimit": "Limite de centres",
+        "organisationLimit": "Limite d’organisations",
+        "features": "Fonctionnalités (séparées par des virgules)"
+      },
+      "placeholders": {
+        "nameExample": "ex. Pro",
+        "codeExample": "ex. PRO",
+        "description": "Description du plan",
+        "currency": "Sélectionner une devise"
+      },
+      "help": {
+        "codeCannotChange": "Le code ne peut pas être modifié."
+      },
+      "billingCycle": {
+        "monthly": "Mensuel",
+        "yearly": "Annuel"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "create": "Créer un plan",
+        "update": "Mettre à jour le plan"
+      },
+      "toast": {
+        "createdSuccess": "Plan créé avec succès",
+        "updatedSuccess": "Plan mis à jour avec succès",
+        "createFailedFallback": "Échec de la création du plan",
+        "updateFailedFallback": "Échec de la mise à jour du plan"
+      }
+    },
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "codeRequired": "Le code est requis",
+      "currencyRequired": "La devise est requise",
+      "priceMin0": "Le prix doit être ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "Administrateurs système",
+      "subtitle": "Gérer les utilisateurs administrateurs maîtres"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Rechercher des administrateurs système...",
+      "empty": "Aucun administrateur système trouvé.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Nom",
+        "status": "Statut",
+        "protected": "Protégé",
+        "createdAt": "Créé le",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif"
+      },
+      "protected": {
+        "yes": "Oui",
+        "no": "Non"
+      }
+    },
+    "actions": {
+      "add": "Ajouter un administrateur système",
+      "export": "Exporter",
+      "exportCsv": "Exporter CSV",
+      "exportPdf": "Exporter PDF",
+      "view": "Voir",
+      "edit": "Modifier",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "delete": "Supprimer"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Créer un administrateur système",
+        "description": "Ajoutez un nouvel utilisateur administrateur maître au système. Seul MasterAdmin peut créer des administrateurs système."
+      },
+      "edit": {
+        "title": "Modifier l’administrateur système",
+        "description": "Mettre à jour les informations de l’administrateur système."
+      },
+      "delete": {
+        "title": "Êtes-vous sûr ?",
+        "description": "Cela retirera le rôle d’administrateur maître à cet utilisateur. Cette action est irréversible.",
+        "protectedNote": "Cet administrateur est protégé et ne peut pas être supprimé.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer",
+        "deleting": "Suppression..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "Aucune donnée à exporter",
+      "csvExported": "CSV exporté avec succès",
+      "pdfExported": "PDF exporté avec succès",
+      "activatedSuccess": "Administrateur système activé avec succès",
+      "deactivatedSuccess": "Administrateur système désactivé avec succès",
+      "removedSuccess": "Administrateur système supprimé avec succès",
+      "activateFailedFallback": "Échec de l’activation de l’administrateur système",
+      "deactivateFailedFallback": "Échec de la désactivation de l’administrateur système",
+      "removeFailedFallback": "Échec de la suppression de l’administrateur système",
+      "protectedDeleteFallback": "Impossible de supprimer un administrateur système protégé",
+      "createdSuccess": "Administrateur système créé avec succès",
+      "updatedSuccess": "Administrateur système mis à jour avec succès",
+      "createFailedFallback": "Échec de la création de l’administrateur système",
+      "updateFailedFallback": "Échec de la mise à jour de l’administrateur système"
+    },
+    "form": {
+      "labels": {
+        "email": "E-mail *",
+        "password": "Mot de passe *",
+        "firstName": "Prénom",
+        "lastName": "Nom"
+      },
+      "placeholders": {
+        "email": "ex. admin@example.com",
+        "password": "Saisir le mot de passe",
+        "firstName": "ex. Jean",
+        "lastName": "ex. Dupont"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "create": "Créer",
+        "update": "Mettre à jour"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Adresse e-mail invalide",
+      "emailRequired": "L’e-mail est requis",
+      "passwordMin": "Le mot de passe doit contenir au moins {min} caractères"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informations sur le cours introuvables",

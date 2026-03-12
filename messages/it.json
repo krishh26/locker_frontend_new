@@ -4914,6 +4914,311 @@
       "updateInvoice": "Aggiorna fattura"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "Abbonamenti",
+      "subtitle": "Visualizza e gestisci abbonamenti e piani delle organizzazioni"
+    },
+    "tabs": {
+      "subscriptions": "Abbonamenti",
+      "plans": "Piani"
+    },
+    "common": {
+      "unknown": "Sconosciuto",
+      "notAvailable": "N/D",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF"
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato correttamente",
+      "pdfExported": "PDF esportato correttamente"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Cerca abbonamenti...",
+      "empty": "Nessun abbonamento trovato.",
+      "columns": {
+        "organisation": "Organizzazione",
+        "plan": "Piano",
+        "users": "Utenti",
+        "status": "Stato",
+        "expiryDate": "Data di scadenza",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "expired": "Scaduto"
+      },
+      "actionsMenu": {
+        "changePlan": "Cambia piano",
+        "suspendAccess": "Sospendi accesso"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Assegna piano all'organizzazione",
+          "description": "Seleziona un'organizzazione e un piano da assegnare."
+        },
+        "changePlan": {
+          "title": "Cambia piano",
+          "description": "Seleziona un nuovo piano per questa organizzazione."
+        },
+        "suspendAccess": {
+          "title": "Sospendi accesso dell'organizzazione",
+          "description": "Limita l'utilizzo per questa organizzazione. Facoltativamente, indica un motivo."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Assegna piano"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Cerca piani...",
+      "empty": "Nessun piano trovato.",
+      "columns": {
+        "name": "Nome",
+        "code": "Codice",
+        "price": "Prezzo",
+        "userLimit": "Limite utenti",
+        "status": "Stato",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "actions": {
+        "create": "Crea piano",
+        "edit": "Modifica",
+        "activate": "Attiva",
+        "deactivate": "Disattiva"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Crea piano",
+          "description": "Definisci un nuovo piano di abbonamento."
+        },
+        "edit": {
+          "title": "Modifica piano",
+          "description": "Aggiorna la configurazione del piano."
+        }
+      },
+      "toast": {
+        "planActivated": "Piano attivato",
+        "planDeactivated": "Piano disattivato",
+        "activateFailedFallback": "Impossibile attivare il piano",
+        "deactivateFailedFallback": "Impossibile disattivare il piano"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organizzazione *",
+        "plan": "Piano *"
+      },
+      "placeholders": {
+        "organisation": "Seleziona organizzazione",
+        "plan": "Seleziona piano"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Sono mostrate solo le organizzazioni senza un piano."
+      },
+      "empty": {
+        "allAssigned": "Tutte le organizzazioni attive hanno già un piano assegnato."
+      },
+      "buttons": {
+        "close": "Chiudi",
+        "cancel": "Annulla",
+        "submit": "Assegna piano"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Seleziona organizzazione e piano",
+        "assignedSuccess": "Piano assegnato correttamente",
+        "assignFailedFallback": "Impossibile assegnare il piano"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organizzazione",
+        "newPlan": "Nuovo piano *"
+      },
+      "placeholders": {
+        "plan": "Seleziona piano"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "submit": "Cambia piano"
+      },
+      "toast": {
+        "selectPlan": "Seleziona un piano",
+        "changedSuccess": "Piano cambiato correttamente",
+        "changeFailedFallback": "Impossibile cambiare il piano"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organizzazione",
+        "reasonOptional": "Motivo (facoltativo)"
+      },
+      "placeholders": {
+        "reason": "es. Pagamento scaduto"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "submit": "Sospendi accesso"
+      },
+      "toast": {
+        "suspendedSuccess": "Accesso dell'organizzazione sospeso",
+        "suspendFailedFallback": "Impossibile sospendere l'accesso"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Nome *",
+        "code": "Codice *",
+        "codeReadonly": "Codice",
+        "description": "Descrizione",
+        "priceGbp": "Prezzo * (GBP)",
+        "price": "Prezzo *",
+        "currency": "Valuta *",
+        "billingCycle": "Ciclo di fatturazione *",
+        "userLimit": "Limite utenti",
+        "centreLimit": "Limite centri",
+        "organisationLimit": "Limite organizzazioni",
+        "features": "Funzionalità (separate da virgole)"
+      },
+      "placeholders": {
+        "nameExample": "es. Pro",
+        "codeExample": "es. PRO",
+        "description": "Descrizione del piano",
+        "currency": "Seleziona valuta"
+      },
+      "help": {
+        "codeCannotChange": "Il codice non può essere modificato."
+      },
+      "billingCycle": {
+        "monthly": "Mensile",
+        "yearly": "Annuale"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "create": "Crea piano",
+        "update": "Aggiorna piano"
+      },
+      "toast": {
+        "createdSuccess": "Piano creato correttamente",
+        "updatedSuccess": "Piano aggiornato correttamente",
+        "createFailedFallback": "Impossibile creare il piano",
+        "updateFailedFallback": "Impossibile aggiornare il piano"
+      }
+    },
+    "validation": {
+      "nameRequired": "Il nome è obbligatorio",
+      "codeRequired": "Il codice è obbligatorio",
+      "currencyRequired": "La valuta è obbligatoria",
+      "priceMin0": "Il prezzo deve essere ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "Amministratori di sistema",
+      "subtitle": "Gestisci gli utenti amministratori master"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Cerca amministratori di sistema...",
+      "empty": "Nessun amministratore di sistema trovato.",
+      "columns": {
+        "email": "Email",
+        "name": "Nome",
+        "status": "Stato",
+        "protected": "Protetto",
+        "createdAt": "Creato il",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "protected": {
+        "yes": "Sì",
+        "no": "No"
+      }
+    },
+    "actions": {
+      "add": "Aggiungi amministratore di sistema",
+      "export": "Esporta",
+      "exportCsv": "Esporta CSV",
+      "exportPdf": "Esporta PDF",
+      "view": "Visualizza",
+      "edit": "Modifica",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "delete": "Elimina"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Crea amministratore di sistema",
+        "description": "Aggiungi un nuovo utente amministratore master al sistema. Solo MasterAdmin può creare amministratori di sistema."
+      },
+      "edit": {
+        "title": "Modifica amministratore di sistema",
+        "description": "Aggiorna le informazioni dell'amministratore di sistema."
+      },
+      "delete": {
+        "title": "Sei sicuro?",
+        "description": "Questo rimuoverà il ruolo di amministratore master da questo utente. Questa azione non può essere annullata.",
+        "protectedNote": "Questo amministratore è protetto e non può essere eliminato.",
+        "cancel": "Annulla",
+        "confirm": "Elimina",
+        "deleting": "Rimozione..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "Nessun dato da esportare",
+      "csvExported": "CSV esportato correttamente",
+      "pdfExported": "PDF esportato correttamente",
+      "activatedSuccess": "Amministratore di sistema attivato correttamente",
+      "deactivatedSuccess": "Amministratore di sistema disattivato correttamente",
+      "removedSuccess": "Amministratore di sistema rimosso correttamente",
+      "activateFailedFallback": "Impossibile attivare l'amministratore di sistema",
+      "deactivateFailedFallback": "Impossibile disattivare l'amministratore di sistema",
+      "removeFailedFallback": "Impossibile rimuovere l'amministratore di sistema",
+      "protectedDeleteFallback": "Impossibile eliminare un amministratore di sistema protetto",
+      "createdSuccess": "Amministratore di sistema creato correttamente",
+      "updatedSuccess": "Amministratore di sistema aggiornato correttamente",
+      "createFailedFallback": "Impossibile creare l'amministratore di sistema",
+      "updateFailedFallback": "Impossibile aggiornare l'amministratore di sistema"
+    },
+    "form": {
+      "labels": {
+        "email": "Email *",
+        "password": "Password *",
+        "firstName": "Nome",
+        "lastName": "Cognome"
+      },
+      "placeholders": {
+        "email": "es. admin@example.com",
+        "password": "Inserisci password",
+        "firstName": "es. Mario",
+        "lastName": "es. Rossi"
+      },
+      "buttons": {
+        "cancel": "Annulla",
+        "create": "Crea",
+        "update": "Aggiorna"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Indirizzo email non valido",
+      "emailRequired": "L'email è obbligatoria",
+      "passwordMin": "La password deve contenere almeno {min} caratteri"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informazioni sul corso non trovate",

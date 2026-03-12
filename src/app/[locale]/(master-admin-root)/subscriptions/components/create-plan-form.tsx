@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useForm, Controller, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -18,6 +19,7 @@ import {
 import { useCreatePlanMutation } from "@/store/api/subscriptions/subscriptionApi"
 import type { CreatePlanRequest } from "@/store/api/subscriptions/types"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 interface CreatePlanFormValues {
   name: string
@@ -27,21 +29,24 @@ interface CreatePlanFormValues {
   billingCycle: "monthly" | "yearly"
 }
 
-const createPlanSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  code: z.string().min(1, "Code is required"),
-  description: z.string().optional(),
-  price: z.coerce.number().min(0, "Price must be ≥ 0"),
-  billingCycle: z.enum(["monthly", "yearly"]),
-})
-
 interface CreatePlanFormProps {
   onSuccess?: () => void
   onCancel?: () => void
 }
 
 export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
+  const t = useTranslations("subscriptions")
   const [createPlanMutation, { isLoading }] = useCreatePlanMutation()
+
+  const createPlanSchema = useMemo(() => {
+    return z.object({
+      name: z.string().min(1, t("validation.nameRequired")),
+      code: z.string().min(1, t("validation.codeRequired")),
+      description: z.string().optional(),
+      price: z.coerce.number().min(0, t("validation.priceMin0")),
+      billingCycle: z.enum(["monthly", "yearly"]),
+    })
+  }, [t])
 
   const form = useForm<CreatePlanFormValues>({
     resolver: zodResolver(createPlanSchema) as unknown as Resolver<CreatePlanFormValues>,
@@ -66,7 +71,7 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
         features: [],
       }
       await createPlanMutation(body).unwrap()
-      toast.success("Plan created successfully")
+      toast.success(t("form.toast.createdSuccess"))
       form.reset()
       onSuccess?.()
     } catch (error: unknown) {
@@ -75,7 +80,7 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to create plan"
+            : t("form.toast.createFailedFallback")
       toast.error(msg)
     }
   }
@@ -86,10 +91,10 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Name *</Label>
+          <Label htmlFor="name">{t("form.labels.name")}</Label>
           <Input
             id="name"
-            placeholder="e.g. Pro"
+            placeholder={t("form.placeholders.nameExample")}
             {...form.register("name")}
             className={form.formState.errors.name ? "border-destructive" : ""}
             disabled={isLoading}
@@ -99,10 +104,10 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="code">Code *</Label>
+          <Label htmlFor="code">{t("form.labels.code")}</Label>
           <Input
             id="code"
-            placeholder="e.g. PRO"
+            placeholder={t("form.placeholders.codeExample")}
             {...form.register("code")}
             className={form.formState.errors.code ? "border-destructive" : ""}
             disabled={isLoading}
@@ -114,10 +119,10 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">{t("form.labels.description")}</Label>
         <Textarea
           id="description"
-          placeholder="Plan description"
+          placeholder={t("form.placeholders.description")}
           {...form.register("description")}
           disabled={isLoading}
           rows={2}
@@ -126,7 +131,7 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="price">Price * (GBP)</Label>
+          <Label htmlFor="price">{t("form.labels.priceGbp")}</Label>
           <Input
             id="price"
             type="number"
@@ -143,7 +148,7 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Billing cycle *</Label>
+        <Label>{t("form.labels.billingCycle")}</Label>
         <Controller
           name="billingCycle"
           control={form.control}
@@ -153,8 +158,8 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
+                <SelectItem value="monthly">{t("form.billingCycle.monthly")}</SelectItem>
+                <SelectItem value="yearly">{t("form.billingCycle.yearly")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -163,11 +168,11 @@ export function CreatePlanForm({ onSuccess, onCancel }: CreatePlanFormProps) {
 
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
-          Cancel
+          {t("form.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Create Plan
+          {t("form.buttons.create")}
         </Button>
       </div>
     </form>

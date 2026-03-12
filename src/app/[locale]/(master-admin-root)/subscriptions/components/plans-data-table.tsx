@@ -48,8 +48,10 @@ import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CreatePlanForm } from "./create-plan-form"
 import { EditPlanForm } from "./edit-plan-form"
+import { useTranslations } from "next-intl"
 
 export function PlansDataTable() {
+  const t = useTranslations("subscriptions")
   const { data: plansData, isLoading: plansLoading, refetch } = useGetPlansQuery()
   const [activatePlanMutation, { isLoading: isActivating }] = useActivatePlanMutation()
   const [deactivatePlanMutation, { isLoading: isDeactivating }] = useDeactivatePlanMutation()
@@ -78,7 +80,7 @@ export function PlansDataTable() {
     async (plan: Plan) => {
       try {
         await activatePlanMutation(plan.id).unwrap()
-        toast.success("Plan activated")
+        toast.success(t("plansTable.toast.planActivated"))
         refetch()
       } catch (error: unknown) {
         const msg =
@@ -86,18 +88,18 @@ export function PlansDataTable() {
             ? (error as { data?: { message?: string } }).data?.message
             : error instanceof Error
               ? error.message
-              : "Failed to activate plan"
+              : t("plansTable.toast.activateFailedFallback")
         toast.error(msg)
       }
     },
-    [activatePlanMutation, refetch]
+    [activatePlanMutation, refetch, t]
   )
 
   const handleDeactivate = useCallback(
     async (plan: Plan) => {
       try {
         await deactivatePlanMutation(plan.id).unwrap()
-        toast.success("Plan deactivated")
+        toast.success(t("plansTable.toast.planDeactivated"))
         refetch()
       } catch (error: unknown) {
         const msg =
@@ -105,28 +107,28 @@ export function PlansDataTable() {
             ? (error as { data?: { message?: string } }).data?.message
             : error instanceof Error
               ? error.message
-              : "Failed to deactivate plan"
+              : t("plansTable.toast.deactivateFailedFallback")
         toast.error(msg)
       }
     },
-    [deactivatePlanMutation, refetch]
+    [deactivatePlanMutation, refetch, t]
   )
 
   const columns: ColumnDef<Plan>[] = useMemo(
     () => [
       {
         accessorKey: "name",
-        header: "Name",
+        header: t("plansTable.columns.name"),
         cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
       },
       {
         accessorKey: "code",
-        header: "Code",
+        header: t("plansTable.columns.code"),
         cell: ({ row }) => <span className="text-muted-foreground">{row.original.code}</span>,
       },
       {
         accessorKey: "price",
-        header: "Price",
+        header: t("plansTable.columns.price"),
         cell: ({ row }) => {
           const p = row.original
           return `${p.currency} ${p.price} / ${p.billingCycle}`
@@ -134,28 +136,30 @@ export function PlansDataTable() {
       },
       {
         accessorKey: "userLimit",
-        header: "User limit",
-        cell: ({ row }) => row.original.userLimit ?? "—",
+        header: t("plansTable.columns.userLimit"),
+        cell: ({ row }) => row.original.userLimit ?? t("common.dash"),
       },
       {
         accessorKey: "isActive",
-        header: "Status",
+        header: t("plansTable.columns.status"),
         cell: ({ row }) => (
           <Badge variant={row.original.isActive ? "default" : "secondary"}>
-            {row.original.isActive ? "Active" : "Inactive"}
+            {row.original.isActive
+              ? t("plansTable.status.active")
+              : t("plansTable.status.inactive")}
           </Badge>
         ),
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("plansTable.columns.actions"),
         cell: ({ row }) => {
           const plan = row.original
           return (
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" onClick={() => { setSelectedPlan(plan); setIsEditOpen(true) }}>
                 <Edit className="h-4 w-4 mr-2" />
-                Edit
+                {t("plansTable.actions.edit")}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -167,12 +171,12 @@ export function PlansDataTable() {
                   {plan.isActive ? (
                     <DropdownMenuItem onClick={() => handleDeactivate(plan)} disabled={isDeactivating}>
                       <XCircle className="h-4 w-4 mr-2" />
-                      Deactivate
+                      {t("plansTable.actions.deactivate")}
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem onClick={() => handleActivate(plan)} disabled={isActivating}>
                       <CheckCircle className="h-4 w-4 mr-2" />
-                      Activate
+                      {t("plansTable.actions.activate")}
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
@@ -182,7 +186,7 @@ export function PlansDataTable() {
         },
       },
     ],
-    [handleActivate, handleDeactivate, isActivating, isDeactivating]
+    [handleActivate, handleDeactivate, isActivating, isDeactivating, t]
   )
 
   const table = useReactTable({
@@ -218,7 +222,7 @@ export function PlansDataTable() {
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search plans..."
+            placeholder={t("plansTable.searchPlaceholder")}
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-9"
@@ -226,7 +230,7 @@ export function PlansDataTable() {
         </div>
         <Button size="sm" onClick={() => setIsCreateOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Create Plan
+          {t("plansTable.actions.create")}
         </Button>
       </div>
 
@@ -259,7 +263,7 @@ export function PlansDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No plans found.
+                  {t("plansTable.empty")}
                 </TableCell>
               </TableRow>
             )}
@@ -272,8 +276,8 @@ export function PlansDataTable() {
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create Plan</DialogTitle>
-            <DialogDescription>Define a new subscription plan.</DialogDescription>
+            <DialogTitle>{t("plansTable.dialogs.create.title")}</DialogTitle>
+            <DialogDescription>{t("plansTable.dialogs.create.description")}</DialogDescription>
           </DialogHeader>
           <CreatePlanForm onSuccess={handleCreateSuccess} onCancel={() => setIsCreateOpen(false)} />
         </DialogContent>
@@ -283,8 +287,8 @@ export function PlansDataTable() {
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Edit Plan</DialogTitle>
-              <DialogDescription>Update plan configuration.</DialogDescription>
+              <DialogTitle>{t("plansTable.dialogs.edit.title")}</DialogTitle>
+              <DialogDescription>{t("plansTable.dialogs.edit.description")}</DialogDescription>
             </DialogHeader>
             <EditPlanForm
               plan={selectedPlan}

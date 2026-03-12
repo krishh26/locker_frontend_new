@@ -5718,6 +5718,311 @@
       "updateInvoice": "更新发票"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "订阅",
+      "subtitle": "查看并管理组织订阅与方案"
+    },
+    "tabs": {
+      "subscriptions": "订阅",
+      "plans": "方案"
+    },
+    "common": {
+      "unknown": "未知",
+      "notAvailable": "不适用",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF"
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "搜索订阅...",
+      "empty": "未找到订阅。",
+      "columns": {
+        "organisation": "组织",
+        "plan": "方案",
+        "users": "用户",
+        "status": "状态",
+        "expiryDate": "到期日",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "有效",
+        "expired": "已过期"
+      },
+      "actionsMenu": {
+        "changePlan": "更换方案",
+        "suspendAccess": "暂停访问"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "为组织分配方案",
+          "description": "选择要分配的组织与方案。"
+        },
+        "changePlan": {
+          "title": "更换方案",
+          "description": "为该组织选择新的方案。"
+        },
+        "suspendAccess": {
+          "title": "暂停组织访问",
+          "description": "限制该组织的使用。可选填写原因。"
+        }
+      },
+      "buttons": {
+        "assignPlan": "分配方案"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "搜索方案...",
+      "empty": "未找到方案。",
+      "columns": {
+        "name": "名称",
+        "code": "代码",
+        "price": "价格",
+        "userLimit": "用户上限",
+        "status": "状态",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "actions": {
+        "create": "创建方案",
+        "edit": "编辑",
+        "activate": "启用",
+        "deactivate": "停用"
+      },
+      "dialogs": {
+        "create": {
+          "title": "创建方案",
+          "description": "定义新的订阅方案。"
+        },
+        "edit": {
+          "title": "编辑方案",
+          "description": "更新方案配置。"
+        }
+      },
+      "toast": {
+        "planActivated": "方案已启用",
+        "planDeactivated": "方案已停用",
+        "activateFailedFallback": "启用方案失败",
+        "deactivateFailedFallback": "停用方案失败"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "组织 *",
+        "plan": "方案 *"
+      },
+      "placeholders": {
+        "organisation": "选择组织",
+        "plan": "选择方案"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "仅显示尚未分配方案的组织。"
+      },
+      "empty": {
+        "allAssigned": "所有启用的组织都已分配方案。"
+      },
+      "buttons": {
+        "close": "关闭",
+        "cancel": "取消",
+        "submit": "分配方案"
+      },
+      "toast": {
+        "selectOrgAndPlan": "请选择组织与方案",
+        "assignedSuccess": "方案分配成功",
+        "assignFailedFallback": "分配方案失败"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "组织",
+        "newPlan": "新方案 *"
+      },
+      "placeholders": {
+        "plan": "选择方案"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "submit": "更换方案"
+      },
+      "toast": {
+        "selectPlan": "请选择方案",
+        "changedSuccess": "方案更换成功",
+        "changeFailedFallback": "更换方案失败"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "组织",
+        "reasonOptional": "原因（可选）"
+      },
+      "placeholders": {
+        "reason": "例如：付款逾期"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "submit": "暂停访问"
+      },
+      "toast": {
+        "suspendedSuccess": "组织访问已暂停",
+        "suspendFailedFallback": "暂停访问失败"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "名称 *",
+        "code": "代码 *",
+        "codeReadonly": "代码",
+        "description": "描述",
+        "priceGbp": "价格 *（GBP）",
+        "price": "价格 *",
+        "currency": "币种 *",
+        "billingCycle": "计费周期 *",
+        "userLimit": "用户上限",
+        "centreLimit": "中心上限",
+        "organisationLimit": "组织上限",
+        "features": "功能（逗号分隔）"
+      },
+      "placeholders": {
+        "nameExample": "例如：Pro",
+        "codeExample": "例如：PRO",
+        "description": "方案描述",
+        "currency": "选择币种"
+      },
+      "help": {
+        "codeCannotChange": "代码不可更改。"
+      },
+      "billingCycle": {
+        "monthly": "按月",
+        "yearly": "按年"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "create": "创建方案",
+        "update": "更新方案"
+      },
+      "toast": {
+        "createdSuccess": "方案创建成功",
+        "updatedSuccess": "方案更新成功",
+        "createFailedFallback": "创建方案失败",
+        "updateFailedFallback": "更新方案失败"
+      }
+    },
+    "validation": {
+      "nameRequired": "名称为必填项",
+      "codeRequired": "代码为必填项",
+      "currencyRequired": "币种为必填项",
+      "priceMin0": "价格必须 ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "系统管理员",
+      "subtitle": "管理主管理员用户"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "搜索系统管理员...",
+      "empty": "未找到系统管理员。",
+      "columns": {
+        "email": "邮箱",
+        "name": "姓名",
+        "status": "状态",
+        "protected": "受保护",
+        "createdAt": "创建日期",
+        "actions": "操作"
+      },
+      "status": {
+        "active": "启用",
+        "inactive": "停用"
+      },
+      "protected": {
+        "yes": "是",
+        "no": "否"
+      }
+    },
+    "actions": {
+      "add": "添加系统管理员",
+      "export": "导出",
+      "exportCsv": "导出 CSV",
+      "exportPdf": "导出 PDF",
+      "view": "查看",
+      "edit": "编辑",
+      "activate": "启用",
+      "deactivate": "停用",
+      "delete": "删除"
+    },
+    "dialogs": {
+      "create": {
+        "title": "创建系统管理员",
+        "description": "向系统添加新的主管理员用户。只有 MasterAdmin 可以创建系统管理员。"
+      },
+      "edit": {
+        "title": "编辑系统管理员",
+        "description": "更新系统管理员信息。"
+      },
+      "delete": {
+        "title": "确定要继续吗？",
+        "description": "这将移除该用户的主管理员角色。此操作无法撤销。",
+        "protectedNote": "该管理员受保护，无法删除。",
+        "cancel": "取消",
+        "confirm": "删除",
+        "deleting": "正在移除..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "没有可导出的数据",
+      "csvExported": "CSV 导出成功",
+      "pdfExported": "PDF 导出成功",
+      "activatedSuccess": "系统管理员已启用",
+      "deactivatedSuccess": "系统管理员已停用",
+      "removedSuccess": "系统管理员已移除",
+      "activateFailedFallback": "启用系统管理员失败",
+      "deactivateFailedFallback": "停用系统管理员失败",
+      "removeFailedFallback": "移除系统管理员失败",
+      "protectedDeleteFallback": "无法删除受保护的系统管理员",
+      "createdSuccess": "系统管理员创建成功",
+      "updatedSuccess": "系统管理员更新成功",
+      "createFailedFallback": "创建系统管理员失败",
+      "updateFailedFallback": "更新系统管理员失败"
+    },
+    "form": {
+      "labels": {
+        "email": "邮箱 *",
+        "password": "密码 *",
+        "firstName": "名",
+        "lastName": "姓"
+      },
+      "placeholders": {
+        "email": "例如：admin@example.com",
+        "password": "输入密码",
+        "firstName": "例如：三",
+        "lastName": "例如：张"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "create": "创建",
+        "update": "更新"
+      }
+    },
+    "validation": {
+      "invalidEmail": "邮箱地址无效",
+      "emailRequired": "邮箱为必填项",
+      "passwordMin": "密码至少需要 {min} 个字符"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "未找到课程信息",

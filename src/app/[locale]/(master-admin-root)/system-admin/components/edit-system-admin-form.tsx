@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useMemo } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -10,15 +11,7 @@ import { Label } from "@/components/ui/label"
 import { useUpdateSystemAdminMutation } from "@/store/api/system-admin/systemAdminApi"
 import type { UpdateSystemAdminRequest, SystemAdmin } from "@/store/api/system-admin/types"
 import { toast } from "sonner"
-import { useEffect } from "react"
-
-const editSystemAdminSchema = z.object({
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-})
-
-type EditSystemAdminFormValues = z.infer<typeof editSystemAdminSchema>
+import { useTranslations } from "next-intl"
 
 interface EditSystemAdminFormProps {
   systemAdmin: SystemAdmin
@@ -31,7 +24,21 @@ export function EditSystemAdminForm({
   onSuccess,
   onCancel,
 }: EditSystemAdminFormProps) {
+  const t = useTranslations("systemAdmin")
   const [updateSystemAdmin, { isLoading: isUpdating }] = useUpdateSystemAdminMutation()
+
+  const editSystemAdminSchema = useMemo(() => {
+    return z.object({
+      email: z
+        .string()
+        .email(t("validation.invalidEmail"))
+        .min(1, t("validation.emailRequired")),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+    })
+  }, [t])
+
+  type EditSystemAdminFormValues = z.infer<typeof editSystemAdminSchema>
 
   const form = useForm<EditSystemAdminFormValues>({
     resolver: zodResolver(editSystemAdminSchema),
@@ -59,7 +66,7 @@ export function EditSystemAdminForm({
       }
 
       await updateSystemAdmin({ id: systemAdmin.id, data: updateData }).unwrap()
-      toast.success("System admin updated successfully")
+      toast.success(t("toast.updatedSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const errorMessage =
@@ -67,7 +74,7 @@ export function EditSystemAdminForm({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
           ? error.message
-          : "Failed to update system admin"
+          : t("toast.updateFailedFallback")
       toast.error(errorMessage)
     }
   }
@@ -80,7 +87,7 @@ export function EditSystemAdminForm({
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email">
-          Email <span className="text-destructive">*</span>
+          {t("form.labels.email")}
         </Label>
         <Controller
           name="email"
@@ -90,7 +97,7 @@ export function EditSystemAdminForm({
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@example.com"
+                placeholder={t("form.placeholders.email")}
                 {...field}
                 className={form.formState.errors.email ? "border-destructive" : ""}
                 disabled={isLoading}
@@ -107,14 +114,14 @@ export function EditSystemAdminForm({
 
       {/* First Name */}
       <div className="space-y-2">
-        <Label htmlFor="firstName">First Name</Label>
+        <Label htmlFor="firstName">{t("form.labels.firstName")}</Label>
         <Controller
           name="firstName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="firstName"
-              placeholder="John"
+              placeholder={t("form.placeholders.firstName")}
               {...field}
               disabled={isLoading}
             />
@@ -124,14 +131,14 @@ export function EditSystemAdminForm({
 
       {/* Last Name */}
       <div className="space-y-2">
-        <Label htmlFor="lastName">Last Name</Label>
+        <Label htmlFor="lastName">{t("form.labels.lastName")}</Label>
         <Controller
           name="lastName"
           control={form.control}
           render={({ field }) => (
             <Input
               id="lastName"
-              placeholder="Doe"
+              placeholder={t("form.placeholders.lastName")}
               {...field}
               disabled={isLoading}
             />
@@ -148,11 +155,11 @@ export function EditSystemAdminForm({
           disabled={isLoading}
           className="w-full sm:w-auto"
         >
-          Cancel
+          {t("form.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Update System Admin
+          {t("form.buttons.update")}
         </Button>
       </div>
     </form>

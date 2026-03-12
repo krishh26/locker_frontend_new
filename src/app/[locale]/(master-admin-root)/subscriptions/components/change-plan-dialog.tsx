@@ -15,6 +15,7 @@ import { useChangeOrganisationPlanMutation } from "@/store/api/subscriptions/sub
 import { useGetPlansQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { toast } from "sonner"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useTranslations } from "next-intl"
 
 interface ChangePlanDialogProps {
   organisationId: number
@@ -29,6 +30,7 @@ export function ChangePlanDialog({
   onSuccess,
   onCancel,
 }: ChangePlanDialogProps) {
+  const t = useTranslations("subscriptions")
   const { data: plansData, isLoading: isLoadingPlans } = useGetPlansQuery()
   const [changePlanMutation, { isLoading: isChanging }] = useChangeOrganisationPlanMutation()
 
@@ -43,7 +45,7 @@ export function ChangePlanDialog({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!planId) {
-      toast.error("Please select a plan")
+      toast.error(t("changePlan.toast.selectPlan"))
       return
     }
     try {
@@ -51,7 +53,7 @@ export function ChangePlanDialog({
         organisationId,
         planId: Number(planId),
       }).unwrap()
-      toast.success("Plan changed successfully")
+      toast.success(t("changePlan.toast.changedSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const msg =
@@ -59,7 +61,7 @@ export function ChangePlanDialog({
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to change plan"
+            : t("changePlan.toast.changeFailedFallback")
       toast.error(msg)
     }
   }
@@ -76,15 +78,15 @@ export function ChangePlanDialog({
     <form onSubmit={handleSubmit} className="space-y-6">
       {organisationName && (
         <div className="space-y-2">
-          <Label>Organisation</Label>
+          <Label>{t("changePlan.labels.organisation")}</Label>
           <p className="text-sm font-medium">{organisationName}</p>
         </div>
       )}
       <div className="space-y-2">
-        <Label>New plan *</Label>
+        <Label>{t("changePlan.labels.newPlan")}</Label>
         <Select value={planId} onValueChange={setPlanId} required>
           <SelectTrigger>
-            <SelectValue placeholder="Select plan" />
+            <SelectValue placeholder={t("changePlan.placeholders.plan")} />
           </SelectTrigger>
           <SelectContent>
             {plans.map((plan) => (
@@ -97,11 +99,11 @@ export function ChangePlanDialog({
       </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isChanging}>
-          Cancel
+          {t("changePlan.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isChanging || !planId}>
           {isChanging && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Change Plan
+          {t("changePlan.buttons.submit")}
         </Button>
       </div>
     </form>

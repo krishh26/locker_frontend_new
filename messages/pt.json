@@ -5760,6 +5760,311 @@
       "updateInvoice": "Atualizar fatura"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "Subscrições",
+      "subtitle": "Ver e gerir subscrições e planos das organizações"
+    },
+    "tabs": {
+      "subscriptions": "Subscrições",
+      "plans": "Planos"
+    },
+    "common": {
+      "unknown": "Desconhecido",
+      "notAvailable": "N/D",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF"
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Pesquisar subscrições...",
+      "empty": "Nenhuma subscrição encontrada.",
+      "columns": {
+        "organisation": "Organização",
+        "plan": "Plano",
+        "users": "Utilizadores",
+        "status": "Estado",
+        "expiryDate": "Data de expiração",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativa",
+        "expired": "Expirada"
+      },
+      "actionsMenu": {
+        "changePlan": "Alterar plano",
+        "suspendAccess": "Suspender acesso"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Atribuir plano à organização",
+          "description": "Selecione uma organização e um plano para atribuir."
+        },
+        "changePlan": {
+          "title": "Alterar plano",
+          "description": "Selecione um novo plano para esta organização."
+        },
+        "suspendAccess": {
+          "title": "Suspender acesso da organização",
+          "description": "Restringir a utilização desta organização. Opcionalmente, indique um motivo."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Atribuir plano"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Pesquisar planos...",
+      "empty": "Nenhum plano encontrado.",
+      "columns": {
+        "name": "Nome",
+        "code": "Código",
+        "price": "Preço",
+        "userLimit": "Limite de utilizadores",
+        "status": "Estado",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "actions": {
+        "create": "Criar plano",
+        "edit": "Editar",
+        "activate": "Ativar",
+        "deactivate": "Desativar"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Criar plano",
+          "description": "Defina um novo plano de subscrição."
+        },
+        "edit": {
+          "title": "Editar plano",
+          "description": "Atualize a configuração do plano."
+        }
+      },
+      "toast": {
+        "planActivated": "Plano ativado",
+        "planDeactivated": "Plano desativado",
+        "activateFailedFallback": "Falha ao ativar o plano",
+        "deactivateFailedFallback": "Falha ao desativar o plano"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organização *",
+        "plan": "Plano *"
+      },
+      "placeholders": {
+        "organisation": "Selecionar organização",
+        "plan": "Selecionar plano"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Apenas são mostradas organizações sem plano."
+      },
+      "empty": {
+        "allAssigned": "Todas as organizações ativas já têm um plano atribuído."
+      },
+      "buttons": {
+        "close": "Fechar",
+        "cancel": "Cancelar",
+        "submit": "Atribuir plano"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Selecione a organização e o plano",
+        "assignedSuccess": "Plano atribuído com sucesso",
+        "assignFailedFallback": "Falha ao atribuir o plano"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organização",
+        "newPlan": "Novo plano *"
+      },
+      "placeholders": {
+        "plan": "Selecionar plano"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "submit": "Alterar plano"
+      },
+      "toast": {
+        "selectPlan": "Selecione um plano",
+        "changedSuccess": "Plano alterado com sucesso",
+        "changeFailedFallback": "Falha ao alterar o plano"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organização",
+        "reasonOptional": "Motivo (opcional)"
+      },
+      "placeholders": {
+        "reason": "ex.: Pagamento em atraso"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "submit": "Suspender acesso"
+      },
+      "toast": {
+        "suspendedSuccess": "Acesso da organização suspenso",
+        "suspendFailedFallback": "Falha ao suspender o acesso"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Nome *",
+        "code": "Código *",
+        "codeReadonly": "Código",
+        "description": "Descrição",
+        "priceGbp": "Preço * (GBP)",
+        "price": "Preço *",
+        "currency": "Moeda *",
+        "billingCycle": "Ciclo de faturação *",
+        "userLimit": "Limite de utilizadores",
+        "centreLimit": "Limite de centros",
+        "organisationLimit": "Limite de organizações",
+        "features": "Funcionalidades (separadas por vírgulas)"
+      },
+      "placeholders": {
+        "nameExample": "ex.: Pro",
+        "codeExample": "ex.: PRO",
+        "description": "Descrição do plano",
+        "currency": "Selecionar moeda"
+      },
+      "help": {
+        "codeCannotChange": "O código não pode ser alterado."
+      },
+      "billingCycle": {
+        "monthly": "Mensal",
+        "yearly": "Anual"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "create": "Criar plano",
+        "update": "Atualizar plano"
+      },
+      "toast": {
+        "createdSuccess": "Plano criado com sucesso",
+        "updatedSuccess": "Plano atualizado com sucesso",
+        "createFailedFallback": "Falha ao criar o plano",
+        "updateFailedFallback": "Falha ao atualizar o plano"
+      }
+    },
+    "validation": {
+      "nameRequired": "O nome é obrigatório",
+      "codeRequired": "O código é obrigatório",
+      "currencyRequired": "A moeda é obrigatória",
+      "priceMin0": "O preço deve ser ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "Administradores do sistema",
+      "subtitle": "Gerir utilizadores de administrador mestre"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar administradores do sistema...",
+      "empty": "Nenhum administrador do sistema encontrado.",
+      "columns": {
+        "email": "E-mail",
+        "name": "Nome",
+        "status": "Estado",
+        "protected": "Protegido",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "protected": {
+        "yes": "Sim",
+        "no": "Não"
+      }
+    },
+    "actions": {
+      "add": "Adicionar administrador do sistema",
+      "export": "Exportar",
+      "exportCsv": "Exportar CSV",
+      "exportPdf": "Exportar PDF",
+      "view": "Ver",
+      "edit": "Editar",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "delete": "Eliminar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Criar administrador do sistema",
+        "description": "Adicione um novo utilizador administrador mestre ao sistema. Apenas MasterAdmin pode criar administradores do sistema."
+      },
+      "edit": {
+        "title": "Editar administrador do sistema",
+        "description": "Atualizar as informações do administrador do sistema."
+      },
+      "delete": {
+        "title": "Tem a certeza?",
+        "description": "Isto removerá a função de administrador mestre deste utilizador. Esta ação não pode ser anulada.",
+        "protectedNote": "Este administrador é protegido e não pode ser eliminado.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "A remover..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "Sem dados para exportar",
+      "csvExported": "CSV exportado com sucesso",
+      "pdfExported": "PDF exportado com sucesso",
+      "activatedSuccess": "Administrador do sistema ativado com sucesso",
+      "deactivatedSuccess": "Administrador do sistema desativado com sucesso",
+      "removedSuccess": "Administrador do sistema removido com sucesso",
+      "activateFailedFallback": "Falha ao ativar o administrador do sistema",
+      "deactivateFailedFallback": "Falha ao desativar o administrador do sistema",
+      "removeFailedFallback": "Falha ao remover o administrador do sistema",
+      "protectedDeleteFallback": "Não é possível eliminar um administrador do sistema protegido",
+      "createdSuccess": "Administrador do sistema criado com sucesso",
+      "updatedSuccess": "Administrador do sistema atualizado com sucesso",
+      "createFailedFallback": "Falha ao criar o administrador do sistema",
+      "updateFailedFallback": "Falha ao atualizar o administrador do sistema"
+    },
+    "form": {
+      "labels": {
+        "email": "E-mail *",
+        "password": "Palavra-passe *",
+        "firstName": "Nome próprio",
+        "lastName": "Apelido"
+      },
+      "placeholders": {
+        "email": "ex.: admin@example.com",
+        "password": "Introduza a palavra-passe",
+        "firstName": "ex.: João",
+        "lastName": "ex.: Silva"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "create": "Criar",
+        "update": "Atualizar"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Endereço de e-mail inválido",
+      "emailRequired": "O e-mail é obrigatório",
+      "passwordMin": "A palavra-passe deve ter pelo menos {min} caracteres"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Informação do curso não encontrada",

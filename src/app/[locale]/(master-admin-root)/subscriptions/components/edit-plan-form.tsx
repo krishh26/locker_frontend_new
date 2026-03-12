@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useForm, Controller, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -19,6 +19,7 @@ import {
 import { useUpdatePlanMutation } from "@/store/api/subscriptions/subscriptionApi"
 import type { Plan, UpdatePlanRequest } from "@/store/api/subscriptions/types"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 interface EditPlanFormValues {
   name: string
@@ -32,18 +33,6 @@ interface EditPlanFormValues {
   featuresStr?: string
 }
 
-const editPlanSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().optional(),
-  price: z.coerce.number().min(0, "Price must be ≥ 0"),
-  currency: z.string().min(1, "Currency is required"),
-  billingCycle: z.enum(["monthly", "yearly"]),
-  userLimit: z.optional(z.coerce.number().min(0)),
-  centreLimit: z.optional(z.coerce.number().min(0)),
-  organisationLimit: z.optional(z.coerce.number().min(0)),
-  featuresStr: z.string().optional(),
-})
-
 interface EditPlanFormProps {
   plan: Plan
   onSuccess?: () => void
@@ -51,7 +40,22 @@ interface EditPlanFormProps {
 }
 
 export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
+  const t = useTranslations("subscriptions")
   const [updatePlan, { isLoading }] = useUpdatePlanMutation()
+
+  const editPlanSchema = useMemo(() => {
+    return z.object({
+      name: z.string().min(1, t("validation.nameRequired")),
+      description: z.string().optional(),
+      price: z.coerce.number().min(0, t("validation.priceMin0")),
+      currency: z.string().min(1, t("validation.currencyRequired")),
+      billingCycle: z.enum(["monthly", "yearly"]),
+      userLimit: z.optional(z.coerce.number().min(0)),
+      centreLimit: z.optional(z.coerce.number().min(0)),
+      organisationLimit: z.optional(z.coerce.number().min(0)),
+      featuresStr: z.string().optional(),
+    })
+  }, [t])
 
   const form = useForm<EditPlanFormValues>({
     resolver: zodResolver(editPlanSchema) as unknown as Resolver<EditPlanFormValues>,
@@ -99,7 +103,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
         features,
       }
       await updatePlan({ id: plan.id, data: body }).unwrap()
-      toast.success("Plan updated successfully")
+      toast.success(t("form.toast.updatedSuccess"))
       onSuccess?.()
     } catch (error: unknown) {
       const msg =
@@ -107,7 +111,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
           ? (error as { data?: { message?: string } }).data?.message
           : error instanceof Error
             ? error.message
-            : "Failed to update plan"
+            : t("form.toast.updateFailedFallback")
       toast.error(msg)
     }
   }
@@ -117,13 +121,13 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-2">
-        <Label>Code</Label>
+        <Label>{t("form.labels.codeReadonly")}</Label>
         <Input value={plan.code} disabled className="bg-muted" />
-        <p className="text-xs text-muted-foreground">Code cannot be changed.</p>
+        <p className="text-xs text-muted-foreground">{t("form.help.codeCannotChange")}</p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="name">Name *</Label>
+        <Label htmlFor="name">{t("form.labels.name")}</Label>
         <Input
           id="name"
           {...form.register("name")}
@@ -136,7 +140,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">{t("form.labels.description")}</Label>
         <Textarea
           id="description"
           {...form.register("description")}
@@ -147,7 +151,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="price">Price *</Label>
+          <Label htmlFor="price">{t("form.labels.price")}</Label>
           <Input
             id="price"
             type="number"
@@ -162,14 +166,14 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="currency">Currency *</Label>
+          <Label htmlFor="currency">{t("form.labels.currency")}</Label>
           <Controller
             name="currency"
             control={form.control}
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange} disabled={isLoading}>
                 <SelectTrigger id="currency" className={form.formState.errors.currency ? "border-destructive" : ""}>
-                  <SelectValue placeholder="Select currency" />
+                  <SelectValue placeholder={t("form.placeholders.currency")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="GBP">GBP</SelectItem>
@@ -186,7 +190,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Billing cycle *</Label>
+        <Label>{t("form.labels.billingCycle")}</Label>
         <Controller
           name="billingCycle"
           control={form.control}
@@ -196,8 +200,8 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
+                <SelectItem value="monthly">{t("form.billingCycle.monthly")}</SelectItem>
+                <SelectItem value="yearly">{t("form.billingCycle.yearly")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -206,7 +210,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label htmlFor="userLimit">User limit</Label>
+          <Label htmlFor="userLimit">{t("form.labels.userLimit")}</Label>
           <Input
             id="userLimit"
             type="number"
@@ -216,7 +220,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="centreLimit">Centre limit</Label>
+          <Label htmlFor="centreLimit">{t("form.labels.centreLimit")}</Label>
           <Input
             id="centreLimit"
             type="number"
@@ -226,7 +230,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="organisationLimit">Organisation limit</Label>
+          <Label htmlFor="organisationLimit">{t("form.labels.organisationLimit")}</Label>
           <Input
             id="organisationLimit"
             type="number"
@@ -238,7 +242,7 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="featuresStr">Features (comma-separated)</Label>
+        <Label htmlFor="featuresStr">{t("form.labels.features")}</Label>
         <Input
           id="featuresStr"
           {...form.register("featuresStr")}
@@ -248,11 +252,11 @@ export function EditPlanForm({ plan, onSuccess, onCancel }: EditPlanFormProps) {
 
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
-          Cancel
+          {t("form.buttons.cancel")}
         </Button>
         <Button type="submit" disabled={isLoading || hasErrors}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Update Plan
+          {t("form.buttons.update")}
         </Button>
       </div>
     </form>

@@ -5776,6 +5776,311 @@
       "updateInvoice": "Update invoice"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "Subscriptions",
+      "subtitle": "View and manage organisation subscriptions and plans"
+    },
+    "tabs": {
+      "subscriptions": "Subscriptions",
+      "plans": "Plans"
+    },
+    "common": {
+      "unknown": "Unknown",
+      "notAvailable": "N/A",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF"
+    },
+    "toast": {
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully",
+      "pdfExported": "PDF exported successfully"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "Search subscriptions...",
+      "empty": "No subscriptions found.",
+      "columns": {
+        "organisation": "Organisation",
+        "plan": "Plan",
+        "users": "Users",
+        "status": "Status",
+        "expiryDate": "Expiry Date",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "expired": "Expired"
+      },
+      "actionsMenu": {
+        "changePlan": "Change Plan",
+        "suspendAccess": "Suspend Access"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "Assign Plan to Organisation",
+          "description": "Select an organisation and a plan to assign."
+        },
+        "changePlan": {
+          "title": "Change Plan",
+          "description": "Select a new plan for this organisation."
+        },
+        "suspendAccess": {
+          "title": "Suspend Organisation Access",
+          "description": "Restrict usage for this organisation. Optionally provide a reason."
+        }
+      },
+      "buttons": {
+        "assignPlan": "Assign Plan"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "Search plans...",
+      "empty": "No plans found.",
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "price": "Price",
+        "userLimit": "User limit",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "create": "Create Plan",
+        "edit": "Edit",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+      },
+      "dialogs": {
+        "create": {
+          "title": "Create Plan",
+          "description": "Define a new subscription plan."
+        },
+        "edit": {
+          "title": "Edit Plan",
+          "description": "Update plan configuration."
+        }
+      },
+      "toast": {
+        "planActivated": "Plan activated",
+        "planDeactivated": "Plan deactivated",
+        "activateFailedFallback": "Failed to activate plan",
+        "deactivateFailedFallback": "Failed to deactivate plan"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "Organisation *",
+        "plan": "Plan *"
+      },
+      "placeholders": {
+        "organisation": "Select organisation",
+        "plan": "Select plan"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "Only organisations without a plan are shown."
+      },
+      "empty": {
+        "allAssigned": "All active organisations already have a plan assigned."
+      },
+      "buttons": {
+        "close": "Close",
+        "cancel": "Cancel",
+        "submit": "Assign Plan"
+      },
+      "toast": {
+        "selectOrgAndPlan": "Please select organisation and plan",
+        "assignedSuccess": "Plan assigned successfully",
+        "assignFailedFallback": "Failed to assign plan"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "Organisation",
+        "newPlan": "New plan *"
+      },
+      "placeholders": {
+        "plan": "Select plan"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "submit": "Change Plan"
+      },
+      "toast": {
+        "selectPlan": "Please select a plan",
+        "changedSuccess": "Plan changed successfully",
+        "changeFailedFallback": "Failed to change plan"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "Organisation",
+        "reasonOptional": "Reason (optional)"
+      },
+      "placeholders": {
+        "reason": "e.g. Payment overdue"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "submit": "Suspend Access"
+      },
+      "toast": {
+        "suspendedSuccess": "Organisation access suspended",
+        "suspendFailedFallback": "Failed to suspend access"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "Name *",
+        "code": "Code *",
+        "codeReadonly": "Code",
+        "description": "Description",
+        "priceGbp": "Price * (GBP)",
+        "price": "Price *",
+        "currency": "Currency *",
+        "billingCycle": "Billing cycle *",
+        "userLimit": "User limit",
+        "centreLimit": "Centre limit",
+        "organisationLimit": "Organisation limit",
+        "features": "Features (comma-separated)"
+      },
+      "placeholders": {
+        "nameExample": "e.g. Pro",
+        "codeExample": "e.g. PRO",
+        "description": "Plan description",
+        "currency": "Select currency"
+      },
+      "help": {
+        "codeCannotChange": "Code cannot be changed."
+      },
+      "billingCycle": {
+        "monthly": "Monthly",
+        "yearly": "Yearly"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "create": "Create Plan",
+        "update": "Update Plan"
+      },
+      "toast": {
+        "createdSuccess": "Plan created successfully",
+        "updatedSuccess": "Plan updated successfully",
+        "createFailedFallback": "Failed to create plan",
+        "updateFailedFallback": "Failed to update plan"
+      }
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "codeRequired": "Code is required",
+      "currencyRequired": "Currency is required",
+      "priceMin0": "Price must be ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "System Admins",
+      "subtitle": "Manage master admin users"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "Search system admins...",
+      "empty": "No system admins found.",
+      "columns": {
+        "email": "Email",
+        "name": "Name",
+        "status": "Status",
+        "protected": "Protected",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "protected": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "actions": {
+      "add": "Add System Admin",
+      "export": "Export",
+      "exportCsv": "Export CSV",
+      "exportPdf": "Export PDF",
+      "view": "View",
+      "edit": "Edit",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "delete": "Delete"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create System Admin",
+        "description": "Add a new master admin user to the system. Only MasterAdmin can create system admins."
+      },
+      "edit": {
+        "title": "Edit System Admin",
+        "description": "Update system admin information."
+      },
+      "delete": {
+        "title": "Are you sure?",
+        "description": "This will remove the master admin role from this user. This action cannot be undone.",
+        "protectedNote": "This admin is protected and cannot be deleted.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "deleting": "Removing..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "No data to export",
+      "csvExported": "CSV exported successfully",
+      "pdfExported": "PDF exported successfully",
+      "activatedSuccess": "System admin activated successfully",
+      "deactivatedSuccess": "System admin deactivated successfully",
+      "removedSuccess": "System admin removed successfully",
+      "activateFailedFallback": "Failed to activate system admin",
+      "deactivateFailedFallback": "Failed to deactivate system admin",
+      "removeFailedFallback": "Failed to remove system admin",
+      "protectedDeleteFallback": "Cannot delete protected system admin",
+      "createdSuccess": "System admin created successfully",
+      "updatedSuccess": "System admin updated successfully",
+      "createFailedFallback": "Failed to create system admin",
+      "updateFailedFallback": "Failed to update system admin"
+    },
+    "form": {
+      "labels": {
+        "email": "Email *",
+        "password": "Password *",
+        "firstName": "First name",
+        "lastName": "Last name"
+      },
+      "placeholders": {
+        "email": "e.g. admin@example.com",
+        "password": "Enter password",
+        "firstName": "e.g. John",
+        "lastName": "e.g. Doe"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update"
+      }
+    },
+    "validation": {
+      "invalidEmail": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least {min} characters"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "Course information not found",

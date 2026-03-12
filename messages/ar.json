@@ -5682,6 +5682,311 @@
       "updateInvoice": "تحديث الفاتورة"
     }
   },
+  "subscriptions": {
+    "page": {
+      "title": "الاشتراكات",
+      "subtitle": "عرض وإدارة اشتراكات وخطط المؤسسات"
+    },
+    "tabs": {
+      "subscriptions": "الاشتراكات",
+      "plans": "الخطط"
+    },
+    "common": {
+      "unknown": "غير معروف",
+      "notAvailable": "غير متاح",
+      "dash": "—"
+    },
+    "actions": {
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF"
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح"
+    },
+    "subscriptionsTable": {
+      "searchPlaceholder": "ابحث عن الاشتراكات...",
+      "empty": "لم يتم العثور على اشتراكات.",
+      "columns": {
+        "organisation": "المؤسسة",
+        "plan": "الخطة",
+        "users": "المستخدمون",
+        "status": "الحالة",
+        "expiryDate": "تاريخ الانتهاء",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "expired": "منتهي"
+      },
+      "actionsMenu": {
+        "changePlan": "تغيير الخطة",
+        "suspendAccess": "تعليق الوصول"
+      },
+      "dialogs": {
+        "assignPlan": {
+          "title": "تعيين خطة للمؤسسة",
+          "description": "اختر مؤسسة وخطة لتعيينها."
+        },
+        "changePlan": {
+          "title": "تغيير الخطة",
+          "description": "اختر خطة جديدة لهذه المؤسسة."
+        },
+        "suspendAccess": {
+          "title": "تعليق وصول المؤسسة",
+          "description": "تقييد الاستخدام لهذه المؤسسة. يمكنك إدخال سبب اختياريًا."
+        }
+      },
+      "buttons": {
+        "assignPlan": "تعيين خطة"
+      }
+    },
+    "plansTable": {
+      "searchPlaceholder": "ابحث عن الخطط...",
+      "empty": "لم يتم العثور على خطط.",
+      "columns": {
+        "name": "الاسم",
+        "code": "الرمز",
+        "price": "السعر",
+        "userLimit": "حد المستخدمين",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "actions": {
+        "create": "إنشاء خطة",
+        "edit": "تعديل",
+        "activate": "تفعيل",
+        "deactivate": "إلغاء التفعيل"
+      },
+      "dialogs": {
+        "create": {
+          "title": "إنشاء خطة",
+          "description": "تعريف خطة اشتراك جديدة."
+        },
+        "edit": {
+          "title": "تعديل الخطة",
+          "description": "تحديث إعدادات الخطة."
+        }
+      },
+      "toast": {
+        "planActivated": "تم تفعيل الخطة",
+        "planDeactivated": "تم إلغاء تفعيل الخطة",
+        "activateFailedFallback": "فشل تفعيل الخطة",
+        "deactivateFailedFallback": "فشل إلغاء تفعيل الخطة"
+      }
+    },
+    "assignPlan": {
+      "labels": {
+        "organisation": "المؤسسة *",
+        "plan": "الخطة *"
+      },
+      "placeholders": {
+        "organisation": "اختر المؤسسة",
+        "plan": "اختر الخطة"
+      },
+      "helper": {
+        "orgsWithoutPlanOnly": "يتم عرض المؤسسات التي لا تملك خطة فقط."
+      },
+      "empty": {
+        "allAssigned": "جميع المؤسسات النشطة لديها خطة معينة بالفعل."
+      },
+      "buttons": {
+        "close": "إغلاق",
+        "cancel": "إلغاء",
+        "submit": "تعيين الخطة"
+      },
+      "toast": {
+        "selectOrgAndPlan": "يرجى اختيار المؤسسة والخطة",
+        "assignedSuccess": "تم تعيين الخطة بنجاح",
+        "assignFailedFallback": "فشل تعيين الخطة"
+      }
+    },
+    "changePlan": {
+      "labels": {
+        "organisation": "المؤسسة",
+        "newPlan": "الخطة الجديدة *"
+      },
+      "placeholders": {
+        "plan": "اختر الخطة"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "submit": "تغيير الخطة"
+      },
+      "toast": {
+        "selectPlan": "يرجى اختيار خطة",
+        "changedSuccess": "تم تغيير الخطة بنجاح",
+        "changeFailedFallback": "فشل تغيير الخطة"
+      }
+    },
+    "suspendAccess": {
+      "labels": {
+        "organisation": "المؤسسة",
+        "reasonOptional": "السبب (اختياري)"
+      },
+      "placeholders": {
+        "reason": "مثال: تأخر الدفع"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "submit": "تعليق الوصول"
+      },
+      "toast": {
+        "suspendedSuccess": "تم تعليق وصول المؤسسة",
+        "suspendFailedFallback": "فشل تعليق الوصول"
+      }
+    },
+    "form": {
+      "labels": {
+        "name": "الاسم *",
+        "code": "الرمز *",
+        "codeReadonly": "الرمز",
+        "description": "الوصف",
+        "priceGbp": "السعر * (GBP)",
+        "price": "السعر *",
+        "currency": "العملة *",
+        "billingCycle": "دورة الفوترة *",
+        "userLimit": "حد المستخدمين",
+        "centreLimit": "حد المراكز",
+        "organisationLimit": "حد المؤسسات",
+        "features": "الميزات (مفصولة بفواصل)"
+      },
+      "placeholders": {
+        "nameExample": "مثال: Pro",
+        "codeExample": "مثال: PRO",
+        "description": "وصف الخطة",
+        "currency": "اختر العملة"
+      },
+      "help": {
+        "codeCannotChange": "لا يمكن تغيير الرمز."
+      },
+      "billingCycle": {
+        "monthly": "شهري",
+        "yearly": "سنوي"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "create": "إنشاء خطة",
+        "update": "تحديث الخطة"
+      },
+      "toast": {
+        "createdSuccess": "تم إنشاء الخطة بنجاح",
+        "updatedSuccess": "تم تحديث الخطة بنجاح",
+        "createFailedFallback": "فشل إنشاء الخطة",
+        "updateFailedFallback": "فشل تحديث الخطة"
+      }
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "codeRequired": "الرمز مطلوب",
+      "currencyRequired": "العملة مطلوبة",
+      "priceMin0": "يجب أن يكون السعر ≥ 0"
+    }
+  },
+  "systemAdmin": {
+    "page": {
+      "title": "مديرو النظام",
+      "subtitle": "إدارة مستخدمي المشرف الرئيسي"
+    },
+    "common": {
+      "dash": "—"
+    },
+    "table": {
+      "searchPlaceholder": "ابحث عن مديري النظام...",
+      "empty": "لم يتم العثور على مديري نظام.",
+      "columns": {
+        "email": "البريد الإلكتروني",
+        "name": "الاسم",
+        "status": "الحالة",
+        "protected": "محمي",
+        "createdAt": "تاريخ الإنشاء",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "protected": {
+        "yes": "نعم",
+        "no": "لا"
+      }
+    },
+    "actions": {
+      "add": "إضافة مدير نظام",
+      "export": "تصدير",
+      "exportCsv": "تصدير CSV",
+      "exportPdf": "تصدير PDF",
+      "view": "عرض",
+      "edit": "تعديل",
+      "activate": "تفعيل",
+      "deactivate": "إلغاء التفعيل",
+      "delete": "حذف"
+    },
+    "dialogs": {
+      "create": {
+        "title": "إنشاء مدير نظام",
+        "description": "إضافة مستخدم مشرف رئيسي جديد إلى النظام. يمكن لـ MasterAdmin فقط إنشاء مديري النظام."
+      },
+      "edit": {
+        "title": "تعديل مدير النظام",
+        "description": "تحديث معلومات مدير النظام."
+      },
+      "delete": {
+        "title": "هل أنت متأكد؟",
+        "description": "سيؤدي هذا إلى إزالة دور المشرف الرئيسي من هذا المستخدم. لا يمكن التراجع عن هذا الإجراء.",
+        "protectedNote": "هذا المدير محمي ولا يمكن حذفه.",
+        "cancel": "إلغاء",
+        "confirm": "حذف",
+        "deleting": "جارٍ الإزالة..."
+      }
+    },
+    "toast": {
+      "noDataToExport": "لا توجد بيانات للتصدير",
+      "csvExported": "تم تصدير CSV بنجاح",
+      "pdfExported": "تم تصدير PDF بنجاح",
+      "activatedSuccess": "تم تفعيل مدير النظام بنجاح",
+      "deactivatedSuccess": "تم إلغاء تفعيل مدير النظام بنجاح",
+      "removedSuccess": "تمت إزالة مدير النظام بنجاح",
+      "activateFailedFallback": "فشل تفعيل مدير النظام",
+      "deactivateFailedFallback": "فشل إلغاء تفعيل مدير النظام",
+      "removeFailedFallback": "فشل إزالة مدير النظام",
+      "protectedDeleteFallback": "لا يمكن حذف مدير نظام محمي",
+      "createdSuccess": "تم إنشاء مدير النظام بنجاح",
+      "updatedSuccess": "تم تحديث مدير النظام بنجاح",
+      "createFailedFallback": "فشل إنشاء مدير النظام",
+      "updateFailedFallback": "فشل تحديث مدير النظام"
+    },
+    "form": {
+      "labels": {
+        "email": "البريد الإلكتروني *",
+        "password": "كلمة المرور *",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة"
+      },
+      "placeholders": {
+        "email": "مثال: admin@example.com",
+        "password": "أدخل كلمة المرور",
+        "firstName": "مثال: أحمد",
+        "lastName": "مثال: علي"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "create": "إنشاء",
+        "update": "تحديث"
+      }
+    },
+    "validation": {
+      "invalidEmail": "عنوان بريد إلكتروني غير صالح",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "passwordMin": "يجب أن تكون كلمة المرور {min} أحرف على الأقل"
+    }
+  },
   "courseDetails": {
     "page": {
       "notFoundTitle": "معلومات الدورة غير متوفرة",

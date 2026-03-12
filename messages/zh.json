@@ -2155,6 +2155,12 @@
       "commentUpdateFailed": "更新备注失败"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "学员提交的表单",
+      "subtitle": "查看和管理所有学员提交的表单"
+    }
+  },
   "wellbeing": {
     "pageTitle": "身心健康资源管理",
     "pageSubtitle": "管理学习者的身心健康资源，包括添加、编辑以及切换资源可用性",

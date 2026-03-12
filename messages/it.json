@@ -1649,6 +1649,12 @@
       "commentUpdateFailed": "Impossibile aggiornare il commento"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Moduli inviati dagli apprendisti",
+      "subtitle": "Visualizza e gestisci tutti i moduli inviati dagli apprendisti"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestione delle risorse di benessere",
     "pageSubtitle": "Gestisci le risorse di benessere per gli studenti, inclusi aggiunta, modifica e attivazione/disattivazione",

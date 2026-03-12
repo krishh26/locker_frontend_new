@@ -2027,6 +2027,12 @@
       "commentUpdateFailed": "Error al actualizar el comentario"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Formularios enviados por aprendices",
+      "subtitle": "Ver y gestionar todos los formularios enviados por aprendices"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestión de Recursos de Bienestar",
     "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

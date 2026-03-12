@@ -16,7 +16,6 @@ import { FeedbackSection } from "@/app/[locale]/(admin-root)/qa-sample-plan/comp
 import { EvidenceLinksTable } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/tables/evidence-links-table";
 import { ActionsTable } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/tables/actions-table";
 import { IqaQuestionsSection } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/iqa-questions/iqa-questions-section";
-import { ActionButtonsBar } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/action-buttons-bar";
 import { DeleteActionDialog } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/dialogs/delete-action-dialog";
 import { DeleteDocumentDialog } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/dialogs/delete-document-dialog";
 import { DeleteFormDialog } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/components/dialogs/delete-form-dialog";

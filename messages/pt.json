@@ -2197,6 +2197,12 @@
       "commentUpdateFailed": "Falha ao atualizar o comentário"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Formulários enviados por formandos",
+      "subtitle": "Ver e gerir todos os formulários enviados por formandos"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestão de recursos de bem-estar",
     "pageSubtitle": "Gerir recursos de bem-estar para os formandos, incluindo adicionar, editar e alternar disponibilidade",

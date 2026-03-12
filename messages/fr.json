@@ -2237,6 +2237,12 @@
       "commentUpdateFailed": "Échec de la mise à jour du commentaire"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Formulaires soumis par les apprenants",
+      "subtitle": "Voir et gérer tous les formulaires soumis par les apprenants"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestion des ressources de bien-être",
     "pageSubtitle": "Gérer les ressources de bien-être pour les apprenants, y compris l’ajout, la modification et l’activation/désactivation",

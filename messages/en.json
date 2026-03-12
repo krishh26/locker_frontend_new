@@ -2266,6 +2266,12 @@
       "commentUpdateFailed": "Failed to update comment"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Learner Submitted Forms",
+      "subtitle": "View and manage all learner submitted forms"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Wellbeing Resources Management",
     "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability",

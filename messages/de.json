@@ -1609,6 +1609,12 @@
       "commentUpdateFailed": "Kommentar konnte nicht aktualisiert werden"
     }
   },
+  "learnersForms": {
+    "page": {
+      "title": "Von Lernern eingereichte Formulare",
+      "subtitle": "Alle von Lernern eingereichten Formulare anzeigen und verwalten"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Verwaltung von Wohlbefinden-Ressourcen",
     "pageSubtitle": "Wohlbefinden-Ressourcen für Lernende verwalten, einschließlich Hinzufügen, Bearbeiten und Umschalten der Verfügbarkeit",

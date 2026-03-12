@@ -13,7 +13,6 @@ import type { SampleQuestion } from "@/store/api/qa-sample-plan/types";
 import {
   transformSampleHistoryToModalData,
   getEmptyModalFormData,
-  extractPlannedDatesFromSampleHistory,
 } from "../utils/data-transformer";
 import type { UnitWithHistory } from "./use-iv-report-data";
 

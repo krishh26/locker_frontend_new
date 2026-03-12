@@ -2168,6 +2168,35 @@
       "loFullName": "Resultado de aprendizagem"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Visão geral do formando",
+      "subtitle": "Gerir e monitorizar o progresso do formando",
+      "loadError": "Falha ao carregar formandos. Tente novamente mais tarde.",
+      "noMatchingLearners": "Nenhum formando correspondente encontrado",
+      "noLearners": "Nenhum formando encontrado",
+      "adjustSearch": "Tente ajustar os critérios de pesquisa",
+      "noLearnersAssigned": "Ainda não há formandos atribuídos à sua conta"
+    },
+    "filters": {
+      "searchLabel": "Pesquisar por formando",
+      "searchPlaceholder": "Introduza nome, ID, email ou comentário do formando"
+    },
+    "card": {
+      "noComment": "Sem comentário",
+      "overallProgress": "Progresso geral",
+      "viewPortfolio": "Ver portfólio",
+      "editCommentTitle": "Editar comentário",
+      "editCommentDescription": "Atualizar o comentário de {name}",
+      "commentLabel": "Comentário",
+      "commentPlaceholder": "Introduza o seu comentário aqui...",
+      "cancel": "Cancelar",
+      "saving": "A guardar...",
+      "save": "Guardar",
+      "commentUpdatedSuccess": "Comentário atualizado com sucesso",
+      "commentUpdateFailed": "Falha ao atualizar o comentário"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestão de recursos de bem-estar",
     "pageSubtitle": "Gerir recursos de bem-estar para os formandos, incluindo adicionar, editar e alternar disponibilidade",

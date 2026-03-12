@@ -1580,6 +1580,35 @@
       "loFullName": "Lernergebnis"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Lerner-Übersicht",
+      "subtitle": "Lernerfortschritt verwalten und überwachen",
+      "loadError": "Lerner konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "noMatchingLearners": "Keine passenden Lerner gefunden",
+      "noLearners": "Keine Lerner gefunden",
+      "adjustSearch": "Versuchen Sie, Ihre Suchkriterien anzupassen",
+      "noLearnersAssigned": "Ihrem Konto sind noch keine Lerner zugewiesen"
+    },
+    "filters": {
+      "searchLabel": "Nach Lerner suchen",
+      "searchPlaceholder": "Name, ID, E-Mail oder Kommentar des Lerners eingeben"
+    },
+    "card": {
+      "noComment": "Kein Kommentar",
+      "overallProgress": "Gesamtfortschritt",
+      "viewPortfolio": "Portfolio anzeigen",
+      "editCommentTitle": "Kommentar bearbeiten",
+      "editCommentDescription": "Kommentar für {name} aktualisieren",
+      "commentLabel": "Kommentar",
+      "commentPlaceholder": "Geben Sie hier Ihren Kommentar ein...",
+      "cancel": "Abbrechen",
+      "saving": "Wird gespeichert...",
+      "save": "Speichern",
+      "commentUpdatedSuccess": "Kommentar erfolgreich aktualisiert",
+      "commentUpdateFailed": "Kommentar konnte nicht aktualisiert werden"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Verwaltung von Wohlbefinden-Ressourcen",
     "pageSubtitle": "Wohlbefinden-Ressourcen für Lernende verwalten, einschließlich Hinzufügen, Bearbeiten und Umschalten der Verfügbarkeit",

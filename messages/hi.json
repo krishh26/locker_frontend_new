@@ -2168,6 +2168,35 @@
       "loFullName": "सीखने का परिणाम"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "लर्नर अवलोकन",
+      "subtitle": "लर्नर की प्रगति का प्रबंधन और निगरानी करें",
+      "loadError": "लर्नर लोड करने में विफल। कृपया बाद में पुनः प्रयास करें।",
+      "noMatchingLearners": "कोई मिलते-जुलते लर्नर नहीं मिले",
+      "noLearners": "कोई लर्नर नहीं मिले",
+      "adjustSearch": "अपने खोज मानदंड समायोजित करने का प्रयास करें",
+      "noLearnersAssigned": "अभी तक आपके खाते में कोई लर्नर असाइन नहीं किए गए"
+    },
+    "filters": {
+      "searchLabel": "लर्नर से खोजें",
+      "searchPlaceholder": "लर्नर का नाम, ID, ईमेल या टिप्पणी दर्ज करें"
+    },
+    "card": {
+      "noComment": "कोई टिप्पणी नहीं",
+      "overallProgress": "कुल प्रगति",
+      "viewPortfolio": "पोर्टफोलियो देखें",
+      "editCommentTitle": "टिप्पणी संपादित करें",
+      "editCommentDescription": "{name} के लिए टिप्पणी अपडेट करें",
+      "commentLabel": "टिप्पणी",
+      "commentPlaceholder": "यहां अपनी टिप्पणी दर्ज करें...",
+      "cancel": "रद्द करें",
+      "saving": "सेव हो रहा है...",
+      "save": "सेव करें",
+      "commentUpdatedSuccess": "टिप्पणी सफलतापूर्वक अपडेट हो गई",
+      "commentUpdateFailed": "टिप्पणी अपडेट करने में विफल"
+    }
+  },
   "wellbeing": {
     "pageTitle": "कल्याण संसाधन प्रबंधन",
     "pageSubtitle": "सीखने वालों के लिए कल्याण संसाधनों का प्रबंधन करें—जोड़ना, संपादित करना और उपलब्धता बदलना",

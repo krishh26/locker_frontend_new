@@ -2237,6 +2237,35 @@
       "learnersForms": "Learner Forms"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Learner Overview",
+      "subtitle": "Manage and monitor learner progress",
+      "loadError": "Failed to load learners. Please try again later.",
+      "noMatchingLearners": "No Matching Learners Found",
+      "noLearners": "No Learners Found",
+      "adjustSearch": "Try adjusting your search criteria",
+      "noLearnersAssigned": "There are no learners assigned to your account yet"
+    },
+    "filters": {
+      "searchLabel": "Search by Learner",
+      "searchPlaceholder": "Enter learner name, ID, email, or comment"
+    },
+    "card": {
+      "noComment": "No comment",
+      "overallProgress": "Overall Progress",
+      "viewPortfolio": "View Portfolio",
+      "editCommentTitle": "Edit Comment",
+      "editCommentDescription": "Update the comment for {name}",
+      "commentLabel": "Comment",
+      "commentPlaceholder": "Enter your comment here...",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "save": "Save",
+      "commentUpdatedSuccess": "Comment updated successfully",
+      "commentUpdateFailed": "Failed to update comment"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Wellbeing Resources Management",
     "pageSubtitle": "Manage wellbeing resources for learners, including adding, editing, and toggling resource availability",

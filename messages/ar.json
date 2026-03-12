@@ -2161,6 +2161,35 @@
       "loFullName": "نتيجة التعلم"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "نظرة عامة على المتعلم",
+      "subtitle": "إدارة ومراقبة تقدم المتعلم",
+      "loadError": "فشل تحميل المتعلمين. يرجى المحاولة لاحقاً.",
+      "noMatchingLearners": "لم يتم العثور على متعلمين مطابقين",
+      "noLearners": "لم يتم العثور على متعلمين",
+      "adjustSearch": "حاول تعديل معايير البحث",
+      "noLearnersAssigned": "لا يوجد متعلمون معينون لحسابك بعد"
+    },
+    "filters": {
+      "searchLabel": "البحث حسب المتعلم",
+      "searchPlaceholder": "أدخل اسم المتعلم أو المعرف أو البريد الإلكتروني أو التعليق"
+    },
+    "card": {
+      "noComment": "بدون تعليق",
+      "overallProgress": "التقدم الإجمالي",
+      "viewPortfolio": "عرض المحفظة",
+      "editCommentTitle": "تعديل التعليق",
+      "editCommentDescription": "تحديث التعليق لـ {name}",
+      "commentLabel": "التعليق",
+      "commentPlaceholder": "أدخل تعليقك هنا...",
+      "cancel": "إلغاء",
+      "saving": "جاري الحفظ...",
+      "save": "حفظ",
+      "commentUpdatedSuccess": "تم تحديث التعليق بنجاح",
+      "commentUpdateFailed": "فشل تحديث التعليق"
+    }
+  },
   "wellbeing": {
     "pageTitle": "إدارة موارد الرفاهية",
     "pageSubtitle": "إدارة موارد الرفاهية للمتعلمين، بما في ذلك الإضافة والتعديل وتبديل توفر الموارد",

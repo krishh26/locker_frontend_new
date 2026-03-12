@@ -15,8 +15,10 @@ import { AlertCircle } from "lucide-react";
 import type { LearnerListItem } from "@/store/api/learner/types";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 
 export function LearnerOverviewPageContent() {
+  const t = useTranslations("learnerOverview");
   const user = useAppSelector((state) => state.auth.user);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -116,14 +118,14 @@ export function LearnerOverviewPageContent() {
     return (
       <div className="container mx-auto p-4 md:p-6">
         <PageHeader
-          title="Learner Overview"
-          subtitle="Manage and monitor learner progress"
+          title={t("page.title")}
+          subtitle={t("page.subtitle")}
           icon={Users}
         />
         <Alert variant="destructive" className="mt-4">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Failed to load learners. Please try again later.
+            {t("page.loadError")}
           </AlertDescription>
         </Alert>
       </div>
@@ -133,8 +135,8 @@ export function LearnerOverviewPageContent() {
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
       <PageHeader
-        title="Learner Overview"
-        subtitle="Manage and monitor learner progress"
+        title={t("page.title")}
+        subtitle={t("page.subtitle")}
         icon={Users}
       />
 
@@ -174,12 +176,12 @@ export function LearnerOverviewPageContent() {
           <CardContent className="text-center">
             <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
             <h3 className="text-lg font-semibold mb-2">
-              {searchQuery ? "No Matching Learners Found" : "No Learners Found"}
+              {searchQuery ? t("page.noMatchingLearners") : t("page.noLearners")}
             </h3>
             <p className="text-muted-foreground">
               {searchQuery
-                ? "Try adjusting your search criteria"
-                : "There are no learners assigned to your account yet"}
+                ? t("page.adjustSearch")
+                : t("page.noLearnersAssigned")}
             </p>
           </CardContent>
         </Card>

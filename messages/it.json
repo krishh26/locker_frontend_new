@@ -1620,6 +1620,35 @@
       "loFullName": "Risultato di apprendimento"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Panoramica apprendisti",
+      "subtitle": "Gestisci e monitora i progressi degli apprendisti",
+      "loadError": "Impossibile caricare gli apprendisti. Riprova più tardi.",
+      "noMatchingLearners": "Nessun apprendista corrispondente trovato",
+      "noLearners": "Nessun apprendista trovato",
+      "adjustSearch": "Prova a modificare i criteri di ricerca",
+      "noLearnersAssigned": "Non ci sono ancora apprendisti assegnati al tuo account"
+    },
+    "filters": {
+      "searchLabel": "Cerca per apprendista",
+      "searchPlaceholder": "Inserisci nome, ID, email o commento dell'apprendista"
+    },
+    "card": {
+      "noComment": "Nessun commento",
+      "overallProgress": "Progresso complessivo",
+      "viewPortfolio": "Visualizza portfolio",
+      "editCommentTitle": "Modifica commento",
+      "editCommentDescription": "Aggiorna il commento per {name}",
+      "commentLabel": "Commento",
+      "commentPlaceholder": "Inserisci qui il tuo commento...",
+      "cancel": "Annulla",
+      "saving": "Salvataggio...",
+      "save": "Salva",
+      "commentUpdatedSuccess": "Commento aggiornato con successo",
+      "commentUpdateFailed": "Impossibile aggiornare il commento"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestione delle risorse di benessere",
     "pageSubtitle": "Gestisci le risorse di benessere per gli studenti, inclusi aggiunta, modifica e attivazione/disattivazione",

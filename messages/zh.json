@@ -2126,6 +2126,35 @@
       "loFullName": "学习成果"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "学员概览",
+      "subtitle": "管理和监控学员进度",
+      "loadError": "加载学员失败，请稍后重试。",
+      "noMatchingLearners": "未找到匹配的学员",
+      "noLearners": "未找到学员",
+      "adjustSearch": "请尝试调整搜索条件",
+      "noLearnersAssigned": "您的账户下尚无分配的学员"
+    },
+    "filters": {
+      "searchLabel": "按学员搜索",
+      "searchPlaceholder": "输入学员姓名、ID、邮箱或备注"
+    },
+    "card": {
+      "noComment": "无备注",
+      "overallProgress": "整体进度",
+      "viewPortfolio": "查看档案",
+      "editCommentTitle": "编辑备注",
+      "editCommentDescription": "更新 {name} 的备注",
+      "commentLabel": "备注",
+      "commentPlaceholder": "在此输入您的备注...",
+      "cancel": "取消",
+      "saving": "保存中...",
+      "save": "保存",
+      "commentUpdatedSuccess": "备注已成功更新",
+      "commentUpdateFailed": "更新备注失败"
+    }
+  },
   "wellbeing": {
     "pageTitle": "身心健康资源管理",
     "pageSubtitle": "管理学习者的身心健康资源，包括添加、编辑以及切换资源可用性",

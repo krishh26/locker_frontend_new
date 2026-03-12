@@ -1998,6 +1998,35 @@
       "loFullName": "Resultado de aprendizaje"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Resumen del aprendiz",
+      "subtitle": "Gestionar y supervisar el progreso del aprendiz",
+      "loadError": "Error al cargar los aprendices. Inténtelo de nuevo más tarde.",
+      "noMatchingLearners": "No se encontraron aprendices que coincidan",
+      "noLearners": "No se encontraron aprendices",
+      "adjustSearch": "Intente ajustar los criterios de búsqueda",
+      "noLearnersAssigned": "Aún no hay aprendices asignados a su cuenta"
+    },
+    "filters": {
+      "searchLabel": "Buscar por aprendiz",
+      "searchPlaceholder": "Introduzca nombre, ID, email o comentario del aprendiz"
+    },
+    "card": {
+      "noComment": "Sin comentario",
+      "overallProgress": "Progreso general",
+      "viewPortfolio": "Ver portafolio",
+      "editCommentTitle": "Editar comentario",
+      "editCommentDescription": "Actualizar el comentario de {name}",
+      "commentLabel": "Comentario",
+      "commentPlaceholder": "Escriba su comentario aquí...",
+      "cancel": "Cancelar",
+      "saving": "Guardando...",
+      "save": "Guardar",
+      "commentUpdatedSuccess": "Comentario actualizado correctamente",
+      "commentUpdateFailed": "Error al actualizar el comentario"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestión de Recursos de Bienestar",
     "pageSubtitle": "Gestione recursos de bienestar para aprendices, incluyendo agregar, editar y alternar disponibilidad de recursos",

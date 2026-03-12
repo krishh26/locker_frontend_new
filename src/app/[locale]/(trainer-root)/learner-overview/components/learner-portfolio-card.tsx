@@ -29,6 +29,7 @@ import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/random
 import { useUpdateLearnerCommentMutation } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem, LearnerCourse } from "@/store/api/learner/types";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface LearnerPortfolioCardProps {
   learner: LearnerListItem;
@@ -39,6 +40,7 @@ export function LearnerPortfolioCard({
   learner,
   onCommentUpdate,
 }: LearnerPortfolioCardProps) {
+  const t = useTranslations("learnerOverview");
   const router = useRouter();
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [editedComment, setEditedComment] = useState("");
@@ -61,7 +63,7 @@ export function LearnerPortfolioCard({
         id: learner.learner_id,
         data: { comment: editedComment },
       }).unwrap();
-      toast.success("Comment updated successfully");
+      toast.success(t("card.commentUpdatedSuccess"));
       onCommentUpdate();
       handleCloseCommentDialog();
     } catch (error: unknown) {
@@ -69,7 +71,7 @@ export function LearnerPortfolioCard({
         error && typeof error === "object" && "data" in error
           ? (error as { data?: { message?: string } }).data?.message
           : undefined;
-      toast.error(errorMessage || "Failed to update comment");
+      toast.error(errorMessage || t("card.commentUpdateFailed"));
     }
   };
 
@@ -250,7 +252,7 @@ export function LearnerPortfolioCard({
                   <div className="flex items-center gap-1.5">
                     <MessageSquare className="h-4 w-4 text-blue-500" />
                     <span className="text-sm font-semibold truncate max-w-[200px]">
-                      {learner?.comment || "No comment"}
+                      {learner?.comment || t("card.noComment")}
                     </span>
                     <Button
                       variant="ghost"
@@ -270,7 +272,7 @@ export function LearnerPortfolioCard({
               <div className="flex-1 md:flex-[1.5] p-4 rounded-lg border border-primary flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm md:text-base font-bold text-primary">
-                    Overall Progress
+                    {t("card.overallProgress")}
                   </span>
                   <Badge className="bg-primary text-primary-foreground font-bold">
                     {completionPercentage.toFixed(0)}%
@@ -315,7 +317,7 @@ export function LearnerPortfolioCard({
                 disabled={!learner?.learner_id}
               >
                 <LayoutDashboard className="mr-2 h-4 w-4" />
-                View Portfolio
+                {t("card.viewPortfolio")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -327,18 +329,20 @@ export function LearnerPortfolioCard({
       <Dialog open={isEditingComment} onOpenChange={setIsEditingComment}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Edit Comment</DialogTitle>
+            <DialogTitle>{t("card.editCommentTitle")}</DialogTitle>
             <DialogDescription>
-              Update the comment for {learner?.first_name} {learner?.last_name}
+              {t("card.editCommentDescription", {
+                name: `${learner?.first_name ?? ""} ${learner?.last_name ?? ""}`.trim() || "—",
+              })}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="comment">Comment</Label>
+              <Label htmlFor="comment">{t("card.commentLabel")}</Label>
               <Textarea
                 id="comment"
-                placeholder="Enter your comment here..."
+                placeholder={t("card.commentPlaceholder")}
                 value={editedComment}
                 onChange={(e) => setEditedComment(e.target.value)}
                 rows={4}
@@ -355,13 +359,13 @@ export function LearnerPortfolioCard({
               onClick={handleCloseCommentDialog}
               disabled={isSavingComment}
             >
-              Cancel
+              {t("card.cancel")}
             </Button>
             <Button onClick={handleSaveComment} disabled={isSavingComment}>
               {isSavingComment && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              {isSavingComment ? "Saving..." : "Save"}
+              {isSavingComment ? t("card.saving") : t("card.save")}
             </Button>
           </DialogFooter>
         </DialogContent>

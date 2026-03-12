@@ -2208,6 +2208,35 @@
       "loFullName": "Résultat d'apprentissage"
     }
   },
+  "learnerOverview": {
+    "page": {
+      "title": "Aperçu des apprenants",
+      "subtitle": "Gérer et suivre la progression des apprenants",
+      "loadError": "Échec du chargement des apprenants. Veuillez réessayer plus tard.",
+      "noMatchingLearners": "Aucun apprenant correspondant trouvé",
+      "noLearners": "Aucun apprenant trouvé",
+      "adjustSearch": "Essayez d'ajuster vos critères de recherche",
+      "noLearnersAssigned": "Aucun apprenant n'est encore assigné à votre compte"
+    },
+    "filters": {
+      "searchLabel": "Rechercher par apprenant",
+      "searchPlaceholder": "Saisissez le nom, l'ID, l'email ou le commentaire de l'apprenant"
+    },
+    "card": {
+      "noComment": "Aucun commentaire",
+      "overallProgress": "Progression globale",
+      "viewPortfolio": "Voir le portfolio",
+      "editCommentTitle": "Modifier le commentaire",
+      "editCommentDescription": "Mettre à jour le commentaire pour {name}",
+      "commentLabel": "Commentaire",
+      "commentPlaceholder": "Saisissez votre commentaire ici...",
+      "cancel": "Annuler",
+      "saving": "Enregistrement...",
+      "save": "Enregistrer",
+      "commentUpdatedSuccess": "Commentaire mis à jour avec succès",
+      "commentUpdateFailed": "Échec de la mise à jour du commentaire"
+    }
+  },
   "wellbeing": {
     "pageTitle": "Gestion des ressources de bien-être",
     "pageSubtitle": "Gérer les ressources de bien-être pour les apprenants, y compris l’ajout, la modification et l’activation/désactivation",

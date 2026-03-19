@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { SubmittedFormsDataTable } from "@/app/[locale]/(admin-root)/forms/components/submitted-forms/submitted-forms-data-table";
 import { useTranslations } from "next-intl";
 
-export function LearnersFormsPageContent() {
+function LearnersFormsPageContent() {
   const t = useTranslations("learnersForms");
 
   return (

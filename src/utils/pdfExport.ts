@@ -1,20 +1,25 @@
+import type { jsPDF as JsPDFCtor } from "jspdf"
+
 let pdfDepsPromise:
   | Promise<{
-      jsPDF: typeof import("jspdf")["jsPDF"]
+      // Use the browser-friendly UMD build to avoid node-only deps like fflate/node.cjs
+      jsPDF: typeof JsPDFCtor
       applyPlugin: typeof import("jspdf-autotable")["applyPlugin"]
     }>
   | null = null
 
 async function getPdfDeps() {
   if (!pdfDepsPromise) {
-    pdfDepsPromise = Promise.all([import("jspdf"), import("jspdf-autotable")]).then(
-      ([jspdfMod, autotableMod]) => {
-        return {
-          jsPDF: jspdfMod.jsPDF,
-          applyPlugin: autotableMod.applyPlugin,
-        }
-      },
-    )
+    pdfDepsPromise = Promise.all([
+      // Explicitly import the browser UMD bundle so Next.js doesn't pull in the Node build
+      import("jspdf/dist/jspdf.umd.min.js"),
+      import("jspdf-autotable"),
+    ]).then(([jspdfMod, autotableMod]) => {
+      return {
+        jsPDF: jspdfMod.jsPDF,
+        applyPlugin: autotableMod.applyPlugin,
+      }
+    })
   }
   return pdfDepsPromise
 }
@@ -77,7 +82,7 @@ export async function exportTableToPdf(options: ExportTableToPdfOptions): Promis
   doc.text(`Generated on: ${dateStr}`, 14, 28)
 
   ;(
-    doc as InstanceType<typeof jsPDF> & {
+    doc as InstanceType<typeof JsPDFCtor> & {
       autoTable: (opts: unknown) => void
       lastAutoTable: { finalY: number }
     }
@@ -147,7 +152,7 @@ export async function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): Pr
   ])
 
   ;(
-    doc as InstanceType<typeof jsPDF> & {
+    doc as InstanceType<typeof JsPDFCtor> & {
       autoTable: (opts: unknown) => void
       lastAutoTable: { finalY: number }
     }
@@ -161,7 +166,9 @@ export async function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): Pr
     headStyles: { fillColor: [71, 85, 105] },
   })
 
-  const docWithAutoTable = doc as InstanceType<typeof jsPDF> & { lastAutoTable: { finalY: number } }
+  const docWithAutoTable = doc as InstanceType<typeof JsPDFCtor> & {
+    lastAutoTable: { finalY: number }
+  }
   let y = docWithAutoTable.lastAutoTable.finalY + 10
 
   doc.setFontSize(10)

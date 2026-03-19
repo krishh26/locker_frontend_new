@@ -30,13 +30,27 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import type { CaseloadItem } from "@/store/api/caseload/types";
-import jsPDF from "jspdf";
-import { applyPlugin } from "jspdf-autotable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTranslations } from "next-intl";
 
-// Apply the autotable plugin to jsPDF
-applyPlugin(jsPDF);
+let pdfDepsPromise:
+  | Promise<{
+      jsPDF: typeof import("jspdf")["jsPDF"];
+      applyPlugin: typeof import("jspdf-autotable")["applyPlugin"];
+    }>
+  | null = null;
+
+async function getPdfDeps() {
+  if (!pdfDepsPromise) {
+    pdfDepsPromise = Promise.all([import("jspdf"), import("jspdf-autotable")]).then(
+      ([jspdfMod, autotableMod]) => ({
+        jsPDF: jspdfMod.jsPDF,
+        applyPlugin: autotableMod.applyPlugin,
+      })
+    );
+  }
+  return pdfDepsPromise;
+}
 
 interface CaseloadManagerCardsProps {
   lineManagers: CaseloadItem[];
@@ -74,7 +88,10 @@ export function CaseloadManagerCards({
     return "default";
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
+    const { jsPDF, applyPlugin } = await getPdfDeps();
+    applyPlugin(jsPDF);
+
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text(t("cards.reportTitle"), 14, 20);
@@ -174,7 +191,10 @@ export function CaseloadManagerCards({
     document.body.removeChild(link);
   };
 
-  const handleExportManagerPDF = (manager: CaseloadItem) => {
+  const handleExportManagerPDF = async (manager: CaseloadItem) => {
+    const { jsPDF, applyPlugin } = await getPdfDeps();
+    applyPlugin(jsPDF);
+
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text(

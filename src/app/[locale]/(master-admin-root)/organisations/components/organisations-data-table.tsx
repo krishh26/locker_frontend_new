@@ -174,7 +174,7 @@ export function OrganisationsDataTable() {
     }
     const headers = [t("name"), t("status")]
     const rows = organisations.map((org: Organisation) => [org.name, org.status])
-    exportTableToPdf({ title: t("pdfTitle"), headers, rows })
+    void exportTableToPdf({ title: t("pdfTitle"), headers, rows })
     toast.success(t("pdfExported"))
   }
 

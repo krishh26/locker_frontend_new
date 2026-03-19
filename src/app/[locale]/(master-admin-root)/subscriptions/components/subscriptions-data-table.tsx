@@ -138,7 +138,7 @@ export function SubscriptionsDataTable() {
         : t("subscriptionsTable.status.active"),
       new Date(sub.expiryDate).toLocaleDateString(),
     ])
-    exportTableToPdf({ title: t("page.title"), headers, rows })
+    void exportTableToPdf({ title: t("page.title"), headers, rows })
     toast.success(t("toast.pdfExported"))
   }
 

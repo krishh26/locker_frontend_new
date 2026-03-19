@@ -148,7 +148,7 @@ export function CentresDataTable() {
       toast.info(t("noDataToExport"))
       return
     }
-    exportTableToPdf({ title: t("pdfTitle"), headers, rows })
+    void exportTableToPdf({ title: t("pdfTitle"), headers, rows })
     toast.success(t("pdfExported"))
   }
 

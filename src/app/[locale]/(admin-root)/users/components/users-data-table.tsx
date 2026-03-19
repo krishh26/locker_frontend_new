@@ -225,7 +225,7 @@ export function UsersDataTable() {
       filterRolesFromApi(user.roles).join(", "),
       user.status,
     ]);
-    exportTableToPdf({ title: "Users", headers, rows });
+    void exportTableToPdf({ title: "Users", headers, rows });
     toast.success(t("table.csvExported"));
   };
 

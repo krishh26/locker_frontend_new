@@ -236,7 +236,7 @@ export function CourseBuilderDataTable() {
       course.sector,
       String(course.guided_learning_hours ?? ""),
     ]);
-    exportTableToPdf({ title: t("export.pdfTitle"), headers, rows });
+    void exportTableToPdf({ title: t("export.pdfTitle"), headers, rows });
     toast.success(t("export.pdfExported"));
   };
 

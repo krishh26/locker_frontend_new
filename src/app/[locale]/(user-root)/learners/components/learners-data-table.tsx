@@ -522,7 +522,7 @@ export function LearnersDataTable() {
           formatDate(eqaLerner.course_registered),
         ];
       });
-      exportTableToPdf({ title: tExport("pdfTitleEqa"), headers, rows });
+      void exportTableToPdf({ title: tExport("pdfTitleEqa"), headers, rows });
     } else {
       const headers = [
         tExport("csvHeaders.learnerName"),
@@ -540,7 +540,7 @@ export function LearnersDataTable() {
         learner.course?.map((c) => c.course.course_name).join(", ") || "",
         learner.status || "",
       ]);
-      exportTableToPdf({ title: tExport("pdfTitleDefault"), headers, rows });
+      void exportTableToPdf({ title: tExport("pdfTitleDefault"), headers, rows });
     }
     toast.success(tExport("pdfSuccess"));
   };

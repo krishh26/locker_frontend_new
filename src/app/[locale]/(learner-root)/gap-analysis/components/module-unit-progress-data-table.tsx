@@ -448,7 +448,7 @@ export function ModuleUnitProgressDataTable() {
       toast.info(t("table.toast.noDataToExport"));
       return;
     }
-    exportTableToPdf({ title: t("table.pdfTitle"), headers, rows });
+    void exportTableToPdf({ title: t("table.pdfTitle"), headers, rows });
     toast.success(t("table.toast.pdfSuccess"));
   };
 

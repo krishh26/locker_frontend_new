@@ -318,7 +318,7 @@ export function AddInvoiceForm({ paymentId }: AddInvoiceFormProps) {
         organisations.find((o) => String(o.id) === organisationId)?.name ??
         t('common.unknown')
       const planName = selectedPlan?.name ?? t('common.unknown')
-      exportInvoiceToPdf({
+      void exportInvoiceToPdf({
         organisationName: orgName,
         planName,
         invoiceDate,

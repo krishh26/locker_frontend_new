@@ -7,6 +7,7 @@ const baseRoles = [
   "IQA",
   "EQA",
   "MasterAdmin",
+  "PhoenixTeam",
   "AccountManager",
 ] as const
 
@@ -35,6 +36,7 @@ export const authRoles = {
   IQA: ["IQA"] as const satisfies readonly Role[],
   EQA: ["EQA"] as const satisfies readonly Role[],
   MasterAdmin: ["MasterAdmin"] as const satisfies readonly Role[],
+  PhoenixTeam: ["PhoenixTeam"] as const satisfies readonly Role[],
   AccountManager: ["AccountManager"] as const satisfies readonly Role[],
   all: [...baseRoles] as const satisfies readonly Role[],
   onlyGuest: null,

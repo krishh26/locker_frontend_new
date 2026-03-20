@@ -59,7 +59,7 @@ export function TicketDetailSheet({
 }: TicketDetailSheetProps) {
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === "Learner"
-  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
+  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "PhoenixTeam", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
 
   const t = useTranslations("tickets.detail")
 

@@ -7,13 +7,11 @@ import {
   type VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 import {
-  Pencil,
   Trash2,
   Download,
   MoreHorizontal,
@@ -103,9 +101,10 @@ export function TicketsDataTable() {
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === "Learner"
   const isMasterAdmin = user?.role === "MasterAdmin"
-  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
+  const isPhoenixTeam = user?.role === "PhoenixTeam"
+  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "PhoenixTeam", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
   const canRaiseTicket = ["Learner", "CentreAdmin", "OrganisationAdmin" ,"Admin" ,"Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
-  const showRaisedByMeFilter = isAdmin && !isMasterAdmin
+  const showRaisedByMeFilter = isAdmin && !isMasterAdmin && !isPhoenixTeam
   const isOrgAdminOrCentreAdmin = showRaisedByMeFilter
 
   const t = useTranslations("tickets")
@@ -117,7 +116,7 @@ export function TicketsDataTable() {
   const [keyword, setKeyword] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [priorityFilter, setPriorityFilter] = useState<string>("all")
-  const [assignedToFilter, setAssignedToFilter] = useState<string>("all")
+  const [assignedToFilter] = useState<string>("all")
   const [raisedByMeFilter, setRaisedByMeFilter] = useState<"mine" | "under">(() =>
     ["OrganisationAdmin", "CentreAdmin"].includes(user?.role ?? "") ? "mine" : "under"
   )
@@ -300,7 +299,7 @@ export function TicketsDataTable() {
         ),
       },
     ],
-    [isAdmin, isOrgAdminOrCentreAdmin, user?.user_id, handleView, handleAssignClick, handleDeleteClick]
+    [t, isAdmin, isOrgAdminOrCentreAdmin, user?.user_id, handleView, handleAssignClick, handleDeleteClick]
   )
 
   const table = useReactTable({

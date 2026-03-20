@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Lock,
   Users,
   Shield,
   MessageSquare,
@@ -406,6 +405,17 @@ const data: {
           title: 'Users',
           url: '/users',
           icon: Users,
+        },
+      ],
+    },
+    {
+      label: 'Phoenix Team',
+      items: [
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+          isFree: true,
         },
       ],
     },
@@ -853,6 +863,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       // Show "Master Admin" group only for Master Admin role
       if (group.label === 'Master Admin') {
         return userRole === 'MasterAdmin'
+      }
+      // Show "Phoenix Team" group only for PhoenixTeam role
+      if (group.label === 'Phoenix Team') {
+        return userRole === 'PhoenixTeam'
       }
       // For other groups, show based on role access
       return true

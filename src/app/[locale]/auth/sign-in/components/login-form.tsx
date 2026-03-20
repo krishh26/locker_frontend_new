@@ -152,6 +152,12 @@ export function LoginForm({
           assignedCenterIds,
         }
         dispatch(updateUser(authUser))
+
+        if (authUser.role === "PhoenixTeam") {
+          router.push("/tickets")
+          return
+        }
+
         if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {
           toast.info("Please update your password to continue.")
           router.push("/auth/change-password")

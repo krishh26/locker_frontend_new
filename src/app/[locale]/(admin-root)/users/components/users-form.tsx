@@ -43,6 +43,7 @@ const roleValues = [
   "LIQA",
   "Line Manager",
   "Employer",
+  "PhoenixTeam",
 ];
 
 // Common timezones - can be extended
@@ -210,14 +211,18 @@ export function UsersForm({ user }: UsersFormProps) {
       "Line Manager": "lineManager",
       "Employer": "employer",
     };
-    const values = isAccountManagerUser
+    const valuesBase = isAccountManagerUser
       ? roleValues.filter((r) => !["MasterAdmin", "AccountManager"].includes(r))
       : roleValues;
+
+    // Requirement: PhoenixTeam role only visible to MasterAdmin creators.
+    const values = userRole === "MasterAdmin" ? valuesBase : valuesBase.filter((r) => r !== "PhoenixTeam");
     return values.map((value) => ({
       value,
-      label: t(`roles.${roleKeyMap[value]}`) || value,
+      // PhoenixTeam has no translation key; keep a safe label.
+      label: value === "PhoenixTeam" ? "PhoenixTeam" : t(`roles.${roleKeyMap[value]}`) || value,
     }));
-  }, [t, isAccountManagerUser]);
+  }, [t, isAccountManagerUser, userRole]);
 
   // EQA learner assignment state
   const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);

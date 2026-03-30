@@ -24,7 +24,7 @@ export type TicketAttachment = {
   created_at: string;
 };
 
-export type TicketStatus = "Open" | "InProgress" | "Resolved" | "Closed";
+export type TicketStatus = "Open" | "In Progress" | "Resolved" | "Closed";
 export type TicketPriority = "Low" | "Medium" | "High" | "Urgent";
 
 export type Ticket = {

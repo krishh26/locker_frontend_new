@@ -2867,7 +2867,7 @@
       "filters": {
         "status": {
           "placeholder": "Status",
-          "all": "All statuses"
+          "all": "All status"
         },
         "priority": {
           "placeholder": "Priority",
@@ -4902,7 +4902,7 @@
       "unknown": "Unknown",
       "noCentresFound": "No centres found.",
       "statusPlaceholder": "Status",
-      "allStatuses": "All statuses",
+      "allStatuses": "All status",
       "suspended": "Suspended",
       "filterByOrganisation": "Filter by organisation",
       "allOrganisations": "All organisations",
@@ -5461,9 +5461,9 @@
       "typeLabel": "Type",
       "statusLabel": "Status",
       "allTypesPlaceholder": "All types",
-      "allStatusesPlaceholder": "All statuses",
+      "allStatusesPlaceholder": "All status",
       "allTypes": "All Types",
-      "allStatuses": "All Statuses",
+      "allStatuses": "All Status",
       "unread": "Unread",
       "read": "Read"
     },

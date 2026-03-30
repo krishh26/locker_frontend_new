@@ -217,7 +217,6 @@ export function LoginForm({
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
               disabled={isSubmitting}
               {...form.register("password")}
             />

@@ -60,14 +60,14 @@ import { TicketAssignDialog } from "./ticket-assign-dialog"
 import { VariantProps } from "class-variance-authority"
 import { useTranslations } from "next-intl"
 
-const STATUS_OPTIONS: TicketStatus[] = ["Open", "InProgress", "Resolved", "Closed"]
+const STATUS_OPTIONS: TicketStatus[] = ["Open", "In Progress", "Resolved", "Closed"]
 const PRIORITY_OPTIONS: TicketPriority[] = ["Low", "Medium", "High", "Urgent"]
 
 function getStatusVariant(status: string): VariantProps<typeof badgeVariants>["variant"] {
   switch (status) {
     case "Open":
       return "secondary"
-    case "InProgress":
+    case "In Progress":
       return "default"
     case "Resolved":
       return "default"
@@ -133,7 +133,7 @@ export function TicketsDataTable() {
   } = useGetTicketListQuery({
     page,
     limit: pageSize,
-    status: statusFilter !== "all" ? statusFilter : undefined,
+    status: statusFilter !== "all" ? statusFilter === "In Progress" ? "InProgress" : statusFilter : undefined,
     priority: priorityFilter !== "all" ? priorityFilter : undefined,
     assigned_to: assignedToFilter !== "all" ? parseInt(assignedToFilter, 10) : undefined,
     keyword: keyword.trim() || undefined,

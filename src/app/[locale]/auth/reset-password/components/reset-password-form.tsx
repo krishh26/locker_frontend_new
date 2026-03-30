@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "@/i18n/navigation"
+import Link from "next/link"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -181,7 +182,6 @@ export function ResetPasswordForm({
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
               disabled={isSubmitting}
               {...form.register("password")}
             />
@@ -211,7 +211,6 @@ export function ResetPasswordForm({
             <Input
               id="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
-              autoComplete="new-password"
               disabled={isSubmitting}
               {...form.register("confirmPassword")}
             />
@@ -254,9 +253,9 @@ export function ResetPasswordForm({
       </div>
       <div className="text-center text-sm">
         Remember your password?{" "}
-        <a href="/auth/sign-in" className="underline underline-offset-4">
+        <Link href="/auth/sign-in" className="underline underline-offset-4">
           Back to sign in
-        </a>
+        </Link>
       </div>
     </form>
   )

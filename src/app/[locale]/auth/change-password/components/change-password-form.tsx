@@ -172,7 +172,6 @@ export function ChangePasswordForm({
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
               disabled={isSubmitting}
               {...form.register("password")}
             />
@@ -202,7 +201,6 @@ export function ChangePasswordForm({
             <Input
               id="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
-              autoComplete="new-password"
               disabled={isSubmitting}
               {...form.register("confirmPassword")}
             />

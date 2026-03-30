@@ -43,8 +43,6 @@ interface QualificationUnitsModulesStepProps {
 }
 
 export function QualificationUnitsModulesStep({
-  courseId,
-  courseCoreType,
   control,
   setValue,
   errors,

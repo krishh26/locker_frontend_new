@@ -95,12 +95,12 @@ export interface StandardUnit {
   title: string;
   type?: string;
   code?: string;
-  unit_ref?: string;
+  // unit_ref?: string;
   mandatory?: boolean;
   description?: string;
-  delivery_method?: string;
-  otj_hours?: string;
-  delivery_lead?: string;
+  // delivery_method?: string;
+  // otj_hours?: string;
+  // delivery_lead?: string;
   sort_order?: string;
   active?: boolean;
   subUnit: SubUnit[];

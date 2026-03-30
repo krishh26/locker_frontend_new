@@ -138,12 +138,12 @@ const standardSchema = baseCourseSchema.extend({
       z.object({
         id: z.any().optional(),
         title: z.string().min(1, "Module Title is required"),
-        unit_ref: z.string().min(1, "Module Reference Number is required"),
+        // unit_ref: z.string().min(1, "Module Reference Number is required"),
         description: z.string().optional(),
         active: z.boolean().optional(),
-        delivery_method: z.string().optional(),
-        otj_hours: z.string().optional(),
-        delivery_lead: z.string().optional(),
+        // delivery_method: z.string().optional(),
+        // otj_hours: z.string().optional(),
+        // delivery_lead: z.string().optional(),
         sort_order: z.string().optional(),
         learning_outcomes: z.array(z.any()).optional(),
         // SubUnit validation for Standard modules
@@ -281,12 +281,12 @@ const getStep1StandardSchema = z.object({
       z.object({
         id: z.any().optional(),
         title: z.string().min(1, "Module Title is required"),
-        unit_ref: z.string().min(1, "Module Reference Number is required"),
+        // unit_ref: z.string().min(1, "Module Reference Number is required"),
         description: z.string().optional(),
         active: z.boolean().optional(),
-        delivery_method: z.string().optional(),
-        otj_hours: z.string().optional(),
-        delivery_lead: z.string().optional(),
+        // delivery_method: z.string().optional(),
+        // otj_hours: z.string().optional(),
+        // delivery_lead: z.string().optional(),
         sort_order: z.string().optional(),
         learning_outcomes: z.array(z.any()).optional(),
         subUnit: z

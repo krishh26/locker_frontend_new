@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * StandardModulesStep Component
  * 
@@ -42,8 +43,6 @@ interface StandardModulesStepProps {
 }
 
 export function StandardModulesStep({
-  courseId,
-  courseCoreType,
   control,
   setValue,
   errors,
@@ -68,12 +67,12 @@ export function StandardModulesStep({
     const newModule = {
       id: Date.now(),
       title: "",
-      unit_ref: "",
+      // unit_ref: "",
       mandatory: true,
       description: "",
-      delivery_method: "",
-      otj_hours: "0",
-      delivery_lead: "",
+      // delivery_method: "",
+      // otj_hours: "0",
+      // delivery_lead: "",
       sort_order: String(currentUnitsCount + 1), // Auto-fill with next number
       active: true,
       subUnit: [],
@@ -130,15 +129,15 @@ export function StandardModulesStep({
                   <TableHead>
                     {t("course.standard.moduleTitle")} <span className="text-destructive">*</span>
                   </TableHead>
-                  <TableHead>
+                  {/* <TableHead>
                     {t("course.standard.moduleReference")} <span className="text-destructive">*</span>
-                  </TableHead>
+                  </TableHead> */}
                   <TableHead>{t("course.standard.description")}</TableHead>
                   <TableHead>{t("course.standard.active")}</TableHead>
                   <TableHead>{t("course.standard.sortOrder")}</TableHead>
-                  <TableHead>{t("course.standard.deliveryMethod")}</TableHead>
+                  {/* <TableHead>{t("course.standard.deliveryMethod")}</TableHead>
                   <TableHead>{t("course.standard.otjHours")}</TableHead>
-                  <TableHead>{t("course.standard.deliveryLead")}</TableHead>
+                  <TableHead>{t("course.standard.deliveryLead")}</TableHead> */}
                   <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -181,7 +180,7 @@ export function StandardModulesStep({
                             )}
                           />
                         </TableCell>
-                        <TableCell>
+                        {/* <TableCell>
                           <Controller
                             name={`units.${index}.unit_ref`}
                             control={control}
@@ -198,7 +197,7 @@ export function StandardModulesStep({
                               </div>
                             )}
                           />
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <Controller
                             name={`units.${index}.description`}
@@ -246,7 +245,7 @@ export function StandardModulesStep({
                             )}
                           />
                         </TableCell>
-                        <TableCell>
+                        {/* <TableCell>
                           <Controller
                             name={`units.${index}.delivery_method`}
                             control={control}
@@ -285,7 +284,7 @@ export function StandardModulesStep({
                               />
                             )}
                           />
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell className="text-center">
                           <Button
                             variant="ghost"

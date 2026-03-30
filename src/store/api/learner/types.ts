@@ -164,6 +164,8 @@ export interface BulkCreateLearnerRequest {
   confirmPassword: string;
   national_ins_no?: string;
   funding_body: string;
+  job_title: string;
+  centre_name: string;
   employer_name?: string;
   courses: Array<{
     course_name: string;

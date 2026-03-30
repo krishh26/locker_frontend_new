@@ -68,9 +68,30 @@ const downloadSampleCSV = () => {
     "TrainerFullName",
     "EmployeeFullName",
     "IQAFullName",
+    "CentreName",
+    "FundingBody",
+    "JobTitle",
   ];
 
-  const csvContent = [headers]
+  // Example row for template usage (values are placeholders; users must replace with DB-matching names).
+  const exampleRow = [
+    "John",
+    "Smith",
+    "john.smith@example.com",
+    "07123456789",
+    "AB123456C",
+    "Course A,Course B",
+    "01-01-2026",
+    "31-12-2026",
+    "Trainer One",
+    "Employer One",
+    "IQA One",
+    "phoenix centre 1",
+    "Advance Learning Loan",
+    "Job title example",
+  ];
+
+  const csvContent = [headers, exampleRow]
     .map((row) => row.map((field) => `"${field}"`).join(","))
     .join("\n");
 
@@ -107,7 +128,17 @@ export function LearnersCsvUploadDialog({
 
   const t = useTranslations("learners.csvUpload");
 
-  const requiredFields = ["FirstNames", "Surname", "Courses"];
+  const requiredFields = [
+    "FirstNames",
+    "Surname",
+    "Email",
+    "Mobile",
+    "Courses",
+    "EmployeeFullName",
+    "CentreName",
+    "FundingBody",
+    "JobTitle",
+  ];
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -131,7 +162,8 @@ export function LearnersCsvUploadDialog({
             t(
               "errors.missingRequiredFields",
               {
-                fields: "First Names, Surname, Courses",
+                fields:
+                  "First Names, Surname, Email, Mobile, Courses, Employee, CentreName, FundingBody, JobTitle",
               }
             )
           );
@@ -140,41 +172,62 @@ export function LearnersCsvUploadDialog({
           setError("");
           setParsedData(
             rows.map((row) => {
+              const firstNames = (row["FirstNames"] ?? "").toString().trim();
+              const lastName = (row.Surname ?? "").toString().trim();
+              const email = (row.Email ?? "").toString().trim();
+              const mobile = (row.Mobile ?? "").toString().trim();
+              const centreName = (row.CentreName ?? "").toString().trim();
+              const fundingBody = (row.FundingBody ?? "").toString().trim();
+              const jobTitle = (row.JobTitle ?? "").toString().trim();
+              const ninNumber = (row.NINumber ?? "").toString().trim();
+              const trainerFullName = (row.TrainerFullName ?? "").toString().trim();
+              const iqaFullName = (row.IQAFullName ?? "").toString().trim();
+              const employerFullName = (row?.EmployeeFullName ?? "")
+                .toString()
+                .trim();
+
+              const coursesList = (row.Courses ?? "")
+                .toString()
+                .split(",")
+                .map((course: string) => course.trim())
+                .filter(Boolean);
+
+              const startRaw = (row.StartDate ?? "").toString().trim();
+              const expectedEndRaw = (row.ExpectedEnd ?? "").toString().trim();
+              const startDate = startRaw ? convertDateFormat(startRaw) : undefined;
+              const expectedEnd = expectedEndRaw
+                ? convertDateFormat(expectedEndRaw)
+                : undefined;
+
+              const generatedPassword = generatePassword(
+                firstNames,
+                lastName,
+                mobile,
+              );
+
               return {
-                first_name: row["FirstNames"],
-                last_name: row.Surname,
-                courses: row.Courses
-                  ? row.Courses.split(",").map((course: string) => {
-                      return {
-                        start_date: convertDateFormat(row.StartDate),
-                        course_name: course.trim(),
-                        end_date: convertDateFormat(row.ExpectedEnd),
-                        trainer_name: row.TrainerFullName,
-                        iqa_name: row.IQAFullName,
-                        employer_name: row?.EmployeeFullName || "",
-                      };
-                    })
-                  : [],
-                user_name: `${row["FirstNames"]?.toLowerCase() || ""}_${
-                  row.Surname?.toLowerCase() || ""
-                }`
+                first_name: firstNames,
+                last_name: lastName,
+                courses: coursesList.map((course) => ({
+                  start_date: startDate,
+                  course_name: course,
+                  end_date: expectedEnd,
+                  trainer_name: trainerFullName,
+                  iqa_name: iqaFullName,
+                  employer_name: employerFullName,
+                })),
+                user_name: `${firstNames.toLowerCase()}_${lastName.toLowerCase()}`
                   .replace(/\s+/g, "_")
                   .replace(/^_+|_+$/g, ""),
-                email: row.Email || "",
-                mobile: row.Mobile || "",
-                password: generatePassword(
-                  row["FirstNames"],
-                  row.Surname,
-                  row.Mobile
-                ),
-                confirmPassword: generatePassword(
-                  row["FirstNames"],
-                  row.Surname,
-                  row.Mobile
-                ),
-                national_ins_no: row.NINumber || "",
-                funding_body: "",
-                employer_name: row?.EmployeeFullName || "",
+                email,
+                mobile,
+                password: generatedPassword,
+                confirmPassword: generatedPassword,
+                national_ins_no: ninNumber,
+                funding_body: fundingBody,
+                job_title: jobTitle,
+                centre_name: centreName,
+                employer_name: employerFullName,
               };
             })
           );
@@ -232,8 +285,42 @@ export function LearnersCsvUploadDialog({
 
     try {
       const response = await bulkCreateLearners(payload).unwrap();
-      if (response.status) {
-        toast.success(t("toast.success"));
+      type BulkUploadRowError = {
+        message?: string;
+        error?: string;
+        row?: number;
+        index?: number;
+      };
+      type BulkUploadBackendResult = {
+        status?: boolean;
+        message?: string;
+        data?: {
+          errors?: BulkUploadRowError[];
+        };
+      };
+
+      const backend = response as BulkUploadBackendResult;
+      const backendMessage: string | undefined = backend?.message;
+      const rowErrors: BulkUploadRowError[] = backend?.data?.errors ?? [];
+
+      if (backend?.status) {
+        if (rowErrors.length > 0) {
+          const preview = rowErrors
+            .slice(0, 3)
+            .map((e, idx) => {
+              const row = e.row != null ? e.row : idx + 1;
+              const msg = e.message ?? e.error ?? "Failed";
+              return `Row ${row}: ${msg}`;
+            })
+            .join(" | ");
+
+          toast.warning(
+            `${backendMessage ?? t("toast.success")}. ${rowErrors.length} failed. ${preview}`,
+          );
+        } else {
+          toast.success(backendMessage ?? t("toast.success"));
+        }
+
         onSuccess();
         onOpenChange(false);
         setFile(null);
@@ -241,10 +328,45 @@ export function LearnersCsvUploadDialog({
         setError("");
       }
     } catch (error: unknown) {
-      const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? (error as { data?: { message?: string } }).data?.message
-          : undefined;
+      type BulkUploadRowError = {
+        message?: string;
+        error?: string;
+        row?: number;
+        index?: number;
+      };
+      type BulkUploadErrorPayload = {
+        message?: string;
+        data?: {
+          errors?: BulkUploadRowError[];
+        };
+        errors?: BulkUploadRowError[];
+      };
+      type RtqUnwrapError = {
+        data?: BulkUploadErrorPayload;
+      };
+
+      const errData: BulkUploadErrorPayload | undefined = (error as RtqUnwrapError)
+        ?.data;
+      const errorMessage: string | undefined = errData?.message;
+      const rowErrors: BulkUploadRowError[] =
+        errData?.data?.errors ?? errData?.errors ?? [];
+
+      if (rowErrors.length > 0) {
+        const preview = rowErrors
+          .slice(0, 3)
+          .map((e, idx) => {
+            const row = e.row ?? e.index ?? idx + 1;
+            const msg = e.message ?? e.error ?? "Failed";
+            return `Row ${row}: ${msg}`;
+          })
+          .join(" | ");
+
+        toast.error(
+          `${errorMessage ?? t("toast.failedGeneric")}. ${rowErrors.length} failed. ${preview}`,
+        );
+        return;
+      }
+
       toast.error(errorMessage || t("toast.failedGeneric"));
     }
   };
@@ -260,7 +382,7 @@ export function LearnersCsvUploadDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl! max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
@@ -269,11 +391,11 @@ export function LearnersCsvUploadDialog({
         </DialogHeader>
 
         {/* Sample CSV Download */}
-        <div className="bg-primary border border-primary rounded-xl p-6">
+        <div className=" border border-primary rounded-xl p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-4 flex-1">
               <div className="bg-white/10 p-3 rounded-lg">
-                <Download className="w-5 h-5 text-white" />
+                <Download className="w-5 h-5 text-black" />
               </div>
               <div>
                 <h3 className="font-bold text-foreground text-lg mb-2">
@@ -320,8 +442,8 @@ export function LearnersCsvUploadDialog({
           </div>
           {file ? (
             <div className="space-y-3">
-              <div className="bg-accent p-4 rounded-lg border border-accent">
-                <p className="text-lg font-semibold text-white">
+              <div className="p-4 rounded-lg border border-accent">
+                <p className="text-lg font-semibold">
                   {file.name}
                 </p>
                 <p className="text-sm text-accent">
@@ -366,7 +488,7 @@ export function LearnersCsvUploadDialog({
 
         {/* File Info */}
         {file && parsedData.length > 0 && (
-          <div className="bg-accent border border-accent rounded-xl p-5">
+          <div className="border border-accent rounded-xl p-5">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-lg">
                 <svg

@@ -106,8 +106,9 @@ function getCourseSchema(t: (key: string) => string) {
       EQA_id: z.string().min(1, t("courseInformation.validation.selectEQA")),
       start_date: z.string().min(1, t("courseInformation.validation.selectStartDate")),
       end_date: z.string().min(1, t("courseInformation.validation.selectEndDate")),
-      predicted_grade: z.string().min(1, t("courseInformation.validation.enterPredictedGrade")),
-      final_grade: z.string().min(1, t("courseInformation.validation.enterFinalGrade")),
+      // Optional inputs: allow empty/whitespace, but normalize to trimmed strings.
+      predicted_grade: z.string().transform((value) => value.trim()),
+      final_grade: z.string().transform((value) => value.trim()),
       is_main_course: z.boolean().optional(),
       course_status: z.string().optional(),
     })
@@ -830,8 +831,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        {t("courseInformation.form.predictedGrade")}{" "}
-                        <span className="text-destructive">*</span>
+                        {t("courseInformation.form.predictedGrade")}
                       </FormLabel>
                       <FormControl>
                         <Input placeholder={t("courseInformation.form.enterPredictedGrade")} {...field} />
@@ -848,7 +848,7 @@ export function CourseInformationTab({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        {t("courseInformation.form.finalGrade")} <span className="text-destructive">*</span>
+                        {t("courseInformation.form.finalGrade")}
                       </FormLabel>
                       <FormControl>
                         <Input placeholder={t("courseInformation.form.enterFinalGrade")} {...field} />

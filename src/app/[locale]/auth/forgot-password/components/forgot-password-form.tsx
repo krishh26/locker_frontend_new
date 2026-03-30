@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { toast } from "sonner"
 import { useRouter } from "@/i18n/navigation"
+import Link from "next/link"
 
 import { cn, extractBaseQueryErrorMessage } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -200,7 +201,6 @@ export function ForgotPasswordForm({
             id="email"
             type="email"
               placeholder="you@example.com"
-            autoComplete="email"
               disabled={emailForm.formState.isSubmitting || isSending}
               {...emailForm.register("email")}
           />
@@ -296,9 +296,9 @@ export function ForgotPasswordForm({
       )}
       <div className="text-center text-sm">
         Remember your password?{" "}
-        <a href="/auth/sign-in" className="underline underline-offset-4">
+        <Link href="/auth/sign-in" className="underline underline-offset-4">
           Back to sign in
-        </a>
+        </Link>
       </div>
     </form>
   )

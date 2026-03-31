@@ -3812,6 +3812,7 @@
     },
     "summaryCards": {
       "thisWeek": "Diese Woche",
+      "thisWeekAlso": "Diese Woche auch",
       "thisMonth": "Dieser Monat",
       "total": "Gesamt",
       "hoursLabel": "{hours} Stunden"

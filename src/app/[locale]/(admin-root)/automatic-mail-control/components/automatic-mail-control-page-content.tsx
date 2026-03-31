@@ -13,48 +13,50 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import {
-  useGetAutomaticMailControlConfigQuery,
-  useSaveAutomaticMailControlConfigMutation,
-} from "@/store/api/automatic-mail-control/automaticMailControlApi";
+  useListSessionReminderSettingsQuery,
+  useSetActiveSessionReminderDaysMutation,
+} from "@/store/api/session-settings/sessionReminderSettingsApi";
 
 type DaysOption = 3 | 5 | 7;
+const DAYS_OPTIONS: DaysOption[] = [3, 5, 7];
 
 export function AutomaticMailControlPageContent() {
   const t = useTranslations("automaticMailControl");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [days, setDays] = useState<DaysOption>(3);
-  const [trainerDays, setTrainerDays] = useState<DaysOption>(3);
 
   const {
-    data: configResponse,
+    data: reminderSettingsResponse,
     isLoading,
     error,
     refetch,
-  } = useGetAutomaticMailControlConfigQuery();
+  } = useListSessionReminderSettingsQuery();
 
-  const [saveConfig, { isLoading: isSaving }] =
-    useSaveAutomaticMailControlConfigMutation();
+  const [setActiveDays, { isLoading: isSaving }] =
+    useSetActiveSessionReminderDaysMutation();
 
   useEffect(() => {
-    if (configResponse?.data && isInitialLoad) {
-      setDays(configResponse.data.session_reminder_days_before ?? 3);
-      setTrainerDays(configResponse.data.trainer_session_reminder_days_before ?? 3);
+    if (isInitialLoad) {
+      const settings = reminderSettingsResponse?.data ?? [];
+      const active = settings.find((s) => s.is_active);
+      const activeDays = Number(active?.days_before);
+      if (DAYS_OPTIONS.includes(activeDays as DaysOption)) {
+        setDays(activeDays as DaysOption);
+      } else {
+        setDays(3);
+      }
       setIsInitialLoad(false);
     }
-  }, [configResponse, isInitialLoad]);
+  }, [reminderSettingsResponse, isInitialLoad]);
 
   const handleSave = async () => {
     try {
-      await saveConfig({
-        session_reminder_days_before: days,
-        enabled: true,
-        trainer_session_reminder_days_before: trainerDays,
-        trainer_enabled: true,
-      }).unwrap();
+      await setActiveDays({ days_before: days }).unwrap();
       toast.success(t("toast.configSaved"));
       refetch();
-    } catch (e: any) {
-      const msg = e?.data?.message || e?.message || t("toast.saveFailed");
+    } catch (e: unknown) {
+      const err = e as { data?: { message?: string }; message?: string };
+      const msg = err?.data?.message || err?.message || t("toast.saveFailed");
       toast.error(msg);
     }
   };
@@ -82,10 +84,20 @@ export function AutomaticMailControlPageContent() {
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            {(error as { data?: { message?: string }; message?: string }).data
-              ?.message ||
-              (error as any)?.message ||
-              t("toast.loadFailed")}
+            {
+              (
+                error as {
+                  data?: { message?: string };
+                  message?: string;
+                }
+              )?.data?.message ||
+                (
+                  error as {
+                    message?: string;
+                  }
+                )?.message ||
+                t("toast.loadFailed")
+            }
           </AlertDescription>
         </Alert>
       )}
@@ -104,7 +116,7 @@ export function AutomaticMailControlPageContent() {
                   onValueChange={(v) => setDays(Number(v) as DaysOption)}
                   className="grid gap-3"
                 >
-                  {[3, 5, 7].map((opt) => (
+                  {DAYS_OPTIONS.map((opt) => (
                     <label
                       key={opt}
                       className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-muted/40"
@@ -116,39 +128,6 @@ export function AutomaticMailControlPageContent() {
                         </span>
                         <span className="text-sm text-muted-foreground">
                           {t("optionHint", { days: opt })}
-                        </span>
-                      </div>
-                    </label>
-                  ))}
-                </RadioGroup>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("trainerCardTitle")}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>{t("trainerReminderDaysLabel")}</Label>
-                <RadioGroup
-                  value={String(trainerDays)}
-                  onValueChange={(v) => setTrainerDays(Number(v) as DaysOption)}
-                  className="grid gap-3"
-                >
-                  {[3, 5, 7].map((opt) => (
-                    <label
-                      key={opt}
-                      className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-muted/40"
-                    >
-                      <RadioGroupItem value={String(opt)} />
-                      <div className="flex flex-col">
-                        <span className="font-medium">
-                          {t("optionDays", { days: opt })}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {t("trainerOptionHint", { days: opt })}
                         </span>
                       </div>
                     </label>

@@ -987,7 +987,7 @@
       "actions": {
         "selectAll": "Select all",
         "clear": "Clear",
-        "exportCsv": "Export CSV"
+        "exportExcel": "Export Excel"
       },
       "validation": {
         "selectForm": "Please select a form.",
@@ -999,7 +999,7 @@
         "exportFailed": "Export failed"
       },
       "toast": {
-        "exportSuccess": "CSV exported successfully"
+        "exportSuccess": "Excel exported successfully"
       },
       "csvHeaders": {
         "userName": "User Name",
@@ -3896,6 +3896,7 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"

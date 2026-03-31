@@ -4568,6 +4568,7 @@
     },
     "summaryCards": {
       "thisWeek": "هذا الأسبوع",
+      "thisWeekAlso": "هذا الأسبوع أيضًا",
       "thisMonth": "هذا الشهر",
       "total": "الإجمالي",
       "hoursLabel": "{hours} ساعة"

@@ -12,24 +12,13 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-import type { FormField, FormListItem, FormSubmission } from "@/store/api/forms/types";
+import type { FormField, FormListItem } from "@/store/api/forms/types";
 import {
   useGetFormsListQuery,
   useGetFormDetailsQuery,
-  useLazyGetFormSubmissionsByFormQuery,
+  useGenerateFormsReportExcelMutation,
 } from "@/store/api/forms/formsApi";
-import { downloadCSV, escapeCSVField, generateFormsReportFilename } from "./utils/csv-export";
-
-function normalizeFieldValue(value: unknown): string {
-  if (value === null || value === undefined) return "";
-  if (typeof value === "string") return value;
-  if (typeof value === "number" || typeof value === "boolean") return String(value);
-  try {
-    return JSON.stringify(value);
-  } catch {
-    return String(value);
-  }
-}
+import { downloadBlob, generateFormsReportFilename } from "./utils/csv-export";
 
 export function FormsReportsPageContent() {
   const t = useTranslations("forms");
@@ -51,7 +40,7 @@ export function FormsReportsPageContent() {
     { skip: !selectedFormId }
   );
 
-  const [fetchSubmissions] = useLazyGetFormSubmissionsByFormQuery();
+  const [generateExcel] = useGenerateFormsReportExcelMutation();
 
   const forms = useMemo(() => (formsListData?.data ?? []) as FormListItem[], [formsListData?.data]);
   const selectedForm = useMemo(() => {
@@ -84,28 +73,6 @@ export function FormsReportsPageContent() {
     setError(null);
   };
 
-  const buildCsv = (rows: Array<Record<string, unknown>>): string => {
-    const fixedHeaders = [
-      t("reports.csvHeaders.userName"),
-      t("reports.csvHeaders.email"),
-      t("reports.csvHeaders.submittedAt"),
-    ];
-    const dynamicHeaders = selectedFields.map((f) => f.label || f.id);
-    const headers = [...fixedHeaders, ...dynamicHeaders];
-
-    const csvRows = rows.map((r) => {
-      const base = [
-        escapeCSVField(r.user_name),
-        escapeCSVField(r.email),
-        escapeCSVField(r.submitted_at),
-      ];
-      const dynamic = selectedFields.map((f) => escapeCSVField(normalizeFieldValue(r[f.id])));
-      return [...base, ...dynamic].join(",");
-    });
-
-    return [headers.map(escapeCSVField).join(","), ...csvRows].join("\n");
-  };
-
   const handleExport = async () => {
     try {
       setExporting(true);
@@ -120,49 +87,13 @@ export function FormsReportsPageContent() {
         return;
       }
 
-      // Fetch all pages
-      const pageSize = 500;
-      let page = 1;
-      let pages = 1;
-      const submissions: FormSubmission[] = [];
+      const res = await generateExcel({
+        formId: Number(selectedFormId),
+        selectedFields: selectedFields.map((f) => f.id),
+      }).unwrap();
 
-      while (page <= pages) {
-        const res = await fetchSubmissions({
-          formId: selectedFormId,
-          page,
-          page_size: pageSize,
-        }).unwrap();
-
-        submissions.push(...(res.data ?? []));
-        pages = res.meta_data?.pages ?? 1;
-        page += 1;
-
-        // Safety guard to avoid infinite loops on unexpected meta
-        if (pages > 200) {
-          throw new Error(t("reports.errors.tooManyPages"));
-        }
-      }
-
-      if (!submissions.length) {
-        setError(t("reports.errors.noSubmissions"));
-        return;
-      }
-
-      const rows = submissions.map((s) => {
-        const formData = (s.form_data ?? {}) as Record<string, unknown>;
-        const row: Record<string, unknown> = {
-          user_name: s.user?.user_name ?? "",
-          email: s.user?.email ?? "",
-          submitted_at: s.created_at ?? "",
-        };
-        for (const f of selectedFields) {
-          row[f.id] = formData[f.id] ?? "";
-        }
-        return row;
-      });
-
-      const csv = buildCsv(rows);
-      downloadCSV(csv, generateFormsReportFilename(selectedForm?.form_name));
+      const fallbackFilename = generateFormsReportFilename(selectedForm?.form_name);
+      downloadBlob(res.blob, res.filename || fallbackFilename);
       toast.success(t("reports.toast.exportSuccess"));
     } catch (e: unknown) {
       const err = e as { data?: { error?: string; message?: string }; message?: string };
@@ -275,7 +206,7 @@ export function FormsReportsPageContent() {
             >
               {exporting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               <Download className="mr-2 h-4 w-4" />
-              {t("reports.actions.exportCsv")}
+              {t("reports.actions.exportExcel")}
             </Button>
           </div>
         </CardContent>

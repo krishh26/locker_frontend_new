@@ -169,6 +169,24 @@ export const formsApi = createApi({
         return response;
       },
     }),
+    generateFormsReportExcel: builder.mutation<
+      { blob: Blob; filename?: string },
+      { formId: number; selectedFields: string[] }
+    >({
+      query: ({ formId, selectedFields }) => ({
+        url: "/reports/generate",
+        method: "POST",
+        body: { formId, selectedFields },
+        responseHandler: async (response) => {
+          const blob = await response.blob();
+          const contentDisposition = response.headers.get("Content-Disposition") ?? "";
+          const filename =
+            contentDisposition.match(/filename\*?=(?:UTF-8''|\"?)([^\";]+)/i)?.[1]?.trim() || undefined;
+
+          return { blob, filename };
+        },
+      }),
+    }),
     getFormDataDetails: builder.query<
       FormDataDetailsResponse,
       { formId: string | number; userId: string | number }
@@ -304,6 +322,7 @@ export const {
   useGetAllUsersQuery,
   useGetFormDetailsQuery,
   useGetFormDataDetailsQuery,
+  useGenerateFormsReportExcelMutation,
   useSubmitFormMutation,
   useCreateFormMutation,
   useUpdateFormMutation,

@@ -5262,6 +5262,8 @@
         "selectEQA": "कृपया EQA चुनें",
         "selectStartDate": "कृपया प्रारंभ तिथि चुनें",
         "selectEndDate": "कृपया समाप्ति तिथि चुनें",
+        "selectSuspendedUntil": "कृपया निलंबन समाप्ति तिथि चुनें",
+        "suspendedUntilNotPast": "निलंबन समाप्ति तिथि पिछली नहीं हो सकती",
         "endDateAfterStart": "समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए",
         "enterPredictedGrade": "कृपया अनुमानित ग्रेड दर्ज करें",
         "enterFinalGrade": "कृपया अंतिम ग्रेड दर्ज करें"
@@ -5293,6 +5295,7 @@
       "form": {
         "selectCourse": "कोर्स चुनें",
         "courseStatus": "कोर्स की स्थिति",
+        "suspendedUntil": "निलंबन समाप्ति तिथि",
         "trainer": "ट्रेनर",
         "iqa": "IQA",
         "liqa": "LIQA",

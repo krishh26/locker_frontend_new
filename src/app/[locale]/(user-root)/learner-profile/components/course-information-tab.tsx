@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -106,12 +106,39 @@ function getCourseSchema(t: (key: string) => string) {
       EQA_id: z.string().min(1, t("courseInformation.validation.selectEQA")),
       start_date: z.string().min(1, t("courseInformation.validation.selectStartDate")),
       end_date: z.string().min(1, t("courseInformation.validation.selectEndDate")),
+      suspended_until: z.string().optional(),
       // Optional inputs: allow empty/whitespace, but normalize to trimmed strings.
       predicted_grade: z.string().transform((value) => value.trim()),
       final_grade: z.string().transform((value) => value.trim()),
       is_main_course: z.boolean().optional(),
       course_status: z.string().optional(),
     })
+    .refine(
+      (data) => {
+        if (data.course_status === "Training Suspended") {
+          return !!data.suspended_until && data.suspended_until.trim().length > 0;
+        }
+        return true;
+      },
+      {
+        message: t("courseInformation.validation.selectSuspendedUntil"),
+        path: ["suspended_until"],
+      }
+    )
+    .refine(
+      (data) => {
+        if (data.course_status !== "Training Suspended" || !data.suspended_until) return true;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const suspendedUntil = new Date(data.suspended_until);
+        suspendedUntil.setHours(0, 0, 0, 0);
+        return suspendedUntil >= today;
+      },
+      {
+        message: t("courseInformation.validation.suspendedUntilNotPast"),
+        path: ["suspended_until"],
+      }
+    )
     .refine(
       (data) => {
         if (data.start_date && data.end_date) {
@@ -133,6 +160,13 @@ export function CourseInformationTab({
   canEdit = false,
 }: CourseInformationTabProps) {
   const t = useTranslations("learnerProfile");
+  const todayISO = useMemo(() => {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }, []);
   const courseSchema = useMemo(
     () => getCourseSchema((key) => t(key)),
     [t]
@@ -189,12 +223,22 @@ export function CourseInformationTab({
       EQA_id: "",
       start_date: "",
       end_date: "",
+      suspended_until: "",
       predicted_grade: "",
       final_grade: "",
       is_main_course: false,
       course_status: "",
     },
   });
+
+  const courseStatus = form.watch("course_status");
+
+  useEffect(() => {
+    if (courseStatus !== "Training Suspended") {
+      form.setValue("suspended_until", "");
+      form.clearErrors("suspended_until");
+    }
+  }, [courseStatus, form]);
 
   // Filter courses by learner's organisation when present (multi-tenant: avoid cross-org enrolment)
   const coursesList = useMemo(() => {
@@ -282,6 +326,9 @@ export function CourseInformationTab({
         end_date: course.end_date
           ? new Date(course.end_date).toISOString().split("T")[0]
           : "",
+        suspended_until: course.suspended_until
+          ? new Date(course.suspended_until).toISOString().split("T")[0]
+          : "",
         predicted_grade: courseData.predicted_grade || "",
         final_grade: courseData.final_grade || "",
         is_main_course: course.is_main_course || false,
@@ -298,6 +345,7 @@ export function CourseInformationTab({
         EQA_id: "",
         start_date: "",
         end_date: "",
+        suspended_until: "",
         predicted_grade: "",
         final_grade: "",
         is_main_course: false,
@@ -326,6 +374,10 @@ export function CourseInformationTab({
             EQA_id: Number(data.EQA_id),
             start_date: data.start_date,
             end_date: data.end_date,
+            suspended_until:
+              data.course_status === "Training Suspended"
+                ? (data.suspended_until || "").trim() || undefined
+                : undefined,
             predicted_grade: data.predicted_grade,
             final_grade: data.final_grade,
             is_main_course: data.is_main_course,
@@ -343,6 +395,10 @@ export function CourseInformationTab({
           EQA_id: Number(data.EQA_id),
           start_date: data.start_date,
           end_date: data.end_date,
+          suspended_until:
+            data.course_status === "Training Suspended"
+              ? (data.suspended_until || "").trim() || undefined
+              : undefined,
           predicted_grade: data.predicted_grade,
           final_grade: data.final_grade,
           is_main_course: data.is_main_course || false,
@@ -641,6 +697,26 @@ export function CourseInformationTab({
                           ))}
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {/* Suspended Until - Only for Training Suspended */}
+              {isEditMode && courseStatus === "Training Suspended" && (
+                <FormField
+                  control={form.control}
+                  name="suspended_until"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("courseInformation.form.suspendedUntil")}{" "}
+                        <span className="text-destructive">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="date" min={todayISO} {...field} />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

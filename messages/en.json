@@ -5278,6 +5278,8 @@
         "selectEQA": "Please select an EQA",
         "selectStartDate": "Please select a start date",
         "selectEndDate": "Please select an end date",
+        "selectSuspendedUntil": "Please select a suspended until date",
+        "suspendedUntilNotPast": "Suspended until date cannot be in the past",
         "endDateAfterStart": "End date must be after start date",
         "enterPredictedGrade": "Please enter predicted grade",
         "enterFinalGrade": "Please enter final grade"
@@ -5309,6 +5311,7 @@
       "form": {
         "selectCourse": "Select Course",
         "courseStatus": "Course Status",
+        "suspendedUntil": "Suspended Until",
         "trainer": "Trainer",
         "iqa": "IQA",
         "liqa": "LIQA",

@@ -3099,6 +3099,24 @@
       "loadFailed": "Konfiguration konnte nicht geladen werden. Bitte versuchen Sie es erneut."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Automatische E‑Mail‑Steuerung",
+    "pageSubtitle": "Automatische E‑Mail‑Erinnerungen für Lernende vor Sitzungen konfigurieren",
+    "cardTitle": "Sitzungserinnerung an Lernende",
+    "reminderDaysLabel": "Erinnerung senden vor",
+    "optionDays": "{days} Tage",
+    "optionHint": "E‑Mail {days} Tage vor dem Sitzungstermin senden",
+    "trainerCardTitle": "Sitzungserinnerung an Trainer",
+    "trainerReminderDaysLabel": "Erinnerung senden vor",
+    "trainerOptionHint": "E‑Mail {days} Tage vor dem Sitzungstermin senden",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "toast": {
+      "configSaved": "Konfiguration erfolgreich gespeichert!",
+      "saveFailed": "Konfiguration konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "loadFailed": "Konfiguration konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Verwaltung von Schutzkontakten",
     "pageSubtitle": "Kontaktinformationen des Safeguarding-Beauftragten und zusätzliche Details verwalten",

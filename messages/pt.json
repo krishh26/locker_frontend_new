@@ -3915,6 +3915,24 @@
       "loadFailed": "Falha ao carregar a configuração. Tente novamente."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Controlo automático de e‑mails",
+    "pageSubtitle": "Configure lembretes automáticos por e‑mail para formandos antes das sessões",
+    "cardTitle": "Lembrete de sessão para o formando",
+    "reminderDaysLabel": "Enviar lembrete",
+    "optionDays": "{days} dias",
+    "optionHint": "Enviar e‑mail {days} dias antes da data da sessão",
+    "trainerCardTitle": "Lembrete de sessão para o formador",
+    "trainerReminderDaysLabel": "Enviar lembrete",
+    "trainerOptionHint": "Enviar e‑mail {days} dias antes da data da sessão",
+    "save": "Guardar",
+    "saving": "A guardar...",
+    "toast": {
+      "configSaved": "Configuração guardada com sucesso!",
+      "saveFailed": "Falha ao guardar a configuração. Tente novamente.",
+      "loadFailed": "Falha ao carregar a configuração. Tente novamente."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Gestão de contactos de proteção",
     "pageSubtitle": "Gerir os contactos do responsável de proteção e detalhes adicionais",

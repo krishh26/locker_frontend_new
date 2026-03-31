@@ -3873,6 +3873,24 @@
       "loadFailed": "加载配置失败。请重试。"
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "自动邮件控制",
+    "pageSubtitle": "配置在会话开始前向学员发送自动邮件提醒",
+    "cardTitle": "会话提醒（发送给学员）",
+    "reminderDaysLabel": "提前发送提醒",
+    "optionDays": "{days} 天",
+    "optionHint": "在会话日期前 {days} 天发送邮件",
+    "trainerCardTitle": "会话提醒（发送给培训师）",
+    "trainerReminderDaysLabel": "提前发送提醒",
+    "trainerOptionHint": "在会话日期前 {days} 天发送邮件",
+    "save": "保存",
+    "saving": "正在保存…",
+    "toast": {
+      "configSaved": "配置保存成功！",
+      "saveFailed": "保存配置失败。请重试。",
+      "loadFailed": "加载配置失败。请重试。"
+    }
+  },
   "safeguarding": {
     "pageTitle": "安全联络人管理",
     "pageSubtitle": "管理安全负责人联系方式及附加信息",

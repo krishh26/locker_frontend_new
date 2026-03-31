@@ -20,6 +20,7 @@ import {
   Ticket,
   ClipboardList,
   Calendar,
+  Mail,
   Settings,
   BookOpen,
   PoundSterling,
@@ -239,6 +240,11 @@ const data: {
               title: 'Default Review Weeks',
               url: '/default-review-weeks',
               icon: Calendar,
+            },
+            {
+              title: 'Automatic Mail Control',
+              url: '/automatic-mail-control',
+              icon: Mail,
             },
             {
               title: 'Caseload Management',

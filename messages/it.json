@@ -3273,6 +3273,24 @@
       "loadFailed": "Caricamento della configurazione non riuscito. Riprova."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Controllo e‑mail automatiche",
+    "pageSubtitle": "Configura promemoria e‑mail automatici per i discenti prima delle sessioni",
+    "cardTitle": "Promemoria sessione al discente",
+    "reminderDaysLabel": "Invia promemoria",
+    "optionDays": "{days} giorni",
+    "optionHint": "Invia e‑mail {days} giorni prima della data della sessione",
+    "trainerCardTitle": "Promemoria sessione al trainer",
+    "trainerReminderDaysLabel": "Invia promemoria",
+    "trainerOptionHint": "Invia e‑mail {days} giorni prima della data della sessione",
+    "save": "Salva",
+    "saving": "Salvataggio in corso...",
+    "toast": {
+      "configSaved": "Configurazione salvata con successo!",
+      "saveFailed": "Salvataggio della configurazione non riuscito. Riprova.",
+      "loadFailed": "Caricamento della configurazione non riuscito. Riprova."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Gestione contatti di tutela",
     "pageSubtitle": "Gestisci i contatti del responsabile della tutela e le informazioni aggiuntive",

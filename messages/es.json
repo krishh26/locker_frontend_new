@@ -3692,6 +3692,24 @@
       "loadFailed": "Error al cargar la configuración. Por favor, inténtelo de nuevo."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Control automático de correos",
+    "pageSubtitle": "Configura recordatorios automáticos por correo para los alumnos antes de las sesiones",
+    "cardTitle": "Recordatorio de sesión al alumno",
+    "reminderDaysLabel": "Enviar recordatorio",
+    "optionDays": "{days} días",
+    "optionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "trainerCardTitle": "Recordatorio de sesión al formador",
+    "trainerReminderDaysLabel": "Enviar recordatorio",
+    "trainerOptionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "toast": {
+      "configSaved": "¡Configuración guardada exitosamente!",
+      "saveFailed": "Error al guardar la configuración. Por favor, inténtelo de nuevo.",
+      "loadFailed": "Error al cargar la configuración. Por favor, inténtelo de nuevo."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Gestión de Contactos de Protección",
     "pageSubtitle": "Gestione la información de contacto del oficial de protección y detalles adicionales",

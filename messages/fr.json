@@ -3955,6 +3955,24 @@
       "loadFailed": "Échec du chargement de la configuration. Veuillez réessayer."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Contrôle automatique des e‑mails",
+    "pageSubtitle": "Configurer des rappels e‑mail automatiques aux apprenants avant les sessions",
+    "cardTitle": "Rappel de session à l’apprenant",
+    "reminderDaysLabel": "Envoyer le rappel",
+    "optionDays": "{days} jours",
+    "optionHint": "Envoyer un e‑mail {days} jours avant la date de la session",
+    "trainerCardTitle": "Rappel de session au formateur",
+    "trainerReminderDaysLabel": "Envoyer le rappel",
+    "trainerOptionHint": "Envoyer un e‑mail {days} jours avant la date de la session",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "toast": {
+      "configSaved": "Configuration enregistrée avec succès !",
+      "saveFailed": "Échec de l’enregistrement de la configuration. Veuillez réessayer.",
+      "loadFailed": "Échec du chargement de la configuration. Veuillez réessayer."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Gestion des contacts de protection",
     "pageSubtitle": "Gérer les coordonnées du responsable de la protection et les informations supplémentaires",

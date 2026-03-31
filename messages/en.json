@@ -4227,6 +4227,24 @@
       "loadFailed": "Failed to load configuration. Please try again."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Automatic Mail Control",
+    "pageSubtitle": "Configure automatic email reminders for learners before sessions",
+    "cardTitle": "Session Reminder to Learner",
+    "reminderDaysLabel": "Send reminder before",
+    "optionDays": "{days} days",
+    "optionHint": "Send email {days} days before the session date",
+    "trainerCardTitle": "Session Reminder to Trainer",
+    "trainerReminderDaysLabel": "Send reminder before",
+    "trainerOptionHint": "Send email {days} days before the session date",
+    "save": "Save",
+    "saving": "Saving...",
+    "toast": {
+      "configSaved": "Configuration saved successfully!",
+      "saveFailed": "Failed to save configuration. Please try again.",
+      "loadFailed": "Failed to load configuration. Please try again."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Safeguarding Contact Management",
     "pageSubtitle": "Manage safeguarding officer contact information and additional details",

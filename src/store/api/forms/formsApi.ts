@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type {
   SubmittedFormsResponse,
+  FormSubmissionsResponse,
   LockFormRequest,
   UnlockFormRequest,
   LockFormResponse,
@@ -45,6 +46,24 @@ export const formsApi = createApi({
       },
       providesTags: ["SubmittedForm"],
       transformResponse: (response: SubmittedFormsResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    getFormSubmissionsByForm: builder.query<
+      FormSubmissionsResponse,
+      { formId: string | number; page?: number; page_size?: number; search_keyword?: string }
+    >({
+      query: ({ formId, page = 1, page_size = 500, search_keyword = "" }) => {
+        let url = `/form/${formId}/submissions?meta=true&page=${page}&limit=${page_size}`;
+        if (search_keyword) {
+          url = `${url}&keyword=${encodeURIComponent(search_keyword)}`;
+        }
+        return url;
+      },
+      transformResponse: (response: FormSubmissionsResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
@@ -275,6 +294,8 @@ export const formsApi = createApi({
 
 export const {
   useGetAllSubmittedFormsQuery,
+  useGetFormSubmissionsByFormQuery,
+  useLazyGetFormSubmissionsByFormQuery,
   useLockFormMutation,
   useUnlockFormMutation,
   useGetFormsListQuery,

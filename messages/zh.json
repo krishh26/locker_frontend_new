@@ -945,7 +945,47 @@
   "tabs": {
   "formList": "表单列表",
   "templateList": "模板列表",
-  "response": "回复"
+  "response": "回复",
+  "reports": "报表"
+  },
+  "reports": {
+    "cardDescription": "选择一个表单，选择字段，并导出所有已提交的数据。",
+    "formSearch": {
+      "label": "搜索表单",
+      "placeholder": "按表单名称搜索..."
+    },
+    "formSelect": {
+      "label": "选择表单",
+      "placeholder": "请选择"
+    },
+    "fields": {
+      "title": "字段",
+      "loading": "正在加载字段...",
+      "available": "可用字段：{count} 个",
+      "selectFormHint": "选择一个表单以查看字段"
+    },
+    "actions": {
+      "selectAll": "全选",
+      "clear": "清除",
+      "exportCsv": "导出 CSV"
+    },
+    "validation": {
+      "selectForm": "请选择一个表单。",
+      "selectAtLeastOneField": "请至少选择一个要导出的字段。"
+    },
+    "errors": {
+      "tooManyPages": "导出页数过多。请缩小结果范围或联系管理员。",
+      "noSubmissions": "未找到该表单的提交记录。",
+      "exportFailed": "导出失败"
+    },
+    "toast": {
+      "exportSuccess": "CSV 导出成功"
+    },
+    "csvHeaders": {
+      "userName": "用户名",
+      "email": "邮箱",
+      "submittedAt": "提交时间"
+    }
   },
   "table": {
     "searchPlaceholder": "按关键词搜索...",

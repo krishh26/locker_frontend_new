@@ -572,7 +572,47 @@
     "tabs": {
       "formList": "Form List",
       "templateList": "Template List",
-      "response": "Response"
+      "response": "Response",
+      "reports": "Berichte"
+    },
+    "reports": {
+      "cardDescription": "Wählen Sie ein Formular aus, wählen Sie Felder und exportieren Sie alle übermittelten Daten.",
+      "formSearch": {
+        "label": "Formulare suchen",
+        "placeholder": "Nach Formularnamen suchen..."
+      },
+      "formSelect": {
+        "label": "Formular auswählen",
+        "placeholder": "Bitte auswählen"
+      },
+      "fields": {
+        "title": "Felder",
+        "loading": "Felder werden geladen...",
+        "available": "{count} Felder verfügbar",
+        "selectFormHint": "Wählen Sie ein Formular aus, um Felder anzuzeigen"
+      },
+      "actions": {
+        "selectAll": "Alle auswählen",
+        "clear": "Löschen",
+        "exportCsv": "CSV exportieren"
+      },
+      "validation": {
+        "selectForm": "Bitte wählen Sie ein Formular aus.",
+        "selectAtLeastOneField": "Bitte wählen Sie mindestens ein Feld zum Exportieren aus."
+      },
+      "errors": {
+        "tooManyPages": "Zu viele Seiten zum Exportieren. Bitte grenzen Sie die Ergebnisse ein oder kontaktieren Sie den Admin.",
+        "noSubmissions": "Keine Einreichungen für dieses Formular gefunden.",
+        "exportFailed": "Export fehlgeschlagen"
+      },
+      "toast": {
+        "exportSuccess": "CSV erfolgreich exportiert"
+      },
+      "csvHeaders": {
+        "userName": "Benutzername",
+        "email": "E-Mail",
+        "submittedAt": "Übermittelt am"
+      }
     },
     "table": {
       "searchPlaceholder": "Nach Stichwort suchen...",

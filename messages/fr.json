@@ -990,7 +990,47 @@
     "tabs": {
       "formList": "Liste des formulaires",
       "templateList": "Liste des modèles",
-      "response": "Réponses"
+      "response": "Réponses",
+      "reports": "Rapports"
+    },
+    "reports": {
+      "cardDescription": "Sélectionnez un formulaire, choisissez des champs et exportez toutes les données soumises.",
+      "formSearch": {
+        "label": "Rechercher des formulaires",
+        "placeholder": "Rechercher par nom de formulaire..."
+      },
+      "formSelect": {
+        "label": "Sélectionner un formulaire",
+        "placeholder": "Veuillez sélectionner"
+      },
+      "fields": {
+        "title": "Champs",
+        "loading": "Chargement des champs...",
+        "available": "{count} champs disponibles",
+        "selectFormHint": "Sélectionnez un formulaire pour afficher les champs"
+      },
+      "actions": {
+        "selectAll": "Tout sélectionner",
+        "clear": "Effacer",
+        "exportCsv": "Exporter CSV"
+      },
+      "validation": {
+        "selectForm": "Veuillez sélectionner un formulaire.",
+        "selectAtLeastOneField": "Veuillez sélectionner au moins un champ à exporter."
+      },
+      "errors": {
+        "tooManyPages": "Trop de pages à exporter. Veuillez affiner les résultats ou contacter l’administrateur.",
+        "noSubmissions": "Aucune soumission trouvée pour ce formulaire.",
+        "exportFailed": "Échec de l’export"
+      },
+      "toast": {
+        "exportSuccess": "CSV exporté avec succès"
+      },
+      "csvHeaders": {
+        "userName": "Nom d’utilisateur",
+        "email": "E-mail",
+        "submittedAt": "Soumis le"
+      }
     },
     "table": {
       "searchPlaceholder": "Rechercher par mot-clé...",

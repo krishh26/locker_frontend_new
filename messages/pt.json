@@ -949,7 +949,47 @@
   "tabs": {
   "formList": "Lista de formulários",
   "templateList": "Lista de modelos",
-  "response": "Respostas"
+  "response": "Respostas",
+  "reports": "Relatórios"
+  },
+  "reports": {
+    "cardDescription": "Selecione um formulário, escolha os campos e exporte todos os dados submetidos.",
+    "formSearch": {
+      "label": "Pesquisar formulários",
+      "placeholder": "Pesquisar por nome do formulário..."
+    },
+    "formSelect": {
+      "label": "Selecionar formulário",
+      "placeholder": "Por favor selecione"
+    },
+    "fields": {
+      "title": "Campos",
+      "loading": "A carregar campos...",
+      "available": "{count} campos disponíveis",
+      "selectFormHint": "Selecione um formulário para ver os campos"
+    },
+    "actions": {
+      "selectAll": "Selecionar tudo",
+      "clear": "Limpar",
+      "exportCsv": "Exportar CSV"
+    },
+    "validation": {
+      "selectForm": "Por favor selecione um formulário.",
+      "selectAtLeastOneField": "Por favor selecione pelo menos um campo para exportar."
+    },
+    "errors": {
+      "tooManyPages": "Demasiadas páginas para exportar. Restrinja os resultados ou contacte o administrador.",
+      "noSubmissions": "Não foram encontradas submissões para este formulário.",
+      "exportFailed": "Falha na exportação"
+    },
+    "toast": {
+      "exportSuccess": "CSV exportado com sucesso"
+    },
+    "csvHeaders": {
+      "userName": "Nome do utilizador",
+      "email": "Email",
+      "submittedAt": "Submetido em"
+    }
   },
   "table": {
     "searchPlaceholder": "Pesquisar por palavra-chave...",

@@ -965,7 +965,47 @@
     "tabs": {
       "formList": "Form List",
       "templateList": "Template List",
-      "response": "Response"
+      "response": "Response",
+      "reports": "Reports"
+    },
+    "reports": {
+      "cardDescription": "Select a form, choose fields, and export all submitted data.",
+      "formSearch": {
+        "label": "Search Forms",
+        "placeholder": "Search by form name..."
+      },
+      "formSelect": {
+        "label": "Select Form",
+        "placeholder": "Please Select"
+      },
+      "fields": {
+        "title": "Fields",
+        "loading": "Loading fields...",
+        "available": "{count} fields available",
+        "selectFormHint": "Select a form to view fields"
+      },
+      "actions": {
+        "selectAll": "Select all",
+        "clear": "Clear",
+        "exportCsv": "Export CSV"
+      },
+      "validation": {
+        "selectForm": "Please select a form.",
+        "selectAtLeastOneField": "Please select at least one field to export."
+      },
+      "errors": {
+        "tooManyPages": "Too many pages to export. Please narrow results or contact admin.",
+        "noSubmissions": "No submissions found for this form.",
+        "exportFailed": "Export failed"
+      },
+      "toast": {
+        "exportSuccess": "CSV exported successfully"
+      },
+      "csvHeaders": {
+        "userName": "User Name",
+        "email": "Email",
+        "submittedAt": "Submitted At"
+      }
     },
     "table": {
       "searchPlaceholder": "Search by keyword...",

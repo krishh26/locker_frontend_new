@@ -942,7 +942,47 @@
   "tabs": {
   "formList": "قائمة النماذج",
   "templateList": "قائمة القوالب",
-  "response": "الاستجابات"
+  "response": "الاستجابات",
+  "reports": "التقارير"
+  },
+  "reports": {
+    "cardDescription": "اختر نموذجًا، وحدد الحقول، ثم صدّر جميع البيانات المُرسلة.",
+    "formSearch": {
+      "label": "بحث النماذج",
+      "placeholder": "ابحث باسم النموذج..."
+    },
+    "formSelect": {
+      "label": "اختر نموذجًا",
+      "placeholder": "يرجى الاختيار"
+    },
+    "fields": {
+      "title": "الحقول",
+      "loading": "جارٍ تحميل الحقول...",
+      "available": "{count} حقول متاحة",
+      "selectFormHint": "اختر نموذجًا لعرض الحقول"
+    },
+    "actions": {
+      "selectAll": "تحديد الكل",
+      "clear": "مسح",
+      "exportCsv": "تصدير CSV"
+    },
+    "validation": {
+      "selectForm": "يرجى اختيار نموذج.",
+      "selectAtLeastOneField": "يرجى تحديد حقل واحد على الأقل للتصدير."
+    },
+    "errors": {
+      "tooManyPages": "عدد الصفحات كبير جدًا للتصدير. يرجى تضييق النتائج أو التواصل مع المسؤول.",
+      "noSubmissions": "لم يتم العثور على أي إرسال لهذا النموذج.",
+      "exportFailed": "فشل التصدير"
+    },
+    "toast": {
+      "exportSuccess": "تم تصدير CSV بنجاح"
+    },
+    "csvHeaders": {
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "submittedAt": "تاريخ الإرسال"
+    }
   },
   "table": {
     "searchPlaceholder": "البحث بالكلمة الرئيسية...",

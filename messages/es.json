@@ -779,7 +779,47 @@
     "tabs": {
       "formList": "Lista de Formularios",
       "templateList": "Lista de Plantillas",
-      "response": "Respuesta"
+      "response": "Respuesta",
+      "reports": "Informes"
+    },
+    "reports": {
+      "cardDescription": "Seleccione un formulario, elija campos y exporte todos los datos enviados.",
+      "formSearch": {
+        "label": "Buscar formularios",
+        "placeholder": "Buscar por nombre del formulario..."
+      },
+      "formSelect": {
+        "label": "Seleccionar formulario",
+        "placeholder": "Por favor seleccione"
+      },
+      "fields": {
+        "title": "Campos",
+        "loading": "Cargando campos...",
+        "available": "{count} campos disponibles",
+        "selectFormHint": "Seleccione un formulario para ver los campos"
+      },
+      "actions": {
+        "selectAll": "Seleccionar todo",
+        "clear": "Limpiar",
+        "exportCsv": "Exportar CSV"
+      },
+      "validation": {
+        "selectForm": "Por favor seleccione un formulario.",
+        "selectAtLeastOneField": "Por favor seleccione al menos un campo para exportar."
+      },
+      "errors": {
+        "tooManyPages": "Demasiadas páginas para exportar. Por favor acote los resultados o contacte al administrador.",
+        "noSubmissions": "No se encontraron envíos para este formulario.",
+        "exportFailed": "Error al exportar"
+      },
+      "toast": {
+        "exportSuccess": "CSV exportado correctamente"
+      },
+      "csvHeaders": {
+        "userName": "Nombre de usuario",
+        "email": "Correo",
+        "submittedAt": "Enviado el"
+      }
     },
     "table": {
       "searchPlaceholder": "Buscar por palabra clave...",

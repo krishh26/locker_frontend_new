@@ -613,7 +613,47 @@
     "tabs": {
       "formList": "Elenco moduli",
       "templateList": "Elenco modelli",
-      "response": "Risposte"
+      "response": "Risposte",
+      "reports": "Report"
+    },
+    "reports": {
+      "cardDescription": "Seleziona un modulo, scegli i campi ed esporta tutti i dati inviati.",
+      "formSearch": {
+        "label": "Cerca moduli",
+        "placeholder": "Cerca per nome del modulo..."
+      },
+      "formSelect": {
+        "label": "Seleziona modulo",
+        "placeholder": "Seleziona"
+      },
+      "fields": {
+        "title": "Campi",
+        "loading": "Caricamento campi...",
+        "available": "{count} campi disponibili",
+        "selectFormHint": "Seleziona un modulo per visualizzare i campi"
+      },
+      "actions": {
+        "selectAll": "Seleziona tutto",
+        "clear": "Cancella",
+        "exportCsv": "Esporta CSV"
+      },
+      "validation": {
+        "selectForm": "Seleziona un modulo.",
+        "selectAtLeastOneField": "Seleziona almeno un campo da esportare."
+      },
+      "errors": {
+        "tooManyPages": "Troppe pagine da esportare. Restringi i risultati o contatta l’amministratore.",
+        "noSubmissions": "Nessun invio trovato per questo modulo.",
+        "exportFailed": "Esportazione non riuscita"
+      },
+      "toast": {
+        "exportSuccess": "CSV esportato con successo"
+      },
+      "csvHeaders": {
+        "userName": "Nome utente",
+        "email": "Email",
+        "submittedAt": "Inviato il"
+      }
     },
     "table": {
       "searchPlaceholder": "Cerca per parola chiave...",

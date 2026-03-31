@@ -41,6 +41,7 @@ type RaiseFormValues = {
   description: string
   priority?: "Low" | "Medium" | "High" | "Urgent"
   centre_id?: number | null
+  attachment?: FileList
 }
 
 interface TicketRaiseDialogProps {
@@ -64,6 +65,7 @@ export function TicketRaiseDialog({
     description: z.string().min(1, t("validation.descriptionRequired")),
     priority: raiseSchemaBase.priority,
     centre_id: raiseSchemaBase.centre_id,
+    attachment: z.any().optional(),
   })
 
   const [createTicket, { isLoading }] = useCreateTicketMutation()
@@ -86,12 +88,19 @@ export function TicketRaiseDialog({
 
   const onSubmit = async (data: RaiseFormValues) => {
     try {
-      await createTicket({
-        title: data.title,
-        description: data.description,
-        priority: (data.priority as TicketPriority) ?? "Medium",
-        centre_id: data.centre_id ?? undefined,
-      }).unwrap()
+      const formData = new FormData()
+      formData.append("title", data.title)
+      formData.append("description", data.description)
+      formData.append("priority", (data.priority as TicketPriority) ?? "Medium")
+      if (typeof data.centre_id === "number" && !Number.isNaN(data.centre_id)) {
+        formData.append("centre_id", String(data.centre_id))
+      }
+      const file = data.attachment?.item(0) ?? undefined
+      if (file) {
+        formData.append("file", file)
+      }
+
+      await createTicket(formData).unwrap()
       toast.success(t("toast.createSuccess"))
       reset()
       onSuccess()
@@ -175,6 +184,17 @@ export function TicketRaiseDialog({
               />
             </div>
           )}
+          <div className="space-y-2">
+            <Label htmlFor="attachment">{t("fields.attachmentLabel")}</Label>
+            <Input
+              id="attachment"
+              type="file"
+              {...register("attachment")}
+            />
+            <p className="text-sm text-muted-foreground">
+              {t("fields.attachmentHint")}
+            </p>
+          </div>
           <DialogFooter>
             <Button
               type="button"

@@ -2628,7 +2628,9 @@
           "urgent": "जरूरी"
         },
         "centreLabel": "केंद्र (वैकल्पिक)",
-        "centrePlaceholder": "केंद्र ID"
+        "centrePlaceholder": "केंद्र ID",
+        "attachmentLabel": "संलग्नक (वैकल्पिक)",
+        "attachmentHint": "आप एक फ़ाइल संलग्न कर सकते हैं (वैकल्पिक)।"
       },
       "buttons": {
         "cancel": "रद्द करें",

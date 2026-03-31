@@ -1986,7 +1986,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centro (facoltativo)",
-        "centrePlaceholder": "ID centro"
+        "centrePlaceholder": "ID centro",
+        "attachmentLabel": "Allegato (facoltativo)",
+        "attachmentHint": "Puoi allegare un file (facoltativo)."
       },
       "buttons": {
         "cancel": "Annulla",

@@ -60,12 +60,14 @@ export type TicketListResponse = {
   };
 };
 
-export type CreateTicketRequest = {
-  title: string;
-  description: string;
-  priority?: TicketPriority;
-  centre_id?: number | null;
-};
+export type CreateTicketRequest = 
+  | {
+      title: string;
+      description: string;
+      priority?: TicketPriority;
+      centre_id?: number | null;
+    }
+  | FormData;
 
 export type CreateTicketResponse = {
   status: boolean;

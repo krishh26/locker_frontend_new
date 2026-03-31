@@ -2628,7 +2628,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centro (opcional)",
-        "centrePlaceholder": "ID do centro"
+        "centrePlaceholder": "ID do centro",
+        "attachmentLabel": "Anexo (opcional)",
+        "attachmentHint": "Pode anexar um ficheiro (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",

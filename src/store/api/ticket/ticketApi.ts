@@ -68,7 +68,6 @@ export const ticketApi = createApi({
       query: (body) => ({
         url: "/ticket/create",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body,
       }),
       invalidatesTags: ["Ticket"],

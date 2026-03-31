@@ -2952,7 +2952,9 @@
           "urgent": "Urgent"
         },
         "centreLabel": "Centre (optional)",
-        "centrePlaceholder": "Centre ID"
+        "centrePlaceholder": "Centre ID",
+        "attachmentLabel": "Attachment (optional)",
+        "attachmentHint": "You can attach one file (optional)."
       },
       "buttons": {
         "cancel": "Cancel",

@@ -2040,7 +2040,9 @@
           "urgent": "Dringend"
         },
         "centreLabel": "Zentrum (optional)",
-        "centrePlaceholder": "Zentrum-ID"
+        "centrePlaceholder": "Zentrum-ID",
+        "attachmentLabel": "Anhang (optional)",
+        "attachmentHint": "Du kannst eine Datei anhängen (optional)."
       },
       "buttons": {
         "cancel": "Abbrechen",

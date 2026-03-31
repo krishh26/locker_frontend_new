@@ -2621,7 +2621,9 @@
           "urgent": "عاجلة"
         },
         "centreLabel": "المركز (اختياري)",
-        "centrePlaceholder": "معرف المركز"
+        "centrePlaceholder": "معرف المركز",
+        "attachmentLabel": "مرفق (اختياري)",
+        "attachmentHint": "يمكنك إرفاق ملف واحد (اختياري)."
       },
       "buttons": {
         "cancel": "إلغاء",

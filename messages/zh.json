@@ -2586,7 +2586,9 @@
           "urgent": "紧急"
         },
         "centreLabel": "中心（可选）",
-        "centrePlaceholder": "中心 ID"
+        "centrePlaceholder": "中心 ID",
+        "attachmentLabel": "附件（可选）",
+        "attachmentHint": "你可以附加一个文件（可选）。"
       },
       "buttons": {
         "cancel": "取消",

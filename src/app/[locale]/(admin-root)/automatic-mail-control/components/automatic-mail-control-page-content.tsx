@@ -16,42 +16,59 @@ import {
   useListSessionReminderSettingsQuery,
   useSetActiveSessionReminderDaysMutation,
 } from "@/store/api/session-settings/sessionReminderSettingsApi";
+import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
+import type { AuthUser } from "@/store/api/auth/types";
 
 type DaysOption = 3 | 5 | 7;
 const DAYS_OPTIONS: DaysOption[] = [3, 5, 7];
 
 export function AutomaticMailControlPageContent() {
   const t = useTranslations("automaticMailControl");
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [days, setDays] = useState<DaysOption>(3);
+
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const authUser = useAppSelector((state) => state.auth.user) as AuthUser | undefined;
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.[0] != null
+      ? Number(authUser.assignedOrganisationIds[0])
+      : undefined);
+
+  const listArg =
+    organisationId != null ? { organisation_id: organisationId } : undefined;
 
   const {
     data: reminderSettingsResponse,
     isLoading,
+    isSuccess,
     error,
     refetch,
-  } = useListSessionReminderSettingsQuery();
+  } = useListSessionReminderSettingsQuery(listArg);
 
   const [setActiveDays, { isLoading: isSaving }] =
     useSetActiveSessionReminderDaysMutation();
 
+  // Sync radio from API only after a successful load — avoids racing before data exists
+  // (otherwise first run used [] and locked days to 3 even when the API returns 5).
   useEffect(() => {
-    if (isInitialLoad) {
-      const settings = reminderSettingsResponse?.data ?? [];
-      const active = settings.find((s) => s.is_active);
-      const activeDays = Number(active?.days_before);
-      if (DAYS_OPTIONS.includes(activeDays as DaysOption)) {
-        setDays(activeDays as DaysOption);
-      } else {
-        setDays(3);
-      }
-      setIsInitialLoad(false);
+    if (!isSuccess) return;
+    const settings = reminderSettingsResponse?.data ?? [];
+    const active = settings.find((s) => s.is_active);
+    const activeDays = Number(active?.days_before);
+    if (DAYS_OPTIONS.includes(activeDays as DaysOption)) {
+      setDays(activeDays as DaysOption);
+    } else {
+      setDays(3);
     }
-  }, [reminderSettingsResponse, isInitialLoad]);
+  }, [isSuccess, reminderSettingsResponse]);
 
   const handleSave = async () => {
     try {
-      await setActiveDays({ days_before: days }).unwrap();
+      await setActiveDays({
+        days_before: days,
+        ...(organisationId != null ? { organisation_id: organisationId } : {}),
+      }).unwrap();
       toast.success(t("toast.configSaved"));
       refetch();
     } catch (e: unknown) {

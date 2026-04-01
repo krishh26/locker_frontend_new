@@ -33,7 +33,6 @@ import { caseloadApi } from "@/store/api/caseload/caseloadApi"
 import { safeguardingApi } from "@/store/api/safeguarding/safeguardingApi"
 import { acknowledgementApi } from "@/store/api/acknowledgement/acknowledgementApi"
 import { defaultReviewWeeksApi } from "@/store/api/default-review-weeks/defaultReviewWeeksApi"
-import { automaticMailControlApi } from "@/store/api/automatic-mail-control/automaticMailControlApi"
 import { sessionReminderSettingsApi } from "@/store/api/session-settings/sessionReminderSettingsApi"
 import { iqaQuestionsApi } from "@/store/api/iqa-questions/iqaQuestionsApi"
 import { sessionTypeApi } from "@/store/api/session-type/sessionTypeApi"
@@ -98,7 +97,6 @@ export const rootReducer = combineReducers({
   [safeguardingApi.reducerPath]: safeguardingApi.reducer,
   [acknowledgementApi.reducerPath]: acknowledgementApi.reducer,
   [defaultReviewWeeksApi.reducerPath]: defaultReviewWeeksApi.reducer,
-  [automaticMailControlApi.reducerPath]: automaticMailControlApi.reducer,
   [sessionReminderSettingsApi.reducerPath]: sessionReminderSettingsApi.reducer,
   [iqaQuestionsApi.reducerPath]: iqaQuestionsApi.reducer,
   [sessionTypeApi.reducerPath]: sessionTypeApi.reducer,
@@ -160,7 +158,6 @@ export const concatMiddleware: Middleware[] = [
   safeguardingApi.middleware,
   acknowledgementApi.middleware,
   defaultReviewWeeksApi.middleware,
-  automaticMailControlApi.middleware,
   sessionReminderSettingsApi.middleware,
   iqaQuestionsApi.middleware,
   sessionTypeApi.middleware,

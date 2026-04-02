@@ -16,6 +16,8 @@ type RawSessionType = {
   isOffTheJob?: boolean;
   active?: boolean;
   isActive?: boolean;
+  is_system?: boolean;
+  isSystem?: boolean;
   order: number;
   centre_id?: number | null;
   centreId?: number | null;
@@ -62,6 +64,7 @@ export const sessionTypeApi = createApi({
               name: item.name,
               isOffTheJob: item.is_off_the_job ?? item.isOffTheJob ?? false,
               isActive: item.active ?? item.isActive ?? true,
+              isSystem: item.is_system ?? item.isSystem ?? false,
               order: item.order,
               centreId: item.centre_id ?? item.centreId ?? null,
               createdAt: item.created_at ?? item.createdAt,
@@ -96,6 +99,7 @@ export const sessionTypeApi = createApi({
               name: raw.data.name,
               isOffTheJob: raw.data.is_off_the_job ?? raw.data.isOffTheJob ?? false,
               isActive: raw.data.active ?? raw.data.isActive ?? true,
+              isSystem: raw.data.is_system ?? raw.data.isSystem ?? false,
               order: raw.data.order,
               centreId: raw.data.centre_id ?? raw.data.centreId ?? null,
               createdAt: raw.data.created_at ?? raw.data.createdAt,
@@ -133,6 +137,7 @@ export const sessionTypeApi = createApi({
               name: raw.data.name,
               isOffTheJob: raw.data.is_off_the_job ?? raw.data.isOffTheJob ?? false,
               isActive: raw.data.active ?? raw.data.isActive ?? true,
+              isSystem: raw.data.is_system ?? raw.data.isSystem ?? false,
               order: raw.data.order,
               centreId: raw.data.centre_id ?? raw.data.centreId ?? null,
               createdAt: raw.data.created_at ?? raw.data.createdAt,
@@ -141,28 +146,6 @@ export const sessionTypeApi = createApi({
           };
         }
         return raw as SessionTypeResponse;
-      },
-    }),
-    toggleSessionType: builder.mutation<
-      SessionTypeResponse,
-      { id: number; isActive: boolean }
-    >({
-      query: ({ id, isActive }) => {
-        const encodedId = encodeURIComponent(String(id));
-        return {
-          url: `/sessionType/update/${encodedId}`,
-          method: "PATCH",
-          body: { isActive },
-        };
-      },
-      invalidatesTags: ["SessionType"],
-      transformResponse: (response: unknown): SessionTypeResponse => {
-        const raw = response as SessionTypeResponse;
-
-        if (raw?.status === false) {
-          throw new Error(raw.error ?? raw.message ?? DEFAULT_ERROR_MESSAGE);
-        }
-        return raw;
       },
     }),
     reorderSessionType: builder.mutation<
@@ -189,7 +172,9 @@ export const sessionTypeApi = createApi({
               name: item.name,
               isOffTheJob: item.is_off_the_job ?? item.isOffTheJob ?? false,
               isActive: item.active ?? item.isActive ?? true,
+              isSystem: item.is_system ?? item.isSystem ?? false,
               order: item.order,
+              centreId: item.centre_id ?? item.centreId ?? null,
               createdAt: item.created_at ?? item.createdAt,
               updatedAt: item.updated_at ?? item.updatedAt,
             })),
@@ -224,7 +209,6 @@ export const {
   useGetSessionTypesQuery,
   useCreateSessionTypeMutation,
   useUpdateSessionTypeMutation,
-  useToggleSessionTypeMutation,
   useReorderSessionTypeMutation,
   useDeleteSessionTypeMutation,
 } = sessionTypeApi;

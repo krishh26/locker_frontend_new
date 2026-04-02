@@ -44,7 +44,7 @@ import {
 import {
   useGetSessionTypesQuery,
   useDeleteSessionTypeMutation,
-  useToggleSessionTypeMutation,
+  useUpdateSessionTypeMutation,
   useReorderSessionTypeMutation,
 } from "@/store/api/session-type/sessionTypeApi";
 import type { SessionType } from "@/store/api/session-type/types";
@@ -68,6 +68,7 @@ function SortableTableRow({
   onDelete,
   onToggleActive,
 }: SortableRowProps) {
+  const isSystem = sessionType.isSystem === true;
   const {
     attributes,
     listeners,
@@ -77,6 +78,7 @@ function SortableTableRow({
     isDragging,
   } = useSortable({
     id: sessionType.id,
+    disabled: isSystem,
   });
 
   const style = {
@@ -89,9 +91,14 @@ function SortableTableRow({
     <TableRow ref={setNodeRef} style={style} className={isDragging ? "bg-muted" : ""}>
       <TableCell className="w-[50px]">
         <div
-          {...attributes}
-          {...listeners}
-          className="cursor-grab active:cursor-grabbing flex items-center"
+          {...(isSystem ? {} : attributes)}
+          {...(isSystem ? {} : listeners)}
+          className={
+            isSystem
+              ? "cursor-not-allowed opacity-50 flex items-center"
+              : "cursor-grab active:cursor-grabbing flex items-center"
+          }
+          aria-disabled={isSystem}
         >
           <GripVertical className="h-5 w-5 text-muted-foreground" />
         </div>
@@ -109,6 +116,7 @@ function SortableTableRow({
         <Switch
           checked={sessionType.isActive}
           onCheckedChange={(checked) => onToggleActive(sessionType.id, checked)}
+          disabled={isSystem}
         />
       </TableCell>
       <TableCell align="center">
@@ -117,6 +125,7 @@ function SortableTableRow({
             variant="ghost"
             size="icon"
             onClick={() => onEdit(sessionType)}
+            disabled={isSystem}
           >
             <Edit className="h-4 w-4" />
           </Button>
@@ -124,6 +133,7 @@ function SortableTableRow({
             variant="ghost"
             size="icon"
             onClick={() => onDelete(sessionType.id)}
+            disabled={isSystem}
           >
             <Trash2 className="h-4 w-4 text-destructive" />
           </Button>
@@ -144,7 +154,7 @@ export function SessionTypesDataTable() {
 
   const { data, isLoading, refetch } = useGetSessionTypesQuery();
   const [deleteSessionType, { isLoading: isDeleting }] = useDeleteSessionTypeMutation();
-  const [toggleSessionType] = useToggleSessionTypeMutation();
+  const [updateSessionType] = useUpdateSessionTypeMutation();
   const [reorderSessionType] = useReorderSessionTypeMutation();
 
   // Update local state when data changes
@@ -194,7 +204,10 @@ export function SessionTypesDataTable() {
 
   const handleToggleActive = async (id: number, isActive: boolean) => {
     try {
-      await toggleSessionType({ id, isActive }).unwrap();
+      const target = sessionTypes.find((st) => st.id === id);
+      if (target?.isSystem === true) return;
+
+      await updateSessionType({ id, payload: { active: isActive } }).unwrap();
       toast.success(
         isActive ? t("toast.activatedSuccess") : t("toast.deactivatedSuccess")
       );
@@ -208,6 +221,11 @@ export function SessionTypesDataTable() {
     const { active, over } = event;
 
     if (!over || active.id === over.id) {
+      return;
+    }
+
+    const activeItem = sessionTypes.find((st) => st.id === active.id);
+    if (activeItem?.isSystem === true) {
       return;
     }
 

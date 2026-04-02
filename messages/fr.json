@@ -2669,8 +2669,8 @@
         },
         "centreLabel": "Centre (facultatif)",
         "centrePlaceholder": "ID du centre",
-        "attachmentLabel": "Pièce jointe (facultatif)",
-        "attachmentHint": "Vous pouvez joindre un fichier (facultatif)."
+        "attachmentLabel": "Pièces jointes (facultatif)",
+        "attachmentHint": "Jusqu'à 5 fichiers, 25 Mo chacun (facultatif)."
       },
       "buttons": {
         "cancel": "Annuler",
@@ -2679,7 +2679,9 @@
       },
       "validation": {
         "titleRequired": "Le titre est obligatoire",
-        "descriptionRequired": "La description est obligatoire"
+        "descriptionRequired": "La description est obligatoire",
+        "tooManyFiles": "Vous pouvez joindre au maximum 5 fichiers.",
+        "fileTooLarge": "Chaque fichier doit faire 25 Mo ou moins."
       },
       "toast": {
         "createSuccess": "Ticket créé avec succès !",

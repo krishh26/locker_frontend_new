@@ -2630,7 +2630,7 @@
         "centreLabel": "केंद्र (वैकल्पिक)",
         "centrePlaceholder": "केंद्र ID",
         "attachmentLabel": "संलग्नक (वैकल्पिक)",
-        "attachmentHint": "आप एक फ़ाइल संलग्न कर सकते हैं (वैकल्पिक)।"
+        "attachmentHint": "अधिकतम 5 फ़ाइलें, प्रत्येक 25 MB तक (वैकल्पिक)।"
       },
       "buttons": {
         "cancel": "रद्द करें",
@@ -2639,7 +2639,9 @@
       },
       "validation": {
         "titleRequired": "शीर्षक आवश्यक है",
-        "descriptionRequired": "विवरण आवश्यक है"
+        "descriptionRequired": "विवरण आवश्यक है",
+        "tooManyFiles": "आप अधिकतम 5 फ़ाइलें संलग्न कर सकते हैं।",
+        "fileTooLarge": "प्रत्येक फ़ाइल 25 MB या उससे कम होनी चाहिए।"
       },
       "toast": {
         "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",

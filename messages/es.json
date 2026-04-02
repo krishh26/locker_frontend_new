@@ -2459,8 +2459,8 @@
         },
         "centreLabel": "Centro (opcional)",
         "centrePlaceholder": "ID del centro",
-        "attachmentLabel": "Adjunto (opcional)",
-        "attachmentHint": "Puedes adjuntar un archivo (opcional)."
+        "attachmentLabel": "Adjuntos (opcional)",
+        "attachmentHint": "Hasta 5 archivos, 25 MB cada uno (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",
@@ -2469,7 +2469,9 @@
       },
       "validation": {
         "titleRequired": "El título es obligatorio",
-        "descriptionRequired": "La descripción es obligatoria"
+        "descriptionRequired": "La descripción es obligatoria",
+        "tooManyFiles": "Puedes adjuntar como máximo 5 archivos.",
+        "fileTooLarge": "Cada archivo debe ser de 25 MB o menos."
       },
       "toast": {
         "createSuccess": "¡Ticket creado correctamente!",

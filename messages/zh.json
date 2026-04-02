@@ -2588,7 +2588,7 @@
         "centreLabel": "中心（可选）",
         "centrePlaceholder": "中心 ID",
         "attachmentLabel": "附件（可选）",
-        "attachmentHint": "你可以附加一个文件（可选）。"
+        "attachmentHint": "最多 5 个文件，每个不超过 25 MB（可选）。"
       },
       "buttons": {
         "cancel": "取消",
@@ -2597,7 +2597,9 @@
       },
       "validation": {
         "titleRequired": "标题为必填项",
-        "descriptionRequired": "描述为必填项"
+        "descriptionRequired": "描述为必填项",
+        "tooManyFiles": "最多只能附加 5 个文件。",
+        "fileTooLarge": "每个文件必须不超过 25 MB。"
       },
       "toast": {
         "createSuccess": "工单创建成功！",

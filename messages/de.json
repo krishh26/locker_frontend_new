@@ -2041,8 +2041,8 @@
         },
         "centreLabel": "Zentrum (optional)",
         "centrePlaceholder": "Zentrum-ID",
-        "attachmentLabel": "Anhang (optional)",
-        "attachmentHint": "Du kannst eine Datei anhängen (optional)."
+        "attachmentLabel": "Anhänge (optional)",
+        "attachmentHint": "Bis zu 5 Dateien, je 25 MB (optional)."
       },
       "buttons": {
         "cancel": "Abbrechen",
@@ -2051,7 +2051,9 @@
       },
       "validation": {
         "titleRequired": "Titel ist erforderlich",
-        "descriptionRequired": "Beschreibung ist erforderlich"
+        "descriptionRequired": "Beschreibung ist erforderlich",
+        "tooManyFiles": "Sie können höchstens 5 Dateien anhängen.",
+        "fileTooLarge": "Jede Datei darf höchstens 25 MB groß sein."
       },
       "toast": {
         "createSuccess": "Ticket erfolgreich erstellt!",

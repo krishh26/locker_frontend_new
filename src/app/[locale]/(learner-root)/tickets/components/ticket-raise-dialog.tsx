@@ -25,7 +25,11 @@ import {
 import { useCreateTicketMutation } from "@/store/api/ticket/ticketApi"
 import { toast } from "sonner"
 import { useAppSelector } from "@/store/hooks"
-import type { TicketPriority } from "@/store/api/ticket/types"
+import {
+  MAX_TICKET_ATTACHMENT_FILE_BYTES,
+  MAX_TICKET_ATTACHMENT_FILES,
+  type TicketPriority,
+} from "@/store/api/ticket/types"
 import { Controller } from "react-hook-form"
 import { useTranslations } from "next-intl"
 
@@ -60,13 +64,37 @@ export function TicketRaiseDialog({
 
   const t = useTranslations("tickets.raise")
 
-  const raiseSchema = z.object({
-    title: z.string().min(1, t("validation.titleRequired")),
-    description: z.string().min(1, t("validation.descriptionRequired")),
-    priority: raiseSchemaBase.priority,
-    centre_id: raiseSchemaBase.centre_id,
-    attachment: z.any().optional(),
-  })
+  const raiseSchema = z
+    .object({
+      title: z.string().min(1, t("validation.titleRequired")),
+      description: z.string().min(1, t("validation.descriptionRequired")),
+      priority: raiseSchemaBase.priority,
+      centre_id: raiseSchemaBase.centre_id,
+      attachment: z.custom<FileList | undefined>().optional(),
+    })
+    .superRefine((vals, ctx) => {
+      const list = vals.attachment
+      if (!list || list.length === 0) return
+      if (list.length > MAX_TICKET_ATTACHMENT_FILES) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.tooManyFiles"),
+          path: ["attachment"],
+        })
+        return
+      }
+      for (let i = 0; i < list.length; i++) {
+        const f = list.item(i)
+        if (f && f.size > MAX_TICKET_ATTACHMENT_FILE_BYTES) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("validation.fileTooLarge"),
+            path: ["attachment"],
+          })
+          return
+        }
+      }
+    })
 
   const [createTicket, { isLoading }] = useCreateTicketMutation()
 
@@ -95,9 +123,12 @@ export function TicketRaiseDialog({
       if (typeof data.centre_id === "number" && !Number.isNaN(data.centre_id)) {
         formData.append("centre_id", String(data.centre_id))
       }
-      const file = data.attachment?.item(0) ?? undefined
-      if (file) {
-        formData.append("file", file)
+      const files = data.attachment
+      if (files && files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+          const file = files.item(i)
+          if (file) formData.append("file", file)
+        }
       }
 
       await createTicket(formData).unwrap()
@@ -189,8 +220,12 @@ export function TicketRaiseDialog({
             <Input
               id="attachment"
               type="file"
+              multiple
               {...register("attachment")}
             />
+            {errors.attachment && (
+              <p className="text-sm text-destructive">{errors.attachment.message}</p>
+            )}
             <p className="text-sm text-muted-foreground">
               {t("fields.attachmentHint")}
             </p>

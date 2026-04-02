@@ -2622,8 +2622,8 @@
         },
         "centreLabel": "المركز (اختياري)",
         "centrePlaceholder": "معرف المركز",
-        "attachmentLabel": "مرفق (اختياري)",
-        "attachmentHint": "يمكنك إرفاق ملف واحد (اختياري)."
+        "attachmentLabel": "مرفقات (اختياري)",
+        "attachmentHint": "حتى 5 ملفات، 25 ميغابايت لكل ملف (اختياري)."
       },
       "buttons": {
         "cancel": "إلغاء",
@@ -2632,7 +2632,9 @@
       },
       "validation": {
         "titleRequired": "العنوان مطلوب",
-        "descriptionRequired": "الوصف مطلوب"
+        "descriptionRequired": "الوصف مطلوب",
+        "tooManyFiles": "يمكنك إرفاق 5 ملفات كحد أقصى.",
+        "fileTooLarge": "يجب ألا يزيد حجم كل ملف عن 25 ميغابايت."
       },
       "toast": {
         "createSuccess": "تم إنشاء التذكرة بنجاح!",

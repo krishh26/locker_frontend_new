@@ -1987,8 +1987,8 @@
         },
         "centreLabel": "Centro (facoltativo)",
         "centrePlaceholder": "ID centro",
-        "attachmentLabel": "Allegato (facoltativo)",
-        "attachmentHint": "Puoi allegare un file (facoltativo)."
+        "attachmentLabel": "Allegati (facoltativo)",
+        "attachmentHint": "Fino a 5 file, 25 MB ciascuno (facoltativo)."
       },
       "buttons": {
         "cancel": "Annulla",
@@ -1997,7 +1997,9 @@
       },
       "validation": {
         "titleRequired": "Il titolo è obbligatorio",
-        "descriptionRequired": "La descrizione è obbligatoria"
+        "descriptionRequired": "La descrizione è obbligatoria",
+        "tooManyFiles": "Puoi allegare al massimo 5 file.",
+        "fileTooLarge": "Ogni file deve essere di 25 MB o inferiore."
       },
       "toast": {
         "createSuccess": "Ticket creato con successo!",

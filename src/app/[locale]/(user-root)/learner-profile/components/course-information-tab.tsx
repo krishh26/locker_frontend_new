@@ -106,7 +106,7 @@ function getCourseSchema(t: (key: string) => string) {
       EQA_id: z.string().min(1, t("courseInformation.validation.selectEQA")),
       start_date: z.string().min(1, t("courseInformation.validation.selectStartDate")),
       end_date: z.string().min(1, t("courseInformation.validation.selectEndDate")),
-      suspended_until: z.string().optional(),
+      bil_return_date: z.string().optional(),
       // Optional inputs: allow empty/whitespace, but normalize to trimmed strings.
       predicted_grade: z.string().transform((value) => value.trim()),
       final_grade: z.string().transform((value) => value.trim()),
@@ -116,27 +116,29 @@ function getCourseSchema(t: (key: string) => string) {
     .refine(
       (data) => {
         if (data.course_status === "Training Suspended") {
-          return !!data.suspended_until && data.suspended_until.trim().length > 0;
+          return !!data.bil_return_date && data.bil_return_date.trim().length > 0;
         }
         return true;
       },
       {
         message: t("courseInformation.validation.selectSuspendedUntil"),
-        path: ["suspended_until"],
+        path: ["bil_return_date"],
       }
     )
     .refine(
       (data) => {
-        if (data.course_status !== "Training Suspended" || !data.suspended_until) return true;
+        if (data.course_status !== "Training Suspended" || !data.bil_return_date) return true;
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const suspendedUntil = new Date(data.suspended_until);
-        suspendedUntil.setHours(0, 0, 0, 0);
-        return suspendedUntil >= today;
+        const bilReturnStr = data.bil_return_date;
+        const parts = bilReturnStr.split("-").map((p) => Number(p));
+        const bilReturn =
+          parts.length === 3 ? new Date(parts[0], parts[1] - 1, parts[2]) : new Date(bilReturnStr);
+        return bilReturn >= today;
       },
       {
         message: t("courseInformation.validation.suspendedUntilNotPast"),
-        path: ["suspended_until"],
+        path: ["bil_return_date"],
       }
     )
     .refine(
@@ -223,7 +225,7 @@ export function CourseInformationTab({
       EQA_id: "",
       start_date: "",
       end_date: "",
-      suspended_until: "",
+      bil_return_date: "",
       predicted_grade: "",
       final_grade: "",
       is_main_course: false,
@@ -235,8 +237,8 @@ export function CourseInformationTab({
 
   useEffect(() => {
     if (courseStatus !== "Training Suspended") {
-      form.setValue("suspended_until", "");
-      form.clearErrors("suspended_until");
+      form.setValue("bil_return_date", "");
+      form.clearErrors("bil_return_date");
     }
   }, [courseStatus, form]);
 
@@ -326,8 +328,8 @@ export function CourseInformationTab({
         end_date: course.end_date
           ? new Date(course.end_date).toISOString().split("T")[0]
           : "",
-        suspended_until: course.suspended_until
-          ? new Date(course.suspended_until).toISOString().split("T")[0]
+        bil_return_date: course.bil_return_date
+          ? new Date(course.bil_return_date).toISOString().split("T")[0]
           : "",
         predicted_grade: courseData.predicted_grade || "",
         final_grade: courseData.final_grade || "",
@@ -345,7 +347,7 @@ export function CourseInformationTab({
         EQA_id: "",
         start_date: "",
         end_date: "",
-        suspended_until: "",
+        bil_return_date: "",
         predicted_grade: "",
         final_grade: "",
         is_main_course: false,
@@ -374,9 +376,9 @@ export function CourseInformationTab({
             EQA_id: Number(data.EQA_id),
             start_date: data.start_date,
             end_date: data.end_date,
-            suspended_until:
+            bil_return_date:
               data.course_status === "Training Suspended"
-                ? (data.suspended_until || "").trim() || undefined
+                ? (data.bil_return_date || "").trim() || undefined
                 : undefined,
             predicted_grade: data.predicted_grade,
             final_grade: data.final_grade,
@@ -395,9 +397,9 @@ export function CourseInformationTab({
           EQA_id: Number(data.EQA_id),
           start_date: data.start_date,
           end_date: data.end_date,
-          suspended_until:
+          bil_return_date:
             data.course_status === "Training Suspended"
-              ? (data.suspended_until || "").trim() || undefined
+              ? (data.bil_return_date || "").trim() || undefined
               : undefined,
           predicted_grade: data.predicted_grade,
           final_grade: data.final_grade,
@@ -707,7 +709,7 @@ export function CourseInformationTab({
               {isEditMode && courseStatus === "Training Suspended" && (
                 <FormField
                   control={form.control}
-                  name="suspended_until"
+                  name="bil_return_date"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>

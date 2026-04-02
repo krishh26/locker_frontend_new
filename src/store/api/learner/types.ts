@@ -16,7 +16,7 @@ export type LearnerCourse = {
   };
   start_date: string;
   end_date: string;
-  suspended_until?: string | null;
+  bil_return_date?: string | null;
   course_status: string;
   is_main_course: boolean;
   // Progress fields
@@ -211,7 +211,7 @@ export interface CreateUserCourseRequest {
   EQA_id: number;
   start_date: string;
   end_date: string;
-  suspended_until?: string;
+  bil_return_date?: string;
   predicted_grade: string;
   final_grade: string;
   is_main_course?: boolean;
@@ -225,7 +225,7 @@ export interface UpdateUserCourseRequest {
   EQA_id?: number;
   start_date?: string;
   end_date?: string;
-  suspended_until?: string;
+  bil_return_date?: string;
   predicted_grade?: string;
   final_grade?: string;
   is_main_course?: boolean;

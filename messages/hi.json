@@ -949,7 +949,47 @@
   "tabs": {
   "formList": "फ़ॉर्म सूची",
   "templateList": "टेम्पलेट सूची",
-  "response": "प्रतिक्रियाएँ"
+  "response": "प्रतिक्रियाएँ",
+  "reports": "रिपोर्ट"
+  },
+  "reports": {
+    "cardDescription": "एक फ़ॉर्म चुनें, फ़ील्ड चुनें, और सभी सबमिटेड डेटा एक्सपोर्ट करें।",
+    "formSearch": {
+      "label": "फ़ॉर्म खोजें",
+      "placeholder": "फ़ॉर्म नाम से खोजें..."
+    },
+    "formSelect": {
+      "label": "फ़ॉर्म चुनें",
+      "placeholder": "कृपया चुनें"
+    },
+    "fields": {
+      "title": "फ़ील्ड",
+      "loading": "फ़ील्ड लोड हो रहे हैं...",
+      "available": "{count} फ़ील्ड उपलब्ध",
+      "selectFormHint": "फ़ील्ड देखने के लिए एक फ़ॉर्म चुनें"
+    },
+    "actions": {
+      "selectAll": "सभी चुनें",
+      "clear": "साफ़ करें",
+      "exportExcel": "Excel एक्सपोर्ट करें"
+    },
+    "validation": {
+      "selectForm": "कृपया एक फ़ॉर्म चुनें।",
+      "selectAtLeastOneField": "कृपया एक्सपोर्ट के लिए कम से कम एक फ़ील्ड चुनें।"
+    },
+    "errors": {
+      "tooManyPages": "एक्सपोर्ट करने के लिए बहुत ज़्यादा पेज हैं। कृपया परिणाम सीमित करें या एडमिन से संपर्क करें।",
+      "noSubmissions": "इस फ़ॉर्म के लिए कोई सबमिशन नहीं मिला।",
+      "exportFailed": "एक्सपोर्ट विफल"
+    },
+    "toast": {
+      "exportSuccess": "Excel सफलतापूर्वक एक्सपोर्ट हुआ"
+    },
+    "csvHeaders": {
+      "userName": "उपयोगकर्ता नाम",
+      "email": "ईमेल",
+      "submittedAt": "सबमिट समय"
+    }
   },
   "table": {
     "searchPlaceholder": "कीवर्ड से खोजें...",
@@ -2588,7 +2628,9 @@
           "urgent": "जरूरी"
         },
         "centreLabel": "केंद्र (वैकल्पिक)",
-        "centrePlaceholder": "केंद्र ID"
+        "centrePlaceholder": "केंद्र ID",
+        "attachmentLabel": "संलग्नक (वैकल्पिक)",
+        "attachmentHint": "अधिकतम 5 फ़ाइलें, प्रत्येक 25 MB तक (वैकल्पिक)।"
       },
       "buttons": {
         "cancel": "रद्द करें",
@@ -2597,7 +2639,9 @@
       },
       "validation": {
         "titleRequired": "शीर्षक आवश्यक है",
-        "descriptionRequired": "विवरण आवश्यक है"
+        "descriptionRequired": "विवरण आवश्यक है",
+        "tooManyFiles": "आप अधिकतम 5 फ़ाइलें संलग्न कर सकते हैं।",
+        "fileTooLarge": "प्रत्येक फ़ाइल 25 MB या उससे कम होनी चाहिए।"
       },
       "toast": {
         "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",
@@ -3698,6 +3742,24 @@
       "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "ऑटोमैटिक मेल कंट्रोल",
+    "pageSubtitle": "सेशन से पहले लर्नर्स के लिए ऑटोमैटिक ईमेल रिमाइंडर कॉन्फ़िगर करें",
+    "cardTitle": "लर्नर को सेशन रिमाइंडर",
+    "reminderDaysLabel": "रिमाइंडर भेजें",
+    "optionDays": "{days} दिन",
+    "optionHint": "सेशन की तारीख से {days} दिन पहले ईमेल भेजें",
+    "trainerCardTitle": "ट्रेनर को सेशन रिमाइंडर",
+    "trainerReminderDaysLabel": "रिमाइंडर भेजें",
+    "trainerOptionHint": "सेशन की तारीख से {days} दिन पहले ईमेल भेजें",
+    "save": "सहेजें",
+    "saving": "सहेजा जा रहा है...",
+    "toast": {
+      "configSaved": "कॉन्फ़िगरेशन सफलतापूर्वक सहेजी गई!",
+      "saveFailed": "कॉन्फ़िगरेशन सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
+    }
+  },
   "proposeInnovations": {
     "page": {
       "title": "अपने नवाचार सुझाएँ",
@@ -4586,6 +4648,7 @@
     },
     "summaryCards": {
       "thisWeek": "इस सप्ताह",
+      "thisWeekAlso": "इस सप्ताह भी",
       "thisMonth": "इस माह",
       "total": "कुल",
       "hoursLabel": "{hours} घंटे"
@@ -5202,6 +5265,8 @@
         "selectEQA": "कृपया EQA चुनें",
         "selectStartDate": "कृपया प्रारंभ तिथि चुनें",
         "selectEndDate": "कृपया समाप्ति तिथि चुनें",
+        "selectSuspendedUntil": "कृपया निलंबन समाप्ति तिथि चुनें",
+        "suspendedUntilNotPast": "निलंबन समाप्ति तिथि पिछली नहीं हो सकती",
         "endDateAfterStart": "समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए",
         "enterPredictedGrade": "कृपया अनुमानित ग्रेड दर्ज करें",
         "enterFinalGrade": "कृपया अंतिम ग्रेड दर्ज करें"
@@ -5233,6 +5298,7 @@
       "form": {
         "selectCourse": "कोर्स चुनें",
         "courseStatus": "कोर्स की स्थिति",
+        "suspendedUntil": "निलंबन समाप्ति तिथि",
         "trainer": "ट्रेनर",
         "iqa": "IQA",
         "liqa": "LIQA",

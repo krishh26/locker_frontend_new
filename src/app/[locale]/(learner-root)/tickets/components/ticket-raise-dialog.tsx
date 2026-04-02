@@ -25,7 +25,11 @@ import {
 import { useCreateTicketMutation } from "@/store/api/ticket/ticketApi"
 import { toast } from "sonner"
 import { useAppSelector } from "@/store/hooks"
-import type { TicketPriority } from "@/store/api/ticket/types"
+import {
+  MAX_TICKET_ATTACHMENT_FILE_BYTES,
+  MAX_TICKET_ATTACHMENT_FILES,
+  type TicketPriority,
+} from "@/store/api/ticket/types"
 import { Controller } from "react-hook-form"
 import { useTranslations } from "next-intl"
 
@@ -41,6 +45,7 @@ type RaiseFormValues = {
   description: string
   priority?: "Low" | "Medium" | "High" | "Urgent"
   centre_id?: number | null
+  attachment?: FileList
 }
 
 interface TicketRaiseDialogProps {
@@ -59,12 +64,37 @@ export function TicketRaiseDialog({
 
   const t = useTranslations("tickets.raise")
 
-  const raiseSchema = z.object({
-    title: z.string().min(1, t("validation.titleRequired")),
-    description: z.string().min(1, t("validation.descriptionRequired")),
-    priority: raiseSchemaBase.priority,
-    centre_id: raiseSchemaBase.centre_id,
-  })
+  const raiseSchema = z
+    .object({
+      title: z.string().min(1, t("validation.titleRequired")),
+      description: z.string().min(1, t("validation.descriptionRequired")),
+      priority: raiseSchemaBase.priority,
+      centre_id: raiseSchemaBase.centre_id,
+      attachment: z.custom<FileList | undefined>().optional(),
+    })
+    .superRefine((vals, ctx) => {
+      const list = vals.attachment
+      if (!list || list.length === 0) return
+      if (list.length > MAX_TICKET_ATTACHMENT_FILES) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validation.tooManyFiles"),
+          path: ["attachment"],
+        })
+        return
+      }
+      for (let i = 0; i < list.length; i++) {
+        const f = list.item(i)
+        if (f && f.size > MAX_TICKET_ATTACHMENT_FILE_BYTES) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("validation.fileTooLarge"),
+            path: ["attachment"],
+          })
+          return
+        }
+      }
+    })
 
   const [createTicket, { isLoading }] = useCreateTicketMutation()
 
@@ -86,12 +116,22 @@ export function TicketRaiseDialog({
 
   const onSubmit = async (data: RaiseFormValues) => {
     try {
-      await createTicket({
-        title: data.title,
-        description: data.description,
-        priority: (data.priority as TicketPriority) ?? "Medium",
-        centre_id: data.centre_id ?? undefined,
-      }).unwrap()
+      const formData = new FormData()
+      formData.append("title", data.title)
+      formData.append("description", data.description)
+      formData.append("priority", (data.priority as TicketPriority) ?? "Medium")
+      if (typeof data.centre_id === "number" && !Number.isNaN(data.centre_id)) {
+        formData.append("centre_id", String(data.centre_id))
+      }
+      const files = data.attachment
+      if (files && files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+          const file = files.item(i)
+          if (file) formData.append("file", file)
+        }
+      }
+
+      await createTicket(formData).unwrap()
       toast.success(t("toast.createSuccess"))
       reset()
       onSuccess()
@@ -175,6 +215,21 @@ export function TicketRaiseDialog({
               />
             </div>
           )}
+          <div className="space-y-2">
+            <Label htmlFor="attachment">{t("fields.attachmentLabel")}</Label>
+            <Input
+              id="attachment"
+              type="file"
+              multiple
+              {...register("attachment")}
+            />
+            {errors.attachment && (
+              <p className="text-sm text-destructive">{errors.attachment.message}</p>
+            )}
+            <p className="text-sm text-muted-foreground">
+              {t("fields.attachmentHint")}
+            </p>
+          </div>
           <DialogFooter>
             <Button
               type="button"

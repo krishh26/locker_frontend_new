@@ -107,6 +107,10 @@ const routeRoleRules: RouteRule[] = [
     roles: R.admin(),
   },
   {
+    pattern: /^\/automatic-mail-control(?:\/|$)/,
+    roles: R.admin(),
+  },
+  {
     pattern: /^\/iqa-questions(?:\/|$)/,
     roles: R.admin(),
   },

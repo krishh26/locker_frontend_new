@@ -779,7 +779,47 @@
     "tabs": {
       "formList": "Lista de Formularios",
       "templateList": "Lista de Plantillas",
-      "response": "Respuesta"
+      "response": "Respuesta",
+      "reports": "Informes"
+    },
+    "reports": {
+      "cardDescription": "Seleccione un formulario, elija campos y exporte todos los datos enviados.",
+      "formSearch": {
+        "label": "Buscar formularios",
+        "placeholder": "Buscar por nombre del formulario..."
+      },
+      "formSelect": {
+        "label": "Seleccionar formulario",
+        "placeholder": "Por favor seleccione"
+      },
+      "fields": {
+        "title": "Campos",
+        "loading": "Cargando campos...",
+        "available": "{count} campos disponibles",
+        "selectFormHint": "Seleccione un formulario para ver los campos"
+      },
+      "actions": {
+        "selectAll": "Seleccionar todo",
+        "clear": "Limpiar",
+        "exportCsv": "Exportar CSV"
+      },
+      "validation": {
+        "selectForm": "Por favor seleccione un formulario.",
+        "selectAtLeastOneField": "Por favor seleccione al menos un campo para exportar."
+      },
+      "errors": {
+        "tooManyPages": "Demasiadas páginas para exportar. Por favor acote los resultados o contacte al administrador.",
+        "noSubmissions": "No se encontraron envíos para este formulario.",
+        "exportFailed": "Error al exportar"
+      },
+      "toast": {
+        "exportSuccess": "CSV exportado correctamente"
+      },
+      "csvHeaders": {
+        "userName": "Nombre de usuario",
+        "email": "Correo",
+        "submittedAt": "Enviado el"
+      }
     },
     "table": {
       "searchPlaceholder": "Buscar por palabra clave...",
@@ -2418,7 +2458,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centro (opcional)",
-        "centrePlaceholder": "ID del centro"
+        "centrePlaceholder": "ID del centro",
+        "attachmentLabel": "Adjuntos (opcional)",
+        "attachmentHint": "Hasta 5 archivos, 25 MB cada uno (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",
@@ -2427,7 +2469,9 @@
       },
       "validation": {
         "titleRequired": "El título es obligatorio",
-        "descriptionRequired": "La descripción es obligatoria"
+        "descriptionRequired": "La descripción es obligatoria",
+        "tooManyFiles": "Puedes adjuntar como máximo 5 archivos.",
+        "fileTooLarge": "Cada archivo debe ser de 25 MB o menos."
       },
       "toast": {
         "createSuccess": "¡Ticket creado correctamente!",
@@ -3476,6 +3520,7 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
@@ -3644,6 +3689,24 @@
       "title": "Información Importante",
       "description": "Estas configuraciones se aplicarán como el período de revisión predeterminado para todos los tipos de aprendices que no tengan un período de revisión personalizado asignado. Los cambios tendrán efecto inmediatamente después de guardar y afectarán las nuevas sesiones de revisión en el futuro."
     },
+    "toast": {
+      "configSaved": "¡Configuración guardada exitosamente!",
+      "saveFailed": "Error al guardar la configuración. Por favor, inténtelo de nuevo.",
+      "loadFailed": "Error al cargar la configuración. Por favor, inténtelo de nuevo."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Control automático de correos",
+    "pageSubtitle": "Configura recordatorios automáticos por correo para los alumnos antes de las sesiones",
+    "cardTitle": "Recordatorio de sesión al alumno",
+    "reminderDaysLabel": "Enviar recordatorio",
+    "optionDays": "{days} días",
+    "optionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "trainerCardTitle": "Recordatorio de sesión al formador",
+    "trainerReminderDaysLabel": "Enviar recordatorio",
+    "trainerOptionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "save": "Guardar",
+    "saving": "Guardando...",
     "toast": {
       "configSaved": "¡Configuración guardada exitosamente!",
       "saveFailed": "Error al guardar la configuración. Por favor, inténtelo de nuevo.",

@@ -1,3 +1,7 @@
+/** Matches locker_backend `TicketRouter` ticketCreateMulter limits for POST /ticket/create */
+export const MAX_TICKET_ATTACHMENT_FILES = 5;
+export const MAX_TICKET_ATTACHMENT_FILE_BYTES = 25 * 1024 * 1024;
+
 export type TicketUser = {
   user_id: number;
   user_name?: string;
@@ -60,12 +64,14 @@ export type TicketListResponse = {
   };
 };
 
-export type CreateTicketRequest = {
-  title: string;
-  description: string;
-  priority?: TicketPriority;
-  centre_id?: number | null;
-};
+export type CreateTicketRequest = 
+  | {
+      title: string;
+      description: string;
+      priority?: TicketPriority;
+      centre_id?: number | null;
+    }
+  | FormData;
 
 export type CreateTicketResponse = {
   status: boolean;

@@ -965,7 +965,47 @@
     "tabs": {
       "formList": "Form List",
       "templateList": "Template List",
-      "response": "Response"
+      "response": "Response",
+      "reports": "Reports"
+    },
+    "reports": {
+      "cardDescription": "Select a form, choose fields, and export all submitted data.",
+      "formSearch": {
+        "label": "Search Forms",
+        "placeholder": "Search by form name..."
+      },
+      "formSelect": {
+        "label": "Select Form",
+        "placeholder": "Please Select"
+      },
+      "fields": {
+        "title": "Fields",
+        "loading": "Loading fields...",
+        "available": "{count} fields available",
+        "selectFormHint": "Select a form to view fields"
+      },
+      "actions": {
+        "selectAll": "Select all",
+        "clear": "Clear",
+        "exportExcel": "Export Excel"
+      },
+      "validation": {
+        "selectForm": "Please select a form.",
+        "selectAtLeastOneField": "Please select at least one field to export."
+      },
+      "errors": {
+        "tooManyPages": "Too many pages to export. Please narrow results or contact admin.",
+        "noSubmissions": "No submissions found for this form.",
+        "exportFailed": "Export failed"
+      },
+      "toast": {
+        "exportSuccess": "Excel exported successfully"
+      },
+      "csvHeaders": {
+        "userName": "User Name",
+        "email": "Email",
+        "submittedAt": "Submitted At"
+      }
     },
     "table": {
       "searchPlaceholder": "Search by keyword...",
@@ -2912,7 +2952,9 @@
           "urgent": "Urgent"
         },
         "centreLabel": "Centre (optional)",
-        "centrePlaceholder": "Centre ID"
+        "centrePlaceholder": "Centre ID",
+        "attachmentLabel": "Attachment (optional)",
+        "attachmentHint": "You can attach one file (optional)."
       },
       "buttons": {
         "cancel": "Cancel",
@@ -3854,6 +3896,7 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
@@ -4179,6 +4222,24 @@
       "title": "Important Information",
       "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
     },
+    "toast": {
+      "configSaved": "Configuration saved successfully!",
+      "saveFailed": "Failed to save configuration. Please try again.",
+      "loadFailed": "Failed to load configuration. Please try again."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Automatic Mail Control",
+    "pageSubtitle": "Configure automatic email reminders for learners before sessions",
+    "cardTitle": "Session Reminder to Learner",
+    "reminderDaysLabel": "Send reminder before",
+    "optionDays": "{days} days",
+    "optionHint": "Send email {days} days before the session date",
+    "trainerCardTitle": "Session Reminder to Trainer",
+    "trainerReminderDaysLabel": "Send reminder before",
+    "trainerOptionHint": "Send email {days} days before the session date",
+    "save": "Save",
+    "saving": "Saving...",
     "toast": {
       "configSaved": "Configuration saved successfully!",
       "saveFailed": "Failed to save configuration. Please try again.",
@@ -5218,6 +5279,8 @@
         "selectEQA": "Please select an EQA",
         "selectStartDate": "Please select a start date",
         "selectEndDate": "Please select an end date",
+        "selectSuspendedUntil": "Please select a suspended until date",
+        "suspendedUntilNotPast": "Suspended until date cannot be in the past",
         "endDateAfterStart": "End date must be after start date",
         "enterPredictedGrade": "Please enter predicted grade",
         "enterFinalGrade": "Please enter final grade"
@@ -5249,6 +5312,7 @@
       "form": {
         "selectCourse": "Select Course",
         "courseStatus": "Course Status",
+        "suspendedUntil": "Suspended Until",
         "trainer": "Trainer",
         "iqa": "IQA",
         "liqa": "LIQA",

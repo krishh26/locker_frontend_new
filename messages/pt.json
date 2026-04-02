@@ -949,7 +949,47 @@
   "tabs": {
   "formList": "Lista de formulários",
   "templateList": "Lista de modelos",
-  "response": "Respostas"
+  "response": "Respostas",
+  "reports": "Relatórios"
+  },
+  "reports": {
+    "cardDescription": "Selecione um formulário, escolha os campos e exporte todos os dados submetidos.",
+    "formSearch": {
+      "label": "Pesquisar formulários",
+      "placeholder": "Pesquisar por nome do formulário..."
+    },
+    "formSelect": {
+      "label": "Selecionar formulário",
+      "placeholder": "Por favor selecione"
+    },
+    "fields": {
+      "title": "Campos",
+      "loading": "A carregar campos...",
+      "available": "{count} campos disponíveis",
+      "selectFormHint": "Selecione um formulário para ver os campos"
+    },
+    "actions": {
+      "selectAll": "Selecionar tudo",
+      "clear": "Limpar",
+      "exportCsv": "Exportar CSV"
+    },
+    "validation": {
+      "selectForm": "Por favor selecione um formulário.",
+      "selectAtLeastOneField": "Por favor selecione pelo menos um campo para exportar."
+    },
+    "errors": {
+      "tooManyPages": "Demasiadas páginas para exportar. Restrinja os resultados ou contacte o administrador.",
+      "noSubmissions": "Não foram encontradas submissões para este formulário.",
+      "exportFailed": "Falha na exportação"
+    },
+    "toast": {
+      "exportSuccess": "CSV exportado com sucesso"
+    },
+    "csvHeaders": {
+      "userName": "Nome do utilizador",
+      "email": "Email",
+      "submittedAt": "Submetido em"
+    }
   },
   "table": {
     "searchPlaceholder": "Pesquisar por palavra-chave...",
@@ -2588,7 +2628,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centro (opcional)",
-        "centrePlaceholder": "ID do centro"
+        "centrePlaceholder": "ID do centro",
+        "attachmentLabel": "Anexos (opcional)",
+        "attachmentHint": "Até 5 ficheiros, 25 MB cada (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",
@@ -2597,7 +2639,9 @@
       },
       "validation": {
         "titleRequired": "O título é obrigatório",
-        "descriptionRequired": "A descrição é obrigatória"
+        "descriptionRequired": "A descrição é obrigatória",
+        "tooManyFiles": "Pode anexar no máximo 5 ficheiros.",
+        "fileTooLarge": "Cada ficheiro deve ter no máximo 25 MB."
       },
       "toast": {
         "createSuccess": "Ticket criado com sucesso!",
@@ -3699,6 +3743,7 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
@@ -3867,6 +3912,24 @@
       "title": "Informações importantes",
       "description": "Estas definições serão aplicadas como período de revisão padrão para todos os tipos de formandos que não tenham um período de revisão personalizado. As alterações terão efeito imediato após guardar e afetarão as novas sessões de revisão."
     },
+    "toast": {
+      "configSaved": "Configuração guardada com sucesso!",
+      "saveFailed": "Falha ao guardar a configuração. Tente novamente.",
+      "loadFailed": "Falha ao carregar a configuração. Tente novamente."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Controlo automático de e‑mails",
+    "pageSubtitle": "Configure lembretes automáticos por e‑mail para formandos antes das sessões",
+    "cardTitle": "Lembrete de sessão para o formando",
+    "reminderDaysLabel": "Enviar lembrete",
+    "optionDays": "{days} dias",
+    "optionHint": "Enviar e‑mail {days} dias antes da data da sessão",
+    "trainerCardTitle": "Lembrete de sessão para o formador",
+    "trainerReminderDaysLabel": "Enviar lembrete",
+    "trainerOptionHint": "Enviar e‑mail {days} dias antes da data da sessão",
+    "save": "Guardar",
+    "saving": "A guardar...",
     "toast": {
       "configSaved": "Configuração guardada com sucesso!",
       "saveFailed": "Falha ao guardar a configuração. Tente novamente.",

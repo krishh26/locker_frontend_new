@@ -942,7 +942,47 @@
   "tabs": {
   "formList": "قائمة النماذج",
   "templateList": "قائمة القوالب",
-  "response": "الاستجابات"
+  "response": "الاستجابات",
+  "reports": "التقارير"
+  },
+  "reports": {
+    "cardDescription": "اختر نموذجًا، وحدد الحقول، ثم صدّر جميع البيانات المُرسلة.",
+    "formSearch": {
+      "label": "بحث النماذج",
+      "placeholder": "ابحث باسم النموذج..."
+    },
+    "formSelect": {
+      "label": "اختر نموذجًا",
+      "placeholder": "يرجى الاختيار"
+    },
+    "fields": {
+      "title": "الحقول",
+      "loading": "جارٍ تحميل الحقول...",
+      "available": "{count} حقول متاحة",
+      "selectFormHint": "اختر نموذجًا لعرض الحقول"
+    },
+    "actions": {
+      "selectAll": "تحديد الكل",
+      "clear": "مسح",
+      "exportCsv": "تصدير CSV"
+    },
+    "validation": {
+      "selectForm": "يرجى اختيار نموذج.",
+      "selectAtLeastOneField": "يرجى تحديد حقل واحد على الأقل للتصدير."
+    },
+    "errors": {
+      "tooManyPages": "عدد الصفحات كبير جدًا للتصدير. يرجى تضييق النتائج أو التواصل مع المسؤول.",
+      "noSubmissions": "لم يتم العثور على أي إرسال لهذا النموذج.",
+      "exportFailed": "فشل التصدير"
+    },
+    "toast": {
+      "exportSuccess": "تم تصدير CSV بنجاح"
+    },
+    "csvHeaders": {
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "submittedAt": "تاريخ الإرسال"
+    }
   },
   "table": {
     "searchPlaceholder": "البحث بالكلمة الرئيسية...",
@@ -2581,7 +2621,9 @@
           "urgent": "عاجلة"
         },
         "centreLabel": "المركز (اختياري)",
-        "centrePlaceholder": "معرف المركز"
+        "centrePlaceholder": "معرف المركز",
+        "attachmentLabel": "مرفقات (اختياري)",
+        "attachmentHint": "حتى 5 ملفات، 25 ميغابايت لكل ملف (اختياري)."
       },
       "buttons": {
         "cancel": "إلغاء",
@@ -2590,7 +2632,9 @@
       },
       "validation": {
         "titleRequired": "العنوان مطلوب",
-        "descriptionRequired": "الوصف مطلوب"
+        "descriptionRequired": "الوصف مطلوب",
+        "tooManyFiles": "يمكنك إرفاق 5 ملفات كحد أقصى.",
+        "fileTooLarge": "يجب ألا يزيد حجم كل ملف عن 25 ميغابايت."
       },
       "toast": {
         "createSuccess": "تم إنشاء التذكرة بنجاح!",
@@ -3691,6 +3735,24 @@
       "loadFailed": "فشل تحميل الإعدادات. يرجى المحاولة مرة أخرى."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "التحكم التلقائي بالبريد الإلكتروني",
+    "pageSubtitle": "إعداد تذكيرات بريد إلكتروني تلقائية للمتعلمين قبل الجلسات",
+    "cardTitle": "تذكير الجلسة للمتعلم",
+    "reminderDaysLabel": "إرسال التذكير قبل",
+    "optionDays": "{days} أيام",
+    "optionHint": "إرسال بريد إلكتروني قبل {days} أيام من تاريخ الجلسة",
+    "trainerCardTitle": "تذكير الجلسة للمدرّب",
+    "trainerReminderDaysLabel": "إرسال التذكير قبل",
+    "trainerOptionHint": "إرسال بريد إلكتروني قبل {days} أيام من تاريخ الجلسة",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "toast": {
+      "configSaved": "تم حفظ الإعدادات بنجاح!",
+      "saveFailed": "فشل حفظ الإعدادات. يرجى المحاولة مرة أخرى.",
+      "loadFailed": "فشل تحميل الإعدادات. يرجى المحاولة مرة أخرى."
+    }
+  },
   "safeguarding": {
     "pageTitle": "إدارة جهات اتصال الحماية",
     "pageSubtitle": "إدارة معلومات الاتصال بضابط الحماية والتفاصيل الإضافية",
@@ -4508,6 +4570,7 @@
     },
     "summaryCards": {
       "thisWeek": "هذا الأسبوع",
+      "thisWeekAlso": "هذا الأسبوع أيضًا",
       "thisMonth": "هذا الشهر",
       "total": "الإجمالي",
       "hoursLabel": "{hours} ساعة"

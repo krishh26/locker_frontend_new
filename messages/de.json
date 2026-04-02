@@ -572,7 +572,47 @@
     "tabs": {
       "formList": "Form List",
       "templateList": "Template List",
-      "response": "Response"
+      "response": "Response",
+      "reports": "Berichte"
+    },
+    "reports": {
+      "cardDescription": "Wählen Sie ein Formular aus, wählen Sie Felder und exportieren Sie alle übermittelten Daten.",
+      "formSearch": {
+        "label": "Formulare suchen",
+        "placeholder": "Nach Formularnamen suchen..."
+      },
+      "formSelect": {
+        "label": "Formular auswählen",
+        "placeholder": "Bitte auswählen"
+      },
+      "fields": {
+        "title": "Felder",
+        "loading": "Felder werden geladen...",
+        "available": "{count} Felder verfügbar",
+        "selectFormHint": "Wählen Sie ein Formular aus, um Felder anzuzeigen"
+      },
+      "actions": {
+        "selectAll": "Alle auswählen",
+        "clear": "Löschen",
+        "exportCsv": "CSV exportieren"
+      },
+      "validation": {
+        "selectForm": "Bitte wählen Sie ein Formular aus.",
+        "selectAtLeastOneField": "Bitte wählen Sie mindestens ein Feld zum Exportieren aus."
+      },
+      "errors": {
+        "tooManyPages": "Zu viele Seiten zum Exportieren. Bitte grenzen Sie die Ergebnisse ein oder kontaktieren Sie den Admin.",
+        "noSubmissions": "Keine Einreichungen für dieses Formular gefunden.",
+        "exportFailed": "Export fehlgeschlagen"
+      },
+      "toast": {
+        "exportSuccess": "CSV erfolgreich exportiert"
+      },
+      "csvHeaders": {
+        "userName": "Benutzername",
+        "email": "E-Mail",
+        "submittedAt": "Übermittelt am"
+      }
     },
     "table": {
       "searchPlaceholder": "Nach Stichwort suchen...",
@@ -2000,7 +2040,9 @@
           "urgent": "Dringend"
         },
         "centreLabel": "Zentrum (optional)",
-        "centrePlaceholder": "Zentrum-ID"
+        "centrePlaceholder": "Zentrum-ID",
+        "attachmentLabel": "Anhänge (optional)",
+        "attachmentHint": "Bis zu 5 Dateien, je 25 MB (optional)."
       },
       "buttons": {
         "cancel": "Abbrechen",
@@ -2009,7 +2051,9 @@
       },
       "validation": {
         "titleRequired": "Titel ist erforderlich",
-        "descriptionRequired": "Beschreibung ist erforderlich"
+        "descriptionRequired": "Beschreibung ist erforderlich",
+        "tooManyFiles": "Sie können höchstens 5 Dateien anhängen.",
+        "fileTooLarge": "Jede Datei darf höchstens 25 MB groß sein."
       },
       "toast": {
         "createSuccess": "Ticket erfolgreich erstellt!",
@@ -3057,6 +3101,24 @@
       "loadFailed": "Konfiguration konnte nicht geladen werden. Bitte versuchen Sie es erneut."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "Automatische E‑Mail‑Steuerung",
+    "pageSubtitle": "Automatische E‑Mail‑Erinnerungen für Lernende vor Sitzungen konfigurieren",
+    "cardTitle": "Sitzungserinnerung an Lernende",
+    "reminderDaysLabel": "Erinnerung senden vor",
+    "optionDays": "{days} Tage",
+    "optionHint": "E‑Mail {days} Tage vor dem Sitzungstermin senden",
+    "trainerCardTitle": "Sitzungserinnerung an Trainer",
+    "trainerReminderDaysLabel": "Erinnerung senden vor",
+    "trainerOptionHint": "E‑Mail {days} Tage vor dem Sitzungstermin senden",
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "toast": {
+      "configSaved": "Konfiguration erfolgreich gespeichert!",
+      "saveFailed": "Konfiguration konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "loadFailed": "Konfiguration konnte nicht geladen werden. Bitte versuchen Sie es erneut."
+    }
+  },
   "safeguarding": {
     "pageTitle": "Verwaltung von Schutzkontakten",
     "pageSubtitle": "Kontaktinformationen des Safeguarding-Beauftragten und zusätzliche Details verwalten",
@@ -3752,6 +3814,7 @@
     },
     "summaryCards": {
       "thisWeek": "Diese Woche",
+      "thisWeekAlso": "Diese Woche auch",
       "thisMonth": "Dieser Monat",
       "total": "Gesamt",
       "hoursLabel": "{hours} Stunden"

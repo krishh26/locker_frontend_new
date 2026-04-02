@@ -1,177 +1,177 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { Mail, AlertTriangle, Save, Loader2 } from "lucide-react";
-import { PageHeader } from "@/components/dashboard/page-header";
-import { useTranslations } from "next-intl";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from '@/components/ui/checkbox'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { toast } from 'sonner'
 
 import {
   useListSessionReminderSettingsQuery,
-  useSetActiveSessionReminderDaysMutation,
-} from "@/store/api/session-settings/sessionReminderSettingsApi";
-import { useAppSelector } from "@/store/hooks";
-import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
-import type { AuthUser } from "@/store/api/auth/types";
+  useCreateSessionReminderSettingMutation,
+  useUpdateSessionReminderSettingMutation,
+  useDeleteSessionReminderSettingMutation,
+  type SessionReminderRecipient,
+} from '@/store/api/session-settings/sessionReminderSettingsApi'
+import { PageHeader } from '@/components/dashboard/page-header'
 
-type DaysOption = 3 | 5 | 7;
-const DAYS_OPTIONS: DaysOption[] = [3, 5, 7];
+const DAYS = [1, 5, 7]
 
-export function AutomaticMailControlPageContent() {
-  const t = useTranslations("automaticMailControl");
-  const [days, setDays] = useState<DaysOption>(3);
+export default function SessionReminderSettings() {
+  const { data, isLoading } = useListSessionReminderSettingsQuery()
 
-  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
-  const authUser = useAppSelector((state) => state.auth.user) as AuthUser | undefined;
-  const organisationId =
-    masterAdminOrgId ??
-    (authUser?.assignedOrganisationIds?.[0] != null
-      ? Number(authUser.assignedOrganisationIds[0])
-      : undefined);
+  const [createReminder] = useCreateSessionReminderSettingMutation()
+  const [updateReminder] = useUpdateSessionReminderSettingMutation()
+  const [deleteReminder] = useDeleteSessionReminderSettingMutation()
 
-  const listArg =
-    organisationId != null ? { organisation_id: organisationId } : undefined;
+  const reminders = data?.data ?? []
 
-  const {
-    data: reminderSettingsResponse,
-    isLoading,
-    isSuccess,
-    error,
-    refetch,
-  } = useListSessionReminderSettingsQuery(listArg);
+  const getReminder = (recipient: SessionReminderRecipient, day: number) => {
+    return reminders.find(
+      (r) => r.recipient === recipient && r.days_before === day,
+    )
+  }
 
-  const [setActiveDays, { isLoading: isSaving }] =
-    useSetActiveSessionReminderDaysMutation();
+  const getDayLabel = (day: number) => {
+    return day === 1 ? '1 day before' : `${day} days before`
+  }
 
-  // Sync radio from API only after a successful load — avoids racing before data exists
-  // (otherwise first run used [] and locked days to 3 even when the API returns 5).
-  useEffect(() => {
-    if (!isSuccess) return;
-    const settings = reminderSettingsResponse?.data ?? [];
-    const active = settings.find((s) => s.is_active);
-    const activeDays = Number(active?.days_before);
-    if (DAYS_OPTIONS.includes(activeDays as DaysOption)) {
-      setDays(activeDays as DaysOption);
-    } else {
-      setDays(3);
-    }
-  }, [isSuccess, reminderSettingsResponse]);
+  // 🔹 Handle checkbox toggle
+  const handleChange = async (
+    checked: boolean,
+    day: number,
+    recipient: SessionReminderRecipient,
+  ) => {
+    const existing = getReminder(recipient, day)
 
-  const handleSave = async () => {
     try {
-      await setActiveDays({
-        days_before: days,
-        ...(organisationId != null ? { organisation_id: organisationId } : {}),
-      }).unwrap();
-      toast.success(t("toast.configSaved"));
-      refetch();
-    } catch (e: unknown) {
-      const err = e as { data?: { message?: string }; message?: string };
-      const msg = err?.data?.message || err?.message || t("toast.saveFailed");
-      toast.error(msg);
+      if (checked) {
+        if (existing) {
+          // ✅ Already exists → just activate
+          await updateReminder({
+            id: existing.id,
+            is_active: true,
+          }).unwrap()
+
+          toast.success('Updated')
+        } else {
+          // ✅ Create new
+          await createReminder({
+            days_before: day,
+            label: getDayLabel(day),
+            is_active: true,
+            recipient,
+          }).unwrap()
+
+          toast.success('Created')
+        }
+      } else {
+        if (existing) {
+          // ❌ Remove
+          await deleteReminder({ id: existing.id }).unwrap()
+
+          toast.success('Removed')
+        }
+      }
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : (err as { data?: { message?: string } })?.data?.message
+
+      toast.error(message || 'Something went wrong')
     }
-  };
+  }
+
 
   return (
-    <div className="space-y-6 px-4 lg:px-6 pb-8">
+    <div className='space-y-6 px-4 lg:px-6 pb-8'>
       <PageHeader
-        title={t("pageTitle")}
-        subtitle={t("pageSubtitle")}
-        icon={Mail}
+        title='Mail Settings'
+        subtitle='Control the automatic mail sending for the platform'
       />
-
-      {isLoading && (
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-64" />
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Skeleton className="h-10 w-full" />
-          </CardContent>
-        </Card>
-      )}
-
-      {error && (
-        <Alert variant="destructive">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>
-            {
-              (
-                error as {
-                  data?: { message?: string };
-                  message?: string;
-                }
-              )?.data?.message ||
-                (
-                  error as {
-                    message?: string;
-                  }
-                )?.message ||
-                t("toast.loadFailed")
-            }
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {!isLoading && (
-        <>
+      <div className='mt-6'>
+        {/* Loading state */}
+        {isLoading && (
+          <div className='space-y-6 px-4 lg:px-6 pb-8'>
+            <div className='space-y-3'>
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className='h-12 w-full rounded-lg' />
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Automatic Mail Control */}
+        {!isLoading && (
           <Card>
             <CardHeader>
-              <CardTitle>{t("cardTitle")}</CardTitle>
+              <CardTitle>Session Reminder</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>{t("reminderDaysLabel")}</Label>
-                <RadioGroup
-                  value={String(days)}
-                  onValueChange={(v) => setDays(Number(v) as DaysOption)}
-                  className="grid gap-3"
-                >
-                  {DAYS_OPTIONS.map((opt) => (
-                    <label
-                      key={opt}
-                      className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-muted/40"
-                    >
-                      <RadioGroupItem value={String(opt)} />
-                      <div className="flex flex-col">
-                        <span className="font-medium">
-                          {t("optionDays", { days: opt })}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {t("optionHint", { days: opt })}
-                        </span>
-                      </div>
-                    </label>
-                  ))}
-                </RadioGroup>
-              </div>
+            <CardContent className='pt-0'>
+              <div className='grid gap-4 lg:grid-cols-2'>
+                {/* Learner */}
+                <div className='border rounded-xl overflow-hidden'>
+                  <div className='grid grid-cols-2 bg-muted p-3 font-medium text-sm'>
+                    <div>Learner - Days Before</div>
+                    <div className='text-center'>Active</div>
+                  </div>
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button onClick={handleSave} disabled={isSaving}>
-                  {isSaving ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t("saving")}
-                    </>
-                  ) : (
-                    <>
-                      <Save className="mr-2 h-4 w-4" />
-                      {t("save")}
-                    </>
-                  )}
-                </Button>
+                  {DAYS.map((day) => {
+                    const existing = getReminder('Learner', day)
+
+                    return (
+                      <div
+                        key={day}
+                        className='grid grid-cols-2 items-center p-3 border-t'
+                      >
+                        <div className='font-medium'>{day} Day</div>
+
+                        <div className='flex justify-center'>
+                          <Checkbox
+                            checked={!!existing && existing.is_active}
+                            onCheckedChange={(checked) =>
+                              handleChange(checked === true, day, 'Learner')
+                            }
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                {/* Trainer */}
+                <div className='border rounded-xl overflow-hidden'>
+                  <div className='grid grid-cols-2 bg-muted p-3 font-medium text-sm'>
+                    <div>Trainer - Days Before</div>
+                    <div className='text-center'>Active</div>
+                  </div>
+
+                  {DAYS.map((day) => {
+                    const existing = getReminder('Trainer', day)
+
+                    return (
+                      <div
+                        key={day}
+                        className='grid grid-cols-2 items-center p-3 border-t'
+                      >
+                        <div className='font-medium'>{day} Day</div>
+
+                        <div className='flex justify-center'>
+                          <Checkbox
+                            checked={!!existing && existing.is_active}
+                            onCheckedChange={(checked) =>
+                              handleChange(checked === true, day, 'Trainer')
+                            }
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </CardContent>
           </Card>
-        </>
-      )}
+        )}
+      </div>
     </div>
-  );
+  )
 }
-

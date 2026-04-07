@@ -132,6 +132,12 @@ export function EmployersCsvUploadDialog({
   const requiredFields = ["CompanyName", "MSIEmployerID"];
 
   const parseCSV = (csvFile: File) => {
+    if (!centreId || centreId <= 0) {
+      setError("A valid centre must be selected before CSV upload.");
+      setParsedData([]);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
@@ -251,6 +257,11 @@ export function EmployersCsvUploadDialog({
   };
 
   const handleUpload = async () => {
+    if (!centreId || centreId <= 0) {
+      setError("A valid centre must be selected before CSV upload.");
+      return;
+    }
+
     if (!file || parsedData.length === 0) {
       setError("No valid data found. Please upload a proper CSV file.");
       return;
@@ -289,11 +300,11 @@ export function EmployersCsvUploadDialog({
 
         <div className="space-y-6">
           {/* Sample CSV Download */}
-          <div className="bg-primary border border-primary rounded-xl p-6 text-white">
+          <div className="border border-primary rounded-xl p-6 text-white">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-4 flex-1">
                 <div className="bg-white/20 p-3 rounded-lg">
-                  <Download className="w-5 h-5 text-white" />
+                  <Download className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-lg mb-2">
@@ -386,10 +397,10 @@ export function EmployersCsvUploadDialog({
 
           {/* File Info */}
           {file && parsedData.length > 0 && (
-            <div className="bg-accent border border-accent rounded-xl p-5">
+            <div className="border border-accent rounded-xl p-5">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-lg">
-                <Download className="w-5 h-5 text-white" />
+                <Download className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <p className="text-accent text-sm font-medium">

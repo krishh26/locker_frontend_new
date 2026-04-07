@@ -80,6 +80,9 @@ export function EmployersDataTable() {
   const authUser = useAppSelector((state) => state.auth.user);
   const organisationId =
     masterAdminOrgId ?? authUser?.assignedOrganisationIds?.[0];
+  const centreId =
+    authUser?.assigned_centers?.[0]?.id ??
+    authUser?.assignedCenterIds?.[0];
 
   const effectiveFilters: EmployerFilters = useMemo(
     () => ({
@@ -452,7 +455,7 @@ export function EmployersDataTable() {
           refetch();
         }}
         organisationId={Number(organisationId) || 0}
-        centreId={0}
+        centreId={Number(centreId) || 0}
       />
 
       {/* Delete Confirmation Dialog */}

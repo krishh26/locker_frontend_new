@@ -17,6 +17,51 @@ import type { BulkCreateLearnerRequest } from "@/store/api/learner/types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
+const learnerCsvHeaders = [
+  "FirstNames",
+  "Surname",
+  "Email",
+  "Mobile",
+  "NINumber",
+  "Courses",
+  "StartDate",
+  "ExpectedEnd",
+  "TrainerFullName",
+  "EmployeeFullName",
+  "IQAFullName",
+  "CentreName",
+  "FundingBody",
+  "JobTitle",
+] as const;
+
+const requiredLearnerCsvFields = [
+  "FirstNames",
+  "Surname",
+  "Email",
+  "Mobile",
+  "Courses",
+  "EmployeeFullName",
+  "CentreName",
+  "FundingBody",
+  "JobTitle",
+] as const;
+
+const requiredLearnerCsvFieldSet = new Set<string>(requiredLearnerCsvFields);
+
+const requiredLearnerCsvFieldLabels: Record<(typeof requiredLearnerCsvFields)[number], string> = {
+  FirstNames: "First Names",
+  Surname: "Surname",
+  Email: "Email",
+  Mobile: "Mobile",
+  Courses: "Courses",
+  EmployeeFullName: "Employee",
+  CentreName: "CentreName",
+  FundingBody: "FundingBody",
+  JobTitle: "JobTitle",
+};
+
+const normalizeCsvHeader = (header: string) => header.replace(/\*+$/g, "").trim();
+
 // Function to convert date from DD-MM-YYYY to YYYY-MM-DD format
 const convertDateFormat = (dateString: string): string => {
   if (!dateString || typeof dateString !== "string") return dateString;
@@ -56,22 +101,9 @@ const generatePassword = (
 
 // Function to download sample CSV
 const downloadSampleCSV = () => {
-  const headers = [
-    "FirstNames",
-    "Surname",
-    "Email",
-    "Mobile",
-    "NINumber",
-    "Courses",
-    "StartDate",
-    "ExpectedEnd",
-    "TrainerFullName",
-    "EmployeeFullName",
-    "IQAFullName",
-    "CentreName",
-    "FundingBody",
-    "JobTitle",
-  ];
+  const headers = learnerCsvHeaders.map((header) =>
+    requiredLearnerCsvFieldSet.has(header) ? `${header}*` : header
+  );
 
   // Example row for template usage (values are placeholders; users must replace with DB-matching names).
   const exampleRow = [
@@ -128,18 +160,6 @@ export function LearnersCsvUploadDialog({
 
   const t = useTranslations("learners.csvUpload");
 
-  const requiredFields = [
-    "FirstNames",
-    "Surname",
-    "Email",
-    "Mobile",
-    "Courses",
-    "EmployeeFullName",
-    "CentreName",
-    "FundingBody",
-    "JobTitle",
-  ];
-
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
     setError("");
@@ -147,12 +167,13 @@ export function LearnersCsvUploadDialog({
     Papa.parse(selectedFile, {
       header: true,
       skipEmptyLines: true,
+      transformHeader: (header) => normalizeCsvHeader(header),
       complete: (results: ParseResult<Record<string, string>>) => {
         const rows = results.data as Record<string, string>[];
 
         // Validation for required fields
         const invalidRow = rows.find((row) =>
-          requiredFields.some(
+          requiredLearnerCsvFields.some(
             (field) => !row[field] || row[field].toString().trim() === ""
           )
         );
@@ -162,8 +183,9 @@ export function LearnersCsvUploadDialog({
             t(
               "errors.missingRequiredFields",
               {
-                fields:
-                  "First Names, Surname, Email, Mobile, Courses, Employee, CentreName, FundingBody, JobTitle",
+                fields: requiredLearnerCsvFields
+                  .map((field) => requiredLearnerCsvFieldLabels[field])
+                  .join(", "),
               }
             )
           );

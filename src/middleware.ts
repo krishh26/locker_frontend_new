@@ -50,7 +50,7 @@ const PROTECTED_PATH_PREFIXES = [
 ]
 
 const AUTH_PATH_PREFIXES = ["/auth"]
-const PUBLIC_PATH_PREFIXES = ["/"]
+const PUBLIC_PATH = "/"
 
 // Since locale is not in path, pathname is already clean
 function isProtectedRoute(pathname: string) {
@@ -66,9 +66,7 @@ function isAuthRoute(pathname: string) {
 }
 
 function isPublicRoute(pathname: string) {
-  return PUBLIC_PATH_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-  )
+  return pathname === PUBLIC_PATH
 }
 
 export function middleware(request: NextRequest) {
@@ -98,6 +96,11 @@ export function middleware(request: NextRequest) {
   // Handle auth redirects (no locale in URL)
   if (token && isPublicRoute(pathname)) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  // Do not allow unauthenticated users to open landing page directly
+  if (!token && isPublicRoute(pathname)) {
+    return NextResponse.redirect(new URL('/auth/sign-in', request.url))
   }
 
   // Require authentication for change-password page

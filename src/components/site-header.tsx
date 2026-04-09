@@ -25,6 +25,7 @@ import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
 import { LanguageSwitcher } from "./language-switcher"
+import { filterRolesFromApi } from "@/config/auth-roles"
 
 export function SiteHeader() {
   const dispatch = useAppDispatch()
@@ -35,7 +36,7 @@ export function SiteHeader() {
   const isImpersonated = useIsImpersonated()
 
   // Get available roles from user object
-  const availableRoles = (user?.roles as string[] | undefined) || []
+  const availableRoles = filterRolesFromApi(user?.roles as string[] | undefined)
   const currentRole = user?.role || ""
 
   const handleLogout = React.useCallback(() => {

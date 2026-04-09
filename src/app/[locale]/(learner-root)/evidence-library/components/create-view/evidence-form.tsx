@@ -159,8 +159,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     },
   })
 
-  console.log(form.formState.errors)
-
   // Process sessions data
   useEffect(() => {
     if (learnerPlanError) {
@@ -476,30 +474,25 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           }
         }
 
-        // Step 4: Handle signatures per mapping (if signature_required is set)
-        // Get required roles that need signatures
+        // Step 4: Handle signature request (assignment-level API)
+        // NOTE: `/assignment/:id/request-signature` is assignment-level; calling it once per mapping
+        // creates duplicate signature rows server-side.
         const requiredRoles =
           data.signatures
             ?.filter((sig) => sig.signature_required)
             .map((sig) => sig.role) || []
+        const rolesToRequest = Array.from(new Set(requiredRoles))
 
-        // Request signatures for each mapping with all required roles as array
-        if (requiredRoles.length > 0 && allMappingIds.length > 0) {
-          for (const mappingId of allMappingIds) {
-            try {
-              await requestSignature({
-                id,
-                data: {
-                  roles: requiredRoles,
-                },
-              }).unwrap()
-            } catch (error) {
-              // Log error but don't fail the entire submission
-              console.warn(
-                `Failed to request signature for mapping ${mappingId}:`,
-                error
-              )
-            }
+        if (rolesToRequest.length > 0 && allMappingIds.length > 0) {
+          try {
+            await requestSignature({
+              id,
+              data: {
+                roles: rolesToRequest,
+              },
+            }).unwrap()
+          } catch (error) {
+            console.warn(`Failed to request signatures for assignment ${id}:`, error)
           }
         }
 
@@ -529,6 +522,25 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           'evidence_time_log',
           data.evidence_time_log ? 'true' : 'false'
         )
+        if (data.learner_comments) {
+          formData.append('learner_comments', data.learner_comments)
+        }
+        if (data.trainer_feedback) {
+          formData.append('trainer_feedback', data.trainer_feedback)
+        }
+        if (data.points_for_improvement) {
+          formData.append('points_for_improvement', data.points_for_improvement)
+        }
+        if (data.session) {
+          formData.append('session', data.session)
+        }
+        if (data.grade) {
+          formData.append('grade', data.grade)
+        }
+        if (Array.isArray(data.assessment_method) && data.assessment_method.length > 0) {
+          // Backend stores this as a string in responses; send a stable representation.
+          formData.append('assessment_method', data.assessment_method.join(','))
+        }
         formData.append('user_id', String(user?.id || ''))
         formData.append('file', data.file)
 
@@ -656,29 +668,26 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           }
         }
 
-        // Handle signatures per mapping (if signature_required is set)
+        // Handle signature request (assignment-level API)
         const requiredRoles =
           data.signatures
             ?.filter((sig) => sig.signature_required)
             .map((sig) => sig.role) || []
+        const rolesToRequest = Array.from(new Set(requiredRoles))
 
-        // Request signatures for each mapping with all required roles as array
-        if (requiredRoles.length > 0 && allMappingIds.length > 0) {
-          for (const mappingId of allMappingIds) {
-            try {
-              await requestSignature({
-                id: createdEvidenceId,
-                data: {
-                  roles: requiredRoles,
-                },
-              }).unwrap()
-            } catch (error) {
-              // Log error but don't fail the entire submission
-              console.warn(
-                `Failed to request signature for mapping ${mappingId}:`,
-                error
-              )
-            }
+        if (rolesToRequest.length > 0 && allMappingIds.length > 0) {
+          try {
+            await requestSignature({
+              id: createdEvidenceId,
+              data: {
+                roles: rolesToRequest,
+              },
+            }).unwrap()
+          } catch (error) {
+            console.warn(
+              `Failed to request signatures for assignment ${createdEvidenceId}:`,
+              error
+            )
           }
         }
 
@@ -695,6 +704,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
 
   const canEditLearnerFields = userRole === 'Learner'
   const canEditTrainerFields = ['Trainer', 'Admin', 'IQA'].includes(userRole)
+  const isReadOnly = !canEditLearnerFields && !canEditTrainerFields
 
   const unitsWatch = form.watch('units') || []
 
@@ -717,10 +727,13 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   // For now, returns 0 as the count would require fetching all evidence to compute.
 
   const getEvidenceCount = (
-    _courseId: number,
-    _unitId: string | number,
-    _topicId?: string | number
+    courseId: number,
+    unitId: string | number,
+    topicId?: string | number
   ) => {
+    void courseId;
+    void unitId;
+    void topicId;
     // Backend TODO: Implement GET /assignment/count endpoint that returns count of
     // evidence mappings for a given course/unit/topic combination.
     // Example: { status: true, data: { count: 5 } }
@@ -989,7 +1002,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                               unit={unit}
                               unitsWatch={unitsWatch || []}
                               courseId={course.course_id}
-                              disabled={!canEditLearnerFields}
+                              disabled={isReadOnly}
                               canEditLearnerFields={canEditLearnerFields}
                               canEditTrainerFields={canEditTrainerFields}
                               learnerMapHandler={qualificationLearnerMapHandler}
@@ -1010,7 +1023,9 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   <UnitsTable
                     control={form.control as any}
                     courses={standardCourses}
-                    disabled={!canEditLearnerFields}
+                    disabled={isReadOnly}
+                    canEditLearnerFields={canEditLearnerFields}
+                    canEditTrainerFields={canEditTrainerFields}
                     error={form.formState.errors.units as any}
                   />
                 )}

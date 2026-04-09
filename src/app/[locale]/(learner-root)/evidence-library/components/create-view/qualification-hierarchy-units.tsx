@@ -156,7 +156,7 @@ function QualificationHierarchyUnitsComponent({
                                   ) : (
                                     <Input
                                       value={comment}
-                                      disabled={disabled}
+                                      disabled={!canEditTrainerFields}
                                       placeholder={t("qualificationHierarchy.trainerCommentPlaceholder")}
                                       onChange={(e) => {
                                         commentHandler(e, topic.id, unit.id, subUnitId);
@@ -171,11 +171,11 @@ function QualificationHierarchyUnitsComponent({
                                     trainerMap={trainerMap}
                                     signedOff={signedOff}
                                     onClick={() => {
-                                      if (canEditTrainerFields && !disabled && learnerMap) {
+                                      if (canEditTrainerFields  && learnerMap) {
                                         trainerMapHandler(topic, unit.id, subUnitId);
                                       }
                                     }}
-                                    disabled={!canEditTrainerFields || disabled || !learnerMap}
+                                    disabled={!canEditTrainerFields ||  !learnerMap}
                                   />
                                   {getEvidenceCount && (
                                     <EvidenceIndicator
@@ -188,7 +188,6 @@ function QualificationHierarchyUnitsComponent({
                                     checked={signedOff}
                                     disabled={
                                       !canEditTrainerFields ||
-                                      disabled ||
                                       !learnerMap ||
                                       !trainerMap
                                     }

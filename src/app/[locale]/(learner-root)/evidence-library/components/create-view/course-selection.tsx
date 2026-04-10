@@ -111,7 +111,6 @@ export function CourseSelection({
     const updated = [...currentSelected, selectedCourse];
     setValue("selectedCourses", updated);
 
-    // Initialize type selection for Standard courses
     if (selectedCourse.course_core_type === COURSE_TYPES.STANDARD) {
       const currentTypes = getValues().courseSelectedTypes || {};
       setValue("courseSelectedTypes", {

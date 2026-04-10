@@ -42,7 +42,7 @@ interface QualificationHierarchyProps {
  * 
  * Displays hierarchical structure for Qualification courses:
  * Course → Module → Unit → Task
- * Only Tasks are mappable (learnerMap/trainerMap/signedOff)
+ * Only Tasks are mappable (learnerMap/trainerMap/signed_off)
  */
 function QualificationHierarchyComponent({
   control,
@@ -254,8 +254,8 @@ function QualificationHierarchyComponent({
                                                           (unitsWatch[structureIndex] as any)?.modules?.[moduleIndex]?.units?.[unitIndex]?.tasks?.[taskIndex]?.learnerMap || false
                                                         }
                                                         trainerMap={field.value || false}
-                                                        signedOff={
-                                                          (unitsWatch[structureIndex] as any)?.modules?.[moduleIndex]?.units?.[unitIndex]?.tasks?.[taskIndex]?.signedOff || false
+                                                        signed_off={
+                                                          (unitsWatch[structureIndex] as any)?.modules?.[moduleIndex]?.units?.[unitIndex]?.tasks?.[taskIndex]?.signed_off || false
                                                         }
                                                         disabled={disabled || !canEditTrainerFields}
                                                         onClick={() => {
@@ -277,11 +277,12 @@ function QualificationHierarchyComponent({
                                               </TableCell>
                                               <TableCell className="text-center">
                                                 <Controller
-                                                  name={`${basePath}.signedOff` as any}
+                                                  name={`${basePath}.signed_off` as any}
                                                   control={control}
                                                   render={({ field }) => {
-                                                    const learnerMap = (unitsWatch[structureIndex] as any)?.modules?.[moduleIndex]?.units?.[unitIndex]?.tasks?.[taskIndex]?.learnerMap || false;
-                                                    const trainerMap = field.value || false;
+                                                    const taskPath = (unitsWatch[structureIndex] as any)?.modules?.[moduleIndex]?.units?.[unitIndex]?.tasks?.[taskIndex];
+                                                    const learnerMap = taskPath?.learnerMap || false;
+                                                    const trainerMap = taskPath?.trainerMap || false;
                                                     return (
                                                       <Checkbox
                                                         checked={field.value || false}

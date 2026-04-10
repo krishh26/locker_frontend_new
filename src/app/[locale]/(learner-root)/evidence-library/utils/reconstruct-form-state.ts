@@ -143,14 +143,17 @@ export function reconstructFormStateFromMappings(
                       // Apply mapping values
                       const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
                       const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-                      const signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? false;
+                      const signed_off =
+                        mapping.signed_off ??
+                        (mapping as { signedOff?: boolean }).signedOff ??
+                        false;
                       const comment = mapping.comment ?? "";
 
                       return {
                         ...topic,
                         learnerMap,
                         trainerMap,
-                        signedOff,
+                        signed_off,
                         comment,
                         mapping_id: mapping.mapping_id,
                       };
@@ -160,7 +163,7 @@ export function reconstructFormStateFromMappings(
                         ...topic,
                         learnerMap: false,
                         trainerMap: false,
-                        signedOff: false,
+                        signed_off: false,
                         comment: "",
                       };
                     }
@@ -226,13 +229,13 @@ export function reconstructFormStateFromMappings(
                     ...sub,
                     learnerMap: false,
                     trainerMap: false,
-                    signedOff: false,
+                    signed_off: false,
                     comment: "",
                   }))
                 : [],
               learnerMap: hasSubUnit ? undefined : false,
               trainerMap: hasSubUnit ? undefined : false,
-              signedOff: hasSubUnit ? undefined : false,
+              signed_off: hasSubUnit ? undefined : false,
               comment: hasSubUnit ? undefined : "",
             });
           }
@@ -266,13 +269,13 @@ export function reconstructFormStateFromMappings(
                   ...sub,
                   learnerMap: false,
                   trainerMap: false,
-                  signedOff: false,
+                  signed_off: false,
                   comment: "",
                 }))
               : [],
             learnerMap: hasSubUnit ? undefined : false,
             trainerMap: hasSubUnit ? undefined : false,
-            signedOff: hasSubUnit ? undefined : false,
+            signed_off: hasSubUnit ? undefined : false,
             comment: hasSubUnit ? undefined : "",
           };
           unitsMap.set(unitKey, newUnitData);
@@ -296,26 +299,32 @@ export function reconstructFormStateFromMappings(
               // Update existing subunit with mapping values
               const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
               const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-              const signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? false;
+              const signed_off =
+                mapping.signed_off ??
+                (mapping as { signedOff?: boolean }).signedOff ??
+                false;
               const comment = mapping.comment ?? "";
               
               existingSubUnit.learnerMap = learnerMap;
               existingSubUnit.trainerMap = trainerMap;
-              existingSubUnit.signedOff = signedOff;
+              existingSubUnit.signed_off = signed_off;
               existingSubUnit.comment = comment;
               existingSubUnit.mapping_id = mapping.mapping_id;
             } else {
               // Add new subunit with mapping values
               const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
               const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-              const signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? false;
+              const signed_off =
+                mapping.signed_off ??
+                (mapping as { signedOff?: boolean }).signedOff ??
+                false;
               const comment = mapping.comment ?? "";
               
               unitData.subUnit.push({
                 ...subunit,
                 learnerMap,
                 trainerMap,
-                signedOff,
+                signed_off,
                 comment,
                 mapping_id: mapping.mapping_id,
               });
@@ -326,12 +335,15 @@ export function reconstructFormStateFromMappings(
           // Support both camelCase and snake_case from API
           const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
           const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-          const signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? false;
+          const signed_off =
+            mapping.signed_off ??
+            (mapping as { signedOff?: boolean }).signedOff ??
+            false;
           const comment = mapping.comment ?? "";
           
           unitData.learnerMap = learnerMap;
           unitData.trainerMap = trainerMap;
-          unitData.signedOff = signedOff;
+          unitData.signed_off = signed_off;
           unitData.comment = comment;
           unitData.mapping_id = mapping.mapping_id;
         }

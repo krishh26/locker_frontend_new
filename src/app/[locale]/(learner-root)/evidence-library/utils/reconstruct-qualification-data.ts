@@ -90,17 +90,17 @@ export function reconstructQualificationData(
           ...module,
           learnerMap: undefined, // Not mappable
           trainerMap: undefined,
-          signedOff: undefined,
+          signed_off: undefined,
           units: (module.units || []).map((unit:any) => ({
             ...unit,
             learnerMap: undefined, // Not mappable
             trainerMap: undefined,
-            signedOff: undefined,
+            signed_off: undefined,
             tasks: (unit.tasks || []).map((task:any) => ({
               ...task,
               learnerMap: false, // Mappable, starts unchecked
               trainerMap: false,
-              signedOff: false,
+              signed_off: false,
               comment: "",
             })),
           })),
@@ -152,7 +152,7 @@ export function reconstructQualificationData(
             ...foundUnit,
             learnerMap: undefined,
             trainerMap: undefined,
-            signedOff: undefined,
+            signed_off: undefined,
             tasks: [],
           });
           unitData = moduleData.units[moduleData.units.length - 1];
@@ -168,14 +168,15 @@ export function reconstructQualificationData(
           // Support both camelCase and snake_case from API
           const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
           const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-          const signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? false;
+          const signed_off =
+            mapping.signed_off ?? (mapping as { signedOff?: boolean }).signedOff ?? false;
           const comment = mapping.comment ?? "";
 
           taskData = {
             ...foundTask,
             learnerMap,
             trainerMap,
-            signedOff,
+            signed_off,
             comment,
             mapping_id: mapping.mapping_id,
           };
@@ -184,7 +185,10 @@ export function reconstructQualificationData(
           // Update existing task with mapping data
           taskData.learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? taskData.learnerMap;
           taskData.trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? taskData.trainerMap;
-          taskData.signedOff = mapping.signedOff ?? (mapping as any).signed_off ?? taskData.signedOff;
+          taskData.signed_off =
+            mapping.signed_off ??
+            (mapping as { signedOff?: boolean }).signedOff ??
+            taskData.signed_off;
           taskData.comment = mapping.comment ?? taskData.comment;
           taskData.mapping_id = mapping.mapping_id;
         }

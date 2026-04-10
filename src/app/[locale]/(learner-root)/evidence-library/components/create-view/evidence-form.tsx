@@ -226,7 +226,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 id?: string | number
                 learnerMap?: boolean
                 trainerMap?: boolean
-                signedOff?: boolean
+                signed_off?: boolean
                 comment?: string
               }>
             }>
@@ -402,7 +402,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       trainerMap: topic.trainerMap ?? false,
                       code: topic.code,
                       comment: topic.comment ?? '',
-                      signedOff: topic.signedOff ?? false,
+                      signed_off: topic.signed_off ?? false,
                       mapping_id: topic.mapping_id, // For updates (if exists)
                     })
                   }
@@ -424,7 +424,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   trainerMap: sub.trainerMap ?? false,
                   code: sub.code,
                   comment: sub.comment ?? '',
-                  signedOff: sub.signedOff ?? false,
+                  signed_off: sub.signed_off ?? false,
                   mapping_id: sub.mapping_id, // For updates (if exists)
                 })
               }
@@ -442,7 +442,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 learnerMap: true,
                 trainerMap: unit.trainerMap ?? false,
                 comment: unit.comment ?? '',
-                signedOff: unit.signedOff ?? false,
+                signed_off: unit.signed_off ?? false,
                 mapping_id: unit.mapping_id, // For updates (if exists)
               })
             }
@@ -615,7 +615,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       trainerMap: topic.trainerMap ?? false,
                       code: topic.code,
                       comment: topic.comment ?? '',
-                      signedOff: topic.signedOff ?? false,
+                      signed_off: topic.signed_off ?? false,
                     })
                   }
                 })
@@ -636,7 +636,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   trainerMap: sub.trainerMap ?? false,
                   code: sub.code,
                   comment: sub.comment ?? '',
-                  signedOff: sub.signedOff ?? false,
+                  signed_off: sub.signed_off ?? false,
                 })
               }
             })
@@ -653,7 +653,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 learnerMap: true,
                 trainerMap: unit.trainerMap ?? false,
                 comment: unit.comment ?? '',
-                signedOff: unit.signedOff ?? false,
+                signed_off: unit.signed_off ?? false,
               })
             }
           }
@@ -758,7 +758,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const {
     learnerMapHandler: qualificationLearnerMapHandler,
     trainerMapHandler: qualificationTrainerMapHandler,
-    signedOffHandler: qualificationSignedOffHandler,
+    signed_offHandler: qualificationSignedOffHandler,
     commentHandler: qualificationCommentHandler,
   } = useQualificationHandlers({
     units: unitsWatch || [],
@@ -1089,7 +1089,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                               canEditTrainerFields={canEditTrainerFields}
                               learnerMapHandler={qualificationLearnerMapHandler}
                               trainerMapHandler={qualificationTrainerMapHandler}
-                              signedOffHandler={qualificationSignedOffHandler}
+                              signed_offHandler={qualificationSignedOffHandler}
                               commentHandler={qualificationCommentHandler}
                               getEvidenceCount={getEvidenceCount}
                             />

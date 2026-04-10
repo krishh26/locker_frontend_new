@@ -150,7 +150,7 @@ export const evidenceApi = createApi({
         method: "GET",
       }),
     }),
-    // Update PC ticks (learnerMap/trainerMap/signedOff) for mapping
+    // Update PC ticks (learnerMap/trainerMap/signed_off) for mapping
     updateMappingPC: builder.mutation({
       query: ({ mapping_id, data }) => ({
         url: `/assignment-mapping/${mapping_id}/pc`,

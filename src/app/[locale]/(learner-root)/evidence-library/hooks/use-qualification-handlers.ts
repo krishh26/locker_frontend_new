@@ -12,7 +12,7 @@ interface UseQualificationHandlersProps {
 /**
  * Custom hook for handling qualification course topic updates
  * Qualification courses have: Unit → Learning Outcomes (subUnit) → Assessment Criteria (topics)
- * Only topics are mappable (learnerMap/trainerMap/signedOff)
+ * Only topics are mappable (learnerMap/trainerMap/signed_off)
  */
 export const useQualificationHandlers = ({
   units,
@@ -65,9 +65,9 @@ export const useQualificationHandlers = ({
               subUnit.topics.forEach((topicItem: any) => {
                 if (String(topicItem.id) === String(topic.id)) {
                   topicItem.trainerMap = !(topicItem.trainerMap ?? false);
-                  // Reset signedOff if trainerMap is unchecked
+                  // Reset signed_off if trainerMap is unchecked
                   if (!topicItem.trainerMap) {
-                    topicItem.signedOff = false;
+                    topicItem.signed_off = false;
                   }
                 }
               });
@@ -82,7 +82,7 @@ export const useQualificationHandlers = ({
   );
 
   /**
-   * Toggle signedOff for a topic
+   * Toggle signed_off for a topic
    */
   const toggleSignedOff = useCallback(
     (
@@ -97,7 +97,7 @@ export const useQualificationHandlers = ({
             if (String(subUnit.id) === String(subUnitId) && subUnit.topics) {
               subUnit.topics.forEach((topicItem: any) => {
                 if (String(topicItem.id) === String(topic.id)) {
-                  topicItem.signedOff = !(topicItem.signedOff ?? false);
+                  topicItem.signed_off = !(topicItem.signed_off ?? false);
                 }
               });
             }
@@ -143,7 +143,7 @@ export const useQualificationHandlers = ({
   return {
     learnerMapHandler: toggleLearnerMap,
     trainerMapHandler: toggleTrainerMap,
-    signedOffHandler: toggleSignedOff,
+    signed_offHandler: toggleSignedOff,
     commentHandler: updateComment,
   };
 };

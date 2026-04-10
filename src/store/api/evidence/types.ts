@@ -31,8 +31,8 @@ export type EvidenceMapping = {
   learner_map?: boolean; // snake_case version from API
   trainerMap?: boolean; // camelCase version
   trainer_map?: boolean; // snake_case version from API
-  signedOff?: boolean;
-  signed_off?: boolean; // snake_case version from API
+  /** Assignment mapping sign-off flag (API / DB: signed_off) */
+  signed_off?: boolean;
   comment?: string | null;
   comment_updated_at?: string | null;
   course?: {

@@ -134,7 +134,7 @@ export function EvidenceDetailsModal({
                     learnerMap: true,
                     trainerMap: topic.trainerMap ?? false,
                     comment: topic.comment ?? "",
-                    signedOff: topic.signedOff ?? false,
+                    signed_off: topic.signed_off ?? false,
                     mapping_id: topic.mapping_id, // For updates (if exists)
                   });
                 }
@@ -153,7 +153,7 @@ export function EvidenceDetailsModal({
                 learnerMap: true,
                 trainerMap: sub.trainerMap ?? false,
                 comment: sub.comment ?? "",
-                signedOff: sub.signedOff ?? false,
+                signed_off: sub.signed_off ?? false,
                 mapping_id: sub.mapping_id, // For updates (if exists)
               });
             }
@@ -169,14 +169,14 @@ export function EvidenceDetailsModal({
               learnerMap: true,
               trainerMap: unit.trainerMap ?? false,
               comment: unit.comment ?? "",
-              signedOff: unit.signedOff ?? false,
+              signed_off: unit.signed_off ?? false,
               mapping_id: unit.mapping_id, // For updates (if exists)
             });
           }
         }
       });
 
-      // Step 3: Upsert mappings and update PC (learnerMap/trainerMap/signedOff/comment)
+      // Step 3: Upsert mappings and update PC (learnerMap/trainerMap/signed_off/comment)
       const desiredMappingsArray = Array.from(desiredMappings.entries());
       
       for (const [key, desiredMapping] of desiredMappingsArray) {
@@ -201,7 +201,7 @@ export function EvidenceDetailsModal({
             mappingId = mapping_id;
           }
 
-          // Update PC (learnerMap/trainerMap/signedOff/comment) if mapping exists
+          // Update PC (learnerMap/trainerMap/signed_off/comment) if mapping exists
           if (mappingId) {
             // Find the unit/subUnit/topic from form data to get current values
             let pcData: any = null;
@@ -224,7 +224,7 @@ export function EvidenceDetailsModal({
                       pcData = {
                         learnerMap: topic.learnerMap ?? false,
                         trainerMap: topic.trainerMap ?? false,
-                        signedOff: topic.signedOff ?? false,
+                        signed_off: topic.signed_off ?? false,
                         comment: topic.comment ?? "",
                       };
                       break;
@@ -241,7 +241,7 @@ export function EvidenceDetailsModal({
                   pcData = {
                     learnerMap: subUnit.learnerMap ?? false,
                     trainerMap: subUnit.trainerMap ?? false,
-                    signedOff: subUnit.signedOff ?? false,
+                    signed_off: subUnit.signed_off ?? false,
                     comment: subUnit.comment ?? "",
                   };
                 }
@@ -252,7 +252,7 @@ export function EvidenceDetailsModal({
                   pcData = {
                     learnerMap: unit.learnerMap ?? false,
                     trainerMap: unit.trainerMap ?? false,
-                    signedOff: unit.signedOff ?? false,
+                    signed_off: unit.signed_off ?? false,
                     comment: unit.comment ?? "",
                   };
                 }

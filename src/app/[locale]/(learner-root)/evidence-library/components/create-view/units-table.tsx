@@ -215,13 +215,13 @@ export function UnitsTable({
                                 render={({ field: trainerMapField }) => {
                                   const currentLearnerMap =
                                     (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                  const currentSignedOff =
-                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signedOff || false;
+                                  const current_signed_off =
+                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signed_off || false;
                                   return (
                                     <GapIndicator
                                       learnerMap={currentLearnerMap}
                                       trainerMap={trainerMapField.value || false}
-                                      signedOff={currentSignedOff}
+                                      signed_off={current_signed_off}
                                       disabled={
                                         disabled ||
                                         !canEditTrainerFields ||
@@ -246,18 +246,18 @@ export function UnitsTable({
                           </TableCell>
                           <TableCell className="text-center">
                             <Controller
-                              key={`${stableKey}-signedOff`}
-                              name={`units.${unitIndex}.subUnit.${subIndex}.signedOff` as any}
+                              key={`${stableKey}-signed_off`}
+                              name={`units.${unitIndex}.subUnit.${subIndex}.signed_off` as any}
                               control={control}
-                              render={({ field: signedOffField }) => {
+                              render={({ field: signed_offField }) => {
                                 const currentLearnerMap =
                                   (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
                                 const currentTrainerMap =
                                   (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.trainerMap || false;
                                 return (
                                   <Checkbox
-                                    checked={signedOffField.value || false}
-                                    onCheckedChange={signedOffField.onChange}
+                                    checked={signed_offField.value || false}
+                                    onCheckedChange={signed_offField.onChange}
                                     disabled={
                                       disabled ||
                                       !canEditTrainerFields ||
@@ -316,13 +316,13 @@ export function UnitsTable({
                               render={({ field: trainerMapField }) => {
                                 const currentLearnerMap =
                                   (units?.[unitIndex] as any)?.learnerMap || false;
-                                const currentSignedOff =
-                                  (units?.[unitIndex] as any)?.signedOff || false;
+                                const current_signed_off =
+                                  (units?.[unitIndex] as any)?.signed_off || false;
                                 return (
                                   <GapIndicator
                                     learnerMap={currentLearnerMap}
                                     trainerMap={trainerMapField.value || false}
-                                    signedOff={currentSignedOff}
+                                    signed_off={current_signed_off}
                                     disabled={
                                       disabled ||
                                       !canEditTrainerFields ||
@@ -347,18 +347,18 @@ export function UnitsTable({
                         </TableCell>
                         <TableCell className="text-center">
                           <Controller
-                            key={`${stableKey}-signedOff`}
-                            name={`units.${unitIndex}.signedOff` as any}
+                            key={`${stableKey}-signed_off`}
+                            name={`units.${unitIndex}.signed_off` as any}
                             control={control}
-                            render={({ field: signedOffField }) => {
+                            render={({ field: signed_offField }) => {
                               const currentLearnerMap =
                                 (units?.[unitIndex] as any)?.learnerMap || false;
                               const currentTrainerMap =
                                 (units?.[unitIndex] as any)?.trainerMap || false;
                               return (
                                 <Checkbox
-                                  checked={signedOffField.value || false}
-                                  onCheckedChange={signedOffField.onChange}
+                                  checked={signed_offField.value || false}
+                                  onCheckedChange={signed_offField.onChange}
                                   disabled={
                                     disabled ||
                                     !canEditTrainerFields ||
@@ -466,13 +466,13 @@ export function UnitsTable({
                                   render={({ field: trainerMapField }) => {
                                     const currentLearnerMap =
                                       (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                    const currentSignedOff =
-                                      (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signedOff || false;
+                                    const current_signed_off =
+                                      (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signed_off || false;
                                     return (
                                       <GapIndicator
                                         learnerMap={currentLearnerMap}
                                         trainerMap={trainerMapField.value || false}
-                                        signedOff={currentSignedOff}
+                                        signed_off={current_signed_off}
                                         disabled={
                                           disabled ||
                                           !canEditTrainerFields ||
@@ -497,18 +497,18 @@ export function UnitsTable({
                             </TableCell>
                             <TableCell className="text-center">
                               <Controller
-                                key={`${stableKey}-signedOff`}
-                                name={`units.${unitIndex}.subUnit.${subIndex}.signedOff` as any}
+                                key={`${stableKey}-signed_off`}
+                                name={`units.${unitIndex}.subUnit.${subIndex}.signed_off` as any}
                                 control={control}
-                                render={({ field: signedOffField }) => {
+                                render={({ field: signed_offField }) => {
                                   const currentLearnerMap =
                                     (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
                                   const currentTrainerMap =
                                     (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.trainerMap || false;
                                   return (
                                     <Checkbox
-                                      checked={signedOffField.value || false}
-                                      onCheckedChange={signedOffField.onChange}
+                                      checked={signed_offField.value || false}
+                                      onCheckedChange={signed_offField.onChange}
                                       disabled={
                                         disabled ||
                                         !canEditTrainerFields ||
@@ -567,13 +567,13 @@ export function UnitsTable({
                                 render={({ field: trainerMapField }) => {
                                   const currentLearnerMap =
                                     (units?.[unitIndex] as any)?.learnerMap || false;
-                                  const currentSignedOff =
-                                    (units?.[unitIndex] as any)?.signedOff || false;
+                                  const current_signed_off =
+                                    (units?.[unitIndex] as any)?.signed_off || false;
                                   return (
                                     <GapIndicator
                                       learnerMap={currentLearnerMap}
                                       trainerMap={trainerMapField.value || false}
-                                      signedOff={currentSignedOff}
+                                      signed_off={current_signed_off}
                                       disabled={
                                         disabled ||
                                         !canEditTrainerFields ||
@@ -598,18 +598,18 @@ export function UnitsTable({
                           </TableCell>
                           <TableCell className="text-center">
                             <Controller
-                              key={`${stableKey}-signedOff`}
-                              name={`units.${unitIndex}.signedOff` as any}
+                              key={`${stableKey}-signed_off`}
+                              name={`units.${unitIndex}.signed_off` as any}
                               control={control}
-                              render={({ field: signedOffField }) => {
+                              render={({ field: signed_offField }) => {
                                 const currentLearnerMap =
                                 (units?.[unitIndex] as any)?.learnerMap || false;
                                 const currentTrainerMap =
                                 (units?.[unitIndex] as any)?.trainerMap || false;
                                 return (
                                   <Checkbox
-                                    checked={signedOffField.value || false}
-                                    onCheckedChange={signedOffField.onChange}
+                                    checked={signed_offField.value || false}
+                                    onCheckedChange={signed_offField.onChange}
                                     disabled={
                                       disabled ||
                                       !canEditTrainerFields ||

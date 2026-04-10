@@ -4888,7 +4888,10 @@
         "loadingEvidence": "साक्ष्य लोड हो रहा है...",
         "selectSession": "सत्र चुनें",
         "loadingSessions": "सत्र लोड हो रहे हैं...",
-        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है"
+        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है",
+        "savedSessionNotInList": "सहेजा गया सत्र (आईडी: {id})",
+        "existingAdditionalEvidence": "वर्तमान अतिरिक्त साक्ष्य फ़ाइल",
+        "replaceAdditionalEvidenceHint": "सहेजते समय बदलने के लिए नीचे नई फ़ाइल अपलोड करें।"
       },
       "assessmentMethods": {
         "Obs": "अवलोकन",

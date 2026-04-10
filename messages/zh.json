@@ -4846,7 +4846,10 @@
         "loadingEvidence": "正在加载证据...",
         "selectSession": "选择会话",
         "loadingSessions": "正在加载会话...",
-        "noSessionsAvailable": "暂无可用会话"
+        "noSessionsAvailable": "暂无可用会话",
+        "savedSessionNotInList": "已保存的会话（ID：{id}）",
+        "existingAdditionalEvidence": "当前附加证据文件",
+        "replaceAdditionalEvidenceHint": "在下方上传新文件，保存时将替换当前文件。"
       },
       "assessmentMethods": {
         "Obs": "观察",

@@ -20,7 +20,7 @@ import {
 import { useAppSelector } from '@/store/hooks'
 import { selectCourses } from '@/store/slices/authSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, Upload, FileText } from 'lucide-react'
+import { ExternalLink, Loader2, Upload, FileText } from 'lucide-react'
 import { useRouter } from "@/i18n/navigation"
 import { useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -35,7 +35,10 @@ import { FileUpload } from './file-upload'
 import { QualificationHierarchyUnits } from './qualification-hierarchy-units'
 import { SignatureTable } from './signature-table'
 import { UnitsTable } from './units-table'
-import { EvidenceUpdateRequest } from '@/store/api/evidence/types'
+import {
+  EvidenceUpdateRequest,
+  type EvidenceExternalFeedback,
+} from '@/store/api/evidence/types'
 import { CreateDocumentCard } from './create-document-card'
 import { ASSESSMENT_METHODS } from '@/utils/assessment-methods'
 import { useGetLearnerPlanListQuery } from '@/store/api/learner-plan/learnerPlanApi'
@@ -43,7 +46,9 @@ import { formatSessionTime } from '@/utils/format-session-time'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -56,6 +61,7 @@ interface EvidenceFormProps {
 export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
+  const learner = useAppSelector((state) => state.auth.learner);
   const courses = useAppSelector(selectCourses)
   const userRole = user?.role || 'Learner'
   const isEmployer = user?.role === "Employer";
@@ -69,7 +75,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const [requestedRoles, setRequestedRoles] = useState<string[]>([])
 
   // Get learner ID - for learners, use their own ID; for trainers/admins, might need to get from context
-  const learnerId = user?.learner_id ? String(user.learner_id) : null
+  const learnerId = user?.learner_id ? String(user.learner_id) : learner?.learner_id ? String(learner.learner_id) : null
 
   // Fetch learner plan list (sessions)
   const {
@@ -81,7 +87,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       learners: learnerId || '',
     },
     {
-      skip: !learnerId || isEditMode, // Skip in edit mode or if no learner ID
+      skip: !learnerId,
     }
   )
 
@@ -264,13 +270,19 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       form.reset({
         title: evidence.title || '',
         description: evidence.description || '',
-        trainer_feedback: evidence.trainer_feedback || '',
-        points_for_improvement: evidence.points_for_improvement || '',
+        trainer_feedback:
+          evidence.trainer_feedback != null
+            ? String(evidence.trainer_feedback)
+            : '',
+        points_for_improvement:
+          evidence.points_for_improvement != null
+            ? String(evidence.points_for_improvement)
+            : '',
         audio: null, // File needs to be re-uploaded
         file: null,
         learner_comments: evidence.learner_comments || '',
         evidence_time_log: evidence.evidence_time_log || false,
-        session: evidence.session || '',
+        session: String(evidence.session ?? ''),
         grade: evidence.grade || '',
         declaration: declarationValue,
         assessment_method: assessmentMethodArray,
@@ -389,6 +401,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       learnerMap: true,
                       trainerMap: topic.trainerMap ?? false,
                       code: topic.code,
+                      comment: topic.comment ?? '',
+                      signedOff: topic.signedOff ?? false,
                       mapping_id: topic.mapping_id, // For updates (if exists)
                     })
                   }
@@ -409,6 +423,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   learnerMap: true,
                   trainerMap: sub.trainerMap ?? false,
                   code: sub.code,
+                  comment: sub.comment ?? '',
+                  signedOff: sub.signedOff ?? false,
                   mapping_id: sub.mapping_id, // For updates (if exists)
                 })
               }
@@ -425,6 +441,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 unit_code: String(unit.id),
                 learnerMap: true,
                 trainerMap: unit.trainerMap ?? false,
+                comment: unit.comment ?? '',
+                signedOff: unit.signedOff ?? false,
                 mapping_id: unit.mapping_id, // For updates (if exists)
               })
             }
@@ -596,6 +614,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       learnerMap: true,
                       trainerMap: topic.trainerMap ?? false,
                       code: topic.code,
+                      comment: topic.comment ?? '',
+                      signedOff: topic.signedOff ?? false,
                     })
                   }
                 })
@@ -615,6 +635,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   learnerMap: true,
                   trainerMap: sub.trainerMap ?? false,
                   code: sub.code,
+                  comment: sub.comment ?? '',
+                  signedOff: sub.signedOff ?? false,
                 })
               }
             })
@@ -630,6 +652,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 unit_code: String(unit.id),
                 learnerMap: true,
                 trainerMap: unit.trainerMap ?? false,
+                comment: unit.comment ?? '',
+                signedOff: unit.signedOff ?? false,
               })
             }
           }
@@ -707,6 +731,28 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const isReadOnly = !canEditLearnerFields && !canEditTrainerFields
 
   const unitsWatch = form.watch('units') || []
+  const sessionField = form.watch('session')
+
+  /** Include a fallback item so Radix Select can show the saved value when the plan list omits that id. */
+  const sessionSelectOptions = useMemo(() => {
+    const sessionValueStr =
+      sessionField != null && sessionField !== ''
+        ? String(sessionField)
+        : ''
+    const list = sessions.map((s) => ({ ...s }))
+    if (!sessionValueStr || !isEditMode) return list
+    const hasMatch = list.some((s) => String(s.id) === sessionValueStr)
+    if (!hasMatch) {
+      return [
+        {
+          id: sessionValueStr,
+          label: t('form.status.savedSessionNotInList', { id: sessionValueStr }),
+        },
+        ...list,
+      ]
+    }
+    return list
+  }, [sessions, sessionField, isEditMode, t])
 
   // Qualification-specific handlers (for topics in Unit → subUnit → topics structure)
   const {
@@ -739,6 +785,22 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     // Example: { status: true, data: { count: 5 } }
     return 0
   }
+
+  const audioFieldValue = form.watch('audio')
+
+  const existingAdditionalEvidence = useMemo((): EvidenceExternalFeedback | null => {
+    if (!isEditMode || !evidenceDetails?.data) return null
+    const raw = evidenceDetails.data.external_feedback
+    if (
+      raw &&
+      typeof raw === 'object' &&
+      'url' in raw &&
+      typeof (raw as EvidenceExternalFeedback).url === 'string'
+    ) {
+      return raw as EvidenceExternalFeedback
+    }
+    return null
+  }, [isEditMode, evidenceDetails?.data])
 
   if (isLoadingDetails && isEditMode) {
     return (
@@ -886,12 +948,22 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div className='space-y-2'>
               <Label htmlFor='trainer_feedback'>{t('form.fields.trainerFeedback')}</Label>
-              <Textarea
-                id='trainer_feedback'
-                {...form.register('trainer_feedback')}
-                placeholder={t('form.placeholders.trainerFeedback')}
-                rows={4}
-                disabled={!canEditTrainerFields}
+              <Controller
+                name='trainer_feedback'
+                control={form.control}
+                render={({ field }) => (
+                  <Textarea
+                    id='trainer_feedback'
+                    {...field}
+                    value={field.value ?? ''}
+                    placeholder={t('form.placeholders.trainerFeedback')}
+                    rows={4}
+                    readOnly={!canEditTrainerFields}
+                    className={
+                      !canEditTrainerFields ? 'cursor-default bg-muted/40' : ''
+                    }
+                  />
+                )}
               />
             </div>
 
@@ -899,12 +971,22 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               <Label htmlFor='points_for_improvement'>
                 {t('form.fields.pointsForImprovement')}
               </Label>
-              <Textarea
-                id='points_for_improvement'
-                {...form.register('points_for_improvement')}
-                placeholder={t('form.placeholders.pointsForImprovement')}
-                rows={4}
-                disabled={!canEditTrainerFields}
+              <Controller
+                name='points_for_improvement'
+                control={form.control}
+                render={({ field }) => (
+                  <Textarea
+                    id='points_for_improvement'
+                    {...field}
+                    value={field.value ?? ''}
+                    placeholder={t('form.placeholders.pointsForImprovement')}
+                    rows={4}
+                    readOnly={!canEditTrainerFields}
+                    className={
+                      !canEditTrainerFields ? 'cursor-default bg-muted/40' : ''
+                    }
+                  />
+                )}
               />
             </div>
           </div>
@@ -1043,6 +1125,62 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         <CardContent className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='audio'>{t('form.fields.additionalEvidence')}</Label>
+            {existingAdditionalEvidence &&
+              !(audioFieldValue instanceof File) && (
+                <div className='rounded-lg border bg-muted/30 p-4 space-y-3'>
+                  <p className='text-sm font-medium'>
+                    {t('form.status.existingAdditionalEvidence')}
+                  </p>
+                  <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+                    <div className='flex items-start gap-3 min-w-0'>
+                      <FileText className='h-8 w-8 text-primary shrink-0' />
+                      <div className='min-w-0'>
+                        <p className='font-medium truncate'>
+                          {existingAdditionalEvidence.name ?? '—'}
+                        </p>
+                        {typeof existingAdditionalEvidence.size === 'number' && (
+                          <p className='text-sm text-muted-foreground'>
+                            {(existingAdditionalEvidence.size / 1024).toFixed(2)}{' '}
+                            KB
+                          </p>
+                        )}
+                        {existingAdditionalEvidence.type && (
+                          <p className='text-xs text-muted-foreground'>
+                            {existingAdditionalEvidence.type}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className='flex flex-wrap gap-2 shrink-0'>
+                      <Button type='button' variant='outline' size='sm' asChild>
+                        <a
+                          href={existingAdditionalEvidence.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <ExternalLink className='h-4 w-4 mr-1' />
+                          {t('createDocument.view')}
+                        </a>
+                      </Button>
+                      <Button type='button' variant='outline' size='sm' asChild>
+                        <a
+                          href={existingAdditionalEvidence.url}
+                          download={
+                            existingAdditionalEvidence.name || undefined
+                          }
+                        >
+                          {t('createDocument.download')}
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                  {canEditLearnerFields && (
+                    <p className='text-xs text-muted-foreground'>
+                      {t('form.status.replaceAdditionalEvidenceHint')}
+                    </p>
+                  )}
+                </div>
+              )}
             <FileUpload
               control={form.control as any}
               name='audio'
@@ -1060,9 +1198,15 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               <Controller
                 name='session'
                 control={form.control}
-                render={({ field }) => (
+                render={({ field }) => {
+                  const sessionValue =
+                    field.value != null && field.value !== ''
+                      ? String(field.value)
+                      : ''
+                  return (
                   <Select
-                    value={field.value || ''}
+                    key={`session-select-${sessionValue}-${sessionSelectOptions.map((o) => o.id).join(',')}`}
+                    value={sessionValue}
                     onValueChange={field.onChange}
                     disabled={isEditMode || !canEditLearnerFields}
                   >
@@ -1070,17 +1214,31 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       <SelectValue placeholder={t('form.status.selectSession')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {isLoadingLearnerPlan ? (
+                      {/*
+                        Radix Select resolves the trigger label from SelectItem nodes.
+                        If we only show a loading row while fetching, there are no items and
+                        the saved session never appears until reopen. Prefer rendering
+                        options whenever we have them, even while the plan list is loading.
+                      */}
+                      {sessionSelectOptions.length > 0 ? (
+                        <SelectGroup>
+                          {isLoadingLearnerPlan && (
+                            <SelectLabel className='flex items-center gap-2 px-2 py-1.5 font-normal text-muted-foreground'>
+                              <Loader2 className='h-4 w-4 shrink-0 animate-spin' />
+                              {t('form.status.loadingSessions')}
+                            </SelectLabel>
+                          )}
+                          {sessionSelectOptions.map((session) => (
+                            <SelectItem key={session.id} value={String(session.id)}>
+                              {session.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ) : isLoadingLearnerPlan ? (
                         <div className='flex items-center justify-center py-2 px-2 text-sm text-muted-foreground'>
                           <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                           {t('form.status.loadingSessions')}
                         </div>
-                      ) : sessions.length > 0 ? (
-                        sessions.map((session) => (
-                          <SelectItem key={session.id} value={String(session.id)}>
-                            {session.label}
-                          </SelectItem>
-                        ))
                       ) : (
                         <div className='py-2 px-2 text-sm text-muted-foreground'>
                           {t('form.status.noSessionsAvailable')}
@@ -1088,7 +1246,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       )}
                     </SelectContent>
                   </Select>
-                )}
+                  )
+                }}
               />
               {form.formState.errors.session && (
                 <p className='text-sm text-destructive'>

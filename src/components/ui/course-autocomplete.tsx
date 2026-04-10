@@ -18,7 +18,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList"
+import { useGetCoursesQuery } from "@/store/api/course/courseApi"
 
 interface CourseAutocompleteProps {
   value?: string | string[]
@@ -44,8 +44,11 @@ export function CourseAutocomplete({
   const [displayedCount, setDisplayedCount] = React.useState(10)
   const listRef = React.useRef<HTMLDivElement>(null)
 
-  // Fetch courses using cached hook
-  const { data: coursesData, isLoading } = useCachedCoursesList()
+  // Fetch courses directly from course API
+  const { data: coursesData, isLoading } = useGetCoursesQuery({
+    page: 1,
+    page_size: 1000,
+  })
 
   // Get all courses from response
   const allCourses = React.useMemo(() => {

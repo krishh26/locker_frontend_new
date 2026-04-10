@@ -135,8 +135,9 @@ export const useQualificationHandlers = ({
         }
       });
       setValue("units", updated);
+      trigger("units");
     },
-    [units, setValue]
+    [units, setValue, trigger]
   );
 
   return {

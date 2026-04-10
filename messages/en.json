@@ -2651,7 +2651,10 @@
         "loadingEvidence": "Loading evidence...",
         "selectSession": "Select session",
         "loadingSessions": "Loading sessions...",
-        "noSessionsAvailable": "No sessions available"
+        "noSessionsAvailable": "No sessions available",
+        "savedSessionNotInList": "Saved session (ID: {id})",
+        "existingAdditionalEvidence": "Current additional evidence",
+        "replaceAdditionalEvidenceHint": "Upload a new file below to replace it when you save."
       },
       "assessmentMethods": {
         "Obs": "Observations",

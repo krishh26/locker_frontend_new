@@ -5,6 +5,17 @@ export type EvidenceFile = {
   url: string;
 };
 
+/** Stored in `assignment.external_feedback` after additional-evidence upload */
+export type EvidenceExternalFeedback = {
+  name?: string;
+  size?: number;
+  type?: string;
+  key?: string;
+  url: string;
+  uploaded_at?: string;
+  uploaded_by?: number;
+};
+
 export type EvidenceCourse = {
   course_id: number;
   course_name: string;
@@ -51,7 +62,8 @@ export type EvidenceEntry = {
   title: string | null;
   description: string | null;
   trainer_feedback: string | null;
-  external_feedback: string | null;
+  /** JSON from API: uploaded additional file metadata (name, url, size, type, …) */
+  external_feedback: EvidenceExternalFeedback | string | null;
   learner_comments: string | null;
   points_for_improvement: string | null;
   assessment_method: string | null;

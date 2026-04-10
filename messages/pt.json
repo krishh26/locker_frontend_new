@@ -4888,7 +4888,10 @@
         "loadingEvidence": "A carregar evidência...",
         "selectSession": "Selecionar sessão",
         "loadingSessions": "A carregar sessões...",
-        "noSessionsAvailable": "Nenhuma sessão disponível"
+        "noSessionsAvailable": "Nenhuma sessão disponível",
+        "savedSessionNotInList": "Sessão guardada (ID: {id})",
+        "existingAdditionalEvidence": "Evidência adicional atual",
+        "replaceAdditionalEvidenceHint": "Carregue um ficheiro novo abaixo para o substituir ao guardar."
       },
       "assessmentMethods": {
         "Obs": "Observações",

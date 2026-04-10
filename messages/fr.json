@@ -4876,7 +4876,10 @@
         "loadingEvidence": "Chargement de l'évidence...",
         "selectSession": "Sélectionner une session",
         "loadingSessions": "Chargement des sessions...",
-        "noSessionsAvailable": "Aucune session disponible"
+        "noSessionsAvailable": "Aucune session disponible",
+        "savedSessionNotInList": "Session enregistrée (ID : {id})",
+        "existingAdditionalEvidence": "Preuve supplémentaire actuelle",
+        "replaceAdditionalEvidenceHint": "Téléversez un nouveau fichier ci-dessous pour le remplacer à l’enregistrement."
       },
       "assessmentMethods": {
         "Obs": "Observations",

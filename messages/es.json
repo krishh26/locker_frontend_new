@@ -4718,7 +4718,10 @@
         "loadingEvidence": "Cargando evidencia...",
         "selectSession": "Seleccionar sesión",
         "loadingSessions": "Cargando sesiones...",
-        "noSessionsAvailable": "No hay sesiones disponibles"
+        "noSessionsAvailable": "No hay sesiones disponibles",
+        "savedSessionNotInList": "Sesión guardada (ID: {id})",
+        "existingAdditionalEvidence": "Evidencia adicional actual",
+        "replaceAdditionalEvidenceHint": "Sube un archivo nuevo abajo para reemplazarla al guardar."
       },
       "assessmentMethods": {
         "Obs": "Observaciones",

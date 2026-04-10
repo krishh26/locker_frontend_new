@@ -4810,7 +4810,10 @@
         "loadingEvidence": "جاري تحميل الدليل...",
         "selectSession": "اختر الجلسة",
         "loadingSessions": "جاري تحميل الجلسات...",
-        "noSessionsAvailable": "لا توجد جلسات متاحة"
+        "noSessionsAvailable": "لا توجد جلسات متاحة",
+        "savedSessionNotInList": "جلسة محفوظة (المعرف: {id})",
+        "existingAdditionalEvidence": "الدليل الإضافي الحالي",
+        "replaceAdditionalEvidenceHint": "ارفع ملفًا جديدًا أدناه لاستبداله عند الحفظ."
       },
       "assessmentMethods": {
         "Obs": "الملاحظات",

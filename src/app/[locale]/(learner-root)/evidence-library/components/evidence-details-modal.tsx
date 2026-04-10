@@ -134,6 +134,7 @@ export function EvidenceDetailsModal({
                     learnerMap: true,
                     trainerMap: topic.trainerMap ?? false,
                     comment: topic.comment ?? "",
+                    signedOff: topic.signedOff ?? false,
                     mapping_id: topic.mapping_id, // For updates (if exists)
                   });
                 }
@@ -152,6 +153,7 @@ export function EvidenceDetailsModal({
                 learnerMap: true,
                 trainerMap: sub.trainerMap ?? false,
                 comment: sub.comment ?? "",
+                signedOff: sub.signedOff ?? false,
                 mapping_id: sub.mapping_id, // For updates (if exists)
               });
             }
@@ -167,6 +169,7 @@ export function EvidenceDetailsModal({
               learnerMap: true,
               trainerMap: unit.trainerMap ?? false,
               comment: unit.comment ?? "",
+              signedOff: unit.signedOff ?? false,
               mapping_id: unit.mapping_id, // For updates (if exists)
             });
           }

@@ -36,6 +36,20 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** API returns "not started" / "in progress"; Select uses underscore values. */
+function apiActionStatusToSelectValue(raw: string | undefined | null): string {
+  if (!raw) return "";
+  const s = String(raw)
+    .trim()
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ");
+  if (s === "not started") return "not_started";
+  if (s === "in progress") return "in_progress";
+  if (s === "completed") return "completed";
+  return "";
+}
+
 type ActionFormData = {
   actionName: string;
   actionDescription?: string;
@@ -52,7 +66,7 @@ type EditActionFormData = {
   trainer_feedback?: string | null;
   learner_feedback?: string | null;
   learner_status?: string;
-  status?: string;
+  trainer_status?: string;
 };
 
 interface AddActionDialogProps {
@@ -117,7 +131,7 @@ export function AddActionDialog({
         trainer_feedback: z.string().nullable().optional(),
         learner_feedback: z.string().nullable().optional(),
         learner_status: z.string().optional(),
-        status: z.string().optional(),
+        trainer_status: z.string().optional(),
       }),
     [t]
   );
@@ -156,8 +170,9 @@ export function AddActionDialog({
       time_spent: editAction?.time_spent || null,
       trainer_feedback: editAction?.trainer_feedback || null,
       learner_feedback: editAction?.learner_feedback || null,
-      learner_status: editAction?.learner_status || "",
-      status: typeof editAction?.status === "string" ? editAction.status : "",
+      learner_status: apiActionStatusToSelectValue(editAction?.learner_status),
+      trainer_status:
+        apiActionStatusToSelectValue(editAction?.trainer_status) || "",
     },
   });
 
@@ -171,8 +186,9 @@ export function AddActionDialog({
         time_spent: editAction.time_spent || null,
         trainer_feedback: editAction.trainer_feedback || null,
         learner_feedback: editAction.learner_feedback || null,
-        learner_status: editAction.learner_status || "",
-        status: typeof editAction.status === "string" ? editAction.status : "",
+        learner_status: apiActionStatusToSelectValue(editAction.learner_status),
+        trainer_status:
+          apiActionStatusToSelectValue(editAction.trainer_status) || "",
       });
     } else if (!editAction && open) {
       reset();
@@ -184,7 +200,7 @@ export function AddActionDialog({
         trainer_feedback: null,
         learner_feedback: null,
         learner_status: "",
-        status: "",
+        trainer_status: "",
       });
     }
   }, [editAction, open, reset, editReset]);
@@ -234,8 +250,13 @@ export function AddActionDialog({
     if (data.learner_status !== null && data.learner_status !== undefined && data.learner_status !== "") {
       payload.learner_status = data.learner_status;
     }
-    if (data.status !== null && data.status !== undefined && data.status !== "") {
-      payload.status = data.status;
+    if (
+      data.trainer_status !== null &&
+      data.trainer_status !== undefined &&
+      data.trainer_status !== ""
+    ) {
+      payload.trainer_status =
+        data.trainer_status === "pending" ? "not_started" : data.trainer_status;
     }
 
     try {
@@ -440,7 +461,7 @@ export function AddActionDialog({
               <div className="space-y-2">
                 <Label>Status</Label>
                 <Controller
-                  name="status"
+                  name="trainer_status"
                   control={editControl}
                   render={({ field }) => (
                     <Select value={field.value || ""} onValueChange={field.onChange}>

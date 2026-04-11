@@ -194,7 +194,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/evidence-library(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","LIQA","Trainer"),
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,

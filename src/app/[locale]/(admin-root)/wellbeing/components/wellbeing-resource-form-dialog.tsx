@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
 import {
   useAddResourceMutation,
   useUpdateResourceMutation,
@@ -347,7 +348,7 @@ export function WellbeingResourceFormDialog({
                     <FileText className="mx-auto size-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-muted-foreground">
                       {t("form.currentFile")}{" "}
-                      <span className="font-medium">{resource.resource_name}</span>
+                      <span className="font-medium">{formatWellbeingDisplayName(resource)}</span>
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {t("form.uploadNewToReplace")}

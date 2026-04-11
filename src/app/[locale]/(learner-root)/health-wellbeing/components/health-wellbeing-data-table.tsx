@@ -38,6 +38,7 @@ import {
 } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
 import { FeedbackDialog } from "./feedback-dialog";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
@@ -119,11 +120,19 @@ export function HealthWellbeingDataTable() {
   const columns: ColumnDef<WellbeingResource>[] = useMemo(
     () => [
       {
-        accessorKey: "resource_name",
+        id: "resource_name",
+        accessorFn: (row) => formatWellbeingDisplayName(row),
         header: t("table.columns.resourceName"),
         cell: ({ row }) => {
+          const resource = row.original;
+          const label = formatWellbeingDisplayName(resource);
           return (
-            <span className="font-semibold">{row.getValue("resource_name")}</span>
+            <span
+              className="font-semibold line-clamp-2 max-w-md text-foreground"
+              title={resource.location || undefined}
+            >
+              {label}
+            </span>
           );
         },
       },
@@ -240,11 +249,13 @@ export function HealthWellbeingDataTable() {
       columnVisibility,
       globalFilter,
     },
-    globalFilterFn: (row, columnId, filterValue) => {
+    globalFilterFn: (row, _columnId, filterValue) => {
       const resource = row.original;
-      const search = filterValue.toLowerCase();
+      const search = String(filterValue).toLowerCase();
       return (
-        resource.resource_name.toLowerCase().includes(search) ||
+        (resource.resource_name || "").toLowerCase().includes(search) ||
+        (resource.location || "").toLowerCase().includes(search) ||
+        formatWellbeingDisplayName(resource).toLowerCase().includes(search) ||
         (resource.description || "").toLowerCase().includes(search) ||
         (resource.category || "").toLowerCase().includes(search)
       );

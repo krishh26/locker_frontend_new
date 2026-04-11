@@ -57,6 +57,7 @@ import {
   useDeleteResourceMutation,
 } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
@@ -198,7 +199,7 @@ export function WellbeingResourcesDataTable() {
       t("export.headers.createdAt"),
     ];
     const rows = resourcesWithFeedbacks.map((resource) => [
-      resource.resource_name,
+      formatWellbeingDisplayName(resource),
       resource.feedback?.feedback || "",
       resource.feedback?.createdAt ? format(new Date(resource.feedback.createdAt), "MMM dd, yyyy") : "",
     ]);
@@ -234,13 +235,20 @@ export function WellbeingResourcesDataTable() {
   const columns = useMemo<ColumnDef<WellbeingResource>[]>(
     () => [
       {
-        accessorKey: "resource_name",
+        id: "resource_name",
+        accessorFn: (row) => formatWellbeingDisplayName(row),
         header: t("table.columns.name"),
         cell: ({ row }) => {
           const resource = row.original;
+          const title = resource.location || resource.resource_name || undefined;
           return (
             <div className="flex flex-col">
-              <span className="font-medium">{resource.resource_name}</span>
+              <span
+                className="font-medium line-clamp-2 max-w-md"
+                title={title}
+              >
+                {formatWellbeingDisplayName(resource)}
+              </span>
               {resource.description && (
                 <span className="text-sm text-muted-foreground truncate max-w-md">
                   {resource.description}
@@ -471,7 +479,9 @@ export function WellbeingResourcesDataTable() {
             <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
               {t("deleteDialog.description", {
-                name: resourceToDelete?.resource_name || "",
+                name: resourceToDelete
+                  ? formatWellbeingDisplayName(resourceToDelete)
+                  : "",
               })}
             </AlertDialogDescription>
           </AlertDialogHeader>

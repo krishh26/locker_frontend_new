@@ -465,7 +465,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
               disabled={formFields.length === 0}
             >
               <Eye className="mr-2 h-4 w-4" />
-              {isPreviewMode ? t("edit") : t("preview")}
+              {isPreviewMode ? t("edit") : t("previewButton")}
             </Button>
             {(isCreating || isUpdating || saveStatus === "saving") ? (
               <Button disabled>

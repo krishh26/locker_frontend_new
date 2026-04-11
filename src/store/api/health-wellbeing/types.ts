@@ -6,8 +6,9 @@ export type Feedback = {
 
 export type WellbeingResource = {
   id: string;
-  resource_name: string;
-  description: string;
+  /** Present for admin/file rows; learner API may omit and use `location` only. */
+  resource_name?: string;
+  description: string | null;
   location: string;
   category?: string;
   tags?: string[];

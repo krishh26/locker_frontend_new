@@ -23,7 +23,7 @@ import { useIsImpersonated } from "@/hooks/use-impersonation"
 import { clearCredentials, setCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import type { AuthUser } from "@/store/api/auth/types"
-import type { User } from "@/store/api/user/types"
+import { buildUser, decodeJwtPayload } from "@/store/api/auth/api"
 import { LanguageSwitcher } from "./language-switcher"
 import { filterRolesFromApi } from "@/config/auth-roles"
 
@@ -58,20 +58,15 @@ export function SiteHeader() {
         const response = await changeUserRole({ role }).unwrap()
 
         if (response.data) {
-          // Transform the user object from API response to AuthUser format
-          const apiUser = response.data.user as User & { role?: string }
-
+          const decoded = decodeJwtPayload(response.data.accessToken)
           const updatedUser: AuthUser = {
-            ...apiUser, // Include all properties first
-            id: apiUser.user_id?.toString(),
-            firstName: apiUser.first_name,
-            lastName: apiUser.last_name,
-            email: apiUser.email,
-            roles: apiUser.roles,
-            role: apiUser.role,
+            ...buildUser({
+              user: { ...(response.data.user as unknown as Record<string, unknown>), role },
+              ...(decoded ? { decoded } : {}),
+            }),
+            role,
           }
 
-          // Update Redux store with new token and user
           dispatch(
             setCredentials({
               token: response.data.accessToken,

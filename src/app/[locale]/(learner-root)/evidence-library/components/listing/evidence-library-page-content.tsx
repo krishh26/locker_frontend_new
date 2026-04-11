@@ -18,7 +18,6 @@ export function EvidenceLibraryPageContent() {
         subtitle={t("pageSubtitle")}
         icon={FolderOpen}
         showBackButton
-        backButtonHref={`/course-details/${currentCourseId}`}
       />
 
       {/* Data Table */}

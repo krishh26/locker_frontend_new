@@ -55,7 +55,7 @@ export const LearnerRow = memo(function LearnerRow({
   const handleViewPortfolio = (learner: SamplePlanLearner) => {
     const learnerId = learner.learner_id || learner.learnerId || learner.id;
     if (learnerId) {
-      router.push(`/portfolio?learner_id=${learnerId}`);
+      router.push(`/learner-dashboard/${learnerId}`);
     } else {
       toast.warning(t("unableOpenPortfolioLearnerIdMissing"));
     }

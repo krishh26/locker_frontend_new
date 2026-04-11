@@ -2500,6 +2500,7 @@
     "validation": {
       "activityRequired": "Activity is required",
       "dateRequired": "Date is required",
+      "dateNotInFuture": "Date cannot be in the future",
       "methodRequired": "Method is required",
       "learningRequired": "Learning is required",
       "impactRequired": "Impact is required"
@@ -3906,6 +3907,7 @@
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Time Taken",
       "empty": "No recent activities found."
     },
     "table": {
@@ -4042,6 +4044,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "Loading off-the-job summary...",
+      "title": "Off the Job Training Summary",
+      "summarySection": {
+        "title": "Summary",
+        "duration": {
+          "label": "Duration",
+          "tooltip": "Programme duration in weeks.",
+          "units": "weeks"
+        },
+        "contractedHours": {
+          "label": "Contracted work hours",
+          "tooltip": "Total contracted work hours for the programme."
+        },
+        "holiday": {
+          "label": "Holiday entitlement",
+          "tooltip": "Statutory and contractual holiday entitlement."
+        },
+        "required": {
+          "label": "Off the job hours (required)"
+        },
+        "requiredToDate": {
+          "label": "Off the job hours required to date"
+        }
+      },
+      "warnings": {
+        "title": "Warnings"
+      },
+      "actualHours": {
+        "title": "Actual hours logged",
+        "totalLogged": {
+          "label": "Total logged (off the job)"
+        },
+        "thisWeek": {
+          "label": "This week"
+        },
+        "thisMonth": {
+          "label": "This month"
+        },
+        "percentage": {
+          "label": "Completion vs required to date",
+          "tooltip": "Percentage is shown when required-to-date hours are available."
+        }
+      },
+      "common": {
+        "hours": "hours"
+      },
+      "courses": {
+        "title": "Courses",
+        "columns": {
+          "course": "Course",
+          "type": "Type",
+          "status": "Status",
+          "offTheJobHours": "Off the job (H:M)"
+        }
       }
     }
   },

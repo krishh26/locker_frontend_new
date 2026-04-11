@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, startOfDay, isAfter } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,9 +28,35 @@ import { toast } from "sonner";
 import type { CpdTableHeader } from "./cpd-data-table";
 import { useTranslations } from "next-intl";
 
+/** Parse API or form date strings without throwing; supports `yyyy-MM-dd` and ISO datetimes. */
+function parseCpdFormDate(val: string): Date | undefined {
+  const trimmed = val?.trim();
+  if (!trimmed) return undefined;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const d = new Date(`${trimmed}T12:00:00`);
+    return Number.isNaN(d.getTime()) ? undefined : d;
+  }
+  const d = new Date(trimmed);
+  return Number.isNaN(d.getTime()) ? undefined : d;
+}
+
+function normalizeDateForCpdForm(val: string): string {
+  const d = parseCpdFormDate(val);
+  return d ? format(d, "yyyy-MM-dd") : "";
+}
+
+const todayYmd = () => format(new Date(), "yyyy-MM-dd");
+
 const cpdEntrySchema = z.object({
   activity: z.string().min(1, "cpd.validation.activityRequired"),
-  date: z.string().min(1, "cpd.validation.dateRequired"),
+  date: z
+    .string()
+    .min(1, "cpd.validation.dateRequired")
+    .refine(
+      (val) =>
+        !/^\d{4}-\d{2}-\d{2}$/.test(val) || val <= todayYmd(),
+      { message: "cpd.validation.dateNotInFuture" },
+    ),
   method: z.string().min(1, "cpd.validation.methodRequired"),
   learning: z.string().min(1, "cpd.validation.learningRequired"),
   impact: z.string().min(1, "cpd.validation.impactRequired"),
@@ -65,7 +91,7 @@ export function CpdEditableRow({
     resolver: zodResolver(cpdEntrySchema),
     defaultValues: {
       activity: row.activity || "",
-      date: row.date || "",
+      date: normalizeDateForCpdForm(row.date || ""),
       method: row.method || "",
       learning: row.learning || "",
       impact: row.impact || "",
@@ -80,7 +106,7 @@ export function CpdEditableRow({
   useEffect(() => {
     form.reset({
       activity: row.activity || "",
-      date: row.date || "",
+      date: normalizeDateForCpdForm(row.date || ""),
       method: row.method || "",
       learning: row.learning || "",
       impact: row.impact || "",
@@ -160,12 +186,11 @@ export function CpdEditableRow({
   };
 
   const dateValue = form.watch("date");
-  const selectedDate = dateValue
-    ? (() => {
-        const date = new Date(dateValue);
-        return isNaN(date.getTime()) ? undefined : date;
-      })()
-    : undefined;
+  const selectedDate = dateValue ? parseCpdFormDate(dateValue) : undefined;
+
+  const todayStart = startOfDay(new Date());
+  const isFutureCalendarDay = (d: Date) =>
+    isAfter(startOfDay(d), todayStart);
 
   return (
     <TableRow className={cn(isSaving && "bg-primary", hasErrors && "bg-destructive")}>
@@ -194,11 +219,19 @@ export function CpdEditableRow({
                           disabled={isSaving || isEmployer}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {field.value ? (
-                            format(new Date(field.value), "PPP")
-                          ) : (
-                            <span>{t("placeholders.pickDate")}</span>
-                          )}
+                          {(() => {
+                            const d = field.value?.trim()
+                              ? parseCpdFormDate(field.value)
+                              : undefined;
+                            if (d) return format(d, "PPP");
+                            if (field.value?.trim())
+                              return (
+                                <span className="text-muted-foreground">
+                                  {field.value}
+                                </span>
+                              );
+                            return <span>{t("placeholders.pickDate")}</span>;
+                          })()}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
@@ -206,6 +239,7 @@ export function CpdEditableRow({
                           mode="single"
                           selected={selectedDate}
                           onSelect={handleDateChange}
+                          disabled={isFutureCalendarDay}
                           initialFocus
                         />
                       </PopoverContent>

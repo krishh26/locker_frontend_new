@@ -3708,6 +3708,7 @@
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "所用时间",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3844,6 +3845,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "正在加载岗外培训摘要...",
+      "title": "岗外培训摘要",
+      "summarySection": {
+        "title": "摘要",
+        "duration": {
+          "label": "时长",
+          "tooltip": "以周为单位的课程时长。",
+          "units": "周"
+        },
+        "contractedHours": {
+          "label": "合同工作时长",
+          "tooltip": "课程合同工作总时长。"
+        },
+        "holiday": {
+          "label": "假期权益",
+          "tooltip": "法定与合同假期权益。"
+        },
+        "required": {
+          "label": "岗外学时（要求）"
+        },
+        "requiredToDate": {
+          "label": "截至今日应完成的岗外学时"
+        }
+      },
+      "warnings": {
+        "title": "提醒"
+      },
+      "actualHours": {
+        "title": "实际记录学时",
+        "totalLogged": {
+          "label": "累计记录（岗外）"
+        },
+        "thisWeek": {
+          "label": "本周"
+        },
+        "thisMonth": {
+          "label": "本月"
+        },
+        "percentage": {
+          "label": "完成度与应完成（截至今日）",
+          "tooltip": "当存在“截至今日应完成学时”时显示百分比。"
+        }
+      },
+      "common": {
+        "hours": "小时"
+      },
+      "courses": {
+        "title": "课程",
+        "columns": {
+          "course": "课程",
+          "type": "类型",
+          "status": "状态",
+          "offTheJobHours": "岗外（时:分）"
+        }
       }
     }
   },

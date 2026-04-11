@@ -3790,6 +3790,7 @@
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Temps passé",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3926,6 +3927,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "Chargement du résumé hors emploi...",
+      "title": "Résumé de la formation hors emploi",
+      "summarySection": {
+        "title": "Résumé",
+        "duration": {
+          "label": "Durée",
+          "tooltip": "Durée du programme en semaines.",
+          "units": "semaines"
+        },
+        "contractedHours": {
+          "label": "Heures de travail contractuelles",
+          "tooltip": "Total des heures de travail contractuelles du programme."
+        },
+        "holiday": {
+          "label": "Droit aux congés",
+          "tooltip": "Droit aux congés légal et contractuel."
+        },
+        "required": {
+          "label": "Heures hors emploi (requis)"
+        },
+        "requiredToDate": {
+          "label": "Heures hors emploi requises à ce jour"
+        }
+      },
+      "warnings": {
+        "title": "Avertissements"
+      },
+      "actualHours": {
+        "title": "Heures réellement enregistrées",
+        "totalLogged": {
+          "label": "Total enregistré (hors emploi)"
+        },
+        "thisWeek": {
+          "label": "Cette semaine"
+        },
+        "thisMonth": {
+          "label": "Ce mois-ci"
+        },
+        "percentage": {
+          "label": "Complétion vs requis à ce jour",
+          "tooltip": "Le pourcentage s’affiche lorsque les heures requises à ce jour sont disponibles."
+        }
+      },
+      "common": {
+        "hours": "heures"
+      },
+      "courses": {
+        "title": "Cours",
+        "columns": {
+          "course": "Cours",
+          "type": "Type",
+          "status": "Statut",
+          "offTheJobHours": "Hors emploi (H:M)"
+        }
       }
     }
   },

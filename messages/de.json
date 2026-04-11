@@ -3821,6 +3821,7 @@
     },
     "recentActivity": {
       "title": "Aktuelle Aktivitäten",
+      "timeTakenLabel": "Aufgewendete Zeit",
       "empty": "Keine aktuellen Aktivitäten gefunden."
     },
     "table": {
@@ -3957,6 +3958,63 @@
         "assessment": "Bewertung oder Prüfung",
         "other": "Sonstiges",
         "furloughed": "Beurlaubt"
+      }
+    },
+    "offTheJob": {
+      "loading": "Zusammenfassung Off-the-Job wird geladen...",
+      "title": "Zusammenfassung Off-the-Job-Schulung",
+      "summarySection": {
+        "title": "Überblick",
+        "duration": {
+          "label": "Dauer",
+          "tooltip": "Programmdauer in Wochen.",
+          "units": "Wochen"
+        },
+        "contractedHours": {
+          "label": "Vertragliche Arbeitsstunden",
+          "tooltip": "Gesamte vertragliche Arbeitsstunden für das Programm."
+        },
+        "holiday": {
+          "label": "Urlaubsanspruch",
+          "tooltip": "Gesetzlicher und vertraglicher Urlaubsanspruch."
+        },
+        "required": {
+          "label": "Off-the-Job-Stunden (erforderlich)"
+        },
+        "requiredToDate": {
+          "label": "Bis heute erforderliche Off-the-Job-Stunden"
+        }
+      },
+      "warnings": {
+        "title": "Hinweise"
+      },
+      "actualHours": {
+        "title": "Tatsächlich erfasste Stunden",
+        "totalLogged": {
+          "label": "Gesamt erfasst (Off-the-Job)"
+        },
+        "thisWeek": {
+          "label": "Diese Woche"
+        },
+        "thisMonth": {
+          "label": "Diesen Monat"
+        },
+        "percentage": {
+          "label": "Fortschritt vs. bis heute erforderlich",
+          "tooltip": "Der Prozentsatz wird angezeigt, wenn die bis heute erforderlichen Stunden vorliegen."
+        }
+      },
+      "common": {
+        "hours": "Stunden"
+      },
+      "courses": {
+        "title": "Kurse",
+        "columns": {
+          "course": "Kurs",
+          "type": "Typ",
+          "status": "Status",
+          "offTheJobHours": "Off-the-Job (Std:Min)"
+        }
       }
     }
   },

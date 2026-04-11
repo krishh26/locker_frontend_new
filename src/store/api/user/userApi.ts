@@ -11,6 +11,7 @@ import type {
 import type { ApiResponse } from "../auth/types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
+import { normalizeUserCentreSpellings } from "./normalizeUserPayload";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -98,7 +99,16 @@ export const userApi = createApi({
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data?.user) {
+          return response;
+        }
+        return {
+          ...response,
+          data: {
+            ...response.data,
+            user: normalizeUserCentreSpellings({ ...response.data.user }),
+          },
+        };
       },
     }),
     getUser: builder.query<UserResponse, void>({
@@ -112,14 +122,7 @@ export const userApi = createApi({
         if (!response?.data) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        // Normalise: backend returns assigned_centers; ensure both spellings exist for compatibility
-        const data = response.data as typeof response.data & { assigned_centres?: typeof response.data.assigned_centers };
-        if (data.assigned_centers != null && data.assigned_centres == null) {
-          data.assigned_centres = data.assigned_centers;
-        }
-        if (data.assigned_centres != null && data.assigned_centers == null) {
-          data.assigned_centers = data.assigned_centres;
-        }
+        const data = normalizeUserCentreSpellings({ ...response.data });
         return { ...response, data };
       },
     }),

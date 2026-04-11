@@ -3527,6 +3527,7 @@
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Tiempo empleado",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3663,6 +3664,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "Cargando resumen fuera del trabajo...",
+      "title": "Resumen de formación fuera del trabajo",
+      "summarySection": {
+        "title": "Resumen",
+        "duration": {
+          "label": "Duración",
+          "tooltip": "Duración del programa en semanas.",
+          "units": "semanas"
+        },
+        "contractedHours": {
+          "label": "Horas de trabajo contratadas",
+          "tooltip": "Total de horas de trabajo contratadas del programa."
+        },
+        "holiday": {
+          "label": "Derecho a vacaciones",
+          "tooltip": "Derecho a vacaciones legal y contractual."
+        },
+        "required": {
+          "label": "Horas fuera del trabajo (requeridas)"
+        },
+        "requiredToDate": {
+          "label": "Horas fuera del trabajo requeridas a la fecha"
+        }
+      },
+      "warnings": {
+        "title": "Advertencias"
+      },
+      "actualHours": {
+        "title": "Horas reales registradas",
+        "totalLogged": {
+          "label": "Total registrado (fuera del trabajo)"
+        },
+        "thisWeek": {
+          "label": "Esta semana"
+        },
+        "thisMonth": {
+          "label": "Este mes"
+        },
+        "percentage": {
+          "label": "Completado vs requerido a la fecha",
+          "tooltip": "El porcentaje se muestra cuando hay horas requeridas a la fecha."
+        }
+      },
+      "common": {
+        "hours": "horas"
+      },
+      "courses": {
+        "title": "Cursos",
+        "columns": {
+          "course": "Curso",
+          "type": "Tipo",
+          "status": "Estado",
+          "offTheJobHours": "Fuera del trabajo (H:M)"
+        }
       }
     }
   },

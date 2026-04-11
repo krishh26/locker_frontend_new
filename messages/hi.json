@@ -2473,6 +2473,7 @@
     "validation": {
       "activityRequired": "गतिविधि आवश्यक है",
       "dateRequired": "तारीख आवश्यक है",
+      "dateNotInFuture": "तारीख भविष्य में नहीं हो सकती",
       "methodRequired": "विधि आवश्यक है",
       "learningRequired": "सीख आवश्यक है",
       "impactRequired": "प्रभाव आवश्यक है"
@@ -4655,6 +4656,7 @@
     },
     "recentActivity": {
       "title": "हाल की गतिविधि",
+      "timeTakenLabel": "लिया गया समय",
       "empty": "कोई हाल की गतिविधि नहीं मिली।"
     },
     "table": {
@@ -4791,6 +4793,63 @@
         "assessment": "आकलन या परीक्षा",
         "other": "अन्य",
         "furloughed": "फरलो (Furloughed)"
+      }
+    },
+    "offTheJob": {
+      "loading": "ऑफ-द-जॉब सारांश लोड हो रहा है...",
+      "title": "ऑफ द जॉब ट्रेनिंग सारांश",
+      "summarySection": {
+        "title": "सारांश",
+        "duration": {
+          "label": "अवधि",
+          "tooltip": "कार्यक्रम की अवधि (सप्ताहों में)।",
+          "units": "सप्ताह"
+        },
+        "contractedHours": {
+          "label": "संविदात्मक कार्य घंटे",
+          "tooltip": "कार्यक्रम के लिए कुल संविदात्मक कार्य घंटे।"
+        },
+        "holiday": {
+          "label": "अवकाश अधिकार",
+          "tooltip": "वैधानिक और संविदात्मक अवकाश अधिकार।"
+        },
+        "required": {
+          "label": "ऑफ द जॉब घंटे (आवश्यक)"
+        },
+        "requiredToDate": {
+          "label": "आज तक आवश्यक ऑफ द जॉब घंटे"
+        }
+      },
+      "warnings": {
+        "title": "चेतावनियाँ"
+      },
+      "actualHours": {
+        "title": "वास्तविक लॉग किए गए घंटे",
+        "totalLogged": {
+          "label": "कुल लॉग (ऑफ द जॉब)"
+        },
+        "thisWeek": {
+          "label": "इस सप्ताह"
+        },
+        "thisMonth": {
+          "label": "इस महीने"
+        },
+        "percentage": {
+          "label": "पूर्णता बनाम आज तक आवश्यक",
+          "tooltip": "प्रतिशत तब दिखाया जाता है जब आज तक आवश्यक घंटे उपलब्ध हों।"
+        }
+      },
+      "common": {
+        "hours": "घंटे"
+      },
+      "courses": {
+        "title": "कोर्स",
+        "columns": {
+          "course": "कोर्स",
+          "type": "प्रकार",
+          "status": "स्थिति",
+          "offTheJobHours": "ऑफ द जॉब (घं:मि)"
+        }
       }
     }
   },

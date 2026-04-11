@@ -42,7 +42,10 @@ let pdfDepsPromise:
 
 async function getPdfDeps() {
   if (!pdfDepsPromise) {
-    pdfDepsPromise = Promise.all([import("jspdf"), import("jspdf-autotable")]).then(
+    pdfDepsPromise = Promise.all([
+      import("jspdf/dist/jspdf.es.min.js"),
+      import("jspdf-autotable"),
+    ]).then(
       ([jspdfMod, autotableMod]) => ({
         jsPDF: jspdfMod.jsPDF,
         applyPlugin: autotableMod.applyPlugin,

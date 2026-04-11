@@ -29,6 +29,30 @@ export type TicketAttachment = {
 };
 
 export type TicketStatus = "Open" | "In Progress" | "Resolved" | "Closed";
+
+/** Values stored by locker_backend `Ticket.entity` / `TicketStatus` enum */
+export type TicketStatusApi = "Open" | "InProgress" | "Resolved" | "Closed";
+
+export function ticketStatusFromApi(raw: string): TicketStatus {
+  if (raw === "InProgress") return "In Progress";
+  if (raw === "Open" || raw === "Resolved" || raw === "Closed") return raw;
+  if (raw === "In Progress") return "In Progress";
+  return raw as TicketStatus;
+}
+
+export function ticketStatusToApi(status: TicketStatus): TicketStatusApi {
+  if (status === "In Progress") return "InProgress";
+  return status as TicketStatusApi;
+}
+
+export function mapTicketFromApi(ticket: Ticket): Ticket {
+  const raw = ticket.status != null ? String(ticket.status) : "Open";
+  return {
+    ...ticket,
+    status: ticketStatusFromApi(raw),
+  };
+}
+
 export type TicketPriority = "Low" | "Medium" | "High" | "Urgent";
 
 export type Ticket = {

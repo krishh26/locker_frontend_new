@@ -103,8 +103,8 @@ export function SkillsScanViewResults() {
         imageTimeout: 15000,
       });
 
-      // Dynamically import jsPDF on the client
-      const { jsPDF } = await import("jspdf");
+      // Browser ESM build — bare "jspdf" resolves to node build under Turbopack/SSR (fflate + Worker error).
+      const { jsPDF } = await import("jspdf/dist/jspdf.es.min.js");
 
       // Calculate PDF dimensions
       const imgWidth = 210; // A4 width in mm

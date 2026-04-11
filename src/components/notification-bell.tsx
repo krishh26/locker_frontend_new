@@ -114,7 +114,7 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent, mark
       className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
         notification.read
           ? "bg-transparent"
-          : "bg-primary text-white"
+          : "bg-background text-black"
       } ${onClickContent ? "cursor-pointer" : ""}`}
       onClick={onClickContent}
       role={onClickContent ? "button" : undefined}

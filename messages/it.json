@@ -3108,6 +3108,7 @@
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Tempo impiegato",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3244,6 +3245,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "Caricamento riepilogo off-the-job...",
+      "title": "Riepilogo formazione off-the-job",
+      "summarySection": {
+        "title": "Riepilogo",
+        "duration": {
+          "label": "Durata",
+          "tooltip": "Durata del programma in settimane.",
+          "units": "settimane"
+        },
+        "contractedHours": {
+          "label": "Ore di lavoro contrattuali",
+          "tooltip": "Totale ore di lavoro contrattuali per il programma."
+        },
+        "holiday": {
+          "label": "Diritto ferie",
+          "tooltip": "Diritto ferie di legge e contrattuale."
+        },
+        "required": {
+          "label": "Ore off-the-job (richieste)"
+        },
+        "requiredToDate": {
+          "label": "Ore off-the-job richieste alla data odierna"
+        }
+      },
+      "warnings": {
+        "title": "Avvisi"
+      },
+      "actualHours": {
+        "title": "Ore effettivamente registrate",
+        "totalLogged": {
+          "label": "Totale registrato (off-the-job)"
+        },
+        "thisWeek": {
+          "label": "Questa settimana"
+        },
+        "thisMonth": {
+          "label": "Questo mese"
+        },
+        "percentage": {
+          "label": "Completamento vs richiesto alla data",
+          "tooltip": "La percentuale viene mostrata quando sono disponibili le ore richieste alla data."
+        }
+      },
+      "common": {
+        "hours": "ore"
+      },
+      "courses": {
+        "title": "Corsi",
+        "columns": {
+          "course": "Corso",
+          "type": "Tipo",
+          "status": "Stato",
+          "offTheJobHours": "Off-the-job (O:M)"
+        }
       }
     }
   },

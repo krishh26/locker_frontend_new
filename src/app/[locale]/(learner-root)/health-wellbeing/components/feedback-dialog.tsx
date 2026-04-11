@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useSubmitFeedbackMutation } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -89,7 +90,12 @@ export function FeedbackDialog({
 
         <div className="space-y-4 py-4">
           <div className="text-center">
-            <h3 className="text-lg font-semibold">{resource.resource_name}</h3>
+            <h3
+              className="text-lg font-semibold line-clamp-2"
+              title={resource.location || undefined}
+            >
+              {formatWellbeingDisplayName(resource)}
+            </h3>
           </div>
 
           <div className="flex justify-center gap-4 py-4">

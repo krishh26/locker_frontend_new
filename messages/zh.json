@@ -1111,7 +1111,7 @@
     "dragComponentsHint": "拖放组件以构建表单",
     "field": "字段",
     "fields": "字段",
-    "preview": "预览",
+    "previewButton": "预览",
     "edit": "编辑",
     "saving": "保存中...",
     "saveAsForm": "另存为表单",

@@ -1156,6 +1156,7 @@
       "dragComponentsHint": "Faites glisser les composants pour créer votre formulaire",
       "field": "champ",
       "fields": "champs",
+      "previewButton": "Aperçu",
       "preview": {
         "noFields": "Aucun champ ajouté au formulaire.",
         "untitledForm": "Formulaire sans titre",

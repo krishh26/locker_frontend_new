@@ -779,6 +779,7 @@
       "dragComponentsHint": "Trascina i componenti per creare il modulo",
       "field": "campo",
       "fields": "campi",
+      "previewButton": "Anteprima",
       "preview": {
         "noFields": "Nessun campo aggiunto al modulo.",
         "untitledForm": "Modulo senza titolo",

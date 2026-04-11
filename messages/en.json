@@ -1131,7 +1131,7 @@
       "dragComponentsHint": "Drag components to build your form",
       "field": "field",
       "fields": "fields",
-      "preview": "Preview",
+      "previewButton": "Preview",
       "edit": "Edit",
       "saving": "Saving...",
       "saveAsForm": "Save As Form",

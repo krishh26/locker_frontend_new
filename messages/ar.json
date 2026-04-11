@@ -1108,7 +1108,7 @@
     "dragComponentsHint": "اسحب المكونات لبناء النموذج",
     "field": "حقل",
     "fields": "حقول",
-    "preview": "معاينة",
+    "previewButton": "معاينة",
     "edit": "تعديل",
     "saving": "جاري الحفظ...",
     "saveAsForm": "حفظ كنموذج",

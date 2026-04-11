@@ -945,7 +945,7 @@
       "dragComponentsHint": "Arrastre componentes para crear su formulario",
       "field": "campo",
       "fields": "campos",
-      "preview": "Vista previa",
+      "previewButton": "Vista previa",
       "edit": "Editar",
       "saving": "Guardando...",
       "saveAsForm": "Guardar como formulario",

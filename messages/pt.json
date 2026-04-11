@@ -1115,7 +1115,7 @@
     "dragComponentsHint": "Arraste componentes para criar o formulário",
     "field": "campo",
     "fields": "campos",
-    "preview": "Pré-visualizar",
+    "previewButton": "Pré-visualizar",
     "edit": "Editar",
     "saving": "A guardar...",
     "saveAsForm": "Guardar como formulário",

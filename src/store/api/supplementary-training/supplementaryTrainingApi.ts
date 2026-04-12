@@ -92,6 +92,42 @@ export const supplementaryTrainingApi = createApi({
         return response;
       },
     }),
+    exportSupTrainingFeedbacks: builder.mutation<
+      { blob: Blob; filename?: string },
+      { search?: string } | void
+    >({
+      query: (arg) => {
+        const params = new URLSearchParams();
+        const search = arg && typeof arg === "object" ? arg.search : undefined;
+        if (search) params.append("search", search);
+        const q = params.toString();
+        return {
+          url: `/supplementary-training/admin/resources/feedbacks/export${q ? `?${q}` : ""}`,
+          method: "GET",
+          responseHandler: async (response) => {
+            const contentDisposition = response.headers.get("Content-Disposition") ?? "";
+            const filename =
+              contentDisposition.match(/filename\*?=(?:UTF-8''|\"?)([^\";]+)/i)?.[1]?.trim() || undefined;
+            if (!response.ok) {
+              let msg = "Export failed";
+              try {
+                const text = await response.text();
+                const j = JSON.parse(text) as { message?: string };
+                if (j?.message) msg = j.message;
+              } catch {
+                msg = `Export failed (${response.status})`;
+              }
+              throw new Error(msg);
+            }
+            const blob = await response.blob();
+            return {
+              blob,
+              filename: filename ? decodeURIComponent(filename.replace(/^"|"$/g, "")) : undefined,
+            };
+          },
+        };
+      },
+    }),
     getLearnerSupTrainingResources: builder.query<LearnerResourcesResponse, void>({
       query: () => "/supplementary-training/learner/resources",
       providesTags: ["SupplementaryTrainingResource", "LearnerSupplementaryTrainingActivity"],
@@ -145,4 +181,5 @@ export const {
   useUpdateSupTrainingResourceMutation,
   useToggleSupTrainingResourceMutation,
   useDeleteSupTrainingResourceMutation,
+  useExportSupTrainingFeedbacksMutation,
 } = supplementaryTrainingApi;

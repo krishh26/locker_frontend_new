@@ -2456,6 +2456,7 @@
       "deleteFailed": "Failed to delete resource",
       "noDataToExport": "No data available to export",
       "noFeedbackToExport": "No feedback data available to export",
+      "exportFailed": "Could not export feedbacks. Please try again.",
       "exportSuccess": "Feedback report exported successfully",
       "addedSuccess": "Resource added successfully",
       "addFailed": "Failed to add resource",

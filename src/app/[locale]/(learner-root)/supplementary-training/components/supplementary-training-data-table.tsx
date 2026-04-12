@@ -41,6 +41,10 @@ import { toast } from "sonner";
 import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { useAppSelector } from "@/store/hooks";
 import { FeedbackDialog } from "./feedback-dialog";
+import {
+  LEARNER_FEEDBACK_EMOJI,
+  parseLearnerFeedbackValue,
+} from "@/lib/learner-resource-feedback";
 
 const feedbackDisplayMapping = {
   very_helpful: "veryHelpful",
@@ -158,17 +162,24 @@ export function SupplementaryTrainingDataTable() {
         header: t("columns.feedback"),
         cell: ({ row }) => {
           const resource = row.original;
-          const feedback = resource
+          const code = parseLearnerFeedbackValue(resource.feedback);
 
-          if (!feedback) {
+          if (!code) {
             return <span className="text-sm text-muted-foreground">{t("feedback.none")}</span>;
           }
 
+          const labelKey =
+            feedbackDisplayMapping[code as keyof typeof feedbackDisplayMapping] || "unknown";
+          const label = t(`feedback.values.${labelKey}`);
+          const emoji = LEARNER_FEEDBACK_EMOJI[code];
+
           return (
-            <span className="text-sm">
-              {t(
-                `feedback.values.${feedbackDisplayMapping[feedback.feedback as unknown as keyof typeof feedbackDisplayMapping] || "unknown"}`
-              )}
+            <span
+              className="inline-flex items-center gap-1.5 text-base"
+              title={label}
+            >
+              <span aria-hidden>{emoji}</span>
+              <span className="sr-only">{label}</span>
             </span>
           );
         },

@@ -39,6 +39,10 @@ import {
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
+import {
+  LEARNER_FEEDBACK_EMOJI,
+  parseLearnerFeedbackValue,
+} from "@/lib/learner-resource-feedback";
 import { FeedbackDialog } from "./feedback-dialog";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
@@ -177,17 +181,22 @@ export function HealthWellbeingDataTable() {
         header: t("table.columns.feedback"),
         cell: ({ row }) => {
           const resource = row.original;
-          const feedback = resource.feedback;
+          const code = parseLearnerFeedbackValue(resource.feedback);
 
-          if (!feedback) {
+          if (!code) {
             return <span className="text-sm text-muted-foreground">{t("table.feedbackValues.none")}</span>;
           }
 
-          const key = FEEDBACK_API_TO_KEY[feedback.feedback];
+          const key = FEEDBACK_API_TO_KEY[code];
           const label = key ? t(`table.feedbackValues.${key}`) : t("table.feedbackValues.unknown");
+          const emoji = LEARNER_FEEDBACK_EMOJI[code];
           return (
-            <span className="text-sm">
-              {label}
+            <span
+              className="inline-flex items-center gap-1.5 text-base"
+              title={label}
+            >
+              <span aria-hidden>{emoji}</span>
+              <span className="sr-only">{label}</span>
             </span>
           );
         },

@@ -18,7 +18,8 @@ export type SupplementaryTrainingResource = {
   updatedBy?: string;
   resourceType: 'FILE' | 'URL';
   lastOpenedDate?: string;
-  feedback?: Feedback;
+  /** API may return a string (`neutral`, etc.) or a `Feedback` object */
+  feedback?: Feedback | Feedback['feedback'];
 };
 
 export type LearnerResourcesResponse = {

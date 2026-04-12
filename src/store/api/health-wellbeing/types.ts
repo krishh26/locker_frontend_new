@@ -6,7 +6,7 @@ export type Feedback = {
 
 export type WellbeingResource = {
   id: string;
-  /** Present for admin/file rows; learner API may omit and use `location` only. */
+  /** Display name; learner list includes it when set on the resource. */
   resource_name?: string;
   description: string | null;
   location: string;
@@ -19,7 +19,8 @@ export type WellbeingResource = {
   updatedBy?: string;
   resourceType: 'FILE' | 'URL';
   lastOpenedDate?: string;
-  feedback?: Feedback;
+  /** API may return a string (`neutral`, etc.) or a `Feedback` object */
+  feedback?: Feedback | Feedback['feedback'];
 };
 
 export type LearnerResourcesResponse = {

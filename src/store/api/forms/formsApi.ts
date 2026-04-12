@@ -138,8 +138,8 @@ export const formsApi = createApi({
     }),
     assignUsersToForm: builder.mutation<AssignUsersResponse, AssignUsersRequest>({
       query: ({ formId, user_ids, assign }) => ({
-        url: `/form/${formId}/assign-users`,
-        method: "POST",
+        url: `/form/add-user/${formId}`,
+        method: "PATCH",
         body: user_ids ? { user_ids } : { assign },
       }),
       invalidatesTags: ["Form"],

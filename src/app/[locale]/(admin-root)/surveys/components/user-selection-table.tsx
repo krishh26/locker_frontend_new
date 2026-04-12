@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Table,
@@ -115,7 +116,16 @@ export function UserSelectionTable({
                 checked={allSelected}
                 onCheckedChange={handleSelectAll}
                 aria-label={t("allocate.selectAll")}
-                className={someSelected && !allSelected ? "data-[state=checked]:bg-primary/50" : ""}
+                className={cn(
+                  // High contrast on primary header: no dark fill; clear white outline
+                  "border-2 border-white bg-transparent! shadow-none",
+                  "focus-visible:ring-white/40 focus-visible:ring-offset-0",
+                  "data-[state=checked]:border-white data-[state=checked]:bg-white! data-[state=checked]:text-primary!",
+                  "dark:bg-transparent! dark:data-[state=checked]:bg-white! dark:data-[state=checked]:text-primary!",
+                  someSelected &&
+                    !allSelected &&
+                    "data-[state=checked]:bg-white/90!"
+                )}
               />
             </TableHead>
             <TableHead>{t("allocate.tableName")}</TableHead>

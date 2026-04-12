@@ -55,6 +55,7 @@ import {
   useGetAdminResourcesQuery,
   useToggleResourceMutation,
   useDeleteResourceMutation,
+  useExportWellbeingFeedbacksMutation,
 } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
@@ -100,6 +101,8 @@ export function WellbeingResourcesDataTable() {
 
   const [toggleResource, { isLoading: isToggling }] = useToggleResourceMutation();
   const [deleteResource, { isLoading: isDeleting }] = useDeleteResourceMutation();
+  const [exportWellbeingFeedbacks, { isLoading: isExportingFeedbacks }] =
+    useExportWellbeingFeedbacksMutation();
 
   const handleSearch = useCallback(() => {
     setPage(1);
@@ -178,50 +181,30 @@ export function WellbeingResourcesDataTable() {
     refetch();
   };
 
-  const handleExportFeedbacks = () => {
-    if (!resourcesData?.data) {
-      toast.warning(t("toast.noDataToExport"));
-      return;
+  const handleExportFeedbacks = async () => {
+    const fallbackName = `${t("export.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    try {
+      const { blob, filename } = await exportWellbeingFeedbacks({
+        search: searchKeyword || undefined,
+      }).unwrap();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename && filename.length > 0 ? filename : fallbackName);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success(t("toast.exportSuccess"));
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg.toLowerCase().includes("no feedback")) {
+        toast.info(t("toast.noFeedbackToExport"));
+      } else {
+        toast.error(msg || t("toast.exportFailed"));
+      }
     }
-
-    const resourcesWithFeedbacks = resourcesData.data.filter(
-      (resource) => resource.feedback
-    );
-
-    if (resourcesWithFeedbacks.length === 0) {
-      toast.info(t("toast.noFeedbackToExport"));
-      return;
-    }
-
-    const headers = [
-      t("export.headers.resourceName"),
-      t("export.headers.feedback"),
-      t("export.headers.createdAt"),
-    ];
-    const rows = resourcesWithFeedbacks.map((resource) => [
-      formatWellbeingDisplayName(resource),
-      resource.feedback?.feedback || "",
-      resource.feedback?.createdAt ? format(new Date(resource.feedback.createdAt), "MMM dd, yyyy") : "",
-    ]);
-
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((row: string[]) => row.map((cell: string) => `"${cell}"`).join(",")),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute(
-      "download",
-      `${t("export.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`
-    );
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success(t("toast.exportSuccess"));
   };
 
   const formatDate = (dateString: string) => {
@@ -385,6 +368,7 @@ export function WellbeingResourcesDataTable() {
           <Button
             variant="outline"
             onClick={handleExportFeedbacks}
+            disabled={isExportingFeedbacks}
             className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />

@@ -2217,6 +2217,7 @@
       "deleteFailed": "No se pudo eliminar el recurso",
       "noDataToExport": "No hay datos disponibles para exportar",
       "noFeedbackToExport": "No hay datos de comentarios disponibles para exportar",
+      "exportFailed": "No se pudieron exportar los comentarios. Inténtelo de nuevo.",
       "exportSuccess": "Informe de comentarios exportado correctamente",
       "addedSuccess": "Recurso agregado correctamente",
       "addFailed": "No se pudo agregar el recurso",

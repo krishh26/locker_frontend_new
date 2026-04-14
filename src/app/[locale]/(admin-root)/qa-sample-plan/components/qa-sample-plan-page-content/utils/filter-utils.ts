@@ -1,18 +1,27 @@
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
+import { qaStatuses } from "../../../utils/constants";
 
 /**
- * Filter learners based on search text
+ * Filter learners by QA approval status and optional search text
  */
 export function filterVisibleRows(
   learnersData: SamplePlanLearner[],
   searchText: string,
-  filterApplied: boolean
+  filterApplied: boolean,
+  selectedQaStatus: string
 ): SamplePlanLearner[] {
   if (!filterApplied) return [];
-  if (!searchText.trim()) return learnersData;
+
+  const qaApprovedOnlyLabel = qaStatuses[1];
+  const afterQaStatus =
+    selectedQaStatus === qaApprovedOnlyLabel
+      ? learnersData.filter((row) => row.qa_approved === true)
+      : learnersData;
+
+  if (!searchText.trim()) return afterQaStatus;
 
   const lowered = searchText.toLowerCase();
-  return learnersData.filter((row) => {
+  return afterQaStatus.filter((row) => {
     const assessor = row?.assessor_name?.toLowerCase() ?? "";
     const learner = row?.learner_name?.toLowerCase() ?? "";
     const sampleType = row?.sample_type?.toLowerCase() ?? "";

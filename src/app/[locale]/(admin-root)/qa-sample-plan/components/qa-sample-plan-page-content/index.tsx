@@ -316,8 +316,6 @@ export function QASamplePlanPageContent() {
       selectedMethods: filterState.selectedMethods,
     });
 
-    console.log("payload", payload);
-
     if (!payload) {
       dispatch(setFilterError(t("errors.selectLearnerWithSampledUnits")));
       return;

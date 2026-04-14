@@ -1270,7 +1270,11 @@
         "viewDocumentsEvidence": "Dokumente / Nachweise ansehen",
         "viewPortfolio": "Portfolio ansehen",
         "unableOpenDocumentsLearnerIdMissing": "Dokumente können nicht geöffnet werden. Lernenden-ID nicht gefunden.",
-        "unableOpenPortfolioLearnerIdMissing": "Portfolio kann nicht geöffnet werden. Lernenden-ID nicht gefunden."
+        "unableOpenPortfolioLearnerIdMissing": "Portfolio kann nicht geöffnet werden. Lernenden-ID nicht gefunden.",
+        "qaApprovedUpdateFailed": "QA genehmigt konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+        "qaApprovedNoSamples": "QA genehmigt kann nur für Lernende mit mindestens einer Stichprobe in diesem Plan gesetzt werden.",
+        "qaApprovedSelectPlanAndFilter": "Wählen Sie einen Kurs und einen Plan und wenden Sie Filter an, bevor Sie QA genehmigt ändern.",
+        "qaApprovedMissingLearnerId": "Lernenden-ID für diese Zeile fehlt."
       }
     },
     "editSampleModal": {

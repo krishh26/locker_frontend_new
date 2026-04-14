@@ -1688,7 +1688,11 @@
         "viewDocumentsEvidence": "Voir documents / preuves",
         "viewPortfolio": "Voir le portfolio",
         "unableOpenDocumentsLearnerIdMissing": "Impossible d’ouvrir les documents. ID apprenant introuvable.",
-        "unableOpenPortfolioLearnerIdMissing": "Impossible d’ouvrir le portfolio. ID apprenant introuvable."
+        "unableOpenPortfolioLearnerIdMissing": "Impossible d’ouvrir le portfolio. ID apprenant introuvable.",
+        "qaApprovedUpdateFailed": "Impossible de mettre à jour QA approuvé. Veuillez réessayer.",
+        "qaApprovedNoSamples": "QA approuvé ne peut être défini que pour les apprenants ayant au moins un échantillon sur ce plan.",
+        "qaApprovedSelectPlanAndFilter": "Sélectionnez un cours et un plan, puis appliquez les filtres avant de modifier QA approuvé.",
+        "qaApprovedMissingLearnerId": "ID apprenant manquant pour cette ligne."
       }
     },
     "editSampleModal": {

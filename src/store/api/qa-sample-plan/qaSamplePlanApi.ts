@@ -20,6 +20,8 @@ import type {
   DeleteAssignmentReviewFileRequest,
   UpdateMappedSubUnitSignOffRequest,
   UnitMappingResponse,
+  UpdateLearnerQaApprovedRequest,
+  UpdateLearnerQaApprovedResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -117,6 +119,24 @@ export const qaSamplePlanApi = createApi({
       },
       invalidatesTags: ["SamplePlanLearner", "SamplePlanDetail"],
       transformResponse: (response: { status: boolean; message?: string; error?: string }) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
+    updateLearnerQaApproved: builder.mutation<UpdateLearnerQaApprovedResponse, UpdateLearnerQaApprovedRequest>({
+      query: ({ plan_id, learner_id, qa_approved }) => {
+        const encodedPlanId = encodeURIComponent(String(plan_id));
+        const encodedLearnerId = encodeURIComponent(String(learner_id));
+        return {
+          url: `/sample-plan/${encodedPlanId}/learners/${encodedLearnerId}/qa-approved`,
+          method: "PATCH",
+          body: { qa_approved },
+        };
+      },
+      invalidatesTags: ["SamplePlanLearner"],
+      transformResponse: (response: UpdateLearnerQaApprovedResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
@@ -446,6 +466,7 @@ export const {
   useApplySamplePlanLearnersMutation,
   useUpdateSamplePlanDetailMutation,
   useRemoveSampledLearnerMutation,
+  useUpdateLearnerQaApprovedMutation,
   useGetSampleQuestionsQuery,
   useLazyGetSampleQuestionsQuery,
   useCreateSampleQuestionsMutation,

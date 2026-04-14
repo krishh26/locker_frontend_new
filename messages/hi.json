@@ -1647,7 +1647,11 @@
         "viewDocumentsEvidence": "डॉक्यूमेंट्स / एविडेंस देखें",
         "viewPortfolio": "पोर्टफोलियो देखें",
         "unableOpenDocumentsLearnerIdMissing": "डॉक्यूमेंट्स नहीं खुल सके। लर्नर ID नहीं मिली।",
-        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।"
+        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।",
+        "qaApprovedUpdateFailed": "QA अनुमोदित अपडेट नहीं हो सका। कृपया पुनः प्रयास करें।",
+        "qaApprovedNoSamples": "QA अनुमोदित केवल उन शिक्षार्थियों के लिए सेट किया जा सकता है जिनके पास इस योजना पर कम से कम एक नमूना हो।",
+        "qaApprovedSelectPlanAndFilter": "QA अनुमोदित बदलने से पहले पाठ्यक्रम और योजना चुनें, फिर फ़िल्टर लागू करें।",
+        "qaApprovedMissingLearnerId": "इस पंक्ति के लिए शिक्षार्थी ID गायब है।"
       }
     },
     "editSampleModal": {

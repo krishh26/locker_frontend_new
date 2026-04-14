@@ -22,6 +22,7 @@ interface LearnersTableContentProps {
   visibleRows: SamplePlanLearner[];
   isLearnersInFlight: boolean;
   isLearnersError: boolean;
+  planId?: string;
 }
 
 export const LearnersTableContent = memo(function LearnersTableContent({
@@ -30,6 +31,7 @@ export const LearnersTableContent = memo(function LearnersTableContent({
   visibleRows,
   isLearnersInFlight,
   isLearnersError,
+  planId,
 }: LearnersTableContentProps) {
   const t = useTranslations("qaSamplePlan.learnersTable");
   const filterState = useAppSelector(selectFilterState);
@@ -84,6 +86,8 @@ export const LearnersTableContent = memo(function LearnersTableContent({
                     learnerIndex={index}
                     isExpanded={isExpanded}
                     onToggleExpansion={() => onToggleRowExpansion(index)}
+                    planId={planId}
+                    filterApplied={filterApplied}
                   />
                 </Fragment>
               );

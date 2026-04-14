@@ -1640,7 +1640,11 @@
         "viewDocumentsEvidence": "عرض المستندات / الأدلة",
         "viewPortfolio": "عرض المحفظة",
         "unableOpenDocumentsLearnerIdMissing": "تعذر فتح المستندات. لم يتم العثور على معرّف المتعلم.",
-        "unableOpenPortfolioLearnerIdMissing": "تعذر فتح المحفظة. لم يتم العثور على معرّف المتعلم."
+        "unableOpenPortfolioLearnerIdMissing": "تعذر فتح المحفظة. لم يتم العثور على معرّف المتعلم.",
+        "qaApprovedUpdateFailed": "تعذر تحديث حقل QA المعتمد. يرجى المحاولة مرة أخرى.",
+        "qaApprovedNoSamples": "لا يمكن تعيين QA المعتمد إلا للمتعلمين الذين لديهم عيّنة واحدة على الأقل في هذه الخطة.",
+        "qaApprovedSelectPlanAndFilter": "اختر مساقًا وخطة، ثم طبّق المرشحات قبل تغيير QA المعتمد.",
+        "qaApprovedMissingLearnerId": "معرّف المتعلم مفقود لهذا الصف."
       }
     },
     "editSampleModal": {

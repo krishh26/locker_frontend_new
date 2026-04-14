@@ -1477,7 +1477,11 @@
         "viewDocumentsEvidence": "Ver documentos / evidencias",
         "viewPortfolio": "Ver portafolio",
         "unableOpenDocumentsLearnerIdMissing": "No se pueden abrir los documentos. No se encontró el ID del alumno.",
-        "unableOpenPortfolioLearnerIdMissing": "No se puede abrir el portafolio. No se encontró el ID del alumno."
+        "unableOpenPortfolioLearnerIdMissing": "No se puede abrir el portafolio. No se encontró el ID del alumno.",
+        "qaApprovedUpdateFailed": "No se pudo actualizar QA aprobado. Inténtelo de nuevo.",
+        "qaApprovedNoSamples": "QA aprobado solo se puede establecer para alumnos con al menos una muestra en este plan.",
+        "qaApprovedSelectPlanAndFilter": "Seleccione un curso y un plan, luego aplique los filtros antes de cambiar QA aprobado.",
+        "qaApprovedMissingLearnerId": "Falta el ID del alumno para esta fila."
       }
     },
     "editSampleModal": {

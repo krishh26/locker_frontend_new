@@ -1311,7 +1311,11 @@
         "viewDocumentsEvidence": "Visualizza documenti / prove",
         "viewPortfolio": "Visualizza portfolio",
         "unableOpenDocumentsLearnerIdMissing": "Impossibile aprire i documenti. ID discente non trovato.",
-        "unableOpenPortfolioLearnerIdMissing": "Impossibile aprire il portfolio. ID discente non trovato."
+        "unableOpenPortfolioLearnerIdMissing": "Impossibile aprire il portfolio. ID discente non trovato.",
+        "qaApprovedUpdateFailed": "Impossibile aggiornare QA approvato. Riprovare.",
+        "qaApprovedNoSamples": "QA approvato può essere impostato solo per discenti con almeno un campione in questo piano.",
+        "qaApprovedSelectPlanAndFilter": "Selezionare un corso e un piano, quindi applicare i filtri prima di modificare QA approvato.",
+        "qaApprovedMissingLearnerId": "ID discente mancante per questa riga."
       }
     },
     "editSampleModal": {

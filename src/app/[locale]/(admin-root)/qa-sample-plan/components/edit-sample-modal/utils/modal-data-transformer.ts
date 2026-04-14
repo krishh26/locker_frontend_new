@@ -92,10 +92,8 @@ export function extractPlannedDates(
     .map((learner) => learner.planned_date || learner.plannedDate)
     .filter((date): date is string => Boolean(date && date.trim()));
 
-  // Remove duplicates and sort
-  return Array.from(new Set(dates)).sort((a, b) => {
-    return new Date(a).getTime() - new Date(b).getTime();
-  });
+  // Remove duplicates
+  return Array.from(new Set(dates));
 }
 
 /**

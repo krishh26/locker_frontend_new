@@ -255,10 +255,6 @@ export function AllocateSurveyDialog({
       if (onAllocate) {
         await onAllocate(allocations)
       } else {
-        console.log("Allocating survey:", {
-          survey_id: survey?.id,
-          allocations,
-        })
         toast.success(t("allocate.toastSuccess", { count: totalSelected }))
         handleClose()
       }

@@ -1663,7 +1663,11 @@
         "viewDocumentsEvidence": "View Documents / Evidence",
         "viewPortfolio": "View Portfolio",
         "unableOpenDocumentsLearnerIdMissing": "Unable to open documents. Learner ID not found.",
-        "unableOpenPortfolioLearnerIdMissing": "Unable to open portfolio. Learner ID not found."
+        "unableOpenPortfolioLearnerIdMissing": "Unable to open portfolio. Learner ID not found.",
+        "qaApprovedUpdateFailed": "Could not update QA approved. Please try again.",
+        "qaApprovedNoSamples": "QA approved can only be set for learners with at least one sample on this plan.",
+        "qaApprovedSelectPlanAndFilter": "Select a course and plan, then apply filters before changing QA approved.",
+        "qaApprovedMissingLearnerId": "Learner ID is missing for this row."
       }
     },
     "editSampleModal": {

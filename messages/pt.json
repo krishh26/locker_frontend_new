@@ -1647,7 +1647,11 @@
         "viewDocumentsEvidence": "Ver documentos / evidências",
         "viewPortfolio": "Ver portefólio",
         "unableOpenDocumentsLearnerIdMissing": "Não foi possível abrir os documentos. ID do formando não encontrado.",
-        "unableOpenPortfolioLearnerIdMissing": "Não foi possível abrir o portefólio. ID do formando não encontrado."
+        "unableOpenPortfolioLearnerIdMissing": "Não foi possível abrir o portefólio. ID do formando não encontrado.",
+        "qaApprovedUpdateFailed": "Não foi possível atualizar QA aprovado. Tente novamente.",
+        "qaApprovedNoSamples": "QA aprovado só pode ser definido para formandos com pelo menos uma amostra neste plano.",
+        "qaApprovedSelectPlanAndFilter": "Selecione um curso e um plano e aplique os filtros antes de alterar QA aprovado.",
+        "qaApprovedMissingLearnerId": "Falta o ID do formando para esta linha."
       }
     },
     "editSampleModal": {

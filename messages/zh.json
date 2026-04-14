@@ -1605,7 +1605,11 @@
         "viewDocumentsEvidence": "查看文档 / 证据",
         "viewPortfolio": "查看作品集",
         "unableOpenDocumentsLearnerIdMissing": "无法打开文档。未找到学员 ID。",
-        "unableOpenPortfolioLearnerIdMissing": "无法打开作品集。未找到学员 ID。"
+        "unableOpenPortfolioLearnerIdMissing": "无法打开作品集。未找到学员 ID。",
+        "qaApprovedUpdateFailed": "无法更新“QA 已批准”。请重试。",
+        "qaApprovedNoSamples": "仅当学员在本计划中至少有一条抽样记录时，才能设置“QA 已批准”。",
+        "qaApprovedSelectPlanAndFilter": "请先选择课程与计划并应用筛选，再更改“QA 已批准”。",
+        "qaApprovedMissingLearnerId": "此行缺少学员 ID。"
       }
     },
     "editSampleModal": {

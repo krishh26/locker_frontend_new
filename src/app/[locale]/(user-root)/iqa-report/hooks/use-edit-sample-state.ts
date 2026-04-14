@@ -76,7 +76,7 @@ export function useEditSampleState(
 
     const fetchQuestions = async () => {
       try {
-        const response = await triggerGetQuestions(Number(planId)).unwrap();
+        const response = await triggerGetQuestions(Number(currentDetailId)).unwrap();
         const questions = ((response as { data?: unknown })?.data || []) as SampleQuestion[];
         setSampleQuestions(questions);
       } catch {

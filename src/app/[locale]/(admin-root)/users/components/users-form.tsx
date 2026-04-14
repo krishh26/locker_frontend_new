@@ -500,7 +500,6 @@ export function UsersForm({ user }: UsersFormProps) {
           learner_ids: [learnerId],
           action: "unassign" as const,
         };
-        console.log("Unassign API Payload:", payload);
         await assignEqaToCourse(payload).unwrap();
     }
     try {

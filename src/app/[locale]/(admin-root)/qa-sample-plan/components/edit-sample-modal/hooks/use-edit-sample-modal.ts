@@ -49,6 +49,10 @@ export function useEditSampleModal(
   const [updateSampleQuestion] = useUpdateSampleQuestionMutation();
   const [applySamplePlanLearners] = useApplySamplePlanLearnersMutation();
 
+  const user = useAppSelector((state) => state.auth.user);
+  const iqaId = user?.user_id;
+  const modalState = useAppSelector(selectEditSampleModal);
+
   // Fetch plan details when modal opens with a plan_id
   useEffect(() => {
     if (!isOpen || !planId) return;
@@ -62,16 +66,59 @@ export function useEditSampleModal(
           // If the response has sampled_learners array, find the one matching detail_id
           const sampledLearnersArray = data.sampled_learners;
           if (Array.isArray(sampledLearnersArray)) {
-            // Store sampled learners in state for tab navigation
-            setSampledLearners(sampledLearnersArray as Record<string, unknown>[]);
-            const sampledLearners = sampledLearnersArray;
-            const matchingDetail = sampledLearners.find(
+            const allSampledLearners = sampledLearnersArray as Record<string, unknown>[];
+            const matchingDetail = allSampledLearners.find(
               (detail: Record<string, unknown>) =>
                 String(detail.detail_id) === String(planDetailId) ||
                 String(detail.id) === String(planDetailId)
             ) as Record<string, unknown> | undefined;
 
             if (matchingDetail) {
+              const selectedLearnerId =
+                (matchingDetail.learner_id as string | number | undefined) ??
+                (matchingDetail.learnerId as string | number | undefined);
+              const selectedUnitCode = String(modalState?.currentUnitCode ?? "").trim();
+              const selectedUnitName = String(modalState?.currentUnitName ?? "").trim();
+
+              // Tabs should only show history for the clicked learner + unit.
+              const filteredLearners = allSampledLearners.filter((entry) => {
+                const entryLearnerId =
+                  (entry.learner_id as string | number | undefined) ??
+                  (entry.learnerId as string | number | undefined);
+                const sameLearner =
+                  selectedLearnerId == null
+                    ? true
+                    : String(entryLearnerId ?? "") === String(selectedLearnerId);
+
+                if (!sameLearner) return false;
+                if (!selectedUnitCode && !selectedUnitName) return true;
+
+                const sampledUnits = Array.isArray(entry.sampledUnits)
+                  ? (entry.sampledUnits as Array<Record<string, unknown>>)
+                  : [];
+                const hasMatchingSampledUnit = sampledUnits.some((unit) => {
+                  const entryUnitCode = String(unit.unit_code ?? unit.unitCode ?? "").trim();
+                  const entryUnitName = String(unit.unit_name ?? unit.unitName ?? "").trim();
+                  return (
+                    (selectedUnitCode !== "" && entryUnitCode === selectedUnitCode) ||
+                    (selectedUnitName !== "" && entryUnitName === selectedUnitName)
+                  );
+                });
+
+                if (hasMatchingSampledUnit) return true;
+
+                // Fallback for payloads where unit values are exposed at entry root.
+                const entryUnitCode = String(entry.unit_code ?? entry.unitCode ?? "").trim();
+                const entryUnitName = String(entry.unit_name ?? entry.unitName ?? "").trim();
+                return (
+                  (selectedUnitCode !== "" && entryUnitCode === selectedUnitCode) ||
+                  (selectedUnitName !== "" && entryUnitName === selectedUnitName)
+                );
+              });
+
+              const learnersForTabs = filteredLearners.length > 0 ? filteredLearners : [matchingDetail];
+              setSampledLearners(learnersForTabs);
+
               // Transform the matching detail to modal data
               const detailData: Record<string, unknown> = {
                 ...data,
@@ -94,8 +141,8 @@ export function useEditSampleModal(
               const transformedData = transformPlanDetailsToModalData(detailData as Parameters<typeof transformPlanDetailsToModalData>[0]);
               setModalFormData(transformedData);
 
-              // Extract planned dates from all sampled learners for tabs
-              const dates = extractPlannedDates(sampledLearners as Array<{ planned_date?: string; plannedDate?: string }>);
+              // Extract planned dates only for the selected learner + unit.
+              const dates = extractPlannedDates(learnersForTabs as Array<{ planned_date?: string; plannedDate?: string }>);
               setPlannedDates(dates);
 
               // Set active tab to the one matching the current planned date
@@ -109,10 +156,10 @@ export function useEditSampleModal(
               }
             } else {
               // If no matching detail found, use the main data
+              setSampledLearners([]);
               const transformedData = transformPlanDetailsToModalData(data as Parameters<typeof transformPlanDetailsToModalData>[0]);
               setModalFormData(transformedData);
-              const dates = extractPlannedDates(sampledLearners as Array<{ planned_date?: string; plannedDate?: string }>);
-              setPlannedDates(dates);
+              setPlannedDates([]);
             }
           } else {
             // If no sampled_learners array, use the main data
@@ -131,15 +178,15 @@ export function useEditSampleModal(
     };
 
     fetchPlanDetails();
-  }, [isOpen, planId, planDetailId, triggerGetPlanDetails]);
+  }, [isOpen, planId, planDetailId, triggerGetPlanDetails, modalState?.currentUnitCode, modalState?.currentUnitName, t]);
 
-  // Fetch sample questions when modal opens
+  // Fetch sample questions when modal opens (API: /sample-question/list/:plan_detail_id)
   useEffect(() => {
-    if (!isOpen || !planId || !planDetailId) return;
+    if (!isOpen || !planDetailId) return;
 
     const fetchQuestions = async () => {
       try {
-        const response = await triggerGetQuestions(Number(planId)).unwrap();
+        const response = await triggerGetQuestions(Number(planDetailId)).unwrap();
         const questions = ((response as { data?: unknown })?.data || []) as SampleQuestion[];
         setSampleQuestions(questions);
       } catch {
@@ -149,7 +196,7 @@ export function useEditSampleModal(
     };
 
     fetchQuestions();
-  }, [isOpen, planId, planDetailId, triggerGetQuestions]);
+  }, [isOpen, planDetailId, triggerGetQuestions]);
 
   // Form data handlers
   const handleFormDataChange = useCallback((field: string, value: unknown) => {
@@ -208,10 +255,6 @@ export function useEditSampleModal(
   const handleDeleteQuestion = useCallback((id: string) => {
     setSampleQuestions((prev) => prev.filter((q) => String(q.id) !== id));
   }, []);
-
-  const user = useAppSelector((state) => state.auth.user);
-  const iqaId = user?.user_id;
-  const modalState = useAppSelector(selectEditSampleModal);
 
   const handleSaveQuestions = useCallback(async () => {
     if (!planDetailId || !iqaId) {
@@ -314,7 +357,7 @@ export function useEditSampleModal(
     setActiveTab(newTabIndex);
 
     // If we have sampled learners and the tab index is valid, populate form data and load questions
-    if (sampledLearners.length > 0 && plannedDates[newTabIndex] && planId) {
+    if (sampledLearners.length > 0 && plannedDates[newTabIndex]) {
       // Find the sampled learner entry that matches the planned date at this tab index
       const targetPlannedDate = plannedDates[newTabIndex];
       const selectedEntry = sampledLearners.find((entry: Record<string, unknown>) => {
@@ -346,9 +389,13 @@ export function useEditSampleModal(
       const transformedData = transformPlanDetailsToModalData(detailData as Parameters<typeof transformPlanDetailsToModalData>[0]);
       setModalFormData(transformedData);
 
-      // Load questions - always use planId for API call (matching old implementation)
+      const detailIdForQuestions =
+        (selectedEntry.detail_id as string | number | undefined) ??
+        (selectedEntry.id as string | number | undefined);
+      if (detailIdForQuestions == null || detailIdForQuestions === "") return;
+
       try {
-        const response = await triggerGetQuestions(Number(planId)).unwrap();
+        const response = await triggerGetQuestions(Number(detailIdForQuestions)).unwrap();
         const list = Array.isArray((response as { data?: unknown })?.data) 
           ? ((response as { data?: unknown }).data as Array<Record<string, unknown>>)
           : [];
@@ -363,7 +410,7 @@ export function useEditSampleModal(
         setSampleQuestions([]);
       }
     }
-  }, [sampledLearners, plannedDates, planId, triggerGetQuestions]);
+  }, [sampledLearners, plannedDates, triggerGetQuestions]);
 
   // Create new handler
   const handleCreateNew = useCallback(async () => {

@@ -12,6 +12,7 @@ import { LearnersTableContent } from "./components/learners-table-content";
 import {
   selectQASamplePlanState,
   selectFilterState,
+  selectSelectedPlan,
 } from "@/store/slices/qaSamplePlanSlice";
 import type { UseLearnersDataReturn } from "../qa-sample-plan-page-content/hooks/use-learners-data";
 
@@ -27,6 +28,7 @@ export function LearnersTable({ learnersData, disableCourseSelector = false }: L
   // Redux state
   const qaState = useAppSelector(selectQASamplePlanState);
   const filterState = useAppSelector(selectFilterState);
+  const selectedPlan = useAppSelector(selectSelectedPlan);
 
   // Use visibleRows directly from the hook (already filtered)
   const visibleRows = learnersData.visibleRows;
@@ -97,6 +99,7 @@ export function LearnersTable({ learnersData, disableCourseSelector = false }: L
           visibleRows={visibleRows}
           isLearnersInFlight={learnersData.isLearnersInFlight}
           isLearnersError={learnersData.isLearnersError}
+          planId={selectedPlan?.trim() ? selectedPlan : undefined}
         />
       </CardContent>
     </Card>

@@ -198,51 +198,51 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/gap-analysis(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/learning-plan(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/course-resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/learners-documents-to-sign(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/supplementary-training(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/time-log(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/choose-units(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/course-details(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/chat(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","IQA","EQA"),
   },
   {
     pattern: /^\/mail(?:\/|$)/,

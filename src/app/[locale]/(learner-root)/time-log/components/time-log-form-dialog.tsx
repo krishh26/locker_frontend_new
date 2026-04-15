@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +38,7 @@ import {
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
 import type { TimeLogEntry, TimeLogCreateRequest } from "@/store/api/time-log/types";
-import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
+import { selectCourses } from "@/store/slices/authSlice";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
 import { useTranslations } from "next-intl";
 
@@ -108,14 +108,34 @@ export function TimeLogFormDialog({
   const [createTimeLog, { isLoading: isCreating }] = useCreateTimeLogMutation();
   const [updateTimeLog, { isLoading: isUpdating }] = useUpdateTimeLogMutation();
 
-  // Fetch courses and trainers
-  const { data: coursesData, isLoading: isLoadingCourses } = useCachedCoursesList({ skip: !open });
+  // Reuse learner courses from auth state (avoid extra cached course hook call)
+  const learnerCourses = useAppSelector(selectCourses);
   const { data: usersData, isLoading: isLoadingUsers } = useGetUsersQuery(
     { page: 1, page_size: 1000, role: "Trainer" },
     { skip: !open }
   );
 
-  const courses = coursesData?.data || [];
+  const courses = useMemo(
+    () =>
+      (learnerCourses || [])
+        .map((courseItem) => {
+          const course = (courseItem as { course?: unknown; units?: unknown }).course || courseItem;
+          const courseData = course as {
+            course_id?: string | number;
+            course_name?: string;
+            units?: { id: string; title: string }[];
+          };
+          if (!courseData?.course_id) return null;
+          return {
+            course_id: String(courseData.course_id),
+            course_name: courseData.course_name || "",
+            units: Array.isArray(courseData.units) ? courseData.units : [],
+          };
+        })
+        .filter((course): course is { course_id: string; course_name: string; units: { id: string; title: string }[] } => Boolean(course)),
+    [learnerCourses]
+  );
+  const isLoadingCourses = false;
   const trainers = usersData?.data || [];
 
   const isLoading = isCreating || isUpdating;
@@ -306,7 +326,7 @@ export function TimeLogFormDialog({
                       {t("dialog.form.fields.activityType.label")}
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger className="cursor-pointer">
                           <SelectValue
                             placeholder={t(
@@ -343,7 +363,7 @@ export function TimeLogFormDialog({
                       }}
                       value={field.value || "none"}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger className="cursor-pointer">
                           <SelectValue
                             placeholder={t("dialog.form.fields.course.label")}
@@ -391,7 +411,7 @@ export function TimeLogFormDialog({
                       }}
                       value=""
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger className="cursor-pointer">
                           <SelectValue
                             placeholder={
@@ -456,7 +476,7 @@ export function TimeLogFormDialog({
                       }}
                       value={field.value || "none"}
                     >
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger className="cursor-pointer">
                           <SelectValue
                             placeholder={t(
@@ -496,7 +516,7 @@ export function TimeLogFormDialog({
                       {t("dialog.form.fields.type.label")}
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
+                      <FormControl className="w-full">
                         <SelectTrigger className="cursor-pointer">
                           <SelectValue
                             placeholder={t(
@@ -530,7 +550,7 @@ export function TimeLogFormDialog({
                     <FormLabel>
                       {t("dialog.form.fields.spendTime.label")}
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="w-full">
                       <Input
                         type="time"
                         {...field}
@@ -553,7 +573,7 @@ export function TimeLogFormDialog({
                     <FormLabel>
                       {t("dialog.form.fields.startTime.label")}
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="w-full">
                       <Input
                         type="time"
                         {...field}
@@ -576,7 +596,7 @@ export function TimeLogFormDialog({
                     <FormLabel>
                       {t("dialog.form.fields.endTime.label")}
                     </FormLabel>
-                    <FormControl>
+                    <FormControl className="w-full">
                       <Input type="time" {...field} disabled />
                     </FormControl>
                     <FormMessage />
@@ -593,7 +613,7 @@ export function TimeLogFormDialog({
                   <FormLabel>
                     {t("dialog.form.fields.impact.label")}
                   </FormLabel>
-                  <FormControl>
+                  <FormControl className="w-full">
                     <Textarea
                       placeholder={t(
                         "dialog.form.fields.impact.placeholder"

@@ -59,7 +59,7 @@ export function ExamineEvidencePageContent({
   // API mutations
   const [addAssignmentReview, { isLoading: isSubmittingReview }] =
     useAddAssignmentReviewMutation();
-  const [updateMappedSubUnitSignOff, { isLoading: isUpdatingSubUnit }] =
+  const [updateMappedSubUnitSignOff] =
     useUpdateMappedSubUnitSignOffMutation();
   const [deleteAssignmentReviewFile, { isLoading: isDeletingFile }] =
     useDeleteAssignmentReviewFileMutation();
@@ -150,7 +150,6 @@ export function ExamineEvidencePageContent({
     [t]
   );
   const [confirmationRows, setConfirmationRows] = useState<ConfirmationRow[]>(defaultConfirmationRows);
-  const [unitLocked, setUnitLocked] = useState(false);
 
   // Comment modal state
   const [commentModalOpen, setCommentModalOpen] = useState(false);
@@ -175,45 +174,6 @@ export function ExamineEvidencePageContent({
     },
     []
   );
-
-  // Get all unique mappedSubUnits from all evidence items (not just expanded)
-  const allMappedSubUnits = useMemo(() => {
-    const allSubUnits: Array<{
-      id: number | string;
-      subTitle: string;
-      learnerMapped?: boolean;
-      trainerMapped?: boolean;
-      review?: {
-        signed_off: boolean;
-        signed_at?: string;
-        signed_by?: {
-          user_id: number;
-          name: string;
-        };
-      } | null;
-    }> = [];
-    const seenIds = new Set<string | number>();
-
-    evidenceList.forEach((evidence) => {
-      if (evidence.mappedSubUnits) {
-        evidence.mappedSubUnits.forEach((subUnit) => {
-          const subUnitId = String(subUnit.id);
-          if (!seenIds.has(subUnitId)) {
-            seenIds.add(subUnitId);
-            allSubUnits.push({
-              id: subUnit.id,
-              subTitle: subUnit.subTitle || "",
-              learnerMapped: subUnit.learnerMapped || false,
-              trainerMapped: subUnit.trainerMapped || false,
-              review: subUnit.review || null,
-            });
-          }
-        });
-      }
-    });
-
-    return allSubUnits;
-  }, [evidenceList]);
 
   // Generate all units to display based on unitMappingResponse
   // If type is "code" or "qualification", use subUnits, otherwise use parent unit
@@ -426,7 +386,7 @@ export function ExamineEvidencePageContent({
 
   // Handlers
   const handleToggleAllRows = useCallback(() => {
-    setExpandedRows((prev) => {
+    setExpandedRows(() => {
       const next: Record<string, boolean> = {};
       evidenceList.forEach((evidence) => {
         const refNo = String(evidence.assignment_id);
@@ -523,9 +483,15 @@ export function ExamineEvidencePageContent({
           return;
         }
 
+        if (!evidence.mapping_id) {
+          toast.error(t("toast.evidenceNotFound"));
+          return;
+        }
+        const mappingId = evidence.mapping_id;
+
         const updatePromises = subUnitsToSignOff.map((subUnit) =>
           updateMappedSubUnitSignOff({
-            assignment_id: evidence.assignment_id,
+            mapping_id: mappingId,
             unit_code: unitCode,
             pc_id: subUnit.id,
             signed_off: true,
@@ -538,7 +504,7 @@ export function ExamineEvidencePageContent({
 
         // Refetch evidence to get updated data
         fetchEvidence();
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Revert state changes on error
         setCriteriaSignOff((prev) => ({
           ...prev,
@@ -563,7 +529,11 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || t("toast.signOffUnitsFailed");
+          error && typeof error === "object" && "data" in error
+            ? ((error as { data?: { message?: string } }).data?.message ||
+              (error as { error?: string }).error ||
+              t("toast.signOffUnitsFailed"))
+            : t("toast.signOffUnitsFailed");
         toast.error(message);
       }
     },
@@ -575,6 +545,7 @@ export function ExamineEvidencePageContent({
       createStateKey,
       updateMappedSubUnitSignOff,
       fetchEvidence,
+      t,
     ]
   );
 
@@ -661,8 +632,13 @@ export function ExamineEvidencePageContent({
         }
 
         // Call API to update mappedSubUnit sign-off
+        if (!targetEvidence.mapping_id) {
+          toast.error(t("toast.evidenceNotFoundCannotUpdateSignOff"));
+          return;
+        }
+
         await updateMappedSubUnitSignOff({
-          assignment_id: targetEvidence.assignment_id,
+          mapping_id: targetEvidence.mapping_id,
           unit_code: unitCode,
           pc_id: subUnitId,
           signed_off: newSignedOffState,
@@ -672,7 +648,7 @@ export function ExamineEvidencePageContent({
 
         // Refetch evidence list to get updated data
         fetchEvidence();
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Revert state changes on error
         setMappedSubUnitsChecked((prev) => ({
           ...prev,
@@ -690,7 +666,11 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || t("toast.signOffStatusUpdateFailed");
+          error && typeof error === "object" && "data" in error
+            ? ((error as { data?: { message?: string } }).data?.message ||
+              (error as { error?: string }).error ||
+              t("toast.signOffStatusUpdateFailed"))
+            : t("toast.signOffStatusUpdateFailed");
         toast.error(message);
       }
     },
@@ -703,6 +683,7 @@ export function ExamineEvidencePageContent({
       createStateKey,
       updateMappedSubUnitSignOff,
       fetchEvidence,
+      t,
     ]
   );
 
@@ -726,13 +707,19 @@ export function ExamineEvidencePageContent({
         return;
       }
 
+      if (!selectedEvidence.mapping_id) {
+        toast.error(t("toast.evidenceNotFound"));
+        return;
+      }
+
       try {
         await addAssignmentReview({
-          assignment_id: selectedEvidence.assignment_id,
+          mapping_id: selectedEvidence.mapping_id,
           sampling_plan_detail_id: Number(planDetailId),
           role: currentUserRole,
           comment: commentText.trim(),
           unit_code: unitCode,
+          signed_off: false,
         }).unwrap();
 
         toast.success(t("toast.commentAddedSuccess"));
@@ -743,13 +730,17 @@ export function ExamineEvidencePageContent({
 
         // Refetch evidence list to get updated data
         fetchEvidence();
-      } catch (error: any) {
+      } catch (error: unknown) {
         const message =
-          error?.data?.message || error?.error || t("toast.addCommentFailed");
+          error && typeof error === "object" && "data" in error
+            ? ((error as { data?: { message?: string } }).data?.message ||
+              (error as { error?: string }).error ||
+              t("toast.addCommentFailed"))
+            : t("toast.addCommentFailed");
         toast.error(message);
       }
     },
-    [selectedEvidence, planDetailId, unitCode, currentUserRole, addAssignmentReview, fetchEvidence]
+    [selectedEvidence, planDetailId, unitCode, currentUserRole, addAssignmentReview, fetchEvidence, t]
   );
 
   const handleConfirmationToggle = useCallback(
@@ -792,21 +783,35 @@ export function ExamineEvidencePageContent({
         const role = confirmationRow.role;
         const comment = confirmationRow.comments || "";
 
+        if (!firstEvidence.mapping_id) {
+          toast.error(t("toast.noEvidenceCannotUpdateStatus"));
+          // Revert the optimistic update
+          setConfirmationRows((prev) => {
+            const updated = [...prev];
+            updated[index] = {
+              ...updated[index],
+              completed: !newCompletedState,
+            };
+            return updated;
+          });
+          return;
+        }
+
         // Call API to update assignment review with completed status
         await addAssignmentReview({
-          assignment_id: firstEvidence.assignment_id,
+          mapping_id: firstEvidence.mapping_id,
           sampling_plan_detail_id: Number(planDetailId),
           role: role,
           comment: comment,
           unit_code: unitCode,
-          completed: newCompletedState,
+          signed_off: newCompletedState,
         }).unwrap();
 
         toast.success(t("toast.statusUpdatedSuccess"));
 
         // Refetch evidence list to get updated data
         fetchEvidence();
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Revert the optimistic update on error
         setConfirmationRows((prev) => {
           const updated = [...prev];
@@ -818,11 +823,15 @@ export function ExamineEvidencePageContent({
         });
 
         const message =
-          error?.data?.message || error?.error || t("toast.updateStatusFailed");
+          error && typeof error === "object" && "data" in error
+            ? ((error as { data?: { message?: string } }).data?.message ||
+              (error as { error?: string }).error ||
+              t("toast.updateStatusFailed"))
+            : t("toast.updateStatusFailed");
         toast.error(message);
       }
     },
-    [confirmationRows, planDetailId, unitCode, evidenceList, addAssignmentReview, fetchEvidence]
+    [confirmationRows, planDetailId, unitCode, evidenceList, addAssignmentReview, fetchEvidence, t]
   );
 
   const handleAddComment = useCallback((index: number) => {
@@ -870,9 +879,13 @@ export function ExamineEvidencePageContent({
       setDeleteFileDialogOpen(false);
       setFileToDeleteIndex(null);
       fetchEvidence();
-    } catch (error: any) {
+    } catch (error: unknown) {
       const message =
-        error?.data?.message || error?.error || t("toast.deleteFileFailed");
+        error && typeof error === "object" && "data" in error
+          ? ((error as { data?: { message?: string } }).data?.message ||
+            (error as { error?: string }).error ||
+            t("toast.deleteFileFailed"))
+          : t("toast.deleteFileFailed");
       toast.error(message);
     }
   }, [
@@ -880,6 +893,7 @@ export function ExamineEvidencePageContent({
     confirmationRows,
     deleteAssignmentReviewFile,
     fetchEvidence,
+    t,
   ]);
 
   const handleDeleteFileCancel = useCallback(() => {
@@ -905,14 +919,19 @@ export function ExamineEvidencePageContent({
 
         const confirmationRow = confirmationRows[selectedIndex];
         const role = confirmationRow?.role || currentUserRole;
+        if (!firstEvidence.mapping_id) {
+          toast.error(t("toast.noEvidenceCannotAddComment"));
+          return;
+        }
 
         // Call API to add assignment review
         await addAssignmentReview({
-          assignment_id: firstEvidence.assignment_id,
+          mapping_id: firstEvidence.mapping_id,
           sampling_plan_detail_id: Number(planDetailId),
           role: role,
           comment: comment.trim(),
           unit_code: unitCode,
+          signed_off: Boolean(confirmationRow?.completed),
         }).unwrap();
 
         // Update local state
@@ -930,9 +949,13 @@ export function ExamineEvidencePageContent({
 
         // Refetch evidence list to get updated data
         fetchEvidence();
-      } catch (error: any) {
+      } catch (error: unknown) {
         const message =
-          error?.data?.message || error?.error || t("toast.addCommentFailed");
+          error && typeof error === "object" && "data" in error
+            ? ((error as { data?: { message?: string } }).data?.message ||
+              (error as { error?: string }).error ||
+              t("toast.addCommentFailed"))
+            : t("toast.addCommentFailed");
         toast.error(message);
       }
     },
@@ -945,6 +968,7 @@ export function ExamineEvidencePageContent({
       currentUserRole,
       addAssignmentReview,
       fetchEvidence,
+      t,
     ]
   );
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -63,6 +63,7 @@ export function SignatureModal({
   onSave,
 }: SignatureModalProps) {
   const t = useTranslations("learnerDocumentsToSign");
+  const locale = useLocale();
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role || "";
   const [signatures, setSignatures] = useState<DocumentSignatures>(
@@ -177,15 +178,28 @@ export function SignatureModal({
     }
   };
 
+  const formatSignatureDate = (dateString?: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+    return new Intl.DateTimeFormat(locale, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(date);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="w-[calc(100%-1rem)] max-w-3xl! p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>{t("modal.title")}</DialogTitle>
         </DialogHeader>
 
         {document && (
-          <div className="space-y-4 py-4">
+          <div className="space-y-4 py-2 overflow-x-auto">
             <div>
               <p className="font-semibold">
                 {t("modal.documentLabel")} {document.documentName}
@@ -195,11 +209,11 @@ export function SignatureModal({
               </p>
             </div>
 
-            <div className="rounded-md border">
-              <Table>
+            <div className="rounded-md border overflow-hidden w-full">
+              <Table className="">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("modal.tableHeaders.signedInAgreement")}</TableHead>
+                    <TableHead className="w-[180px]">{t("modal.tableHeaders.signedInAgreement")}</TableHead>
                     <TableHead>{t("modal.tableHeaders.name")}</TableHead>
                     <TableHead>{t("modal.tableHeaders.signed")}</TableHead>
                     <TableHead>{t("modal.tableHeaders.date")}</TableHead>
@@ -220,7 +234,9 @@ export function SignatureModal({
                         <TableCell className="font-medium">
                           {getRoleLabel(role.key, role.label)}
                         </TableCell>
-                        <TableCell>{signature?.name || ""}</TableCell>
+                        <TableCell className="max-w-[170px] truncate">
+                          {signature?.name || ""}
+                        </TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">
                             <Checkbox
@@ -238,8 +254,8 @@ export function SignatureModal({
                             />
                           </div>
                         </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {signature?.date || ""}
+                        <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
+                          {formatSignatureDate(signature?.date)}
                         </TableCell>
                       </TableRow>
                     );
@@ -250,7 +266,7 @@ export function SignatureModal({
           </div>
         )}
 
-        <DialogFooter>
+        <DialogFooter className="gap-2">
           <Button variant="outline" onClick={onClose}>
             {t("modal.buttons.cancel")}
           </Button>

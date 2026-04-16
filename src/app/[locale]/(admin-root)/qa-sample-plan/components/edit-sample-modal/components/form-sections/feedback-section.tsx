@@ -42,10 +42,10 @@ export function FeedbackSection({
         />
       </div>
 
-      {/* <div className='col-span-12 mt-4'>
+      <div className='col-span-12 mt-2 flex justify-end'>
         <Button
+          type='button'
           onClick={() => {
-            // Navigate to examine evidence page with searchParams
             if (planDetailId) {
               const params = new URLSearchParams()
               if (unitCode) params.set('unit_code', String(unitCode))
@@ -59,7 +59,7 @@ export function FeedbackSection({
         >
           Examine Evidence
         </Button>
-      </div> */}
+      </div>
     </>
   )
 }

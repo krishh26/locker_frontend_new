@@ -81,7 +81,7 @@ export function IQAQuestionFormDialog({
     setErrorMessage("");
 
     if (!questionType || questionType === "All") {
-      const msg = t("form.selectValidType");
+      const msg = t("toast.selectTypeFirst");
       setErrorMessage(msg);
       return;
     }
@@ -181,12 +181,12 @@ export function IQAQuestionFormDialog({
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isEditMode ? t("form.updating") : t("form.adding")}
+                  {isEditMode ? t("formDialog.updating") : t("formDialog.adding")}
                 </>
               ) : isEditMode ? (
-                t("form.updateQuestion")
+                t("formDialog.updateQuestion")
               ) : (
-                t("form.addQuestion")
+                t("formDialog.addQuestion")
               )}
             </Button>
           </DialogFooter>

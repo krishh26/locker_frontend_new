@@ -368,12 +368,12 @@ export interface EvidenceListResponse {
 }
 
 export interface AddAssignmentReviewRequest {
-  assignment_id: number;
+  mapping_id: number;
   sampling_plan_detail_id: number;
   role: string;
-  comment: string;
+  comment?: string;
   unit_code: string;
-  completed?: boolean;
+  signed_off: boolean;
   file?: File;
 }
 
@@ -382,7 +382,7 @@ export interface DeleteAssignmentReviewFileRequest {
 }
 
 export interface UpdateMappedSubUnitSignOffRequest {
-  assignment_id: number;
+  mapping_id: number;
   unit_code: string | number;
   pc_id: string | number;
   signed_off: boolean;

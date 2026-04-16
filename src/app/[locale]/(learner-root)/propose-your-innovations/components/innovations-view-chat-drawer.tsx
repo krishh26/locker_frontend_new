@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { X } from "lucide-react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   useGetInnovationCommentsQuery,
   useCreateInnovationCommentMutation,
@@ -77,7 +76,9 @@ export function InnovationsViewChatDrawer({
   onSuccess,
 }: InnovationsViewChatDrawerProps) {
   const user = useAppSelector((state) => state.auth.user)
-  const isAdmin = Array.isArray(user?.roles) ? user.roles.includes("Admin") : user?.role === "Admin"
+  const isMasterAdminUser =
+    user?.role === "MasterAdmin" ||
+    (Array.isArray(user?.roles) && user.roles.includes("MasterAdmin"))
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   const [newMessage, setNewMessage] = useState("")
@@ -119,7 +120,7 @@ export function InnovationsViewChatDrawer({
   const handleSendMessage = async () => {
     if (!newMessage.trim() || !innovation) return
 
-    const messageType = isAdmin ? "Response" : "Reply"
+    const messageType = isMasterAdminUser ? "Response" : "Reply"
 
 
     try {
@@ -154,9 +155,6 @@ export function InnovationsViewChatDrawer({
 
   if (!innovation) return null
 
-  const isInnovationOwner =
-    innovation.innovation_propose_by_id?.user_id === user?.user_id
-
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-[50%] overflow-y-auto">
@@ -169,7 +167,7 @@ export function InnovationsViewChatDrawer({
 
         <div className="flex flex-col h-[calc(100vh-120px)] mt-4">
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+          <div className="flex-1 overflow-y-auto space-y-4 px-2">
             {isLoadingComments ? (
               <div className="text-center text-muted-foreground py-8">
                 Loading messages...
@@ -179,29 +177,32 @@ export function InnovationsViewChatDrawer({
                 No messages yet. Start the conversation!
               </div>
             ) : (
-              comments.map((message: InnovationComment , index: number) => {
-                const isOwnerMessage =
-                  isInnovationOwner && message.type === "Response"
-                const isUserMessage =
-                  !isInnovationOwner && message.type === "Reply"
+              comments.map((message: InnovationComment, index: number) => {
+                const isResponse = (message.type || "").toLowerCase() === "response"
+                const isOwnMessage = isMasterAdminUser ? isResponse : !isResponse
 
-                // Admin response to owner
-                if (isOwnerMessage) {
+                if (!isOwnMessage) {
+                  const senderLabel = isResponse
+                    ? "Master Admin"
+                    : innovation.innovation_propose_by_id?.user_name || "Learner"
+                  const avatarSeed = isResponse ? "master-admin" : senderLabel
+                  const avatarInitial = senderLabel.charAt(0).toUpperCase() || "U"
+
                   return (
                     <div key={index} className="flex justify-start">
                       <div className="flex items-start gap-3 bg-muted rounded-lg p-4 max-w-[80%]">
                         <Avatar className="h-8 w-8">
                           <AvatarFallback
                             style={{
-                              backgroundColor: getRandomColor("admin"),
+                              backgroundColor: getRandomColor(avatarSeed),
                             }}
                           >
-                            A
+                            {avatarInitial}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 space-y-1">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="font-semibold text-sm">Admin</span>
+                            <span className="font-semibold text-sm">{senderLabel}</span>
                             <span className="text-xs text-muted-foreground">
                               {timeAgo(message.date || message.created_at || "")}
                             </span>
@@ -215,72 +216,22 @@ export function InnovationsViewChatDrawer({
                   )
                 }
 
-                // User reply
-                if (isUserMessage) {
-                  return (
-                    <div key={message.id} className="flex justify-end">
-                      <div className="bg-primary text-primary-foreground rounded-lg p-4 max-w-[80%]">
-                        <p className="text-sm wrap-break-word">
-                          {message.description}
-                        </p>
-                        <div className="flex justify-end mt-1">
-                          <span className="text-xs opacity-80">
-                            {timeAgo(message.date || message.created_at || "")}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
-
-                // Other cases (non-owner reply or admin response to non-owner)
-                const isResponse = message.type === "Response"
+                // Current user's messages are always shown on the right.
                 return (
                   <div
                     key={message.id}
-                    className={`flex ${isResponse ? "justify-start" : "justify-end"}`}
+                    className="flex justify-end"
                   >
-                    {isResponse ? (
-                      <div className="flex items-start gap-3 bg-muted rounded-lg p-4 max-w-[80%]">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage
-                            src={
-                              innovation.innovation_propose_by_id?.avatar?.url
-                            }
-                          />
-                          <AvatarFallback>
-                            {innovation.innovation_propose_by_id?.user_name
-                              ?.charAt(0)
-                              .toUpperCase() || "U"}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 space-y-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="font-semibold text-sm">
-                              {innovation.innovation_propose_by_id?.user_name ||
-                                "User"}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {timeAgo(message.date || message.created_at || "")}
-                            </span>
-                          </div>
-                          <p className="text-sm wrap-break-word">
-                            {message.description}
-                          </p>
-                        </div>
+                    <div className="bg-primary text-primary-foreground rounded-lg p-4 max-w-[80%]">
+                      <p className="text-sm wrap-break-word">
+                        {message.description}
+                      </p>
+                      <div className="flex justify-end mt-1">
+                        <span className="text-xs opacity-80">
+                          {timeAgo(message.date || message.created_at || "")}
+                        </span>
                       </div>
-                    ) : (
-                      <div className="bg-primary text-primary-foreground rounded-lg p-4 max-w-[80%]">
-                        <p className="text-sm wrap-break-word">
-                          {message.description}
-                        </p>
-                        <div className="flex justify-end mt-1">
-                          <span className="text-xs opacity-80">
-                            {timeAgo(message.date || message.created_at || "")}
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )
               })

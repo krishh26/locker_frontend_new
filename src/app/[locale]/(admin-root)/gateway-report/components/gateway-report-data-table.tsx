@@ -262,8 +262,16 @@ export function GatewayReportDataTable() {
     }
 
     try {
-      const csvContent = await exportGatewayReportToCSV(filteredData);
-      const filename = await generateGatewayReportFilename();
+      const csvContent = exportGatewayReportToCSV(filteredData, {
+        learnerFirstName: t("csv.headers.learnerFirstName"),
+        learnerLastName: t("csv.headers.learnerLastName"),
+        learnerUln: t("csv.headers.learnerUln"),
+        courseName: t("csv.headers.courseName"),
+        trainerName: t("csv.headers.trainerName"),
+        sessionBookDate: t("csv.headers.sessionBookDate"),
+        gatewayProgress: t("csv.headers.gatewayProgress"),
+      });
+      const filename = generateGatewayReportFilename(t("csv.filenamePrefix"));
       downloadCSV(csvContent, filename);
       toast.success(t("toast.exportSuccess"));
     } catch (error) {

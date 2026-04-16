@@ -1286,7 +1286,7 @@
   },
   "iqaQuestions": {
     "pageTitle": "IQA Maintain Questions",
-    "pageSubtitle": "Manage and organize IQA assessment questions by type",
+    "pageSubtitle": "Manage and organise IQA assessment questions by type",
     "questionTypes": {
       "all": "All",
       "observeAssessor": "Observe Assessor",
@@ -2035,6 +2035,18 @@
       "templateDialogTitle": "Create from featured templates",
       "templateDialogDescription": "Choose a template to quickly get started with pre-filled questions.",
       "templateQuestionsCount": "{count} questions",
+      "backgroundTitle": "Background image",
+      "backgroundDescription": "Paste an online image URL to apply a custom survey background.",
+      "backgroundUrlPlaceholder": "https://example.com/background.jpg",
+      "backgroundApply": "Apply",
+      "backgroundApplying": "Applying...",
+      "backgroundRemove": "Remove",
+      "backgroundUrlRequired": "Please enter an image URL.",
+      "backgroundUrlInvalid": "Please enter a valid URL.",
+      "backgroundApplySuccess": "Background image updated successfully.",
+      "backgroundApplyFailed": "Failed to update background image.",
+      "backgroundRemoveSuccess": "Background image removed successfully.",
+      "backgroundRemoveFailed": "Failed to remove background image.",
       "previewShortTextPlaceholder": "Short text answer",
       "previewLongTextPlaceholder": "Long text answer",
       "previewLikertStatementsHeader": "Statements",
@@ -4481,11 +4493,16 @@
     "filters": {
       "searchPlaceholder": "Search by keyword...",
       "courseTypePlaceholder": "Course type",
+      "scopePlaceholder": "Scope",
       "courseTypes": {
         "all": "All types",
         "Qualification": "Qualification",
         "Standard": "Standard",
         "Gateway": "Gateway"
+      },
+      "scopeTypes": {
+        "organisation": "Organisation",
+        "global": "Global"
       }
     },
     "table": {

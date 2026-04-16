@@ -48,6 +48,7 @@ export function CourseAutocomplete({
   const { data: coursesData, isLoading } = useGetCoursesQuery({
     page: 1,
     page_size: 1000,
+    scope: "organisation",
   })
 
   // Get all courses from response

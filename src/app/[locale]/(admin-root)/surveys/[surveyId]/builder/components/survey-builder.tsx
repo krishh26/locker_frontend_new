@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
   DndContext,
@@ -16,14 +16,16 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
-import { Plus, Eye, FileText } from "lucide-react"
+import { Plus, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { PageHeader } from "@/components/dashboard/page-header"
 import {
   useGetSurveyByIdQuery,
   useGetQuestionsQuery,
   useReorderQuestionsMutation,
   useApplyTemplateMutation,
+  useUpdateSurveyMutation,
 } from "@/store/api/survey/surveyApi"
 import { type CreateQuestionRequest } from "@/store/api/survey/types"
 import { toast } from "sonner"
@@ -51,14 +53,44 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
   
   const [reorderQuestions] = useReorderQuestionsMutation()
   const [applyTemplate, { isLoading: isApplyingTemplate }] = useApplyTemplateMutation()
+  const [updateSurvey, { isLoading: isUpdatingBackground }] = useUpdateSurveyMutation()
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [templateSelectorOpen, setTemplateSelectorOpen] = useState(false)
+  const [backgroundUrlInput, setBackgroundUrlInput] = useState("")
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
+
+  const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
+
+  // Handle both nested structure (background.type/value) and flat structure (backgroundType/backgroundValue)
+  const surveyRecord = survey as Record<string, unknown> | undefined
+  const legacyBackgroundType = surveyRecord?.backgroundType
+  const legacyBackgroundValue = surveyRecord?.backgroundValue
+  const backgroundType =
+    (legacyBackgroundType === "gradient" || legacyBackgroundType === "image"
+      ? legacyBackgroundType
+      : undefined) || survey?.background?.type
+  const backgroundValue =
+    (typeof legacyBackgroundValue === "string" ? legacyBackgroundValue : undefined) ||
+    survey?.background?.value
+  
+  const backgroundStyle = backgroundType && backgroundValue
+    ? backgroundType === "gradient"
+      ? { background: backgroundValue }
+      : { backgroundImage: `url(${backgroundValue})`, backgroundSize: "cover", backgroundPosition: "center" }
+    : {}
+
+  useEffect(() => {
+    if (backgroundType === "image" && backgroundValue) {
+      setBackgroundUrlInput(backgroundValue)
+      return
+    }
+    setBackgroundUrlInput("")
+  }, [backgroundType, backgroundValue])
 
   // Loading state
   if (isLoadingSurvey || isLoadingQuestions) {
@@ -92,17 +124,65 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
     )
   }
 
-  const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
+  const handleApplyBackgroundImage = async () => {
+    const trimmedUrl = backgroundUrlInput.trim()
 
-  // Handle both nested structure (background.type/value) and flat structure (backgroundType/backgroundValue)
-  const backgroundType = (survey as any).backgroundType || survey.background?.type
-  const backgroundValue = (survey as any).backgroundValue || survey.background?.value
-  
-  const backgroundStyle = backgroundType && backgroundValue
-    ? backgroundType === "gradient"
-      ? { background: backgroundValue }
-      : { backgroundImage: `url(${backgroundValue})`, backgroundSize: "cover", backgroundPosition: "center" }
-    : {}
+    if (!trimmedUrl) {
+      toast.error(t("builder.backgroundUrlRequired"))
+      return
+    }
+
+    try {
+      new URL(trimmedUrl)
+    } catch {
+      toast.error(t("builder.backgroundUrlInvalid"))
+      return
+    }
+
+    try {
+      await updateSurvey({
+        surveyId,
+        updates: {
+          background: {
+            type: "image",
+            value: trimmedUrl,
+          },
+        },
+      }).unwrap()
+      toast.success(t("builder.backgroundApplySuccess"))
+    } catch (error: unknown) {
+      let errorMessage = t("builder.backgroundApplyFailed")
+      if (error && typeof error === "object" && "data" in error) {
+        const errorData = error.data
+        if (errorData && typeof errorData === "object" && "message" in errorData) {
+          errorMessage = String(errorData.message)
+        }
+      }
+      toast.error(errorMessage)
+    }
+  }
+
+  const handleRemoveBackgroundImage = async () => {
+    try {
+      await updateSurvey({
+        surveyId,
+        updates: {
+          background: null as never,
+        },
+      }).unwrap()
+      setBackgroundUrlInput("")
+      toast.success(t("builder.backgroundRemoveSuccess"))
+    } catch (error: unknown) {
+      let errorMessage = t("builder.backgroundRemoveFailed")
+      if (error && typeof error === "object" && "data" in error) {
+        const errorData = error.data
+        if (errorData && typeof errorData === "object" && "message" in errorData) {
+          errorMessage = String(errorData.message)
+        }
+      }
+      toast.error(errorMessage)
+    }
+  }
 
 
   const handleDragEnd = async (event: DragEndEvent) => {
@@ -224,6 +304,43 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
           </div>
         </div>
 
+        <div className="rounded-lg border p-4 space-y-3">
+          <div>
+            <h3 className="text-sm font-medium">{t("builder.backgroundTitle")}</h3>
+            <p className="text-xs text-muted-foreground">
+              {t("builder.backgroundDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 md:flex-row">
+            <Input
+              type="url"
+              value={backgroundUrlInput}
+              onChange={(event) => setBackgroundUrlInput(event.target.value)}
+              placeholder={t("builder.backgroundUrlPlaceholder")}
+              disabled={isUpdatingBackground}
+            />
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                onClick={handleApplyBackgroundImage}
+                disabled={isUpdatingBackground}
+              >
+                {isUpdatingBackground
+                  ? t("builder.backgroundApplying")
+                  : t("builder.backgroundApply")}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleRemoveBackgroundImage}
+                disabled={isUpdatingBackground || !backgroundValue}
+              >
+                {t("builder.backgroundRemove")}
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {sortedQuestions.length === 0 ? (
           <div className="rounded-xl border border-dashed border-primary p-12 text-center space-y-4">
             <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 border-primary/20 flex items-center justify-center mb-4">
@@ -254,7 +371,7 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
             style={backgroundStyle}
           >
             <div className="mx-auto max-w-2xl">
-              <div className="bg-background/95 backdrop-blur-sm rounded-lg p-6 space-y-6">
+              <div className="bg-background/95 backdrop-blur-sm rounded-lg p-6 space-y-6 border border-primary/20">
                 {/* Survey Header */}
                 <div className="space-y-2 pb-4 border-b border-primary/20">
                   <h2 className="text-2xl font-bold bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">{survey.name}</h2>

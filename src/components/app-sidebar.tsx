@@ -164,12 +164,12 @@ const data: {
         //   icon: HelpCircle,
         //   isFree: true, // Basic support is free
         // },
-        {
-          title: 'Tickets',
-          url: '/tickets',
-          icon: Ticket,
-          isFree: true,
-        },
+        // {
+        //   title: 'Tickets',
+        //   url: '/tickets',
+        //   icon: Ticket,
+        //   isFree: true,
+        // },
         // {
         //   title: "Evidence Library",
         //   url: "/dashboard/evidence-library",
@@ -441,6 +441,11 @@ const data: {
           url: '/users',
           icon: Users,
         },
+        {
+          title: 'Propose Your Innovations',
+          url: '/propose-your-innovations',
+          icon: Lightbulb,
+        }
       ],
     },
     {

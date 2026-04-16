@@ -778,9 +778,15 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     }
   }
 
-  const canEditLearnerFields = userRole === 'Learner'
+  const canEditLearnerFields =
+    userRole === 'Learner' || (!isEditMode && userRole === 'Trainer')
   const canEditTrainerFields = ['Trainer', 'Admin', 'IQA'].includes(userRole)
-  const isReadOnly = !canEditLearnerFields && !canEditTrainerFields
+  const isLearnerEditMode = isEditMode && userRole === 'Learner'
+  const canEditAdditionalInformation =
+    canEditLearnerFields || userRole === 'Trainer'
+  const canEditPrimarySections = canEditLearnerFields && !isLearnerEditMode
+  const isReadOnly =
+    (!canEditLearnerFields && !canEditTrainerFields) || isLearnerEditMode
 
   const unitsWatchRaw = form.watch('units')
   const unitsWatch = useMemo(() => unitsWatchRaw || [], [unitsWatchRaw])
@@ -981,7 +987,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         {isEditMode || hasFile ? (
           <CreateDocumentCard
             onDocumentCreated={handleDocumentCreated}
-            disabled={!canEditLearnerFields}
+            disabled={!canEditPrimarySections}
             isEditMode={isEditMode || hasFile}
             fileUrl={currentFileUrl}
             fileName={currentFileName}
@@ -998,11 +1004,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 className='w-full'
               >
                 <TabsList className='grid w-full grid-cols-2'>
-                  <TabsTrigger value='upload' disabled={!canEditLearnerFields}>
+                  <TabsTrigger value='upload' disabled={!canEditPrimarySections}>
                     <Upload className='h-4 w-4 mr-2' />
                     {t('form.fields.uploadFile')}
                   </TabsTrigger>
-                  <TabsTrigger value='create' disabled={!canEditLearnerFields}>
+                  <TabsTrigger value='create' disabled={!canEditPrimarySections}>
                     <FileText className='h-4 w-4 mr-2' />
                     {t('createDocument.createDocument')}
                   </TabsTrigger>
@@ -1017,7 +1023,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     <FileUpload
                       control={form.control as any}
                       name='file'
-                      disabled={!canEditLearnerFields}
+                      disabled={!canEditPrimarySections}
                       error={form.formState.errors.file}
                     />
                   </div>
@@ -1027,7 +1033,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   <div className='space-y-4'>
                     <CreateDocumentCard
                       onDocumentCreated={handleDocumentCreated}
-                      disabled={!canEditLearnerFields}
+                      disabled={!canEditPrimarySections}
                       isEditMode={false}
                     />
                     {form.formState.errors.file && (
@@ -1060,7 +1066,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     id='title'
                     {...form.register('title')}
                     placeholder={t('form.placeholders.title')}
-                    disabled={!canEditLearnerFields}
+                    disabled={!canEditPrimarySections}
                     className={
                       form.formState.errors.title ? 'border-destructive' : ''
                     }
@@ -1081,7 +1087,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     {...form.register('description')}
                     placeholder={t('form.placeholders.description')}
                     rows={4}
-                    disabled={!canEditLearnerFields}
+                    disabled={!canEditPrimarySections}
                   />
                 </div>
 
@@ -1148,7 +1154,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     {...form.register('learner_comments')}
                     placeholder={t('form.placeholders.learnerComments')}
                     rows={4}
-                    disabled={!canEditLearnerFields}
+                    disabled={!canEditPrimarySections}
                   />
                 </div>
               </CardContent>
@@ -1163,7 +1169,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 <CourseSelection
                   control={form.control as any}
                   courses={courses}
-                  disabled={!canEditLearnerFields}
+                  disabled={!canEditPrimarySections}
                   error={form.formState.errors.selectedCourses as any}
                   courseSelectedTypesError={
                     form.formState.errors.courseSelectedTypes as any
@@ -1241,7 +1247,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                                     unitsWatch={unitsWatch || []}
                                     courseId={course.course_id}
                                     disabled={isReadOnly}
-                                    canEditLearnerFields={canEditLearnerFields}
+                                    canEditLearnerFields={canEditPrimarySections}
                                     canEditTrainerFields={canEditTrainerFields}
                                     learnerMapHandler={
                                       qualificationLearnerMapHandler
@@ -1267,7 +1273,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                           control={form.control as any}
                           courses={standardCourses}
                           disabled={isReadOnly}
-                          canEditLearnerFields={canEditLearnerFields}
+                          canEditLearnerFields={canEditPrimarySections}
                           canEditTrainerFields={canEditTrainerFields}
                           error={form.formState.errors.units as any}
                         />
@@ -1350,7 +1356,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             </Button>
                           </div>
                         </div>
-                        {canEditLearnerFields && (
+                        {canEditAdditionalInformation && (
                           <p className='text-xs text-muted-foreground'>
                             {t('form.status.replaceAdditionalEvidenceHint')}
                           </p>
@@ -1360,7 +1366,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   <FileUpload
                     control={form.control as any}
                     name='audio'
-                    disabled={!canEditLearnerFields}
+                    disabled={!canEditAdditionalInformation}
                     error={form.formState.errors.audio}
                   />
                   <p className='text-xs text-muted-foreground'>
@@ -1384,7 +1390,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             key={`session-select-${sessionValue}-${sessionSelectOptions.map((o) => o.id).join(',')}`}
                             value={sessionValue}
                             onValueChange={field.onChange}
-                            disabled={isEditMode || !canEditLearnerFields}
+                            disabled={isEditMode || !canEditAdditionalInformation}
                           >
                             <SelectTrigger id='session' className='w-full'>
                               <SelectValue
@@ -1443,7 +1449,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       id='grade'
                       {...form.register('grade')}
                       placeholder={t('form.placeholders.grade')}
-                      disabled={!canEditLearnerFields}
+                      disabled={!canEditAdditionalInformation}
                     />
                   </div>
                 </div>
@@ -1459,7 +1465,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                         onValueChange={(value) =>
                           field.onChange(value === 'yes')
                         }
-                        disabled={!canEditLearnerFields}
+                        disabled={!canEditAdditionalInformation}
                       >
                         <div className='flex items-center space-x-2'>
                           <RadioGroupItem value='yes' id='yes' />
@@ -1472,7 +1478,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       </RadioGroup>
                     )}
                   />
-                  {evidenceTimeLogField && canEditLearnerFields && (
+                  {evidenceTimeLogField && canEditAdditionalInformation && (
                     <Button
                       type='button'
                       variant='outline'
@@ -1516,7 +1522,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                                     )
                                   }
                                 }}
-                                disabled={!canEditLearnerFields}
+                                disabled={!canEditAdditionalInformation}
                               />
                             )}
                           />
@@ -1550,7 +1556,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             id='declaration-checkbox'
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            disabled={!canEditLearnerFields}
+                            disabled={!canEditAdditionalInformation}
                           />
                         )}
                       />
@@ -1582,7 +1588,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   control={form.control as any}
                   errors={form.formState.errors as any}
                   watch={form.watch}
-                  disabled={!canEditLearnerFields}
+                  disabled={!canEditPrimarySections}
                   requestedRoles={requestedRoles}
                 />
               </CardContent>

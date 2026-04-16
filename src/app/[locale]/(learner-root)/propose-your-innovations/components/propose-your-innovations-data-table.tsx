@@ -17,7 +17,6 @@ import {
   Eye,
   Pencil,
   Trash2,
-  Download,
   MoreHorizontal,
   Plus,
 } from "lucide-react"
@@ -51,10 +50,11 @@ import { InnovationsDeleteDialog } from "./innovations-delete-dialog"
 import { InnovationsAddEditDialog } from "./innovations-add-edit-dialog"
 import { InnovationsViewChatDrawer } from "./innovations-view-chat-drawer"
 import { useTranslations } from "next-intl"
+import { isMasterAdmin } from "@/utils/permissions"
 
 export function ProposeYourInnovationsDataTable() {
   const user = useAppSelector((state) => state.auth.user)
-  const isAdmin = user?.role === "Admin"
+  const canManageInnovations = isMasterAdmin(user)
   const isEmployer = user?.role === "Employer"
 
   const [page, setPage] = useState(1)
@@ -71,7 +71,7 @@ export function ProposeYourInnovationsDataTable() {
   const t = useTranslations("proposeInnovations")
 
   // For non-admin users, filter by their user_id
-  const userId: number | undefined = !isAdmin && user?.user_id
+  const userId: number | undefined = !canManageInnovations && user?.user_id
     ? (typeof user.user_id === 'number' ? user.user_id : parseInt(String(user.user_id)))
     : undefined
 
@@ -157,7 +157,7 @@ export function ProposeYourInnovationsDataTable() {
           </div>
         ),
       },
-      ...(isAdmin
+      ...(canManageInnovations
         ? [
             {
               accessorKey: "email",
@@ -216,7 +216,7 @@ export function ProposeYourInnovationsDataTable() {
               {!isEmployer && (
                 <DropdownMenuItem
                   onClick={() => handleEdit(row.original)}
-                  disabled={!isAdmin && row.original.status === "Closed"}
+                  disabled={!canManageInnovations && row.original.status === "Closed"}
                 >
                   <Pencil className="mr-2 h-4 w-4" />
                   {t("actions.edit")}
@@ -236,7 +236,7 @@ export function ProposeYourInnovationsDataTable() {
         ),
       },
     ],
-    [isAdmin, isEmployer, handleView, handleEdit, handleDeleteClick]
+    [t, canManageInnovations, isEmployer, handleView, handleEdit, handleDeleteClick]
   )
 
   const table = useReactTable({
@@ -260,66 +260,11 @@ export function ProposeYourInnovationsDataTable() {
     pageCount: innovationsData?.meta_data?.pages || 0,
   })
 
-  const handleExportCSV = () => {
-    const data = innovationsData?.data || []
-    const headers = isAdmin
-      ? [
-          t("csv.headers.topic"),
-          t("csv.headers.description"),
-          t("csv.headers.email"),
-          t("csv.headers.userName"),
-          t("csv.headers.date"),
-          t("csv.headers.status"),
-        ]
-      : [
-          t("csv.headers.topic"),
-          t("csv.headers.description"),
-          t("csv.headers.date"),
-          t("csv.headers.status"),
-        ]
-    const rows = data.map((innovation) =>
-      isAdmin
-        ? [
-            innovation.topic,
-            innovation.description || "",
-            innovation.innovation_propose_by_id?.email || "",
-            innovation.innovation_propose_by_id?.user_name || "",
-            formatDate(innovation.created_at),
-            innovation.status,
-          ]
-        : [
-            innovation.topic,
-            innovation.description || "",
-            formatDate(innovation.created_at),
-            innovation.status,
-          ]
-    )
-
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
-    ].join("\n")
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
-    const link = document.createElement("a")
-    const url = URL.createObjectURL(blob)
-    link.setAttribute("href", url)
-    link.setAttribute(
-      "download",
-      `${t("csv.filenamePrefix")}-${format(new Date(), "yyyy-MM-dd")}.csv`
-    )
-    link.style.visibility = "hidden"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    toast.success(t("toast.csvSuccess"))
-  }
-
   return (
     <div className="space-y-4">
       {/* Add Button and Export */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
-        {!isAdmin && (
+        {!canManageInnovations && (
           <Button onClick={handleAddClick} className="gap-2">
             <Plus className="h-4 w-4" />
             {t("actions.submitIdea")}

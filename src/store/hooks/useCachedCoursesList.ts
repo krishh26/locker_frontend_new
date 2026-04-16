@@ -14,6 +14,7 @@ export const useCachedCoursesList = (options?: { skip?: boolean }) => {
   const filters: CourseFilters = {
     page: 1,
     page_size: 1000,
+    scope: "organisation",
   }
   
   const {

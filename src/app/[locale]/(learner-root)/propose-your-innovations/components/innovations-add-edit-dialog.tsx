@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -31,6 +31,7 @@ import { toast } from "sonner"
 import { useAppSelector } from "@/store/hooks"
 import type { Innovation } from "@/store/api/innovations/types"
 import { Controller } from "react-hook-form"
+import { isMasterAdmin } from "@/utils/permissions"
 
 const innovationSchema = z.object({
   topic: z.string().min(1, "Topic is required"),
@@ -56,7 +57,7 @@ export function InnovationsAddEditDialog({
   onSuccess,
 }: InnovationsAddEditDialogProps) {
   const user = useAppSelector((state) => state.auth.user)
-  const isAdmin = user?.role === "Admin"
+  const canManageInnovations = isMasterAdmin(user)
 
   const [createInnovation, { isLoading: isCreating }] = useCreateInnovationMutation()
   const [updateInnovation, { isLoading: isUpdating }] = useUpdateInnovationMutation()
@@ -113,7 +114,7 @@ export function InnovationsAddEditDialog({
           id: innovation.id,
           topic: data.topic,
           description: data.description,
-          status: isAdmin ? data.status : undefined,
+          status: canManageInnovations ? data.status : undefined,
         }).unwrap()
         toast.success("Innovation updated successfully!")
       }
@@ -152,7 +153,7 @@ export function InnovationsAddEditDialog({
               id="topic"
               placeholder="Add your topic"
               {...register("topic")}
-              disabled={isAdmin && mode === "edit"}
+              disabled={canManageInnovations && mode === "edit"}
             />
             {errors.topic && (
               <p className="text-sm text-destructive">{errors.topic.message}</p>
@@ -166,7 +167,7 @@ export function InnovationsAddEditDialog({
               placeholder="Add your description"
               rows={6}
               {...register("description")}
-              disabled={isAdmin && mode === "edit"}
+              disabled={canManageInnovations && mode === "edit"}
             />
             {errors.description && (
               <p className="text-sm text-destructive">
@@ -175,7 +176,7 @@ export function InnovationsAddEditDialog({
             )}
           </div>
 
-          {isAdmin && mode === "edit" && (
+          {canManageInnovations && mode === "edit" && (
             <div className="space-y-2">
               <Label htmlFor="status">Select Status</Label>
               <Controller

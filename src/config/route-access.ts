@@ -174,7 +174,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/propose-your-innovations(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA"),
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA" , "MasterAdmin"),
   },
   {
     pattern: /^\/learner-forms(?:\/|$)/,
@@ -186,7 +186,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/tickets(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA", "MasterAdmin", "PhoenixTeam"),
+    roles: R.adminWith("Trainer", "IQA", "Employer", "EQA", "MasterAdmin", "PhoenixTeam"),
   },
   {
     pattern: /^\/surveys(?:\/|$)/,

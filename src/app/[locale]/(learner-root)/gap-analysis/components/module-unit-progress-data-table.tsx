@@ -152,6 +152,7 @@ export function ModuleUnitProgressDataTable() {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
+  console.log("🚀 ~ ModuleUnitProgressDataTable ~ selectedCourse:", selectedCourse?.units)
   const isQualificationCourse = selectedCourse?.course_core_type === "Qualification";
   
   // Update selected unit when course changes (for non-Standard courses)

@@ -69,6 +69,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useTranslations } from "next-intl";
+import { isMasterAdmin } from "@/utils/permissions";
 
 const courseTypes = ["all", "Qualification", "Standard", "Gateway"] as const;
 
@@ -80,6 +81,7 @@ export function CourseBuilderDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
+  const showScopeFilter = !isMasterAdmin(user);
   const t = useTranslations("courseBuilder");
   const tCommon = useTranslations("common");
   const tAdmin = useTranslations("adminCommon");
@@ -89,16 +91,20 @@ export function CourseBuilderDataTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
   const [courseTypeFilter, setCourseTypeFilter] = useState<string>("all");
+  const [scopeFilter, setScopeFilter] = useState<CourseFilters["scope"]>("organisation");
   const [filters, setFilters] = useState<CourseFilters>({
     page: 1,
     page_size: 10,
+    scope: "organisation",
   });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [createCourseMenuOpen, setCreateCourseMenuOpen] = useState(false);
 
-  const { data, isLoading } = useGetCoursesQuery(filters);
+  const { data, isLoading } = useGetCoursesQuery(filters, {
+    refetchOnMountOrArgChange: true,
+  });
   const [deleteCourse,] = useDeleteCourseMutation();
 
   const handleSearch = useCallback(() => {
@@ -107,8 +113,9 @@ export function CourseBuilderDataTable() {
       page: 1,
       keyword: globalFilter || undefined,
       core_type: courseTypeFilter && courseTypeFilter !== "all" ? courseTypeFilter : undefined,
+      scope: showScopeFilter ? scopeFilter : prev.scope,
     }));
-  }, [globalFilter, courseTypeFilter]);
+  }, [globalFilter, courseTypeFilter, scopeFilter, showScopeFilter]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -124,6 +131,7 @@ export function CourseBuilderDataTable() {
       page: 1,
       keyword: undefined,
       core_type: undefined,
+      scope: "organisation",
     }));
   };
 
@@ -133,6 +141,17 @@ export function CourseBuilderDataTable() {
       ...prev,
       page: 1,
       core_type: value && value !== "all" ? value : undefined,
+    }));
+  };
+
+  const handleScopeChange = (value: string) => {
+    const nextScope: CourseFilters["scope"] =
+      value === "global" ? "global" : "organisation";
+    setScopeFilter(nextScope);
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      scope: nextScope,
     }));
   };
 
@@ -321,7 +340,7 @@ export function CourseBuilderDataTable() {
         },
       },
     ],
-    [handleEdit, handleView, isEmployer, t, tAdmin]
+    [handleEdit, handleView, isEmployer, t, tCommon, tAdmin]
   );
 
   const table = useReactTable({
@@ -386,7 +405,24 @@ export function CourseBuilderDataTable() {
               ))}
             </SelectContent>
           </Select>
-          {(globalFilter || (courseTypeFilter && courseTypeFilter !== "all")) && (
+          {showScopeFilter && (
+            <Select value={scopeFilter} onValueChange={handleScopeChange}>
+              <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectValue placeholder={t("filters.scopePlaceholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="organisation">
+                  {t("filters.scopeTypes.organisation")}
+                </SelectItem>
+                <SelectItem value="global">
+                  {t("filters.scopeTypes.global")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+          {(globalFilter ||
+            (courseTypeFilter && courseTypeFilter !== "all") ||
+            (showScopeFilter && scopeFilter !== "organisation")) && (
             <Button
               variant="ghost"
               size="sm"

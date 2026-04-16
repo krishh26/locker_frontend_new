@@ -1,5 +1,14 @@
 import type { GatewayData } from "../components/gateway-report-data-table";
-import { getTranslations } from "next-intl/server";
+
+interface GatewayCsvHeaderTranslations {
+  learnerFirstName: string;
+  learnerLastName: string;
+  learnerUln: string;
+  courseName: string;
+  trainerName: string;
+  sessionBookDate: string;
+  gatewayProgress: string;
+}
 
 /**
  * Formats date for Excel CSV export
@@ -30,22 +39,23 @@ function escapeCSVField(value: string | undefined): string {
 /**
  * Convert gateway report data to CSV format
  */
-export async function exportGatewayReportToCSV(data: GatewayData[]): Promise<string> {
+export function exportGatewayReportToCSV(
+  data: GatewayData[],
+  headersMap: GatewayCsvHeaderTranslations
+): string {
   if (!data || data.length === 0) {
     return "";
   }
 
-  const t = await getTranslations("gatewayReport.csv.headers");
-
   // Define CSV headers
   const headers = [
-    t("learnerFirstName"),
-    t("learnerLastName"),
-    t("learnerUln"),
-    t("courseName"),
-    t("trainerName"),
-    t("sessionBookDate"),
-    t("gatewayProgress"),
+    headersMap.learnerFirstName,
+    headersMap.learnerLastName,
+    headersMap.learnerUln,
+    headersMap.courseName,
+    headersMap.trainerName,
+    headersMap.sessionBookDate,
+    headersMap.gatewayProgress,
   ];
 
   // Convert data to CSV rows
@@ -85,10 +95,8 @@ export function downloadCSV(csvContent: string, filename: string): void {
 /**
  * Generate filename with timestamp
  */
-export async function generateGatewayReportFilename(): Promise<string> {
-  const t = await getTranslations("gatewayReport.csv");
+export function generateGatewayReportFilename(prefix: string): string {
   const timestamp = new Date().toISOString().split("T")[0];
-  const prefix = t("filenamePrefix");
   return `${prefix}-${timestamp}.csv`;
 }
 

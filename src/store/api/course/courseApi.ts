@@ -18,8 +18,14 @@ export const courseApi = createApi({
   endpoints: (builder) => ({
     getCourses: builder.query<CourseListResponse, CourseFilters>({
       query: (filters = {}) => {
-        const { page = 1, page_size = 10, keyword = "", core_type = "" } = filters;
-        let url = `/course/list?page=${page}&limit=${page_size}&meta=true`;
+        const {
+          page = 1,
+          page_size = 10,
+          keyword = "",
+          core_type = "",
+          scope = "organisation",
+        } = filters;
+        let url = `/course/list?page=${page}&limit=${page_size}&meta=true&scope=${encodeURIComponent(scope)}`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -118,7 +124,7 @@ export const courseApi = createApi({
       },
     }),
     getGatewayCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Gateway`,
+      query: () => `/course/list?limit=100&core_type=Gateway&scope=organisation`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
@@ -128,7 +134,7 @@ export const courseApi = createApi({
       },
     }),
     getStandardCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Standard`,
+      query: () => `/course/list?limit=100&core_type=Standard&scope=organisation`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
+import { useAppSelector } from "@/store/hooks";
 import type { EvidenceFormValues } from "./evidence-form-types";
 
 interface SignatureTableProps {
@@ -32,6 +33,12 @@ const signatureRoles = [
   { role: "IQA", label: "IQA" },
 ];
 
+const normalizeRole = (role?: string) => {
+  const key = (role || "").toLowerCase();
+  if (key === "liqa") return "iqa";
+  return key;
+};
+
 export function SignatureTable({
   control,
   errors,
@@ -40,7 +47,18 @@ export function SignatureTable({
   requestedRoles = [],
 }: SignatureTableProps) {
   const t = useTranslations("evidenceLibrary");
+  const userRole = useAppSelector((state) => state.auth.user?.role);
   const requestedSet = useMemo(() => new Set(requestedRoles), [requestedRoles]);
+  const currentUserRole = normalizeRole(userRole);
+
+  const visibleSignatureRoles = useMemo(
+    () =>
+      signatureRoles
+        .map((item, index) => ({ ...item, index }))
+        .filter((item) => normalizeRole(item.role) !== currentUserRole),
+    [currentUserRole]
+  );
+
   return (
     <div className="space-y-4">
       <div className="rounded-md border">
@@ -56,8 +74,8 @@ export function SignatureTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {signatureRoles.map((item, index) => {
-              const isSigned = watch(`signatures.${index}.signed`);
+            {visibleSignatureRoles.map((item) => {
+              const isSigned = watch(`signatures.${item.index}.signed`);
               const isRequested = requestedSet.has(item.role);
               return (
                 <TableRow key={item.role}>
@@ -66,7 +84,7 @@ export function SignatureTable({
                   </TableCell>
                   <TableCell>
                     <Controller
-                      name={`signatures.${index}.name`}
+                      name={`signatures.${item.index}.name`}
                       control={control}
                       render={({ field }) => (
                         <Input
@@ -80,7 +98,7 @@ export function SignatureTable({
                   </TableCell>
                   <TableCell>
                     <Controller
-                      name={`signatures.${index}.signed`}
+                      name={`signatures.${item.index}.signed`}
                       control={control}
                       render={({ field }) => (
                         <Checkbox
@@ -94,7 +112,7 @@ export function SignatureTable({
                   </TableCell>
                   <TableCell>
                     <Controller
-                      name={`signatures.${index}.es`}
+                      name={`signatures.${item.index}.es`}
                       control={control}
                       render={({ field }) => (
                         <Input
@@ -108,7 +126,7 @@ export function SignatureTable({
                   </TableCell>
                   <TableCell>
                     <Controller
-                      name={`signatures.${index}.date`}
+                      name={`signatures.${item.index}.date`}
                       control={control}
                       render={({ field }) => (
                         <Input
@@ -122,7 +140,7 @@ export function SignatureTable({
                   </TableCell>
                   <TableCell>
                     <Controller
-                      name={`signatures.${index}.signature_required`}
+                      name={`signatures.${item.index}.signature_required`}
                       control={control}
                       render={({ field }) => (
                         <Checkbox

@@ -32,6 +32,7 @@ export interface CourseFilters {
   page_size?: number;
   keyword?: string;
   core_type?: string;
+  scope?: "organisation" | "global";
 }
 
 export interface CourseListResponse {

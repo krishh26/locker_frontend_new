@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from "react";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useLazyGetSamplePlanLearnersQuery } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { setPlanSummary, setFilterError } from "@/store/slices/qaSamplePlanSlice";
+import { setPlanSummary } from "@/store/slices/qaSamplePlanSlice";
 import { filterVisibleRows, hasPlannedDate } from "../utils/filter-utils";
 import type { PlanSummary } from "@/store/slices/qaSamplePlanSlice";
 
@@ -25,6 +25,9 @@ export function useLearnersData(
   searchText: string
 ): UseLearnersDataReturn {
   const dispatch = useAppDispatch();
+  const selectedQaStatus = useAppSelector(
+    (state) => state.qaSamplePlan.selectedStatus
+  );
 
   // Fetch learners (lazy query)
   // Note: RTK Query shares cache between hook instances, so multiple components
@@ -84,7 +87,25 @@ export function useLearnersData(
           }
         });
         const deduplicatedUnits = Array.from(learnerUnitsMap.values());
-        return { ...learner, units: deduplicatedUnits };
+        const rawQa = (learner as SamplePlanLearner & { qa_approved?: unknown })
+          .qa_approved;
+        const toBool = (v: unknown) =>
+          v === true || v === "true" || v === 1 || v === "1";
+        const qaApproved = toBool(rawQa);
+
+        return {
+          ...learner,
+          qa_approved: qaApproved,
+          units: deduplicatedUnits.map((unit: any) => {
+            const history = Array.isArray(unit?.sample_history)
+              ? unit.sample_history.map((entry: Record<string, unknown>) => ({
+                  ...entry,
+                  qa_approved: toBool(entry?.qa_approved),
+                }))
+              : unit?.sample_history;
+            return { ...unit, sample_history: history };
+          }),
+        };
       });
   }, [learnersResponse]);
 
@@ -110,8 +131,13 @@ export function useLearnersData(
 
   // Filter visible rows
   const visibleRows = useMemo(() => {
-    return filterVisibleRows(learnersData, searchText, filterApplied);
-  }, [filterApplied, learnersData, searchText]);
+    return filterVisibleRows(
+      learnersData,
+      searchText,
+      filterApplied,
+      selectedQaStatus
+    );
+  }, [filterApplied, learnersData, searchText, selectedQaStatus]);
 
   // Check if planned date exists
   const hasPlannedDateValue = useMemo(() => {

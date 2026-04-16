@@ -184,7 +184,7 @@ export function PaymentsDataTable() {
       toast.info(t("toast.noDataToExport"))
       return
     }
-    exportTableToPdf({ title: t("page.title"), headers, rows })
+    void exportTableToPdf({ title: t("page.title"), headers, rows })
     toast.success(t("toast.pdfExported"))
   }
 

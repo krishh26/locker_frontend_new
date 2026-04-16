@@ -8,7 +8,7 @@ interface GapIndicatorProps {
   /** Whether trainer map is checked */
   trainerMap: boolean;
   /** Whether signed off is checked */
-  signedOff: boolean;
+  signed_off: boolean;
   /** Whether the indicator is clickable */
   onClick?: () => void;
   /** Whether the indicator is disabled */
@@ -21,21 +21,21 @@ interface GapIndicatorProps {
  * GapIndicator Component
  *
  * Displays a colored box indicating the mapping status:
- * - Green: learnerMap && trainerMap && signedOff
- * - Orange: learnerMap && trainerMap (but not signedOff)
+ * - Green: learnerMap && trainerMap && signed_off
+ * - Orange: learnerMap && trainerMap (but not signed_off)
  * - Empty/Gray: otherwise
  */
 export const GapIndicator: React.FC<GapIndicatorProps> = ({
   learnerMap,
   trainerMap,
-  signedOff,
+  signed_off,
   onClick,
   disabled = false,
   className = "",
 }) => {
   const isClickable = !disabled && learnerMap && onClick;
   const backgroundColor =
-    learnerMap && trainerMap && signedOff
+    learnerMap && trainerMap && signed_off
       ? "bg-accent"
       : learnerMap && trainerMap
       ? "bg-secondary"
@@ -62,7 +62,7 @@ export const GapIndicator: React.FC<GapIndicatorProps> = ({
           : undefined
       }
       aria-label={
-        learnerMap && trainerMap && signedOff
+        learnerMap && trainerMap && signed_off
           ? "Fully mapped and signed off"
           : learnerMap && trainerMap
           ? "Mapped by learner and trainer"

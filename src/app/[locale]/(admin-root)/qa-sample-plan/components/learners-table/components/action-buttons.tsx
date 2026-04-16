@@ -60,8 +60,18 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
   // For action buttons, we just need the trigger function and loading state
   // The actual data display is handled by LearnersTable
   const visibleRows = useMemo(() => {
-    return filterVisibleRows(learnersData.learnersData, filterState.searchText, filterState.filterApplied);
-  }, [learnersData.learnersData, filterState.searchText, filterState.filterApplied]);
+    return filterVisibleRows(
+      learnersData.learnersData,
+      filterState.searchText,
+      filterState.filterApplied,
+      filterState.selectedStatus
+    );
+  }, [
+    learnersData.learnersData,
+    filterState.searchText,
+    filterState.filterApplied,
+    filterState.selectedStatus,
+  ]);
 
   // Course name
   const courseName = useMemo(() => {

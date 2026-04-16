@@ -529,7 +529,7 @@ export function EvidenceLibraryDataTable() {
               let mappingStatus = {
                 learnerMap: false,
                 trainerMap: false,
-                signedOff: false,
+                signed_off: false,
               };
 
               if (evidence.mappings && Array.isArray(evidence.mappings) && unit.subUnit) {
@@ -548,19 +548,22 @@ export function EvidenceLibraryDataTable() {
                         // Handle optional boolean properties and support both camelCase and snake_case
                         const learnerMap = matchingMapping.learnerMap ?? (matchingMapping as { learner_map?: boolean }).learner_map ?? false;
                         const trainerMap = matchingMapping.trainerMap ?? (matchingMapping as { trainer_map?: boolean }).trainer_map ?? false;
-                        const signedOff = matchingMapping.signedOff ?? (matchingMapping as { signed_off?: boolean }).signed_off ?? false;
+                        const signed_off =
+                          matchingMapping.signed_off ??
+                          (matchingMapping as { signedOff?: boolean }).signedOff ??
+                          false;
                         
                         mappingStatus = {
                           learnerMap: learnerMap === true || mappingStatus.learnerMap,
                           trainerMap: trainerMap === true || mappingStatus.trainerMap,
-                          signedOff: signedOff === true || mappingStatus.signedOff,
+                          signed_off: signed_off === true || mappingStatus.signed_off,
                         };
                         // Break inner loop since we found a mapping for this unit
                         break;
                       }
                     }
                     // If we found a mapping, break outer loop
-                    if (mappingStatus.learnerMap || mappingStatus.trainerMap || mappingStatus.signedOff) {
+                    if (mappingStatus.learnerMap || mappingStatus.trainerMap || mappingStatus.signed_off) {
                       break;
                     }
                   }
@@ -588,11 +591,11 @@ export function EvidenceLibraryDataTable() {
               const isMapped =
                 mappingStatus.learnerMap ||
                 mappingStatus.trainerMap ||
-                mappingStatus.signedOff ||
+                mappingStatus.signed_off ||
                 isLearnerSelected;
 
               let checkboxColor = "text-muted-foreground";
-              if (mappingStatus.signedOff) {
+              if (mappingStatus.signed_off) {
                 checkboxColor = "text-accent";
               } else if (mappingStatus.trainerMap) {
                 checkboxColor = "text-secondary";
@@ -699,7 +702,7 @@ export function EvidenceLibraryDataTable() {
                 let mappingStatus = {
                   learnerMap: false,
                   trainerMap: false,
-                  signedOff: false,
+                  signed_off: false,
                 };
 
                 if (evidence.mappings && Array.isArray(evidence.mappings)) {
@@ -721,12 +724,15 @@ export function EvidenceLibraryDataTable() {
                     // Handle optional boolean properties and support both camelCase and snake_case
                     const learnerMap = matchingMapping.learnerMap ?? (matchingMapping as { learner_map?: boolean }).learner_map ?? false;
                     const trainerMap = matchingMapping.trainerMap ?? (matchingMapping as { trainer_map?: boolean }).trainer_map ?? false;
-                    const signedOff = matchingMapping.signedOff ?? (matchingMapping as { signed_off?: boolean }).signed_off ?? false;
+                    const signed_off =
+                      matchingMapping.signed_off ??
+                      (matchingMapping as { signedOff?: boolean }).signedOff ??
+                      false;
 
                     mappingStatus = {
                       learnerMap: learnerMap === true,
                       trainerMap: trainerMap === true,
-                      signedOff: signedOff === true,
+                      signed_off: signed_off === true,
                     };
                   }
                 }
@@ -746,11 +752,11 @@ export function EvidenceLibraryDataTable() {
                 const isMapped =
                   mappingStatus.learnerMap ||
                   mappingStatus.trainerMap ||
-                  mappingStatus.signedOff ||
+                  mappingStatus.signed_off ||
                   isLearnerSelected;
 
                 let checkboxColor = "text-muted-foreground";
-                if (mappingStatus.signedOff) {
+                if (mappingStatus.signed_off) {
                   checkboxColor = "text-accent";
                 } else if (mappingStatus.trainerMap) {
                   checkboxColor = "text-secondary";

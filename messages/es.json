@@ -779,7 +779,47 @@
     "tabs": {
       "formList": "Lista de Formularios",
       "templateList": "Lista de Plantillas",
-      "response": "Respuesta"
+      "response": "Respuesta",
+      "reports": "Informes"
+    },
+    "reports": {
+      "cardDescription": "Seleccione un formulario, elija campos y exporte todos los datos enviados.",
+      "formSearch": {
+        "label": "Buscar formularios",
+        "placeholder": "Buscar por nombre del formulario..."
+      },
+      "formSelect": {
+        "label": "Seleccionar formulario",
+        "placeholder": "Por favor seleccione"
+      },
+      "fields": {
+        "title": "Campos",
+        "loading": "Cargando campos...",
+        "available": "{count} campos disponibles",
+        "selectFormHint": "Seleccione un formulario para ver los campos"
+      },
+      "actions": {
+        "selectAll": "Seleccionar todo",
+        "clear": "Limpiar",
+        "exportCsv": "Exportar CSV"
+      },
+      "validation": {
+        "selectForm": "Por favor seleccione un formulario.",
+        "selectAtLeastOneField": "Por favor seleccione al menos un campo para exportar."
+      },
+      "errors": {
+        "tooManyPages": "Demasiadas páginas para exportar. Por favor acote los resultados o contacte al administrador.",
+        "noSubmissions": "No se encontraron envíos para este formulario.",
+        "exportFailed": "Error al exportar"
+      },
+      "toast": {
+        "exportSuccess": "CSV exportado correctamente"
+      },
+      "csvHeaders": {
+        "userName": "Nombre de usuario",
+        "email": "Correo",
+        "submittedAt": "Enviado el"
+      }
     },
     "table": {
       "searchPlaceholder": "Buscar por palabra clave...",
@@ -905,7 +945,7 @@
       "dragComponentsHint": "Arrastre componentes para crear su formulario",
       "field": "campo",
       "fields": "campos",
-      "preview": "Vista previa",
+      "previewButton": "Vista previa",
       "edit": "Editar",
       "saving": "Guardando...",
       "saveAsForm": "Guardar como formulario",
@@ -1437,7 +1477,11 @@
         "viewDocumentsEvidence": "Ver documentos / evidencias",
         "viewPortfolio": "Ver portafolio",
         "unableOpenDocumentsLearnerIdMissing": "No se pueden abrir los documentos. No se encontró el ID del alumno.",
-        "unableOpenPortfolioLearnerIdMissing": "No se puede abrir el portafolio. No se encontró el ID del alumno."
+        "unableOpenPortfolioLearnerIdMissing": "No se puede abrir el portafolio. No se encontró el ID del alumno.",
+        "qaApprovedUpdateFailed": "No se pudo actualizar QA aprobado. Inténtelo de nuevo.",
+        "qaApprovedNoSamples": "QA aprobado solo se puede establecer para alumnos con al menos una muestra en este plan.",
+        "qaApprovedSelectPlanAndFilter": "Seleccione un curso y un plan, luego aplique los filtros antes de cambiar QA aprobado.",
+        "qaApprovedMissingLearnerId": "Falta el ID del alumno para esta fila."
       }
     },
     "editSampleModal": {
@@ -2177,6 +2221,7 @@
       "deleteFailed": "No se pudo eliminar el recurso",
       "noDataToExport": "No hay datos disponibles para exportar",
       "noFeedbackToExport": "No hay datos de comentarios disponibles para exportar",
+      "exportFailed": "No se pudieron exportar los comentarios. Inténtelo de nuevo.",
       "exportSuccess": "Informe de comentarios exportado correctamente",
       "addedSuccess": "Recurso agregado correctamente",
       "addFailed": "No se pudo agregar el recurso",
@@ -2418,7 +2463,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centro (opcional)",
-        "centrePlaceholder": "ID del centro"
+        "centrePlaceholder": "ID del centro",
+        "attachmentLabel": "Adjuntos (opcional)",
+        "attachmentHint": "Hasta 5 archivos, 25 MB cada uno (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",
@@ -2427,7 +2474,9 @@
       },
       "validation": {
         "titleRequired": "El título es obligatorio",
-        "descriptionRequired": "La descripción es obligatoria"
+        "descriptionRequired": "La descripción es obligatoria",
+        "tooManyFiles": "Puedes adjuntar como máximo 5 archivos.",
+        "fileTooLarge": "Cada archivo debe ser de 25 MB o menos."
       },
       "toast": {
         "createSuccess": "¡Ticket creado correctamente!",
@@ -3476,12 +3525,14 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Tiempo empleado",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3619,6 +3670,63 @@
         "other": "Other",
         "furloughed": "Furloughed"
       }
+    },
+    "offTheJob": {
+      "loading": "Cargando resumen fuera del trabajo...",
+      "title": "Resumen de formación fuera del trabajo",
+      "summarySection": {
+        "title": "Resumen",
+        "duration": {
+          "label": "Duración",
+          "tooltip": "Duración del programa en semanas.",
+          "units": "semanas"
+        },
+        "contractedHours": {
+          "label": "Horas de trabajo contratadas",
+          "tooltip": "Total de horas de trabajo contratadas del programa."
+        },
+        "holiday": {
+          "label": "Derecho a vacaciones",
+          "tooltip": "Derecho a vacaciones legal y contractual."
+        },
+        "required": {
+          "label": "Horas fuera del trabajo (requeridas)"
+        },
+        "requiredToDate": {
+          "label": "Horas fuera del trabajo requeridas a la fecha"
+        }
+      },
+      "warnings": {
+        "title": "Advertencias"
+      },
+      "actualHours": {
+        "title": "Horas reales registradas",
+        "totalLogged": {
+          "label": "Total registrado (fuera del trabajo)"
+        },
+        "thisWeek": {
+          "label": "Esta semana"
+        },
+        "thisMonth": {
+          "label": "Este mes"
+        },
+        "percentage": {
+          "label": "Completado vs requerido a la fecha",
+          "tooltip": "El porcentaje se muestra cuando hay horas requeridas a la fecha."
+        }
+      },
+      "common": {
+        "hours": "horas"
+      },
+      "courses": {
+        "title": "Cursos",
+        "columns": {
+          "course": "Curso",
+          "type": "Tipo",
+          "status": "Estado",
+          "offTheJobHours": "Fuera del trabajo (H:M)"
+        }
+      }
     }
   },
   "defaultReviewWeeks": {
@@ -3644,6 +3752,24 @@
       "title": "Información Importante",
       "description": "Estas configuraciones se aplicarán como el período de revisión predeterminado para todos los tipos de aprendices que no tengan un período de revisión personalizado asignado. Los cambios tendrán efecto inmediatamente después de guardar y afectarán las nuevas sesiones de revisión en el futuro."
     },
+    "toast": {
+      "configSaved": "¡Configuración guardada exitosamente!",
+      "saveFailed": "Error al guardar la configuración. Por favor, inténtelo de nuevo.",
+      "loadFailed": "Error al cargar la configuración. Por favor, inténtelo de nuevo."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Control automático de correos",
+    "pageSubtitle": "Configura recordatorios automáticos por correo para los alumnos antes de las sesiones",
+    "cardTitle": "Recordatorio de sesión al alumno",
+    "reminderDaysLabel": "Enviar recordatorio",
+    "optionDays": "{days} días",
+    "optionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "trainerCardTitle": "Recordatorio de sesión al formador",
+    "trainerReminderDaysLabel": "Enviar recordatorio",
+    "trainerOptionHint": "Enviar correo {days} días antes de la fecha de la sesión",
+    "save": "Guardar",
+    "saving": "Guardando...",
     "toast": {
       "configSaved": "¡Configuración guardada exitosamente!",
       "saveFailed": "Error al guardar la configuración. Por favor, inténtelo de nuevo.",
@@ -4655,7 +4781,10 @@
         "loadingEvidence": "Cargando evidencia...",
         "selectSession": "Seleccionar sesión",
         "loadingSessions": "Cargando sesiones...",
-        "noSessionsAvailable": "No hay sesiones disponibles"
+        "noSessionsAvailable": "No hay sesiones disponibles",
+        "savedSessionNotInList": "Sesión guardada (ID: {id})",
+        "existingAdditionalEvidence": "Evidencia adicional actual",
+        "replaceAdditionalEvidenceHint": "Sube un archivo nuevo abajo para reemplazarla al guardar."
       },
       "assessmentMethods": {
         "Obs": "Observaciones",
@@ -5112,7 +5241,8 @@
         "editDescription": "Actualice la información de horas contratadas.",
         "setNewDescription": "Introduzca la información de horas contratadas de este alumno.",
         "companyLabel": "Empresa *",
-        "companyPlaceholder": "Introduzca el nombre de la empresa",
+        "companyPlaceholder": "Seleccione la empresa",
+        "loadingEmployers": "Cargando empresas…",
         "contractStartLabel": "Fecha de inicio del contrato *",
         "contractEndLabel": "Fecha de fin del contrato",
         "hoursPerWeekLabel": "Horas de trabajo por semana *",

@@ -190,15 +190,6 @@ export function AdminDashboard() {
         if (arrayValue) data = arrayValue as unknown[]
       }
 
-      // DEBUG: remove after verifying active_learners export
-      if (apiType === 'active_learners') {
-        console.debug('[active_learners export]', {
-          keys: Object.keys(res),
-          dataIsArray: Array.isArray(res.data),
-          dataLength: data.length,
-        })
-      }
-
       const summary = res.summary
       const csvParts: string[] = []
 

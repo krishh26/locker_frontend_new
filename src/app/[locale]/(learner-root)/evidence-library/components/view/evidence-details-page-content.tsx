@@ -179,7 +179,7 @@ export function EvidenceDetailsPageContent() {
                           ...topic,
                           learnerMap: false,
                           trainerMap: false,
-                          signedOff: false,
+                          signed_off: false,
                           comment: "",
                         };
                       }) : [],
@@ -252,7 +252,7 @@ export function EvidenceDetailsPageContent() {
                           ...sub,
                           learnerMap: isSelected,
                           trainerMap: false,
-                          signedOff: false,
+                          signed_off: false,
                           comment: "",
                         };
                       }),
@@ -264,7 +264,7 @@ export function EvidenceDetailsPageContent() {
                       type: unit.type,
                       learnerMap: true,
                       trainerMap: false,
-                      signedOff: false,
+                      signed_off: false,
                       comment: "",
                     };
                   }
@@ -373,6 +373,7 @@ export function EvidenceDetailsPageContent() {
                     learnerMap: true,
                     trainerMap: topic.trainerMap ?? false,
                     comment: topic.comment ?? "",
+                    signed_off: topic.signed_off ?? false,
                     mapping_id: topic.mapping_id, // For updates (if exists)
                   });
                 }
@@ -391,6 +392,7 @@ export function EvidenceDetailsPageContent() {
                 learnerMap: true,
                 trainerMap: sub.trainerMap ?? false,
                 comment: sub.comment ?? "",
+                signed_off: sub.signed_off ?? false,
                 mapping_id: sub.mapping_id, // For updates (if exists)
               });
             }
@@ -406,6 +408,7 @@ export function EvidenceDetailsPageContent() {
               learnerMap: true,
               trainerMap: unit.trainerMap ?? false,
               comment: unit.comment ?? "",
+              signed_off: unit.signed_off ?? false,
               mapping_id: unit.mapping_id, // For updates (if exists)
             });
           }
@@ -432,7 +435,7 @@ export function EvidenceDetailsPageContent() {
         }
       }
 
-      // Step 6: Upsert mappings and update PC (learnerMap/trainerMap/signedOff/comment)
+      // Step 6: Upsert mappings and update PC (learnerMap/trainerMap/signed_off/comment)
       const allMappingIds: number[] = []
       const desiredMappingsArray = Array.from(desiredMappings.entries());
       
@@ -463,7 +466,7 @@ export function EvidenceDetailsPageContent() {
             allMappingIds.push(mappingId);
           }
 
-          // Update PC (learnerMap/trainerMap/signedOff/comment) if mapping exists
+          // Update PC (learnerMap/trainerMap/signed_off/comment) if mapping exists
           if (mappingId) {
             // Find the unit/subUnit/topic from form data to get current values
             let pcData: any = null;
@@ -486,7 +489,7 @@ export function EvidenceDetailsPageContent() {
                       pcData = {
                         learnerMap: topic.learnerMap ?? false,
                         trainerMap: topic.trainerMap ?? false,
-                        signedOff: topic.signedOff ?? false,
+                        signed_off: topic.signed_off ?? false,
                         comment: topic.comment ?? "",
                       };
                       break;
@@ -503,7 +506,7 @@ export function EvidenceDetailsPageContent() {
                   pcData = {
                     learnerMap: subUnit.learnerMap ?? false,
                     trainerMap: subUnit.trainerMap ?? false,
-                    signedOff: subUnit.signedOff ?? false,
+                    signed_off: subUnit.signed_off ?? false,
                     comment: subUnit.comment ?? "",
                   };
                 }
@@ -514,7 +517,7 @@ export function EvidenceDetailsPageContent() {
                   pcData = {
                     learnerMap: unit.learnerMap ?? false,
                     trainerMap: unit.trainerMap ?? false,
-                    signedOff: unit.signedOff ?? false,
+                    signed_off: unit.signed_off ?? false,
                     comment: unit.comment ?? "",
                   };
                 }

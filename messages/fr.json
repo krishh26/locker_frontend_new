@@ -990,7 +990,47 @@
     "tabs": {
       "formList": "Liste des formulaires",
       "templateList": "Liste des modèles",
-      "response": "Réponses"
+      "response": "Réponses",
+      "reports": "Rapports"
+    },
+    "reports": {
+      "cardDescription": "Sélectionnez un formulaire, choisissez des champs et exportez toutes les données soumises.",
+      "formSearch": {
+        "label": "Rechercher des formulaires",
+        "placeholder": "Rechercher par nom de formulaire..."
+      },
+      "formSelect": {
+        "label": "Sélectionner un formulaire",
+        "placeholder": "Veuillez sélectionner"
+      },
+      "fields": {
+        "title": "Champs",
+        "loading": "Chargement des champs...",
+        "available": "{count} champs disponibles",
+        "selectFormHint": "Sélectionnez un formulaire pour afficher les champs"
+      },
+      "actions": {
+        "selectAll": "Tout sélectionner",
+        "clear": "Effacer",
+        "exportCsv": "Exporter CSV"
+      },
+      "validation": {
+        "selectForm": "Veuillez sélectionner un formulaire.",
+        "selectAtLeastOneField": "Veuillez sélectionner au moins un champ à exporter."
+      },
+      "errors": {
+        "tooManyPages": "Trop de pages à exporter. Veuillez affiner les résultats ou contacter l’administrateur.",
+        "noSubmissions": "Aucune soumission trouvée pour ce formulaire.",
+        "exportFailed": "Échec de l’export"
+      },
+      "toast": {
+        "exportSuccess": "CSV exporté avec succès"
+      },
+      "csvHeaders": {
+        "userName": "Nom d’utilisateur",
+        "email": "E-mail",
+        "submittedAt": "Soumis le"
+      }
     },
     "table": {
       "searchPlaceholder": "Rechercher par mot-clé...",
@@ -1116,6 +1156,7 @@
       "dragComponentsHint": "Faites glisser les composants pour créer votre formulaire",
       "field": "champ",
       "fields": "champs",
+      "previewButton": "Aperçu",
       "preview": {
         "noFields": "Aucun champ ajouté au formulaire.",
         "untitledForm": "Formulaire sans titre",
@@ -1647,7 +1688,11 @@
         "viewDocumentsEvidence": "Voir documents / preuves",
         "viewPortfolio": "Voir le portfolio",
         "unableOpenDocumentsLearnerIdMissing": "Impossible d’ouvrir les documents. ID apprenant introuvable.",
-        "unableOpenPortfolioLearnerIdMissing": "Impossible d’ouvrir le portfolio. ID apprenant introuvable."
+        "unableOpenPortfolioLearnerIdMissing": "Impossible d’ouvrir le portfolio. ID apprenant introuvable.",
+        "qaApprovedUpdateFailed": "Impossible de mettre à jour QA approuvé. Veuillez réessayer.",
+        "qaApprovedNoSamples": "QA approuvé ne peut être défini que pour les apprenants ayant au moins un échantillon sur ce plan.",
+        "qaApprovedSelectPlanAndFilter": "Sélectionnez un cours et un plan, puis appliquez les filtres avant de modifier QA approuvé.",
+        "qaApprovedMissingLearnerId": "ID apprenant manquant pour cette ligne."
       }
     },
     "editSampleModal": {
@@ -2628,7 +2673,9 @@
           "urgent": "Urgente"
         },
         "centreLabel": "Centre (facultatif)",
-        "centrePlaceholder": "ID du centre"
+        "centrePlaceholder": "ID du centre",
+        "attachmentLabel": "Pièces jointes (facultatif)",
+        "attachmentHint": "Jusqu'à 5 fichiers, 25 Mo chacun (facultatif)."
       },
       "buttons": {
         "cancel": "Annuler",
@@ -2637,7 +2684,9 @@
       },
       "validation": {
         "titleRequired": "Le titre est obligatoire",
-        "descriptionRequired": "La description est obligatoire"
+        "descriptionRequired": "La description est obligatoire",
+        "tooManyFiles": "Vous pouvez joindre au maximum 5 fichiers.",
+        "fileTooLarge": "Chaque fichier doit faire 25 Mo ou moins."
       },
       "toast": {
         "createSuccess": "Ticket créé avec succès !",
@@ -3739,12 +3788,14 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Temps passé",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3882,6 +3933,63 @@
         "other": "Other",
         "furloughed": "Furloughed"
       }
+    },
+    "offTheJob": {
+      "loading": "Chargement du résumé hors emploi...",
+      "title": "Résumé de la formation hors emploi",
+      "summarySection": {
+        "title": "Résumé",
+        "duration": {
+          "label": "Durée",
+          "tooltip": "Durée du programme en semaines.",
+          "units": "semaines"
+        },
+        "contractedHours": {
+          "label": "Heures de travail contractuelles",
+          "tooltip": "Total des heures de travail contractuelles du programme."
+        },
+        "holiday": {
+          "label": "Droit aux congés",
+          "tooltip": "Droit aux congés légal et contractuel."
+        },
+        "required": {
+          "label": "Heures hors emploi (requis)"
+        },
+        "requiredToDate": {
+          "label": "Heures hors emploi requises à ce jour"
+        }
+      },
+      "warnings": {
+        "title": "Avertissements"
+      },
+      "actualHours": {
+        "title": "Heures réellement enregistrées",
+        "totalLogged": {
+          "label": "Total enregistré (hors emploi)"
+        },
+        "thisWeek": {
+          "label": "Cette semaine"
+        },
+        "thisMonth": {
+          "label": "Ce mois-ci"
+        },
+        "percentage": {
+          "label": "Complétion vs requis à ce jour",
+          "tooltip": "Le pourcentage s’affiche lorsque les heures requises à ce jour sont disponibles."
+        }
+      },
+      "common": {
+        "hours": "heures"
+      },
+      "courses": {
+        "title": "Cours",
+        "columns": {
+          "course": "Cours",
+          "type": "Type",
+          "status": "Statut",
+          "offTheJobHours": "Hors emploi (H:M)"
+        }
+      }
     }
   },
   "defaultReviewWeeks": {
@@ -3910,6 +4018,24 @@
     "toast": {
       "configSaved": "Configuration enregistrée avec succès !",
       "saveFailed": "Échec de l'enregistrement de la configuration. Veuillez réessayer.",
+      "loadFailed": "Échec du chargement de la configuration. Veuillez réessayer."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Contrôle automatique des e‑mails",
+    "pageSubtitle": "Configurer des rappels e‑mail automatiques aux apprenants avant les sessions",
+    "cardTitle": "Rappel de session à l’apprenant",
+    "reminderDaysLabel": "Envoyer le rappel",
+    "optionDays": "{days} jours",
+    "optionHint": "Envoyer un e‑mail {days} jours avant la date de la session",
+    "trainerCardTitle": "Rappel de session au formateur",
+    "trainerReminderDaysLabel": "Envoyer le rappel",
+    "trainerOptionHint": "Envoyer un e‑mail {days} jours avant la date de la session",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "toast": {
+      "configSaved": "Configuration enregistrée avec succès !",
+      "saveFailed": "Échec de l’enregistrement de la configuration. Veuillez réessayer.",
       "loadFailed": "Échec du chargement de la configuration. Veuillez réessayer."
     }
   },
@@ -4813,7 +4939,10 @@
         "loadingEvidence": "Chargement de l'évidence...",
         "selectSession": "Sélectionner une session",
         "loadingSessions": "Chargement des sessions...",
-        "noSessionsAvailable": "Aucune session disponible"
+        "noSessionsAvailable": "Aucune session disponible",
+        "savedSessionNotInList": "Session enregistrée (ID : {id})",
+        "existingAdditionalEvidence": "Preuve supplémentaire actuelle",
+        "replaceAdditionalEvidenceHint": "Téléversez un nouveau fichier ci-dessous pour le remplacer à l’enregistrement."
       },
       "assessmentMethods": {
         "Obs": "Observations",
@@ -5270,7 +5399,8 @@
         "editDescription": "Mettez à jour les informations des heures contractuelles.",
         "setNewDescription": "Saisissez les heures contractuelles pour cet apprenant.",
         "companyLabel": "Entreprise *",
-        "companyPlaceholder": "Saisissez le nom de l'entreprise",
+        "companyPlaceholder": "Sélectionnez l'entreprise",
+        "loadingEmployers": "Chargement des employeurs…",
         "contractStartLabel": "Date de début du contrat *",
         "contractEndLabel": "Date de fin du contrat",
         "hoursPerWeekLabel": "Heures de travail par semaine *",

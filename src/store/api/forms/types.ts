@@ -31,6 +31,36 @@ export type SubmittedFormsResponse = {
   };
 };
 
+export type FormSubmission = {
+  id: string | number;
+  form_data?: Record<string, unknown>;
+  form_files?: unknown;
+  created_at: string;
+  updated_at?: string;
+  is_locked?: boolean;
+  user: FormUser;
+  form: {
+    id: string | number;
+    form_name: string;
+    description?: string;
+    form_data?: FormField[];
+    type: string;
+  };
+};
+
+export type FormSubmissionsResponse = {
+  status: boolean;
+  message?: string;
+  error?: string;
+  data?: FormSubmission[];
+  meta_data?: {
+    page: number;
+    items: number;
+    page_size: number;
+    pages: number;
+  };
+};
+
 export type LockFormRequest = {
   formId: string | number;
   userId: string | number;

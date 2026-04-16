@@ -1,3 +1,7 @@
+/** Matches locker_backend `TicketRouter` ticketCreateMulter limits for POST /ticket/create */
+export const MAX_TICKET_ATTACHMENT_FILES = 5;
+export const MAX_TICKET_ATTACHMENT_FILE_BYTES = 25 * 1024 * 1024;
+
 export type TicketUser = {
   user_id: number;
   user_name?: string;
@@ -24,7 +28,31 @@ export type TicketAttachment = {
   created_at: string;
 };
 
-export type TicketStatus = "Open" | "InProgress" | "Resolved" | "Closed";
+export type TicketStatus = "Open" | "In Progress" | "Resolved" | "Closed";
+
+/** Values stored by locker_backend `Ticket.entity` / `TicketStatus` enum */
+export type TicketStatusApi = "Open" | "InProgress" | "Resolved" | "Closed";
+
+export function ticketStatusFromApi(raw: string): TicketStatus {
+  if (raw === "InProgress") return "In Progress";
+  if (raw === "Open" || raw === "Resolved" || raw === "Closed") return raw;
+  if (raw === "In Progress") return "In Progress";
+  return raw as TicketStatus;
+}
+
+export function ticketStatusToApi(status: TicketStatus): TicketStatusApi {
+  if (status === "In Progress") return "InProgress";
+  return status as TicketStatusApi;
+}
+
+export function mapTicketFromApi(ticket: Ticket): Ticket {
+  const raw = ticket.status != null ? String(ticket.status) : "Open";
+  return {
+    ...ticket,
+    status: ticketStatusFromApi(raw),
+  };
+}
+
 export type TicketPriority = "Low" | "Medium" | "High" | "Urgent";
 
 export type Ticket = {
@@ -60,12 +88,14 @@ export type TicketListResponse = {
   };
 };
 
-export type CreateTicketRequest = {
-  title: string;
-  description: string;
-  priority?: TicketPriority;
-  centre_id?: number | null;
-};
+export type CreateTicketRequest = 
+  | {
+      title: string;
+      description: string;
+      priority?: TicketPriority;
+      centre_id?: number | null;
+    }
+  | FormData;
 
 export type CreateTicketResponse = {
   status: boolean;

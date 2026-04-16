@@ -33,7 +33,7 @@ interface QualificationHierarchyUnitsProps {
   canEditTrainerFields?: boolean;
   learnerMapHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   trainerMapHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
-  signedOffHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
+  signed_offHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   commentHandler: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, topicId: string | number, unitId: string | number, subUnitId: string | number) => void;
   getEvidenceCount?: (courseId: number, unitId: string | number, topicId?: string | number) => number;
 }
@@ -43,7 +43,7 @@ interface QualificationHierarchyUnitsProps {
  * 
  * Displays hierarchical structure for Qualification courses:
  * Unit → Learning Outcomes (subUnit) → Assessment Criteria (topics)
- * Only topics are mappable (learnerMap/trainerMap/signedOff)
+ * Only topics are mappable (learnerMap/trainerMap/signed_off)
  */
 function QualificationHierarchyUnitsComponent({
   unit,
@@ -54,7 +54,7 @@ function QualificationHierarchyUnitsComponent({
   canEditTrainerFields = false,
   learnerMapHandler,
   trainerMapHandler,
-  signedOffHandler,
+  signed_offHandler,
   commentHandler,
   getEvidenceCount,
 }: QualificationHierarchyUnitsProps) {
@@ -130,7 +130,8 @@ function QualificationHierarchyUnitsComponent({
                             );
                             const learnerMap = currentTopic?.learnerMap ?? topic.learnerMap ?? false;
                             const trainerMap = currentTopic?.trainerMap ?? topic.trainerMap ?? false;
-                            const signedOff = currentTopic?.signedOff ?? topic.signedOff ?? false;
+                            const signed_off =
+                              currentTopic?.signed_off ?? topic.signed_off ?? false;
                             const comment = currentTopic?.comment ?? topic.comment ?? "";
 
                             return (
@@ -156,7 +157,7 @@ function QualificationHierarchyUnitsComponent({
                                   ) : (
                                     <Input
                                       value={comment}
-                                      disabled={disabled}
+                                      disabled={!canEditTrainerFields}
                                       placeholder={t("qualificationHierarchy.trainerCommentPlaceholder")}
                                       onChange={(e) => {
                                         commentHandler(e, topic.id, unit.id, subUnitId);
@@ -169,13 +170,13 @@ function QualificationHierarchyUnitsComponent({
                                   <GapIndicator
                                     learnerMap={learnerMap}
                                     trainerMap={trainerMap}
-                                    signedOff={signedOff}
+                                    signed_off={signed_off}
                                     onClick={() => {
-                                      if (canEditTrainerFields && !disabled && learnerMap) {
+                                      if (canEditTrainerFields  && learnerMap) {
                                         trainerMapHandler(topic, unit.id, subUnitId);
                                       }
                                     }}
-                                    disabled={!canEditTrainerFields || disabled || !learnerMap}
+                                    disabled={!canEditTrainerFields ||  !learnerMap}
                                   />
                                   {getEvidenceCount && (
                                     <EvidenceIndicator
@@ -185,15 +186,14 @@ function QualificationHierarchyUnitsComponent({
                                 </TableCell>
                                 <TableCell align="center">
                                   <Checkbox
-                                    checked={signedOff}
+                                    checked={signed_off}
                                     disabled={
                                       !canEditTrainerFields ||
-                                      disabled ||
                                       !learnerMap ||
                                       !trainerMap
                                     }
                                     onCheckedChange={() => {
-                                      signedOffHandler(topic, unit.id, subUnitId);
+                                      signed_offHandler(topic, unit.id, subUnitId);
                                     }}
                                   />
                                 </TableCell>

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { format } from "date-fns"
+import Image from "next/image"
 import {
   Sheet,
   SheetContent,
@@ -28,9 +29,14 @@ import { useTranslations } from "next-intl"
 
 const PRIORITY_OPTIONS: TicketPriority[] = ["Low", "Medium", "High", "Urgent"]
 
+function isImageUrl(url: string): boolean {
+  const clean = url.split("?")[0].split("#")[0]
+  return /\.(png|jpe?g|gif|webp|svg)$/i.test(clean)
+}
+
 const ALLOWED_STATUS_TRANSITIONS: Record<TicketStatus, TicketStatus[]> = {
-  Open: ["InProgress"],
-  InProgress: ["Resolved"],
+  Open: ["In Progress"],
+  "In Progress": ["Resolved"],
   Resolved: ["Closed"],
   Closed: ["Open"],
 }
@@ -59,7 +65,7 @@ export function TicketDetailSheet({
 }: TicketDetailSheetProps) {
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === "Learner"
-  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
+  const isAdmin = !isLearner && ["Admin", "MasterAdmin", "PhoenixTeam", "OrganisationAdmin", "CentreAdmin", "Trainer", "IQA", "Employer", "EQA"].includes(user?.role ?? "")
 
   const t = useTranslations("tickets.detail")
 
@@ -229,14 +235,33 @@ export function TicketDetailSheet({
                   <ul className="space-y-1">
                     {ticket.attachments.map((a) => (
                       <li key={a.id}>
-                        <a
-                          href={a.file_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:underline text-sm"
-                        >
-                          {a.file_url.split("/").pop() ?? t("attachments.itemFallback")}
-                        </a>
+                        <div className="flex items-start gap-3">
+                          {isImageUrl(a.file_url) && (
+                            <a
+                              href={a.file_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="shrink-0"
+                            >
+                              <Image
+                                src={a.file_url}
+                                alt={a.file_url.split("/").pop() ?? t("attachments.itemFallback")}
+                                width={56}
+                                height={56}
+                                className="h-14 w-14 rounded-md border object-cover"
+                                unoptimized
+                              />
+                            </a>
+                          )}
+                          <a
+                            href={a.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline text-sm break-all"
+                          >
+                            {a.file_url.split("/").pop() ?? t("attachments.itemFallback")}
+                          </a>
+                        </div>
                       </li>
                     ))}
                   </ul>

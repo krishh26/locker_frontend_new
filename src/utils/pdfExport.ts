@@ -1,7 +1,28 @@
-import jsPDF from "jspdf"
-import { applyPlugin } from "jspdf-autotable"
+import type { jsPDF as JsPDFCtor } from "jspdf"
 
-applyPlugin(jsPDF)
+let pdfDepsPromise:
+  | Promise<{
+      // Use the browser-friendly UMD build to avoid node-only deps like fflate/node.cjs
+      jsPDF: typeof JsPDFCtor
+      applyPlugin: typeof import("jspdf-autotable")["applyPlugin"]
+    }>
+  | null = null
+
+async function getPdfDeps() {
+  if (!pdfDepsPromise) {
+    pdfDepsPromise = Promise.all([
+      // Explicitly import the browser UMD bundle so Next.js doesn't pull in the Node build
+      import("jspdf/dist/jspdf.umd.min.js"),
+      import("jspdf-autotable"),
+    ]).then(([jspdfMod, autotableMod]) => {
+      return {
+        jsPDF: jspdfMod.jsPDF,
+        applyPlugin: autotableMod.applyPlugin,
+      }
+    })
+  }
+  return pdfDepsPromise
+}
 
 export interface ExportTableToPdfOptions {
   title: string
@@ -38,12 +59,17 @@ export interface ExportInvoiceToPdfOptions {
  * Export a table (title + headers + rows) to PDF and trigger download.
  * If rows is empty, does nothing; caller should show "No data to export" toast.
  */
-export function exportTableToPdf(options: ExportTableToPdfOptions): void {
+export async function exportTableToPdf(options: ExportTableToPdfOptions): Promise<void> {
+  if (typeof window === "undefined") return
+
   const { title, headers, rows, filename } = options
 
   if (!rows || rows.length === 0) {
     return
   }
+
+  const { jsPDF, applyPlugin } = await getPdfDeps()
+  applyPlugin(jsPDF)
 
   const doc = new jsPDF()
   const dateStr = new Date().toLocaleDateString()
@@ -55,7 +81,12 @@ export function exportTableToPdf(options: ExportTableToPdfOptions): void {
   doc.setFontSize(10)
   doc.text(`Generated on: ${dateStr}`, 14, 28)
 
-  ;(doc as jsPDF & { autoTable: (opts: unknown) => void; lastAutoTable: { finalY: number } }).autoTable({
+  ;(
+    doc as InstanceType<typeof JsPDFCtor> & {
+      autoTable: (opts: unknown) => void
+      lastAutoTable: { finalY: number }
+    }
+  ).autoTable({
     startY: 34,
     head: [headers],
     body: rows,
@@ -71,7 +102,9 @@ export function exportTableToPdf(options: ExportTableToPdfOptions): void {
 /**
  * Generate and download an invoice PDF (single invoice with line items and totals).
  */
-export function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): void {
+export async function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): Promise<void> {
+  if (typeof window === "undefined") return
+
   const {
     organisationName,
     planName,
@@ -86,6 +119,9 @@ export function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): void {
     notes,
     filename,
   } = options
+
+  const { jsPDF, applyPlugin } = await getPdfDeps()
+  applyPlugin(jsPDF)
 
   const doc = new jsPDF()
   const dateDisplay = invoiceDate.includes("T")
@@ -115,7 +151,12 @@ export function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): void {
     `${currency} ${item.rowTotal.toFixed(2)}`,
   ])
 
-  ;(doc as jsPDF & { autoTable: (opts: unknown) => void; lastAutoTable: { finalY: number } }).autoTable({
+  ;(
+    doc as InstanceType<typeof JsPDFCtor> & {
+      autoTable: (opts: unknown) => void
+      lastAutoTable: { finalY: number }
+    }
+  ).autoTable({
     startY,
     head: [headers],
     body: rows,
@@ -125,7 +166,9 @@ export function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): void {
     headStyles: { fillColor: [71, 85, 105] },
   })
 
-  const docWithAutoTable = doc as jsPDF & { lastAutoTable: { finalY: number } }
+  const docWithAutoTable = doc as InstanceType<typeof JsPDFCtor> & {
+    lastAutoTable: { finalY: number }
+  }
   let y = docWithAutoTable.lastAutoTable.finalY + 10
 
   doc.setFontSize(10)

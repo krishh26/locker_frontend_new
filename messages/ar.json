@@ -942,7 +942,47 @@
   "tabs": {
   "formList": "قائمة النماذج",
   "templateList": "قائمة القوالب",
-  "response": "الاستجابات"
+  "response": "الاستجابات",
+  "reports": "التقارير"
+  },
+  "reports": {
+    "cardDescription": "اختر نموذجًا، وحدد الحقول، ثم صدّر جميع البيانات المُرسلة.",
+    "formSearch": {
+      "label": "بحث النماذج",
+      "placeholder": "ابحث باسم النموذج..."
+    },
+    "formSelect": {
+      "label": "اختر نموذجًا",
+      "placeholder": "يرجى الاختيار"
+    },
+    "fields": {
+      "title": "الحقول",
+      "loading": "جارٍ تحميل الحقول...",
+      "available": "{count} حقول متاحة",
+      "selectFormHint": "اختر نموذجًا لعرض الحقول"
+    },
+    "actions": {
+      "selectAll": "تحديد الكل",
+      "clear": "مسح",
+      "exportCsv": "تصدير CSV"
+    },
+    "validation": {
+      "selectForm": "يرجى اختيار نموذج.",
+      "selectAtLeastOneField": "يرجى تحديد حقل واحد على الأقل للتصدير."
+    },
+    "errors": {
+      "tooManyPages": "عدد الصفحات كبير جدًا للتصدير. يرجى تضييق النتائج أو التواصل مع المسؤول.",
+      "noSubmissions": "لم يتم العثور على أي إرسال لهذا النموذج.",
+      "exportFailed": "فشل التصدير"
+    },
+    "toast": {
+      "exportSuccess": "تم تصدير CSV بنجاح"
+    },
+    "csvHeaders": {
+      "userName": "اسم المستخدم",
+      "email": "البريد الإلكتروني",
+      "submittedAt": "تاريخ الإرسال"
+    }
   },
   "table": {
     "searchPlaceholder": "البحث بالكلمة الرئيسية...",
@@ -1068,7 +1108,7 @@
     "dragComponentsHint": "اسحب المكونات لبناء النموذج",
     "field": "حقل",
     "fields": "حقول",
-    "preview": "معاينة",
+    "previewButton": "معاينة",
     "edit": "تعديل",
     "saving": "جاري الحفظ...",
     "saveAsForm": "حفظ كنموذج",
@@ -1600,7 +1640,11 @@
         "viewDocumentsEvidence": "عرض المستندات / الأدلة",
         "viewPortfolio": "عرض المحفظة",
         "unableOpenDocumentsLearnerIdMissing": "تعذر فتح المستندات. لم يتم العثور على معرّف المتعلم.",
-        "unableOpenPortfolioLearnerIdMissing": "تعذر فتح المحفظة. لم يتم العثور على معرّف المتعلم."
+        "unableOpenPortfolioLearnerIdMissing": "تعذر فتح المحفظة. لم يتم العثور على معرّف المتعلم.",
+        "qaApprovedUpdateFailed": "تعذر تحديث حقل QA المعتمد. يرجى المحاولة مرة أخرى.",
+        "qaApprovedNoSamples": "لا يمكن تعيين QA المعتمد إلا للمتعلمين الذين لديهم عيّنة واحدة على الأقل في هذه الخطة.",
+        "qaApprovedSelectPlanAndFilter": "اختر مساقًا وخطة، ثم طبّق المرشحات قبل تغيير QA المعتمد.",
+        "qaApprovedMissingLearnerId": "معرّف المتعلم مفقود لهذا الصف."
       }
     },
     "editSampleModal": {
@@ -2581,7 +2625,9 @@
           "urgent": "عاجلة"
         },
         "centreLabel": "المركز (اختياري)",
-        "centrePlaceholder": "معرف المركز"
+        "centrePlaceholder": "معرف المركز",
+        "attachmentLabel": "مرفقات (اختياري)",
+        "attachmentHint": "حتى 5 ملفات، 25 ميغابايت لكل ملف (اختياري)."
       },
       "buttons": {
         "cancel": "إلغاء",
@@ -2590,7 +2636,9 @@
       },
       "validation": {
         "titleRequired": "العنوان مطلوب",
-        "descriptionRequired": "الوصف مطلوب"
+        "descriptionRequired": "الوصف مطلوب",
+        "tooManyFiles": "يمكنك إرفاق 5 ملفات كحد أقصى.",
+        "fileTooLarge": "يجب ألا يزيد حجم كل ملف عن 25 ميغابايت."
       },
       "toast": {
         "createSuccess": "تم إنشاء التذكرة بنجاح!",
@@ -3691,6 +3739,24 @@
       "loadFailed": "فشل تحميل الإعدادات. يرجى المحاولة مرة أخرى."
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "التحكم التلقائي بالبريد الإلكتروني",
+    "pageSubtitle": "إعداد تذكيرات بريد إلكتروني تلقائية للمتعلمين قبل الجلسات",
+    "cardTitle": "تذكير الجلسة للمتعلم",
+    "reminderDaysLabel": "إرسال التذكير قبل",
+    "optionDays": "{days} أيام",
+    "optionHint": "إرسال بريد إلكتروني قبل {days} أيام من تاريخ الجلسة",
+    "trainerCardTitle": "تذكير الجلسة للمدرّب",
+    "trainerReminderDaysLabel": "إرسال التذكير قبل",
+    "trainerOptionHint": "إرسال بريد إلكتروني قبل {days} أيام من تاريخ الجلسة",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "toast": {
+      "configSaved": "تم حفظ الإعدادات بنجاح!",
+      "saveFailed": "فشل حفظ الإعدادات. يرجى المحاولة مرة أخرى.",
+      "loadFailed": "فشل تحميل الإعدادات. يرجى المحاولة مرة أخرى."
+    }
+  },
   "safeguarding": {
     "pageTitle": "إدارة جهات اتصال الحماية",
     "pageSubtitle": "إدارة معلومات الاتصال بضابط الحماية والتفاصيل الإضافية",
@@ -4508,12 +4574,14 @@
     },
     "summaryCards": {
       "thisWeek": "هذا الأسبوع",
+      "thisWeekAlso": "هذا الأسبوع أيضًا",
       "thisMonth": "هذا الشهر",
       "total": "الإجمالي",
       "hoursLabel": "{hours} ساعة"
     },
     "recentActivity": {
       "title": "الأنشطة الحديثة",
+      "timeTakenLabel": "الوقت المستغرق",
       "empty": "لم يتم العثور على أنشطة حديثة."
     },
     "table": {
@@ -4651,6 +4719,63 @@
         "other": "أخرى",
         "furloughed": "مجاز/موقوف مؤقتاً (Furloughed)"
       }
+    },
+    "offTheJob": {
+      "loading": "جاري تحميل ملخص التدريب خارج نطاق العمل...",
+      "title": "ملخص التدريب خارج نطاق العمل",
+      "summarySection": {
+        "title": "ملخص",
+        "duration": {
+          "label": "المدة",
+          "tooltip": "مدة البرنامج بالأسابيع.",
+          "units": "أسابيع"
+        },
+        "contractedHours": {
+          "label": "ساعات العمل التعاقدية",
+          "tooltip": "إجمالي ساعات العمل التعاقدية للبرنامج."
+        },
+        "holiday": {
+          "label": "استحقاق الإجازة",
+          "tooltip": "استحقاق الإجازة القانوني والتعاقدي."
+        },
+        "required": {
+          "label": "ساعات خارج نطاق العمل (مطلوبة)"
+        },
+        "requiredToDate": {
+          "label": "ساعات خارج نطاق العمل المطلوبة حتى اليوم"
+        }
+      },
+      "warnings": {
+        "title": "تحذيرات"
+      },
+      "actualHours": {
+        "title": "الساعات المسجّلة فعلياً",
+        "totalLogged": {
+          "label": "إجمالي المسجّل (خارج نطاق العمل)"
+        },
+        "thisWeek": {
+          "label": "هذا الأسبوع"
+        },
+        "thisMonth": {
+          "label": "هذا الشهر"
+        },
+        "percentage": {
+          "label": "الإنجاز مقابل المطلوب حتى اليوم",
+          "tooltip": "يُعرض النسبة المئوية عند توفر الساعات المطلوبة حتى اليوم."
+        }
+      },
+      "common": {
+        "hours": "ساعات"
+      },
+      "courses": {
+        "title": "الدورات",
+        "columns": {
+          "course": "الدورة",
+          "type": "النوع",
+          "status": "الحالة",
+          "offTheJobHours": "خارج نطاق العمل (س:د)"
+        }
+      }
     }
   },
   "evidenceLibrary": {
@@ -4747,7 +4872,10 @@
         "loadingEvidence": "جاري تحميل الدليل...",
         "selectSession": "اختر الجلسة",
         "loadingSessions": "جاري تحميل الجلسات...",
-        "noSessionsAvailable": "لا توجد جلسات متاحة"
+        "noSessionsAvailable": "لا توجد جلسات متاحة",
+        "savedSessionNotInList": "جلسة محفوظة (المعرف: {id})",
+        "existingAdditionalEvidence": "الدليل الإضافي الحالي",
+        "replaceAdditionalEvidenceHint": "ارفع ملفًا جديدًا أدناه لاستبداله عند الحفظ."
       },
       "assessmentMethods": {
         "Obs": "الملاحظات",
@@ -5204,7 +5332,8 @@
         "editDescription": "تحديث معلومات ساعات العمل التعاقدية.",
         "setNewDescription": "أدخل معلومات ساعات العمل التعاقدية لهذا المتعلم.",
         "companyLabel": "الشركة *",
-        "companyPlaceholder": "أدخل اسم الشركة",
+        "companyPlaceholder": "اختر الشركة",
+        "loadingEmployers": "جاري تحميل أصحاب العمل…",
         "contractStartLabel": "تاريخ بدء العقد *",
         "contractEndLabel": "تاريخ انتهاء العقد",
         "hoursPerWeekLabel": "ساعات العمل أسبوعياً *",

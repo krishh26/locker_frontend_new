@@ -154,7 +154,7 @@ export function AssignedLearnersDataTable({
       toast.info(t("noDataToExport"))
       return
     }
-    exportTableToPdf({ title: "Assigned Learners", headers, rows })
+    void exportTableToPdf({ title: "Assigned Learners", headers, rows })
     toast.success(t("csvExported"))
   };
 

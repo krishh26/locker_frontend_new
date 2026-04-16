@@ -28,7 +28,6 @@ import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
 import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
 import { toast } from "sonner";
-import { filterRolesFromApi } from "@/config/auth-roles";
 import { useAppSelector } from "@/store/hooks";
 import type { AuthUser } from "@/store/api/auth/types";
 import { isAccountManager } from "@/utils/permissions";
@@ -43,6 +42,7 @@ const roleValues = [
   "LIQA",
   "Line Manager",
   "Employer",
+  "PhoenixTeam",
 ];
 
 // Common timezones - can be extended
@@ -69,7 +69,7 @@ const createUserSchema = (t: (key: string) => string) => z
     email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")),
     password: z.string().min(6, t("validation.passwordMinLength")),
     confirmPassword: z.string(),
-    mobile: z.string().optional(),
+    mobile: z.number().optional(),
     time_zone: z.string().optional(),
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")),
     line_manager_id: z.string().optional(),
@@ -102,7 +102,7 @@ const updateUserSchema = (t: (key: string) => string) => z
     last_name: z.string().min(1, t("validation.lastNameRequired")).optional(),
     user_name: z.string().min(1, t("validation.usernameRequired")).optional(),
     email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")).optional(),
-    mobile: z.string().optional(),
+    mobile: z.number().optional(),
     time_zone: z.string().optional(),
     roles: z.array(z.string()).min(1, t("validation.rolesRequired")).optional(),
     line_manager_id: z.string().optional(),
@@ -210,14 +210,18 @@ export function UsersForm({ user }: UsersFormProps) {
       "Line Manager": "lineManager",
       "Employer": "employer",
     };
-    const values = isAccountManagerUser
+    const valuesBase = isAccountManagerUser
       ? roleValues.filter((r) => !["MasterAdmin", "AccountManager"].includes(r))
       : roleValues;
+
+    // Requirement: PhoenixTeam role only visible to MasterAdmin creators.
+    const values = userRole === "MasterAdmin" ? valuesBase : valuesBase.filter((r) => r !== "PhoenixTeam");
     return values.map((value) => ({
       value,
-      label: t(`roles.${roleKeyMap[value]}`) || value,
+      // PhoenixTeam has no translation key; keep a safe label.
+      label: value === "PhoenixTeam" ? "PhoenixTeam" : t(`roles.${roleKeyMap[value]}`) || value,
     }));
-  }, [t, isAccountManagerUser]);
+  }, [t, isAccountManagerUser, userRole]);
 
   // EQA learner assignment state
   const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);
@@ -235,7 +239,7 @@ export function UsersForm({ user }: UsersFormProps) {
           last_name: "",
           user_name: "",
           email: "",
-          mobile: "",
+          mobile: undefined,
           time_zone: "",
           roles: [],
           line_manager_id: "",
@@ -251,7 +255,7 @@ export function UsersForm({ user }: UsersFormProps) {
           email: "",
           password: "",
           confirmPassword: "",
-          mobile: "",
+          mobile: undefined,
           time_zone: "",
           roles: [],
           line_manager_id: "",
@@ -269,9 +273,14 @@ export function UsersForm({ user }: UsersFormProps) {
         last_name: user.last_name,
         user_name: user.user_name,
         email: user.email,
-        mobile: user.mobile,
+        mobile: user.mobile
+          ? (() => {
+              const parsedMobile = Number(user.mobile);
+              return Number.isNaN(parsedMobile) ? undefined : parsedMobile;
+            })()
+          : undefined,
         time_zone: user.time_zone || "UTC",
-        roles: filterRolesFromApi(user.roles),
+        roles: user.roles,
         line_manager_id: user.line_manager?.user_id?.toString() || "",
         employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
         organisation_ids: (user.assigned_organisations?.map((org) => org.id) || []).slice(0, 1),
@@ -292,7 +301,7 @@ export function UsersForm({ user }: UsersFormProps) {
         email: "",
         password: "",
         confirmPassword: "",
-        mobile: "",
+        mobile: undefined,
         time_zone: "",
         roles: [],
         line_manager_id: "",
@@ -491,7 +500,6 @@ export function UsersForm({ user }: UsersFormProps) {
           learner_ids: [learnerId],
           action: "unassign" as const,
         };
-        console.log("Unassign API Payload:", payload);
         await assignEqaToCourse(payload).unwrap();
     }
     try {
@@ -529,10 +537,14 @@ export function UsersForm({ user }: UsersFormProps) {
       const organisationIds = values.organisation_ids?.length
         ? [values.organisation_ids[0]]
         : [];
-      const payload: (CreateUserFormValues | UpdateUserFormValues) & {
+      const payload: (CreateUserRequest | UpdateUserRequest) & {
         centre_id?: number;
         centre_ids?: number[];
-      } = { ...values, organisation_ids: organisationIds };
+      } = {
+        ...(values as Record<string, unknown>),
+        mobile: !values.mobile ? "" : String(values.mobile),
+        organisation_ids: organisationIds,
+      };
 
       if (payload.line_manager_id === "") {
         delete payload.line_manager_id;
@@ -565,16 +577,16 @@ export function UsersForm({ user }: UsersFormProps) {
         }
       }
       if (isEditMode) {
-        const updateData = payload as UpdateUserFormValues;
+        const updateData = payload as UpdateUserRequest;
         await updateUser({
           id: user.user_id,
-          data: updateData as UpdateUserRequest,
+          data: updateData,
         }).unwrap();
         createdOrUpdatedUserId = user.user_id;
         toast.success("User updated successfully");
       } else {
-        const createData = payload as CreateUserFormValues;
-        const result = await createUser(createData as CreateUserRequest).unwrap();
+        const createData = payload as CreateUserRequest;
+        const result = await createUser(createData).unwrap();
         createdOrUpdatedUserId = result.data.user_id;
         toast.success("User created successfully");
       }
@@ -853,8 +865,16 @@ export function UsersForm({ user }: UsersFormProps) {
               <>
                 <Input
                   id="mobile"
+                  type="number"
                   placeholder={t("form.mobilePlaceholder")}
-                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(event) => {
+                    const raw = event.target.value;
+                    field.onChange(raw === "" ? undefined : Number(raw));
+                  }}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  ref={field.ref}
                   className={form.formState.errors.mobile ? "border-destructive" : ""}
                 />
                 {form.formState.errors.mobile && (

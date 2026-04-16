@@ -945,7 +945,47 @@
   "tabs": {
   "formList": "表单列表",
   "templateList": "模板列表",
-  "response": "回复"
+  "response": "回复",
+  "reports": "报表"
+  },
+  "reports": {
+    "cardDescription": "选择一个表单，选择字段，并导出所有已提交的数据。",
+    "formSearch": {
+      "label": "搜索表单",
+      "placeholder": "按表单名称搜索..."
+    },
+    "formSelect": {
+      "label": "选择表单",
+      "placeholder": "请选择"
+    },
+    "fields": {
+      "title": "字段",
+      "loading": "正在加载字段...",
+      "available": "可用字段：{count} 个",
+      "selectFormHint": "选择一个表单以查看字段"
+    },
+    "actions": {
+      "selectAll": "全选",
+      "clear": "清除",
+      "exportCsv": "导出 CSV"
+    },
+    "validation": {
+      "selectForm": "请选择一个表单。",
+      "selectAtLeastOneField": "请至少选择一个要导出的字段。"
+    },
+    "errors": {
+      "tooManyPages": "导出页数过多。请缩小结果范围或联系管理员。",
+      "noSubmissions": "未找到该表单的提交记录。",
+      "exportFailed": "导出失败"
+    },
+    "toast": {
+      "exportSuccess": "CSV 导出成功"
+    },
+    "csvHeaders": {
+      "userName": "用户名",
+      "email": "邮箱",
+      "submittedAt": "提交时间"
+    }
   },
   "table": {
     "searchPlaceholder": "按关键词搜索...",
@@ -1071,7 +1111,7 @@
     "dragComponentsHint": "拖放组件以构建表单",
     "field": "字段",
     "fields": "字段",
-    "preview": "预览",
+    "previewButton": "预览",
     "edit": "编辑",
     "saving": "保存中...",
     "saveAsForm": "另存为表单",
@@ -1565,7 +1605,11 @@
         "viewDocumentsEvidence": "查看文档 / 证据",
         "viewPortfolio": "查看作品集",
         "unableOpenDocumentsLearnerIdMissing": "无法打开文档。未找到学员 ID。",
-        "unableOpenPortfolioLearnerIdMissing": "无法打开作品集。未找到学员 ID。"
+        "unableOpenPortfolioLearnerIdMissing": "无法打开作品集。未找到学员 ID。",
+        "qaApprovedUpdateFailed": "无法更新“QA 已批准”。请重试。",
+        "qaApprovedNoSamples": "仅当学员在本计划中至少有一条抽样记录时，才能设置“QA 已批准”。",
+        "qaApprovedSelectPlanAndFilter": "请先选择课程与计划并应用筛选，再更改“QA 已批准”。",
+        "qaApprovedMissingLearnerId": "此行缺少学员 ID。"
       }
     },
     "editSampleModal": {
@@ -2546,7 +2590,9 @@
           "urgent": "紧急"
         },
         "centreLabel": "中心（可选）",
-        "centrePlaceholder": "中心 ID"
+        "centrePlaceholder": "中心 ID",
+        "attachmentLabel": "附件（可选）",
+        "attachmentHint": "最多 5 个文件，每个不超过 25 MB（可选）。"
       },
       "buttons": {
         "cancel": "取消",
@@ -2555,7 +2601,9 @@
       },
       "validation": {
         "titleRequired": "标题为必填项",
-        "descriptionRequired": "描述为必填项"
+        "descriptionRequired": "描述为必填项",
+        "tooManyFiles": "最多只能附加 5 个文件。",
+        "fileTooLarge": "每个文件必须不超过 25 MB。"
       },
       "toast": {
         "createSuccess": "工单创建成功！",
@@ -3657,12 +3705,14 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "所用时间",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3800,6 +3850,63 @@
         "other": "Other",
         "furloughed": "Furloughed"
       }
+    },
+    "offTheJob": {
+      "loading": "正在加载岗外培训摘要...",
+      "title": "岗外培训摘要",
+      "summarySection": {
+        "title": "摘要",
+        "duration": {
+          "label": "时长",
+          "tooltip": "以周为单位的课程时长。",
+          "units": "周"
+        },
+        "contractedHours": {
+          "label": "合同工作时长",
+          "tooltip": "课程合同工作总时长。"
+        },
+        "holiday": {
+          "label": "假期权益",
+          "tooltip": "法定与合同假期权益。"
+        },
+        "required": {
+          "label": "岗外学时（要求）"
+        },
+        "requiredToDate": {
+          "label": "截至今日应完成的岗外学时"
+        }
+      },
+      "warnings": {
+        "title": "提醒"
+      },
+      "actualHours": {
+        "title": "实际记录学时",
+        "totalLogged": {
+          "label": "累计记录（岗外）"
+        },
+        "thisWeek": {
+          "label": "本周"
+        },
+        "thisMonth": {
+          "label": "本月"
+        },
+        "percentage": {
+          "label": "完成度与应完成（截至今日）",
+          "tooltip": "当存在“截至今日应完成学时”时显示百分比。"
+        }
+      },
+      "common": {
+        "hours": "小时"
+      },
+      "courses": {
+        "title": "课程",
+        "columns": {
+          "course": "课程",
+          "type": "类型",
+          "status": "状态",
+          "offTheJobHours": "岗外（时:分）"
+        }
+      }
     }
   },
   "defaultReviewWeeks": {
@@ -3825,6 +3932,24 @@
       "title": "重要信息",
       "description": "这些设置将作为所有未配置自定义复查周期的学员类型的默认复查周期。保存后更改将立即生效，并影响之后的新复查会话。"
     },
+    "toast": {
+      "configSaved": "配置保存成功！",
+      "saveFailed": "保存配置失败。请重试。",
+      "loadFailed": "加载配置失败。请重试。"
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "自动邮件控制",
+    "pageSubtitle": "配置在会话开始前向学员发送自动邮件提醒",
+    "cardTitle": "会话提醒（发送给学员）",
+    "reminderDaysLabel": "提前发送提醒",
+    "optionDays": "{days} 天",
+    "optionHint": "在会话日期前 {days} 天发送邮件",
+    "trainerCardTitle": "会话提醒（发送给培训师）",
+    "trainerReminderDaysLabel": "提前发送提醒",
+    "trainerOptionHint": "在会话日期前 {days} 天发送邮件",
+    "save": "保存",
+    "saving": "正在保存…",
     "toast": {
       "configSaved": "配置保存成功！",
       "saveFailed": "保存配置失败。请重试。",
@@ -4783,7 +4908,10 @@
         "loadingEvidence": "正在加载证据...",
         "selectSession": "选择会话",
         "loadingSessions": "正在加载会话...",
-        "noSessionsAvailable": "暂无可用会话"
+        "noSessionsAvailable": "暂无可用会话",
+        "savedSessionNotInList": "已保存的会话（ID：{id}）",
+        "existingAdditionalEvidence": "当前附加证据文件",
+        "replaceAdditionalEvidenceHint": "在下方上传新文件，保存时将替换当前文件。"
       },
       "assessmentMethods": {
         "Obs": "观察",
@@ -5240,7 +5368,8 @@
         "editDescription": "更新合同工作小时信息。",
         "setNewDescription": "输入该学员的合同工作小时信息。",
         "companyLabel": "公司 *",
-        "companyPlaceholder": "输入公司名称",
+        "companyPlaceholder": "选择公司",
+        "loadingEmployers": "正在加载雇主…",
         "contractStartLabel": "雇佣合同开始日期 *",
         "contractEndLabel": "雇佣合同结束日期",
         "hoursPerWeekLabel": "每周合同工作小时 *",

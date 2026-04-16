@@ -34,9 +34,32 @@ export interface SamplePlanLearnerUnit {
   unitRef?: string | null;
   type?: string;
   sample_history?: Array<{
-    planned_date?: string;
-    [key: string]: unknown;
+    detail_id?: number | string;
+    sample_type?: string;
+    planned_date?: string | null;
+    completed_date?: string | null;
+    status?: string;
+    assessment_methods?: Record<string, boolean>;
+    qa_approved?: boolean;
   }>;
+  [key: string]: unknown;
+}
+
+export interface UpdateLearnerQaApprovedRequest {
+  plan_id: string | number;
+  learner_id: string | number;
+  qa_approved: boolean;
+}
+
+export interface UpdateLearnerQaApprovedResponse {
+  status?: boolean;
+  message?: string;
+  error?: string;
+  data?: {
+    plan_id: number;
+    learner_id: number;
+    qa_approved: boolean;
+  };
   [key: string]: unknown;
 }
 
@@ -44,6 +67,7 @@ export interface SamplePlanLearner {
   assessor_name?: string;
   risk_level?: string;
   qa_approved?: boolean;
+  total_samples?: number;
   learner_name?: string;
   sample_type?: string;
   planned_date?: string | null;

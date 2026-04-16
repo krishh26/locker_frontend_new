@@ -1,6 +1,7 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useCallback } from "react";
+import type { CheckedState } from "@radix-ui/react-checkbox";
 import { useRouter } from "@/i18n/navigation";
 import { ChevronDown, ChevronUp, FileText, FolderOpen } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,6 +17,7 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
+import { useUpdateLearnerQaApprovedMutation } from "@/store/api/qa-sample-plan/qaSamplePlanApi";
 import { sanitizeText, getRiskBadgeVariant } from "../../../utils/utils";
 import { LearnerUnitsTable } from "./learner-units-table";
 import { toast } from "sonner";
@@ -27,6 +29,8 @@ interface LearnerRowProps {
   learnerIndex: number;
   isExpanded: boolean;
   onToggleExpansion: () => void;
+  planId?: string;
+  filterApplied: boolean;
 }
 
 export const LearnerRow = memo(function LearnerRow({
@@ -34,9 +38,13 @@ export const LearnerRow = memo(function LearnerRow({
   learnerIndex,
   isExpanded,
   onToggleExpansion,
+  planId,
+  filterApplied,
 }: LearnerRowProps) {
   const router = useRouter();
   const t = useTranslations("qaSamplePlan.learnersTable.actions");
+  const [updateLearnerQaApproved, { isLoading: isQaApprovedUpdating }] =
+    useUpdateLearnerQaApprovedMutation();
   const unitSelection = useAppSelector(selectUnitSelection);
   const units = Array.isArray(learner.units) ? learner.units : [];
   const learnerKey = `${learner.learner_name ?? ""}-${learnerIndex}`;
@@ -52,10 +60,50 @@ export const LearnerRow = memo(function LearnerRow({
     }
   };
 
+  const learnerId = learner.learner_id ?? learner.learnerId ?? learner.id;
+  const totalSamples = learner.total_samples ?? 0;
+  const hasSamples = totalSamples > 0;
+
+  const handleQaApprovedChange = useCallback(
+    async (checked: CheckedState) => {
+      if (checked === "indeterminate") return;
+      if (!filterApplied || !planId) {
+        toast.warning(t("qaApprovedSelectPlanAndFilter"));
+        return;
+      }
+      if (learnerId == null || String(learnerId).trim() === "") {
+        toast.warning(t("qaApprovedMissingLearnerId"));
+        return;
+      }
+      if (!hasSamples) {
+        toast.warning(t("qaApprovedNoSamples"));
+        return;
+      }
+      const next = checked === true;
+      try {
+        await updateLearnerQaApproved({
+          plan_id: planId,
+          learner_id: learnerId,
+          qa_approved: next,
+        }).unwrap();
+      } catch {
+        toast.error(t("qaApprovedUpdateFailed"));
+      }
+    },
+    [
+      filterApplied,
+      planId,
+      learnerId,
+      hasSamples,
+      updateLearnerQaApproved,
+      t,
+    ]
+  );
+
   const handleViewPortfolio = (learner: SamplePlanLearner) => {
     const learnerId = learner.learner_id || learner.learnerId || learner.id;
     if (learnerId) {
-      router.push(`/portfolio?learner_id=${learnerId}`);
+      router.push(`/learner-dashboard/${learnerId}`);
     } else {
       toast.warning(t("unableOpenPortfolioLearnerIdMissing"));
     }
@@ -83,7 +131,18 @@ export const LearnerRow = memo(function LearnerRow({
         </TableCell>
         <TableCell>
           <div onClick={(e) => e.stopPropagation()}>
-            <Checkbox checked={Boolean(learner.qa_approved)} onCheckedChange={() => {}} />
+            <Checkbox
+              checked={Boolean(learner.qa_approved)}
+              disabled={
+                !filterApplied ||
+                !planId ||
+                learnerId == null ||
+                String(learnerId).trim() === "" ||
+                !hasSamples ||
+                isQaApprovedUpdating
+              }
+              onCheckedChange={handleQaApprovedChange}
+            />
           </div>
         </TableCell>
         <TableCell className="min-w-[180px]">

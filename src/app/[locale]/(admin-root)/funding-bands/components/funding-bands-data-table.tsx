@@ -45,6 +45,7 @@ import { FundingBandsFormDialog } from "./funding-bands-form-dialog";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
+import { cn } from "@/lib/utils";
 
 export function FundingBandsDataTable() {
   const t = useTranslations("fundingBands");
@@ -281,7 +282,14 @@ export function FundingBandsDataTable() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="min-w-[150px]">
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        "min-w-[150px]",
+                        header.column.id === "course_course_name" &&
+                          "max-w-[min(100%,28rem)] min-w-0"
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -302,7 +310,13 @@ export function FundingBandsDataTable() {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={cn(
+                        cell.column.id === "course_course_name" &&
+                          "max-w-[min(100%,28rem)] min-w-0 whitespace-normal break-words align-top"
+                      )}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

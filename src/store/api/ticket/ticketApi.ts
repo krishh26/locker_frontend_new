@@ -13,6 +13,7 @@ import type {
   AddAttachmentResponse,
   AssignableUsersResponse,
 } from "./types";
+import { mapTicketFromApi, ticketStatusToApi } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 
@@ -49,7 +50,11 @@ export const ticketApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data?.length) return response;
+        return {
+          ...response,
+          data: response.data.map((t) => mapTicketFromApi(t as Ticket)),
+        };
       },
     }),
 
@@ -60,7 +65,8 @@ export const ticketApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return { ...response, data: mapTicketFromApi(response.data) };
       },
     }),
 
@@ -68,7 +74,6 @@ export const ticketApi = createApi({
       query: (body) => ({
         url: "/ticket/create",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body,
       }),
       invalidatesTags: ["Ticket"],
@@ -76,23 +81,28 @@ export const ticketApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return { ...response, data: mapTicketFromApi(response.data) };
       },
     }),
 
     updateTicket: builder.mutation<UpdateTicketResponse, UpdateTicketRequest>({
-      query: ({ ticket_id, ...body }) => ({
+      query: ({ ticket_id, status, ...rest }) => ({
         url: `/ticket/update/${ticket_id}`,
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body,
+        body: {
+          ...rest,
+          ...(status !== undefined ? { status: ticketStatusToApi(status) } : {}),
+        },
       }),
       invalidatesTags: ["Ticket"],
       transformResponse: (response: UpdateTicketResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return { ...response, data: mapTicketFromApi(response.data) };
       },
     }),
 

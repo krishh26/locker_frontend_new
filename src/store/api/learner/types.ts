@@ -16,6 +16,7 @@ export type LearnerCourse = {
   };
   start_date: string;
   end_date: string;
+  bil_return_date?: string | null;
   course_status: string;
   is_main_course: boolean;
   // Progress fields
@@ -164,6 +165,8 @@ export interface BulkCreateLearnerRequest {
   confirmPassword: string;
   national_ins_no?: string;
   funding_body: string;
+  job_title: string;
+  centre_name: string;
   employer_name?: string;
   courses: Array<{
     course_name: string;
@@ -208,6 +211,7 @@ export interface CreateUserCourseRequest {
   EQA_id: number;
   start_date: string;
   end_date: string;
+  bil_return_date?: string;
   predicted_grade: string;
   final_grade: string;
   is_main_course?: boolean;
@@ -221,6 +225,7 @@ export interface UpdateUserCourseRequest {
   EQA_id?: number;
   start_date?: string;
   end_date?: string;
+  bil_return_date?: string;
   predicted_grade?: string;
   final_grade?: string;
   is_main_course?: boolean;

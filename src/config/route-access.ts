@@ -107,6 +107,10 @@ const routeRoleRules: RouteRule[] = [
     roles: R.admin(),
   },
   {
+    pattern: /^\/automatic-mail-control(?:\/|$)/,
+    roles: R.admin(),
+  },
+  {
     pattern: /^\/iqa-questions(?:\/|$)/,
     roles: R.admin(),
   },
@@ -182,7 +186,7 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/tickets(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA" ,'MasterAdmin'),
+    roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "EQA", "MasterAdmin", "PhoenixTeam"),
   },
   {
     pattern: /^\/surveys(?:\/|$)/,
@@ -190,55 +194,55 @@ const routeRoleRules: RouteRule[] = [
   },
   {
     pattern: /^\/evidence-library(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","LIQA","Trainer"),
   },
   {
     pattern: /^\/module-unit-progress(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/gap-analysis(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/learning-plan(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/course-resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/learners-documents-to-sign(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/resources(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/health-wellbeing(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/supplementary-training(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/time-log(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/choose-units(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/course-details(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer","Employer"),
+    roles: R.adminWith("Learner", "Trainer","Employer","IQA","EQA"),
   },
   {
     pattern: /^\/chat(?:\/|$)/,
-    roles: R.adminWith("Learner", "Trainer"),
+    roles: R.adminWith("Learner", "Trainer","IQA","EQA"),
   },
   {
     pattern: /^\/mail(?:\/|$)/,

@@ -31,6 +31,7 @@ import {
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import type { FundingBand } from "@/store/api/funding-band/types";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 function getCreateFundingBandSchema(t: (key: string) => string) {
   return z.object({
@@ -173,7 +174,7 @@ export function FundingBandsFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl w-full">
         <DialogHeader>
           <DialogTitle>
             {isEditMode ? t("form.titleEdit") : t("form.titleCreate")}
@@ -212,17 +213,29 @@ export function FundingBandsFormDialog({
                     >
                       <SelectTrigger
                         id="course_id"
-                        className={
+                        className={cn(
+                          // Override global SelectTrigger: fixed height + nowrap + line-clamp hide long course titles
+                          "w-full min-w-0 h-auto min-h-9 whitespace-normal text-left items-start gap-2 py-2",
+                          "data-[size=default]:h-auto data-[size=sm]:h-auto",
+                          "**:data-[slot=select-value]:block! **:data-[slot=select-value]:line-clamp-none **:data-[slot=select-value]:whitespace-normal **:data-[slot=select-value]:wrap-break-word **:data-[slot=select-value]:text-left **:data-[slot=select-value]:min-w-0 **:data-[slot=select-value]:flex-1",
                           !isEditMode &&
-                          "course_id" in form.formState.errors &&
-                          form.formState.errors.course_id
-                            ? "border-destructive"
-                            : ""
-                        }
+                            "course_id" in form.formState.errors &&
+                            form.formState.errors.course_id &&
+                            "border-destructive"
+                        )}
                       >
                         <SelectValue placeholder={t("form.selectCoursePlaceholder")} />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent
+                        position="popper"
+                        align="start"
+                        collisionPadding={16}
+                        className={cn(
+                          // Keep panel within viewport on mobile; match trigger width; allow wrapped labels
+                          "max-w-[min(calc(100vw-2rem),var(--radix-select-trigger-width))] w-(--radix-select-trigger-width) min-w-0",
+                          "**:data-radix-select-viewport:min-w-0 **:data-radix-select-viewport:max-w-full"
+                        )}
+                      >
                         {isLoadingCourses ? (
                           <SelectItem value="loading" disabled>
                             {t("form.loadingCourses")}
@@ -232,6 +245,7 @@ export function FundingBandsFormDialog({
                             <SelectItem
                               key={course.course_id}
                               value={course.course_id.toString()}
+                              className="h-auto min-h-8 min-w-0 items-start whitespace-normal wrap-break-word py-2 pr-8"
                             >
                               {course.course_name}
                               {course.course_code && ` (Code: ${course.course_code})`}
@@ -264,19 +278,24 @@ export function FundingBandsFormDialog({
                 control={form.control}
                 render={({ field }) => (
                   <>
-                    <Input
+                    <input type="hidden" {...field} />
+                    <div
                       id="band_name"
-                      placeholder={t("form.bandNamePlaceholder")}
-                      {...field}
-                      readOnly
-                      className={
+                      aria-readonly
+                      className={cn(
+                        "bg-muted text-foreground rounded-md border px-3 py-2 text-sm whitespace-normal break-words min-w-0 w-full",
                         !isEditMode &&
-                        "band_name" in form.formState.errors &&
-                        form.formState.errors.band_name
-                          ? "border-destructive"
-                          : "bg-muted"
-                      }
-                    />
+                          "band_name" in form.formState.errors &&
+                          form.formState.errors.band_name &&
+                          "border-destructive"
+                      )}
+                    >
+                      {field.value || (
+                        <span className="text-muted-foreground">
+                          {t("form.bandNamePlaceholder")}
+                        </span>
+                      )}
+                    </div>
                     {!isEditMode &&
                       "band_name" in form.formState.errors &&
                       form.formState.errors.band_name && (
@@ -294,11 +313,9 @@ export function FundingBandsFormDialog({
           {isEditMode && (
             <div className="space-y-2">
               <Label>{t("form.course")}</Label>
-              <Input
-                value={fundingBand.course.course_name}
-                readOnly
-                className="bg-muted"
-              />
+              <div className="bg-muted text-foreground rounded-md border px-3 py-2 text-sm break-words min-w-0 w-full">
+                {fundingBand.course.course_name}
+              </div>
             </div>
           )}
 

@@ -20,7 +20,7 @@ export type EvidenceFormValues = {
     units?: StandardUnit[];
   }>;
   courseSelectedTypes: Record<string | number, string[]>;
-  units: (StandardUnit | { id: string | number; course_id?: string | number; subUnit?: Array<{ id?: string | number; topics?: Array<{ id?: string | number; learnerMap?: boolean; trainerMap?: boolean; signedOff?: boolean; comment?: string }> }> })[];
+  units: (StandardUnit | { id: string | number; course_id?: string | number; subUnit?: Array<{ id?: string | number; topics?: Array<{ id?: string | number; learnerMap?: boolean; trainerMap?: boolean; signed_off?: boolean; comment?: string }> }> })[];
   signatures: SignatureData[];
 };
 
@@ -41,7 +41,7 @@ export interface Task {
   showOrder?: number;
   learnerMap?: boolean;
   trainerMap?: boolean;
-  signedOff?: boolean;
+  signed_off?: boolean;
   comment?: string;
   mapping_id?: number;
 }
@@ -56,7 +56,7 @@ export interface Unit {
   tasks?: Task[];
   learnerMap?: boolean;
   trainerMap?: boolean;
-  signedOff?: boolean;
+  signed_off?: boolean;
   comment?: string;
   mapping_id?: number;
 }
@@ -71,7 +71,7 @@ export interface Module {
   units?: Unit[];
   learnerMap?: boolean;
   trainerMap?: boolean;
-  signedOff?: boolean;
+  signed_off?: boolean;
   comment?: string;
   mapping_id?: number;
 }
@@ -85,7 +85,7 @@ export interface SubUnit {
   code?: string;
   learnerMap?: boolean;
   trainerMap?: boolean;
-  signedOff?: boolean;
+  signed_off?: boolean;
   comment?: string;
   mapping_id?: number;
 }
@@ -95,18 +95,18 @@ export interface StandardUnit {
   title: string;
   type?: string;
   code?: string;
-  unit_ref?: string;
+  // unit_ref?: string;
   mandatory?: boolean;
   description?: string;
-  delivery_method?: string;
-  otj_hours?: string;
-  delivery_lead?: string;
+  // delivery_method?: string;
+  // otj_hours?: string;
+  // delivery_lead?: string;
   sort_order?: string;
   active?: boolean;
   subUnit: SubUnit[];
   learnerMap?: boolean;
   trainerMap?: boolean;
-  signedOff?: boolean;
+  signed_off?: boolean;
   comment?: string;
   course_id?: string | number;
   mapping_id?: number;

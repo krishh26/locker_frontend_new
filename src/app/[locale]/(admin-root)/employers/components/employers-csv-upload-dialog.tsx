@@ -17,6 +17,49 @@ import { useBulkCreateEmployersMutation } from "@/store/api/employer/employerApi
 import type { CreateEmployerRequest } from "@/store/api/employer/types";
 import { toast } from "sonner";
 
+const csvFieldToApiFieldMap = {
+  CompanyName: "employer_name",
+  MSIEmployerID: "msi_employer_id",
+  BusinessDepartment: "business_department",
+  BusinessLocation: "business_location",
+  BranchCode: "branch_code",
+  Address1: "address_1",
+  Address2: "address_2",
+  City: "city",
+  County: "employer_county",
+  Country: "country",
+  Postcode: "postal_code",
+  BusinessCategory: "business_category",
+  NumberOfEmployees: "number_of_employees",
+  Telephone: "telephone",
+  Website: "website",
+  KeyContactName: "key_contact_name",
+  KeyContactNumber: "key_contact_number",
+  Email: "email",
+  BusinessDescription: "business_description",
+  Comments: "comments",
+  AssessmentDate: "assessment_date",
+  AssessmentRenewalDate: "assessment_renewal_date",
+  InsuranceRenewalDate: "insurance_renewal_date",
+} as const;
+
+const requiredCsvFields = [
+  "CompanyName",
+  "MSIEmployerID",
+  "Address1",
+  "Address2",
+  "City",
+  "County",
+  "Country",
+  "Postcode",
+  "Email",
+] as const;
+const requiredCsvFieldSet = new Set<string>(requiredCsvFields);
+
+const allCsvHeaders = Object.keys(csvFieldToApiFieldMap) as Array<keyof typeof csvFieldToApiFieldMap>;
+
+const normalizeCsvHeader = (header: string) => header.replace(/\*+$/g, "").trim();
+
 // Function to convert date from DD-MM-YYYY to YYYY-MM-DD format
 const convertDateFormat = (dateString: string): string => {
   if (!dateString || typeof dateString !== "string") return dateString;
@@ -38,31 +81,9 @@ const convertDateFormat = (dateString: string): string => {
 
 // Function to download sample CSV
 const downloadSampleCSV = () => {
-  const headers = [
-    "CompanyName",
-    "MSIEmployerID",
-    "BusinessDepartment",
-    "BusinessLocation",
-    "BranchCode",
-    "Address1",
-    "Address2",
-    "City",
-    "County",
-    "Country",
-    "Postcode",
-    "BusinessCategory",
-    "NumberOfEmployees",
-    "Telephone",
-    "Website",
-    "KeyContactName",
-    "KeyContactNumber",
-    "Email",
-    "BusinessDescription",
-    "Comments",
-    "AssessmentDate",
-    "AssessmentRenewalDate",
-    "InsuranceRenewalDate",
-  ];
+  const headers = allCsvHeaders.map((header) =>
+    requiredCsvFieldSet.has(header) ? `${header}*` : header
+  );
 
   const sampleData = [
     "ABC Company Ltd - Test",
@@ -129,9 +150,13 @@ export function EmployersCsvUploadDialog({
 
   const [bulkCreateEmployers, { isLoading }] = useBulkCreateEmployersMutation();
 
-  const requiredFields = ["CompanyName", "MSIEmployerID"];
-
   const parseCSV = (csvFile: File) => {
+    if (!centreId || centreId <= 0) {
+      setError("A valid centre must be selected before CSV upload.");
+      setParsedData([]);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
@@ -145,7 +170,7 @@ export function EmployersCsvUploadDialog({
       // Parse header
       const headers = lines[0]
         .split(",")
-        .map((h) => h.trim().replace(/^"|"$/g, ""));
+        .map((h) => normalizeCsvHeader(h.replace(/^"|"$/g, "")));
 
       // Parse data rows
       const rows: Omit<CreateEmployerRequest, "file">[] = [];
@@ -160,13 +185,13 @@ export function EmployersCsvUploadDialog({
         });
 
         // Validate required fields
-        const invalidField = requiredFields.find(
+        const invalidField = requiredCsvFields.find(
           (field) => !row[field] || row[field].toString().trim() === ""
         );
 
         if (invalidField) {
           setError(
-            `Row ${i + 1}: Missing required field "${invalidField}". Please check that every row includes Company Name and MSIEmployerID.`
+            `Row ${i + 1}: Missing required field "${invalidField}". Required columns are ${requiredCsvFields.join(", ")}.`
           );
           setParsedData([]);
           return;
@@ -251,6 +276,11 @@ export function EmployersCsvUploadDialog({
   };
 
   const handleUpload = async () => {
+    if (!centreId || centreId <= 0) {
+      setError("A valid centre must be selected before CSV upload.");
+      return;
+    }
+
     if (!file || parsedData.length === 0) {
       setError("No valid data found. Please upload a proper CSV file.");
       return;
@@ -289,11 +319,11 @@ export function EmployersCsvUploadDialog({
 
         <div className="space-y-6">
           {/* Sample CSV Download */}
-          <div className="bg-primary border border-primary rounded-xl p-6 text-white">
+          <div className="border border-primary rounded-xl p-6 text-white">
             <div className="flex items-center justify-between">
               <div className="flex items-start gap-4 flex-1">
                 <div className="bg-white/20 p-3 rounded-lg">
-                  <Download className="w-5 h-5 text-white" />
+                  <Download className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-lg mb-2">
@@ -386,10 +416,10 @@ export function EmployersCsvUploadDialog({
 
           {/* File Info */}
           {file && parsedData.length > 0 && (
-            <div className="bg-accent border border-accent rounded-xl p-5">
+            <div className="border border-accent rounded-xl p-5">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-lg">
-                <Download className="w-5 h-5 text-white" />
+                <Download className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <p className="text-accent text-sm font-medium">

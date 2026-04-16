@@ -7,11 +7,12 @@ const baseRoles = [
   "IQA",
   "EQA",
   "MasterAdmin",
+  "PhoenixTeam",
   "AccountManager",
 ] as const
 
 /** Roles returned by API that we strip from auth/display (not used in app) */
-export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin"] as const
+export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin" ,"LIQA"] as const
 
 export type Role = (typeof baseRoles)[number]
 
@@ -35,6 +36,7 @@ export const authRoles = {
   IQA: ["IQA"] as const satisfies readonly Role[],
   EQA: ["EQA"] as const satisfies readonly Role[],
   MasterAdmin: ["MasterAdmin"] as const satisfies readonly Role[],
+  PhoenixTeam: ["PhoenixTeam"] as const satisfies readonly Role[],
   AccountManager: ["AccountManager"] as const satisfies readonly Role[],
   all: [...baseRoles] as const satisfies readonly Role[],
   onlyGuest: null,

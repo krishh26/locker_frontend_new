@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useSubmitFeedbackMutation } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -77,9 +78,14 @@ export function FeedbackDialog({
     }
   };
 
+  const displayName = formatWellbeingDisplayName(resource);
+  const titleTooltip =
+    [resource.resource_name?.trim(), resource.location?.trim()].filter(Boolean).join(" — ") ||
+    displayName;
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-[min(100vw-2rem,28rem)] max-w-[calc(100vw-2rem)] overflow-hidden sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("feedbackDialog.title")}</DialogTitle>
           <DialogDescription>
@@ -87,12 +93,17 @@ export function FeedbackDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-4">
-          <div className="text-center">
-            <h3 className="text-lg font-semibold">{resource.resource_name}</h3>
+        <div className="flex min-h-0 min-w-0 flex-col gap-4 py-2">
+          <div className="w-full min-w-0 max-w-full shrink-0">
+            <h3
+              className="max-h-[min(28vh,7.5rem)] overflow-y-auto wrap-anywhere text-center text-base font-semibold leading-snug break-all text-foreground sm:text-lg"
+              title={titleTooltip}
+            >
+              {displayName}
+            </h3>
           </div>
 
-          <div className="flex justify-center gap-4 py-4">
+          <div className="flex shrink-0 flex-wrap justify-center gap-3 py-2 sm:gap-4">
             {Object.keys(feedbackMapping).map((emoji) => {
               const emojiKey = emoji as EmojiKey;
               const isSelected = selectedEmoji === emojiKey;

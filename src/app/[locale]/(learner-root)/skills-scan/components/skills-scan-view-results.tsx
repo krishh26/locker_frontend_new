@@ -15,7 +15,6 @@ import type { CourseUnit } from "@/store/api/skills-scan/types";
 import { useAppSelector } from "@/store/hooks";
 import { selectCourseData, selectSelectedCourse } from "@/store/slices/skillsScanSlice";
 import html2canvas from "html2canvas-pro";
-import jsPDF from "jspdf";
 import { Download, Eye, TrendingUp } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -103,6 +102,9 @@ export function SkillsScanViewResults() {
         allowTaint: true,
         imageTimeout: 15000,
       });
+
+      // Browser ESM build — bare "jspdf" resolves to node build under Turbopack/SSR (fflate + Worker error).
+      const { jsPDF } = await import("jspdf/dist/jspdf.es.min.js");
 
       // Calculate PDF dimensions
       const imgWidth = 210; // A4 width in mm

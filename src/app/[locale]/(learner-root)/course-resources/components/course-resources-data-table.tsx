@@ -298,7 +298,7 @@ export function CourseResourcesDataTable() {
         ? t("table.accessStatus.opened")
         : t("table.accessStatus.notOpened"),
     ]);
-    exportTableToPdf({ title: t("table.export.pdfTitle"), headers, rows });
+    void exportTableToPdf({ title: t("table.export.pdfTitle"), headers, rows });
     toast.success(t("table.export.pdfSuccess"));
   };
 

@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { format } from "date-fns"
-import { Button } from "@/components/ui/button"
+import { format } from 'date-fns'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,16 +9,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+} from '@/components/ui/dialog'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
 import {
   useGetSurveyByIdQuery,
   useGetQuestionsQuery,
   type Response,
   type Question,
-} from "@/store/api/survey/surveyApi"
+} from '@/store/api/survey/surveyApi'
 
 interface ResponseDetailProps {
   open: boolean
@@ -27,23 +27,25 @@ interface ResponseDetailProps {
   response: Response | null
 }
 
-const questionTypeLabels: Record<Question["type"], string> = {
-  "short-text": "Short Text",
-  "long-text": "Long Text",
-  "multiple-choice": "Multiple Choice",
-  checkbox: "Checkbox",
-  rating: "Rating",
-  date: "Date",
-  likert: "Likert Scale",
+const questionTypeLabels: Record<Question['type'], string> = {
+  'short-text': 'Short Text',
+  'long-text': 'Long Text',
+  'multiple-choice': 'Multiple Choice',
+  checkbox: 'Checkbox',
+  rating: 'Rating',
+  date: 'Date',
+  likert: 'Likert Scale',
 }
 
 const questionDetailColors = [
-  "bg-primary border-primary",
-  "bg-secondary border-secondary",
-  "bg-accent border-accent",
-  "bg-primary border-primary",
-  "bg-secondary border-secondary",
-  "bg-linear-to-br from-cyan-50/50 to-teal-50/50 dark:from-cyan-950/20 dark:to-teal-950/15 border-cyan-200/50 dark:border-cyan-800/30",
+  'bg-linear-to-br from-cyan-50/50 to-teal-50/50 dark:from-cyan-950/20 dark:to-teal-950/15 border-cyan-200/50 dark:border-cyan-800/30',
+  'bg-linear-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/15 border-violet-200/50 dark:border-violet-800/30',
+  'bg-linear-to-br from-rose-50/50 to-pink-50/50 dark:from-rose-950/20 dark:to-pink-950/15 border-rose-200/50 dark:border-rose-800/30',
+  'bg-linear-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/15 border-amber-200/50 dark:border-amber-800/30',
+  'bg-linear-to-br from-sky-50/50 to-indigo-50/50 dark:from-sky-950/20 dark:to-indigo-950/15 border-sky-200/50 dark:border-sky-800/30',
+  'bg-linear-to-br from-emerald-50/50 to-lime-50/50 dark:from-emerald-950/20 dark:to-lime-950/15 border-emerald-200/50 dark:border-emerald-800/30',
+  'bg-linear-to-br from-red-50/50 to-orange-50/50 dark:from-red-950/15 dark:to-orange-950/15 border-red-200/50 dark:border-red-900/30',
+  'bg-linear-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-950/20 dark:to-cyan-950/15 border-blue-200/50 dark:border-blue-800/30',
 ]
 
 export function ResponseDetail({
@@ -55,7 +57,7 @@ export function ResponseDetail({
   // Fetch survey from API
   const { data: surveyResponse } = useGetSurveyByIdQuery(surveyId)
   const survey = surveyResponse?.data?.survey
-  
+
   // Fetch questions from API
   const { data: questionsResponse } = useGetQuestionsQuery(surveyId, {
     skip: !surveyId,
@@ -69,23 +71,32 @@ export function ResponseDetail({
 
   const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
 
-  const formatAnswer = (question: Question, answer: string | string[] | Record<string, string> | null) => {
+  const formatAnswer = (
+    question: Question,
+    answer: string | string[] | Record<string, string> | null,
+  ) => {
     if (answer === null || answer === undefined) {
-      return <span className="text-muted-foreground italic">No answer provided</span>
+      return (
+        <span className='text-muted-foreground italic'>No answer provided</span>
+      )
     }
 
-    if (question.type === "likert" && typeof answer === "object" && !Array.isArray(answer)) {
+    if (
+      question.type === 'likert' &&
+      typeof answer === 'object' &&
+      !Array.isArray(answer)
+    ) {
       // Likert responses are stored as objects: { "0": "option1", "1": "option2" }
       if (question.statements && question.statements.length > 0) {
         return (
-          <div className="space-y-2">
-            <table className="w-full border-collapse border border-border text-sm">
+          <div className='space-y-2'>
+            <table className='w-full border-collapse border border-border text-sm'>
               <thead>
                 <tr>
-                  <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                  <th className='border border-border bg-muted/50 p-2 text-left font-medium'>
                     Statement
                   </th>
-                  <th className="border border-border bg-muted/50 p-2 text-left font-medium">
+                  <th className='border border-border bg-muted/50 p-2 text-left font-medium'>
                     Selected Option
                   </th>
                 </tr>
@@ -93,14 +104,17 @@ export function ResponseDetail({
               <tbody>
                 {question.statements.map((statement, index) => {
                   const statementKey = String(index)
-                  const selectedOption = answer[statementKey] || "Not answered"
+                  const selectedOption = answer[statementKey] || 'Not answered'
                   return (
-                    <tr key={index} className={index % 2 === 0 ? "bg-muted/30" : ""}>
-                      <td className="border border-border p-2 font-medium">
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? 'bg-muted/30' : ''}
+                    >
+                      <td className='border border-border p-2 font-medium'>
                         {statement}
                       </td>
-                      <td className="border border-border p-2">
-                        <Badge variant="secondary">{selectedOption}</Badge>
+                      <td className='border border-border p-2'>
+                        <Badge variant='secondary'>{selectedOption}</Badge>
                       </td>
                     </tr>
                   )
@@ -112,22 +126,22 @@ export function ResponseDetail({
       }
       // Fallback if statements are not available
       return (
-        <div className="space-y-1">
+        <div className='space-y-1'>
           {Object.entries(answer).map(([key, value]) => (
-            <div key={key} className="flex items-center gap-2">
-              <span className="font-medium">Statement {Number(key) + 1}:</span>
-              <Badge variant="secondary">{value}</Badge>
+            <div key={key} className='flex items-center gap-2'>
+              <span className='font-medium'>Statement {Number(key) + 1}:</span>
+              <Badge variant='secondary'>{value}</Badge>
             </div>
           ))}
         </div>
       )
     }
 
-    if (question.type === "checkbox" && Array.isArray(answer)) {
+    if (question.type === 'checkbox' && Array.isArray(answer)) {
       return (
-        <div className="space-y-1">
+        <div className='space-y-1'>
           {answer.map((item, index) => (
-            <Badge key={index} variant="secondary" className="mr-2">
+            <Badge key={index} variant='secondary' className='mr-2'>
               {item}
             </Badge>
           ))}
@@ -135,16 +149,16 @@ export function ResponseDetail({
       )
     }
 
-    if (question.type === "date" && typeof answer === "string") {
+    if (question.type === 'date' && typeof answer === 'string') {
       try {
-        return format(new Date(answer), "PPP")
+        return format(new Date(answer), 'PPP')
       } catch {
         return answer
       }
     }
 
     if (Array.isArray(answer)) {
-      return answer.join(", ")
+      return answer.join(', ')
     }
 
     return <span>{String(answer)}</span>
@@ -152,7 +166,7 @@ export function ResponseDetail({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className='sm:max-w-3xl max-h-[90vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>Response Details</DialogTitle>
           <DialogDescription>
@@ -160,55 +174,62 @@ export function ResponseDetail({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <Card className="bg-primary border-primary">
+        <div className='space-y-4'>
+          <Card className='border-primary'>
             <CardHeader>
-              <CardTitle className="text-lg text-white">{survey.name}</CardTitle>
+              <CardTitle className='text-lg text-black'>
+                {survey.name}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              {survey.description && (
-                <p className="text-sm text-white/70 mb-4">
+            {survey.description && (
+              <CardContent>
+                <p className='text-sm text-black/70 mb-4'>
                   {survey.description}
                 </p>
-              )}
-            </CardContent>
+              </CardContent>
+            )}
           </Card>
 
           <Separator />
 
-          <div className="space-y-4">
+          <div className='space-y-4'>
             {sortedQuestions.map((question, index) => {
               const answer = response.answers[question.id]
               return (
-                <Card key={question.id} className={questionDetailColors[index % questionDetailColors.length]}>
+                <Card
+                  key={question.id}
+                  className={
+                    questionDetailColors[index % questionDetailColors.length]
+                  }
+                >
                   <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardTitle className="text-base">
+                    <div className='flex items-start justify-between'>
+                      <div className='flex-1'>
+                        <CardTitle className='text-base'>
                           {index + 1}. {question.title}
                         </CardTitle>
                         {question.description && (
-                          <p className="text-sm text-muted-foreground mt-1">
+                          <p className='text-sm text-muted-foreground mt-1'>
                             {question.description}
                           </p>
                         )}
                       </div>
-                      <div className="flex gap-2">
-                        <Badge variant="outline">
+                      <div className='flex gap-2'>
+                        <Badge variant='outline'>
                           {questionTypeLabels[question.type]}
                         </Badge>
                         {question.required && (
-                          <Badge variant="destructive">Required</Badge>
+                          <Badge variant='destructive'>Required</Badge>
                         )}
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium text-muted-foreground">
+                    <div className='space-y-2'>
+                      <p className='text-sm font-medium text-muted-foreground'>
                         Answer:
                       </p>
-                      <div className="text-base">
+                      <div className='text-base'>
                         {formatAnswer(question, answer)}
                       </div>
                     </div>
@@ -220,7 +241,7 @@ export function ResponseDetail({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant='outline' onClick={() => onOpenChange(false)}>
             Close
           </Button>
         </DialogFooter>
@@ -228,4 +249,3 @@ export function ResponseDetail({
     </Dialog>
   )
 }
-

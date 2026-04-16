@@ -37,6 +37,8 @@ export interface CreateContractedWorkRequest {
   contract_end?: string | null; // ISO date string, optional
   contracted_work_hours_per_week: string | number;
   yearly_holiday_entitlement_in_hours?: number | null;
+  /** Backend persists the editing user (legacy parity). */
+  last_editer?: number;
 }
 
 export interface UpdateContractedWorkRequest {
@@ -45,5 +47,6 @@ export interface UpdateContractedWorkRequest {
   contract_end?: string | null; // ISO date string, optional
   contracted_work_hours_per_week?: string | number;
   yearly_holiday_entitlement_in_hours?: number | null;
+  last_editer?: number;
 }
 

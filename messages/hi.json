@@ -949,7 +949,47 @@
   "tabs": {
   "formList": "फ़ॉर्म सूची",
   "templateList": "टेम्पलेट सूची",
-  "response": "प्रतिक्रियाएँ"
+  "response": "प्रतिक्रियाएँ",
+  "reports": "रिपोर्ट"
+  },
+  "reports": {
+    "cardDescription": "एक फ़ॉर्म चुनें, फ़ील्ड चुनें, और सभी सबमिटेड डेटा एक्सपोर्ट करें।",
+    "formSearch": {
+      "label": "फ़ॉर्म खोजें",
+      "placeholder": "फ़ॉर्म नाम से खोजें..."
+    },
+    "formSelect": {
+      "label": "फ़ॉर्म चुनें",
+      "placeholder": "कृपया चुनें"
+    },
+    "fields": {
+      "title": "फ़ील्ड",
+      "loading": "फ़ील्ड लोड हो रहे हैं...",
+      "available": "{count} फ़ील्ड उपलब्ध",
+      "selectFormHint": "फ़ील्ड देखने के लिए एक फ़ॉर्म चुनें"
+    },
+    "actions": {
+      "selectAll": "सभी चुनें",
+      "clear": "साफ़ करें",
+      "exportExcel": "Excel एक्सपोर्ट करें"
+    },
+    "validation": {
+      "selectForm": "कृपया एक फ़ॉर्म चुनें।",
+      "selectAtLeastOneField": "कृपया एक्सपोर्ट के लिए कम से कम एक फ़ील्ड चुनें।"
+    },
+    "errors": {
+      "tooManyPages": "एक्सपोर्ट करने के लिए बहुत ज़्यादा पेज हैं। कृपया परिणाम सीमित करें या एडमिन से संपर्क करें।",
+      "noSubmissions": "इस फ़ॉर्म के लिए कोई सबमिशन नहीं मिला।",
+      "exportFailed": "एक्सपोर्ट विफल"
+    },
+    "toast": {
+      "exportSuccess": "Excel सफलतापूर्वक एक्सपोर्ट हुआ"
+    },
+    "csvHeaders": {
+      "userName": "उपयोगकर्ता नाम",
+      "email": "ईमेल",
+      "submittedAt": "सबमिट समय"
+    }
   },
   "table": {
     "searchPlaceholder": "कीवर्ड से खोजें...",
@@ -1075,7 +1115,7 @@
     "dragComponentsHint": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
     "field": "फ़ील्ड",
     "fields": "फ़ील्ड",
-    "preview": "पूर्वावलोकन",
+    "previewButton": "पूर्वावलोकन",
     "edit": "संपादित करें",
     "saving": "सहेज रहा है...",
     "saveAsForm": "फ़ॉर्म के रूप में सहेजें",
@@ -1607,7 +1647,11 @@
         "viewDocumentsEvidence": "डॉक्यूमेंट्स / एविडेंस देखें",
         "viewPortfolio": "पोर्टफोलियो देखें",
         "unableOpenDocumentsLearnerIdMissing": "डॉक्यूमेंट्स नहीं खुल सके। लर्नर ID नहीं मिली।",
-        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।"
+        "unableOpenPortfolioLearnerIdMissing": "पोर्टफोलियो नहीं खुल सका। लर्नर ID नहीं मिली।",
+        "qaApprovedUpdateFailed": "QA अनुमोदित अपडेट नहीं हो सका। कृपया पुनः प्रयास करें।",
+        "qaApprovedNoSamples": "QA अनुमोदित केवल उन शिक्षार्थियों के लिए सेट किया जा सकता है जिनके पास इस योजना पर कम से कम एक नमूना हो।",
+        "qaApprovedSelectPlanAndFilter": "QA अनुमोदित बदलने से पहले पाठ्यक्रम और योजना चुनें, फिर फ़िल्टर लागू करें।",
+        "qaApprovedMissingLearnerId": "इस पंक्ति के लिए शिक्षार्थी ID गायब है।"
       }
     },
     "editSampleModal": {
@@ -2347,6 +2391,7 @@
       "deleteFailed": "संसाधन हटाने में विफल",
       "noDataToExport": "एक्सपोर्ट करने के लिए डेटा उपलब्ध नहीं है",
       "noFeedbackToExport": "एक्सपोर्ट करने के लिए फीडबैक डेटा उपलब्ध नहीं है",
+      "exportFailed": "फीडबैक एक्सपोर्ट नहीं हो सका। कृपया पुनः प्रयास करें।",
       "exportSuccess": "फीडबैक रिपोर्ट सफलतापूर्वक एक्सपोर्ट की गई",
       "addedSuccess": "संसाधन सफलतापूर्वक जोड़ा गया",
       "addFailed": "संसाधन जोड़ने में विफल",
@@ -2433,6 +2478,7 @@
     "validation": {
       "activityRequired": "गतिविधि आवश्यक है",
       "dateRequired": "तारीख आवश्यक है",
+      "dateNotInFuture": "तारीख भविष्य में नहीं हो सकती",
       "methodRequired": "विधि आवश्यक है",
       "learningRequired": "सीख आवश्यक है",
       "impactRequired": "प्रभाव आवश्यक है"
@@ -2588,7 +2634,9 @@
           "urgent": "जरूरी"
         },
         "centreLabel": "केंद्र (वैकल्पिक)",
-        "centrePlaceholder": "केंद्र ID"
+        "centrePlaceholder": "केंद्र ID",
+        "attachmentLabel": "संलग्नक (वैकल्पिक)",
+        "attachmentHint": "अधिकतम 5 फ़ाइलें, प्रत्येक 25 MB तक (वैकल्पिक)।"
       },
       "buttons": {
         "cancel": "रद्द करें",
@@ -2597,7 +2645,9 @@
       },
       "validation": {
         "titleRequired": "शीर्षक आवश्यक है",
-        "descriptionRequired": "विवरण आवश्यक है"
+        "descriptionRequired": "विवरण आवश्यक है",
+        "tooManyFiles": "आप अधिकतम 5 फ़ाइलें संलग्न कर सकते हैं।",
+        "fileTooLarge": "प्रत्येक फ़ाइल 25 MB या उससे कम होनी चाहिए।"
       },
       "toast": {
         "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",
@@ -3698,6 +3748,24 @@
       "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
     }
   },
+  "automaticMailControl": {
+    "pageTitle": "ऑटोमैटिक मेल कंट्रोल",
+    "pageSubtitle": "सेशन से पहले लर्नर्स के लिए ऑटोमैटिक ईमेल रिमाइंडर कॉन्फ़िगर करें",
+    "cardTitle": "लर्नर को सेशन रिमाइंडर",
+    "reminderDaysLabel": "रिमाइंडर भेजें",
+    "optionDays": "{days} दिन",
+    "optionHint": "सेशन की तारीख से {days} दिन पहले ईमेल भेजें",
+    "trainerCardTitle": "ट्रेनर को सेशन रिमाइंडर",
+    "trainerReminderDaysLabel": "रिमाइंडर भेजें",
+    "trainerOptionHint": "सेशन की तारीख से {days} दिन पहले ईमेल भेजें",
+    "save": "सहेजें",
+    "saving": "सहेजा जा रहा है...",
+    "toast": {
+      "configSaved": "कॉन्फ़िगरेशन सफलतापूर्वक सहेजी गई!",
+      "saveFailed": "कॉन्फ़िगरेशन सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "loadFailed": "कॉन्फ़िगरेशन लोड करने में विफल। कृपया पुनः प्रयास करें।"
+    }
+  },
   "proposeInnovations": {
     "page": {
       "title": "अपने नवाचार सुझाएँ",
@@ -4586,12 +4654,14 @@
     },
     "summaryCards": {
       "thisWeek": "इस सप्ताह",
+      "thisWeekAlso": "इस सप्ताह भी",
       "thisMonth": "इस माह",
       "total": "कुल",
       "hoursLabel": "{hours} घंटे"
     },
     "recentActivity": {
       "title": "हाल की गतिविधि",
+      "timeTakenLabel": "लिया गया समय",
       "empty": "कोई हाल की गतिविधि नहीं मिली।"
     },
     "table": {
@@ -4729,6 +4799,63 @@
         "other": "अन्य",
         "furloughed": "फरलो (Furloughed)"
       }
+    },
+    "offTheJob": {
+      "loading": "ऑफ-द-जॉब सारांश लोड हो रहा है...",
+      "title": "ऑफ द जॉब ट्रेनिंग सारांश",
+      "summarySection": {
+        "title": "सारांश",
+        "duration": {
+          "label": "अवधि",
+          "tooltip": "कार्यक्रम की अवधि (सप्ताहों में)।",
+          "units": "सप्ताह"
+        },
+        "contractedHours": {
+          "label": "संविदात्मक कार्य घंटे",
+          "tooltip": "कार्यक्रम के लिए कुल संविदात्मक कार्य घंटे।"
+        },
+        "holiday": {
+          "label": "अवकाश अधिकार",
+          "tooltip": "वैधानिक और संविदात्मक अवकाश अधिकार।"
+        },
+        "required": {
+          "label": "ऑफ द जॉब घंटे (आवश्यक)"
+        },
+        "requiredToDate": {
+          "label": "आज तक आवश्यक ऑफ द जॉब घंटे"
+        }
+      },
+      "warnings": {
+        "title": "चेतावनियाँ"
+      },
+      "actualHours": {
+        "title": "वास्तविक लॉग किए गए घंटे",
+        "totalLogged": {
+          "label": "कुल लॉग (ऑफ द जॉब)"
+        },
+        "thisWeek": {
+          "label": "इस सप्ताह"
+        },
+        "thisMonth": {
+          "label": "इस महीने"
+        },
+        "percentage": {
+          "label": "पूर्णता बनाम आज तक आवश्यक",
+          "tooltip": "प्रतिशत तब दिखाया जाता है जब आज तक आवश्यक घंटे उपलब्ध हों।"
+        }
+      },
+      "common": {
+        "hours": "घंटे"
+      },
+      "courses": {
+        "title": "कोर्स",
+        "columns": {
+          "course": "कोर्स",
+          "type": "प्रकार",
+          "status": "स्थिति",
+          "offTheJobHours": "ऑफ द जॉब (घं:मि)"
+        }
+      }
     }
   },
   "evidenceLibrary": {
@@ -4825,7 +4952,10 @@
         "loadingEvidence": "साक्ष्य लोड हो रहा है...",
         "selectSession": "सत्र चुनें",
         "loadingSessions": "सत्र लोड हो रहे हैं...",
-        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है"
+        "noSessionsAvailable": "कोई सत्र उपलब्ध नहीं है",
+        "savedSessionNotInList": "सहेजा गया सत्र (आईडी: {id})",
+        "existingAdditionalEvidence": "वर्तमान अतिरिक्त साक्ष्य फ़ाइल",
+        "replaceAdditionalEvidenceHint": "सहेजते समय बदलने के लिए नीचे नई फ़ाइल अपलोड करें।"
       },
       "assessmentMethods": {
         "Obs": "अवलोकन",
@@ -5202,6 +5332,8 @@
         "selectEQA": "कृपया EQA चुनें",
         "selectStartDate": "कृपया प्रारंभ तिथि चुनें",
         "selectEndDate": "कृपया समाप्ति तिथि चुनें",
+        "selectSuspendedUntil": "कृपया निलंबन समाप्ति तिथि चुनें",
+        "suspendedUntilNotPast": "निलंबन समाप्ति तिथि पिछली नहीं हो सकती",
         "endDateAfterStart": "समाप्ति तिथि प्रारंभ तिथि के बाद होनी चाहिए",
         "enterPredictedGrade": "कृपया अनुमानित ग्रेड दर्ज करें",
         "enterFinalGrade": "कृपया अंतिम ग्रेड दर्ज करें"
@@ -5233,6 +5365,7 @@
       "form": {
         "selectCourse": "कोर्स चुनें",
         "courseStatus": "कोर्स की स्थिति",
+        "suspendedUntil": "निलंबन समाप्ति तिथि",
         "trainer": "ट्रेनर",
         "iqa": "IQA",
         "liqa": "LIQA",
@@ -5282,7 +5415,8 @@
         "editDescription": "अनुबंधित कार्य घंटे की जानकारी अपडेट करें।",
         "setNewDescription": "इस सीखने वाले के लिए अनुबंधित कार्य घंटे की जानकारी दर्ज करें।",
         "companyLabel": "कंपनी *",
-        "companyPlaceholder": "कंपनी का नाम दर्ज करें",
+        "companyPlaceholder": "कंपनी चुनें",
+        "loadingEmployers": "नियोक्ता लोड हो रहे हैं…",
         "contractStartLabel": "अनुबंध प्रारंभ तिथि *",
         "contractEndLabel": "अनुबंध समाप्ति तिथि",
         "hoursPerWeekLabel": "प्रति सप्ताह कार्य घंटे *",

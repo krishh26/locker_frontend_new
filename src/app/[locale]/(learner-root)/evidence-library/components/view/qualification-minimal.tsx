@@ -35,7 +35,7 @@ export interface QualificationMinimalProps {
   unitsWatch: any[];
   learnerMapHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   trainerMapHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
-  signedOffHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
+  signed_offHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   commentHandler: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, topicId: string | number, unitId: string | number, subUnitId: string | number) => void;
   getEvidenceCount: (courseId: string | number, unitId: string | number, topicId?: string | number) => number;
   canEditLearnerFields: boolean;
@@ -52,7 +52,7 @@ export function QualificationMinimal({
   unitsWatch,
   learnerMapHandler,
   trainerMapHandler,
-  signedOffHandler,
+  signed_offHandler,
   commentHandler,
   getEvidenceCount,
   canEditLearnerFields,
@@ -75,7 +75,7 @@ export function QualificationMinimal({
       return {
         learnerMap: false,
         trainerMap: false,
-        signedOff: false,
+        signed_off: false,
         comment: '',
       };
     }
@@ -87,7 +87,7 @@ export function QualificationMinimal({
       return {
         learnerMap: false,
         trainerMap: false,
-        signedOff: false,
+        signed_off: false,
         comment: '',
       };
     }
@@ -99,7 +99,7 @@ export function QualificationMinimal({
     return {
       learnerMap: currentTopic?.learnerMap ?? false,
       trainerMap: currentTopic?.trainerMap ?? false,
-      signedOff: currentTopic?.signedOff ?? false,
+      signed_off: currentTopic?.signed_off ?? false,
       comment: currentTopic?.comment ?? '',
     };
   }, [unitsWatch]);
@@ -274,7 +274,7 @@ export function QualificationMinimal({
                             <GapIndicator
                               learnerMap={currentValues.learnerMap}
                               trainerMap={currentValues.trainerMap}
-                              signedOff={currentValues.signedOff}
+                              signed_off={currentValues.signed_off}
                               onClick={() => {
                                 if (canEditTrainerFields && currentValues.learnerMap) {
                                   trainerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
@@ -287,14 +287,14 @@ export function QualificationMinimal({
                         </TableCell>
                         <TableCell className="text-center">
                           <Checkbox
-                            checked={currentValues.signedOff}
+                            checked={currentValues.signed_off}
                             disabled={
                               !canEditTrainerFields ||
                               !currentValues.learnerMap ||
                               !currentValues.trainerMap
                             }
                             onCheckedChange={() => {
-                              signedOffHandler(pc.topic, pc.unitId, pc.subUnitId);
+                              signed_offHandler(pc.topic, pc.unitId, pc.subUnitId);
                             }}
                           />
                         </TableCell>

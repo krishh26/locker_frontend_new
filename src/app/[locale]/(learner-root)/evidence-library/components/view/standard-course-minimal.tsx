@@ -45,7 +45,7 @@ export interface StandardCourseMinimalProps {
   unitsWatch: any[];
   learnerMapHandler: (row: any) => void;
   trainerMapHandler: (row: any) => void;
-  signedOffHandler: (row: any) => void;
+  signed_offHandler: (row: any) => void;
   commentHandler: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, id: string | number) => void;
   selectAllSignedOffForCombinedHandler?: (combinedSubUnits: any[], checked: boolean) => void;
   combinedSubUnits?: any[];
@@ -69,7 +69,7 @@ export function StandardCourseMinimal({
   unitsWatch,
   learnerMapHandler,
   trainerMapHandler,
-  signedOffHandler,
+  signed_offHandler,
   commentHandler,
   selectAllSignedOffForCombinedHandler,
   combinedSubUnits,
@@ -88,7 +88,7 @@ export function StandardCourseMinimal({
       return {
         learnerMap: currentUnit?.learnerMap ?? row.learnerMap ?? false,
         trainerMap: currentUnit?.trainerMap ?? row.trainerMap ?? false,
-        signedOff: currentUnit?.signedOff ?? row.signedOff ?? false,
+        signed_off: currentUnit?.signed_off ?? row.signed_off ?? false,
         comment: currentUnit?.comment ?? row.comment ?? '',
       };
     } else {
@@ -99,7 +99,7 @@ export function StandardCourseMinimal({
       return {
         learnerMap: currentSubUnit?.learnerMap ?? row.learnerMap ?? false,
         trainerMap: currentSubUnit?.trainerMap ?? row.trainerMap ?? false,
-        signedOff: currentSubUnit?.signedOff ?? row.signedOff ?? false,
+        signed_off: currentSubUnit?.signed_off ?? row.signed_off ?? false,
         comment: currentSubUnit?.comment ?? row.comment ?? '',
       };
     }
@@ -124,14 +124,14 @@ export function StandardCourseMinimal({
   const allSignedOffSelected = React.useMemo(() => {
     return rows.every((r) => {
       const values = getCurrentRowValues(r);
-      return (values.learnerMap && values.trainerMap && values.signedOff);
+      return (values.learnerMap && values.trainerMap && values.signed_off);
     });
   }, [rows, getCurrentRowValues]);
 
   const someSignedOffSelected = React.useMemo(() => {
     return rows.some((r) => {
       const values = getCurrentRowValues(r);
-      return (values.learnerMap && values.trainerMap && values.signedOff);
+      return (values.learnerMap && values.trainerMap && values.signed_off);
     });
   }, [rows, getCurrentRowValues]);
 
@@ -239,7 +239,7 @@ export function StandardCourseMinimal({
                       <GapIndicator
                         learnerMap={currentValues.learnerMap}
                         trainerMap={currentValues.trainerMap}
-                        signedOff={currentValues.signedOff}
+                        signed_off={currentValues.signed_off}
                         onClick={() => {
                           if (canEditTrainerFields && currentValues.learnerMap) {
                             trainerMapHandler(row);
@@ -252,14 +252,14 @@ export function StandardCourseMinimal({
                   </TableCell>
                   <TableCell className="text-center">
                     <Checkbox
-                      checked={currentValues.signedOff}
+                      checked={currentValues.signed_off}
                       disabled={
                         !canEditTrainerFields ||
                         !currentValues.learnerMap ||
                         !currentValues.trainerMap
                       }
                       onCheckedChange={() => {
-                        signedOffHandler(row);
+                        signed_offHandler(row);
                       }}
                     />
                   </TableCell>

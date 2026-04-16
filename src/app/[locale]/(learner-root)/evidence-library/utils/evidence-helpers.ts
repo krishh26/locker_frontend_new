@@ -56,18 +56,18 @@ export const getUnitMappingStatus = (
       sub_unit_id: number | null;
       learnerMap: boolean;
       trainerMap: boolean;
-      signedOff?: boolean;
+      signed_off?: boolean;
       course?: { course_core_type?: string };
     }>;
   },
   unitId: string | number,
   unitCode?: string,
   isSubUnit: boolean = false
-): { learnerMap: boolean; trainerMap: boolean; signedOff: boolean } => {
+): { learnerMap: boolean; trainerMap: boolean; signed_off: boolean } => {
   const defaultStatus = {
     learnerMap: false,
     trainerMap: false,
-    signedOff: false,
+    signed_off: false,
   };
 
   // Check mappings array from API response
@@ -85,7 +85,7 @@ export const getUnitMappingStatus = (
           return {
             learnerMap: mapping.learnerMap === true,
             trainerMap: mapping.trainerMap === true,
-            signedOff: mapping.signedOff === true,
+            signed_off: mapping.signed_off === true || (mapping as { signedOff?: boolean }).signedOff === true,
           };
         }
         // For Qualification courses: when sub_unit_id is null, unit_code might be a sub-unit ID
@@ -97,7 +97,7 @@ export const getUnitMappingStatus = (
           return {
             learnerMap: mapping.learnerMap === true,
             trainerMap: mapping.trainerMap === true,
-            signedOff: mapping.signedOff === true,
+            signed_off: mapping.signed_off === true || (mapping as { signedOff?: boolean }).signedOff === true,
           };
         }
       } else {
@@ -114,7 +114,7 @@ export const getUnitMappingStatus = (
             return {
               learnerMap: mapping.learnerMap === true,
               trainerMap: mapping.trainerMap === true,
-              signedOff: mapping.signedOff === true,
+              signed_off: mapping.signed_off === true || (mapping as { signedOff?: boolean }).signedOff === true,
             };
           }
         }

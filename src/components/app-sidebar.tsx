@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Lock,
   Users,
   Shield,
   MessageSquare,
@@ -21,6 +20,7 @@ import {
   Ticket,
   ClipboardList,
   Calendar,
+  Mail,
   Settings,
   BookOpen,
   PoundSterling,
@@ -158,12 +158,12 @@ const data: {
           icon: Lightbulb,
           isFree: true, // TODO: Configure later if needed
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-          isFree: true, // Basic support is free
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        //   isFree: true, // Basic support is free
+        // },
         {
           title: 'Tickets',
           url: '/tickets',
@@ -224,6 +224,49 @@ const data: {
           title: 'Admin Management',
           url: '/admin',
           icon: Settings,
+          items: [
+            {
+              title: 'Admin',
+              url: '/admin',
+              icon: Settings,
+            },
+            {
+              title: 'Funding Bands',
+              url: '/funding-bands',
+              icon: PoundSterling,
+              isFree: true,
+            },
+            {
+              title: 'Default Review Weeks',
+              url: '/default-review-weeks',
+              icon: Calendar,
+            },
+            {
+              title: 'Automatic Mail Control',
+              url: '/automatic-mail-control',
+              icon: Mail,
+            },
+            {
+              title: 'Caseload Management',
+              url: '/caseload',
+              icon: Users,
+            },
+            {
+              title: 'Forms',
+              url: '/forms',
+              icon: FileText,
+            },
+            {
+              title: 'Session Types',
+              url: '/session-types',
+              icon: Clock,
+            },
+            {
+              title: 'Exclude From Overall Progress',
+              url: '/progress-exclusion',
+              icon: Ban,
+            },
+          ],
         },
         // {
         //   title: "Pricing",
@@ -241,9 +284,26 @@ const data: {
           icon: Calendar,
         },
         {
-          title: 'Course Builder',
+          title: 'Course Management',
           url: '/course-builder',
           icon: BookOpen,
+          items: [
+            {
+              title: 'Course Builder',
+              url: '/course-builder',
+              icon: BookOpen,
+            },
+            {
+              title: 'Wellbeing Resources',
+              url: '/wellbeing',
+              icon: Heart,
+            },
+            {
+              title: 'Supplementary Training',
+              url: '/sup-training',
+              icon: BookOpen,
+            },
+          ],
         },
         {
           title: 'Surveys',
@@ -251,39 +311,50 @@ const data: {
           icon: ClipboardList,
         },
         {
-          title: 'Funding Bands',
-          url: '/funding-bands',
-          icon: PoundSterling,
-        },
-        {
-          title: 'Forms',
-          url: '/forms',
-          icon: FileText,
-        },
-        {
-          title: 'Trainer Risk Rating',
-          url: '/trainer-risk-rating',
-          icon: TrendingUp,
-        },
-        {
-          title: 'Wellbeing Resources',
-          url: '/wellbeing',
-          icon: Heart,
-        },
-        {
-          title: 'Supplementary Training',
-          url: '/sup-training',
-          icon: BookOpen,
-        },
-        {
-          title: 'QA Sample Plan',
+          title: 'Quality Assurance',
           url: '/qa-sample-plan',
           icon: ClipboardList,
+          items: [
+            {
+              title: 'QA Sample Plan',
+              url: '/qa-sample-plan',
+              icon: ClipboardList,
+            },
+            {
+              title: 'Trainer Risk Rating',
+              url: '/trainer-risk-rating',
+              icon: TrendingUp,
+            },
+            {
+              title: 'IQA Maintain Questions',
+              url: '/iqa-questions',
+              icon: HelpCircle,
+            },
+          ],
         },
         {
-          title: 'Caseload Management',
-          url: '/caseload',
-          icon: Users,
+          title: 'Reports',
+          url: '/timelog-export',
+          icon: FileBarChart,
+          items: [
+            {
+              title: 'Timelog Data Export',
+              url: '/timelog-export',
+              icon: Download,
+              isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'DATA_EXPORT'
+            },
+            {
+              title: 'Awaiting Signature',
+              url: '/awaiting-signature',
+              icon: FileSignature,
+            },
+            {
+              title: 'Gateway Report',
+              url: '/gateway-report',
+              icon: FileBarChart,
+              isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'ADVANCED_REPORTS'
+            },
+          ],
         },
         {
           title: 'Safeguarding',
@@ -296,43 +367,6 @@ const data: {
           icon: MessageSquare,
         },
         {
-          title: 'Default Review Weeks',
-          url: '/default-review-weeks',
-          icon: Calendar,
-        },
-        {
-          title: 'IQA Maintain Questions',
-          url: '/iqa-questions',
-          icon: HelpCircle,
-        },
-        {
-          title: 'Session Types',
-          url: '/session-types',
-          icon: Clock,
-        },
-        {
-          title: 'Timelog Data Export',
-          url: '/timelog-export',
-          icon: Download,
-          isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'DATA_EXPORT'
-        },
-        {
-          title: 'Awaiting Signature',
-          url: '/awaiting-signature',
-          icon: FileSignature,
-        },
-        {
-          title: 'Gateway Report',
-          url: '/gateway-report',
-          icon: FileBarChart,
-          isFree: true, // TODO: Make paid later - remove isFree and add featureCode: 'ADVANCED_REPORTS'
-        },
-        {
-          title: 'Exclude From Overall Progress',
-          url: '/progress-exclusion',
-          icon: Ban,
-        },
-        {
           title: 'Learner Management',
           url: '/learners',
           icon: Users,
@@ -342,11 +376,11 @@ const data: {
           url: '/propose-your-innovations',
           icon: Lightbulb,
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        // },
         {
           title: 'Tickets',
           url: '/tickets',
@@ -406,6 +440,17 @@ const data: {
           title: 'Users',
           url: '/users',
           icon: Users,
+        },
+      ],
+    },
+    {
+      label: 'Phoenix Team',
+      items: [
+        {
+          title: 'Tickets',
+          url: '/tickets',
+          icon: Ticket,
+          isFree: true,
         },
       ],
     },
@@ -497,11 +542,11 @@ const data: {
           url: '/propose-your-innovations',
           icon: Lightbulb,
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        // },
         {
           title: 'Tickets',
           url: '/tickets',
@@ -542,11 +587,11 @@ const data: {
           url: '/propose-your-innovations',
           icon: Lightbulb,
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        // },
       ],
     },
     {
@@ -557,11 +602,11 @@ const data: {
           url: '/learners',
           icon: GraduationCap,
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        // },
         {
           title: 'Tickets',
           url: '/tickets',
@@ -582,11 +627,11 @@ const data: {
           url: '/learners',
           icon: GraduationCap,
         },
-        {
-          title: 'Support',
-          url: '/support',
-          icon: HelpCircle,
-        },
+        // {
+        //   title: 'Support',
+        //   url: '/support',
+        //   icon: HelpCircle,
+        // },
         {
           title: 'Tickets',
           url: '/tickets',
@@ -854,16 +899,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (group.label === 'Master Admin') {
         return userRole === 'MasterAdmin'
       }
+      // Show "Phoenix Team" group only for PhoenixTeam role
+      if (group.label === 'Phoenix Team') {
+        return userRole === 'PhoenixTeam'
+      }
       // For other groups, show based on role access
       return true
     })
 
+    const translateSidebarItem = (item: SidebarItem): SidebarItem => ({
+      ...item,
+      title: translateItemTitle(item.title),
+      items: item.items?.map((subItem) => ({
+        ...subItem,
+        title: translateItemTitle(subItem.title),
+      })),
+    })
+
     return filteredGroups
       .map((group) => {
-        const items = filterItems(group.items).map((item) => ({
-          ...item,
-          title: translateItemTitle(item.title),
-        }))
+        const items = filterItems(group.items).map(translateSidebarItem)
         return {
           ...group,
           label: translateGroupLabel(group.label),

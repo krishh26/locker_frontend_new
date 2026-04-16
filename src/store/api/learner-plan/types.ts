@@ -225,7 +225,8 @@ export interface EditActionRequest {
   trainer_feedback?: string | null;
   learner_feedback?: string | null;
   learner_status?: string;
-  status?: string;
+  /** Trainer/admin workflow; maps to session_learner_action.trainer_status */
+  trainer_status?: string;
 }
 
 export interface AddFormToLearnerRequest {

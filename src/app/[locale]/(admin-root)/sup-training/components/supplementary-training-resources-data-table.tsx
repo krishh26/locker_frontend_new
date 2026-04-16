@@ -54,6 +54,7 @@ import {
   useGetAdminSupTrainingResourcesQuery,
   useToggleSupTrainingResourceMutation,
   useDeleteSupTrainingResourceMutation,
+  useExportSupTrainingFeedbacksMutation,
 } from "@/store/api/supplementary-training/supplementaryTrainingApi";
 import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { toast } from "sonner";
@@ -97,6 +98,8 @@ export function SupplementaryTrainingResourcesDataTable() {
 
   const [toggleResource, { isLoading: isToggling }] = useToggleSupTrainingResourceMutation();
   const [deleteResource, { isLoading: isDeleting }] = useDeleteSupTrainingResourceMutation();
+  const [exportSupTrainingFeedbacks, { isLoading: isExportingFeedbacks }] =
+    useExportSupTrainingFeedbacksMutation();
 
   const handleSearch = useCallback(() => {
     setPage(1);
@@ -175,46 +178,30 @@ export function SupplementaryTrainingResourcesDataTable() {
     refetch();
   };
 
-  const handleExportFeedbacks = () => {
-    if (!resourcesData?.data) {
-      toast.warning("No data available to export");
-      return;
+  const handleExportFeedbacks = async () => {
+    const fallbackName = `supplementary-training-feedbacks-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    try {
+      const { blob, filename } = await exportSupTrainingFeedbacks({
+        search: searchKeyword || undefined,
+      }).unwrap();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename && filename.length > 0 ? filename : fallbackName);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Feedback report exported successfully");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg.toLowerCase().includes("no feedback")) {
+        toast.info("No feedback data available to export");
+      } else {
+        toast.error(msg || "Could not export feedbacks. Please try again.");
+      }
     }
-
-    const resourcesWithFeedbacks = resourcesData.data.filter(
-      (resource) => resource.feedback
-    );
-
-    if (resourcesWithFeedbacks.length === 0) {
-      toast.info("No feedback data available to export");
-      return;
-    }
-
-    const headers = ["Resource Name", "Feedback", "Created At"];
-    const rows = resourcesWithFeedbacks.map((resource) => [
-      resource.resource_name,
-      resource.feedback?.feedback || "",
-      resource.feedback?.createdAt ? format(new Date(resource.feedback.createdAt), "MMM dd, yyyy") : "",
-    ]);
-
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((row: string[]) => row.map((cell: string) => `"${cell}"`).join(",")),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute(
-      "download",
-      `supplementary-training-feedbacks-${format(new Date(), "yyyy-MM-dd")}.csv`
-    );
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success("Feedback report exported successfully");
   };
 
   const formatDate = (dateString: string) => {
@@ -371,6 +358,7 @@ export function SupplementaryTrainingResourcesDataTable() {
           <Button
             variant="outline"
             onClick={handleExportFeedbacks}
+            disabled={isExportingFeedbacks}
             className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />

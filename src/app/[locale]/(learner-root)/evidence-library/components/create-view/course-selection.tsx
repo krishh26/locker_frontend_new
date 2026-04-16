@@ -111,7 +111,6 @@ export function CourseSelection({
     const updated = [...currentSelected, selectedCourse];
     setValue("selectedCourses", updated);
 
-    // Initialize type selection for Standard courses
     if (selectedCourse.course_core_type === COURSE_TYPES.STANDARD) {
       const currentTypes = getValues().courseSelectedTypes || {};
       setValue("courseSelectedTypes", {
@@ -183,7 +182,7 @@ export function CourseSelection({
           code: unit.code,
           learnerMap: false,
           trainerMap: false,
-          signedOff: false,
+          signed_off: false,
           comment: "",
           subUnit: hasSubUnit && unit.subUnit
             ? unit.subUnit.map((sub: any) => ({
@@ -193,12 +192,12 @@ export function CourseSelection({
                   ...topic,
                   learnerMap: topic.learnerMap ?? false,
                   trainerMap: topic.trainerMap ?? false,
-                  signedOff: topic.signedOff ?? false,
+                  signed_off: topic.signed_off ?? false,
                   comment: topic.comment ?? "",
                 })) : undefined,
                 learnerMap: false,
                 trainerMap: false,
-                signedOff: false,
+                signed_off: false,
                 comment: "",
               }))
             : [],
@@ -243,7 +242,7 @@ export function CourseSelection({
       // Ensure mapping properties are initialized
       unitToAdd.learnerMap = fullUnit.learnerMap ?? false;
       unitToAdd.trainerMap = fullUnit.trainerMap ?? false;
-      unitToAdd.signedOff = fullUnit.signedOff ?? false;
+      unitToAdd.signed_off = fullUnit.signed_off ?? false;
       unitToAdd.comment = fullUnit.comment ?? "";
       
       // Ensure subUnit topics have proper initialization
@@ -252,7 +251,7 @@ export function CourseSelection({
           // Initialize mapping properties for subUnit
           sub.learnerMap = sub.learnerMap ?? false;
           sub.trainerMap = sub.trainerMap ?? false;
-          sub.signedOff = sub.signedOff ?? false;
+          sub.signed_off = sub.signed_off ?? false;
           sub.comment = sub.comment ?? "";
           
           // Ensure topics array is preserved and initialized
@@ -261,7 +260,7 @@ export function CourseSelection({
               ...topic,
               learnerMap: topic.learnerMap ?? false,
               trainerMap: topic.trainerMap ?? false,
-              signedOff: topic.signedOff ?? false,
+              signed_off: topic.signed_off ?? false,
               comment: topic.comment ?? "",
             }));
           }

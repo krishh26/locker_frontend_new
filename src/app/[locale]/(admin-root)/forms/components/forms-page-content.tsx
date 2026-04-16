@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FormsDataTable } from "./forms/forms-data-table";
 import { TemplateListTable } from "./templates-forms/template-list-table";
 import { SubmittedFormsDataTable } from "./submitted-forms/submitted-forms-data-table";
+import { FormsReportsPageContent } from "@/app/[locale]/(admin-root)/forms/components/reports/forms-reports-page-content";
 import { useTranslations } from "next-intl";
 
 export function FormsPageContent() {
@@ -26,6 +27,7 @@ export function FormsPageContent() {
           <TabsTrigger value="forms" className="cursor-pointer">{t("tabs.formList")}</TabsTrigger>
           <TabsTrigger value="templates" className="cursor-pointer">{t("tabs.templateList")}</TabsTrigger>
           <TabsTrigger value="response" className="cursor-pointer">{t("tabs.response")}</TabsTrigger>
+          <TabsTrigger value="reports" className="cursor-pointer">{t("tabs.reports")}</TabsTrigger>
         </TabsList>
         <TabsContent value="forms" className="mt-6">
           <div className="@container/main">
@@ -40,6 +42,11 @@ export function FormsPageContent() {
         <TabsContent value="response" className="mt-6">
           <div className="@container/main">
             <SubmittedFormsDataTable />
+          </div>
+        </TabsContent>
+        <TabsContent value="reports" className="mt-6">
+          <div className="@container/main">
+            <FormsReportsPageContent />
           </div>
         </TabsContent>
       </Tabs>

@@ -965,7 +965,47 @@
     "tabs": {
       "formList": "Form List",
       "templateList": "Template List",
-      "response": "Response"
+      "response": "Response",
+      "reports": "Reports"
+    },
+    "reports": {
+      "cardDescription": "Select a form, choose fields, and export all submitted data.",
+      "formSearch": {
+        "label": "Search Forms",
+        "placeholder": "Search by form name..."
+      },
+      "formSelect": {
+        "label": "Select Form",
+        "placeholder": "Please Select"
+      },
+      "fields": {
+        "title": "Fields",
+        "loading": "Loading fields...",
+        "available": "{count} fields available",
+        "selectFormHint": "Select a form to view fields"
+      },
+      "actions": {
+        "selectAll": "Select all",
+        "clear": "Clear",
+        "exportExcel": "Export Excel"
+      },
+      "validation": {
+        "selectForm": "Please select a form.",
+        "selectAtLeastOneField": "Please select at least one field to export."
+      },
+      "errors": {
+        "tooManyPages": "Too many pages to export. Please narrow results or contact admin.",
+        "noSubmissions": "No submissions found for this form.",
+        "exportFailed": "Export failed"
+      },
+      "toast": {
+        "exportSuccess": "Excel exported successfully"
+      },
+      "csvHeaders": {
+        "userName": "User Name",
+        "email": "Email",
+        "submittedAt": "Submitted At"
+      }
     },
     "table": {
       "searchPlaceholder": "Search by keyword...",
@@ -1091,7 +1131,7 @@
       "dragComponentsHint": "Drag components to build your form",
       "field": "field",
       "fields": "fields",
-      "preview": "Preview",
+      "previewButton": "Preview",
       "edit": "Edit",
       "saving": "Saving...",
       "saveAsForm": "Save As Form",
@@ -1623,7 +1663,11 @@
         "viewDocumentsEvidence": "View Documents / Evidence",
         "viewPortfolio": "View Portfolio",
         "unableOpenDocumentsLearnerIdMissing": "Unable to open documents. Learner ID not found.",
-        "unableOpenPortfolioLearnerIdMissing": "Unable to open portfolio. Learner ID not found."
+        "unableOpenPortfolioLearnerIdMissing": "Unable to open portfolio. Learner ID not found.",
+        "qaApprovedUpdateFailed": "Could not update QA approved. Please try again.",
+        "qaApprovedNoSamples": "QA approved can only be set for learners with at least one sample on this plan.",
+        "qaApprovedSelectPlanAndFilter": "Select a course and plan, then apply filters before changing QA approved.",
+        "qaApprovedMissingLearnerId": "Learner ID is missing for this row."
       }
     },
     "editSampleModal": {
@@ -2416,6 +2460,7 @@
       "deleteFailed": "Failed to delete resource",
       "noDataToExport": "No data available to export",
       "noFeedbackToExport": "No feedback data available to export",
+      "exportFailed": "Could not export feedbacks. Please try again.",
       "exportSuccess": "Feedback report exported successfully",
       "addedSuccess": "Resource added successfully",
       "addFailed": "Failed to add resource",
@@ -2460,6 +2505,7 @@
     "validation": {
       "activityRequired": "Activity is required",
       "dateRequired": "Date is required",
+      "dateNotInFuture": "Date cannot be in the future",
       "methodRequired": "Method is required",
       "learningRequired": "Learning is required",
       "impactRequired": "Impact is required"
@@ -2611,7 +2657,10 @@
         "loadingEvidence": "Loading evidence...",
         "selectSession": "Select session",
         "loadingSessions": "Loading sessions...",
-        "noSessionsAvailable": "No sessions available"
+        "noSessionsAvailable": "No sessions available",
+        "savedSessionNotInList": "Saved session (ID: {id})",
+        "existingAdditionalEvidence": "Current additional evidence",
+        "replaceAdditionalEvidenceHint": "Upload a new file below to replace it when you save."
       },
       "assessmentMethods": {
         "Obs": "Observations",
@@ -2867,7 +2916,7 @@
       "filters": {
         "status": {
           "placeholder": "Status",
-          "all": "All statuses"
+          "all": "All status"
         },
         "priority": {
           "placeholder": "Priority",
@@ -2912,7 +2961,9 @@
           "urgent": "Urgent"
         },
         "centreLabel": "Centre (optional)",
-        "centrePlaceholder": "Centre ID"
+        "centrePlaceholder": "Centre ID",
+        "attachmentLabel": "Attachment (optional)",
+        "attachmentHint": "You can attach one file (optional)."
       },
       "buttons": {
         "cancel": "Cancel",
@@ -3854,12 +3905,14 @@
     },
     "summaryCards": {
       "thisWeek": "This Week",
+      "thisWeekAlso": "This Week Also",
       "thisMonth": "This Month",
       "total": "Total",
       "hoursLabel": "{hours} hours"
     },
     "recentActivity": {
       "title": "Recent Activity",
+      "timeTakenLabel": "Time Taken",
       "empty": "No recent activities found."
     },
     "table": {
@@ -3996,6 +4049,63 @@
         "assessment": "Assessment or examination",
         "other": "Other",
         "furloughed": "Furloughed"
+      }
+    },
+    "offTheJob": {
+      "loading": "Loading off-the-job summary...",
+      "title": "Off the Job Training Summary",
+      "summarySection": {
+        "title": "Summary",
+        "duration": {
+          "label": "Duration",
+          "tooltip": "Programme duration in weeks.",
+          "units": "weeks"
+        },
+        "contractedHours": {
+          "label": "Contracted work hours",
+          "tooltip": "Total contracted work hours for the programme."
+        },
+        "holiday": {
+          "label": "Holiday entitlement",
+          "tooltip": "Statutory and contractual holiday entitlement."
+        },
+        "required": {
+          "label": "Off the job hours (required)"
+        },
+        "requiredToDate": {
+          "label": "Off the job hours required to date"
+        }
+      },
+      "warnings": {
+        "title": "Warnings"
+      },
+      "actualHours": {
+        "title": "Actual hours logged",
+        "totalLogged": {
+          "label": "Total logged (off the job)"
+        },
+        "thisWeek": {
+          "label": "This week"
+        },
+        "thisMonth": {
+          "label": "This month"
+        },
+        "percentage": {
+          "label": "Completion vs required to date",
+          "tooltip": "Percentage is shown when required-to-date hours are available."
+        }
+      },
+      "common": {
+        "hours": "hours"
+      },
+      "courses": {
+        "title": "Courses",
+        "columns": {
+          "course": "Course",
+          "type": "Type",
+          "status": "Status",
+          "offTheJobHours": "Off the job (H:M)"
+        }
       }
     }
   },
@@ -4179,6 +4289,24 @@
       "title": "Important Information",
       "description": "These settings will be applied as the default review period for all learner types that don't have a custom review period assigned. Changes will take effect immediately after saving and will affect new review sessions going forward."
     },
+    "toast": {
+      "configSaved": "Configuration saved successfully!",
+      "saveFailed": "Failed to save configuration. Please try again.",
+      "loadFailed": "Failed to load configuration. Please try again."
+    }
+  },
+  "automaticMailControl": {
+    "pageTitle": "Automatic Mail Control",
+    "pageSubtitle": "Configure automatic email reminders for learners before sessions",
+    "cardTitle": "Session Reminder to Learner",
+    "reminderDaysLabel": "Send reminder before",
+    "optionDays": "{days} days",
+    "optionHint": "Send email {days} days before the session date",
+    "trainerCardTitle": "Session Reminder to Trainer",
+    "trainerReminderDaysLabel": "Send reminder before",
+    "trainerOptionHint": "Send email {days} days before the session date",
+    "save": "Save",
+    "saving": "Saving...",
     "toast": {
       "configSaved": "Configuration saved successfully!",
       "saveFailed": "Failed to save configuration. Please try again.",
@@ -4902,7 +5030,7 @@
       "unknown": "Unknown",
       "noCentresFound": "No centres found.",
       "statusPlaceholder": "Status",
-      "allStatuses": "All statuses",
+      "allStatuses": "All status",
       "suspended": "Suspended",
       "filterByOrganisation": "Filter by organisation",
       "allOrganisations": "All organisations",
@@ -5218,6 +5346,8 @@
         "selectEQA": "Please select an EQA",
         "selectStartDate": "Please select a start date",
         "selectEndDate": "Please select an end date",
+        "selectSuspendedUntil": "Please select a suspended until date",
+        "suspendedUntilNotPast": "Suspended until date cannot be in the past",
         "endDateAfterStart": "End date must be after start date",
         "enterPredictedGrade": "Please enter predicted grade",
         "enterFinalGrade": "Please enter final grade"
@@ -5249,6 +5379,7 @@
       "form": {
         "selectCourse": "Select Course",
         "courseStatus": "Course Status",
+        "suspendedUntil": "Suspended Until",
         "trainer": "Trainer",
         "iqa": "IQA",
         "liqa": "LIQA",
@@ -5298,7 +5429,8 @@
         "editDescription": "Update the contracted work hours information.",
         "setNewDescription": "Enter the contracted work hours information for this learner.",
         "companyLabel": "Company *",
-        "companyPlaceholder": "Enter company name",
+        "companyPlaceholder": "Select company",
+        "loadingEmployers": "Loading employers…",
         "contractStartLabel": "Employment Contract Start Date *",
         "contractEndLabel": "Employment Contract End Date",
         "hoursPerWeekLabel": "Contracted Work Hours per Week *",
@@ -5461,9 +5593,9 @@
       "typeLabel": "Type",
       "statusLabel": "Status",
       "allTypesPlaceholder": "All types",
-      "allStatusesPlaceholder": "All statuses",
+      "allStatusesPlaceholder": "All status",
       "allTypes": "All Types",
-      "allStatuses": "All Statuses",
+      "allStatuses": "All Status",
       "unread": "Unread",
       "read": "Read"
     },

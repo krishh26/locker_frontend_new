@@ -38,6 +38,11 @@ import {
 } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import { toast } from "sonner";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
+import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
+import {
+  LEARNER_FEEDBACK_EMOJI,
+  parseLearnerFeedbackValue,
+} from "@/lib/learner-resource-feedback";
 import { FeedbackDialog } from "./feedback-dialog";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
@@ -119,11 +124,19 @@ export function HealthWellbeingDataTable() {
   const columns: ColumnDef<WellbeingResource>[] = useMemo(
     () => [
       {
-        accessorKey: "resource_name",
+        id: "resource_name",
+        accessorFn: (row) => formatWellbeingDisplayName(row),
         header: t("table.columns.resourceName"),
         cell: ({ row }) => {
+          const resource = row.original;
+          const label = formatWellbeingDisplayName(resource);
           return (
-            <span className="font-semibold">{row.getValue("resource_name")}</span>
+            <span
+              className="font-semibold line-clamp-2 max-w-md text-foreground"
+              title={resource.location || undefined}
+            >
+              {label}
+            </span>
           );
         },
       },
@@ -168,17 +181,22 @@ export function HealthWellbeingDataTable() {
         header: t("table.columns.feedback"),
         cell: ({ row }) => {
           const resource = row.original;
-          const feedback = resource.feedback;
+          const code = parseLearnerFeedbackValue(resource.feedback);
 
-          if (!feedback) {
+          if (!code) {
             return <span className="text-sm text-muted-foreground">{t("table.feedbackValues.none")}</span>;
           }
 
-          const key = FEEDBACK_API_TO_KEY[feedback.feedback];
+          const key = FEEDBACK_API_TO_KEY[code];
           const label = key ? t(`table.feedbackValues.${key}`) : t("table.feedbackValues.unknown");
+          const emoji = LEARNER_FEEDBACK_EMOJI[code];
           return (
-            <span className="text-sm">
-              {label}
+            <span
+              className="inline-flex items-center gap-1.5 text-base"
+              title={label}
+            >
+              <span aria-hidden>{emoji}</span>
+              <span className="sr-only">{label}</span>
             </span>
           );
         },
@@ -240,11 +258,13 @@ export function HealthWellbeingDataTable() {
       columnVisibility,
       globalFilter,
     },
-    globalFilterFn: (row, columnId, filterValue) => {
+    globalFilterFn: (row, _columnId, filterValue) => {
       const resource = row.original;
-      const search = filterValue.toLowerCase();
+      const search = String(filterValue).toLowerCase();
       return (
-        resource.resource_name.toLowerCase().includes(search) ||
+        (resource.resource_name || "").toLowerCase().includes(search) ||
+        (resource.location || "").toLowerCase().includes(search) ||
+        formatWellbeingDisplayName(resource).toLowerCase().includes(search) ||
         (resource.description || "").toLowerCase().includes(search) ||
         (resource.category || "").toLowerCase().includes(search)
       );

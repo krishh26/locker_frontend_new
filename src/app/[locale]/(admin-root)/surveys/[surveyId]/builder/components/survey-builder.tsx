@@ -225,9 +225,9 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
         </div>
 
         {sortedQuestions.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-primary p-12 text-center space-y-4 bg-primary">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-white/10 border-white/20 flex items-center justify-center mb-4">
-              <FileText className="h-8 w-8 text-white" />
+          <div className="rounded-xl border border-dashed border-primary p-12 text-center space-y-4">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-primary/10 border-primary/20 flex items-center justify-center mb-4">
+              <FileText className="h-8 w-8 text-primary" />
             </div>
             <p className="text-muted-foreground">
               {t("builder.emptyDescription")}

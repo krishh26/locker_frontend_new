@@ -3,6 +3,7 @@ export interface SessionType {
   name: string;
   isOffTheJob: boolean;
   isActive: boolean;
+  isSystem?: boolean;
   order: number;
   centreId?: number | null;
   createdAt?: string;
@@ -11,16 +12,16 @@ export interface SessionType {
 
 export interface CreateSessionTypePayload {
   name: string;
-  is_off_the_job: boolean;
-  active: boolean;
+  is_off_the_job?: boolean;
+  active?: boolean;
   organisation_id?: number;
   centre_id?: number;
 }
 
 export interface UpdateSessionTypePayload {
-  name: string;
-  is_off_the_job: boolean;
-  active: boolean;
+  name?: string;
+  is_off_the_job?: boolean;
+  active?: boolean;
   organisation_id?: number;
   centre_id?: number;
 }

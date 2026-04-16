@@ -147,7 +147,7 @@ export function EvidenceMappingsTable({
       if (subUnit && subUnit.topics) {
         const topicItem = subUnit.topics.find((t: any) => String(t.id) === String(topic.id));
         if (topicItem) {
-          topicItem.signedOff = !topicItem.signedOff;
+          topicItem.signed_off = !topicItem.signed_off;
           setValue('units', updated);
           trigger('units');
         }
@@ -220,12 +220,12 @@ export function EvidenceMappingsTable({
       if (hasSubUnit) {
         const subUnit = unit.subUnit.find((s: any) => String(s.id) === String(row.id));
         if (subUnit) {
-          subUnit.signedOff = !subUnit.signedOff;
+          subUnit.signed_off = !subUnit.signed_off;
           setValue('units', updated);
           trigger('units');
         }
       } else {
-        unit.signedOff = !unit.signedOff;
+        unit.signed_off = !unit.signed_off;
         setValue('units', updated);
         trigger('units');
       }
@@ -266,11 +266,11 @@ export function EvidenceMappingsTable({
         if (hasSubUnit) {
           const subUnit = unit.subUnit.find((s: any) => String(s.id) === String(row.id));
           if (subUnit && subUnit.learnerMap && subUnit.trainerMap) {
-            subUnit.signedOff = checked;
+            subUnit.signed_off = checked;
           }
         } else {
           if (unit.learnerMap && unit.trainerMap) {
-            unit.signedOff = checked;
+            unit.signed_off = checked;
           }
         }
       }
@@ -323,7 +323,7 @@ export function EvidenceMappingsTable({
                   unitsWatch={unitsWatch}
                   learnerMapHandler={qualificationLearnerMapHandler}
                   trainerMapHandler={qualificationTrainerMapHandler}
-                  signedOffHandler={qualificationSignedOffHandler}
+                  signed_offHandler={qualificationSignedOffHandler}
                   commentHandler={qualificationCommentHandler}
                   getEvidenceCount={getEvidenceCount}
                   canEditLearnerFields={canEditLearnerFields}
@@ -408,7 +408,7 @@ export function EvidenceMappingsTable({
                   unitsWatch={unitsWatch}
                   learnerMapHandler={standardLearnerMapHandler}
                   trainerMapHandler={standardTrainerMapHandler}
-                  signedOffHandler={standardSignedOffHandler}
+                  signed_offHandler={standardSignedOffHandler}
                   commentHandler={standardCommentHandler}
                   selectAllSignedOffForCombinedHandler={selectAllSignedOffForCombinedHandler}
                   combinedSubUnits={combinedSubUnits}

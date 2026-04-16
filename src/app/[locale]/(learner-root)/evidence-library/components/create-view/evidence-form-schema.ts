@@ -14,7 +14,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
     code: z.string().optional(),
     learnerMap: z.boolean().optional(),
     trainerMap: z.boolean().optional(),
-    signedOff: z.boolean().optional(),
+    signed_off: z.boolean().optional(),
     comment: z.string().optional(),
   })
 
@@ -40,7 +40,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
     title: z.string(),
     learnerMap: z.boolean().optional(),
     trainerMap: z.boolean().optional(),
-    signedOff: z.boolean().optional(),
+    signed_off: z.boolean().optional(),
     comment: z.string().optional(),
     topics: z.array(taskSchema).optional(),
   })
@@ -54,7 +54,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
     course_id: z.union([z.string(), z.number()]).optional(),
     learnerMap: z.boolean().optional(),
     trainerMap: z.boolean().optional(),
-    signedOff: z.boolean().optional(),
+    signed_off: z.boolean().optional(),
     comment: z.string().optional(),
     subUnit: z.array(subUnitSchema).optional(),
   })

@@ -17,6 +17,12 @@ import { useTranslations } from "next-intl";
 import { useAppSelector } from "@/store/hooks";
 import type { EvidenceFormValues } from "./evidence-form-types";
 
+export function normalizeEvidenceSignatureRole(role?: string) {
+  const key = (role || "").toLowerCase();
+  if (key === "liqa") return "iqa";
+  return key;
+}
+
 interface SignatureTableProps {
   control: Control<EvidenceFormValues>;
   errors: FieldErrors<EvidenceFormValues>;
@@ -24,6 +30,8 @@ interface SignatureTableProps {
   disabled?: boolean;
   /** When a role has been requested for signature, "Signature req" is checked and cannot be changed */
   requestedRoles?: string[];
+  /** True when the current user's role row is already signed on the server (edit load) */
+  creatorRoleSignedFromApi?: boolean;
 }
 
 const signatureRoles = [
@@ -33,30 +41,22 @@ const signatureRoles = [
   { role: "IQA", label: "IQA" },
 ];
 
-const normalizeRole = (role?: string) => {
-  const key = (role || "").toLowerCase();
-  if (key === "liqa") return "iqa";
-  return key;
-};
-
 export function SignatureTable({
   control,
   errors,
   watch,
   disabled = false,
   requestedRoles = [],
+  creatorRoleSignedFromApi = false,
 }: SignatureTableProps) {
   const t = useTranslations("evidenceLibrary");
   const userRole = useAppSelector((state) => state.auth.user?.role);
   const requestedSet = useMemo(() => new Set(requestedRoles), [requestedRoles]);
-  const currentUserRole = normalizeRole(userRole);
+  const currentUserRole = normalizeEvidenceSignatureRole(userRole);
 
-  const visibleSignatureRoles = useMemo(
-    () =>
-      signatureRoles
-        .map((item, index) => ({ ...item, index }))
-        .filter((item) => normalizeRole(item.role) !== currentUserRole),
-    [currentUserRole]
+  const rowsWithIndex = useMemo(
+    () => signatureRoles.map((item, index) => ({ ...item, index })),
+    [],
   );
 
   return (
@@ -74,13 +74,25 @@ export function SignatureTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {visibleSignatureRoles.map((item) => {
-              const isSigned = watch(`signatures.${item.index}.signed`);
+            {rowsWithIndex.map((item) => {
+              const isOwnRole =
+                normalizeEvidenceSignatureRole(item.role) === currentUserRole;
+              const rowSigned = watch(`signatures.${item.index}.signed`);
               const isRequested = requestedSet.has(item.role);
+              const signatureReqDisabled =
+                disabled ||
+                isRequested ||
+                (isOwnRole ? creatorRoleSignedFromApi : Boolean(rowSigned));
+              /** Own-row Enable stays interactive in edit mode even when other primary fields use `disabled` (e.g. Trainer editing evidence). */
+              const ownSignedCheckboxDisabled = creatorRoleSignedFromApi;
+              const enableId = `signature-enable-${item.index}`;
+
               return (
                 <TableRow key={item.role}>
                   <TableCell>
-                    <Label className="text-sm">{t(`form.signature.${item.role.toLowerCase()}`)}</Label>
+                    <Label className="text-sm">
+                      {t(`form.signature.${item.role.toLowerCase()}`)}
+                    </Label>
                   </TableCell>
                   <TableCell>
                     <Controller
@@ -101,12 +113,23 @@ export function SignatureTable({
                       name={`signatures.${item.index}.signed`}
                       control={control}
                       render={({ field }) => (
-                        <Checkbox
-                          checked={field.value || false}
-                          onCheckedChange={field.onChange}
-                          disabled={true}
-                          className="border-slate-500 disabled:border-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                        />
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id={enableId}
+                            checked={field.value || false}
+                            onCheckedChange={field.onChange}
+                            disabled={isOwnRole ? ownSignedCheckboxDisabled : true}
+                            className="border-slate-500 disabled:border-slate-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                          {isOwnRole && (
+                            <Label
+                              htmlFor={enableId}
+                              className="text-sm font-normal cursor-pointer"
+                            >
+                              {t("form.signature.enable")}
+                            </Label>
+                          )}
+                        </div>
                       )}
                     />
                   </TableCell>
@@ -146,7 +169,7 @@ export function SignatureTable({
                         <Checkbox
                           checked={field.value || false}
                           onCheckedChange={field.onChange}
-                          disabled={disabled || isSigned || isRequested}
+                          disabled={signatureReqDisabled}
                           className="border-slate-500 disabled:border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                       )}
@@ -166,4 +189,3 @@ export function SignatureTable({
     </div>
   );
 }
-

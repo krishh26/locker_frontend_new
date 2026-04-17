@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,12 +28,122 @@ import {
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
 import { useUpdateLearnerCommentMutation } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem, LearnerCourse } from "@/store/api/learner/types";
+import { calculateLearnerProgress } from "@/lib/learner-progress-utils";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
 interface LearnerPortfolioCardProps {
   learner: LearnerListItem;
   onCommentUpdate: () => void;
+}
+
+/**
+ * Same idea as backend `getUnitCompletionStatus` / learner dashboard.
+ * Qualification list payloads often put `learnerMap`/`trainerMap` on **sub-units** while
+ * `topics` exist without those flags — we must read both.
+ */
+function getUnitCompletionStatusLocal(unit: {
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+  subUnit?: Array<{
+    learnerMap?: boolean;
+    trainerMap?: boolean;
+    topics?: Array<{ learnerMap?: boolean; trainerMap?: boolean }>;
+  }>;
+}): { fullyCompleted: boolean; partiallyCompleted: boolean } {
+  if (Array.isArray(unit?.subUnit) && unit.subUnit.length > 0) {
+    let learnerDone = false;
+    let trainerDone = false;
+    for (const sub of unit.subUnit) {
+      if (Array.isArray(sub?.topics) && sub.topics.length > 0) {
+        for (const topic of sub.topics) {
+          if (topic?.learnerMap) learnerDone = true;
+          if (topic?.trainerMap) trainerDone = true;
+        }
+      }
+      if (sub?.learnerMap) learnerDone = true;
+      if (sub?.trainerMap) trainerDone = true;
+    }
+    return {
+      fullyCompleted: learnerDone && trainerDone,
+      partiallyCompleted: learnerDone || trainerDone,
+    };
+  }
+  const learnerDone = Boolean(unit?.learnerMap);
+  const trainerDone = Boolean(unit?.trainerMap);
+  return {
+    fullyCompleted: learnerDone && trainerDone,
+    partiallyCompleted: learnerDone || trainerDone,
+  };
+}
+
+function unitHasMappingEvidence(unit: {
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+  subUnit?: Array<{
+    learnerMap?: boolean;
+    trainerMap?: boolean;
+    topics?: Array<{ learnerMap?: boolean; trainerMap?: boolean }>;
+  }>;
+}): boolean {
+  if (Array.isArray(unit?.subUnit) && unit.subUnit.length > 0) {
+    return unit.subUnit.some((sub) => {
+      if (Array.isArray(sub?.topics) && sub.topics.length > 0) {
+        if (sub.topics.some((t) => t?.learnerMap || t?.trainerMap)) return true;
+      }
+      return Boolean(sub?.learnerMap || sub?.trainerMap);
+    });
+  }
+  return Boolean(unit?.learnerMap || unit?.trainerMap);
+}
+
+/**
+ * `/learner/list` often returns wrong `unitsFullyCompleted` / `unitsNotStarted` while
+ * `course.units` has the real learner/trainer flags (e.g. Qualification: maps on sub-unit,
+ * not on topics). Recompute from that tree for non-Gateway courses when `units` exist.
+ */
+function patchCourseProgressFromUnits(
+  course: LearnerCourse,
+): LearnerCourse {
+  const coreType = course?.course_core_type ?? course?.course?.course_core_type;
+  const isGateway = coreType === "Gateway";
+  if (isGateway) return course;
+
+  const units = (course?.course as { units?: unknown[] } | undefined)?.units;
+  if (!Array.isArray(units) || units.length === 0) return course;
+
+  const totalUnitsAll = units.length;
+  let fully = 0;
+  let partial = 0;
+  let notStarted = 0;
+
+  for (const unit of units as Parameters<typeof unitHasMappingEvidence>[0][]) {
+    if (!unitHasMappingEvidence(unit)) {
+      notStarted += 1;
+      continue;
+    }
+    const st = getUnitCompletionStatusLocal(unit);
+    if (st.fullyCompleted) fully += 1;
+    else if (st.partiallyCompleted) partial += 1;
+    else notStarted += 1;
+  }
+
+  return {
+    ...course,
+    totalUnits: totalUnitsAll,
+    unitsFullyCompleted: fully,
+    unitsPartiallyCompleted: partial,
+    unitsNotStarted: notStarted,
+  };
+}
+
+function buildLearnerWithProgressFallback(learner: LearnerListItem): LearnerListItem {
+  const courses = learner.course;
+  if (!courses?.length) return learner;
+  return {
+    ...learner,
+    course: courses.map(patchCourseProgressFromUnits),
+  };
 }
 
 export function LearnerPortfolioCard({
@@ -46,6 +156,18 @@ export function LearnerPortfolioCard({
   const [editedComment, setEditedComment] = useState("");
   const [updateComment, { isLoading: isSavingComment }] =
     useUpdateLearnerCommentMutation();
+
+  const learnerForProgress = useMemo(
+    () => buildLearnerWithProgressFallback(learner),
+    [learner],
+  );
+
+  const {
+    totalCompleted,
+    totalInProgress,
+    totalNotStarted,
+    completionPercentage,
+  } = calculateLearnerProgress(learnerForProgress);
 
   const handleOpenCommentDialog = () => {
     setIsEditingComment(true);
@@ -75,132 +197,8 @@ export function LearnerPortfolioCard({
     }
   };
 
-  const convertToMatrixData = (data: LearnerCourse & { 
-    unitsNotStarted?: number;
-    unitsFullyCompleted?: number;
-    unitsPartiallyCompleted?: number;
-    totalUnits?: number;
-    questions?: Array<{ achieved?: boolean }>;
-    course?: LearnerCourse['course'] & { questions?: Array<{ achieved?: boolean }> };
-  }) => {
-    if (!data)
-      return {
-        yetToComplete: 0,
-        fullyCompleted: 0,
-        workInProgress: 0,
-        totalUnits: 0,
-        duration: 0,
-        totalDuration: 0,
-        dayPending: 0,
-      };
-
-    // Gateway questions-based progress
-    try {
-      const coreType = data?.course_core_type || data?.course?.course_core_type;
-      const isGateway = coreType === "Gateway";
-      const courseData = data?.course as LearnerCourse['course'] & { questions?: Array<{ achieved?: boolean }> };
-      const questions = Array.isArray(courseData?.questions)
-        ? courseData.questions
-        : Array.isArray(data?.questions)
-        ? data.questions
-        : [];
-
-      if (isGateway && questions.length > 0) {
-        const totalUnits = questions.length;
-        const fullyCompleted = questions.filter(
-          (q: { achieved?: boolean }) => q?.achieved === true
-        ).length;
-
-        let duration = 0;
-        let totalDuration = 1;
-        let dayPending = 0;
-        if (data.start_date && data.end_date) {
-          const startDate = new Date(data.start_date);
-          const endDate = new Date(data.end_date);
-          const currentDate = new Date();
-          totalDuration = Math.max(
-            1,
-            Math.ceil(
-              (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-            )
-          );
-          duration = Math.max(
-            0,
-            Math.ceil(
-              (currentDate.getTime() - startDate.getTime()) /
-                (1000 * 60 * 60 * 24)
-            )
-          );
-          dayPending = Math.max(
-            0,
-            Math.ceil(
-              (endDate.getTime() - currentDate.getTime()) /
-                (1000 * 60 * 60 * 24)
-            )
-          );
-        }
-
-        return {
-          yetToComplete: Math.max(0, totalUnits - fullyCompleted),
-          fullyCompleted,
-          workInProgress: 0,
-          totalUnits,
-          duration,
-          totalDuration,
-          dayPending,
-        };
-      }
-    } catch {}
-
-    // Calculate duration from start and end dates
-    const startDate = new Date(data.start_date);
-    const endDate = new Date(data.end_date);
-    const currentDate = new Date();
-    const totalDuration = Math.ceil(
-      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    const duration = Math.ceil(
-      (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    const dayPending = Math.ceil(
-      (endDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-
-    return {
-      yetToComplete: data.unitsNotStarted || 0,
-      fullyCompleted: data.unitsFullyCompleted || 0,
-      workInProgress: data.unitsPartiallyCompleted || 0,
-      totalUnits: data.totalUnits || 0,
-      duration: Math.max(0, duration),
-      totalDuration: Math.max(1, totalDuration),
-      dayPending: Math.max(0, dayPending),
-    };
-  };
-
-  // Calculate combined progress
-  let totalCompleted = 0;
-  let totalInProgress = 0;
-  let totalNotStarted = 0;
-  let totalUnitsAll = 0;
-
-  if (learner?.course && learner.course.length > 0) {
-    learner.course.forEach((course) => {
-      const progressData = convertToMatrixData(course);
-      totalCompleted += progressData.fullyCompleted;
-      totalInProgress += progressData.workInProgress;
-      totalNotStarted += progressData.yetToComplete;
-      totalUnitsAll += progressData.totalUnits;
-    });
-  }
-
-  const completionPercentage =
-    totalUnitsAll > 0
-      ? (totalCompleted / totalUnitsAll) * 100 +
-        (totalInProgress / totalUnitsAll) * 50
-      : 0;
-
   const avatarColor = getRandomColor(
-    learner?.first_name?.toLowerCase().charAt(0)
+    learner?.first_name?.toLowerCase().charAt(0),
   );
   const initials = `${learner?.first_name?.charAt(0) || ""}${
     learner?.last_name?.charAt(0) || ""
@@ -219,13 +217,17 @@ export function LearnerPortfolioCard({
               >
                 <AvatarImage
                   src={
-                    (learner as LearnerListItem & { 
-                      avatar?: { url?: string };
-                      user_id?: { avatar?: { url?: string } };
-                    })?.avatar?.url ||
-                    (learner as LearnerListItem & { 
-                      user_id?: { avatar?: { url?: string } };
-                    })?.user_id?.avatar?.url
+                    (
+                      learner as LearnerListItem & {
+                        avatar?: { url?: string };
+                        user_id?: { avatar?: { url?: string } };
+                      }
+                    )?.avatar?.url ||
+                    (
+                      learner as LearnerListItem & {
+                        user_id?: { avatar?: { url?: string } };
+                      }
+                    )?.user_id?.avatar?.url
                   }
                   alt={initials}
                 />
@@ -240,7 +242,6 @@ export function LearnerPortfolioCard({
                 </h3>
 
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 flex-wrap">
-                  {/* Learner ID */}
                   <div className="flex items-center gap-1.5">
                     <User className="h-4 w-4 text-primary" />
                     <span className="text-sm font-semibold">
@@ -248,7 +249,6 @@ export function LearnerPortfolioCard({
                     </span>
                   </div>
 
-                  {/* Comment */}
                   <div className="flex items-center gap-1.5">
                     <MessageSquare className="h-4 w-4 text-blue-500" />
                     <span className="text-sm font-semibold truncate max-w-[200px]">
@@ -267,7 +267,6 @@ export function LearnerPortfolioCard({
               </div>
             </div>
 
-            {/* Section 2: Overall Progress */}
             {learner?.course && learner.course.length > 0 && (
               <div className="flex-1 md:flex-[1.5] p-4 rounded-lg border border-primary flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-2">
@@ -304,12 +303,11 @@ export function LearnerPortfolioCard({
               </div>
             )}
 
-            {/* Section 3: View Portfolio Button */}
             <div className="flex-1 md:flex-[0.8] flex items-center justify-center">
               <Button
                 onClick={() => {
                   if (learner?.learner_id) {
-                    router.push(`/learner-dashboard/${learner.learner_id}`)
+                    router.push(`/learner-dashboard/${learner.learner_id}`);
                   }
                 }}
                 className="w-full md:w-auto"
@@ -325,14 +323,15 @@ export function LearnerPortfolioCard({
         </CardContent>
       </Card>
 
-      {/* Edit Comment Dialog */}
       <Dialog open={isEditingComment} onOpenChange={setIsEditingComment}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{t("card.editCommentTitle")}</DialogTitle>
             <DialogDescription>
               {t("card.editCommentDescription", {
-                name: `${learner?.first_name ?? ""} ${learner?.last_name ?? ""}`.trim() || "—",
+                name:
+                  `${learner?.first_name ?? ""} ${learner?.last_name ?? ""}`.trim() ||
+                  "—",
               })}
             </DialogDescription>
           </DialogHeader>
@@ -373,4 +372,3 @@ export function LearnerPortfolioCard({
     </>
   );
 }
-

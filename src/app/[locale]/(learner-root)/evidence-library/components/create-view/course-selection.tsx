@@ -156,7 +156,7 @@ export function CourseSelection({
       // Add type to array
       setValue("courseSelectedTypes", {
         ...currentTypes,
-        [courseId]: [...selectedTypes, type],
+        [courseId]: selectedTypes.includes(type) ? selectedTypes : [...selectedTypes, type],
       });
 
       // Initialize units for this type
@@ -164,7 +164,27 @@ export function CourseSelection({
       if (!course) return;
 
       const courseUnits = course.units || [];
-      const filteredUnits = courseUnits.filter((u: any) => u.type === type);
+      const filteredUnits = courseUnits
+        .map((unit: any) => {
+          const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+          const matchingSubUnits = unitSubUnits.filter(
+            (sub: any) => String(sub.type) === String(type)
+          );
+          const matchesByUnitType = String(unit.type) === String(type);
+          const matchesBySubUnitType = matchingSubUnits.length > 0;
+
+          if (!matchesByUnitType && !matchesBySubUnitType) {
+            return null;
+          }
+
+          return {
+            ...unit,
+            // Normalize type at unit-level for downstream grouping/validation.
+            type,
+            subUnit: matchesByUnitType ? unitSubUnits : matchingSubUnits,
+          };
+        })
+        .filter((unit): unit is NonNullable<typeof unit> => unit !== null);
 
       // Remove existing units of this type (to avoid duplicates)
       const currentUnits = getValues().units || [];
@@ -178,7 +198,7 @@ export function CourseSelection({
         return {
           ...unit,
           course_id: courseId,
-          type: unit.type,
+          type,
           code: unit.code,
           learnerMap: false,
           trainerMap: false,

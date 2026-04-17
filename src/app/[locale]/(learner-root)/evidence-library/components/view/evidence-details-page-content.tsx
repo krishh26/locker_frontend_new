@@ -36,6 +36,7 @@ export function EvidenceDetailsPageContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Read selected units from URL params
+  const hasSelectedUnitsParam = searchParams.has("selectedUnits");
   const selectedUnitsFromUrl = useMemo(() => {
     const selectedUnitsParam = searchParams.get("selectedUnits");
     if (!selectedUnitsParam) {
@@ -87,6 +88,7 @@ export function EvidenceDetailsPageContent() {
       } else {
         reconstructed = { selectedCourses: [], courseSelectedTypes: {}, units: [] };
       }
+      console.log("🚀 ~ EvidenceDetailsPageContent ~ reconstructed:", reconstructed)
 
       // Include selected units from URL params (learner selections)
       // If there are no mappings, we need to find courses from courses array
@@ -132,7 +134,25 @@ export function EvidenceDetailsPageContent() {
       }
       
       if (selectedUnitsFromUrl.size > 0 && coursesToProcess.length > 0) {
-        const updatedUnits = [...reconstructed.units];
+        // Preserve reconstructed backend mappings and apply URL selections as additive overlay.
+        const updatedUnits = (reconstructed.units || []).map((unit: any) => ({
+          ...unit,
+          subUnit: Array.isArray(unit.subUnit)
+            ? unit.subUnit.map((sub: any) => ({
+                ...sub,
+                topics: Array.isArray(sub.topics)
+                  ? sub.topics.map((topic: any) => ({
+                      ...topic,
+                    }))
+                  : sub.topics,
+              }))
+            : unit.subUnit,
+        }));
+        const isSelectedId = (id?: string | number) =>
+          id != null &&
+          (selectedUnitsFromUrl.has(id) ||
+            selectedUnitsFromUrl.has(String(id)) ||
+            selectedUnitsFromUrl.has(Number(id)));
         
         coursesToProcess.forEach((course) => {
           if (!course.units || course.units.length === 0) {
@@ -144,17 +164,14 @@ export function EvidenceDetailsPageContent() {
             course.units.forEach((unit: any) => {
               // Check if this unit has any selected topics
               let hasSelectedTopics = false;
-              const selectedTopicIds: (string | number)[] = [];
               
               if (unit.subUnit && Array.isArray(unit.subUnit)) {
                 unit.subUnit.forEach((subUnit: any) => {
                     if (subUnit.topics && Array.isArray(subUnit.topics)) {
                       subUnit.topics.forEach((topic: any) => {
-                        // Compare as strings to handle type mismatches
-                        const isSelected = topic.id && (selectedUnitsFromUrl.has(topic.id) || selectedUnitsFromUrl.has(String(topic.id)) || selectedUnitsFromUrl.has(Number(topic.id)));
+                        const isSelected = isSelectedId(topic.id);
                         if (isSelected) {
                           hasSelectedTopics = true;
-                          selectedTopicIds.push(topic.id);
                         }
                       });
                     }
@@ -177,7 +194,7 @@ export function EvidenceDetailsPageContent() {
                       topics: subUnit.topics ? subUnit.topics.map((topic: any) => {
                         return {
                           ...topic,
-                          learnerMap: false,
+                          learnerMap: isSelectedId(topic.id),
                           trainerMap: false,
                           signed_off: false,
                           comment: "",
@@ -194,11 +211,7 @@ export function EvidenceDetailsPageContent() {
                         subUnit.topics.forEach((topic: any) => {
                           // Compare as strings to handle type mismatches
                           const topicId = topic.id;
-                          const isSelected = topicId != null && (
-                            selectedUnitsFromUrl.has(topicId) || 
-                            selectedUnitsFromUrl.has(String(topicId)) || 
-                            selectedUnitsFromUrl.has(Number(topicId))
-                          );
+                          const isSelected = isSelectedId(topicId);
                           if (isSelected) {
                             // Only set learnerMap if not already set from mapping
                             if (topic.learnerMap === undefined || topic.learnerMap === false) {
@@ -215,90 +228,88 @@ export function EvidenceDetailsPageContent() {
           } else {
             // For Standard courses: selectedUnits contains unit IDs or subUnit IDs
             course.units.forEach((unit: any) => {
-              let isSelected = false;
-              
-              if (unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0) {
-                // Check if any subUnit is selected - handle type mismatches
-                isSelected = unit.subUnit.some((sub: any) => {
-                  return sub.id && (selectedUnitsFromUrl.has(sub.id) || selectedUnitsFromUrl.has(String(sub.id)) || selectedUnitsFromUrl.has(Number(sub.id)));
-                });
-              } else {
-                // Check if unit itself is selected - handle type mismatches
-                isSelected = unit.id && (selectedUnitsFromUrl.has(unit.id) || selectedUnitsFromUrl.has(String(unit.id)) || selectedUnitsFromUrl.has(Number(unit.id)));
-              }
-              
-              if (isSelected) {
-                // Find or create unit in updatedUnits
-                let existingUnit = updatedUnits.find(
-                  (u: any) => u.id === unit.id && u.course_id === course.course_id
-                ) as any;
-                
-                if (!existingUnit) {
-                  // Create new unit with selected subUnits/unit
-                  if (unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0) {
-                    existingUnit = {
-                      ...unit,
-                      course_id: course.course_id,
-                      type: unit.type,
-                      subUnit: unit.subUnit.map((sub: any) => {
-                        // Check if this subUnit is selected - explicitly check all possible ID formats
-                        const subId = sub.id;
-                        const isSelected = subId != null && (
-                          selectedUnitsFromUrl.has(subId) || 
-                          selectedUnitsFromUrl.has(String(subId)) || 
-                          selectedUnitsFromUrl.has(Number(subId))
-                        );
-                        return {
-                          ...sub,
-                          learnerMap: isSelected,
-                          trainerMap: false,
-                          signed_off: false,
-                          comment: "",
-                        };
-                      }),
-                    };
-                  } else {
-                    existingUnit = {
-                      ...unit,
-                      course_id: course.course_id,
-                      type: unit.type,
-                      learnerMap: true,
-                      trainerMap: false,
-                      signed_off: false,
-                      comment: "",
-                    };
+              const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+              const selectedSubUnits = unitSubUnits.filter((sub: any) => isSelectedId(sub.id));
+              const unitSelectedWithoutSubUnits =
+                unitSubUnits.length === 0 && isSelectedId(unit.id);
+
+              if (selectedSubUnits.length > 0) {
+                // For subUnit-based standard structures, split by subUnit.type and merge into typed rows.
+                const selectedByType = new Map<string, any[]>();
+                selectedSubUnits.forEach((sub: any) => {
+                  const selectedType = sub.type || unit.type || "";
+                  if (!selectedByType.has(selectedType)) {
+                    selectedByType.set(selectedType, []);
                   }
-                  updatedUnits.push(existingUnit);
-                } else {
-                  // Update existing unit to include selected subUnits/unit
-                  if (existingUnit.subUnit && Array.isArray(existingUnit.subUnit) && existingUnit.subUnit.length > 0) {
-                    existingUnit.subUnit.forEach((sub: any) => {
-                      // Compare as strings to handle type mismatches
-                      const subId = sub.id;
-                      const isSelected = subId != null && (
-                        selectedUnitsFromUrl.has(subId) || 
-                        selectedUnitsFromUrl.has(String(subId)) || 
-                        selectedUnitsFromUrl.has(Number(subId))
+                  selectedByType.get(selectedType)!.push(sub);
+                });
+
+                selectedByType.forEach((typedSubUnits, selectedType) => {
+                  let existingUnit = updatedUnits.find(
+                    (u: any) =>
+                      u.id === unit.id &&
+                      u.course_id === course.course_id &&
+                      String(u.type || "") === String(selectedType || "")
+                  ) as any;
+
+                  if (!existingUnit) {
+                    existingUnit = {
+                      ...unit,
+                      course_id: course.course_id,
+                      type: selectedType,
+                      subUnit: typedSubUnits.map((sub: any) => ({
+                        ...sub,
+                        learnerMap: true,
+                        trainerMap: sub.trainerMap ?? false,
+                        signed_off: sub.signed_off ?? false,
+                        comment: sub.comment ?? "",
+                      })),
+                    };
+                    updatedUnits.push(existingUnit);
+                  } else {
+                    if (!Array.isArray(existingUnit.subUnit)) {
+                      existingUnit.subUnit = [];
+                    }
+                    typedSubUnits.forEach((typedSub: any) => {
+                      const existingSub = existingUnit.subUnit.find(
+                        (sub: any) => String(sub.id) === String(typedSub.id)
                       );
-                      if (isSelected) {
-                        if (sub.learnerMap === undefined || sub.learnerMap === false) {
-                          sub.learnerMap = true;
-                        }
+                      if (existingSub) {
+                        existingSub.learnerMap = true;
+                      } else {
+                        existingUnit.subUnit.push({
+                          ...typedSub,
+                          learnerMap: true,
+                          trainerMap: typedSub.trainerMap ?? false,
+                          signed_off: typedSub.signed_off ?? false,
+                          comment: typedSub.comment ?? "",
+                        });
                       }
                     });
-                  } else {
-                    const unitId = existingUnit.id;
-                    const isSelected = unitId != null && (
-                      selectedUnitsFromUrl.has(unitId) || 
-                      selectedUnitsFromUrl.has(String(unitId)) || 
-                      selectedUnitsFromUrl.has(Number(unitId))
-                    );
-                    if (isSelected) {
-                      if (existingUnit.learnerMap === undefined || existingUnit.learnerMap === false) {
-                        existingUnit.learnerMap = true;
-                      }
-                    }
                   }
+                });
+              } else if (unitSelectedWithoutSubUnits) {
+                // Unit-level mapping (no subUnits)
+                let existingUnit = updatedUnits.find(
+                  (u: any) =>
+                    u.id === unit.id &&
+                    u.course_id === course.course_id &&
+                    String(u.type || "") === String(unit.type || "")
+                ) as any;
+
+                if (!existingUnit) {
+                  existingUnit = {
+                    ...unit,
+                    course_id: course.course_id,
+                    type: unit.type,
+                    learnerMap: true,
+                    trainerMap: unit.trainerMap ?? false,
+                    signed_off: unit.signed_off ?? false,
+                    comment: unit.comment ?? "",
+                  };
+                  updatedUnits.push(existingUnit);
+                } else if (!existingUnit.learnerMap) {
+                  existingUnit.learnerMap = true;
                 }
               }
             });
@@ -313,7 +324,7 @@ export function EvidenceDetailsPageContent() {
         form.setValue("units", reconstructed.units);
       }
     }
-  }, [evidenceDetails, courses, form, selectedUnitsFromUrl]);
+  }, [evidenceDetails, courses, form, selectedUnitsFromUrl, hasSelectedUnitsParam]);
 
   const handleSave = async () => {
     if (!evidenceDetails?.data) return;
@@ -381,21 +392,30 @@ export function EvidenceDetailsPageContent() {
             }
           });
         } else if (hasSubUnit) {
-          // For Standard courses: Unit has subunits - create mapping for each subunit
-          unit.subUnit.forEach((sub: any) => {
-            if (sub.learnerMap === true) {
-              const key = `${courseId}-${sub.id}`;
-              desiredMappings.set(key, {
-                assignment_id: Number(assignmentId),
-                course_id: Number(courseId),
-                unit_code: String(sub.id),
-                learnerMap: true,
-                trainerMap: sub.trainerMap ?? false,
-                comment: sub.comment ?? "",
-                signed_off: sub.signed_off ?? false,
-                mapping_id: sub.mapping_id, // For updates (if exists)
-              });
-            }
+          // For Standard courses: use unit-level key and merge selected subUnit IDs
+          const key = `${courseId}-${unit.id}`;
+          const existingMapping = desiredMappings.get(key);
+          const currentSubUnitIds = Array.isArray(unit.subUnit)
+            ? unit.subUnit
+                .filter((sub: any) => sub?.learnerMap === true)
+                .map((sub: any) => Number(sub.id))
+            : [];
+          const mergedSubUnitIds = Array.from(
+            new Set<number>([
+              ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
+              ...currentSubUnitIds,
+            ])
+          );
+          desiredMappings.set(key, {
+            assignment_id: Number(assignmentId),
+            course_id: Number(courseId),
+            unit_code: String(unit.id),
+            learnerMap: true,
+            trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
+            comment: existingMapping?.comment ?? unit.comment ?? "",
+            signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
+            mapping_id: existingMapping?.mapping_id ?? unit.mapping_id,
+            sub_unit_ids: mergedSubUnitIds,
           });
         } else {
           // Unit-only - create mapping for unit itself
@@ -497,17 +517,14 @@ export function EvidenceDetailsPageContent() {
                   }
                 }
               } else if (unit.subUnit) {
-                // Standard: check subUnits
-                const subUnit = unit.subUnit.find((sub: any) => {
-                  const subKey = `${courseId}-${sub.id}`;
-                  return subKey === key;
-                });
-                if (subUnit) {
+                // Standard: with unit-level key, resolve by unit ID
+                const unitKey = `${courseId}-${unit.id}`;
+                if (unitKey === key) {
                   pcData = {
-                    learnerMap: subUnit.learnerMap ?? false,
-                    trainerMap: subUnit.trainerMap ?? false,
-                    signed_off: subUnit.signed_off ?? false,
-                    comment: subUnit.comment ?? "",
+                    learnerMap: unit.learnerMap ?? false,
+                    trainerMap: unit.trainerMap ?? false,
+                    signed_off: unit.signed_off ?? false,
+                    comment: unit.comment ?? "",
                   };
                 }
               } else {

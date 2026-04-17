@@ -72,15 +72,15 @@ export function UnitsTable({
   const unitIndexMap = useMemo(() => {
     const map = new Map<string, number>();
     units.forEach((unit: any, index: number) => {
-      const key = `${unit.course_id}-${unit.id}`;
+      const key = `${unit.course_id}-${unit.id}-${unit.type ?? ""}`;
       map.set(key, index);
     });
     return map;
   }, [units]);
 
   // Find unit index by id and course_id - use stable mapping
-  const findUnitIndex = (unitId: string | number, courseId: number) => {
-    const key = `${courseId}-${unitId}`;
+  const findUnitIndex = (unitId: string | number, courseId: number, unitType?: string) => {
+    const key = `${courseId}-${unitId}-${unitType ?? ""}`;
     return unitIndexMap.get(key) ?? -1;
   };
 
@@ -157,7 +157,7 @@ export function UnitsTable({
                       </TableHeader>
                       <TableBody>
                         {unitsOfType.map((unit: any) => {
-                  const unitIndex = findUnitIndex(unit.id, course.course_id);
+                  const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
                   // Skip if unit index is invalid (shouldn't happen, but safety check)
                   if (unitIndex === -1) {
                     return <TableRow key={`invalid-${unit.id}`} style={{ display: 'none' }} />;
@@ -408,7 +408,7 @@ export function UnitsTable({
                 </TableHeader>
                 <TableBody>
                   {courseUnits.map((unit: any) => {
-                    const unitIndex = findUnitIndex(unit.id, course.course_id);
+                    const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
                     // Skip if unit index is invalid (shouldn't happen, but safety check)
                     if (unitIndex === -1) {
                       return <TableRow key={`invalid-${unit.id}`} style={{ display: 'none' }} />;

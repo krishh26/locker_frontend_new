@@ -23,13 +23,14 @@ export interface StandardCourseMinimalProps {
     id: string | number;
     title: string;
     unitId?: string | number;
+    unitType?: string;
     courseId?: string | number;
     unitIndex?: number;
     subUnitIndex?: number;
   }>;
   control: Control<any>;
   courseId: string | number;
-  findUnitIndex: (unitId: string | number, courseId: number) => number;
+  findUnitIndex: (unitId: string | number, courseId: number, unitType?: string) => number;
   findSubUnitIndex: (unitIndex: number, subUnitId: string | number) => number;
   canEditLearnerFields: boolean;
   canEditTrainerFields: boolean;
@@ -78,12 +79,18 @@ export function StandardCourseMinimal({
 
   // Get current row values from unitsWatch for real-time updates (same as UnitsTable)
   const getCurrentRowValues = React.useCallback((row: any) => {
-    const unit = unitsWatch.find((u: any) => String(u.id) === String(row.unitId));
+    const unit = unitsWatch.find(
+      (u: any) =>
+        String(u.id) === String(row.unitId) &&
+        String(u.type ?? "") === String(row.unitType ?? "")
+    );
     const hasSubUnitInUnit = unit?.subUnit && unit.subUnit.length > 0;
 
     if (!hasSubUnitInUnit) {
       const currentUnit = unitsWatch.find(
-        (u: any) => String(u.id) === String(row.id || row.unitId)
+        (u: any) =>
+          String(u.id) === String(row.id || row.unitId) &&
+          String(u.type ?? "") === String(row.unitType ?? "")
       );
       return {
         learnerMap: currentUnit?.learnerMap ?? row.learnerMap ?? false,
@@ -92,7 +99,11 @@ export function StandardCourseMinimal({
         comment: currentUnit?.comment ?? row.comment ?? '',
       };
     } else {
-      const currentUnit = unitsWatch.find((u: any) => String(u.id) === String(row.unitId));
+      const currentUnit = unitsWatch.find(
+        (u: any) =>
+          String(u.id) === String(row.unitId) &&
+          String(u.type ?? "") === String(row.unitType ?? "")
+      );
       const currentSubUnit = currentUnit?.subUnit?.find(
         (s: any) => String(s.id) === String(row.id)
       );
@@ -107,7 +118,11 @@ export function StandardCourseMinimal({
 
   // Calculate evidence count (same as UnitsTable)
   const getRowEvidenceCount = React.useCallback((row: any) => {
-    const unit = unitsWatch.find((u: any) => String(u.id) === String(row.unitId));
+    const unit = unitsWatch.find(
+      (u: any) =>
+        String(u.id) === String(row.unitId) &&
+        String(u.type ?? "") === String(row.unitType ?? "")
+    );
     const hasSubUnitInUnit = unit?.subUnit && unit.subUnit.length > 0;
     if (hasSubUnitInUnit) {
       return getEvidenceCount(courseIdNum, row.unitId!, row.id);
@@ -151,7 +166,11 @@ export function StandardCourseMinimal({
                       // Handle combined variant select all (same as UnitsTable)
                       const updated = [...unitsWatch];
                       rows.forEach((row) => {
-                        const unit = updated.find((u: any) => u.id === row.unitId);
+                        const unit = updated.find(
+                          (u: any) =>
+                            String(u.id) === String(row.unitId) &&
+                            String(u.type ?? "") === String(row.unitType ?? "")
+                        );
                         if (unit) {
                           const hasSubUnitInUnit = unit.subUnit && unit.subUnit.length > 0;
                           if (hasSubUnitInUnit) {
@@ -204,7 +223,7 @@ export function StandardCourseMinimal({
           <TableBody>
             {rows.map((row) => {
               const currentValues = getCurrentRowValues(row);
-              const rowKey = `${row.unitId}-${row.id}`;
+              const rowKey = `${row.unitId}-${row.unitType ?? ""}-${row.id}`;
 
               return (
                 <TableRow key={rowKey}>

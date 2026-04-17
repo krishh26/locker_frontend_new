@@ -2663,6 +2663,7 @@
         "uploadFileOrCreateDoc": "Please upload a file or create a document",
         "invalidFile": "Invalid file. Please upload a file or create a document",
         "saveFailed": "Failed to save evidence. Please try again.",
+        "selfSignFailed": "Could not save your signature. Please try again.",
         "documentCreatedSuccess": "Document created successfully! You can continue filling the form."
       },
       "status": {
@@ -2693,6 +2694,7 @@
         "signedInAgreement": "Signed in Agreement:",
         "name": "Name:",
         "signed": "Signed:",
+        "enable": "Enable",
         "es": "ES:",
         "date": "Date:",
         "signatureReq": "Signature req:",

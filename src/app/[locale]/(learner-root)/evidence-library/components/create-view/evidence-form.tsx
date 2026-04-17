@@ -17,6 +17,7 @@ import {
   useRequestSignatureMutation,
   useUploadExternalEvidenceFileMutation,
 } from '@/store/api/evidence/evidenceApi'
+import { useSaveSignatureMutation } from '@/store/api/documents-to-sign/documentsToSignApi'
 import { useAppSelector } from '@/store/hooks'
 import { selectCourses } from '@/store/slices/authSlice'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,7 +34,10 @@ import { getEvidenceFormSchema } from './evidence-form-schema'
 import type { EvidenceFormValues } from './evidence-form-types'
 import { FileUpload } from './file-upload'
 import { QualificationHierarchyUnits } from './qualification-hierarchy-units'
-import { SignatureTable } from './signature-table'
+import {
+  SignatureTable,
+  normalizeEvidenceSignatureRole,
+} from './signature-table'
 import { UnitsTable } from './units-table'
 import {
   EvidenceUpdateRequest,
@@ -58,6 +62,19 @@ import type { TimeLogEntry } from '@/store/api/time-log/types'
 
 interface EvidenceFormProps {
   evidenceId?: string
+}
+
+function findOwnSignatureRow(
+  signatures: EvidenceFormValues['signatures'] | undefined,
+  userRoleStr: string | undefined,
+) {
+  if (!signatures?.length || !userRoleStr) return null
+  const normalizedUser = normalizeEvidenceSignatureRole(userRoleStr)
+  return (
+    signatures.find(
+      (s) => normalizeEvidenceSignatureRole(s.role) === normalizedUser,
+    ) ?? null
+  )
 }
 
 export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
@@ -116,7 +133,24 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const [updateEvidence] = useUpdateEvidenceMutation()
   const [upsertMapping] = useUpsertAssignmentMappingMutation()
   const [requestSignature] = useRequestSignatureMutation()
+  const [saveSignature] = useSaveSignatureMutation()
   const [uploadExternalEvidenceFile] = useUploadExternalEvidenceFileMutation()
+
+  const creatorRoleSignedFromApi = useMemo(() => {
+    if (!isEditMode || !evidenceDetails?.data) return false
+    const apiSigs =
+      (
+        evidenceDetails.data as {
+          signatures?: Array<{ role: string; is_signed?: boolean }>
+        }
+      ).signatures ?? []
+    const match = apiSigs.find(
+      (s) =>
+        normalizeEvidenceSignatureRole(s.role) ===
+        normalizeEvidenceSignatureRole(user?.role),
+    )
+    return Boolean(match?.is_signed)
+  }, [isEditMode, evidenceDetails?.data, user?.role])
 
   const schema = useMemo(
     () => getEvidenceFormSchema(userRole, isEditMode),
@@ -200,7 +234,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     } else {
       setSessions([])
     }
-  }, [learnerPlanData, learnerPlanError])
+  }, [])
 
   // Load evidence data when editing
   useEffect(() => {
@@ -455,43 +489,59 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 })
               }
             })
-          } else if (hasSubUnit) {
-            // For Standard courses: Unit has subunits - create mapping for each subunit
-            // Only include mappings where learnerMap is true
-            unit.subUnit.forEach((sub: any) => {
-              // Only add to desiredMappings if learnerMap is true
-              if (sub.learnerMap === true) {
-                const key = `${courseId}-${sub.id}`
-                desiredMappings.set(key, {
-                  assignment_id: Number(id),
-                  course_id: Number(courseId),
-                  unit_code: String(sub.id),
-                  learnerMap: true,
-                  trainerMap: sub.trainerMap ?? false,
-                  code: sub.code,
-                  comment: sub.comment ?? '',
-                  signed_off: sub.signed_off ?? false,
-                  mapping_id: sub.mapping_id, // For updates (if exists)
-                })
-              }
-            })
-          } else {
+          } 
+          // else if (hasSubUnit) {
+          //   // For Standard courses: Unit has subunits - create mapping for each subunit
+          //   // Only include mappings where learnerMap is true
+          //   unit.subUnit.forEach((sub: any) => {
+          //     // Only add to desiredMappings if learnerMap is true
+          //     if (sub.learnerMap === true) {
+          //       const key = `${courseId}-${sub.id}`
+          //       desiredMappings.set(key, {
+          //         assignment_id: Number(id),
+          //         course_id: Number(courseId),
+          //         unit_code: String(sub.id),
+          //         learnerMap: true,
+          //         trainerMap: sub.trainerMap ?? false,
+          //         code: sub.code,
+          //         comment: sub.comment ?? '',
+          //         signed_off: sub.signed_off ?? false,
+          //         mapping_id: sub.mapping_id, // For updates (if exists)
+          //       })
+          //     }
+          //   })
+          // }
+           else {
             // Unit-only - create mapping for unit itself (unit_code = unit code)
             // Only include mappings where learnerMap is true
-            if (unit.learnerMap === true) {
+            // if (unit.learnerMap === true) {
               const key = `${courseId}-${unit.id}`
+              const existingMapping = desiredMappings.get(key)
+              const currentSubUnitIds = Array.isArray(unit.subUnit)
+                ? unit.subUnit
+                    .filter((sub: any) => sub?.learnerMap === true)
+                    .map((sub: any) => Number(sub.id))
+                : []
+              const mergedSubUnitIds = Array.from(
+                new Set<number>([
+                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
+                  ...currentSubUnitIds,
+                ]),
+              )
               desiredMappings.set(key, {
                 assignment_id: Number(id),
                 course_id: Number(courseId),
                 code: unit.code,
                 unit_code: String(unit.id),
                 learnerMap: true,
-                trainerMap: unit.trainerMap ?? false,
-                comment: unit.comment ?? '',
-                signed_off: unit.signed_off ?? false,
-                mapping_id: unit.mapping_id, // For updates (if exists)
+                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
+                comment: existingMapping?.comment ?? unit.comment ?? '',
+                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
+                mapping_id: existingMapping?.mapping_id ?? unit.mapping_id,
+                sub_unit_ids: mergedSubUnitIds,
               })
-            }
+            // }
+            // console.log('desiredMappings2')
           }
         })
 
@@ -560,6 +610,29 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               `Failed to request signatures for assignment ${id}:`,
               error,
             )
+          }
+        }
+
+        const ownSigForSelfSign = findOwnSignatureRow(
+          data.signatures,
+          user?.role,
+        )
+        if (
+          allMappingIds.length > 0 &&
+          ownSigForSelfSign?.signed &&
+          !creatorRoleSignedFromApi
+        ) {
+          try {
+            await saveSignature({
+              id: String(id),
+              data: {
+                role: ownSigForSelfSign.role,
+                is_signed: true,
+              },
+            }).unwrap()
+          } catch (error) {
+            console.error('Failed to save creator signature:', error)
+            toast.error(t('form.toast.selfSignFailed'))
           }
         }
 
@@ -673,41 +746,56 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 })
               }
             })
-          } else if (hasSubUnit) {
-            // For Standard courses: Unit has subunits - create mapping for each subunit
-            // Only include mappings where learnerMap is true
-            unit.subUnit.forEach((sub: any) => {
-              // Only add to desiredMappings if learnerMap is true
-              if (sub.learnerMap === true) {
-                const key = `${courseId}-${sub.id}`
-                desiredMappings.set(key, {
-                  assignment_id: Number(createdEvidenceId),
-                  course_id: Number(courseId),
-                  unit_code: String(sub.id),
-                  learnerMap: true,
-                  trainerMap: sub.trainerMap ?? false,
-                  code: sub.code,
-                  comment: sub.comment ?? '',
-                  signed_off: sub.signed_off ?? false,
-                })
-              }
-            })
-          } else {
+          }
+          //  else if (hasSubUnit) {
+          //   // For Standard courses: Unit has subunits - create mapping for each subunit
+          //   // Only include mappings where learnerMap is true
+          //   unit.subUnit.forEach((sub: any) => {
+          //     // Only add to desiredMappings if learnerMap is true
+          //     if (sub.learnerMap === true) {
+          //       const key = `${courseId}-${sub.id}`
+          //       desiredMappings.set(key, {
+          //         assignment_id: Number(createdEvidenceId),
+          //         course_id: Number(courseId),
+          //         unit_code: String(sub.id),
+          //         learnerMap: true,
+          //         trainerMap: sub.trainerMap ?? false,
+          //         code: sub.code,
+          //         comment: sub.comment ?? '',
+          //         signed_off: sub.signed_off ?? false,
+          //       })
+          //     }
+          //   })
+          // } 
+          else {
             // Unit-only - create mapping for unit itself (unit_code = unit code)
             // Only include mappings where learnerMap is true
-            if (unit.learnerMap === true) {
+            // if (unit.learnerMap === true) {
               const key = `${courseId}-${unit.id}`
+              const existingMapping = desiredMappings.get(key)
+              const currentSubUnitIds = Array.isArray(unit.subUnit)
+                ? unit.subUnit
+                    .filter((sub: any) => sub?.learnerMap === true)
+                    .map((sub: any) => Number(sub.id))
+                : []
+              const mergedSubUnitIds = Array.from(
+                new Set<number>([
+                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
+                  ...currentSubUnitIds,
+                ]),
+              )
               desiredMappings.set(key, {
                 assignment_id: Number(createdEvidenceId),
                 course_id: Number(courseId),
                 code: unit.code,
                 unit_code: String(unit.id),
                 learnerMap: true,
-                trainerMap: unit.trainerMap ?? false,
-                comment: unit.comment ?? '',
-                signed_off: unit.signed_off ?? false,
+                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
+                comment: existingMapping?.comment ?? unit.comment ?? '',
+                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
+                sub_unit_ids: mergedSubUnitIds,
               })
-            }
+            // }
           }
         })
 
@@ -764,6 +852,29 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               `Failed to request signatures for assignment ${createdEvidenceId}:`,
               error,
             )
+          }
+        }
+
+        const ownSigForSelfSignCreate = findOwnSignatureRow(
+          data.signatures,
+          user?.role,
+        )
+        if (
+          allMappingIds.length > 0 &&
+          ownSigForSelfSignCreate?.signed &&
+          !creatorRoleSignedFromApi
+        ) {
+          try {
+            await saveSignature({
+              id: String(createdEvidenceId),
+              data: {
+                role: ownSigForSelfSignCreate.role,
+                is_signed: true,
+              },
+            }).unwrap()
+          } catch (error) {
+            console.error('Failed to save creator signature:', error)
+            toast.error(t('form.toast.selfSignFailed'))
           }
         }
 
@@ -1590,6 +1701,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                   watch={form.watch}
                   disabled={!canEditPrimarySections}
                   requestedRoles={requestedRoles}
+                  creatorRoleSignedFromApi={creatorRoleSignedFromApi}
                 />
               </CardContent>
             </Card>

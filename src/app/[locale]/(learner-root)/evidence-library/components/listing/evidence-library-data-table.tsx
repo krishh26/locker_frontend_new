@@ -425,9 +425,13 @@ export function EvidenceLibraryDataTable() {
               onClick={() => {
                 // Pass selected units via URL search params
                 const params = new URLSearchParams();
-                if (selectedUnits && selectedUnits.size > 0) {
-                  params.set("selectedUnits", Array.from(selectedUnits).join(","));
-                }
+                // Always pass selectedUnits (even empty) so view page can apply explicit override.
+                params.set(
+                  "selectedUnits",
+                  selectedUnits && selectedUnits.size > 0
+                    ? Array.from(selectedUnits).join(",")
+                    : ""
+                );
                 const queryString = params.toString();
                 router.push(
                   `/evidence-library/${evidenceId}/view${queryString ? `?${queryString}` : ""}`
@@ -532,60 +536,87 @@ export function EvidenceLibraryDataTable() {
                 signed_off: false,
               };
 
-              if (evidence.mappings && Array.isArray(evidence.mappings) && unit.subUnit) {
-                // Check all subUnits and their topics
-                for (const subUnit of unit.subUnit) {
-                  if (subUnit.topics && Array.isArray(subUnit.topics)) {
-                    for (const topic of subUnit.topics) {
-                      // Find mapping where unit_code matches topic.id (handle type conversion)
-                      const matchingMapping = evidence.mappings.find((mapping) => {
-                        // Convert both to string for comparison (topic.id is string, mapping.unit_code might be string or number)
-                        return String(mapping.unit_code) === String(topic.id);
+              if (evidence.mappings && Array.isArray(evidence.mappings)) {
+                const mappingCourseId = selectedCourseDetails.course_id;
+                const candidateIds = new Set<string>();
+                if (unit.id != null) candidateIds.add(String(unit.id));
+                if (unit.code != null) candidateIds.add(String(unit.code));
+                if (unit.subUnit && Array.isArray(unit.subUnit)) {
+                  unit.subUnit.forEach((subUnit) => {
+                    if (subUnit.id != null) candidateIds.add(String(subUnit.id));
+                    if (subUnit.code != null) candidateIds.add(String(subUnit.code));
+                    if (subUnit.topics && Array.isArray(subUnit.topics)) {
+                      subUnit.topics.forEach((topic) => {
+                        if (topic.id != null) candidateIds.add(String(topic.id));
+                        if (topic.code != null) candidateIds.add(String(topic.code));
                       });
+                    }
+                  });
+                }
 
-                      if (matchingMapping) {
-                        // If any topic in this unit has a mapping, mark the unit as mapped
-                        // Handle optional boolean properties and support both camelCase and snake_case
-                        const learnerMap = matchingMapping.learnerMap ?? (matchingMapping as { learner_map?: boolean }).learner_map ?? false;
-                        const trainerMap = matchingMapping.trainerMap ?? (matchingMapping as { trainer_map?: boolean }).trainer_map ?? false;
-                        const signed_off =
-                          matchingMapping.signed_off ??
-                          (matchingMapping as { signedOff?: boolean }).signedOff ??
-                          false;
-                        
-                        mappingStatus = {
-                          learnerMap: learnerMap === true || mappingStatus.learnerMap,
-                          trainerMap: trainerMap === true || mappingStatus.trainerMap,
-                          signed_off: signed_off === true || mappingStatus.signed_off,
-                        };
-                        // Break inner loop since we found a mapping for this unit
-                        break;
-                      }
-                    }
-                    // If we found a mapping, break outer loop
-                    if (mappingStatus.learnerMap || mappingStatus.trainerMap || mappingStatus.signed_off) {
-                      break;
-                    }
-                  }
+                for (const mapping of evidence.mappings) {
+                  const belongsToCourse =
+                    (mapping.course?.course_id ?? mapping.course_id) === mappingCourseId;
+                  if (!belongsToCourse) continue;
+
+                  const mappingUnitCode =
+                    mapping.unit_code != null ? String(mapping.unit_code) : null;
+                  const mappingSubUnitId =
+                    mapping.sub_unit_id != null ? String(mapping.sub_unit_id) : null;
+
+                  const hasMatch =
+                    (mappingUnitCode !== null && candidateIds.has(mappingUnitCode)) ||
+                    (mappingSubUnitId !== null && candidateIds.has(mappingSubUnitId));
+
+                  if (!hasMatch) continue;
+
+                  const learnerMap =
+                    mapping.learnerMap ??
+                    (mapping as { learner_map?: boolean }).learner_map ??
+                    false;
+                  const trainerMap =
+                    mapping.trainerMap ??
+                    (mapping as { trainer_map?: boolean }).trainer_map ??
+                    false;
+                  const signed_off =
+                    mapping.signed_off ??
+                    (mapping as { signedOff?: boolean }).signedOff ??
+                    false;
+
+                  mappingStatus = {
+                    learnerMap: learnerMap === true || mappingStatus.learnerMap,
+                    trainerMap: trainerMap === true || mappingStatus.trainerMap,
+                    signed_off: signed_off === true || mappingStatus.signed_off,
+                  };
                 }
               }
 
               const evidenceId = row.original.assignment_id;
               const selectedUnits = learnerSelectedUnits.get(evidenceId) || new Set<string | number>();
+              const isSelectedId = (id?: string | number) =>
+                id != null &&
+                (selectedUnits.has(id) ||
+                  selectedUnits.has(String(id)) ||
+                  selectedUnits.has(Number(id)));
               // Check if this unit is selected by learner (for qualification, check if any topic is selected)
               let isLearnerSelected = false;
               if (unit.subUnit) {
                 for (const subUnit of unit.subUnit) {
-                  if (subUnit.topics && Array.isArray(subUnit.topics)) {
+                  if (subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0) {
                     for (const topic of subUnit.topics) {
-                      if (topic.id && selectedUnits.has(topic.id)) {
+                      if (isSelectedId(topic.id)) {
                         isLearnerSelected = true;
                         break;
                       }
                     }
                     if (isLearnerSelected) break;
+                  } else if (isSelectedId(subUnit.id)) {
+                    isLearnerSelected = true;
+                    break;
                   }
                 }
+              } else if (isSelectedId(unit.id)) {
+                isLearnerSelected = true;
               }
 
               const isMapped =
@@ -612,27 +643,35 @@ export function EvidenceLibraryDataTable() {
                     // Select all topics in this unit
                     if (unit.subUnit) {
                       unit.subUnit.forEach((subUnit) => {
-                        if (subUnit.topics && Array.isArray(subUnit.topics)) {
+                        if (subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0) {
                           subUnit.topics.forEach((topic) => {
                             if (topic.id) {
                               evidenceUnits.add(topic.id);
                             }
                           });
+                        } else if (subUnit.id) {
+                          evidenceUnits.add(subUnit.id);
                         }
                       });
+                    } else if (unit.id) {
+                      evidenceUnits.add(unit.id);
                     }
                   } else {
                     // Deselect all topics in this unit
                     if (unit.subUnit) {
                       unit.subUnit.forEach((subUnit) => {
-                        if (subUnit.topics && Array.isArray(subUnit.topics)) {
+                        if (subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0) {
                           subUnit.topics.forEach((topic) => {
                             if (topic.id) {
                               evidenceUnits.delete(topic.id);
                             }
                           });
+                        } else if (subUnit.id) {
+                          evidenceUnits.delete(subUnit.id);
                         }
                       });
+                    } else if (unit.id) {
+                      evidenceUnits.delete(unit.id);
                     }
                   }
                   

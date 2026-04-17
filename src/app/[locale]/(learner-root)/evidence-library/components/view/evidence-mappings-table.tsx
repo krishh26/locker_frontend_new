@@ -75,14 +75,14 @@ export function EvidenceMappingsTable({
   const unitIndexMap = useMemo(() => {
     const map = new Map<string, number>();
     units.forEach((unit: any, index: number) => {
-      const key = `${unit.course_id}-${unit.id}`;
+      const key = `${unit.course_id}-${unit.id}-${unit.type ?? ""}`;
       map.set(key, index);
     });
     return map;
   }, [units]);
 
-  const findUnitIndex = (unitId: string | number, courseId: number) => {
-    const key = `${courseId}-${unitId}`;
+  const findUnitIndex = (unitId: string | number, courseId: number, unitType?: string) => {
+    const key = `${courseId}-${unitId}-${unitType ?? ""}`;
     return unitIndexMap.get(key) ?? -1;
   };
 
@@ -174,7 +174,11 @@ export function EvidenceMappingsTable({
   // Standard course handlers
   const standardLearnerMapHandler = useCallback((row: any) => {
     const updated = [...unitsWatch];
-    const unit = updated.find((u: any) => String(u.id) === String(row.unitId));
+    const unit = updated.find(
+      (u: any) =>
+        String(u.id) === String(row.unitId) &&
+        String(u.type ?? "") === String(row.unitType ?? "")
+    );
     if (unit) {
       const hasSubUnit = unit.subUnit && unit.subUnit.length > 0;
       if (hasSubUnit) {
@@ -194,7 +198,11 @@ export function EvidenceMappingsTable({
 
   const standardTrainerMapHandler = useCallback((row: any) => {
     const updated = [...unitsWatch];
-    const unit = updated.find((u: any) => String(u.id) === String(row.unitId));
+    const unit = updated.find(
+      (u: any) =>
+        String(u.id) === String(row.unitId) &&
+        String(u.type ?? "") === String(row.unitType ?? "")
+    );
     if (unit) {
       const hasSubUnit = unit.subUnit && unit.subUnit.length > 0;
       if (hasSubUnit) {
@@ -214,7 +222,11 @@ export function EvidenceMappingsTable({
 
   const standardSignedOffHandler = useCallback((row: any) => {
     const updated = [...unitsWatch];
-    const unit = updated.find((u: any) => String(u.id) === String(row.unitId));
+    const unit = updated.find(
+      (u: any) =>
+        String(u.id) === String(row.unitId) &&
+        String(u.type ?? "") === String(row.unitType ?? "")
+    );
     if (unit) {
       const hasSubUnit = unit.subUnit && unit.subUnit.length > 0;
       if (hasSubUnit) {
@@ -260,7 +272,11 @@ export function EvidenceMappingsTable({
   const selectAllSignedOffForCombinedHandler = useCallback((combinedSubUnits: any[], checked: boolean) => {
     const updated = [...unitsWatch];
     combinedSubUnits.forEach((row) => {
-      const unit = updated.find((u: any) => String(u.id) === String(row.unitId));
+      const unit = updated.find(
+        (u: any) =>
+          String(u.id) === String(row.unitId) &&
+          String(u.type ?? "") === String(row.unitType ?? "")
+      );
       if (unit) {
         const hasSubUnit = unit.subUnit && unit.subUnit.length > 0;
         if (hasSubUnit) {
@@ -359,7 +375,7 @@ export function EvidenceMappingsTable({
               // Combine all subUnits from all units of this type
               const combinedSubUnits: any[] = [];
               unitsOfType.forEach((unit: any) => {
-                const unitIndex = findUnitIndex(unit.id, course.course_id);
+                const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
                 if (unitIndex === -1) return;
                 
                 const hasSubUnit = unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0;
@@ -372,6 +388,7 @@ export function EvidenceMappingsTable({
                       id: sub.id,
                       title: sub.title,
                       unitId: unit.id,
+                      unitType: unit.type,
                       courseId: course.course_id,
                       unitIndex,
                       subUnitIndex,
@@ -383,6 +400,7 @@ export function EvidenceMappingsTable({
                     id: unit.id,
                     title: unit.title,
                     unitId: unit.id,
+                    unitType: unit.type,
                     courseId: course.course_id,
                     unitIndex,
                   });

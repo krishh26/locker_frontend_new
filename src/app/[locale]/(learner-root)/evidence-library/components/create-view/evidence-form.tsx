@@ -489,43 +489,59 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 })
               }
             })
-          } else if (hasSubUnit) {
-            // For Standard courses: Unit has subunits - create mapping for each subunit
-            // Only include mappings where learnerMap is true
-            unit.subUnit.forEach((sub: any) => {
-              // Only add to desiredMappings if learnerMap is true
-              if (sub.learnerMap === true) {
-                const key = `${courseId}-${sub.id}`
-                desiredMappings.set(key, {
-                  assignment_id: Number(id),
-                  course_id: Number(courseId),
-                  unit_code: String(sub.id),
-                  learnerMap: true,
-                  trainerMap: sub.trainerMap ?? false,
-                  code: sub.code,
-                  comment: sub.comment ?? '',
-                  signed_off: sub.signed_off ?? false,
-                  mapping_id: sub.mapping_id, // For updates (if exists)
-                })
-              }
-            })
-          } else {
+          } 
+          // else if (hasSubUnit) {
+          //   // For Standard courses: Unit has subunits - create mapping for each subunit
+          //   // Only include mappings where learnerMap is true
+          //   unit.subUnit.forEach((sub: any) => {
+          //     // Only add to desiredMappings if learnerMap is true
+          //     if (sub.learnerMap === true) {
+          //       const key = `${courseId}-${sub.id}`
+          //       desiredMappings.set(key, {
+          //         assignment_id: Number(id),
+          //         course_id: Number(courseId),
+          //         unit_code: String(sub.id),
+          //         learnerMap: true,
+          //         trainerMap: sub.trainerMap ?? false,
+          //         code: sub.code,
+          //         comment: sub.comment ?? '',
+          //         signed_off: sub.signed_off ?? false,
+          //         mapping_id: sub.mapping_id, // For updates (if exists)
+          //       })
+          //     }
+          //   })
+          // }
+           else {
             // Unit-only - create mapping for unit itself (unit_code = unit code)
             // Only include mappings where learnerMap is true
-            if (unit.learnerMap === true) {
+            // if (unit.learnerMap === true) {
               const key = `${courseId}-${unit.id}`
+              const existingMapping = desiredMappings.get(key)
+              const currentSubUnitIds = Array.isArray(unit.subUnit)
+                ? unit.subUnit
+                    .filter((sub: any) => sub?.learnerMap === true)
+                    .map((sub: any) => Number(sub.id))
+                : []
+              const mergedSubUnitIds = Array.from(
+                new Set<number>([
+                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
+                  ...currentSubUnitIds,
+                ]),
+              )
               desiredMappings.set(key, {
                 assignment_id: Number(id),
                 course_id: Number(courseId),
                 code: unit.code,
                 unit_code: String(unit.id),
                 learnerMap: true,
-                trainerMap: unit.trainerMap ?? false,
-                comment: unit.comment ?? '',
-                signed_off: unit.signed_off ?? false,
-                mapping_id: unit.mapping_id, // For updates (if exists)
+                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
+                comment: existingMapping?.comment ?? unit.comment ?? '',
+                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
+                mapping_id: existingMapping?.mapping_id ?? unit.mapping_id,
+                sub_unit_ids: mergedSubUnitIds,
               })
-            }
+            // }
+            // console.log('desiredMappings2')
           }
         })
 
@@ -730,41 +746,56 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 })
               }
             })
-          } else if (hasSubUnit) {
-            // For Standard courses: Unit has subunits - create mapping for each subunit
-            // Only include mappings where learnerMap is true
-            unit.subUnit.forEach((sub: any) => {
-              // Only add to desiredMappings if learnerMap is true
-              if (sub.learnerMap === true) {
-                const key = `${courseId}-${sub.id}`
-                desiredMappings.set(key, {
-                  assignment_id: Number(createdEvidenceId),
-                  course_id: Number(courseId),
-                  unit_code: String(sub.id),
-                  learnerMap: true,
-                  trainerMap: sub.trainerMap ?? false,
-                  code: sub.code,
-                  comment: sub.comment ?? '',
-                  signed_off: sub.signed_off ?? false,
-                })
-              }
-            })
-          } else {
+          }
+          //  else if (hasSubUnit) {
+          //   // For Standard courses: Unit has subunits - create mapping for each subunit
+          //   // Only include mappings where learnerMap is true
+          //   unit.subUnit.forEach((sub: any) => {
+          //     // Only add to desiredMappings if learnerMap is true
+          //     if (sub.learnerMap === true) {
+          //       const key = `${courseId}-${sub.id}`
+          //       desiredMappings.set(key, {
+          //         assignment_id: Number(createdEvidenceId),
+          //         course_id: Number(courseId),
+          //         unit_code: String(sub.id),
+          //         learnerMap: true,
+          //         trainerMap: sub.trainerMap ?? false,
+          //         code: sub.code,
+          //         comment: sub.comment ?? '',
+          //         signed_off: sub.signed_off ?? false,
+          //       })
+          //     }
+          //   })
+          // } 
+          else {
             // Unit-only - create mapping for unit itself (unit_code = unit code)
             // Only include mappings where learnerMap is true
-            if (unit.learnerMap === true) {
+            // if (unit.learnerMap === true) {
               const key = `${courseId}-${unit.id}`
+              const existingMapping = desiredMappings.get(key)
+              const currentSubUnitIds = Array.isArray(unit.subUnit)
+                ? unit.subUnit
+                    .filter((sub: any) => sub?.learnerMap === true)
+                    .map((sub: any) => Number(sub.id))
+                : []
+              const mergedSubUnitIds = Array.from(
+                new Set<number>([
+                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
+                  ...currentSubUnitIds,
+                ]),
+              )
               desiredMappings.set(key, {
                 assignment_id: Number(createdEvidenceId),
                 course_id: Number(courseId),
                 code: unit.code,
                 unit_code: String(unit.id),
                 learnerMap: true,
-                trainerMap: unit.trainerMap ?? false,
-                comment: unit.comment ?? '',
-                signed_off: unit.signed_off ?? false,
+                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
+                comment: existingMapping?.comment ?? unit.comment ?? '',
+                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
+                sub_unit_ids: mergedSubUnitIds,
               })
-            }
+            // }
           }
         })
 

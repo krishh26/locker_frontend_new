@@ -673,16 +673,58 @@ export function EvidenceLibraryDataTable() {
           UNIT_TYPES.SKILLS,
         ] as const;
 
-        // Get all units grouped by type
-        const unitsByType = new Map<string, Array<{ id?: number | string; code?: string; type?: string }>>();
-        selectedCourseDetails.units.forEach((unit: { id?: number | string; code?: string; type?: string; subUnit?: Array<{ id?: number | string; code?: string }> }) => {
-          if (unit.type && (COMBINED_UNIT_TYPES as readonly string[]).includes(unit.type)) {
-          if (!unitsByType.has(unit.type)) {
-            unitsByType.set(unit.type, []);
+        // Get all units grouped by type.
+        // Support both data shapes:
+        // 1) type at unit-level
+        // 2) type at subUnit-level (new payload shape)
+        const unitsByType = new Map<
+          string,
+          Array<{
+            id?: number | string;
+            code?: string;
+            type?: string;
+            subUnit?: Array<{ id?: number | string; code?: string; type?: string }>;
+          }>
+        >();
+        selectedCourseDetails.units.forEach(
+          (unit: {
+            id?: number | string;
+            code?: string;
+            type?: string;
+            subUnit?: Array<{ id?: number | string; code?: string; type?: string }>;
+          }) => {
+            if (
+              unit.type &&
+              (COMBINED_UNIT_TYPES as readonly string[]).includes(unit.type)
+            ) {
+              if (!unitsByType.has(unit.type)) {
+                unitsByType.set(unit.type, []);
+              }
+              unitsByType.get(unit.type)!.push({
+                ...unit,
+                type: unit.type,
+              });
+            }
+
+            if (unit.subUnit && Array.isArray(unit.subUnit)) {
+              unit.subUnit.forEach((sub) => {
+                if (
+                  sub.type &&
+                  (COMBINED_UNIT_TYPES as readonly string[]).includes(sub.type)
+                ) {
+                  if (!unitsByType.has(sub.type)) {
+                    unitsByType.set(sub.type, []);
+                  }
+                  unitsByType.get(sub.type)!.push({
+                    ...unit,
+                    type: sub.type,
+                    subUnit: [sub],
+                  });
+                }
+              });
+            }
           }
-          unitsByType.get(unit.type)!.push(unit as { id?: number | string; code?: string; type?: string });
-          }
-        });
+        );
 
         // Create columns for Knowledge, Behaviour, and Skills
         COMBINED_UNIT_TYPES.forEach((unitType) => {
@@ -708,16 +750,63 @@ export function EvidenceLibraryDataTable() {
                 if (evidence.mappings && Array.isArray(evidence.mappings)) {
                   // Get all unit IDs of this type
                   const unitIdsOfType = unitsOfType.map((u) => String(u.id));
+                  const subUnitIdsOfType = unitsOfType.flatMap((u) => {
+                    const unitWithSubUnit = u as typeof u & {
+                      subUnit?: Array<{ id?: string | number }>;
+                    };
+                    if (
+                      unitWithSubUnit.subUnit &&
+                      Array.isArray(unitWithSubUnit.subUnit)
+                    ) {
+                      return unitWithSubUnit.subUnit
+                        .filter((sub) => sub.id != null)
+                        .map((sub) => String(sub.id));
+                    }
+                    return [];
+                  });
 
                   // Find any mapping where unit_code matches a unit of this type
                   const matchingMapping = evidence.mappings.find((mapping) => {
                     // Check if mapping belongs to this course
-                    const belongsToCourse = mapping.course?.course_id === selectedCourseDetails.course_id;
+                    const mappingCourseId =
+                      mapping.course?.course_id ?? mapping.course_id;
+                    const belongsToCourse =
+                      mappingCourseId === selectedCourseDetails.course_id;
                     if (!belongsToCourse) return false;
 
-                    // For Standard courses: unit_code is the unit ID
-                    // Check if it matches any unit ID of this type
-                    return mapping.sub_unit_id === null && unitIdsOfType.includes(String(mapping.unit_code));
+                    const mappingUnitCode = String(mapping.unit_code);
+                    const mappingSubUnitId =
+                      mapping.sub_unit_id !== null &&
+                      mapping.sub_unit_id !== undefined
+                        ? String(mapping.sub_unit_id)
+                        : null;
+
+                    // Legacy shape: unit-level mapping only
+                    if (
+                      mappingSubUnitId === null &&
+                      unitIdsOfType.includes(mappingUnitCode)
+                    ) {
+                      return true;
+                    }
+
+                    // Current shape: unit_code = module id, sub_unit_id = selected sub unit id
+                    if (
+                      mappingSubUnitId !== null &&
+                      unitIdsOfType.includes(mappingUnitCode) &&
+                      subUnitIdsOfType.includes(mappingSubUnitId)
+                    ) {
+                      return true;
+                    }
+
+                    // Backward/alternate shape: unit_code may carry subUnit id when sub_unit_id is null
+                    if (
+                      mappingSubUnitId === null &&
+                      subUnitIdsOfType.includes(mappingUnitCode)
+                    ) {
+                      return true;
+                    }
+
+                    return false;
                   });
 
                   if (matchingMapping) {
@@ -739,13 +828,18 @@ export function EvidenceLibraryDataTable() {
 
                 const evidenceId = row.original.assignment_id;
                 const selectedUnits = learnerSelectedUnits.get(evidenceId) || new Set<string | number>();
+                const isIdSelected = (id?: string | number) =>
+                  id != null &&
+                  (selectedUnits.has(id) ||
+                    selectedUnits.has(String(id)) ||
+                    selectedUnits.has(Number(id)));
                 // Check if any unit of this type is selected by learner
                 const isLearnerSelected = unitsOfType.some((u) => {
                   const unitWithSubUnit = u as typeof u & { subUnit?: Array<{ id?: string | number }> };
                   if (unitWithSubUnit.subUnit && Array.isArray(unitWithSubUnit.subUnit) && unitWithSubUnit.subUnit.length > 0) {
-                    return unitWithSubUnit.subUnit.some((sub) => sub.id && selectedUnits.has(sub.id));
+                    return unitWithSubUnit.subUnit.some((sub) => isIdSelected(sub.id));
                   } else {
-                    return u.id && selectedUnits.has(u.id);
+                    return isIdSelected(u.id);
                   }
                 });
 

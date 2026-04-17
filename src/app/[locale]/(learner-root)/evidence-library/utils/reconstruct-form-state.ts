@@ -189,19 +189,53 @@ export function reconstructFormStateFromMappings(
     if (course.course_core_type === COURSE_TYPES.STANDARD) {
       const courseUnits = course.units || [];
       const unitsMap = new Map<string, StandardUnit>();
+      const getMappingValues = (mapping: EvidenceMapping) => {
+        const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
+        const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
+        const signed_off =
+          mapping.signed_off ??
+          (mapping as { signedOff?: boolean }).signedOff ??
+          false;
+        const comment = mapping.comment ?? "";
+        return { learnerMap, trainerMap, signed_off, comment };
+      };
 
       // Collect all types that have mappings (not just the first one)
       const selectedTypesSet = new Set<string>();
       if (courseMappings.length > 0 && courseUnits.length > 0) {
         courseMappings.forEach((mapping) => {
           const unitIdOrRef = mapping.unit_code;
+          const subUnitRef = mapping.sub_unit_id;
           if (unitIdOrRef) {
-            // Find the unit to determine its type
+            // Find unit-level type first (legacy shape)
             const matchedUnit = courseUnits.find(
               (u: any) => String(u.id) === String(unitIdOrRef) || u.code === unitIdOrRef || u.unit_ref === unitIdOrRef
             );
+            const matchedSubUnitInUnit = subUnitRef
+              ? matchedUnit?.subUnit?.find(
+                  (sub: any) => String(sub.id) === String(subUnitRef) || sub.code === subUnitRef
+                )
+              : undefined;
+            if (matchedSubUnitInUnit?.type) {
+              selectedTypesSet.add(matchedSubUnitInUnit.type);
+              return;
+            }
             if (matchedUnit?.type) {
               selectedTypesSet.add(matchedUnit.type);
+              return;
+            }
+
+            // Fallback: type may be on subUnit (current payload shape)
+            for (const unit of courseUnits) {
+              const lookupRef =
+                subUnitRef !== null && subUnitRef !== undefined ? subUnitRef : unitIdOrRef;
+              const matchedSubUnit = unit.subUnit?.find(
+                (sub: any) => String(sub.id) === String(lookupRef) || sub.code === lookupRef
+              );
+              if (matchedSubUnit?.type) {
+                selectedTypesSet.add(matchedSubUnit.type);
+                break;
+              }
             }
           }
         });
@@ -214,31 +248,45 @@ export function reconstructFormStateFromMappings(
 
       // Initialize ALL units from all selected types
       if (selectedTypesSet.size > 0) {
-        const filteredUnits = courseUnits.filter((u: any) => selectedTypesSet.has(u.type));
-        filteredUnits.forEach((unit: any) => {
-          const unitKey = `${courseId}-${unit.id || unit.code}`;
-          if (!unitsMap.has(unitKey)) {
-            const hasSubUnit = unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0;
-            unitsMap.set(unitKey, {
-              ...unit,
-              course_id: courseId,
-              type: unit.type,
-              code: unit.code || unit.unit_ref,
-              subUnit: hasSubUnit
-                ? unit.subUnit.map((sub: any) => ({
-                    ...sub,
-                    learnerMap: false,
-                    trainerMap: false,
-                    signed_off: false,
-                    comment: "",
-                  }))
-                : [],
-              learnerMap: hasSubUnit ? undefined : false,
-              trainerMap: hasSubUnit ? undefined : false,
-              signed_off: hasSubUnit ? undefined : false,
-              comment: hasSubUnit ? undefined : "",
-            });
-          }
+        selectedTypesSet.forEach((selectedType) => {
+          courseUnits.forEach((unit: any) => {
+            const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+            const matchingSubUnits = unitSubUnits.filter(
+              (sub: any) => String(sub.type) === String(selectedType)
+            );
+            const matchesByUnitType = String(unit.type) === String(selectedType);
+            const matchesBySubUnitType = matchingSubUnits.length > 0;
+
+            if (!matchesByUnitType && !matchesBySubUnitType) {
+              return;
+            }
+
+            const normalizedSubUnits = (matchesByUnitType ? unitSubUnits : matchingSubUnits).map(
+              (sub: any) => ({
+                ...sub,
+                learnerMap: false,
+                trainerMap: false,
+                signed_off: false,
+                comment: "",
+              })
+            );
+
+            const hasSubUnit = normalizedSubUnits.length > 0;
+            const unitKey = `${courseId}-${unit.id || unit.code}-${selectedType}`;
+            if (!unitsMap.has(unitKey)) {
+              unitsMap.set(unitKey, {
+                ...unit,
+                course_id: courseId,
+                type: selectedType,
+                code: unit.code || unit.unit_ref,
+                subUnit: normalizedSubUnits,
+                learnerMap: hasSubUnit ? undefined : false,
+                trainerMap: hasSubUnit ? undefined : false,
+                signed_off: hasSubUnit ? undefined : false,
+                comment: hasSubUnit ? undefined : "",
+              });
+            }
+          });
         });
       }
 
@@ -246,33 +294,53 @@ export function reconstructFormStateFromMappings(
       courseMappings.forEach((mapping) => {
         const unitIdOrRef = mapping.unit_code;
         const subUnitRef = mapping.sub_unit_id;
+        const targetSubUnitRef =
+          subUnitRef !== null && subUnitRef !== undefined ? subUnitRef : unitIdOrRef;
 
-        // Find the unit in course structure
         const unit = courseUnits.find(
           (u: any) => String(u.id) === String(unitIdOrRef) || u.code === unitIdOrRef || u.unit_ref === unitIdOrRef
         );
-        if (!unit) return;
+        const unitBySubUnit = courseUnits.find((u: any) =>
+          u.subUnit?.some(
+            (sub: any) => String(sub.id) === String(targetSubUnitRef) || sub.code === targetSubUnitRef
+          )
+        );
+        const resolvedUnit = unit || unitBySubUnit;
+        if (!resolvedUnit) return;
 
-        const unitKey = `${courseId}-${unit.id || unit.code}`;
+        const resolvedType =
+          resolvedUnit.type ||
+          resolvedUnit.subUnit?.find(
+            (sub: any) => String(sub.id) === String(targetSubUnitRef) || sub.code === targetSubUnitRef
+          )?.type;
+        if (!resolvedType) return;
+
+        const unitKey = `${courseId}-${resolvedUnit.id || resolvedUnit.code}-${resolvedType}`;
         let unitData = unitsMap.get(unitKey);
 
-        // If unit not in map yet (shouldn't happen if type is selected, but handle it)
+        // If unit not in map yet, initialize compatible shape
         if (!unitData) {
-          const hasSubUnit = unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0;
+          const unitSubUnits = Array.isArray(resolvedUnit.subUnit) ? resolvedUnit.subUnit : [];
+          const matchingSubUnits = unitSubUnits.filter(
+            (sub: any) => String(sub.type) === String(resolvedType)
+          );
+          const matchesByUnitType = String(resolvedUnit.type) === String(resolvedType);
+          const normalizedSubUnits = (matchesByUnitType ? unitSubUnits : matchingSubUnits).map(
+            (sub: any) => ({
+              ...sub,
+              learnerMap: false,
+              trainerMap: false,
+              signed_off: false,
+              comment: "",
+            })
+          );
+          const hasSubUnit = normalizedSubUnits.length > 0;
           const newUnitData: StandardUnit = {
-            ...unit,
+            ...resolvedUnit,
             course_id: courseId,
-            type: unit.type,
-            code: unit.code || unit.unit_ref,
-            subUnit: hasSubUnit
-              ? unit.subUnit.map((sub: any) => ({
-                  ...sub,
-                  learnerMap: false,
-                  trainerMap: false,
-                  signed_off: false,
-                  comment: "",
-                }))
-              : [],
+            type: resolvedType,
+            code: resolvedUnit.code || resolvedUnit.unit_ref,
+            subUnit: normalizedSubUnits,
             learnerMap: hasSubUnit ? undefined : false,
             trainerMap: hasSubUnit ? undefined : false,
             signed_off: hasSubUnit ? undefined : false,
@@ -285,61 +353,37 @@ export function reconstructFormStateFromMappings(
         // Ensure unitData is defined before using it
         if (!unitData) return;
 
-        // If mapping has sub_unit_id, it's a sub unit mapping
-        if (subUnitRef !== null && subUnitRef !== undefined) {
-          // Find the subunit in the unit's subUnit array
-          const subunit = unit.subUnit?.find(
-            (s: any) => String(s.id) === String(subUnitRef) || s.code === subUnitRef
-          );
-          if (subunit) {
-            const existingSubUnit = unitData.subUnit.find(
-              (s: any) => String(s.id) === String(subUnitRef) || s.code === subUnitRef
-            );
-            if (existingSubUnit) {
-              // Update existing subunit with mapping values
-              const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
-              const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-              const signed_off =
-                mapping.signed_off ??
-                (mapping as { signedOff?: boolean }).signedOff ??
-                false;
-              const comment = mapping.comment ?? "";
-              
-              existingSubUnit.learnerMap = learnerMap;
-              existingSubUnit.trainerMap = trainerMap;
-              existingSubUnit.signed_off = signed_off;
-              existingSubUnit.comment = comment;
-              existingSubUnit.mapping_id = mapping.mapping_id;
-            } else {
-              // Add new subunit with mapping values
-              const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
-              const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-              const signed_off =
-                mapping.signed_off ??
-                (mapping as { signedOff?: boolean }).signedOff ??
-                false;
-              const comment = mapping.comment ?? "";
-              
-              unitData.subUnit.push({
-                ...subunit,
-                learnerMap,
-                trainerMap,
-                signed_off,
-                comment,
-                mapping_id: mapping.mapping_id,
-              });
-            }
+        // For standard mappings, support both:
+        // - sub_unit_id provided (new payload shape)
+        // - unit_code carrying subUnit id when sub_unit_id is null
+        const sourceSubUnit = resolvedUnit.subUnit?.find(
+          (s: any) => String(s.id) === String(targetSubUnitRef) || s.code === targetSubUnitRef
+        );
+        const existingSubUnit = unitData.subUnit.find(
+          (s: any) => String(s.id) === String(targetSubUnitRef) || s.code === targetSubUnitRef
+        );
+
+        if (sourceSubUnit) {
+          const { learnerMap, trainerMap, signed_off, comment } = getMappingValues(mapping);
+          if (existingSubUnit) {
+            existingSubUnit.learnerMap = learnerMap;
+            existingSubUnit.trainerMap = trainerMap;
+            existingSubUnit.signed_off = signed_off;
+            existingSubUnit.comment = comment;
+            existingSubUnit.mapping_id = mapping.mapping_id;
+          } else {
+            unitData.subUnit.push({
+              ...sourceSubUnit,
+              learnerMap,
+              trainerMap,
+              signed_off,
+              comment,
+              mapping_id: mapping.mapping_id,
+            });
           }
         } else {
           // Unit-only mapping (no subunits)
-          // Support both camelCase and snake_case from API
-          const learnerMap = mapping.learnerMap ?? (mapping as any).learner_map ?? false;
-          const trainerMap = mapping.trainerMap ?? (mapping as any).trainer_map ?? false;
-          const signed_off =
-            mapping.signed_off ??
-            (mapping as { signedOff?: boolean }).signedOff ??
-            false;
-          const comment = mapping.comment ?? "";
+          const { learnerMap, trainerMap, signed_off, comment } = getMappingValues(mapping);
           
           unitData.learnerMap = learnerMap;
           unitData.trainerMap = trainerMap;

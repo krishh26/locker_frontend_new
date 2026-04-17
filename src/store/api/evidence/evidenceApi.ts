@@ -131,10 +131,11 @@ export const evidenceApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Evidence", id: arg.assignment_id },
-        "Evidence",
-      ],
+      // Do not invalidate Evidence detail/list here: the evidence edit form calls
+      // this mutation in a tight loop; invalidating would refetch `/assignment/get/:id`
+      // after every mapping save. Other flows (updateEvidence, delete, etc.) still
+      // invalidate Evidence as needed.
+      invalidatesTags: [],
     }),
     deleteAssignmentMapping: builder.mutation({
       query: ({ mapping_id }) => ({

@@ -5,6 +5,8 @@ import type {
   EvidenceDetailResponse,
   EvidenceUpdateRequest,
   EvidenceReuploadRequest,
+  AssignmentSignoffRequest,
+  AssignmentSignoffResponse,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -137,6 +139,24 @@ export const evidenceApi = createApi({
       // invalidate Evidence as needed.
       invalidatesTags: [],
     }),
+    /** PATCH PC row by mapping_id (edit mode); caller refetches detail after batch if needed */
+    patchAssignmentSignoff: builder.mutation<
+      AssignmentSignoffResponse,
+      AssignmentSignoffRequest
+    >({
+      query: (body) => ({
+        url: `/assignment/signoff`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [],
+      transformResponse: (response: AssignmentSignoffResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
     deleteAssignmentMapping: builder.mutation({
       query: ({ mapping_id }) => ({
         url: `/assignment-mapping/delete/${mapping_id}`,
@@ -193,6 +213,7 @@ export const {
   useReuploadEvidenceMutation,
   useGetAssignmentMappingsQuery,
   useUpsertAssignmentMappingMutation,
+  usePatchAssignmentSignoffMutation,
   useDeleteAssignmentMappingMutation,
   useGetMappingSignatureListQuery,
   useUpdateMappingPCMutation,

@@ -14,6 +14,7 @@ import {
   useCreateEvidenceMutation,
   useUpdateEvidenceMutation,
   useUpsertAssignmentMappingMutation,
+  usePatchAssignmentSignoffMutation,
   useRequestSignatureMutation,
   useUploadExternalEvidenceFileMutation,
 } from '@/store/api/evidence/evidenceApi'
@@ -27,7 +28,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useQualificationHandlers } from '../../hooks/use-qualification-handlers'
+import { useEvidenceSubmissionCounts } from '../../hooks/use-evidence-submission-counts'
 import { reconstructFormStateFromMappings } from '../../utils/reconstruct-form-state'
+import {
+  collectEditModeMappingSaveOps,
+  extractMappingIdFromUpsertResponse,
+} from '../../utils/edit-mode-mapping-save'
 import { COURSE_TYPES } from '../constants'
 import { CourseSelection } from './course-selection'
 import { getEvidenceFormSchema } from './evidence-form-schema'
@@ -122,7 +128,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   )
 
   // Get evidence details if editing
-  const { data: evidenceDetails, isLoading: isLoadingDetails } =
+  const { data: evidenceDetails, isLoading: isLoadingDetails, refetch: refetchEvidenceDetails } =
     useGetEvidenceDetailsQuery(Number(evidenceId), {
       skip: !evidenceId,
       refetchOnMountOrArgChange: true,
@@ -132,6 +138,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const [createEvidence] = useCreateEvidenceMutation()
   const [updateEvidence] = useUpdateEvidenceMutation()
   const [upsertMapping] = useUpsertAssignmentMappingMutation()
+  const [patchAssignmentSignoff] = usePatchAssignmentSignoffMutation()
   const [requestSignature] = useRequestSignatureMutation()
   const [saveSignature] = useSaveSignatureMutation()
   const [uploadExternalEvidenceFile] = useUploadExternalEvidenceFileMutation()
@@ -448,145 +455,53 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           data: evidencePayload as EvidenceUpdateRequest,
         }).unwrap()
 
-        // Step 3: Handle mappings for each course/unit/subunit/topic combination
-        // Map key: course_id-topic_id (for Qualification, topics are mapped; for Standard, subUnits or units are mapped)
-        // Build desired mappings from form state
-        const desiredMappings: Map<string, any> = new Map()
+        // Step 3: New PCs → POST /assignment/mapping; existing rows → PATCH /assignment/signoff
+        const allMappingIdSet = new Set<number>()
+        const apiMappings = evidenceDetails?.data?.mappings
 
-        formUnits.forEach((unit: any) => {
-          const courseId = unit.course_id
-          const course = selectedCourses.find(
-            (c: any) => c.course_id === courseId,
-          )
-          const isQualification =
-            course?.course_core_type === COURSE_TYPES.QUALIFICATION
-          const hasSubUnit = unit.subUnit && unit.subUnit.length > 0
+        const { upserts: editUpserts, signoffs: editSignoffs } =
+          collectEditModeMappingSaveOps({
+            assignmentId: id,
+            formUnits,
+            selectedCourses,
+            mappingsFromApi: apiMappings,
+          })
 
-          if (isQualification && hasSubUnit) {
-            // For Qualification courses: map topics (Assessment Criteria) only
-            unit.subUnit.forEach((subUnit: any) => {
-              if (
-                subUnit.topics &&
-                Array.isArray(subUnit.topics) &&
-                subUnit.topics.length > 0
-              ) {
-                subUnit.topics.forEach((topic: any) => {
-                  // Only add to desiredMappings if learnerMap is true
-                  if (topic.learnerMap === true) {
-                    const key = `${courseId}-${topic.id}`
-                    desiredMappings.set(key, {
-                      assignment_id: Number(id),
-                      course_id: Number(courseId),
-                      unit_code: String(topic.id), // For qualification, unit_code = topic.id
-                      learnerMap: true,
-                      trainerMap: topic.trainerMap ?? false,
-                      code: topic.code,
-                      comment: topic.comment ?? '',
-                      signed_off: topic.signed_off ?? false,
-                      mapping_id: topic.mapping_id, // For updates (if exists)
-                    })
-                  }
-                })
-              }
-            })
-          } 
-          // else if (hasSubUnit) {
-          //   // For Standard courses: Unit has subunits - create mapping for each subunit
-          //   // Only include mappings where learnerMap is true
-          //   unit.subUnit.forEach((sub: any) => {
-          //     // Only add to desiredMappings if learnerMap is true
-          //     if (sub.learnerMap === true) {
-          //       const key = `${courseId}-${sub.id}`
-          //       desiredMappings.set(key, {
-          //         assignment_id: Number(id),
-          //         course_id: Number(courseId),
-          //         unit_code: String(sub.id),
-          //         learnerMap: true,
-          //         trainerMap: sub.trainerMap ?? false,
-          //         code: sub.code,
-          //         comment: sub.comment ?? '',
-          //         signed_off: sub.signed_off ?? false,
-          //         mapping_id: sub.mapping_id, // For updates (if exists)
-          //       })
-          //     }
-          //   })
-          // }
-           else {
-            // Unit-only - create mapping for unit itself (unit_code = unit code)
-            // Only include mappings where learnerMap is true
-            // if (unit.learnerMap === true) {
-              const key = `${courseId}-${unit.id}`
-              const existingMapping = desiredMappings.get(key)
-              const currentSubUnitIds = Array.isArray(unit.subUnit)
-                ? unit.subUnit
-                    .filter((sub: any) => sub?.learnerMap === true)
-                    .map((sub: any) => Number(sub.id))
-                : []
-              const mergedSubUnitIds = Array.from(
-                new Set<number>([
-                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
-                  ...currentSubUnitIds,
-                ]),
-              )
-              desiredMappings.set(key, {
-                assignment_id: Number(id),
-                course_id: Number(courseId),
-                code: unit.code,
-                unit_code: String(unit.id),
-                learnerMap: true,
-                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
-                comment: existingMapping?.comment ?? unit.comment ?? '',
-                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
-                mapping_id: existingMapping?.mapping_id ?? unit.mapping_id,
-                sub_unit_ids: mergedSubUnitIds,
-              })
-            // }
-            // console.log('desiredMappings2')
-          }
-        })
-
-        // Upsert mappings and collect mapping IDs
-        const allMappingIds: number[] = []
-        const desiredMappingsArray = Array.from(desiredMappings.entries())
-
-        for (const [, desiredMapping] of desiredMappingsArray) {
+        for (const payload of editUpserts) {
           try {
-            // Use merged upsert API - it handles both create and update
-            const { mapping_id, ...payload } = desiredMapping
             const result = await upsertMapping(payload).unwrap()
-
-            // Extract mapping_id from response
-            // Response structure: { status: true, message: "...", data: [{ mapping_id: 11, ... }] }
-            let mappingId: number | null = null
-
-            if (
-              result?.data &&
-              Array.isArray(result.data) &&
-              result.data.length > 0
-            ) {
-              // Get mapping_id from the first item in the data array
-              mappingId = result.data[0]?.mapping_id || null
-            } else if ((result as any)?.mapping_id) {
-              // Fallback: direct mapping_id property
-              mappingId = (result as any).mapping_id
-            } else if ((result as any)?.id) {
-              // Fallback: direct id property
-              mappingId = (result as any).id
-            } else if ((result as any)?.data?.mapping_id) {
-              // Fallback: data.mapping_id (if data is not an array)
-              mappingId = (result as any).data.mapping_id
-            } else if (mapping_id) {
-              // Final fallback: use existing mapping_id from desiredMapping
-              mappingId = mapping_id
-            }
-
-            if (mappingId) {
-              allMappingIds.push(mappingId)
+            const mappingId = extractMappingIdFromUpsertResponse(result, null)
+            if (mappingId != null) {
+              allMappingIdSet.add(mappingId)
             }
           } catch (error) {
-            console.warn('Failed to upsert mapping:', error)
+            console.warn('Failed to upsert mapping (edit):', error)
           }
         }
+
+        for (const signoffBody of editSignoffs) {
+          try {
+            const result = await patchAssignmentSignoff(signoffBody).unwrap()
+            const mid =
+              result?.data?.mapping_id ?? signoffBody.mapping_id
+            if (mid != null) {
+              allMappingIdSet.add(mid)
+            }
+          } catch (error) {
+            console.warn(
+              `Failed to PATCH /assignment/signoff mapping ${signoffBody.mapping_id}:`,
+              error,
+            )
+          }
+        }
+
+        try {
+          await refetchEvidenceDetails()
+        } catch {
+          // non-fatal
+        }
+
+        const allMappingIds = Array.from(allMappingIdSet)
 
         // Step 4: Handle signature request (assignment-level API)
         // NOTE: `/assignment/:id/request-signature` is assignment-level; calling it once per mapping
@@ -937,25 +852,32 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     trigger: form.trigger,
   })
 
-  // getEvidenceCount - Returns count of evidence submissions for a unit/topic
-  // Note: For accurate counts, this would require a backend API endpoint like:
-  // GET /evidence/count?course_id={courseId}&unit_id={unitId}&topic_id={topicId}
-  // Or implementing a caching layer that tracks mappings after evidence creation.
-  // For now, returns 0 as the count would require fetching all evidence to compute.
+  /** Evidence list API filters by assignment owner's platform user_id, not trainer's. */
+  const evidenceCountsOwnerUserId = useMemo(() => {
+    if (isEditMode && evidenceDetails?.data) {
+      const ownerId = (
+        evidenceDetails.data as { user?: { user_id?: number } }
+      ).user?.user_id
+      if (ownerId != null && ownerId !== undefined) return ownerId
+    }
+    if (user?.role === 'Learner') {
+      return user.id
+    }
+    const selectedLearnerUserId = (learner as { user_id?: number } | null)
+      ?.user_id
+    if (
+      selectedLearnerUserId !== undefined &&
+      selectedLearnerUserId !== null &&
+      String(selectedLearnerUserId) !== ''
+    ) {
+      return selectedLearnerUserId
+    }
+    return user?.id
+  }, [isEditMode, evidenceDetails?.data, user?.id, user?.role, learner])
 
-  const getEvidenceCount = (
-    courseId: number,
-    unitId: string | number,
-    topicId?: string | number,
-  ) => {
-    void courseId
-    void unitId
-    void topicId
-    // Backend TODO: Implement GET /assignment/count endpoint that returns count of
-    // evidence mappings for a given course/unit/topic combination.
-    // Example: { status: true, data: { count: 5 } }
-    return 0
-  }
+  const { getEvidenceCount } = useEvidenceSubmissionCounts(
+    evidenceCountsOwnerUserId,
+  )
 
   const audioFieldValue = form.watch('audio')
 
@@ -1387,6 +1309,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                           canEditLearnerFields={canEditPrimarySections}
                           canEditTrainerFields={canEditTrainerFields}
                           error={form.formState.errors.units as any}
+                          getEvidenceCount={getEvidenceCount}
                         />
                       )}
                     </div>

@@ -14,7 +14,6 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { toast } from "sonner";
 import {
   useGetEvidenceDetailsQuery,
-  useUpdateEvidenceMutation,
   useUpsertAssignmentMappingMutation,
   usePatchAssignmentSignoffMutation,
   useDeleteAssignmentMappingMutation,
@@ -63,7 +62,6 @@ export function EvidenceDetailsPageContent() {
       skip: !evidenceId,
     });
 
-  const [updateEvidence] = useUpdateEvidenceMutation();
   const [upsertMapping] = useUpsertAssignmentMappingMutation();
   const [patchAssignmentSignoff] = usePatchAssignmentSignoffMutation();
   const [deleteMapping] = useDeleteAssignmentMappingMutation();

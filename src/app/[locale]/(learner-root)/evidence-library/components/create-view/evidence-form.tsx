@@ -241,7 +241,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     } else {
       setSessions([])
     }
-  }, [])
+  }, [learnerPlanData, learnerPlanError])
 
   // Load evidence data when editing
   useEffect(() => {

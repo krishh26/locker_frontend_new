@@ -25,6 +25,7 @@ import { reconstructFormStateFromMappings } from "../../utils/reconstruct-form-s
 import {
   collectEditModeMappingSaveOps,
   collectWantedExistingMappingIds,
+  extractMappingIdsFromUpsertResponse,
 } from "../../utils/edit-mode-mapping-save";
 import { COURSE_TYPES } from "../constants";
 import { useEvidenceSubmissionCounts } from "../../hooks/use-evidence-submission-counts";
@@ -353,14 +354,18 @@ export function EvidenceDetailsPageContent() {
         courses,
       );
       const selectedCourses = reconstructed.selectedCourses;
+      const userRole = user?.role || "Learner";
 
       const saveOps = collectEditModeMappingSaveOps({
         assignmentId: Number(assignmentId),
         formUnits,
         selectedCourses,
         mappingsFromApi: originalMappings,
+        mappedBy: userRole === "Trainer" ? "Trainer" : "Learner",
       });
       const wantedExistingIds = collectWantedExistingMappingIds(saveOps);
+
+      const allMappingIdSet = new Set<number>();
 
       // Remove DB rows the learner no longer maps (not in PATCH signoff list)
       for (const mappingRow of originalMappings) {
@@ -376,7 +381,10 @@ export function EvidenceDetailsPageContent() {
 
       for (const payload of saveOps.upserts) {
         try {
-          await upsertMapping(payload).unwrap();
+          const result = await upsertMapping(payload).unwrap();
+          for (const mid of extractMappingIdsFromUpsertResponse(result)) {
+            allMappingIdSet.add(mid);
+          }
         } catch (error) {
           console.warn("Failed to upsert mapping (details page):", error);
         }
@@ -384,7 +392,12 @@ export function EvidenceDetailsPageContent() {
 
       for (const signoffBody of saveOps.signoffs) {
         try {
-          await patchAssignmentSignoff(signoffBody).unwrap();
+          const result = await patchAssignmentSignoff(signoffBody).unwrap();
+          const mid =
+            result?.data?.mapping_id ?? signoffBody.mapping_id;
+          if (mid != null) {
+            allMappingIdSet.add(mid);
+          }
         } catch (error) {
           console.warn(
             `Failed to PATCH /assignment/signoff mapping ${signoffBody.mapping_id}:`,
@@ -392,6 +405,10 @@ export function EvidenceDetailsPageContent() {
           );
         }
       }
+
+      // Same as evidence-form edit save: collect every mapping_id from batched POSTs / PATCHes
+      // (e.g. Qualification `mappings[]`). Signature APIs are not used on this page yet.
+      void allMappingIdSet;
 
       toast.success("Evidence updated successfully");
       

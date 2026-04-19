@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
+  AssignmentMappingCreateEntry,
   AssignmentSignoffRequest,
   EvidenceMapping,
 } from '@/store/api/evidence/types'
@@ -49,11 +50,60 @@ export function findMappingIdFromMappings(
   return undefined
 }
 
+/**
+ * Qualification row from GET: either legacy (`unit_code` = topic id) or new (`unit_code` = parent unit,
+ * `topic_id` + optional `sub_unit_id`).
+ */
+export function findQualificationTopicMappingId(
+  mappings: EvidenceMapping[] | undefined,
+  courseId: number,
+  topicId: string | number,
+  subUnitId: string | number,
+  parentUnitId?: string | number,
+): number | undefined {
+  const tid = String(topicId)
+  const sid = String(subUnitId)
+  const pid =
+    parentUnitId === undefined || parentUnitId === null
+      ? null
+      : String(parentUnitId)
+
+  if (mappings?.length) {
+    for (const m of mappings) {
+      const mc = (m as { course_id?: number }).course_id ?? m.course?.course_id
+      if (Number(mc) !== Number(courseId)) continue
+      const rawTopicId = (m as { topic_id?: unknown }).topic_id
+      if (rawTopicId == null || String(rawTopicId).trim() === '') continue
+      if (String(rawTopicId) !== tid) continue
+      if (pid !== null && String(m.unit_code) !== pid) continue
+      const msr = m.sub_unit_id
+      if (msr != null && String(msr) !== '' && String(msr) !== sid) continue
+      return m.mapping_id
+    }
+  }
+
+  return (
+    findMappingIdFromMappings(mappings, courseId, tid, null) ??
+    findMappingIdFromMappings(mappings, courseId, tid, sid) ??
+    (() => {
+      if (!mappings?.length) return undefined
+      for (const m of mappings) {
+        const mc = (m as { course_id?: number }).course_id ?? m.course?.course_id
+        if (Number(mc) !== Number(courseId)) continue
+        if (String(m.unit_code) === tid) return m.mapping_id
+      }
+      return undefined
+    })()
+  )
+}
+
 export type EditUpsertMappingPayload = Record<string, unknown> & {
   assignment_id: number
   course_id: number
   unit_code: string
-  sub_unit_ids?: number[]
+  sub_unit_ids?: string[]
+  mappings?: AssignmentMappingCreateEntry[]
+  mapped_by?: 'Learner' | 'Trainer'
 }
 
 export type EditMappingSaveOps = {
@@ -70,8 +120,15 @@ export function collectEditModeMappingSaveOps(options: {
   formUnits: any[]
   selectedCourses: any[]
   mappingsFromApi?: EvidenceMapping[]
+  mappedBy?: 'Learner' | 'Trainer'
 }): EditMappingSaveOps {
-  const { assignmentId, formUnits, selectedCourses, mappingsFromApi } = options
+  const {
+    assignmentId,
+    formUnits,
+    selectedCourses,
+    mappingsFromApi,
+    mappedBy = 'Learner',
+  } = options
   const upserts: EditUpsertMappingPayload[] = []
   const signoffs: AssignmentSignoffRequest[] = []
   const maps = mappingsFromApi ?? []
@@ -84,13 +141,26 @@ export function collectEditModeMappingSaveOps(options: {
     const hasSubUnit = unit.subUnit && unit.subUnit.length > 0
 
     if (isQualification && hasSubUnit) {
+      const mappingsToCreate: AssignmentMappingCreateEntry[] = []
+      let anyTrainerMap = false
+      let anySignedOff = false
+      let commentPick =
+        unit.comment != null && String(unit.comment).trim() !== ''
+          ? String(unit.comment)
+          : ''
+
       for (const subUnit of unit.subUnit ?? []) {
         for (const topic of subUnit.topics ?? []) {
           if (topic.learnerMap !== true) continue
-          const unitCodeForRow = String(topic.id)
           const mappingId =
             topic.mapping_id ??
-            findMappingIdFromMappings(maps, courseId, unitCodeForRow, null)
+            findQualificationTopicMappingId(
+              maps,
+              courseId,
+              topic.id,
+              subUnit.id,
+              unit.id,
+            )
           if (mappingId != null) {
             signoffs.push({
               mapping_id: mappingId,
@@ -104,19 +174,35 @@ export function collectEditModeMappingSaveOps(options: {
                   : String(topic.id),
             })
           } else {
-            upserts.push({
-              assignment_id: assignmentId,
-              course_id: courseId,
-              unit_code: unitCodeForRow,
-              learnerMap: true,
-              trainerMap: Boolean(topic.trainerMap),
-              comment: topic.comment ?? '',
-              signed_off: Boolean(topic.signed_off),
-              code: topic.code,
-              mapped_by: 'Learner',
+            mappingsToCreate.push({
+              sub_unit_id: String(subUnit.id),
+              topic_id: String(topic.id),
             })
+            if (topic.trainerMap) anyTrainerMap = true
+            if (topic.signed_off) anySignedOff = true
+            if (
+              !commentPick &&
+              topic.comment != null &&
+              String(topic.comment).trim() !== ''
+            ) {
+              commentPick = String(topic.comment)
+            }
           }
         }
+      }
+
+      if (mappingsToCreate.length > 0) {
+        upserts.push({
+          assignment_id: assignmentId,
+          course_id: courseId,
+          unit_code: String(unit.id),
+          mapped_by: mappedBy,
+          learnerMap: true,
+          trainerMap: anyTrainerMap,
+          comment: commentPick || '',
+          signed_off: anySignedOff,
+          mappings: mappingsToCreate,
+        })
       }
       continue
     }
@@ -147,12 +233,12 @@ export function collectEditModeMappingSaveOps(options: {
             assignment_id: assignmentId,
             course_id: courseId,
             unit_code: String(unit.id),
-            sub_unit_ids: [Number(sub.id)],
+            sub_unit_ids: [String(sub.id)],
             learnerMap: true,
             trainerMap: Boolean(sub.trainerMap),
             comment: sub.comment ?? '',
             signed_off: Boolean(sub.signed_off),
-            mapped_by: 'Learner',
+            mapped_by: mappedBy,
           })
         }
       }
@@ -180,7 +266,7 @@ export function collectEditModeMappingSaveOps(options: {
           trainerMap: Boolean(unit.trainerMap),
           comment: unit.comment ?? '',
           signed_off: Boolean(unit.signed_off),
-          mapped_by: 'Learner',
+          mapped_by: mappedBy,
         })
       }
     }
@@ -217,4 +303,25 @@ export function extractMappingIdFromUpsertResponse(
   }
   if (fallbackId != null && fallbackId !== undefined) return fallbackId
   return null
+}
+
+/** Collect every `mapping_id` from a batch POST (array `data`) or a single-object response. */
+export function extractMappingIdsFromUpsertResponse(result: unknown): number[] {
+  const r = result as {
+    data?: Array<{ mapping_id?: number }> | { mapping_id?: number }
+    mapping_id?: number
+    id?: number
+  }
+  if (r?.data && Array.isArray(r.data)) {
+    return r.data
+      .map((x) => x?.mapping_id)
+      .filter((id): id is number => id != null && typeof id === 'number')
+  }
+  if (r?.data && typeof r.data === 'object' && !Array.isArray(r.data)) {
+    const id = (r.data as { mapping_id?: number }).mapping_id
+    return id != null ? [id] : []
+  }
+  if (r?.mapping_id != null) return [r.mapping_id]
+  if (r?.id != null) return [r.id]
+  return []
 }

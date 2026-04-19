@@ -26,6 +26,8 @@ export type EvidenceMapping = {
   mapping_id: number;
   unit_code: string;
   sub_unit_id: number | string | null;
+  /** Qualification batch API: assessment criterion / topic id (legacy rows used `unit_code` alone). */
+  topic_id?: string | number | null;
   course_id?: number; // Direct course_id from API response
   learnerMap?: boolean; // camelCase version
   learner_map?: boolean; // snake_case version from API
@@ -133,6 +135,27 @@ export type EvidenceUpdateRequest = {
 
 export type EvidenceReuploadRequest = {
   file: File;
+};
+
+/** POST `/assignment/mapping` — Standard uses `sub_unit_ids`; Qualification batch uses `mappings`. */
+export type AssignmentMappingCreateEntry = {
+  sub_unit_id: string;
+  topic_id: string;
+};
+
+export type AssignmentMappingUpsertBody = {
+  assignment_id: number;
+  course_id: number;
+  /** Parent unit id (Qualification); Standard unit id for `sub_unit_ids` rows. */
+  unit_code: string;
+  mapped_by: 'Learner' | 'Trainer';
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+  comment?: string;
+  signed_off?: boolean;
+  code?: string;
+  sub_unit_ids?: string[];
+  mappings?: AssignmentMappingCreateEntry[];
 };
 
 /** PATCH `/assignment/signoff` — PC update for an existing mapping row */

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, memo } from "react";
+import { useState, memo, useEffect, useRef } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,6 +36,10 @@ interface QualificationHierarchyUnitsProps {
   signed_offHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   commentHandler: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, topicId: string | number, unitId: string | number, subUnitId: string | number) => void;
   getEvidenceCount?: (courseId: number, unitId: string | number, topicId?: string | number) => number;
+  /** When true, all learning outcomes (sub-units) start expanded after data loads. */
+  isEditMode?: boolean;
+  /** Changes when switching assignment so default expand runs again. */
+  evidenceId?: string;
 }
 
 /**
@@ -57,9 +61,12 @@ function QualificationHierarchyUnitsComponent({
   signed_offHandler,
   commentHandler,
   getEvidenceCount,
+  isEditMode = false,
+  evidenceId,
 }: QualificationHierarchyUnitsProps) {
   const t = useTranslations("evidenceLibrary");
   const [expandedSubUnits, setExpandedSubUnits] = useState<Set<string | number>>(new Set());
+  const lastDefaultExpandKeyRef = useRef<string | null>(null);
 
   const toggleSubUnit = (subUnitId: string | number) => {
     const newExpanded = new Set(expandedSubUnits);
@@ -75,6 +82,18 @@ function QualificationHierarchyUnitsComponent({
   const currentUnit = unitsWatch.find(
     (u: any) => String(u.id) === String(unit.id) && u.course_id === courseId
   );
+
+  const defaultExpandKey = `${evidenceId ?? "create"}-${courseId}-${String(unit.id)}`;
+
+  useEffect(() => {
+    if (!isEditMode) return;
+    if (!currentUnit?.subUnit?.length) return;
+    if (lastDefaultExpandKeyRef.current === defaultExpandKey) return;
+    lastDefaultExpandKeyRef.current = defaultExpandKey;
+    setExpandedSubUnits(
+      new Set(currentUnit.subUnit.map((s: any) => s.id).filter(Boolean)),
+    );
+  }, [isEditMode, defaultExpandKey, currentUnit?.subUnit]);
 
   if (!currentUnit) return null;
 

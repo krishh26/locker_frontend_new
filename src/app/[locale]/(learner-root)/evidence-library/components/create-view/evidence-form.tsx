@@ -32,7 +32,7 @@ import { useEvidenceSubmissionCounts } from '../../hooks/use-evidence-submission
 import { reconstructFormStateFromMappings } from '../../utils/reconstruct-form-state'
 import {
   collectEditModeMappingSaveOps,
-  extractMappingIdFromUpsertResponse,
+  extractMappingIdsFromUpsertResponse,
 } from '../../utils/edit-mode-mapping-save'
 import { COURSE_TYPES } from '../constants'
 import { CourseSelection } from './course-selection'
@@ -465,14 +465,14 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             formUnits,
             selectedCourses,
             mappingsFromApi: apiMappings,
+            mappedBy: userRole === 'Trainer' ? 'Trainer' : 'Learner',
           })
 
         for (const payload of editUpserts) {
           try {
             const result = await upsertMapping(payload).unwrap()
-            const mappingId = extractMappingIdFromUpsertResponse(result, null)
-            if (mappingId != null) {
-              allMappingIdSet.add(mappingId)
+            for (const mid of extractMappingIdsFromUpsertResponse(result)) {
+              allMappingIdSet.add(mid)
             }
           } catch (error) {
             console.warn('Failed to upsert mapping (edit):', error)
@@ -621,10 +621,13 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           throw new Error('Failed to create evidence - no ID returned')
         }
 
-        // Handle mappings for each course/unit/subunit/topic combination
+        // Handle mappings: Qualification = one POST per unit with `mappings[]`; Standard = merged `sub_unit_ids`.
         const selectedCourses = data.selectedCourses || []
         const formUnits = data.units || []
-        const desiredMappings: Map<string, any> = new Map()
+        const mappedByCreate =
+          userRole === 'Trainer' ? 'Trainer' : 'Learner'
+        const mappingRequests: Record<string, unknown>[] = []
+        const standardMergedByKey = new Map<string, Record<string, unknown>>()
 
         formUnits.forEach((unit: any) => {
           const courseId = unit.course_id
@@ -636,112 +639,105 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           const hasSubUnit = unit.subUnit && unit.subUnit.length > 0
 
           if (isQualification && hasSubUnit) {
-            // For Qualification courses: map topics (Assessment Criteria) only
+            const mappings: { sub_unit_id: string; topic_id: string }[] = []
+            let anyTrainerMap = false
+            let anySignedOff = false
+            let commentPick =
+              unit.comment != null && String(unit.comment).trim() !== ''
+                ? String(unit.comment)
+                : ''
+
             unit.subUnit.forEach((subUnit: any) => {
               if (
-                subUnit.topics &&
-                Array.isArray(subUnit.topics) &&
-                subUnit.topics.length > 0
+                !subUnit.topics ||
+                !Array.isArray(subUnit.topics) ||
+                subUnit.topics.length === 0
               ) {
-                subUnit.topics.forEach((topic: any) => {
-                  // Only add to desiredMappings if learnerMap is true
-                  if (topic.learnerMap === true) {
-                    const key = `${courseId}-${topic.id}`
-                    desiredMappings.set(key, {
-                      assignment_id: Number(createdEvidenceId),
-                      course_id: Number(courseId),
-                      unit_code: String(topic.id), // For qualification, unit_code = topic.id
-                      learnerMap: true,
-                      trainerMap: topic.trainerMap ?? false,
-                      code: topic.code,
-                      comment: topic.comment ?? '',
-                      signed_off: topic.signed_off ?? false,
-                    })
-                  }
-                })
+                return
               }
+              subUnit.topics.forEach((topic: any) => {
+                if (topic.learnerMap !== true) return
+                mappings.push({
+                  sub_unit_id: String(subUnit.id),
+                  topic_id: String(topic.id),
+                })
+                if (topic.trainerMap) anyTrainerMap = true
+                if (topic.signed_off) anySignedOff = true
+                if (
+                  !commentPick &&
+                  topic.comment != null &&
+                  String(topic.comment).trim() !== ''
+                ) {
+                  commentPick = String(topic.comment)
+                }
+              })
             })
-          }
-          //  else if (hasSubUnit) {
-          //   // For Standard courses: Unit has subunits - create mapping for each subunit
-          //   // Only include mappings where learnerMap is true
-          //   unit.subUnit.forEach((sub: any) => {
-          //     // Only add to desiredMappings if learnerMap is true
-          //     if (sub.learnerMap === true) {
-          //       const key = `${courseId}-${sub.id}`
-          //       desiredMappings.set(key, {
-          //         assignment_id: Number(createdEvidenceId),
-          //         course_id: Number(courseId),
-          //         unit_code: String(sub.id),
-          //         learnerMap: true,
-          //         trainerMap: sub.trainerMap ?? false,
-          //         code: sub.code,
-          //         comment: sub.comment ?? '',
-          //         signed_off: sub.signed_off ?? false,
-          //       })
-          //     }
-          //   })
-          // } 
-          else {
-            // Unit-only - create mapping for unit itself (unit_code = unit code)
-            // Only include mappings where learnerMap is true
-            // if (unit.learnerMap === true) {
-              const key = `${courseId}-${unit.id}`
-              const existingMapping = desiredMappings.get(key)
-              const currentSubUnitIds = Array.isArray(unit.subUnit)
-                ? unit.subUnit
-                    .filter((sub: any) => sub?.learnerMap === true)
-                    .map((sub: any) => Number(sub.id))
-                : []
-              const mergedSubUnitIds = Array.from(
-                new Set<number>([
-                  ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
-                  ...currentSubUnitIds,
-                ]),
-              )
-              desiredMappings.set(key, {
+
+            if (mappings.length > 0) {
+              // Requires POST /assignment/mapping to accept `mappings[]` (see backend mapAssignment).
+              mappingRequests.push({
                 assignment_id: Number(createdEvidenceId),
                 course_id: Number(courseId),
-                code: unit.code,
                 unit_code: String(unit.id),
+                mapped_by: mappedByCreate,
                 learnerMap: true,
-                trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
-                comment: existingMapping?.comment ?? unit.comment ?? '',
-                signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
-                sub_unit_ids: mergedSubUnitIds,
+                // Trainer flag if any learner-mapped topic in this batch is trainer-mapped
+                trainerMap: anyTrainerMap,
+                comment: commentPick || '',
+                signed_off: anySignedOff,
+                mappings,
               })
-            // }
+            }
+          } else {
+            const key = `${courseId}-${unit.id}`
+            const existingMapping = standardMergedByKey.get(key)
+            const currentSubUnitIds = Array.isArray(unit.subUnit)
+              ? unit.subUnit
+                  .filter((sub: any) => sub?.learnerMap === true)
+                  .map((sub: any) => String(sub.id))
+              : []
+            const mergedSubUnitIds = Array.from(
+              new Set<string>([
+                ...((existingMapping?.sub_unit_ids as string[] | undefined) ||
+                  []),
+                ...currentSubUnitIds,
+              ]),
+            )
+            standardMergedByKey.set(key, {
+              assignment_id: Number(createdEvidenceId),
+              course_id: Number(courseId),
+              code: unit.code,
+              unit_code: String(unit.id),
+              mapped_by: mappedByCreate,
+              learnerMap: true,
+              trainerMap:
+                (existingMapping?.trainerMap as boolean | undefined) ??
+                unit.trainerMap ??
+                false,
+              comment:
+                (existingMapping?.comment as string | undefined) ??
+                unit.comment ??
+                '',
+              signed_off:
+                (existingMapping?.signed_off as boolean | undefined) ??
+                unit.signed_off ??
+                false,
+              sub_unit_ids: mergedSubUnitIds,
+            })
           }
         })
 
-        // Upsert mappings and collect mapping IDs
-        const allMappingIds: number[] = []
-        const desiredMappingsArray = Array.from(desiredMappings.entries())
+        for (const payload of standardMergedByKey.values()) {
+          mappingRequests.push(payload)
+        }
+        console.log("🚀 ~ onSubmit ~ mappingRequests:", mappingRequests)
 
-        for (const [, desiredMapping] of desiredMappingsArray) {
+        const allMappingIds: number[] = []
+
+        for (const desiredMapping of mappingRequests) {
           try {
             const result = await upsertMapping(desiredMapping).unwrap()
-
-            // Extract mapping_id from response
-            let mappingId: number | null = null
-
-            if (
-              result?.data &&
-              Array.isArray(result.data) &&
-              result.data.length > 0
-            ) {
-              mappingId = result.data[0]?.mapping_id || null
-            } else if ((result as any)?.mapping_id) {
-              mappingId = (result as any).mapping_id
-            } else if ((result as any)?.id) {
-              mappingId = (result as any).id
-            } else if ((result as any)?.data?.mapping_id) {
-              mappingId = (result as any).data.mapping_id
-            }
-
-            if (mappingId) {
-              allMappingIds.push(mappingId)
-            }
+            allMappingIds.push(...extractMappingIdsFromUpsertResponse(result))
           } catch (error) {
             console.warn('Failed to upsert mapping:', error)
           }
@@ -1293,6 +1289,8 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                                     }
                                     commentHandler={qualificationCommentHandler}
                                     getEvidenceCount={getEvidenceCount}
+                                    isEditMode={isEditMode}
+                                    evidenceId={evidenceId}
                                   />
                                 )
                               })}

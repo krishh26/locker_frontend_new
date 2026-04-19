@@ -142,6 +142,11 @@ type UnitWithSubUnits = {
   }>;
 };
 
+function escapeCsvCell(value: string | number | boolean): string {
+  const s = String(value ?? "");
+  return `"${s.replace(/"/g, '""')}"`;
+}
+
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
   const courses = useAppSelector((state) => state.auth.courses);
@@ -152,7 +157,6 @@ export function ModuleUnitProgressDataTable() {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
-  console.log("🚀 ~ ModuleUnitProgressDataTable ~ selectedCourse:", selectedCourse?.units)
   const isQualificationCourse = selectedCourse?.course_core_type === "Qualification";
   
   // Update selected unit when course changes (for non-Standard courses)
@@ -420,8 +424,77 @@ export function ModuleUnitProgressDataTable() {
     },
   });
 
+  const gapStatusLabel = (gap: SubUnitRow["gap"]) => {
+    switch (gap) {
+      case "complete":
+        return t("table.gapStatus.complete");
+      case "partial":
+        return t("table.gapStatus.partial");
+      default:
+        return t("table.gapStatus.none");
+    }
+  };
+
   const handleExportCsv = () => {
-    toast.info(t("table.toast.csvNotImplemented"));
+    if (filteredData.length === 0) {
+      toast.info(t("table.toast.noDataToExport"));
+      return;
+    }
+
+    const headers = isStandardCourse
+      ? [
+          t("table.columns.title"),
+          t("table.columns.code"),
+          t("table.columns.learnerMap"),
+          t("table.columns.trainerMap"),
+          t("table.columns.gap"),
+        ]
+      : [
+          t("table.columns.subUnitTitle"),
+          t("table.columns.learnerMap"),
+          t("table.columns.trainerMap"),
+          t("table.columns.gap"),
+          t("table.columns.comment"),
+        ];
+
+    const rows = filteredData.map((row) =>
+      isStandardCourse
+        ? [
+            row.subTitle,
+            row.comment,
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
+            gapStatusLabel(row.gap),
+          ]
+        : [
+            row.subTitle,
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
+            gapStatusLabel(row.gap),
+            row.comment,
+          ]
+    );
+
+    const csvContent = [
+      headers.map(escapeCsvCell).join(","),
+      ...rows.map((row) => row.map((cell) => escapeCsvCell(cell)).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const rawCourseName = selectedCourse?.course_name?.trim() || "course";
+    const safeCourse =
+      rawCourseName
+        .replace(/[^a-zA-Z0-9\s_-]/g, "")
+        .trim()
+        .replace(/\s+/g, "_")
+        .slice(0, 80) || "course";
+    link.download = `gap_analysis_${safeCourse}_${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success(t("table.toast.csvSuccess"));
   };
 
   const handleExportPdf = () => {
@@ -435,13 +508,13 @@ export function ModuleUnitProgressDataTable() {
             row.comment,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
-            row.gap,
+            gapStatusLabel(row.gap),
           ]
         : [
             row.subTitle,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
-            row.gap,
+            gapStatusLabel(row.gap),
             row.comment,
           ]
     );

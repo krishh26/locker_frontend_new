@@ -2699,6 +2699,11 @@
         "partial": "部分 - 一张图存在",
         "none": "无图存在"
       },
+      "gapStatus": {
+        "complete": "完整",
+        "partial": "部分",
+        "none": "无"
+      },
       "filters": {
         "selectCourse": "选择课程",
         "selectType": "选择类型",
@@ -2721,7 +2726,7 @@
       "exportPdf": "导出为 PDF",
       "pdfTitle": "模块/单元进度",
       "toast": {
-        "csvNotImplemented": "CSV 导出功能将后续实现",
+        "csvSuccess": "CSV 导出成功",
         "noDataToExport": "无数据可导出",
         "pdfSuccess": "PDF 导出成功"
       },

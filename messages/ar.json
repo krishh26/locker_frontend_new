@@ -2734,6 +2734,11 @@
         "partial": "جزئي - خريطة واحدة موجودة",
         "none": "لا توجد خرائط"
       },
+      "gapStatus": {
+        "complete": "كامل",
+        "partial": "جزئي",
+        "none": "لا يوجد"
+      },
       "filters": {
         "selectCourse": "اختر الدورة",
         "selectType": "اختر النوع",
@@ -2756,7 +2761,7 @@
       "exportPdf": "تصدير PDF",
       "pdfTitle": "تقدم الوحدة/الوحدة الفرعية",
       "toast": {
-        "csvNotImplemented": "سيتم تنفيذ تصدير CSV",
+        "csvSuccess": "تم تصدير CSV بنجاح",
         "noDataToExport": "لا توجد بيانات للتصدير",
         "pdfSuccess": "تم تصدير PDF بنجاح"
       },

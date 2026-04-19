@@ -3082,6 +3082,11 @@
         "partial": "Partial - One map present",
         "none": "No maps present"
       },
+      "gapStatus": {
+        "complete": "Complete",
+        "partial": "Partial",
+        "none": "None"
+      },
       "filters": {
         "selectCourse": "Select Course",
         "selectType": "Select Type",
@@ -3104,7 +3109,7 @@
       "exportPdf": "Export as PDF",
       "pdfTitle": "Module Unit Progress",
       "toast": {
-        "csvNotImplemented": "CSV export functionality will be implemented",
+        "csvSuccess": "CSV exported successfully",
         "noDataToExport": "No data to export",
         "pdfSuccess": "PDF exported successfully"
       },

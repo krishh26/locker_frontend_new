@@ -2741,6 +2741,11 @@
         "partial": "Parcial - Um mapa presente",
         "none": "Nenhum mapa presente"
       },
+      "gapStatus": {
+        "complete": "Completo",
+        "partial": "Parcial",
+        "none": "Nenhum"
+      },
       "filters": {
         "selectCourse": "Selecionar curso",
         "selectType": "Selecionar tipo",
@@ -2763,7 +2768,7 @@
       "exportPdf": "Exportar como PDF",
       "pdfTitle": "Progresso módulo/unidade",
       "toast": {
-        "csvNotImplemented": "A exportação CSV será implementada",
+        "csvSuccess": "CSV exportado com sucesso",
         "noDataToExport": "Sem dados para exportar",
         "pdfSuccess": "PDF exportado com sucesso"
       },

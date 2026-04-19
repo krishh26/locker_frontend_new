@@ -2782,6 +2782,11 @@
         "partial": "Partiel - Une carte présente",
         "none": "Aucune carte présente"
       },
+      "gapStatus": {
+        "complete": "Complet",
+        "partial": "Partiel",
+        "none": "Aucun"
+      },
       "filters": {
         "selectCourse": "Sélectionner le cours",
         "selectType": "Sélectionner le type",
@@ -2804,7 +2809,7 @@
       "exportPdf": "Exporter en PDF",
       "pdfTitle": "Progression module / unité",
       "toast": {
-        "csvNotImplemented": "L'export CSV sera implémenté",
+        "csvSuccess": "Export CSV réussi",
         "noDataToExport": "Aucune donnée à exporter",
         "pdfSuccess": "PDF exporté avec succès"
       },

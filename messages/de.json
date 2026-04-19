@@ -2153,6 +2153,11 @@
         "partial": "Teilweise - Eine Karte vorhanden",
         "none": "Keine Karten vorhanden"
       },
+      "gapStatus": {
+        "complete": "Vollständig",
+        "partial": "Teilweise",
+        "none": "Keine"
+      },
       "filters": {
         "selectCourse": "Kurs auswählen",
         "selectType": "Typ auswählen",
@@ -2175,7 +2180,7 @@
       "exportPdf": "Als PDF exportieren",
       "pdfTitle": "Modul-/Einheitenfortschritt",
       "toast": {
-        "csvNotImplemented": "CSV-Export wird implementiert",
+        "csvSuccess": "CSV erfolgreich exportiert",
         "noDataToExport": "Keine Daten zum Exportieren",
         "pdfSuccess": "PDF erfolgreich exportiert"
       },

@@ -5293,7 +5293,15 @@
       "remaining": "Remaining",
       "progressLabel": "Progress",
       "completedUnits": "Completed units",
-      "totalUnits": "Total units"
+      "totalUnits": "Total units",
+      "duration": "Duration",
+      "timeElapsed": "Time elapsed",
+      "timeRemaining": "Time remaining",
+      "workInProgress": "Work in progress",
+      "notYetStarted": "Not yet started",
+      "noEndDate": "No end date",
+      "daysLeft": "Days left",
+      "noUnitData": "No data"
     },
     "calendarDialog": {
       "title": "Calendar",

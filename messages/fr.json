@@ -5247,7 +5247,15 @@
       "remaining": "Restant",
       "progressLabel": "Progression",
       "completedUnits": "Unités terminées",
-      "totalUnits": "Unités totales"
+      "totalUnits": "Unités totales",
+      "duration": "Durée",
+      "timeElapsed": "Temps écoulé",
+      "timeRemaining": "Temps restant",
+      "workInProgress": "En cours",
+      "notYetStarted": "Pas encore commencé",
+      "noEndDate": "Pas de date de fin",
+      "daysLeft": "Jours restants",
+      "noUnitData": "Aucune donnée"
     },
     "calendarDialog": {
       "title": "Calendrier",

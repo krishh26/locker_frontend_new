@@ -5260,7 +5260,15 @@
       "remaining": "शेष",
       "progressLabel": "प्रगति",
       "completedUnits": "पूर्ण इकाइयाँ",
-      "totalUnits": "कुल इकाइयाँ"
+      "totalUnits": "कुल इकाइयाँ",
+      "duration": "अवधि",
+      "timeElapsed": "बीता समय",
+      "timeRemaining": "शेष समय",
+      "workInProgress": "प्रगति पर",
+      "notYetStarted": "अभी शुरू नहीं",
+      "noEndDate": "कोई समाप्ति तिथि नहीं",
+      "daysLeft": "शेष दिन",
+      "noUnitData": "कोई डेटा नहीं"
     },
     "calendarDialog": {
       "title": "कैलेंडर",

@@ -4410,7 +4410,15 @@
       "remaining": "Rimanente",
       "progressLabel": "Progresso",
       "completedUnits": "Unità completate",
-      "totalUnits": "Unità totali"
+      "totalUnits": "Unità totali",
+      "duration": "Durata",
+      "timeElapsed": "Tempo trascorso",
+      "timeRemaining": "Tempo rimanente",
+      "workInProgress": "In corso",
+      "notYetStarted": "Non ancora iniziato",
+      "noEndDate": "Nessuna data di fine",
+      "daysLeft": "Giorni rimanenti",
+      "noUnitData": "Nessun dato"
     },
     "calendarDialog": {
       "title": "Calendario",

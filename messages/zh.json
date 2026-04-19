@@ -5216,7 +5216,15 @@
       "remaining": "剩余",
       "progressLabel": "进度",
       "completedUnits": "已完成单元",
-      "totalUnits": "总单元数"
+      "totalUnits": "总单元数",
+      "duration": "时长",
+      "timeElapsed": "已过时间",
+      "timeRemaining": "剩余时间",
+      "workInProgress": "进行中",
+      "notYetStarted": "未开始",
+      "noEndDate": "无结束日期",
+      "daysLeft": "剩余天数",
+      "noUnitData": "无数据"
     },
     "calendarDialog": {
       "title": "日历",

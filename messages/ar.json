@@ -5180,7 +5180,15 @@
       "remaining": "متبقي",
       "progressLabel": "التقدم",
       "completedUnits": "الوحدات المكتملة",
-      "totalUnits": "إجمالي الوحدات"
+      "totalUnits": "إجمالي الوحدات",
+      "duration": "المدة",
+      "timeElapsed": "الوقت المنقضي",
+      "timeRemaining": "الوقت المتبقي",
+      "workInProgress": "قيد التنفيذ",
+      "notYetStarted": "لم يبدأ بعد",
+      "noEndDate": "لا يوجد تاريخ انتهاء",
+      "daysLeft": "الأيام المتبقية",
+      "noUnitData": "لا توجد بيانات"
     },
     "calendarDialog": {
       "title": "التقويم",

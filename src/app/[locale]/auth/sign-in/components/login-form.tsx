@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useLoginMutation } from "@/store/api/auth/authApi"
-import type { AuthUser } from "@/store/api/auth/types"
 import { useLazyGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi"
 import { useLazyGetUserQuery } from "@/store/api/user/userApi"
 import {
@@ -25,6 +24,7 @@ import {
 } from "@/store/slices/authSlice"
 import type { RootState } from "@/store"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
+import { mapUserApiToAuthUser } from "@/lib/auth/map-user-api-to-auth-user"
 import { cn, extractBaseQueryErrorMessage } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
@@ -96,60 +96,7 @@ export function LoginForm({
         
         // Trigger user fetch - the query will run automatically via useEffect
         const userResponse = await getUser().unwrap()
-        const userData = userResponse.data
-
-        // Centres: support both assigned_centers (API) and assigned_centres
-        const assignedCenters =
-          userData.assigned_centers ?? userData.assigned_centres ?? []
-        const assignedCenterIds =
-          assignedCenters.length > 0
-            ? assignedCenters.map((c: { id: number }) => c.id)
-            : null
-
-        // Organisations: from assigned_organisations, or for centre admin derive from userCentres
-        let assignedOrganisationIds =
-          userData.assigned_organisations?.map((org: { id: number }) => org.id) ??
-          null
-        if (
-          (!assignedOrganisationIds || assignedOrganisationIds.length === 0) &&
-          userData.userCentres?.length
-        ) {
-          const orgIds = [
-            ...new Set(
-              userData.userCentres
-                .map((uc: { centre?: { organisation_id?: number } }) =>
-                  uc.centre?.organisation_id
-                )
-                .filter((id): id is number => typeof id === "number")
-            ),
-          ]
-          assignedOrganisationIds = orgIds.length > 0 ? orgIds : null
-        }
-
-        // const filteredRoles = filterRolesFromApi(userData.roles)
-        const authUser: AuthUser = {
-          id: userData.user_id?.toString(),
-          email: userData.email,
-          firstName: userData.first_name,
-          lastName: userData.last_name,
-          role: userData.roles[0],
-          roles: userData.roles.length > 0 ? userData.roles : undefined,
-          user_id: userData.user_id,
-          user_name: userData.user_name,
-          mobile: userData.mobile,
-          avatar: userData.avatar,
-          password_changed: userData.password_changed,
-          time_zone: userData.time_zone,
-          status: userData.status,
-          line_manager: userData.line_manager,
-          number_of_active_learners: userData.number_of_active_learners,
-          assigned_employers: userData.assigned_employers,
-          userEmployers: userData.userEmployers,
-          assigned_organisations: userData.assigned_organisations,
-          assignedOrganisationIds,
-          assigned_centers: assignedCenters.length > 0 ? assignedCenters : undefined,
-          assignedCenterIds,
-        }
+        const authUser = mapUserApiToAuthUser(userResponse.data)
         dispatch(updateUser(authUser))
 
         if (authUser.role === "PhoenixTeam") {

@@ -28,7 +28,6 @@ export function LearnerDashboard() {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
-  console.log("🚀 ~ LearnerDashboard ~ learner:", learner)
   const t = useTranslations('learnerDashboard')
 
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false)

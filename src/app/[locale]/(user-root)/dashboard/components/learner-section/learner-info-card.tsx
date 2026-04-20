@@ -11,6 +11,9 @@ import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { isEnrollmentExcluded } from '@/lib/is-enrollment-excluded'
+import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
+import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
 
 interface Learner {
   learner_id?: string | number
@@ -33,6 +36,7 @@ interface Learner {
     course?: {
       course_name: string
       course_core_type?: string
+      is_excluded?: boolean
     }
     start_date?: string
     end_date?: string
@@ -43,6 +47,7 @@ interface Learner {
     unitsFullyCompleted?: number
     unitsPartiallyCompleted?: number
     totalUnits?: number
+    is_excluded?: boolean
   }>
 }
 
@@ -69,108 +74,43 @@ function initialsFromName(name: string) {
     .join('')
 }
 
-// Convert incoming data to progress format
-const convertToProgressData = (
-  data: Learner['course'] extends Array<infer T> ? T : never | null | undefined
-) => {
-  if (!data)
-    return {
-      yetToComplete: 0,
-      fullyCompleted: 0,
-      workInProgress: 0,
-      totalUnits: 0,
-    }
-
-  try {
-    const courseData = data as Learner['course'] extends Array<infer T>
-      ? T
-      : never
-    const coreType = (courseData as { course?: { course_core_type?: string } })
-      ?.course?.course_core_type
-    const isGateway = coreType === 'Gateway'
-    const questions = Array.isArray(
-      (courseData as { course?: { questions?: Array<{ achieved?: boolean }> } })
-        ?.course?.questions
-    )
-      ? (courseData as { course: { questions: Array<{ achieved?: boolean }> } })
-          .course.questions
-      : Array.isArray(
-          (courseData as { questions?: Array<{ achieved?: boolean }> })
-            ?.questions
-        )
-      ? (courseData as { questions: Array<{ achieved?: boolean }> }).questions
-      : []
-
-    if (isGateway && questions.length > 0) {
-      const totalUnits = questions.length
-      const fullyCompleted = questions.filter(
-        (q: { achieved?: boolean }) => q?.achieved === true
-      ).length
-
-      return {
-        yetToComplete: Math.max(0, totalUnits - fullyCompleted),
-        fullyCompleted,
-        workInProgress: 0,
-        totalUnits,
-      }
-    }
-  } catch {}
-
-  const courseData = data as {
-    unitsNotStarted?: number
-    unitsFullyCompleted?: number
-    unitsPartiallyCompleted?: number
-    totalUnits?: number
-  }
-  return {
-    yetToComplete: courseData.unitsNotStarted || 0,
-    fullyCompleted: courseData.unitsFullyCompleted || 0,
-    workInProgress: courseData.unitsPartiallyCompleted || 0,
-    totalUnits: courseData.totalUnits || 0,
-  }
-}
-
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const t = useTranslations('learnerDashboard.infoCard')
-  // Calculate overall progress across all courses
+  // Calculate overall progress across courses not excluded from overall progress
   const overallProgressData = useMemo(() => {
-    if (!learner?.course || learner.course.length === 0) {
+    const coursesForProgress = (learner?.course ?? []).filter(
+      (c) => !isEnrollmentExcluded(c)
+    )
+
+    if (coursesForProgress.length === 0) {
       return {
         yetToComplete: 0,
         fullyCompleted: 0,
         workInProgress: 0,
         totalUnits: 0,
         completionPercentage: 0,
+        countedCourses: 0,
       }
     }
 
-    let totalCompleted = 0
-    let totalInProgress = 0
-    let totalNotStarted = 0
-    let totalUnitsAll = 0
-
-    learner.course.forEach((course) => {
-      const progressData = convertToProgressData(
-        course as Learner['course'] extends Array<infer T> ? T : never
-      )
-      totalCompleted += progressData.fullyCompleted
-      totalInProgress += progressData.workInProgress
-      totalNotStarted += progressData.yetToComplete
-      totalUnitsAll += progressData.totalUnits
-    })
-
-    const completionPercentage =
-      totalUnitsAll > 0
-        ? (totalCompleted / totalUnitsAll) * 100 +
-          (totalInProgress / totalUnitsAll) * 50
-        : 0
+    const stub: LearnerListItem = {
+      learner_id: Number(learner.learner_id ?? 0),
+      user_name: String(learner.user_name ?? ''),
+      first_name: String(learner.first_name ?? ''),
+      last_name: String(learner.last_name ?? ''),
+      email: String(learner.email ?? ''),
+      mobile: String((learner as { mobile?: string }).mobile ?? ''),
+      course: coursesForProgress as LearnerCourse[],
+    }
+    const summary = calculateLearnerProgress(stub)
 
     return {
-      yetToComplete: totalNotStarted,
-      fullyCompleted: totalCompleted,
-      workInProgress: totalInProgress,
-      totalUnits: totalUnitsAll,
-      completionPercentage,
+      yetToComplete: summary.totalNotStarted,
+      fullyCompleted: summary.totalCompleted,
+      workInProgress: summary.totalInProgress,
+      totalUnits: summary.totalUnits,
+      completionPercentage: summary.completionPercentage,
+      countedCourses: coursesForProgress.length,
     }
   }, [learner?.course])
 
@@ -183,12 +123,15 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const avatarUrl = learner?.avatar || user?.avatar?.url
   const initials = initialsFromName(learnerName)
 
-  const trainerName = learner?.course?.[0]?.trainer_id
-    ? `${learner.course[0].trainer_id.first_name} ${learner.course[0].trainer_id.last_name}`
+  const primaryCourse =
+    learner?.course?.find((c) => !isEnrollmentExcluded(c)) ?? learner?.course?.[0]
+
+  const trainerName = primaryCourse?.trainer_id
+    ? `${primaryCourse.trainer_id.first_name} ${primaryCourse.trainer_id.last_name}`
     : t('notAvailable')
 
-  const iqaName = learner?.course?.[0]?.IQA_id
-    ? `${learner.course[0].IQA_id.first_name} ${learner.course[0].IQA_id.last_name}`
+  const iqaName = primaryCourse?.IQA_id
+    ? `${primaryCourse.IQA_id.first_name} ${primaryCourse.IQA_id.last_name}`
     : t('notAvailable')
 
   const completion = Math.min(
@@ -309,7 +252,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
             <p className='text-xs text-white/70 mt-3 text-center'>
               {t('overallProgress.totalUnits', {
                 units: overallProgressData.totalUnits,
-                courses: learner?.course?.length || 0,
+                courses: overallProgressData.countedCourses,
               })}
             </p>
           </div>

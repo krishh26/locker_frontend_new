@@ -4362,39 +4362,29 @@
   },
   "progressExclusion": {
     "pageTitle": "Exclude From Overall Progress",
-    "pageSubtitle": "Select a course and choose which training statuses should be excluded from overall progress tracking",
+    "pageSubtitle": "Exclude an entire course so it does not count toward overall progress for learners in this organisation.",
     "card": {
       "title": "Exclude From Overall Progress",
-      "description": "Select a course and choose which training statuses should be excluded from overall progress tracking"
+      "description": "Select a course and choose whether it should be excluded from overall progress tracking."
     },
     "info": {
-      "description": "Changes here will affect how overall progress is calculated for all learners on the selected course."
+      "description": "When excluded, this course will not count toward overall progress calculations for learners on the selected course."
     },
     "form": {
       "courseLabel": "Select Course",
       "coursePlaceholder": "Select a course",
       "submit": "Submit",
-      "submitting": "Submitting..."
-    },
-    "table": {
-      "statusColumn": "Status Changed To",
-      "excludeColumn": "Exclude From Progress"
-    },
-    "statusLabels": {
-      "In Training": "In Training",
-      "IQA Approved": "IQA Approved",
-      "Completed": "Completed",
-      "Certificated": "Certificated",
-      "Training Suspended": "Training Suspended",
-      "Transferred": "Transferred",
-      "Early Leaver": "Early Leaver",
-      "Exempt": "Exempt",
-      "Awaiting Induction": "Awaiting Induction"
+      "submitting": "Submitting...",
+      "organisationRequired": "Select an organisation (Master Admin) or ensure your account is linked to an organisation to manage exclusions.",
+      "loadError": "Failed to load exclusion settings. Please try again.",
+      "excludeToggleLabel": "Exclude course from overall progress",
+      "excludeToggleHint": "Turn on to exclude this course from overall progress; turn off to include it again."
     },
     "toast": {
       "selectCourseRequired": "Please select a course",
-      "updateSuccess": "Progress exclusion settings updated successfully",
-      "updateFailed": "Failed to update progress exclusion settings"
+      "organisationRequired": "Organisation is required to update exclusion settings",
+      "updateSuccess": "Course exclusion settings updated successfully",
+      "updateFailed": "Failed to update course exclusion settings"
     }
   },
   "gatewayReport": {

@@ -147,11 +147,149 @@ function escapeCsvCell(value: string | number | boolean): string {
   return `"${s.replace(/"/g, '""')}"`;
 }
 
+/** Merge nested `course` with `units` from inner course or LearnerCourse wrapper (matches Evidence / skills-scan shapes). */
+function resolveCourseFromLearnerEntry(
+  learnerCourse: LearnerCourse | undefined | null,
+): CourseWithUnits | null {
+  if (!learnerCourse) return null;
+  const inner = learnerCourse.course;
+  if (!inner?.course_id) return null;
+  const wrapperUnits = (learnerCourse as { units?: unknown }).units;
+  const innerUnits = (inner as { units?: unknown }).units;
+  const mergedUnits =
+    Array.isArray(innerUnits) && innerUnits.length > 0
+      ? innerUnits
+      : Array.isArray(wrapperUnits)
+        ? wrapperUnits
+        : [];
+  return {
+    ...(inner as CourseWithUnits),
+    units: mergedUnits as CourseWithUnits["units"],
+  };
+}
+
+type StandardGapRowSource = {
+  id: string | number;
+  title: string;
+  code: string;
+  evidenceBoxes?: StandardItem["evidenceBoxes"];
+  learnerMapDirect?: boolean;
+  trainerMapDirect?: boolean;
+};
+
+function isKbsType(type: unknown): type is "Knowledge" | "Behaviour" | "Skills" {
+  return type === "Knowledge" || type === "Behaviour" || type === "Skills";
+}
+
+/** Flatten Standard course `units` into rows for the selected K/B/S type (parent items, unit.items[], or unit.subUnit[]). */
+function collectStandardGapRows(
+  units: unknown[] | undefined,
+  selectedType: "Knowledge" | "Behaviour" | "Skills",
+): StandardGapRowSource[] {
+  if (!Array.isArray(units) || units.length === 0) return [];
+  const rows: StandardGapRowSource[] = [];
+
+  for (const raw of units) {
+    const unit = raw as Record<string, unknown>;
+    const unitId = unit.id ?? unit.code ?? "";
+
+    if (Array.isArray(unit.items) && unit.items.length > 0) {
+      for (const item of unit.items as StandardItem[]) {
+        if (!isKbsType(item.type) || item.type !== selectedType) continue;
+        rows.push({
+          id: item.id,
+          title: item.title,
+          code: item.code || "",
+          evidenceBoxes: item.evidenceBoxes,
+        });
+      }
+      continue;
+    }
+
+    const subUnits = unit.subUnit as Array<Record<string, unknown>> | undefined;
+    if (Array.isArray(subUnits) && subUnits.length > 0) {
+      const matchingSubUnits = subUnits.filter(
+        (sub) => String(sub.type) === String(selectedType),
+      );
+      const matchesByUnitType =
+        unit.type !== undefined &&
+        unit.type !== null &&
+        String(unit.type) === String(selectedType);
+      const matchesBySubUnitType = matchingSubUnits.length > 0;
+      if (!matchesByUnitType && !matchesBySubUnitType) {
+        continue;
+      }
+      const subsToEmit = matchesByUnitType ? subUnits : matchingSubUnits;
+      for (const sub of subsToEmit) {
+        const subId = sub.id ?? sub.code;
+        const id =
+          subId !== undefined && subId !== null
+            ? `${String(unitId)}-${String(subId)}`
+            : `${String(unitId)}-row-${rows.length}`;
+        const title =
+          (typeof sub.title === "string" && sub.title) ||
+          (typeof sub.subTitle === "string" && sub.subTitle) ||
+          (typeof unit.title === "string" && unit.title) ||
+          "";
+        const code =
+          (typeof sub.code === "string" && sub.code) ||
+          (typeof unit.code === "string" && unit.code) ||
+          "";
+        rows.push({
+          id,
+          title,
+          code,
+          evidenceBoxes: sub.evidenceBoxes as StandardItem["evidenceBoxes"] | undefined,
+          learnerMapDirect: Boolean(sub.learnerMap),
+          trainerMapDirect: Boolean(sub.trainerMap),
+        });
+      }
+      continue;
+    }
+
+    if (
+      unit.type !== undefined &&
+      unit.type !== null &&
+      String(unit.type) === String(selectedType) &&
+      isKbsType(unit.type)
+    ) {
+      rows.push({
+        id: unitId as string | number,
+        title: (typeof unit.title === "string" && unit.title) || "",
+        code: (typeof unit.code === "string" && unit.code) || "",
+        evidenceBoxes: unit.evidenceBoxes as StandardItem["evidenceBoxes"] | undefined,
+        learnerMapDirect: Boolean(unit.learnerMap),
+        trainerMapDirect: Boolean(unit.trainerMap),
+      });
+    }
+  }
+
+  return rows;
+}
+
+function mapsFromStandardGapRow(row: StandardGapRowSource): {
+  learnerMap: boolean;
+  trainerMap: boolean;
+} {
+  const fromBoxesLearner = row.evidenceBoxes?.some((box) => box.learnerMap) ?? false;
+  const fromBoxesTrainer = row.evidenceBoxes?.some((box) => box.trainerMap) ?? false;
+  return {
+    learnerMap: Boolean(row.learnerMapDirect) || fromBoxesLearner,
+    trainerMap: Boolean(row.trainerMapDirect) || fromBoxesTrainer,
+  };
+}
+
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
   const courses = useAppSelector((state) => state.auth.courses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
-  const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(currentCourseId ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null : null);
+  const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(() =>
+    currentCourseId
+      ? resolveCourseFromLearnerEntry(
+          courses.find((c) => c.course?.course_id === currentCourseId),
+        )
+      : null,
+  );
   const [selectedUnit, setSelectedUnit] = useState<UnitWithSubUnits | QualificationUnit | null>(null);
   const [selectedType, setSelectedType] = useState<"Knowledge" | "Behaviour" | "Skills">("Knowledge");
   const [globalFilter, setGlobalFilter] = useState("");
@@ -159,21 +297,27 @@ export function ModuleUnitProgressDataTable() {
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
   const isQualificationCourse = selectedCourse?.course_core_type === "Qualification";
   
-  // Update selected unit when course changes (for non-Standard courses)
   useEffect(() => {
-    if (isStandardCourse) {
-      // For Standard courses, reset unit and type selection
-      setSelectedUnit(null);
-      setSelectedType("Knowledge");
-    } else if (isQualificationCourse || (!isStandardCourse && !isQualificationCourse)) {
-      // For Qualification and other courses, select first unit
+    if (!isStandardCourse) return;
+    setSelectedUnit(null);
+    setSelectedType("Knowledge");
+  }, [selectedCourse?.course_id, isStandardCourse]);
+
+  useEffect(() => {
+    if (isStandardCourse) return;
+    if (isQualificationCourse || (!isStandardCourse && !isQualificationCourse)) {
       if (selectedCourse?.units && selectedCourse.units.length > 0) {
         setSelectedUnit(selectedCourse.units[0] as UnitWithSubUnits | QualificationUnit);
       } else {
         setSelectedUnit(null);
       }
     }
-  }, [selectedCourse, isStandardCourse, isQualificationCourse]);
+  }, [
+    selectedCourse?.course_id,
+    selectedCourse?.units,
+    isStandardCourse,
+    isQualificationCourse,
+  ]);
 
   // For non-Standard courses, units are actual units
   // For Standard courses, units array contains items directly
@@ -186,34 +330,22 @@ export function ModuleUnitProgressDataTable() {
     return selectedCourse?.units || [];
   }, [selectedCourse, isStandardCourse]);
 
-  // Collect all items from units array for Standard courses
-  // For Standard courses, the units array IS the items array (each unit is an item)
-  const allStandardItems = useMemo(() => {
-    if (!isStandardCourse || !selectedCourse?.units) {
+  const standardGapRows = useMemo(() => {
+    if (!isStandardCourse || !selectedType || !selectedCourse?.units) {
       return [];
     }
-
-    // The units array directly contains items with type, code, title, evidenceBoxes, etc.
-    return (selectedCourse.units as unknown as StandardItem[]).filter(
-      (item) => item.type && (item.type === "Knowledge" || item.type === "Behaviour" || item.type === "Skills")
+    return collectStandardGapRows(
+      selectedCourse.units as unknown[],
+      selectedType,
     );
-  }, [selectedCourse, isStandardCourse]);
-
-  // Filter items by selected type for Standard courses
-  const filteredStandardItems = useMemo(() => {
-    if (!isStandardCourse || !selectedType) {
-      return [];
-    }
-    return allStandardItems.filter((item) => item.type === selectedType);
-  }, [allStandardItems, selectedType, isStandardCourse]);
+  }, [isStandardCourse, selectedCourse?.units, selectedType]);
 
   const tableData: SubUnitRow[] = useMemo(() => {
     // Handle Standard course flow
     if (isStandardCourse && selectedType) {
-      return filteredStandardItems.map((item) => {
-        // Aggregate learnerMap and trainerMap from evidenceBoxes
-        const hasLearnerMap = item.evidenceBoxes?.some((box) => box.learnerMap) || false;
-        const hasTrainerMap = item.evidenceBoxes?.some((box) => box.trainerMap) || false;
+      return standardGapRows.map((item) => {
+        const { learnerMap: hasLearnerMap, trainerMap: hasTrainerMap } =
+          mapsFromStandardGapRow(item);
 
         let gap: "complete" | "partial" | "none" = "none";
         if (hasLearnerMap && hasTrainerMap) {
@@ -228,7 +360,7 @@ export function ModuleUnitProgressDataTable() {
           learnerMap: hasLearnerMap,
           trainerMap: hasTrainerMap,
           gap,
-          comment: item.code || "", // Store code in comment field for display
+          comment: item.code || "",
         };
       });
     }
@@ -276,7 +408,7 @@ export function ModuleUnitProgressDataTable() {
     }
 
     return [];
-  }, [isStandardCourse, selectedType, filteredStandardItems, selectedUnit]);
+  }, [isStandardCourse, selectedType, standardGapRows, selectedUnit]);
 
   const filteredData = useMemo(() => {
     if (!globalFilter) return tableData;
@@ -539,10 +671,10 @@ export function ModuleUnitProgressDataTable() {
               <Select
                 value={selectedCourse?.course_id?.toString() || ""}
                 onValueChange={(value) => {
-                  const course = courses.find(
+                  const entry = courses.find(
                     (c: LearnerCourse) => c?.course?.course_id?.toString() === value
                   );
-                  setSelectedCourse(course?.course || null);
+                  setSelectedCourse(resolveCourseFromLearnerEntry(entry));
                 }}
                 disabled={!courses || courses.length === 0}
               >

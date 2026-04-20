@@ -3158,39 +3158,29 @@
   },
   "progressExclusion": {
     "pageTitle": "Vom Gesamtfortschritt ausschließen",
-    "pageSubtitle": "Wählen Sie einen Kurs und legen Sie fest, welche Trainingsstatus vom Gesamtfortschritt ausgeschlossen werden sollen",
+    "pageSubtitle": "Schließen Sie einen gesamten Kurs aus, damit er für Lernende dieser Organisation nicht in den Gesamtfortschritt einfließt.",
     "card": {
       "title": "Vom Gesamtfortschritt ausschließen",
-      "description": "Wählen Sie einen Kurs und legen Sie fest, welche Trainingsstatus vom Gesamtfortschritt ausgeschlossen werden sollen"
+      "description": "Wählen Sie einen Kurs und legen Sie fest, ob er vom Gesamtfortschritt ausgeschlossen werden soll."
     },
     "info": {
-      "description": "Änderungen hier beeinflussen die Berechnung des Gesamtfortschritts für alle Lernenden im ausgewählten Kurs."
+      "description": "Ausgeschlossene Kurse fließen nicht in die Berechnung des Gesamtfortschritts für Lernende dieses Kurses ein."
     },
     "form": {
       "courseLabel": "Kurs auswählen",
       "coursePlaceholder": "Kurs auswählen",
       "submit": "Speichern",
-      "submitting": "Wird gespeichert..."
-    },
-    "table": {
-      "statusColumn": "Status geändert zu",
-      "excludeColumn": "Vom Fortschritt ausschließen"
-    },
-    "statusLabels": {
-      "In Training": "In Ausbildung",
-      "IQA Approved": "IQA genehmigt",
-      "Completed": "Abgeschlossen",
-      "Certificated": "Zertifiziert",
-      "Training Suspended": "Ausbildung ausgesetzt",
-      "Transferred": "Versetzt",
-      "Early Leaver": "Früher Ausstieg",
-      "Exempt": "Befreit",
-      "Awaiting Induction": "Wartet auf Einweisung"
+      "submitting": "Wird gespeichert...",
+      "organisationRequired": "Wählen Sie eine Organisation (Master Admin) oder stellen Sie sicher, dass Ihr Konto einer Organisation zugeordnet ist.",
+      "loadError": "Ausschlusseinstellungen konnten nicht geladen werden. Bitte erneut versuchen.",
+      "excludeToggleLabel": "Kurs vom Gesamtfortschritt ausschließen",
+      "excludeToggleHint": "Aktivieren, um den Kurs auszuschließen; deaktivieren, um ihn wieder einzubeziehen."
     },
     "toast": {
       "selectCourseRequired": "Bitte wählen Sie einen Kurs aus",
-      "updateSuccess": "Einstellungen zum Fortschrittsausschluss wurden erfolgreich aktualisiert",
-      "updateFailed": "Einstellungen zum Fortschrittsausschluss konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut."
+      "organisationRequired": "Zum Aktualisieren ist eine Organisation erforderlich",
+      "updateSuccess": "Kursausschluss-Einstellungen wurden erfolgreich aktualisiert",
+      "updateFailed": "Kursausschluss-Einstellungen konnten nicht aktualisiert werden. Bitte versuchen Sie es erneut."
     }
   },
   "gatewayReport": {

@@ -3811,39 +3811,29 @@
   },
   "progressExclusion": {
     "pageTitle": "Excluir del Progreso General",
-    "pageSubtitle": "Seleccione un curso y elija qué estados de capacitación deben excluirse del seguimiento del progreso general",
+    "pageSubtitle": "Excluya un curso completo para que no cuente en el progreso general de los aprendices de esta organización.",
     "card": {
       "title": "Excluir del Progreso General",
-      "description": "Seleccione un curso y elija qué estados de capacitación deben excluirse del seguimiento del progreso general"
+      "description": "Seleccione un curso y elija si debe excluirse del seguimiento del progreso general."
     },
     "info": {
-      "description": "Los cambios aquí afectarán cómo se calcula el progreso general para todos los aprendices del curso seleccionado."
+      "description": "Si está excluido, este curso no contará en el cálculo del progreso general de los aprendices del curso seleccionado."
     },
     "form": {
       "courseLabel": "Seleccionar curso",
       "coursePlaceholder": "Seleccione un curso",
       "submit": "Guardar",
-      "submitting": "Guardando..."
-    },
-    "table": {
-      "statusColumn": "Estado cambiado a",
-      "excludeColumn": "Excluir del progreso"
-    },
-    "statusLabels": {
-      "In Training": "En formación",
-      "IQA Approved": "Aprobado por IQA",
-      "Completed": "Completado",
-      "Certificated": "Certificado",
-      "Training Suspended": "Formación suspendida",
-      "Transferred": "Transferido",
-      "Early Leaver": "Abandono temprano",
-      "Exempt": "Exento",
-      "Awaiting Induction": "En espera de inducción"
+      "submitting": "Guardando...",
+      "organisationRequired": "Seleccione una organización (Master Admin) o asegúrese de que su cuenta esté vinculada a una organización.",
+      "loadError": "No se pudieron cargar los ajustes de exclusión. Inténtelo de nuevo.",
+      "excludeToggleLabel": "Excluir el curso del progreso general",
+      "excludeToggleHint": "Active para excluir el curso del progreso general; desactive para volver a incluirlo."
     },
     "toast": {
       "selectCourseRequired": "Seleccione un curso",
-      "updateSuccess": "La configuración de exclusión de progreso se actualizó correctamente",
-      "updateFailed": "Error al actualizar la configuración de exclusión de progreso. Inténtelo de nuevo."
+      "organisationRequired": "Se requiere una organización para actualizar los ajustes",
+      "updateSuccess": "La configuración de exclusión del curso se actualizó correctamente",
+      "updateFailed": "Error al actualizar la configuración de exclusión del curso. Inténtelo de nuevo."
     }
   },
   "gatewayReport": {

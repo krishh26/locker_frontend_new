@@ -12,7 +12,7 @@ const baseRoles = [
 ] as const
 
 /** Roles returned by API that we strip from auth/display (not used in app) */
-export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin" ,"LIQA"] as const
+export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin" ,"LIQA" ,"Line Manager"] as const
 
 export type Role = (typeof baseRoles)[number]
 

@@ -11,7 +11,17 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Download, Search, ChevronDown, ChevronRight, Plus } from 'lucide-react'
+import {
+  Download,
+  Search,
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  Loader2,
+} from 'lucide-react'
 import { format, addMinutes } from 'date-fns'
 
 import { Button } from '@/components/ui/button'
@@ -38,10 +48,20 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Card, CardContent } from '@/components/ui/card'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import {
   useGetLearnerPlanListQuery,
+  useDeleteLearnerPlanMutation,
   useUpdateSessionMutation,
 } from '@/store/api/learner-plan/learnerPlanApi'
 import { useAppSelector } from '@/store/hooks'
@@ -99,6 +119,7 @@ const attendedStatuses = [
 
 export function LearningPlanDataTable() {
   const t = useTranslations('learningPlan')
+  const commonT = useTranslations('common')
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
   const [typeFilter, setTypeFilter] = useState<string>('')
@@ -106,6 +127,9 @@ export function LearningPlanDataTable() {
   const [globalFilter, setGlobalFilter] = useState('')
   const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set())
   const [addSessionDialogOpen, setAddSessionDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [selectedSession, setSelectedSession] = useState<SessionRow | null>(null)
+  const [isEditMode, setIsEditMode] = useState(false)
 
   const currentCourseId = useAppSelector(selectCurrentCourseId)
 
@@ -184,6 +208,7 @@ export function LearningPlanDataTable() {
   )
 
   const [updateSession] = useUpdateSessionMutation()
+  const [deleteLearnerPlan, { isLoading: isDeleting }] = useDeleteLearnerPlanMutation()
 
   const handleUpdateSubmit = useCallback(
     async (payload: {
@@ -280,6 +305,34 @@ export function LearningPlanDataTable() {
       return newSet
     })
   }
+
+  const isAdminOrTrainer = user?.role === 'Admin' || user?.role === 'Trainer'
+
+  const handleAddSession = useCallback(() => {
+    setSelectedSession(null)
+    setIsEditMode(false)
+    setAddSessionDialogOpen(true)
+  }, [])
+
+  const handleEditSession = useCallback((session: SessionRow) => {
+    setSelectedSession(session)
+    setIsEditMode(true)
+    setAddSessionDialogOpen(true)
+  }, [])
+
+  const handleDeleteSession = useCallback(async () => {
+    if (!selectedSession?.id) return
+
+    try {
+      await deleteLearnerPlan(selectedSession.id).unwrap()
+      toast.success('Session deleted successfully')
+      setDeleteDialogOpen(false)
+      setSelectedSession(null)
+    } catch (error) {
+      console.error(error)
+      toast.error('Failed to delete session')
+    }
+  }, [deleteLearnerPlan, selectedSession])
 
 
   const columns: ColumnDef<SessionRow>[] = useMemo(
@@ -474,8 +527,53 @@ export function LearningPlanDataTable() {
           )
         },
       },
+      ...(isAdminOrTrainer
+        ? [
+            {
+              id: 'actions',
+              header: 'Actions',
+              cell: ({ row }) => (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant='ghost' className='h-8 w-8 p-0'>
+                      <span className='sr-only'>Open menu</span>
+                      <MoreHorizontal className='h-4 w-4' />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='end'>
+                    <DropdownMenuItem
+                      className='cursor-pointer'
+                      onClick={() => handleEditSession(row.original)}
+                    >
+                      <Edit className='mr-2 h-4 w-4' />
+                      {t('sessionExpanded.actionTable.tooltips.edit')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className='cursor-pointer text-destructive'
+                      onClick={() => {
+                        setSelectedSession(row.original)
+                        setDeleteDialogOpen(true)
+                      }}
+                    >
+                      <Trash2 className='mr-2 h-4 w-4' />
+                      {t('sessionExpanded.actionTable.tooltips.delete')}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ),
+            } as ColumnDef<SessionRow>,
+          ]
+        : []),
     ],
-    [expandedRows, getSessionTypeLabel, getAttendedStatusLabel, user?.role, handleUpdateSubmit, t]
+    [
+      expandedRows,
+      getSessionTypeLabel,
+      user?.role,
+      handleUpdateSubmit,
+      t,
+      isAdminOrTrainer,
+      handleEditSession,
+    ]
   )
 
   const table = useReactTable({
@@ -639,11 +737,11 @@ export function LearningPlanDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {(user?.role === 'Admin' || user?.role === 'Trainer') && (
+          {isAdminOrTrainer && (
             <Button
               type="button"
               className="cursor-pointer"
-              onClick={() => setAddSessionDialogOpen(true)}
+              onClick={handleAddSession}
             >
               <Plus className="mr-2 size-4" />
               {t('table.buttons.addSession')}
@@ -652,10 +750,16 @@ export function LearningPlanDataTable() {
         </div>
       </div>
 
-      {learnerId && (user?.role === 'Admin' || user?.role === 'Trainer') && (
+      {learnerId && isAdminOrTrainer && (
         <AddSessionDialog
           open={addSessionDialogOpen}
-          onOpenChange={setAddSessionDialogOpen}
+          onOpenChange={(open) => {
+            setAddSessionDialogOpen(open)
+            if (!open) {
+              setIsEditMode(false)
+              setSelectedSession(null)
+            }
+          }}
           learnerId={Number(learnerId)}
           assessorId={
             (user as { user_id?: number })?.user_id ??
@@ -664,6 +768,8 @@ export function LearningPlanDataTable() {
           }
           defaultCourseIds={currentCourseId ? [currentCourseId] : []}
           onSuccess={() => setAddSessionDialogOpen(false)}
+          isEditMode={isEditMode}
+          sessionToEdit={selectedSession?.rawData ?? null}
         />
       )}
 
@@ -761,6 +867,48 @@ export function LearningPlanDataTable() {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {isAdminOrTrainer && (
+        <AlertDialog
+          open={deleteDialogOpen}
+          onOpenChange={(open) => {
+            if (!isDeleting) {
+              setDeleteDialogOpen(open)
+            }
+          }}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {commonT('confirm')} {commonT('delete')}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {t('dialogs.deleteSession.description')}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={isDeleting}>
+                {commonT('cancel')}
+              </AlertDialogCancel>
+              <Button
+                type='button'
+                onClick={handleDeleteSession}
+                disabled={isDeleting}
+                className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    {commonT('loading')}
+                  </>
+                ) : (
+                  commonT('delete')
+                )}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </div>
   )

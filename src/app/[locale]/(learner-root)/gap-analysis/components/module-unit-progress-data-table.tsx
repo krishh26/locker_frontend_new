@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useStore } from "react-redux";
 import {
   type ColumnDef,
   type Row,
@@ -38,11 +39,13 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { useAppSelector } from "@/store/hooks";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import type { RootState } from "@/store";
 import { toast } from "sonner";
 import { exportTableToPdf } from "@/utils/pdfExport";
 import { LearnerCourse } from "@/store/api/learner/types";
-import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { selectCurrentCourseId, setCurrentCourseId } from "@/store/slices/courseSlice";
 import { useTranslations } from "next-intl";
 
 export type SubUnitRow = {
@@ -142,18 +145,166 @@ type UnitWithSubUnits = {
   }>;
 };
 
+function escapeCsvCell(value: string | number | boolean): string {
+  const s = String(value ?? "");
+  return `"${s.replace(/"/g, '""')}"`;
+}
+
+function gapFromMaps(learnerMap: boolean, trainerMap: boolean): SubUnitRow["gap"] {
+  if (learnerMap && trainerMap) return "complete";
+  if (learnerMap || trainerMap) return "partial";
+  return "none";
+}
+
+/**
+ * Standard courses from `/learner/get` use units with nested `subUnit[]` (maps on sub-units).
+ * Legacy payloads used a flat list of items with `type` + `evidenceBoxes` on each row.
+ */
+function collectStandardGapRows(
+  course: CourseWithUnits,
+  selectedType: "Knowledge" | "Behaviour" | "Skills"
+): SubUnitRow[] {
+  const rows: SubUnitRow[] = [];
+  const units = (course.units || []) as unknown[];
+
+  for (const raw of units) {
+    const unit = raw as Record<string, unknown> & {
+      id?: string | number;
+      title?: string;
+      type?: string;
+      code?: string;
+      subUnit?: unknown[];
+      items?: StandardItem[];
+      evidenceBoxes?: StandardItem["evidenceBoxes"];
+      learnerMap?: boolean;
+      trainerMap?: boolean;
+    };
+
+    const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+
+    if (unitSubUnits.length > 0) {
+      const matchingSubUnits = unitSubUnits.filter(
+        (sub) => String((sub as { type?: string }).type) === String(selectedType)
+      );
+      const matchesByUnitType = String(unit.type) === String(selectedType);
+      if (!matchesByUnitType && matchingSubUnits.length === 0) continue;
+
+      const subsToShow = matchesByUnitType ? unitSubUnits : matchingSubUnits;
+      for (const subRaw of subsToShow) {
+        const sub = subRaw as {
+          id?: string | number;
+          title?: string;
+          subTitle?: string;
+          code?: string;
+          learnerMap?: boolean;
+          trainerMap?: boolean;
+          learner_map?: boolean;
+          trainer_map?: boolean;
+        };
+        const learnerMap = Boolean(sub.learnerMap ?? sub.learner_map ?? false);
+        const trainerMap = Boolean(sub.trainerMap ?? sub.trainer_map ?? false);
+        const title = String(sub.title ?? sub.subTitle ?? "");
+        const code = String(sub.code ?? "");
+        const subId = `${String(unit.id ?? "u")}-${String(sub.id ?? sub.code ?? rows.length)}`;
+        rows.push({
+          id: subId,
+          subTitle: title,
+          learnerMap,
+          trainerMap,
+          gap: gapFromMaps(learnerMap, trainerMap),
+          comment: code,
+        });
+      }
+      continue;
+    }
+
+    if (Array.isArray(unit.items) && unit.items.length > 0) {
+      for (const item of unit.items) {
+        if (String(item.type) !== String(selectedType)) continue;
+        const hasLearnerMap = item.evidenceBoxes?.some((box) => box.learnerMap) || false;
+        const hasTrainerMap = item.evidenceBoxes?.some((box) => box.trainerMap) || false;
+        rows.push({
+          id: item.id,
+          subTitle: item.title,
+          learnerMap: hasLearnerMap,
+          trainerMap: hasTrainerMap,
+          gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
+          comment: item.code || "",
+        });
+      }
+      continue;
+    }
+
+    if (
+      unit.type &&
+      String(unit.type) === String(selectedType) &&
+      (unit.title != null || unit.id != null)
+    ) {
+      const hasLearnerMap =
+        Boolean(unit.learnerMap ?? (unit as { learner_map?: boolean }).learner_map) ||
+        unit.evidenceBoxes?.some((box) => box.learnerMap) ||
+        false;
+      const hasTrainerMap =
+        Boolean(unit.trainerMap ?? (unit as { trainer_map?: boolean }).trainer_map) ||
+        unit.evidenceBoxes?.some((box) => box.trainerMap) ||
+        false;
+      rows.push({
+        id: unit.id ?? rows.length,
+        subTitle: String(unit.title ?? ""),
+        learnerMap: hasLearnerMap,
+        trainerMap: hasTrainerMap,
+        gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
+        comment: String(unit.code ?? ""),
+      });
+    }
+  }
+
+  return rows;
+}
+
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
+  const dispatch = useAppDispatch();
+  const store = useStore<RootState>();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const urlCourseIdParam = searchParams.get("course_id");
   const courses = useAppSelector((state) => state.auth.courses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
+  const prevUrlCourseId = useRef<string | undefined>(undefined);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(currentCourseId ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null : null);
   const [selectedUnit, setSelectedUnit] = useState<UnitWithSubUnits | QualificationUnit | null>(null);
   const [selectedType, setSelectedType] = useState<"Knowledge" | "Behaviour" | "Skills">("Knowledge");
   const [globalFilter, setGlobalFilter] = useState("");
 
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
-  console.log("🚀 ~ ModuleUnitProgressDataTable ~ selectedCourse:", selectedCourse?.units)
   const isQualificationCourse = selectedCourse?.course_core_type === "Qualification";
+
+  useEffect(() => {
+    const raw = urlCourseIdParam ?? "";
+    if (raw === prevUrlCourseId.current) return;
+    prevUrlCourseId.current = raw;
+    if (!urlCourseIdParam) return;
+    const n = Number(urlCourseIdParam);
+    if (!Number.isFinite(n) || n <= 0) return;
+    dispatch(setCurrentCourseId(n));
+  }, [urlCourseIdParam, dispatch]);
+
+  useEffect(() => {
+    const fromUrl =
+      urlCourseIdParam && Number.isFinite(Number(urlCourseIdParam)) && Number(urlCourseIdParam) > 0
+        ? Number(urlCourseIdParam)
+        : null;
+    const rid = selectCurrentCourseId(store.getState());
+    const targetId = rid != null && rid > 0 ? rid : fromUrl;
+    if (!targetId) return;
+    const match = courses.find((c: LearnerCourse) => c?.course?.course_id === targetId);
+    if (!match?.course) return;
+    if (selectedCourse?.course_id !== targetId) {
+      setSelectedCourse(match.course as CourseWithUnits);
+    }
+  }, [courses, currentCourseId, urlCourseIdParam, selectedCourse?.course_id, store]);
   
   // Update selected unit when course changes (for non-Standard courses)
   useEffect(() => {
@@ -182,51 +333,15 @@ export function ModuleUnitProgressDataTable() {
     return selectedCourse?.units || [];
   }, [selectedCourse, isStandardCourse]);
 
-  // Collect all items from units array for Standard courses
-  // For Standard courses, the units array IS the items array (each unit is an item)
-  const allStandardItems = useMemo(() => {
-    if (!isStandardCourse || !selectedCourse?.units) {
-      return [];
-    }
-
-    // The units array directly contains items with type, code, title, evidenceBoxes, etc.
-    return (selectedCourse.units as unknown as StandardItem[]).filter(
-      (item) => item.type && (item.type === "Knowledge" || item.type === "Behaviour" || item.type === "Skills")
-    );
-  }, [selectedCourse, isStandardCourse]);
-
-  // Filter items by selected type for Standard courses
-  const filteredStandardItems = useMemo(() => {
-    if (!isStandardCourse || !selectedType) {
-      return [];
-    }
-    return allStandardItems.filter((item) => item.type === selectedType);
-  }, [allStandardItems, selectedType, isStandardCourse]);
+  const standardRows = useMemo(() => {
+    if (!isStandardCourse || !selectedCourse || !selectedType) return [];
+    return collectStandardGapRows(selectedCourse, selectedType);
+  }, [selectedCourse, selectedType, isStandardCourse]);
 
   const tableData: SubUnitRow[] = useMemo(() => {
-    // Handle Standard course flow
+    // Handle Standard course flow (hierarchical sub-units, unit.items, or legacy flat rows)
     if (isStandardCourse && selectedType) {
-      return filteredStandardItems.map((item) => {
-        // Aggregate learnerMap and trainerMap from evidenceBoxes
-        const hasLearnerMap = item.evidenceBoxes?.some((box) => box.learnerMap) || false;
-        const hasTrainerMap = item.evidenceBoxes?.some((box) => box.trainerMap) || false;
-
-        let gap: "complete" | "partial" | "none" = "none";
-        if (hasLearnerMap && hasTrainerMap) {
-          gap = "complete";
-        } else if (hasLearnerMap || hasTrainerMap) {
-          gap = "partial";
-        }
-
-        return {
-          id: item.id,
-          subTitle: item.title,
-          learnerMap: hasLearnerMap,
-          trainerMap: hasTrainerMap,
-          gap,
-          comment: item.code || "", // Store code in comment field for display
-        };
-      });
+      return standardRows;
     }
 
     // Handle Qualification course flow (original logic)
@@ -272,7 +387,7 @@ export function ModuleUnitProgressDataTable() {
     }
 
     return [];
-  }, [isStandardCourse, selectedType, filteredStandardItems, selectedUnit]);
+  }, [isStandardCourse, selectedType, standardRows, selectedUnit]);
 
   const filteredData = useMemo(() => {
     if (!globalFilter) return tableData;
@@ -420,8 +535,77 @@ export function ModuleUnitProgressDataTable() {
     },
   });
 
+  const gapStatusLabel = (gap: SubUnitRow["gap"]) => {
+    switch (gap) {
+      case "complete":
+        return t("table.gapStatus.complete");
+      case "partial":
+        return t("table.gapStatus.partial");
+      default:
+        return t("table.gapStatus.none");
+    }
+  };
+
   const handleExportCsv = () => {
-    toast.info(t("table.toast.csvNotImplemented"));
+    if (filteredData.length === 0) {
+      toast.info(t("table.toast.noDataToExport"));
+      return;
+    }
+
+    const headers = isStandardCourse
+      ? [
+          t("table.columns.title"),
+          t("table.columns.code"),
+          t("table.columns.learnerMap"),
+          t("table.columns.trainerMap"),
+          t("table.columns.gap"),
+        ]
+      : [
+          t("table.columns.subUnitTitle"),
+          t("table.columns.learnerMap"),
+          t("table.columns.trainerMap"),
+          t("table.columns.gap"),
+          t("table.columns.comment"),
+        ];
+
+    const rows = filteredData.map((row) =>
+      isStandardCourse
+        ? [
+            row.subTitle,
+            row.comment,
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
+            gapStatusLabel(row.gap),
+          ]
+        : [
+            row.subTitle,
+            row.learnerMap ? t("table.yes") : t("table.no"),
+            row.trainerMap ? t("table.yes") : t("table.no"),
+            gapStatusLabel(row.gap),
+            row.comment,
+          ]
+    );
+
+    const csvContent = [
+      headers.map(escapeCsvCell).join(","),
+      ...rows.map((row) => row.map((cell) => escapeCsvCell(cell)).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const rawCourseName = selectedCourse?.course_name?.trim() || "course";
+    const safeCourse =
+      rawCourseName
+        .replace(/[^a-zA-Z0-9\s_-]/g, "")
+        .trim()
+        .replace(/\s+/g, "_")
+        .slice(0, 80) || "course";
+    link.download = `gap_analysis_${safeCourse}_${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success(t("table.toast.csvSuccess"));
   };
 
   const handleExportPdf = () => {
@@ -435,13 +619,13 @@ export function ModuleUnitProgressDataTable() {
             row.comment,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
-            row.gap,
+            gapStatusLabel(row.gap),
           ]
         : [
             row.subTitle,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
-            row.gap,
+            gapStatusLabel(row.gap),
             row.comment,
           ]
     );
@@ -469,7 +653,18 @@ export function ModuleUnitProgressDataTable() {
                   const course = courses.find(
                     (c: LearnerCourse) => c?.course?.course_id?.toString() === value
                   );
-                  setSelectedCourse(course?.course || null);
+                  const next = course?.course || null;
+                  setSelectedCourse(next);
+                  const nextId = next?.course_id ?? null;
+                  dispatch(setCurrentCourseId(nextId));
+                  const params = new URLSearchParams(searchParams.toString());
+                  if (nextId != null) {
+                    params.set("course_id", String(nextId));
+                  } else {
+                    params.delete("course_id");
+                  }
+                  const qs = params.toString();
+                  router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
                 }}
                 disabled={!courses || courses.length === 0}
               >

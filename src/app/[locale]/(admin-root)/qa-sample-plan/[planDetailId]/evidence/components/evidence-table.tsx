@@ -1,6 +1,7 @@
 "use client";
 
-import { FileText, Download, Eye, Pencil } from "lucide-react";
+import { FileText, Pencil, ExternalLink } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,20 +18,6 @@ import {
 import { format } from "date-fns";
 import type { EvidenceItem } from "@/store/api/qa-sample-plan/types";
 
-interface MappedSubUnit {
-  id: number | string;
-  subTitle: string;
-  learnerMapped?: boolean;
-  review?: {
-    signed_off: boolean;
-    signed_at?: string;
-    signed_by?: {
-      user_id: number;
-      name: string;
-    };
-  } | null;
-}
-
 interface UnitToDisplay {
   id: string | number;
   code: string;
@@ -42,10 +29,6 @@ interface UnitToDisplay {
 
 interface EvidenceTableProps {
   evidenceList: EvidenceItem[];
-  planDetailId: string;
-  unitCode: string | null;
-  onRefresh: () => void;
-  // New props for enhanced functionality
   expandedRows: Record<string, boolean>;
   criteriaSignOff: Record<string, boolean>;
   mappedSubUnitsChecked: Record<string, boolean>;
@@ -63,9 +46,6 @@ interface EvidenceTableProps {
 
 export function EvidenceTable({
   evidenceList,
-  planDetailId,
-  unitCode,
-  onRefresh,
   expandedRows,
   criteriaSignOff,
   mappedSubUnitsChecked,
@@ -81,27 +61,6 @@ export function EvidenceTable({
   createStateKey,
 }: EvidenceTableProps) {
   const t = useTranslations("qaSamplePlan.evidence.evidenceTable");
-  const handleViewFile = (url: string) => {
-    window.open(url, "_blank");
-  };
-
-  const handleDownloadFile = (url: string, fileName: string) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return t("fileSize.zeroBytes");
-    const k = 1024;
-    const sizes = [t("fileSize.bytes"), t("fileSize.kb"), t("fileSize.mb"), t("fileSize.gb")];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
-  };
 
   return (
     <Card>
@@ -126,7 +85,7 @@ export function EvidenceTable({
                 {hasExpandedRows &&
                   allUnitsToDisplay.map((unit) => (
                     <TableHead
-                      key={unit.id}
+                      key={`hdr-${String(unit.unit_code)}-${String(unit.id)}`}
                       className="text-center min-w-[100px]"
                       title={unit.title}
                     >
@@ -160,14 +119,23 @@ export function EvidenceTable({
                   return (
                     <TableRow key={evidence.assignment_id} className="hover:bg-muted">
                       <TableCell className="font-medium">
-                        <div className="flex items-center gap-2">
-                          {refNo}
+                        <div className="flex items-center gap-1">
+                          <span>{refNo}</span>
+                          <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" asChild>
+                            <Link
+                              href={`/evidence-library/${evidence.assignment_id}`}
+                              title={t("openInEvidenceLibrary")}
+                            >
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Link>
+                          </Button>
                           {onOpenCommentModal && (
                             <Button
                               variant="ghost"
                               size="icon"
                               onClick={() => onOpenCommentModal(evidence)}
-                              className="h-6 w-6"
+                              className="h-7 w-7 shrink-0"
+                              title={t("addComment")}
                             >
                               <Pencil className="h-3.5 w-3.5" />
                             </Button>
@@ -223,7 +191,6 @@ export function EvidenceTable({
                             const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
                               (sub) => sub.trainerMapped === true
                             );
-                            // Only check if there are trainer-mapped units AND all are signed off
                             return (
                               trainerMappedSubUnits.length > 0 &&
                               trainerMappedSubUnits.every(
@@ -239,7 +206,6 @@ export function EvidenceTable({
                               const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
                                 (sub) => sub.trainerMapped === true
                               );
-                              // Disable if no trainer-mapped units OR all are already signed off
                               return (
                                 trainerMappedSubUnits.length === 0 ||
                                 trainerMappedSubUnits.every(
@@ -256,58 +222,62 @@ export function EvidenceTable({
                             ? mappedSubUnits.find((su) => String(su.id) === String(unit.id))
                             : null;
 
-                          // Unit is not in evidence data
                           const isUnitNotInEvidence = !evidenceSubUnit;
-
                           const stateKey = createStateKey(
                             evidence?.assignment_id,
-                            evidenceSubUnit?.id || unit.id
+                            evidenceSubUnit?.id ?? unit.id
                           );
 
                           const isChecked = evidenceSubUnit
                             ? evidenceSubUnit.review?.signed_off === true ||
-                              (evidenceSubUnit.trainerMapped === true) ||
-                              (mappedSubUnitsChecked[stateKey] === true)
+                              evidenceSubUnit.trainerMapped === true ||
+                              mappedSubUnitsChecked[stateKey] === true
                             : false;
 
                           const isLocked = lockedCheckboxes.has(stateKey);
                           const isIqaChecked = iqaCheckedCheckboxes.has(stateKey);
                           const isIQA = currentUserRole === "IQA";
-                          // IQA can only check if trainerMapped is true
-                          const canIqaCheck = isIQA && evidenceSubUnit?.trainerMapped === true;
-                          // Disable if unit is not in evidence, locked, trainerMapped is false, or user is not IQA
-                          const isDisabled =
-                            isUnitNotInEvidence ||
-                            isLocked ||
-                            !evidenceSubUnit?.trainerMapped ||
-                            !isIQA;
-                          // Check if it's trainer mapped but not IQA signed off (show blue)
                           const isTrainerMappedOnly =
                             evidenceSubUnit?.trainerMapped === true &&
                             !evidenceSubUnit?.review?.signed_off &&
                             !isIqaChecked;
 
+                          const isDisabled =
+                            isUnitNotInEvidence ||
+                            isLocked ||
+                            !evidenceSubUnit?.trainerMapped ||
+                            !isIQA;
+
+                          const columnKey = `cell-${String(unit.unit_code)}-${String(unit.id)}-${evidence.assignment_id}`;
+
+                          if (!isExpanded) {
+                            return <TableCell key={columnKey} className="text-center" />;
+                          }
+
+                          if (!evidenceSubUnit) {
+                            return (
+                              <TableCell key={columnKey} className="text-center">
+                                <Checkbox checked={false} disabled className="opacity-50" />
+                              </TableCell>
+                            );
+                          }
+
                           return (
-                            <TableCell key={unit.id} className="text-center">
-                              {isExpanded && evidenceSubUnit ? (
-                                <Checkbox
-                                  checked={isChecked}
-                                  onCheckedChange={() =>
-                                    onMappedSubUnitToggle(
-                                      evidenceSubUnit.id,
-                                      evidence.assignment_id
-                                    )
-                                  }
-                                  disabled={isDisabled}
-                                  className={
-                                    isTrainerMappedOnly
-                                      ? "data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                                      : isIqaChecked
-                                        ? "data-[state=checked]:bg-accent data-[state=checked]:border-accent"
-                                        : ""
-                                  }
-                                />
-                              ) : null}
+                            <TableCell key={columnKey} className="text-center">
+                              <Checkbox
+                                checked={isChecked}
+                                onCheckedChange={() =>
+                                  onMappedSubUnitToggle(evidenceSubUnit.id, evidence.assignment_id)
+                                }
+                                disabled={isDisabled}
+                                className={
+                                  isTrainerMappedOnly
+                                    ? "data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                    : isIqaChecked
+                                      ? "data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                                      : ""
+                                }
+                              />
                             </TableCell>
                           );
                         })}

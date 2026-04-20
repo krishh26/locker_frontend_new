@@ -28,6 +28,7 @@ import { selectCourses } from "@/store/slices/authSlice";
 import { reconstructFormStateFromMappings } from "../utils/reconstruct-form-state";
 import { COURSE_TYPES } from "./constants";
 import { EvidenceMappingsTable } from "./view/evidence-mappings-table";
+import { useEvidenceSubmissionCounts } from "../hooks/use-evidence-submission-counts";
 
 interface EvidenceDetailsModalProps {
   open: boolean;
@@ -285,6 +286,9 @@ export function EvidenceDetailsModal({
   };
 
   const evidenceData = evidenceDetails?.data;
+  const evidenceOwnerUserId = (evidenceData as EvidenceEntry | undefined)?.user
+    ?.user_id;
+  const { getEvidenceCount } = useEvidenceSubmissionCounts(evidenceOwnerUserId);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -327,6 +331,7 @@ export function EvidenceDetailsModal({
                   courses={courses}
                   setValue={form.setValue}
                   trigger={form.trigger}
+                  getEvidenceCount={getEvidenceCount}
                 />
               </div>
             </>

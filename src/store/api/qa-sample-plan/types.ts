@@ -373,7 +373,10 @@ export interface AddAssignmentReviewRequest {
   role: string;
   comment?: string;
   unit_code: string;
-  signed_off: boolean;
+  /** When omitted, not sent — avoids overwriting server state on comment-only updates. */
+  signed_off?: boolean;
+  /** Role confirmation grid “tick when completed”; maps to DB `completed`. */
+  completed?: boolean;
   file?: File;
 }
 

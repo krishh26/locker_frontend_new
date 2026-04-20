@@ -2153,6 +2153,11 @@
         "partial": "Teilweise - Eine Karte vorhanden",
         "none": "Keine Karten vorhanden"
       },
+      "gapStatus": {
+        "complete": "Vollständig",
+        "partial": "Teilweise",
+        "none": "Keine"
+      },
       "filters": {
         "selectCourse": "Kurs auswählen",
         "selectType": "Typ auswählen",
@@ -2175,7 +2180,7 @@
       "exportPdf": "Als PDF exportieren",
       "pdfTitle": "Modul-/Einheitenfortschritt",
       "toast": {
-        "csvNotImplemented": "CSV-Export wird implementiert",
+        "csvSuccess": "CSV erfolgreich exportiert",
         "noDataToExport": "Keine Daten zum Exportieren",
         "pdfSuccess": "PDF erfolgreich exportiert"
       },
@@ -2621,6 +2626,9 @@
           "durationRequired": "Dauer ist erforderlich",
           "sessionTypeRequired": "Sitzungstyp ist erforderlich"
         }
+      },
+      "deleteSession": {
+        "description": "Diese Aktion kann nicht rueckgaengig gemacht werden. Die ausgewaehlte Sitzung wird dauerhaft geloescht."
       },
       "addAction": {
         "toast": {
@@ -4421,7 +4429,15 @@
       "remaining": "Verbleibend",
       "progressLabel": "Fortschritt",
       "completedUnits": "Abgeschlossene Einheiten",
-      "totalUnits": "Einheiten gesamt"
+      "totalUnits": "Einheiten gesamt",
+      "duration": "Dauer",
+      "timeElapsed": "Verstrichene Zeit",
+      "timeRemaining": "Verbleibende Zeit",
+      "workInProgress": "In Bearbeitung",
+      "notYetStarted": "Noch nicht begonnen",
+      "noEndDate": "Kein Enddatum",
+      "daysLeft": "Tage verbleibend",
+      "noUnitData": "Keine Daten"
     },
     "calendarDialog": {
       "title": "Kalender",

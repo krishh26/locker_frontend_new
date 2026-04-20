@@ -1386,6 +1386,9 @@
       "page": {
         "subtitle": "एविडेंस डॉक्यूमेंट्स की समीक्षा करें",
         "subtitleForUnit": "यूनिट के लिए एविडेंस डॉक्यूमेंट्स की समीक्षा करें: {unitCode}",
+        "evidenceLoadErrorTitle": "एविडेंस लोड नहीं हो सका",
+        "evidenceLoadErrorDescription": "एविडेंस सूची लोड करने में विफल। कृपया पुनः प्रयास करें।",
+        "retryEvidenceLoad": "पुनः प्रयास करें",
         "confirmationStatements": {
           "learner": "मैं पुष्टि करता/करती हूँ कि यह यूनिट पूर्ण है और प्रदान किया गया एविडेंस मेरे अपने कार्य का परिणाम है।",
           "trainer": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
@@ -1424,7 +1427,8 @@
           "unableDeleteFileReviewIdNotFound": "फ़ाइल हटाई नहीं जा सकी: रिव्यू ID नहीं मिली।",
           "fileDeletedSuccess": "फ़ाइल सफलतापूर्वक हटाई गई।",
           "deleteFileFailed": "फ़ाइल हटाने में विफल।",
-          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।"
+          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।",
+          "commentAndFileUploadedSuccess": "कमेंट और फ़ाइल सफलतापूर्वक अपलोड हो गई।"
         }
       },
       "unitProgress": {
@@ -1455,7 +1459,9 @@
           "kb": "KB",
           "mb": "MB",
           "gb": "GB"
-        }
+        },
+        "openInEvidenceLibrary": "एविडेंस लाइब्रेरी में खोलें",
+        "addComment": "कमेंट जोड़ें या संपादित करें"
       },
       "confirmationStatements": {
         "columns": {
@@ -1488,6 +1494,8 @@
       "unitSignOffModal": {
         "title": "यूनिट साइन-ऑफ",
         "description": "इस यूनिट के लिए सामान्य टिप्पणी (अधिकतम 500 अक्षर)।",
+        "optionalFileLabel": "अनुलग्नक (वैकल्पिक)",
+        "optionalFileHint": "इस साइन-ऑफ के साथ वैकल्पिक फ़ाइल संलग्न कर सकते हैं।",
         "commentLabel": "कमेंट",
         "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
         "charactersCount": "{count}/500 अक्षर",
@@ -2743,6 +2751,11 @@
         "partial": "आंशिक - एक मानचित्र मौजूद",
         "none": "कोई मानचित्र मौजूद नहीं"
       },
+      "gapStatus": {
+        "complete": "पूर्ण",
+        "partial": "आंशिक",
+        "none": "कोई नहीं"
+      },
       "filters": {
         "selectCourse": "पाठ्यक्रम चुनें",
         "selectType": "प्रकार चुनें",
@@ -2765,7 +2778,7 @@
       "exportPdf": "PDF के रूप में निर्यात",
       "pdfTitle": "मॉड्यूल/इकाई प्रगति",
       "toast": {
-        "csvNotImplemented": "CSV निर्यात लागू किया जाएगा",
+        "csvSuccess": "CSV सफलतापूर्वक निर्यात हुआ",
         "noDataToExport": "निर्यात के लिए कोई डेटा नहीं",
         "pdfSuccess": "PDF सफलतापूर्वक निर्यात हुआ"
       },
@@ -3264,6 +3277,9 @@
           "durationRequired": "अवधि आवश्यक है",
           "sessionTypeRequired": "सत्र प्रकार आवश्यक है"
         }
+      },
+      "deleteSession": {
+        "description": "Yeh action wapas nahi li ja sakti. Chuni gayi session permanently delete ho jayegi."
       },
       "addAction": {
         "toast": {
@@ -5260,7 +5276,15 @@
       "remaining": "शेष",
       "progressLabel": "प्रगति",
       "completedUnits": "पूर्ण इकाइयाँ",
-      "totalUnits": "कुल इकाइयाँ"
+      "totalUnits": "कुल इकाइयाँ",
+      "duration": "अवधि",
+      "timeElapsed": "बीता समय",
+      "timeRemaining": "शेष समय",
+      "workInProgress": "प्रगति पर",
+      "notYetStarted": "अभी शुरू नहीं",
+      "noEndDate": "कोई समाप्ति तिथि नहीं",
+      "daysLeft": "शेष दिन",
+      "noUnitData": "कोई डेटा नहीं"
     },
     "calendarDialog": {
       "title": "कैलेंडर",

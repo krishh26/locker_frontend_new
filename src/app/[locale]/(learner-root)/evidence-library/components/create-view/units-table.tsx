@@ -33,6 +33,11 @@ interface UnitsTableProps {
   canEditLearnerFields?: boolean;
   canEditTrainerFields?: boolean;
   error?: FieldError;
+  getEvidenceCount?: (
+    courseId: string | number,
+    unitId: string | number,
+    topicId?: string | number,
+  ) => number;
 }
 
 export function UnitsTable({
@@ -42,6 +47,7 @@ export function UnitsTable({
   canEditLearnerFields = true,
   canEditTrainerFields = false,
   error,
+  getEvidenceCount,
 }: UnitsTableProps) {
   const t = useTranslations("evidenceLibrary");
   // Always call hooks first - before any conditional returns
@@ -241,7 +247,17 @@ export function UnitsTable({
                                   );
                                 }}
                               />
-                              <EvidenceIndicator evidenceCount={0} />
+                              <EvidenceIndicator
+                                evidenceCount={
+                                  getEvidenceCount
+                                    ? getEvidenceCount(
+                                        course.course_id,
+                                        unit.id,
+                                        subUnit.id,
+                                      )
+                                    : 0
+                                }
+                              />
                             </div>
                           </TableCell>
                           <TableCell className="text-center">
@@ -342,7 +358,13 @@ export function UnitsTable({
                                 );
                               }}
                             />
-                            <EvidenceIndicator evidenceCount={0} />
+                            <EvidenceIndicator
+                              evidenceCount={
+                                getEvidenceCount
+                                  ? getEvidenceCount(course.course_id, unit.id)
+                                  : 0
+                              }
+                            />
                           </div>
                         </TableCell>
                         <TableCell className="text-center">
@@ -492,7 +514,17 @@ export function UnitsTable({
                                     );
                                   }}
                                 />
-                                <EvidenceIndicator evidenceCount={0} />
+                                <EvidenceIndicator
+                                  evidenceCount={
+                                    getEvidenceCount
+                                      ? getEvidenceCount(
+                                          course.course_id,
+                                          unit.id,
+                                          subUnit.id,
+                                        )
+                                      : 0
+                                  }
+                                />
                               </div>
                             </TableCell>
                             <TableCell className="text-center">
@@ -593,7 +625,13 @@ export function UnitsTable({
                                   );
                                 }}
                               />
-                              <EvidenceIndicator evidenceCount={0} />
+                              <EvidenceIndicator
+                                evidenceCount={
+                                  getEvidenceCount
+                                    ? getEvidenceCount(course.course_id, unit.id)
+                                    : 0
+                                }
+                              />
                             </div>
                           </TableCell>
                           <TableCell className="text-center">

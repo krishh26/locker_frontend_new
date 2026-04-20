@@ -25,7 +25,9 @@ export type EvidenceCourse = {
 export type EvidenceMapping = {
   mapping_id: number;
   unit_code: string;
-  sub_unit_id: number | null;
+  sub_unit_id: number | string | null;
+  /** Qualification batch API: assessment criterion / topic id (legacy rows used `unit_code` alone). */
+  topic_id?: string | number | null;
   course_id?: number; // Direct course_id from API response
   learnerMap?: boolean; // camelCase version
   learner_map?: boolean; // snake_case version from API
@@ -57,6 +59,8 @@ export type EvidenceSignature = {
 
 export type EvidenceEntry = {
   assignment_id: number;
+  /** Present on `/assignment/get/:id` — learner (owner) platform user id */
+  user?: { user_id?: number };
   file: EvidenceFile | null;
   declaration: string | null;
   title: string | null;
@@ -131,5 +135,49 @@ export type EvidenceUpdateRequest = {
 
 export type EvidenceReuploadRequest = {
   file: File;
+};
+
+/** POST `/assignment/mapping` — Standard uses `sub_unit_ids`; Qualification batch uses `mappings`. */
+export type AssignmentMappingCreateEntry = {
+  sub_unit_id: string;
+  topic_id: string;
+};
+
+export type AssignmentMappingUpsertBody = {
+  assignment_id: number;
+  course_id: number;
+  /** Parent unit id (Qualification); Standard unit id for `sub_unit_ids` rows. */
+  unit_code: string;
+  mapped_by: 'Learner' | 'Trainer';
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+  comment?: string;
+  signed_off?: boolean;
+  code?: string;
+  sub_unit_ids?: string[];
+  mappings?: AssignmentMappingCreateEntry[];
+};
+
+/** PATCH `/assignment/signoff` — PC update for an existing mapping row */
+export type AssignmentSignoffRequest = {
+  mapping_id: number;
+  learnerMap: boolean;
+  trainerMap: boolean;
+  comment?: string | null;
+  signed_off: boolean;
+  /** Optional; send for Qualification-style PCs when BE expects it */
+  topic_id?: string;
+};
+
+export type AssignmentSignoffResponse = {
+  status: boolean;
+  data?: EvidenceMapping & {
+    topic_id?: string;
+    comment_updated_at?: string | null;
+    created_at?: string;
+    comment_updated_by?: { user_id?: number };
+  };
+  message?: string;
+  error?: string;
 };
 

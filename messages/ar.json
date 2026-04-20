@@ -2734,6 +2734,11 @@
         "partial": "جزئي - خريطة واحدة موجودة",
         "none": "لا توجد خرائط"
       },
+      "gapStatus": {
+        "complete": "كامل",
+        "partial": "جزئي",
+        "none": "لا يوجد"
+      },
       "filters": {
         "selectCourse": "اختر الدورة",
         "selectType": "اختر النوع",
@@ -2756,7 +2761,7 @@
       "exportPdf": "تصدير PDF",
       "pdfTitle": "تقدم الوحدة/الوحدة الفرعية",
       "toast": {
-        "csvNotImplemented": "سيتم تنفيذ تصدير CSV",
+        "csvSuccess": "تم تصدير CSV بنجاح",
         "noDataToExport": "لا توجد بيانات للتصدير",
         "pdfSuccess": "تم تصدير PDF بنجاح"
       },
@@ -3255,6 +3260,9 @@
           "durationRequired": "المدة مطلوبة",
           "sessionTypeRequired": "نوع الجلسة مطلوب"
         }
+      },
+      "deleteSession": {
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الجلسة المحددة نهائيًا."
       },
       "addAction": {
         "toast": {
@@ -5180,7 +5188,15 @@
       "remaining": "متبقي",
       "progressLabel": "التقدم",
       "completedUnits": "الوحدات المكتملة",
-      "totalUnits": "إجمالي الوحدات"
+      "totalUnits": "إجمالي الوحدات",
+      "duration": "المدة",
+      "timeElapsed": "الوقت المنقضي",
+      "timeRemaining": "الوقت المتبقي",
+      "workInProgress": "قيد التنفيذ",
+      "notYetStarted": "لم يبدأ بعد",
+      "noEndDate": "لا يوجد تاريخ انتهاء",
+      "daysLeft": "الأيام المتبقية",
+      "noUnitData": "لا توجد بيانات"
     },
     "calendarDialog": {
       "title": "التقويم",

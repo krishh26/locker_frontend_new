@@ -2782,6 +2782,11 @@
         "partial": "Partiel - Une carte présente",
         "none": "Aucune carte présente"
       },
+      "gapStatus": {
+        "complete": "Complet",
+        "partial": "Partiel",
+        "none": "Aucun"
+      },
       "filters": {
         "selectCourse": "Sélectionner le cours",
         "selectType": "Sélectionner le type",
@@ -2804,7 +2809,7 @@
       "exportPdf": "Exporter en PDF",
       "pdfTitle": "Progression module / unité",
       "toast": {
-        "csvNotImplemented": "L'export CSV sera implémenté",
+        "csvSuccess": "Export CSV réussi",
         "noDataToExport": "Aucune donnée à exporter",
         "pdfSuccess": "PDF exporté avec succès"
       },
@@ -3303,6 +3308,9 @@
           "durationRequired": "La durée est requise",
           "sessionTypeRequired": "Le type de session est requis"
         }
+      },
+      "deleteSession": {
+        "description": "Cette action est irreversible. La session selectionnee sera supprimee definitivement."
       },
       "addAction": {
         "toast": {
@@ -5247,7 +5255,15 @@
       "remaining": "Restant",
       "progressLabel": "Progression",
       "completedUnits": "Unités terminées",
-      "totalUnits": "Unités totales"
+      "totalUnits": "Unités totales",
+      "duration": "Durée",
+      "timeElapsed": "Temps écoulé",
+      "timeRemaining": "Temps restant",
+      "workInProgress": "En cours",
+      "notYetStarted": "Pas encore commencé",
+      "noEndDate": "Pas de date de fin",
+      "daysLeft": "Jours restants",
+      "noUnitData": "Aucune donnée"
     },
     "calendarDialog": {
       "title": "Calendrier",

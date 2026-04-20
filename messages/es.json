@@ -2572,6 +2572,11 @@
         "partial": "Parcial - Un mapa presente",
         "none": "Ningún mapa presente"
       },
+      "gapStatus": {
+        "complete": "Completo",
+        "partial": "Parcial",
+        "none": "Ninguno"
+      },
       "filters": {
         "selectCourse": "Seleccionar curso",
         "selectType": "Seleccionar tipo",
@@ -2594,7 +2599,7 @@
       "exportPdf": "Exportar como PDF",
       "pdfTitle": "Progreso módulo/unidad",
       "toast": {
-        "csvNotImplemented": "La exportación CSV se implementará",
+        "csvSuccess": "CSV exportado correctamente",
         "noDataToExport": "No hay datos para exportar",
         "pdfSuccess": "PDF exportado correctamente"
       },
@@ -3040,6 +3045,9 @@
           "durationRequired": "La duración es obligatoria",
           "sessionTypeRequired": "El tipo de sesión es obligatorio"
         }
+      },
+      "deleteSession": {
+        "description": "Esta accion no se puede deshacer. La sesion seleccionada se eliminara permanentemente."
       },
       "addAction": {
         "toast": {
@@ -5089,7 +5097,15 @@
       "remaining": "Pendiente",
       "progressLabel": "Progreso",
       "completedUnits": "Unidades completadas",
-      "totalUnits": "Unidades totales"
+      "totalUnits": "Unidades totales",
+      "duration": "Duración",
+      "timeElapsed": "Tiempo transcurrido",
+      "timeRemaining": "Tiempo restante",
+      "workInProgress": "En curso",
+      "notYetStarted": "Sin empezar",
+      "noEndDate": "Sin fecha de fin",
+      "daysLeft": "Días restantes",
+      "noUnitData": "Sin datos"
     },
     "calendarDialog": {
       "title": "Calendario",

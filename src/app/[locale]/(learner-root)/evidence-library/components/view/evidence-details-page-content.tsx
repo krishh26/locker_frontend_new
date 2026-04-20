@@ -14,16 +14,22 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { toast } from "sonner";
 import {
   useGetEvidenceDetailsQuery,
-  useUpdateEvidenceMutation,
   useUpsertAssignmentMappingMutation,
-  useUpdateMappingPCMutation,
+  usePatchAssignmentSignoffMutation,
   useDeleteAssignmentMappingMutation,
 } from "@/store/api/evidence/evidenceApi";
 import { useAppSelector } from "@/store/hooks";
 import { selectCourses } from "@/store/slices/authSlice";
 import { EvidenceMappingsTable } from "./evidence-mappings-table";
 import { reconstructFormStateFromMappings } from "../../utils/reconstruct-form-state";
+import {
+  collectEditModeMappingSaveOps,
+  collectWantedExistingMappingIds,
+  extractMappingIdsFromUpsertResponse,
+} from "../../utils/edit-mode-mapping-save";
 import { COURSE_TYPES } from "../constants";
+import { useEvidenceSubmissionCounts } from "../../hooks/use-evidence-submission-counts";
+import type { EvidenceEntry } from "@/store/api/evidence/types";
 
 export function EvidenceDetailsPageContent() {
   const router = useRouter();
@@ -57,9 +63,8 @@ export function EvidenceDetailsPageContent() {
       skip: !evidenceId,
     });
 
-  const [updateEvidence] = useUpdateEvidenceMutation();
   const [upsertMapping] = useUpsertAssignmentMappingMutation();
-  const [updateMappingPC] = useUpdateMappingPCMutation();
+  const [patchAssignmentSignoff] = usePatchAssignmentSignoffMutation();
   const [deleteMapping] = useDeleteAssignmentMappingMutation();
 
   // Initialize form with evidence data
@@ -342,219 +347,68 @@ export function EvidenceDetailsPageContent() {
       //   },
       // }).unwrap();
 
-      // Step 2: Track original mappings for deletion comparison
       const originalMappings = evidenceDetails.data.mappings || [];
-      const originalMappingsMap = new Map<string, any>();
-      originalMappings.forEach((mapping: any) => {
-        const courseId = mapping.course_id || mapping.course?.course_id;
-        const unitCode = mapping.unit_code;
-        if (courseId && unitCode) {
-          const key = `${courseId}-${unitCode}`;
-          originalMappingsMap.set(key, mapping);
-        }
-      });
-
-      // Step 3: Handle mappings for each course/unit/subunit/topic combination
-      const desiredMappings: Map<string, any> = new Map();
       const formUnits = formData.units || [];
       const reconstructed = reconstructFormStateFromMappings(
         originalMappings,
-        courses
+        courses,
       );
       const selectedCourses = reconstructed.selectedCourses;
+      const userRole = user?.role || "Learner";
 
-      formUnits.forEach((unit: any) => {
-        const courseId = unit.course_id;
-        const course = selectedCourses.find((c: any) => c.course_id === courseId);
-        const isQual = course?.course_core_type === COURSE_TYPES.QUALIFICATION;
-        const hasSubUnit = unit.subUnit && unit.subUnit.length > 0;
-
-        if (isQual && hasSubUnit) {
-          // For Qualification courses: map topics (Assessment Criteria) only
-          unit.subUnit.forEach((subUnit: any) => {
-            if (subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0) {
-              subUnit.topics.forEach((topic: any) => {
-                // Only add to desiredMappings if learnerMap is true
-                if (topic.learnerMap === true) {
-                  const key = `${courseId}-${topic.id}`;
-                  desiredMappings.set(key, {
-                    assignment_id: Number(assignmentId),
-                    course_id: Number(courseId),
-                    unit_code: String(topic.id), // For qualification, unit_code = topic.id
-                    learnerMap: true,
-                    trainerMap: topic.trainerMap ?? false,
-                    comment: topic.comment ?? "",
-                    signed_off: topic.signed_off ?? false,
-                    mapping_id: topic.mapping_id, // For updates (if exists)
-                  });
-                }
-              });
-            }
-          });
-        } else if (hasSubUnit) {
-          // For Standard courses: use unit-level key and merge selected subUnit IDs
-          const key = `${courseId}-${unit.id}`;
-          const existingMapping = desiredMappings.get(key);
-          const currentSubUnitIds = Array.isArray(unit.subUnit)
-            ? unit.subUnit
-                .filter((sub: any) => sub?.learnerMap === true)
-                .map((sub: any) => Number(sub.id))
-            : [];
-          const mergedSubUnitIds = Array.from(
-            new Set<number>([
-              ...((existingMapping?.sub_unit_ids as number[] | undefined) || []),
-              ...currentSubUnitIds,
-            ])
-          );
-          desiredMappings.set(key, {
-            assignment_id: Number(assignmentId),
-            course_id: Number(courseId),
-            unit_code: String(unit.id),
-            learnerMap: true,
-            trainerMap: existingMapping?.trainerMap ?? unit.trainerMap ?? false,
-            comment: existingMapping?.comment ?? unit.comment ?? "",
-            signed_off: existingMapping?.signed_off ?? unit.signed_off ?? false,
-            mapping_id: existingMapping?.mapping_id ?? unit.mapping_id,
-            sub_unit_ids: mergedSubUnitIds,
-          });
-        } else {
-          // Unit-only - create mapping for unit itself
-          if (unit.learnerMap === true) {
-            const key = `${courseId}-${unit.id}`;
-            desiredMappings.set(key, {
-              assignment_id: Number(assignmentId),
-              course_id: Number(courseId),
-              unit_code: String(unit.id),
-              learnerMap: true,
-              trainerMap: unit.trainerMap ?? false,
-              comment: unit.comment ?? "",
-              signed_off: unit.signed_off ?? false,
-              mapping_id: unit.mapping_id, // For updates (if exists)
-            });
-          }
-        }
+      const saveOps = collectEditModeMappingSaveOps({
+        assignmentId: Number(assignmentId),
+        formUnits,
+        selectedCourses,
+        mappingsFromApi: originalMappings,
+        mappedBy: userRole === "Trainer" ? "Trainer" : "Learner",
       });
+      const wantedExistingIds = collectWantedExistingMappingIds(saveOps);
 
-      // Step 4: Find mappings to delete (existed before but not in desiredMappings)
-      const mappingsToDelete: any[] = [];
-      originalMappingsMap.forEach((mapping, key) => {
-        if (!desiredMappings.has(key)) {
-          // This mapping existed before but is not in desired mappings - mark for deletion
-          if (mapping.mapping_id) {
-            mappingsToDelete.push(mapping);
+      const allMappingIdSet = new Set<number>();
+
+      // Remove DB rows the learner no longer maps (not in PATCH signoff list)
+      for (const mappingRow of originalMappings) {
+        const mid = mappingRow.mapping_id;
+        if (mid != null && !wantedExistingIds.has(mid)) {
+          try {
+            await deleteMapping({ mapping_id: mid }).unwrap();
+          } catch (error) {
+            console.warn("Failed to delete mapping:", error);
           }
-        }
-      });
-
-      // Step 5: Delete mappings that were unselected
-      for (const mappingToDelete of mappingsToDelete) {
-        try {
-          await deleteMapping({ mapping_id: mappingToDelete.mapping_id }).unwrap();
-        } catch (error) {
-          console.warn("Failed to delete mapping:", error);
         }
       }
 
-      // Step 6: Upsert mappings and update PC (learnerMap/trainerMap/signed_off/comment)
-      const allMappingIds: number[] = []
-      const desiredMappingsArray = Array.from(desiredMappings.entries());
-      
-      for (const [key, desiredMapping] of desiredMappingsArray) {
+      for (const payload of saveOps.upserts) {
         try {
-          const { mapping_id, ...payload } = desiredMapping;
-          
-          // Upsert mapping (creates if new, updates if exists)
           const result = await upsertMapping(payload).unwrap();
-          
-          // Extract mapping_id from response
-          let mappingId: number | null = null;
-          
-          if (result?.data && Array.isArray(result.data) && result.data.length > 0) {
-            mappingId = result.data[0]?.mapping_id || null;
-          } else if ((result as any)?.mapping_id) {
-            mappingId = (result as any).mapping_id;
-          } else if ((result as any)?.id) {
-            mappingId = (result as any).id;
-          } else if ((result as any)?.data?.mapping_id) {
-            mappingId = (result as any).data.mapping_id;
-          } else if (mapping_id) {
-            mappingId = mapping_id;
-          }
-
-          // Collect mapping ID
-          if (mappingId) {
-            allMappingIds.push(mappingId);
-          }
-
-          // Update PC (learnerMap/trainerMap/signed_off/comment) if mapping exists
-          if (mappingId) {
-            // Find the unit/subUnit/topic from form data to get current values
-            let pcData: any = null;
-            
-            // Search through form units to find matching item
-            for (const unit of formUnits) {
-              const courseId = unit.course_id;
-              const course = selectedCourses.find((c: any) => c.course_id === courseId);
-              const isQual = course?.course_core_type === COURSE_TYPES.QUALIFICATION;
-              
-              if (isQual && unit.subUnit) {
-                // Qualification: check topics
-                for (const subUnit of unit.subUnit) {
-                  if (subUnit.topics) {
-                    const topic = subUnit.topics.find((t: any) => {
-                      const topicKey = `${courseId}-${t.id}`;
-                      return topicKey === key;
-                    });
-                    if (topic) {
-                      pcData = {
-                        learnerMap: topic.learnerMap ?? false,
-                        trainerMap: topic.trainerMap ?? false,
-                        signed_off: topic.signed_off ?? false,
-                        comment: topic.comment ?? "",
-                      };
-                      break;
-                    }
-                  }
-                }
-              } else if (unit.subUnit) {
-                // Standard: with unit-level key, resolve by unit ID
-                const unitKey = `${courseId}-${unit.id}`;
-                if (unitKey === key) {
-                  pcData = {
-                    learnerMap: unit.learnerMap ?? false,
-                    trainerMap: unit.trainerMap ?? false,
-                    signed_off: unit.signed_off ?? false,
-                    comment: unit.comment ?? "",
-                  };
-                }
-              } else {
-                // Unit only
-                const unitKey = `${courseId}-${unit.id}`;
-                if (unitKey === key) {
-                  pcData = {
-                    learnerMap: unit.learnerMap ?? false,
-                    trainerMap: unit.trainerMap ?? false,
-                    signed_off: unit.signed_off ?? false,
-                    comment: unit.comment ?? "",
-                  };
-                }
-              }
-              
-              if (pcData) break;
-            }
-
-            // Update PC if we have data
-            if (pcData) {
-              await updateMappingPC({
-                mapping_id: mappingId,
-                data: pcData,
-              }).unwrap();
-            }
+          for (const mid of extractMappingIdsFromUpsertResponse(result)) {
+            allMappingIdSet.add(mid);
           }
         } catch (error) {
-          console.warn("Failed to upsert/update mapping:", error);
+          console.warn("Failed to upsert mapping (details page):", error);
         }
       }
+
+      for (const signoffBody of saveOps.signoffs) {
+        try {
+          const result = await patchAssignmentSignoff(signoffBody).unwrap();
+          const mid =
+            result?.data?.mapping_id ?? signoffBody.mapping_id;
+          if (mid != null) {
+            allMappingIdSet.add(mid);
+          }
+        } catch (error) {
+          console.warn(
+            `Failed to PATCH /assignment/signoff mapping ${signoffBody.mapping_id}:`,
+            error,
+          );
+        }
+      }
+
+      // Same as evidence-form edit save: collect every mapping_id from batched POSTs / PATCHes
+      // (e.g. Qualification `mappings[]`). Signature APIs are not used on this page yet.
+      void allMappingIdSet;
 
       toast.success("Evidence updated successfully");
       
@@ -575,6 +429,9 @@ export function EvidenceDetailsPageContent() {
   };
 
   const evidenceData = evidenceDetails?.data;
+  const evidenceOwnerUserId = (evidenceData as EvidenceEntry | undefined)?.user
+    ?.user_id;
+  const { getEvidenceCount } = useEvidenceSubmissionCounts(evidenceOwnerUserId);
 
   return (
     <div className="space-y-6 px-4 lg:px-6">
@@ -632,6 +489,7 @@ export function EvidenceDetailsPageContent() {
                 trigger={form.trigger}
                 canEditLearnerFields={isTrainer}
                 canEditTrainerFields={isTrainer}
+                getEvidenceCount={getEvidenceCount}
               />
             </div>
           </CardContent>

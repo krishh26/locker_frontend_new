@@ -4,6 +4,39 @@ import type { StandardUnit } from "../components/create-view/evidence-form-types
 import type { LearnerCourse } from "@/store/api/learner/types";
 import { COURSE_TYPES } from "../components/constants";
 
+const str = (v: unknown) => (v === null || v === undefined ? "" : String(v));
+
+/** Qualification: match API row to a topic — new shape (`unit_code` + `topic_id` + `sub_unit_id`) or legacy (`unit_code` = topic id). */
+function findQualMappingForTopic(
+  courseMappings: EvidenceMapping[],
+  unit: any,
+  subUnit: any,
+  topic: any,
+): EvidenceMapping | undefined {
+  const tid = str(topic.id);
+  const tcode =
+    topic.code != null && topic.code !== "" ? str(topic.code) : "";
+
+  return courseMappings.find((m) => {
+    const rawTopicId = (m as { topic_id?: unknown }).topic_id;
+    const hasTopicIdCol =
+      rawTopicId !== undefined &&
+      rawTopicId !== null &&
+      str(rawTopicId).trim() !== "";
+
+    if (hasTopicIdCol) {
+      const mtid = str(rawTopicId);
+      if (str(m.unit_code) !== str(unit.id)) return false;
+      if (m.sub_unit_id != null && str(m.sub_unit_id) !== "") {
+        if (str(m.sub_unit_id) !== str(subUnit.id)) return false;
+      }
+      return mtid === tid || (tcode !== "" && mtid === tcode);
+    }
+
+    return str(m.unit_code) === tid || (tcode !== "" && str(m.unit_code) === tcode);
+  });
+}
+
 /**
  * Reconstructs the complete form state from API mappings for both Standard and Qualification courses
  * This function handles:
@@ -79,32 +112,50 @@ export function reconstructFormStateFromMappings(
       }
       
       // Track which units have mappings (to determine which units to select)
-      const unitsWithMappings = new Set<string | number>();
-      
-      // First, find all units that have mappings by checking topic IDs in mappings
+      const unitsWithMappings = new Set<string>();
+
+      const addUnitKey = (unitId: string | number | undefined) => {
+        if (unitId === undefined || unitId === null) return;
+        unitsWithMappings.add(str(unitId));
+      };
+
+      // New API: unit_code = parent unit, topic_id + sub_unit_id identify the row.
+      // Legacy: unit_code = topic id only.
       courseMappings.forEach((mapping) => {
-        const topicId = mapping.unit_code; // For Qualification, unit_code = topic ID
-        
-        // Check all units to find which unit contains this topic
+        const rawTopicId = (mapping as { topic_id?: unknown }).topic_id;
+        const hasTopicIdCol =
+          rawTopicId !== undefined &&
+          rawTopicId !== null &&
+          str(rawTopicId).trim() !== "";
+
+        if (hasTopicIdCol) {
+          const parentRef = str(mapping.unit_code);
+          const directUnit = courseUnits.find((u: any) => str(u.id) === parentRef);
+          if (directUnit) {
+            addUnitKey(directUnit.id);
+            return;
+          }
+        }
+
+        const topicRef = hasTopicIdCol ? str(rawTopicId) : str(mapping.unit_code);
+
         for (const unit of courseUnits) {
           let foundInUnit = false;
           if (unit.subUnit && Array.isArray(unit.subUnit)) {
             for (const subUnit of unit.subUnit) {
               if (subUnit.topics && Array.isArray(subUnit.topics)) {
                 const topic = subUnit.topics.find(
-                  (t: any) => String(t.id) === String(topicId) || t.code === topicId
+                  (t: any) => str(t.id) === topicRef || str(t.code) === topicRef
                 );
                 if (topic) {
-                  unitsWithMappings.add(unit.id);
+                  addUnitKey(unit.id);
                   foundInUnit = true;
-                  break; // Break out of subUnit loop
+                  break;
                 }
               }
             }
           }
-          if (foundInUnit) {
-            break; // Break out of unit loop once we found the mapping's unit
-          }
+          if (foundInUnit) break;
         }
       });
 
@@ -113,7 +164,7 @@ export function reconstructFormStateFromMappings(
 
       // Initialize all units that have mappings
       courseUnits.forEach((unit: any) => {
-        if (unitsWithMappings.has(unit.id)) {
+        if (unitsWithMappings.has(str(unit.id))) {
           const unitKey = unit.id;
           if (!unitsMap.has(unitKey)) {
             // Initialize unit with all subUnits and topics
@@ -134,9 +185,11 @@ export function reconstructFormStateFromMappings(
                 // Add all topics from the course structure
                 if (subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0) {
                   subUnitData.topics = subUnit.topics.map((topic: any) => {
-                    // Check if this topic has a mapping
-                    const mapping = courseMappings.find(
-                      (m) => String(m.unit_code) === String(topic.id)
+                    const mapping = findQualMappingForTopic(
+                      courseMappings,
+                      unit,
+                      subUnit,
+                      topic,
                     );
 
                     if (mapping) {

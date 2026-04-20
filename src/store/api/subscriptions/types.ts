@@ -83,6 +83,9 @@ export interface UpdatePlanRequest {
 export interface AssignPlanToOrganisationRequest {
   organisationId: number
   planId: number
+  totalLicenses: number
+  tolerancePercentage: number
+  warningThresholdPercentage: number
 }
 
 export interface ChangeOrganisationPlanRequest {

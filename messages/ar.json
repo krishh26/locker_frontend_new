@@ -5929,11 +5929,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "المؤسسة *",
-        "plan": "الخطة *"
+        "plan": "الخطة *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "اختر المؤسسة",
-        "plan": "اختر الخطة"
+        "plan": "اختر الخطة",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "يتم عرض المؤسسات التي لا تملك خطة فقط."
@@ -5948,6 +5954,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "يرجى اختيار المؤسسة والخطة",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "تم تعيين الخطة بنجاح",
         "assignFailedFallback": "فشل تعيين الخطة"
       }

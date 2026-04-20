@@ -5965,11 +5965,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "组织 *",
-        "plan": "方案 *"
+        "plan": "方案 *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "选择组织",
-        "plan": "选择方案"
+        "plan": "选择方案",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "仅显示尚未分配方案的组织。"
@@ -5984,6 +5990,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "请选择组织与方案",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "方案分配成功",
         "assignFailedFallback": "分配方案失败"
       }

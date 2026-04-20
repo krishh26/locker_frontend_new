@@ -5838,11 +5838,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organización *",
-        "plan": "Plan *"
+        "plan": "Plan *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Seleccionar organización",
-        "plan": "Seleccionar plan"
+        "plan": "Seleccionar plan",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Solo se muestran organizaciones sin plan."
@@ -5857,6 +5863,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Selecciona la organización y el plan",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Plan asignado correctamente",
         "assignFailedFallback": "No se pudo asignar el plan"
       }

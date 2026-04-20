@@ -195,6 +195,55 @@ export function ExamineEvidencePageContent({
     []
   );
 
+  // Mapping id can arrive as `mapping_id`, `mappingId`, or nested under mappedSubUnits/review.
+  const resolveMappingId = useCallback(
+    (evidence: EvidenceItem, subUnitId?: number | string): number | null => {
+      const candidates: unknown[] = [
+        (evidence as { mapping_id?: unknown }).mapping_id,
+        (evidence as { mappingId?: unknown }).mappingId,
+      ];
+
+      if (subUnitId != null) {
+        const matchedSubUnit = evidence.mappedSubUnits?.find(
+          (subUnit) => String(subUnit.id) === String(subUnitId)
+        ) as
+          | (EvidenceItem["mappedSubUnits"][number] & {
+              mapping_id?: unknown;
+              mappingId?: unknown;
+              review?: { mapping_id?: unknown } | null;
+            })
+          | undefined;
+
+        if (matchedSubUnit) {
+          candidates.push(
+            matchedSubUnit.mapping_id,
+            matchedSubUnit.mappingId,
+            matchedSubUnit.review?.mapping_id
+          );
+        }
+      } else {
+        evidence.mappedSubUnits?.forEach((subUnit) => {
+          const ext = subUnit as EvidenceItem["mappedSubUnits"][number] & {
+            mapping_id?: unknown;
+            mappingId?: unknown;
+            review?: { mapping_id?: unknown } | null;
+          };
+          candidates.push(ext.mapping_id, ext.mappingId, ext.review?.mapping_id);
+        });
+      }
+
+      for (const candidate of candidates) {
+        const parsed = Number(candidate);
+        if (Number.isFinite(parsed) && parsed > 0) {
+          return parsed;
+        }
+      }
+
+      return null;
+    },
+    []
+  );
+
   // Generate all units to display based on unitMappingResponse
   // If type is "code" or "qualification", use subUnits, otherwise use parent unit
   const allUnitsToDisplay = useMemo(() => {
@@ -503,11 +552,11 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        if (!evidence.mapping_id) {
+        const mappingId = resolveMappingId(evidence);
+        if (!mappingId) {
           toast.error(t("toast.evidenceNotFound"));
           return;
         }
-        const mappingId = evidence.mapping_id;
 
         const updatePromises = subUnitsToSignOff.map((subUnit) =>
           updateMappedSubUnitSignOff({
@@ -563,6 +612,7 @@ export function ExamineEvidencePageContent({
       currentUserRole,
       unitCode,
       createStateKey,
+      resolveMappingId,
       updateMappedSubUnitSignOff,
       fetchEvidence,
       t,
@@ -652,13 +702,14 @@ export function ExamineEvidencePageContent({
         }
 
         // Call API to update mappedSubUnit sign-off
-        if (!targetEvidence.mapping_id) {
+        const mappingId = resolveMappingId(targetEvidence, subUnitId);
+        if (!mappingId) {
           toast.error(t("toast.evidenceNotFoundCannotUpdateSignOff"));
           return;
         }
 
         await updateMappedSubUnitSignOff({
-          mapping_id: targetEvidence.mapping_id,
+          mapping_id: mappingId,
           unit_code: unitCode,
           pc_id: subUnitId,
           signed_off: newSignedOffState,
@@ -701,6 +752,7 @@ export function ExamineEvidencePageContent({
       unitCode,
       currentUserRole,
       createStateKey,
+      resolveMappingId,
       updateMappedSubUnitSignOff,
       fetchEvidence,
       t,
@@ -727,14 +779,15 @@ export function ExamineEvidencePageContent({
         return;
       }
 
-      if (!selectedEvidence.mapping_id) {
+      const selectedMappingId = resolveMappingId(selectedEvidence);
+      if (!selectedMappingId) {
         toast.error(t("toast.evidenceNotFound"));
         return;
       }
 
       try {
         await addAssignmentReview({
-          mapping_id: selectedEvidence.mapping_id,
+          mapping_id: selectedMappingId,
           sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: currentUserRole,
           comment: commentText.trim(),
@@ -767,6 +820,7 @@ export function ExamineEvidencePageContent({
       currentUserRole,
       addAssignmentReview,
       fetchEvidence,
+      resolveMappingId,
       t,
     ]
   );
@@ -811,7 +865,8 @@ export function ExamineEvidencePageContent({
         const role = confirmationRow.role;
         const comment = confirmationRow.comments || "";
 
-        if (!firstEvidence.mapping_id) {
+        const mappingId = resolveMappingId(firstEvidence);
+        if (!mappingId) {
           toast.error(t("toast.noEvidenceCannotUpdateStatus"));
           // Revert the optimistic update
           setConfirmationRows((prev) => {
@@ -827,7 +882,7 @@ export function ExamineEvidencePageContent({
 
         // Backend persists role-grid tick on `completed` (legacy parity); omit signed_off here.
         await addAssignmentReview({
-          mapping_id: firstEvidence.mapping_id,
+          mapping_id: mappingId,
           sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: role,
           comment: comment,
@@ -859,7 +914,16 @@ export function ExamineEvidencePageContent({
         toast.error(message);
       }
     },
-    [confirmationRows, effectivePlanDetailId, unitCode, evidenceList, addAssignmentReview, fetchEvidence, t]
+    [
+      confirmationRows,
+      effectivePlanDetailId,
+      unitCode,
+      evidenceList,
+      addAssignmentReview,
+      fetchEvidence,
+      resolveMappingId,
+      t,
+    ]
   );
 
   const handleAddComment = useCallback((index: number) => {
@@ -946,13 +1010,14 @@ export function ExamineEvidencePageContent({
 
         const confirmationRow = confirmationRows[selectedIndex];
         const role = confirmationRow?.role || currentUserRole;
-        if (!firstEvidence.mapping_id) {
+        const mappingId = resolveMappingId(firstEvidence);
+        if (!mappingId) {
           toast.error(t("toast.noEvidenceCannotAddComment"));
           return;
         }
 
         const response = await addAssignmentReview({
-          mapping_id: firstEvidence.mapping_id,
+          mapping_id: mappingId,
           sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: role,
           comment: comment.trim(),
@@ -998,6 +1063,7 @@ export function ExamineEvidencePageContent({
       currentUserRole,
       addAssignmentReview,
       fetchEvidence,
+      resolveMappingId,
       t,
     ]
   );

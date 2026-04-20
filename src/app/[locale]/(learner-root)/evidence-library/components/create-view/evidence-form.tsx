@@ -19,8 +19,11 @@ import {
   useUploadExternalEvidenceFileMutation,
 } from '@/store/api/evidence/evidenceApi'
 import { useSaveSignatureMutation } from '@/store/api/documents-to-sign/documentsToSignApi'
+import { useGetCoursesQuery } from '@/store/api/course/courseApi'
+import type { Course } from '@/store/api/course/types'
 import { useAppSelector } from '@/store/hooks'
 import { selectCourses } from '@/store/slices/authSlice'
+import type { LearnerCourse } from '@/store/api/learner/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ExternalLink, Loader2, Upload, FileText } from 'lucide-react'
 import { useRouter } from '@/i18n/navigation'
@@ -70,6 +73,34 @@ interface EvidenceFormProps {
   evidenceId?: string
 }
 
+/** Map organisation course list API rows into the `LearnerCourse` shape expected by course selection & reconstruct. */
+function mapCourseListToLearnerCourses(list: Course[]): LearnerCourse[] {
+  return list
+    .filter((c) => c.active !== false)
+    .map((c) => ({
+      user_course_id: c.course_id,
+      start_date: c.operational_start_date || '',
+      end_date: '',
+      course_status: 'Active',
+      is_main_course: true,
+      course: {
+        course_id: c.course_id,
+        course_name: c.course_name,
+        course_code: c.course_code,
+        level: c.level || '',
+        sector: c.sector || '',
+        recommended_minimum_age: c.recommended_minimum_age || '',
+        total_credits: c.total_credits || '',
+        operational_start_date: c.operational_start_date || '',
+        guided_learning_hours: c.guided_learning_hours || '',
+        brand_guidelines: c.brand_guidelines || '',
+        course_type: c.course_type ?? null,
+        course_core_type: c.course_core_type ?? null,
+        ...(Array.isArray(c.units) && c.units.length > 0 ? { units: c.units } : {}),
+      } as LearnerCourse['course'],
+    }))
+}
+
 function findOwnSignatureRow(
   signatures: EvidenceFormValues['signatures'] | undefined,
   userRoleStr: string | undefined,
@@ -87,7 +118,23 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
-  const courses = useAppSelector(selectCourses)
+  const authCourses = useAppSelector(selectCourses)
+
+  const { data: coursesApiResponse } = useGetCoursesQuery(
+    { page: 1, page_size: 1000, scope: 'organisation' },
+    { skip: !user },
+  )
+
+  const courses = useMemo(() => {
+    const fromApi = coursesApiResponse?.data?.length
+      ? mapCourseListToLearnerCourses(coursesApiResponse.data)
+      : []
+    if (fromApi.length > 0) {
+      return fromApi
+    }
+    return authCourses
+  }, [coursesApiResponse?.data, authCourses])
+
   const userRole = user?.role || 'Learner'
   const isEmployer = user?.role === 'Employer'
   const isEditMode = !!evidenceId && !isEmployer

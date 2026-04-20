@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "@/i18n/navigation";
-import { useSearchParams } from "next/navigation";;
+import { useSearchParams } from "next/navigation";
 import { useEffect, useCallback, useState, useMemo } from "react";
-import { ArrowLeft, FileText } from "lucide-react";
+import { AlertCircle, ArrowLeft, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEvidenceList } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/hooks/use-evidence-list";
 import { EvidenceTable } from "./evidence-table";
 import { CommentModal } from "./comment-modal";
@@ -47,14 +48,25 @@ export function ExamineEvidencePageContent({
   const t = useTranslations("qaSamplePlan.evidence.page");
   const searchParams = useSearchParams();
 
+  const effectivePlanDetailId =
+    (
+      planDetailId ||
+      searchParams.get("sampleResultsId") ||
+      searchParams.get("SampleResultsID") ||
+      ""
+    ).trim();
+
   // Get unit info from search params
   const unitCode = searchParams.get("unit_code");
 
   // Fetch evidence list
-  const { evidenceList, isLoadingEvidence, fetchEvidence } = useEvidenceList(
-    planDetailId,
-    unitCode
-  );
+  const {
+    evidenceList,
+    isLoadingEvidence,
+    isEvidenceError,
+    evidenceErrorMessage,
+    fetchEvidence,
+  } = useEvidenceList(effectivePlanDetailId || null, unitCode);
 
   // API mutations
   const [addAssignmentReview, { isLoading: isSubmittingReview }] =
@@ -66,8 +78,8 @@ export function ExamineEvidencePageContent({
 
   // Fetch unit mapping
   const { data: unitMappingResponse } = useGetUnitMappingByTypeQuery(
-    { planDetailId },
-    { skip: !planDetailId }
+    { planDetailId: effectivePlanDetailId },
+    { skip: !effectivePlanDetailId }
   );
 
   // Find unit name based on unit_code using unitCode from search params
@@ -82,6 +94,14 @@ export function ExamineEvidencePageContent({
 
     return foundUnit?.unit_title || searchParams.get("unitName") || "";
   }, [unitMappingResponse?.data, unitCode, searchParams]);
+
+  const displayTitle = useMemo(() => {
+    const fromEvidence = evidenceList[0]?.unit?.title?.trim();
+    if (fromEvidence) {
+      return fromEvidence;
+    }
+    return unitName || "";
+  }, [evidenceList, unitName]);
 
   // State for expanded rows, criteria sign-off, mapped sub-units
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
@@ -379,10 +399,10 @@ export function ExamineEvidencePageContent({
 
   // Fetch evidence on mount
   useEffect(() => {
-    if (planDetailId && unitCode) {
+    if (effectivePlanDetailId && unitCode) {
       fetchEvidence();
     }
-  }, [planDetailId, unitCode, fetchEvidence]);
+  }, [effectivePlanDetailId, unitCode, fetchEvidence]);
 
   // Handlers
   const handleToggleAllRows = useCallback(() => {
@@ -702,7 +722,7 @@ export function ExamineEvidencePageContent({
 
   const handleSubmitComment = useCallback(
     async (commentText: string) => {
-      if (!selectedEvidence || !commentText.trim() || !planDetailId || !unitCode) {
+      if (!selectedEvidence || !commentText.trim() || !effectivePlanDetailId || !unitCode) {
         toast.error(t("toast.fillAllRequiredFields"));
         return;
       }
@@ -715,7 +735,7 @@ export function ExamineEvidencePageContent({
       try {
         await addAssignmentReview({
           mapping_id: selectedEvidence.mapping_id,
-          sampling_plan_detail_id: Number(planDetailId),
+          sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: currentUserRole,
           comment: commentText.trim(),
           unit_code: unitCode,
@@ -740,13 +760,21 @@ export function ExamineEvidencePageContent({
         toast.error(message);
       }
     },
-    [selectedEvidence, planDetailId, unitCode, currentUserRole, addAssignmentReview, fetchEvidence, t]
+    [
+      selectedEvidence,
+      effectivePlanDetailId,
+      unitCode,
+      currentUserRole,
+      addAssignmentReview,
+      fetchEvidence,
+      t,
+    ]
   );
 
   const handleConfirmationToggle = useCallback(
     async (index: number) => {
       const confirmationRow = confirmationRows[index];
-      if (!confirmationRow || !planDetailId || !unitCode) {
+      if (!confirmationRow || !effectivePlanDetailId || !unitCode) {
         return;
       }
 
@@ -797,14 +825,14 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        // Call API to update assignment review with completed status
+        // Backend persists role-grid tick on `completed` (legacy parity); omit signed_off here.
         await addAssignmentReview({
           mapping_id: firstEvidence.mapping_id,
-          sampling_plan_detail_id: Number(planDetailId),
+          sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: role,
           comment: comment,
           unit_code: unitCode,
-          signed_off: newCompletedState,
+          completed: newCompletedState,
         }).unwrap();
 
         toast.success(t("toast.statusUpdatedSuccess"));
@@ -831,7 +859,7 @@ export function ExamineEvidencePageContent({
         toast.error(message);
       }
     },
-    [confirmationRows, planDetailId, unitCode, evidenceList, addAssignmentReview, fetchEvidence, t]
+    [confirmationRows, effectivePlanDetailId, unitCode, evidenceList, addAssignmentReview, fetchEvidence, t]
   );
 
   const handleAddComment = useCallback((index: number) => {
@@ -902,14 +930,13 @@ export function ExamineEvidencePageContent({
   }, []);
 
   const handleModalSubmit = useCallback(
-    async (comment: string) => {
-      if (!comment.trim() || selectedIndex === null || !planDetailId || !unitCode) {
+    async (comment: string, file?: File) => {
+      if (!comment.trim() || selectedIndex === null || !effectivePlanDetailId || !unitCode) {
         toast.error(t("toast.fillAllRequiredFields"));
         return;
       }
 
       try {
-        // Get the first evidence's assignment_id for unit-level sign-off
         const firstEvidence = evidenceList.length > 0 ? evidenceList[0] : null;
 
         if (!firstEvidence) {
@@ -924,30 +951,33 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        // Call API to add assignment review
-        await addAssignmentReview({
+        const response = await addAssignmentReview({
           mapping_id: firstEvidence.mapping_id,
-          sampling_plan_detail_id: Number(planDetailId),
+          sampling_plan_detail_id: Number(effectivePlanDetailId),
           role: role,
           comment: comment.trim(),
           unit_code: unitCode,
-          signed_off: Boolean(confirmationRow?.completed),
+          file,
         }).unwrap();
 
-        // Update local state
+        const saved = (response as { data?: { id?: number } }).data;
+        const assignmentReviewId = saved?.id;
+
         const updated = [...confirmationRows];
         updated[selectedIndex] = {
           ...updated[selectedIndex],
           comments: comment.trim(),
+          file: file ? file.name : updated[selectedIndex].file,
+          assignment_review_id:
+            assignmentReviewId ?? updated[selectedIndex].assignment_review_id,
         };
         setConfirmationRows(updated);
 
-        toast.success(t("toast.commentAddedSuccess"));
+        toast.success(file ? t("toast.commentAndFileUploadedSuccess") : t("toast.commentAddedSuccess"));
 
         setUnitSignOffModalOpen(false);
         setSelectedIndex(null);
 
-        // Refetch evidence list to get updated data
         fetchEvidence();
       } catch (error: unknown) {
         const message =
@@ -961,7 +991,7 @@ export function ExamineEvidencePageContent({
     },
     [
       selectedIndex,
-      planDetailId,
+      effectivePlanDetailId,
       unitCode,
       evidenceList,
       confirmationRows,
@@ -1001,7 +1031,7 @@ export function ExamineEvidencePageContent({
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <PageHeader
-          title={unitName || ""}
+          title={displayTitle}
           subtitle={
             unitCode
               ? t("subtitleForUnit", { unitCode })
@@ -1021,15 +1051,23 @@ export function ExamineEvidencePageContent({
             </div>
           </CardContent>
         </Card>
+      ) : isEvidenceError ? (
+        <Alert variant="destructive">
+          <AlertCircle />
+          <AlertTitle>{t("evidenceLoadErrorTitle")}</AlertTitle>
+          <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <span>{evidenceErrorMessage || t("evidenceLoadErrorDescription")}</span>
+            <Button type="button" variant="outline" size="sm" onClick={() => void fetchEvidence()}>
+              {t("retryEvidenceLoad")}
+            </Button>
+          </AlertDescription>
+        </Alert>
       ) : (
         <>
           <UnitProgressSection unitProgress={unitProgress} />
 
           <EvidenceTable
             evidenceList={evidenceList}
-            planDetailId={planDetailId}
-            unitCode={unitCode}
-            onRefresh={fetchEvidence}
             expandedRows={expandedRows}
             criteriaSignOff={criteriaSignOff}
             mappedSubUnitsChecked={mappedSubUnitsChecked}

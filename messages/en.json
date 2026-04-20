@@ -1402,6 +1402,9 @@
       "page": {
         "subtitle": "Review evidence documents",
         "subtitleForUnit": "Review evidence documents for unit: {unitCode}",
+        "evidenceLoadErrorTitle": "Could not load evidence",
+        "evidenceLoadErrorDescription": "Failed to load evidence list. Please try again.",
+        "retryEvidenceLoad": "Retry",
         "confirmationStatements": {
           "learner": "I confirm that this unit is complete and the evidence provided is a result of my own work",
           "trainer": "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
@@ -1440,7 +1443,8 @@
           "unableDeleteFileReviewIdNotFound": "Unable to delete file: Review ID not found.",
           "fileDeletedSuccess": "File deleted successfully.",
           "deleteFileFailed": "Failed to delete file.",
-          "noEvidenceCannotAddComment": "No evidence found. Cannot add comment."
+          "noEvidenceCannotAddComment": "No evidence found. Cannot add comment.",
+          "commentAndFileUploadedSuccess": "Comment and file uploaded successfully."
         }
       },
       "unitProgress": {
@@ -1471,7 +1475,9 @@
           "kb": "KB",
           "mb": "MB",
           "gb": "GB"
-        }
+        },
+        "openInEvidenceLibrary": "Open in evidence library",
+        "addComment": "Add or edit comment"
       },
       "confirmationStatements": {
         "columns": {
@@ -1504,6 +1510,8 @@
       "unitSignOffModal": {
         "title": "Unit sign off",
         "description": "General comment for this Unit (Max 500 Characters).",
+        "optionalFileLabel": "Attachment (optional)",
+        "optionalFileHint": "You can attach an optional file with this sign-off.",
         "commentLabel": "Comment",
         "commentPlaceholder": "Enter your comments here...",
         "charactersCount": "{count}/500 characters",

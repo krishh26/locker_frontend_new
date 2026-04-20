@@ -5978,13 +5978,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Search subscriptions...",
       "empty": "No subscriptions found.",
+      "licensesRemaining": "{count} remaining",
       "columns": {
         "organisation": "Organisation",
         "plan": "Plan",
-        "users": "Users",
+        "users": "Licenses",
+        "licenseStatus": "License status",
         "status": "Status",
+        "startDate": "Start date",
         "expiryDate": "Expiry Date",
         "actions": "Actions"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Warning",
+        "crossed": "Crossed"
       },
       "status": {
         "active": "Active",
@@ -6010,6 +6018,18 @@
       },
       "buttons": {
         "assignPlan": "Assign Plan"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Subscription license health",
+      "viewSubscriptions": "View subscriptions",
+      "warningCount": "{count} warning",
+      "crossedCount": "{count} crossed",
+      "noSubscriptions": "No subscriptions available.",
+      "columns": {
+        "organisation": "Organisation",
+        "remaining": "Remaining",
+        "status": "Status"
       }
     },
     "plansTable": {
@@ -6053,11 +6073,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organisation *",
-        "plan": "Plan *"
+        "plan": "Plan *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Select organisation",
-        "plan": "Select plan"
+        "plan": "Select plan",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Only organisations without a plan are shown."
@@ -6072,6 +6098,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Please select organisation and plan",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Plan assigned successfully",
         "assignFailedFallback": "Failed to assign plan"
       }

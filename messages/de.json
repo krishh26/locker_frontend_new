@@ -5095,13 +5095,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Abonnements suchen...",
       "empty": "Keine Abonnements gefunden.",
+      "licensesRemaining": "{count} verbleibend",
       "columns": {
         "organisation": "Organisation",
         "plan": "Plan",
-        "users": "Benutzer",
+        "users": "Lizenzen",
+        "licenseStatus": "Lizenzstatus",
         "status": "Status",
+        "startDate": "Startdatum",
         "expiryDate": "Ablaufdatum",
         "actions": "Aktionen"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Warnung",
+        "crossed": "Überschritten"
       },
       "status": {
         "active": "Aktiv",
@@ -5127,6 +5135,18 @@
       },
       "buttons": {
         "assignPlan": "Plan zuweisen"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Abonnement-Lizenzstatus",
+      "viewSubscriptions": "Abonnements anzeigen",
+      "warningCount": "{count} Warnung",
+      "crossedCount": "{count} überschritten",
+      "noSubscriptions": "Keine Abonnements verfügbar.",
+      "columns": {
+        "organisation": "Organisation",
+        "remaining": "Verbleibend",
+        "status": "Status"
       }
     },
     "plansTable": {
@@ -5170,11 +5190,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organisation *",
-        "plan": "Plan *"
+        "plan": "Plan *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Organisation auswählen",
-        "plan": "Plan auswählen"
+        "plan": "Plan auswählen",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Es werden nur Organisationen ohne Plan angezeigt."
@@ -5189,6 +5215,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Bitte Organisation und Plan auswählen",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Plan erfolgreich zugewiesen",
         "assignFailedFallback": "Plan konnte nicht zugewiesen werden"
       }

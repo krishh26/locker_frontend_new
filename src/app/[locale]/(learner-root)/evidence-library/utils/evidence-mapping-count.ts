@@ -2,8 +2,10 @@ import type { EvidenceEntry, EvidenceMapping } from '@/store/api/evidence/types'
 import { COURSE_TYPES } from '../components/constants'
 
 function mappingCourseId(m: EvidenceMapping): number | undefined {
-  const raw = (m as { course_id?: number }).course_id ?? m.course?.course_id
-  if (raw === null || raw === undefined || raw === '') return undefined
+  const raw: unknown =
+    (m as { course_id?: unknown }).course_id ?? (m.course as { course_id?: unknown } | undefined)?.course_id
+  if (raw === null || raw === undefined) return undefined
+  if (typeof raw === 'string' && raw.trim() === '') return undefined
   const n = Number(raw)
   return Number.isFinite(n) ? n : undefined
 }

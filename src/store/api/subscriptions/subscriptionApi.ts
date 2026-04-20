@@ -13,6 +13,68 @@ import type {
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api"
 import { baseQuery } from "@/store/api/baseQuery"
 
+function toNumber(value: unknown): number | undefined {
+  const n = typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN
+  return Number.isFinite(n) ? n : undefined
+}
+
+function normalizeSubscription(raw: unknown): SubscriptionResponse["data"] {
+  const r = (raw ?? {}) as Record<string, unknown>
+
+  const totalLicenses = toNumber(r.totalLicenses ?? r.total_licenses)
+  const usedLicenses = toNumber(r.usedLicenses ?? r.used_licenses ?? r.usedUsers ?? r.used_users)
+  const maxAllowedLicenses = toNumber(r.maxAllowedLicenses ?? r.max_allowed_licenses ?? r.userLimit ?? r.user_limit) ?? totalLicenses
+  const remainingLicenses =
+    toNumber(r.remainingLicenses ?? r.remaining_licenses) ??
+    (maxAllowedLicenses != null && usedLicenses != null ? maxAllowedLicenses - usedLicenses : undefined)
+
+  const warningThresholdPercentage = toNumber(
+    r.warningThresholdPercentage ?? r.warning_threshold_percentage,
+  )
+  const tolerancePercentage = toNumber(r.tolerancePercentage ?? r.tolerance_percentage)
+
+  const startDate = (r.startDate ?? r.start_date) as string | null | undefined
+  const endDate = (r.endDate ?? r.end_date ?? r.expiryDate ?? r.expiry_date) as
+    | string
+    | null
+    | undefined
+
+  const status = (r.status as string | undefined) ?? undefined
+  const warningStatus = (r.warningStatus ?? r.warning_status) as string | undefined
+
+  const derivedUserLimit = maxAllowedLicenses ?? totalLicenses ?? toNumber(r.userLimit ?? r.user_limit) ?? 0
+  const derivedUsedUsers = usedLicenses ?? toNumber(r.usedUsers ?? r.used_users) ?? 0
+
+  const isExpired =
+    typeof r.isExpired === "boolean"
+      ? r.isExpired
+      : status
+        ? status !== "active"
+        : endDate
+          ? new Date(endDate).getTime() < Date.now()
+          : false
+
+  return {
+    id: toNumber(r.id) ?? 0,
+    organisationId: toNumber(r.organisationId ?? r.organisation_id ?? r.organisationId) ?? 0,
+    plan: (r.plan as string | undefined) ?? (r.planName as string | undefined) ?? "—",
+    status,
+    startDate: startDate ?? null,
+    endDate: endDate ?? null,
+    totalLicenses,
+    tolerancePercentage,
+    warningThresholdPercentage,
+    usedLicenses,
+    maxAllowedLicenses,
+    remainingLicenses,
+    warningStatus,
+    usedUsers: derivedUsedUsers,
+    userLimit: derivedUserLimit,
+    isExpired,
+    expiryDate: typeof endDate === "string" ? endDate : typeof r.expiryDate === "string" ? (r.expiryDate as string) : "",
+  }
+}
+
 export const subscriptionApi = createApi({
   reducerPath: "subscriptionApi",
   baseQuery,
@@ -26,7 +88,10 @@ export const subscriptionApi = createApi({
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
         }
-        return response
+        return {
+          ...response,
+          data: normalizeSubscription(response.data),
+        }
       },
     }),
     // Existing: Get All Subscriptions
@@ -37,7 +102,12 @@ export const subscriptionApi = createApi({
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE)
         }
-        return response
+        return {
+          ...response,
+          data: Array.isArray(response.data)
+            ? response.data.map((s) => normalizeSubscription(s))
+            : [],
+        }
       },
     }),
     // Create Plan - "Define plan"

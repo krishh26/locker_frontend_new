@@ -3309,6 +3309,9 @@
           "sessionTypeRequired": "Le type de session est requis"
         }
       },
+      "deleteSession": {
+        "description": "Cette action est irreversible. La session selectionnee sera supprimee definitivement."
+      },
       "addAction": {
         "toast": {
           "added": "Action ajoutée avec succès",

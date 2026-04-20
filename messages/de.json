@@ -2627,6 +2627,9 @@
           "sessionTypeRequired": "Sitzungstyp ist erforderlich"
         }
       },
+      "deleteSession": {
+        "description": "Diese Aktion kann nicht rueckgaengig gemacht werden. Die ausgewaehlte Sitzung wird dauerhaft geloescht."
+      },
       "addAction": {
         "toast": {
           "added": "Aktion erfolgreich hinzugefügt",

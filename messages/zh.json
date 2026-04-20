@@ -3226,6 +3226,9 @@
           "sessionTypeRequired": "会话类型为必填项"
         }
       },
+      "deleteSession": {
+        "description": "此操作无法撤销。所选会话将被永久删除。"
+      },
       "addAction": {
         "toast": {
           "added": "行动添加成功",

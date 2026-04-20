@@ -3278,6 +3278,9 @@
           "sessionTypeRequired": "सत्र प्रकार आवश्यक है"
         }
       },
+      "deleteSession": {
+        "description": "Yeh action wapas nahi li ja sakti. Chuni gayi session permanently delete ho jayegi."
+      },
       "addAction": {
         "toast": {
           "added": "एक्शन सफलतापूर्वक जोड़ा गया",

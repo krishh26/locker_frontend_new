@@ -3268,6 +3268,9 @@
           "sessionTypeRequired": "O tipo de sessão é obrigatório"
         }
       },
+      "deleteSession": {
+        "description": "Esta acao nao pode ser desfeita. A sessao selecionada sera excluida permanentemente."
+      },
       "addAction": {
         "toast": {
           "added": "Ação adicionada com sucesso",

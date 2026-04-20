@@ -3261,6 +3261,9 @@
           "sessionTypeRequired": "نوع الجلسة مطلوب"
         }
       },
+      "deleteSession": {
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الجلسة المحددة نهائيًا."
+      },
       "addAction": {
         "toast": {
           "added": "تمت إضافة الإجراء بنجاح",

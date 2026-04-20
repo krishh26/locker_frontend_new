@@ -3605,6 +3605,9 @@
           "sessionTypeRequired": "Session type is required"
         }
       },
+      "deleteSession": {
+        "description": "This action cannot be undone. The selected session will be permanently deleted."
+      },
       "addAction": {
         "toast": {
           "added": "Action added successfully",

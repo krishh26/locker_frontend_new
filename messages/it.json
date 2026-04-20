@@ -2627,6 +2627,9 @@
           "sessionTypeRequired": "Il tipo di sessione è obbligatorio"
         }
       },
+      "deleteSession": {
+        "description": "Questa azione non puo essere annullata. La sessione selezionata verra eliminata definitivamente."
+      },
       "addAction": {
         "toast": {
           "added": "Azione aggiunta con successo",

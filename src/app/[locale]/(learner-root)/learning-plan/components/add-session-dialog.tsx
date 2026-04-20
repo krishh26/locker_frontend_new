@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useTranslations } from 'next-intl'
+import { format } from 'date-fns'
 import {
   Dialog,
   DialogContent,
@@ -26,7 +27,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Loader2 } from 'lucide-react'
-import { useCreateLearnerPlanMutation } from '@/store/api/learner-plan/learnerPlanApi'
+import {
+  useCreateLearnerPlanMutation,
+  useUpdateSessionMutation,
+} from '@/store/api/learner-plan/learnerPlanApi'
+import type { LearningPlanSession } from '@/store/api/learner-plan/types'
 import { toast } from 'sonner'
 
 type AddSessionFormValues = {
@@ -60,6 +65,8 @@ export interface AddSessionDialogProps {
   assessorId: number
   defaultCourseIds: number[]
   onSuccess?: () => void
+  isEditMode?: boolean
+  sessionToEdit?: LearningPlanSession | null
 }
 
 export function AddSessionDialog({
@@ -69,9 +76,12 @@ export function AddSessionDialog({
   assessorId,
   defaultCourseIds,
   onSuccess,
+  isEditMode = false,
+  sessionToEdit = null,
 }: AddSessionDialogProps) {
   const t = useTranslations('learningPlan')
   const [createLearnerPlan, { isLoading: isCreating }] = useCreateLearnerPlanMutation()
+  const [updateSession, { isLoading: isUpdating }] = useUpdateSessionMutation()
 
   const addSessionSchema = React.useMemo(
     () =>
@@ -100,6 +110,25 @@ export function AddSessionDialog({
 
   useEffect(() => {
     if (open) {
+      if (isEditMode && sessionToEdit) {
+        const parsedStartDate = sessionToEdit.startDate
+          ? new Date(sessionToEdit.startDate)
+          : null
+        const startDateValue =
+          parsedStartDate && !Number.isNaN(parsedStartDate.getTime())
+            ? format(parsedStartDate, "yyyy-MM-dd'T'HH:mm")
+            : ''
+        form.reset({
+          title: sessionToEdit.title || '',
+          description: sessionToEdit.description || '',
+          location: sessionToEdit.location || '',
+          startDate: startDateValue,
+          Duration: sessionToEdit.Duration || '0:30',
+          type: sessionToEdit.type || '',
+        })
+        return
+      }
+
       form.reset({
         title: '',
         description: '',
@@ -109,7 +138,7 @@ export function AddSessionDialog({
         type: '',
       })
     }
-  }, [open, form])
+  }, [open, form, isEditMode, sessionToEdit])
 
   const durationParts = form.watch('Duration').split(':')
   const hours = parseInt(durationParts[0] || '0', 10)
@@ -130,6 +159,32 @@ export function AddSessionDialog({
   }
 
   const onSubmit = async (values: AddSessionFormValues) => {
+    const isSubmittingEdit = isEditMode && Boolean(sessionToEdit?.learner_plan_id)
+
+    if (isSubmittingEdit) {
+      try {
+        await updateSession({
+          id: sessionToEdit!.learner_plan_id,
+          title: values.title,
+          description: values.description || undefined,
+          location: values.location,
+          startDate: values.startDate,
+          Duration: values.Duration,
+          type: values.type,
+        }).unwrap()
+        toast.success('Session updated successfully')
+        onOpenChange(false)
+        onSuccess?.()
+      } catch (error: unknown) {
+        const message =
+          (error as { data?: { message?: string }; message?: string })?.data?.message ??
+          (error as Error)?.message ??
+          'Failed to update session'
+        toast.error(message)
+      }
+      return
+    }
+
     if (defaultCourseIds.length === 0) {
       toast.error(t('dialogs.addSession.toast.courseRequired'))
       return
@@ -158,21 +213,26 @@ export function AddSessionDialog({
   }
 
   const handleClose = () => {
-    if (!isCreating) {
+    if (!isCreating && !isUpdating) {
       form.reset()
       onOpenChange(false)
     }
   }
 
-  const canSubmit = defaultCourseIds.length > 0
+  const canSubmit = isEditMode || defaultCourseIds.length > 0
+  const isSubmitting = isCreating || isUpdating
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-lg overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{t('dialogs.addSession.title')}</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? 'Edit Session' : t('dialogs.addSession.title')}
+          </DialogTitle>
           <DialogDescription>
-            {t('dialogs.addSession.description')}
+            {isEditMode
+              ? 'Update this session details'
+              : t('dialogs.addSession.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -327,18 +387,18 @@ export function AddSessionDialog({
               type="button"
               variant="outline"
               onClick={handleClose}
-              disabled={isCreating}
+              disabled={isSubmitting}
             >
               {t('dialogs.addSession.buttons.cancel')}
             </Button>
-            <Button type="submit" disabled={isCreating || !canSubmit}>
-              {isCreating ? (
+            <Button type="submit" disabled={isSubmitting || !canSubmit}>
+              {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('dialogs.addSession.buttons.submitting')}
                 </>
               ) : (
-                t('dialogs.addSession.buttons.submit')
+                isEditMode ? 'Update Session' : t('dialogs.addSession.buttons.submit')
               )}
             </Button>
           </DialogFooter>

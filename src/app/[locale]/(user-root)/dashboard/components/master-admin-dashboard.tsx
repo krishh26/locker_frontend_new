@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { Building2, MapPin, CreditCard, DollarSign, FileText, ExternalLink } from "lucide-react"
+import { Building2, MapPin, CreditCard, DollarSign, FileText, ExternalLink, AlertTriangle, CheckCircle2 } from "lucide-react"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -15,12 +15,14 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   useGetSystemSummaryQuery,
   useGetStatusOverviewQuery,
 } from "@/store/api/dashboard/dashboardApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
+import { useGetSubscriptionsQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
 import { useGetAuditLogsQuery } from "@/store/api/audit-logs/auditLogApi"
 import type { AuditLog } from "@/store/api/audit-logs/types"
@@ -40,11 +42,41 @@ function getAuditActionKey(value: string): string {
   return AUDIT_ACTION_KEYS[value] ?? value
 }
 
+type LicenseHealth = "ok" | "warning" | "crossed"
+
+function safePct(numerator: number | undefined, denominator: number | undefined): number | null {
+  if (!numerator || !denominator || denominator <= 0) return null
+  return (numerator / denominator) * 100
+}
+
+function computeLicenseHealth(sub: { warningStatus?: string; usedLicenses?: number; usedUsers?: number; remainingLicenses?: number; maxAllowedLicenses?: number; userLimit?: number; warningThresholdPercentage?: number }): LicenseHealth {
+  const ws = (sub.warningStatus ?? "").toLowerCase()
+  if (ws === "crossed") return "crossed"
+  if (ws === "warning") return "warning"
+  if (ws === "none") return "ok"
+
+  const used = sub.usedLicenses ?? sub.usedUsers
+  const maxAllowed = sub.maxAllowedLicenses ?? sub.userLimit
+  const remaining = sub.remainingLicenses
+  const crossed =
+    (typeof remaining === "number" && remaining < 0) ||
+    (typeof used === "number" && typeof maxAllowed === "number" && used > maxAllowed)
+  if (crossed) return "crossed"
+
+  const pct = safePct(used, maxAllowed)
+  const threshold = sub.warningThresholdPercentage
+  if (pct != null && typeof threshold === "number" && pct >= threshold) return "warning"
+  return "ok"
+}
+
 export function MasterAdminDashboard() {
   const t = useTranslations("dashboard.masterAdmin")
+  const ts = useTranslations("subscriptions")
   const { data: summaryData, isLoading: summaryLoading, isError: summaryError } = useGetSystemSummaryQuery()
   const { data: statusData, isLoading: statusLoading } = useGetStatusOverviewQuery()
   const { data: orgsFallback } = useGetOrganisationsQuery({ page: 1, limit: 1 }, { skip: !summaryError })
+  const { data: orgsData } = useGetOrganisationsQuery()
+  const { data: subscriptionsData } = useGetSubscriptionsQuery()
   const { data: paymentsData } = useGetPaymentsQuery({ limit: 100 })
   const { data: auditLogsData, isLoading: auditLoading } = useGetAuditLogsQuery({ limit: 10 })
 
@@ -81,6 +113,31 @@ export function MasterAdminDashboard() {
 
   const recentLogs = useMemo(() => (auditLogsData?.data ?? []) as AuditLog[], [auditLogsData?.data]).slice(0, 5)
   const kpiLoading = summaryLoading || statusLoading
+
+  const orgMap = useMemo(() => {
+    const organisations = (orgsData?.data ?? []) as Array<{ id: number; name: string }>
+    return new Map(organisations.map((o) => [o.id, o.name]))
+  }, [orgsData?.data])
+
+  const licenseHealth = useMemo(() => {
+    const subs = subscriptionsData?.data ?? []
+    let warningCount = 0
+    let crossedCount = 0
+    const withRemaining = subs.map((s) => {
+      const used = s.usedLicenses ?? s.usedUsers
+      const maxAllowed = s.maxAllowedLicenses ?? s.userLimit
+      const remaining = s.remainingLicenses ?? (typeof used === "number" && typeof maxAllowed === "number" ? maxAllowed - used : 0)
+      const health = computeLicenseHealth(s)
+      if (health === "warning") warningCount += 1
+      if (health === "crossed") crossedCount += 1
+      return { ...s, remaining, health }
+    })
+    const topLowRemaining = withRemaining
+      .slice()
+      .sort((a, b) => (a.remaining ?? 0) - (b.remaining ?? 0))
+      .slice(0, 5)
+    return { warningCount, crossedCount, topLowRemaining }
+  }, [subscriptionsData?.data])
 
   const stats = [
     {
@@ -146,6 +203,76 @@ export function MasterAdminDashboard() {
           )
         })}
       </div>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-base font-medium flex items-center gap-2">
+            <CreditCard className="h-4 w-4" />
+            {ts("dashboard.licenseHealthTitle")}
+          </CardTitle>
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/subscriptions" className="gap-1">
+              {ts("dashboard.viewSubscriptions")}
+              <ExternalLink className="h-3 w-3" />
+            </Link>
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">
+              <AlertTriangle className="h-3 w-3" />
+              {ts("dashboard.warningCount", { count: licenseHealth.warningCount })}
+            </Badge>
+            <Badge variant="destructive">
+              <CheckCircle2 className="h-3 w-3" />
+              {ts("dashboard.crossedCount", { count: licenseHealth.crossedCount })}
+            </Badge>
+          </div>
+
+          {licenseHealth.topLowRemaining.length === 0 ? (
+            <p className="text-sm text-muted-foreground">{ts("dashboard.noSubscriptions")}</p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{ts("dashboard.columns.organisation")}</TableHead>
+                  <TableHead className="text-right">{ts("dashboard.columns.remaining")}</TableHead>
+                  <TableHead className="text-right">{ts("dashboard.columns.status")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {licenseHealth.topLowRemaining.map((sub) => {
+                  const orgName = orgMap.get(sub.organisationId) ?? `#${sub.organisationId}`
+                  const badgeVariant =
+                    sub.health === "crossed"
+                      ? "destructive"
+                      : sub.health === "warning"
+                        ? "secondary"
+                        : "outline"
+                  const BadgeIcon =
+                    sub.health === "crossed"
+                      ? CheckCircle2
+                      : sub.health === "warning"
+                        ? AlertTriangle
+                        : null
+                  return (
+                    <TableRow key={sub.id}>
+                      <TableCell className="font-medium">{orgName}</TableCell>
+                      <TableCell className="text-right tabular-nums">{sub.remaining}</TableCell>
+                      <TableCell className="text-right">
+                        <Badge variant={badgeVariant}>
+                          {BadgeIcon ? <BadgeIcon className="h-3 w-3" /> : null}
+                          {ts(`subscriptionsTable.licenseHealth.${sub.health}` as "subscriptionsTable.licenseHealth.ok")}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

@@ -5084,13 +5084,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Cerca abbonamenti...",
       "empty": "Nessun abbonamento trovato.",
+      "licensesRemaining": "{count} rimanenti",
       "columns": {
         "organisation": "Organizzazione",
         "plan": "Piano",
-        "users": "Utenti",
+        "users": "Licenze",
+        "licenseStatus": "Stato licenza",
         "status": "Stato",
+        "startDate": "Data di inizio",
         "expiryDate": "Data di scadenza",
         "actions": "Azioni"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Avviso",
+        "crossed": "Superato"
       },
       "status": {
         "active": "Attivo",
@@ -5116,6 +5124,18 @@
       },
       "buttons": {
         "assignPlan": "Assegna piano"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Salute licenze abbonamento",
+      "viewSubscriptions": "Vedi abbonamenti",
+      "warningCount": "{count} avviso",
+      "crossedCount": "{count} superato",
+      "noSubscriptions": "Nessun abbonamento disponibile.",
+      "columns": {
+        "organisation": "Organizzazione",
+        "remaining": "Rimanenti",
+        "status": "Stato"
       }
     },
     "plansTable": {

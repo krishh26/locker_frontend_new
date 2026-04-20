@@ -5945,13 +5945,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "सब्सक्रिप्शन्स खोजें...",
       "empty": "कोई सब्सक्रिप्शन नहीं मिला।",
+      "licensesRemaining": "{count} बचे",
       "columns": {
         "organisation": "ऑर्गनाइज़ेशन",
         "plan": "प्लान",
-        "users": "यूज़र्स",
+        "users": "लाइसेंस",
+        "licenseStatus": "लाइसेंस स्टेटस",
         "status": "स्टेटस",
+        "startDate": "स्टार्ट डेट",
         "expiryDate": "एक्सपायरी डेट",
         "actions": "एक्शन्स"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "वार्निंग",
+        "crossed": "क्रॉस्ड"
       },
       "status": {
         "active": "एक्टिव",
@@ -5977,6 +5985,18 @@
       },
       "buttons": {
         "assignPlan": "प्लान असाइन करें"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "सब्सक्रिप्शन लाइसेंस हेल्थ",
+      "viewSubscriptions": "सब्सक्रिप्शन्स देखें",
+      "warningCount": "{count} वार्निंग",
+      "crossedCount": "{count} क्रॉस्ड",
+      "noSubscriptions": "कोई सब्सक्रिप्शन उपलब्ध नहीं है।",
+      "columns": {
+        "organisation": "ऑर्गनाइज़ेशन",
+        "remaining": "बचे",
+        "status": "स्टेटस"
       }
     },
     "plansTable": {

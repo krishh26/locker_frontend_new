@@ -5854,13 +5854,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "ابحث عن الاشتراكات...",
       "empty": "لم يتم العثور على اشتراكات.",
+      "licensesRemaining": "المتبقي {count}",
       "columns": {
         "organisation": "المؤسسة",
         "plan": "الخطة",
-        "users": "المستخدمون",
+        "users": "التراخيص",
+        "licenseStatus": "حالة الترخيص",
         "status": "الحالة",
+        "startDate": "تاريخ البدء",
         "expiryDate": "تاريخ الانتهاء",
         "actions": "الإجراءات"
+      },
+      "licenseHealth": {
+        "ok": "موافق",
+        "warning": "تحذير",
+        "crossed": "تجاوز الحد"
       },
       "status": {
         "active": "نشط",
@@ -5886,6 +5894,18 @@
       },
       "buttons": {
         "assignPlan": "تعيين خطة"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "صحة تراخيص الاشتراك",
+      "viewSubscriptions": "عرض الاشتراكات",
+      "warningCount": "{count} تحذير",
+      "crossedCount": "{count} تجاوز",
+      "noSubscriptions": "لا توجد اشتراكات متاحة.",
+      "columns": {
+        "organisation": "المؤسسة",
+        "remaining": "المتبقي",
+        "status": "الحالة"
       }
     },
     "plansTable": {

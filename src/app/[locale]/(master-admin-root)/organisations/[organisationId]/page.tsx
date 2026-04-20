@@ -16,7 +16,7 @@ import {
   useSuspendOrganisationMutation,
 } from "@/store/api/organisations/organisationApi"
 import { useGetTokenByEmailMutation } from "@/store/api/auth/authApi"
-import { useGetSubscriptionQuery } from "@/store/api/subscriptions/subscriptionApi"
+import { useGetSubscriptionsQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -38,14 +38,48 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, MapPin, CreditCard, DollarSign, Users, Edit, CheckCircle, XCircle, Plus, LogIn } from "lucide-react"
-import { useEffect, useState, useCallback } from "react"
+import { Building2, MapPin, CreditCard, DollarSign, Users, Edit, CheckCircle, XCircle, Plus, LogIn, AlertTriangle, CheckCircle2 } from "lucide-react"
+import { useEffect, useMemo, useState, useCallback } from "react"
 import { toast } from "sonner"
 import { EditOrganisationForm } from "../components/edit-organisation-form"
 import { AssignAdminDialog } from "../components/assign-admin-dialog"
 
+type LicenseHealth = "ok" | "warning" | "crossed"
+
+function safePct(numerator: number | undefined, denominator: number | undefined): number | null {
+  if (!numerator || !denominator || denominator <= 0) return null
+  return (numerator / denominator) * 100
+}
+
+function computeLicenseHealth(sub: { warningStatus?: string; usedLicenses?: number; usedUsers?: number; remainingLicenses?: number; maxAllowedLicenses?: number; userLimit?: number; warningThresholdPercentage?: number }): LicenseHealth {
+  const ws = (sub.warningStatus ?? "").toLowerCase()
+  if (ws === "crossed") return "crossed"
+  if (ws === "warning") return "warning"
+  if (ws === "none") return "ok"
+
+  const used = sub.usedLicenses ?? sub.usedUsers
+  const maxAllowed = sub.maxAllowedLicenses ?? sub.userLimit
+  const remaining = sub.remainingLicenses
+  const crossed =
+    (typeof remaining === "number" && remaining < 0) ||
+    (typeof used === "number" && typeof maxAllowed === "number" && used > maxAllowed)
+  if (crossed) return "crossed"
+
+  const pct = safePct(used, maxAllowed)
+  const threshold = sub.warningThresholdPercentage
+  if (pct != null && typeof threshold === "number" && pct >= threshold) return "warning"
+  return "ok"
+}
+
+function formatDate(value: string | null | undefined): string {
+  if (!value) return "—"
+  const d = new Date(value)
+  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString()
+}
+
 export default function OrganisationDetailPage() {
   const t = useTranslations("organisations.detail")
+  const ts = useTranslations("subscriptions")
   const params = useParams()
   const router = useRouter()
   const organisationId = Number(params.organisationId)
@@ -67,7 +101,7 @@ export default function OrganisationDetailPage() {
   }, [dispatch])
 
   const { data: orgData, isLoading: isLoadingOrg, refetch: refetchOrg } = useGetOrganisationQuery(organisationId)
-  const { data: subscriptionData, isLoading: isLoadingSubscription } = useGetSubscriptionQuery(organisationId)
+  const { data: subscriptionsData, isLoading: isLoadingSubscription } = useGetSubscriptionsQuery()
   const { data: paymentsData, isLoading: isLoadingPayments } = useGetPaymentsQuery({ organisationId })
   const [activateOrganisation, { isLoading: isActivating }] = useActivateOrganisationMutation()
   const [suspendOrganisation, { isLoading: isSuspending }] = useSuspendOrganisationMutation()
@@ -75,7 +109,10 @@ export default function OrganisationDetailPage() {
 
   const organisation = orgData?.data
   const centres = organisation?.centres ?? []
-  const subscription = subscriptionData?.data
+  const subscription = useMemo(
+    () => (subscriptionsData?.data ?? []).find((s) => s.organisationId === organisationId),
+    [subscriptionsData?.data, organisationId],
+  )
   const payments = paymentsData?.data || []
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
@@ -108,7 +145,7 @@ export default function OrganisationDetailPage() {
           : "Failed to activate organisation"
       toast.error(errorMessage || t("toastActivateFailed"))
     }
-  }, [organisation, activateOrganisation, refetchOrg])
+  }, [organisation, activateOrganisation, t, refetchOrg])
 
   const handleSuspend = useCallback(async () => {
     if (!organisation) return
@@ -125,7 +162,7 @@ export default function OrganisationDetailPage() {
           : "Failed to suspend organisation"
       toast.error(errorMessage || t("toastSuspendFailed"))
     }
-  }, [organisation, suspendOrganisation, refetchOrg])
+  }, [organisation, suspendOrganisation, t, refetchOrg])
 
   const handleAssignOrgAdminSuccess = useCallback(() => {
     setIsAssignOrgAdminDialogOpen(false)
@@ -156,7 +193,7 @@ export default function OrganisationDetailPage() {
           : "Failed to login as admin"
       toast.error(errorMessage || t("toastLoginAsFailed"))
     }
-  }, [getTokenByEmail, organisationId, dispatch])
+  }, [getTokenByEmail, organisationId, dispatch, t])
 
   if (!canAccessOrganisation(user as unknown as UserWithOrganisations | null, organisationId)) {
     return null // Will redirect in useEffect
@@ -437,24 +474,53 @@ export default function OrganisationDetailPage() {
                     <p className="text-sm text-muted-foreground">{subscription.plan}</p>
                   </div>
                   <div>
-                    <span className="text-sm font-medium">{t("userLimit")}:</span>
+                    <span className="text-sm font-medium">{ts("subscriptionsTable.columns.users")}:</span>
                     <p className="text-sm text-muted-foreground">
-                      {t("usersCount", { used: subscription.usedUsers, limit: subscription.userLimit })}
+                      {subscription.usedLicenses ?? subscription.usedUsers} /{" "}
+                      {subscription.totalLicenses ?? subscription.userLimit}{" "}
+                      <span className="text-muted-foreground">
+                        ({ts("subscriptionsTable.licensesRemaining", { count: subscription.remainingLicenses ?? Math.max(0, (subscription.maxAllowedLicenses ?? subscription.userLimit) - (subscription.usedLicenses ?? subscription.usedUsers)) })})
+                      </span>
                     </p>
                   </div>
                   <div>
                     <span className="text-sm font-medium">{t("status")}:</span>
                     <div className="mt-1">
-                      <Badge variant={subscription.isExpired ? "destructive" : "default"}>
-                        {subscription.isExpired ? t("expired") : t("active")}
-                      </Badge>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge variant={subscription.isExpired ? "destructive" : "default"}>
+                          {subscription.isExpired ? t("expired") : t("active")}
+                        </Badge>
+                        {(() => {
+                          const health = computeLicenseHealth(subscription)
+                          const badgeVariant =
+                            health === "crossed"
+                              ? "destructive"
+                              : health === "warning"
+                                ? "secondary"
+                                : "outline"
+                          const BadgeIcon =
+                            health === "crossed"
+                              ? CheckCircle2
+                              : health === "warning"
+                                ? AlertTriangle
+                                : null
+                          return (
+                            <Badge variant={badgeVariant}>
+                              {BadgeIcon ? <BadgeIcon className="h-3 w-3" /> : null}
+                              {ts(`subscriptionsTable.licenseHealth.${health}` as "subscriptionsTable.licenseHealth.ok")}
+                            </Badge>
+                          )
+                        })()}
+                      </div>
                     </div>
                   </div>
                   <div>
                     <span className="text-sm font-medium">{t("expiryDate")}:</span>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(subscription.expiryDate).toLocaleDateString()}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{formatDate(subscription.endDate ?? subscription.expiryDate)}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium">{ts("subscriptionsTable.columns.startDate")}:</span>
+                    <p className="text-sm text-muted-foreground">{formatDate(subscription.startDate)}</p>
                   </div>
                 </>
               ) : (

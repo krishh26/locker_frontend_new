@@ -5890,13 +5890,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "搜索订阅...",
       "empty": "未找到订阅。",
+      "licensesRemaining": "剩余 {count}",
       "columns": {
         "organisation": "组织",
         "plan": "方案",
-        "users": "用户",
+        "users": "许可证",
+        "licenseStatus": "许可证状态",
         "status": "状态",
+        "startDate": "开始日期",
         "expiryDate": "到期日",
         "actions": "操作"
+      },
+      "licenseHealth": {
+        "ok": "正常",
+        "warning": "警告",
+        "crossed": "已超限"
       },
       "status": {
         "active": "有效",
@@ -5922,6 +5930,18 @@
       },
       "buttons": {
         "assignPlan": "分配方案"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "订阅许可证健康度",
+      "viewSubscriptions": "查看订阅",
+      "warningCount": "{count} 警告",
+      "crossedCount": "{count} 超限",
+      "noSubscriptions": "暂无订阅。",
+      "columns": {
+        "organisation": "组织",
+        "remaining": "剩余",
+        "status": "状态"
       }
     },
     "plansTable": {

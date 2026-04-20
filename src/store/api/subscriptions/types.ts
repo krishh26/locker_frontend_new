@@ -7,6 +7,25 @@ export interface Subscription {
   id: number
   organisationId: number
   plan: string
+
+  /**
+   * New API (v1) license fields (preferred)
+   */
+  status?: "active" | "expired" | "suspended" | string
+  startDate?: string | null
+  endDate?: string | null
+  totalLicenses?: number
+  tolerancePercentage?: number
+  warningThresholdPercentage?: number
+  usedLicenses?: number
+  maxAllowedLicenses?: number
+  remainingLicenses?: number
+  warningStatus?: "none" | "warning" | "crossed" | string
+
+  /**
+   * Legacy fields (kept for backward compatibility across UI/guards)
+   * These are derived from license fields when possible.
+   */
   usedUsers: number
   userLimit: number
   isExpired: boolean

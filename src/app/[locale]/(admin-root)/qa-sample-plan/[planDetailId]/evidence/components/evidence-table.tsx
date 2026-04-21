@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 import {
   Table,
@@ -17,6 +18,10 @@ import {
 } from "@/components/ui/table";
 import { format } from "date-fns";
 import type { EvidenceItem } from "@/store/api/qa-sample-plan/types";
+
+function normalizeRole(role: unknown): string {
+  return String(role ?? "").trim().toUpperCase();
+}
 
 interface UnitToDisplay {
   id: string | number;
@@ -61,6 +66,7 @@ export function EvidenceTable({
   createStateKey,
 }: EvidenceTableProps) {
   const t = useTranslations("qaSamplePlan.evidence.evidenceTable");
+  const isIqaUser = normalizeRole(currentUserRole) === "IQA";
 
   return (
     <Card>
@@ -87,9 +93,15 @@ export function EvidenceTable({
                     <TableHead
                       key={`hdr-${String(unit.unit_code)}-${String(unit.id)}`}
                       className="text-center min-w-[100px]"
-                      title={unit.title}
                     >
-                      {unit.code}
+                      <Tooltip delayDuration={200}>
+                        <TooltipTrigger asChild>
+                          <span className="cursor-help">{unit.code}</span>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" sideOffset={6} className="max-w-[320px]">
+                          {unit.title || t("na")}
+                        </TooltipContent>
+                      </Tooltip>
                     </TableHead>
                   ))}
                 <TableHead
@@ -188,31 +200,26 @@ export function EvidenceTable({
                           checked={(() => {
                             if (criteriaSignOff[refNo]) return true;
                             if (!evidence?.mappedSubUnits) return false;
-                            const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
-                              (sub) => sub.trainerMapped === true
-                            );
-                            return (
-                              trainerMappedSubUnits.length > 0 &&
-                              trainerMappedSubUnits.every(
-                                (sub) => sub.review?.signed_off === true
-                              )
+                            return evidence.mappedSubUnits.every(
+                              (sub) => sub.review?.signed_off === true
                             );
                           })()}
                           onCheckedChange={() => onCriteriaToggle(refNo)}
                           disabled={
-                            currentUserRole !== "IQA" ||
-                            !evidence?.mappedSubUnits ||
-                            (() => {
-                              const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
-                                (sub) => sub.trainerMapped === true
-                              );
-                              return (
-                                trainerMappedSubUnits.length === 0 ||
-                                trainerMappedSubUnits.every(
-                                  (sub) => sub.review?.signed_off === true
-                                )
-                              );
-                            })()
+                            !isIqaUser ||
+                            !evidence?.mappedSubUnits
+                            //  ||
+                            // (() => {
+                            //   const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
+                            //     (sub) => sub.trainerMapped === true
+                            //   );
+                            //   return (
+                            //     trainerMappedSubUnits.length === 0 ||
+                            //     trainerMappedSubUnits.every(
+                            //       (sub) => sub.review?.signed_off === true
+                            //     )
+                            //   );
+                            // })()
                           }
                         />
                       </TableCell>
@@ -230,22 +237,26 @@ export function EvidenceTable({
 
                           const isChecked = evidenceSubUnit
                             ? evidenceSubUnit.review?.signed_off === true ||
-                              evidenceSubUnit.trainerMapped === true ||
                               mappedSubUnitsChecked[stateKey] === true
                             : false;
 
                           const isLocked = lockedCheckboxes.has(stateKey);
                           const isIqaChecked = iqaCheckedCheckboxes.has(stateKey);
-                          const isIQA = currentUserRole === "IQA";
+                          const isIQA = isIqaUser;
                           const isTrainerMappedOnly =
                             evidenceSubUnit?.trainerMapped === true &&
                             !evidenceSubUnit?.review?.signed_off &&
                             !isIqaChecked;
+                          const checkboxStateClass = isChecked
+                            ? "data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
+                            : isTrainerMappedOnly
+                              ? "data-[state=unchecked]:bg-orange-400 data-[state=unchecked]:border-emerald-600"
+                              : "";
 
                           const isDisabled =
                             isUnitNotInEvidence ||
-                            isLocked ||
-                            !evidenceSubUnit?.trainerMapped ||
+                            (!isIQA && isLocked) ||
+                           
                             !isIQA;
 
                           const columnKey = `cell-${String(unit.unit_code)}-${String(unit.id)}-${evidence.assignment_id}`;
@@ -257,7 +268,7 @@ export function EvidenceTable({
                           if (!evidenceSubUnit) {
                             return (
                               <TableCell key={columnKey} className="text-center">
-                                <Checkbox checked={false} disabled className="opacity-50" />
+                                {/* <Checkbox checked={false} disabled className="opacity-50" /> */}
                               </TableCell>
                             );
                           }
@@ -270,13 +281,7 @@ export function EvidenceTable({
                                   onMappedSubUnitToggle(evidenceSubUnit.id, evidence.assignment_id)
                                 }
                                 disabled={isDisabled}
-                                className={
-                                  isTrainerMappedOnly
-                                    ? "data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                                    : isIqaChecked
-                                      ? "data-[state=checked]:bg-accent data-[state=checked]:border-accent"
-                                      : ""
-                                }
+                                className={checkboxStateClass}
                               />
                             </TableCell>
                           );

@@ -329,6 +329,7 @@ export interface EvidenceItem {
     title: string;
   };
   mappedSubUnits: Array<{
+    mapping_id: number;
     id: number;
     subTitle: string;
     learnerMapped?: boolean;

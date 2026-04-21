@@ -41,6 +41,10 @@ interface ExamineEvidencePageContentProps {
   planDetailId: string;
 }
 
+function normalizeRole(role: unknown): string {
+  return String(role ?? "").trim().toUpperCase();
+}
+
 export function ExamineEvidencePageContent({
   planDetailId,
 }: ExamineEvidencePageContentProps) {
@@ -107,6 +111,7 @@ export function ExamineEvidencePageContent({
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [criteriaSignOff, setCriteriaSignOff] = useState<Record<string, boolean>>({});
   const [mappedSubUnitsChecked, setMappedSubUnitsChecked] = useState<Record<string, boolean>>({});
+ 
   const [lockedCheckboxes, setLockedCheckboxes] = useState<Set<string>>(new Set());
   const [iqaCheckedCheckboxes, setIqaCheckedCheckboxes] = useState<Set<string>>(new Set());
   const [expandedUnits, setExpandedUnits] = useState<Set<string | number>>(new Set());
@@ -186,6 +191,7 @@ export function ExamineEvidencePageContent({
 
   // Get current user role (placeholder - replace with actual user hook when available)
   const currentUserRole = useAppSelector((state) => state.auth.user?.role) || "";
+  const isIqaUser = useMemo(() => normalizeRole(currentUserRole) === "IQA", [currentUserRole]);
 
   // Helper function to create state key
   const createStateKey = useCallback(
@@ -244,52 +250,77 @@ export function ExamineEvidencePageContent({
     []
   );
 
-  // Generate all units to display based on unitMappingResponse
-  // If type is "code" or "qualification", use subUnits, otherwise use parent unit
+  // Build criteria columns ONLY for selected unit_code.
+  // Primary source: evidenceList.mappedSubUnits; fallback to unitMappingResponse selected unit subUnits.
   const allUnitsToDisplay = useMemo(() => {
-    if (!unitMappingResponse?.data || unitMappingResponse.data.length === 0) {
-      return [];
-    }
+    const selectedUnitCode = unitCode ? String(unitCode) : "";
+    const seen = new Set<string>();
 
-    const unitsToDisplay: Array<{
+    const columns: Array<{
       id: string | number;
       code: string;
       title: string;
       unit_code: string | number;
-      learnerMapped?: boolean;
-      trainerMapped?: boolean;
     }> = [];
 
-    unitMappingResponse.data.forEach((unit) => {
-      const shouldUseSubUnits = unit.type === "code" || unit.type === "qualification";
+    // 1) Evidence mappedSubUnits union (preferred)
+    if (evidenceList.length > 0) {
+      for (const evidence of evidenceList) {
+        for (const subUnit of evidence.mappedSubUnits ?? []) {
+          const key = String(subUnit.id);
+          if (!key || seen.has(key)) continue;
+          seen.add(key);
 
-      if (shouldUseSubUnits && unit.subUnits && unit.subUnits.length > 0) {
-        // Use subUnits for code/qualification type
-        unit.subUnits.forEach((subUnit) => {
-          unitsToDisplay.push({
+          const code = String(
+            (subUnit as unknown as { code?: string | number }).code ?? subUnit.id
+          );
+
+          columns.push({
             id: subUnit.id,
-            code: subUnit.code || String(subUnit.id),
-            title: subUnit.title || "",
-            unit_code: unit.unit_code,
-            learnerMapped: subUnit.learnerMapped || false,
-            trainerMapped: subUnit.trainerMapped || false,
+            code,
+            title:
+              subUnit.subTitle ||
+              (subUnit as unknown as { title?: string }).title ||
+              "",
+            unit_code: selectedUnitCode || "",
           });
-        });
-      } else {
-        // Use parent unit for other types
-        unitsToDisplay.push({
-          id: unit.unit_code,
-          code: unit.code || String(unit.unit_code),
-          title: unit.unit_title || "",
-          unit_code: unit.unit_code,
-          learnerMapped: unit.learnerMapped || false,
-          trainerMapped: unit.trainerMapped || false,
+        }
+      }
+    }
+
+    // 2) Fallback mapping subUnits for selected unit
+    if (columns.length === 0 && unitMappingResponse?.data?.length && selectedUnitCode) {
+      const selectedUnit = unitMappingResponse.data.find(
+        (u) => String(u.unit_code) === selectedUnitCode
+      );
+
+      for (const subUnit of selectedUnit?.subUnits ?? []) {
+        const key = String(subUnit.id);
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+
+        columns.push({
+          id: subUnit.id,
+          code: String(subUnit.code ?? subUnit.id),
+          title: subUnit.title ?? "",
+          unit_code: selectedUnitCode,
         });
       }
+    }
+
+    columns.sort((a, b) => {
+      const an = Number(a.id);
+      const bn = Number(b.id);
+      const aIsNum = Number.isFinite(an);
+      const bIsNum = Number.isFinite(bn);
+      if (aIsNum && bIsNum) return an - bn;
+      if (aIsNum) return -1;
+      if (bIsNum) return 1;
+      return String(a.code).localeCompare(String(b.code));
     });
 
-    return unitsToDisplay;
-  }, [unitMappingResponse]);
+    return columns;
+  }, [evidenceList, unitMappingResponse, unitCode]);
 
   // Calculate unit progress statistics based on evidence data
   const unitProgress = useMemo(() => {
@@ -364,20 +395,12 @@ export function ExamineEvidencePageContent({
       const initialCriteriaSignOff: Record<string, boolean> = {};
       evidenceList.forEach((evidence) => {
         if (evidence.mappedSubUnits && evidence.mappedSubUnits.length > 0) {
-          const trainerMappedSubUnits = evidence.mappedSubUnits.filter(
-            (sub) => sub.trainerMapped === true
+          // Display logic: checked when ALL mapped criteria are signed off,
+          // regardless of trainerMapped flag (backend can return signed_off even when trainerMapped is false).
+          const allSignedOff = evidence.mappedSubUnits.every(
+            (sub) => sub.review?.signed_off === true
           );
-          // Only mark as checked if there are trainer-mapped units AND all are signed off
-          // If no trainer-mapped units exist, mark as unchecked (false)
-          if (trainerMappedSubUnits.length > 0) {
-            const allSignedOff = trainerMappedSubUnits.every(
-              (sub) => sub.review?.signed_off === true
-            );
-            initialCriteriaSignOff[String(evidence.assignment_id)] = allSignedOff;
-          } else {
-            // No trainer-mapped units, so checkbox should be unchecked
-            initialCriteriaSignOff[String(evidence.assignment_id)] = false;
-          }
+          initialCriteriaSignOff[String(evidence.assignment_id)] = allSignedOff;
         } else {
           // No mappedSubUnits at all, checkbox should be unchecked
           initialCriteriaSignOff[String(evidence.assignment_id)] = false;
@@ -467,7 +490,7 @@ export function ExamineEvidencePageContent({
 
   const handleCriteriaToggle = useCallback(
     async (refNo: string) => {
-      const isIQA = currentUserRole === "IQA";
+      const isIQA = isIqaUser;
 
       // Only IQA can use this shortcut
       if (!isIQA) {
@@ -487,21 +510,12 @@ export function ExamineEvidencePageContent({
       const isCurrentlyChecked = criteriaSignOff[refNo] || false;
       const newCheckedState = !isCurrentlyChecked;
 
-      // If unchecking, don't allow (one-way operation)
-      if (!newCheckedState) {
-        toast.error(t("toast.cannotUncheckSignOffPermanent"));
-        return;
-      }
-
       // Get all mappedSubUnits that have trainerMapped === true
-      const subUnitsToSignOff = evidence.mappedSubUnits?.filter(
-        (subUnit) => subUnit.trainerMapped === true
-      ) || [];
-
-      if (subUnitsToSignOff.length === 0) {
-        toast.error(t("toast.noUnitsReadyTrainerMustMapFirst"));
-        return;
-      }
+      const subUnitsToSignOff = evidence.mappedSubUnits
+      // if (subUnitsToSignOff.length === 0) {
+      //   toast.error(t("toast.noUnitsReadyTrainerMustMapFirst"));
+      //   return;
+      // }
 
       // Update local state optimistically
       setCriteriaSignOff((prev) => ({
@@ -515,13 +529,29 @@ export function ExamineEvidencePageContent({
         const stateKey = createStateKey(evidence.assignment_id, subUnit.id);
         stateKeysToUpdate.push(stateKey);
 
-        // Mark as checked, locked, and IQA checked
+        // Mark local state for each criteria based on newCheckedState
         setMappedSubUnitsChecked((prev) => ({
           ...prev,
-          [stateKey]: true,
+          [stateKey]: newCheckedState,
         }));
-        setLockedCheckboxes((prev) => new Set(prev).add(stateKey));
-        setIqaCheckedCheckboxes((prev) => new Set(prev).add(stateKey));
+        setLockedCheckboxes((prev) => {
+          const next = new Set(prev);
+          if (newCheckedState) {
+            next.add(stateKey);
+          } else {
+            next.delete(stateKey);
+          }
+          return next;
+        });
+        setIqaCheckedCheckboxes((prev) => {
+          const next = new Set(prev);
+          if (newCheckedState) {
+            next.add(stateKey);
+          } else {
+            next.delete(stateKey);
+          }
+          return next;
+        });
       });
 
       // Call API for each subUnit
@@ -552,24 +582,29 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        const mappingId = resolveMappingId(evidence);
-        if (!mappingId) {
-          toast.error(t("toast.evidenceNotFound"));
-          return;
-        }
+        const updatePromises = subUnitsToSignOff.map((subUnit) => {
+          const subUnitMappingId = Number(
+            (subUnit as unknown as { mapping_id?: unknown }).mapping_id
+          );
+          if (!Number.isFinite(subUnitMappingId) || subUnitMappingId <= 0) {
+            throw new Error("Missing mapping id for criteria.");
+          }
 
-        const updatePromises = subUnitsToSignOff.map((subUnit) =>
-          updateMappedSubUnitSignOff({
-            mapping_id: mappingId,
+          return updateMappedSubUnitSignOff({
+            mapping_id: subUnitMappingId,
             unit_code: unitCode,
             pc_id: subUnit.id,
-            signed_off: true,
-          }).unwrap()
-        );
+            signed_off: newCheckedState,
+          }).unwrap();
+        });
 
         await Promise.all(updatePromises);
 
-        toast.success(t("toast.signedOffUnitsSuccess", { count: subUnitsToSignOff.length }));
+        toast.success(
+          newCheckedState
+            ? t("toast.signedOffUnitsSuccess", { count: subUnitsToSignOff.length })
+            : t("toast.signOffStatusUpdatedSuccess")
+        );
 
         // Refetch evidence to get updated data
         fetchEvidence();
@@ -609,10 +644,9 @@ export function ExamineEvidencePageContent({
     [
       criteriaSignOff,
       evidenceList,
-      currentUserRole,
+      isIqaUser,
       unitCode,
       createStateKey,
-      resolveMappingId,
       updateMappedSubUnitSignOff,
       fetchEvidence,
       t,
@@ -624,8 +658,10 @@ export function ExamineEvidencePageContent({
       const stateKey = createStateKey(assignmentId, subUnitId);
       const currentChecked = mappedSubUnitsChecked[stateKey] || false;
 
-      // Prevent toggling if already locked
-      if (lockedCheckboxes.has(stateKey)) {
+      const isIQA = isIqaUser;
+
+      // Prevent toggling if already locked (except IQA can override)
+      if (!isIQA && lockedCheckboxes.has(stateKey)) {
         return;
       }
 
@@ -656,24 +692,38 @@ export function ExamineEvidencePageContent({
         return;
       }
 
-      const isIQA = currentUserRole === "IQA";
-
       // IQA can only check if trainerMapped is true
-      if (isIQA && !evidenceSubUnit.trainerMapped) {
-        toast.error(t("toast.iqaCanOnlySignOffWhenTrainerMapped"));
-        return;
-      }
+      // if (isIQA && !evidenceSubUnit.trainerMapped) {
+      //   toast.error(t("toast.iqaCanOnlySignOffWhenTrainerMapped"));
+      //   return;
+      // }
 
       // Determine new state based on current state
       const newSignedOffState = !currentChecked;
 
-      // Lock the checkbox once it's set
-      setLockedCheckboxes((prev) => new Set(prev).add(stateKey));
-
-      // Track if IQA checked it
-      if (isIQA && newSignedOffState) {
-        setIqaCheckedCheckboxes((prev) => new Set(prev).add(stateKey));
+      // Track if IQA checked it (and allow removing)
+      if (isIQA) {
+        setIqaCheckedCheckboxes((prev) => {
+          const next = new Set(prev);
+          if (newSignedOffState) {
+            next.add(stateKey);
+          } else {
+            next.delete(stateKey);
+          }
+          return next;
+        });
       }
+
+      // Maintain lock set, but allow removing when unchecking
+      setLockedCheckboxes((prev) => {
+        const next = new Set(prev);
+        if (newSignedOffState) {
+          next.add(stateKey);
+        } else {
+          next.delete(stateKey);
+        }
+        return next;
+      });
 
       setMappedSubUnitsChecked((prev) => ({
         ...prev,
@@ -701,15 +751,17 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        // Call API to update mappedSubUnit sign-off
-        const mappingId = resolveMappingId(targetEvidence, subUnitId);
-        if (!mappingId) {
+        // Call API to update mappedSubUnit sign-off using subUnit-level mapping_id
+        const subUnitMappingId = Number(
+          (evidenceSubUnit as unknown as { mapping_id?: unknown }).mapping_id
+        );
+        if (!Number.isFinite(subUnitMappingId) || subUnitMappingId <= 0) {
           toast.error(t("toast.evidenceNotFoundCannotUpdateSignOff"));
           return;
         }
 
         await updateMappedSubUnitSignOff({
-          mapping_id: mappingId,
+          mapping_id: subUnitMappingId,
           unit_code: unitCode,
           pc_id: subUnitId,
           signed_off: newSignedOffState,
@@ -750,9 +802,8 @@ export function ExamineEvidencePageContent({
       lockedCheckboxes,
       evidenceList,
       unitCode,
-      currentUserRole,
+      isIqaUser,
       createStateKey,
-      resolveMappingId,
       updateMappedSubUnitSignOff,
       fetchEvidence,
       t,

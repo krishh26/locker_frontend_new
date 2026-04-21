@@ -11,99 +11,84 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Switch } from "@/components/ui/switch";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import {
-  useGetProgressExclusionQuery,
-  useUpdateProgressExclusionMutation,
-} from "@/store/api/progress-exclusion/progressExclusionApi";
+  useGetCourseExclusionQuery,
+  useUpdateCourseExclusionMutation,
+} from "@/store/api/course-exclusion/courseExclusionApi";
 import type { Course } from "@/store/api/course/types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-
-// Training status list
-const trainingStatuses = [
-  "In Training",
-  "IQA Approved",
-  "Completed",
-  "Certificated",
-  "Training Suspended",
-  "Transferred",
-  "Early Leaver",
-  "Exempt",
-  "Awaiting Induction",
-];
+import { useAppSelector } from "@/store/hooks";
+import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 
 export function ProgressExclusionForm() {
   const t = useTranslations("progressExclusion");
 
-  const [selectedCourseId, setSelectedCourseId] = useState<string>("");
-  const [excludedStatuses, setExcludedStatuses] = useState<Set<string>>(new Set());
+  const masterAdminOrgId = useAppSelector(selectMasterAdminOrganisationId);
+  const authUser = useAppSelector((state) => state.auth.user);
+  const organisationId =
+    masterAdminOrgId ??
+    (authUser?.assignedOrganisationIds?.length
+      ? authUser.assignedOrganisationIds[0]
+      : undefined);
 
-  // Fetch courses
+  const [selectedCourseId, setSelectedCourseId] = useState<string>("");
+  const [isExcluded, setIsExcluded] = useState(false);
+
   const { data: coursesData, isLoading: coursesLoading } = useCachedCoursesList();
 
-  // Fetch exclusion settings when course is selected
+  const courseIdNum = selectedCourseId ? Number(selectedCourseId) : undefined;
+  const canQueryExclusion =
+    organisationId != null && !Number.isNaN(Number(organisationId)) && courseIdNum != null && !Number.isNaN(courseIdNum);
+
   const {
     data: exclusionData,
     isLoading: exclusionLoading,
     error: exclusionError,
-  } = useGetProgressExclusionQuery(Number(selectedCourseId), {
-    skip: !selectedCourseId || selectedCourseId === "",
-  });
+  } = useGetCourseExclusionQuery(
+    {
+      organisation_id: Number(organisationId),
+      course_id: courseIdNum,
+    },
+    {
+      skip: !canQueryExclusion,
+    }
+  );
 
-  const [updateProgressExclusion, { isLoading: isSubmitting }] =
-    useUpdateProgressExclusionMutation();
+  const [updateCourseExclusion, { isLoading: isSubmitting }] =
+    useUpdateCourseExclusionMutation();
 
   const courses = coursesData?.data || [];
 
-  // Update excluded statuses when exclusion data changes
   useEffect(() => {
-    if (exclusionData?.data && exclusionData.data.excluded_statuses) {
-      setExcludedStatuses(new Set(exclusionData.data.excluded_statuses));
-    } else if (selectedCourseId && !exclusionLoading && exclusionData && !exclusionData.data) {
-      // Default excluded statuses if no data exists (API returned success but no data)
-      setExcludedStatuses(
-        new Set(["Completed", "Certificated", "Transferred", "Early Leaver"])
-      );
+    if (!canQueryExclusion) {
+      setIsExcluded(false);
+      return;
     }
-  }, [exclusionData, selectedCourseId, exclusionLoading]);
+    if (exclusionLoading) return;
+    setIsExcluded(!!exclusionData?.data?.is_excluded);
+  }, [exclusionData, exclusionLoading, canQueryExclusion]);
 
-  // Handle checkbox change
-  const handleCheckboxChange = (status: string) => {
-    setExcludedStatuses((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(status)) {
-        newSet.delete(status);
-      } else {
-        newSet.add(status);
-      }
-      return newSet;
-    });
-  };
-
-  // Handle submit
   const handleSubmit = async () => {
-    if (!selectedCourseId) {
+    if (organisationId == null || Number.isNaN(Number(organisationId))) {
+      toast.error(t("toast.organisationRequired"));
+      return;
+    }
+    if (!selectedCourseId || courseIdNum == null || Number.isNaN(courseIdNum)) {
       toast.error(t("toast.selectCourseRequired"));
       return;
     }
 
     try {
-      await updateProgressExclusion({
-        course_id: Number(selectedCourseId),
-        excluded_statuses: Array.from(excludedStatuses),
+      await updateCourseExclusion({
+        organisation_id: Number(organisationId),
+        course_id: courseIdNum,
+        is_excluded: isExcluded,
       }).unwrap();
 
       toast.success(t("toast.updateSuccess"));
@@ -117,6 +102,8 @@ export function ProgressExclusionForm() {
     }
   };
 
+  const orgMissing = organisationId == null || Number.isNaN(Number(organisationId));
+
   return (
     <Card>
       <CardHeader>
@@ -126,12 +113,15 @@ export function ProgressExclusionForm() {
       <CardContent className="space-y-6">
         <Alert>
           <Info className="h-4 w-4" />
-          <AlertDescription>
-            {t("info.description")}
-          </AlertDescription>
+          <AlertDescription>{t("info.description")}</AlertDescription>
         </Alert>
 
-        {/* Course Selection */}
+        {orgMissing ? (
+          <Alert variant="destructive">
+            <AlertDescription>{t("form.organisationRequired")}</AlertDescription>
+          </Alert>
+        ) : null}
+
         <div className="space-y-2">
           <Label htmlFor="course-select">
             {t("form.courseLabel")} <span className="text-destructive">*</span>
@@ -140,9 +130,9 @@ export function ProgressExclusionForm() {
             value={selectedCourseId}
             onValueChange={(value) => {
               setSelectedCourseId(value);
-              setExcludedStatuses(new Set()); // Reset when course changes
+              setIsExcluded(false);
             }}
-            disabled={coursesLoading}
+            disabled={coursesLoading || orgMissing}
           >
             <SelectTrigger id="course-select" className="w-full">
               <SelectValue placeholder={t("form.coursePlaceholder")} />
@@ -157,68 +147,45 @@ export function ProgressExclusionForm() {
           </Select>
         </div>
 
-        {/* Status List Table */}
-        {selectedCourseId && (
+        {selectedCourseId && !orgMissing ? (
           <>
             {exclusionLoading ? (
-              <div className="space-y-2">
-                <Skeleton className="h-10 w-full" />
-                {Array.from({ length: 9 }).map((_, index) => (
-                  <Skeleton key={index} className="h-12 w-full" />
-                ))}
+              <div className="space-y-4">
+                <Skeleton className="h-10 w-full max-w-md" />
+                <Skeleton className="h-10 w-32" />
               </div>
             ) : exclusionError ? (
               <Alert variant="destructive">
-                <AlertDescription>
-                  Failed to load exclusion settings. Please try again.
-                </AlertDescription>
+                <AlertDescription>{t("form.loadError")}</AlertDescription>
               </Alert>
             ) : (
-              <>
-                <div className="rounded-md border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>{t("table.statusColumn")}</TableHead>
-                        <TableHead className="text-center">
-                          {t("table.excludeColumn")}
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {trainingStatuses.map((status, index) => (
-                        <TableRow
-                          key={status}
-                          className={index % 2 === 0 ? "bg-background" : "bg-muted/50"}
-                        >
-                          <TableCell className="font-medium">
-                            {t(`statusLabels.${status}`)}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <Checkbox
-                              checked={excludedStatuses.has(status)}
-                              onCheckedChange={() => handleCheckboxChange(status)}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+              <div className="flex flex-col gap-4 rounded-md border p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-1">
+                  <Label htmlFor="course-exclusion-switch" className="text-base">
+                    {t("form.excludeToggleLabel")}
+                  </Label>
+                  <p className="text-sm text-muted-foreground">{t("form.excludeToggleHint")}</p>
                 </div>
-
-                {/* Submit Button */}
-                <div className="flex justify-end">
-                  <Button onClick={handleSubmit} disabled={isSubmitting} size="lg">
-                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isSubmitting ? t("form.submitting") : t("form.submit")}
-                  </Button>
-                </div>
-              </>
+                <Switch
+                  id="course-exclusion-switch"
+                  checked={isExcluded}
+                  onCheckedChange={(checked) => setIsExcluded(checked === true)}
+                  disabled={isSubmitting}
+                />
+              </div>
             )}
+
+            {!exclusionLoading && !exclusionError ? (
+              <div className="flex justify-end">
+                <Button onClick={handleSubmit} disabled={isSubmitting} size="lg">
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSubmitting ? t("form.submitting") : t("form.submit")}
+                </Button>
+              </div>
+            ) : null}
           </>
-        )}
+        ) : null}
       </CardContent>
     </Card>
   );
 }
-

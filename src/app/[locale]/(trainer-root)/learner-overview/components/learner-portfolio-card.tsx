@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
 import { useUpdateLearnerCommentMutation } from "@/store/api/learner/learnerApi";
-import type { LearnerListItem, LearnerCourse } from "@/store/api/learner/types";
+import type { LearnerListItem } from "@/store/api/learner/types";
 import { calculateLearnerProgress } from "@/lib/learner-progress-utils";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -35,115 +35,6 @@ import { useTranslations } from "next-intl";
 interface LearnerPortfolioCardProps {
   learner: LearnerListItem;
   onCommentUpdate: () => void;
-}
-
-/**
- * Same idea as backend `getUnitCompletionStatus` / learner dashboard.
- * Qualification list payloads often put `learnerMap`/`trainerMap` on **sub-units** while
- * `topics` exist without those flags — we must read both.
- */
-function getUnitCompletionStatusLocal(unit: {
-  learnerMap?: boolean;
-  trainerMap?: boolean;
-  subUnit?: Array<{
-    learnerMap?: boolean;
-    trainerMap?: boolean;
-    topics?: Array<{ learnerMap?: boolean; trainerMap?: boolean }>;
-  }>;
-}): { fullyCompleted: boolean; partiallyCompleted: boolean } {
-  if (Array.isArray(unit?.subUnit) && unit.subUnit.length > 0) {
-    let learnerDone = false;
-    let trainerDone = false;
-    for (const sub of unit.subUnit) {
-      if (Array.isArray(sub?.topics) && sub.topics.length > 0) {
-        for (const topic of sub.topics) {
-          if (topic?.learnerMap) learnerDone = true;
-          if (topic?.trainerMap) trainerDone = true;
-        }
-      }
-      if (sub?.learnerMap) learnerDone = true;
-      if (sub?.trainerMap) trainerDone = true;
-    }
-    return {
-      fullyCompleted: learnerDone && trainerDone,
-      partiallyCompleted: learnerDone || trainerDone,
-    };
-  }
-  const learnerDone = Boolean(unit?.learnerMap);
-  const trainerDone = Boolean(unit?.trainerMap);
-  return {
-    fullyCompleted: learnerDone && trainerDone,
-    partiallyCompleted: learnerDone || trainerDone,
-  };
-}
-
-function unitHasMappingEvidence(unit: {
-  learnerMap?: boolean;
-  trainerMap?: boolean;
-  subUnit?: Array<{
-    learnerMap?: boolean;
-    trainerMap?: boolean;
-    topics?: Array<{ learnerMap?: boolean; trainerMap?: boolean }>;
-  }>;
-}): boolean {
-  if (Array.isArray(unit?.subUnit) && unit.subUnit.length > 0) {
-    return unit.subUnit.some((sub) => {
-      if (Array.isArray(sub?.topics) && sub.topics.length > 0) {
-        if (sub.topics.some((t) => t?.learnerMap || t?.trainerMap)) return true;
-      }
-      return Boolean(sub?.learnerMap || sub?.trainerMap);
-    });
-  }
-  return Boolean(unit?.learnerMap || unit?.trainerMap);
-}
-
-/**
- * `/learner/list` often returns wrong `unitsFullyCompleted` / `unitsNotStarted` while
- * `course.units` has the real learner/trainer flags (e.g. Qualification: maps on sub-unit,
- * not on topics). Recompute from that tree for non-Gateway courses when `units` exist.
- */
-function patchCourseProgressFromUnits(
-  course: LearnerCourse,
-): LearnerCourse {
-  const coreType = course?.course_core_type ?? course?.course?.course_core_type;
-  const isGateway = coreType === "Gateway";
-  if (isGateway) return course;
-
-  const units = (course?.course as { units?: unknown[] } | undefined)?.units;
-  if (!Array.isArray(units) || units.length === 0) return course;
-
-  const totalUnitsAll = units.length;
-  let fully = 0;
-  let partial = 0;
-  let notStarted = 0;
-
-  for (const unit of units as Parameters<typeof unitHasMappingEvidence>[0][]) {
-    if (!unitHasMappingEvidence(unit)) {
-      notStarted += 1;
-      continue;
-    }
-    const st = getUnitCompletionStatusLocal(unit);
-    if (st.fullyCompleted) fully += 1;
-    else if (st.partiallyCompleted) partial += 1;
-    else notStarted += 1;
-  }
-
-  return {
-    ...course,
-    totalUnits: totalUnitsAll,
-    unitsFullyCompleted: fully,
-    unitsPartiallyCompleted: partial,
-    unitsNotStarted: notStarted,
-  };
-}
-
-function buildLearnerWithProgressFallback(learner: LearnerListItem): LearnerListItem {
-  const courses = learner.course;
-  if (!courses?.length) return learner;
-  return {
-    ...learner,
-    course: courses.map(patchCourseProgressFromUnits),
-  };
 }
 
 export function LearnerPortfolioCard({
@@ -157,17 +48,12 @@ export function LearnerPortfolioCard({
   const [updateComment, { isLoading: isSavingComment }] =
     useUpdateLearnerCommentMutation();
 
-  const learnerForProgress = useMemo(
-    () => buildLearnerWithProgressFallback(learner),
-    [learner],
-  );
-
   const {
     totalCompleted,
     totalInProgress,
     totalNotStarted,
     completionPercentage,
-  } = calculateLearnerProgress(learnerForProgress);
+  } = calculateLearnerProgress(learner);
 
   const handleOpenCommentDialog = () => {
     setIsEditingComment(true);

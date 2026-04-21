@@ -37,7 +37,7 @@ import { sessionReminderSettingsApi } from "@/store/api/session-settings/session
 import { iqaQuestionsApi } from "@/store/api/iqa-questions/iqaQuestionsApi"
 import { sessionTypeApi } from "@/store/api/session-type/sessionTypeApi"
 import { awaitingSignatureApi } from "@/store/api/awaiting-signature/awaitingSignatureApi"
-import { progressExclusionApi } from "@/store/api/progress-exclusion/progressExclusionApi"
+import { courseExclusionApi } from "@/store/api/course-exclusion/courseExclusionApi"
 import { notificationApi } from "@/store/api/notification/notificationApi"
 import { contractedWorkApi } from "@/store/api/contracted-work/contractedWorkApi"
 import { moduleUnitProgressApi } from "@/store/api/module-unit-progress/moduleUnitProgressApi"
@@ -101,7 +101,7 @@ export const rootReducer = combineReducers({
   [iqaQuestionsApi.reducerPath]: iqaQuestionsApi.reducer,
   [sessionTypeApi.reducerPath]: sessionTypeApi.reducer,
   [awaitingSignatureApi.reducerPath]: awaitingSignatureApi.reducer,
-    [progressExclusionApi.reducerPath]: progressExclusionApi.reducer,
+    [courseExclusionApi.reducerPath]: courseExclusionApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
     [contractedWorkApi.reducerPath]: contractedWorkApi.reducer,
     [moduleUnitProgressApi.reducerPath]: moduleUnitProgressApi.reducer,
@@ -162,7 +162,7 @@ export const concatMiddleware: Middleware[] = [
   iqaQuestionsApi.middleware,
   sessionTypeApi.middleware,
   awaitingSignatureApi.middleware,
-  progressExclusionApi.middleware,
+  courseExclusionApi.middleware,
   notificationApi.middleware,
   contractedWorkApi.middleware,
   moduleUnitProgressApi.middleware,

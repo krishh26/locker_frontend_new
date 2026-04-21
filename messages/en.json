@@ -3906,6 +3906,9 @@
     }
   },
   "timeLog": {
+    "common": {
+      "edit": "Edit"
+    },
     "page": {
       "title": "Time Log",
       "subtitle": "Viewing E-Timelog for All Courses and General Activities"

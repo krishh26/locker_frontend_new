@@ -162,18 +162,20 @@ export function SignatureTable({
                     />
                   </TableCell>
                   <TableCell>
-                    <Controller
-                      name={`signatures.${item.index}.signature_required`}
-                      control={control}
-                      render={({ field }) => (
-                        <Checkbox
-                          checked={field.value || false}
-                          onCheckedChange={field.onChange}
-                          disabled={signatureReqDisabled}
-                          className="border-slate-500 disabled:border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                        />
-                      )}
-                    />
+                    {!isOwnRole &&
+                      <Controller
+                        name={`signatures.${item.index}.signature_required`}
+                        control={control}
+                        render={({ field }) => (
+                          <Checkbox
+                            checked={field.value || false}
+                            onCheckedChange={field.onChange}
+                            disabled={signatureReqDisabled}
+                            className="border-slate-500 disabled:border-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                        )}
+                      />
+                    }
                   </TableCell>
                 </TableRow>
               );

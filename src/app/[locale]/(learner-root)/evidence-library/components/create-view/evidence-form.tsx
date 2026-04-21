@@ -553,11 +553,22 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         // Step 4: Handle signature request (assignment-level API)
         // NOTE: `/assignment/:id/request-signature` is assignment-level; calling it once per mapping
         // creates duplicate signature rows server-side.
+        const ownSigForSelfSign = findOwnSignatureRow(
+          data.signatures,
+          user?.role,
+        )
         const requiredRoles =
           data.signatures
             ?.filter((sig) => sig.signature_required)
             .map((sig) => sig.role) || []
-        const rolesToRequest = Array.from(new Set(requiredRoles))
+        const rolesToRequest = Array.from(
+          new Set<string>([
+            ...requiredRoles,
+            ...(ownSigForSelfSign?.signed && !creatorRoleSignedFromApi
+              ? [ownSigForSelfSign.role]
+              : []),
+          ]),
+        )
 
         if (rolesToRequest.length > 0 && allMappingIds.length > 0) {
           try {
@@ -574,11 +585,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             )
           }
         }
-
-        const ownSigForSelfSign = findOwnSignatureRow(
-          data.signatures,
-          user?.role,
-        )
         if (
           allMappingIds.length > 0 &&
           ownSigForSelfSign?.signed &&
@@ -791,11 +797,22 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
         }
 
         // Handle signature request (assignment-level API)
+        const ownSigForSelfSignCreate = findOwnSignatureRow(
+          data.signatures,
+          user?.role,
+        )
         const requiredRoles =
           data.signatures
             ?.filter((sig) => sig.signature_required)
             .map((sig) => sig.role) || []
-        const rolesToRequest = Array.from(new Set(requiredRoles))
+        const rolesToRequest = Array.from(
+          new Set<string>([
+            ...requiredRoles,
+            ...(ownSigForSelfSignCreate?.signed && !creatorRoleSignedFromApi
+              ? [ownSigForSelfSignCreate.role]
+              : []),
+          ]),
+        )
 
         if (rolesToRequest.length > 0 && allMappingIds.length > 0) {
           try {
@@ -812,11 +829,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
             )
           }
         }
-
-        const ownSigForSelfSignCreate = findOwnSignatureRow(
-          data.signatures,
-          user?.role,
-        )
         if (
           allMappingIds.length > 0 &&
           ownSigForSelfSignCreate?.signed &&

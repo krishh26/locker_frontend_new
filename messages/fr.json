@@ -3309,6 +3309,9 @@
           "sessionTypeRequired": "Le type de session est requis"
         }
       },
+      "deleteSession": {
+        "description": "Cette action est irreversible. La session selectionnee sera supprimee definitivement."
+      },
       "addAction": {
         "toast": {
           "added": "Action ajoutée avec succès",
@@ -5908,13 +5911,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Rechercher des abonnements...",
       "empty": "Aucun abonnement trouvé.",
+      "licensesRemaining": "{count} restant",
       "columns": {
         "organisation": "Organisation",
         "plan": "Plan",
-        "users": "Utilisateurs",
+        "users": "Licences",
+        "licenseStatus": "Statut de licence",
         "status": "Statut",
+        "startDate": "Date de début",
         "expiryDate": "Date d’expiration",
         "actions": "Actions"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Avertissement",
+        "crossed": "Dépassé"
       },
       "status": {
         "active": "Actif",
@@ -5940,6 +5951,18 @@
       },
       "buttons": {
         "assignPlan": "Attribuer un plan"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Santé des licences d’abonnement",
+      "viewSubscriptions": "Voir les abonnements",
+      "warningCount": "{count} avertissement",
+      "crossedCount": "{count} dépassé",
+      "noSubscriptions": "Aucun abonnement disponible.",
+      "columns": {
+        "organisation": "Organisation",
+        "remaining": "Restant",
+        "status": "Statut"
       }
     },
     "plansTable": {
@@ -5983,11 +6006,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organisation *",
-        "plan": "Plan *"
+        "plan": "Plan *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Sélectionner une organisation",
-        "plan": "Sélectionner un plan"
+        "plan": "Sélectionner un plan",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Seules les organisations sans plan sont affichées."
@@ -6002,6 +6031,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Veuillez sélectionner une organisation et un plan",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Plan attribué avec succès",
         "assignFailedFallback": "Échec de l’attribution du plan"
       }

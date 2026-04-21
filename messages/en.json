@@ -1402,6 +1402,9 @@
       "page": {
         "subtitle": "Review evidence documents",
         "subtitleForUnit": "Review evidence documents for unit: {unitCode}",
+        "evidenceLoadErrorTitle": "Could not load evidence",
+        "evidenceLoadErrorDescription": "Failed to load evidence list. Please try again.",
+        "retryEvidenceLoad": "Retry",
         "confirmationStatements": {
           "learner": "I confirm that this unit is complete and the evidence provided is a result of my own work",
           "trainer": "I confirm that the learner has demonstrated competence by satisfying all the skills and knowledge for this unit, and has been assessed according to requirements of the qualification.",
@@ -1440,7 +1443,8 @@
           "unableDeleteFileReviewIdNotFound": "Unable to delete file: Review ID not found.",
           "fileDeletedSuccess": "File deleted successfully.",
           "deleteFileFailed": "Failed to delete file.",
-          "noEvidenceCannotAddComment": "No evidence found. Cannot add comment."
+          "noEvidenceCannotAddComment": "No evidence found. Cannot add comment.",
+          "commentAndFileUploadedSuccess": "Comment and file uploaded successfully."
         }
       },
       "unitProgress": {
@@ -1471,7 +1475,9 @@
           "kb": "KB",
           "mb": "MB",
           "gb": "GB"
-        }
+        },
+        "openInEvidenceLibrary": "Open in evidence library",
+        "addComment": "Add or edit comment"
       },
       "confirmationStatements": {
         "columns": {
@@ -1504,6 +1510,8 @@
       "unitSignOffModal": {
         "title": "Unit sign off",
         "description": "General comment for this Unit (Max 500 Characters).",
+        "optionalFileLabel": "Attachment (optional)",
+        "optionalFileHint": "You can attach an optional file with this sign-off.",
         "commentLabel": "Comment",
         "commentPlaceholder": "Enter your comments here...",
         "charactersCount": "{count}/500 characters",
@@ -3596,6 +3604,9 @@
           "durationRequired": "Duration is required",
           "sessionTypeRequired": "Session type is required"
         }
+      },
+      "deleteSession": {
+        "description": "This action cannot be undone. The selected session will be permanently deleted."
       },
       "addAction": {
         "toast": {
@@ -5957,13 +5968,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Search subscriptions...",
       "empty": "No subscriptions found.",
+      "licensesRemaining": "{count} remaining",
       "columns": {
         "organisation": "Organisation",
         "plan": "Plan",
-        "users": "Users",
+        "users": "Licenses",
+        "licenseStatus": "License status",
         "status": "Status",
+        "startDate": "Start date",
         "expiryDate": "Expiry Date",
         "actions": "Actions"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Warning",
+        "crossed": "Crossed"
       },
       "status": {
         "active": "Active",
@@ -5989,6 +6008,18 @@
       },
       "buttons": {
         "assignPlan": "Assign Plan"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Subscription license health",
+      "viewSubscriptions": "View subscriptions",
+      "warningCount": "{count} warning",
+      "crossedCount": "{count} crossed",
+      "noSubscriptions": "No subscriptions available.",
+      "columns": {
+        "organisation": "Organisation",
+        "remaining": "Remaining",
+        "status": "Status"
       }
     },
     "plansTable": {
@@ -6032,11 +6063,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organisation *",
-        "plan": "Plan *"
+        "plan": "Plan *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Select organisation",
-        "plan": "Select plan"
+        "plan": "Select plan",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Only organisations without a plan are shown."
@@ -6051,6 +6088,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Please select organisation and plan",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Plan assigned successfully",
         "assignFailedFallback": "Failed to assign plan"
       }

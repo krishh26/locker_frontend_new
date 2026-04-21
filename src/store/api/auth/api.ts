@@ -98,6 +98,10 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     assignedCenters?.length ? assignedCenters.map((c) => c.id) : null;
 
   const filteredRoles = filterRolesFromApi(user.roles as string[] | undefined)
+  const explicitRole =
+    typeof user.role === "string" && user.role.trim().length > 0
+      ? user.role
+      : undefined
   const tokenUser: AuthUser = {
     id: (user.id as string | undefined) ?? (user.user_id as string | undefined),
     email: user.email as string | undefined,
@@ -107,7 +111,7 @@ export function buildUser(data: Record<string, unknown>): AuthUser {
     lastName:
       (user.last_name as string | undefined) ??
       (user.lastName as string | undefined),
-    role: filteredRoles[0] ?? (user.role as string | undefined),
+    role: explicitRole ?? filteredRoles[0],
     roles: filteredRoles.length > 0 ? filteredRoles : undefined,
     learner_id: (user.learner_id as number | undefined) ?? (user.learner_id as string | undefined),
     assignedOrganisationIds: assignedOrgIds,

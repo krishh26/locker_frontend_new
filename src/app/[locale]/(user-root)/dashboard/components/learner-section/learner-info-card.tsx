@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl'
 import { isEnrollmentExcluded } from '@/lib/is-enrollment-excluded'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
+import { useGetTimeLogSpendQuery } from '@/store/api/time-log/timeLogApi'
 
 interface Learner {
   learner_id?: string | number
@@ -52,6 +53,7 @@ interface Learner {
 }
 
 interface User {
+  id?: string | number
   first_name?: string
   last_name?: string
   email?: string
@@ -76,7 +78,59 @@ function initialsFromName(name: string) {
 
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const t = useTranslations('learnerDashboard.infoCard')
-  // Calculate overall progress across courses not excluded from overall progress
+  const timeLogUserId = user?.id ? String(user.id) : undefined
+
+  const { data: otjSpendResponse, isLoading: isOtjLoading } =
+    useGetTimeLogSpendQuery(
+      {
+        user_id: timeLogUserId || '',
+        type: 'On the job',
+      },
+      { skip: !timeLogUserId }
+    )
+
+  const { data: ofjSpendResponse, isLoading: isOfjLoading } =
+    useGetTimeLogSpendQuery(
+      {
+        user_id: timeLogUserId || '',
+        type: 'Off the job',
+      },
+      { skip: !timeLogUserId }
+    )
+
+  const formatTime = (timeString?: string) => {
+    if (!timeString) return '0h 0m'
+    const [hours, minutes] = timeString.split(':')
+    return `${hours || '0'}h ${minutes || '0'}m`
+  }
+
+  const calculateTotalHours = (otjTotal?: string, ofjTotal?: string) => {
+    const parseTime = (timeString?: string) => {
+      if (!timeString) return { hours: 0, minutes: 0 }
+      const [hours, minutes] = timeString.split(':')
+      return {
+        hours: parseInt(hours || '0', 10),
+        minutes: parseInt(minutes || '0', 10),
+      }
+    }
+
+    const otj = parseTime(otjTotal)
+    const ofj = parseTime(ofjTotal)
+    const totalMinutes = otj.hours * 60 + otj.minutes + ofj.hours * 60 + ofj.minutes
+    const totalHours = Math.floor(totalMinutes / 60)
+    const remainingMinutes = totalMinutes % 60
+
+    if (totalHours === 0 && remainingMinutes === 0) return '0h'
+    if (remainingMinutes === 0) return `${totalHours}h`
+    return `${totalHours}h ${remainingMinutes}m`
+  }
+
+  const isTimeLogLoading = isOtjLoading || isOfjLoading
+  const otjTotal = otjSpendResponse?.data?.total
+  const ofjTotal = ofjSpendResponse?.data?.total
+  const totalHoursLabel = calculateTotalHours(otjTotal, ofjTotal)
+
+  // Calculate overall progress across all courses
   const overallProgressData = useMemo(() => {
     const coursesForProgress = (learner?.course ?? []).filter(
       (c) => !isEnrollmentExcluded(c)
@@ -264,7 +318,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
                 {t('timeLog.title')}
               </h3>
               <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-white/10 text-white shadow-sm'>
-                24h 57m
+                {isTimeLogLoading ? '...' : totalHoursLabel}
               </Badge>
             </div>
             <div className='grid grid-cols-2 gap-4 flex-1 items-center'>
@@ -272,13 +326,17 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
                 <p className='text-xs text-white/70'>
                   {t('timeLog.onTheJob')}
                 </p>
-                <p className='text-lg font-bold text-white'>02h 00m</p>
+                <p className='text-lg font-bold text-white'>
+                  {isTimeLogLoading ? '...' : formatTime(otjTotal)}
+                </p>
               </div>
               <div className='text-center space-y-1'>
                 <p className='text-xs text-white/70'>
                   {t('timeLog.offTheJob')}
                 </p>
-                <p className='text-lg font-bold text-white'>22h 57m</p>
+                <p className='text-lg font-bold text-white'>
+                  {isTimeLogLoading ? '...' : formatTime(ofjTotal)}
+                </p>
               </div>
             </div>
           </div>

@@ -2627,6 +2627,9 @@
           "sessionTypeRequired": "Il tipo di sessione è obbligatorio"
         }
       },
+      "deleteSession": {
+        "description": "Questa azione non puo essere annullata. La sessione selezionata verra eliminata definitivamente."
+      },
       "addAction": {
         "toast": {
           "added": "Azione aggiunta con successo",
@@ -5071,13 +5074,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "Cerca abbonamenti...",
       "empty": "Nessun abbonamento trovato.",
+      "licensesRemaining": "{count} rimanenti",
       "columns": {
         "organisation": "Organizzazione",
         "plan": "Piano",
-        "users": "Utenti",
+        "users": "Licenze",
+        "licenseStatus": "Stato licenza",
         "status": "Stato",
+        "startDate": "Data di inizio",
         "expiryDate": "Data di scadenza",
         "actions": "Azioni"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "Avviso",
+        "crossed": "Superato"
       },
       "status": {
         "active": "Attivo",
@@ -5103,6 +5114,18 @@
       },
       "buttons": {
         "assignPlan": "Assegna piano"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "Salute licenze abbonamento",
+      "viewSubscriptions": "Vedi abbonamenti",
+      "warningCount": "{count} avviso",
+      "crossedCount": "{count} superato",
+      "noSubscriptions": "Nessun abbonamento disponibile.",
+      "columns": {
+        "organisation": "Organizzazione",
+        "remaining": "Rimanenti",
+        "status": "Stato"
       }
     },
     "plansTable": {
@@ -5146,11 +5169,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "Organizzazione *",
-        "plan": "Piano *"
+        "plan": "Piano *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "Seleziona organizzazione",
-        "plan": "Seleziona piano"
+        "plan": "Seleziona piano",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "Sono mostrate solo le organizzazioni senza un piano."
@@ -5165,6 +5194,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Seleziona organizzazione e piano",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "Piano assegnato correttamente",
         "assignFailedFallback": "Impossibile assegnare il piano"
       }

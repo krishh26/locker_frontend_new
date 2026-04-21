@@ -393,8 +393,13 @@ export const qaSamplePlanApi = createApi({
         formData.append("mapping_id", String(body.mapping_id));
         formData.append("sampling_plan_detail_id", String(body.sampling_plan_detail_id));
         formData.append("role", body.role);
-        formData.append("signed_off", String(body.signed_off));
         formData.append("unit_code", body.unit_code);
+        if (body.signed_off !== undefined) {
+          formData.append("signed_off", String(body.signed_off));
+        }
+        if (body.completed !== undefined) {
+          formData.append("completed", String(body.completed));
+        }
         if (body.comment !== undefined) {
           formData.append("comment", body.comment);
         }

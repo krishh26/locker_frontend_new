@@ -36,6 +36,7 @@ import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import { toast } from "sonner"
 import type { AuthUser } from "@/store/api/auth/types"
 import { buildUser, decodeJwtPayload } from "@/store/api/auth/api"
+import { filterRolesFromApi } from "@/config/auth-roles"
 export function NavUser() {
   const { isMobile } = useSidebar()
   const router = useRouter()
@@ -55,7 +56,7 @@ export function NavUser() {
   const displayEmail = user?.email || learner?.email || ""
 
   // Get available roles from user object
-  const availableRoles = (user?.roles as string[] | undefined) || []
+  const availableRoles = filterRolesFromApi(user?.roles as string[] | undefined)
   const currentRole = user?.role || ""
 
   // Handle role change

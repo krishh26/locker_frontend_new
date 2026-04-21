@@ -1386,6 +1386,9 @@
       "page": {
         "subtitle": "एविडेंस डॉक्यूमेंट्स की समीक्षा करें",
         "subtitleForUnit": "यूनिट के लिए एविडेंस डॉक्यूमेंट्स की समीक्षा करें: {unitCode}",
+        "evidenceLoadErrorTitle": "एविडेंस लोड नहीं हो सका",
+        "evidenceLoadErrorDescription": "एविडेंस सूची लोड करने में विफल। कृपया पुनः प्रयास करें।",
+        "retryEvidenceLoad": "पुनः प्रयास करें",
         "confirmationStatements": {
           "learner": "मैं पुष्टि करता/करती हूँ कि यह यूनिट पूर्ण है और प्रदान किया गया एविडेंस मेरे अपने कार्य का परिणाम है।",
           "trainer": "मैं पुष्टि करता/करती हूँ कि लर्नर ने इस यूनिट के लिए सभी कौशल और ज्ञान आवश्यकताओं को पूरा करके दक्षता प्रदर्शित की है, और योग्यता की आवश्यकताओं के अनुसार मूल्यांकन किया गया है।",
@@ -1424,7 +1427,8 @@
           "unableDeleteFileReviewIdNotFound": "फ़ाइल हटाई नहीं जा सकी: रिव्यू ID नहीं मिली।",
           "fileDeletedSuccess": "फ़ाइल सफलतापूर्वक हटाई गई।",
           "deleteFileFailed": "फ़ाइल हटाने में विफल।",
-          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।"
+          "noEvidenceCannotAddComment": "कोई एविडेंस नहीं मिला। कमेंट जोड़ा नहीं जा सकता।",
+          "commentAndFileUploadedSuccess": "कमेंट और फ़ाइल सफलतापूर्वक अपलोड हो गई।"
         }
       },
       "unitProgress": {
@@ -1455,7 +1459,9 @@
           "kb": "KB",
           "mb": "MB",
           "gb": "GB"
-        }
+        },
+        "openInEvidenceLibrary": "एविडेंस लाइब्रेरी में खोलें",
+        "addComment": "कमेंट जोड़ें या संपादित करें"
       },
       "confirmationStatements": {
         "columns": {
@@ -1488,6 +1494,8 @@
       "unitSignOffModal": {
         "title": "यूनिट साइन-ऑफ",
         "description": "इस यूनिट के लिए सामान्य टिप्पणी (अधिकतम 500 अक्षर)।",
+        "optionalFileLabel": "अनुलग्नक (वैकल्पिक)",
+        "optionalFileHint": "इस साइन-ऑफ के साथ वैकल्पिक फ़ाइल संलग्न कर सकते हैं।",
         "commentLabel": "कमेंट",
         "commentPlaceholder": "यहाँ अपना कमेंट लिखें...",
         "charactersCount": "{count}/500 अक्षर",
@@ -3269,6 +3277,9 @@
           "durationRequired": "अवधि आवश्यक है",
           "sessionTypeRequired": "सत्र प्रकार आवश्यक है"
         }
+      },
+      "deleteSession": {
+        "description": "Yeh action wapas nahi li ja sakti. Chuni gayi session permanently delete ho jayegi."
       },
       "addAction": {
         "toast": {
@@ -5924,13 +5935,21 @@
     "subscriptionsTable": {
       "searchPlaceholder": "सब्सक्रिप्शन्स खोजें...",
       "empty": "कोई सब्सक्रिप्शन नहीं मिला।",
+      "licensesRemaining": "{count} बचे",
       "columns": {
         "organisation": "ऑर्गनाइज़ेशन",
         "plan": "प्लान",
-        "users": "यूज़र्स",
+        "users": "लाइसेंस",
+        "licenseStatus": "लाइसेंस स्टेटस",
         "status": "स्टेटस",
+        "startDate": "स्टार्ट डेट",
         "expiryDate": "एक्सपायरी डेट",
         "actions": "एक्शन्स"
+      },
+      "licenseHealth": {
+        "ok": "OK",
+        "warning": "वार्निंग",
+        "crossed": "क्रॉस्ड"
       },
       "status": {
         "active": "एक्टिव",
@@ -5956,6 +5975,18 @@
       },
       "buttons": {
         "assignPlan": "प्लान असाइन करें"
+      }
+    },
+    "dashboard": {
+      "licenseHealthTitle": "सब्सक्रिप्शन लाइसेंस हेल्थ",
+      "viewSubscriptions": "सब्सक्रिप्शन्स देखें",
+      "warningCount": "{count} वार्निंग",
+      "crossedCount": "{count} क्रॉस्ड",
+      "noSubscriptions": "कोई सब्सक्रिप्शन उपलब्ध नहीं है।",
+      "columns": {
+        "organisation": "ऑर्गनाइज़ेशन",
+        "remaining": "बचे",
+        "status": "स्टेटस"
       }
     },
     "plansTable": {
@@ -5999,11 +6030,17 @@
     "assignPlan": {
       "labels": {
         "organisation": "ऑर्गनाइज़ेशन *",
-        "plan": "प्लान *"
+        "plan": "प्लान *",
+        "totalLicenses": "Total licenses *",
+        "tolerancePercentage": "Tolerance percentage *",
+        "warningThresholdPercentage": "Warning threshold percentage *"
       },
       "placeholders": {
         "organisation": "ऑर्गनाइज़ेशन चुनें",
-        "plan": "प्लान चुनें"
+        "plan": "प्लान चुनें",
+        "totalLicenses": "e.g. 10",
+        "tolerancePercentage": "e.g. 5",
+        "warningThresholdPercentage": "e.g. 90"
       },
       "helper": {
         "orgsWithoutPlanOnly": "सिर्फ वही ऑर्गनाइज़ेशन दिखाए जाते हैं जिनके पास प्लान नहीं है।"
@@ -6018,6 +6055,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "कृपया ऑर्गनाइज़ेशन और प्लान चुनें",
+        "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
+        "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
+        "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
         "assignedSuccess": "प्लान सफलतापूर्वक असाइन हुआ",
         "assignFailedFallback": "प्लान असाइन करने में विफल"
       }

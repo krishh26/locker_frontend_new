@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { Search, Download, Building2, CreditCard, AlertCircle, Plus, MoreVertical, RefreshCw, Ban } from "lucide-react"
+import { Search, Download, Building2, CreditCard, Plus, MoreVertical, RefreshCw, Ban, AlertTriangle, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -48,6 +48,39 @@ import { AssignPlanDialog } from "./assign-plan-dialog"
 import { ChangePlanDialog } from "./change-plan-dialog"
 import { SuspendAccessDialog } from "./suspend-access-dialog"
 import { useTranslations } from "next-intl"
+
+type LicenseHealth = "ok" | "warning" | "crossed"
+
+function safePct(numerator: number | undefined, denominator: number | undefined): number | null {
+  if (!numerator || !denominator || denominator <= 0) return null
+  return (numerator / denominator) * 100
+}
+
+function computeLicenseHealth(sub: Subscription): LicenseHealth {
+  const ws = (sub.warningStatus ?? "").toLowerCase()
+  if (ws === "crossed") return "crossed"
+  if (ws === "warning") return "warning"
+  if (ws === "none") return "ok"
+
+  const used = sub.usedLicenses ?? sub.usedUsers
+  const maxAllowed = sub.maxAllowedLicenses ?? sub.userLimit
+  const remaining = sub.remainingLicenses
+  const crossed =
+    (typeof remaining === "number" && remaining < 0) ||
+    (typeof used === "number" && typeof maxAllowed === "number" && used > maxAllowed)
+  if (crossed) return "crossed"
+
+  const pct = safePct(used, maxAllowed)
+  const threshold = sub.warningThresholdPercentage
+  if (pct != null && typeof threshold === "number" && pct >= threshold) return "warning"
+  return "ok"
+}
+
+function formatDate(value: string | null | undefined): string {
+  if (!value) return "—"
+  const d = new Date(value)
+  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString()
+}
 
 export function SubscriptionsDataTable() {
   const t = useTranslations("subscriptions")
@@ -89,17 +122,19 @@ export function SubscriptionsDataTable() {
       t("subscriptionsTable.columns.organisation"),
       t("subscriptionsTable.columns.plan"),
       t("subscriptionsTable.columns.users"),
+      t("subscriptionsTable.columns.licenseStatus"),
       t("subscriptionsTable.columns.status"),
       t("subscriptionsTable.columns.expiryDate"),
     ]
     const rows = filteredSubscriptions.map((sub) => [
       orgMap.get(sub.organisationId) || t("common.unknown"),
       sub.plan,
-      `${sub.usedUsers}/${sub.userLimit}`,
+      `${sub.usedLicenses ?? sub.usedUsers} / ${sub.totalLicenses ?? sub.userLimit} (${t("subscriptionsTable.licensesRemaining", { count: sub.remainingLicenses ?? Math.max(0, (sub.maxAllowedLicenses ?? sub.userLimit) - (sub.usedLicenses ?? sub.usedUsers)) })})`,
+      t(`subscriptionsTable.licenseHealth.${computeLicenseHealth(sub)}` as "subscriptionsTable.licenseHealth.ok"),
       sub.isExpired
         ? t("subscriptionsTable.status.expired")
         : t("subscriptionsTable.status.active"),
-      new Date(sub.expiryDate).toLocaleDateString(),
+      formatDate(sub.endDate ?? sub.expiryDate),
     ])
 
     const csvContent = [
@@ -126,17 +161,19 @@ export function SubscriptionsDataTable() {
       t("subscriptionsTable.columns.organisation"),
       t("subscriptionsTable.columns.plan"),
       t("subscriptionsTable.columns.users"),
+      t("subscriptionsTable.columns.licenseStatus"),
       t("subscriptionsTable.columns.status"),
       t("subscriptionsTable.columns.expiryDate"),
     ]
     const rows = filteredSubscriptions.map((sub) => [
       orgMap.get(sub.organisationId) || t("common.unknown"),
       sub.plan,
-      `${sub.usedUsers}/${sub.userLimit}`,
+      `${sub.usedLicenses ?? sub.usedUsers} / ${sub.totalLicenses ?? sub.userLimit} (${t("subscriptionsTable.licensesRemaining", { count: sub.remainingLicenses ?? Math.max(0, (sub.maxAllowedLicenses ?? sub.userLimit) - (sub.usedLicenses ?? sub.usedUsers)) })})`,
+      t(`subscriptionsTable.licenseHealth.${computeLicenseHealth(sub)}` as "subscriptionsTable.licenseHealth.ok"),
       sub.isExpired
         ? t("subscriptionsTable.status.expired")
         : t("subscriptionsTable.status.active"),
-      new Date(sub.expiryDate).toLocaleDateString(),
+      formatDate(sub.endDate ?? sub.expiryDate),
     ])
     void exportTableToPdf({ title: t("page.title"), headers, rows })
     toast.success(t("toast.pdfExported"))
@@ -191,19 +228,37 @@ export function SubscriptionsDataTable() {
         },
       },
       {
-        accessorKey: "users",
+        id: "licenses",
         header: t("subscriptionsTable.columns.users"),
         cell: ({ row }) => {
           const sub = row.original
-          const isLimitReached = sub.usedUsers >= sub.userLimit
+          const used = sub.usedLicenses ?? sub.usedUsers
+          const total = sub.totalLicenses ?? sub.userLimit
+          const remaining =
+            sub.remainingLicenses ??
+            (typeof used === "number" && typeof (sub.maxAllowedLicenses ?? sub.userLimit) === "number"
+              ? (sub.maxAllowedLicenses ?? sub.userLimit) - used
+              : undefined)
+          const health = computeLicenseHealth(sub)
+
+          const badgeVariant =
+            health === "crossed" ? "destructive" : health === "warning" ? "secondary" : "outline"
+          const BadgeIcon = health === "crossed" ? CheckCircle : health === "warning" ? AlertTriangle : null
+
           return (
-            <div className="flex items-center gap-2">
-              <span>
-                {sub.usedUsers} / {sub.userLimit}
-              </span>
-              {isLimitReached && (
-                <AlertCircle className="h-4 w-4 text-destructive" />
-              )}
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col">
+                <span className="tabular-nums">
+                  {used} / {total}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {t("subscriptionsTable.licensesRemaining", { count: remaining ?? 0 })}
+                </span>
+              </div>
+              <Badge variant={badgeVariant}>
+                {BadgeIcon ? <BadgeIcon className="h-3 w-3" /> : null}
+                {t(`subscriptionsTable.licenseHealth.${health}` as "subscriptionsTable.licenseHealth.ok")}
+              </Badge>
             </div>
           )
         },
@@ -226,7 +281,7 @@ export function SubscriptionsDataTable() {
         accessorKey: "expiryDate",
         header: t("subscriptionsTable.columns.expiryDate"),
         cell: ({ row }) => {
-          return new Date(row.original.expiryDate).toLocaleDateString()
+          return formatDate(row.original.endDate ?? row.original.expiryDate)
         },
       },
       {

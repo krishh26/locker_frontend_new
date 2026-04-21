@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
@@ -13,11 +13,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 interface UnitSignOffModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (comment: string) => void;
+  onSubmit: (comment: string, file?: File) => void | Promise<void>;
   defaultValue?: string;
 }
 
@@ -29,10 +30,16 @@ export function UnitSignOffModal({
 }: UnitSignOffModalProps) {
   const t = useTranslations("qaSamplePlan.evidence.unitSignOffModal");
   const [comment, setComment] = useState(defaultValue);
+  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (open) {
       setComment(defaultValue);
+      setSelectedFile(undefined);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   }, [defaultValue, open]);
 
@@ -40,12 +47,20 @@ export function UnitSignOffModal({
     if (!comment.trim()) {
       return;
     }
-    onSubmit(comment.trim());
+    void onSubmit(comment.trim(), selectedFile);
     setComment("");
+    setSelectedFile(undefined);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleClose = () => {
     setComment("");
+    setSelectedFile(undefined);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     onOpenChange(false);
   };
 
@@ -54,38 +69,47 @@ export function UnitSignOffModal({
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>
-            {t("description")}
-          </DialogDescription>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-2 py-4">
-          <Label htmlFor="unit-comment">{t("commentLabel")}</Label>
-          <Textarea
-            id="unit-comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder={t("commentPlaceholder")}
-            rows={8}
-            className="resize-none"
-            maxLength={500}
-          />
-          {comment.length > 0 && (
-            <p className="text-xs text-muted-foreground text-right">
-              {t("charactersCount", { count: comment.length })}
-            </p>
-          )}
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="unit-comment">{t("commentLabel")}</Label>
+            <Textarea
+              id="unit-comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder={t("commentPlaceholder")}
+              rows={8}
+              className="resize-none"
+              maxLength={500}
+            />
+            {comment.length > 0 && (
+              <p className="text-xs text-muted-foreground text-right">
+                {t("charactersCount", { count: comment.length })}
+              </p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="unit-sign-off-file">{t("optionalFileLabel")}</Label>
+            <Input
+              ref={fileInputRef}
+              id="unit-sign-off-file"
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                setSelectedFile(file ?? undefined);
+              }}
+            />
+            <p className="text-xs text-muted-foreground">{t("optionalFileHint")}</p>
+          </div>
         </div>
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={handleClose}>
             {t("cancelClose")}
           </Button>
-          <Button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!comment.trim()}
-          >
+          <Button type="button" onClick={handleSubmit} disabled={!comment.trim()}>
             {t("submit")}
           </Button>
         </DialogFooter>

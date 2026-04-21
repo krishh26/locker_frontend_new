@@ -77,7 +77,7 @@ export function UnitMappingTable({
                       isExpanded &&
                       unit.subUnits?.map((subUnit) => (
                         <TableRow
-                          key={subUnit.id}
+                          key={`${String(unit.unit_code)}-${String(subUnit.id)}`}
                           className="bg-muted hover:bg-muted"
                         >
                           <TableCell className="w-[50px] pl-8"></TableCell>

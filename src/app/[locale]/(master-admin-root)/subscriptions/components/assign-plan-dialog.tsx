@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Select,
@@ -40,6 +41,9 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
 
   const [organisationId, setOrganisationId] = useState<string>("")
   const [planId, setPlanId] = useState<string>("")
+  const [totalLicenses, setTotalLicenses] = useState<string>("")
+  const [tolerancePercentage, setTolerancePercentage] = useState<string>("")
+  const [warningThresholdPercentage, setWarningThresholdPercentage] = useState<string>("")
 
   // Get organisation IDs that already have a subscription/plan
   const orgsWithPlan = useMemo(() => {
@@ -61,14 +65,43 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       toast.error(t("assignPlan.toast.selectOrgAndPlan"))
       return
     }
+
+    const totalLicensesNum = Number(totalLicenses)
+    if (!Number.isInteger(totalLicensesNum) || totalLicensesNum < 1) {
+      toast.error(t("assignPlan.toast.invalidTotalLicenses"))
+      return
+    }
+
+    const tolerancePercentageNum = Number(tolerancePercentage)
+    if (!Number.isFinite(tolerancePercentageNum) || tolerancePercentageNum < 0 || tolerancePercentageNum > 100) {
+      toast.error(t("assignPlan.toast.invalidTolerancePercentage"))
+      return
+    }
+
+    const warningThresholdPercentageNum = Number(warningThresholdPercentage)
+    if (
+      !Number.isFinite(warningThresholdPercentageNum) ||
+      warningThresholdPercentageNum < 0 ||
+      warningThresholdPercentageNum > 100
+    ) {
+      toast.error(t("assignPlan.toast.invalidWarningThresholdPercentage"))
+      return
+    }
+
     try {
       await assignPlanMutation({
         organisationId: Number(organisationId),
         planId: Number(planId),
+        totalLicenses: totalLicensesNum,
+        tolerancePercentage: tolerancePercentageNum,
+        warningThresholdPercentage: warningThresholdPercentageNum,
       }).unwrap()
       toast.success(t("assignPlan.toast.assignedSuccess"))
       setOrganisationId("")
       setPlanId("")
+      setTotalLicenses("")
+      setTolerancePercentage("")
+      setWarningThresholdPercentage("")
       onSuccess?.()
     } catch (error: unknown) {
       const msg =
@@ -108,6 +141,30 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     )
   }
 
+  const totalLicensesNumForUi = Number(totalLicenses)
+  const tolerancePercentageNumForUi = Number(tolerancePercentage)
+  const warningThresholdPercentageNumForUi = Number(warningThresholdPercentage)
+
+  const isTotalLicensesValid =
+    totalLicenses !== "" && Number.isInteger(totalLicensesNumForUi) && totalLicensesNumForUi >= 1
+  const isTolerancePercentageValid =
+    tolerancePercentage !== "" &&
+    Number.isFinite(tolerancePercentageNumForUi) &&
+    tolerancePercentageNumForUi >= 0 &&
+    tolerancePercentageNumForUi <= 100
+  const isWarningThresholdPercentageValid =
+    warningThresholdPercentage !== "" &&
+    Number.isFinite(warningThresholdPercentageNumForUi) &&
+    warningThresholdPercentageNumForUi >= 0 &&
+    warningThresholdPercentageNumForUi <= 100
+
+  const isFormValid =
+    !!organisationId &&
+    !!planId &&
+    isTotalLicensesValid &&
+    isTolerancePercentageValid &&
+    isWarningThresholdPercentageValid
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
@@ -143,11 +200,57 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
           </SelectContent>
         </Select>
       </div>
+      <div className="space-y-2">
+        <Label htmlFor="totalLicenses">{t("assignPlan.labels.totalLicenses")}</Label>
+        <Input
+          id="totalLicenses"
+          type="number"
+          inputMode="numeric"
+          min={1}
+          step={1}
+          placeholder={t("assignPlan.placeholders.totalLicenses")}
+          value={totalLicenses}
+          onChange={(e) => setTotalLicenses(e.target.value)}
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="tolerancePercentage">{t("assignPlan.labels.tolerancePercentage")}</Label>
+        <Input
+          id="tolerancePercentage"
+          type="number"
+          inputMode="decimal"
+          min={0}
+          max={100}
+          step={0.01}
+          placeholder={t("assignPlan.placeholders.tolerancePercentage")}
+          value={tolerancePercentage}
+          onChange={(e) => setTolerancePercentage(e.target.value)}
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="warningThresholdPercentage">
+          {t("assignPlan.labels.warningThresholdPercentage")}
+        </Label>
+        <Input
+          id="warningThresholdPercentage"
+          type="number"
+          inputMode="decimal"
+          min={0}
+          max={100}
+          step={0.01}
+          placeholder={t("assignPlan.placeholders.warningThresholdPercentage")}
+          value={warningThresholdPercentage}
+          onChange={(e) => setWarningThresholdPercentage(e.target.value)}
+          required
+        />
+      </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isAssigning}>
           {t("assignPlan.buttons.cancel")}
         </Button>
-        <Button type="submit" disabled={isAssigning || !organisationId || !planId}>
+        <Button type="submit" disabled={isAssigning || !isFormValid}>
           {isAssigning && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {t("assignPlan.buttons.submit")}
         </Button>

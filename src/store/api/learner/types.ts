@@ -13,12 +13,15 @@ export type LearnerCourse = {
     brand_guidelines: string;
     course_type: string | null;
     course_core_type: string | null;
+    is_excluded?: boolean;
   };
   start_date: string;
   end_date: string;
   bil_return_date?: string | null;
   course_status: string;
   is_main_course: boolean;
+  /** When true, enrollment is omitted from overall progress aggregates */
+  is_excluded?: boolean;
   // Progress fields
   unitsNotStarted?: number;
   unitsFullyCompleted?: number;

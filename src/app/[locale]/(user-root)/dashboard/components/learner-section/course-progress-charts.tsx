@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useRouter } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
 import { useAppDispatch } from "@/store/hooks"
@@ -16,14 +17,17 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Flag, CalendarDays, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded"
 
 interface Course {
   user_course_id?: number
+  is_excluded?: boolean
   course?: {
     course_id?: number
     course_name: string
     course_core_type?: string
     questions?: Array<{ achieved?: boolean }>
+    is_excluded?: boolean
   }
   start_date?: string
   end_date?: string
@@ -389,7 +393,12 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
   const dispatch = useAppDispatch()
   const t = useTranslations("learnerDashboard.courseProgressCharts")
 
-  if (!courses || courses.length === 0) {
+  const visibleCourses = useMemo(
+    () => (courses ?? []).filter((c) => !isEnrollmentExcluded(c)),
+    [courses]
+  )
+
+  if (!visibleCourses.length) {
     return null
   }
 
@@ -414,15 +423,16 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         <h2 className="text-xl font-semibold">{t("progressOverview")}</h2>
       </div>
       <div className="grid gap-4 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-1 ">
-        {courses.map((course, index) => {
+        {visibleCourses.map((course, index) => {
           const progressData = convertToProgressData(course)
           const metrics = getNestedChartMetrics(course)
           const courseName = course?.course?.course_name || t("courseFallback", { index: index + 1 })
           const colorIdx = index % cardBgColors.length
+          const rowKey = course.user_course_id ?? course.course?.course_id ?? index
 
           return (
             <Card
-              key={index}
+              key={rowKey}
               className={cn(
                 "relative shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
               )}

@@ -4077,39 +4077,29 @@
   },
   "progressExclusion": {
     "pageTitle": "Exclure du progrès global",
-    "pageSubtitle": "Sélectionnez un cours et choisissez quels statuts de formation doivent être exclus du suivi du progrès global",
+    "pageSubtitle": "Excluez un cours entier afin qu’il ne compte pas dans le progrès global des apprenants de cette organisation.",
     "card": {
       "title": "Exclure du progrès global",
-      "description": "Sélectionnez un cours et choisissez quels statuts de formation doivent être exclus du suivi du progrès global"
+      "description": "Sélectionnez un cours et indiquez s’il doit être exclu du suivi du progrès global."
     },
     "info": {
-      "description": "Les modifications effectuées ici affecteront la façon dont le progrès global est calculé pour tous les apprenants du cours sélectionné."
+      "description": "Lorsqu’il est exclu, ce cours ne compte pas dans le calcul du progrès global pour les apprenants du cours sélectionné."
     },
     "form": {
       "courseLabel": "Sélectionner un cours",
       "coursePlaceholder": "Sélectionnez un cours",
       "submit": "Enregistrer",
-      "submitting": "Enregistrement..."
-    },
-    "table": {
-      "statusColumn": "Statut modifié en",
-      "excludeColumn": "Exclure du progrès"
-    },
-    "statusLabels": {
-      "In Training": "En formation",
-      "IQA Approved": "Approuvé par IQA",
-      "Completed": "Terminé",
-      "Certificated": "Certifié",
-      "Training Suspended": "Formation suspendue",
-      "Transferred": "Transféré",
-      "Early Leaver": "Départ anticipé",
-      "Exempt": "Exempté",
-      "Awaiting Induction": "En attente d’induction"
+      "submitting": "Enregistrement...",
+      "organisationRequired": "Sélectionnez une organisation (Master Admin) ou assurez-vous que votre compte est rattaché à une organisation.",
+      "loadError": "Échec du chargement des paramètres d’exclusion. Veuillez réessayer.",
+      "excludeToggleLabel": "Exclure le cours du progrès global",
+      "excludeToggleHint": "Activez pour exclure ce cours du progrès global ; désactivez pour l’inclure à nouveau."
     },
     "toast": {
       "selectCourseRequired": "Veuillez sélectionner un cours",
-      "updateSuccess": "Les paramètres d’exclusion du progrès ont été mis à jour avec succès",
-      "updateFailed": "Échec de la mise à jour des paramètres d’exclusion du progrès. Veuillez réessayer."
+      "organisationRequired": "Une organisation est requise pour mettre à jour les paramètres",
+      "updateSuccess": "Les paramètres d’exclusion du cours ont été mis à jour avec succès",
+      "updateFailed": "Échec de la mise à jour des paramètres d’exclusion du cours. Veuillez réessayer."
     }
   },
   "gatewayReport": {

@@ -3395,39 +3395,29 @@
   },
   "progressExclusion": {
     "pageTitle": "Escludi dal progresso complessivo",
-    "pageSubtitle": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo",
+    "pageSubtitle": "Escludi un intero corso in modo che non conti nel progresso complessivo degli studenti di questa organizzazione.",
     "card": {
       "title": "Escludi dal progresso complessivo",
-      "description": "Seleziona un corso e scegli quali stati di formazione escludere dal tracciamento del progresso complessivo"
+      "description": "Seleziona un corso e scegli se escluderlo dal tracciamento del progresso complessivo."
     },
     "info": {
-      "description": "Le modifiche apportate qui influenzeranno il modo in cui viene calcolato il progresso complessivo per tutti gli studenti del corso selezionato."
+      "description": "Se escluso, questo corso non entrerà nel calcolo del progresso complessivo per gli studenti del corso selezionato."
     },
     "form": {
       "courseLabel": "Seleziona corso",
       "coursePlaceholder": "Seleziona un corso",
       "submit": "Salva",
-      "submitting": "Salvataggio in corso..."
-    },
-    "table": {
-      "statusColumn": "Stato modificato in",
-      "excludeColumn": "Escludi dal progresso"
-    },
-    "statusLabels": {
-      "In Training": "In formazione",
-      "IQA Approved": "Approvato da IQA",
-      "Completed": "Completato",
-      "Certificated": "Certificato",
-      "Training Suspended": "Formazione sospesa",
-      "Transferred": "Trasferito",
-      "Early Leaver": "Uscita anticipata",
-      "Exempt": "Esente",
-      "Awaiting Induction": "In attesa di induzione"
+      "submitting": "Salvataggio in corso...",
+      "organisationRequired": "Seleziona un’organizzazione (Master Admin) o assicurati che il tuo account sia collegato a un’organizzazione.",
+      "loadError": "Impossibile caricare le impostazioni di esclusione. Riprova.",
+      "excludeToggleLabel": "Escludi il corso dal progresso complessivo",
+      "excludeToggleHint": "Attiva per escludere il corso dal progresso complessivo; disattiva per includerlo di nuovo."
     },
     "toast": {
       "selectCourseRequired": "Seleziona un corso",
-      "updateSuccess": "Impostazioni di esclusione dal progresso aggiornate con successo",
-      "updateFailed": "Errore durante l’aggiornamento delle impostazioni di esclusione dal progresso. Riprova."
+      "organisationRequired": "Per aggiornare le impostazioni è necessaria un’organizzazione",
+      "updateSuccess": "Impostazioni di esclusione del corso aggiornate con successo",
+      "updateFailed": "Errore durante l’aggiornamento delle impostazioni di esclusione del corso. Riprova."
     }
   },
   "gatewayReport": {

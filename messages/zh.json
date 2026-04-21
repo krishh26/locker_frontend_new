@@ -3994,39 +3994,29 @@
   },
   "progressExclusion": {
     "pageTitle": "不计入总体进度",
-    "pageSubtitle": "选择课程并指定哪些培训状态不计入总体进度统计",
+    "pageSubtitle": "将整个课程排除在组织学员的总体进度之外。",
     "card": {
       "title": "不计入总体进度",
-      "description": "选择课程并指定哪些培训状态不计入总体进度统计"
+      "description": "选择课程并设置是否将其排除在总体进度统计之外。"
     },
     "info": {
-      "description": "此处的更改会影响所选课程下所有学员的总体进度计算方式。"
+      "description": "排除后，该课程将不计入选定课程学员的总体进度计算。"
     },
     "form": {
       "courseLabel": "选择课程",
       "coursePlaceholder": "请选择课程",
       "submit": "保存",
-      "submitting": "正在保存..."
-    },
-    "table": {
-      "statusColumn": "状态变更为",
-      "excludeColumn": "不计入进度"
-    },
-    "statusLabels": {
-      "In Training": "培训中",
-      "IQA Approved": "IQA 已批准",
-      "Completed": "已完成",
-      "Certificated": "已发证书",
-      "Training Suspended": "培训暂停",
-      "Transferred": "已转出",
-      "Early Leaver": "提前离开",
-      "Exempt": "豁免",
-      "Awaiting Induction": "等待入职培训"
+      "submitting": "正在保存...",
+      "organisationRequired": "请选择组织（主管理员），或确保您的账户已关联到组织。",
+      "loadError": "加载排除设置失败。请重试。",
+      "excludeToggleLabel": "将课程排除在总体进度之外",
+      "excludeToggleHint": "开启以排除该课程的总体进度；关闭以重新计入。"
     },
     "toast": {
       "selectCourseRequired": "请选择课程",
-      "updateSuccess": "进度排除设置已成功更新",
-      "updateFailed": "更新进度排除设置失败。请重试。"
+      "organisationRequired": "更新设置需要选择组织",
+      "updateSuccess": "课程排除设置已成功更新",
+      "updateFailed": "更新课程排除设置失败。请重试。"
     }
   },
   "gatewayReport": {

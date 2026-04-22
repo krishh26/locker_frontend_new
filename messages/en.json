@@ -552,6 +552,9 @@
         "session_due_in_7_days": "Sessions due in 7 days",
         "sample_due_in_month": "Sample due in month",
         "sampling_plan_overdue": "Sampling plan overdue",
+        "total_licenses": "Total Licenses",
+        "total_license_used": "Licenses Used",
+        "total_license_remaining": "Licenses Remaining",
         "trainer_rag_report": "Trainer RAG rating",
         "outstanding_eqa_actions": "Outstanding EQA actions",
         "overall_progress": "Overall progress"
@@ -947,17 +950,6 @@
       "noChatSelected": "No chat selected",
       "noChatSelectedDescription": "Select a course from the list to start messaging"
     }
-  },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
     "pageTitle": "Form Builder",
@@ -2145,6 +2137,7 @@
       "filterByEmployerLabel": "By Employer",
       "filterByCourseLabel": "By Course",
       "filterByCurriculumManagerLabel": "By Curriculum Manager",
+      "filterByLineManagerLabel": "By Line Manager",
       "pleaseSelectOption": "Please Select",
       "dateFromLabel": "Date Range From",
       "dateToLabel": "Date Range To",
@@ -4984,13 +4977,14 @@
   },
   "caseload": {
     "pageTitle": "Caseload Management",
-    "pageSubtitle": "View and export line manager caseloads.",
-    "searchPlaceholder": "Search line managers...",
+    "pageSubtitle": "Manage and view line managers and their assigned users",
+    "searchPlaceholder": "Search line managers by name or email...",
     "refresh": "Refresh",
     "clear": "Clear",
-    "noLineManagersFound": "No line managers found",
-    "noLineManagersMatch": "No line managers match your search",
-    "noLineManagersInSystem": "There are currently no line managers in the system.",
+    "noLineManagersFound": "No Line Managers Found",
+    "noLineManagersMatch": "No line managers match",
+    "noLineManagersInSystem": "There are no line managers in the system yet.",
+    "failedToLoad": "Failed to load caseload data. Please try again.",
     "cards": {
       "export": "Export",
       "exportCsv": "Export CSV",

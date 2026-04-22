@@ -533,6 +533,9 @@
         "session_due_in_7_days": "Sesiones en 7 días",
         "sample_due_in_month": "Muestra en el mes",
         "sampling_plan_overdue": "Plan de muestreo atrasado",
+        "total_licenses": "Licencias totales",
+        "total_license_used": "Licencias usadas",
+        "total_license_remaining": "Licencias restantes",
         "trainer_rag_report": "Valoración RAG del formador",
         "outstanding_eqa_actions": "Acciones EQA pendientes",
         "overall_progress": "Progreso general"
@@ -1939,6 +1942,7 @@
       "filterByEmployerLabel": "Por empleador",
       "filterByCourseLabel": "Por curso",
       "filterByCurriculumManagerLabel": "Por responsable de currículo",
+      "filterByLineManagerLabel": "Por supervisor directo",
       "pleaseSelectOption": "Seleccione una opción",
       "dateFromLabel": "Rango de fechas (desde)",
       "dateToLabel": "Rango de fechas (hasta)",

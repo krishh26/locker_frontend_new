@@ -341,7 +341,14 @@
   },
   "dashboard": {
     "adminDashboard": "Beheerdashboard",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin": {
+      "cards": {
+        "total_licenses": "Gesamtanzahl Lizenzen",
+        "total_license_used": "Verwendete Lizenzen",
+        "total_license_remaining": "Verbleibende Lizenzen"
+      }
+    }
   },
   "adminCommon": {
     "name": "Name",
@@ -1521,6 +1528,7 @@
       "filterByEmployerLabel": "Nach Arbeitgeber",
       "filterByCourseLabel": "Nach Kurs",
       "filterByCurriculumManagerLabel": "Nach Curriculum-Manager",
+      "filterByLineManagerLabel": "Nach Vorgesetztem",
       "pleaseSelectOption": "Bitte auswählen",
       "dateFromLabel": "Datumsbereich von",
       "dateToLabel": "Datumsbereich bis",

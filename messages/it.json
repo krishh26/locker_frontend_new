@@ -341,7 +341,14 @@
   },
   "dashboard": {
     "adminDashboard": "Dashboard amministratore",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin": {
+      "cards": {
+        "total_licenses": "Licenze totali",
+        "total_license_used": "Licenze utilizzate",
+        "total_license_remaining": "Licenze rimanenti"
+      }
+    }
   },
   "adminCommon": {
     "name": "Nome",
@@ -1562,6 +1569,7 @@
       "filterByEmployerLabel": "Per datore di lavoro",
       "filterByCourseLabel": "Per corso",
       "filterByCurriculumManagerLabel": "Per responsabile del curriculum",
+      "filterByLineManagerLabel": "Per responsabile di linea",
       "pleaseSelectOption": "Seleziona",
       "dateFromLabel": "Intervallo date (da)",
       "dateToLabel": "Intervallo date (a)",

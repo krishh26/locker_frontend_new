@@ -532,6 +532,9 @@
         "session_due_in_7_days": "الجلسات في 7 أيام",
         "sample_due_in_month": "العينة في الشهر",
         "sampling_plan_overdue": "خطة المعاينة متأخرة",
+        "total_licenses": "إجمالي التراخيص",
+        "total_license_used": "التراخيص المستخدمة",
+        "total_license_remaining": "التراخيص المتبقية",
         "trainer_rag_report": "تقييم RAG للمدرب",
         "outstanding_eqa_actions": "إجراءات EQA المعلقة",
         "overall_progress": "التقدم الإجمالي"
@@ -2102,6 +2105,7 @@
       "filterByEmployerLabel": "حسب صاحب العمل",
       "filterByCourseLabel": "حسب الدورة",
       "filterByCurriculumManagerLabel": "حسب مدير المنهج",
+      "filterByLineManagerLabel": "حسب المدير المباشر",
       "pleaseSelectOption": "الرجاء الاختيار",
       "dateFromLabel": "نطاق التاريخ (من)",
       "dateToLabel": "نطاق التاريخ (إلى)",

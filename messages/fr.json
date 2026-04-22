@@ -539,6 +539,9 @@
         "session_due_in_7_days": "Sessions dans 7 jours",
         "sample_due_in_month": "Échantillon dans le mois",
         "sampling_plan_overdue": "Plan d'échantillonnage en retard",
+        "total_licenses": "Licences totales",
+        "total_license_used": "Licences utilisées",
+        "total_license_remaining": "Licences restantes",
         "trainer_rag_report": "Note RAG formateur",
         "outstanding_eqa_actions": "Actions EQA en attente",
         "overall_progress": "Progression globale"

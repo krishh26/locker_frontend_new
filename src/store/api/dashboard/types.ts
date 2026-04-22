@@ -61,7 +61,11 @@ export interface DashboardCounts {
   sampleDueInMonth_count: number
   samplingPlanOverdue_count: number
   totalCourses: number
-  [key: string]: number
+  /** License / credit information (admin-only display). */
+  totalLicenses?: number
+  totalLicenseRemaining?: number
+  totalLicenseUsed?: number
+  [key: string]: number | undefined
 }
 
 export interface DashboardResponse {

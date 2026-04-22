@@ -144,6 +144,7 @@ export function AdminDashboard() {
   const t = useTranslations('dashboard')
   const tAdmin = useTranslations('dashboard.admin')
   const userRole = useAppSelector((state) => state.auth.user?.role)
+  const isAdmin = userRole === 'Admin'
 
   const { data: dashboardData, isLoading: loading } =
     useGetDashboardCountsQuery(undefined, {
@@ -281,13 +282,41 @@ export function AdminDashboard() {
   }
 
   const dashboardTitle =
-    userRole === 'Admin' ? t('adminDashboard') : t('dashboard')
+    isAdmin ? t('adminDashboard') : t('dashboard')
 
   return (
     <div className='flex flex-col gap-6'>
       <div className='px-4 lg:px-6'>
         <PageHeader title={dashboardTitle} icon={ShieldCheck} />
       </div>
+
+      {isAdmin ? (
+        <div className='px-4 lg:px-6'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+            <AdminDashboardCard
+              title={tAdmin('cards.total_licenses')}
+              count={loading ? '...' : counts.totalLicenses ?? 0}
+              textColor='#ffffff'
+              radiusColor='rgba(255, 255, 255, 0.2)'
+              className='border bg-primary'
+            />
+            <AdminDashboardCard
+              title={tAdmin('cards.total_license_used')}
+              count={loading ? '...' : counts.totalLicenseUsed ?? 0}
+              textColor='#ffffff'
+              radiusColor='rgba(255, 255, 255, 0.2)'
+              className='border bg-secondary'
+            />
+            <AdminDashboardCard
+              title={tAdmin('cards.total_license_remaining')}
+              count={loading ? '...' : counts.totalLicenseRemaining ?? 0}
+              textColor='#ffffff'
+              radiusColor='rgba(255, 255, 255, 0.2)'
+              className='border bg-accent'
+            />
+          </div>
+        </div>
+      ) : null}
 
       <div className='px-4 lg:px-6'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>

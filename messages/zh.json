@@ -535,6 +535,9 @@
         "session_due_in_7_days": "7 天内到期会议",
         "sample_due_in_month": "本月到期样本",
         "sampling_plan_overdue": "抽样计划逾期",
+        "total_licenses": "许可证总数",
+        "total_license_used": "已使用许可证",
+        "total_license_remaining": "剩余许可证",
         "trainer_rag_report": "培训师 RAG 评级",
         "outstanding_eqa_actions": "待处理 EQA 操作",
         "overall_progress": "总体进度"

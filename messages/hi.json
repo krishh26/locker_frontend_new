@@ -539,6 +539,9 @@
         "session_due_in_7_days": "7 दिनों में सत्र",
         "sample_due_in_month": "महीने में नमूना",
         "sampling_plan_overdue": "सैंपलिंग प्लान अतिदेय",
+        "total_licenses": "कुल लाइसेंस",
+        "total_license_used": "उपयोग किए गए लाइसेंस",
+        "total_license_remaining": "शेष लाइसेंस",
         "trainer_rag_report": "ट्रेनर RAG रेटिंग",
         "outstanding_eqa_actions": "बकाया EQA कार्रवाई",
         "overall_progress": "समग्र प्रगति"

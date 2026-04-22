@@ -341,7 +341,14 @@
   },
   "dashboard": {
     "adminDashboard": "Dashboard amministratore",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin": {
+      "cards": {
+        "total_licenses": "Licenze totali",
+        "total_license_used": "Licenze utilizzate",
+        "total_license_remaining": "Licenze rimanenti"
+      }
+    }
   },
   "adminCommon": {
     "name": "Nome",

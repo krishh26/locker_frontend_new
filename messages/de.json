@@ -341,7 +341,14 @@
   },
   "dashboard": {
     "adminDashboard": "Beheerdashboard",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin": {
+      "cards": {
+        "total_licenses": "Gesamtanzahl Lizenzen",
+        "total_license_used": "Verwendete Lizenzen",
+        "total_license_remaining": "Verbleibende Lizenzen"
+      }
+    }
   },
   "adminCommon": {
     "name": "Name",

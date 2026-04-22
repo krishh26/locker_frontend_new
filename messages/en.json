@@ -552,6 +552,9 @@
         "session_due_in_7_days": "Sessions due in 7 days",
         "sample_due_in_month": "Sample due in month",
         "sampling_plan_overdue": "Sampling plan overdue",
+        "total_licenses": "Total Licenses",
+        "total_license_used": "Licenses Used",
+        "total_license_remaining": "Licenses Remaining",
         "trainer_rag_report": "Trainer RAG rating",
         "outstanding_eqa_actions": "Outstanding EQA actions",
         "overall_progress": "Overall progress"

@@ -1942,6 +1942,7 @@
       "filterByEmployerLabel": "Por empleador",
       "filterByCourseLabel": "Por curso",
       "filterByCurriculumManagerLabel": "Por responsable de currículo",
+      "filterByLineManagerLabel": "Por supervisor directo",
       "pleaseSelectOption": "Seleccione una opción",
       "dateFromLabel": "Rango de fechas (desde)",
       "dateToLabel": "Rango de fechas (hasta)",

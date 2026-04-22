@@ -2120,6 +2120,7 @@
       "filterByEmployerLabel": "नियोक्ता के अनुसार",
       "filterByCourseLabel": "कोर्स के अनुसार",
       "filterByCurriculumManagerLabel": "करिकुलम मैनेजर के अनुसार",
+      "filterByLineManagerLabel": "लाइन मैनेजर के अनुसार",
       "pleaseSelectOption": "कृपया चुनें",
       "dateFromLabel": "तिथि सीमा (से)",
       "dateToLabel": "तिथि सीमा (तक)",

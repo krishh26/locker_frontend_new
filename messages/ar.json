@@ -2105,6 +2105,7 @@
       "filterByEmployerLabel": "حسب صاحب العمل",
       "filterByCourseLabel": "حسب الدورة",
       "filterByCurriculumManagerLabel": "حسب مدير المنهج",
+      "filterByLineManagerLabel": "حسب المدير المباشر",
       "pleaseSelectOption": "الرجاء الاختيار",
       "dateFromLabel": "نطاق التاريخ (من)",
       "dateToLabel": "نطاق التاريخ (إلى)",

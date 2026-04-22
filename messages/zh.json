@@ -2070,6 +2070,7 @@
       "filterByEmployerLabel": "按雇主",
       "filterByCourseLabel": "按课程",
       "filterByCurriculumManagerLabel": "按课程负责人",
+      "filterByLineManagerLabel": "按直属经理",
       "pleaseSelectOption": "请选择",
       "dateFromLabel": "日期范围（起）",
       "dateToLabel": "日期范围（止）",

@@ -2153,6 +2153,7 @@
       "filterByEmployerLabel": "Par employeur",
       "filterByCourseLabel": "Par cours",
       "filterByCurriculumManagerLabel": "Par responsable de programme",
+      "filterByLineManagerLabel": "Par responsable hiérarchique",
       "pleaseSelectOption": "Veuillez sélectionner",
       "dateFromLabel": "Plage de dates (de)",
       "dateToLabel": "Plage de dates (à)",

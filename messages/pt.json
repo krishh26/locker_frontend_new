@@ -2112,6 +2112,7 @@
       "filterByEmployerLabel": "Por empregador",
       "filterByCourseLabel": "Por curso",
       "filterByCurriculumManagerLabel": "Por gestor de currículo",
+      "filterByLineManagerLabel": "Por gestor de linha",
       "pleaseSelectOption": "Selecione",
       "dateFromLabel": "Intervalo de datas (de)",
       "dateToLabel": "Intervalo de datas (até)",

@@ -1569,6 +1569,7 @@
       "filterByEmployerLabel": "Per datore di lavoro",
       "filterByCourseLabel": "Per corso",
       "filterByCurriculumManagerLabel": "Per responsabile del curriculum",
+      "filterByLineManagerLabel": "Per responsabile di linea",
       "pleaseSelectOption": "Seleziona",
       "dateFromLabel": "Intervallo date (da)",
       "dateToLabel": "Intervallo date (a)",

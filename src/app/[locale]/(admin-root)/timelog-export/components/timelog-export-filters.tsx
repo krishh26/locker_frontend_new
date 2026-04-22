@@ -25,17 +25,11 @@ interface FilterData {
   primaryAssessor: string;
   employer: string;
   course: string;
-  curriculumManager: string;
+  lineManager: string;
   dateFrom: Date | undefined;
   dateTo: Date | undefined;
   showOnlyOffTheJob: boolean;
 }
-
-const curriculumManagers = [
-  { id: "1", name: "Emma Davis" },
-  { id: "2", name: "Robert Brown" },
-  { id: "3", name: "Lisa Anderson" },
-];
 
 export function TimelogExportFilters() {
   const t = useTranslations("timelogExport");
@@ -44,7 +38,7 @@ export function TimelogExportFilters() {
     primaryAssessor: "",
     employer: "",
     course: "",
-    curriculumManager: "",
+    lineManager: "",
     dateFrom: undefined,
     dateTo: undefined,
     showOnlyOffTheJob: false,
@@ -56,6 +50,7 @@ export function TimelogExportFilters() {
   // Fetch dropdown data using cached hooks
   const { data: adminUsers, isLoading: loadingAdmins } = useCachedUsersByRole("Admin");
   const { data: employerUsers, isLoading: loadingEmployers } = useCachedUsersByRole("Employer");
+  const { data: lineManagerUsers, isLoading: loadingLineManagers } = useCachedUsersByRole("Line Manager");
   const { data: coursesData, isLoading: loadingCourses } = useCachedCoursesList();
 
   const [getTimeLogExport, { isLoading: isTimelogLoading }] = useGetTimeLogExportMutation();
@@ -79,6 +74,12 @@ export function TimelogExportFilters() {
       name: course.course_name || "Unknown",
     })) || [];
 
+  const lineManagers =
+    lineManagerUsers?.data?.map((user: User) => ({
+      id: user.user_id?.toString() || "",
+      name: user.user_name || `${user.first_name || ""} ${user.last_name || ""}`.trim() || "Unknown",
+    })) || [];
+
   const handleFilterChange = (field: keyof FilterData, value: string | Date | boolean | undefined) => {
     setFilters((prev) => ({
       ...prev,
@@ -92,7 +93,7 @@ export function TimelogExportFilters() {
       primaryAssessor: "",
       employer: "",
       course: "",
-      curriculumManager: "",
+      lineManager: "",
       dateFrom: undefined,
       dateTo: undefined,
       showOnlyOffTheJob: false,
@@ -163,7 +164,7 @@ export function TimelogExportFilters() {
     }
   };
 
-  const isLoading = loadingAdmins || loadingEmployers || loadingCourses;
+  const isLoading = loadingAdmins || loadingEmployers || loadingLineManagers || loadingCourses;
 
   return (
     <Card>
@@ -239,19 +240,20 @@ export function TimelogExportFilters() {
             </select>
           </div>
 
-          {/* Curriculum Manager */}
+          {/* Line Manager */}
           <div className="space-y-2">
-            <Label htmlFor="curriculum-manager">{t("filters.filterByCurriculumManagerLabel")}</Label>
+            <Label htmlFor="line-manager">{t("filters.filterByLineManagerLabel")}</Label>
             <select
-              id="curriculum-manager"
-              value={filters.curriculumManager}
-              onChange={(e) => handleFilterChange("curriculumManager", e.target.value)}
+              id="line-manager"
+              value={filters.lineManager}
+              onChange={(e) => handleFilterChange("lineManager", e.target.value)}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={isLoading}
             >
-              <option value="">Please Select</option>
-              {curriculumManagers.map((cm) => (
-                <option key={cm.id} value={cm.id}>
-                  {cm.name}
+              <option value="">{t("filters.pleaseSelectOption")}</option>
+              {lineManagers.map((lm) => (
+                <option key={lm.id} value={lm.id}>
+                  {lm.name}
                 </option>
               ))}
             </select>

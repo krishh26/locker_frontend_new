@@ -1528,6 +1528,7 @@
       "filterByEmployerLabel": "Nach Arbeitgeber",
       "filterByCourseLabel": "Nach Kurs",
       "filterByCurriculumManagerLabel": "Nach Curriculum-Manager",
+      "filterByLineManagerLabel": "Nach Vorgesetztem",
       "pleaseSelectOption": "Bitte auswählen",
       "dateFromLabel": "Datumsbereich von",
       "dateToLabel": "Datumsbereich bis",

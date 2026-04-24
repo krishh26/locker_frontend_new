@@ -63,9 +63,9 @@ export function TimelogExportFilters() {
     })) || [];
 
   const employers =
-    employerUsers?.data?.map((user: User & { employer?: { employer_name?: string } }) => ({
+    employerUsers?.data?.map((user: User) => ({
       id: user.user_id?.toString() || "",
-      name: user.employer?.employer_name || "Unknown",
+      name: user.first_name + " " + user.last_name || "Unknown",
     })) || [];
 
   const courses =

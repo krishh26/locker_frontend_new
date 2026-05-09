@@ -510,6 +510,7 @@
       "cards": {
         "active_learner": "المتعلم النشط",
         "learners_on_bil": "المتعلمون في BIL",
+        "learners_in_gateway": "المتعلمون في Gateway",
         "overdue_learners": "المتعلمون المتأخرون",
         "overdue_progress_review": "مراجعات التقدم المتأخرة",
         "learners_due_complete_30_days": "المتعلمون المقرر إكمالهم خلال 30 يومًا",

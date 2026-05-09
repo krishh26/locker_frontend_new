@@ -34,6 +34,17 @@ export interface AdminDashboardCardData {
   apiType?: string
 }
 
+/** Card ids shown on the Employer dashboard, in display order. */
+export const EMPLOYER_DASHBOARD_CARD_IDS = [
+  "session_due_today",
+  "session_due_in_7_days",
+  "learners_off_track",
+  "overdue_learners",
+  "learners_due_complete_30_days",
+  "learners_on_bil",
+  "learners_in_gateway",
+] as const
+
 export const dashboardCards: AdminDashboardCardData[] = [
   // --- Learner cards (first) ---
   {
@@ -245,6 +256,15 @@ export const dashboardCards: AdminDashboardCardData[] = [
   {
     id: "overall_progress",
     title: "Overall progress",
+    name: "0",
+    textColor: "#ffffff",
+    radiusColor: "rgba(255, 255, 255, 0.2)",
+  },
+  // BE TODO: add `apiType` + `CardApiType` / `DashboardCounts` when
+  // `/learner/list-with-count` exposes learners-in-gateway count and `type=`.
+  {
+    id: "learners_in_gateway",
+    title: "Learners in Gateway",
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",

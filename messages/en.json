@@ -530,6 +530,7 @@
       "cards": {
         "active_learner": "Active Learner",
         "learners_on_bil": "Learners on BIL",
+        "learners_in_gateway": "Learners in Gateway",
         "overdue_learners": "Overdue Learners",
         "overdue_progress_review": "Overdue Progress Reviews",
         "learners_due_complete_30_days": "Learners due to complete within 30 days",

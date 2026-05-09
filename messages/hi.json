@@ -517,6 +517,7 @@
       "cards": {
         "active_learner": "सक्रिय शिक्षार्थी",
         "learners_on_bil": "BIL पर शिक्षार्थी",
+        "learners_in_gateway": "Gateway में शिक्षार्थी",
         "overdue_learners": "अतिदेय शिक्षार्थी",
         "overdue_progress_review": "अतिदेय प्रगति समीक्षा",
         "learners_due_complete_30_days": "30 दिनों में पूर्ण होने वाले शिक्षार्थी",

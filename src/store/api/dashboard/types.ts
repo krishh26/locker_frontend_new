@@ -1,3 +1,12 @@
+/**
+ * Valid API types for card data queries (`GET /learner/list-with-count?type=`).
+ *
+ * Employer dashboard includes a `learners_in_gateway` card (see
+ * `admin-dashboard-data.ts`) that is not wired here yet. When the backend
+ * exposes a `type` value and a numeric field on the list-with-count payload,
+ * add both to `CardApiType`, `DashboardCounts`, and `cardApiTypeToCountKey`,
+ * then set `apiType` on that card.
+ */
 // Valid API types for card data queries (used in query parameters)
 export type CardApiType =
   | "active_learners"

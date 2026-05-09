@@ -513,6 +513,7 @@
       "cards": {
         "active_learner": "活跃学员",
         "learners_on_bil": "BIL 学员",
+        "learners_in_gateway": "Gateway 学员",
         "overdue_learners": "逾期学员",
         "overdue_progress_review": "逾期进度审查",
         "learners_due_complete_30_days": "30 天内将完成的学员",

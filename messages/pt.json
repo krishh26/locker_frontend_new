@@ -517,6 +517,7 @@
       "cards": {
         "active_learner": "Aprendiz ativo",
         "learners_on_bil": "Aprendizes em BIL",
+        "learners_in_gateway": "Aprendizes em Gateway",
         "overdue_learners": "Aprendizes em atraso",
         "overdue_progress_review": "Revisões de progresso em atraso",
         "learners_due_complete_30_days": "Aprendizes a concluir em 30 dias",

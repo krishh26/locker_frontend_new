@@ -9,6 +9,8 @@ import { ActiveLearnersDetailDialog } from './active-learners-detail-dialog'
 import {
   dashboardCards,
   cardTypeMapping,
+  EMPLOYER_DASHBOARD_CARD_IDS,
+  type AdminDashboardCardData,
 } from '../../data/admin-dashboard-data'
 import {
   useGetDashboardCountsQuery,
@@ -160,6 +162,16 @@ export function AdminDashboard() {
   }>({ open: false, summary: null })
 
   const counts: DashboardCounts = dashboardData?.data || ({} as DashboardCounts)
+
+  const cardsWithoutOverall = dashboardCards.filter(
+    (card) => card.id !== 'overall_progress',
+  )
+  const cardsToRender: AdminDashboardCardData[] =
+    userRole === 'Employer'
+      ? EMPLOYER_DASHBOARD_CARD_IDS.map((id) =>
+          cardsWithoutOverall.find((c) => c.id === id),
+        ).filter((c): c is AdminDashboardCardData => c != null)
+      : cardsWithoutOverall
 
   /* ============================================================
      EXPORT HANDLER
@@ -320,9 +332,7 @@ export function AdminDashboard() {
 
       <div className='px-4 lg:px-6'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
-          {dashboardCards
-            .filter((card) => card.id !== 'overall_progress')
-            .map((card, index) => {
+          {cardsToRender.map((card, index) => {
               const apiType: CardApiType | string | undefined =
                 card.apiType || cardTypeMapping[card.title]
 

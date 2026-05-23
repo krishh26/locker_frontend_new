@@ -46,9 +46,7 @@ export function CpdLearnerInfoCard() {
     : t("learnerInfo.notSpecified");
 
   const employerName = 
-    learner?.employer_id && typeof learner.employer_id === "object" && "employer_name" in learner.employer_id
-      ? learner.employer_id.employer_name
-      : t("learnerInfo.notSpecified");
+    learner?.employer_name ? learner.employer_name : t("learnerInfo.notSpecified")
 
   const learnerInfo = [
     {

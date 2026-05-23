@@ -991,19 +991,6 @@
       "plannedSampleDateRequired": "Geplantes Stichprobendatum ist erforderlich",
       "applySamples": "Stichproben anwenden",
       "applyRandomSamples": "Zufällige Stichproben anwenden",
-      "assessmentMethodTitles": {
-        "WO": "Beobachtung am Arbeitsplatz",
-        "WP": "Projekte am Arbeitsplatz / außerhalb der Arbeit",
-        "PW": "Arbeitsportfolio",
-        "VI": "Viva",
-        "LB": "Logbuch / Aufgaben",
-        "PD": "Fachgespräche",
-        "PT": "Praktischer Test",
-        "TE": "Tests / Prüfungen",
-        "RJ": "Reflexionsjournal",
-        "OT": "Sonstige",
-        "RPL": "Anerkannte Vorbildung"
-      },
       "sampleTypeLabels": {
         "Portfolio": "Portfolio-Stichprobe",
         "ObserveAssessor": "Assessor beobachten",
@@ -4124,21 +4111,6 @@
         "loadingSessions": "Sitzungen werden geladen...",
         "noSessionsAvailable": "Keine Sitzungen verfügbar"
       },
-      "assessmentMethods": {
-        "Obs": "Beobachtungen",
-        "PA": "Praktische Bewertung",
-        "ET": "Prüfungen und Tests",
-        "PD": "Fachgespräch",
-        "I": "Interview",
-        "Q&A": "Fragen und Antworten",
-        "P": "Projekt",
-        "RA": "Reflexiver Bericht",
-        "WT": "Zeugenaussage",
-        "PE": "Produktnachweis",
-        "SI": "Simulation",
-        "OT": "Sonstige",
-        "RPL": "Anerkannte Vorkenntnisse"
-      },
       "signature": {
         "signedInAgreement": "Unterzeichnet zur Vereinbarung:",
         "name": "Name:",
@@ -5432,5 +5404,20 @@
       "status": "Status:",
       "gradingType": "Bewertungstyp:"
     }
+  }
+,
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

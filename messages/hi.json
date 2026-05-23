@@ -1365,19 +1365,6 @@
       "plannedSampleDateRequired": "प्लान्ड सैंपल डेट आवश्यक है",
       "applySamples": "सैंपल लागू करें",
       "applyRandomSamples": "रैंडम सैंपल लागू करें",
-      "assessmentMethodTitles": {
-        "WO": "वर्कप्लेस ऑब्ज़र्वेशन",
-        "WP": "वर्कप्लेस प्रोजेक्ट्स / वर्क से बाहर प्रोजेक्ट्स",
-        "PW": "वर्क पोर्टफोलियो",
-        "VI": "वाइवा",
-        "LB": "लॉग बुक / असाइनमेंट्स",
-        "PD": "प्रोफेशनल डिस्कशन्स",
-        "PT": "प्रैक्टिकल टेस्ट",
-        "TE": "टेस्ट / परीक्षाएँ",
-        "RJ": "रिफ्लेक्टिव जर्नल",
-        "OT": "अन्य",
-        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
-      },
       "sampleTypeLabels": {
         "Portfolio": "पोर्टफोलियो सैंपल",
         "ObserveAssessor": "असेसर का अवलोकन",
@@ -4968,21 +4955,6 @@
         "existingAdditionalEvidence": "वर्तमान अतिरिक्त साक्ष्य फ़ाइल",
         "replaceAdditionalEvidenceHint": "सहेजते समय बदलने के लिए नीचे नई फ़ाइल अपलोड करें।"
       },
-      "assessmentMethods": {
-        "Obs": "अवलोकन",
-        "PA": "प्रैक्टिकल असेसमेंट",
-        "ET": "परीक्षा और टेस्ट",
-        "PD": "प्रोफेशनल चर्चा",
-        "I": "इंटरव्यू",
-        "Q&A": "प्रश्न और उत्तर",
-        "P": "प्रोजेक्ट",
-        "RA": "रिफ्लेक्टिव अकाउंट",
-        "WT": "विटनेस टेस्टिमनी",
-        "PE": "प्रोडक्ट एविडेंस",
-        "SI": "सिमुलेशन",
-        "OT": "अन्य",
-        "RPL": "मान्यता प्राप्त पूर्व शिक्षण"
-      },
       "signature": {
         "signedInAgreement": "समझौते में हस्ताक्षर:",
         "name": "नाम:",
@@ -6279,5 +6251,19 @@
       "status": "स्थिति:",
       "gradingType": "ग्रेडिंग प्रकार:"
     }
+  },
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

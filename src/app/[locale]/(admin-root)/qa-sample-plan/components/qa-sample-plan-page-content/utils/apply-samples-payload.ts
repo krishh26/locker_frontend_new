@@ -1,5 +1,5 @@
 import type { SamplePlanLearner } from "@/store/api/qa-sample-plan/types";
-import { assessmentMethodCodesForPayload } from "../../../utils/constants";
+import { buildAssessmentMethodsPayload } from "@/config/assessment-methods";
 
 export interface ApplySamplesPayload {
   plan_id: string | number;
@@ -85,13 +85,7 @@ export function buildApplySamplesPayload({
     return null;
   }
 
-  const assessmentMethodsPayload = assessmentMethodCodesForPayload.reduce(
-    (accumulator, code) => {
-      accumulator[code] = selectedMethods.includes(code);
-      return accumulator;
-    },
-    {} as Record<string, boolean>
-  );
+  const assessmentMethodsPayload = buildAssessmentMethodsPayload(selectedMethods);
 
   const numericPlanId = Number(selectedPlan);
   const planIdForRequest = Number.isFinite(numericPlanId)

@@ -42,6 +42,7 @@ export function FilterPanel({
   isApplyRandomSamplesLoading,
 }: FilterPanelProps) {
   const t = useTranslations("qaSamplePlan.filters");
+  const tMethods = useTranslations("assessmentMethods");
   const dispatch = useAppDispatch();
   const filterState = useAppSelector(selectFilterState);
   const { selectedMethods, sampleType, plannedSampleDate } = filterState;
@@ -115,7 +116,7 @@ export function FilterPanel({
                   htmlFor={`method-${method.code}`}
                   className="text-sm cursor-pointer flex-1"
                 >
-                  {method.code} - {t(`assessmentMethodTitles.${method.code}`)}
+                  {method.code} - {tMethods(`${method.code}.title`)}
                 </Label>
               </div>
             ))}

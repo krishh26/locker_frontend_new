@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCachedUsersByRole } from "@/store/hooks/useCachedUsersByRole";
 import { useGetTrainerDetailsQuery } from "@/store/api/trainer-risk-rating/trainerRiskRatingApi";
 import type { User } from "@/store/api/user/types";
+import { STANDARD_ASSESSMENT_METHODS } from "@/config/assessment-methods";
 
 export function TrainerRiskRatingPageContent() {
   const t = useTranslations("trainerRiskRating");
@@ -26,22 +27,15 @@ export function TrainerRiskRatingPageContent() {
     ] as const,
     [t]
   );
+  const tMethods = useTranslations("assessmentMethods");
   const assessmentMethods = useMemo(
-    () => [
-      { value: "pe", label: t("assessmentMethods.pe"), fullName: t("assessmentMethods.peFullName") },
-      { value: "do", label: t("assessmentMethods.do"), fullName: t("assessmentMethods.doFullName") },
-      { value: "wt", label: t("assessmentMethods.wt"), fullName: t("assessmentMethods.wtFullName") },
-      { value: "qa", label: t("assessmentMethods.qa"), fullName: t("assessmentMethods.qaFullName") },
-      { value: "ps", label: t("assessmentMethods.ps"), fullName: t("assessmentMethods.psFullName") },
-      { value: "di", label: t("assessmentMethods.di"), fullName: t("assessmentMethods.diFullName") },
-      { value: "si", label: t("assessmentMethods.si"), fullName: t("assessmentMethods.siFullName") },
-      { value: "ee", label: t("assessmentMethods.ee"), fullName: t("assessmentMethods.eeFullName") },
-      { value: "ba", label: t("assessmentMethods.ba"), fullName: t("assessmentMethods.baFullName") },
-      { value: "ot", label: t("assessmentMethods.ot"), fullName: t("assessmentMethods.otFullName") },
-      { value: "ipl", label: t("assessmentMethods.ipl"), fullName: t("assessmentMethods.iplFullName") },
-      { value: "lo", label: t("assessmentMethods.lo"), fullName: t("assessmentMethods.loFullName") },
-    ] as const,
-    [t]
+    () =>
+      STANDARD_ASSESSMENT_METHODS.map((method) => ({
+        value: method.apiKey,
+        label: tMethods(`${method.code}.label`),
+        fullName: tMethods(`${method.code}.title`),
+      })),
+    [tMethods],
   );
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);

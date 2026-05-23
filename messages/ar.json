@@ -1358,19 +1358,6 @@
       "plannedSampleDateRequired": "تاريخ العينة المخطط مطلوب",
       "applySamples": "تطبيق العينات",
       "applyRandomSamples": "تطبيق عينات عشوائية",
-      "assessmentMethodTitles": {
-        "WO": "ملاحظة في مكان العمل",
-        "WP": "مشاريع مكان العمل / خارج العمل",
-        "PW": "محفظة الأعمال",
-        "VI": "فيفا",
-        "LB": "دفتر السجل / الواجبات",
-        "PD": "مناقشات مهنية",
-        "PT": "اختبار عملي",
-        "TE": "اختبارات / امتحانات",
-        "RJ": "يومية تأملية",
-        "OT": "أخرى",
-        "RPL": "اعتراف بالتعلم السابق"
-      },
       "sampleTypeLabels": {
         "Portfolio": "عينة المحفظة",
         "ObserveAssessor": "ملاحظة المُقيِّم",
@@ -4880,21 +4867,6 @@
         "existingAdditionalEvidence": "الدليل الإضافي الحالي",
         "replaceAdditionalEvidenceHint": "ارفع ملفًا جديدًا أدناه لاستبداله عند الحفظ."
       },
-      "assessmentMethods": {
-        "Obs": "الملاحظات",
-        "PA": "التقييم العملي",
-        "ET": "الامتحانات والاختبارات",
-        "PD": "النقاش المهني",
-        "I": "المقابلة",
-        "Q&A": "الأسئلة والأجوبة",
-        "P": "المشروع",
-        "RA": "الحساب التأملي",
-        "WT": "شهادة الشاهد",
-        "PE": "دليل المنتج",
-        "SI": "المحاكاة",
-        "OT": "أخرى",
-        "RPL": "التعلم السابق المعترف به"
-      },
       "signature": {
         "signedInAgreement": "موقع بالاتفاق:",
         "name": "الاسم:",
@@ -6188,5 +6160,19 @@
       "status": "الحالة:",
       "gradingType": "نوع التقدير:"
     }
+  },
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

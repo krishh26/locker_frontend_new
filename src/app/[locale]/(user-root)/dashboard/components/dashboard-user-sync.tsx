@@ -58,8 +58,10 @@ export function DashboardUserSync() {
     if (!userQuerySuccess || !userResponse?.data) {
       return
     }
-    dispatch(updateUser(mapUserApiToAuthUser(userResponse.data)))
-  }, [dispatch, userQuerySuccess, userResponse?.data])
+    dispatch(
+      updateUser(mapUserApiToAuthUser(userResponse.data, user?.role)),
+    )
+  }, [dispatch, userQuerySuccess, userResponse?.data, user?.role])
 
   useEffect(() => {
     if (!learnerQuerySuccess || !learnerResponse?.data) {

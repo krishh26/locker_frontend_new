@@ -1,10 +1,18 @@
 import type { AuthUser } from "@/store/api/auth/types"
 import type { User } from "@/store/api/user/types"
+import { filterRolesFromApi } from "@/config/auth-roles"
+import { resolveActiveUserRole } from "@/lib/auth/resolve-active-user-role"
 
 /**
  * Maps `/user/get` response (`User`) to the `AuthUser` shape stored in Redux after login.
+ *
+ * @param currentRole - Active role from Redux/cookie; preserved when still in `roles`
+ *   so change-role is not reset to `roles[0]` on refresh or dashboard sync.
  */
-export function mapUserApiToAuthUser(userData: User): AuthUser {
+export function mapUserApiToAuthUser(
+  userData: User,
+  currentRole?: string | null,
+): AuthUser {
   const assignedCenters =
     userData.assigned_centers ?? userData.assigned_centres ?? []
   const assignedCenterIds =
@@ -23,21 +31,27 @@ export function mapUserApiToAuthUser(userData: User): AuthUser {
       ...new Set(
         userData.userCentres
           .map((uc: { centre?: { organisation_id?: number } }) =>
-            uc.centre?.organisation_id
+            uc.centre?.organisation_id,
           )
-          .filter((id): id is number => typeof id === "number")
+          .filter((id): id is number => typeof id === "number"),
       ),
     ]
     assignedOrganisationIds = orgIds.length > 0 ? orgIds : null
   }
+
+  const filteredRoles = filterRolesFromApi(userData.roles)
+  const role = resolveActiveUserRole(userData.roles, {
+    apiRole: userData.role,
+    currentRole,
+  })
 
   return {
     id: userData.user_id?.toString(),
     email: userData.email,
     firstName: userData.first_name,
     lastName: userData.last_name,
-    role: userData.roles[0],
-    roles: userData.roles.length > 0 ? userData.roles : undefined,
+    role,
+    roles: filteredRoles.length > 0 ? filteredRoles : undefined,
     user_id: userData.user_id,
     user_name: userData.user_name,
     mobile: userData.mobile,

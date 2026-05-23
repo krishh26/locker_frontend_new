@@ -30,6 +30,8 @@ export interface User {
   password: string;
   mobile: string;
   roles: string[];
+  /** Active role (e.g. after change-role); optional on `/user/get`. */
+  role?: string;
   avatar: Avatar | null;
   password_changed: boolean;
   time_zone: string;

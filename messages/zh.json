@@ -5227,7 +5227,8 @@
       "notYetStarted": "未开始",
       "noEndDate": "无结束日期",
       "daysLeft": "剩余天数",
-      "noUnitData": "无数据"
+      "noUnitData": "无数据",
+      "excludedFromOverallProgress": "不计入总体进度"
     },
     "calendarDialog": {
       "title": "日历",

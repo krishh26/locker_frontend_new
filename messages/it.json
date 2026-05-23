@@ -4424,7 +4424,8 @@
       "notYetStarted": "Non ancora iniziato",
       "noEndDate": "Nessuna data di fine",
       "daysLeft": "Giorni rimanenti",
-      "noUnitData": "Nessun dato"
+      "noUnitData": "Nessun dato",
+      "excludedFromOverallProgress": "Escluso dal progresso complessivo"
     },
     "calendarDialog": {
       "title": "Calendario",

@@ -5305,7 +5305,8 @@
       "notYetStarted": "Not yet started",
       "noEndDate": "No end date",
       "daysLeft": "Days left",
-      "noUnitData": "No data"
+      "noUnitData": "No data",
+      "excludedFromOverallProgress": "Excluded from overall progress"
     },
     "calendarDialog": {
       "title": "Calendar",

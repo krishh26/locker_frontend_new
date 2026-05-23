@@ -161,6 +161,122 @@ function gapFromMaps(
   return "none";
 }
 
+type MappingSource = {
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+  learner_map?: boolean;
+  trainer_map?: boolean;
+  completed?: boolean;
+  evidenceBoxes?: Array<{
+    learnerMap?: boolean;
+    trainerMap?: boolean;
+  }>;
+};
+
+/** Reads learner/trainer map flags from the node or its evidenceBoxes; inherits parent subUnit when topic has no explicit flags. */
+function readMappingFlags(
+  source: MappingSource,
+  parentSub?: MappingSource,
+): { learnerMap: boolean; trainerMap: boolean } {
+  const learnerFromBoxes =
+    source.evidenceBoxes?.some((box) => box.learnerMap) ?? false;
+  const trainerFromBoxes =
+    source.evidenceBoxes?.some((box) => box.trainerMap) ?? false;
+
+  const hasDirectOrBoxFlags =
+    source.learnerMap !== undefined ||
+    source.trainerMap !== undefined ||
+    source.learner_map !== undefined ||
+    source.trainer_map !== undefined ||
+    learnerFromBoxes ||
+    trainerFromBoxes;
+
+  if (hasDirectOrBoxFlags) {
+    return {
+      learnerMap: Boolean(
+        source.learnerMap ?? source.learner_map ?? learnerFromBoxes,
+      ),
+      trainerMap: Boolean(
+        source.trainerMap ?? source.trainer_map ?? trainerFromBoxes,
+      ),
+    };
+  }
+
+  if (parentSub) {
+    return readMappingFlags(parentSub);
+  }
+
+  return { learnerMap: false, trainerMap: false };
+}
+
+function buildGapRow(
+  id: string | number,
+  subTitle: string,
+  flags: { learnerMap: boolean; trainerMap: boolean },
+  comment: string,
+): SubUnitRow {
+  return {
+    id,
+    subTitle,
+    learnerMap: flags.learnerMap,
+    trainerMap: flags.trainerMap,
+    gap: gapFromMaps(flags.learnerMap, flags.trainerMap),
+    comment,
+  };
+}
+
+function collectQualificationGapRows(
+  unit: UnitWithSubUnits | QualificationUnit,
+): SubUnitRow[] {
+  const rows: SubUnitRow[] = [];
+  const subUnits = unit.subUnit ?? [];
+
+  for (const subRaw of subUnits) {
+    const sub = subRaw as MappingSource & {
+      id?: string | number;
+      title?: string;
+      subTitle?: string;
+      comment?: string;
+      code?: string;
+      topics?: Array<
+        MappingSource & {
+          id?: string | number;
+          title?: string;
+          comment?: string;
+          code?: string;
+        }
+      >;
+    };
+
+    if (Array.isArray(sub.topics) && sub.topics.length > 0) {
+      for (const topic of sub.topics) {
+        const flags = readMappingFlags(topic, sub);
+        rows.push(
+          buildGapRow(
+            `${String(sub.id ?? "sub")}-${String(topic.id ?? rows.length)}`,
+            String(topic.title ?? ""),
+            flags,
+            String(topic.comment ?? topic.code ?? ""),
+          ),
+        );
+      }
+      continue;
+    }
+
+    const title = String(sub.title ?? sub.subTitle ?? "");
+    rows.push(
+      buildGapRow(
+        sub.id ?? rows.length,
+        title,
+        readMappingFlags(sub),
+        String(sub.comment ?? sub.code ?? ""),
+      ),
+    );
+  }
+
+  return rows;
+}
+
 function collectStandardGapRows(
   course: CourseWithUnits,
   selectedType: "Knowledge" | "Behaviour" | "Skills",
@@ -365,46 +481,7 @@ export function ModuleUnitProgressDataTable() {
       return [];
     }
 
-    const firstSubUnit = selectedUnit.subUnit[0];
-    if ("topics" in firstSubUnit) {
-      return (
-        firstSubUnit.topics as Array<{
-          id: string | number;
-          code: string;
-          showOrder: number;
-          type: "Knowledge" | "Behaviour" | "Skills";
-          title: string;
-          learnerMap: boolean;
-          trainerMap: boolean;
-          comment: string;
-          evidenceBoxes?: Array<{
-            mapping_id: number;
-            assignment_id: number;
-            learnerMap: boolean;
-            trainerMap: boolean;
-            sub_unit_id: number | null;
-          }>;
-        }>
-      ).map((topic) => {
-        let gap: "complete" | "partial" | "none" = "none";
-        if (topic.learnerMap && topic.trainerMap) {
-          gap = "complete";
-        } else if (topic.learnerMap || topic.trainerMap) {
-          gap = "partial";
-        }
-
-        return {
-          id: topic.id,
-          subTitle: topic.title,
-          learnerMap: topic.learnerMap,
-          trainerMap: topic.trainerMap,
-          gap,
-          comment: topic.comment || "",
-        };
-      });
-    }
-
-    return [];
+    return collectQualificationGapRows(selectedUnit);
   }, [isStandardCourse, selectedType, standardRows, selectedUnit]);
 
   const filteredData = useMemo(() => {
@@ -448,13 +525,13 @@ export function ModuleUnitProgressDataTable() {
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const learnerMap = row.getValue("learnerMap") as boolean;
           const isHeader = row.original.isSubUnitHeader;
-          if (isHeader) return <div className="text-center">-</div>;
+          if (isHeader) return <div className="text-start">-</div>;
           return (
-            <div className="text-center">
+            <div className="text-start">
               {learnerMap ? (
-                <span className="text-accent">{t("table.yes")}</span>
+                <span className="text-accent text-start">{t("table.yes")}</span>
               ) : (
-                <span className="text-muted-foreground">{t("table.no")}</span>
+                <span className="text-muted-foreground text-start">{t("table.no")}</span>
               )}
             </div>
           );
@@ -466,13 +543,13 @@ export function ModuleUnitProgressDataTable() {
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const trainerMap = row.getValue("trainerMap") as boolean;
           const isHeader = row.original.isSubUnitHeader;
-          if (isHeader) return <div className="text-center">-</div>;
+          if (isHeader) return <div className="text-start">-</div>;
           return (
-            <div className="text-center">
+            <div className="text-start">
               {trainerMap ? (
-                <span className="text-accent">{t("table.yes")}</span>
+                <span className="text-accent text-start">{t("table.yes")}</span>
               ) : (
-                <span className="text-muted-foreground">{t("table.no")}</span>
+                <span className="text-muted-foreground text-start">{t("table.no")}</span>
               )}
             </div>
           );
@@ -484,7 +561,7 @@ export function ModuleUnitProgressDataTable() {
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const gap = row.getValue("gap") as "complete" | "partial" | "none";
           const isHeader = row.original.isSubUnitHeader;
-          if (isHeader) return <div className="text-center">-</div>;
+          if (isHeader) return <div className="text-start">-</div>;
 
           const getGapColor = () => {
             switch (gap) {
@@ -500,7 +577,7 @@ export function ModuleUnitProgressDataTable() {
           };
 
           return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-start">
               <div
                 className={`h-6 w-full max-w-[100px] rounded ${getGapColor()}`}
                 title={
@@ -517,20 +594,20 @@ export function ModuleUnitProgressDataTable() {
       },
     );
 
-    if (!isStandardCourse) {
-      baseColumns.push({
-        accessorKey: "comment",
-        header: t("table.columns.comment"),
-        cell: ({ row }: { row: Row<SubUnitRow> }) => {
-          const comment = row.getValue("comment") as string;
-          return (
-            <div className="max-w-[300px] truncate text-sm text-muted-foreground">
-              {comment || "-"}
-            </div>
-          );
-        },
-      });
-    }
+    // if (!isStandardCourse) {
+    //   baseColumns.push({
+    //     accessorKey: "comment",
+    //     header: t("table.columns.comment"),
+    //     cell: ({ row }: { row: Row<SubUnitRow> }) => {
+    //       const comment = row.getValue("comment") as string;
+    //       return (
+    //         <div className="max-w-[300px] truncate text-sm text-muted-foreground">
+    //           {comment || "-"}
+    //         </div>
+    //       );
+    //     },
+    //   });
+    // }
 
     return baseColumns;
   }, [isStandardCourse, t]);

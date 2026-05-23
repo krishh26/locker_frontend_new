@@ -5269,7 +5269,8 @@
       "notYetStarted": "Ainda não iniciado",
       "noEndDate": "Sem data de fim",
       "daysLeft": "Dias restantes",
-      "noUnitData": "Sem dados"
+      "noUnitData": "Sem dados",
+      "excludedFromOverallProgress": "Excluído do progresso geral"
     },
     "calendarDialog": {
       "title": "Calendário",

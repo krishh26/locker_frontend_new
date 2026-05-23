@@ -5279,7 +5279,8 @@
       "notYetStarted": "अभी शुरू नहीं",
       "noEndDate": "कोई समाप्ति तिथि नहीं",
       "daysLeft": "शेष दिन",
-      "noUnitData": "कोई डेटा नहीं"
+      "noUnitData": "कोई डेटा नहीं",
+      "excludedFromOverallProgress": "समग्र प्रगति से बाहर"
     },
     "calendarDialog": {
       "title": "कैलेंडर",

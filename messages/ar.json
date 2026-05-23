@@ -5191,7 +5191,8 @@
       "notYetStarted": "لم يبدأ بعد",
       "noEndDate": "لا يوجد تاريخ انتهاء",
       "daysLeft": "الأيام المتبقية",
-      "noUnitData": "لا توجد بيانات"
+      "noUnitData": "لا توجد بيانات",
+      "excludedFromOverallProgress": "مستبعد من التقدم الإجمالي"
     },
     "calendarDialog": {
       "title": "التقويم",

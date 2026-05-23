@@ -301,7 +301,11 @@
       "lastLogin": "Dernière connexion",
       "nextVisit": "Prochaine visite",
       "noComment": "Aucun commentaire",
-      "profile": "Profil"
+      "profile": "Profil",
+      "progressTitle": "Progression des unités du cours",
+      "progressCompleted": "Terminé",
+      "progressInProgress": "En cours",
+      "progressNotStarted": "Non commencé"
     }
   },
   "users": {
@@ -514,6 +518,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "Aperçu des licences",
       "cards": {
         "active_learner": "Apprenant actif",
         "learners_on_bil": "Apprenants en BIL",
@@ -1217,8 +1222,7 @@
         "Others": "Autres"
       },
       "roles": {
-        "Master Admin": "Administrateur principal",
-        "Basic Admin": "Administrateur de base",
+        "Admin": "Admin",
         "Assessor": "Évaluateur",
         "IQA": "IQA",
         "EQA": "EQA",
@@ -3029,6 +3033,10 @@
       "support": "Support",
       "tickets": "Tickets",
       "adminManagement": "Gestion admin",
+      "admin": "Admin",
+      "courseManagement": "Cours",
+      "calendar": "Calendrier",
+      "automaticMailControl": "Contrôle mail",
       "courseBuilder": "Course Builder",
       "surveys": "Enquêtes",
       "fundingBands": "Bandes de financement",
@@ -5251,6 +5259,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Sélectionner…",
+      "optionsPendingHint": "Les options seront fournies par votre administrateur."
+    },
     "page": {
       "title": "Informations du profil",
       "subtitle": "Consulter les détails du profil de l'apprenant et les informations personnelles",

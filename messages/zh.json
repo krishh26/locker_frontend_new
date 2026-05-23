@@ -301,7 +301,11 @@
       "lastLogin": "上次登录",
       "nextVisit": "下次拜访",
       "noComment": "暂无备注",
-      "profile": "个人资料"
+      "profile": "个人资料",
+      "progressTitle": "课程单元进度",
+      "progressCompleted": "已完成",
+      "progressInProgress": "进行中",
+      "progressNotStarted": "未开始"
     }
   },
   "users": {
@@ -510,6 +514,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "许可证概览",
       "cards": {
         "active_learner": "活跃学员",
         "learners_on_bil": "BIL 学员",
@@ -1166,8 +1171,7 @@
       "Others": "其他"
     },
     "roles": {
-      "Master Admin": "主管理员",
-      "Basic Admin": "基础管理员",
+      "Admin": "管理员",
       "Assessor": "评估员",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -2946,6 +2950,10 @@
       "support": "支持",
       "tickets": "工单",
       "adminManagement": "管理员管理",
+      "admin": "管理员",
+      "courseManagement": "课程",
+      "calendar": "日历",
+      "automaticMailControl": "邮件控制",
       "courseBuilder": "Course Builder",
       "surveys": "问卷调查",
       "fundingBands": "资助区间",
@@ -5220,6 +5228,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "请选择…",
+      "optionsPendingHint": "选项将由管理员提供。"
+    },
     "page": {
       "title": "个人资料信息",
       "subtitle": "查看学员个人资料详情及个人信息",

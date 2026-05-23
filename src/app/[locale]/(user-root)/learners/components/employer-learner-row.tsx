@@ -97,35 +97,58 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
             </div>
           </div>
 
-          {/* Progress - Compact inline bars */}
+          {/* Progress - labelled bars (completed / in progress / not started) */}
           {learner?.course && learner.course.length > 0 && (
-            <div className="hidden md:flex items-center gap-2 shrink-0">
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-accent">{percentages.completedPercent}%</span>
-                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+            <div
+              className="hidden md:flex flex-col gap-1.5 shrink-0 min-w-[240px] lg:min-w-[280px]"
+              aria-label={t("progressTitle")}
+            >
+              <span className="text-[11px] font-semibold text-muted-foreground">
+                {t("progressTitle")}
+              </span>
+              <div className="flex items-start gap-3">
+                {[
+                  {
+                    label: t("progressCompleted"),
+                    percent: percentages.completedPercent,
+                    barClass: "bg-accent",
+                    textClass: "text-accent",
+                  },
+                  {
+                    label: t("progressInProgress"),
+                    percent: percentages.inProgressPercent,
+                    barClass: "bg-primary",
+                    textClass: "text-primary",
+                  },
+                  {
+                    label: t("progressNotStarted"),
+                    percent: percentages.notStartedPercent,
+                    barClass: "bg-muted-foreground/40",
+                    textClass: "text-muted-foreground",
+                  },
+                ].map((item) => (
                   <div
-                    className="h-full bg-accent rounded-full"
-                    style={{ width: `${percentages.completedPercent}%` }}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-primary">{percentages.inProgressPercent}%</span>
-                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-primary rounded-full"
-                    style={{ width: `${percentages.inProgressPercent}%` }}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-medium text-muted-foreground">{percentages.notStartedPercent}%</span>
-                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-muted-foreground/40 rounded-full"
-                    style={{ width: `${percentages.notStartedPercent}%` }}
-                  />
-                </div>
+                    key={item.label}
+                    className="flex flex-1 flex-col gap-0.5 min-w-0"
+                  >
+                    <span className="text-[11px] font-medium leading-tight text-foreground truncate">
+                      {item.label}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={`text-xs font-semibold tabular-nums shrink-0 ${item.textClass}`}
+                      >
+                        {item.percent}%
+                      </span>
+                      <div className="h-2 flex-1 min-w-[40px] bg-muted rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${item.barClass}`}
+                          style={{ width: `${item.percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}

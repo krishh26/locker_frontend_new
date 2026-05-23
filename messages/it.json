@@ -343,6 +343,7 @@
     "adminDashboard": "Dashboard amministratore",
     "dashboard": "Dashboard",
     "admin": {
+      "licenseOverview": "Panoramica licenze",
       "cards": {
         "total_licenses": "Licenze totali",
         "total_license_used": "Licenze utilizzate",
@@ -843,8 +844,7 @@
         "Others": "Altri"
       },
       "roles": {
-        "Master Admin": "Amministratore principale",
-        "Basic Admin": "Amministratore base",
+        "Admin": "Amministratore",
         "Assessor": "Valutatore",
         "IQA": "IQA",
         "EQA": "EQA",
@@ -2350,6 +2350,10 @@
       "support": "Supporto",
       "tickets": "Ticket",
       "adminManagement": "Gestione admin",
+      "admin": "Admin",
+      "courseManagement": "Corsi",
+      "calendar": "Calendario",
+      "automaticMailControl": "Controllo email",
       "courseBuilder": "Course Builder",
       "surveys": "Sondaggi",
       "fundingBands": "Bande di finanziamento",
@@ -4417,6 +4421,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Seleziona…",
+      "optionsPendingHint": "Le opzioni saranno fornite dall'amministratore."
+    },
     "page": {
       "title": "Informazioni sul profilo",
       "subtitle": "Visualizza i dettagli del profilo del discente e le informazioni personali",

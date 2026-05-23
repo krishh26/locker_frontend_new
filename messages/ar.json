@@ -298,7 +298,11 @@
       "lastLogin": "آخر تسجيل دخول",
       "nextVisit": "الزيارة القادمة",
       "noComment": "لا يوجد تعليق",
-      "profile": "الملف الشخصي"
+      "profile": "الملف الشخصي",
+      "progressTitle": "تقدم وحدات الدورة",
+      "progressCompleted": "مكتمل",
+      "progressInProgress": "قيد التقدم",
+      "progressNotStarted": "لم يبدأ"
     }
   },
   "users": {
@@ -507,6 +511,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "نظرة عامة على التراخيص",
       "cards": {
         "active_learner": "المتعلم النشط",
         "learners_on_bil": "المتعلمون في BIL",
@@ -1163,8 +1168,7 @@
       "Others": "أخرى"
     },
     "roles": {
-      "Master Admin": "المشرف الرئيسي",
-      "Basic Admin": "مشرف أساسي",
+      "Admin": "المدير",
       "Assessor": "مقيّم",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -2981,6 +2985,10 @@
       "support": "الدعم",
       "tickets": "التذاكر",
       "adminManagement": "إدارة المسؤول",
+      "admin": "المسؤول",
+      "courseManagement": "الدورات",
+      "calendar": "التقويم",
+      "automaticMailControl": "التحكم بالبريد",
       "courseBuilder": "Course Builder",
       "surveys": "الاستبيانات",
       "fundingBands": "شرائح التمويل",
@@ -5184,6 +5192,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "اختر…",
+      "optionsPendingHint": "سيتم توفير الخيارات من قبل المسؤول."
+    },
     "page": {
       "title": "معلومات الملف الشخصي",
       "subtitle": "عرض تفاصيل ملف المتعلم والمعلومات الشخصية",

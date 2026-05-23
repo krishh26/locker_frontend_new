@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { ShieldCheck } from 'lucide-react'
+import { KeyRound, ShieldCheck, UserCheck, Users } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { PageHeader } from '@/components/dashboard/page-header'
 import { AdminDashboardCard } from './admin-dashboard-card'
 import { ActiveLearnersDetailDialog } from './active-learners-detail-dialog'
@@ -136,6 +137,38 @@ const cardBgColors = [
   'border bg-primary',
   'border bg-secondary',
   'border bg-accent',
+]
+
+const LICENSE_KPI_CARDS: Array<{
+  id: 'total_licenses' | 'total_license_used' | 'total_license_remaining'
+  countKey: keyof Pick<
+    DashboardCounts,
+    'totalLicenses' | 'totalLicenseUsed' | 'totalLicenseRemaining'
+  >
+  className: string
+  icon: LucideIcon
+}> = [
+  {
+    id: 'total_licenses',
+    countKey: 'totalLicenses',
+    className:
+      'bg-gradient-to-br from-violet-600 via-violet-700 to-violet-900 text-white ring-violet-400/60 shadow-violet-900/40',
+    icon: KeyRound,
+  },
+  {
+    id: 'total_license_used',
+    countKey: 'totalLicenseUsed',
+    className:
+      'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-800 text-white ring-orange-300/70 shadow-orange-900/40',
+    icon: Users,
+  },
+  {
+    id: 'total_license_remaining',
+    countKey: 'totalLicenseRemaining',
+    className:
+      'bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-900 text-white ring-emerald-400/60 shadow-emerald-900/40',
+    icon: UserCheck,
+  },
 ]
 
 /* ============================================================
@@ -304,29 +337,28 @@ export function AdminDashboard() {
 
       {isAdmin ? (
         <div className='px-4 lg:px-6'>
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-            <AdminDashboardCard
-              title={tAdmin('cards.total_licenses')}
-              count={loading ? '...' : counts.totalLicenses ?? 0}
-              textColor='#ffffff'
-              radiusColor='rgba(255, 255, 255, 0.2)'
-              className='border bg-primary'
-            />
-            <AdminDashboardCard
-              title={tAdmin('cards.total_license_used')}
-              count={loading ? '...' : counts.totalLicenseUsed ?? 0}
-              textColor='#ffffff'
-              radiusColor='rgba(255, 255, 255, 0.2)'
-              className='border bg-secondary'
-            />
-            <AdminDashboardCard
-              title={tAdmin('cards.total_license_remaining')}
-              count={loading ? '...' : counts.totalLicenseRemaining ?? 0}
-              textColor='#ffffff'
-              radiusColor='rgba(255, 255, 255, 0.2)'
-              className='border bg-accent'
-            />
-          </div>
+          <section
+            aria-label={tAdmin('licenseOverview')}
+            className='rounded-2xl border-2 border-primary/20 bg-card p-4 shadow-md sm:p-5'
+          >
+            <h2 className='mb-3 text-xs font-bold uppercase tracking-widest text-primary'>
+              {tAdmin('licenseOverview')}
+            </h2>
+            <div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+              {LICENSE_KPI_CARDS.map((kpi) => (
+                <AdminDashboardCard
+                  key={kpi.id}
+                  variant='license'
+                  title={tAdmin(`cards.${kpi.id}`)}
+                  count={loading ? '...' : counts[kpi.countKey] ?? 0}
+                  textColor='#ffffff'
+                  radiusColor='rgba(255, 255, 255, 0.3)'
+                  icon={kpi.icon}
+                  className={kpi.className}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       ) : null}
 

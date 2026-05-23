@@ -52,7 +52,9 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarGroupLabel className="h-auto min-h-8 whitespace-normal py-1 leading-snug">
+        {label}
+      </SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <FeatureAccessWrapper
@@ -69,10 +71,15 @@ export function NavMain({
                 {item.items?.length ? (
                   <>
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuButton tooltip={item.title} className="cursor-pointer">
-                        {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                      <SidebarMenuButton
+                        tooltip={item.title}
+                        className="relative cursor-pointer gap-2 pr-9"
+                      >
+                        {item.icon && <item.icon className="shrink-0" />}
+                        <span className="min-w-0 flex-1 truncate text-left leading-snug">
+                          {item.title}
+                        </span>
+                        <ChevronRight className="absolute right-2 top-1/2 size-4 shrink-0 -translate-y-1/2 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
@@ -90,7 +97,9 @@ export function NavMain({
                                   target={(item.title === "Auth Pages" || item.title === "Errors") ? "_blank" : undefined}
                                   rel={(item.title === "Auth Pages" || item.title === "Errors") ? "noopener noreferrer" : undefined}
                                 >
-                                  <span>{subItem.title}</span>
+                                  <span className="min-w-0 flex-1 truncate text-left leading-snug">
+                                    {subItem.title}
+                                  </span>
                                 </Link>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
@@ -100,10 +109,17 @@ export function NavMain({
                     </CollapsibleContent>
                   </>
                 ) : (
-                  <SidebarMenuButton asChild tooltip={item.title} className="cursor-pointer" isActive={pathname === item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.title}
+                    className="cursor-pointer gap-2"
+                    isActive={pathname === item.url}
+                  >
                     <Link href={item.url}>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
+                      {item.icon && <item.icon className="shrink-0" />}
+                      <span className="min-w-0 flex-1 truncate text-left leading-snug">
+                        {item.title}
+                      </span>
                     </Link>
                   </SidebarMenuButton>
                 )}

@@ -301,7 +301,11 @@
       "lastLogin": "अंतिम लॉगिन",
       "nextVisit": "अगली विज़िट",
       "noComment": "कोई टिप्पणी नहीं",
-      "profile": "प्रोफ़ाइल"
+      "profile": "प्रोफ़ाइल",
+      "progressTitle": "कोर्स यूनिट प्रगति",
+      "progressCompleted": "पूर्ण",
+      "progressInProgress": "प्रगति पर",
+      "progressNotStarted": "शुरू नहीं हुआ"
     }
   },
   "users": {
@@ -514,6 +518,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "लाइसेंस अवलोकन",
       "cards": {
         "active_learner": "सक्रिय शिक्षार्थी",
         "learners_on_bil": "BIL पर शिक्षार्थी",
@@ -1170,8 +1175,7 @@
       "Others": "अन्य"
     },
     "roles": {
-      "Master Admin": "मास्टर व्यवस्थापक",
-      "Basic Admin": "बेसिक व्यवस्थापक",
+      "Admin": "एडमिन",
       "Assessor": "मूल्यांकनकर्ता",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -2955,6 +2959,10 @@
       "support": "सपोर्ट",
       "tickets": "टिकट्स",
       "adminManagement": "एडमिन प्रबंधन",
+      "admin": "एडमिन",
+      "courseManagement": "कोर्स",
+      "calendar": "कैलेंडर",
+      "automaticMailControl": "मेल नियंत्रण",
       "courseBuilder": "कोर्स बिल्डर",
       "surveys": "सर्वे",
       "fundingBands": "फंडिंग बैंड्स",
@@ -5272,6 +5280,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "चुनें…",
+      "optionsPendingHint": "विकल्प आपके प्रशासक द्वारा प्रदान किए जाएंगे।"
+    },
     "page": {
       "title": "प्रोफ़ाइल जानकारी",
       "subtitle": "सीखने वाले की प्रोफ़ाइल विवरण और व्यक्तिगत जानकारी देखें",

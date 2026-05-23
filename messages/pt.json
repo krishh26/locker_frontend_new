@@ -301,7 +301,11 @@
       "lastLogin": "Último acesso",
       "nextVisit": "Próxima visita",
       "noComment": "Sem comentário",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "progressTitle": "Progresso das unidades do curso",
+      "progressCompleted": "Concluído",
+      "progressInProgress": "Em progresso",
+      "progressNotStarted": "Não iniciado"
     }
   },
   "users": {
@@ -514,6 +518,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "Visão geral de licenças",
       "cards": {
         "active_learner": "Aprendiz ativo",
         "learners_on_bil": "Aprendizes em BIL",
@@ -1170,8 +1175,7 @@
       "Others": "Outros"
     },
     "roles": {
-      "Master Admin": "Administrador principal",
-      "Basic Admin": "Administrador básico",
+      "Admin": "Administrador",
       "Assessor": "Avaliador",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -2988,6 +2992,10 @@
       "support": "Suporte",
       "tickets": "Tickets",
       "adminManagement": "Gestão admin",
+      "admin": "Admin",
+      "courseManagement": "Cursos",
+      "calendar": "Calendário",
+      "automaticMailControl": "Controlo de email",
       "courseBuilder": "Course Builder",
       "surveys": "Inquéritos",
       "fundingBands": "Bandas de financiamento",
@@ -5262,6 +5270,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Selecionar…",
+      "optionsPendingHint": "As opções serão fornecidas pelo administrador."
+    },
     "page": {
       "title": "Informação do perfil",
       "subtitle": "Ver detalhes do perfil do formando e informação pessoal",

@@ -82,7 +82,7 @@
     "confirmDelete": "Are you sure you want to delete this learner?",
     "page": {
       "title": "Learner Management",
-      "adminSubtitle": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs",
+      "adminSubtitle": "Optimise learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs",
       "defaultSubtitle": "Manage and monitor your assigned learners"
     },
     "form": {
@@ -302,7 +302,11 @@
       "lastLogin": "Last Login",
       "nextVisit": "Next Visit",
       "noComment": "No comment",
-      "profile": "Profile"
+      "profile": "Profile",
+      "progressTitle": "Course unit progress",
+      "progressCompleted": "Completed",
+      "progressInProgress": "In progress",
+      "progressNotStarted": "Not started"
     }
   },
   "users": {
@@ -527,6 +531,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "License overview",
       "cards": {
         "active_learner": "Active Learner",
         "learners_on_bil": "Learners on BIL",
@@ -716,7 +721,7 @@
       },
       "learnerManagement": {
         "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "description": "Optimise learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
       },
       "employerManagement": {
         "title": "Employer Management",
@@ -1175,8 +1180,7 @@
         "Others": "Others"
       },
       "roles": {
-        "Master Admin": "Master Admin",
-        "Basic Admin": "Basic Admin",
+        "Admin": "Admin",
         "Assessor": "Assessor",
         "IQA": "IQA",
         "EQA": "EQA",
@@ -2251,6 +2255,10 @@
       "support": "Support",
       "tickets": "Tickets",
       "adminManagement": "Admin Management",
+      "admin": "Admin",
+      "courseManagement": "Courses",
+      "calendar": "Calendar",
+      "automaticMailControl": "Mail Control",
       "courseBuilder": "Course Builder",
       "surveys": "Surveys",
       "fundingBands": "Funding Bands",
@@ -5298,6 +5306,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Select…",
+      "optionsPendingHint": "Options will be provided by your administrator."
+    },
     "page": {
       "title": "Profile Information",
       "subtitle": "View learner profile details and personal information",

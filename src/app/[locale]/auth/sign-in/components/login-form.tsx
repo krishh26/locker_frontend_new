@@ -104,7 +104,7 @@ export function LoginForm({
           return
         }
 
-        if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {
+        if (result.passwordChanged === false && result.user?.role !== "MasterAdmin" && (result.user?.role !== "Admin" || !result.user.roles?.includes("Admin")) ) {
           toast.info("Please update your password to continue.")
           router.push("/auth/change-password")
           return

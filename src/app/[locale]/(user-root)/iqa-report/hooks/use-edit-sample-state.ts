@@ -16,6 +16,7 @@ import {
   getEmptyModalFormData,
 } from "../utils/data-transformer";
 import type { UnitWithHistory } from "./use-iv-report-data";
+import { buildAssessmentMethodsPayload } from "@/config/assessment-methods";
 
 export function useEditSampleState(
   planId: string | number | null,
@@ -199,12 +200,9 @@ export function useEditSampleState(
 
     setIsSaving(true);
     try {
-      // Convert assessment methods array to object format
-      const assessmentMethodsObj: Record<string, boolean> = {};
-      const assessmentMethodCodes = ["WO", "WP", "PW", "VI", "LB", "PD", "PT", "TE", "RJ", "OT", "RPL"];
-      assessmentMethodCodes.forEach((code) => {
-        assessmentMethodsObj[code] = modalFormData.assessmentMethods.includes(code);
-      });
+      const assessmentMethodsObj = buildAssessmentMethodsPayload(
+        modalFormData.assessmentMethods,
+      );
 
       // Convert IQA conclusion array to object format
       const iqaConclusionObj: Record<string, boolean> = {};

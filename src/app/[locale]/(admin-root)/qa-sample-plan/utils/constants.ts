@@ -1,38 +1,26 @@
-export interface AssessmentMethod {
-  code: string;
-  title: string;
-  assessmentMethodId?: string;
-}
+import {
+  toQaAssessmentMethodList,
+  type AssessmentMethodCode,
+} from "@/config/assessment-methods";
 
-export const assessmentMethods: AssessmentMethod[] = [
-  { code: "WO", title: "Workplace Observation", assessmentMethodId: "WO" },
-  { code: "WP", title: "Workplace Projects/Projects away from Work", assessmentMethodId: "WP" },
-  { code: "PW", title: "Portfolio of Work", assessmentMethodId: "PW" },
-  { code: "VI", title: "Viva", assessmentMethodId: "VI" },
-  { code: "LB", title: "Log Book/Assignments", assessmentMethodId: "LB" },
-  { code: "PD", title: "Professional Discussions", assessmentMethodId: "PD" },
-  { code: "PT", title: "Practical Test", assessmentMethodId: "PT" },
-  { code: "TE", title: "Tests/Examinations", assessmentMethodId: "TE" },
-  { code: "RJ", title: "Reflective Journal", assessmentMethodId: "RJ" },
-  { code: "OT", title: "Other", assessmentMethodId: "OT" },
-  { code: "RPL", title: "Recognised Prior Learning", assessmentMethodId: "RPL" },
-];
+export {
+  assessmentMethods,
+  assessmentMethodCodes,
+  assessmentMethodCodesForPayload,
+  getAssessmentMethodByCode,
+  getAssessmentMethodById,
+  toQaAssessmentMethodList,
+  type AssessmentMethod,
+} from "@/config/assessment-methods";
 
-export const assessmentMethodCodes = assessmentMethods.map((method) => method.code);
-
-export const assessmentMethodCodesForPayload = assessmentMethods
-  .map((method) => method.assessmentMethodId || method.code)
-  .filter((id) => id) as string[];
-
-export const getAssessmentMethodByCode = (code: string): AssessmentMethod | undefined => {
-  return assessmentMethods.find((method) => method.code === code);
-};
-
-export const getAssessmentMethodById = (id: string): AssessmentMethod | undefined => {
-  return assessmentMethods.find(
-    (method) => method.assessmentMethodId === id || method.code === id
+/** QA list with titles — use `getQaAssessmentMethods(t)` in UI for i18n titles. */
+export function getQaAssessmentMethods(
+  getTitle: (code: string) => string,
+) {
+  return toQaAssessmentMethodList((code: AssessmentMethodCode) =>
+    getTitle(code),
   );
-};
+}
 
 export interface SampleType {
   value: string;
@@ -89,4 +77,3 @@ export const formatDateForInput = (dateString: string | null | undefined): strin
 export const getTabColor = (index: number): string => {
   return index % 2 === 0 ? "primary" : "#e91e63";
 };
-

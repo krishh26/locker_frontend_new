@@ -301,7 +301,11 @@
       "lastLogin": "Último acesso",
       "nextVisit": "Próxima visita",
       "noComment": "Sem comentário",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "progressTitle": "Progresso das unidades do curso",
+      "progressCompleted": "Concluído",
+      "progressInProgress": "Em progresso",
+      "progressNotStarted": "Não iniciado"
     }
   },
   "users": {
@@ -514,6 +518,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "Visão geral de licenças",
       "cards": {
         "active_learner": "Aprendiz ativo",
         "learners_on_bil": "Aprendizes em BIL",
@@ -1170,8 +1175,7 @@
       "Others": "Outros"
     },
     "roles": {
-      "Master Admin": "Administrador principal",
-      "Basic Admin": "Administrador básico",
+      "Admin": "Administrador",
       "Assessor": "Avaliador",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -1365,19 +1369,6 @@
       "plannedSampleDateRequired": "A Data de Amostra Planeada é obrigatória",
       "applySamples": "Aplicar amostras",
       "applyRandomSamples": "Aplicar amostras aleatórias",
-      "assessmentMethodTitles": {
-        "WO": "Observação no local de trabalho",
-        "WP": "Projetos no local de trabalho / fora do trabalho",
-        "PW": "Portefólio de trabalho",
-        "VI": "Viva",
-        "LB": "Livro de registo / atribuições",
-        "PD": "Discussões profissionais",
-        "PT": "Teste prático",
-        "TE": "Testes / exames",
-        "RJ": "Diário reflexivo",
-        "OT": "Outro",
-        "RPL": "Reconhecimento de aprendizagem prévia"
-      },
       "sampleTypeLabels": {
         "Portfolio": "Amostra de portefólio",
         "ObserveAssessor": "Observar avaliador",
@@ -3001,6 +2992,10 @@
       "support": "Suporte",
       "tickets": "Tickets",
       "adminManagement": "Gestão admin",
+      "admin": "Admin",
+      "courseManagement": "Cursos",
+      "calendar": "Calendário",
+      "automaticMailControl": "Controlo de email",
       "courseBuilder": "Course Builder",
       "surveys": "Inquéritos",
       "fundingBands": "Bandas de financiamento",
@@ -4958,21 +4953,6 @@
         "existingAdditionalEvidence": "Evidência adicional atual",
         "replaceAdditionalEvidenceHint": "Carregue um ficheiro novo abaixo para o substituir ao guardar."
       },
-      "assessmentMethods": {
-        "Obs": "Observações",
-        "PA": "Avaliação prática",
-        "ET": "Exames e testes",
-        "PD": "Discussão profissional",
-        "I": "Entrevista",
-        "Q&A": "Perguntas e respostas",
-        "P": "Projeto",
-        "RA": "Relato reflexivo",
-        "WT": "Depoimento de testemunha",
-        "PE": "Evidência de produto",
-        "SI": "Simulação",
-        "OT": "Outro",
-        "RPL": "Aprendizagem prévia reconhecida"
-      },
       "signature": {
         "signedInAgreement": "Assinado em acordo:",
         "name": "Nome:",
@@ -5269,7 +5249,8 @@
       "notYetStarted": "Ainda não iniciado",
       "noEndDate": "Sem data de fim",
       "daysLeft": "Dias restantes",
-      "noUnitData": "Sem dados"
+      "noUnitData": "Sem dados",
+      "excludedFromOverallProgress": "Excluído do progresso geral"
     },
     "calendarDialog": {
       "title": "Calendário",
@@ -5289,6 +5270,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Selecionar…",
+      "optionsPendingHint": "As opções serão fornecidas pelo administrador."
+    },
     "page": {
       "title": "Informação do perfil",
       "subtitle": "Ver detalhes do perfil do formando e informação pessoal",
@@ -6265,5 +6250,19 @@
       "status": "Estado:",
       "gradingType": "Tipo de classificação:"
     }
+  },
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

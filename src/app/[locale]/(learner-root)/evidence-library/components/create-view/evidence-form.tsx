@@ -53,7 +53,10 @@ import {
   type EvidenceExternalFeedback,
 } from '@/store/api/evidence/types'
 import { CreateDocumentCard } from './create-document-card'
-import { ASSESSMENT_METHODS } from '@/utils/assessment-methods'
+import {
+  buildAssessmentMethodsForEvidence,
+  mergeAssessmentMethodsForDisplay,
+} from '@/utils/assessment-methods'
 import { useGetLearnerPlanListQuery } from '@/store/api/learner-plan/learnerPlanApi'
 import { formatSessionTime } from '@/utils/format-session-time'
 import {
@@ -140,6 +143,14 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const isEditMode = !!evidenceId && !isEmployer
   const t = useTranslations('evidenceLibrary')
   const tTimeLog = useTranslations('timeLog')
+  const tAssessmentMethods = useTranslations('assessmentMethods')
+  const assessmentMethodOptions = useMemo(
+    () =>
+      buildAssessmentMethodsForEvidence((code) =>
+        tAssessmentMethods(`${code}.title`),
+      ),
+    [tAssessmentMethods],
+  )
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [fileTab, setFileTab] = useState('upload')
@@ -294,14 +305,15 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   useEffect(() => {
     if (evidenceDetails?.data && isEditMode) {
       const evidence = evidenceDetails.data
-      // Parse assessment_method from string to array
-      const assessmentMethodArray = evidence.assessment_method
-        ? typeof evidence.assessment_method === 'string'
+      const rawAssessmentMethods =
+        typeof evidence.assessment_method === 'string'
           ? evidence.assessment_method.split(',').map((m) => m.trim())
           : Array.isArray(evidence.assessment_method)
             ? evidence.assessment_method
             : []
-        : []
+      const assessmentMethodArray = mergeAssessmentMethodsForDisplay(
+        rawAssessmentMethods,
+      )
 
       // Convert declaration from string to boolean
       const declarationValue =
@@ -1587,7 +1599,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                     <span className='text-destructive'>*</span>
                   </Label>
                   <div className='flex flex-wrap gap-4'>
-                    {ASSESSMENT_METHODS.map((method) => {
+                    {assessmentMethodOptions.map((method) => {
                       const checkboxId = `assessment-method-${method.value
                         .toLowerCase()
                         .replace(/\s+/g, '-')}`
@@ -1621,7 +1633,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             htmlFor={checkboxId}
                             className='cursor-pointer'
                           >
-                            {t(`form.assessmentMethods.${method.value}`)}
+                            {method.title}
                           </Label>
                         </div>
                       )

@@ -17,6 +17,7 @@ export function AssessmentMethodsSection({
   isReadOnly = false,
 }: AssessmentMethodsSectionProps) {
   const t = useTranslations('qaSamplePlan.editSampleModal.formSections.assessmentMethods')
+  const tMethods = useTranslations('assessmentMethods')
   return (
     <div className='md:col-span-4 space-y-2'>
       <Label className='text-sm font-semibold'>{t('title')}</Label>
@@ -32,7 +33,7 @@ export function AssessmentMethodsSection({
                   disabled={isReadOnly}
                 />
                 <Label htmlFor={`method-${method.code}`} className='text-sm cursor-pointer'>
-                  {method.code}
+                  {tMethods(`${method.code}.label`)} — {tMethods(`${method.code}.title`)}
                 </Label>
               </div>
             ))}

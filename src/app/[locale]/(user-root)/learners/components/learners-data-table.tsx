@@ -22,7 +22,6 @@ import {
   Trash2,
   MessageSquare,
   Upload,
-  BookOpen,
   Folder,
   FileText,
   ClipboardList,
@@ -591,8 +590,6 @@ export function LearnersDataTable() {
                         <TooltipTrigger asChild>
                           <Link
                             href={`/learner-dashboard/${learner.learner_id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="flex items-center justify-center cursor-pointer"
                           >
                             <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
@@ -756,7 +753,8 @@ export function LearnersDataTable() {
         accessorKey: "course",
         header: tTable("headers.course"),
         cell: ({ row }) => {
-          const courses = row.original.course;
+          const learner = row.original;
+          const courses = learner.course;
           if (!courses || courses.length === 0) return "-";
           return (
             <div className="flex items-center gap-1">
@@ -765,9 +763,12 @@ export function LearnersDataTable() {
                 return (
                   <Tooltip key={index}>
                     <TooltipTrigger asChild>
-                      <div className="flex items-center justify-center cursor-pointer">
-                        <BookOpen className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                      </div>
+                      <Link
+                        href={`/learner-dashboard/${learner.learner_id}`}
+                        className="flex items-center justify-center cursor-pointer"
+                      >
+                        <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                      </Link>
                     </TooltipTrigger>
                     <TooltipContent>
                       <p className="max-w-xs">{courseName}</p>

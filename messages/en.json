@@ -82,7 +82,7 @@
     "confirmDelete": "Are you sure you want to delete this learner?",
     "page": {
       "title": "Learner Management",
-      "adminSubtitle": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs",
+      "adminSubtitle": "Optimise learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs",
       "defaultSubtitle": "Manage and monitor your assigned learners"
     },
     "form": {
@@ -302,7 +302,11 @@
       "lastLogin": "Last Login",
       "nextVisit": "Next Visit",
       "noComment": "No comment",
-      "profile": "Profile"
+      "profile": "Profile",
+      "progressTitle": "Course unit progress",
+      "progressCompleted": "Completed",
+      "progressInProgress": "In progress",
+      "progressNotStarted": "Not started"
     }
   },
   "users": {
@@ -527,6 +531,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "License overview",
       "cards": {
         "active_learner": "Active Learner",
         "learners_on_bil": "Learners on BIL",
@@ -716,7 +721,7 @@
       },
       "learnerManagement": {
         "title": "Learner Management",
-        "description": "Optimize learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
+        "description": "Optimise learner administration by seamlessly adding, updating, and deleting learners, while also facilitating the assignment of courses, trainers, employers, IQAs, and EQAs."
       },
       "employerManagement": {
         "title": "Employer Management",
@@ -1175,8 +1180,7 @@
         "Others": "Others"
       },
       "roles": {
-        "Master Admin": "Master Admin",
-        "Basic Admin": "Basic Admin",
+        "Admin": "Admin",
         "Assessor": "Assessor",
         "IQA": "IQA",
         "EQA": "EQA",
@@ -1370,19 +1374,6 @@
       "plannedSampleDateRequired": "Planned Sample Date is required",
       "applySamples": "Apply Samples",
       "applyRandomSamples": "Apply Random Samples",
-      "assessmentMethodTitles": {
-        "WO": "Workplace Observation",
-        "WP": "Workplace Projects/Projects away from Work",
-        "PW": "Portfolio of Work",
-        "VI": "Viva",
-        "LB": "Log Book/Assignments",
-        "PD": "Professional Discussions",
-        "PT": "Practical Test",
-        "TE": "Tests/Examinations",
-        "RJ": "Reflective Journal",
-        "OT": "Other",
-        "RPL": "Recognised Prior Learning"
-      },
       "sampleTypeLabels": {
         "Portfolio": "Sample Portfolio",
         "ObserveAssessor": "Observe Assessor",
@@ -2264,6 +2255,10 @@
       "support": "Support",
       "tickets": "Tickets",
       "adminManagement": "Admin Management",
+      "admin": "Admin",
+      "courseManagement": "Courses",
+      "calendar": "Calendar",
+      "automaticMailControl": "Mail Control",
       "courseBuilder": "Course Builder",
       "surveys": "Surveys",
       "fundingBands": "Funding Bands",
@@ -2676,21 +2671,6 @@
         "savedSessionNotInList": "Saved session (ID: {id})",
         "existingAdditionalEvidence": "Current additional evidence",
         "replaceAdditionalEvidenceHint": "Upload a new file below to replace it when you save."
-      },
-      "assessmentMethods": {
-        "Obs": "Observations",
-        "PA": "Practical assessment",
-        "ET": "Exams and Tests",
-        "PD": "Professional discussion",
-        "I": "Interview",
-        "Q&A": "Question and Answers",
-        "P": "Project",
-        "RA": "Reflective Account",
-        "WT": "Witness Testimony",
-        "PE": "Product Evidence",
-        "SI": "Simulation",
-        "OT": "Other",
-        "RPL": "Recognised prior learning"
       },
       "signature": {
         "signedInAgreement": "Signed in Agreement:",
@@ -5305,7 +5285,8 @@
       "notYetStarted": "Not yet started",
       "noEndDate": "No end date",
       "daysLeft": "Days left",
-      "noUnitData": "No data"
+      "noUnitData": "No data",
+      "excludedFromOverallProgress": "Excluded from overall progress"
     },
     "calendarDialog": {
       "title": "Calendar",
@@ -5325,6 +5306,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Select…",
+      "optionsPendingHint": "Options will be provided by your administrator."
+    },
     "page": {
       "title": "Profile Information",
       "subtitle": "View learner profile details and personal information",
@@ -6304,5 +6289,19 @@
       "status": "Status:",
       "gradingType": "Grading Type:"
     }
+  },
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

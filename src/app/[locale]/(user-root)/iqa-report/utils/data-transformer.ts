@@ -1,6 +1,6 @@
 import type { SamplePlanLearner, SamplePlanLearnerUnit } from "@/store/api/qa-sample-plan/types";
 import type { ModalFormData } from "@/app/[locale]/(admin-root)/qa-sample-plan/components/edit-sample-modal/types";
-import { assessmentMethods } from "@/app/[locale]/(admin-root)/qa-sample-plan/utils/constants";
+import { assessmentMethodsSelectionFromApi } from "@/config/assessment-methods";
 
 /**
  * Transform sample_history item to ModalFormData format
@@ -8,13 +8,9 @@ import { assessmentMethods } from "@/app/[locale]/(admin-root)/qa-sample-plan/ut
 export function transformSampleHistoryToModalData(
   sampleHistoryItem: Record<string, unknown>
 ): ModalFormData {
-  // Extract assessment methods - handle object format { "WO": true, "WP": false }
-  let assessmentMethodsArray: string[] = [];
-  if (sampleHistoryItem.assessment_methods && typeof sampleHistoryItem.assessment_methods === "object") {
-    assessmentMethodsArray = Object.entries(sampleHistoryItem.assessment_methods)
-      .filter(([, value]) => value === true)
-      .map(([key]) => key);
-  }
+  const assessmentMethodsArray = assessmentMethodsSelectionFromApi(
+    sampleHistoryItem.assessment_methods,
+  );
 
   // Extract IQA conclusion - handle object format
   let iqaConclusionArray: string[] = [];

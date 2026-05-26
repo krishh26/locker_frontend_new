@@ -12,6 +12,12 @@ import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/random
 import { toast } from "sonner";
 import { Loader2, Camera } from "lucide-react";
 import type { LearnerData } from "@/store/api/learner/types";
+import {
+  ETHNICITY_OPTIONS,
+  LEARNER_DISABILITY_OPTIONS,
+  LEARNING_DIFFICULTY_OPTIONS,
+} from "@/config/learner-profile-dropdowns";
+import { ProfileEnumSelect } from "../profile-enum-select";
 
 interface AboutYouSectionProps {
   learner: LearnerData;
@@ -369,44 +375,30 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.ethnicity")}</Label>
-            {canEdit ? (
-              <>
-                <Input
-                  type="text"
-                  {...form.register("ethnicity")}
-                  className="min-h-10"
-                />
-                {form.formState.errors.ethnicity && (
-                  <p className="text-destructive text-sm">
-                    {form.formState.errors.ethnicity.message as string}
-                  </p>
-                )}
-              </>
-            ) : (
-              <div className="flex items-center">
-                {ethnicity}
-              </div>
+            <ProfileEnumSelect
+              name="ethnicity"
+              options={ETHNICITY_OPTIONS}
+              canEdit={canEdit}
+              viewValue={ethnicity}
+            />
+            {canEdit && form.formState.errors.ethnicity && (
+              <p className="text-destructive text-sm">
+                {form.formState.errors.ethnicity.message as string}
+              </p>
             )}
           </div>
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.learnerDisability")}</Label>
-            {canEdit ? (
-              <>
-                <Input
-                  type="text"
-                  {...form.register("learner_disability")}
-                  className="min-h-10"
-                />
-                {form.formState.errors.learner_disability && (
-                  <p className="text-destructive text-sm">
-                    {form.formState.errors.learner_disability.message as string}
-                  </p>
-                )}
-              </>
-            ) : (
-              <div className="flex items-center">
-                {learnerDisability}
-              </div>
+            <ProfileEnumSelect
+              name="learner_disability"
+              options={LEARNER_DISABILITY_OPTIONS}
+              canEdit={canEdit}
+              viewValue={learnerDisability}
+            />
+            {canEdit && form.formState.errors.learner_disability && (
+              <p className="text-destructive text-sm">
+                {form.formState.errors.learner_disability.message as string}
+              </p>
             )}
           </div>
         </div>
@@ -414,23 +406,16 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.learningDifficulties")}</Label>
-            {canEdit ? (
-              <>
-                <Input
-                  type="text"
-                  {...form.register("learner_difficulity")}
-                  className="min-h-10"
-                />
-                {form.formState.errors.learner_difficulity && (
-                  <p className="text-destructive text-sm">
-                    {form.formState.errors.learner_difficulity.message as string}
-                  </p>
-                )}
-              </>
-            ) : (
-              <div className="flex items-center">
-                {learnerDifficulty}
-              </div>
+            <ProfileEnumSelect
+              name="learner_difficulity"
+              options={LEARNING_DIFFICULTY_OPTIONS}
+              canEdit={canEdit}
+              viewValue={learnerDifficulty}
+            />
+            {canEdit && form.formState.errors.learner_difficulity && (
+              <p className="text-destructive text-sm">
+                {form.formState.errors.learner_difficulity.message as string}
+              </p>
             )}
           </div>
           <div className="space-y-2">

@@ -64,7 +64,8 @@ export function ReduxProvider({ children }: ReduxProviderProps) {
           !currentToken ||
           !currentUser ||
           currentToken !== storedToken ||
-          currentUserId !== transformedUserId
+          currentUserId !== transformedUserId ||
+          currentUser?.role !== transformedUser.role
         ) {
           const result: LoginResult = {
             token: storedToken,

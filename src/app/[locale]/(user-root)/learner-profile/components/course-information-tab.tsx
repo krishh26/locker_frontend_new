@@ -625,7 +625,12 @@ export function CourseInformationTab({
 
       {/* Add/Edit Course Dialog */}
       <Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent
+          className={cn(
+            "w-full max-w-4xl sm:max-w-4xl",
+            isEditMode && "max-h-[90vh] overflow-y-auto",
+          )}
+        >
           <DialogHeader>
             <DialogTitle>
               {isEditMode ? t("courseInformation.dialog.editTitle") : t("courseInformation.dialog.addTitle")}
@@ -638,7 +643,7 @@ export function CourseInformationTab({
           </DialogHeader>
 
           <Form {...form}>
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-3">
               {/* Course Selection - Disabled in edit mode */}
               <FormField
                 control={form.control}
@@ -725,7 +730,7 @@ export function CourseInformationTab({
                 />
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {/* Trainer */}
                 <FormField
                   control={form.control}
@@ -793,9 +798,7 @@ export function CourseInformationTab({
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* LIQA */}
                 <FormField
                   control={form.control}
@@ -863,9 +866,7 @@ export function CourseInformationTab({
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Start Date */}
                 <FormField
                   control={form.control}
@@ -899,9 +900,7 @@ export function CourseInformationTab({
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Predicted Grade */}
                 <FormField
                   control={form.control}

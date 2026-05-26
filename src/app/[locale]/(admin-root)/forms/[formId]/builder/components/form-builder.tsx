@@ -35,21 +35,47 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAppSelector } from "@/store/hooks";
 import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 
+const LEGACY_ADMIN_ROLE_LABELS = ["Master Admin", "Basic Admin"] as const;
+
 const roles = [
-  "Master Admin",
-  "Basic Admin",
+  "Admin",
   "Assessor",
   "IQA",
   "EQA",
   "Curriculum Manager",
   "Employer Overview",
   "Employer Manager",
-  "Partner",
   "Custom Manager",
   "Learner",
 ] as const;
 
 type Role = (typeof roles)[number];
+
+function parseRolesFromApi(value: string | undefined): string[] {
+  if (!value) return [];
+  return value
+    .split(",")
+    .map((role) => role.trim().replace(/^'(.*)'$/, "$1"));
+}
+
+function isRoleSelected(role: string, selectedRoles: string[] | undefined): boolean {
+  if (!selectedRoles?.length) return false;
+  if (selectedRoles.includes(role)) return true;
+  if (role === "Admin") {
+    return LEGACY_ADMIN_ROLE_LABELS.some((legacy) =>
+      selectedRoles.includes(legacy),
+    );
+  }
+  return false;
+}
+
+function buildRoleSelectionMap(
+  selectedRoles: string[] | undefined,
+): Record<Role, boolean> {
+  return Object.fromEntries(
+    roles.map((role) => [role, isRoleSelected(role, selectedRoles)]),
+  ) as Record<Role, boolean>;
+}
 
 const formTypeOptions = [
   "ILP",
@@ -216,46 +242,27 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         email_roles,
       } = formDetails.data;
 
-      const accessRolesArray = access_rights
-        ?.split(",")
-        .map((role) => role.trim().replace(/^'(.*)'$/, "$1"));
-
+      const accessRolesArray = parseRolesFromApi(access_rights);
       const completionRolesArray = Array.isArray(completion_roles)
         ? completion_roles
-        : typeof completion_roles === 'string'
-        ? completion_roles.split(",").map((role) => role.trim().replace(/^'(.*)'$/, "$1"))
-        : [];
-
+        : typeof completion_roles === "string"
+          ? parseRolesFromApi(completion_roles)
+          : [];
       const emailRolesArray = Array.isArray(email_roles)
         ? email_roles
-        : typeof email_roles === 'string'
-        ? email_roles.split(",").map((role) => role.trim().replace(/^'(.*)'$/, "$1"))
-        : [];
+        : typeof email_roles === "string"
+          ? parseRolesFromApi(email_roles)
+          : [];
 
       form.reset({
         form_name,
         type,
         description: description || "",
-        accessRights: Object.fromEntries(
-          roles.map((role) => [
-            role,
-            accessRolesArray?.includes(role) || false,
-          ])
-        ) as Record<Role, boolean>,
-        completionRoles: Object.fromEntries(
-          roles.map((role) => [
-            role,
-            completionRolesArray?.includes(role) || false,
-          ])
-        ) as Record<Role, boolean>,
+        accessRights: buildRoleSelectionMap(accessRolesArray),
+        completionRoles: buildRoleSelectionMap(completionRolesArray),
         enableCompleteFunction: enable_complete_function || false,
         requestSignature: set_request_signature || false,
-        emails: Object.fromEntries(
-          roles.map((role) => [
-            role,
-            emailRolesArray?.includes(role) || false,
-          ])
-        ) as Record<Role, boolean>,
+        emails: buildRoleSelectionMap(emailRolesArray),
         otherEmail: other_emails || "",
       });
 

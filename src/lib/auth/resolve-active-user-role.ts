@@ -1,0 +1,30 @@
+import {
+  filterRolesFromApi,
+  normalizeRole,
+  type Role,
+} from "@/config/auth-roles"
+
+/**
+ * Picks the active role for the session: API/current selection first, then first allowed role.
+ */
+export function resolveActiveUserRole(
+  roles: string[] | null | undefined,
+  options?: {
+    apiRole?: unknown
+    currentRole?: unknown
+  },
+): Role | undefined {
+  const filtered = filterRolesFromApi(roles)
+  if (filtered.length === 0) {
+    return undefined
+  }
+
+  for (const raw of [options?.apiRole, options?.currentRole]) {
+    const normalized = normalizeRole(raw)
+    if (normalized && filtered.includes(normalized)) {
+      return normalized
+    }
+  }
+
+  return filtered[0] as Role
+}

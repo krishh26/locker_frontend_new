@@ -298,7 +298,11 @@
       "lastLogin": "آخر تسجيل دخول",
       "nextVisit": "الزيارة القادمة",
       "noComment": "لا يوجد تعليق",
-      "profile": "الملف الشخصي"
+      "profile": "الملف الشخصي",
+      "progressTitle": "تقدم وحدات الدورة",
+      "progressCompleted": "مكتمل",
+      "progressInProgress": "قيد التقدم",
+      "progressNotStarted": "لم يبدأ"
     }
   },
   "users": {
@@ -507,6 +511,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "نظرة عامة على التراخيص",
       "cards": {
         "active_learner": "المتعلم النشط",
         "learners_on_bil": "المتعلمون في BIL",
@@ -1163,8 +1168,7 @@
       "Others": "أخرى"
     },
     "roles": {
-      "Master Admin": "المشرف الرئيسي",
-      "Basic Admin": "مشرف أساسي",
+      "Admin": "المدير",
       "Assessor": "مقيّم",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -1358,19 +1362,6 @@
       "plannedSampleDateRequired": "تاريخ العينة المخطط مطلوب",
       "applySamples": "تطبيق العينات",
       "applyRandomSamples": "تطبيق عينات عشوائية",
-      "assessmentMethodTitles": {
-        "WO": "ملاحظة في مكان العمل",
-        "WP": "مشاريع مكان العمل / خارج العمل",
-        "PW": "محفظة الأعمال",
-        "VI": "فيفا",
-        "LB": "دفتر السجل / الواجبات",
-        "PD": "مناقشات مهنية",
-        "PT": "اختبار عملي",
-        "TE": "اختبارات / امتحانات",
-        "RJ": "يومية تأملية",
-        "OT": "أخرى",
-        "RPL": "اعتراف بالتعلم السابق"
-      },
       "sampleTypeLabels": {
         "Portfolio": "عينة المحفظة",
         "ObserveAssessor": "ملاحظة المُقيِّم",
@@ -2994,6 +2985,10 @@
       "support": "الدعم",
       "tickets": "التذاكر",
       "adminManagement": "إدارة المسؤول",
+      "admin": "المسؤول",
+      "courseManagement": "الدورات",
+      "calendar": "التقويم",
+      "automaticMailControl": "التحكم بالبريد",
       "courseBuilder": "Course Builder",
       "surveys": "الاستبيانات",
       "fundingBands": "شرائح التمويل",
@@ -4880,21 +4875,6 @@
         "existingAdditionalEvidence": "الدليل الإضافي الحالي",
         "replaceAdditionalEvidenceHint": "ارفع ملفًا جديدًا أدناه لاستبداله عند الحفظ."
       },
-      "assessmentMethods": {
-        "Obs": "الملاحظات",
-        "PA": "التقييم العملي",
-        "ET": "الامتحانات والاختبارات",
-        "PD": "النقاش المهني",
-        "I": "المقابلة",
-        "Q&A": "الأسئلة والأجوبة",
-        "P": "المشروع",
-        "RA": "الحساب التأملي",
-        "WT": "شهادة الشاهد",
-        "PE": "دليل المنتج",
-        "SI": "المحاكاة",
-        "OT": "أخرى",
-        "RPL": "التعلم السابق المعترف به"
-      },
       "signature": {
         "signedInAgreement": "موقع بالاتفاق:",
         "name": "الاسم:",
@@ -5191,7 +5171,8 @@
       "notYetStarted": "لم يبدأ بعد",
       "noEndDate": "لا يوجد تاريخ انتهاء",
       "daysLeft": "الأيام المتبقية",
-      "noUnitData": "لا توجد بيانات"
+      "noUnitData": "لا توجد بيانات",
+      "excludedFromOverallProgress": "مستبعد من التقدم الإجمالي"
     },
     "calendarDialog": {
       "title": "التقويم",
@@ -5211,6 +5192,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "اختر…",
+      "optionsPendingHint": "سيتم توفير الخيارات من قبل المسؤول."
+    },
     "page": {
       "title": "معلومات الملف الشخصي",
       "subtitle": "عرض تفاصيل ملف المتعلم والمعلومات الشخصية",
@@ -6187,5 +6172,19 @@
       "status": "الحالة:",
       "gradingType": "نوع التقدير:"
     }
+  },
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

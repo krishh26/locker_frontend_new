@@ -343,6 +343,7 @@
     "adminDashboard": "Dashboard amministratore",
     "dashboard": "Dashboard",
     "admin": {
+      "licenseOverview": "Panoramica licenze",
       "cards": {
         "total_licenses": "Licenze totali",
         "total_license_used": "Licenze utilizzate",
@@ -843,8 +844,7 @@
         "Others": "Altri"
       },
       "roles": {
-        "Master Admin": "Amministratore principale",
-        "Basic Admin": "Amministratore base",
+        "Admin": "Amministratore",
         "Assessor": "Valutatore",
         "IQA": "IQA",
         "EQA": "EQA",
@@ -1032,19 +1032,6 @@
       "plannedSampleDateRequired": "La data del campione pianificata è obbligatoria",
       "applySamples": "Applica campioni",
       "applyRandomSamples": "Applica campioni casuali",
-      "assessmentMethodTitles": {
-        "WO": "Osservazione sul posto di lavoro",
-        "WP": "Progetti sul posto di lavoro / fuori dal lavoro",
-        "PW": "Portfolio di lavoro",
-        "VI": "Viva",
-        "LB": "Registro / compiti",
-        "PD": "Discussioni professionali",
-        "PT": "Test pratico",
-        "TE": "Test / esami",
-        "RJ": "Diario riflessivo",
-        "OT": "Altro",
-        "RPL": "Riconoscimento di apprendimenti pregressi"
-      },
       "sampleTypeLabels": {
         "Portfolio": "Campione portfolio",
         "ObserveAssessor": "Osserva valutatore",
@@ -2363,6 +2350,10 @@
       "support": "Supporto",
       "tickets": "Ticket",
       "adminManagement": "Gestione admin",
+      "admin": "Admin",
+      "courseManagement": "Corsi",
+      "calendar": "Calendario",
+      "automaticMailControl": "Controllo email",
       "courseBuilder": "Course Builder",
       "surveys": "Sondaggi",
       "fundingBands": "Bande di finanziamento",
@@ -4113,21 +4104,6 @@
         "loadingSessions": "Caricamento sessioni...",
         "noSessionsAvailable": "Nessuna sessione disponibile"
       },
-      "assessmentMethods": {
-        "Obs": "Osservazioni",
-        "PA": "Valutazione pratica",
-        "ET": "Esami e test",
-        "PD": "Discussione professionale",
-        "I": "Colloquio",
-        "Q&A": "Domande e risposte",
-        "P": "Progetto",
-        "RA": "Resoconto riflessivo",
-        "WT": "Testimonianza",
-        "PE": "Evidenza di prodotto",
-        "SI": "Simulazione",
-        "OT": "Altro",
-        "RPL": "Apprendimento pregresso riconosciuto"
-      },
       "signature": {
         "signedInAgreement": "Firmato in accordo:",
         "name": "Nome:",
@@ -4424,7 +4400,8 @@
       "notYetStarted": "Non ancora iniziato",
       "noEndDate": "Nessuna data di fine",
       "daysLeft": "Giorni rimanenti",
-      "noUnitData": "Nessun dato"
+      "noUnitData": "Nessun dato",
+      "excludedFromOverallProgress": "Escluso dal progresso complessivo"
     },
     "calendarDialog": {
       "title": "Calendario",
@@ -4444,6 +4421,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "Seleziona…",
+      "optionsPendingHint": "Le opzioni saranno fornite dall'amministratore."
+    },
     "page": {
       "title": "Informazioni sul profilo",
       "subtitle": "Visualizza i dettagli del profilo del discente e le informazioni personali",
@@ -5420,5 +5401,20 @@
       "status": "Stato:",
       "gradingType": "Tipo di valutazione:"
     }
+  }
+,
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

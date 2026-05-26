@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, Briefcase, Building2 } from "lucide-react";
+import { Users, Building2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
@@ -45,24 +45,14 @@ export function CpdLearnerInfoCard() {
       t("learnerInfo.notSpecified")
     : t("learnerInfo.notSpecified");
 
-  // Get job title and employer from learner data
-  const jobTitle = learner?.job_title || t("learnerInfo.notSpecified");
-  
   const employerName = 
-    learner?.employer_id && typeof learner.employer_id === "object" && "employer_name" in learner.employer_id
-      ? learner.employer_id.employer_name
-      : t("learnerInfo.notSpecified");
+    learner?.employer_name ? learner.employer_name : t("learnerInfo.notSpecified")
 
   const learnerInfo = [
     {
       title: t("learnerInfo.learnerName"),
       value: learnerName,
       icon: Users,
-    },
-    {
-      title: t("learnerInfo.jobTitle"),
-      value: jobTitle,
-      icon: Briefcase,
     },
     {
       title: t("learnerInfo.employer"),
@@ -72,7 +62,7 @@ export function CpdLearnerInfoCard() {
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
       {learnerInfo.map((info) => (
         <MetricCard
           key={info.title}

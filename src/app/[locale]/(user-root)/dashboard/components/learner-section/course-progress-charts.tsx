@@ -15,7 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Flag, CalendarDays, TrendingUp } from "lucide-react"
+import { Flag, CalendarDays, TrendingUp, Ban } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded"
 
@@ -394,7 +394,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
   const t = useTranslations("learnerDashboard.courseProgressCharts")
 
   const visibleCourses = useMemo(
-    () => (courses ?? []).filter((c) => !isEnrollmentExcluded(c)),
+    () => (courses ?? []).filter((c) => c),
     [courses]
   )
 
@@ -429,12 +429,14 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
           const courseName = course?.course?.course_name || t("courseFallback", { index: index + 1 })
           const colorIdx = index % cardBgColors.length
           const rowKey = course.user_course_id ?? course.course?.course_id ?? index
+          const isExcluded = isEnrollmentExcluded(course)
 
           return (
             <Card
               key={rowKey}
               className={cn(
-                "relative shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
+                "relative shadow-sm cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02]",
+                isExcluded && "border-dashed border-muted-foreground/50 bg-muted/20",
               )}
               onClick={() => {
                 const courseId = course.course?.course_id
@@ -444,14 +446,24 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
                 }
               }}
             >
+              {isExcluded ? (
+                <Badge
+                  variant="secondary"
+                  className="absolute top-3 left-3 z-10 max-w-[calc(100%-7rem)] gap-1 rounded-full border border-muted-foreground/30 bg-muted text-xs font-medium text-muted-foreground shadow-sm"
+                  title={t("excludedFromOverallProgress")}
+                >
+                  <Ban className="size-3 shrink-0" />
+                  <span className="truncate">{t("excludedFromOverallProgress")}</span>
+                </Badge>
+              ) : null}
               <Badge
                 variant={progressData.isGateway ? "default" : "outline"}
-                className="absolute top-3 right-3 gap-1 rounded-full shadow-sm text-xs"
+                className="absolute top-3 right-3 z-10 gap-1 rounded-full shadow-sm text-xs"
               >
                 <Flag className="size-3" />
                 {progressData.isGateway ? t("gateway") : t("core")}
               </Badge>
-              <CardHeader className="space-y-1 pr-24">
+              <CardHeader className={cn("space-y-1 pr-24", isExcluded && "pt-10")}>
                 <CardTitle className="text-base font-semibold text-foreground line-clamp-2" title={courseName}>
                   {courseName}
                 </CardTitle>

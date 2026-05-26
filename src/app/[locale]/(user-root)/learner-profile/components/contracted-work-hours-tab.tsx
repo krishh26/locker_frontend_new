@@ -542,7 +542,9 @@ export function ContractedWorkHoursTab({
                           mode='single'
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) => date < today}
+                          captionLayout='dropdown'
+                          fromYear={1900}
+                          toYear={new Date().getFullYear() + 20}
                           initialFocus
                         />
                       </PopoverContent>

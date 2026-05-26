@@ -1,6 +1,9 @@
 import type { PlanDetailsResponse } from "@/store/api/qa-sample-plan/types";
 import { ModalFormData } from "../components/edit-sample-modal/types";
-import { assessmentMethods } from "./constants";
+import {
+  assessmentMethodsSelectionFromApi,
+  buildAssessmentMethodsPayload,
+} from "@/config/assessment-methods";
 
 /**
  * Transform PlanDetailsResponse data to ModalFormData format
@@ -12,16 +15,9 @@ export function transformPlanDetailsToModalData(
     return getEmptyModalFormData();
   }
 
-  // Extract assessment methods - handle both array and object formats
-  let assessmentMethodsArray: string[] = [];
-  if (Array.isArray(data.assessmentMethods || data.assessment_methods)) {
-    assessmentMethodsArray = (data.assessmentMethods || data.assessment_methods) as string[];
-  } else if (data.assessment_methods && typeof data.assessment_methods === "object") {
-    // Convert object format { "WO": true, "WP": false } to array of codes
-    assessmentMethodsArray = Object.entries(data.assessment_methods)
-      .filter(([, value]) => value === true)
-      .map(([key]) => key);
-  }
+  const assessmentMethodsArray = assessmentMethodsSelectionFromApi(
+    data.assessmentMethods ?? data.assessment_methods,
+  );
 
   // Extract IQA conclusion - handle both array and object formats
   let iqaConclusionArray: string[] = [];
@@ -116,11 +112,9 @@ export function transformModalDataToUpdateRequest(
   plannedDate?: string;
   type?: string;
 } {
-  // Convert assessment methods array to object format
-  const assessmentMethodsObj: Record<string, boolean> = {};
-  assessmentMethods.forEach((method) => {
-    assessmentMethodsObj[method.code] = modalData.assessmentMethods.includes(method.code);
-  });
+  const assessmentMethodsObj = buildAssessmentMethodsPayload(
+    modalData.assessmentMethods,
+  );
 
   // Convert IQA conclusion array to object format
   const iqaConclusionObj: Record<string, boolean> = {};

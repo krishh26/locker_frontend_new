@@ -755,6 +755,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           return tSidebar('items.tickets')
         case 'Admin Management':
           return tSidebar('items.adminManagement')
+        case 'Admin':
+          return tSidebar('items.admin')
+        case 'Course Management':
+          return tSidebar('items.courseManagement')
+        case 'Calendar':
+          return tSidebar('items.calendar')
+        case 'Automatic Mail Control':
+          return tSidebar('items.automaticMailControl')
         case 'Course Builder':
           return tSidebar('items.courseBuilder')
         case 'Surveys':

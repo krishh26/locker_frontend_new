@@ -301,7 +301,11 @@
       "lastLogin": "上次登录",
       "nextVisit": "下次拜访",
       "noComment": "暂无备注",
-      "profile": "个人资料"
+      "profile": "个人资料",
+      "progressTitle": "课程单元进度",
+      "progressCompleted": "已完成",
+      "progressInProgress": "进行中",
+      "progressNotStarted": "未开始"
     }
   },
   "users": {
@@ -510,6 +514,7 @@
       }
     },
     "admin": {
+      "licenseOverview": "许可证概览",
       "cards": {
         "active_learner": "活跃学员",
         "learners_on_bil": "BIL 学员",
@@ -1166,8 +1171,7 @@
       "Others": "其他"
     },
     "roles": {
-      "Master Admin": "主管理员",
-      "Basic Admin": "基础管理员",
+      "Admin": "管理员",
       "Assessor": "评估员",
       "IQA": "IQA",
       "EQA": "EQA",
@@ -1323,19 +1327,6 @@
       "plannedSampleDateRequired": "计划抽样日期为必填项",
       "applySamples": "应用抽样",
       "applyRandomSamples": "应用随机抽样",
-      "assessmentMethodTitles": {
-        "WO": "工作场所观察",
-        "WP": "工作场所项目 / 工作外项目",
-        "PW": "工作作品集",
-        "VI": "口试",
-        "LB": "日志 / 作业",
-        "PD": "专业讨论",
-        "PT": "实操测试",
-        "TE": "测试 / 考试",
-        "RJ": "反思日志",
-        "OT": "其他",
-        "RPL": "认可的先前学习"
-      },
       "sampleTypeLabels": {
         "Portfolio": "抽样作品集",
         "ObserveAssessor": "观察评估员",
@@ -2959,6 +2950,10 @@
       "support": "支持",
       "tickets": "工单",
       "adminManagement": "管理员管理",
+      "admin": "管理员",
+      "courseManagement": "课程",
+      "calendar": "日历",
+      "automaticMailControl": "邮件控制",
       "courseBuilder": "Course Builder",
       "surveys": "问卷调查",
       "fundingBands": "资助区间",
@@ -4916,21 +4911,6 @@
         "existingAdditionalEvidence": "当前附加证据文件",
         "replaceAdditionalEvidenceHint": "在下方上传新文件，保存时将替换当前文件。"
       },
-      "assessmentMethods": {
-        "Obs": "观察",
-        "PA": "实践评估",
-        "ET": "考试与测验",
-        "PD": "专业讨论",
-        "I": "访谈",
-        "Q&A": "问答",
-        "P": "项目",
-        "RA": "反思陈述",
-        "WT": "证人证言",
-        "PE": "产品证据",
-        "SI": "模拟",
-        "OT": "其他",
-        "RPL": "认可的先验学习"
-      },
       "signature": {
         "signedInAgreement": "同意并签署：",
         "name": "姓名：",
@@ -5227,7 +5207,8 @@
       "notYetStarted": "未开始",
       "noEndDate": "无结束日期",
       "daysLeft": "剩余天数",
-      "noUnitData": "无数据"
+      "noUnitData": "无数据",
+      "excludedFromOverallProgress": "不计入总体进度"
     },
     "calendarDialog": {
       "title": "日历",
@@ -5247,6 +5228,10 @@
     }
   },
   "learnerProfile": {
+    "dropdowns": {
+      "selectPlaceholder": "请选择…",
+      "optionsPendingHint": "选项将由管理员提供。"
+    },
     "page": {
       "title": "个人资料信息",
       "subtitle": "查看学员个人资料详情及个人信息",
@@ -6223,5 +6208,20 @@
       "status": "状态：",
       "gradingType": "评分类型："
     }
+  }
+,
+  "assessmentMethods": {
+    "PE": { "label": "PE", "title": "Professional Discussion" },
+    "DO": { "label": "DO", "title": "Direct Observation" },
+    "WT": { "label": "WT", "title": "Witness Testimony" },
+    "QA": { "label": "QA", "title": "Question and Answer" },
+    "PS": { "label": "PS", "title": "Product Sample" },
+    "DI": { "label": "DI", "title": "Discussion" },
+    "SI": { "label": "SI", "title": "Simulation" },
+    "ET": { "label": "ET", "title": "Expert Evidence" },
+    "RA": { "label": "RA", "title": "Basic Assessment" },
+    "OT": { "label": "OT", "title": "Other" },
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
+    "LO": { "label": "LO", "title": "Learning Outcome" }
   }
 }

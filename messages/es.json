@@ -5243,6 +5243,8 @@
         "contractEndLabel": "Fecha de fin del contrato",
         "hoursPerWeekLabel": "Horas de trabajo por semana *",
         "hoursPlaceholder": "Introduzca las horas por semana",
+        "yearlyHolidayLabel": "Derecho a vacaciones anuales (horas)",
+        "yearlyHolidayPlaceholder": "Introduzca el derecho a vacaciones anuales en horas",
         "pickDate": "Elegir fecha",
         "pickDateOptional": "Elegir fecha (opcional)",
         "cancel": "Cancelar",
@@ -5259,7 +5261,8 @@
         "companyRequired": "La empresa es obligatoria",
         "contractStartRequired": "La fecha de inicio del contrato es obligatoria",
         "hoursRequired": "Las horas de trabajo por semana son obligatorias",
-        "hoursPositive": "Debe ser un número positivo"
+        "hoursPositive": "Debe ser un número positivo",
+        "yearlyHolidayInteger": "El derecho a vacaciones anuales debe ser un número entero (0 o mayor)"
       },
       "toast": {
         "updated": "Horas contratadas actualizadas correctamente",

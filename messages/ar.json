@@ -5334,6 +5334,8 @@
         "contractEndLabel": "تاريخ انتهاء العقد",
         "hoursPerWeekLabel": "ساعات العمل أسبوعياً *",
         "hoursPlaceholder": "أدخل الساعات أسبوعياً",
+        "yearlyHolidayLabel": "حق الإجازة السنوية (ساعات)",
+        "yearlyHolidayPlaceholder": "أدخل حق الإجازة السنوية بالساعات",
         "pickDate": "اختر تاريخاً",
         "pickDateOptional": "اختر تاريخاً (اختياري)",
         "cancel": "إلغاء",
@@ -5350,7 +5352,8 @@
         "companyRequired": "الشركة مطلوبة",
         "contractStartRequired": "تاريخ بدء العقد مطلوب",
         "hoursRequired": "ساعات العمل أسبوعياً مطلوبة",
-        "hoursPositive": "يجب أن يكون رقماً موجباً"
+        "hoursPositive": "يجب أن يكون رقماً موجباً",
+        "yearlyHolidayInteger": "يجب أن يكون حق الإجازة السنوية رقماً صحيحاً (0 أو أكثر)"
       },
       "toast": {
         "updated": "تم تحديث ساعات العمل التعاقدية بنجاح",

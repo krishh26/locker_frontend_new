@@ -5370,6 +5370,8 @@
         "contractEndLabel": "雇佣合同结束日期",
         "hoursPerWeekLabel": "每周合同工作小时 *",
         "hoursPlaceholder": "输入每周小时数",
+        "yearlyHolidayLabel": "年度假期权利（小时）",
+        "yearlyHolidayPlaceholder": "输入年度假期权利（小时）",
         "pickDate": "选择日期",
         "pickDateOptional": "选择日期（可选）",
         "cancel": "取消",
@@ -5386,7 +5388,8 @@
         "companyRequired": "公司为必填项",
         "contractStartRequired": "合同开始日期为必填项",
         "hoursRequired": "每周工作小时为必填项",
-        "hoursPositive": "必须为正数"
+        "hoursPositive": "必须为正数",
+        "yearlyHolidayInteger": "年度假期权利必须为整数（0 或以上）"
       },
       "toast": {
         "updated": "合同工作小时已成功更新",

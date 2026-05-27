@@ -502,6 +502,7 @@ export function EvidenceLibraryDataTable() {
           id?: number | string; 
           code?: string;
           title?: string;
+          unit_ref?: string;
           subUnit?: Array<{ 
             id?: number | string; 
             code?: string;
@@ -509,7 +510,7 @@ export function EvidenceLibraryDataTable() {
           }> 
         }) => {
           const unitId = unit.id;
-          const unitCode = unit.code || String(unitId);
+          const unitCode = unit.unit_ref || String(unitId);
           const unitTitle = unit.title || unitCode;
 
           baseColumns.push({

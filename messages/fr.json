@@ -5401,6 +5401,8 @@
         "contractEndLabel": "Date de fin du contrat",
         "hoursPerWeekLabel": "Heures de travail par semaine *",
         "hoursPlaceholder": "Saisissez les heures par semaine",
+        "yearlyHolidayLabel": "Droit aux congés annuels (heures)",
+        "yearlyHolidayPlaceholder": "Saisissez le droit aux congés annuels en heures",
         "pickDate": "Choisir une date",
         "pickDateOptional": "Choisir une date (optionnel)",
         "cancel": "Annuler",
@@ -5417,7 +5419,8 @@
         "companyRequired": "L'entreprise est obligatoire",
         "contractStartRequired": "La date de début du contrat est obligatoire",
         "hoursRequired": "Les heures par semaine sont obligatoires",
-        "hoursPositive": "Doit être un nombre positif"
+        "hoursPositive": "Doit être un nombre positif",
+        "yearlyHolidayInteger": "Le droit aux congés annuels doit être un nombre entier (0 ou plus)"
       },
       "toast": {
         "updated": "Heures contractuelles mises à jour avec succès",

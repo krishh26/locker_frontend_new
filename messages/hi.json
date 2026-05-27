@@ -941,17 +941,6 @@
       "noChatSelectedDescription": "मैसेजिंग शुरू करने के लिए सूची से कोई कोर्स चुनें"
     }
   },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
-  },
   "forms": {
   "pageTitle": "फ़ॉर्म प्रबंधन",
   "pageSubtitle": "ड्रैग‑एंड‑ड्रॉप बिल्डर के साथ डायनेमिक फ़ॉर्म बनाएँ और मैनेज करें",
@@ -5425,6 +5414,8 @@
         "contractEndLabel": "अनुबंध समाप्ति तिथि",
         "hoursPerWeekLabel": "प्रति सप्ताह कार्य घंटे *",
         "hoursPlaceholder": "प्रति सप्ताह घंटे दर्ज करें",
+        "yearlyHolidayLabel": "वार्षिक छुट्टी अधिकार (घंटे)",
+        "yearlyHolidayPlaceholder": "वार्षिक छुट्टी अधिकार (घंटों में) दर्ज करें",
         "pickDate": "तिथि चुनें",
         "pickDateOptional": "तिथि चुनें (वैकल्पिक)",
         "cancel": "रद्द करें",
@@ -5441,7 +5432,8 @@
         "companyRequired": "कंपनी आवश्यक है",
         "contractStartRequired": "अनुबंध प्रारंभ तिथि आवश्यक है",
         "hoursRequired": "प्रति सप्ताह कार्य घंटे आवश्यक हैं",
-        "hoursPositive": "धनात्मक संख्या होनी चाहिए"
+        "hoursPositive": "धनात्मक संख्या होनी चाहिए",
+        "yearlyHolidayInteger": "वार्षिक छुट्टी अधिकार एक पूर्ण संख्या (0 या अधिक) होना चाहिए"
       },
       "toast": {
         "updated": "अनुबंधित कार्य घंटे सफलतापूर्वक अपडेट हो गए",

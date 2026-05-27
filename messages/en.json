@@ -5451,6 +5451,8 @@
         "contractEndLabel": "Employment Contract End Date",
         "hoursPerWeekLabel": "Contracted Work Hours per Week *",
         "hoursPlaceholder": "Enter hours per week",
+        "yearlyHolidayLabel": "Yearly Holiday Entitlement (Hours)",
+        "yearlyHolidayPlaceholder": "Enter yearly holiday entitlement in hours",
         "pickDate": "Pick a date",
         "pickDateOptional": "Pick a date (optional)",
         "cancel": "Cancel",
@@ -5467,7 +5469,8 @@
         "companyRequired": "Company is required",
         "contractStartRequired": "Contract start date is required",
         "hoursRequired": "Work hours per week is required",
-        "hoursPositive": "Must be a positive number"
+        "hoursPositive": "Must be a positive number",
+        "yearlyHolidayInteger": "Yearly holiday entitlement must be a whole number (0 or greater)"
       },
       "toast": {
         "updated": "Contracted work hours updated successfully",

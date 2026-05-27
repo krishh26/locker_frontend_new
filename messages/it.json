@@ -4563,6 +4563,8 @@
         "contractEndLabel": "Data di fine del contratto",
         "hoursPerWeekLabel": "Ore di lavoro settimanali *",
         "hoursPlaceholder": "Inserisci le ore settimanali",
+        "yearlyHolidayLabel": "Diritto alle ferie annuali (ore)",
+        "yearlyHolidayPlaceholder": "Inserisci il diritto alle ferie annuali in ore",
         "pickDate": "Scegli data",
         "pickDateOptional": "Scegli data (opzionale)",
         "cancel": "Annulla",
@@ -4579,7 +4581,8 @@
         "companyRequired": "L'azienda è obbligatoria",
         "contractStartRequired": "La data di inizio del contratto è obbligatoria",
         "hoursRequired": "Le ore di lavoro settimanali sono obbligatorie",
-        "hoursPositive": "Deve essere un numero positivo"
+        "hoursPositive": "Deve essere un numero positivo",
+        "yearlyHolidayInteger": "Il diritto alle ferie annuali deve essere un numero intero (0 o superiore)"
       },
       "toast": {
         "updated": "Ore contrattuali aggiornate con successo",

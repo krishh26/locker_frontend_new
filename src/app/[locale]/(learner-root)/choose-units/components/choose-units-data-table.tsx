@@ -155,7 +155,7 @@ export function ChooseUnitsDataTable({
         size: 80,
       },
       {
-        accessorKey: "title",
+        accessorKey: "Title",
         header: t("table.columns.unitName"),
         cell: ({ row }) => {
           const unit = row.original;
@@ -188,7 +188,7 @@ export function ChooseUnitsDataTable({
         },
       },
       {
-        accessorKey: "mandatory",
+        accessorKey: "Mandatory",
         header: t("table.columns.type"),
         cell: ({ row }) => {
           const unit = row.original;
@@ -205,7 +205,7 @@ export function ChooseUnitsDataTable({
         },
       },
       {
-        accessorKey: "glh",
+        accessorKey: "GLH",
         header: t("table.columns.glh"),
         cell: ({ row }) => {
           const glh = row.getValue("glh") as number;
@@ -213,7 +213,7 @@ export function ChooseUnitsDataTable({
         },
       },
       {
-        accessorKey: "level",
+        accessorKey: "Level",
         header: t("table.columns.level"),
         cell: ({ row }) => {
           const level = row.getValue("level") as string;

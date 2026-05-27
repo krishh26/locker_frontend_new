@@ -563,17 +563,6 @@
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
   },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
-  },
   "forms": {
     "pageTitle": "Form Builder",
     "pageSubtitle": "Create and manage dynamic forms with drag-and-drop builder",
@@ -4574,6 +4563,8 @@
         "contractEndLabel": "Vertragsende",
         "hoursPerWeekLabel": "Arbeitsstunden pro Woche *",
         "hoursPlaceholder": "Stunden pro Woche eingeben",
+        "yearlyHolidayLabel": "Jahresurlaubsanspruch (Stunden)",
+        "yearlyHolidayPlaceholder": "Jahresurlaubsanspruch in Stunden eingeben",
         "pickDate": "Datum wählen",
         "pickDateOptional": "Datum wählen (optional)",
         "cancel": "Abbrechen",
@@ -4590,7 +4581,8 @@
         "companyRequired": "Unternehmen ist erforderlich",
         "contractStartRequired": "Vertragsbeginn ist erforderlich",
         "hoursRequired": "Arbeitsstunden pro Woche sind erforderlich",
-        "hoursPositive": "Muss eine positive Zahl sein"
+        "hoursPositive": "Muss eine positive Zahl sein",
+        "yearlyHolidayInteger": "Der Jahresurlaubsanspruch muss eine ganze Zahl (0 oder größer) sein"
       },
       "toast": {
         "updated": "Vertragliche Arbeitsstunden erfolgreich aktualisiert",

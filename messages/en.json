@@ -175,6 +175,7 @@
         "email": "Email",
         "mobile": "Mobile",
         "course": "Course",
+        "iqaShortcuts": "IQA",
         "comment": "Comment",
         "status": "Status",
         "actions": "Actions"

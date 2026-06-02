@@ -710,6 +710,199 @@ export function LearnersDataTable() {
       ];
     }
 
+    // IQA-specific columns (extend default columns with shortcut actions)
+    if (isIqa) {
+      return [
+        {
+          accessorKey: "name",
+          header: tTable("headers.learnerName"),
+          cell: ({ row }) => {
+            const learner = row.original as LearnerListItem;
+            const learnerName = `${learner.first_name} ${learner.last_name}`;
+            return (
+              <div className="flex flex-col">
+                <Link
+                  href={`/learner-profile?learner_id=${learner.learner_id}`}
+                  className="text-primary hover:underline cursor-pointer font-medium"
+                >
+                  {learnerName}
+                </Link>
+              </div>
+            );
+          },
+        },
+        {
+          accessorKey: "user_name",
+          header: tTable("headers.username"),
+        },
+        {
+          accessorKey: "email",
+          header: tTable("headers.email"),
+        },
+        {
+          accessorKey: "mobile",
+          header: tTable("headers.mobile"),
+        },
+        {
+          accessorKey: "course",
+          header: tTable("headers.course"),
+          cell: ({ row }) => {
+            const learner = row.original as LearnerListItem;
+            const courses = learner.course;
+            if (!courses || courses.length === 0) return "-";
+            return (
+              <div className="flex items-center gap-1">
+                {courses.map((c, index) => {
+                  const courseName = c.course?.course_name || tTable("unknownCourse");
+                  return (
+                    <Tooltip key={index}>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={`/learner-dashboard/${learner.learner_id}`}
+                          className="flex items-center justify-center cursor-pointer"
+                        >
+                          <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="max-w-xs">{courseName}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  );
+                })}
+              </div>
+            );
+          },
+        },
+        {
+          id: "iqa_shortcuts",
+          header: tTable("headers.iqaShortcuts"),
+          cell: ({ row }) => {
+            const learner = row.original as LearnerListItem;
+          
+            if (!learner.course?.length) return "-";
+          
+            return (
+              <div className="flex items-center gap-3 flex-wrap">
+                {learner.course.map((item) => {
+                  const courseId = item?.course?.course_id;
+          
+                  if (!courseId) return null;
+                  const courseName = item?.course?.course_name || tTable("unknownCourse");
+          
+                  return (
+                    <div key={courseId} className="flex items-center gap-2">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/qa-sample-plan?course_id=${courseId}`}
+                            className="flex items-center justify-center cursor-pointer"
+                          >
+                            <ClipboardList className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{`${courseName} - ${tTable("qaSamplePlan")}`}</p>
+                        </TooltipContent>
+                      </Tooltip>
+          
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/iqa-report?course_id=${courseId}`}
+                            className="flex items-center justify-center cursor-pointer"
+                          >
+                            <FileText className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{`${courseName} - ${tTable("viewIqaReport")}`}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          }
+        },
+        {
+          accessorKey: "comment",
+          header: tTable("headers.comment"),
+          cell: ({ row }) => {
+            const learner = row.original as LearnerListItem;
+            const comment = learner.comment;
+            return (
+              <div className="flex items-center gap-2">
+                {comment ? (
+                  <span className="max-w-[200px] truncate block" title={comment}>
+                    {comment}
+                  </span>
+                ) : (
+                  <span className="text-muted-foreground text-sm">-</span>
+                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => handleCommentClick(learner)}
+                >
+                  <Edit className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                </Button>
+              </div>
+            );
+          },
+        },
+        {
+          accessorKey: "status",
+          header: tTable("headers.status"),
+          cell: ({ row }) => {
+            const status = (row.original as LearnerListItem).status;
+            if (!status) return "-";
+            return (
+              <span
+                className={cn(
+                  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+                  status === "Completed" || status === "Certificated"
+                    ? "bg-accent text-white"
+                    : status === "Early Leaver" || status === "Training Suspended"
+                      ? "bg-destructive text-white"
+                      : "bg-primary text-white"
+                )}
+              >
+                {status}
+              </span>
+            );
+          },
+        },
+        {
+          id: "actions",
+          header: tTable("headers.actions"),
+          cell: ({ row }) => {
+            const learner = row.original as LearnerListItem;
+            return (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">{tTable("actions.openMenu")}</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {canEditComments && (
+                    <DropdownMenuItem onClick={() => handleCommentClick(learner)}>
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      {tTable("actions.comment")}
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            );
+          },
+        },
+      ];
+    }
+
     // Default columns for Admin, Trainer, Employer
     return [
       {
@@ -872,7 +1065,7 @@ export function LearnersDataTable() {
         },
       },
     ];
-  }, [canEditComments, isAdmin, isEmployer, isEqa, tTable]);
+  }, [canEditComments, isAdmin, isEmployer, isEqa, isIqa, tTable]);
 
   // Determine table data - all roles now use server-side data
   // tableData is already defined above with conditional logic

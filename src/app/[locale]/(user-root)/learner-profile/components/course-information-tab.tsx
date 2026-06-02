@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,6 +51,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CourseAutocomplete } from "@/components/ui/course-autocomplete";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import type { Course } from "@/store/api/course/types";
 import {
@@ -96,9 +97,10 @@ const STATUS_VALUE_TO_KEY: Record<string, string> = {
   Transferred: "transferred",
 };
 
-function getCourseSchema(t: (key: string) => string) {
+function getEditCourseSchema(t: (key: string) => string) {
   return z
     .object({
+      mode: z.literal("edit"),
       course_id: z.string().min(1, t("courseInformation.validation.selectCourse")),
       trainer_id: z.string().min(1, t("courseInformation.validation.selectTrainer")),
       IQA_id: z.string().min(1, t("courseInformation.validation.selectIQA")),
@@ -112,6 +114,7 @@ function getCourseSchema(t: (key: string) => string) {
       final_grade: z.string().transform((value) => value.trim()),
       is_main_course: z.boolean().optional(),
       course_status: z.string().optional(),
+      courses: z.array(z.any()).optional(),
     })
     .refine(
       (data) => {
@@ -133,7 +136,9 @@ function getCourseSchema(t: (key: string) => string) {
         const bilReturnStr = data.bil_return_date;
         const parts = bilReturnStr.split("-").map((p) => Number(p));
         const bilReturn =
-          parts.length === 3 ? new Date(parts[0], parts[1] - 1, parts[2]) : new Date(bilReturnStr);
+          parts.length === 3
+            ? new Date(parts[0], parts[1] - 1, parts[2])
+            : new Date(bilReturnStr);
         return bilReturn >= today;
       },
       {
@@ -155,7 +160,63 @@ function getCourseSchema(t: (key: string) => string) {
     );
 }
 
-type CourseFormValues = z.infer<ReturnType<typeof getCourseSchema>>;
+function getAddCourseSchema(t: (key: string) => string) {
+  const courseEntry = z
+    .object({
+      course_id: z.string().min(1, t("courseInformation.validation.selectCourse")),
+      start_date: z.string().min(1, t("courseInformation.validation.selectStartDate")),
+      end_date: z.string().min(1, t("courseInformation.validation.selectEndDate")),
+      is_main_course: z.boolean().optional(),
+    })
+    .refine(
+      (data) => {
+        if (data.start_date && data.end_date) {
+          return new Date(data.end_date) > new Date(data.start_date);
+        }
+        return true;
+      },
+      {
+        message: t("courseInformation.validation.endDateAfterStart"),
+        path: ["end_date"],
+      }
+    );
+
+  return z
+    .object({
+      mode: z.literal("add"),
+      trainer_id: z.string().min(1, t("courseInformation.validation.selectTrainer")),
+      IQA_id: z.string().min(1, t("courseInformation.validation.selectIQA")),
+      LIQA_id: z.string().min(1, t("courseInformation.validation.selectLIQA")),
+      EQA_id: z.string().min(1, t("courseInformation.validation.selectEQA")),
+      // Optional inputs: allow empty/whitespace, but normalize to trimmed strings.
+      predicted_grade: z.string().transform((value) => value.trim()),
+      final_grade: z.string().transform((value) => value.trim()),
+      courses: z.array(courseEntry).min(1, t("courseInformation.validation.selectCourse")),
+      // Keep these for shared form parity; unused in add mode.
+      course_id: z.string().optional(),
+      start_date: z.string().optional(),
+      end_date: z.string().optional(),
+      bil_return_date: z.string().optional(),
+      course_status: z.string().optional(),
+      is_main_course: z.boolean().optional(),
+    })
+    .superRefine((data, ctx) => {
+      const mainCount = (data.courses || []).filter((c) => Boolean(c.is_main_course)).length;
+      if (mainCount > 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Only one course can be marked as Main Aim Course.",
+          path: ["courses"],
+        });
+      }
+    });
+}
+
+function getDialogCourseSchema(t: (key: string) => string) {
+  return z.discriminatedUnion("mode", [getEditCourseSchema(t), getAddCourseSchema(t)]);
+}
+
+type CourseFormValues = z.infer<ReturnType<typeof getDialogCourseSchema>>;
 
 export function CourseInformationTab({
   learner,
@@ -169,10 +230,7 @@ export function CourseInformationTab({
     const dd = String(d.getDate()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd}`;
   }, []);
-  const courseSchema = useMemo(
-    () => getCourseSchema((key) => t(key)),
-    [t]
-  );
+  const courseSchema = useMemo(() => getDialogCourseSchema((key) => t(key)), [t]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<LearnerCourse | null>(
@@ -180,7 +238,7 @@ export function CourseInformationTab({
   );
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const courses = learner.course || [];
+  const courses = useMemo(() => learner.course || [], [learner.course]);
 
   // Fetch courses list for dropdown
   const { data: coursesResponse, isLoading: isLoadingCourses } =
@@ -218,6 +276,7 @@ export function CourseInformationTab({
   const form = useForm<CourseFormValues>({
     resolver: zodResolver(courseSchema),
     defaultValues: {
+      mode: "add",
       course_id: "",
       trainer_id: "",
       IQA_id: "",
@@ -230,10 +289,15 @@ export function CourseInformationTab({
       final_grade: "",
       is_main_course: false,
       course_status: "",
+      courses: [],
     },
   });
 
   const courseStatus = form.watch("course_status");
+  const { fields: courseFields, replace: replaceCourses } = useFieldArray({
+    control: form.control,
+    name: "courses",
+  });
 
   useEffect(() => {
     if (courseStatus !== "Training Suspended") {
@@ -317,6 +381,7 @@ export function CourseInformationTab({
         "";
 
       form.reset({
+        mode: "edit",
         course_id: course.course?.course_id?.toString() || "",
         trainer_id: trainerId.toString(),
         IQA_id: iqaId.toString(),
@@ -335,11 +400,13 @@ export function CourseInformationTab({
         final_grade: courseData.final_grade || "",
         is_main_course: course.is_main_course || false,
         course_status: course.course_status || "",
+        courses: [],
       });
     } else {
       setSelectedCourse(null);
       setIsEditMode(false);
       form.reset({
+        mode: "add",
         course_id: "",
         trainer_id: "",
         IQA_id: "",
@@ -352,6 +419,7 @@ export function CourseInformationTab({
         final_grade: "",
         is_main_course: false,
         course_status: "",
+        courses: [],
       });
     }
     setDialogOpen(true);
@@ -364,9 +432,36 @@ export function CourseInformationTab({
     form.reset();
   };
 
+  const existingMainCourse = useMemo(
+    () => courses.find((c) => c.is_main_course),
+    [courses]
+  );
+
+  const syncSelectedCourses = useCallback(
+    (selectedIds: string[]) => {
+      const current = form.getValues("courses") || [];
+      const byId = new Map(current.map((c) => [c.course_id, c]));
+      const next = selectedIds.map((id) => {
+        const prev = byId.get(id);
+        return prev
+          ? prev
+          : {
+              course_id: id,
+              start_date: "",
+              end_date: "",
+              is_main_course: false,
+            };
+      });
+      replaceCourses(next);
+      form.clearErrors("courses");
+    },
+    [form, replaceCourses]
+  );
+
   const onSubmit = form.handleSubmit(async (data) => {
     try {
-      if (isEditMode && selectedCourse) {
+      if (data.mode === "edit") {
+        if (!selectedCourse) return;
         await updateUserCourse({
           userCourseId: selectedCourse.user_course_id,
           data: {
@@ -387,27 +482,35 @@ export function CourseInformationTab({
           },
         }).unwrap();
         toast.success(t("courseInformation.toast.updated"));
-      } else {
+        handleCloseDialog();
+        return;
+      }
+
+      const nextMain = (data.courses || []).find((c) => Boolean(c.is_main_course));
+      if (nextMain && existingMainCourse) {
+        await updateUserCourse({
+          userCourseId: existingMainCourse.user_course_id,
+          data: { is_main_course: false },
+        }).unwrap();
+      }
+
+      for (const courseEntry of data.courses) {
         await createUserCourse({
           learner_id: learner.learner_id,
-          course_id: Number(data.course_id),
+          course_id: Number(courseEntry.course_id),
           trainer_id: Number(data.trainer_id),
           IQA_id: Number(data.IQA_id),
           LIQA_id: Number(data.LIQA_id),
           EQA_id: Number(data.EQA_id),
-          start_date: data.start_date,
-          end_date: data.end_date,
-          bil_return_date:
-            data.course_status === "Training Suspended"
-              ? (data.bil_return_date || "").trim() || undefined
-              : undefined,
+          start_date: courseEntry.start_date,
+          end_date: courseEntry.end_date,
           predicted_grade: data.predicted_grade,
           final_grade: data.final_grade,
-          is_main_course: data.is_main_course || false,
+          is_main_course: Boolean(courseEntry.is_main_course),
         }).unwrap();
-        toast.success(t("courseInformation.toast.added"));
       }
 
+      toast.success(t("courseInformation.toast.added"));
       handleCloseDialog();
     } catch (error) {
       console.error("Failed to save course:", error);
@@ -444,6 +547,14 @@ export function CourseInformationTab({
   // Check if there's already a main course
   const hasMainCourse = courses.some((c) => c.is_main_course);
   const isSelectedCourseMain = selectedCourse?.is_main_course;
+
+  const courseNameById = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const c of coursesList) {
+      if (c.course_id != null) m.set(String(c.course_id), c.course_name || "");
+    }
+    return m;
+  }, [coursesList]);
 
   if (courses.length === 0 && !canEdit) {
     return (
@@ -627,8 +738,7 @@ export function CourseInformationTab({
       <Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>
         <DialogContent
           className={cn(
-            "w-full max-w-4xl sm:max-w-4xl",
-            isEditMode && "max-h-[90vh] overflow-y-auto",
+            "w-full max-w-4xl sm:max-w-4xl max-h-[90vh] overflow-y-auto",
           )}
         >
           <DialogHeader>
@@ -645,39 +755,74 @@ export function CourseInformationTab({
           <Form {...form}>
             <form onSubmit={onSubmit} className="space-y-3">
               {/* Course Selection - Disabled in edit mode */}
-              <FormField
-                control={form.control}
-                name="course_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("courseInformation.form.selectCourse")} <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={isEditMode || isLoadingCourses}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder={t("courseInformation.form.chooseCourse")} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {coursesList.map((course) => (
-                          <SelectItem
-                            key={course.course_id}
-                            value={course.course_id.toString()}
-                          >
-                            {course.course_name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {isEditMode ? (
+                <FormField
+                  control={form.control}
+                  name="course_id"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("courseInformation.form.selectCourse")}{" "}
+                        <span className="text-destructive">*</span>
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={isEditMode || isLoadingCourses}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue
+                              placeholder={t("courseInformation.form.chooseCourse")}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {coursesList.map((course) => (
+                            <SelectItem
+                              key={course.course_id}
+                              value={course.course_id.toString()}
+                            >
+                              {course.course_name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : (
+                <FormField
+                  control={form.control}
+                  name="courses"
+                  render={({ field }) => {
+                    const selectedIds = (field.value || []).map((c) => c.course_id);
+                    return (
+                      <FormItem>
+                        <FormLabel>
+                          {t("courseInformation.form.selectCourse")}{" "}
+                          <span className="text-destructive">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <CourseAutocomplete
+                            multiple
+                            value={selectedIds}
+                            onValueChange={(next) => {
+                              const nextIds = Array.isArray(next) ? next : next ? [next] : [];
+                              syncSelectedCourses(nextIds);
+                            }}
+                            placeholder={t("courseInformation.form.chooseCourse")}
+                            disabled={isLoadingCourses}
+                            error={Boolean(form.formState.errors.courses)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+              )}
 
               {/* Course Status - Only shown in edit mode */}
               {isEditMode && (
@@ -867,40 +1012,6 @@ export function CourseInformationTab({
                   )}
                 />
 
-                {/* Start Date */}
-                <FormField
-                  control={form.control}
-                  name="start_date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t("courseInformation.form.startDate")} <span className="text-destructive">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* End Date */}
-                <FormField
-                  control={form.control}
-                  name="end_date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t("courseInformation.form.endDate")} <span className="text-destructive">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
                 {/* Predicted Grade */}
                 <FormField
                   control={form.control}
@@ -936,36 +1047,135 @@ export function CourseInformationTab({
                 />
               </div>
 
-              {/* Main Course Checkbox */}
-              <FormField
-                control={form.control}
-                name="is_main_course"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        disabled={
-                          isEditMode &&
-                          !isSelectedCourseMain &&
-                          hasMainCourse
-                        }
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>{t("courseInformation.form.mainAimCourse")}</FormLabel>
-                      {isEditMode &&
-                        !isSelectedCourseMain &&
-                        hasMainCourse && (
+              {isEditMode ? (
+                <FormField
+                  control={form.control}
+                  name="is_main_course"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={isEditMode && !isSelectedCourseMain && hasMainCourse}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          {t("courseInformation.form.mainAimCourse")}
+                        </FormLabel>
+                        {isEditMode && !isSelectedCourseMain && hasMainCourse && (
                           <p className="text-sm text-muted-foreground">
                             {t("courseInformation.form.anotherMainCourse")}
                           </p>
                         )}
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              ) : (
+                <div className="space-y-3">
+                  <div className="text-sm font-medium">
+                    Selected Courses
+                  </div>
+                  {courseFields.length === 0 ? (
+                    <div className="text-sm text-muted-foreground">
+                      {t("courseInformation.form.chooseCourse")}
                     </div>
-                  </FormItem>
-                )}
-              />
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3">
+                      {courseFields.map((courseField, index) => {
+                        const courseId = String(courseField.course_id || "");
+                        const courseName =
+                          (courseId && courseNameById.get(courseId)) || "Course";
+                        return (
+                          <Card key={courseField.id} className="border-dashed">
+                            <CardHeader className="pb-3">
+                              <CardTitle className="text-base">
+                                {courseName}
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <FormField
+                                  control={form.control}
+                                  name={`courses.${index}.start_date`}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>
+                                        {t("courseInformation.form.startDate")}{" "}
+                                        <span className="text-destructive">*</span>
+                                      </FormLabel>
+                                      <FormControl>
+                                        <Input type="date" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name={`courses.${index}.end_date`}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>
+                                        {t("courseInformation.form.endDate")}{" "}
+                                        <span className="text-destructive">*</span>
+                                      </FormLabel>
+                                      <FormControl>
+                                        <Input type="date" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </div>
+
+                              <FormField
+                                control={form.control}
+                                name={`courses.${index}.is_main_course`}
+                                render={({ field }) => (
+                                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={Boolean(field.value)}
+                                        onCheckedChange={(checked) => {
+                                          const isChecked = Boolean(checked);
+                                          if (isChecked) {
+                                            const current = form.getValues("courses") || [];
+                                            current.forEach((_, i) => {
+                                              form.setValue(
+                                                `courses.${i}.is_main_course`,
+                                                i === index
+                                              );
+                                            });
+                                          } else {
+                                            field.onChange(false);
+                                          }
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                      <FormLabel>
+                                        {t("courseInformation.form.mainAimCourse")}
+                                      </FormLabel>
+                                      {existingMainCourse && (
+                                        <p className="text-sm text-muted-foreground">
+                                          Selecting this will replace the current Main Aim Course.
+                                        </p>
+                                      )}
+                                    </div>
+                                  </FormItem>
+                                )}
+                              />
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <DialogFooter>
                 <Button

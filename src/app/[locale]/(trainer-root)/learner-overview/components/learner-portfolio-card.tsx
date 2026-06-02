@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,9 +26,13 @@ import {
   Loader2,
 } from "lucide-react";
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
-import { useUpdateLearnerCommentMutation } from "@/store/api/learner/learnerApi";
-import type { LearnerListItem } from "@/store/api/learner/types";
+import {
+  useGetLearnerDetailsQuery,
+  useUpdateLearnerCommentMutation,
+} from "@/store/api/learner/learnerApi";
+import type { LearnerCourse, LearnerListItem } from "@/store/api/learner/types";
 import { calculateLearnerProgress } from "@/lib/learner-progress-utils";
+import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
@@ -48,12 +52,44 @@ export function LearnerPortfolioCard({
   const [updateComment, { isLoading: isSavingComment }] =
     useUpdateLearnerCommentMutation();
 
-  const {
-    totalCompleted,
-    totalInProgress,
-    totalNotStarted,
-    completionPercentage,
-  } = calculateLearnerProgress(learner);
+  const learnerId = learner?.learner_id;
+  const { data: learnerDetailsResponse } = useGetLearnerDetailsQuery(learnerId, {
+    skip: !learnerId,
+  });
+  const learnerDetails = learnerDetailsResponse?.data;
+
+  const overallProgressData = useMemo(() => {
+    const coursesForProgress = (learnerDetails?.course ?? learner?.course ?? []).filter(
+      (c) => !isEnrollmentExcluded(c),
+    );
+
+    if (coursesForProgress.length === 0) {
+      return {
+        totalCompleted: 0,
+        totalInProgress: 0,
+        totalNotStarted: 0,
+        completionPercentage: 0,
+        countedCourses: 0,
+      };
+    }
+
+    const progressLearner: LearnerListItem = {
+      learner_id: Number(learnerDetails?.learner_id ?? learner.learner_id),
+      user_name: String(learnerDetails?.user_name ?? learner.user_name ?? ""),
+      first_name: String(learnerDetails?.first_name ?? learner.first_name ?? ""),
+      last_name: String(learnerDetails?.last_name ?? learner.last_name ?? ""),
+      email: String(learnerDetails?.email ?? learner.email ?? ""),
+      mobile: String(learnerDetails?.mobile ?? learner.mobile ?? ""),
+      course: coursesForProgress as LearnerCourse[],
+    };
+
+    const summary = calculateLearnerProgress(progressLearner);
+
+    return {
+      ...summary,
+      countedCourses: coursesForProgress.length,
+    };
+  }, [learner, learnerDetails]);
 
   const handleOpenCommentDialog = () => {
     setIsEditingComment(true);
@@ -153,36 +189,36 @@ export function LearnerPortfolioCard({
               </div>
             </div>
 
-            {learner?.course && learner.course.length > 0 && (
+            {overallProgressData.countedCourses > 0 && (
               <div className="flex-1 md:flex-[1.5] p-4 rounded-lg border border-primary flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm md:text-base font-bold text-primary">
                     {t("card.overallProgress")}
                   </span>
                   <Badge className="bg-primary text-primary-foreground font-bold">
-                    {completionPercentage.toFixed(0)}%
+                    {overallProgressData.completionPercentage.toFixed(0)}%
                   </Badge>
                 </div>
 
                 <Progress
-                  value={Math.min(completionPercentage, 100)}
+                  value={Math.min(overallProgressData.completionPercentage, 100)}
                   className="h-2 md:h-3 mb-2"
                 />
 
                 <div className="flex justify-between gap-2 text-xs md:text-sm">
                   <div className="text-center flex-1">
-                    <span className="font-semibold text-green-600">
-                      ✓ {totalCompleted}
+                    <span className="font-semibold text-success">
+                      ✓ {overallProgressData.totalCompleted}
                     </span>
                   </div>
                   <div className="text-center flex-1">
-                    <span className="font-semibold text-yellow-600">
-                      ⟳ {totalInProgress}
+                    <span className="font-semibold text-warning">
+                      ⟳ {overallProgressData.totalInProgress}
                     </span>
                   </div>
                   <div className="text-center flex-1">
-                    <span className="font-semibold text-red-600">
-                      ○ {totalNotStarted}
+                    <span className="font-semibold text-destructive">
+                      ○ {overallProgressData.totalNotStarted}
                     </span>
                   </div>
                 </div>

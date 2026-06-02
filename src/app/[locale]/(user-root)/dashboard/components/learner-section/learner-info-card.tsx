@@ -166,7 +166,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
       completionPercentage: summary.completionPercentage,
       countedCourses: coursesForProgress.length,
     }
-  }, [learner?.course])
+  }, [learner])
 
   const learnerName = learner
     ? `${learner.first_name || ''} ${learner.last_name || ''}`.trim()

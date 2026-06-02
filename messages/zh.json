@@ -5969,6 +5969,8 @@
       "labels": {
         "organisation": "组织 *",
         "plan": "方案 *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5993,6 +5995,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "请选择组织与方案",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6003,7 +6008,9 @@
     "changePlan": {
       "labels": {
         "organisation": "组织",
-        "newPlan": "新方案 *"
+        "newPlan": "新方案 *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "选择方案"
@@ -6014,6 +6021,9 @@
       },
       "toast": {
         "selectPlan": "请选择方案",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "方案更换成功",
         "changeFailedFallback": "更换方案失败"
       }

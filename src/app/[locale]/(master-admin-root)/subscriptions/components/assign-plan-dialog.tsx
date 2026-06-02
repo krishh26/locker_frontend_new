@@ -41,6 +41,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
 
   const [organisationId, setOrganisationId] = useState<string>("")
   const [planId, setPlanId] = useState<string>("")
+  const [startDate, setStartDate] = useState<string>("")
+  const [endDate, setEndDate] = useState<string>("")
   const [totalLicenses, setTotalLicenses] = useState<string>("")
   const [tolerancePercentage, setTolerancePercentage] = useState<string>("")
   const [warningThresholdPercentage, setWarningThresholdPercentage] = useState<string>("")
@@ -63,6 +65,21 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     e.preventDefault()
     if (!organisationId || !planId) {
       toast.error(t("assignPlan.toast.selectOrgAndPlan"))
+      return
+    }
+
+    if (!startDate || !endDate) {
+      toast.error(t("assignPlan.toast.selectStartAndEndDate"))
+      return
+    }
+    const startMs = new Date(startDate).getTime()
+    const endMs = new Date(endDate).getTime()
+    if (Number.isNaN(startMs) || Number.isNaN(endMs)) {
+      toast.error(t("assignPlan.toast.invalidDate"))
+      return
+    }
+    if (startMs > endMs) {
+      toast.error(t("assignPlan.toast.startDateAfterEndDate"))
       return
     }
 
@@ -92,6 +109,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       await assignPlanMutation({
         organisationId: Number(organisationId),
         planId: Number(planId),
+        startDate,
+        endDate,
         totalLicenses: totalLicensesNum,
         tolerancePercentage: tolerancePercentageNum,
         warningThresholdPercentage: warningThresholdPercentageNum,
@@ -99,6 +118,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       toast.success(t("assignPlan.toast.assignedSuccess"))
       setOrganisationId("")
       setPlanId("")
+      setStartDate("")
+      setEndDate("")
       setTotalLicenses("")
       setTolerancePercentage("")
       setWarningThresholdPercentage("")
@@ -161,6 +182,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   const isFormValid =
     !!organisationId &&
     !!planId &&
+    !!startDate &&
+    !!endDate &&
     isTotalLicensesValid &&
     isTolerancePercentageValid &&
     isWarningThresholdPercentageValid
@@ -199,6 +222,28 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
             ))}
           </SelectContent>
         </Select>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="startDate">{t("assignPlan.labels.startDate")}</Label>
+          <Input
+            id="startDate"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="endDate">{t("assignPlan.labels.endDate")}</Label>
+          <Input
+            id="endDate"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            required
+          />
+        </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="totalLicenses">{t("assignPlan.labels.totalLicenses")}</Label>

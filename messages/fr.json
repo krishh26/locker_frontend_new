@@ -6000,6 +6000,8 @@
       "labels": {
         "organisation": "Organisation *",
         "plan": "Plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -6024,6 +6026,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Veuillez sélectionner une organisation et un plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6034,7 +6039,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organisation",
-        "newPlan": "Nouveau plan *"
+        "newPlan": "Nouveau plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Sélectionner un plan"
@@ -6045,6 +6052,9 @@
       },
       "toast": {
         "selectPlan": "Veuillez sélectionner un plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Plan changé avec succès",
         "changeFailedFallback": "Échec du changement de plan"
       }

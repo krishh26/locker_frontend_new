@@ -70,8 +70,21 @@ import { useTranslations } from "next-intl";
 
 export function TimeLogDataTable() {
   const user = useAppSelector((state) => state.auth.user);
+  const learner = useAppSelector((state) => state.auth.learner);
   const courses = useAppSelector(selectCourses);
-  const userId = user?.id || "";
+  // When admin/trainer opens a learner dashboard, use the learner's id for queries (not the logged-in admin).
+  // API expects `user_id`; the learner object may expose `id`/`user_id` (user id) or only `learner_id`.
+  const targetUserId =
+    user?.role === "Learner"
+      ? String(user?.id ?? "")
+      : String(
+          (learner as unknown as { id?: string | number; user_id?: string | number })
+            ?.id ??
+            (learner as unknown as { user_id?: string | number })?.user_id ??
+            learner?.learner_id ??
+            "",
+        );
+  const viewerUserId = String(user?.id ?? "");
   const isEmployer = user?.role === "Employer";
   const t = useTranslations("timeLog");
 
@@ -94,14 +107,14 @@ export function TimeLogDataTable() {
   } = useGetTimeLogsQuery({
     page,
     page_size: pageSize,
-    user_id: userId,
+    user_id: targetUserId,
     course_id: courseFilter || undefined,
     type: jobTypeFilter !== "All" ? jobTypeFilter : undefined,
     approved: approvedFilter !== "All" ? approvedFilter : undefined,
   });
 
   const { data: spendResponse } = useGetTimeLogSpendQuery({
-    user_id: userId,
+    user_id: targetUserId,
     course_id: courseFilter || undefined,
     type: jobTypeFilter !== "All" ? jobTypeFilter : undefined,
   });
@@ -290,7 +303,7 @@ export function TimeLogDataTable() {
           const isTrainer = user?.role === "Trainer";
           const isCurrentUserTrainer =
             typeof timeLog.trainer_id === "object" &&
-            timeLog.trainer_id?.user_id === userId;
+            timeLog.trainer_id?.user_id === viewerUserId;
 
           if (isTrainer && isCurrentUserTrainer) {
             return (
@@ -381,7 +394,7 @@ export function TimeLogDataTable() {
         },
       },
     ],
-    [user?.role, userId, isEmployer, handleVerifyChange, handleEdit, t]
+    [user?.role, viewerUserId, isEmployer, handleVerifyChange, handleEdit, t]
   );
 
   const table = useReactTable({

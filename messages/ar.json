@@ -5933,6 +5933,8 @@
       "labels": {
         "organisation": "المؤسسة *",
         "plan": "الخطة *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5957,6 +5959,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "يرجى اختيار المؤسسة والخطة",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -5967,7 +5972,9 @@
     "changePlan": {
       "labels": {
         "organisation": "المؤسسة",
-        "newPlan": "الخطة الجديدة *"
+        "newPlan": "الخطة الجديدة *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "اختر الخطة"
@@ -5978,6 +5985,9 @@
       },
       "toast": {
         "selectPlan": "يرجى اختيار خطة",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "تم تغيير الخطة بنجاح",
         "changeFailedFallback": "فشل تغيير الخطة"
       }

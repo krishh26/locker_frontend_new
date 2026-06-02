@@ -124,6 +124,7 @@ export function SubscriptionsDataTable() {
       t("subscriptionsTable.columns.users"),
       t("subscriptionsTable.columns.licenseStatus"),
       t("subscriptionsTable.columns.status"),
+      t("subscriptionsTable.columns.startDate"),
       t("subscriptionsTable.columns.expiryDate"),
     ]
     const rows = filteredSubscriptions.map((sub) => [
@@ -134,6 +135,7 @@ export function SubscriptionsDataTable() {
       sub.isExpired
         ? t("subscriptionsTable.status.expired")
         : t("subscriptionsTable.status.active"),
+      formatDate(sub.startDate),
       formatDate(sub.endDate ?? sub.expiryDate),
     ])
 
@@ -163,6 +165,7 @@ export function SubscriptionsDataTable() {
       t("subscriptionsTable.columns.users"),
       t("subscriptionsTable.columns.licenseStatus"),
       t("subscriptionsTable.columns.status"),
+      t("subscriptionsTable.columns.startDate"),
       t("subscriptionsTable.columns.expiryDate"),
     ]
     const rows = filteredSubscriptions.map((sub) => [
@@ -173,6 +176,7 @@ export function SubscriptionsDataTable() {
       sub.isExpired
         ? t("subscriptionsTable.status.expired")
         : t("subscriptionsTable.status.active"),
+      formatDate(sub.startDate),
       formatDate(sub.endDate ?? sub.expiryDate),
     ])
     void exportTableToPdf({ title: t("page.title"), headers, rows })
@@ -275,6 +279,13 @@ export function SubscriptionsDataTable() {
                 : t("subscriptionsTable.status.active")}
             </Badge>
           )
+        },
+      },
+      {
+        accessorKey: "startDate",
+        header: t("subscriptionsTable.columns.startDate"),
+        cell: ({ row }) => {
+          return formatDate(row.original.startDate)
         },
       },
       {

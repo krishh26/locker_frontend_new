@@ -78,7 +78,13 @@ function initialsFromName(name: string) {
 
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const t = useTranslations('learnerDashboard.infoCard')
-  const timeLogUserId = user?.id ? String(user.id) : undefined
+  // When Admin/Trainer views a learner dashboard, the time log API must use the learner's user_id (not the viewer's).
+  const timeLogUserId = String(
+    (learner as unknown as { id?: string | number; user_id?: string | number })?.id ??
+      (learner as unknown as { user_id?: string | number })?.user_id ??
+      user?.id ??
+      '',
+  ) || undefined
 
   const { data: otjSpendResponse, isLoading: isOtjLoading } =
     useGetTimeLogSpendQuery(

@@ -6013,6 +6013,8 @@
       "labels": {
         "organisation": "ऑर्गनाइज़ेशन *",
         "plan": "प्लान *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -6037,6 +6039,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "कृपया ऑर्गनाइज़ेशन और प्लान चुनें",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6047,7 +6052,9 @@
     "changePlan": {
       "labels": {
         "organisation": "ऑर्गनाइज़ेशन",
-        "newPlan": "नया प्लान *"
+        "newPlan": "नया प्लान *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "प्लान चुनें"
@@ -6058,6 +6065,9 @@
       },
       "toast": {
         "selectPlan": "कृपया एक प्लान चुनें",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "प्लान सफलतापूर्वक बदला गया",
         "changeFailedFallback": "प्लान बदलने में विफल"
       }

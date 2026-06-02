@@ -50,16 +50,21 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   // Get organisation IDs that already have a subscription/plan
   const orgsWithPlan = useMemo(() => {
     const subscriptions = subscriptionsData?.data ?? []
-    return new Set(subscriptions.map((s) => s.organisationId))
+    // Suspended subscriptions shouldn't block assigning a new plan
+    return new Set(
+      subscriptions
+        .filter((s) => String(s.status ?? "").toLowerCase() !== "suspended")
+        .map((s) => s.organisationId)
+    )
   }, [subscriptionsData])
 
+  const plans = (plansData?.data ?? []).filter((p) => p.isActive)
   // Filter out organisations that already have a plan assigned
   const organisations = useMemo(() => {
     const allOrgs = orgsData?.data ?? []
     return allOrgs.filter((org) => !orgsWithPlan.has(org.id))
   }, [orgsData, orgsWithPlan])
 
-  const plans = (plansData?.data ?? []).filter((p) => p.isActive)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -187,6 +192,7 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     isTotalLicensesValid &&
     isTolerancePercentageValid &&
     isWarningThresholdPercentageValid
+  console.log("🚀 ~ AssignPlanDialog ~ isFormValid:", isFormValid)
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

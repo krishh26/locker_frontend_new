@@ -343,6 +343,55 @@
   "dashboard": {
     "adminDashboard": "Dashboard amministratore",
     "dashboard": "Dashboard",
+    "masterAdmin": {
+      "title": "Dashboard Super Admin",
+      "subtitle": "Panoramica di tutte le organizzazioni, i centri e l'attività del sistema",
+      "totalOrganisations": "Organizzazioni totali",
+      "active": "attive",
+      "totalCentres": "Centri totali",
+      "acrossAllOrgs": "In tutte le organizzazioni",
+      "suspended": "sospesi",
+      "activeSubscriptions": "Abbonamenti attivi",
+      "total": "totale",
+      "activePlans": "Piani attivi",
+      "totalRevenue": "Ricavi totali",
+      "fromRecentPayments": "Da pagamenti recenti",
+      "fromPaymentsCount": "Da {count} pagamenti recenti",
+      "totalLicenses": "Licenze totali",
+      "licensesAcrossSystem": "In tutte le organizzazioni",
+      "userRaisedTile": {
+        "title": "Ticket e innovazioni sollevati dagli utenti finali",
+        "tickets": "Ticket",
+        "ticketsSubtitle": "Richieste di supporto create nella piattaforma",
+        "ticketStatusTitle": "Ripartizione per stato",
+        "ticketStatuses": {
+          "open": "Aperto",
+          "inProgress": "In corso",
+          "resolved": "Risolto",
+          "closed": "Chiuso"
+        },
+        "viewTickets": "Vedi ticket",
+        "innovations": "Innovazioni",
+        "innovationsSubtitle": "Idee proposte dagli utenti finali",
+        "viewInnovations": "Vedi innovazioni"
+      },
+      "recentAuditEvents": "Eventi di audit recenti",
+      "viewAll": "Vedi tutto",
+      "noRecentAuditEvents": "Nessun evento di audit recente.",
+      "action": "Azione",
+      "user": "Utente",
+      "organisation": "Organizzazione",
+      "date": "Data",
+      "auditActions": {
+        "system_action": "Azione di sistema",
+        "account_manager_action": "Azione del responsabile account",
+        "organisation_change": "Modifica organizzazione",
+        "access_change": "Modifica accesso",
+        "centre_change": "Modifica centro",
+        "subscription_change": "Modifica abbonamento",
+        "feature_change": "Modifica funzionalità"
+      }
+    },
     "admin": {
       "licenseOverview": "Panoramica licenze",
       "cards": {

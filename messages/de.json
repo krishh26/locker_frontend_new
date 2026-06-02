@@ -343,6 +343,55 @@
   "dashboard": {
     "adminDashboard": "Beheerdashboard",
     "dashboard": "Dashboard",
+    "masterAdmin": {
+      "title": "Master-Admin-Dashboard",
+      "subtitle": "Überblick über alle Organisationen, Zentren und Systemaktivitäten",
+      "totalOrganisations": "Organisationen gesamt",
+      "active": "aktiv",
+      "totalCentres": "Zentren gesamt",
+      "acrossAllOrgs": "Über alle Organisationen",
+      "suspended": "gesperrt",
+      "activeSubscriptions": "Aktive Abonnements",
+      "total": "gesamt",
+      "activePlans": "Aktive Pläne",
+      "totalRevenue": "Gesamtumsatz",
+      "fromRecentPayments": "Aus aktuellen Zahlungen",
+      "fromPaymentsCount": "Aus {count} aktuellen Zahlungen",
+      "totalLicenses": "Lizenzen gesamt",
+      "licensesAcrossSystem": "Über alle Organisationen",
+      "userRaisedTile": {
+        "title": "Tickets & Innovationen von Endnutzern",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Support-Anfragen, die in der Plattform erstellt wurden",
+        "ticketStatusTitle": "Status-Aufschlüsselung",
+        "ticketStatuses": {
+          "open": "Offen",
+          "inProgress": "In Bearbeitung",
+          "resolved": "Gelöst",
+          "closed": "Geschlossen"
+        },
+        "viewTickets": "Tickets ansehen",
+        "innovations": "Innovationen",
+        "innovationsSubtitle": "Ideen, die von Endnutzern vorgeschlagen wurden",
+        "viewInnovations": "Innovationen ansehen"
+      },
+      "recentAuditEvents": "Letzte Audit-Ereignisse",
+      "viewAll": "Alle anzeigen",
+      "noRecentAuditEvents": "Keine aktuellen Audit-Ereignisse.",
+      "action": "Aktion",
+      "user": "Benutzer",
+      "organisation": "Organisation",
+      "date": "Datum",
+      "auditActions": {
+        "system_action": "Systemaktion",
+        "account_manager_action": "Account-Manager-Aktion",
+        "organisation_change": "Organisationsänderung",
+        "access_change": "Zugriffsänderung",
+        "centre_change": "Zentrumsänderung",
+        "subscription_change": "Abo-Änderung",
+        "feature_change": "Feature-Änderung"
+      }
+    },
     "admin": {
       "licenseOverview": "Lizenzübersicht",
       "cards": {

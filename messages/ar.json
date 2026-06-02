@@ -494,6 +494,24 @@
       "totalRevenue": "إجمالي الإيرادات",
       "fromRecentPayments": "من المدفوعات الأخيرة",
       "fromPaymentsCount": "من {count} مدفوعات حديثة",
+      "totalLicenses": "إجمالي التراخيص",
+      "licensesAcrossSystem": "عبر جميع المنظمات",
+      "userRaisedTile": {
+        "title": "التذاكر والابتكارات التي رفعها المستخدمون النهائيون",
+        "tickets": "التذاكر",
+        "ticketsSubtitle": "طلبات الدعم التي تم رفعها داخل المنصة",
+        "ticketStatusTitle": "تفصيل الحالة",
+        "ticketStatuses": {
+          "open": "مفتوح",
+          "inProgress": "قيد المعالجة",
+          "resolved": "تم الحل",
+          "closed": "مغلق"
+        },
+        "viewTickets": "عرض التذاكر",
+        "innovations": "الابتكارات",
+        "innovationsSubtitle": "أفكار مقترحة من المستخدمين النهائيين",
+        "viewInnovations": "عرض الابتكارات"
+      },
       "recentAuditEvents": "أحداث التدقيق الأخيرة",
       "viewAll": "عرض الكل",
       "noRecentAuditEvents": "لا توجد أحداث تدقيق حديثة.",

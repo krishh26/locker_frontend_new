@@ -501,6 +501,24 @@
       "totalRevenue": "Revenu total",
       "fromRecentPayments": "Des paiements récents",
       "fromPaymentsCount": "De {count} paiements récents",
+      "totalLicenses": "Total des licences",
+      "licensesAcrossSystem": "Dans toutes les organisations",
+      "userRaisedTile": {
+        "title": "Tickets et innovations proposés par les utilisateurs finaux",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Demandes de support créées dans la plateforme",
+        "ticketStatusTitle": "Répartition par statut",
+        "ticketStatuses": {
+          "open": "Ouvert",
+          "inProgress": "En cours",
+          "resolved": "Résolu",
+          "closed": "Fermé"
+        },
+        "viewTickets": "Voir les tickets",
+        "innovations": "Innovations",
+        "innovationsSubtitle": "Idées proposées par les utilisateurs finaux",
+        "viewInnovations": "Voir les innovations"
+      },
       "recentAuditEvents": "Événements d'audit récents",
       "viewAll": "Voir tout",
       "noRecentAuditEvents": "Aucun événement d'audit récent.",

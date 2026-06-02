@@ -501,6 +501,24 @@
       "totalRevenue": "कुल राजस्व",
       "fromRecentPayments": "हाल के भुगतान से",
       "fromPaymentsCount": "{count} हाल के भुगतान से",
+      "totalLicenses": "कुल लाइसेंस",
+      "licensesAcrossSystem": "सभी संगठनों में",
+      "userRaisedTile": {
+        "title": "एंड यूज़र्स द्वारा उठाए गए टिकट और इनोवेशन",
+        "tickets": "टिकट",
+        "ticketsSubtitle": "प्लेटफ़ॉर्म पर उठाए गए सपोर्ट अनुरोध",
+        "ticketStatusTitle": "स्टेटस ब्रेकडाउन",
+        "ticketStatuses": {
+          "open": "ओपन",
+          "inProgress": "इन प्रोग्रेस",
+          "resolved": "रिज़ॉल्व्ड",
+          "closed": "क्लोज़्ड"
+        },
+        "viewTickets": "टिकट देखें",
+        "innovations": "इनोवेशन",
+        "innovationsSubtitle": "एंड यूज़र्स द्वारा प्रस्तावित आइडियाज़",
+        "viewInnovations": "इनोवेशन देखें"
+      },
       "recentAuditEvents": "हाल की ऑडिट घटनाएं",
       "viewAll": "सभी देखें",
       "noRecentAuditEvents": "कोई हाल की ऑडिट घटना नहीं।",

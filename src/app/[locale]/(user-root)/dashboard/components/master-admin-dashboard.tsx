@@ -3,7 +3,19 @@
 import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { Building2, MapPin, CreditCard, DollarSign, FileText, ExternalLink, AlertTriangle, CheckCircle2 } from "lucide-react"
+import {
+  Building2,
+  MapPin,
+  CreditCard,
+  DollarSign,
+  FileText,
+  ExternalLink,
+  AlertTriangle,
+  CheckCircle2,
+  Ticket,
+  Lightbulb,
+  KeyRound,
+} from "lucide-react"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -21,6 +33,8 @@ import {
   useGetSystemSummaryQuery,
   useGetStatusOverviewQuery,
 } from "@/store/api/dashboard/dashboardApi"
+import { useGetTicketListQuery } from "@/store/api/ticket/ticketApi"
+import { useGetInnovationsQuery } from "@/store/api/innovations/innovationsApi"
 import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi"
 import { useGetSubscriptionsQuery } from "@/store/api/subscriptions/subscriptionApi"
 import { useGetPaymentsQuery } from "@/store/api/payments/paymentApi"
@@ -74,6 +88,12 @@ export function MasterAdminDashboard() {
   const ts = useTranslations("subscriptions")
   const { data: summaryData, isLoading: summaryLoading, isError: summaryError } = useGetSystemSummaryQuery()
   const { data: statusData, isLoading: statusLoading } = useGetStatusOverviewQuery()
+  const { data: ticketsData, isLoading: ticketsLoading } = useGetTicketListQuery({ page: 1, limit: 1 })
+  const { data: openTicketsData, isLoading: openTicketsLoading } = useGetTicketListQuery({ page: 1, limit: 1, status: "Open" })
+  const { data: inProgressTicketsData, isLoading: inProgressTicketsLoading } = useGetTicketListQuery({ page: 1, limit: 1, status: "InProgress" })
+  const { data: resolvedTicketsData, isLoading: resolvedTicketsLoading } = useGetTicketListQuery({ page: 1, limit: 1, status: "Resolved" })
+  const { data: closedTicketsData, isLoading: closedTicketsLoading } = useGetTicketListQuery({ page: 1, limit: 1, status: "Closed" })
+  const { data: innovationsData, isLoading: innovationsLoading } = useGetInnovationsQuery({ page: 1, page_size: 1 })
   const { data: orgsFallback } = useGetOrganisationsQuery({ page: 1, limit: 1 }, { skip: !summaryError })
   const { data: orgsData } = useGetOrganisationsQuery()
   const { data: subscriptionsData } = useGetSubscriptionsQuery()
@@ -168,7 +188,44 @@ export function MasterAdminDashboard() {
       icon: DollarSign,
       color: "text-secondary",
     },
+    {
+      title: t("totalLicenses"),
+      value: summary?.licenceUsage ?? 0,
+      subtitle: t("licensesAcrossSystem"),
+      icon: KeyRound,
+      color: "text-primary",
+    },
   ]
+
+  const userRaised = useMemo(() => {
+    const tickets = ticketsData?.meta_data?.items ?? 0
+    const innovations = innovationsData?.meta_data?.items ?? 0
+    return {
+      tickets,
+      innovations,
+      total: tickets + innovations,
+    }
+  }, [ticketsData?.meta_data?.items, innovationsData?.meta_data?.items])
+
+  const ticketStatusCounts = useMemo(() => {
+    return {
+      open: openTicketsData?.meta_data?.items ?? 0,
+      inProgress: inProgressTicketsData?.meta_data?.items ?? 0,
+      resolved: resolvedTicketsData?.meta_data?.items ?? 0,
+      closed: closedTicketsData?.meta_data?.items ?? 0,
+    }
+  }, [
+    openTicketsData?.meta_data?.items,
+    inProgressTicketsData?.meta_data?.items,
+    resolvedTicketsData?.meta_data?.items,
+    closedTicketsData?.meta_data?.items,
+  ])
+
+  const ticketsStatusLoading =
+    openTicketsLoading ||
+    inProgressTicketsLoading ||
+    resolvedTicketsLoading ||
+    closedTicketsLoading
 
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-8">
@@ -203,6 +260,90 @@ export function MasterAdminDashboard() {
           )
         })}
       </div>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-base font-medium flex items-center gap-2">
+            <Ticket className="h-4 w-4" />
+            {t("userRaisedTile.title")}
+          </CardTitle>
+          <Badge variant="secondary" className="tabular-nums">
+            {ticketsLoading || innovationsLoading ? "..." : userRaised.total}
+          </Badge>
+        </CardHeader>
+        <CardContent className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium">{t("userRaisedTile.tickets")}</p>
+                {ticketsLoading ? (
+                  <Skeleton className="mt-2 h-7 w-16" />
+                ) : (
+                  <p className="mt-1 text-2xl font-bold tabular-nums">{userRaised.tickets}</p>
+                )}
+                <p className="mt-1 text-xs text-muted-foreground">{t("userRaisedTile.ticketsSubtitle")}</p>
+              </div>
+              <Ticket className="h-5 w-5 text-primary" />
+            </div>
+
+            <div className="mt-3 rounded-md border bg-muted/20 p-3">
+              <p className="text-xs font-medium text-muted-foreground">
+                {t("userRaisedTile.ticketStatusTitle")}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <Badge variant="outline" className="tabular-nums">
+                  {t("userRaisedTile.ticketStatuses.open")}:{" "}
+                  {ticketsStatusLoading ? "..." : ticketStatusCounts.open}
+                </Badge>
+                <Badge variant="outline" className="tabular-nums">
+                  {t("userRaisedTile.ticketStatuses.inProgress")}:{" "}
+                  {ticketsStatusLoading ? "..." : ticketStatusCounts.inProgress}
+                </Badge>
+                <Badge variant="outline" className="tabular-nums">
+                  {t("userRaisedTile.ticketStatuses.resolved")}:{" "}
+                  {ticketsStatusLoading ? "..." : ticketStatusCounts.resolved}
+                </Badge>
+                <Badge variant="outline" className="tabular-nums">
+                  {t("userRaisedTile.ticketStatuses.closed")}:{" "}
+                  {ticketsStatusLoading ? "..." : ticketStatusCounts.closed}
+                </Badge>
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/tickets" className="gap-1">
+                  {t("userRaisedTile.viewTickets")}
+                  <ExternalLink className="h-3 w-3" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className="rounded-lg border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium">{t("userRaisedTile.innovations")}</p>
+                {innovationsLoading ? (
+                  <Skeleton className="mt-2 h-7 w-16" />
+                ) : (
+                  <p className="mt-1 text-2xl font-bold tabular-nums">{userRaised.innovations}</p>
+                )}
+                <p className="mt-1 text-xs text-muted-foreground">{t("userRaisedTile.innovationsSubtitle")}</p>
+              </div>
+              <Lightbulb className="h-5 w-5 text-accent" />
+            </div>
+            <div className="mt-3">
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/propose-your-innovations" className="gap-1">
+                  {t("userRaisedTile.viewInnovations")}
+                  <ExternalLink className="h-3 w-3" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

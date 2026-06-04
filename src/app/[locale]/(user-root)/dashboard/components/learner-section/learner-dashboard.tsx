@@ -28,8 +28,20 @@ export function LearnerDashboard() {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector((state) => state.auth.learner)
-  console.log("🚀 ~ LearnerDashboard ~ learner:", learner?.course)
   const t = useTranslations('learnerDashboard')
+
+  // When admin/trainer views a learner dashboard, queries must use the learner's id (not logged-in user's id).
+  // Different endpoints sometimes expect `user_id` vs `learner_id`, so keep both handy.
+  const targetLearnerId = learner?.learner_id
+  const targetUserId = String(
+    user?.role === 'Learner'
+      ? user?.id ?? ''
+      : (learner as unknown as { id?: string | number; user_id?: string | number })
+          ?.id ??
+          (learner as unknown as { user_id?: string | number })?.user_id ??
+          learner?.learner_id ??
+          '',
+  )
 
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false)
   const [isCalendarDialogOpen, setIsCalendarDialogOpen] = useState(false)
@@ -37,7 +49,7 @@ export function LearnerDashboard() {
 
   // Get learner's isShowMessage value
   const learnerIsShowMessage = (learner as { isShowMessage?: boolean })?.isShowMessage
-  const learnerId = learner?.learner_id
+  const learnerId = targetLearnerId
   const userRole = user?.role
 
   // Reset course ID when dashboard mounts
@@ -62,15 +74,16 @@ export function LearnerDashboard() {
 
   // Portfolio counts from RTK Query
   const { data: pendingSignaturesData } = useGetPendingSignaturesQuery(
-    { id: String(user?.id) },
-    { skip: !user?.id }
+    { id: targetUserId },
+    { skip: !targetUserId }
   )
   const { data: evidenceData } = useGetEvidenceListQuery(
-    { user_id: user?.id, page: 1, limit: 1, meta: true },
-    { skip: !user?.id }
+    { user_id: targetUserId, page: 1, limit: 1, meta: true },
+    { skip: !targetUserId }
   )
   const { data: cpdData } = useGetCpdEntriesQuery(undefined, {
-    skip: user?.role !== 'Learner',
+    // Learner dashboard shows learner's gaps; allow when admin/trainer is viewing a learner too.
+    skip: user?.role === 'Learner' ? false : !targetLearnerId,
   })
   const { data: learnerPlanData } = useGetLearnerPlanListQuery(
     { learners: String(learnerId ?? ''), meta: true },
@@ -79,9 +92,9 @@ export function LearnerDashboard() {
   const { data: resourcesData } = useGetResourcesByCourseQuery(
     {
       course_id: firstCourseId ?? 0,
-      user_id: user?.id ?? '',
+      user_id: targetUserId,
     },
-    { skip: !firstCourseId || !user?.id }
+    { skip: !firstCourseId || !targetUserId }
   )
 
   const countData: PortfolioCountData = useMemo(() => {

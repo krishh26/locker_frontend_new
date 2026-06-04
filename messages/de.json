@@ -91,6 +91,7 @@
         "email": "E-Mail",
         "mobile": "Mobil",
         "course": "Kurs",
+        "iqaShortcuts": "IQA",
         "comment": "Kommentar",
         "status": "Status",
         "actions": "Aktionen"
@@ -342,6 +343,55 @@
   "dashboard": {
     "adminDashboard": "Beheerdashboard",
     "dashboard": "Dashboard",
+    "masterAdmin": {
+      "title": "Master-Admin-Dashboard",
+      "subtitle": "Überblick über alle Organisationen, Zentren und Systemaktivitäten",
+      "totalOrganisations": "Organisationen gesamt",
+      "active": "aktiv",
+      "totalCentres": "Zentren gesamt",
+      "acrossAllOrgs": "Über alle Organisationen",
+      "suspended": "gesperrt",
+      "activeSubscriptions": "Aktive Abonnements",
+      "total": "gesamt",
+      "activePlans": "Aktive Pläne",
+      "totalRevenue": "Gesamtumsatz",
+      "fromRecentPayments": "Aus aktuellen Zahlungen",
+      "fromPaymentsCount": "Aus {count} aktuellen Zahlungen",
+      "totalLicenses": "Lizenzen gesamt",
+      "licensesAcrossSystem": "Über alle Organisationen",
+      "userRaisedTile": {
+        "title": "Tickets & Innovationen von Endnutzern",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Support-Anfragen, die in der Plattform erstellt wurden",
+        "ticketStatusTitle": "Status-Aufschlüsselung",
+        "ticketStatuses": {
+          "open": "Offen",
+          "inProgress": "In Bearbeitung",
+          "resolved": "Gelöst",
+          "closed": "Geschlossen"
+        },
+        "viewTickets": "Tickets ansehen",
+        "innovations": "Innovationen",
+        "innovationsSubtitle": "Ideen, die von Endnutzern vorgeschlagen wurden",
+        "viewInnovations": "Innovationen ansehen"
+      },
+      "recentAuditEvents": "Letzte Audit-Ereignisse",
+      "viewAll": "Alle anzeigen",
+      "noRecentAuditEvents": "Keine aktuellen Audit-Ereignisse.",
+      "action": "Aktion",
+      "user": "Benutzer",
+      "organisation": "Organisation",
+      "date": "Datum",
+      "auditActions": {
+        "system_action": "Systemaktion",
+        "account_manager_action": "Account-Manager-Aktion",
+        "organisation_change": "Organisationsänderung",
+        "access_change": "Zugriffsänderung",
+        "centre_change": "Zentrumsänderung",
+        "subscription_change": "Abo-Änderung",
+        "feature_change": "Feature-Änderung"
+      }
+    },
     "admin": {
       "licenseOverview": "Lizenzübersicht",
       "cards": {
@@ -562,17 +612,6 @@
   "calendar": {
     "pageTitle": "Calendar",
     "pageSubtitle": "Manage sessions and appointments"
-  },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
     "pageTitle": "Form Builder",
@@ -4574,6 +4613,8 @@
         "contractEndLabel": "Vertragsende",
         "hoursPerWeekLabel": "Arbeitsstunden pro Woche *",
         "hoursPlaceholder": "Stunden pro Woche eingeben",
+        "yearlyHolidayLabel": "Jahresurlaubsanspruch (Stunden)",
+        "yearlyHolidayPlaceholder": "Jahresurlaubsanspruch in Stunden eingeben",
         "pickDate": "Datum wählen",
         "pickDateOptional": "Datum wählen (optional)",
         "cancel": "Abbrechen",
@@ -4590,7 +4631,8 @@
         "companyRequired": "Unternehmen ist erforderlich",
         "contractStartRequired": "Vertragsbeginn ist erforderlich",
         "hoursRequired": "Arbeitsstunden pro Woche sind erforderlich",
-        "hoursPositive": "Muss eine positive Zahl sein"
+        "hoursPositive": "Muss eine positive Zahl sein",
+        "yearlyHolidayInteger": "Der Jahresurlaubsanspruch muss eine ganze Zahl (0 oder größer) sein"
       },
       "toast": {
         "updated": "Vertragliche Arbeitsstunden erfolgreich aktualisiert",
@@ -5170,6 +5212,8 @@
       "labels": {
         "organisation": "Organisation *",
         "plan": "Plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5194,6 +5238,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Bitte Organisation und Plan auswählen",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -5204,7 +5251,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organisation",
-        "newPlan": "Neuer Plan *"
+        "newPlan": "Neuer Plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Plan auswählen"
@@ -5215,6 +5264,9 @@
       },
       "toast": {
         "selectPlan": "Bitte einen Plan auswählen",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Plan erfolgreich geändert",
         "changeFailedFallback": "Plan konnte nicht geändert werden"
       }

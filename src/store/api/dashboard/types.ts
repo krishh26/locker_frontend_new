@@ -129,6 +129,11 @@ export interface SystemSummary {
   /** Backend system-summary response */
   totalSubscriptions?: number
   activeOrganisations?: number
+  /**
+   * Total licenses / license usage count from backend (`GET /dashboard/system-summary`).
+   * Backend may return `null` initially.
+   */
+  licenceUsage?: number | null
 }
 
 export interface SystemSummaryResponse {

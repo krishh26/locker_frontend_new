@@ -167,6 +167,7 @@
         "email": "البريد الإلكتروني",
         "mobile": "الجوال",
         "course": "الدورة",
+        "iqaShortcuts": "IQA",
         "comment": "ملاحظة",
         "status": "الحالة",
         "actions": "الإجراءات"
@@ -493,6 +494,24 @@
       "totalRevenue": "إجمالي الإيرادات",
       "fromRecentPayments": "من المدفوعات الأخيرة",
       "fromPaymentsCount": "من {count} مدفوعات حديثة",
+      "totalLicenses": "إجمالي التراخيص",
+      "licensesAcrossSystem": "عبر جميع المنظمات",
+      "userRaisedTile": {
+        "title": "التذاكر والابتكارات التي رفعها المستخدمون النهائيون",
+        "tickets": "التذاكر",
+        "ticketsSubtitle": "طلبات الدعم التي تم رفعها داخل المنصة",
+        "ticketStatusTitle": "تفصيل الحالة",
+        "ticketStatuses": {
+          "open": "مفتوح",
+          "inProgress": "قيد المعالجة",
+          "resolved": "تم الحل",
+          "closed": "مغلق"
+        },
+        "viewTickets": "عرض التذاكر",
+        "innovations": "الابتكارات",
+        "innovationsSubtitle": "أفكار مقترحة من المستخدمين النهائيين",
+        "viewInnovations": "عرض الابتكارات"
+      },
       "recentAuditEvents": "أحداث التدقيق الأخيرة",
       "viewAll": "عرض الكل",
       "noRecentAuditEvents": "لا توجد أحداث تدقيق حديثة.",
@@ -5334,6 +5353,8 @@
         "contractEndLabel": "تاريخ انتهاء العقد",
         "hoursPerWeekLabel": "ساعات العمل أسبوعياً *",
         "hoursPlaceholder": "أدخل الساعات أسبوعياً",
+        "yearlyHolidayLabel": "حق الإجازة السنوية (ساعات)",
+        "yearlyHolidayPlaceholder": "أدخل حق الإجازة السنوية بالساعات",
         "pickDate": "اختر تاريخاً",
         "pickDateOptional": "اختر تاريخاً (اختياري)",
         "cancel": "إلغاء",
@@ -5350,7 +5371,8 @@
         "companyRequired": "الشركة مطلوبة",
         "contractStartRequired": "تاريخ بدء العقد مطلوب",
         "hoursRequired": "ساعات العمل أسبوعياً مطلوبة",
-        "hoursPositive": "يجب أن يكون رقماً موجباً"
+        "hoursPositive": "يجب أن يكون رقماً موجباً",
+        "yearlyHolidayInteger": "يجب أن يكون حق الإجازة السنوية رقماً صحيحاً (0 أو أكثر)"
       },
       "toast": {
         "updated": "تم تحديث ساعات العمل التعاقدية بنجاح",
@@ -5930,6 +5952,8 @@
       "labels": {
         "organisation": "المؤسسة *",
         "plan": "الخطة *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5954,6 +5978,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "يرجى اختيار المؤسسة والخطة",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -5964,7 +5991,9 @@
     "changePlan": {
       "labels": {
         "organisation": "المؤسسة",
-        "newPlan": "الخطة الجديدة *"
+        "newPlan": "الخطة الجديدة *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "اختر الخطة"
@@ -5975,6 +6004,9 @@
       },
       "toast": {
         "selectPlan": "يرجى اختيار خطة",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "تم تغيير الخطة بنجاح",
         "changeFailedFallback": "فشل تغيير الخطة"
       }

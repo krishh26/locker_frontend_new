@@ -91,6 +91,7 @@
         "email": "Email",
         "mobile": "Cellulare",
         "course": "Corso",
+        "iqaShortcuts": "IQA",
         "comment": "Commento",
         "status": "Stato",
         "actions": "Azioni"
@@ -342,6 +343,55 @@
   "dashboard": {
     "adminDashboard": "Dashboard amministratore",
     "dashboard": "Dashboard",
+    "masterAdmin": {
+      "title": "Dashboard Super Admin",
+      "subtitle": "Panoramica di tutte le organizzazioni, i centri e l'attività del sistema",
+      "totalOrganisations": "Organizzazioni totali",
+      "active": "attive",
+      "totalCentres": "Centri totali",
+      "acrossAllOrgs": "In tutte le organizzazioni",
+      "suspended": "sospesi",
+      "activeSubscriptions": "Abbonamenti attivi",
+      "total": "totale",
+      "activePlans": "Piani attivi",
+      "totalRevenue": "Ricavi totali",
+      "fromRecentPayments": "Da pagamenti recenti",
+      "fromPaymentsCount": "Da {count} pagamenti recenti",
+      "totalLicenses": "Licenze totali",
+      "licensesAcrossSystem": "In tutte le organizzazioni",
+      "userRaisedTile": {
+        "title": "Ticket e innovazioni sollevati dagli utenti finali",
+        "tickets": "Ticket",
+        "ticketsSubtitle": "Richieste di supporto create nella piattaforma",
+        "ticketStatusTitle": "Ripartizione per stato",
+        "ticketStatuses": {
+          "open": "Aperto",
+          "inProgress": "In corso",
+          "resolved": "Risolto",
+          "closed": "Chiuso"
+        },
+        "viewTickets": "Vedi ticket",
+        "innovations": "Innovazioni",
+        "innovationsSubtitle": "Idee proposte dagli utenti finali",
+        "viewInnovations": "Vedi innovazioni"
+      },
+      "recentAuditEvents": "Eventi di audit recenti",
+      "viewAll": "Vedi tutto",
+      "noRecentAuditEvents": "Nessun evento di audit recente.",
+      "action": "Azione",
+      "user": "Utente",
+      "organisation": "Organizzazione",
+      "date": "Data",
+      "auditActions": {
+        "system_action": "Azione di sistema",
+        "account_manager_action": "Azione del responsabile account",
+        "organisation_change": "Modifica organizzazione",
+        "access_change": "Modifica accesso",
+        "centre_change": "Modifica centro",
+        "subscription_change": "Modifica abbonamento",
+        "feature_change": "Modifica funzionalità"
+      }
+    },
     "admin": {
       "licenseOverview": "Panoramica licenze",
       "cards": {
@@ -4563,6 +4613,8 @@
         "contractEndLabel": "Data di fine del contratto",
         "hoursPerWeekLabel": "Ore di lavoro settimanali *",
         "hoursPlaceholder": "Inserisci le ore settimanali",
+        "yearlyHolidayLabel": "Diritto alle ferie annuali (ore)",
+        "yearlyHolidayPlaceholder": "Inserisci il diritto alle ferie annuali in ore",
         "pickDate": "Scegli data",
         "pickDateOptional": "Scegli data (opzionale)",
         "cancel": "Annulla",
@@ -4579,7 +4631,8 @@
         "companyRequired": "L'azienda è obbligatoria",
         "contractStartRequired": "La data di inizio del contratto è obbligatoria",
         "hoursRequired": "Le ore di lavoro settimanali sono obbligatorie",
-        "hoursPositive": "Deve essere un numero positivo"
+        "hoursPositive": "Deve essere un numero positivo",
+        "yearlyHolidayInteger": "Il diritto alle ferie annuali deve essere un numero intero (0 o superiore)"
       },
       "toast": {
         "updated": "Ore contrattuali aggiornate con successo",
@@ -5159,6 +5212,8 @@
       "labels": {
         "organisation": "Organizzazione *",
         "plan": "Piano *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5183,6 +5238,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Seleziona organizzazione e piano",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -5193,7 +5251,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organizzazione",
-        "newPlan": "Nuovo piano *"
+        "newPlan": "Nuovo piano *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Seleziona piano"
@@ -5204,6 +5264,9 @@
       },
       "toast": {
         "selectPlan": "Seleziona un piano",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Piano cambiato correttamente",
         "changeFailedFallback": "Impossibile cambiare il piano"
       }

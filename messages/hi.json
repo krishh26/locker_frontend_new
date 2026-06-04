@@ -174,6 +174,7 @@
         "email": "ईमेल",
         "mobile": "मोबाइल",
         "course": "कोर्स",
+        "iqaShortcuts": "IQA",
         "comment": "टिप्पणी",
         "status": "स्थिति",
         "actions": "कार्रवाई"
@@ -500,6 +501,24 @@
       "totalRevenue": "कुल राजस्व",
       "fromRecentPayments": "हाल के भुगतान से",
       "fromPaymentsCount": "{count} हाल के भुगतान से",
+      "totalLicenses": "कुल लाइसेंस",
+      "licensesAcrossSystem": "सभी संगठनों में",
+      "userRaisedTile": {
+        "title": "एंड यूज़र्स द्वारा उठाए गए टिकट और इनोवेशन",
+        "tickets": "टिकट",
+        "ticketsSubtitle": "प्लेटफ़ॉर्म पर उठाए गए सपोर्ट अनुरोध",
+        "ticketStatusTitle": "स्टेटस ब्रेकडाउन",
+        "ticketStatuses": {
+          "open": "ओपन",
+          "inProgress": "इन प्रोग्रेस",
+          "resolved": "रिज़ॉल्व्ड",
+          "closed": "क्लोज़्ड"
+        },
+        "viewTickets": "टिकट देखें",
+        "innovations": "इनोवेशन",
+        "innovationsSubtitle": "एंड यूज़र्स द्वारा प्रस्तावित आइडियाज़",
+        "viewInnovations": "इनोवेशन देखें"
+      },
       "recentAuditEvents": "हाल की ऑडिट घटनाएं",
       "viewAll": "सभी देखें",
       "noRecentAuditEvents": "कोई हाल की ऑडिट घटना नहीं।",
@@ -940,17 +959,6 @@
       "noChatSelected": "कोई चैट चयनित नहीं है",
       "noChatSelectedDescription": "मैसेजिंग शुरू करने के लिए सूची से कोई कोर्स चुनें"
     }
-  },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
   },
   "forms": {
   "pageTitle": "फ़ॉर्म प्रबंधन",
@@ -5425,6 +5433,8 @@
         "contractEndLabel": "अनुबंध समाप्ति तिथि",
         "hoursPerWeekLabel": "प्रति सप्ताह कार्य घंटे *",
         "hoursPlaceholder": "प्रति सप्ताह घंटे दर्ज करें",
+        "yearlyHolidayLabel": "वार्षिक छुट्टी अधिकार (घंटे)",
+        "yearlyHolidayPlaceholder": "वार्षिक छुट्टी अधिकार (घंटों में) दर्ज करें",
         "pickDate": "तिथि चुनें",
         "pickDateOptional": "तिथि चुनें (वैकल्पिक)",
         "cancel": "रद्द करें",
@@ -5441,7 +5451,8 @@
         "companyRequired": "कंपनी आवश्यक है",
         "contractStartRequired": "अनुबंध प्रारंभ तिथि आवश्यक है",
         "hoursRequired": "प्रति सप्ताह कार्य घंटे आवश्यक हैं",
-        "hoursPositive": "धनात्मक संख्या होनी चाहिए"
+        "hoursPositive": "धनात्मक संख्या होनी चाहिए",
+        "yearlyHolidayInteger": "वार्षिक छुट्टी अधिकार एक पूर्ण संख्या (0 या अधिक) होना चाहिए"
       },
       "toast": {
         "updated": "अनुबंधित कार्य घंटे सफलतापूर्वक अपडेट हो गए",
@@ -6021,6 +6032,8 @@
       "labels": {
         "organisation": "ऑर्गनाइज़ेशन *",
         "plan": "प्लान *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -6045,6 +6058,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "कृपया ऑर्गनाइज़ेशन और प्लान चुनें",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6055,7 +6071,9 @@
     "changePlan": {
       "labels": {
         "organisation": "ऑर्गनाइज़ेशन",
-        "newPlan": "नया प्लान *"
+        "newPlan": "नया प्लान *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "प्लान चुनें"
@@ -6066,6 +6084,9 @@
       },
       "toast": {
         "selectPlan": "कृपया एक प्लान चुनें",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "प्लान सफलतापूर्वक बदला गया",
         "changeFailedFallback": "प्लान बदलने में विफल"
       }

@@ -175,6 +175,7 @@
         "email": "Email",
         "mobile": "Mobile",
         "course": "Course",
+        "iqaShortcuts": "IQA",
         "comment": "Comment",
         "status": "Status",
         "actions": "Actions"
@@ -513,6 +514,24 @@
       "totalRevenue": "Total Revenue",
       "fromRecentPayments": "From recent payments",
       "fromPaymentsCount": "From {count} recent payments",
+      "totalLicenses": "Total Licenses",
+      "licensesAcrossSystem": "Across all organisations",
+      "userRaisedTile": {
+        "title": "Tickets & innovations raised by end users",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Support requests raised in the platform",
+        "ticketStatusTitle": "Status breakdown",
+        "ticketStatuses": {
+          "open": "Open",
+          "inProgress": "In Progress",
+          "resolved": "Resolved",
+          "closed": "Closed"
+        },
+        "viewTickets": "View tickets",
+        "innovations": "Innovations",
+        "innovationsSubtitle": "Ideas proposed by end users",
+        "viewInnovations": "View innovations"
+      },
       "recentAuditEvents": "Recent audit events",
       "viewAll": "View all",
       "noRecentAuditEvents": "No recent audit events.",
@@ -5451,6 +5470,8 @@
         "contractEndLabel": "Employment Contract End Date",
         "hoursPerWeekLabel": "Contracted Work Hours per Week *",
         "hoursPlaceholder": "Enter hours per week",
+        "yearlyHolidayLabel": "Yearly Holiday Entitlement (Hours)",
+        "yearlyHolidayPlaceholder": "Enter yearly holiday entitlement in hours",
         "pickDate": "Pick a date",
         "pickDateOptional": "Pick a date (optional)",
         "cancel": "Cancel",
@@ -5467,7 +5488,8 @@
         "companyRequired": "Company is required",
         "contractStartRequired": "Contract start date is required",
         "hoursRequired": "Work hours per week is required",
-        "hoursPositive": "Must be a positive number"
+        "hoursPositive": "Must be a positive number",
+        "yearlyHolidayInteger": "Yearly holiday entitlement must be a whole number (0 or greater)"
       },
       "toast": {
         "updated": "Contracted work hours updated successfully",
@@ -6047,6 +6069,8 @@
       "labels": {
         "organisation": "Organisation *",
         "plan": "Plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -6071,6 +6095,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Please select organisation and plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6081,7 +6108,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organisation",
-        "newPlan": "New plan *"
+        "newPlan": "New plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Select plan"
@@ -6092,6 +6121,9 @@
       },
       "toast": {
         "selectPlan": "Please select a plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Plan changed successfully",
         "changeFailedFallback": "Failed to change plan"
       }

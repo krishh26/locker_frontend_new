@@ -41,6 +41,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
 
   const [organisationId, setOrganisationId] = useState<string>("")
   const [planId, setPlanId] = useState<string>("")
+  const [startDate, setStartDate] = useState<string>("")
+  const [endDate, setEndDate] = useState<string>("")
   const [totalLicenses, setTotalLicenses] = useState<string>("")
   const [tolerancePercentage, setTolerancePercentage] = useState<string>("")
   const [warningThresholdPercentage, setWarningThresholdPercentage] = useState<string>("")
@@ -48,21 +50,41 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   // Get organisation IDs that already have a subscription/plan
   const orgsWithPlan = useMemo(() => {
     const subscriptions = subscriptionsData?.data ?? []
-    return new Set(subscriptions.map((s) => s.organisationId))
+    // Suspended subscriptions shouldn't block assigning a new plan
+    return new Set(
+      subscriptions
+        .filter((s) => String(s.status ?? "").toLowerCase() !== "suspended")
+        .map((s) => s.organisationId)
+    )
   }, [subscriptionsData])
 
+  const plans = (plansData?.data ?? []).filter((p) => p.isActive)
   // Filter out organisations that already have a plan assigned
   const organisations = useMemo(() => {
     const allOrgs = orgsData?.data ?? []
     return allOrgs.filter((org) => !orgsWithPlan.has(org.id))
   }, [orgsData, orgsWithPlan])
 
-  const plans = (plansData?.data ?? []).filter((p) => p.isActive)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!organisationId || !planId) {
       toast.error(t("assignPlan.toast.selectOrgAndPlan"))
+      return
+    }
+
+    if (!startDate || !endDate) {
+      toast.error(t("assignPlan.toast.selectStartAndEndDate"))
+      return
+    }
+    const startMs = new Date(startDate).getTime()
+    const endMs = new Date(endDate).getTime()
+    if (Number.isNaN(startMs) || Number.isNaN(endMs)) {
+      toast.error(t("assignPlan.toast.invalidDate"))
+      return
+    }
+    if (startMs > endMs) {
+      toast.error(t("assignPlan.toast.startDateAfterEndDate"))
       return
     }
 
@@ -92,6 +114,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       await assignPlanMutation({
         organisationId: Number(organisationId),
         planId: Number(planId),
+        startDate,
+        endDate,
         totalLicenses: totalLicensesNum,
         tolerancePercentage: tolerancePercentageNum,
         warningThresholdPercentage: warningThresholdPercentageNum,
@@ -99,6 +123,8 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
       toast.success(t("assignPlan.toast.assignedSuccess"))
       setOrganisationId("")
       setPlanId("")
+      setStartDate("")
+      setEndDate("")
       setTotalLicenses("")
       setTolerancePercentage("")
       setWarningThresholdPercentage("")
@@ -161,9 +187,12 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
   const isFormValid =
     !!organisationId &&
     !!planId &&
+    !!startDate &&
+    !!endDate &&
     isTotalLicensesValid &&
     isTolerancePercentageValid &&
     isWarningThresholdPercentageValid
+  console.log("🚀 ~ AssignPlanDialog ~ isFormValid:", isFormValid)
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -199,6 +228,28 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
             ))}
           </SelectContent>
         </Select>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="startDate">{t("assignPlan.labels.startDate")}</Label>
+          <Input
+            id="startDate"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="endDate">{t("assignPlan.labels.endDate")}</Label>
+          <Input
+            id="endDate"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            required
+          />
+        </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="totalLicenses">{t("assignPlan.labels.totalLicenses")}</Label>

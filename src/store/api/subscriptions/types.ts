@@ -102,6 +102,8 @@ export interface UpdatePlanRequest {
 export interface AssignPlanToOrganisationRequest {
   organisationId: number
   planId: number
+  startDate: string
+  endDate: string
   totalLicenses: number
   tolerancePercentage: number
   warningThresholdPercentage: number
@@ -110,6 +112,8 @@ export interface AssignPlanToOrganisationRequest {
 export interface ChangeOrganisationPlanRequest {
   organisationId: number
   planId: number
+  startDate: string
+  endDate: string
 }
 
 export interface SuspendOrganisationAccessRequest {

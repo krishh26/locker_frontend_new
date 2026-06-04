@@ -97,6 +97,19 @@ function getContractedWorkSchema(t: (key: string) => string) {
         (val) => !isNaN(Number(val)) && Number(val) > 0,
         t('contractedWorkHours.validation.hoursPositive'),
       ),
+    yearly_holiday_entitlement_in_hours: z
+      .string()
+      .optional()
+      .refine(
+        (val) => {
+          if (val == null) return true
+          const trimmed = val.trim()
+          if (!trimmed) return true
+          const n = Number(trimmed)
+          return Number.isInteger(n) && n >= 0
+        },
+        t('contractedWorkHours.validation.yearlyHolidayInteger'),
+      ),
   })
 }
 
@@ -180,6 +193,7 @@ export function ContractedWorkHoursTab({
       contract_start: undefined,
       contract_end: null,
       contracted_work_hours_per_week: '',
+      yearly_holiday_entitlement_in_hours: '',
     },
   })
 
@@ -212,6 +226,10 @@ export function ContractedWorkHoursTab({
         contracted_work_hours_per_week: String(
           work.contracted_work_hours_per_week,
         ),
+        yearly_holiday_entitlement_in_hours:
+          work.yearly_holiday_entitlement_in_hours != null
+            ? String(work.yearly_holiday_entitlement_in_hours)
+            : '',
       })
     } else {
       // Explicitly reset form for create mode
@@ -220,6 +238,7 @@ export function ContractedWorkHoursTab({
         contract_start: undefined,
         contract_end: null,
         contracted_work_hours_per_week: '',
+        yearly_holiday_entitlement_in_hours: '',
       })
     }
     setDialogOpen(true)
@@ -235,6 +254,7 @@ export function ContractedWorkHoursTab({
       contract_start: undefined,
       contract_end: null,
       contracted_work_hours_per_week: '',
+      yearly_holiday_entitlement_in_hours: '',
     })
   }
 
@@ -254,6 +274,11 @@ export function ContractedWorkHoursTab({
             ? Number(authUser.id)
             : undefined
 
+      const holidayRaw = data.yearly_holiday_entitlement_in_hours?.trim() ?? ''
+      const holidayParsed = holidayRaw ? Number(holidayRaw) : NaN
+      const yearlyHolidayEntitlementInHours =
+        Number.isInteger(holidayParsed) && holidayParsed >= 0 ? holidayParsed : 0
+
       const payload = {
         learner_id: learnerId,
         company: data.company,
@@ -265,7 +290,7 @@ export function ContractedWorkHoursTab({
         ...(lastEditorId != null && !Number.isNaN(lastEditorId)
           ? { last_editer: lastEditorId }
           : {}),
-        yearly_holiday_entitlement_in_hours: 0,
+        yearly_holiday_entitlement_in_hours: yearlyHolidayEntitlementInHours,
       }
 
       if (selectedWork) {
@@ -620,6 +645,31 @@ export function ContractedWorkHoursTab({
                         {...field}
                         min='0'
                         step='0.5'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='yearly_holiday_entitlement_in_hours'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      {t('contractedWorkHours.dialog.yearlyHolidayLabel')}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        placeholder={t(
+                          'contractedWorkHours.dialog.yearlyHolidayPlaceholder',
+                        )}
+                        {...field}
+                        min='0'
+                        step='1'
+                        inputMode='numeric'
                       />
                     </FormControl>
                     <FormMessage />

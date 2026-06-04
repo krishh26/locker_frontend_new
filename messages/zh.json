@@ -166,6 +166,7 @@
         "email": "电子邮件",
         "mobile": "手机",
         "course": "课程",
+        "iqaShortcuts": "IQA",
         "comment": "备注",
         "status": "状态",
         "actions": "操作"
@@ -496,6 +497,24 @@
       "totalRevenue": "总收入",
       "fromRecentPayments": "来自最近付款",
       "fromPaymentsCount": "来自 {count} 笔最近付款",
+      "totalLicenses": "许可证总数",
+      "licensesAcrossSystem": "跨所有组织",
+      "userRaisedTile": {
+        "title": "终端用户提出的工单与创新",
+        "tickets": "工单",
+        "ticketsSubtitle": "在平台中提交的支持请求",
+        "ticketStatusTitle": "状态明细",
+        "ticketStatuses": {
+          "open": "打开",
+          "inProgress": "处理中",
+          "resolved": "已解决",
+          "closed": "已关闭"
+        },
+        "viewTickets": "查看工单",
+        "innovations": "创新",
+        "innovationsSubtitle": "终端用户提出的想法",
+        "viewInnovations": "查看创新"
+      },
       "recentAuditEvents": "最近审计事件",
       "viewAll": "查看全部",
       "noRecentAuditEvents": "暂无最近审计事件。",
@@ -5370,6 +5389,8 @@
         "contractEndLabel": "雇佣合同结束日期",
         "hoursPerWeekLabel": "每周合同工作小时 *",
         "hoursPlaceholder": "输入每周小时数",
+        "yearlyHolidayLabel": "年度假期权利（小时）",
+        "yearlyHolidayPlaceholder": "输入年度假期权利（小时）",
         "pickDate": "选择日期",
         "pickDateOptional": "选择日期（可选）",
         "cancel": "取消",
@@ -5386,7 +5407,8 @@
         "companyRequired": "公司为必填项",
         "contractStartRequired": "合同开始日期为必填项",
         "hoursRequired": "每周工作小时为必填项",
-        "hoursPositive": "必须为正数"
+        "hoursPositive": "必须为正数",
+        "yearlyHolidayInteger": "年度假期权利必须为整数（0 或以上）"
       },
       "toast": {
         "updated": "合同工作小时已成功更新",
@@ -5966,6 +5988,8 @@
       "labels": {
         "organisation": "组织 *",
         "plan": "方案 *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5990,6 +6014,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "请选择组织与方案",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6000,7 +6027,9 @@
     "changePlan": {
       "labels": {
         "organisation": "组织",
-        "newPlan": "新方案 *"
+        "newPlan": "新方案 *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "选择方案"
@@ -6011,6 +6040,9 @@
       },
       "toast": {
         "selectPlan": "请选择方案",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "方案更换成功",
         "changeFailedFallback": "更换方案失败"
       }

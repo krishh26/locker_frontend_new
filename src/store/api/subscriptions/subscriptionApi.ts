@@ -201,7 +201,12 @@ export const subscriptionApi = createApi({
       query: (body) => ({
         url: "/subscriptions/assign-plan",
         method: "POST",
-        body,
+        body: {
+          ...body,
+          // Support APIs expecting snake_case
+          start_date: body.startDate,
+          end_date: body.endDate,
+        },
       }),
       invalidatesTags: ["Subscription", "Plan"],
       transformResponse: (response: SubscriptionResponse) => {
@@ -219,7 +224,12 @@ export const subscriptionApi = createApi({
       query: (body) => ({
         url: "/subscriptions/change-plan",
         method: "POST",
-        body,
+        body: {
+          ...body,
+          // Support APIs expecting snake_case
+          start_date: body.startDate,
+          end_date: body.endDate,
+        },
       }),
       invalidatesTags: ["Subscription", "Plan"],
       transformResponse: (response: SubscriptionResponse) => {

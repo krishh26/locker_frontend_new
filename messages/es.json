@@ -167,6 +167,7 @@
         "email": "Correo electrónico",
         "mobile": "Móvil",
         "course": "Curso",
+        "iqaShortcuts": "IQA",
         "comment": "Comentario",
         "status": "Estado",
         "actions": "Acciones"
@@ -494,6 +495,24 @@
       "totalRevenue": "Ingresos totales",
       "fromRecentPayments": "De pagos recientes",
       "fromPaymentsCount": "De {count} pagos recientes",
+      "totalLicenses": "Licencias totales",
+      "licensesAcrossSystem": "En todas las organizaciones",
+      "userRaisedTile": {
+        "title": "Tickets e innovaciones planteadas por los usuarios finales",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Solicitudes de soporte generadas en la plataforma",
+        "ticketStatusTitle": "Desglose por estado",
+        "ticketStatuses": {
+          "open": "Abierto",
+          "inProgress": "En progreso",
+          "resolved": "Resuelto",
+          "closed": "Cerrado"
+        },
+        "viewTickets": "Ver tickets",
+        "innovations": "Innovaciones",
+        "innovationsSubtitle": "Ideas propuestas por los usuarios finales",
+        "viewInnovations": "Ver innovaciones"
+      },
       "recentAuditEvents": "Eventos de auditoría recientes",
       "viewAll": "Ver todo",
       "noRecentAuditEvents": "No hay eventos de auditoría recientes.",
@@ -5243,6 +5262,8 @@
         "contractEndLabel": "Fecha de fin del contrato",
         "hoursPerWeekLabel": "Horas de trabajo por semana *",
         "hoursPlaceholder": "Introduzca las horas por semana",
+        "yearlyHolidayLabel": "Derecho a vacaciones anuales (horas)",
+        "yearlyHolidayPlaceholder": "Introduzca el derecho a vacaciones anuales en horas",
         "pickDate": "Elegir fecha",
         "pickDateOptional": "Elegir fecha (opcional)",
         "cancel": "Cancelar",
@@ -5259,7 +5280,8 @@
         "companyRequired": "La empresa es obligatoria",
         "contractStartRequired": "La fecha de inicio del contrato es obligatoria",
         "hoursRequired": "Las horas de trabajo por semana son obligatorias",
-        "hoursPositive": "Debe ser un número positivo"
+        "hoursPositive": "Debe ser un número positivo",
+        "yearlyHolidayInteger": "El derecho a vacaciones anuales debe ser un número entero (0 o mayor)"
       },
       "toast": {
         "updated": "Horas contratadas actualizadas correctamente",
@@ -5839,6 +5861,8 @@
       "labels": {
         "organisation": "Organización *",
         "plan": "Plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -5863,6 +5887,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Selecciona la organización y el plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -5873,7 +5900,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organización",
-        "newPlan": "Nuevo plan *"
+        "newPlan": "Nuevo plan *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Seleccionar plan"
@@ -5884,6 +5913,9 @@
       },
       "toast": {
         "selectPlan": "Selecciona un plan",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Plan cambiado correctamente",
         "changeFailedFallback": "No se pudo cambiar el plan"
       }

@@ -174,7 +174,7 @@ export function QASamplePlanPageContent() {
 
   // EQA course validation and auto-set
   useEffect(() => {
-    if (!isEqa || !courseIdFromUrl || courses.length === 0) return;
+    if (!isEqa && !isIqa || !courseIdFromUrl || courses.length === 0) return;
 
     // Validate course_id exists in courses data
     const courseExists = courses.some((course) => course.id === courseIdFromUrl);
@@ -190,7 +190,7 @@ export function QASamplePlanPageContent() {
     if (selectedCourse !== courseIdFromUrl) {
       dispatch(setSelectedCourse(courseIdFromUrl));
     }
-  }, [isEqa, courseIdFromUrl, courses, selectedCourse, dispatch, router]);
+  }, [isEqa, isIqa, courseIdFromUrl, courses, selectedCourse, dispatch, router]);
 
   // Learners data hook (keeps API logic, dispatches Redux actions)
   const learnersData = useLearnersData(
@@ -201,7 +201,7 @@ export function QASamplePlanPageContent() {
 
   // Auto-trigger filter for EQA users when course and plan are ready
   useEffect(() => {
-    if (!isEqa || !courseIdFromUrl || !selectedCourse || selectedCourse !== courseIdFromUrl) return;
+    if (!isEqa && !isIqa || !courseIdFromUrl || !selectedCourse || selectedCourse !== courseIdFromUrl) return;
     if (isPlanListLoading || !qaState.plans.length) return;
     if (filterState.filterApplied) return; // Already applied
 
@@ -219,6 +219,7 @@ export function QASamplePlanPageContent() {
     }
   }, [
     isEqa,
+    isIqa,
     courseIdFromUrl,
     selectedCourse,
     selectedPlan,
@@ -499,7 +500,7 @@ export function QASamplePlanPageContent() {
         <div className="lg:col-span-8">
           <LearnersTable 
             learnersData={learnersData} 
-            disableCourseSelector={isEqa && !!courseIdFromUrl}
+            disableCourseSelector={(isEqa || isIqa) && !!courseIdFromUrl}
           />
         </div>
       </QASamplePlanLayout>

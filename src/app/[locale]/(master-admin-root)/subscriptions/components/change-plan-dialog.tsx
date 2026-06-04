@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -35,11 +36,15 @@ export function ChangePlanDialog({
   const [changePlanMutation, { isLoading: isChanging }] = useChangeOrganisationPlanMutation()
 
   const [planId, setPlanId] = useState<string>("")
+  const [startDate, setStartDate] = useState<string>("")
+  const [endDate, setEndDate] = useState<string>("")
 
   const plans = (plansData?.data ?? []).filter((p) => p.isActive)
 
   useEffect(() => {
     setPlanId("")
+    setStartDate("")
+    setEndDate("")
   }, [organisationId])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,10 +53,26 @@ export function ChangePlanDialog({
       toast.error(t("changePlan.toast.selectPlan"))
       return
     }
+    if (!startDate || !endDate) {
+      toast.error(t("changePlan.toast.selectStartAndEndDate"))
+      return
+    }
+    const startMs = new Date(startDate).getTime()
+    const endMs = new Date(endDate).getTime()
+    if (Number.isNaN(startMs) || Number.isNaN(endMs)) {
+      toast.error(t("changePlan.toast.invalidDate"))
+      return
+    }
+    if (startMs > endMs) {
+      toast.error(t("changePlan.toast.startDateAfterEndDate"))
+      return
+    }
     try {
       await changePlanMutation({
         organisationId,
         planId: Number(planId),
+        startDate,
+        endDate,
       }).unwrap()
       toast.success(t("changePlan.toast.changedSuccess"))
       onSuccess?.()
@@ -97,11 +118,33 @@ export function ChangePlanDialog({
           </SelectContent>
         </Select>
       </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="change-startDate">{t("changePlan.labels.startDate")}</Label>
+          <Input
+            id="change-startDate"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="change-endDate">{t("changePlan.labels.endDate")}</Label>
+          <Input
+            id="change-endDate"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            required
+          />
+        </div>
+      </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isChanging}>
           {t("changePlan.buttons.cancel")}
         </Button>
-        <Button type="submit" disabled={isChanging || !planId}>
+        <Button type="submit" disabled={isChanging || !planId || !startDate || !endDate}>
           {isChanging && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {t("changePlan.buttons.submit")}
         </Button>

@@ -166,6 +166,7 @@
         "email": "E-mail",
         "mobile": "Celular",
         "course": "Curso",
+        "iqaShortcuts": "IQA",
         "comment": "Comentário",
         "status": "Status",
         "actions": "Ações"
@@ -500,6 +501,24 @@
       "totalRevenue": "Receita total",
       "fromRecentPayments": "De pagamentos recentes",
       "fromPaymentsCount": "De {count} pagamentos recentes",
+      "totalLicenses": "Licenças totais",
+      "licensesAcrossSystem": "Em todas as organizações",
+      "userRaisedTile": {
+        "title": "Tickets e inovações levantados pelos utilizadores finais",
+        "tickets": "Tickets",
+        "ticketsSubtitle": "Pedidos de suporte levantados na plataforma",
+        "ticketStatusTitle": "Detalhe por estado",
+        "ticketStatuses": {
+          "open": "Aberto",
+          "inProgress": "Em progresso",
+          "resolved": "Resolvido",
+          "closed": "Fechado"
+        },
+        "viewTickets": "Ver tickets",
+        "innovations": "Inovações",
+        "innovationsSubtitle": "Ideias propostas pelos utilizadores finais",
+        "viewInnovations": "Ver inovações"
+      },
       "recentAuditEvents": "Eventos de auditoria recentes",
       "viewAll": "Ver tudo",
       "noRecentAuditEvents": "Nenhum evento de auditoria recente.",
@@ -5412,6 +5431,8 @@
         "contractEndLabel": "Data de fim do contrato",
         "hoursPerWeekLabel": "Horas de trabalho por semana *",
         "hoursPlaceholder": "Introduza as horas por semana",
+        "yearlyHolidayLabel": "Direito a férias anuais (horas)",
+        "yearlyHolidayPlaceholder": "Introduza o direito a férias anuais em horas",
         "pickDate": "Escolher data",
         "pickDateOptional": "Escolher data (opcional)",
         "cancel": "Cancelar",
@@ -5428,7 +5449,8 @@
         "companyRequired": "A empresa é obrigatória",
         "contractStartRequired": "A data de início do contrato é obrigatória",
         "hoursRequired": "As horas de trabalho por semana são obrigatórias",
-        "hoursPositive": "Deve ser um número positivo"
+        "hoursPositive": "Deve ser um número positivo",
+        "yearlyHolidayInteger": "O direito a férias anuais deve ser um número inteiro (0 ou superior)"
       },
       "toast": {
         "updated": "Horas contratadas atualizadas com sucesso",
@@ -6008,6 +6030,8 @@
       "labels": {
         "organisation": "Organização *",
         "plan": "Plano *",
+        "startDate": "Start date *",
+        "endDate": "End date *",
         "totalLicenses": "Total licenses *",
         "tolerancePercentage": "Tolerance percentage *",
         "warningThresholdPercentage": "Warning threshold percentage *"
@@ -6032,6 +6056,9 @@
       },
       "toast": {
         "selectOrgAndPlan": "Selecione a organização e o plano",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "invalidTotalLicenses": "Please enter a valid total licenses (minimum 1)",
         "invalidTolerancePercentage": "Please enter a valid tolerance percentage (0-100)",
         "invalidWarningThresholdPercentage": "Please enter a valid warning threshold percentage (0-100)",
@@ -6042,7 +6069,9 @@
     "changePlan": {
       "labels": {
         "organisation": "Organização",
-        "newPlan": "Novo plano *"
+        "newPlan": "Novo plano *",
+        "startDate": "Start date *",
+        "endDate": "End date *"
       },
       "placeholders": {
         "plan": "Selecionar plano"
@@ -6053,6 +6082,9 @@
       },
       "toast": {
         "selectPlan": "Selecione um plano",
+        "selectStartAndEndDate": "Please select start date and end date",
+        "invalidDate": "Please enter valid dates",
+        "startDateAfterEndDate": "Start date cannot be after end date",
         "changedSuccess": "Plano alterado com sucesso",
         "changeFailedFallback": "Falha ao alterar o plano"
       }

@@ -5,22 +5,51 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import type { LearnerListItem } from "@/store/api/learner/types";
+import { useMemo } from "react";
+import type { LearnerCourse, LearnerListItem } from "@/store/api/learner/types";
 import {
   calculateLearnerProgress,
   getProgressPercentages,
 } from "@/lib/learner-progress-utils";
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
 import { useTranslations } from "next-intl";
+import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded";
+import { useGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi";
 
 interface EmployerLearnerRowProps {
   learner: LearnerListItem;
 }
 
 export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
-  // Calculate progress
-  const progress = calculateLearnerProgress(learner);
-  const percentages = getProgressPercentages(progress);
+  const learnerId = learner?.learner_id;
+  const { data: learnerDetailsResponse } = useGetLearnerDetailsQuery(learnerId, {
+    skip: !learnerId,
+  });
+  const learnerDetails = learnerDetailsResponse?.data;
+
+  const overallProgressData = useMemo(() => {
+    const coursesForProgress = (learnerDetails?.course ?? learner?.course ?? []).filter(
+      (c) => !isEnrollmentExcluded(c),
+    );
+
+    const progressLearner: LearnerListItem = {
+      learner_id: Number(learnerDetails?.learner_id ?? learner.learner_id),
+      user_name: String(learnerDetails?.user_name ?? learner.user_name ?? ""),
+      first_name: String(learnerDetails?.first_name ?? learner.first_name ?? ""),
+      last_name: String(learnerDetails?.last_name ?? learner.last_name ?? ""),
+      email: String(learnerDetails?.email ?? learner.email ?? ""),
+      mobile: String(learnerDetails?.mobile ?? learner.mobile ?? ""),
+      course: coursesForProgress as LearnerCourse[],
+    };
+
+    const summary = calculateLearnerProgress(progressLearner);
+
+    return {
+      ...summary,
+      countedCourses: coursesForProgress.length,
+      percentages: getProgressPercentages(summary),
+    };
+  }, [learner, learnerDetails]);
 
   const t = useTranslations("learners.employerRow");
 
@@ -98,7 +127,7 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
           </div>
 
           {/* Progress - labelled bars (completed / in progress / not started) */}
-          {learner?.course && learner.course.length > 0 && (
+          {overallProgressData.countedCourses > 0 && (
             <div
               className="hidden md:flex flex-col gap-1.5 shrink-0 min-w-[240px] lg:min-w-[280px]"
               aria-label={t("progressTitle")}
@@ -110,19 +139,22 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
                 {[
                   {
                     label: t("progressCompleted"),
-                    percent: percentages.completedPercent,
+                    count: overallProgressData.totalCompleted,
+                    percent: overallProgressData.percentages.completedPercent,
                     barClass: "bg-accent",
                     textClass: "text-accent",
                   },
                   {
                     label: t("progressInProgress"),
-                    percent: percentages.inProgressPercent,
+                    count: overallProgressData.totalInProgress,
+                    percent: overallProgressData.percentages.inProgressPercent,
                     barClass: "bg-primary",
                     textClass: "text-primary",
                   },
                   {
                     label: t("progressNotStarted"),
-                    percent: percentages.notStartedPercent,
+                    count: overallProgressData.totalNotStarted,
+                    percent: overallProgressData.percentages.notStartedPercent,
                     barClass: "bg-muted-foreground/40",
                     textClass: "text-muted-foreground",
                   },
@@ -138,7 +170,7 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
                       <span
                         className={`text-xs font-semibold tabular-nums shrink-0 ${item.textClass}`}
                       >
-                        {item.percent}%
+                        {item.count}
                       </span>
                       <div className="h-2 flex-1 min-w-[40px] bg-muted rounded-full overflow-hidden">
                         <div

@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { isEnrollmentExcluded } from '@/lib/is-enrollment-excluded'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
@@ -24,6 +24,7 @@ interface Learner {
   avatar?: string
   user_name?: string
   nextvisitdate?: string
+  next_visit_date?: string | null
   course?: Array<{
     trainer_id?: {
       first_name: string
@@ -76,9 +77,41 @@ function initialsFromName(name: string) {
     .join('')
 }
 
+function formatNextVisitDate(
+  dateString: string | undefined | null,
+  locale: string,
+): string | null {
+  if (!dateString) return null
+  const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toLocaleString(locale, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const t = useTranslations('learnerDashboard.infoCard')
-  const timeLogUserId = user?.id ? String(user.id) : undefined
+  const locale = useLocale()
+
+  const formattedNextVisit = useMemo(
+    () =>
+      formatNextVisitDate(
+        learner?.nextvisitdate ?? learner?.next_visit_date,
+        locale,
+      ),
+    [learner?.nextvisitdate, learner?.next_visit_date, locale],
+  )
+  // When Admin/Trainer views a learner dashboard, the time log API must use the learner's user_id (not the viewer's).
+  const timeLogUserId = String(
+    (learner as unknown as { id?: string | number; user_id?: string | number })?.id ??
+      (learner as unknown as { user_id?: string | number })?.user_id ??
+      user?.id ??
+      '',
+  ) || undefined
 
   const { data: otjSpendResponse, isLoading: isOtjLoading } =
     useGetTimeLogSpendQuery(
@@ -166,7 +199,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
       completionPercentage: summary.completionPercentage,
       countedCourses: coursesForProgress.length,
     }
-  }, [learner?.course])
+  }, [learner])
 
   const learnerName = learner
     ? `${learner.first_name || ''} ${learner.last_name || ''}`.trim()
@@ -251,7 +284,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
               variant='outline'
               className='w-fit rounded-full px-4 py-2 shadow-sm border-primary bg-primary text-white'
             >
-              {t('nextVisit')} {learner?.nextvisitdate || t('notAvailable')}
+              {t('nextVisit')} {formattedNextVisit ?? t('notAvailable')}
             </Badge>
           </div>
         </div>

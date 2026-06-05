@@ -128,7 +128,10 @@ export const resourcesApi = createApi({
       CourseResourceListRequest
     >({
       query: ({ course_id, user_id, search = "", job_type = "" }) => {
-        let url = `/resource/list-by-course?course_id=${course_id}&user_id=${user_id}`;
+        let url = `/resource/list-by-course?course_id=${encodeURIComponent(String(course_id))}`;
+        if (user_id != null && user_id !== "") {
+          url += `&user_id=${encodeURIComponent(String(user_id))}`;
+        }
         if (search) {
           url += `&search=${encodeURIComponent(search)}`;
         }

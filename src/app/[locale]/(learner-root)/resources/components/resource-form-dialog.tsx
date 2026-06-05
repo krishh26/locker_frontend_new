@@ -50,6 +50,26 @@ type ResourceFormValues = {
   file?: File;
 };
 
+function getFileSizeInMb(file: File): string {
+  return (file.size / (1024 * 1024)).toFixed(2);
+}
+
+function appendResourceFormFields(
+  formData: FormData,
+  data: ResourceFormValues,
+  file: File,
+) {
+  formData.append("course_id", data.course_id);
+  formData.append("name", data.name || file.name);
+  formData.append("description", data.description || "");
+  formData.append("size", getFileSizeInMb(file));
+  formData.append("job_type", data.job_type);
+  formData.append("resource_type", data.resource_type);
+  formData.append("hours", String(data.hours ?? 0));
+  formData.append("minute", String(data.minute ?? 0));
+  formData.append("file", file);
+}
+
 interface ResourceFormDialogProps {
   onSuccess?: () => void;
   trigger?: React.ReactNode;
@@ -105,9 +125,6 @@ export function ResourceFormDialog({
           .instanceof(File, {
             message: t("form.validation.uploadFile"),
           })
-          .refine((file) => file.size <= 10 * 1024 * 1024, {
-            message: t("form.validation.fileTooLarge"),
-          })
           .optional(),
       }),
     [t]
@@ -116,13 +133,9 @@ export function ResourceFormDialog({
   const createResourceSchema = useMemo(
     () =>
       resourceFormSchema.extend({
-        file: z
-          .instanceof(File, {
-            message: t("form.validation.uploadFile"),
-          })
-          .refine((file) => file.size <= 10 * 1024 * 1024, {
-            message: t("form.validation.fileTooLarge"),
-          }),
+        file: z.instanceof(File, {
+          message: t("form.validation.uploadFile"),
+        }),
       }),
     [resourceFormSchema, t]
   );
@@ -155,8 +168,6 @@ export function ResourceFormDialog({
     }
   }, [form, isEditMode, open, resource]);
 
-  const fileRef = form.register("file");
-
   async function onSubmit(data: ResourceFormValues) {
     try {
       if (isEditMode && resource) {
@@ -177,6 +188,7 @@ export function ResourceFormDialog({
           Object.entries(updateData).forEach(([key, value]) => {
             formData.append(key, String(value));
           });
+          formData.append("size", getFileSizeInMb(data.file));
           formData.append("file", data.file);
           await updateResource({ 
             id: String(resource.resource_id || resource.id), 
@@ -192,16 +204,7 @@ export function ResourceFormDialog({
       } else {
         // Create new resource
         const formData = new FormData();
-        formData.append("course_id", data.course_id);
-        formData.append("name", data.name || data.file!.name);
-        if (data.description) {
-          formData.append("description", data.description);
-        }
-        formData.append("job_type", data.job_type);
-        formData.append("resource_type", data.resource_type);
-        formData.append("hours", String(data.hours ?? 0));
-        formData.append("minute", String(data.minute ?? 0));
-        formData.append("file", data.file!);
+        appendResourceFormFields(formData, data, data.file!);
 
         await createResource(formData as FormData).unwrap();
         toast.success(t("form.toast.created"));
@@ -290,7 +293,7 @@ export function ResourceFormDialog({
               <FormField
                 control={form.control}
                 name="file"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, ref } }) => (
                 <FormItem>
                   <FormLabel>
                     {t("form.fields.file")}{" "}
@@ -314,12 +317,12 @@ export function ResourceFormDialog({
                       <div className="flex items-center gap-2">
                         <Input
                           type="file"
-                          {...fileRef}
+                          ref={ref}
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
                               onChange(file);
-                              form.setValue("name", file.name);
+                              form.setValue("name", file.name, { shouldValidate: true });
                             }
                           }}
                           className="cursor-pointer"
@@ -328,9 +331,6 @@ export function ResourceFormDialog({
                       </div>
                     </div>
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
-                    {t("form.helper.maxFileSize")}
-                  </p>
                   <FormMessage />
                 </FormItem>
               )}

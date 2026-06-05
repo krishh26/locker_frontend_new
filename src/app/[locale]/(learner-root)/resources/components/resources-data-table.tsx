@@ -59,37 +59,52 @@ import { Switch } from '@/components/ui/switch'
 import { ResourceFormDialog } from './resource-form-dialog'
 import { DataTablePagination } from '@/components/data-table-pagination'
 import {
-  useGetResourcesQuery,
+  useGetResourcesByCourseQuery,
   useDeleteResourceMutation,
   useExportResourcesPdfMutation,
   useExportResourcesCsvMutation,
 } from '@/store/api/resources/resourcesApi'
+import { useCachedCoursesList } from '@/store/hooks/useCachedCoursesList'
 import { toast } from 'sonner'
 import { useAppSelector } from '@/store/hooks'
 import type { Resource } from '@/store/api/resources/types'
+import { Loader2 } from 'lucide-react'
 
 export function ResourcesDataTable() {
   const t = useTranslations('resources')
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === 'Learner'
   const isEmployer = user?.role === 'Employer'
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(25)
+  const [selectedCourseId, setSelectedCourseId] = useState('')
   const [searchKeyword, setSearchKeyword] = useState('')
   const [jobType, setJobType] = useState<'On' | 'Off' | ''>('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const debouncedSearch = useDebounce(searchKeyword, 500)
 
+  const { data: coursesResponse, isLoading: isLoadingCourses } =
+    useCachedCoursesList()
+  const courses = useMemo(
+    () => coursesResponse?.data ?? [],
+    [coursesResponse?.data],
+  )
+
+  useEffect(() => {
+    if (selectedCourseId || courses.length === 0) return
+    setSelectedCourseId(String(courses[0].course_id))
+  }, [courses, selectedCourseId])
+
   const {
     data: resourcesResponse,
     isLoading,
     refetch,
-  } = useGetResourcesQuery({
-    page,
-    page_size: pageSize,
-    search: debouncedSearch,
-    job_type: jobType === 'On' ? 'On' : '',
-  })
+  } = useGetResourcesByCourseQuery(
+    {
+      course_id: selectedCourseId,
+      search: debouncedSearch,
+      job_type: jobType,
+    },
+    { skip: !selectedCourseId },
+  )
 
   const [deleteResource] = useDeleteResourceMutation()
 
@@ -100,14 +115,7 @@ export function ResourcesDataTable() {
   const [editResource, setEditResource] = useState<Resource | null>(null)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
 
-  const resources = resourcesResponse?.data ?? []
-  const metaData = resourcesResponse?.meta_data
-
-  useEffect(() => {
-    if (debouncedSearch !== searchKeyword) {
-      setPage(1)
-    }
-  }, [debouncedSearch, searchKeyword])
+  const resources = (resourcesResponse?.data ?? []) as Resource[]
 
   const getJobTypeLabel = useCallback(
     (value: string | undefined) => {
@@ -407,15 +415,13 @@ export function ResourcesDataTable() {
       columnVisibility,
       rowSelection,
     },
-    manualPagination: true,
-    pageCount: metaData?.pages ?? 0,
   })
 
   const resourceTypeFilter = table
     .getColumn('resource_type')
     ?.getFilterValue() as string
 
-  if (isLoading) {
+  if (isLoadingCourses || (isLoading && selectedCourseId)) {
     return (
       <div className='flex items-center justify-center h-64'>
         <div className='text-muted-foreground'>{t('table.states.loading')}</div>
@@ -425,8 +431,41 @@ export function ResourcesDataTable() {
 
   return (
     <div className='w-full space-y-4'>
-      <div className='flex gap-4 items-center justify-between'>
-        <div className='space-y-2'>
+      <div className='flex gap-4 items-center justify-between flex-wrap'>
+        <div className='flex flex-wrap items-end gap-4'>
+          <div className='space-y-2 min-w-[220px]'>
+            <Label htmlFor='course-filter' className='text-sm font-medium'>
+              {t('form.fields.course')}
+            </Label>
+            <Select
+              value={selectedCourseId}
+              onValueChange={setSelectedCourseId}
+            >
+              <SelectTrigger id='course-filter' className='cursor-pointer w-full'>
+                <SelectValue placeholder={t('form.placeholders.selectCourse')} />
+              </SelectTrigger>
+              <SelectContent>
+                {isLoadingCourses ? (
+                  <div className='flex items-center justify-center p-2'>
+                    <Loader2 className='h-4 w-4 animate-spin' />
+                  </div>
+                ) : courses.length > 0 ? (
+                  courses.map((course) => (
+                    <SelectItem
+                      key={course.course_id}
+                      value={String(course.course_id)}
+                    >
+                      {course.course_name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <SelectItem value='' disabled>
+                    {t('form.placeholders.noCourses')}
+                  </SelectItem>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
           <div className='relative flex-1 max-w-sm'>
             <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground' />
             <Input
@@ -443,13 +482,8 @@ export function ResourcesDataTable() {
               id='job-type-switch'
               checked={jobType === 'On'}
               onCheckedChange={(checked) => {
-                const newJobType = checked
-                  ? 'On'
-                  : jobType === 'Off'
-                  ? ''
-                  : 'Off'
+                const newJobType = checked ? 'On' : 'Off'
                 setJobType(newJobType)
-                setPage(1)
               }}
             />
             <Label htmlFor='job-type-switch' className='text-sm'>
@@ -563,21 +597,7 @@ export function ResourcesDataTable() {
         </Table>
       </div>
 
-      {metaData && (
-        <DataTablePagination
-          table={table}
-          manualPagination={true}
-          currentPage={page}
-          totalPages={metaData.pages}
-          totalItems={metaData.items}
-          pageSize={pageSize}
-          onPageChange={setPage}
-          onPageSizeChange={(newPageSize) => {
-            setPageSize(newPageSize)
-            setPage(1)
-          }}
-        />
-      )}
+      {resources.length > 0 && <DataTablePagination table={table} />}
 
       {/* Edit Resource Dialog */}
       <ResourceFormDialog

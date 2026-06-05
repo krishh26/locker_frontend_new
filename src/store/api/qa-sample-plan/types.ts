@@ -289,7 +289,7 @@ export interface UpdateSampleQuestionRequest {
 
 export interface UnitMappingItem {
   unit_code: number | string;
-  code: string;
+  code?: string;
   unit_title: string;
   type?: string;
   learnerMapped: boolean;
@@ -300,6 +300,12 @@ export interface UnitMappingItem {
     title?: string;
     learnerMapped?: boolean;
     trainerMapped?: boolean;
+    topics?: Array<{
+      id: string | number;
+      title?: string;
+      learnerMapped?: boolean;
+      trainerMapped?: boolean;
+    }>;
   }>;
 }
 

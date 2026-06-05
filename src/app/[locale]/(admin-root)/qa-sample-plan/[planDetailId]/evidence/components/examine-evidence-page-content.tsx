@@ -250,8 +250,33 @@ export function ExamineEvidencePageContent({
     []
   );
 
+  const subUnitMetaById = useMemo(() => {
+    const map = new Map<string, { code: string; title: string }>();
+    const selectedUnitCode = unitCode ? String(unitCode) : "";
+    if (!unitMappingResponse?.data?.length || !selectedUnitCode) {
+      return map;
+    }
+
+    const selectedUnit = unitMappingResponse.data.find(
+      (u) => String(u.unit_code) === selectedUnitCode
+    );
+
+    (selectedUnit?.subUnits ?? []).forEach((subUnit, index) => {
+      const apiCode =
+        subUnit.code != null && String(subUnit.code).trim() !== ""
+          ? String(subUnit.code).trim()
+          : "";
+      map.set(String(subUnit.id), {
+        code: apiCode || String(index + 1),
+        title: subUnit.title ?? "",
+      });
+    });
+
+    return map;
+  }, [unitMappingResponse?.data, unitCode]);
+
   // Build criteria columns ONLY for selected unit_code.
-  // Primary source: evidenceList.mappedSubUnits; fallback to unitMappingResponse selected unit subUnits.
+  // Primary source: evidenceList.mappedSubUnits; enrich code/title from unit-mapping API.
   const allUnitsToDisplay = useMemo(() => {
     const selectedUnitCode = unitCode ? String(unitCode) : "";
     const seen = new Set<string>();
@@ -271,14 +296,14 @@ export function ExamineEvidencePageContent({
           if (!key || seen.has(key)) continue;
           seen.add(key);
 
-          const code = String(
-            (subUnit as unknown as { code?: string | number }).code ?? subUnit.id
-          );
+          const meta = subUnitMetaById.get(key);
+          const evidenceCode = (subUnit as unknown as { code?: string | number }).code;
 
           columns.push({
             id: subUnit.id,
-            code,
+            code: String(meta?.code ?? evidenceCode ?? ""),
             title:
+              meta?.title ||
               subUnit.subTitle ||
               (subUnit as unknown as { title?: string }).title ||
               "",
@@ -299,28 +324,29 @@ export function ExamineEvidencePageContent({
         if (!key || seen.has(key)) continue;
         seen.add(key);
 
+        const meta = subUnitMetaById.get(key);
         columns.push({
           id: subUnit.id,
-          code: String(subUnit.code ?? subUnit.id),
-          title: subUnit.title ?? "",
+          code: meta?.code ?? String(subUnit.code ?? ""),
+          title: meta?.title ?? subUnit.title ?? "",
           unit_code: selectedUnitCode,
         });
       }
     }
 
     columns.sort((a, b) => {
-      const an = Number(a.id);
-      const bn = Number(b.id);
-      const aIsNum = Number.isFinite(an);
-      const bIsNum = Number.isFinite(bn);
-      if (aIsNum && bIsNum) return an - bn;
-      if (aIsNum) return -1;
-      if (bIsNum) return 1;
+      const ac = Number(a.code);
+      const bc = Number(b.code);
+      const aCodeNum = Number.isFinite(ac) && a.code !== "";
+      const bCodeNum = Number.isFinite(bc) && b.code !== "";
+      if (aCodeNum && bCodeNum) return ac - bc;
+      if (aCodeNum) return -1;
+      if (bCodeNum) return 1;
       return String(a.code).localeCompare(String(b.code));
     });
 
     return columns;
-  }, [evidenceList, unitMappingResponse, unitCode]);
+  }, [evidenceList, unitMappingResponse, unitCode, subUnitMetaById]);
 
   // Calculate unit progress statistics based on evidence data
   const unitProgress = useMemo(() => {

@@ -75,13 +75,17 @@ export function UnitMappingTable({
                     </TableRow>
                     {hasSubUnits &&
                       isExpanded &&
-                      unit.subUnits?.map((subUnit) => (
+                      unit.subUnits?.map((subUnit, index) => (
                         <TableRow
                           key={`${String(unit.unit_code)}-${String(subUnit.id)}`}
                           className="bg-muted hover:bg-muted"
                         >
                           <TableCell className="w-[50px] pl-8"></TableCell>
-                          <TableCell>{subUnit.code || String(subUnit.id)}</TableCell>
+                          <TableCell>
+                            {subUnit.code && String(subUnit.code).trim() !== ""
+                              ? subUnit.code
+                              : String(index + 1)}
+                          </TableCell>
                           <TableCell>{subUnit.title || t("na")}</TableCell>
                         </TableRow>
                       ))}

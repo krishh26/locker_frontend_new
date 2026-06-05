@@ -51,6 +51,7 @@ export type ResourceCreateRequest = FormData | {
   course_id: string;
   name: string;
   description?: string;
+  size?: string | number;
   glh?: number;
   job_type: "On" | "Off";
   resource_type: string;
@@ -86,7 +87,7 @@ export type CourseResource = {
 
 export type CourseResourceListRequest = {
   course_id: number | string;
-  user_id: number | string;
+  user_id?: number | string;
   search?: string;
   job_type?: "On" | "Off" | "";
 };

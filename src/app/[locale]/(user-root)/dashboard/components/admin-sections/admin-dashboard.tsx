@@ -25,12 +25,9 @@ import type {
 } from '@/store/api/dashboard/types'
 import { cardApiTypeToCountKey } from '@/store/api/dashboard/types'
 import { useAppSelector } from '@/store/hooks'
+import { buildLockerReportCsvRows } from '../../data/locker-report-mapping'
 
-/* ============================================================
-   CSV HEADER MAPPING - use t() at runtime in handleExport
-============================================================ */
-
-/** Keys to strip from CSV export (file paths and similar). */
+/** Keys to strip from generic CSV export (file paths and similar). */
 const FILE_PATH_HEADERS_BLOCKLIST = [
   'file_path',
   'filePath',
@@ -38,88 +35,27 @@ const FILE_PATH_HEADERS_BLOCKLIST = [
   'file_path_url',
 ]
 
-/* ============================================================
-   SAFE HELPERS
-============================================================ */
-
-const parsePercentage = (value: unknown): number => {
-  if (value === null || value === undefined) return 0
-  if (typeof value === 'number') return value
-  if (typeof value === 'string') {
-    return Number(value.replace('%', '').trim()) || 0
-  }
-  return 0
-}
-
-/* ============================================================
-   FLATTEN + COMPUTED FIELDS
-============================================================ */
-
-function flattenRowForCsv(
+function genericFlattenRowForCsv(
   row: Record<string, unknown>,
 ): Record<string, unknown> {
-  const today = new Date()
+  const flat: Record<string, unknown> = {}
 
-  const startDateRaw = row.registration_date as string
-  const endDateRaw = row.course_expected_end_date as string
+  for (const [key, value] of Object.entries(row)) {
+    if (FILE_PATH_HEADERS_BLOCKLIST.includes(key)) continue
 
-  let timelineProgress = 0
-
-  if (startDateRaw && endDateRaw) {
-    const startDate = new Date(startDateRaw)
-    const endDate = new Date(endDateRaw)
-
-    const totalDuration =
-      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-
-    const daysPassed =
-      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-
-    if (totalDuration > 0) {
-      timelineProgress = Math.min(
-        100,
-        Math.max(0, (daysPassed / totalDuration) * 100),
-      )
+    if (
+      value !== null &&
+      typeof value === 'object' &&
+      !Array.isArray(value) &&
+      !(value instanceof Date)
+    ) {
+      flat[key] = JSON.stringify(value)
+    } else {
+      flat[key] = value ?? ''
     }
   }
 
-  /* -------- OVERDUE -------- */
-  let overdue = 'No'
-  if (endDateRaw) {
-    const endDate = new Date(endDateRaw)
-    if (!isNaN(endDate.getTime()) && today > endDate) {
-      overdue = 'Yes'
-    }
-  }
-
-  /* -------- OVERALL PROGRESS -------- */
-  const overallProgress = parsePercentage(
-    row.main_aim_green_progress ?? 0,
-  )
-
-  /* -------- ON TRACK -------- */
-  const onTrack =
-    overallProgress >= timelineProgress ? 'Yes' : 'No'
-
-  return {
-    learner_id: row.learner_id ?? '',
-    first_name: row.first_name ?? '',
-    last_name: row.last_name ?? '',
-    email: row.email ?? '',
-
-    course_name: row.curriculum_area ?? '',
-    start_date: startDateRaw ?? '',
-    planned_end_date: endDateRaw ?? '',
-
-    overall_progress: Math.round(overallProgress),
-    timeline_progress: Math.round(timelineProgress),
-
-    overdue: overdue,
-    on_track: onTrack,
-
-    course_status:
-      (row.user_id as Record<string, unknown>)?.status ?? '',
-  }
+  return flat
 }
 /* ============================================================
    THEME-ADAPTIVE CARD BACKGROUNDS
@@ -262,37 +198,46 @@ export function AdminDashboard() {
 
       /* -------- Data rows -------- */
       if (Array.isArray(data) && data.length > 0) {
-        const flatRows = data.map((row) =>
-          flattenRowForCsv({ ...(row as Record<string, unknown>) }),
-        )
+        if (apiType === 'active_learners') {
+          const { headers, dataRows } = buildLockerReportCsvRows(
+            data as Record<string, unknown>[],
+          )
+          csvParts.push(headers, ...dataRows)
+        } else {
+          const flatRows = data.map((row) =>
+            genericFlattenRowForCsv({
+              ...(row as Record<string, unknown>),
+            }),
+          )
 
-        const rawHeaders = Object.keys(flatRows[0])
-        const filteredHeaders = rawHeaders.filter(
-          (h) => !FILE_PATH_HEADERS_BLOCKLIST.includes(h),
-        )
-        const headers = filteredHeaders.map(
-          (h) =>
-            (tAdmin as (key: string) => string)('csvHeaders.' + h) ||
-            h.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-        )
+          const rawHeaders = Object.keys(flatRows[0])
+          const filteredHeaders = rawHeaders.filter(
+            (h) => !FILE_PATH_HEADERS_BLOCKLIST.includes(h),
+          )
+          const headers = filteredHeaders.map(
+            (h) =>
+              (tAdmin as (key: string) => string)('csvHeaders.' + h) ||
+              h.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+          )
 
-        const csvHeaders = headers
-          .map((h) => `"${h.replace(/"/g, '""')}"`)
-          .join(',')
+          const csvHeaders = headers
+            .map((h) => `"${h.replace(/"/g, '""')}"`)
+            .join(',')
 
-        const csvRows = flatRows.map((row) =>
-          filteredHeaders
-            .map((header) => {
-              const value = row[header]
-              if (value === null || value === undefined) return '""'
-              const str =
-                value instanceof Date ? value.toISOString() : String(value)
-              return `"${str.replace(/"/g, '""')}"`
-            })
-            .join(','),
-        )
+          const csvRows = flatRows.map((row) =>
+            filteredHeaders
+              .map((header) => {
+                const value = row[header]
+                if (value === null || value === undefined) return '""'
+                const str =
+                  value instanceof Date ? value.toISOString() : String(value)
+                return `"${str.replace(/"/g, '""')}"`
+              })
+              .join(','),
+          )
 
-        csvParts.push(csvHeaders, ...csvRows)
+          csvParts.push(csvHeaders, ...csvRows)
+        }
       }
 
       /* Ensure a file is always generated (e.g. when data and summary are empty). */

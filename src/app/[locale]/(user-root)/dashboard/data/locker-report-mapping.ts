@@ -173,15 +173,32 @@ export function computeWeeksSinceLastReview(
   return Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000))
 }
 
+/** Returns the first non-empty value from dot/bracket paths on the row. */
+export function resolveFromPaths(
+  row: Record<string, unknown>,
+  paths: string[],
+): unknown {
+  for (const path of paths) {
+    const value = getNestedValue(row, path)
+    if (value !== null && value !== undefined && String(value).trim() !== '') {
+      return value
+    }
+  }
+  return undefined
+}
+
 export function resolveMainAimAssessor(
   row: Record<string, unknown>,
 ): string {
-  const flat = row.main_aim_assessor
-  if (flat != null && String(flat).trim()) return String(flat)
+  const flat = resolveFromPaths(row, [
+    'mentor',
+    'manager_name',
+    'iqas_name',
+    'user_course.trainer_name',
+  ])
 
-  const trainerName = getNestedValue(row, 'user_course.trainer_name')
-  if (trainerName != null && String(trainerName).trim()) {
-    return String(trainerName)
+  if (flat != null && String(flat).trim()) {
+    return String(flat)
   }
 
   const trainer = getNestedValue(row, 'user_course.trainer_id') as
@@ -189,23 +206,50 @@ export function resolveMainAimAssessor(
     | undefined
 
   if (trainer) {
-    const first = trainer.first_name ?? ''
-    const last = trainer.last_name ?? ''
-    const full = `${first} ${last}`.trim()
+    const full = `${trainer.first_name ?? ''} ${trainer.last_name ?? ''}`.trim()
     if (full) return full
   }
 
   return ''
 }
 
+function resolveCourseStartDate(row: Record<string, unknown>): unknown {
+  return resolveFromPaths(row, [
+    'user_course.start_date',
+    'registration_date',
+  ])
+}
+
+function resolveCourseEndDate(row: Record<string, unknown>): unknown {
+  return resolveFromPaths(row, [
+    'user_course.end_date',
+    'course_expected_end_date',
+    'course_actual_end_date',
+  ])
+}
+
+function resolveDeliveryModel(row: Record<string, unknown>): unknown {
+  return resolveFromPaths(row, [
+    'learner_type',
+    'funding_body',
+    'curriculum_area',
+  ])
+}
+
 /* ============================================================
    COLUMN MAPPING
 ============================================================ */
 
+/**
+ * Maps Locker Report spreadsheet columns to Active Learners API response keys.
+ * Only keys present in GET /learner/list-with-count?type=active_learners are used.
+ * Columns with no matching API field export blank.
+ */
 export const LOCKER_REPORT_MAPPING: Record<
   LockerReportColumn,
   LockerReportMappingValue
 > = {
+  /* ---- Learner identity ---- */
   'Learner First Name': 'first_name',
   'Learner Last Name': 'last_name',
   'Main Aim Assessor': resolveMainAimAssessor,
@@ -213,42 +257,57 @@ export const LOCKER_REPORT_MAPPING: Record<
   Status: 'user_id.status',
   ULN: 'uln',
   'Curriculum Manager Name': 'director_of_curriculum',
+
   'Evidence Last Uploaded': 'evidence_last_uploaded',
   'Last Feedback': 'last_feedback',
-  'Overall Green': 'overall_green_progress',
-  'Overall Orange': 'overall_orange_progress',
+
+  /* ---- Progress (main aim used for overall until dedicated fields exist) ---- */
+  'Overall Green': 'main_aim_green_progress',
+  'Overall Orange': 'main_aim_orange_progress',
   'Overall TimeLine': computeOverallTimeline,
+
+  /* ---- Main aim course (user_course.*) ---- */
   'Main Aim Status': 'user_course.course_status',
   'Main Aim Course name': 'user_course.course.course_name',
-  'Delivery Model': 'delivery_model',
-  'Course Start Date': 'user_course.start_date',
-  'Course End Date': 'user_course.end_date',
+  'Delivery Model': resolveDeliveryModel,
+  'Course Start Date': resolveCourseStartDate,
+  'Course End Date': resolveCourseEndDate,
   'Main Green': 'main_aim_green_progress',
   'Main Orange': 'main_aim_orange_progress',
+
+  /* ---- Functional skills ICT ---- */
   'F Skills ICT': 'fs_ict',
   'F skill ICT Green': 'fs_ict_green_progress',
   'F skill ICT Orange': 'fs_ict_orange_progress',
-  'F skill ICT Status': 'fs_ict_status',
+  'F skill ICT Status': 'fSkillICTStatus',
+
+  /* ---- Functional skills English ---- */
   'F Skills Eng': 'fs_english',
   'F Skills Eng Green': 'fs_english_green_progress',
   'F Skills Eng Orange': 'fs_english_orange_progress',
-  'F Skills Eng Status': 'fs_english_status',
+  'F Skills Eng Status': 'fSkillsEngStatus',
+
+  /* ---- Functional skills Maths ---- */
   'F Skills Maths': 'fs_maths',
   'F Skills Maths Green': 'fs_maths_green_progress',
   'F Skills Maths Orange': 'fs_maths_orange_progress',
-  'F Skills Maths Status': 'fs_maths_status',
-  'Tech Cert': 'tech_cert',
-  'Tech Cert Green': 'tech_cert_green_progress',
-  'Tech Cert Orange': 'tech_cert_orange_progress',
-  'Tech Cert Status': 'tech_cert_status',
+  'F Skills Maths Status': 'fSkillsMathsStatus',
+
+  /* ---- Tech Cert / ERR / PLTS ---- */
+  'Tech Cert': 'techCert',
+  'Tech Cert Green': 'techCertGreen',
+  'Tech Cert Orange': 'techCertOrange',
+  'Tech Cert Status': 'techCertStatus',
   ERR: 'err',
-  'ERR Green': 'err_green_progress',
-  'ERR Orange': 'err_orange_progress',
-  'ERR Status': 'err_status',
+  'ERR Green': 'errGreen',
+  'ERR Orange': 'errOrange',
+  'ERR Status': 'errStatus',
   PLTS: 'plts',
-  'PLTS Green': 'plts_green_progress',
-  'PLTS Orange': 'plts_orange_progress',
-  'PLTS Status': 'plts_status',
+  'PLTS Green': 'pltsGreen',
+  'PLTS Orange': 'pltsOrange',
+  'PLTS Status': 'pltsStatus',
+
+  /* ---- Visits & review ---- */
   'Last Visit type': 'last_visit_type',
   'Last Visit Date': 'last_visit_date',
   'Next Visit type': 'next_visit_type',
@@ -268,10 +327,15 @@ export function flattenRowForCsv(
 
   for (const column of LOCKER_REPORT_COLUMNS) {
     const mapping = LOCKER_REPORT_MAPPING[column]
-    const raw =
-      typeof mapping === 'function'
-        ? mapping(row)
-        : getNestedValue(row, mapping)
+    let raw: unknown
+
+    if (typeof mapping === 'function') {
+      raw = mapping(row)
+    } else if (mapping === '') {
+      raw = undefined
+    } else {
+      raw = getNestedValue(row, mapping)
+    }
 
     result[column] = formatLockerReportValue(raw)
   }

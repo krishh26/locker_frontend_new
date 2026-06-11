@@ -144,7 +144,7 @@ export const mails = [
     name: "Ethan Clark",
     email: "ethanclark@example.com",
     subject: "Team Building Event",
-    text: "Let's plan a team-building event for our department. Team cohesion and morale are vital to our success, and I believe a well-organized team-building event can be incredibly beneficial. I've done some research and have a few ideas for fun and engaging activities.\n\nPlease let me know your thoughts and availability. We want this event to be both enjoyable and productive.\n\nTogether, we'll strengthen our team and boost our performance.\n\nRegards, Ethan",
+    text: "Let's plan a team-building event for our department. Team cohesion and morale are vital to our success, and I believe a well-organised team-building event can be incredibly beneficial. I've done some research and have a few ideas for fun and engaging activities.\n\nPlease let me know your thoughts and availability. We want this event to be both enjoyable and productive.\n\nTogether, we'll strengthen our team and boost our performance.\n\nRegards, Ethan",
     date: "2022-08-25T15:30:00",
     read: false,
     labels: ["meeting", "work"],

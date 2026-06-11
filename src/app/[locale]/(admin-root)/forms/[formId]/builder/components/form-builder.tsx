@@ -45,7 +45,6 @@ const roles = [
   "Curriculum Manager",
   "Employer Overview",
   "Employer Manager",
-  "Custom Manager",
   "Learner",
 ] as const;
 

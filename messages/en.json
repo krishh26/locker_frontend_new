@@ -2593,7 +2593,7 @@
   },
   "evidenceLibrary": {
     "pageTitle": "Evidence Library",
-    "pageSubtitle": "Manage and organize your evidence files",
+    "pageSubtitle": "Manage and organise your evidence files",
     "filters": {
       "searchPlaceholder": "Search by title...",
       "coursePlaceholder": "Filter by course",
@@ -4493,7 +4493,7 @@
   },
   "courseBuilder": {
     "pageTitle": "Course Builder",
-    "pageSubtitle": "Create, manage, and organize your courses with ease",
+    "pageSubtitle": "Create, manage, and organise your courses with ease",
     "filters": {
       "searchPlaceholder": "Search by keyword...",
       "courseTypePlaceholder": "Course type",

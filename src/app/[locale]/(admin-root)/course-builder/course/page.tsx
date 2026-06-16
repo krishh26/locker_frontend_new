@@ -24,6 +24,7 @@ export default function CoursePage() {
     const router = useRouter();
     const courseId = searchParams.get("id");
     const stepParam = searchParams.get("step");
+    const isViewMode = searchParams.get("view") === "true";
     const initialStep = stepParam === "1" ? 1 : 0;
     const courseIdNumber = courseId ? Number(courseId) : undefined;
 
@@ -125,7 +126,13 @@ export default function CoursePage() {
         <div className="space-y-6 px-4 lg:px-6 pb-8">
             {/* Page Header */}
             <PageHeader
-                title={isCreateMode ? t("course.pageTitleCreate") : t("course.pageTitleEdit")}
+                title={
+                    isViewMode
+                        ? t("course.pageTitleView")
+                        : isCreateMode
+                          ? t("course.pageTitleCreate")
+                          : t("course.pageTitleEdit")
+                }
                 icon={BookOpen}
                 showBackButton
                 backButtonHref="/course-builder"
@@ -136,6 +143,7 @@ export default function CoursePage() {
                     courseType={courseType}
                     courseId={courseId}
                     initialStep={initialStep}
+                    isViewMode={isViewMode}
                 />
             )}
         </div>

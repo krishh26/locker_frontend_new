@@ -101,6 +101,7 @@ export interface UserFilters {
   page_size?: number;
   keyword?: string;
   role?: string;
+  organisation_id?: number;
 }
 
 export interface AssignedLearner {

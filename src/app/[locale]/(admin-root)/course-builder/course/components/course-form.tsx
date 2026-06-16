@@ -52,6 +52,7 @@ interface CourseFormProps {
   courseType: CourseCoreType;
   courseId?: string | null;
   initialStep?: number;
+  isViewMode?: boolean;
 }
 
 const getSteps = (courseType: CourseCoreType, t: (key: string) => string) => {
@@ -66,7 +67,7 @@ function getInitialStep(courseType: CourseCoreType, initialStep?: number): numbe
   return initialStep === 1 ? 1 : 0;
 }
 
-export function CourseForm({ courseType, courseId, initialStep }: CourseFormProps) {
+export function CourseForm({ courseType, courseId, initialStep, isViewMode = false }: CourseFormProps) {
   const t = useTranslations("courseBuilder");
   const router = useRouter();
   const authUser = useAppSelector(selectAuthUser);
@@ -545,6 +546,7 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
             setValue={(name: string, value: any) => setValue(name as any, value)}
             errors={errors}
             trigger={trigger}
+            edit={isViewMode ? "view" : isEditMode ? "edit" : "create"}
           />
         </div>
       );
@@ -702,41 +704,70 @@ export function CourseForm({ courseType, courseId, initialStep }: CourseFormProp
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleNext();
+            if (!isViewMode) {
+              handleNext();
+            }
           }}
         >
-          {renderStepContent()}
+          <fieldset disabled={isViewMode} className="min-w-0 border-0 p-0 m-0">
+            {renderStepContent()}
+          </fieldset>
 
           {/* Action Buttons */}
           <div className="flex items-center justify-between mt-8 pt-6 border-t">
             <Button
               type="button"
               variant="outline"
-              onClick={handleBack}
-              disabled={activeStep === 0 || isLoading || courseCoreType === "Gateway"}
+              onClick={() => {
+                if (isViewMode && activeStep === 0) {
+                  router.push("/course-builder");
+                  return;
+                }
+                handleBack();
+              }}
+              disabled={
+                !isViewMode &&
+                (activeStep === 0 || isLoading || courseCoreType === "Gateway")
+              }
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              {t("course.back")}
+              {isViewMode && activeStep === 0
+                ? t("course.backToList")
+                : t("course.back")}
             </Button>
 
-            <Button
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("course.saving")}
-                </>
-              ) : (
-                <>
-                  {activeStep === steps.length - 1 || courseCoreType === "Gateway"
-                    ? t("course.submit")
-                    : t("course.next")}
+            {isViewMode ? (
+              activeStep < steps.length - 1 && courseCoreType !== "Gateway" ? (
+                <Button
+                  type="button"
+                  onClick={() => {
+                    clearErrors();
+                    setActiveStep((prev) => prev + 1);
+                  }}
+                >
+                  {t("course.next")}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </>
-              )}
-            </Button>
+                </Button>
+              ) : (
+                <span />
+              )
+            ) : (
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {t("course.saving")}
+                  </>
+                ) : (
+                  <>
+                    {activeStep === steps.length - 1 || courseCoreType === "Gateway"
+                      ? t("course.submit")
+                      : t("course.next")}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            )}
           </div>
         </form>
       </Card>

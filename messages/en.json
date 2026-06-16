@@ -1206,7 +1206,7 @@
         "IQA": "IQA",
         "EQA": "EQA",
         "Curriculum Manager": "Curriculum Manager",
-        "Employer Overview": "Employer Overview",
+        "Employer": "Employer",
         "Employer Manager": "Employer Manager",
         "Partner": "Partner",
         "Custom Manager": "Custom Manager",
@@ -5547,7 +5547,11 @@
       "employer": {
         "title": "Employer",
         "employer": "Employer",
-        "employerIdPlaceholder": "Employer ID",
+        "employerPlaceholder": "Select employer",
+        "searchEmployers": "Search employers...",
+        "loadingEmployers": "Loading employers...",
+        "noEmployersAvailable": "No employers available.",
+        "noEmployersFound": "No employers found.",
         "jobTitle": "Job Title",
         "location": "Location",
         "managerName": "Manager Name",
@@ -6339,7 +6343,6 @@
     "ET": { "label": "ET", "title": "Expert Evidence" },
     "RA": { "label": "RA", "title": "Basic Assessment" },
     "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" }
   }
 }

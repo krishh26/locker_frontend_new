@@ -256,12 +256,9 @@ export interface DeleteQuestionResponse {
 }
 
 export interface ReorderQuestionsResponse {
-  status: boolean;
+  success: boolean;
   data: {
-    questions: Array<{
-      id: string;
-      order: number;
-    }>;
+    questions: Question[];
   };
   error?: {
     code: string;

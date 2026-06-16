@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import {
   DndContext,
@@ -39,6 +39,8 @@ interface SurveyBuilderProps {
   surveyId: string
 }
 
+const EMPTY_QUESTIONS: Question[] = []
+
 export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
   const t = useTranslations("surveys")
   // Fetch survey from API
@@ -49,7 +51,7 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
   const { data: questionsResponse, isLoading: isLoadingQuestions } = useGetQuestionsQuery(surveyId, {
     skip: !surveyId,
   })
-  const questions = questionsResponse?.data?.questions || []
+  const questions = questionsResponse?.data?.questions ?? EMPTY_QUESTIONS
   
   const [reorderQuestions] = useReorderQuestionsMutation()
   const [applyTemplate, { isLoading: isApplyingTemplate }] = useApplyTemplateMutation()
@@ -58,13 +60,36 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [templateSelectorOpen, setTemplateSelectorOpen] = useState(false)
   const [backgroundUrlInput, setBackgroundUrlInput] = useState("")
+  const [optimisticOrder, setOptimisticOrder] = useState<string[] | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
 
-  const sortedQuestions = [...questions].sort((a, b) => a.order - b.order)
+  const sortedQuestions = useMemo(
+    () => [...questions].sort((a, b) => a.order - b.order),
+    [questions],
+  )
+
+  const serverOrderKey = useMemo(
+    () => sortedQuestions.map((q) => q.id).join(","),
+    [sortedQuestions],
+  )
+
+  const displayQuestions = useMemo(() => {
+    if (!optimisticOrder) return sortedQuestions
+
+    const byId = new Map(sortedQuestions.map((q) => [q.id, q]))
+    return optimisticOrder
+      .map((id) => byId.get(id))
+      .filter((q): q is Question => Boolean(q))
+  }, [sortedQuestions, optimisticOrder])
+
+  // Clear optimistic order once server data reflects the new sequence.
+  useEffect(() => {
+    setOptimisticOrder(null)
+  }, [serverOrderKey])
 
   // Handle both nested structure (background.type/value) and flat structure (backgroundType/backgroundValue)
   const surveyRecord = survey as Record<string, unknown> | undefined
@@ -185,32 +210,41 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
   }
 
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      const oldIndex = sortedQuestions.findIndex((q) => q.id === active.id)
-      const newIndex = sortedQuestions.findIndex((q) => q.id === over.id)
+      const oldIndex = displayQuestions.findIndex((q) => q.id === active.id)
+      const newIndex = displayQuestions.findIndex((q) => q.id === over.id)
 
-      const newOrder = arrayMove(sortedQuestions, oldIndex, newIndex)
+      if (oldIndex < 0 || newIndex < 0) return
+
+      const newOrder = arrayMove(displayQuestions, oldIndex, newIndex)
       const questionIds = newOrder.map((q) => q.id)
+      const previousOrder = optimisticOrder ?? serverOrderKey.split(",").filter(Boolean)
 
-      try {
-        await reorderQuestions({
-          surveyId,
-          questionIds,
-        }).unwrap()
-        toast.success(t("builder.reorderToastSuccess"))
-      } catch (error: unknown) {
-        let errorMessage = t("builder.reorderToastFailed")
-        if (error && typeof error === 'object' && 'data' in error) {
-          const errorData = error.data
-          if (errorData && typeof errorData === 'object' && 'message' in errorData) {
-            errorMessage = String(errorData.message)
+      setOptimisticOrder(questionIds)
+
+      void reorderQuestions({
+        surveyId,
+        questionIds,
+      })
+        .unwrap()
+        .then(() => {
+          toast.success(t("builder.reorderToastSuccess"))
+        })
+        .catch((error: unknown) => {
+          let errorMessage = t("builder.reorderToastFailed")
+          if (error && typeof error === "object") {
+            const maybe = error as { data?: { message?: unknown } }
+            const message = maybe.data?.message
+            if (typeof message === "string" && message.trim()) {
+              errorMessage = message
+            }
           }
-        }
-        toast.error(errorMessage)
-      }
+          setOptimisticOrder(previousOrder.length ? previousOrder : null)
+          toast.error(errorMessage)
+        })
     }
   }
 
@@ -387,11 +421,11 @@ export function SurveyBuilder({ surveyId }: SurveyBuilderProps) {
                   onDragEnd={handleDragEnd}
                 >
                   <SortableContext
-                    items={sortedQuestions.map((q) => q.id)}
+                    items={displayQuestions.map((q) => q.id)}
                     strategy={verticalListSortingStrategy}
                   >
                     <div className="space-y-6">
-                      {sortedQuestions.map((question, index) => (
+                      {displayQuestions.map((question, index) => (
                         <LivePreviewQuestion
                           key={question.id}
                           question={question}

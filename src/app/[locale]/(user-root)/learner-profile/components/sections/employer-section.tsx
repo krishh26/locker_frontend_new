@@ -1,10 +1,12 @@
 "use client";
 
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { EmployerAutocomplete } from "@/components/ui/employer-autocomplete";
 import type { LearnerData } from "@/store/api/learner/types";
 
 interface EmployerSectionProps {
@@ -15,7 +17,6 @@ interface EmployerSectionProps {
 export function EmployerSection({ learner, canEdit = false }: EmployerSectionProps) {
   const t = useTranslations("learnerProfile");
   const form = useFormContext();
-  const employerId = (learner as { employer_id?: number }).employer_id;
   const employer = (learner as { employer?: { employer_id: number; employer_name: string } }).employer;
   const jobTitle = (learner as { job_title?: string }).job_title || "-";
   const location = (learner as { location?: string }).location || "-";
@@ -23,7 +24,14 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
   const managerJobTitle = (learner as { manager_job_title?: string }).manager_job_title || "-";
   const mentor = (learner as { mentor?: string }).mentor || "-";
 
-  const employerName = employer?.employer_name || (employerId ? `Employer ID: ${employerId}` : "-");
+  const employerName = employer?.employer_name || "-";
+
+  const additionalEmployers = useMemo(() => {
+    if (employer?.employer_id && employer?.employer_name) {
+      return [employer];
+    }
+    return [];
+  }, [employer]);
 
   return (
     <Card>
@@ -36,11 +44,22 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
             <Label className="text-sm font-medium">{t("sections.employer.employer")}</Label>
             {canEdit ? (
               <>
-                <Input
-                  type="text"
-                  {...form.register("employer_id")}
-                  className="min-h-10"
-                  placeholder={t("sections.employer.employerIdPlaceholder")}
+                <Controller
+                  name="employer_id"
+                  control={form.control}
+                  render={({ field }) => (
+                    <EmployerAutocomplete
+                      value={field.value || ""}
+                      onValueChange={field.onChange}
+                      placeholder={t("sections.employer.employerPlaceholder")}
+                      searchPlaceholder={t("sections.employer.searchEmployers")}
+                      loadingLabel={t("sections.employer.loadingEmployers")}
+                      emptyLabel={t("sections.employer.noEmployersAvailable")}
+                      noResultsLabel={t("sections.employer.noEmployersFound")}
+                      additionalEmployers={additionalEmployers}
+                      error={!!form.formState.errors.employer_id}
+                    />
+                  )}
                 />
                 {form.formState.errors.employer_id && (
                   <p className="text-destructive text-sm">

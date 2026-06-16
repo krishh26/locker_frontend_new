@@ -43,7 +43,7 @@ const roles = [
   "IQA",
   "EQA",
   "Curriculum Manager",
-  "Employer Overview",
+  "Employer",
   "Employer Manager",
   "Learner",
 ] as const;

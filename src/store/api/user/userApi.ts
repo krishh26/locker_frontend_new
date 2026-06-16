@@ -104,6 +104,7 @@ export const userApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
       transformResponse: (response: ChangeUserRoleResponse) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);

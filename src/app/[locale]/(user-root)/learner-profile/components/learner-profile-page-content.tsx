@@ -265,7 +265,7 @@ export function LearnerProfilePageContent({
         if (value !== '' && value !== null && value !== undefined) {
           // Convert string numbers back to numbers for certain fields
           if (key === 'employer_id' && value) {
-            updateData[key] = value
+            updateData[key] = Number(value)
           } else if (
             key === 'custom_amount' ||
             key === 'original_amount' ||

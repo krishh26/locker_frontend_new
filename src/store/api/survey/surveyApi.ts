@@ -254,7 +254,7 @@ export const surveyApi = createApi({
         { type: "Survey", id: surveyId },
       ],
       transformResponse: (response: ReorderQuestionsResponse) => {
-        if (!response?.status) {
+        if (!response?.success) {
           throw new Error(response?.error?.message ?? DEFAULT_ERROR_MESSAGE);
         }
         return response;

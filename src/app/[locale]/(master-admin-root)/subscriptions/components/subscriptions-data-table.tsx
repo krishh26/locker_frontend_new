@@ -434,7 +434,7 @@ export function SubscriptionsDataTable() {
 
       {/* Assign Plan Dialog */}
       <Dialog open={isAssignPlanOpen} onOpenChange={setIsAssignPlanOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] max-h-[min(90vh,100dvh)] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{t("subscriptionsTable.dialogs.assignPlan.title")}</DialogTitle>
             <DialogDescription>
@@ -448,7 +448,7 @@ export function SubscriptionsDataTable() {
       {/* Change Plan Dialog */}
       {changePlanSub && (
         <Dialog open={!!changePlanSub} onOpenChange={(open) => !open && setChangePlanSub(null)}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] max-h-[min(90vh,100dvh)] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{t("subscriptionsTable.dialogs.changePlan.title")}</DialogTitle>
               <DialogDescription>
@@ -468,7 +468,7 @@ export function SubscriptionsDataTable() {
       {/* Suspend Access Dialog */}
       {suspendAccessSub && (
         <Dialog open={!!suspendAccessSub} onOpenChange={(open) => !open && setSuspendAccessSub(null)}>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] max-h-[min(90vh,100dvh)] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{t("subscriptionsTable.dialogs.suspendAccess.title")}</DialogTitle>
               <DialogDescription>

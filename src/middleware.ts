@@ -4,6 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY } from "@/store/api/auth/api"
 import { canAccess } from "@/config/route-access"
+import { resolveSessionRole } from "@/lib/auth/session-role"
 import { routing } from "@/i18n/navigation"
 
 // Create the i18n middleware using the routing configuration
@@ -73,17 +74,8 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get(TOKEN_COOKIE_KEY)?.value
   const userCookie = request.cookies.get(USER_COOKIE_KEY)?.value
-  let userRole: string | null = null
-
-  if (userCookie) {
-    try {
-      const parsed = JSON.parse(userCookie) as { role?: unknown }
-      userRole = typeof parsed?.role === "string" ? parsed.role : null
-    } catch {
-      userRole = null
-    }
-  }
-
+  const userRole = resolveSessionRole(token, userCookie)
+  
   // First, let i18n middleware handle locale routing
   // With localePrefix: 'never', it won't add locale to URLs but will handle locale detection
   const response = intlMiddleware(request)

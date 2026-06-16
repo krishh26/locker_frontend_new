@@ -5,7 +5,8 @@ import {
 } from "@/config/auth-roles"
 
 /**
- * Picks the active role for the session: API/current selection first, then first allowed role.
+ * Picks the active role for the session: current Redux/cookie selection first,
+ * then API role, then first allowed role.
  */
 export function resolveActiveUserRole(
   roles: string[] | null | undefined,
@@ -19,7 +20,7 @@ export function resolveActiveUserRole(
     return undefined
   }
 
-  for (const raw of [options?.apiRole, options?.currentRole]) {
+  for (const raw of [options?.currentRole, options?.apiRole]) {
     const normalized = normalizeRole(raw)
     if (normalized && filtered.includes(normalized)) {
       return normalized

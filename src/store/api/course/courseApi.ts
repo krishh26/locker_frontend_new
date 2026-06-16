@@ -123,6 +123,30 @@ export const courseApi = createApi({
         return response;
       },
     }),
+    moveCourseToOrganisation: builder.mutation<
+      CourseCreateResponse,
+      number
+    >({
+      query: (courseId) => ({
+        url: `/course/move-to-organisation/${courseId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Course"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(clearCoursesList());
+        } catch {
+          // handled by caller
+        }
+      },
+      transformResponse: (response: CourseCreateResponse) => {
+        if (!response?.status) {
+          throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
+        }
+        return response;
+      },
+    }),
     getGatewayCourses: builder.query<CourseListResponse, void>({
       query: () => `/course/list?limit=100&core_type=Gateway&scope=organisation`,
       providesTags: ["Course"],
@@ -159,6 +183,7 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
+  useMoveCourseToOrganisationMutation,
   useGetGatewayCoursesQuery,
   useGetStandardCoursesQuery,
 } = courseApi;

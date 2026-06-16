@@ -400,6 +400,8 @@
       "searchPlaceholder": "Search by keyword...",
       "filterByRole": "Filter by role",
       "allRoles": "All Roles",
+      "filterByOrganisation": "Filter by organisation",
+      "allOrganisations": "All Organisations",
       "clear": "Clear",
       "export": "Export",
       "exportCsv": "Export as CSV",
@@ -1204,7 +1206,7 @@
         "IQA": "IQA",
         "EQA": "EQA",
         "Curriculum Manager": "Curriculum Manager",
-        "Employer Overview": "Employer Overview",
+        "Employer": "Employer",
         "Employer Manager": "Employer Manager",
         "Partner": "Partner",
         "Custom Manager": "Custom Manager",
@@ -4519,7 +4521,8 @@
         "learningHours": "Learning hours"
       },
       "actions": {
-        "view": "View"
+        "view": "View",
+        "moveToPersonal": "Move to Personal"
       }
     },
     "export": {
@@ -4557,11 +4560,14 @@
     "toast": {
       "deleteSuccess": "Course deleted successfully",
       "forbiddenDelete": "You do not have access to delete this course.",
-      "deleteFailed": "Failed to delete course"
+      "deleteFailed": "Failed to delete course",
+      "moveToPersonalSuccess": "Course moved to your organisation successfully",
+      "moveToPersonalFailed": "Failed to move course to your organisation"
     },
     "course": {
       "pageTitleCreate": "Create Course",
       "pageTitleEdit": "Edit Course",
+      "pageTitleView": "View Course",
       "errorNoAccess": "You do not have access to this course.",
       "errorNotFound": "Course not found or an error occurred.",
       "backToList": "Back to course list",
@@ -5541,7 +5547,11 @@
       "employer": {
         "title": "Employer",
         "employer": "Employer",
-        "employerIdPlaceholder": "Employer ID",
+        "employerPlaceholder": "Select employer",
+        "searchEmployers": "Search employers...",
+        "loadingEmployers": "Loading employers...",
+        "noEmployersAvailable": "No employers available.",
+        "noEmployersFound": "No employers found.",
         "jobTitle": "Job Title",
         "location": "Location",
         "managerName": "Manager Name",
@@ -6333,7 +6343,6 @@
     "ET": { "label": "ET", "title": "Expert Evidence" },
     "RA": { "label": "RA", "title": "Basic Assessment" },
     "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "RPL": { "label": "RPL", "title": "Individual Personal Log" }
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Canonical assessment methods (12) — single source of truth for the app.
+ * Canonical assessment methods (11) — single source of truth for the app.
  * Display codes: PE, DO, WT, … Trainer Risk Rating API uses lowercase `apiKey`.
  */
 
@@ -20,8 +20,10 @@ export const STANDARD_ASSESSMENT_METHODS: readonly StandardAssessmentMethod[] = 
   { code: "RA", apiKey: "ba" },
   { code: "OT", apiKey: "ot" },
   { code: "RPL", apiKey: "ipl" },
-  { code: "LO", apiKey: "lo" },
 ] as const
+
+/** Retired codes — stripped from UI and payloads (legacy API data may still contain them). */
+const DEPRECATED_ASSESSMENT_METHOD_CODES = new Set(["LO", "lo", "LB", "lb"])
 
 export type AssessmentMethodCode =
   (typeof STANDARD_ASSESSMENT_METHODS)[number]["code"]
@@ -48,7 +50,6 @@ const LEGACY_QA_CODE_ALIASES: Record<string, AssessmentMethodCode> = {
   WP: "PS",
   PW: "PS",
   VI: "QA",
-  LB: "LO",
   PD: "PE",
   PT: "DO",
   TE: "ET",
@@ -182,11 +183,15 @@ export function mergeAssessmentMethodsForDisplay(
 ): string[] {
   const result = new Set<string>()
   for (const code of codes) {
+    const trimmed = code.trim()
+    if (!trimmed || DEPRECATED_ASSESSMENT_METHOD_CODES.has(trimmed)) continue
     const normalized = normalizeAssessmentMethodCode(code)
     if (normalized) {
-      result.add(normalized)
-    } else if (code.trim()) {
-      result.add(code.trim())
+      if (!DEPRECATED_ASSESSMENT_METHOD_CODES.has(normalized)) {
+        result.add(normalized)
+      }
+    } else {
+      result.add(trimmed)
     }
   }
   return Array.from(result)

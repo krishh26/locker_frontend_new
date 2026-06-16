@@ -362,6 +362,11 @@ const data: {
           icon: Shield,
         },
         {
+          title: 'Resources',
+          url: '/resources',
+          icon: BookOpen,
+        },
+        {
           title: 'Acknowledge Message',
           url: '/acknowledge-message',
           icon: MessageSquare,

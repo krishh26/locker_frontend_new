@@ -30,13 +30,22 @@ export const userApi = createApi({
     }),
     getUsers: builder.query<UserListResponse, UserFilters>({
       query: (filters = {}) => {
-        const { page = 1, page_size = 10, keyword = "", role = "" } = filters;
+        const {
+          page = 1,
+          page_size = 10,
+          keyword = "",
+          role = "",
+          organisation_id,
+        } = filters;
         let url = `/user/list?page=${page}&limit=${page_size}&meta=true`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
         if (role) {
           url += `&role=${encodeURIComponent(role)}`;
+        }
+        if (organisation_id != null) {
+          url += `&organisation_id=${encodeURIComponent(organisation_id)}`;
         }
         return url;
       },
@@ -95,6 +104,7 @@ export const userApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
       transformResponse: (response: ChangeUserRoleResponse) => {
         if (!response?.status) {
           throw new Error(response?.message ?? DEFAULT_ERROR_MESSAGE);

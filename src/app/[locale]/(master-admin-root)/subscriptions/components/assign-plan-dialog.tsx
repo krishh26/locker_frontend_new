@@ -192,7 +192,6 @@ export function AssignPlanDialog({ onSuccess, onCancel }: AssignPlanDialogProps)
     isTotalLicensesValid &&
     isTolerancePercentageValid &&
     isWarningThresholdPercentageValid
-  console.log("🚀 ~ AssignPlanDialog ~ isFormValid:", isFormValid)
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

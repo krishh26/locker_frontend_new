@@ -64,12 +64,15 @@ export function AssessmentMethodsTable({
   };
 
   const handleSaveAssessmentRatings = async () => {
-    const assessmentMethodsData = Object.entries(assessmentRiskRating).map(
-      ([id, risk]) => ({
+    const allowedMethods = new Set(
+      assessmentMethods.map((method) => method.value),
+    );
+    const assessmentMethodsData = Object.entries(assessmentRiskRating)
+      .filter(([id]) => allowedMethods.has(id))
+      .map(([id, risk]) => ({
         assessment_method: id,
         risk_level: risk === "Please select" ? "" : risk,
-      })
-    );
+      }));
 
     const payload: SaveCourseRiskRatingsRequest = {
       trainer_id: trainerId,

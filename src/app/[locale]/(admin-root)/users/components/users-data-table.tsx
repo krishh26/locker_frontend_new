@@ -27,6 +27,7 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { filterRolesFromApi } from "@/config/auth-roles";
+import { isMasterAdmin } from "@/utils/permissions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -62,6 +63,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { exportTableToPdf } from "@/utils/pdfExport";
 import { useGetUsersQuery, useDeleteUserMutation } from "@/store/api/user/userApi";
+import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
 import type { User, UserFilters } from "@/store/api/user/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -85,6 +87,7 @@ export function UsersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
   const isEmployer = userRole === "Employer";
+  const showOrganisationFilter = isMasterAdmin(user);
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   // Create roles with translated labels
   const roles = useMemo(() => {
@@ -106,6 +109,7 @@ export function UsersDataTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
+  const [organisationFilter, setOrganisationFilter] = useState<string>("all");
   const [filters, setFilters] = useState<UserFilters>({
     page: 1,
     page_size: 10,
@@ -115,6 +119,13 @@ export function UsersDataTable() {
 
   const { data, isLoading, refetch } = useGetUsersQuery(filters);
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+  const { data: organisationsData, isLoading: isLoadingOrganisations } =
+    useGetOrganisationsQuery(
+      { page: 1, limit: 500, meta: "true" },
+      { skip: !showOrganisationFilter },
+    );
+
+  const organisations = organisationsData?.data ?? [];
 
   const handleSearch = useCallback(() => {
     setFilters((prev) => ({
@@ -122,8 +133,14 @@ export function UsersDataTable() {
       page: 1,
       keyword: globalFilter || undefined,
       role: roleFilter && roleFilter !== "all" ? roleFilter : undefined,
+      organisation_id:
+        showOrganisationFilter &&
+        organisationFilter &&
+        organisationFilter !== "all"
+          ? Number(organisationFilter)
+          : undefined,
     }));
-  }, [globalFilter, roleFilter]);
+  }, [globalFilter, roleFilter, organisationFilter, showOrganisationFilter]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -134,13 +151,22 @@ export function UsersDataTable() {
   const handleClearSearch = () => {
     setGlobalFilter("");
     setRoleFilter("all");
+    setOrganisationFilter("all");
     setFilters((prev) => ({
       ...prev,
       page: 1,
       keyword: undefined,
       role: undefined,
+      organisation_id: undefined,
     }));
   };
+
+  const hasActiveFilters =
+    !!globalFilter ||
+    (roleFilter && roleFilter !== "all") ||
+    (showOrganisationFilter &&
+      organisationFilter &&
+      organisationFilter !== "all");
 
   const handleAddNew = useCallback(() => {
     router.push("/users/add");
@@ -440,7 +466,41 @@ export function UsersDataTable() {
               ))}
             </SelectContent>
           </Select>
-          {(globalFilter || (roleFilter && roleFilter !== "all")) && (
+          {showOrganisationFilter ? (
+            <Select
+              value={organisationFilter}
+              onValueChange={(value) => {
+                setOrganisationFilter(value);
+                setFilters((prev) => ({
+                  ...prev,
+                  page: 1,
+                  organisation_id:
+                    value && value !== "all" ? Number(value) : undefined,
+                }));
+              }}
+            >
+              <SelectTrigger className="w-full sm:w-[220px]">
+                <SelectValue placeholder={t("table.filterByOrganisation")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  {t("table.allOrganisations")}
+                </SelectItem>
+                {isLoadingOrganisations ? (
+                  <SelectItem value="loading" disabled>
+                    {t("form.loadingOrganisations")}
+                  </SelectItem>
+                ) : (
+                  organisations.map((org) => (
+                    <SelectItem key={org.id} value={String(org.id)}>
+                      {org.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+          ) : null}
+          {hasActiveFilters && (
             <Button
               variant="ghost"
               size="sm"

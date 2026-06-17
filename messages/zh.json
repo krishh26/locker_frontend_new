@@ -2728,7 +2728,11 @@
         "selectCourseFirst": "请先选择课程",
         "selectTypePlaceholder": "选择类型",
         "selectUnitPlaceholder": "选择单元",
-        "noUnits": "暂无单元"
+        "noUnits": "暂无单元",
+        "selectCriteriaStatus": "筛选标准",
+        "showAllCriteria": "显示全部标准",
+        "showCompletedCriteria": "显示已完成标准",
+        "showNonCompletedCriteria": "显示未完成标准"
       },
       "types": {
         "knowledge": "知识",
@@ -2759,7 +2763,8 @@
         "selectType": "请选择类型以查看进度",
         "noItemsForType": "所选类型暂无项目",
         "selectUnit": "请选择单元以查看进度",
-        "noSubUnits": "所选单元暂无子单元"
+        "noSubUnits": "所选单元暂无子单元",
+        "noCriteriaForFilter": "没有符合所选筛选条件的标准"
       }
     }
   },

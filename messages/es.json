@@ -2601,7 +2601,11 @@
         "selectCourseFirst": "Seleccione un curso primero",
         "selectTypePlaceholder": "Seleccionar un tipo",
         "selectUnitPlaceholder": "Seleccionar una unidad",
-        "noUnits": "No hay unidades disponibles"
+        "noUnits": "No hay unidades disponibles",
+        "selectCriteriaStatus": "Filtrar criterios",
+        "showAllCriteria": "Mostrar todos los criterios",
+        "showCompletedCriteria": "Mostrar criterios completados",
+        "showNonCompletedCriteria": "Mostrar criterios no completados"
       },
       "types": {
         "knowledge": "Conocimiento",
@@ -2632,7 +2636,8 @@
         "selectType": "Seleccione un tipo para ver el progreso",
         "noItemsForType": "No hay elementos para el tipo seleccionado",
         "selectUnit": "Seleccione una unidad para ver el progreso",
-        "noSubUnits": "No hay subunidades para la unidad seleccionada"
+        "noSubUnits": "No hay subunidades para la unidad seleccionada",
+        "noCriteriaForFilter": "Ningún criterio coincide con el filtro seleccionado"
       }
     }
   },

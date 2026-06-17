@@ -2201,7 +2201,11 @@
         "selectCourseFirst": "Wählen Sie zuerst einen Kurs",
         "selectTypePlaceholder": "Typ auswählen",
         "selectUnitPlaceholder": "Einheit auswählen",
-        "noUnits": "Keine Einheiten verfügbar"
+        "noUnits": "Keine Einheiten verfügbar",
+        "selectCriteriaStatus": "Kriterien filtern",
+        "showAllCriteria": "Alle Kriterien anzeigen",
+        "showCompletedCriteria": "Abgeschlossene Kriterien anzeigen",
+        "showNonCompletedCriteria": "Nicht abgeschlossene Kriterien anzeigen"
       },
       "types": {
         "knowledge": "Wissen",
@@ -2232,7 +2236,8 @@
         "selectType": "Bitte wählen Sie einen Typ, um den Fortschritt zu sehen",
         "noItemsForType": "Keine Elemente für den gewählten Typ",
         "selectUnit": "Bitte wählen Sie eine Einheit, um den Fortschritt zu sehen",
-        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit"
+        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit",
+        "noCriteriaForFilter": "Keine Kriterien entsprechen dem ausgewählten Filter"
       }
     }
   },

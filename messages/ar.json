@@ -2763,7 +2763,11 @@
         "selectCourseFirst": "اختر دورة أولاً",
         "selectTypePlaceholder": "اختر نوعاً",
         "selectUnitPlaceholder": "اختر وحدة",
-        "noUnits": "لا توجد وحدات متاحة"
+        "noUnits": "لا توجد وحدات متاحة",
+        "selectCriteriaStatus": "تصفية المعايير",
+        "showAllCriteria": "عرض جميع المعايير",
+        "showCompletedCriteria": "عرض المعايير المكتملة",
+        "showNonCompletedCriteria": "عرض المعايير غير المكتملة"
       },
       "types": {
         "knowledge": "المعرفة",
@@ -2794,7 +2798,8 @@
         "selectType": "يرجى اختيار نوع لعرض التقدم",
         "noItemsForType": "لا توجد عناصر للنوع المحدد",
         "selectUnit": "يرجى اختيار وحدة لعرض التقدم",
-        "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة"
+        "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة",
+        "noCriteriaForFilter": "لا توجد معايير تطابق الفلتر المحدد"
       }
     }
   },

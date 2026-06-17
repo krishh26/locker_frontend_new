@@ -3099,7 +3099,11 @@
         "selectCourseFirst": "Select a course first",
         "selectTypePlaceholder": "Select a type",
         "selectUnitPlaceholder": "Select a unit",
-        "noUnits": "No units available"
+        "noUnits": "No units available",
+        "selectCriteriaStatus": "Filter Criteria",
+        "showAllCriteria": "Show All Criteria",
+        "showCompletedCriteria": "Show Completed Criteria",
+        "showNonCompletedCriteria": "Show Non Completed Criteria"
       },
       "types": {
         "knowledge": "Knowledge",
@@ -3130,7 +3134,8 @@
         "selectType": "Please select a type to view progress",
         "noItemsForType": "No items available for the selected type",
         "selectUnit": "Please select a unit to view progress",
-        "noSubUnits": "No sub-units available for the selected unit"
+        "noSubUnits": "No sub-units available for the selected unit",
+        "noCriteriaForFilter": "No criteria match the selected filter"
       }
     }
   },

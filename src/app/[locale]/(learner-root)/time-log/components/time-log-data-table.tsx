@@ -17,7 +17,6 @@ import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -55,7 +54,6 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 import {
   useGetTimeLogsQuery,
   useGetTimeLogSpendQuery,
-  useUpdateTimeLogMutation,
   useDeleteTimeLogMutation,
 } from "@/store/api/time-log/timeLogApi";
 import { toast } from "sonner";
@@ -84,7 +82,6 @@ export function TimeLogDataTable() {
             learner?.learner_id ??
             "",
         );
-  const viewerUserId = String(user?.id ?? "");
   const isEmployer = user?.role === "Employer";
   const t = useTranslations("timeLog");
 
@@ -92,7 +89,6 @@ export function TimeLogDataTable() {
   const [pageSize, setPageSize] = useState(10);
   const [courseFilter, setCourseFilter] = useState<string>("");
   const [jobTypeFilter, setJobTypeFilter] = useState<string>("All");
-  const [approvedFilter, setApprovedFilter] = useState<string>("All");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -110,7 +106,6 @@ export function TimeLogDataTable() {
     user_id: targetUserId,
     course_id: courseFilter || undefined,
     type: jobTypeFilter !== "All" ? jobTypeFilter : undefined,
-    approved: approvedFilter !== "All" ? approvedFilter : undefined,
   });
 
   const { data: spendResponse } = useGetTimeLogSpendQuery({
@@ -119,7 +114,6 @@ export function TimeLogDataTable() {
     type: jobTypeFilter !== "All" ? jobTypeFilter : undefined,
   });
 
-  const [updateTimeLog] = useUpdateTimeLogMutation();
   const [deleteTimeLog] = useDeleteTimeLogMutation();
 
   const timeLogs = useMemo(() => timeLogsResponse?.data ?? [], [timeLogsResponse?.data]);
@@ -174,32 +168,6 @@ export function TimeLogDataTable() {
     setEditMode(false);
     setFormDialogOpen(true);
   }, []);
-
-  const handleVerifyChange = useCallback(
-    async (checked: boolean, timeLog: TimeLogEntry) => {
-      if (!timeLog.id) return;
-
-      try {
-        await updateTimeLog({
-          id: timeLog.id,
-          verified: checked,
-        }).unwrap();
-        toast.success(
-          checked
-            ? t("toast.updateSuccess")
-            : t("toast.updateSuccess")
-        );
-        refetch();
-      } catch (error: unknown) {
-        const errorMessage =
-          error && typeof error === "object" && "data" in error
-            ? (error as { data?: { error?: string } }).data?.error
-            : undefined;
-        toast.error(errorMessage || t("toast.updateFailed"));
-      }
-    },
-    [updateTimeLog, refetch, t]
-  );
 
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "-";
@@ -296,41 +264,6 @@ export function TimeLogDataTable() {
         },
       },
       {
-        accessorKey: "verified",
-        header: t("table.columns.approved"),
-        cell: ({ row }) => {
-          const timeLog = row.original;
-          const isTrainer = user?.role === "Trainer";
-          const isCurrentUserTrainer =
-            typeof timeLog.trainer_id === "object" &&
-            timeLog.trainer_id?.user_id === viewerUserId;
-
-          if (isTrainer && isCurrentUserTrainer) {
-            return (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  checked={timeLog.verified || false}
-                  onCheckedChange={(checked) =>
-                    handleVerifyChange(checked as boolean, timeLog)
-                  }
-                />
-                <span className="text-sm">
-                  {t("table.labels.assessor")}
-                </span>
-              </div>
-            );
-          }
-
-          return (
-            <span className="text-sm">
-              {timeLog.verified
-                ? t("table.labels.approved")
-                : t("table.labels.notApproved")}
-            </span>
-          );
-        },
-      },
-      {
         accessorKey: "impact_on_learner",
         header: t("table.columns.comment"),
         cell: ({ row }) => {
@@ -394,7 +327,7 @@ export function TimeLogDataTable() {
         },
       },
     ],
-    [user?.role, viewerUserId, isEmployer, handleVerifyChange, handleEdit, t]
+    [isEmployer, handleEdit, t]
   );
 
   const table = useReactTable({
@@ -415,7 +348,7 @@ export function TimeLogDataTable() {
 
   useEffect(() => {
     setPage(1);
-  }, [courseFilter, jobTypeFilter, approvedFilter]);
+  }, [courseFilter, jobTypeFilter]);
 
   if (isLoading && !timeLogs.length) {
     return (
@@ -428,7 +361,7 @@ export function TimeLogDataTable() {
   return (
     <div className="w-full space-y-6">
       {/* Filters */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="course-filter" className="text-sm font-medium">
             {t("filters.course.label")}
@@ -469,28 +402,6 @@ export function TimeLogDataTable() {
               </SelectItem>
               <SelectItem value="Off the job">
                 {t("filters.jobType.options.offTheJob")}
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="approved-filter" className="text-sm font-medium">
-            {t("filters.approved.label")}
-          </Label>
-          <Select value={approvedFilter} onValueChange={setApprovedFilter}>
-            <SelectTrigger id="approved-filter" className="cursor-pointer">
-              <SelectValue placeholder={t("filters.approved.options.all")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">
-                {t("filters.approved.options.all")}
-              </SelectItem>
-              <SelectItem value="true">
-                {t("filters.approved.options.approved")}
-              </SelectItem>
-              <SelectItem value="false">
-                {t("filters.approved.options.notApproved")}
               </SelectItem>
             </SelectContent>
           </Select>

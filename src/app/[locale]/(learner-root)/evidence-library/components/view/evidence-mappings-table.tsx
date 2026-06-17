@@ -7,6 +7,7 @@ import type { EvidenceEntry } from "@/store/api/evidence/types";
 import type { LearnerCourse } from "@/store/api/learner/types";
 import { COURSE_TYPES } from "../constants";
 import { reconstructFormStateFromMappings } from "../../utils/reconstruct-form-state";
+import { applyTrainerMapToggle } from "../../utils/apply-trainer-map-toggle";
 import { QualificationMinimal } from "./qualification-minimal";
 import { StandardCourseMinimal } from "./standard-course-minimal";
 
@@ -131,7 +132,7 @@ export function EvidenceMappingsTable({
       if (subUnit && subUnit.topics) {
         const topicItem = subUnit.topics.find((t: any) => String(t.id) === String(topic.id));
         if (topicItem) {
-          topicItem.trainerMap = !topicItem.trainerMap;
+          applyTrainerMapToggle(topicItem);
           setValue('units', updated);
           trigger('units');
         }
@@ -208,12 +209,12 @@ export function EvidenceMappingsTable({
       if (hasSubUnit) {
         const subUnit = unit.subUnit.find((s: any) => String(s.id) === String(row.id));
         if (subUnit) {
-          subUnit.trainerMap = !subUnit.trainerMap;
+          applyTrainerMapToggle(subUnit);
           setValue('units', updated);
           trigger('units');
         }
       } else {
-        unit.trainerMap = !unit.trainerMap;
+        applyTrainerMapToggle(unit);
         setValue('units', updated);
         trigger('units');
       }

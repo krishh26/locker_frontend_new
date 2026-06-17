@@ -2,7 +2,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Controller, Control, FieldError, useWatch } from "react-hook-form";
+import { Controller, Control, FieldError, useWatch, type UseFormSetValue } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
@@ -16,12 +16,14 @@ import {
 import { Card } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
+import { resolveFormErrorMessage } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
 import { COURSE_TYPES } from "../constants";
 
 interface UnitsTableProps {
   control: Control<EvidenceFormValues>;
+  setValue: UseFormSetValue<EvidenceFormValues>;
   courses: Array<{
     course_id: number;
     course_name: string;
@@ -42,6 +44,7 @@ interface UnitsTableProps {
 
 export function UnitsTable({
   control,
+  setValue,
   courses,
   disabled,
   canEditLearnerFields = true,
@@ -50,6 +53,24 @@ export function UnitsTable({
   getEvidenceCount,
 }: UnitsTableProps) {
   const t = useTranslations("evidenceLibrary");
+  const unitsErrorMessage = resolveFormErrorMessage(error);
+  const isStandardUnitsError =
+    unitsErrorMessage === "form.validation.learnerMapRequiredStandard";
+
+  const handleTrainerGapClick = (
+    trainerMapField: { value?: boolean; onChange: (value: boolean) => void },
+    learnerMapPath: string,
+    signedOffPath: string,
+  ) => {
+    if (disabled || !canEditTrainerFields) return;
+    const turningOn = !trainerMapField.value;
+    trainerMapField.onChange(turningOn);
+    if (turningOn) {
+      setValue(learnerMapPath as any, true);
+    } else {
+      setValue(signedOffPath as any, false);
+    }
+  };
   // Always call hooks first - before any conditional returns
   const watchedUnits = useWatch({ control, name: "units" });
   const courseSelectedTypes = useWatch({ control, name: "courseSelectedTypes" }) || {};
@@ -143,7 +164,8 @@ export function UnitsTable({
                 });
                 
                 // Show error if type is selected but no learnerMap is checked
-                const hasError = error && isTypeSelected && !hasLearnerMap;
+                const hasError =
+                  isStandardUnitsError && isTypeSelected && !hasLearnerMap;
                 
                 return (
                 <Card key={unitType} className={`p-4 ${hasError ? 'border-destructive border-2' : ''}`}>
@@ -228,20 +250,13 @@ export function UnitsTable({
                                       learnerMap={currentLearnerMap}
                                       trainerMap={trainerMapField.value || false}
                                       signed_off={current_signed_off}
-                                      disabled={
-                                        disabled ||
-                                        !canEditTrainerFields ||
-                                        !currentLearnerMap
-                                      }
+                                      disabled={disabled || !canEditTrainerFields}
                                       onClick={() => {
-                                        if (
-                                          disabled ||
-                                          !canEditTrainerFields ||
-                                          !currentLearnerMap
-                                        ) {
-                                          return;
-                                        }
-                                        trainerMapField.onChange(!trainerMapField.value);
+                                        handleTrainerGapClick(
+                                          trainerMapField,
+                                          `units.${unitIndex}.subUnit.${subIndex}.learnerMap`,
+                                          `units.${unitIndex}.subUnit.${subIndex}.signed_off`,
+                                        );
                                       }}
                                     />
                                   );
@@ -339,20 +354,13 @@ export function UnitsTable({
                                     learnerMap={currentLearnerMap}
                                     trainerMap={trainerMapField.value || false}
                                     signed_off={current_signed_off}
-                                    disabled={
-                                      disabled ||
-                                      !canEditTrainerFields ||
-                                      !currentLearnerMap
-                                    }
+                                    disabled={disabled || !canEditTrainerFields}
                                     onClick={() => {
-                                      if (
-                                        disabled ||
-                                        !canEditTrainerFields ||
-                                        !currentLearnerMap
-                                      ) {
-                                        return;
-                                      }
-                                      trainerMapField.onChange(!trainerMapField.value);
+                                      handleTrainerGapClick(
+                                        trainerMapField,
+                                        `units.${unitIndex}.learnerMap`,
+                                        `units.${unitIndex}.signed_off`,
+                                      );
                                     }}
                                   />
                                 );
@@ -399,10 +407,10 @@ export function UnitsTable({
                       </TableBody>
                     </Table>
                   </div>
-                  {hasError && (
+                  {hasError && unitsErrorMessage && (
                     <div className="mt-2">
                       <p className="text-sm text-destructive font-medium">
-                        {t("form.validation.learnerMapRequiredStandard")}
+                        {t(unitsErrorMessage)}
                       </p>
                     </div>
                   )}
@@ -495,20 +503,13 @@ export function UnitsTable({
                                         learnerMap={currentLearnerMap}
                                         trainerMap={trainerMapField.value || false}
                                         signed_off={current_signed_off}
-                                        disabled={
-                                          disabled ||
-                                          !canEditTrainerFields ||
-                                          !currentLearnerMap
-                                        }
+                                        disabled={disabled || !canEditTrainerFields}
                                         onClick={() => {
-                                          if (
-                                            disabled ||
-                                            !canEditTrainerFields ||
-                                            !currentLearnerMap
-                                          ) {
-                                            return;
-                                          }
-                                          trainerMapField.onChange(!trainerMapField.value);
+                                          handleTrainerGapClick(
+                                            trainerMapField,
+                                            `units.${unitIndex}.subUnit.${subIndex}.learnerMap`,
+                                            `units.${unitIndex}.subUnit.${subIndex}.signed_off`,
+                                          );
                                         }}
                                       />
                                     );
@@ -606,20 +607,13 @@ export function UnitsTable({
                                       learnerMap={currentLearnerMap}
                                       trainerMap={trainerMapField.value || false}
                                       signed_off={current_signed_off}
-                                      disabled={
-                                        disabled ||
-                                        !canEditTrainerFields ||
-                                        !currentLearnerMap
-                                      }
+                                      disabled={disabled || !canEditTrainerFields}
                                       onClick={() => {
-                                        if (
-                                          disabled ||
-                                          !canEditTrainerFields ||
-                                          !currentLearnerMap
-                                        ) {
-                                          return;
-                                        }
-                                        trainerMapField.onChange(!trainerMapField.value);
+                                        handleTrainerGapClick(
+                                          trainerMapField,
+                                          `units.${unitIndex}.learnerMap`,
+                                          `units.${unitIndex}.signed_off`,
+                                        );
                                       }}
                                     />
                                   );
@@ -669,7 +663,9 @@ export function UnitsTable({
           </Card>
         );
       })}
-      {error && <p className="text-sm text-destructive">{t(String(error.message))}</p>}
+      {isStandardUnitsError && unitsErrorMessage && (
+        <p className="text-sm text-destructive">{t(unitsErrorMessage)}</p>
+      )}
     </div>
   );
 }

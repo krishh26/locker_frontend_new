@@ -23,7 +23,8 @@ import { useGetCoursesQuery } from '@/store/api/course/courseApi'
 import type { Course } from '@/store/api/course/types'
 import { useAppSelector } from '@/store/hooks'
 import { selectCourses } from '@/store/slices/authSlice'
-import type { LearnerCourse } from '@/store/api/learner/types'
+import type { LearnerCourse, LearnerData } from '@/store/api/learner/types'
+import type { AuthUser } from '@/store/api/auth/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ExternalLink, Loader2, Upload, FileText } from 'lucide-react'
 import { useRouter } from '@/i18n/navigation'
@@ -41,6 +42,7 @@ import { COURSE_TYPES } from '../constants'
 import { CourseSelection } from './course-selection'
 import { getEvidenceFormSchema } from './evidence-form-schema'
 import type { EvidenceFormValues } from './evidence-form-types'
+import { resolveFormErrorMessage } from './evidence-form-types'
 import { FileUpload } from './file-upload'
 import { QualificationHierarchyUnits } from './qualification-hierarchy-units'
 import {
@@ -115,6 +117,41 @@ function findOwnSignatureRow(
       (s) => normalizeEvidenceSignatureRole(s.role) === normalizedUser,
     ) ?? null
   )
+}
+
+/** Platform user_id for evidence/time-log when trainer/admin acts on a learner's record. */
+function resolveEvidenceOwnerUserId(
+  user: AuthUser | null | undefined,
+  learner: LearnerData | null | undefined,
+  options?: { editOwnerUserId?: number | null },
+): string {
+  if (
+    options?.editOwnerUserId !== undefined &&
+    options.editOwnerUserId !== null
+  ) {
+    return String(options.editOwnerUserId)
+  }
+
+  if (user?.role === 'Learner') {
+    return String(user.id ?? '')
+  }
+
+  const learnerRecord = learner as
+    | { user_id?: number; id?: string | number }
+    | null
+    | undefined
+  const selectedLearnerUserId =
+    learnerRecord?.user_id ?? learnerRecord?.id
+
+  if (
+    selectedLearnerUserId !== undefined &&
+    selectedLearnerUserId !== null &&
+    String(selectedLearnerUserId) !== ''
+  ) {
+    return String(selectedLearnerUserId)
+  }
+
+  return String(user?.id ?? '')
 }
 
 export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
@@ -216,6 +253,15 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     )
     return Boolean(match?.is_signed)
   }, [isEditMode, evidenceDetails?.data, user?.role])
+
+  const evidenceOwnerUserId = useMemo(() => {
+    const editOwnerUserId = isEditMode
+      ? (evidenceDetails?.data as { user?: { user_id?: number } } | undefined)
+          ?.user?.user_id
+      : undefined
+
+    return resolveEvidenceOwnerUserId(user, learner, { editOwnerUserId })
+  }, [isEditMode, evidenceDetails?.data, user, learner])
 
   const schema = useMemo(
     () => getEvidenceFormSchema(userRole, isEditMode),
@@ -664,7 +710,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
           // Backend stores this as a string in responses; send a stable representation.
           formData.append('assessment_method', data.assessment_method.join(','))
         }
-        formData.append('user_id', String(user?.id || ''))
+        formData.append('user_id', evidenceOwnerUserId)
         formData.append('file', data.file)
 
         // Create evidence
@@ -919,32 +965,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     trigger: form.trigger,
   })
 
-  /** Evidence list API filters by assignment owner's platform user_id, not trainer's. */
-  const evidenceCountsOwnerUserId = useMemo(() => {
-    if (isEditMode && evidenceDetails?.data) {
-      const ownerId = (
-        evidenceDetails.data as { user?: { user_id?: number } }
-      ).user?.user_id
-      if (ownerId != null && ownerId !== undefined) return ownerId
-    }
-    if (user?.role === 'Learner') {
-      return user.id
-    }
-    const selectedLearnerUserId = (learner as { user_id?: number } | null)
-      ?.user_id
-    if (
-      selectedLearnerUserId !== undefined &&
-      selectedLearnerUserId !== null &&
-      String(selectedLearnerUserId) !== ''
-    ) {
-      return selectedLearnerUserId
-    }
-    return user?.id
-  }, [isEditMode, evidenceDetails?.data, user?.id, user?.role, learner])
-
-  const { getEvidenceCount } = useEvidenceSubmissionCounts(
-    evidenceCountsOwnerUserId,
-  )
+  const { getEvidenceCount } = useEvidenceSubmissionCounts(evidenceOwnerUserId)
 
   const audioFieldValue = form.watch('audio')
 
@@ -1032,7 +1053,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
     const today = new Date().toISOString().slice(0, 10)
 
     return {
-      user_id: String(user?.id || ''),
+      user_id: evidenceOwnerUserId,
       course_id: firstSelectedCourse
         ? String(firstSelectedCourse.course_id)
         : null,
@@ -1047,7 +1068,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       impact_on_learner: form.getValues('description') || '',
       evidence_link: currentFileUrl || '',
     }
-  }, [currentFileUrl, form, getMappedUnitTitles, user?.id])
+  }, [currentFileUrl, evidenceOwnerUserId, form, getMappedUnitTitles])
 
   const openTimeLogDialog = useCallback(() => {
     setTimeLogDraft(buildTimeLogDraft())
@@ -1305,6 +1326,11 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       {qualificationCourses.map((course: any) => {
                         const unitsWatch = form.watch('units') || []
                         const unitsError = form.formState.errors.units as any
+                        const unitsErrorMessage =
+                          resolveFormErrorMessage(unitsError)
+                        const isQualificationUnitsError =
+                          unitsErrorMessage ===
+                          'form.validation.learnerMapRequiredQualification'
 
                         // Get units for this course (Unit → subUnit → topics structure)
                         const displayUnits = (unitsWatch || []).filter(
@@ -1333,9 +1359,9 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             <h3 className='font-semibold text-lg mb-2'>
                               {course.course_name} - Units
                             </h3>
-                            {unitsError?.message && (
+                            {isQualificationUnitsError && unitsErrorMessage && (
                               <p className='text-sm text-white font-medium p-2 bg-destructive border border-destructive rounded'>
-                                {t(String(unitsError?.message))}
+                                {t(unitsErrorMessage)}
                               </p>
                             )}
                             {displayUnits.length > 0 &&
@@ -1373,6 +1399,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       {standardCourses.length > 0 && (
                         <UnitsTable
                           control={form.control as any}
+                          setValue={form.setValue}
                           courses={standardCourses}
                           disabled={isReadOnly}
                           canEditLearnerFields={canEditPrimarySections}
@@ -1493,7 +1520,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             key={`session-select-${sessionValue}-${sessionSelectOptions.map((o) => o.id).join(',')}`}
                             value={sessionValue}
                             onValueChange={field.onChange}
-                            disabled={isEditMode || !canEditAdditionalInformation}
                           >
                             <SelectTrigger id='session' className='w-full'>
                               <SelectValue

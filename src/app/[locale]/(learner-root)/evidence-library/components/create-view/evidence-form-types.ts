@@ -112,3 +112,26 @@ export interface StandardUnit {
   mapping_id?: number;
 }
 
+type FormFieldErrorLike =
+  | { message?: string; root?: { message?: string } }
+  | undefined
+  | null
+
+/** Resolves RHF/Zod errors on array fields (`errors.units.root.message`). */
+export function resolveFormErrorMessage(
+  error: FormFieldErrorLike,
+): string | undefined {
+  if (!error) return undefined
+
+  if (typeof error.message === "string" && error.message.trim()) {
+    return error.message
+  }
+
+  const rootMessage = error.root?.message
+  if (typeof rootMessage === "string" && rootMessage.trim()) {
+    return rootMessage
+  }
+
+  return undefined
+}
+

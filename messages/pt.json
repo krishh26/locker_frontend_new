@@ -354,6 +354,7 @@
       "noLearnersAssigned": "Nenhum aluno atribuído ainda. Clique em \"Selecionar Alunos\" para atribuir alunos aos cursos.",
       "createUser": "Criar Usuário",
       "updateUser": "Atualizar Usuário",
+      "changePassword": "Alterar palavra-passe",
       "required": "*"
     },
     "validation": {
@@ -378,6 +379,28 @@
       "liqa": "LIQA",
       "lineManager": "Gerente de Linha",
       "employer": "Empregador"
+    },
+    "changePasswordDialog": {
+      "title": "Alterar palavra-passe",
+      "descriptionWithName": "Definir uma nova palavra-passe para {name} ({email})",
+      "descriptionEmailOnly": "Definir uma nova palavra-passe para {email}",
+      "newPassword": "Nova palavra-passe",
+      "confirmPassword": "Confirmar palavra-passe",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "cancel": "Cancelar",
+      "changing": "A alterar...",
+      "changePassword": "Alterar palavra-passe",
+      "hintText": "A palavra-passe deve ter pelo menos 6 caracteres e incluir letras maiúsculas, minúsculas e um número.",
+      "validation": {
+        "passwordMin": "A palavra-passe deve ter pelo menos 6 caracteres",
+        "passwordPattern": "A palavra-passe deve conter pelo menos uma maiúscula, uma minúscula e um número",
+        "confirmRequired": "Confirme a palavra-passe",
+        "passwordsMismatch": "As palavras-passe não coincidem"
+      },
+      "successDefault": "Palavra-passe alterada com sucesso",
+      "errorDefault": "Não foi possível alterar a palavra-passe. Tente novamente dentro de momentos.",
+      "emailRequired": "O e-mail do utilizador é obrigatório"
     },
     "table": {
       "name": "Nome",
@@ -2770,7 +2793,11 @@
         "selectCourseFirst": "Selecione um curso primeiro",
         "selectTypePlaceholder": "Selecionar um tipo",
         "selectUnitPlaceholder": "Selecionar uma unidade",
-        "noUnits": "Nenhuma unidade disponível"
+        "noUnits": "Nenhuma unidade disponível",
+        "selectCriteriaStatus": "Filtrar critérios",
+        "showAllCriteria": "Mostrar todos os critérios",
+        "showCompletedCriteria": "Mostrar critérios concluídos",
+        "showNonCompletedCriteria": "Mostrar critérios não concluídos"
       },
       "types": {
         "knowledge": "Conhecimento",
@@ -2801,7 +2828,8 @@
         "selectType": "Selecione um tipo para ver o progresso",
         "noItemsForType": "Nenhum item para o tipo selecionado",
         "selectUnit": "Selecione uma unidade para ver o progresso",
-        "noSubUnits": "Nenhuma subunidade para a unidade selecionada"
+        "noSubUnits": "Nenhuma subunidade para a unidade selecionada",
+        "noCriteriaForFilter": "Nenhum critério corresponde ao filtro selecionado"
       }
     }
   },

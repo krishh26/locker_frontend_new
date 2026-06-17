@@ -274,7 +274,6 @@ export function TimeLogFormDialog({
     "Review/feedback/support",
     "Assessment or examination",
     "Other",
-    "Furloughed",
   ];
 
   const selectedCourse = courses.find(
@@ -300,7 +299,7 @@ export function TimeLogFormDialog({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 *:min-w-0">
               <FormField
                 control={form.control}
                 name="activity_date"
@@ -327,7 +326,7 @@ export function TimeLogFormDialog({
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl className="w-full">
-                        <SelectTrigger className="cursor-pointer">
+                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
                           <SelectValue
                             placeholder={t(
                               "dialog.form.fields.activityType.placeholder"
@@ -364,7 +363,10 @@ export function TimeLogFormDialog({
                       value={field.value || "none"}
                     >
                       <FormControl className="w-full">
-                        <SelectTrigger className="cursor-pointer">
+                        <SelectTrigger
+                          className="w-full min-w-0 cursor-pointer"
+                          title={selectedCourse?.course_name}
+                        >
                           <SelectValue
                             placeholder={t("dialog.form.fields.course.label")}
                           />
@@ -412,7 +414,7 @@ export function TimeLogFormDialog({
                       value=""
                     >
                       <FormControl className="w-full">
-                        <SelectTrigger className="cursor-pointer">
+                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
                           <SelectValue
                             placeholder={
                               selectedUnits.length > 0
@@ -477,7 +479,7 @@ export function TimeLogFormDialog({
                       value={field.value || "none"}
                     >
                       <FormControl className="w-full">
-                        <SelectTrigger className="cursor-pointer">
+                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
                           <SelectValue
                             placeholder={t(
                               "dialog.form.fields.trainer.label"
@@ -517,7 +519,7 @@ export function TimeLogFormDialog({
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl className="w-full">
-                        <SelectTrigger className="cursor-pointer">
+                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
                           <SelectValue
                             placeholder={t(
                               "dialog.form.fields.type.placeholder"

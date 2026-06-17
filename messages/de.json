@@ -210,6 +210,7 @@
       "noLearnersAssigned": "Noch keine Lernenden zugewiesen. Klicken Sie auf \"Lernende auswählen\", um Lernende Kursen zuzuweisen.",
       "createUser": "Benutzer erstellen",
       "updateUser": "Benutzer aktualisieren",
+      "changePassword": "Passwort ändern",
       "required": "*"
     },
     "validation": {
@@ -234,6 +235,28 @@
       "liqa": "LIQA",
       "lineManager": "Linienmanager",
       "employer": "Arbeitgeber"
+    },
+    "changePasswordDialog": {
+      "title": "Passwort ändern",
+      "descriptionWithName": "Neues Passwort für {name} ({email}) festlegen",
+      "descriptionEmailOnly": "Neues Passwort für {email} festlegen",
+      "newPassword": "Neues Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "cancel": "Abbrechen",
+      "changing": "Wird geändert...",
+      "changePassword": "Passwort ändern",
+      "hintText": "Das Passwort muss mindestens 6 Zeichen haben und Groß- und Kleinbuchstaben sowie eine Zahl enthalten.",
+      "validation": {
+        "passwordMin": "Passwort muss mindestens 6 Zeichen haben",
+        "passwordPattern": "Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten",
+        "confirmRequired": "Bitte Passwort bestätigen",
+        "passwordsMismatch": "Passwörter stimmen nicht überein"
+      },
+      "successDefault": "Passwort erfolgreich geändert",
+      "errorDefault": "Passwort konnte nicht geändert werden. Bitte in Kürze erneut versuchen.",
+      "emailRequired": "E-Mail des Benutzers ist erforderlich"
     },
     "table": {
       "name": "Name",
@@ -2201,7 +2224,11 @@
         "selectCourseFirst": "Wählen Sie zuerst einen Kurs",
         "selectTypePlaceholder": "Typ auswählen",
         "selectUnitPlaceholder": "Einheit auswählen",
-        "noUnits": "Keine Einheiten verfügbar"
+        "noUnits": "Keine Einheiten verfügbar",
+        "selectCriteriaStatus": "Kriterien filtern",
+        "showAllCriteria": "Alle Kriterien anzeigen",
+        "showCompletedCriteria": "Abgeschlossene Kriterien anzeigen",
+        "showNonCompletedCriteria": "Nicht abgeschlossene Kriterien anzeigen"
       },
       "types": {
         "knowledge": "Wissen",
@@ -2232,7 +2259,8 @@
         "selectType": "Bitte wählen Sie einen Typ, um den Fortschritt zu sehen",
         "noItemsForType": "Keine Elemente für den gewählten Typ",
         "selectUnit": "Bitte wählen Sie eine Einheit, um den Fortschritt zu sehen",
-        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit"
+        "noSubUnits": "Keine Untereinheiten für die gewählte Einheit",
+        "noCriteriaForFilter": "Keine Kriterien entsprechen dem ausgewählten Filter"
       }
     }
   },

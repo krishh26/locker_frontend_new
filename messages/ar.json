@@ -347,6 +347,7 @@
       "noLearnersAssigned": "لم يتم تعيين متعلمين بعد. انقر على \"اختر المتعلمين\" لتعيين المتعلمين للدورات.",
       "createUser": "إنشاء مستخدم",
       "updateUser": "تحديث المستخدم",
+      "changePassword": "تغيير كلمة المرور",
       "required": "*"
     },
     "validation": {
@@ -371,6 +372,28 @@
       "liqa": "LIQA",
       "lineManager": "مدير الخط",
       "employer": "صاحب العمل"
+    },
+    "changePasswordDialog": {
+      "title": "تغيير كلمة المرور",
+      "descriptionWithName": "تعيين كلمة مرور جديدة لـ {name} ({email})",
+      "descriptionEmailOnly": "تعيين كلمة مرور جديدة لـ {email}",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "show": "إظهار",
+      "hide": "إخفاء",
+      "cancel": "إلغاء",
+      "changing": "جاري التغيير...",
+      "changePassword": "تغيير كلمة المرور",
+      "hintText": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل وتتضمن أحرفاً كبيرة وصغيرة ورقماً.",
+      "validation": {
+        "passwordMin": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+        "passwordPattern": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم واحد على الأقل",
+        "confirmRequired": "يرجى تأكيد كلمة المرور",
+        "passwordsMismatch": "كلمات المرور غير متطابقة"
+      },
+      "successDefault": "تم تغيير كلمة المرور بنجاح",
+      "errorDefault": "تعذر تغيير كلمة المرور. يرجى المحاولة بعد قليل.",
+      "emailRequired": "البريد الإلكتروني للمستخدم مطلوب"
     },
     "table": {
       "name": "الاسم",
@@ -2763,7 +2786,11 @@
         "selectCourseFirst": "اختر دورة أولاً",
         "selectTypePlaceholder": "اختر نوعاً",
         "selectUnitPlaceholder": "اختر وحدة",
-        "noUnits": "لا توجد وحدات متاحة"
+        "noUnits": "لا توجد وحدات متاحة",
+        "selectCriteriaStatus": "تصفية المعايير",
+        "showAllCriteria": "عرض جميع المعايير",
+        "showCompletedCriteria": "عرض المعايير المكتملة",
+        "showNonCompletedCriteria": "عرض المعايير غير المكتملة"
       },
       "types": {
         "knowledge": "المعرفة",
@@ -2794,7 +2821,8 @@
         "selectType": "يرجى اختيار نوع لعرض التقدم",
         "noItemsForType": "لا توجد عناصر للنوع المحدد",
         "selectUnit": "يرجى اختيار وحدة لعرض التقدم",
-        "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة"
+        "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة",
+        "noCriteriaForFilter": "لا توجد معايير تطابق الفلتر المحدد"
       }
     }
   },

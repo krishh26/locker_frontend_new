@@ -36,6 +36,12 @@ import type { EvidenceItem } from "@/store/api/qa-sample-plan/types";
 import { UnitProgressSection } from "./unit-progress-section";
 import { UnitMappingTable } from "./unit-mapping-table";
 import { useAppSelector } from "@/store/hooks";
+import {
+  compareTopicCodes,
+  extractCriterionCode,
+  findMappedEntryByCriteriaId,
+  getMappedCriteriaId,
+} from "../../../utils/mapped-topic";
 
 interface ExamineEvidencePageContentProps {
   planDetailId: string;
@@ -193,26 +199,24 @@ export function ExamineEvidencePageContent({
   const currentUserRole = useAppSelector((state) => state.auth.user?.role) || "";
   const isIqaUser = useMemo(() => normalizeRole(currentUserRole) === "IQA", [currentUserRole]);
 
-  // Helper function to create state key
+  // Helper function to create state key (per evidence row + topic/criteria id)
   const createStateKey = useCallback(
-    (assignmentId: number | undefined, subUnitId: string | number) => {
-      return assignmentId ? `${assignmentId}_${subUnitId}` : String(subUnitId);
+    (assignmentId: number | undefined, topicId: string | number) => {
+      return assignmentId ? `${assignmentId}_${topicId}` : String(topicId);
     },
     []
   );
 
   // Mapping id can arrive as `mapping_id`, `mappingId`, or nested under mappedSubUnits/review.
   const resolveMappingId = useCallback(
-    (evidence: EvidenceItem, subUnitId?: number | string): number | null => {
+    (evidence: EvidenceItem, topicId?: number | string): number | null => {
       const candidates: unknown[] = [
         (evidence as { mapping_id?: unknown }).mapping_id,
         (evidence as { mappingId?: unknown }).mappingId,
       ];
 
-      if (subUnitId != null) {
-        const matchedSubUnit = evidence.mappedSubUnits?.find(
-          (subUnit) => String(subUnit.id) === String(subUnitId)
-        ) as
+      if (topicId != null) {
+        const matched = findMappedEntryByCriteriaId(evidence.mappedSubUnits, topicId) as
           | (EvidenceItem["mappedSubUnits"][number] & {
               mapping_id?: unknown;
               mappingId?: unknown;
@@ -220,16 +224,16 @@ export function ExamineEvidencePageContent({
             })
           | undefined;
 
-        if (matchedSubUnit) {
+        if (matched) {
           candidates.push(
-            matchedSubUnit.mapping_id,
-            matchedSubUnit.mappingId,
-            matchedSubUnit.review?.mapping_id
+            matched.mapping_id,
+            matched.mappingId,
+            matched.review?.mapping_id
           );
         }
       } else {
-        evidence.mappedSubUnits?.forEach((subUnit) => {
-          const ext = subUnit as EvidenceItem["mappedSubUnits"][number] & {
+        evidence.mappedSubUnits?.forEach((entry) => {
+          const ext = entry as EvidenceItem["mappedSubUnits"][number] & {
             mapping_id?: unknown;
             mappingId?: unknown;
             review?: { mapping_id?: unknown } | null;
@@ -250,7 +254,7 @@ export function ExamineEvidencePageContent({
     []
   );
 
-  const subUnitMetaById = useMemo(() => {
+  const criteriaMetaById = useMemo(() => {
     const map = new Map<string, { code: string; title: string }>();
     const selectedUnitCode = unitCode ? String(unitCode) : "";
     if (!unitMappingResponse?.data?.length || !selectedUnitCode) {
@@ -261,22 +265,30 @@ export function ExamineEvidencePageContent({
       (u) => String(u.unit_code) === selectedUnitCode
     );
 
-    (selectedUnit?.subUnits ?? []).forEach((subUnit, index) => {
-      const apiCode =
-        subUnit.code != null && String(subUnit.code).trim() !== ""
-          ? String(subUnit.code).trim()
-          : "";
-      map.set(String(subUnit.id), {
-        code: apiCode || String(index + 1),
-        title: subUnit.title ?? "",
-      });
-    });
+    for (const subUnit of selectedUnit?.subUnits ?? []) {
+      const topics = subUnit.topics ?? [];
+
+      if (topics.length === 0) {
+        const title = subUnit.title ?? "";
+        const code =
+          (subUnit.code != null && String(subUnit.code).trim() !== ""
+            ? String(subUnit.code).trim()
+            : "") || extractCriterionCode(title) || String(subUnit.id);
+        map.set(String(subUnit.id), { code, title });
+        continue;
+      }
+
+      for (const topic of topics) {
+        const title = topic.title ?? "";
+        const code = extractCriterionCode(title) || String(topic.id);
+        map.set(String(topic.id), { code, title });
+      }
+    }
 
     return map;
   }, [unitMappingResponse?.data, unitCode]);
 
-  // Build criteria columns ONLY for selected unit_code.
-  // Primary source: evidenceList.mappedSubUnits; enrich code/title from unit-mapping API.
+  // Qualification: topic columns. Standard: subUnit columns when topics are empty.
   const allUnitsToDisplay = useMemo(() => {
     const selectedUnitCode = unitCode ? String(unitCode) : "";
     const seen = new Set<string>();
@@ -288,65 +300,51 @@ export function ExamineEvidencePageContent({
       unit_code: string | number;
     }> = [];
 
-    // 1) Evidence mappedSubUnits union (preferred)
-    if (evidenceList.length > 0) {
-      for (const evidence of evidenceList) {
-        for (const subUnit of evidence.mappedSubUnits ?? []) {
-          const key = String(subUnit.id);
-          if (!key || seen.has(key)) continue;
-          seen.add(key);
+    const pushCriterion = (criteriaId: string | number, fallbackTitle = "") => {
+      const key = String(criteriaId);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
 
-          const meta = subUnitMetaById.get(key);
-          const evidenceCode = (subUnit as unknown as { code?: string | number }).code;
+      const meta = criteriaMetaById.get(key);
+      const title = meta?.title || fallbackTitle;
+      columns.push({
+        id: criteriaId,
+        code: meta?.code || extractCriterionCode(title) || key,
+        title,
+        unit_code: selectedUnitCode || "",
+      });
+    };
 
-          columns.push({
-            id: subUnit.id,
-            code: String(meta?.code ?? evidenceCode ?? ""),
-            title:
-              meta?.title ||
-              subUnit.subTitle ||
-              (subUnit as unknown as { title?: string }).title ||
-              "",
-            unit_code: selectedUnitCode || "",
-          });
+    if (unitMappingResponse?.data?.length && selectedUnitCode) {
+      const selectedUnit = unitMappingResponse.data.find(
+        (u) => String(u.unit_code) === selectedUnitCode
+      );
+      for (const subUnit of selectedUnit?.subUnits ?? []) {
+        const topics = subUnit.topics ?? [];
+        if (topics.length === 0) {
+          pushCriterion(subUnit.id, subUnit.title ?? "");
+        } else {
+          for (const topic of topics) {
+            pushCriterion(topic.id, topic.title ?? "");
+          }
         }
       }
     }
 
-    // 2) Fallback mapping subUnits for selected unit
-    if (columns.length === 0 && unitMappingResponse?.data?.length && selectedUnitCode) {
-      const selectedUnit = unitMappingResponse.data.find(
-        (u) => String(u.unit_code) === selectedUnitCode
-      );
-
-      for (const subUnit of selectedUnit?.subUnits ?? []) {
-        const key = String(subUnit.id);
-        if (!key || seen.has(key)) continue;
-        seen.add(key);
-
-        const meta = subUnitMetaById.get(key);
-        columns.push({
-          id: subUnit.id,
-          code: meta?.code ?? String(subUnit.code ?? ""),
-          title: meta?.title ?? subUnit.title ?? "",
-          unit_code: selectedUnitCode,
-        });
+    for (const evidence of evidenceList) {
+      for (const entry of evidence.mappedSubUnits ?? []) {
+        pushCriterion(getMappedCriteriaId(entry));
       }
     }
 
     columns.sort((a, b) => {
-      const ac = Number(a.code);
-      const bc = Number(b.code);
-      const aCodeNum = Number.isFinite(ac) && a.code !== "";
-      const bCodeNum = Number.isFinite(bc) && b.code !== "";
-      if (aCodeNum && bCodeNum) return ac - bc;
-      if (aCodeNum) return -1;
-      if (bCodeNum) return 1;
-      return String(a.code).localeCompare(String(b.code));
+      const byCode = compareTopicCodes(a.code, b.code);
+      if (byCode !== 0) return byCode;
+      return a.title.localeCompare(b.title);
     });
 
     return columns;
-  }, [evidenceList, unitMappingResponse, unitCode, subUnitMetaById]);
+  }, [evidenceList, unitMappingResponse, unitCode, criteriaMetaById]);
 
   // Calculate unit progress statistics based on evidence data
   const unitProgress = useMemo(() => {
@@ -394,16 +392,17 @@ export function ExamineEvidencePageContent({
 
       evidenceList.forEach((evidence) => {
         if (evidence.mappedSubUnits) {
-          evidence.mappedSubUnits.forEach((subUnit) => {
-            const key = createStateKey(evidence.assignment_id, subUnit.id);
-            if (subUnit.review && subUnit.review.signed_off === true) {
+          evidence.mappedSubUnits.forEach((entry) => {
+            const topicId = getMappedCriteriaId(entry);
+            const key = createStateKey(evidence.assignment_id, topicId);
+            if (entry.review && entry.review.signed_off === true) {
               initialCheckedState[key] = true;
               initialLockedCheckboxes.add(key);
               // Check if signed by IQA
-              if (subUnit.review.signed_by?.name) {
+              if (entry.review.signed_by?.name) {
                 initialIqaChecked.add(key);
               }
-            } else if (subUnit.trainerMapped === true) {
+            } else if (entry.trainerMapped === true) {
               // trainerMapped is true but not signed off yet - checkbox should be toggleable
               initialCheckedState[key] = false; // Start as unchecked, can be checked by IQA
               // Don't lock it - allow IQA to check it
@@ -551,8 +550,9 @@ export function ExamineEvidencePageContent({
 
       // Update all subUnits states
       const stateKeysToUpdate: string[] = [];
-      subUnitsToSignOff.forEach((subUnit) => {
-        const stateKey = createStateKey(evidence.assignment_id, subUnit.id);
+      subUnitsToSignOff.forEach((entry) => {
+        const topicId = getMappedCriteriaId(entry);
+        const stateKey = createStateKey(evidence.assignment_id, topicId);
         stateKeysToUpdate.push(stateKey);
 
         // Mark local state for each criteria based on newCheckedState
@@ -608,9 +608,9 @@ export function ExamineEvidencePageContent({
           return;
         }
 
-        const updatePromises = subUnitsToSignOff.map((subUnit) => {
+        const updatePromises = subUnitsToSignOff.map((entry) => {
           const subUnitMappingId = Number(
-            (subUnit as unknown as { mapping_id?: unknown }).mapping_id
+            (entry as unknown as { mapping_id?: unknown }).mapping_id
           );
           if (!Number.isFinite(subUnitMappingId) || subUnitMappingId <= 0) {
             throw new Error("Missing mapping id for criteria.");
@@ -619,7 +619,7 @@ export function ExamineEvidencePageContent({
           return updateMappedSubUnitSignOff({
             mapping_id: subUnitMappingId,
             unit_code: unitCode,
-            pc_id: subUnit.id,
+            pc_id: getMappedCriteriaId(entry),
             signed_off: newCheckedState,
           }).unwrap();
         });
@@ -680,8 +680,8 @@ export function ExamineEvidencePageContent({
   );
 
   const handleMappedSubUnitToggle = useCallback(
-    async (subUnitId: number | string, assignmentId?: number) => {
-      const stateKey = createStateKey(assignmentId, subUnitId);
+    async (topicId: number | string, assignmentId?: number) => {
+      const stateKey = createStateKey(assignmentId, topicId);
       const currentChecked = mappedSubUnitsChecked[stateKey] || false;
 
       const isIQA = isIqaUser;
@@ -696,10 +696,12 @@ export function ExamineEvidencePageContent({
       if (assignmentId) {
         targetEvidence = evidenceList.find((e) => e.assignment_id === assignmentId) || null;
       } else {
-        const idString = String(subUnitId);
+        const idString = String(topicId);
         targetEvidence =
           evidenceList.find((evidence) =>
-            evidence.mappedSubUnits?.some((su) => String(su.id) === idString)
+            evidence.mappedSubUnits?.some(
+              (entry) => getMappedCriteriaId(entry) === idString
+            )
           ) || null;
       }
 
@@ -708,12 +710,12 @@ export function ExamineEvidencePageContent({
         return;
       }
 
-      // Find the specific subUnit
-      const evidenceSubUnit = targetEvidence.mappedSubUnits?.find(
-        (su) => String(su.id) === String(subUnitId)
+      const evidenceTopic = findMappedEntryByCriteriaId(
+        targetEvidence.mappedSubUnits,
+        topicId
       );
 
-      if (!evidenceSubUnit) {
+      if (!evidenceTopic) {
         toast.error(t("toast.subUnitNotFoundCannotUpdateSignOff"));
         return;
       }
@@ -779,7 +781,7 @@ export function ExamineEvidencePageContent({
 
         // Call API to update mappedSubUnit sign-off using subUnit-level mapping_id
         const subUnitMappingId = Number(
-          (evidenceSubUnit as unknown as { mapping_id?: unknown }).mapping_id
+          (evidenceTopic as unknown as { mapping_id?: unknown }).mapping_id
         );
         if (!Number.isFinite(subUnitMappingId) || subUnitMappingId <= 0) {
           toast.error(t("toast.evidenceNotFoundCannotUpdateSignOff"));
@@ -789,7 +791,7 @@ export function ExamineEvidencePageContent({
         await updateMappedSubUnitSignOff({
           mapping_id: subUnitMappingId,
           unit_code: unitCode,
-          pc_id: subUnitId,
+          pc_id: topicId,
           signed_off: newSignedOffState,
         }).unwrap();
 

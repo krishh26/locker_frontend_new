@@ -260,11 +260,11 @@ export function StandardCourseMinimal({
                         trainerMap={currentValues.trainerMap}
                         signed_off={currentValues.signed_off}
                         onClick={() => {
-                          if (canEditTrainerFields && currentValues.learnerMap) {
+                          if (canEditTrainerFields) {
                             trainerMapHandler(row);
                           }
                         }}
-                        disabled={!canEditTrainerFields || !currentValues.learnerMap}
+                        disabled={!canEditTrainerFields}
                       />
                       <EvidenceIndicator evidenceCount={getRowEvidenceCount(row)} />
                     </div>

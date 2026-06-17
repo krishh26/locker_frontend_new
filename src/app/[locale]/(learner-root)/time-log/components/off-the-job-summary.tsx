@@ -27,18 +27,23 @@ interface OffTheJobSummaryProps {
 
 export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
   const user = useAppSelector((state) => state.auth.user);
-  const learnerId =
-    (user as { learner_id?: string })?.learner_id || user?.id || "";
+  const learner = useAppSelector((state) => state.auth.learner);
+  const targetLearnerId =
+    user?.role === "Learner"
+      ? String(
+          (user as { learner_id?: string | number })?.learner_id ?? "",
+        )
+      : String(learner?.learner_id ?? "");
   const t = useTranslations("timeLog");
 
   const { data: summaryResponse, isLoading } = useGetOtjSummaryQuery(
     {
-      learner_id: learnerId,
+      learner_id: targetLearnerId,
       courseId,
       includeUnverified: true,
     },
     {
-      skip: !learnerId,
+      skip: !targetLearnerId,
     }
   );
 

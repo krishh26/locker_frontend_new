@@ -336,8 +336,9 @@ export interface EvidenceItem {
   };
   mappedSubUnits: Array<{
     mapping_id: number;
-    id: number;
-    subTitle: string;
+    id: number | string;
+    topic_id?: number | string | null;
+    subTitle?: string;
     learnerMapped?: boolean;
     trainerMapped?: boolean;
     review?: {

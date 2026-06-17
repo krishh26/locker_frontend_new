@@ -55,7 +55,6 @@ const SESSION_TYPES = [
   'Initial Session',
   'Gateway Ready',
   'EPA',
-  'Furloughed',
 ]
 
 export interface AddSessionDialogProps {
@@ -368,8 +367,6 @@ export function AddSessionDialog({
                           ? t('options.sessionTypes.gatewayReady')
                           : sessionType === 'EPA'
                           ? t('options.sessionTypes.epa')
-                          : sessionType === 'Furloughed'
-                          ? t('options.sessionTypes.furloughed')
                           : sessionType}
                       </SelectItem>
                     ))}

@@ -8,11 +8,10 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download, Search } from "lucide-react";
+import { Download, Minus, Plus, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -39,11 +38,17 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import type { RootState } from "@/store";
 import { toast } from "sonner";
-import { exportTableToPdf } from "@/utils/pdfExport";
+import { exportGapAnalysisToPdf } from "@/utils/pdfExport";
 import { LearnerCourse } from "@/store/api/learner/types";
 import {
   selectCurrentCourseId,
@@ -382,6 +387,152 @@ function collectStandardGapRows(
   return rows;
 }
 
+function filterSubUnitRows(
+  rows: SubUnitRow[],
+  globalFilter: string,
+): SubUnitRow[] {
+  if (!globalFilter) return rows;
+  const filter = globalFilter.toLowerCase();
+  return rows.filter(
+    (row) =>
+      row.subTitle.toLowerCase().includes(filter) ||
+      row.comment.toLowerCase().includes(filter),
+  );
+}
+
+type GapCompletionFilter = "all" | "completed" | "nonCompleted";
+
+function filterSubUnitRowsByCompletion(
+  rows: SubUnitRow[],
+  completionFilter: GapCompletionFilter,
+): SubUnitRow[] {
+  if (completionFilter === "all") return rows;
+  if (completionFilter === "completed") {
+    return rows.filter((row) => row.gap === "complete");
+  }
+  return rows.filter((row) => row.gap === "none");
+}
+
+function applySubUnitFilters(
+  rows: SubUnitRow[],
+  globalFilter: string,
+  completionFilter: GapCompletionFilter,
+): SubUnitRow[] {
+  return filterSubUnitRowsByCompletion(
+    filterSubUnitRows(rows, globalFilter),
+    completionFilter,
+  );
+}
+
+type GapSubUnitTableProps = {
+  rows: SubUnitRow[];
+  columns: ColumnDef<SubUnitRow>[];
+  globalFilter: string;
+  completionFilter: GapCompletionFilter;
+  emptyMessage: string;
+  t: (key: string, values?: Record<string, string | number>) => string;
+};
+
+function GapSubUnitTable({
+  rows,
+  columns,
+  globalFilter,
+  completionFilter,
+  emptyMessage,
+  t,
+}: GapSubUnitTableProps) {
+  const filteredData = useMemo(
+    () => applySubUnitFilters(rows, globalFilter, completionFilter),
+    [rows, globalFilter, completionFilter],
+  );
+
+  const table = useReactTable({
+    data: filteredData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  });
+
+  if (rows.length === 0) {
+    return (
+      <div className="py-8 text-center text-sm text-muted-foreground">
+        {emptyMessage}
+      </div>
+    );
+  }
+
+  if (filteredData.length === 0) {
+    return (
+      <div className="py-8 text-center text-sm text-muted-foreground">
+        {completionFilter !== "all" || globalFilter
+          ? t("table.empty.noCriteriaForFilter")
+          : t("table.noResults")}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="rounded-md border overflow-x-auto">
+        <Table className="w-full table-fixed">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className={
+                      header.column.id === "subTitle" ? "w-[55%]" : undefined
+                    }
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      className={
+                        cell.column.id === "subTitle" ? "max-w-0" : undefined
+                      }
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  {t("table.noResults")}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </>
+  );
+}
+
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
   const dispatch = useAppDispatch();
@@ -398,17 +549,14 @@ export function ModuleUnitProgressDataTable() {
       ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null
       : null,
   );
-  const [selectedUnit, setSelectedUnit] = useState<
-    UnitWithSubUnits | QualificationUnit | null
-  >(null);
   const [selectedType, setSelectedType] = useState<
     "Knowledge" | "Behaviour" | "Skills"
   >("Knowledge");
   const [globalFilter, setGlobalFilter] = useState("");
+  const [completionFilter, setCompletionFilter] =
+    useState<GapCompletionFilter>("all");
 
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
-  const isQualificationCourse =
-    selectedCourse?.course_core_type === "Qualification";
 
   useEffect(() => {
     const raw = urlCourseIdParam ?? "";
@@ -441,25 +589,10 @@ export function ModuleUnitProgressDataTable() {
 
   useEffect(() => {
     if (isStandardCourse) {
-      setSelectedUnit(null);
       setSelectedType("Knowledge");
-    } else if (
-      isQualificationCourse ||
-      (!isStandardCourse && !isQualificationCourse)
-    ) {
-      if (selectedCourse?.units && selectedCourse.units.length > 0) {
-        setSelectedUnit(
-          selectedCourse.units[0] as UnitWithSubUnits | QualificationUnit,
-        );
-      } else {
-        setSelectedUnit(null);
-      }
     }
-  }, [selectedCourse, isStandardCourse, isQualificationCourse]);
-
-  const units = useMemo(() => {
-    if (isStandardCourse) return [];
-    return selectedCourse?.units || [];
+    setCompletionFilter("all");
+    setGlobalFilter("");
   }, [selectedCourse, isStandardCourse]);
 
   const standardRows = useMemo(() => {
@@ -467,32 +600,46 @@ export function ModuleUnitProgressDataTable() {
     return collectStandardGapRows(selectedCourse, selectedType);
   }, [selectedCourse, selectedType, isStandardCourse]);
 
-  const tableData: SubUnitRow[] = useMemo(() => {
-    if (isStandardCourse && selectedType) {
-      return standardRows;
-    }
+  const qualificationUnitSections = useMemo(() => {
+    if (isStandardCourse || !selectedCourse?.units?.length) return [];
+    return selectedCourse.units.map((unit, index) => {
+      const typedUnit = unit as UnitWithSubUnits | QualificationUnit;
+      return {
+        id: String(typedUnit.id ?? `${index}-${typedUnit.title ?? "unit"}`),
+        title: String(typedUnit.title ?? t("table.empty.selectUnit")),
+        rows: collectQualificationGapRows(typedUnit),
+      };
+    });
+  }, [isStandardCourse, selectedCourse?.units, t]);
 
-    if (
-      !selectedUnit ||
-      !("subUnit" in selectedUnit) ||
-      !selectedUnit.subUnit ||
-      selectedUnit.subUnit.length === 0
-    ) {
-      return [];
-    }
+  const standardFilteredData = useMemo(
+    () => applySubUnitFilters(standardRows, globalFilter, completionFilter),
+    [standardRows, globalFilter, completionFilter],
+  );
 
-    return collectQualificationGapRows(selectedUnit);
-  }, [isStandardCourse, selectedType, standardRows, selectedUnit]);
+  const allQualificationRows = useMemo(
+    () => qualificationUnitSections.flatMap((section) => section.rows),
+    [qualificationUnitSections],
+  );
 
-  const filteredData = useMemo(() => {
-    if (!globalFilter) return tableData;
-    const filter = globalFilter.toLowerCase();
-    return tableData.filter(
-      (row) =>
-        row.subTitle.toLowerCase().includes(filter) ||
-        row.comment.toLowerCase().includes(filter),
-    );
-  }, [tableData, globalFilter]);
+  const qualificationFilteredData = useMemo(
+    () =>
+      applySubUnitFilters(allQualificationRows, globalFilter, completionFilter),
+    [allQualificationRows, globalFilter, completionFilter],
+  );
+
+  const exportRows = isStandardCourse
+    ? standardFilteredData
+    : qualificationFilteredData;
+
+  const hasQualificationContent = qualificationUnitSections.length > 0;
+  const showStandardTable =
+    isStandardCourse && selectedType && standardRows.length > 0;
+  const showQualificationAccordion =
+    !isStandardCourse && selectedCourse && hasQualificationContent;
+  const showToolbar =
+    Boolean(selectedCourse) &&
+    (isStandardCourse ? Boolean(selectedType) : hasQualificationContent);
 
   const columns: ColumnDef<SubUnitRow>[] = useMemo(() => {
     const baseColumns: ColumnDef<SubUnitRow>[] = [
@@ -501,9 +648,17 @@ export function ModuleUnitProgressDataTable() {
         header: isStandardCourse
           ? t("table.columns.title")
           : t("table.columns.subUnitTitle"),
-        cell: ({ row }: { row: Row<SubUnitRow> }) => (
-          <div className="font-medium">{row.getValue("subTitle")}</div>
-        ),
+        cell: ({ row }: { row: Row<SubUnitRow> }) => {
+          const title = String(row.getValue("subTitle") ?? "");
+          return (
+            <div
+              className="max-w-2xl truncate font-medium"
+              title={title}
+            >
+              {title}
+            </div>
+          );
+        },
       },
     ];
 
@@ -612,19 +767,6 @@ export function ModuleUnitProgressDataTable() {
     return baseColumns;
   }, [isStandardCourse, t]);
 
-  const table = useReactTable({
-    data: filteredData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
-    state: {
-      globalFilter,
-    },
-  });
-
   const gapStatusLabel = (gap: SubUnitRow["gap"]) => {
     switch (gap) {
       case "complete":
@@ -636,8 +778,27 @@ export function ModuleUnitProgressDataTable() {
     }
   };
 
+  const mapRowToPdfExport = (row: SubUnitRow) => ({
+    subTitle: row.subTitle,
+    learnerMap: row.learnerMap ? t("table.yes") : t("table.no"),
+    trainerMap: row.trainerMap ? t("table.yes") : t("table.no"),
+    gap: row.gap,
+    comment: row.comment,
+  });
+
+  const buildExportFilename = (extension: "csv" | "pdf") => {
+    const rawCourseName = selectedCourse?.course_name?.trim() || "course";
+    const safeCourse =
+      rawCourseName
+        .replace(/[^a-zA-Z0-9\s_-]/g, "")
+        .trim()
+        .replace(/\s+/g, "_")
+        .slice(0, 80) || "course";
+    return `gap_analysis_${safeCourse}_${new Date().toISOString().split("T")[0]}.${extension}`;
+  };
+
   const handleExportCsv = () => {
-    if (filteredData.length === 0) {
+    if (exportRows.length === 0) {
       toast.info(t("table.toast.noDataToExport"));
       return;
     }
@@ -658,7 +819,7 @@ export function ModuleUnitProgressDataTable() {
           t("table.columns.comment"),
         ];
 
-    const rows = filteredData.map((row) =>
+    const rows = exportRows.map((row) =>
       isStandardCourse
         ? [
             row.subTitle,
@@ -685,14 +846,7 @@ export function ModuleUnitProgressDataTable() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    const rawCourseName = selectedCourse?.course_name?.trim() || "course";
-    const safeCourse =
-      rawCourseName
-        .replace(/[^a-zA-Z0-9\s_-]/g, "")
-        .trim()
-        .replace(/\s+/g, "_")
-        .slice(0, 80) || "course";
-    link.download = `gap_analysis_${safeCourse}_${new Date().toISOString().split("T")[0]}.csv`;
+    link.download = buildExportFilename("csv");
     link.click();
     URL.revokeObjectURL(url);
     toast.success(t("table.toast.csvSuccess"));
@@ -714,28 +868,40 @@ export function ModuleUnitProgressDataTable() {
           t("table.columns.gap"),
           t("table.columns.comment"),
         ];
-    const rows = filteredData.map((row) =>
-      isStandardCourse
-        ? [
-            row.subTitle,
-            row.comment,
-            row.learnerMap ? t("table.yes") : t("table.no"),
-            row.trainerMap ? t("table.yes") : t("table.no"),
-            gapStatusLabel(row.gap),
-          ]
-        : [
-            row.subTitle,
-            row.learnerMap ? t("table.yes") : t("table.no"),
-            row.trainerMap ? t("table.yes") : t("table.no"),
-            gapStatusLabel(row.gap),
-            row.comment,
-          ],
-    );
-    if (rows.length === 0) {
+
+    const unitSections = isStandardCourse
+      ? [
+          {
+            unitTitle: "",
+            rows: exportRows.map(mapRowToPdfExport),
+          },
+        ]
+      : qualificationUnitSections.map((section) => ({
+          unitTitle: section.title,
+          rows: applySubUnitFilters(
+            section.rows,
+            globalFilter,
+            completionFilter,
+          ).map(mapRowToPdfExport),
+        }));
+
+    const canExportPdf = isStandardCourse
+      ? exportRows.length > 0
+      : qualificationUnitSections.length > 0;
+
+    if (!canExportPdf) {
       toast.info(t("table.toast.noDataToExport"));
       return;
     }
-    void exportTableToPdf({ title: t("table.pdfTitle"), headers, rows });
+
+    void exportGapAnalysisToPdf({
+      title: t("table.pdfTitle"),
+      courseName: selectedCourse?.course_name,
+      headers,
+      unitSections,
+      isStandardCourse,
+      filename: buildExportFilename("pdf"),
+    });
     toast.success(t("table.toast.pdfSuccess"));
   };
 
@@ -743,7 +909,9 @@ export function ModuleUnitProgressDataTable() {
     <div className="w-full space-y-4">
       <Card>
         <CardContent className="">
-          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+          <div
+            className={`grid gap-4 ${isStandardCourse ? "sm:grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}
+          >
             <div className="space-y-2">
               <Label htmlFor="course-select" className="text-sm font-medium">
                 {t("table.filters.selectCourse")}
@@ -827,49 +995,14 @@ export function ModuleUnitProgressDataTable() {
                   </SelectContent>
                 </Select>
               </div>
-            ) : (
-              <div className="space-y-2">
-                <Label htmlFor="unit-select" className="text-sm font-medium">
-                  {t("table.filters.selectUnit")}
-                </Label>
-                <Select
-                  value={selectedUnit?.id?.toString() || ""}
-                  onValueChange={(value) => {
-                    const unit = units.find((u) => u.id.toString() === value);
-                    setSelectedUnit(unit || null);
-                  }}
-                  disabled={!selectedCourse || units.length === 0}
-                >
-                  <SelectTrigger id="unit-select" className="cursor-pointer">
-                    <SelectValue
-                      placeholder={
-                        !selectedCourse
-                          ? t("table.filters.selectCourseFirst")
-                          : units.length === 0
-                            ? t("table.filters.noUnits")
-                            : t("table.filters.selectUnitPlaceholder")
-                      }
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {units.map((unit, index) => (
-                      <SelectItem
-                        key={index}
-                        value={unit.id?.toString() || unit.title}
-                      >
-                        {unit.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
+            ) : null}
           </div>
         </CardContent>
       </Card>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 items-center space-x-2">
+      {showToolbar && (
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-1 flex-col gap-4 sm:flex-row sm:items-center">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -878,6 +1011,32 @@ export function ModuleUnitProgressDataTable() {
               onChange={(event) => setGlobalFilter(String(event.target.value))}
               className="pl-9"
             />
+          </div>
+          <div className="w-full max-w-sm space-y-2 sm:w-auto sm:space-y-0">
+            <Label htmlFor="criteria-filter" className="sr-only">
+              {t("table.filters.selectCriteriaStatus")}
+            </Label>
+            <Select
+              value={completionFilter}
+              onValueChange={(value) =>
+                setCompletionFilter(value as GapCompletionFilter)
+              }
+            >
+              <SelectTrigger id="criteria-filter" className="w-full cursor-pointer sm:w-[260px]">
+                <SelectValue placeholder={t("table.filters.selectCriteriaStatus")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  {t("table.filters.showAllCriteria")}
+                </SelectItem>
+                <SelectItem value="nonCompleted">
+                  {t("table.filters.showNonCompletedCriteria")}
+                </SelectItem>
+                <SelectItem value="completed">
+                  {t("table.filters.showCompletedCriteria")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="flex items-center space-x-2">
@@ -899,105 +1058,52 @@ export function ModuleUnitProgressDataTable() {
           </DropdownMenu>
         </div>
       </div>
+      )}
 
-      {((isStandardCourse && selectedType && tableData.length > 0) ||
-        (isQualificationCourse && selectedUnit && tableData.length > 0) ||
-        (!isStandardCourse &&
-          !isQualificationCourse &&
-          selectedUnit &&
-          tableData.length > 0)) ? (
-        <>
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={columns.length} className="h-24 text-center">
-                      {t("table.noResults")}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="flex items-center justify-between space-x-2 py-4">
-            <div className="flex-1 text-sm text-muted-foreground">
-              {t("table.pagination.showing", {
-                count: table.getRowModel().rows.length,
-                total: filteredData.length,
-                items: t(
-                  isStandardCourse
-                    ? "table.pagination.items"
-                    : "table.pagination.subUnits",
-                ),
-              })}
-            </div>
-            <div className="flex items-center space-x-6 lg:space-x-8">
-              <div className="flex items-center space-x-2">
-                <p className="text-sm font-medium">{t("table.pagination.page")}</p>
-                <strong className="text-sm">
-                  {table.getState().pagination.pageIndex + 1} of{" "}
-                  {table.getPageCount()}
-                </strong>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                  className="cursor-pointer"
-                >
-                  {t("table.pagination.previous")}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                  className="cursor-pointer"
-                >
-                  {t("table.pagination.next")}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </>
+      {showStandardTable ? (
+        <GapSubUnitTable
+          rows={standardRows}
+          columns={columns}
+          globalFilter={globalFilter}
+          completionFilter={completionFilter}
+          emptyMessage={t("table.empty.noItemsForType")}
+          t={t}
+        />
+      ) : showQualificationAccordion ? (
+        <Accordion
+          key={`${selectedCourse?.course_id ?? "course"}-${completionFilter}`}
+          type="multiple"
+          defaultValue={[]}
+          className="w-full space-y-3"
+        >
+          {qualificationUnitSections.map((section) => (
+            <AccordionItem
+              key={section.id}
+              value={section.id}
+              className="overflow-hidden rounded-md border border-border bg-white last:border-b"
+            >
+              <AccordionTrigger className="cursor-pointer bg-white px-4 py-4 text-left font-semibold hover:bg-white hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden">
+                <span className="flex w-full items-center gap-3">
+                  <span className="relative flex size-5 shrink-0 items-center justify-center text-muted-foreground">
+                    <Plus className="unit-accordion-plus size-4" />
+                    <Minus className="unit-accordion-minus absolute size-4" />
+                  </span>
+                  <span className="truncate">{section.title}</span>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="border-t bg-white px-4 pb-4">
+                <GapSubUnitTable
+                  rows={section.rows}
+                  columns={columns}
+                  globalFilter={globalFilter}
+                  completionFilter={completionFilter}
+                  emptyMessage={t("table.empty.noSubUnits")}
+                  t={t}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       ) : (
         <Card>
           <CardContent className="p-12">
@@ -1008,13 +1114,9 @@ export function ModuleUnitProgressDataTable() {
                   ? !selectedType
                     ? t("table.empty.selectType")
                     : t("table.empty.noItemsForType")
-                  : isQualificationCourse
-                    ? !selectedUnit
-                      ? t("table.empty.selectUnit")
-                      : t("table.empty.noSubUnits")
-                    : !selectedUnit
-                      ? t("table.empty.selectUnit")
-                      : t("table.empty.noSubUnits")}
+                  : hasQualificationContent
+                    ? t("table.empty.noSubUnits")
+                    : t("table.filters.noUnits")}
             </div>
           </CardContent>
         </Card>

@@ -354,6 +354,7 @@
       "noLearnersAssigned": "अभी तक कोई शिक्षार्थी निर्दिष्ट नहीं किया गया है। शिक्षार्थियों को कोर्स में निर्दिष्ट करने के लिए \"शिक्षार्थी चुनें\" पर क्लिक करें।",
       "createUser": "उपयोगकर्ता बनाएं",
       "updateUser": "उपयोगकर्ता अपडेट करें",
+      "changePassword": "पासवर्ड बदलें",
       "required": "*"
     },
     "validation": {
@@ -378,6 +379,28 @@
       "liqa": "LIQA",
       "lineManager": "लाइन मैनेजर",
       "employer": "नियोक्ता"
+    },
+    "changePasswordDialog": {
+      "title": "पासवर्ड बदलें",
+      "descriptionWithName": "{name} ({email}) के लिए नया पासवर्ड सेट करें",
+      "descriptionEmailOnly": "{email} के लिए नया पासवर्ड सेट करें",
+      "newPassword": "नया पासवर्ड",
+      "confirmPassword": "पासवर्ड की पुष्टि करें",
+      "show": "दिखाएं",
+      "hide": "छिपाएं",
+      "cancel": "रद्द करें",
+      "changing": "बदला जा रहा है...",
+      "changePassword": "पासवर्ड बदलें",
+      "hintText": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए और बड़े व छोटे अक्षर और एक संख्या शामिल होनी चाहिए।",
+      "validation": {
+        "passwordMin": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए",
+        "passwordPattern": "पासवर्ड में कम से कम एक बड़ा अक्षर, एक छोटा अक्षर और एक संख्या होनी चाहिए",
+        "confirmRequired": "कृपया पासवर्ड की पुष्टि करें",
+        "passwordsMismatch": "पासवर्ड मेल नहीं खाते"
+      },
+      "successDefault": "पासवर्ड सफलतापूर्वक बदला गया",
+      "errorDefault": "पासवर्ड बदला नहीं जा सका। कृपया कुछ समय बाद पुनः प्रयास करें।",
+      "emailRequired": "उपयोगकर्ता का ईमेल आवश्यक है"
     },
     "table": {
       "name": "नाम",
@@ -2769,7 +2792,11 @@
         "selectCourseFirst": "पहले पाठ्यक्रम चुनें",
         "selectTypePlaceholder": "प्रकार चुनें",
         "selectUnitPlaceholder": "इकाई चुनें",
-        "noUnits": "कोई इकाई उपलब्ध नहीं"
+        "noUnits": "कोई इकाई उपलब्ध नहीं",
+        "selectCriteriaStatus": "मानदंड फ़िल्टर करें",
+        "showAllCriteria": "सभी मानदंड दिखाएं",
+        "showCompletedCriteria": "पूर्ण मानदंड दिखाएं",
+        "showNonCompletedCriteria": "अपूर्ण मानदंड दिखाएं"
       },
       "types": {
         "knowledge": "ज्ञान",
@@ -2800,7 +2827,8 @@
         "selectType": "प्रगति देखने के लिए प्रकार चुनें",
         "noItemsForType": "चयनित प्रकार के लिए कोई आइटम नहीं",
         "selectUnit": "प्रगति देखने के लिए इकाई चुनें",
-        "noSubUnits": "चयनित इकाई के लिए कोई उप-इकाई नहीं"
+        "noSubUnits": "चयनित इकाई के लिए कोई उप-इकाई नहीं",
+        "noCriteriaForFilter": "चयनित फ़िल्टर से कोई मानदंड मेल नहीं खाता"
       }
     }
   },

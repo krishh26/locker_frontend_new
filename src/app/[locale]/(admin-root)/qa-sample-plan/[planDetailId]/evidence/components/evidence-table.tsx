@@ -18,6 +18,10 @@ import {
 } from "@/components/ui/table";
 import { format } from "date-fns";
 import type { EvidenceItem } from "@/store/api/qa-sample-plan/types";
+import {
+  findMappedEntryByCriteriaId,
+  getMappedCriteriaId,
+} from "../../../utils/mapped-topic";
 
 function normalizeRole(role: unknown): string {
   return String(role ?? "").trim().toUpperCase();
@@ -44,9 +48,9 @@ interface EvidenceTableProps {
   currentUserRole: string;
   onToggleAllRows: () => void;
   onCriteriaToggle: (refNo: string) => void;
-  onMappedSubUnitToggle: (subUnitId: number | string, assignmentId?: number) => void;
+  onMappedSubUnitToggle: (topicId: number | string, assignmentId?: number) => void;
   onOpenCommentModal?: (evidence: EvidenceItem) => void;
-  createStateKey: (assignmentId: number | undefined, subUnitId: string | number) => string;
+  createStateKey: (assignmentId: number | undefined, topicId: string | number) => string;
 }
 
 export function EvidenceTable({
@@ -92,14 +96,16 @@ export function EvidenceTable({
                   allUnitsToDisplay.map((unit) => (
                     <TableHead
                       key={`hdr-${String(unit.unit_code)}-${String(unit.id)}`}
-                      className="text-center min-w-[100px]"
+                      className="text-center min-w-[140px] max-w-[200px] align-bottom"
                     >
                       <Tooltip delayDuration={200}>
                         <TooltipTrigger asChild>
-                          <span className="cursor-help">{unit.code}</span>
+                          <span className="cursor-help line-clamp-3 text-xs font-medium leading-snug">
+                            {unit.title || unit.code}
+                          </span>
                         </TooltipTrigger>
-                        <TooltipContent side="top" sideOffset={6} className="max-w-[320px]">
-                          {unit.title || t("na")}
+                        <TooltipContent side="top" sideOffset={6} className="max-w-[360px]">
+                          {unit.title || unit.code || t("na")}
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
@@ -225,18 +231,20 @@ export function EvidenceTable({
                       </TableCell>
                       {hasExpandedRows &&
                         allUnitsToDisplay.map((unit) => {
-                          const evidenceSubUnit = isExpanded
-                            ? mappedSubUnits.find((su) => String(su.id) === String(unit.id))
+                          const evidenceTopic = isExpanded
+                            ? findMappedEntryByCriteriaId(mappedSubUnits, unit.id)
                             : null;
 
-                          const isUnitNotInEvidence = !evidenceSubUnit;
+                          const isTopicNotInEvidence = !evidenceTopic;
                           const stateKey = createStateKey(
                             evidence?.assignment_id,
-                            evidenceSubUnit?.id ?? unit.id
+                            evidenceTopic
+                              ? getMappedCriteriaId(evidenceTopic)
+                              : unit.id
                           );
 
-                          const isChecked = evidenceSubUnit
-                            ? evidenceSubUnit.review?.signed_off === true ||
+                          const isChecked = evidenceTopic
+                            ? evidenceTopic.review?.signed_off === true ||
                               mappedSubUnitsChecked[stateKey] === true
                             : false;
 
@@ -244,8 +252,8 @@ export function EvidenceTable({
                           const isIqaChecked = iqaCheckedCheckboxes.has(stateKey);
                           const isIQA = isIqaUser;
                           const isTrainerMappedOnly =
-                            evidenceSubUnit?.trainerMapped === true &&
-                            !evidenceSubUnit?.review?.signed_off &&
+                            evidenceTopic?.trainerMapped === true &&
+                            !evidenceTopic?.review?.signed_off &&
                             !isIqaChecked;
                           const checkboxStateClass = isChecked
                             ? "data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
@@ -254,7 +262,7 @@ export function EvidenceTable({
                               : "";
 
                           const isDisabled =
-                            isUnitNotInEvidence ||
+                            isTopicNotInEvidence ||
                             (!isIQA && isLocked) ||
                            
                             !isIQA;
@@ -265,7 +273,7 @@ export function EvidenceTable({
                             return <TableCell key={columnKey} className="text-center" />;
                           }
 
-                          if (!evidenceSubUnit) {
+                          if (!evidenceTopic) {
                             return (
                               <TableCell key={columnKey} className="text-center">
                                 {/* <Checkbox checked={false} disabled className="opacity-50" /> */}
@@ -278,7 +286,10 @@ export function EvidenceTable({
                               <Checkbox
                                 checked={isChecked}
                                 onCheckedChange={() =>
-                                  onMappedSubUnitToggle(evidenceSubUnit.id, evidence.assignment_id)
+                                  onMappedSubUnitToggle(
+                                    getMappedCriteriaId(evidenceTopic),
+                                    evidence.assignment_id
+                                  )
                                 }
                                 disabled={isDisabled}
                                 className={checkboxStateClass}

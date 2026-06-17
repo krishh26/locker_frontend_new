@@ -354,6 +354,7 @@
       "noLearnersAssigned": "Aucun apprenant assigné pour le moment. Cliquez sur \"Sélectionner les Apprenants\" pour assigner des apprenants aux cours.",
       "createUser": "Créer un Utilisateur",
       "updateUser": "Mettre à jour l'Utilisateur",
+      "changePassword": "Changer le mot de passe",
       "required": "*"
     },
     "validation": {
@@ -378,6 +379,28 @@
       "liqa": "LIQA",
       "lineManager": "Responsable de Ligne",
       "employer": "Employeur"
+    },
+    "changePasswordDialog": {
+      "title": "Changer le mot de passe",
+      "descriptionWithName": "Définir un nouveau mot de passe pour {name} ({email})",
+      "descriptionEmailOnly": "Définir un nouveau mot de passe pour {email}",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "show": "Afficher",
+      "hide": "Masquer",
+      "cancel": "Annuler",
+      "changing": "Modification...",
+      "changePassword": "Changer le mot de passe",
+      "hintText": "Le mot de passe doit contenir au moins 6 caractères, des majuscules, des minuscules et un chiffre.",
+      "validation": {
+        "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",
+        "passwordPattern": "Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre",
+        "confirmRequired": "Veuillez confirmer le mot de passe",
+        "passwordsMismatch": "Les mots de passe ne correspondent pas"
+      },
+      "successDefault": "Mot de passe modifié avec succès",
+      "errorDefault": "Impossible de modifier le mot de passe. Veuillez réessayer dans un instant.",
+      "emailRequired": "L'e-mail de l'utilisateur est obligatoire"
     },
     "table": {
       "name": "Nom",

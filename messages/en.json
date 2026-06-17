@@ -357,6 +357,7 @@
       "noLearnersAssigned": "No learners assigned yet. Click \"Select Learners\" to assign learners to courses.",
       "createUser": "Create User",
       "updateUser": "Update User",
+      "changePassword": "Change Password",
       "centre": "Centre",
       "centrePlaceholder": "Select centre",
       "noCentresAvailable": "No centres available",
@@ -388,6 +389,28 @@
       "liqa": "LIQA",
       "lineManager": "Line Manager",
       "employer": "Employer"
+    },
+    "changePasswordDialog": {
+      "title": "Change Password",
+      "descriptionWithName": "Set a new password for {name} ({email})",
+      "descriptionEmailOnly": "Set a new password for {email}",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "show": "Show",
+      "hide": "Hide",
+      "cancel": "Cancel",
+      "changing": "Changing...",
+      "changePassword": "Change Password",
+      "hintText": "Password must be at least 6 characters long and include upper & lower case letters and a number.",
+      "validation": {
+        "passwordMin": "Password must be at least 6 characters long",
+        "passwordPattern": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+        "confirmRequired": "Please confirm the password",
+        "passwordsMismatch": "Passwords do not match"
+      },
+      "successDefault": "Password changed successfully",
+      "errorDefault": "We couldn't change the password right now. Please try again in a moment.",
+      "emailRequired": "User email is required"
     },
     "table": {
       "name": "Name",

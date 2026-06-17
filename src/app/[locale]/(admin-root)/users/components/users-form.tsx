@@ -1,270 +1,321 @@
-"use client";
+'use client'
 
-import { useEffect, useState, useMemo } from "react";
-import { useForm, Controller, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Eye, EyeOff, Loader2, Users } from "lucide-react";
-import { useRouter } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useEffect, useState, useMemo } from 'react'
+import { useForm, Controller, FormProvider } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Eye, EyeOff, KeyRound, Loader2, Users } from 'lucide-react'
+import { useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useCreateUserMutation, useUpdateUserMutation, useGetUsersByRoleQuery } from "@/store/api/user/userApi";
-import type { User, CreateUserRequest, UpdateUserRequest, AssignedLearner } from "@/store/api/user/types";
-import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
-import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
-import { useAssignEqaToCourseMutation, useGetEqaAssignedLearnersQuery } from "@/store/api/learner/learnerApi";
-import type { LearnerListItem } from "@/store/api/learner/types";
-import MultipleSelector, { type Option } from "@/components/ui/multi-select";
-import { EqaLearnerSelectionDialog } from "./eqa-learner-selection-dialog";
-import { AssignedLearnersDataTable } from "./assigned-learners-data-table";
-import { toast } from "sonner";
-import { useAppSelector } from "@/store/hooks";
-import type { AuthUser } from "@/store/api/auth/types";
-import { isAccountManager } from "@/utils/permissions";
-import { useGetOrganisationsQuery } from "@/store/api/organisations/organisationApi";
+} from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useGetUsersByRoleQuery,
+} from '@/store/api/user/userApi'
+import type {
+  User,
+  CreateUserRequest,
+  UpdateUserRequest,
+  AssignedLearner,
+} from '@/store/api/user/types'
+import { useGetEmployersQuery } from '@/store/api/employer/employerApi'
+import { useCachedCoursesList } from '@/store/hooks/useCachedCoursesList'
+import {
+  useAssignEqaToCourseMutation,
+  useGetEqaAssignedLearnersQuery,
+} from '@/store/api/learner/learnerApi'
+import type { LearnerListItem } from '@/store/api/learner/types'
+import MultipleSelector, { type Option } from '@/components/ui/multi-select'
+import { EqaLearnerSelectionDialog } from './eqa-learner-selection-dialog'
+import { AssignedLearnersDataTable } from './assigned-learners-data-table'
+import { toast } from 'sonner'
+import { useAppSelector } from '@/store/hooks'
+import type { AuthUser } from '@/store/api/auth/types'
+import { isAccountManager } from '@/utils/permissions'
+import { useGetOrganisationsQuery } from '@/store/api/organisations/organisationApi'
+import { ChangePasswordDialog } from './change-password-dialog'
 
 // Roles will be translated in component
 const roleValues = [
-  "Admin",
-  "Trainer",
-  "IQA",
-  "EQA",
-  "LIQA",
-  "Line Manager",
-  "Employer",
-  "PhoenixTeam",
-];
+  'Admin',
+  'Trainer',
+  'IQA',
+  'EQA',
+  'LIQA',
+  'Line Manager',
+  'Employer',
+  'PhoenixTeam',
+]
 
 // Common timezones - can be extended
 const timezones = [
-  "UTC",
-  "America/New_York",
-  "America/Chicago",
-  "America/Denver",
-  "America/Los_Angeles",
-  "Europe/London",
-  "Europe/Paris",
-  "Asia/Dubai",
-  "Asia/Kolkata",
-  "Asia/Tokyo",
-  "Australia/Sydney",
-];
+  'UTC',
+  'America/New_York',
+  'America/Chicago',
+  'America/Denver',
+  'America/Los_Angeles',
+  'Europe/London',
+  'Europe/Paris',
+  'Asia/Dubai',
+  'Asia/Kolkata',
+  'Asia/Tokyo',
+  'Australia/Sydney',
+]
 
 // Schema creation functions that accept translation function
-const createUserSchema = (t: (key: string) => string) => z
-  .object({
-    first_name: z.string().min(1, t("validation.firstNameRequired")),
-    last_name: z.string().min(1, t("validation.lastNameRequired")),
-    user_name: z.string().min(1, t("validation.usernameRequired")),
-    email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")),
-    password: z.string().min(6, t("validation.passwordMinLength")),
-    confirmPassword: z.string(),
-    mobile: z.number().optional(),
-    time_zone: z.string().optional(),
-    roles: z.array(z.string()).min(1, t("validation.rolesRequired")),
-    line_manager_id: z.string().optional(),
-    employer_ids: z.array(z.number()).optional(),
-    organisation_ids: z.array(z.number()).max(1, "At most one organisation can be assigned").optional(),
-    selectedCourseForAssignment: z.string().optional(),
-    assignedLearners: z.array(z.any()).optional(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: t("validation.passwordsDoNotMatch"),
-    path: ["confirmPassword"],
-  })
-  .refine(
-    (data) => {
-      const hasEmployerRole = data.roles?.includes("Employer");
-      if (hasEmployerRole) {
-        return data.employer_ids && data.employer_ids.length > 0;
-      }
-      return true;
-    },
-    {
-      message: t("validation.employerRequired"),
-      path: ["employer_ids"],
-    }
-  );
+const createUserSchema = (t: (key: string) => string) =>
+  z
+    .object({
+      first_name: z.string().min(1, t('validation.firstNameRequired')),
+      last_name: z.string().min(1, t('validation.lastNameRequired')),
+      user_name: z.string().min(1, t('validation.usernameRequired')),
+      email: z
+        .string()
+        .email(t('validation.emailInvalid'))
+        .min(1, t('validation.emailRequired')),
+      password: z.string().min(6, t('validation.passwordMinLength')),
+      confirmPassword: z.string(),
+      mobile: z.number().optional(),
+      time_zone: z.string().optional(),
+      roles: z.array(z.string()).min(1, t('validation.rolesRequired')),
+      line_manager_id: z.string().optional(),
+      employer_ids: z.array(z.number()).optional(),
+      organisation_ids: z
+        .array(z.number())
+        .max(1, 'At most one organisation can be assigned')
+        .optional(),
+      selectedCourseForAssignment: z.string().optional(),
+      assignedLearners: z.array(z.any()).optional(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('validation.passwordsDoNotMatch'),
+      path: ['confirmPassword'],
+    })
+    .refine(
+      (data) => {
+        const hasEmployerRole = data.roles?.includes('Employer')
+        if (hasEmployerRole) {
+          return data.employer_ids && data.employer_ids.length > 0
+        }
+        return true
+      },
+      {
+        message: t('validation.employerRequired'),
+        path: ['employer_ids'],
+      },
+    )
 
-const updateUserSchema = (t: (key: string) => string) => z
-  .object({
-    first_name: z.string().min(1, t("validation.firstNameRequired")).optional(),
-    last_name: z.string().min(1, t("validation.lastNameRequired")).optional(),
-    user_name: z.string().min(1, t("validation.usernameRequired")).optional(),
-    email: z.string().email(t("validation.emailInvalid")).min(1, t("validation.emailRequired")).optional(),
-    mobile: z.number().optional(),
-    time_zone: z.string().optional(),
-    roles: z.array(z.string()).min(1, t("validation.rolesRequired")).optional(),
-    line_manager_id: z.string().optional(),
-    employer_ids: z.array(z.number()).optional(),
-    organisation_ids: z.array(z.number()).max(1, "At most one organisation can be assigned").optional(),
-    selectedCourseForAssignment: z.string().optional(),
-    assignedLearners: z.array(z.any()).optional(),
-  })
-  .refine(
-    (data) => {
-      const hasEmployerRole = data.roles?.includes("Employer");
-      if (hasEmployerRole) {
-        return data.employer_ids && data.employer_ids.length > 0;
-      }
-      return true;
-    },
-    {
-      message: t("validation.employerRequired"),
-      path: ["employer_ids"],
-    }
-  );
+const updateUserSchema = (t: (key: string) => string) =>
+  z
+    .object({
+      first_name: z
+        .string()
+        .min(1, t('validation.firstNameRequired'))
+        .optional(),
+      last_name: z.string().min(1, t('validation.lastNameRequired')).optional(),
+      user_name: z.string().min(1, t('validation.usernameRequired')).optional(),
+      email: z
+        .string()
+        .email(t('validation.emailInvalid'))
+        .min(1, t('validation.emailRequired'))
+        .optional(),
+      mobile: z.number().optional(),
+      time_zone: z.string().optional(),
+      roles: z
+        .array(z.string())
+        .min(1, t('validation.rolesRequired'))
+        .optional(),
+      line_manager_id: z.string().optional(),
+      employer_ids: z.array(z.number()).optional(),
+      organisation_ids: z
+        .array(z.number())
+        .max(1, 'At most one organisation can be assigned')
+        .optional(),
+      selectedCourseForAssignment: z.string().optional(),
+      assignedLearners: z.array(z.any()).optional(),
+    })
+    .refine(
+      (data) => {
+        const hasEmployerRole = data.roles?.includes('Employer')
+        if (hasEmployerRole) {
+          return data.employer_ids && data.employer_ids.length > 0
+        }
+        return true
+      },
+      {
+        message: t('validation.employerRequired'),
+        path: ['employer_ids'],
+      },
+    )
 
-type CreateUserFormValues = z.infer<ReturnType<typeof createUserSchema>>;
-type UpdateUserFormValues = z.infer<ReturnType<typeof updateUserSchema>>;
+type CreateUserFormValues = z.infer<ReturnType<typeof createUserSchema>>
+type UpdateUserFormValues = z.infer<ReturnType<typeof updateUserSchema>>
 
 type AssignedCentreOption = {
-  id: number;
-  name: string;
-  status?: string;
-};
+  id: number
+  name: string
+  status?: string
+}
 
 type AssignedOrganisationOption = {
-  id: number;
-  name: string;
-  centres?: AssignedCentreOption[];
-};
+  id: number
+  name: string
+  centres?: AssignedCentreOption[]
+}
 
 interface UsersFormProps {
-  user: User | null;
+  user: User | null
 }
 
 export function UsersForm({ user }: UsersFormProps) {
-  const router = useRouter();
-  const t = useTranslations("users");
-  const common = useTranslations("common");
-  const authUser = useAppSelector((state) => state.auth.user);
-  const userRole = authUser?.role;
-  const isEmployer = userRole === "Employer";
-  const isAccountManagerUser = isAccountManager(authUser);
+  const router = useRouter()
+  const t = useTranslations('users')
+  const common = useTranslations('common')
+  const authUser = useAppSelector((state) => state.auth.user)
+  const userRole = authUser?.role
+  const isEmployer = userRole === 'Employer'
+  const isAccountManagerUser = isAccountManager(authUser)
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const isEditMode = !!user;
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const isEditMode = !!user
 
   // Organisation / centre options for the currently logged-in admin (from /user/get)
   const assignedOrganisations: AssignedOrganisationOption[] = useMemo(() => {
-    const typed = authUser as (AuthUser & {
-      assigned_organisations?: AssignedOrganisationOption[];
-    }) | null;
-    return typed?.assigned_organisations ?? [];
-  }, [authUser]);
+    const typed = authUser as
+      | (AuthUser & {
+          assigned_organisations?: AssignedOrganisationOption[]
+        })
+      | null
+    return typed?.assigned_organisations ?? []
+  }, [authUser])
 
-  const [selectedCentreId, setSelectedCentreId] = useState<number | undefined>(() => {
-    const org = assignedOrganisations[0];
-    const centres = org?.centres ?? [];
-    const active = centres.filter(
-      (c) =>
-        (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
-    );
-    return active[0]?.id ?? centres[0]?.id;
-  });
+  const [selectedCentreId, setSelectedCentreId] = useState<number | undefined>(
+    () => {
+      const org = assignedOrganisations[0]
+      const centres = org?.centres ?? []
+      const active = centres.filter(
+        (c) =>
+          (c.status ?? '').toString().toLowerCase() === 'active' ||
+          c.status === undefined,
+      )
+      return active[0]?.id ?? centres[0]?.id
+    },
+  )
 
   const centreOptions: AssignedCentreOption[] = useMemo(() => {
-    const org = assignedOrganisations[0];
-    const centres = org?.centres ?? [];
+    const org = assignedOrganisations[0]
+    const centres = org?.centres ?? []
     return centres.filter(
       (c) =>
-        (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
-    );
-  }, [assignedOrganisations]);
+        (c.status ?? '').toString().toLowerCase() === 'active' ||
+        c.status === undefined,
+    )
+  }, [assignedOrganisations])
 
   useEffect(() => {
     // Whenever logged-in user's org tree changes, reset centre to first active centre
     if (assignedOrganisations.length) {
-      const org = assignedOrganisations[0];
-      const centres = org?.centres ?? [];
+      const org = assignedOrganisations[0]
+      const centres = org?.centres ?? []
       const active = centres.filter(
         (c) =>
-          (c.status ?? "").toString().toLowerCase() === "active" || c.status === undefined,
-      );
-      setSelectedCentreId(active[0]?.id ?? centres[0]?.id);
+          (c.status ?? '').toString().toLowerCase() === 'active' ||
+          c.status === undefined,
+      )
+      setSelectedCentreId(active[0]?.id ?? centres[0]?.id)
     } else {
-      setSelectedCentreId(undefined);
+      setSelectedCentreId(undefined)
     }
-  }, [assignedOrganisations]);
+  }, [assignedOrganisations])
 
   // Create roles with translated labels; for Account Manager exclude MasterAdmin and AccountManager
   const roles = useMemo(() => {
     const roleKeyMap: Record<string, string> = {
-      "Admin": "admin",
-      "Trainer": "trainer",
-      "IQA": "iqa",
-      "EQA": "eqa",
-      "LIQA": "liqa",
-      "Line Manager": "lineManager",
-      "Employer": "employer",
-    };
+      Admin: 'admin',
+      Trainer: 'trainer',
+      IQA: 'iqa',
+      EQA: 'eqa',
+      LIQA: 'liqa',
+      'Line Manager': 'lineManager',
+      Employer: 'employer',
+    }
     const valuesBase = isAccountManagerUser
-      ? roleValues.filter((r) => !["MasterAdmin", "AccountManager"].includes(r))
-      : roleValues;
+      ? roleValues.filter((r) => !['MasterAdmin', 'AccountManager'].includes(r))
+      : roleValues
 
     // Requirement: PhoenixTeam role only visible to MasterAdmin creators.
-    const values = userRole === "MasterAdmin" ? valuesBase : valuesBase.filter((r) => r !== "PhoenixTeam");
+    const values =
+      userRole === 'MasterAdmin'
+        ? valuesBase
+        : valuesBase.filter((r) => r !== 'PhoenixTeam')
     return values.map((value) => ({
       value,
       // PhoenixTeam has no translation key; keep a safe label.
-      label: value === "PhoenixTeam" ? "PhoenixTeam" : t(`roles.${roleKeyMap[value]}`) || value,
-    }));
-  }, [t, isAccountManagerUser, userRole]);
+      label:
+        value === 'PhoenixTeam'
+          ? 'PhoenixTeam'
+          : t(`roles.${roleKeyMap[value]}`) || value,
+    }))
+  }, [t, isAccountManagerUser, userRole])
+
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
   // EQA learner assignment state
-  const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);
-  const [isLoadingAssignments, setIsLoadingAssignments] = useState(false);
+  const [selectionDialogOpen, setSelectionDialogOpen] = useState(false)
+  const [isLoadingAssignments, setIsLoadingAssignments] = useState(false)
 
-  const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
-  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
-  const [assignEqaToCourse] = useAssignEqaToCourseMutation();
+  const [createUser, { isLoading: isCreating }] = useCreateUserMutation()
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation()
+  const [assignEqaToCourse] = useAssignEqaToCourseMutation()
 
   const form = useForm<CreateUserFormValues | UpdateUserFormValues>({
-    resolver: zodResolver(isEditMode ? updateUserSchema(t) : createUserSchema(t)),
-        defaultValues: isEditMode
+    resolver: zodResolver(
+      isEditMode ? updateUserSchema(t) : createUserSchema(t),
+    ),
+    defaultValues: isEditMode
       ? {
-          first_name: "",
-          last_name: "",
-          user_name: "",
-          email: "",
+          first_name: '',
+          last_name: '',
+          user_name: '',
+          email: '',
           mobile: undefined,
-          time_zone: "",
+          time_zone: '',
           roles: [],
-          line_manager_id: "",
+          line_manager_id: '',
           employer_ids: [],
           organisation_ids: [],
-          selectedCourseForAssignment: "",
+          selectedCourseForAssignment: '',
           assignedLearners: [],
         }
       : {
-          first_name: "",
-          last_name: "",
-          user_name: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
+          first_name: '',
+          last_name: '',
+          user_name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
           mobile: undefined,
-          time_zone: "",
+          time_zone: '',
           roles: [],
-          line_manager_id: "",
+          line_manager_id: '',
           employer_ids: [],
           organisation_ids: [],
-          selectedCourseForAssignment: "",
+          selectedCourseForAssignment: '',
           assignedLearners: [],
         },
-  });
+  })
 
   useEffect(() => {
     if (user) {
@@ -275,114 +326,130 @@ export function UsersForm({ user }: UsersFormProps) {
         email: user.email,
         mobile: user.mobile
           ? (() => {
-              const parsedMobile = Number(user.mobile);
-              return Number.isNaN(parsedMobile) ? undefined : parsedMobile;
+              const parsedMobile = Number(user.mobile)
+              return Number.isNaN(parsedMobile) ? undefined : parsedMobile
             })()
           : undefined,
-        time_zone: user.time_zone || "UTC",
+        time_zone: user.time_zone || 'UTC',
         roles: user.roles,
-        line_manager_id: user.line_manager?.user_id?.toString() || "",
-        employer_ids: user.assigned_employers?.map((employer) => employer.employer_id) || [],
-        organisation_ids: (user.assigned_organisations?.map((org) => org.id) || []).slice(0, 1),
-        selectedCourseForAssignment: "",
+        line_manager_id: user.line_manager?.user_id?.toString() || '',
+        employer_ids:
+          user.assigned_employers?.map((employer) => employer.employer_id) ||
+          [],
+        organisation_ids: (
+          user.assigned_organisations?.map((org) => org.id) || []
+        ).slice(0, 1),
+        selectedCourseForAssignment: '',
         assignedLearners: [],
-      });
+      })
       // Set centre from user's assigned centres (API returns assigned_centers; we support both spellings)
-      const assignedCentres = (user as { assigned_centers?: Array<{ id: number }>; assigned_centres?: Array<{ id: number }> }).assigned_centers
-        ?? (user as { assigned_centres?: Array<{ id: number }> }).assigned_centres;
+      const assignedCentres =
+        (
+          user as {
+            assigned_centers?: Array<{ id: number }>
+            assigned_centres?: Array<{ id: number }>
+          }
+        ).assigned_centers ??
+        (user as { assigned_centres?: Array<{ id: number }> }).assigned_centres
       if (Array.isArray(assignedCentres) && assignedCentres.length > 0) {
-        setSelectedCentreId(assignedCentres[0].id);
+        setSelectedCentreId(assignedCentres[0].id)
       }
     } else {
       form.reset({
-        first_name: "",
-        last_name: "",
-        user_name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+        first_name: '',
+        last_name: '',
+        user_name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
         mobile: undefined,
-        time_zone: "",
+        time_zone: '',
         roles: [],
-        line_manager_id: "",
+        line_manager_id: '',
         employer_ids: [],
         organisation_ids: [],
-        selectedCourseForAssignment: "",
+        selectedCourseForAssignment: '',
         assignedLearners: [],
-      });
+      })
     }
-  }, [user, form]);
+  }, [user, form])
 
   // Watch roles to conditionally show employer field and EQA learner selection
-  const selectedRoles = form.watch("roles");
-  const hasEmployerRole = selectedRoles?.includes("Employer") || false;
-  const hasEqaRole = selectedRoles?.includes("EQA") || false;
-  
+  const selectedRoles = form.watch('roles')
+  const hasEmployerRole = selectedRoles?.includes('Employer') || false
+  const hasEqaRole = selectedRoles?.includes('EQA') || false
+
   // Watch time_zone to ensure Select component updates
-  const watchedTimeZone = form.watch("time_zone");
-  
+  const watchedTimeZone = form.watch('time_zone')
+
   // Watch form values for EQA assignment
-  const selectedCourseForAssignment = form.watch("selectedCourseForAssignment") || "";
-  const assignedLearnersValue = form.watch("assignedLearners");
+  const selectedCourseForAssignment =
+    form.watch('selectedCourseForAssignment') || ''
+  const assignedLearnersValue = form.watch('assignedLearners')
   // Keep all assigned learners in form state (across all courses)
   const allAssignedLearners = useMemo(
     () => (assignedLearnersValue || []) as AssignedLearner[],
-    [assignedLearnersValue]
-  );
+    [assignedLearnersValue],
+  )
   // Show all assigned learners (from all courses)
   const assignedLearners = useMemo(() => {
-    return allAssignedLearners;
-  }, [allAssignedLearners]);
+    return allAssignedLearners
+  }, [allAssignedLearners])
 
   // Fetch all employers
-  const { data: lineManagersData } = useGetUsersByRoleQuery("Line Manager");
+  const { data: lineManagersData } = useGetUsersByRoleQuery('Line Manager')
   const lineManagerOptions: { value: string; label: string }[] = useMemo(() => {
-    const list = lineManagersData?.data ?? [];
+    const list = lineManagersData?.data ?? []
     return list.map((u) => ({
       value: String(u.user_id),
-      label: [u.first_name, u.last_name].filter(Boolean).join(" ") || u.user_name || String(u.user_id),
-    }));
-  }, [lineManagersData]);
+      label:
+        [u.first_name, u.last_name].filter(Boolean).join(' ') ||
+        u.user_name ||
+        String(u.user_id),
+    }))
+  }, [lineManagersData])
 
-  const { data: employersData, isLoading: isLoadingEmployers } = useGetEmployersQuery(
-    { page: 1, page_size: 1000 },
-    { skip: !hasEmployerRole }
-  );
+  const { data: employersData, isLoading: isLoadingEmployers } =
+    useGetEmployersQuery(
+      { page: 1, page_size: 1000 },
+      { skip: !hasEmployerRole },
+    )
 
   // Transform employers to options for MultipleSelector
   const employerOptions: Option[] =
     employersData?.data?.map((employer) => ({
       value: employer.employer_id.toString(),
       label: employer.employer_name,
-    })) || [];
+    })) || []
 
   // Organisations for Account Manager (create/edit user with org assignment)
-  const { data: organisationsData, isLoading: isLoadingOrganisations } = useGetOrganisationsQuery(
-    { page: 1, limit: 500, meta: "true", status: "active" },
-    { skip: !isAccountManagerUser }
-  );
+  const { data: organisationsData, isLoading: isLoadingOrganisations } =
+    useGetOrganisationsQuery(
+      { page: 1, limit: 500, meta: 'true', status: 'active' },
+      { skip: !isAccountManagerUser },
+    )
   const organisationOptions: Option[] = useMemo(() => {
-    const list = organisationsData?.data ?? [];
-    const assignedIds = authUser?.assignedOrganisationIds;
+    const list = organisationsData?.data ?? []
+    const assignedIds = authUser?.assignedOrganisationIds
     const filtered =
       assignedIds?.length && list.length
         ? list.filter((org) => assignedIds.includes(org.id))
-        : list;
+        : list
     return filtered.map((org) => ({
       value: org.id.toString(),
       label: org.name,
-    }));
-  }, [organisationsData?.data, authUser?.assignedOrganisationIds]);
+    }))
+  }, [organisationsData?.data, authUser?.assignedOrganisationIds])
 
   // Fetch all courses for the course selection dropdown
   const { data: coursesData } = useCachedCoursesList({
-    skip: !hasEqaRole
-  });
+    skip: !hasEqaRole,
+  })
 
   // Fetch assigned learners for EQA when in edit mode
-  const { 
-    data: eqaAssignedLearnersData, 
-    isLoading: isLoadingEqaAssignedLearners 
+  const {
+    data: eqaAssignedLearnersData,
+    isLoading: isLoadingEqaAssignedLearners,
   } = useGetEqaAssignedLearnersQuery(
     {
       eqaId: user?.user_id || 0,
@@ -390,57 +457,58 @@ export function UsersForm({ user }: UsersFormProps) {
       page_size: 1000, // Large page size to get all assigned learners
       meta: true,
     },
-    { skip: !isEditMode || !hasEqaRole || !user?.user_id }
-  );
-
+    { skip: !isEditMode || !hasEqaRole || !user?.user_id },
+  )
 
   // Load existing assignments from API when editing EQA user
   useEffect(() => {
     if (isEditMode && hasEqaRole && eqaAssignedLearnersData?.data) {
-      const assigned: AssignedLearner[] = eqaAssignedLearnersData.data.map((item) => ({
-        learner_id: item.learner_id?.learner_id || 0,
-        first_name: item.learner_id?.first_name || "",
-        last_name: item.learner_id?.last_name || "",
-        user_name: item.learner_id?.user_name || "",
-        email: item.learner_id?.email || "",
-        course_id: item.course?.course_id || 0,
-        course_name: item.course?.course_name || "",
-        user_course_id: item.user_course_id || 0,
-        course_status: item.course_status || "",
-        start_date: item.start_date || "",
-        end_date: item.end_date || "",
-      }));
+      const assigned: AssignedLearner[] = eqaAssignedLearnersData.data.map(
+        (item) => ({
+          learner_id: item.learner_id?.learner_id || 0,
+          first_name: item.learner_id?.first_name || '',
+          last_name: item.learner_id?.last_name || '',
+          user_name: item.learner_id?.user_name || '',
+          email: item.learner_id?.email || '',
+          course_id: item.course?.course_id || 0,
+          course_name: item.course?.course_name || '',
+          user_course_id: item.user_course_id || 0,
+          course_status: item.course_status || '',
+          start_date: item.start_date || '',
+          end_date: item.end_date || '',
+        }),
+      )
 
-      form.setValue("assignedLearners", assigned);
+      form.setValue('assignedLearners', assigned)
     } else if (!hasEqaRole) {
       // Clear assignments only if EQA role is removed
-      form.setValue("assignedLearners", []);
+      form.setValue('assignedLearners', [])
     }
-  }, [
-    isEditMode,
-    hasEqaRole,
-    eqaAssignedLearnersData,
-    form,
-  ]);
+  }, [isEditMode, hasEqaRole, eqaAssignedLearnersData, form])
 
   // Update loading state based on API query
   useEffect(() => {
-    setIsLoadingAssignments(isLoadingEqaAssignedLearners);
-  }, [isLoadingEqaAssignedLearners]);
+    setIsLoadingAssignments(isLoadingEqaAssignedLearners)
+  }, [isLoadingEqaAssignedLearners])
 
   // Handle learner selection from dialog
-  const handleLearnerSelection = (selectedLearners: Set<LearnerListItem>, courseId: number) => {
+  const handleLearnerSelection = (
+    selectedLearners: Set<LearnerListItem>,
+    courseId: number,
+  ) => {
     // Get course name from coursesData
-    const selectedCourse = coursesData?.data?.find((c) => c.course_id === courseId);
-    const courseName = selectedCourse?.course_name || "Unknown Course";
+    const selectedCourse = coursesData?.data?.find(
+      (c) => c.course_id === courseId,
+    )
+    const courseName = selectedCourse?.course_name || 'Unknown Course'
 
     // Create assigned learner objects directly from the passed learner objects
     const newAssignments: AssignedLearner[] = Array.from(selectedLearners)
       .map((learner) => {
         // Find the course enrollment for this course
         const courseEnrollment = learner.course?.find(
-          (c) => c.course?.course_id === courseId
-        );
+          (c) => c.course?.course_id === courseId,
+        )
 
         // If course enrollment exists, use it; otherwise create minimal object
         if (courseEnrollment) {
@@ -453,10 +521,10 @@ export function UsersForm({ user }: UsersFormProps) {
             course_id: courseId,
             course_name: courseEnrollment.course?.course_name || courseName,
             user_course_id: courseEnrollment.user_course_id,
-            course_status: courseEnrollment.course_status || "Active",
-            start_date: courseEnrollment.start_date || "",
-            end_date: courseEnrollment.end_date || "",
-          };
+            course_status: courseEnrollment.course_status || 'Active',
+            start_date: courseEnrollment.start_date || '',
+            end_date: courseEnrollment.end_date || '',
+          }
         } else {
           // Create assignment without enrollment data (will be created on submit)
           return {
@@ -468,141 +536,157 @@ export function UsersForm({ user }: UsersFormProps) {
             course_id: courseId,
             course_name: courseName,
             user_course_id: 0, // Will be set when enrollment is created
-            course_status: "Active",
-            start_date: "",
-            end_date: "",
-          };
+            course_status: 'Active',
+            start_date: '',
+            end_date: '',
+          }
         }
       })
-      .filter((assignment): assignment is AssignedLearner => assignment !== null);
+      .filter(
+        (assignment): assignment is AssignedLearner => assignment !== null,
+      )
 
     // Add to assigned learners (avoid duplicates)
-    const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
-    const existingIds = new Set(currentAssigned.map((a) => `${a.learner_id}-${a.course_id}`));
+    const currentAssigned = (form.getValues('assignedLearners') ||
+      []) as AssignedLearner[]
+    const existingIds = new Set(
+      currentAssigned.map((a) => `${a.learner_id}-${a.course_id}`),
+    )
     const newOnes = newAssignments.filter(
-      (a) => !existingIds.has(`${a.learner_id}-${a.course_id}`)
-    );
-    
-    const updatedAssignments = [...currentAssigned, ...newOnes];
-    form.setValue("assignedLearners", updatedAssignments);
-    
+      (a) => !existingIds.has(`${a.learner_id}-${a.course_id}`),
+    )
+
+    const updatedAssignments = [...currentAssigned, ...newOnes]
+    form.setValue('assignedLearners', updatedAssignments)
+
     // Trigger form re-render to show the table
-    form.trigger("assignedLearners");
-  };
+    form.trigger('assignedLearners')
+  }
 
   // Handle removing a learner from assignment (course-specific)
   const handleRemoveLearner = async (learnerId: number, courseId: number) => {
     // If in edit mode, call API to unassign
     if (isEditMode && user?.user_id && hasEqaRole) {
-        const payload = {
-          course_id: courseId,
-          eqa_id: user.user_id,
-          learner_ids: [learnerId],
-          action: "unassign" as const,
-        };
-        await assignEqaToCourse(payload).unwrap();
+      const payload = {
+        course_id: courseId,
+        eqa_id: user.user_id,
+        learner_ids: [learnerId],
+        action: 'unassign' as const,
+      }
+      await assignEqaToCourse(payload).unwrap()
     }
     try {
       // Update form state to remove the learner
-      const currentAssigned = (form.getValues("assignedLearners") || []) as AssignedLearner[];
+      const currentAssigned = (form.getValues('assignedLearners') ||
+        []) as AssignedLearner[]
       form.setValue(
-        "assignedLearners",
+        'assignedLearners',
         currentAssigned.filter(
-          (a) => !(a.learner_id === learnerId && a.course_id === courseId)
-        )
-      );
-      toast.success(t("toast.learnerUnassigned"));
+          (a) => !(a.learner_id === learnerId && a.course_id === courseId),
+        ),
+      )
+      toast.success(t('toast.learnerUnassigned'))
     } catch (error) {
-      console.error("Error removing learner:", error);
-      toast.error(t("toast.removeLearnerFailed"));
+      console.error('Error removing learner:', error)
+      toast.error(t('toast.removeLearnerFailed'))
     }
-  };
+  }
 
   // Get already assigned learner IDs for the dialog (course-specific)
   const alreadyAssignedLearnerIds = useMemo(() => {
     if (!selectedCourseForAssignment) {
-      return new Set<number>();
+      return new Set<number>()
     }
-    const courseId = Number(selectedCourseForAssignment);
+    const courseId = Number(selectedCourseForAssignment)
     return new Set(
       allAssignedLearners
         .filter((a) => a.course_id === courseId)
-        .map((a) => a.learner_id)
-    );
-  }, [allAssignedLearners, selectedCourseForAssignment]);
+        .map((a) => a.learner_id),
+    )
+  }, [allAssignedLearners, selectedCourseForAssignment])
 
-  const onSubmit = async (values: CreateUserFormValues | UpdateUserFormValues) => {
+  const onSubmit = async (
+    values: CreateUserFormValues | UpdateUserFormValues,
+  ) => {
     try {
       // One org per user: backend accepts at most one organisation
       const organisationIds = values.organisation_ids?.length
         ? [values.organisation_ids[0]]
-        : [];
+        : []
       const payload: (CreateUserRequest | UpdateUserRequest) & {
-        centre_id?: number;
-        centre_ids?: number[];
+        centre_id?: number
+        centre_ids?: number[]
       } = {
         ...(values as Record<string, unknown>),
-        mobile: !values.mobile ? "" : String(values.mobile),
+        mobile: !values.mobile ? '' : String(values.mobile),
         organisation_ids: organisationIds,
-      };
-
-      if (payload.line_manager_id === "") {
-        delete payload.line_manager_id;
       }
 
-      let createdOrUpdatedUserId: number;
+      if (payload.line_manager_id === '') {
+        delete payload.line_manager_id
+      }
+
+      let createdOrUpdatedUserId: number
 
       // For Admin users, auto-populate organisation_ids from logged-in user's orgs
       // Admin organisations are managed via "Assign Admin to Organisation" API, not through this form
       if (authUser?.assignedOrganisationIds) {
         payload.organisation_ids = authUser.assignedOrganisationIds
           .slice(0, 1)
-          .map((id) => Number(id));
+          .map((id) => Number(id))
       }
 
       // Trainer must have exactly one centre (backend requirement). Send centre_ids and assigned_centers (same shape as user/get).
-      const roles = values.roles ?? [];
-      const hasTrainerRole = roles.includes("Trainer");
+      const roles = values.roles ?? []
+      const hasTrainerRole = roles.includes('Trainer')
       if (hasTrainerRole && selectedCentreId) {
-        payload.centre_ids = [selectedCentreId];
-        const centre = centreOptions.find((c) => c.id === selectedCentreId);
+        payload.centre_ids = [selectedCentreId]
+        const centre = centreOptions.find((c) => c.id === selectedCentreId)
         if (centre) {
-          (payload as Record<string, unknown>).assigned_centers = [{ id: centre.id, name: centre.name }];
+          ;(payload as Record<string, unknown>).assigned_centers = [
+            { id: centre.id, name: centre.name },
+          ]
         }
-      } else if (!isAccountManagerUser && centreOptions.length && selectedCentreId) {
-        payload.centre_ids = [selectedCentreId];
-        const centre = centreOptions.find((c) => c.id === selectedCentreId);
+      } else if (
+        !isAccountManagerUser &&
+        centreOptions.length &&
+        selectedCentreId
+      ) {
+        payload.centre_ids = [selectedCentreId]
+        const centre = centreOptions.find((c) => c.id === selectedCentreId)
         if (centre) {
-          (payload as Record<string, unknown>).assigned_centers = [{ id: centre.id, name: centre.name }];
+          ;(payload as Record<string, unknown>).assigned_centers = [
+            { id: centre.id, name: centre.name },
+          ]
         }
       }
       if (isEditMode) {
-        const updateData = payload as UpdateUserRequest;
+        const updateData = payload as UpdateUserRequest
         await updateUser({
           id: user.user_id,
           data: updateData,
-        }).unwrap();
-        createdOrUpdatedUserId = user.user_id;
-        toast.success("User updated successfully");
+        }).unwrap()
+        createdOrUpdatedUserId = user.user_id
+        toast.success('User updated successfully')
       } else {
-        const createData = payload as CreateUserRequest;
-        const result = await createUser(createData).unwrap();
-        createdOrUpdatedUserId = result.data.user_id;
-        toast.success("User created successfully");
+        const createData = payload as CreateUserRequest
+        const result = await createUser(createData).unwrap()
+        createdOrUpdatedUserId = result.data.user_id
+        toast.success('User created successfully')
       }
 
       // If EQA role is selected and there are assigned learners, assign EQA to courses
       if (hasEqaRole && allAssignedLearners.length > 0) {
         try {
           // Group learners by course_id
-          const learnersByCourse = new Map<number, number[]>();
+          const learnersByCourse = new Map<number, number[]>()
           allAssignedLearners.forEach((assigned: AssignedLearner) => {
-            const courseId = assigned.course_id;
+            const courseId = assigned.course_id
             if (!learnersByCourse.has(courseId)) {
-              learnersByCourse.set(courseId, []);
+              learnersByCourse.set(courseId, [])
             }
-            learnersByCourse.get(courseId)!.push(assigned.learner_id);
-          });
+            learnersByCourse.get(courseId)!.push(assigned.learner_id)
+          })
 
           // Create API calls for each course
           const assignmentPromises = Array.from(learnersByCourse.entries()).map(
@@ -611,647 +695,753 @@ export function UsersForm({ user }: UsersFormProps) {
                 course_id: courseId,
                 eqa_id: createdOrUpdatedUserId,
                 learner_ids: learnerIds,
-                action: "assign" as const,
-              };
-              return assignEqaToCourse(payload).unwrap();
-            }
-          );
+                action: 'assign' as const,
+              }
+              return assignEqaToCourse(payload).unwrap()
+            },
+          )
 
-          await Promise.all(assignmentPromises);
-          toast.success(t("toast.learnersAssigned", { count: allAssignedLearners.length }));
+          await Promise.all(assignmentPromises)
+          toast.success(
+            t('toast.learnersAssigned', { count: allAssignedLearners.length }),
+          )
         } catch (assignmentError: unknown) {
-          console.error("Error assigning learners:", assignmentError);
-          const err = assignmentError as { status?: number; data?: { message?: string } };
+          console.error('Error assigning learners:', assignmentError)
+          const err = assignmentError as {
+            status?: number
+            data?: { message?: string }
+          }
           if (err?.status === 400) {
-            toast.error(err?.data?.message ?? "Learner and course must belong to the same organisation.");
+            toast.error(
+              err?.data?.message ??
+                'Learner and course must belong to the same organisation.',
+            )
           } else if (err?.status === 403) {
-            toast.error(err?.data?.message ?? "You do not have access to assign this course.");
+            toast.error(
+              err?.data?.message ??
+                'You do not have access to assign this course.',
+            )
           } else {
-            toast.error(t("toast.assignmentFailed"));
+            toast.error(t('toast.assignmentFailed'))
           }
         }
       }
 
-      router.push("/users");
+      router.push('/users')
     } catch (error: unknown) {
-      const err = error as { data?: { message?: string; error?: string } };
+      const err = error as { data?: { message?: string; error?: string } }
       const errorMessage =
         err?.data?.message ??
-        (typeof err?.data?.error === "string" ? err.data.error : undefined);
-      toast.error(errorMessage || (isEditMode ? t("toast.updateFailed") : t("toast.createFailed")));
+        (typeof err?.data?.error === 'string' ? err.data.error : undefined)
+      toast.error(
+        errorMessage ||
+          (isEditMode ? t('toast.updateFailed') : t('toast.createFailed')),
+      )
     }
-  };
+  }
 
-  const isLoading = isCreating || isUpdating;
-  const hasErrors = Object.keys(form.formState.errors).length > 0;
+  const isLoading = isCreating || isUpdating
+  const hasErrors = Object.keys(form.formState.errors).length > 0
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      {/* First Name & Last Name */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="first_name"> 
-            {t("form.firstName")}<span className="text-destructive">{t("form.required")}</span>
-          </Label>
-          <Controller
-            name="first_name"
-            control={form.control}
-            render={({ field }) => (
-              <>
-                <Input
-                  id="first_name"
-                  placeholder={t("form.firstNamePlaceholder")}
-                  {...field}
-                  className={form.formState.errors.first_name ? "border-destructive" : ""}
-                />
-                {form.formState.errors.first_name && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.first_name.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="last_name">
-            {t("form.lastName")}<span className="text-destructive">{t("form.required")}</span>
-          </Label>
-          <Controller
-            name="last_name"
-            control={form.control}
-            render={({ field }) => (
-              <>
-                <Input
-                  id="last_name"
-                  placeholder={t("form.lastNamePlaceholder")}
-                  {...field}
-                  className={form.formState.errors.last_name ? "border-destructive" : ""}
-                />
-                {form.formState.errors.last_name && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.last_name.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-      </div>
-
-      {/* Username & Email */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="user_name">
-            {t("form.username")}<span className="text-destructive">{t("form.required")}</span>
-          </Label>
-          <Controller
-            name="user_name"
-            control={form.control}
-            render={({ field }) => (
-              <>
-                <Input
-                  id="user_name"
-                  placeholder={t("form.usernamePlaceholder")}
-                  {...field}
-                  className={form.formState.errors.user_name ? "border-destructive" : ""}
-                />
-                {form.formState.errors.user_name && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.user_name.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">
-            {t("form.email")}<span className="text-destructive">{t("form.required")}</span>
-          </Label>
-          <Controller
-            name="email"
-            control={form.control}
-            render={({ field }) => (
-              <>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t("form.emailPlaceholder")}
-                  {...field}
-                  className={form.formState.errors.email ? "border-destructive" : ""}
-                />
-                {form.formState.errors.email && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.email.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-      </div>
-
-      {/* Password & Confirm Password (only for create) */}
-      {!isEditMode && (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="password">
-              {t("form.password")}<span className="text-destructive">{t("form.required")}</span>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        {/* First Name & Last Name */}
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+          <div className='space-y-2'>
+            <Label htmlFor='first_name'>
+              {t('form.firstName')}
+              <span className='text-destructive'>{t('form.required')}</span>
             </Label>
             <Controller
-              name="password"
+              name='first_name'
               control={form.control}
               render={({ field }) => (
                 <>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder={t("form.passwordPlaceholder")}
-                      {...field}
-                      className={
-                        !isEditMode &&
-                        form.formState.errors &&
-                        "password" in form.formState.errors
-                          ? "border-destructive pr-10"
-                          : "pr-10"
-                      }
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </button>
-                  </div>
-                  {!isEditMode &&
-                    form.formState.errors &&
-                    "password" in form.formState.errors &&
-                    (form.formState.errors as Record<string, { message?: string }>).password && (
-                      <p className="text-sm text-destructive">
-                        {(form.formState.errors as Record<string, { message?: string }>).password?.message}
-                      </p>
-                    )}
-                </>
-              )}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">
-              {t("form.confirmPassword")}<span className="text-destructive">{t("form.required")}</span>
-            </Label>
-            <Controller
-              name="confirmPassword"
-              control={form.control}
-              render={({ field }) => (
-                <>
-                  <div className="relative">
-                    <Input
-                      id="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder={t("form.confirmPasswordPlaceholder")}
-                      {...field}
-                      className={
-                        !isEditMode &&
-                        form.formState.errors &&
-                        "confirmPassword" in form.formState.errors
-                          ? "border-destructive pr-10"
-                          : "pr-10"
-                      }
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </button>
-                  </div>
-                  {!isEditMode &&
-                    form.formState.errors &&
-                    "confirmPassword" in form.formState.errors && (
-                      <p className="text-sm text-destructive">
-                        {(form.formState.errors as Record<string, { message?: string }>).confirmPassword?.message}
-                      </p>
-                    )}
-                </>
-              )}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Mobile & Timezone */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="mobile">
-            {t("form.mobile")}
-          </Label>
-          <Controller
-            name="mobile"
-            control={form.control}
-            render={({ field }) => (
-              <>
-                <Input
-                  id="mobile"
-                  type="number"
-                  placeholder={t("form.mobilePlaceholder")}
-                  value={field.value ?? ""}
-                  onChange={(event) => {
-                    const raw = event.target.value;
-                    field.onChange(raw === "" ? undefined : Number(raw));
-                  }}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  ref={field.ref}
-                  className={form.formState.errors.mobile ? "border-destructive" : ""}
-                />
-                {form.formState.errors.mobile && (
-                  <p className="text-sm text-destructive">
-                    {form.formState.errors.mobile.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="time_zone">
-            {t("form.timeZone")}
-          </Label>
-          <Controller
-            name="time_zone"
-            control={form.control}
-            render={({ field }) => {
-              // Use watched value or field value, ensuring it's a valid timezone
-              const timeZoneValue = watchedTimeZone || field.value || "";
-              const isValidTimezone = timeZoneValue && timezones.includes(timeZoneValue);
-              
-              return (
-                <>
-                  <Select 
-                    value={isValidTimezone ? timeZoneValue : undefined} 
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                  >
-                    <SelectTrigger
-                      id="time_zone"
-                      className={form.formState.errors.time_zone ? "w-full border-destructive" : "w-full"}
-                    >
-                      <SelectValue placeholder={t("form.timeZonePlaceholder")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {timezones.map((tz) => (
-                        <SelectItem key={tz} value={tz}>
-                          {tz}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {form.formState.errors.time_zone && (
-                    <p className="text-sm text-destructive">
-                      {form.formState.errors.time_zone.message}
+                  <Input
+                    id='first_name'
+                    placeholder={t('form.firstNamePlaceholder')}
+                    {...field}
+                    className={
+                      form.formState.errors.first_name
+                        ? 'border-destructive'
+                        : ''
+                    }
+                  />
+                  {form.formState.errors.first_name && (
+                    <p className='text-sm text-destructive'>
+                      {form.formState.errors.first_name.message}
                     </p>
                   )}
                 </>
-              );
-            }}
+              )}
+            />
+          </div>
+          <div className='space-y-2'>
+            <Label htmlFor='last_name'>
+              {t('form.lastName')}
+              <span className='text-destructive'>{t('form.required')}</span>
+            </Label>
+            <Controller
+              name='last_name'
+              control={form.control}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id='last_name'
+                    placeholder={t('form.lastNamePlaceholder')}
+                    {...field}
+                    className={
+                      form.formState.errors.last_name
+                        ? 'border-destructive'
+                        : ''
+                    }
+                  />
+                  {form.formState.errors.last_name && (
+                    <p className='text-sm text-destructive'>
+                      {form.formState.errors.last_name.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Username & Email */}
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+          <div className='space-y-2'>
+            <Label htmlFor='user_name'>
+              {t('form.username')}
+              <span className='text-destructive'>{t('form.required')}</span>
+            </Label>
+            <Controller
+              name='user_name'
+              control={form.control}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id='user_name'
+                    placeholder={t('form.usernamePlaceholder')}
+                    {...field}
+                    className={
+                      form.formState.errors.user_name
+                        ? 'border-destructive'
+                        : ''
+                    }
+                  />
+                  {form.formState.errors.user_name && (
+                    <p className='text-sm text-destructive'>
+                      {form.formState.errors.user_name.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+          <div className='space-y-2'>
+            <Label htmlFor='email'>
+              {t('form.email')}
+              <span className='text-destructive'>{t('form.required')}</span>
+            </Label>
+            <Controller
+              name='email'
+              control={form.control}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id='email'
+                    type='email'
+                    placeholder={t('form.emailPlaceholder')}
+                    {...field}
+                    className={
+                      form.formState.errors.email ? 'border-destructive' : ''
+                    }
+                  />
+                  {form.formState.errors.email && (
+                    <p className='text-sm text-destructive'>
+                      {form.formState.errors.email.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Password & Confirm Password (only for create) */}
+        {!isEditMode && (
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+            <div className='space-y-2'>
+              <Label htmlFor='password'>
+                {t('form.password')}
+                <span className='text-destructive'>{t('form.required')}</span>
+              </Label>
+              <Controller
+                name='password'
+                control={form.control}
+                render={({ field }) => (
+                  <>
+                    <div className='relative'>
+                      <Input
+                        id='password'
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder={t('form.passwordPlaceholder')}
+                        {...field}
+                        className={
+                          !isEditMode &&
+                          form.formState.errors &&
+                          'password' in form.formState.errors
+                            ? 'border-destructive pr-10'
+                            : 'pr-10'
+                        }
+                      />
+                      <button
+                        type='button'
+                        onClick={() => setShowPassword(!showPassword)}
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
+                      >
+                        {showPassword ? (
+                          <EyeOff className='h-4 w-4' />
+                        ) : (
+                          <Eye className='h-4 w-4' />
+                        )}
+                      </button>
+                    </div>
+                    {!isEditMode &&
+                      form.formState.errors &&
+                      'password' in form.formState.errors &&
+                      (
+                        form.formState.errors as Record<
+                          string,
+                          { message?: string }
+                        >
+                      ).password && (
+                        <p className='text-sm text-destructive'>
+                          {
+                            (
+                              form.formState.errors as Record<
+                                string,
+                                { message?: string }
+                              >
+                            ).password?.message
+                          }
+                        </p>
+                      )}
+                  </>
+                )}
+              />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='confirmPassword'>
+                {t('form.confirmPassword')}
+                <span className='text-destructive'>{t('form.required')}</span>
+              </Label>
+              <Controller
+                name='confirmPassword'
+                control={form.control}
+                render={({ field }) => (
+                  <>
+                    <div className='relative'>
+                      <Input
+                        id='confirmPassword'
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        placeholder={t('form.confirmPasswordPlaceholder')}
+                        {...field}
+                        className={
+                          !isEditMode &&
+                          form.formState.errors &&
+                          'confirmPassword' in form.formState.errors
+                            ? 'border-destructive pr-10'
+                            : 'pr-10'
+                        }
+                      />
+                      <button
+                        type='button'
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className='h-4 w-4' />
+                        ) : (
+                          <Eye className='h-4 w-4' />
+                        )}
+                      </button>
+                    </div>
+                    {!isEditMode &&
+                      form.formState.errors &&
+                      'confirmPassword' in form.formState.errors && (
+                        <p className='text-sm text-destructive'>
+                          {
+                            (
+                              form.formState.errors as Record<
+                                string,
+                                { message?: string }
+                              >
+                            ).confirmPassword?.message
+                          }
+                        </p>
+                      )}
+                  </>
+                )}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Mobile & Timezone */}
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+          <div className='space-y-2'>
+            <Label htmlFor='mobile'>{t('form.mobile')}</Label>
+            <Controller
+              name='mobile'
+              control={form.control}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id='mobile'
+                    type='number'
+                    placeholder={t('form.mobilePlaceholder')}
+                    value={field.value ?? ''}
+                    onChange={(event) => {
+                      const raw = event.target.value
+                      field.onChange(raw === '' ? undefined : Number(raw))
+                    }}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                    className={
+                      form.formState.errors.mobile ? 'border-destructive' : ''
+                    }
+                  />
+                  {form.formState.errors.mobile && (
+                    <p className='text-sm text-destructive'>
+                      {form.formState.errors.mobile.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+          <div className='space-y-2'>
+            <Label htmlFor='time_zone'>{t('form.timeZone')}</Label>
+            <Controller
+              name='time_zone'
+              control={form.control}
+              render={({ field }) => {
+                // Use watched value or field value, ensuring it's a valid timezone
+                const timeZoneValue = watchedTimeZone || field.value || ''
+                const isValidTimezone =
+                  timeZoneValue && timezones.includes(timeZoneValue)
+
+                return (
+                  <>
+                    <Select
+                      value={isValidTimezone ? timeZoneValue : undefined}
+                      onValueChange={(value) => {
+                        field.onChange(value)
+                      }}
+                    >
+                      <SelectTrigger
+                        id='time_zone'
+                        className={
+                          form.formState.errors.time_zone
+                            ? 'w-full border-destructive'
+                            : 'w-full'
+                        }
+                      >
+                        <SelectValue
+                          placeholder={t('form.timeZonePlaceholder')}
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {timezones.map((tz) => (
+                          <SelectItem key={tz} value={tz}>
+                            {tz}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {form.formState.errors.time_zone && (
+                      <p className='text-sm text-destructive'>
+                        {form.formState.errors.time_zone.message}
+                      </p>
+                    )}
+                  </>
+                )
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Roles */}
+        <div className='space-y-2'>
+          <Label>
+            {t('form.roles')}{' '}
+            <span className='text-destructive'>{t('form.required')}</span>
+          </Label>
+          <Controller
+            name='roles'
+            control={form.control}
+            render={({ field }) => (
+              <>
+                <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4'>
+                  {roles.map((role) => (
+                    <div
+                      key={role.value}
+                      className='flex items-center space-x-2'
+                    >
+                      <Checkbox
+                        id={`role-${role.value}`}
+                        checked={field.value?.includes(role.value)}
+                        onCheckedChange={(checked) => {
+                          const currentRoles = field.value || []
+                          if (checked) {
+                            field.onChange([...currentRoles, role.value])
+                          } else {
+                            const newRoles = currentRoles.filter(
+                              (r) => r !== role.value,
+                            )
+                            field.onChange(newRoles)
+                            // Clear employer_ids if Employer role is removed
+                            if (role.value === 'Employer') {
+                              form.setValue('employer_ids', [])
+                            }
+                            // Clear assigned learners if EQA role is removed
+                            if (role.value === 'EQA') {
+                              form.setValue('assignedLearners', [])
+                              form.setValue('selectedCourseForAssignment', '')
+                            }
+                          }
+                        }}
+                      />
+                      <Label
+                        htmlFor={`role-${role.value}`}
+                        className='text-sm font-normal cursor-pointer'
+                      >
+                        {role.label}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                {form.formState.errors.roles && (
+                  <p className='text-sm text-destructive'>
+                    {form.formState.errors.roles.message}
+                  </p>
+                )}
+              </>
+            )}
           />
         </div>
-      </div>
 
-      {/* Roles */}
-      <div className="space-y-2">
-        <Label>
-          {t("form.roles")} <span className="text-destructive">{t("form.required")}</span>
-        </Label>
-        <Controller
-          name="roles"
-          control={form.control}
-          render={({ field }) => (
-            <>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {roles.map((role) => (
-                  <div key={role.value} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`role-${role.value}`}
-                      checked={field.value?.includes(role.value)}
-                      onCheckedChange={(checked) => {
-                        const currentRoles = field.value || [];
-                        if (checked) {
-                          field.onChange([...currentRoles, role.value]);
-                        } else {
-                          const newRoles = currentRoles.filter((r) => r !== role.value);
-                          field.onChange(newRoles);
-                          // Clear employer_ids if Employer role is removed
-                          if (role.value === "Employer") {
-                            form.setValue("employer_ids", []);
-                          }
-                          // Clear assigned learners if EQA role is removed
-                          if (role.value === "EQA") {
-                            form.setValue("assignedLearners", []);
-                            form.setValue("selectedCourseForAssignment", "");
-                          }
-                        }
-                      }}
-                    />
-                    <Label
-                      htmlFor={`role-${role.value}`}
-                      className="text-sm font-normal cursor-pointer"
-                    >
-                      {role.label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-              {form.formState.errors.roles && (
-                <p className="text-sm text-destructive">
-                  {form.formState.errors.roles.message}
-                </p>
-              )}
-            </>
-          )}
-        />
-      </div>
+        {/* Line Manager */}
+        <div className='space-y-2'>
+          <Label htmlFor='line_manager_id'>{t('form.lineManager')}</Label>
+          <Controller
+            name='line_manager_id'
+            control={form.control}
+            render={({ field }) => (
+              <Select
+                value={field.value || '__none__'}
+                onValueChange={(v) => field.onChange(v === '__none__' ? '' : v)}
+                disabled={lineManagerOptions.length === 0}
+              >
+                <SelectTrigger id='line_manager_id'>
+                  <SelectValue
+                    placeholder={
+                      lineManagerOptions.length
+                        ? t('form.lineManagerPlaceholder')
+                        : t('form.noLineManagersAvailable')
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value='__none__'>
+                    {t('form.noLineManager')}
+                  </SelectItem>
+                  {lineManagerOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
 
-      {/* Line Manager */}
-      <div className="space-y-2">
-        <Label htmlFor="line_manager_id">{t("form.lineManager")}</Label>
-        <Controller
-          name="line_manager_id"
-          control={form.control}
-          render={({ field }) => (
+        {/* Centre (for logged-in admins with organisation → centres tree, e.g. Org Admin) */}
+        {!isAccountManagerUser && assignedOrganisations.length > 0 && (
+          <div className='space-y-2'>
+            <Label htmlFor='centre_id'>{t('form.centre')}</Label>
             <Select
-              value={field.value || "__none__"}
-              onValueChange={(v) => field.onChange(v === "__none__" ? "" : v)}
-              disabled={lineManagerOptions.length === 0}
+              value={selectedCentreId ? String(selectedCentreId) : ''}
+              onValueChange={(value) => {
+                setSelectedCentreId(Number(value))
+              }}
+              disabled={!centreOptions.length}
             >
-              <SelectTrigger id="line_manager_id">
+              <SelectTrigger id='centre_id'>
                 <SelectValue
                   placeholder={
-                    lineManagerOptions.length
-                      ? t("form.lineManagerPlaceholder")
-                      : t("form.noLineManagersAvailable")
+                    centreOptions.length
+                      ? t('form.centrePlaceholder')
+                      : t('form.noCentresAvailable')
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__none__">{t("form.noLineManager")}</SelectItem>
-                {lineManagerOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
+                {centreOptions.map((centre) => (
+                  <SelectItem key={centre.id} value={String(centre.id)}>
+                    {centre.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-          )}
-        />
-      </div>
-
-      {/* Centre (for logged-in admins with organisation → centres tree, e.g. Org Admin) */}
-      {!isAccountManagerUser && assignedOrganisations.length > 0 && (
-        <div className="space-y-2">
-          <Label htmlFor="centre_id">
-            {t("form.centre")}
-          </Label>
-          <Select
-            value={selectedCentreId ? String(selectedCentreId) : ""}
-            onValueChange={(value) => {
-              setSelectedCentreId(Number(value));
-            }}
-            disabled={!centreOptions.length}
-          >
-            <SelectTrigger id="centre_id">
-              <SelectValue
-                placeholder={
-                  centreOptions.length
-                    ? t("form.centrePlaceholder")
-                    : t("form.noCentresAvailable")
-                }
-              />
-            </SelectTrigger>
-            <SelectContent>
-              {centreOptions.map((centre) => (
-                <SelectItem key={centre.id} value={String(centre.id)}>
-                  {centre.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-
-      {/* Employees - Only show when Employer role is selected */}
-      {hasEmployerRole && (
-        <div className="space-y-2">
-          <Label htmlFor="employer_ids">
-            {t("form.employers")} <span className="text-destructive">{t("form.required")}</span>
-          </Label>
-          <Controller
-            name="employer_ids"
-            control={form.control}
-            render={({ field }) => {
-              const selectedOptions: Option[] =
-                (field.value ?? []).map((id) => {
-                  const opt = employerOptions.find(
-                    (o) => o.value === String(id)
-                  );
-                  return (
-                    opt ?? { value: String(id), label: String(id) }
-                  );
-                });
-
-              return (
-                <>
-                  <MultipleSelector
-                    value={selectedOptions}
-                    options={employerOptions}
-                    placeholder={
-                      isLoadingEmployers
-                        ? t("form.loadingEmployers")
-                        : t("form.employersPlaceholder")
-                    }
-                    onChange={(options: Option[]) => {
-                      const ids = options.map((opt: Option) => Number(opt.value));
-                      field.onChange(ids);
-                    }}
-                    disabled={isLoadingEmployers}
-                    loadingIndicator={
-                      <div className="flex items-center justify-center p-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      </div>
-                    }
-                    emptyIndicator={
-                      <p className="text-center text-sm text-muted-foreground">
-                        {t("form.noEmployersFound")}
-                      </p>
-                    }
-                    className={`w-full ${
-                      form.formState.errors.employer_ids
-                        ? "border-destructive"
-                        : ""
-                    }`}
-                  />
-                  {form.formState.errors.employer_ids && (
-                    <p className="text-sm text-destructive">
-                      {form.formState.errors.employer_ids.message}
-                    </p>
-                  )}
-                </>
-              );
-            }}
-          />
-        </div>
-      )}
-
-      {/* Organisations - Only show for Account Manager (create/edit) */}
-      {isAccountManagerUser && (
-        <div className="space-y-2">
-          <Label htmlFor="organisation_ids">{t("form.organisations")}</Label>
-          <Controller
-            name="organisation_ids"
-            control={form.control}
-            render={({ field }) => {
-              const selectedOptions: Option[] =
-                (field.value ?? []).map((id) => {
-                  const opt = organisationOptions.find(
-                    (o) => o.value === String(id)
-                  );
-                  return opt ?? { value: String(id), label: String(id) };
-                });
-
-              return (
-                <>
-                  <MultipleSelector
-                    value={selectedOptions}
-                    options={organisationOptions}
-                    maxSelected={1}
-                    placeholder={
-                      isLoadingOrganisations
-                        ? t("form.loadingOrganisations")
-                        : t("form.organisationsPlaceholder")
-                    }
-                    onChange={(options: Option[]) => {
-                      const ids = options.map((opt: Option) => Number(opt.value));
-                      field.onChange(ids);
-                    }}
-                    disabled={isLoadingOrganisations}
-                    loadingIndicator={
-                      <div className="flex items-center justify-center p-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      </div>
-                    }
-                    emptyIndicator={
-                      <p className="text-center text-sm text-muted-foreground">
-                        {t("form.noOrganisationsFound")}
-                      </p>
-                    }
-                    className={`w-full ${
-                      form.formState.errors.organisation_ids ? "border-destructive" : ""
-                    }`}
-                    direction="up"
-                  />
-                  {form.formState.errors.organisation_ids && (
-                    <p className="text-sm text-destructive">
-                      {form.formState.errors.organisation_ids.message}
-                    </p>
-                  )}
-                </>
-              );
-            }}
-          />
-        </div>
-      )}
-
-      {/* EQA Learner Assignment Section */}
-      {hasEqaRole && (
-        <div className="space-y-4 pt-4 border-t">
-          <div>
-            <Label className="text-base font-semibold">{t("form.assignedLearners")}</Label>
-            <p className="text-sm text-muted-foreground">
-              {t("form.assignedLearnersDescription")}
-            </p>
           </div>
-
-          {/* Course Selection - Removed, now managed in dialog */}
-          <div className="space-y-2">
-            <Label>{t("form.selectLearners")}</Label>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setSelectionDialogOpen(true)}
-              disabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              <Users className="mr-2 h-4 w-4" />
-              {t("form.selectLearners")}
-            </Button>
-          </div>
-
-          {/* Assigned Learners Table - Show all assigned learners from all courses */}
-          {allAssignedLearners.length > 0 ? (
-            <AssignedLearnersDataTable
-              data={assignedLearners}
-              onRemove={handleRemoveLearner}
-              isLoading={isLoadingAssignments}
-            />
-          ) : (
-            !isLoadingAssignments && (
-              <div className="flex items-center justify-center py-8 border rounded-md bg-muted">
-                <p className="text-sm text-muted-foreground">
-                  {t("form.noLearnersAssigned")}
-                </p>
-              </div>
-            )
-          )}
-          {isLoadingAssignments && (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Learner Selection Dialog */}
-      <EqaLearnerSelectionDialog
-        open={selectionDialogOpen}
-        onOpenChange={setSelectionDialogOpen}
-        onSave={handleLearnerSelection}
-        currentEqaId={isEditMode ? user?.user_id : undefined}
-        alreadyAssignedLearnerIds={alreadyAssignedLearnerIds}
-      />
-
-      {/* Form Actions */}
-      <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-end pt-4 border-t">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push("/users")}
-          disabled={isLoading}
-          className="w-full sm:w-auto"
-        >
-          {common("cancel")}
-        </Button>
-        {!isEmployer && (
-          <Button type="submit" disabled={isLoading || hasErrors} className="w-full sm:w-auto">
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isEditMode ? t("form.updateUser") : t("form.createUser")}
-          </Button>
         )}
-      </div>
+
+        {/* Employees - Only show when Employer role is selected */}
+        {hasEmployerRole && (
+          <div className='space-y-2'>
+            <Label htmlFor='employer_ids'>
+              {t('form.employers')}{' '}
+              <span className='text-destructive'>{t('form.required')}</span>
+            </Label>
+            <Controller
+              name='employer_ids'
+              control={form.control}
+              render={({ field }) => {
+                const selectedOptions: Option[] = (field.value ?? []).map(
+                  (id) => {
+                    const opt = employerOptions.find(
+                      (o) => o.value === String(id),
+                    )
+                    return opt ?? { value: String(id), label: String(id) }
+                  },
+                )
+
+                return (
+                  <>
+                    <MultipleSelector
+                      value={selectedOptions}
+                      options={employerOptions}
+                      placeholder={
+                        isLoadingEmployers
+                          ? t('form.loadingEmployers')
+                          : t('form.employersPlaceholder')
+                      }
+                      onChange={(options: Option[]) => {
+                        const ids = options.map((opt: Option) =>
+                          Number(opt.value),
+                        )
+                        field.onChange(ids)
+                      }}
+                      disabled={isLoadingEmployers}
+                      loadingIndicator={
+                        <div className='flex items-center justify-center p-2'>
+                          <Loader2 className='h-4 w-4 animate-spin' />
+                        </div>
+                      }
+                      emptyIndicator={
+                        <p className='text-center text-sm text-muted-foreground'>
+                          {t('form.noEmployersFound')}
+                        </p>
+                      }
+                      className={`w-full ${
+                        form.formState.errors.employer_ids
+                          ? 'border-destructive'
+                          : ''
+                      }`}
+                    />
+                    {form.formState.errors.employer_ids && (
+                      <p className='text-sm text-destructive'>
+                        {form.formState.errors.employer_ids.message}
+                      </p>
+                    )}
+                  </>
+                )
+              }}
+            />
+          </div>
+        )}
+
+        {/* Organisations - Only show for Account Manager (create/edit) */}
+        {isAccountManagerUser && (
+          <div className='space-y-2'>
+            <Label htmlFor='organisation_ids'>{t('form.organisations')}</Label>
+            <Controller
+              name='organisation_ids'
+              control={form.control}
+              render={({ field }) => {
+                const selectedOptions: Option[] = (field.value ?? []).map(
+                  (id) => {
+                    const opt = organisationOptions.find(
+                      (o) => o.value === String(id),
+                    )
+                    return opt ?? { value: String(id), label: String(id) }
+                  },
+                )
+
+                return (
+                  <>
+                    <MultipleSelector
+                      value={selectedOptions}
+                      options={organisationOptions}
+                      maxSelected={1}
+                      placeholder={
+                        isLoadingOrganisations
+                          ? t('form.loadingOrganisations')
+                          : t('form.organisationsPlaceholder')
+                      }
+                      onChange={(options: Option[]) => {
+                        const ids = options.map((opt: Option) =>
+                          Number(opt.value),
+                        )
+                        field.onChange(ids)
+                      }}
+                      disabled={isLoadingOrganisations}
+                      loadingIndicator={
+                        <div className='flex items-center justify-center p-2'>
+                          <Loader2 className='h-4 w-4 animate-spin' />
+                        </div>
+                      }
+                      emptyIndicator={
+                        <p className='text-center text-sm text-muted-foreground'>
+                          {t('form.noOrganisationsFound')}
+                        </p>
+                      }
+                      className={`w-full ${
+                        form.formState.errors.organisation_ids
+                          ? 'border-destructive'
+                          : ''
+                      }`}
+                      direction='up'
+                    />
+                    {form.formState.errors.organisation_ids && (
+                      <p className='text-sm text-destructive'>
+                        {form.formState.errors.organisation_ids.message}
+                      </p>
+                    )}
+                  </>
+                )
+              }}
+            />
+          </div>
+        )}
+
+        {/* EQA Learner Assignment Section */}
+        {hasEqaRole && (
+          <div className='space-y-4 pt-4 border-t'>
+            <div>
+              <Label className='text-base font-semibold'>
+                {t('form.assignedLearners')}
+              </Label>
+              <p className='text-sm text-muted-foreground'>
+                {t('form.assignedLearnersDescription')}
+              </p>
+            </div>
+
+            {/* Course Selection - Removed, now managed in dialog */}
+            <div className='space-y-2'>
+              <Label>{t('form.selectLearners')}</Label>
+              <Button
+                type='button'
+                variant='outline'
+                onClick={() => setSelectionDialogOpen(true)}
+                disabled={isLoading}
+                className='w-full sm:w-auto'
+              >
+                <Users className='mr-2 h-4 w-4' />
+                {t('form.selectLearners')}
+              </Button>
+            </div>
+
+            {/* Assigned Learners Table - Show all assigned learners from all courses */}
+            {allAssignedLearners.length > 0 ? (
+              <AssignedLearnersDataTable
+                data={assignedLearners}
+                onRemove={handleRemoveLearner}
+                isLoading={isLoadingAssignments}
+              />
+            ) : (
+              !isLoadingAssignments && (
+                <div className='flex items-center justify-center py-8 border rounded-md bg-muted'>
+                  <p className='text-sm text-muted-foreground'>
+                    {t('form.noLearnersAssigned')}
+                  </p>
+                </div>
+              )
+            )}
+            {isLoadingAssignments && (
+              <div className='flex items-center justify-center py-8'>
+                <Loader2 className='h-6 w-6 animate-spin text-muted-foreground' />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Learner Selection Dialog */}
+        <EqaLearnerSelectionDialog
+          open={selectionDialogOpen}
+          onOpenChange={setSelectionDialogOpen}
+          onSave={handleLearnerSelection}
+          currentEqaId={isEditMode ? user?.user_id : undefined}
+          alreadyAssignedLearnerIds={alreadyAssignedLearnerIds}
+        />
+
+        {/* Form Actions */}
+        <div className='flex flex-col-reverse gap-4 sm:flex-row sm:justify-between pt-4 border-t'>
+          {isEditMode && !isEmployer ? (
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => setChangePasswordOpen(true)}
+              disabled={isLoading}
+              className='w-full sm:w-auto'
+            >
+              <KeyRound className='mr-2 h-4 w-4' />
+              {t('form.changePassword')}
+            </Button>
+          ) : (
+            <div className='hidden sm:block' />
+          )}
+          <div className='flex flex-col-reverse gap-4 sm:flex-row sm:justify-end'>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => router.push('/users')}
+              disabled={isLoading}
+              className='w-full sm:w-auto'
+            >
+              {common('cancel')}
+            </Button>
+            {!isEmployer && (
+              <Button
+                type='submit'
+                disabled={isLoading || hasErrors}
+                className='w-full sm:w-auto'
+              >
+                {isLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+                {isEditMode ? t('form.updateUser') : t('form.createUser')}
+              </Button>
+            )}
+          </div>
+        </div>
       </form>
+      {isEditMode && user && (
+        <ChangePasswordDialog
+          open={changePasswordOpen}
+          onOpenChange={setChangePasswordOpen}
+          userEmail={form.watch('email') || user.email}
+          userName={
+            [user.first_name, user.last_name].filter(Boolean).join(' ') ||
+            undefined
+          }
+        />
+      )}
     </FormProvider>
-  );
+  )
 }

@@ -355,6 +355,7 @@
       "noLearnersAssigned": "Aún no hay aprendices asignados. Haga clic en \"Seleccionar Aprendices\" para asignar aprendices a cursos.",
       "createUser": "Crear Usuario",
       "updateUser": "Actualizar Usuario",
+      "changePassword": "Cambiar contraseña",
       "required": "*"
     },
     "validation": {
@@ -379,6 +380,28 @@
       "liqa": "LIQA",
       "lineManager": "Gerente de Línea",
       "employer": "Empleador"
+    },
+    "changePasswordDialog": {
+      "title": "Cambiar contraseña",
+      "descriptionWithName": "Establecer una nueva contraseña para {name} ({email})",
+      "descriptionEmailOnly": "Establecer una nueva contraseña para {email}",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "cancel": "Cancelar",
+      "changing": "Cambiando...",
+      "changePassword": "Cambiar contraseña",
+      "hintText": "La contraseña debe tener al menos 6 caracteres e incluir mayúsculas, minúsculas y un número.",
+      "validation": {
+        "passwordMin": "La contraseña debe tener al menos 6 caracteres",
+        "passwordPattern": "La contraseña debe contener al menos una mayúscula, una minúscula y un número",
+        "confirmRequired": "Confirme la contraseña",
+        "passwordsMismatch": "Las contraseñas no coinciden"
+      },
+      "successDefault": "Contraseña cambiada correctamente",
+      "errorDefault": "No pudimos cambiar la contraseña. Inténtelo de nuevo en un momento.",
+      "emailRequired": "El correo del usuario es obligatorio"
     },
     "table": {
       "name": "Nombre",

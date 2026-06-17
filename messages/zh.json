@@ -350,6 +350,7 @@
       "noLearnersAssigned": "尚未分配学员。点击\"选择学员\"将学员分配给课程。",
       "createUser": "创建用户",
       "updateUser": "更新用户",
+      "changePassword": "更改密码",
       "required": "*"
     },
     "validation": {
@@ -374,6 +375,28 @@
       "liqa": "LIQA",
       "lineManager": "部门经理",
       "employer": "雇主"
+    },
+    "changePasswordDialog": {
+      "title": "更改密码",
+      "descriptionWithName": "为 {name} ({email}) 设置新密码",
+      "descriptionEmailOnly": "为 {email} 设置新密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "show": "显示",
+      "hide": "隐藏",
+      "cancel": "取消",
+      "changing": "更改中...",
+      "changePassword": "更改密码",
+      "hintText": "密码至少 6 个字符，并包含大小写字母和数字。",
+      "validation": {
+        "passwordMin": "密码至少 6 个字符",
+        "passwordPattern": "密码须包含至少一个大写字母、一个小写字母和一个数字",
+        "confirmRequired": "请确认密码",
+        "passwordsMismatch": "两次输入的密码不一致"
+      },
+      "successDefault": "密码已成功更改",
+      "errorDefault": "暂时无法更改密码，请稍后重试。",
+      "emailRequired": "用户邮箱为必填项"
     },
     "table": {
       "name": "姓名",

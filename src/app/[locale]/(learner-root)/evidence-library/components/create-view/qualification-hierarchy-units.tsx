@@ -191,11 +191,11 @@ function QualificationHierarchyUnitsComponent({
                                     trainerMap={trainerMap}
                                     signed_off={signed_off}
                                     onClick={() => {
-                                      if (canEditTrainerFields  && learnerMap) {
+                                      if (canEditTrainerFields) {
                                         trainerMapHandler(topic, unit.id, subUnitId);
                                       }
                                     }}
-                                    disabled={!canEditTrainerFields ||  !learnerMap}
+                                    disabled={!canEditTrainerFields}
                                   />
                                   {getEvidenceCount && (
                                     <EvidenceIndicator

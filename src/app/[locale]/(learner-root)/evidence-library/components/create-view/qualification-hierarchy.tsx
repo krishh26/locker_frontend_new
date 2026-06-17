@@ -25,9 +25,11 @@ import { useTranslations } from "next-intl";
 import type { EvidenceFormValues, Module, Unit, Task } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
+import type { UseFormSetValue } from "react-hook-form";
 
 interface QualificationHierarchyProps {
   control: Control<EvidenceFormValues>;
+  setValue: UseFormSetValue<EvidenceFormValues>;
   courseId: number;
   courseName: string;
   modules: Module[];
@@ -46,6 +48,7 @@ interface QualificationHierarchyProps {
  */
 function QualificationHierarchyComponent({
   control,
+  setValue,
   courseId,
   courseName,
   modules,
@@ -259,8 +262,15 @@ function QualificationHierarchyComponent({
                                                         }
                                                         disabled={disabled || !canEditTrainerFields}
                                                         onClick={() => {
-                                                          if (!disabled && canEditTrainerFields) {
-                                                            field.onChange(!field.value);
+                                                          if (disabled || !canEditTrainerFields) {
+                                                            return;
+                                                          }
+                                                          const turningOn = !field.value;
+                                                          field.onChange(turningOn);
+                                                          if (turningOn) {
+                                                            setValue(`${basePath}.learnerMap` as any, true);
+                                                          } else {
+                                                            setValue(`${basePath}.signed_off` as any, false);
                                                           }
                                                         }}
                                                       />

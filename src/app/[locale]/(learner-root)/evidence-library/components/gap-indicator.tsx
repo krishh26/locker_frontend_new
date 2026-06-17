@@ -33,7 +33,7 @@ export const GapIndicator: React.FC<GapIndicatorProps> = ({
   disabled = false,
   className = "",
 }) => {
-  const isClickable = !disabled && learnerMap && onClick;
+  const isClickable = !disabled && Boolean(onClick);
   const backgroundColor =
     learnerMap && trainerMap && signed_off
       ? "bg-accent"

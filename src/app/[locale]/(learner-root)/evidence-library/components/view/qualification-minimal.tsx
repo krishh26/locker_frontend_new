@@ -276,11 +276,11 @@ export function QualificationMinimal({
                               trainerMap={currentValues.trainerMap}
                               signed_off={currentValues.signed_off}
                               onClick={() => {
-                                if (canEditTrainerFields && currentValues.learnerMap) {
+                                if (canEditTrainerFields) {
                                   trainerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
                                 }
                               }}
-                              disabled={!canEditTrainerFields || !currentValues.learnerMap}
+                              disabled={!canEditTrainerFields}
                             />
                             <EvidenceIndicator evidenceCount={getTopicEvidenceCount(pc.topic, pc.unitId)} />
                           </div>

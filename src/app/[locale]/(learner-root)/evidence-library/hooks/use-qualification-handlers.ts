@@ -2,6 +2,7 @@
 import { useCallback } from "react";
 import type { EvidenceFormValues } from "../components/create-view/evidence-form-types";
 import type { UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { applyTrainerMapToggle } from "../utils/apply-trainer-map-toggle";
 
 interface UseQualificationHandlersProps {
   units: EvidenceFormValues["units"];
@@ -64,11 +65,7 @@ export const useQualificationHandlers = ({
             if (String(subUnit.id) === String(subUnitId) && subUnit.topics) {
               subUnit.topics.forEach((topicItem: any) => {
                 if (String(topicItem.id) === String(topic.id)) {
-                  topicItem.trainerMap = !(topicItem.trainerMap ?? false);
-                  // Reset signed_off if trainerMap is unchecked
-                  if (!topicItem.trainerMap) {
-                    topicItem.signed_off = false;
-                  }
+                  applyTrainerMapToggle(topicItem);
                 }
               });
             }

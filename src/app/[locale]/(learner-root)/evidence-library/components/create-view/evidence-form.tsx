@@ -1399,6 +1399,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                       {standardCourses.length > 0 && (
                         <UnitsTable
                           control={form.control as any}
+                          setValue={form.setValue}
                           courses={standardCourses}
                           disabled={isReadOnly}
                           canEditLearnerFields={canEditPrimarySections}
@@ -1519,7 +1520,6 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             key={`session-select-${sessionValue}-${sessionSelectOptions.map((o) => o.id).join(',')}`}
                             value={sessionValue}
                             onValueChange={field.onChange}
-                            disabled={isEditMode || !canEditAdditionalInformation}
                           >
                             <SelectTrigger id='session' className='w-full'>
                               <SelectValue

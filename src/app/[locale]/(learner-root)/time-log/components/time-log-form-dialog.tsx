@@ -274,7 +274,6 @@ export function TimeLogFormDialog({
     "Review/feedback/support",
     "Assessment or examination",
     "Other",
-    "Furloughed",
   ];
 
   const selectedCourse = courses.find(

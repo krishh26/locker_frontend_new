@@ -106,7 +106,6 @@ const sessionTypes = [
   'Initial Session',
   'Gateway Ready',
   'EPA',
-  'Furloughed',
 ]
 
 const attendedStatuses = [
@@ -162,8 +161,6 @@ export function LearningPlanDataTable() {
           return t('options.sessionTypes.gatewayReady')
         case 'EPA':
           return t('options.sessionTypes.epa')
-        case 'Furloughed':
-          return t('options.sessionTypes.furloughed')
         default:
           return value
       }

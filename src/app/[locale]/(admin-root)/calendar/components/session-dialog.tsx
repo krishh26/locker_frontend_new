@@ -83,7 +83,6 @@ const SESSION_TYPES = [
   'Initial Session',
   'Gateway Ready',
   'EPA',
-  'Furloughed',
 ]
 
 export function SessionDialog({

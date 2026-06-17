@@ -956,17 +956,6 @@
       "noChatSelectedDescription": "从列表中选择一个课程以开始聊天"
     }
   },
-  "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
-  },
   "forms": {
   "pageTitle": "表单构建器",
   "pageSubtitle": "使用拖放构建器创建和管理动态表单",

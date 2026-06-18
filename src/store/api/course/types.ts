@@ -112,3 +112,8 @@ export interface CourseUpdateResponse {
   data: Course;
   error?: string;
 }
+
+export interface AddCourseFromLibraryRequest {
+  course_id: number;
+  organisation_id: number;
+}

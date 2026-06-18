@@ -280,7 +280,10 @@ export function ExamineEvidencePageContent({
 
       for (const topic of topics) {
         const title = topic.title ?? "";
-        const code = extractCriterionCode(title) || String(topic.id);
+        const code =
+          topic.code != null && String(topic.code).trim() !== ""
+            ? String(topic.code).trim()
+            : extractCriterionCode(title) || String(topic.id);
         map.set(String(topic.id), { code, title });
       }
     }

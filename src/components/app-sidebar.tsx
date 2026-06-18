@@ -48,7 +48,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useAppSelector } from '@/store/hooks'
 import { getAllowedRolesForPath } from '@/config/route-access'
-import { isRoleAllowed } from '@/config/auth-roles'
+import { isRoleAllowed, isAdminRole, normalizeRole } from '@/config/auth-roles'
 import { isMasterAdmin } from '@/utils/permissions'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
@@ -708,6 +708,7 @@ const data: {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAppSelector((state) => state.auth.user)
   const userRole = useAppSelector((state) => state.auth.user?.role)
+  const effectiveUserRole = normalizeRole(userRole) ?? userRole
   const learner = useAppSelector((state) => state.auth.learner)
   const tSidebar = useTranslations('sidebar')
 
@@ -842,7 +843,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ? getAllowedRolesForPath(item.url)
             : undefined
         const authorized = routeRoles
-          ? isRoleAllowed(userRole, routeRoles)
+          ? isRoleAllowed(effectiveUserRole, routeRoles)
           : false
 
         // Check feature access if item has featureCode
@@ -884,9 +885,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       if (group.label === 'Dashboards') {
         return userRole !== 'EQA'
       }
-      // Show "Admin" group only for Admin role
+      // Show "Admin" group for Admin (incl. OrganisationAdmin / CentreAdmin)
       if (group.label === 'Admin') {
-        return userRole === 'Admin'
+        return isAdminRole(userRole)
       }
       // Show "Learner" group only for Learner role
       if (group.label === 'Learner') {
@@ -944,7 +945,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       })
       .filter((group) => group.items.length > 0)
-  }, [userRole, isMasterAdminUser, tSidebar])
+  }, [userRole, effectiveUserRole, isMasterAdminUser, tSidebar])
 
   return (
     <Sidebar {...props}>

@@ -6,6 +6,7 @@ import type {
   CourseFormData,
   CourseCreateResponse,
   CourseUpdateResponse,
+  AddCourseFromLibraryRequest,
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
@@ -123,13 +124,14 @@ export const courseApi = createApi({
         return response;
       },
     }),
-    moveCourseToOrganisation: builder.mutation<
+    addCourseFromLibrary: builder.mutation<
       CourseCreateResponse,
-      number
+      AddCourseFromLibraryRequest
     >({
-      query: (courseId) => ({
-        url: `/course/move-to-organisation/${courseId}`,
+      query: (body) => ({
+        url: "/course/add-from-library",
         method: "POST",
+        body,
       }),
       invalidatesTags: ["Course"],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -183,7 +185,7 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
-  useMoveCourseToOrganisationMutation,
+  useAddCourseFromLibraryMutation,
   useGetGatewayCoursesQuery,
   useGetStandardCoursesQuery,
 } = courseApi;

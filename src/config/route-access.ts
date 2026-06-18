@@ -2,6 +2,7 @@ import {
   ALL_ROLES,
   authRoles,
   isRoleAllowed,
+  normalizeRole,
   type AllowedRoles,
   type Role,
 } from "@/config/auth-roles"
@@ -322,8 +323,9 @@ export function getAllowedRolesForPath(pathname: string): AllowedRoles {
 }
 
 export function canAccess(pathname: string, role: string | null): boolean {
-  // Admin and MasterAdmin have access to all routes
-  if (role === "Admin" || role === "MasterAdmin") {
+  const normalizedRole = normalizeRole(role)
+  // Admin (incl. OrganisationAdmin / CentreAdmin) and MasterAdmin have access to all routes
+  if (normalizedRole === "Admin" || normalizedRole === "MasterAdmin") {
     return true
   }
   const allowedRoles = getAllowedRolesForPath(pathname)

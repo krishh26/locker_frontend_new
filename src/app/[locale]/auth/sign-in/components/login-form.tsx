@@ -26,6 +26,7 @@ import type { RootState } from "@/store"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { mapUserApiToAuthUser } from "@/lib/auth/map-user-api-to-auth-user"
 import { cn, extractBaseQueryErrorMessage } from "@/lib/utils"
+import { normalizeRole } from "@/config/auth-roles"
 import { useTranslations } from "next-intl"
 
 const loginSchema = z.object({
@@ -66,7 +67,13 @@ export function LoginForm({
     dispatch(setAuthError(null))
     try {
       const result = await login(values).unwrap()
-      dispatch(setCredentials(result))
+      const normalizedUser = result.user
+        ? {
+            ...result.user,
+            role: normalizeRole(result.user.role) ?? result.user.role,
+          }
+        : result.user
+      dispatch(setCredentials({ ...result, user: normalizedUser }))
       toast.success("Signed in successfully")
 
       // Fetch learner details if user role is "Learner"
@@ -97,14 +104,20 @@ export function LoginForm({
         // Trigger user fetch - the query will run automatically via useEffect
         const userResponse = await getUser().unwrap()
         const authUser = mapUserApiToAuthUser(userResponse.data)
-        dispatch(updateUser(authUser))
+        dispatch(
+          updateUser({
+            ...authUser,
+            role: normalizeRole(authUser.role) ?? authUser.role,
+          }),
+        )
 
-        if (authUser.role === "PhoenixTeam") {
+        const activeRole = normalizeRole(authUser.role) ?? authUser.role
+        if (activeRole === "PhoenixTeam") {
           router.push("/tickets")
           return
         }
 
-        if (result.passwordChanged === false && result.user?.role !== "MasterAdmin") {
+        if (result.passwordChanged === false && activeRole !== "MasterAdmin") {
           toast.info("Please update your password to continue.")
           router.push("/auth/change-password")
           return

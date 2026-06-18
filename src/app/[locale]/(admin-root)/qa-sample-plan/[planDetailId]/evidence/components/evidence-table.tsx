@@ -96,12 +96,12 @@ export function EvidenceTable({
                   allUnitsToDisplay.map((unit) => (
                     <TableHead
                       key={`hdr-${String(unit.unit_code)}-${String(unit.id)}`}
-                      className="text-center min-w-[140px] max-w-[200px] align-bottom"
+                      className="text-center min-w-[140px] max-w-[200px]"
                     >
                       <Tooltip delayDuration={200}>
                         <TooltipTrigger asChild>
                           <span className="cursor-help line-clamp-3 text-xs font-medium leading-snug">
-                            {unit.title || unit.code}
+                            {unit.code || unit.title}
                           </span>
                         </TooltipTrigger>
                         <TooltipContent side="top" sideOffset={6} className="max-w-[360px]">

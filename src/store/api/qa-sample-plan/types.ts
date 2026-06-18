@@ -302,6 +302,7 @@ export interface UnitMappingItem {
     trainerMapped?: boolean;
     topics?: Array<{
       id: string | number;
+      code?: string;
       title?: string;
       learnerMapped?: boolean;
       trainerMapped?: boolean;

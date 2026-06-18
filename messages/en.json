@@ -4590,7 +4590,8 @@
       "forbiddenDelete": "You do not have access to delete this course.",
       "deleteFailed": "Failed to delete course",
       "moveToPersonalSuccess": "Course moved to your organisation successfully",
-      "moveToPersonalFailed": "Failed to move course to your organisation"
+      "moveToPersonalFailed": "Failed to move course to your organisation",
+      "moveToPersonalNoOrganisation": "No organisation assigned to your account"
     },
     "course": {
       "pageTitleCreate": "Create Course",

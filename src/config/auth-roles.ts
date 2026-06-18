@@ -11,20 +11,41 @@ const baseRoles = [
   "AccountManager",
 ] as const
 
+/** API roles that map to Admin for access, sidebar, and redirects */
+export const ADMIN_EQUIVALENT_ROLES = ["CentreAdmin", "OrganisationAdmin"] as const
+
 /** Roles returned by API that we strip from auth/display (not used in app) */
-export const ROLES_STRIPPED_FROM_API = ["CentreAdmin", "OrganisationAdmin" ,"LIQA" ,"Line Manager"] as const
+export const ROLES_STRIPPED_FROM_API = ["LIQA", "Line Manager"] as const
 
 export type Role = (typeof baseRoles)[number]
 
 /**
- * Filter out CentreAdmin and OrganisationAdmin from role arrays (e.g. from API).
- * Use when setting user.roles or displaying roles so these two are never shown or used.
+ * Normalise API role arrays: OrganisationAdmin/CentreAdmin become Admin;
+ * strip unused roles from display/switcher.
  */
 export function filterRolesFromApi(roles: string[] | null | undefined): string[] {
   if (!Array.isArray(roles) || roles.length === 0) return []
-  return roles.filter(
-    (r) => !ROLES_STRIPPED_FROM_API.includes(r as (typeof ROLES_STRIPPED_FROM_API)[number])
-  )
+
+  const result: string[] = []
+
+  for (const role of roles) {
+    if ((ADMIN_EQUIVALENT_ROLES as readonly string[]).includes(role)) {
+      if (!result.includes("Admin")) {
+        result.push("Admin")
+      }
+      continue
+    }
+
+    if ((ROLES_STRIPPED_FROM_API as readonly string[]).includes(role)) {
+      continue
+    }
+
+    if ((baseRoles as readonly string[]).includes(role) && !result.includes(role)) {
+      result.push(role)
+    }
+  }
+
+  return result
 }
 
 export const authRoles = {
@@ -49,12 +70,22 @@ export function normalizeRole(role: unknown): Role | null {
   if (typeof role !== "string") {
     return null
   }
-  if (ROLES_STRIPPED_FROM_API.includes(role as (typeof ROLES_STRIPPED_FROM_API)[number])) {
+
+  if ((ADMIN_EQUIVALENT_ROLES as readonly string[]).includes(role)) {
+    return "Admin"
+  }
+
+  if ((ROLES_STRIPPED_FROM_API as readonly string[]).includes(role)) {
     return null
   }
+
   return (baseRoles as readonly string[]).includes(role)
     ? (role as Role)
     : null
+}
+
+export function isAdminRole(role: unknown): boolean {
+  return normalizeRole(role) === "Admin"
 }
 
 export function isRoleAllowed(
@@ -102,4 +133,3 @@ export function getRolesWithAdmin(
   // Otherwise, add Admin to the array
   return ["Admin", ...roles] as const satisfies readonly Role[]
 }
-

@@ -1,4 +1,5 @@
 import { decodeJwtPayload } from "@/store/api/auth/api"
+import { normalizeRole } from "@/config/auth-roles"
 
 /**
  * Resolves the active session role for middleware / server checks.
@@ -31,5 +32,7 @@ export function resolveSessionRole(
   token: string | undefined | null,
   userCookie: string | undefined | null,
 ): string | null {
-  return getRoleFromAccessToken(token) ?? getRoleFromUserCookie(userCookie)
+  const rawRole = getRoleFromAccessToken(token) ?? getRoleFromUserCookie(userCookie)
+  if (!rawRole) return null
+  return normalizeRole(rawRole) ?? rawRole
 }

@@ -8,7 +8,7 @@ import { exportTableToPdf } from '@/utils/pdfExport'
 import {
   useGetCoursesQuery,
   useDeleteCourseMutation,
-  useMoveCourseToOrganisationMutation,
+  useAddCourseFromLibraryMutation,
 } from '@/store/api/course/courseApi'
 import {
   type ColumnDef,
@@ -75,6 +75,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { DataTablePagination } from '@/components/data-table-pagination'
 import { useTranslations } from 'next-intl'
 import { isMasterAdmin } from '@/utils/permissions'
+import { getErrorMessage } from '@/lib/utils'
 
 const courseTypes = ['all', 'Qualification', 'Standard', 'Gateway'] as const
 
@@ -115,8 +116,8 @@ export function CourseBuilderDataTable() {
     refetchOnMountOrArgChange: true,
   })
   const [deleteCourse] = useDeleteCourseMutation()
-  const [moveCourseToOrganisation, { isLoading: isMovingCourse }] =
-    useMoveCourseToOrganisationMutation()
+  const [addCourseFromLibrary, { isLoading: isMovingCourse }] =
+    useAddCourseFromLibraryMutation()
 
   const handleSearch = useCallback(() => {
     setFilters((prev) => ({
@@ -192,21 +193,23 @@ export function CourseBuilderDataTable() {
 
   const handleMoveToPersonal = useCallback(
     async (course: Course) => {
+      const organisationId = user?.assignedOrganisationIds?.[0]
+      if (!organisationId) {
+        toast.error(t('toast.moveToPersonalNoOrganisation'))
+        return
+      }
+
       try {
-        await moveCourseToOrganisation(course.course_id).unwrap()
+        await addCourseFromLibrary({
+          course_id: course.course_id,
+          organisation_id: Number(organisationId),
+        }).unwrap()
         toast.success(t('toast.moveToPersonalSuccess'))
       } catch (error: unknown) {
-        const err = error as {
-          data?: { message?: string; error?: string }
-        }
-        toast.error(
-          err?.data?.message ??
-            err?.data?.error ??
-            t('toast.moveToPersonalFailed'),
-        )
+        toast.error(getErrorMessage(error) ?? t('toast.moveToPersonalFailed'))
       }
     },
-    [moveCourseToOrganisation, t],
+    [addCourseFromLibrary, t, user?.assignedOrganisationIds],
   )
 
   const handleDeleteClick = (course: Course) => {

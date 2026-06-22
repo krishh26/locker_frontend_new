@@ -170,7 +170,6 @@ export function InlineEditSampleContent({
             unitName={unitName}
             unitType={unitType}
             onFormDataChange={onFormDataChange}
-            isReadOnly={true}
           />
         </div>
 

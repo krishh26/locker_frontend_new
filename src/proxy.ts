@@ -7,7 +7,7 @@ import { canAccess } from "@/config/route-access"
 import { resolveSessionRole } from "@/lib/auth/session-role"
 import { routing } from "@/i18n/navigation"
 
-// Create the i18n middleware using the routing configuration
+// Create the i18n proxy using the routing configuration
 const intlMiddleware = createMiddleware(routing)
 
 // Protected routes - all routes except public ones need authentication
@@ -70,17 +70,17 @@ function isPublicRoute(pathname: string) {
   return pathname === PUBLIC_PATH
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get(TOKEN_COOKIE_KEY)?.value
   const userCookie = request.cookies.get(USER_COOKIE_KEY)?.value
   const userRole = resolveSessionRole(token, userCookie)
   
-  // First, let i18n middleware handle locale routing
-  // With localePrefix: 'never', it won't add locale to URLs but will handle locale detection
+  // First, let next-intl handle locale routing
+  // With localePrefix: 'never', URLs stay clean but requests rewrite to /[locale]/...
   const response = intlMiddleware(request)
   
-  // If intl middleware redirected, return that response
+  // If intl proxy redirected, return that response
   if (response.status === 307 || response.status === 308) {
     return response
   }
@@ -117,7 +117,6 @@ export function middleware(request: NextRequest) {
   }
 
   // Let auth routes through if no token (user needs to sign in)
-  // Don't redirect, just let the response through
   if (!token && isAuthRoute(pathname)) {
     return response
   }
@@ -138,12 +137,9 @@ export function middleware(request: NextRequest) {
   return response
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    // Match all request paths except:
-    // - api, _next/static, _next/image, favicon.ico
-    // - paths containing a dot (static files in public, e.g. logo-text.png)
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+    // Match all pathnames except api, Next.js internals, and static files
+    "/((?!api|_next|_vercel|.*\\..*).*)",
   ],
 }

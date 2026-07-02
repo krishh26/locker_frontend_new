@@ -60,8 +60,6 @@ import { ActionMenu } from "./action-menu";
 import { DownloadDialog } from "./download-dialog";
 import {
   formatDate,
-  getStatusColor,
-  displayValue,
   truncateText,
 } from "../../utils/evidence-helpers";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
@@ -376,29 +374,6 @@ export function EvidenceLibraryDataTable() {
                 <FileText className="h-5 w-5 text-primary-foreground" />
               </div>
             </a>
-          );
-        },
-      },
-      {
-        accessorKey: "status",
-        header: t("table.columns.status"),
-        cell: ({ row }) => {
-          const status = row.original.status;
-          const color = getStatusColor(status);
-          return (
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                color === "success"
-                  ? "bg-accent text-white"
-                  : color === "warning"
-                  ? "bg-secondary text-white"
-                  : color === "info"
-                  ? "bg-primary text-white"
-                  : "bg-muted text-muted-foreground"
-              }`}
-            >
-              {displayValue(status)}
-            </span>
           );
         },
       },

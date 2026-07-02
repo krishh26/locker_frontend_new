@@ -75,7 +75,7 @@ import type { LearnerListItem, LearnerFilters, LearnerCourse } from "@/store/api
 import { LearnersFormDialog } from "./learners-form-dialog";
 import { LearnerCommentDialog } from "./learner-comment-dialog";
 import { LearnersCsvUploadDialog } from "./learners-csv-upload-dialog";
-import { EmployerLearnerRow } from "./employer-learner-row";
+import { LearnerPortfolioCard } from "@/app/[locale]/(trainer-root)/learner-overview/components/learner-portfolio-card";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
@@ -1239,9 +1239,10 @@ export function LearnersDataTable() {
         <div className="space-y-4">
           {tableData.length > 0 ? (
             tableData.map((learner) => (
-              <EmployerLearnerRow
+              <LearnerPortfolioCard
                 key={learner.learner_id}
                 learner={learner as LearnerListItem}
+                onCommentUpdate={() => refetchData()}
               />
             ))
           ) : (

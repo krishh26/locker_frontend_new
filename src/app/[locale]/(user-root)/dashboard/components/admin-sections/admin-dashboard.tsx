@@ -33,6 +33,7 @@ import { buildLearnersDueComplete30DaysCsv } from '../../utils/learners-due-comp
 import { buildDefaultReviewOverdueCsv } from '../../utils/default-review-overdue-csv-export'
 import { buildSamplingPlanOverdueCsv } from '../../utils/sampling-plan-overdue-csv-export'
 import { buildAssignmentsWithoutMappedCsv } from '../../utils/assignments-without-mapped-csv-export'
+import { buildUnmappedEvidenceCsv } from '../../utils/unmapped-evidence-csv-export'
 import { buildSessionLearnerActionCsv } from '../../utils/session-learner-action-csv-export'
 import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
 
@@ -47,6 +48,7 @@ const SHEET_CSV_BUILDERS: Record<
   learners_course_due_in_next_30_days: buildLearnersDueComplete30DaysCsv,
   default_review_overdue: buildDefaultReviewOverdueCsv,
   assignments_without_mapped: buildAssignmentsWithoutMappedCsv,
+  unmapped_evidence: buildUnmappedEvidenceCsv,
   session_learner_action_due: buildSessionLearnerActionCsv,
   session_action_due_in_next_7_days: buildSessionLearnerActionCsv,
   session_learner_action_overdue: buildSessionLearnerActionCsv,

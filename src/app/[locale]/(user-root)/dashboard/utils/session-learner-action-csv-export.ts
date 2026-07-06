@@ -1,6 +1,6 @@
 /**
  * Session learner action CSV – business report for session action dashboard tiles.
- * Backend returns SessionLearnerAction[] with learner_plan, learners, and user_id joined.
+ * Backend returns SessionLearnerAction[] with learner_plan and learners joined.
  */
 
 import {
@@ -10,7 +10,6 @@ import {
   formatText,
   formatYesNo,
   learnerDisplayName,
-  userDisplayName,
 } from './csv-export-helpers'
 
 export const SESSION_LEARNER_ACTION_CSV_HEADERS = [
@@ -27,9 +26,6 @@ export const SESSION_LEARNER_ACTION_CSV_HEADERS = [
   'Plan Type',
   'Plan Start Date',
   'Trainer Name',
-  'Added By',
-  'Unit Reference',
-  'Unit Name',
   'Trainer Feedback',
   'Learner Feedback',
   'Time Spent (minutes)',
@@ -42,12 +38,6 @@ function getLearnerPlan(row: Record<string, unknown>): Record<string, unknown> |
   const plan = row.learner_plan
   if (!plan || typeof plan !== 'object') return null
   return plan as Record<string, unknown>
-}
-
-function getUnitField(row: Record<string, unknown>, field: 'unit_ref' | 'unit_name'): string {
-  const unit = row.unit
-  if (!unit || typeof unit !== 'object') return ''
-  return formatText((unit as Record<string, unknown>)[field])
 }
 
 function actionRowToCells(
@@ -68,10 +58,7 @@ function actionRowToCells(
     plan ? formatText(plan.title) : '',
     plan ? formatText(plan.type) : '',
     plan ? formatCsvDateTime(plan.startDate) : '',
-    plan ? userDisplayName(plan.assessor_id) : '',
-    userDisplayName(row.added_by),
-    getUnitField(row, 'unit_ref'),
-    getUnitField(row, 'unit_name'),
+    '',
     formatText(row.trainer_feedback),
     formatText(row.learner_feedback),
     formatText(row.time_spent),

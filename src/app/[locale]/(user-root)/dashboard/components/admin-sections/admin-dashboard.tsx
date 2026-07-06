@@ -26,37 +26,54 @@ import type {
 import { cardApiTypeToCountKey } from '@/store/api/dashboard/types'
 import { useAppSelector } from '@/store/hooks'
 import { buildLockerReportCsvRows } from '../../data/locker-report-mapping'
+import { buildLearnersOnBilCsv } from '../../utils/learners-on-bil-csv-export'
+import { buildOverdueLearnersCsv } from '../../utils/overdue-learners-csv-export'
+import { buildOverdueProgressReviewCsv } from '../../utils/overdue-progress-review-csv-export'
+import { buildLearnersDueComplete30DaysCsv } from '../../utils/learners-due-complete-30-days-csv-export'
+import { buildDefaultReviewOverdueCsv } from '../../utils/default-review-overdue-csv-export'
+import { buildSamplingPlanOverdueCsv } from '../../utils/sampling-plan-overdue-csv-export'
+import { buildAssignmentsWithoutMappedCsv } from '../../utils/assignments-without-mapped-csv-export'
+import { buildUnmappedEvidenceCsv } from '../../utils/unmapped-evidence-csv-export'
+import { buildSessionLearnerActionCsv } from '../../utils/session-learner-action-csv-export'
+import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
 
-/** Keys to strip from generic CSV export (file paths and similar). */
-const FILE_PATH_HEADERS_BLOCKLIST = [
-  'file_path',
-  'filePath',
-  'file_path_link',
-  'file_path_url',
-]
-
-function genericFlattenRowForCsv(
-  row: Record<string, unknown>,
-): Record<string, unknown> {
-  const flat: Record<string, unknown> = {}
-
-  for (const [key, value] of Object.entries(row)) {
-    if (FILE_PATH_HEADERS_BLOCKLIST.includes(key)) continue
-
-    if (
-      value !== null &&
-      typeof value === 'object' &&
-      !Array.isArray(value) &&
-      !(value instanceof Date)
-    ) {
-      flat[key] = JSON.stringify(value)
-    } else {
-      flat[key] = value ?? ''
-    }
-  }
-
-  return flat
+const SHEET_CSV_BUILDERS: Record<
+  string,
+  (rows: Record<string, unknown>[]) => string
+> = {
+  suspended_learners: buildLearnersOnBilCsv,
+  learners_over_due: buildOverdueLearnersCsv,
+  learner_plan_due: buildOverdueProgressReviewCsv,
+  learner_plan_due_in_next_7_days: buildOverdueProgressReviewCsv,
+  learners_course_due_in_next_30_days: buildLearnersDueComplete30DaysCsv,
+  default_review_overdue: buildDefaultReviewOverdueCsv,
+  assignments_without_mapped: buildAssignmentsWithoutMappedCsv,
+  unmapped_evidence: buildUnmappedEvidenceCsv,
+  session_learner_action_due: buildSessionLearnerActionCsv,
+  session_action_due_in_next_7_days: buildSessionLearnerActionCsv,
+  session_learner_action_overdue: buildSessionLearnerActionCsv,
+  iqa_actions_overdue: buildIqaActionsCsv,
+  all_iqa_actions: buildIqaActionsCsv,
+  iqa_actions_due_in_30_days: buildIqaActionsCsv,
+  session_due_today: buildOverdueProgressReviewCsv,
+  session_due_in_7_days: buildOverdueProgressReviewCsv,
+  sample_due_in_month: buildSamplingPlanOverdueCsv,
+  sampling_plan_overdue: buildSamplingPlanOverdueCsv,
 }
+
+function extractCardDataArray(res: unknown): unknown[] {
+  if (!res || typeof res !== 'object') return []
+
+  const record = res as Record<string, unknown>
+
+  if (Array.isArray(record.data)) return record.data
+  if (Array.isArray(record.learners)) return record.learners
+  if (Array.isArray(record.list)) return record.list
+
+  const arrayValue = Object.values(record).find((v) => Array.isArray(v))
+  return arrayValue ? (arrayValue as unknown[]) : []
+}
+
 /* ============================================================
    THEME-ADAPTIVE CARD BACKGROUNDS
 ============================================================ */
@@ -152,26 +169,8 @@ export function AdminDashboard() {
     try {
       const response = await getCardData(apiType).unwrap()
       const res = response as ActiveLearnersCardDataResponse
-
-      /* Backend for active_learners should return { status, data: [] | [...] } (or learners/list).
-         Optional summary: { sa_unmapped_evidence_count?, outstanding_iqa_actions_count?, ... }. */
-      let data: unknown[] = []
-      if (Array.isArray(res.data)) {
-        data = res.data
-      } else if (
-        Array.isArray((res as unknown as Record<string, unknown>).learners)
-      ) {
-        data = (res as unknown as Record<string, unknown>).learners as unknown[]
-      } else if (
-        Array.isArray((res as unknown as Record<string, unknown>).list)
-      ) {
-        data = (res as unknown as Record<string, unknown>).list as unknown[]
-      } else {
-        const values = Object.values(res as unknown as Record<string, unknown>)
-        const arrayValue = values.find((v) => Array.isArray(v))
-        if (arrayValue) data = arrayValue as unknown[]
-      }
-
+      const data = extractCardDataArray(res)
+      const recordData = data as Record<string, unknown>[]
       const summary = res.summary
       const csvParts: string[] = []
 
@@ -197,47 +196,13 @@ export function AdminDashboard() {
       }
 
       /* -------- Data rows -------- */
-      if (Array.isArray(data) && data.length > 0) {
-        if (apiType === 'active_learners') {
-          const { headers, dataRows } = buildLockerReportCsvRows(
-            data as Record<string, unknown>[],
-          )
-          csvParts.push(headers, ...dataRows)
-        } else {
-          const flatRows = data.map((row) =>
-            genericFlattenRowForCsv({
-              ...(row as Record<string, unknown>),
-            }),
-          )
+      const sheetBuilder = SHEET_CSV_BUILDERS[apiType]
 
-          const rawHeaders = Object.keys(flatRows[0])
-          const filteredHeaders = rawHeaders.filter(
-            (h) => !FILE_PATH_HEADERS_BLOCKLIST.includes(h),
-          )
-          const headers = filteredHeaders.map(
-            (h) =>
-              (tAdmin as (key: string) => string)('csvHeaders.' + h) ||
-              h.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-          )
-
-          const csvHeaders = headers
-            .map((h) => `"${h.replace(/"/g, '""')}"`)
-            .join(',')
-
-          const csvRows = flatRows.map((row) =>
-            filteredHeaders
-              .map((header) => {
-                const value = row[header]
-                if (value === null || value === undefined) return '""'
-                const str =
-                  value instanceof Date ? value.toISOString() : String(value)
-                return `"${str.replace(/"/g, '""')}"`
-              })
-              .join(','),
-          )
-
-          csvParts.push(csvHeaders, ...csvRows)
-        }
+      if (apiType === 'active_learners') {
+        const { headers, dataRows } = buildLockerReportCsvRows(recordData)
+        csvParts.push(headers, ...dataRows)
+      } else if (sheetBuilder) {
+        csvParts.push(sheetBuilder(recordData))
       }
 
       /* Ensure a file is always generated (e.g. when data and summary are empty). */

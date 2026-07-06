@@ -28,6 +28,7 @@ export type CardApiType =
   | "session_due_in_7_days"
   | "sample_due_in_month"
   | "sampling_plan_overdue"
+  | "risk_ratings"
 
 // Mapping from CardApiType (query param) to DashboardCounts key (API response)
 export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> = {
@@ -50,6 +51,7 @@ export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> =
   session_due_in_7_days: "sessionDueIn7Days_count",
   sample_due_in_month: "sampleDueInMonth_count",
   sampling_plan_overdue: "samplingPlanOverdue_count",
+  risk_ratings: "risk_ratings_count",
 }
 
 export interface DashboardCounts {

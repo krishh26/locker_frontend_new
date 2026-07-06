@@ -23,7 +23,8 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Due session in next 7 days": "session_action_due_in_next_7_days",
   "Sessions due in next 7 days": "session_action_due_in_next_7_days",
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
-}
+  "Risk ratings": "risk_ratings",
+} 
 
 export interface AdminDashboardCardData {
   id: string
@@ -247,6 +248,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "risk_ratings",
   },
   {
     id: "outstanding_eqa_actions",

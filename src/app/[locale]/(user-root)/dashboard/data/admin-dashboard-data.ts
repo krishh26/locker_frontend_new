@@ -6,11 +6,11 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Overdue Progress Reviews": "learner_plan_due",
   "Learners due to complete within 30 days": "learners_course_due_in_next_30_days",
   "Learners off track": "assignments_without_mapped",
-  "Unmapped evidences": "assignments_without_mapped",
+  "Unmapped evidences": "unmapped_evidence",
   "Session learner action due (today)": "session_learner_action_due",
   "Session learner actions due in next 7 days": "session_action_due_in_next_7_days",
   "Session learner action overdue": "session_learner_action_overdue",
-  "Learners on a Sampling Plan": "learner_plan_due_in_next_7_days",
+  "Learners on a Sampling Plan": "learner_plan_due",
   "Learners not on a Sampling Plan": "learner_plan_due_in_next_7_days",
   "Default review overdue": "default_review_overdue",
   "IQA actions overdue": "iqa_actions_overdue",
@@ -23,7 +23,8 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Due session in next 7 days": "session_action_due_in_next_7_days",
   "Sessions due in next 7 days": "session_action_due_in_next_7_days",
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
-}
+  "Risk ratings": "risk_ratings",
+} 
 
 export interface AdminDashboardCardData {
   id: string
@@ -101,7 +102,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "assignments_without_mapped",
+    apiType: "unmapped_evidence",
   },
   {
     id: "session_learner_action_due_today",
@@ -133,7 +134,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "learner_plan_due_in_next_7_days",
+    apiType: "learner_plan_due",
   },
   {
     id: "learner_not_all_sampling_plan",
@@ -141,7 +142,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "learner_plan_due_in_next_7_days",
+    apiType: "learners_over_due",
   },
   {
     id: "default_review_overdue",
@@ -157,6 +158,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "session_learner_action_due",
   },
   {
     id: "overdue_actions",
@@ -164,6 +166,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "session_learner_action_overdue",
   },
   {
     id: "actions_due_7_days",
@@ -245,6 +248,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "risk_ratings",
   },
   {
     id: "outstanding_eqa_actions",

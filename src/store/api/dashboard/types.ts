@@ -12,6 +12,7 @@ export type CardApiType =
   | "active_learners"
   | "suspended_learners"
   | "assignments_without_mapped"
+  | "unmapped_evidence"
   | "learners_over_due"
   | "learner_plan_due"
   | "learner_plan_due_in_next_7_days"
@@ -27,12 +28,14 @@ export type CardApiType =
   | "session_due_in_7_days"
   | "sample_due_in_month"
   | "sampling_plan_overdue"
+  | "risk_ratings"
 
 // Mapping from CardApiType (query param) to DashboardCounts key (API response)
 export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> = {
   active_learners: "active_learners_count",
   suspended_learners: "learners_suspended_count",
   assignments_without_mapped: "assignmentsWithoutMapped_count",
+  unmapped_evidence: "assignmentsWithoutMapped_count",
   learners_over_due: "learnersOverDue_count",
   learner_plan_due: "learnerPlanDue_count",
   learner_plan_due_in_next_7_days: "learnerPlanDueInNext7Days_count",
@@ -48,6 +51,7 @@ export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> =
   session_due_in_7_days: "sessionDueIn7Days_count",
   sample_due_in_month: "sampleDueInMonth_count",
   sampling_plan_overdue: "samplingPlanOverdue_count",
+  risk_ratings: "risk_ratings_count",
 }
 
 export interface DashboardCounts {

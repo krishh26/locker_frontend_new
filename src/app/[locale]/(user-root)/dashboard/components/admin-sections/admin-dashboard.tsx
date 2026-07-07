@@ -36,6 +36,7 @@ import { buildAssignmentsWithoutMappedCsv } from '../../utils/assignments-withou
 import { buildUnmappedEvidenceCsv } from '../../utils/unmapped-evidence-csv-export'
 import { buildSessionLearnerActionCsv } from '../../utils/session-learner-action-csv-export'
 import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
+import { buildTrainerRiskRatingCsv } from '../../utils/trainer-risk-rating-csv-export'
 
 const SHEET_CSV_BUILDERS: Record<
   string,
@@ -59,6 +60,7 @@ const SHEET_CSV_BUILDERS: Record<
   session_due_in_7_days: buildOverdueProgressReviewCsv,
   sample_due_in_month: buildSamplingPlanOverdueCsv,
   sampling_plan_overdue: buildSamplingPlanOverdueCsv,
+  risk_ratings: buildTrainerRiskRatingCsv,
 }
 
 function extractCardDataArray(res: unknown): unknown[] {

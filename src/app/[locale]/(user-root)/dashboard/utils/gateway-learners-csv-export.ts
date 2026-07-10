@@ -1,13 +1,19 @@
-/** Learners due to complete within 30 days – business report for learners_course_due_in_next_30_days tile. */
+/**
+ * Gateway learners CSV – business report for gateway_learners dashboard tile.
+ * Backend returns UserCourse[] with learner_id and course joined.
+ */
 
 import {
-  escapeCsvCell,
+  buildCsvString,
   formatCsvDateOnly,
   formatText,
   formatYesNo,
+  getCourseFromUserCourse,
+  getLearnerFromUserCourse,
+  learnerDisplayName,
 } from './csv-export-helpers'
 
-export const LEARNERS_DUE_COMPLETE_30_DAYS_CSV_HEADERS = [
+export const GATEWAY_LEARNERS_CSV_HEADERS = [
   'Learner Name',
   'Email',
   'Mobile',
@@ -18,38 +24,21 @@ export const LEARNERS_DUE_COMPLETE_30_DAYS_CSV_HEADERS = [
   'Job Title',
   'Course Name',
   'Course Code',
-  'Course Type',
   'Course Level',
+  'Course Type',
   'Course Status',
   'Start Date',
   'End Date',
   'Predicted Grade',
   'Final Grade',
-  'Awarding Body (Course)',
+  'Course Awarding Body',
   'BIL Return Date',
   'Main Course',
 ] as const
 
-function getLearner(row: Record<string, unknown>): Record<string, unknown> | null {
-  const learner = row.learner_id
-  if (!learner || typeof learner !== 'object') return null
-  return learner as Record<string, unknown>
-}
-
-function getCourse(row: Record<string, unknown>): Record<string, unknown> | null {
-  const course = row.course
-  if (!course || typeof course !== 'object') return null
-  return course as Record<string, unknown>
-}
-
-function learnerDisplayName(learner: Record<string, unknown> | null): string {
-  if (!learner) return ''
-  return `${formatText(learner.first_name)} ${formatText(learner.last_name)}`.trim()
-}
-
 function rowToCells(row: Record<string, unknown>): string[] {
-  const learner = getLearner(row)
-  const course = getCourse(row)
+  const learner = getLearnerFromUserCourse(row)
+  const course = getCourseFromUserCourse(row)
 
   return [
     learnerDisplayName(learner),
@@ -62,8 +51,8 @@ function rowToCells(row: Record<string, unknown>): string[] {
     learner ? formatText(learner.job_title) : '',
     course ? formatText(course.course_name) : '',
     course ? formatText(course.course_code) : '',
-    course ? formatText(course.course_type) : '',
     course ? formatText(course.level) : '',
+    course ? formatText(course.course_type) : '',
     formatText(row.course_status),
     formatCsvDateOnly(row.start_date),
     formatCsvDateOnly(row.end_date),
@@ -75,13 +64,8 @@ function rowToCells(row: Record<string, unknown>): string[] {
   ]
 }
 
-export function buildLearnersDueComplete30DaysCsv(
-  rows: Record<string, unknown>[],
-): string {
-  const headerRow = [...LEARNERS_DUE_COMPLETE_30_DAYS_CSV_HEADERS]
+export function buildGatewayLearnersCsv(rows: Record<string, unknown>[]): string {
+  const headerRow = [...GATEWAY_LEARNERS_CSV_HEADERS]
   const dataRows = rows.map((row) => rowToCells(row))
-
-  return [headerRow, ...dataRows]
-    .map((row) => row.map((cell) => escapeCsvCell(cell)).join(','))
-    .join('\n')
+  return buildCsvString([headerRow, ...dataRows])
 }

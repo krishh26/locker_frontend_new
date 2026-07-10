@@ -18,67 +18,60 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
 const learnerCsvHeaders = [
-  "FirstNames",
-  "Surname",
+  "First Names",
+  "Last Name",
   "Email",
   "Mobile",
-  "NINumber",
-  "Courses",
-  "StartDate",
-  "ExpectedEnd",
-  "TrainerFullName",
-  "EmployeeFullName",
-  "IQAFullName",
-  "CentreName",
-  "FundingBody",
-  "JobTitle",
+  "NI Number",
+  "Trainer Full Name",
+  "Employer Full Name",
+  "IQA Full Name",
+  "Centre Name",
+  "Funding Body",
+  "Job Title",
 ] as const;
 
 const requiredLearnerCsvFields = [
-  "FirstNames",
-  "Surname",
+  "First Names",
+  "Last Name",
   "Email",
   "Mobile",
-  "Courses",
-  "EmployeeFullName",
-  "CentreName",
-  "FundingBody",
-  "JobTitle",
+  "Employer Full Name",
+  "Centre Name",
+  "Funding Body",
+  "Job Title",
 ] as const;
 
 const requiredLearnerCsvFieldSet = new Set<string>(requiredLearnerCsvFields);
 
 const requiredLearnerCsvFieldLabels: Record<(typeof requiredLearnerCsvFields)[number], string> = {
-  FirstNames: "First Names",
-  Surname: "Surname",
+  "First Names": "First Names",
+  "Last Name": "Last Name",
   Email: "Email",
   Mobile: "Mobile",
-  Courses: "Courses",
-  EmployeeFullName: "Employee",
-  CentreName: "CentreName",
-  FundingBody: "FundingBody",
-  JobTitle: "JobTitle",
+  "Employer Full Name": "Employer Full Name",
+  "Centre Name": "Centre Name",
+  "Funding Body": "Funding Body",
+  "Job Title": "Job Title",
 };
 
-const normalizeCsvHeader = (header: string) => header.replace(/\*+$/g, "").trim();
+/** Map legacy camelCase headers to spaced header names */
+const legacyCsvHeaderMap: Record<string, string> = {
+  FirstNames: "First Names",
+  Surname: "Last Name",
+  NINumber: "NI Number",
+  TrainerFullName: "Trainer Full Name",
+  EmployeeFullName: "Employer Full Name",
+  EmployerFullName: "Employer Full Name",
+  IQAFullName: "IQA Full Name",
+  CentreName: "Centre Name",
+  FundingBody: "Funding Body",
+  JobTitle: "Job Title",
+};
 
-// Function to convert date from DD-MM-YYYY to YYYY-MM-DD format
-const convertDateFormat = (dateString: string): string => {
-  if (!dateString || typeof dateString !== "string") return dateString;
-
-  // Check if the date is already in YYYY-MM-DD format
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-    return dateString;
-  }
-
-  // Convert from DD-MM-YYYY to YYYY-MM-DD
-  const parts = dateString.split("-");
-  if (parts.length === 3) {
-    const [day, month, year] = parts;
-    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-  }
-
-  return dateString;
+const normalizeCsvHeader = (header: string) => {
+  const cleaned = header.replace(/\*+$/g, "").trim().replace(/\s+/g, " ");
+  return legacyCsvHeaderMap[cleaned] ?? cleaned;
 };
 
 // Function to generate password for learners
@@ -112,9 +105,6 @@ const downloadSampleCSV = () => {
     "john.smith@example.com",
     "07123456789",
     "AB123456C",
-    "Course A,Course B",
-    "01-01-2026",
-    "31-12-2026",
     "Trainer One",
     "Employer One",
     "IQA One",
@@ -194,32 +184,17 @@ export function LearnersCsvUploadDialog({
           setError("");
           setParsedData(
             rows.map((row) => {
-              const firstNames = (row["FirstNames"] ?? "").toString().trim();
-              const lastName = (row.Surname ?? "").toString().trim();
+              const firstNames = (row["First Names"] ?? "").toString().trim();
+              const lastName = (row["Last Name"] ?? "").toString().trim();
               const email = (row.Email ?? "").toString().trim();
               const mobile = (row.Mobile ?? "").toString().trim();
-              const centreName = (row.CentreName ?? "").toString().trim();
-              const fundingBody = (row.FundingBody ?? "").toString().trim();
-              const jobTitle = (row.JobTitle ?? "").toString().trim();
-              const ninNumber = (row.NINumber ?? "").toString().trim();
-              const trainerFullName = (row.TrainerFullName ?? "").toString().trim();
-              const iqaFullName = (row.IQAFullName ?? "").toString().trim();
-              const employerFullName = (row?.EmployeeFullName ?? "")
+              const centreName = (row["Centre Name"] ?? "").toString().trim();
+              const fundingBody = (row["Funding Body"] ?? "").toString().trim();
+              const jobTitle = (row["Job Title"] ?? "").toString().trim();
+              const ninNumber = (row["NI Number"] ?? "").toString().trim();
+              const employerFullName = (row["Employer Full Name"] ?? "")
                 .toString()
                 .trim();
-
-              const coursesList = (row.Courses ?? "")
-                .toString()
-                .split(",")
-                .map((course: string) => course.trim())
-                .filter(Boolean);
-
-              const startRaw = (row.StartDate ?? "").toString().trim();
-              const expectedEndRaw = (row.ExpectedEnd ?? "").toString().trim();
-              const startDate = startRaw ? convertDateFormat(startRaw) : undefined;
-              const expectedEnd = expectedEndRaw
-                ? convertDateFormat(expectedEndRaw)
-                : undefined;
 
               const generatedPassword = generatePassword(
                 firstNames,
@@ -230,14 +205,7 @@ export function LearnersCsvUploadDialog({
               return {
                 first_name: firstNames,
                 last_name: lastName,
-                courses: coursesList.map((course) => ({
-                  start_date: startDate,
-                  course_name: course,
-                  end_date: expectedEnd,
-                  trainer_name: trainerFullName,
-                  iqa_name: iqaFullName,
-                  employer_name: employerFullName,
-                })),
+                courses: [],
                 user_name: `${firstNames.toLowerCase()}_${lastName.toLowerCase()}`
                   .replace(/\s+/g, "_")
                   .replace(/^_+|_+$/g, ""),

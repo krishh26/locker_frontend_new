@@ -1,5 +1,10 @@
 /** Active learners CSV – column order and labels match the reference Excel sheet. */
 
+import {
+  formatCsvDateOnly,
+  formatCsvDateTime,
+} from '@/utils/csv-export-helpers'
+
 export const ACTIVE_LEARNERS_CSV_HEADERS = [
   'Learner First Name',
   'Learner Last Name',
@@ -76,32 +81,6 @@ function formatProgressValue(value: unknown): string {
     return String(Math.round(parsePercentage(value)))
   }
   return String(value)
-}
-
-function formatCsvDate(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  const date = value instanceof Date ? value : new Date(String(value))
-  if (isNaN(date.getTime())) return ''
-  return date.toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  })
-}
-
-function formatCsvDateOnly(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  const date = value instanceof Date ? value : new Date(String(value))
-  if (isNaN(date.getTime())) return ''
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
 }
 
 function formatCsvNumber(value: number | null | undefined, decimals = 2): string {
@@ -255,8 +234,8 @@ function rowToCells(row: Record<string, unknown>): string[] {
     String(userId?.status ?? ''),
     String(row.uln ?? ''),
     String(row.manager_name ?? ''),
-    formatCsvDate(row.evidence_last_uploaded),
-    formatCsvDate(row.last_feedback),
+    formatCsvDateTime(row.evidence_last_uploaded),
+    formatCsvDateTime(row.last_feedback),
     String(overallGreen),
     String(overallOrange),
     String(computeTimelineProgress(userCourse?.start_date, userCourse?.end_date)),
@@ -275,9 +254,9 @@ function rowToCells(row: Record<string, unknown>): string[] {
     formatProgressValue(row.fs_maths_orange_progress),
     String(row.fSkillsMathsStatus ?? ''),
     String(row.last_visit_type ?? ''),
-    formatCsvDate(row.last_visit_date),
+    formatCsvDateTime(row.last_visit_date),
     String(row.next_visit_type ?? ''),
-    formatCsvDate(row.next_visit_date),
+    formatCsvDateTime(row.next_visit_date),
     '',
     String(row.comment ?? ''),
     String(row.learner_type ?? ''),
@@ -286,7 +265,7 @@ function rowToCells(row: Record<string, unknown>): string[] {
     formatCsvNumber(otj.requiredToDate),
     formatCsvNumber(otj.totalLoggedHours),
     formatCsvNumber(otj.otjDifferential),
-    formatCsvDate(otj.lastEntryDate),
+    formatCsvDateTime(otj.lastEntryDate),
   ]
 }
 

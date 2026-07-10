@@ -250,10 +250,10 @@
     },
     "csvUpload": {
       "title": "Upload Learner CSV",
-      "description": "Upload learner data in bulk using CSV format",
+      "description": "Upload learner data in bulk using CSV format. Courses are optional — leave blank to create learners without enrolment.",
       "sample": {
         "title": "Need a sample CSV?",
-        "description": "Download our template with all required fields and sample data to ensure proper formatting",
+        "description": "Download our template with required fields marked by * and sample data. Courses are assigned later from the learner profile.",
         "button": "Download Sample CSV"
       },
       "upload": {

@@ -1,5 +1,11 @@
 /** Sampling Plan Overdue CSV – business report for sampling_plan_overdue dashboard tile. */
 
+import {
+  escapeCsvCell,
+  formatCsvDateOnly,
+  formatText,
+} from './csv-export-helpers'
+
 export const SAMPLING_PLAN_OVERDUE_CSV_HEADERS = [
   'Learner Name',
   'Email',
@@ -23,26 +29,6 @@ export const SAMPLING_PLAN_OVERDUE_CSV_HEADERS = [
   'Assessor Decision Correct',
   'IQA Conclusion',
 ] as const
-
-function escapeCsvCell(value: string): string {
-  return `"${value.replace(/"/g, '""')}"`
-}
-
-function formatCsvDateOnly(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  const date = value instanceof Date ? value : new Date(String(value))
-  if (isNaN(date.getTime())) return ''
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-}
-
-function formatText(value: unknown): string {
-  if (value === null || value === undefined) return ''
-  return String(value).trim()
-}
 
 function formatAssessorDecision(value: unknown): string {
   if (value === null || value === undefined || value === '') return ''

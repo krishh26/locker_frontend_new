@@ -1,19 +1,6 @@
 import type { AwaitingSignatureEntry } from "@/store/api/awaiting-signature/types";
+import { formatCsvDateTime } from "@/utils/csv-export-helpers";
 import { getTranslations } from "next-intl/server";
-
-/**
- * Formats date for Excel CSV export
- */
-function formatDate(dateString: string | undefined): string {
-  if (!dateString) return "-";
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "-";
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-}
 
 /**
  * Escape CSV field value
@@ -68,15 +55,15 @@ export async function exportAwaitingSignatureToCSV(data: AwaitingSignatureEntry[
     escapeCSVField(row.file_type),
     escapeCSVField(row.file_name),
     escapeCSVField(row.file_description),
-    formatDate(row.uploaded_at),
-    formatDate(row.signatures?.Trainer?.requestedAt),
-    formatDate(row.signatures?.Trainer?.signedAt),
-    formatDate(row.signatures?.Learner?.requestedAt),
-    formatDate(row.signatures?.Learner?.signedAt),
-    formatDate(row.signatures?.Employer?.requestedAt),
-    formatDate(row.signatures?.Employer?.signedAt),
-    formatDate(row.signatures?.IQA?.requestedAt),
-    formatDate(row.signatures?.IQA?.signedAt),
+    formatCsvDateTime(row.uploaded_at),
+    formatCsvDateTime(row.signatures?.Trainer?.requestedAt),
+    formatCsvDateTime(row.signatures?.Trainer?.signedAt),
+    formatCsvDateTime(row.signatures?.Learner?.requestedAt),
+    formatCsvDateTime(row.signatures?.Learner?.signedAt),
+    formatCsvDateTime(row.signatures?.Employer?.requestedAt),
+    formatCsvDateTime(row.signatures?.Employer?.signedAt),
+    formatCsvDateTime(row.signatures?.IQA?.requestedAt),
+    formatCsvDateTime(row.signatures?.IQA?.signedAt),
   ]);
 
   // Combine headers and rows

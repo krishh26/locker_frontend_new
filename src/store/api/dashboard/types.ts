@@ -29,6 +29,8 @@ export type CardApiType =
   | "sample_due_in_month"
   | "sampling_plan_overdue"
   | "risk_ratings"
+  | "gateway_learners"
+  | "off_track_learners"
 
 // Mapping from CardApiType (query param) to DashboardCounts key (API response)
 export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> = {
@@ -52,6 +54,8 @@ export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> =
   sample_due_in_month: "sampleDueInMonth_count",
   sampling_plan_overdue: "samplingPlanOverdue_count",
   risk_ratings: "risk_ratings_count",
+  gateway_learners: "gateway_learners_count",
+  off_track_learners: "off_track_learners_count",
 }
 
 export interface DashboardCounts {
@@ -133,9 +137,11 @@ export interface SystemSummary {
   /** Backend system-summary response */
   totalSubscriptions?: number
   activeOrganisations?: number
+  /** Sum of subscription total_licenses across scoped organisations. */
+  totalLicenses?: number
   /**
-   * Total licenses / license usage count from backend (`GET /dashboard/system-summary`).
-   * Backend may return `null` initially.
+   * Licence usage for a single-org scope from backend (`GET /dashboard/system-summary`).
+   * Backend may return `null` when not in single-org context.
    */
   licenceUsage?: number | null
 }

@@ -1,4 +1,5 @@
 import type { GatewayData } from "../components/gateway-report-data-table";
+import { formatCsvDateOnly } from "@/utils/csv-export-helpers";
 
 interface GatewayCsvHeaderTranslations {
   learnerFirstName: string;
@@ -8,20 +9,6 @@ interface GatewayCsvHeaderTranslations {
   trainerName: string;
   sessionBookDate: string;
   gatewayProgress: string;
-}
-
-/**
- * Formats date for Excel CSV export
- */
-function formatDate(dateString: string | undefined): string {
-  if (!dateString) return "-";
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "-";
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
 }
 
 /**
@@ -65,7 +52,7 @@ export function exportGatewayReportToCSV(
     escapeCSVField(row.learner_uln),
     escapeCSVField(row.course_name), // Already wrapped in quotes if needed
     escapeCSVField(row.trainer_name),
-    formatDate(row.session_book_date),
+    formatCsvDateOnly(row.session_book_date),
     row.gateway_progress.toString(),
   ]);
 
@@ -99,4 +86,3 @@ export function generateGatewayReportFilename(prefix: string): string {
   const timestamp = new Date().toISOString().split("T")[0];
   return `${prefix}-${timestamp}.csv`;
 }
-

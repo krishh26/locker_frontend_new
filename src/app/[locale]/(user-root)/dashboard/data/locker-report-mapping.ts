@@ -1,3 +1,8 @@
+import {
+  formatCsvDateOnly,
+  formatCsvDateTime,
+} from '@/utils/csv-export-helpers'
+
 /**
  * Locker Report spreadsheet column order and API field mapping
  * for Active Learners CSV export.
@@ -102,15 +107,37 @@ function isIsoDateString(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}/.test(value)
 }
 
-export function formatLockerReportValue(value: unknown): string {
+const LOCKER_REPORT_DATE_ONLY_COLUMNS = new Set<LockerReportColumn>([
+  'Course Start Date',
+  'Course End Date',
+  'Last Visit Date',
+  'Next Visit Date',
+])
+
+const LOCKER_REPORT_DATETIME_COLUMNS = new Set<LockerReportColumn>([
+  'Evidence Last Uploaded',
+])
+
+export function formatLockerReportValue(
+  value: unknown,
+  column?: LockerReportColumn,
+): string {
   if (value === null || value === undefined) return ''
 
+  if (column && LOCKER_REPORT_DATETIME_COLUMNS.has(column)) {
+    return formatCsvDateTime(value)
+  }
+
+  if (column && LOCKER_REPORT_DATE_ONLY_COLUMNS.has(column)) {
+    return formatCsvDateOnly(value)
+  }
+
   if (value instanceof Date) {
-    return value.toISOString().split('T')[0]
+    return formatCsvDateOnly(value)
   }
 
   if (typeof value === 'string' && isIsoDateString(value)) {
-    return value.split('T')[0]
+    return formatCsvDateOnly(value)
   }
 
   return String(value)
@@ -337,7 +364,7 @@ export function flattenRowForCsv(
       raw = getNestedValue(row, mapping)
     }
 
-    result[column] = formatLockerReportValue(raw)
+    result[column] = formatLockerReportValue(raw, column)
   }
 
   return result

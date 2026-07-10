@@ -5,7 +5,7 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Overdue Learners": "learners_over_due",
   "Overdue Progress Reviews": "learner_plan_due",
   "Learners due to complete within 30 days": "learners_course_due_in_next_30_days",
-  "Learners off track": "assignments_without_mapped",
+  "Learners off track": "off_track_learners",
   "Unmapped evidences": "unmapped_evidence",
   "Session learner action due (today)": "session_learner_action_due",
   "Session learner actions due in next 7 days": "session_action_due_in_next_7_days",
@@ -24,7 +24,8 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Sessions due in next 7 days": "session_action_due_in_next_7_days",
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
   "Risk ratings": "risk_ratings",
-} 
+  "Learners in Gateway": "gateway_learners",
+}
 
 export interface AdminDashboardCardData {
   id: string
@@ -94,7 +95,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "assignments_without_mapped",
+    apiType: "off_track_learners",
   },
   {
     id: "unmapped_evidences",
@@ -264,14 +265,13 @@ export const dashboardCards: AdminDashboardCardData[] = [
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
   },
-  // BE TODO: add `apiType` + `CardApiType` / `DashboardCounts` when
-  // `/learner/list-with-count` exposes learners-in-gateway count and `type=`.
   {
     id: "learners_in_gateway",
     title: "Learners in Gateway",
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "gateway_learners",
   },
 ]
 

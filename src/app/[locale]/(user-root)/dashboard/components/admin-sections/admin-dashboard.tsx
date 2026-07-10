@@ -38,6 +38,7 @@ import { buildSessionLearnerActionCsv } from '../../utils/session-learner-action
 import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
 import { buildTrainerRiskRatingCsv } from '../../utils/trainer-risk-rating-csv-export'
 import { buildGatewayLearnersCsv } from '../../utils/gateway-learners-csv-export'
+import { buildLearnersOffTrackCsv } from '../../utils/learners-off-track-csv-export'
 
 const SHEET_CSV_BUILDERS: Record<
   string,
@@ -63,6 +64,7 @@ const SHEET_CSV_BUILDERS: Record<
   sampling_plan_overdue: buildSamplingPlanOverdueCsv,
   risk_ratings: buildTrainerRiskRatingCsv,
   gateway_learners: buildGatewayLearnersCsv,
+  off_track_learners: buildLearnersOffTrackCsv,
 }
 
 function extractCardDataArray(res: unknown): unknown[] {

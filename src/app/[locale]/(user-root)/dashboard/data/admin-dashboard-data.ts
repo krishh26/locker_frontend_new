@@ -5,7 +5,7 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Overdue Learners": "learners_over_due",
   "Overdue Progress Reviews": "learner_plan_due",
   "Learners due to complete within 30 days": "learners_course_due_in_next_30_days",
-  "Learners off track": "assignments_without_mapped",
+  "Learners off track": "off_track_learners",
   "Unmapped evidences": "unmapped_evidence",
   "Session learner action due (today)": "session_learner_action_due",
   "Session learner actions due in next 7 days": "session_action_due_in_next_7_days",
@@ -95,7 +95,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "assignments_without_mapped",
+    apiType: "off_track_learners",
   },
   {
     id: "unmapped_evidences",

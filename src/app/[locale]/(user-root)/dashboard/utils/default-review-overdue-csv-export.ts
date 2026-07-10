@@ -1,5 +1,13 @@
 /** Default Review Overdue CSV – business report for default_review_overdue dashboard tile. */
 
+import {
+  escapeCsvCell,
+  formatCsvDateOnly,
+  formatCsvDateTime,
+  formatText,
+  formatYesNo,
+} from './csv-export-helpers'
+
 export const DEFAULT_REVIEW_OVERDUE_CSV_HEADERS = [
   'Learner Name',
   'Email',
@@ -24,47 +32,6 @@ export const DEFAULT_REVIEW_OVERDUE_CSV_HEADERS = [
   'Main Course',
   'BIL Return Date',
 ] as const
-
-function escapeCsvCell(value: string): string {
-  return `"${value.replace(/"/g, '""')}"`
-}
-
-function formatCsvDateOnly(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  const date = value instanceof Date ? value : new Date(String(value))
-  if (isNaN(date.getTime())) return ''
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-}
-
-function formatCsvDateTime(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  const date = value instanceof Date ? value : new Date(String(value))
-  if (isNaN(date.getTime())) return ''
-  return date.toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  })
-}
-
-function formatText(value: unknown): string {
-  if (value === null || value === undefined) return ''
-  return String(value).trim()
-}
-
-function formatYesNo(value: unknown): string {
-  if (value === null || value === undefined || value === '') return ''
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No'
-  return formatText(value)
-}
 
 function getLearner(row: Record<string, unknown>): Record<string, unknown> | null {
   const learner = row.learner_id

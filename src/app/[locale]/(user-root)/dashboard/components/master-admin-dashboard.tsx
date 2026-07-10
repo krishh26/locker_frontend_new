@@ -190,7 +190,7 @@ export function MasterAdminDashboard() {
     },
     {
       title: t("totalLicenses"),
-      value: summary?.licenceUsage ?? 0,
+      value: summary?.totalLicenses ?? 0,
       subtitle: t("licensesAcrossSystem"),
       icon: KeyRound,
       color: "text-primary",

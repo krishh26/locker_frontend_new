@@ -1,21 +1,6 @@
 import { type Session } from "@/store/api/session/types";
+import { formatCsvDateTime } from "@/utils/csv-export-helpers";
 import { convertDurationToMinutes } from "./session-transform";
-
-/**
- * Format date for Excel CSV export
- */
-function formatDateForExcel(date: string): string {
-  const dateObj = new Date(date);
-  return dateObj.toLocaleString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-}
 
 /**
  * Escape CSV field value
@@ -49,7 +34,7 @@ export function exportSessionsToCSV(sessions: Session[]): string {
   sessions.forEach((session) => {
     const sessionId = session.session_id.toString();
     const trainerName = session.trainer_id?.user_name || "";
-    const startTime = formatDateForExcel(session.startDate);
+    const startTime = formatCsvDateTime(session.startDate);
     const sessionType = session.type || "";
     const durationMinutes = convertDurationToMinutes(session.Duration).toString();
     const location = session.location || "";

@@ -1,20 +1,5 @@
 import type { TimeLogExportData } from "@/store/api/time-log/types";
-
-/**
- * Formats date for Excel CSV export
- */
-function formatDateForExcel(dateString: string): string {
-  if (!dateString) return "";
-  
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "";
-  
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-}
+import { formatCsvDateOnly, formatCsvDateTime } from "@/utils/csv-export-helpers";
 
 /**
  * Escape CSV field value
@@ -66,7 +51,7 @@ export function exportTimelogToCSV(data: TimeLogExportData[]): string {
   // Convert data to CSV rows
   const rows = data.map((item) => [
     item.id.toString(),
-    formatDateForExcel(item.activity_date),
+    formatCsvDateOnly(item.activity_date),
     escapeCSVField(item.activity_type),
     escapeCSVField(item.unit),
     escapeCSVField(item.type),
@@ -80,8 +65,8 @@ export function exportTimelogToCSV(data: TimeLogExportData[]): string {
     escapeCSVField(item.trainer_id?.email || ""),
     escapeCSVField(item.course_id?.course_name || ""),
     escapeCSVField(item.course_id?.course_code || ""),
-    formatDateForExcel(item.created_at),
-    formatDateForExcel(item.updated_at),
+    formatCsvDateTime(item.created_at),
+    formatCsvDateTime(item.updated_at),
   ]);
 
   // Combine headers and rows

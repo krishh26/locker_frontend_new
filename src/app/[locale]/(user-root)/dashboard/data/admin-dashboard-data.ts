@@ -24,7 +24,8 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Sessions due in next 7 days": "session_action_due_in_next_7_days",
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
   "Risk ratings": "risk_ratings",
-} 
+  "Learners in Gateway": "gateway_learners",
+}
 
 export interface AdminDashboardCardData {
   id: string
@@ -264,14 +265,13 @@ export const dashboardCards: AdminDashboardCardData[] = [
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
   },
-  // BE TODO: add `apiType` + `CardApiType` / `DashboardCounts` when
-  // `/learner/list-with-count` exposes learners-in-gateway count and `type=`.
   {
     id: "learners_in_gateway",
     title: "Learners in Gateway",
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "gateway_learners",
   },
 ]
 

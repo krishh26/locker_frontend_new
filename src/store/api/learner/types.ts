@@ -171,7 +171,8 @@ export interface BulkCreateLearnerRequest {
   job_title: string;
   centre_name: string;
   employer_name?: string;
-  courses: Array<{
+  /** Optional — learner can be created without course enrolment */
+  courses?: Array<{
     course_name: string;
     start_date?: string;
     end_date?: string;

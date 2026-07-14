@@ -32,7 +32,7 @@ import {
 } from '@/store/api/learner/learnerApi'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
-import { isEnrollmentExcluded } from '@/lib/is-enrollment-excluded'
+import { isCourseEligibleForOverallProgress } from '@/lib/is-enrollment-excluded'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 
@@ -66,7 +66,7 @@ export function LearnerPortfolioCard({
       learnerDetails?.course ??
       learner?.course ??
       []
-    ).filter((c) => !isEnrollmentExcluded(c))
+    ).filter((c) => isCourseEligibleForOverallProgress(c))
 
     if (coursesForProgress.length === 0) {
       return {

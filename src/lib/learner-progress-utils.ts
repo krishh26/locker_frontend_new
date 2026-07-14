@@ -1,5 +1,5 @@
 import type { LearnerCourse, LearnerListItem } from "@/store/api/learner/types";
-import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded";
+import { isCourseEligibleForOverallProgress } from "@/lib/is-enrollment-excluded";
 
 /** Sub-unit / topic row with optional mapping flags (list payloads mirror evidence tree). */
 type MapLike = { learnerMap?: boolean; trainerMap?: boolean };
@@ -287,7 +287,9 @@ export function calculateLearnerProgress(
   let totalNotStarted = 0;
   let totalUnitsAll = 0;
 
-  const courses = (learner?.course ?? []).filter((c) => !isEnrollmentExcluded(c));
+  const courses = (learner?.course ?? []).filter((c) =>
+    isCourseEligibleForOverallProgress(c),
+  );
   if (courses.length > 0) {
     courses.forEach((course) => {
       const progressData = convertToMatrixData(course);

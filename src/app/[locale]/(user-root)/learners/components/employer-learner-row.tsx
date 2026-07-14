@@ -13,7 +13,7 @@ import {
 } from "@/lib/learner-progress-utils";
 import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/randomColor";
 import { useTranslations } from "next-intl";
-import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded";
+import { isCourseEligibleForOverallProgress } from "@/lib/is-enrollment-excluded";
 import { useGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi";
 
 interface EmployerLearnerRowProps {
@@ -29,7 +29,7 @@ export function EmployerLearnerRow({ learner }: EmployerLearnerRowProps) {
 
   const overallProgressData = useMemo(() => {
     const coursesForProgress = (learnerDetails?.course ?? learner?.course ?? []).filter(
-      (c) => !isEnrollmentExcluded(c),
+      (c) => isCourseEligibleForOverallProgress(c),
     );
 
     const progressLearner: LearnerListItem = {

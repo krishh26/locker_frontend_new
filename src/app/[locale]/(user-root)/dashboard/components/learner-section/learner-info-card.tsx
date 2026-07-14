@@ -11,7 +11,7 @@ import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useLocale, useTranslations } from 'next-intl'
-import { isEnrollmentExcluded } from '@/lib/is-enrollment-excluded'
+import { isCourseEligibleForOverallProgress } from '@/lib/is-enrollment-excluded'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
 import { useGetTimeLogSpendQuery } from '@/store/api/time-log/timeLogApi'
@@ -165,8 +165,8 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
 
   // Calculate overall progress across all courses
   const overallProgressData = useMemo(() => {
-    const coursesForProgress = (learner?.course ?? []).filter(
-      (c) => !isEnrollmentExcluded(c)
+    const coursesForProgress = (learner?.course ?? []).filter((c) =>
+      isCourseEligibleForOverallProgress(c),
     )
 
     if (coursesForProgress.length === 0) {
@@ -211,7 +211,8 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const initials = initialsFromName(learnerName)
 
   const primaryCourse =
-    learner?.course?.find((c) => !isEnrollmentExcluded(c)) ?? learner?.course?.[0]
+    learner?.course?.find((c) => isCourseEligibleForOverallProgress(c)) ??
+    learner?.course?.[0]
 
   const trainerName = primaryCourse?.trainer_id
     ? `${primaryCourse.trainer_id.first_name} ${primaryCourse.trainer_id.last_name}`
@@ -290,9 +291,9 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
         </div>
 
         {/* Right Section - Overall Progress and Time Log */}
-        <div className='flex flex-col lg:flex-row gap-4 px-4'>
+        <div className='flex justify-end flex-col lg:flex-row gap-4 px-4'>
           {/* Overall Progress Card */}
-          <div className='flex-1 min-w-[280px] rounded-lg border border-accent bg-accent p-4 shadow-sm'>
+          <div className='min-w-[280px] rounded-lg border border-accent bg-accent p-4 shadow-sm'>
             <div className='flex items-center justify-between mb-3'>
               <h3 className='text-sm font-semibold text-white'>
                 {t('overallProgress.title')}
@@ -345,7 +346,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
           </div>
 
           {/* Time Log Card - Compact Version */}
-          <div className='flex-1 rounded-lg border border-secondary bg-secondary p-4 shadow-sm flex flex-col justify-center'>
+          <div className='flex-1 max-w-[200px] rounded-lg border border-secondary bg-secondary p-4 shadow-sm flex flex-col justify-center'>
             <div className='flex items-center justify-between mb-3'>
               <h3 className='text-sm font-semibold text-white'>
                 {t('timeLog.title')}
@@ -354,15 +355,7 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
                 {isTimeLogLoading ? '...' : totalHoursLabel}
               </Badge>
             </div>
-            <div className='grid grid-cols-2 gap-4 flex-1 items-center'>
-              <div className='text-center space-y-1 border-r border-white/30'>
-                <p className='text-xs text-white/70'>
-                  {t('timeLog.onTheJob')}
-                </p>
-                <p className='text-lg font-bold text-white'>
-                  {isTimeLogLoading ? '...' : formatTime(otjTotal)}
-                </p>
-              </div>
+            <div className='grid grid-cols-1 gap-4 flex-1 items-center'>
               <div className='text-center space-y-1'>
                 <p className='text-xs text-white/70'>
                   {t('timeLog.offTheJob')}

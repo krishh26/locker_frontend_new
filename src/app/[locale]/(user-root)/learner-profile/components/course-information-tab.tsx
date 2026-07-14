@@ -25,6 +25,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   Form,
   FormControl,
   FormField,
@@ -50,10 +60,11 @@ import {
 import {
   useCreateUserCourseMutation,
   useUpdateUserCourseMutation,
+  useDeleteUserCourseMutation,
 } from "@/store/api/learner/learnerApi";
 import type { LearnerData, LearnerCourse } from "@/store/api/learner/types";
 import { cn } from "@/lib/utils";
-import { Plus, Pencil, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface CourseInformationTabProps {
@@ -221,6 +232,7 @@ export function CourseInformationTab({
   }, []);
   const courseSchema = useMemo(() => getDialogCourseSchema((key) => t(key)), [t]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<LearnerCourse | null>(
     null
   );
@@ -258,6 +270,8 @@ export function CourseInformationTab({
     useCreateUserCourseMutation();
   const [updateUserCourse, { isLoading: isUpdating }] =
     useUpdateUserCourseMutation();
+  const [deleteUserCourse, { isLoading: isDeleting }] =
+    useDeleteUserCourseMutation();
 
   const form = useForm<CourseFormValues>({
     resolver: zodResolver(courseSchema),
@@ -511,6 +525,25 @@ export function CourseInformationTab({
     }
   });
 
+  const handleDelete = async () => {
+    if (!selectedCourse) return;
+
+    try {
+      await deleteUserCourse(selectedCourse.user_course_id).unwrap();
+      toast.success(t("courseInformation.toast.deleted"));
+      setDeleteDialogOpen(false);
+      setSelectedCourse(null);
+    } catch (error) {
+      console.error("Failed to unassign course:", error);
+      toast.error(t("courseInformation.toast.deleteFailed"));
+    }
+  };
+
+  const handleDeleteClick = (course: LearnerCourse) => {
+    setSelectedCourse(course);
+    setDeleteDialogOpen(true);
+  };
+
   // Check if there's already a main course
   const hasMainCourse = courses.some((c) => c.is_main_course);
   const isSelectedCourseMain = selectedCourse?.is_main_course;
@@ -623,15 +656,26 @@ export function CourseInformationTab({
                       </TableCell>
                       {canEdit && (
                         <TableCell>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleOpenDialog(course)}
-                            className="h-8 w-8"
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleOpenDialog(course)}
+                              className="h-8 w-8"
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteClick(course)}
+                              className="h-8 w-8 text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </TableCell>
                       )}
                     </TableRow>
@@ -1153,6 +1197,42 @@ export function CourseInformationTab({
           </Form>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {t("courseInformation.deleteDialog.title")}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("courseInformation.deleteDialog.description", {
+                courseName: selectedCourse?.course?.course_name || "this course",
+              })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setDeleteDialogOpen(false);
+                setSelectedCourse(null);
+              }}
+              disabled={isDeleting}
+            >
+              {t("courseInformation.deleteDialog.cancel")}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {t("courseInformation.deleteDialog.delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

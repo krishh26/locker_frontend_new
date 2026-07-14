@@ -227,7 +227,7 @@ export const learnerApi = createApi({
       number
     >({
       query: (userCourseId) => ({
-        url: `/course/delete/${userCourseId}`,
+        url: `/course/user/delete/${userCourseId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Learner"],

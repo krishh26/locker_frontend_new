@@ -86,6 +86,7 @@ export function CourseBuilderDataTable() {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const userRole = user?.role
+  console.log("🚀 ~ CourseBuilderDataTable ~ userRole:", userRole)
   const isEmployer = userRole === 'Employer'
   const isAdmin = userRole === 'Admin'
   const showScopeFilter = !isMasterAdmin(user)
@@ -105,7 +106,7 @@ export function CourseBuilderDataTable() {
   const [filters, setFilters] = useState<CourseFilters>({
     page: 1,
     page_size: 10,
-    scope: 'organisation',
+    scope: showScopeFilter ? 'organisation' : "",
   })
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [courseToDelete, setCourseToDelete] = useState<Course | null>(null)

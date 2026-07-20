@@ -140,9 +140,10 @@ export function AdminDashboard() {
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const isAdmin = userRole === 'Admin'
 
-  const { data: dashboardData, isLoading: loading } =
+  const { data: dashboardData, isLoading: loading ,isFetching } =
     useGetDashboardCountsQuery(undefined, {
       skip: !userRole || userRole === 'Learner',
+      refetchOnMountOrArgChange: true,
     })
 
   const [getCardData] = useLazyGetCardDataQuery()
@@ -266,7 +267,7 @@ export function AdminDashboard() {
                   key={kpi.id}
                   variant='license'
                   title={tAdmin(`cards.${kpi.id}`)}
-                  count={loading ? '...' : counts[kpi.countKey] ?? 0}
+                  count={loading || isFetching ? '...' : counts[kpi.countKey] ?? 0}
                   textColor='#ffffff'
                   radiusColor='rgba(255, 255, 255, 0.3)'
                   icon={kpi.icon}
@@ -294,7 +295,7 @@ export function AdminDashboard() {
                   ? counts[countKey]?.toString()
                   : card.name || '0'
 
-              const displayCount = loading ? '...' : count
+              const displayCount = loading || isFetching ? '...' : count
               const isExporting = apiType ? exporting[apiType] || false : false
 
               const showExport = Boolean(

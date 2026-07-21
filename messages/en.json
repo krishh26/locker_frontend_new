@@ -3129,6 +3129,7 @@
         "showNonCompletedCriteria": "Show Non Completed Criteria"
       },
       "types": {
+        "all": "All",
         "knowledge": "Knowledge",
         "behaviour": "Behaviour",
         "skills": "Skills"

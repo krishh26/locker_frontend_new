@@ -2800,6 +2800,7 @@
         "showNonCompletedCriteria": "Mostrar critérios não concluídos"
       },
       "types": {
+        "all": "Todos",
         "knowledge": "Conhecimento",
         "behaviour": "Comportamento",
         "skills": "Competências"

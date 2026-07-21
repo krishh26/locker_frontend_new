@@ -298,12 +298,8 @@ export function AdminDashboard() {
               const displayCount = loading || isFetching ? '...' : count
               const isExporting = apiType ? exporting[apiType] || false : false
 
-              const showExport = Boolean(
-                apiType &&
-                countKey &&
-                counts[countKey] !== undefined &&
-                counts[countKey]! > 0,
-              )
+              // Always show report button when card has an API type — empty data still downloads headers-only CSV
+              const showExport = Boolean(apiType)
 
               return (
                 <AdminDashboardCard

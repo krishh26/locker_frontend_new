@@ -2793,6 +2793,7 @@
         "showNonCompletedCriteria": "عرض المعايير غير المكتملة"
       },
       "types": {
+        "all": "الكل",
         "knowledge": "المعرفة",
         "behaviour": "السلوك",
         "skills": "المهارات"

@@ -225,7 +225,7 @@ export function NotificationBell() {
           <span className="sr-only">{t("bell.srOnly")}</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-0" align="end">
+      <PopoverContent className="w-[calc(100vw-2rem)] max-w-sm p-0 sm:w-96" align="end">
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="font-semibold">{t("bell.heading")}</h3>
           {unreadCount > 0 && (
@@ -233,7 +233,7 @@ export function NotificationBell() {
           )}
         </div>
 
-        <ScrollArea className="h-[400px]">
+        <ScrollArea className="h-100">
           {isLoading ? (
             <div className="p-4 space-y-3">
               {[1, 2, 3].map((i) => (

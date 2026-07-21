@@ -112,16 +112,16 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
   const initialAssessmentICT = (learner as { Initial_Assessment_ICT?: string }).Initial_Assessment_ICT || "-";
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.aboutYou.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.aboutYou.title")}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-4 sm:px-6">
         {/* Photo Upload Section */}
         <div className="flex flex-col items-center justify-center py-4">
           <div className="relative">
             <Avatar
-              className={`h-[150px] w-[150px] border-2 border-border cursor-pointer transition-opacity hover:opacity-80 ${
+              className={`h-30 w-30 border-2 border-border sm:h-37.5 sm:w-37.5 cursor-pointer transition-opacity hover:opacity-80 ${
                 canEdit ? "" : "cursor-default"
               } ${isUploading ? "opacity-50" : ""}`}
               onClick={handleAvatarClick}
@@ -171,7 +171,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.firstName")}</Label>
             {canEdit ? (
@@ -216,7 +216,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.username")}</Label>
             {canEdit ? (
@@ -261,7 +261,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.telephone")}</Label>
             {canEdit ? (
@@ -306,7 +306,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.dateOfBirth")}</Label>
             {canEdit ? (
@@ -351,7 +351,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.nationalInsuranceNo")}</Label>
             {canEdit ? (
@@ -403,7 +403,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.aboutYou.learningDifficulties")}</Label>
             <ProfileEnumSelect
@@ -463,7 +463,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
         </div>
 
         {initialAssessmentICT && initialAssessmentICT !== "-" && (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
               <Label className="text-sm font-medium">{t("sections.aboutYou.initialAssessmentICT")}</Label>
               {canEdit ? (

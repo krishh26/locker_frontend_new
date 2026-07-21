@@ -51,12 +51,12 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.additionalInfo.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.additionalInfo.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <CardContent className="px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.costCentre")}</Label>
             {canEdit ? (
@@ -101,7 +101,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.partner")}</Label>
             {canEdit ? (
@@ -146,7 +146,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.cohort")}</Label>
             {canEdit ? (
@@ -191,7 +191,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.ssa1")}</Label>
             {canEdit ? (
@@ -236,7 +236,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.directorOfCurriculum")}</Label>
             {canEdit ? (
@@ -281,7 +281,7 @@ export function AdditionalInfoSection({ learner, canEdit = false }: AdditionalIn
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.additionalInfo.expectedOffTheJobHours")}</Label>
             {canEdit ? (

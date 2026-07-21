@@ -2799,6 +2799,7 @@
         "showNonCompletedCriteria": "अपूर्ण मानदंड दिखाएं"
       },
       "types": {
+        "all": "सभी",
         "knowledge": "ज्ञान",
         "behaviour": "व्यवहार",
         "skills": "कौशल"

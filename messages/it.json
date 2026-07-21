@@ -2189,6 +2189,7 @@
         "showNonCompletedCriteria": "Mostra criteri non completati"
       },
       "types": {
+        "all": "Tutti",
         "knowledge": "Conoscenza",
         "behaviour": "Comportamento",
         "skills": "Competenze"

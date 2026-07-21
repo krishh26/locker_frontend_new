@@ -2747,6 +2747,7 @@
         "showNonCompletedCriteria": "显示未完成标准"
       },
       "types": {
+        "all": "全部",
         "knowledge": "知识",
         "behaviour": "行为",
         "skills": "技能"

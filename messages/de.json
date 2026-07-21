@@ -2231,6 +2231,7 @@
         "showNonCompletedCriteria": "Nicht abgeschlossene Kriterien anzeigen"
       },
       "types": {
+        "all": "Alle",
         "knowledge": "Wissen",
         "behaviour": "Verhalten",
         "skills": "Fertigkeiten"

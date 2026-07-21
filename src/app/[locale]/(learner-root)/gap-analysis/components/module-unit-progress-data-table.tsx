@@ -282,12 +282,15 @@ function collectQualificationGapRows(
   return rows;
 }
 
+type StandardGapTypeFilter = "all" | "Knowledge" | "Behaviour" | "Skills";
+
 function collectStandardGapRows(
   course: CourseWithUnits,
-  selectedType: "Knowledge" | "Behaviour" | "Skills",
+  selectedType: StandardGapTypeFilter,
 ): SubUnitRow[] {
   const rows: SubUnitRow[] = [];
   const units = (course.units || []) as unknown[];
+  const showAll = selectedType === "all";
 
   for (const raw of units) {
     const unit = raw as Record<string, unknown> & {
@@ -305,11 +308,14 @@ function collectStandardGapRows(
     const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
 
     if (unitSubUnits.length > 0) {
-      const matchingSubUnits = unitSubUnits.filter(
-        (sub) =>
-          String((sub as { type?: string }).type) === String(selectedType),
-      );
-      const matchesByUnitType = String(unit.type) === String(selectedType);
+      const matchingSubUnits = showAll
+        ? unitSubUnits
+        : unitSubUnits.filter(
+            (sub) =>
+              String((sub as { type?: string }).type) === String(selectedType),
+          );
+      const matchesByUnitType =
+        showAll || String(unit.type) === String(selectedType);
       if (!matchesByUnitType && matchingSubUnits.length === 0) continue;
 
       const subsToShow = matchesByUnitType ? unitSubUnits : matchingSubUnits;
@@ -343,7 +349,7 @@ function collectStandardGapRows(
 
     if (Array.isArray(unit.items) && unit.items.length > 0) {
       for (const item of unit.items) {
-        if (String(item.type) !== String(selectedType)) continue;
+        if (!showAll && String(item.type) !== String(selectedType)) continue;
         const hasLearnerMap =
           item.evidenceBoxes?.some((box) => box.learnerMap) || false;
         const hasTrainerMap =
@@ -361,9 +367,9 @@ function collectStandardGapRows(
     }
 
     if (
-      unit.type &&
-      String(unit.type) === String(selectedType) &&
-      (unit.title != null || unit.id != null)
+      (unit.title != null || unit.id != null) &&
+      (showAll ||
+        (unit.type != null && String(unit.type) === String(selectedType)))
     ) {
       const hasLearnerMap =
         Boolean(unit.learnerMap ?? (unit as { learner_map?: boolean }).learner_map) ||
@@ -549,9 +555,8 @@ export function ModuleUnitProgressDataTable() {
       ? courses.find((c) => (c.course || c).course_id === currentCourseId)?.course || null
       : null,
   );
-  const [selectedType, setSelectedType] = useState<
-    "Knowledge" | "Behaviour" | "Skills"
-  >("Knowledge");
+  const [selectedType, setSelectedType] =
+    useState<StandardGapTypeFilter>("all");
   const [globalFilter, setGlobalFilter] = useState("");
   const [completionFilter, setCompletionFilter] =
     useState<GapCompletionFilter>("all");
@@ -589,7 +594,7 @@ export function ModuleUnitProgressDataTable() {
 
   useEffect(() => {
     if (isStandardCourse) {
-      setSelectedType("Knowledge");
+      setSelectedType("all");
     }
     setCompletionFilter("all");
     setGlobalFilter("");
@@ -969,7 +974,7 @@ export function ModuleUnitProgressDataTable() {
                 <Select
                   value={selectedType}
                   onValueChange={(value) => {
-                    setSelectedType(value as "Knowledge" | "Behaviour" | "Skills");
+                    setSelectedType(value as StandardGapTypeFilter);
                   }}
                   disabled={!selectedCourse}
                 >
@@ -983,6 +988,9 @@ export function ModuleUnitProgressDataTable() {
                     />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">
+                      {t("table.types.all")}
+                    </SelectItem>
                     <SelectItem value="Knowledge">
                       {t("table.types.knowledge")}
                     </SelectItem>

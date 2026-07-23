@@ -83,7 +83,7 @@ import { Users } from "lucide-react";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
-import { exportTableToPdf } from "@/utils/pdfExport";
+import { buildLearnerManagementCsv } from "../utils/learner-management-csv-export";
 import Link from "next/link";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
@@ -456,29 +456,9 @@ export function LearnersDataTable() {
       URL.revokeObjectURL(url);
       toast.success(tExport("csvSuccess"));
     } else {
-      const headers = [
-        tExport("csvHeaders.learnerName"),
-        tExport("csvHeaders.username"),
-        tExport("csvHeaders.email"),
-        tExport("csvHeaders.mobile"),
-        tExport("csvHeaders.course"),
-        tExport("csvHeaders.status"),
-      ];
-      const rows = exportData.map((learner) => [
-        `${learner.first_name} ${learner.last_name}`,
-        learner.user_name,
-        learner.email,
-        learner.mobile || "",
-        learner.course?.map((c) => c.course.course_name).join(", ") || "",
-        learner.status || "",
-      ]);
-
-      const csvContent = [
-        headers.join(","),
-        ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
-      ].join("\n");
-
-      const blob = new Blob([csvContent], { type: "text/csv" });
+      const learners = exportData as LearnerListItem[];
+      const csvContent = buildLearnerManagementCsv(learners);
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -489,59 +469,6 @@ export function LearnersDataTable() {
       URL.revokeObjectURL(url);
       toast.success(tExport("csvSuccess"));
     }
-  };
-
-  const handleExportPdf = () => {
-    const exportData = isEqa ? eqaLearners : (data?.data || []);
-    if (!exportData || exportData.length === 0) {
-      toast.info(tExport("noData"));
-      return;
-    }
-    if (isEqa) {
-      const headers = [
-        tExport("eqaCsvHeaders.learnerName"),
-        tExport("eqaCsvHeaders.course"),
-        tExport("eqaCsvHeaders.employer"),
-        tExport("eqaCsvHeaders.iqa"),
-        tExport("eqaCsvHeaders.status"),
-        tExport("eqaCsvHeaders.iqaReport"),
-        tExport("eqaCsvHeaders.learnerCreated"),
-        tExport("eqaCsvHeaders.courseRegistered"),
-      ];
-      const rows = exportData.map((learner) => {
-        const eqaLerner = learner as LearnerListItem & { IQA_id?: { first_name: string; last_name: string }; learner_created?: string; course_registered?: string; iqa_report?: string };
-        return [
-          `${eqaLerner.first_name} ${eqaLerner.last_name}`,
-          eqaLerner.course?.map((c) => c.course?.course_name).join(", ") || "",
-          (learner as { employer_id?: { employer_name?: string } }).employer_id?.employer_name || "-",
-          eqaLerner.IQA_id ? `${eqaLerner.IQA_id.first_name} ${eqaLerner.IQA_id.last_name}` : "-",
-          eqaLerner.status || "",
-          eqaLerner.iqa_report || "-",
-          formatDate(eqaLerner.learner_created),
-          formatDate(eqaLerner.course_registered),
-        ];
-      });
-      void exportTableToPdf({ title: tExport("pdfTitleEqa"), headers, rows });
-    } else {
-      const headers = [
-        tExport("csvHeaders.learnerName"),
-        tExport("csvHeaders.username"),
-        tExport("csvHeaders.email"),
-        tExport("csvHeaders.mobile"),
-        tExport("csvHeaders.course"),
-        tExport("csvHeaders.status"),
-      ];
-      const rows = exportData.map((learner) => [
-        `${learner.first_name} ${learner.last_name}`,
-        learner.user_name,
-        learner.email,
-        learner.mobile || "",
-        learner.course?.map((c) => c.course.course_name).join(", ") || "",
-        learner.status || "",
-      ]);
-      void exportTableToPdf({ title: tExport("pdfTitleDefault"), headers, rows });
-    }
-    toast.success(tExport("pdfSuccess"));
   };
 
   // Extended type for EQA learners
@@ -835,7 +762,7 @@ export function LearnersDataTable() {
             return (
               <div className="flex items-center gap-2">
                 {comment ? (
-                  <span className="max-w-[200px] truncate block" title={comment}>
+                  <span className="max-w-50 truncate block" title={comment}>
                     {comment}
                   </span>
                 ) : (
@@ -982,7 +909,7 @@ export function LearnersDataTable() {
           return (
             <div className="flex items-center gap-2">
               {comment ? (
-                <span className="max-w-[200px] truncate block" title={comment}>
+                <span className="max-w-50 truncate block" title={comment}>
                   {comment}
                 </span>
               ) : (
@@ -1122,7 +1049,7 @@ export function LearnersDataTable() {
           </div>
           {!isEqa && (
             <Select value={courseFilter} onValueChange={setCourseFilter}>
-              <SelectTrigger className="w-full sm:w-[200px]">
+              <SelectTrigger className="w-full sm:w-50">
                 <SelectValue placeholder={tFilters("coursePlaceholder")} />
               </SelectTrigger>
               <SelectContent>
@@ -1144,7 +1071,7 @@ export function LearnersDataTable() {
           {/* Only show employer filter for Admin (not EQA) */}
           {isAdmin && !isEqa && (
             <Select value={employerFilter} onValueChange={setEmployerFilter}>
-              <SelectTrigger className="w-full sm:w-[200px]">
+              <SelectTrigger className="w-full sm:w-50">
                 <SelectValue placeholder={tFilters("employerPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
@@ -1175,22 +1102,14 @@ export function LearnersDataTable() {
           )}
         </div>
         <div className="flex flex-wrap justify-end items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="cursor-pointer">
-                <Download className="mr-2 size-4" />
-                {tExport("export")}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer">
-                {tExport("exportCsv")}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleExportPdf} className="cursor-pointer">
-                {tExport("exportPdf")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={handleExportCsv}
+          >
+            <Download className="mr-2 size-4" />
+            {tExport("export")}
+          </Button>
           {/* Only show Upload and Add New for Admin (not Employer) */}
           {isAdmin && !isEmployer && (
             <>
@@ -1266,7 +1185,7 @@ export function LearnersDataTable() {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="min-w-[150px]">
+                      <TableHead key={header.id} className="min-w-37.5">
                         {header.isPlaceholder
                           ? null
                           : flexRender(

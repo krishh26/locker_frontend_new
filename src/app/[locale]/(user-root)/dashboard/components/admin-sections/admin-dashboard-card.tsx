@@ -12,6 +12,7 @@ export interface AdminDashboardCardProps {
   radiusColor: string
   icon?: LucideIcon
   variant?: "default" | "license"
+  onClick?: () => void
   onExport?: () => void
   isExporting?: boolean
   showExport?: boolean
@@ -23,6 +24,7 @@ export function AdminDashboardCard({
   count,
   textColor,
   radiusColor,
+  onClick,
   onExport,
   isExporting = false,
   showExport = false,
@@ -40,8 +42,22 @@ export function AdminDashboardCard({
 
   return (
     <Card
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                onClick()
+              }
+            }
+          : undefined
+      }
       className={cn(
-        "relative h-full transition-all hover:scale-[1.01] cursor-pointer group w-full",
+        "relative h-full transition-all hover:scale-[1.01] group w-full",
+        onClick ? "cursor-pointer" : "cursor-default",
         isLicense
           ? "min-h-[112px] border-0 shadow-lg ring-2 ring-offset-2 ring-offset-background"
           : "border border-border/60 shadow-sm hover:shadow-md",

@@ -34,12 +34,12 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
   }, [employer]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.employer.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.employer.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <CardContent className="px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.employer.employer")}</Label>
             {canEdit ? (
@@ -96,7 +96,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.employer.location")}</Label>
             {canEdit ? (
@@ -141,7 +141,7 @@ export function EmployerSection({ learner, canEdit = false }: EmployerSectionPro
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.employer.managerJobTitle")}</Label>
             {canEdit ? (

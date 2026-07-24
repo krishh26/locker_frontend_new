@@ -20,12 +20,12 @@ export function StudentIdSection({ learner, canEdit = false }: StudentIdSectionP
   const studentId = (learner as { student_id?: string }).student_id || "";
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.studentId.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.studentId.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <CardContent className="px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.studentId.uln")}</Label>
             {canEdit ? (

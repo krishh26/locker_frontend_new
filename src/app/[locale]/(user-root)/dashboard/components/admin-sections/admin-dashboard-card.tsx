@@ -12,6 +12,7 @@ export interface AdminDashboardCardProps {
   radiusColor: string
   icon?: LucideIcon
   variant?: "default" | "license"
+  onClick?: () => void
   onExport?: () => void
   isExporting?: boolean
   showExport?: boolean
@@ -23,6 +24,7 @@ export function AdminDashboardCard({
   count,
   textColor,
   radiusColor,
+  onClick,
   onExport,
   isExporting = false,
   showExport = false,
@@ -40,10 +42,24 @@ export function AdminDashboardCard({
 
   return (
     <Card
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                onClick()
+              }
+            }
+          : undefined
+      }
       className={cn(
-        "relative h-full transition-all hover:scale-[1.01] cursor-pointer group w-full",
+        "relative h-full transition-all hover:scale-[1.01] group w-full",
+        onClick ? "cursor-pointer" : "cursor-default",
         isLicense
-          ? "min-h-[112px] border-0 shadow-lg ring-2 ring-offset-2 ring-offset-background"
+          ? "min-h-28 border-0 shadow-lg ring-2 ring-offset-2 ring-offset-background"
           : "border border-border/60 shadow-sm hover:shadow-md",
         className
       )}
@@ -90,7 +106,7 @@ export function AdminDashboardCard({
           <div
             className={cn(
               "flex items-center justify-center rounded-xl transition-transform group-hover:scale-105",
-              isLicense ? "min-w-[3.25rem] px-3 py-1 rounded-lg" : "w-10 h-10 rounded-lg",
+              isLicense ? "min-w-13 px-3 py-1 rounded-lg" : "w-10 h-10 rounded-lg",
             )}
             style={{ backgroundColor: radiusColor }}
           >

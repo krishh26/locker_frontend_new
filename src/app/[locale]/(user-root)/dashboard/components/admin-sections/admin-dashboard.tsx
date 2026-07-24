@@ -1,12 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { KeyRound, ShieldCheck, UserCheck, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { PageHeader } from '@/components/dashboard/page-header'
 import { AdminDashboardCard } from './admin-dashboard-card'
-import { ActiveLearnersDetailDialog } from './active-learners-detail-dialog'
 import {
   dashboardCards,
   cardTypeMapping,
@@ -20,71 +19,37 @@ import {
 import type {
   DashboardCounts,
   CardApiType,
-  ActiveLearnersSummary,
   ActiveLearnersCardDataResponse,
+  ActiveLearnersSummary,
 } from '@/store/api/dashboard/types'
 import { cardApiTypeToCountKey } from '@/store/api/dashboard/types'
 import { useAppSelector } from '@/store/hooks'
-import { buildLockerReportCsvRows } from '../../data/locker-report-mapping'
 import { buildLearnersOnBilCsv } from '../../utils/learners-on-bil-csv-export'
-import { buildOverdueLearnersCsv } from '../../utils/overdue-learners-csv-export'
 import { buildOverdueProgressReviewCsv } from '../../utils/overdue-progress-review-csv-export'
-import { buildLearnersDueComplete30DaysCsv } from '../../utils/learners-due-complete-30-days-csv-export'
 import { buildDefaultReviewOverdueCsv } from '../../utils/default-review-overdue-csv-export'
-import { buildSamplingPlanOverdueCsv } from '../../utils/sampling-plan-overdue-csv-export'
 import { buildAssignmentsWithoutMappedCsv } from '../../utils/assignments-without-mapped-csv-export'
-import { buildUnmappedEvidenceCsv } from '../../utils/unmapped-evidence-csv-export'
-import { buildSessionLearnerActionCsv } from '../../utils/session-learner-action-csv-export'
-import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
-import { buildTrainerRiskRatingCsv } from '../../utils/trainer-risk-rating-csv-export'
-import { buildGatewayLearnersCsv } from '../../utils/gateway-learners-csv-export'
-import { buildLearnersOffTrackCsv } from '../../utils/learners-off-track-csv-export'
+import {
+  getReportConfigByApiType,
+  getReportConfigByCardId,
+} from '../../reports/configs'
+import {
+  extractCardDataArray,
+  processReportResponse,
+} from '../../reports/lib/process-report-response'
+import { ReportDialog } from '../../reports/components/report-dialog'
+import type { ReportConfig } from '../../reports/types'
 
-const SHEET_CSV_BUILDERS: Record<
+/** Legacy CSV builders for tiles not yet on the shared report architecture. */
+const LEGACY_SHEET_CSV_BUILDERS: Record<
   string,
   (rows: Record<string, unknown>[]) => string
 > = {
   suspended_learners: buildLearnersOnBilCsv,
-  learners_over_due: buildOverdueLearnersCsv,
-  learner_plan_due: buildOverdueProgressReviewCsv,
   learner_plan_due_in_next_7_days: buildOverdueProgressReviewCsv,
-  learners_course_due_in_next_30_days: buildLearnersDueComplete30DaysCsv,
   default_review_overdue: buildDefaultReviewOverdueCsv,
   assignments_without_mapped: buildAssignmentsWithoutMappedCsv,
-  unmapped_evidence: buildUnmappedEvidenceCsv,
-  session_learner_action_due: buildSessionLearnerActionCsv,
-  session_action_due_in_next_7_days: buildSessionLearnerActionCsv,
-  session_learner_action_overdue: buildSessionLearnerActionCsv,
-  iqa_actions_overdue: buildIqaActionsCsv,
-  all_iqa_actions: buildIqaActionsCsv,
-  iqa_actions_due_in_30_days: buildIqaActionsCsv,
-  session_due_today: buildOverdueProgressReviewCsv,
-  session_due_in_7_days: buildOverdueProgressReviewCsv,
-  sample_due_in_month: buildSamplingPlanOverdueCsv,
-  sampling_plan_overdue: buildSamplingPlanOverdueCsv,
-  risk_ratings: buildTrainerRiskRatingCsv,
-  gateway_learners: buildGatewayLearnersCsv,
-  off_track_learners: buildLearnersOffTrackCsv,
 }
 
-function extractCardDataArray(res: unknown): unknown[] {
-  if (!res || typeof res !== 'object') return []
-
-  const record = res as Record<string, unknown>
-
-  if (Array.isArray(record.data)) return record.data
-  if (Array.isArray(record.learners)) return record.learners
-  if (Array.isArray(record.list)) return record.list
-
-  const arrayValue = Object.values(record).find((v) => Array.isArray(v))
-  return arrayValue ? (arrayValue as unknown[]) : []
-}
-
-/* ============================================================
-   THEME-ADAPTIVE CARD BACKGROUNDS
-============================================================ */
-
-// Theme-adaptive card backgrounds – follows active theme automatically
 const cardBgColors = [
   'border bg-primary',
   'border bg-secondary',
@@ -130,9 +95,17 @@ const LICENSE_KPI_CARDS: Array<{
   },
 ]
 
-/* ============================================================
-   COMPONENT
-============================================================ */
+function downloadBlob(csv: string, filename: string) {
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(blob)
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+}
 
 export function AdminDashboard() {
   const t = useTranslations('dashboard')
@@ -140,7 +113,7 @@ export function AdminDashboard() {
   const userRole = useAppSelector((state) => state.auth.user?.role)
   const isAdmin = userRole === 'Admin'
 
-  const { data: dashboardData, isLoading: loading ,isFetching } =
+  const { data: dashboardData, isLoading: loading, isFetching } =
     useGetDashboardCountsQuery(undefined, {
       skip: !userRole || userRole === 'Learner',
       refetchOnMountOrArgChange: true,
@@ -149,10 +122,11 @@ export function AdminDashboard() {
   const [getCardData] = useLazyGetCardDataQuery()
   const [exporting, setExporting] = useState<Record<string, boolean>>({})
 
-  const [activeLearnersDialog, setActiveLearnersDialog] = useState<{
+  const [reportDialog, setReportDialog] = useState<{
     open: boolean
-    summary?: ActiveLearnersSummary | null
-  }>({ open: false, summary: null })
+    config: ReportConfig | null
+    title: string
+  }>({ open: false, config: null, title: '' })
 
   const counts: DashboardCounts = dashboardData?.data || ({} as DashboardCounts)
 
@@ -166,76 +140,71 @@ export function AdminDashboard() {
         ).filter((c): c is AdminDashboardCardData => c != null)
       : cardsWithoutOverall
 
-  /* ============================================================
-     EXPORT HANDLER
-  ============================================================ */
+  const buildActiveLearnersSummaryLines = useCallback(
+    (response: unknown): string[] => {
+      const summary = (response as ActiveLearnersCardDataResponse)?.summary as
+        | ActiveLearnersSummary
+        | undefined
+      if (!summary) return []
+
+      const summaryRows: string[] = []
+      if (summary.sa_unmapped_evidence_count !== undefined) {
+        summaryRows.push(
+          `${tAdmin('summarySaUnmapped')},${summary.sa_unmapped_evidence_count}`,
+        )
+      }
+      if (summary.outstanding_iqa_actions_count !== undefined) {
+        summaryRows.push(
+          `${tAdmin('summaryOutstandingIqa')},${summary.outstanding_iqa_actions_count}`,
+        )
+      }
+      return summaryRows
+    },
+    [tAdmin],
+  )
 
   const handleExport = async (apiType: string, cardId: string) => {
     setExporting((prev) => ({ ...prev, [apiType]: true }))
 
     try {
       const response = await getCardData(apiType).unwrap()
+      const filename = `${cardId}_${new Date().toISOString().split('T')[0]}.csv`
+
+      const sharedConfig =
+        getReportConfigByCardId(cardId) ?? getReportConfigByApiType(apiType)
+
+      if (sharedConfig) {
+        const summaryLines =
+          apiType === 'active_learners'
+            ? buildActiveLearnersSummaryLines(response)
+            : []
+        const { csv } = processReportResponse(
+          {
+            ...sharedConfig,
+            buildSummaryLines: summaryLines.length
+              ? () => summaryLines
+              : undefined,
+          },
+          response,
+        )
+        downloadBlob(csv || `"Report","${tAdmin('csvNoData')}"`, filename)
+        return
+      }
+
       const res = response as ActiveLearnersCardDataResponse
-      const data = extractCardDataArray(res)
-      const recordData = data as Record<string, unknown>[]
-      const summary = res.summary
+      const data = extractCardDataArray(res) as Record<string, unknown>[]
+      const sheetBuilder = LEGACY_SHEET_CSV_BUILDERS[apiType]
       const csvParts: string[] = []
 
-      /* -------- Add summary if exists -------- */
-      if (apiType === 'active_learners' && summary) {
-        const summaryRows: string[] = []
-
-        if (summary.sa_unmapped_evidence_count !== undefined) {
-          summaryRows.push(
-            `${tAdmin('summarySaUnmapped')},${summary.sa_unmapped_evidence_count}`,
-          )
-        }
-
-        if (summary.outstanding_iqa_actions_count !== undefined) {
-          summaryRows.push(
-            `${tAdmin('summaryOutstandingIqa')},${summary.outstanding_iqa_actions_count}`,
-          )
-        }
-
-        if (summaryRows.length > 0) {
-          csvParts.push(summaryRows.join('\n'), '')
-        }
+      if (sheetBuilder) {
+        csvParts.push(sheetBuilder(data))
       }
 
-      /* -------- Data rows -------- */
-      const sheetBuilder = SHEET_CSV_BUILDERS[apiType]
-
-      if (apiType === 'active_learners') {
-        const { headers, dataRows } = buildLockerReportCsvRows(recordData)
-        csvParts.push(headers, ...dataRows)
-      } else if (sheetBuilder) {
-        csvParts.push(sheetBuilder(recordData))
-      }
-
-      /* Ensure a file is always generated (e.g. when data and summary are empty). */
       if (csvParts.length === 0) {
         csvParts.push(`"Report","${tAdmin('csvNoData')}"`)
       }
 
-      /* -------- Generate File -------- */
-      if (csvParts.length > 0) {
-        const blob = new Blob([csvParts.join('\n')], {
-          type: 'text/csv;charset=utf-8;',
-        })
-
-        const link = document.createElement('a')
-        const url = URL.createObjectURL(blob)
-
-        link.href = url
-        link.download = `${cardId}_${
-          new Date().toISOString().split('T')[0]
-        }.csv`
-
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        URL.revokeObjectURL(url)
-      }
+      downloadBlob(csvParts.join('\n'), filename)
     } catch (error) {
       console.error(`Failed to export ${apiType}:`, error)
     } finally {
@@ -243,8 +212,18 @@ export function AdminDashboard() {
     }
   }
 
-  const dashboardTitle =
-    isAdmin ? t('adminDashboard') : t('dashboard')
+  const handleOpenReport = (card: AdminDashboardCardData) => {
+    const config = getReportConfigByCardId(card.id)
+    if (!config?.apiType) return
+
+    setReportDialog({
+      open: true,
+      config,
+      title: tAdmin('cards.' + card.id),
+    })
+  }
+
+  const dashboardTitle = isAdmin ? t('adminDashboard') : t('dashboard')
 
   return (
     <div className='flex flex-col gap-6'>
@@ -267,7 +246,9 @@ export function AdminDashboard() {
                   key={kpi.id}
                   variant='license'
                   title={tAdmin(`cards.${kpi.id}`)}
-                  count={loading || isFetching ? '...' : counts[kpi.countKey] ?? 0}
+                  count={
+                    loading || isFetching ? '...' : counts[kpi.countKey] ?? 0
+                  }
                   textColor='#ffffff'
                   radiusColor='rgba(255, 255, 255, 0.3)'
                   icon={kpi.icon}
@@ -280,56 +261,62 @@ export function AdminDashboard() {
       ) : null}
 
       <div className='px-4 lg:px-6'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6'>
           {cardsToRender.map((card, index) => {
-              const apiType: CardApiType | string | undefined =
-                card.apiType || cardTypeMapping[card.title]
+            const apiType: CardApiType | string | undefined =
+              card.apiType || cardTypeMapping[card.title]
 
-              const countKey =
-                apiType && apiType in cardApiTypeToCountKey
-                  ? cardApiTypeToCountKey[apiType as CardApiType]
-                  : apiType
+            const countKey =
+              apiType && apiType in cardApiTypeToCountKey
+                ? cardApiTypeToCountKey[apiType as CardApiType]
+                : apiType
 
-              const count =
-                apiType && countKey && counts[countKey] !== undefined
-                  ? counts[countKey]?.toString()
-                  : card.name || '0'
+            const count =
+              apiType && countKey && counts[countKey] !== undefined
+                ? counts[countKey]?.toString()
+                : card.name || '0'
 
-              const displayCount = loading || isFetching ? '...' : count
-              const isExporting = apiType ? exporting[apiType] || false : false
+            const displayCount = loading || isFetching ? '...' : count
+            const isExporting = apiType ? exporting[apiType] || false : false
+            const showExport =
+              loading || isFetching ? false : Boolean(apiType)
+            const reportConfig = getReportConfigByCardId(card.id)
+            const canOpenReport = Boolean(reportConfig?.apiType)
 
-              // Always show report button when card has an API type — empty data still downloads headers-only CSV
-              const showExport = loading || isFetching ? false : Boolean(apiType)
-
-              return (
-                <AdminDashboardCard
-                  key={card.id}
-                  title={tAdmin('cards.' + card.id)}
-                  count={displayCount}
-                  textColor={card.textColor}
-                  radiusColor={card.radiusColor}
-                  onExport={
-                    apiType
-                      ? () => handleExport(apiType, card.id)
-                      : undefined
-                  }
-                  isExporting={isExporting}
-                  showExport={showExport}
-                  className={cardBgColors[index % cardBgColors.length]}
-                />
-              )
-            })}
+            return (
+              <AdminDashboardCard
+                key={card.id}
+                title={tAdmin('cards.' + card.id)}
+                count={displayCount}
+                textColor={card.textColor}
+                radiusColor={card.radiusColor}
+                onClick={
+                  canOpenReport ? () => handleOpenReport(card) : undefined
+                }
+                onExport={
+                  apiType ? () => handleExport(apiType, card.id) : undefined
+                }
+                isExporting={isExporting}
+                showExport={showExport}
+                className={cardBgColors[index % cardBgColors.length]}
+              />
+            )
+          })}
         </div>
       </div>
 
-      <ActiveLearnersDetailDialog
-        open={activeLearnersDialog.open}
+      <ReportDialog
+        open={reportDialog.open}
         onOpenChange={(open) =>
-          setActiveLearnersDialog((prev) => ({ ...prev, open }))
+          setReportDialog((prev) => ({ ...prev, open }))
         }
-        title={tAdmin('cards.active_learner')}
-        count={counts.active_learners_count ?? '0'}
-        summary={activeLearnersDialog.summary}
+        config={reportDialog.config}
+        title={reportDialog.title}
+        buildSummaryLines={
+          reportDialog.config?.apiType === 'active_learners'
+            ? buildActiveLearnersSummaryLines
+            : undefined
+        }
       />
     </div>
   )

@@ -346,17 +346,22 @@ export function ContractedWorkHoursTab({
 
   return (
     <>
-      <Card>
-        <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-4'>
-          <CardTitle>{t('contractedWorkHours.cardTitle')}</CardTitle>
+      <Card className="overflow-hidden">
+        <CardHeader className='flex flex-col gap-3 space-y-0 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between sm:px-6'>
+          <CardTitle className='text-base sm:text-lg'>{t('contractedWorkHours.cardTitle')}</CardTitle>
           {canEdit && (
-            <Button type='button' onClick={() => handleOpenDialog()} size='sm'>
+            <Button
+              type='button'
+              onClick={() => handleOpenDialog()}
+              size='sm'
+              className='w-full shrink-0 sm:w-auto'
+            >
               <Plus className='mr-2 h-4 w-4' />
               {t('contractedWorkHours.setNewHours')}
             </Button>
           )}
         </CardHeader>
-        <CardContent>
+        <CardContent className='px-4 sm:px-6'>
           {contractedWorkList.length === 0 ? (
             <div className='text-center py-8 text-muted-foreground'>
               {t('contractedWorkHours.emptyState')}
@@ -462,14 +467,14 @@ export function ContractedWorkHoursTab({
           }
         }}
       >
-        <DialogContent className='max-w-2xl'>
-          <DialogHeader>
-            <DialogTitle>
+        <DialogContent className='w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-2xl sm:p-6'>
+          <DialogHeader className='pr-8 text-left'>
+            <DialogTitle className='text-base sm:text-lg'>
               {selectedWork
                 ? t('contractedWorkHours.dialog.editTitle')
                 : t('contractedWorkHours.dialog.setNewTitle')}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className='wrap-break-word'>
               {selectedWork
                 ? t('contractedWorkHours.dialog.editDescription')
                 : t('contractedWorkHours.dialog.setNewDescription')}
@@ -677,10 +682,11 @@ export function ContractedWorkHoursTab({
                 )}
               />
 
-              <DialogFooter>
+              <DialogFooter className='flex-col gap-2 sm:flex-row sm:justify-end'>
                 <Button
                   type='button'
                   variant='outline'
+                  className='w-full sm:w-auto'
                   onClick={handleCloseDialog}
                   disabled={isCreating || isUpdating || isLoadingEmployers}
                 >
@@ -688,6 +694,7 @@ export function ContractedWorkHoursTab({
                 </Button>
                 <Button
                   type='submit'
+                  className='w-full sm:w-auto'
                   disabled={isCreating || isUpdating || isLoadingEmployers}
                 >
                   {(isCreating || isUpdating) && (
@@ -705,31 +712,32 @@ export function ContractedWorkHoursTab({
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
+        <AlertDialogContent className='w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-lg sm:p-6'>
+          <AlertDialogHeader className='pr-8 text-left'>
+            <AlertDialogTitle className='text-base sm:text-lg'>
               {t('contractedWorkHours.deleteDialog.title')}
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className='wrap-break-word'>
               {t('contractedWorkHours.deleteDialog.description', {
                 company: selectedWork?.company ?? '',
               })}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className='gap-2'>
             <AlertDialogCancel
               onClick={() => {
                 setDeleteDialogOpen(false)
                 setSelectedWork(null)
               }}
               disabled={isDeleting}
+              className='w-full sm:w-auto'
             >
               {t('contractedWorkHours.deleteDialog.cancel')}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              className='w-full bg-destructive text-destructive-foreground hover:bg-destructive/90 sm:w-auto'
             >
               {isDeleting && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
               {t('contractedWorkHours.deleteDialog.delete')}

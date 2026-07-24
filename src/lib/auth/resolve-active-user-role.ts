@@ -1,12 +1,13 @@
 import {
   filterRolesFromApi,
+  getHighestPriorityRole,
   normalizeRole,
   type Role,
 } from "@/config/auth-roles"
 
 /**
  * Picks the active role for the session: current Redux/cookie selection first,
- * then API role, then first allowed role.
+ * then API role, then highest-priority allowed role.
  */
 export function resolveActiveUserRole(
   roles: string[] | null | undefined,
@@ -27,5 +28,5 @@ export function resolveActiveUserRole(
     }
   }
 
-  return filtered[0] as Role
+  return getHighestPriorityRole(filtered)
 }

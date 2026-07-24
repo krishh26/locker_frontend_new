@@ -23,12 +23,12 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
   const countryOfDomicile = (learner as { country_of_domicile?: string }).country_of_domicile || "-";
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.address.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.address.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <CardContent className="px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.address.street")}</Label>
             {canEdit ? (
@@ -73,7 +73,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.address.town")}</Label>
             {canEdit ? (
@@ -118,7 +118,7 @@ export function AddressSection({ learner, canEdit = false }: AddressSectionProps
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.address.homePostcode")}</Label>
             {canEdit ? (

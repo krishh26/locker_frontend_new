@@ -19,6 +19,19 @@ export const ROLES_STRIPPED_FROM_API = ["LIQA", "Line Manager"] as const
 
 export type Role = (typeof baseRoles)[number]
 
+/** Highest-privilege role first — aligned with backend `rolePriority`. */
+export const ROLE_PRIORITY = [
+  "MasterAdmin",
+  "PhoenixTeam",
+  "AccountManager",
+  "Admin",
+  "Trainer",
+  "Employer",
+  "IQA",
+  "EQA",
+  "Learner",
+] as const
+
 /**
  * Normalise API role arrays: OrganisationAdmin/CentreAdmin become Admin;
  * strip unused roles from display/switcher.
@@ -46,6 +59,25 @@ export function filterRolesFromApi(roles: string[] | null | undefined): string[]
   }
 
   return result
+}
+
+/** Picks the highest-priority role from the user's allowed roles. */
+export function getHighestPriorityRole(
+  roles: string[] | null | undefined,
+): Role | undefined {
+  const filtered = filterRolesFromApi(roles)
+  if (filtered.length === 0) {
+    return undefined
+  }
+
+  for (const priorityRole of ROLE_PRIORITY) {
+    const normalized = normalizeRole(priorityRole)
+    if (normalized && filtered.includes(normalized)) {
+      return normalized
+    }
+  }
+
+  return filtered[0] as Role
 }
 
 export const authRoles = {

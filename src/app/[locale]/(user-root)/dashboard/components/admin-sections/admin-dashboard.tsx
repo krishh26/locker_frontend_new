@@ -27,10 +27,7 @@ import { useAppSelector } from '@/store/hooks'
 import { buildLearnersOnBilCsv } from '../../utils/learners-on-bil-csv-export'
 import { buildOverdueProgressReviewCsv } from '../../utils/overdue-progress-review-csv-export'
 import { buildDefaultReviewOverdueCsv } from '../../utils/default-review-overdue-csv-export'
-import { buildSamplingPlanOverdueCsv } from '../../utils/sampling-plan-overdue-csv-export'
 import { buildAssignmentsWithoutMappedCsv } from '../../utils/assignments-without-mapped-csv-export'
-import { buildIqaActionsCsv } from '../../utils/iqa-actions-csv-export'
-import { buildGatewayLearnersCsv } from '../../utils/gateway-learners-csv-export'
 import {
   getReportConfigByApiType,
   getReportConfigByCardId,
@@ -51,12 +48,6 @@ const LEGACY_SHEET_CSV_BUILDERS: Record<
   learner_plan_due_in_next_7_days: buildOverdueProgressReviewCsv,
   default_review_overdue: buildDefaultReviewOverdueCsv,
   assignments_without_mapped: buildAssignmentsWithoutMappedCsv,
-  iqa_actions_overdue: buildIqaActionsCsv,
-  all_iqa_actions: buildIqaActionsCsv,
-  iqa_actions_due_in_30_days: buildIqaActionsCsv,
-  sample_due_in_month: buildSamplingPlanOverdueCsv,
-  sampling_plan_overdue: buildSamplingPlanOverdueCsv,
-  gateway_learners: buildGatewayLearnersCsv,
 }
 
 const cardBgColors = [

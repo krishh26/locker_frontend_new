@@ -15,6 +15,13 @@ import { sessionsDueIn7DaysReport } from './sessions-due-in-7-days'
 import { learnersOnSamplingPlanReport } from './learners-on-sampling-plan'
 import { learnersNotOnSamplingPlanReport } from './learners-not-on-sampling-plan'
 import { trainerRagReport } from './trainer-rag-report'
+import { iqaActionsOverdueReport } from './iqa-actions-overdue'
+import { allIqaActionsReport } from './all-iqa-actions'
+import { iqaActionsDueIn30DaysReport } from './iqa-actions-due-in-30-days'
+import { sampleDueInMonthReport } from './sample-due-in-month'
+import { samplingPlanOverdueReport } from './sampling-plan-overdue'
+import { outstandingEqaActionsReport } from './outstanding-eqa-actions'
+import { learnersInGatewayReport } from './learners-in-gateway'
 
 export const DASHBOARD_REPORT_CONFIGS: ReportConfig[] = [
   activeLearnerReport,
@@ -32,6 +39,13 @@ export const DASHBOARD_REPORT_CONFIGS: ReportConfig[] = [
   learnersOnSamplingPlanReport,
   learnersNotOnSamplingPlanReport,
   trainerRagReport,
+  iqaActionsOverdueReport,
+  allIqaActionsReport,
+  iqaActionsDueIn30DaysReport,
+  sampleDueInMonthReport,
+  samplingPlanOverdueReport,
+  outstandingEqaActionsReport,
+  learnersInGatewayReport,
 ]
 
 const byCardId = new Map(

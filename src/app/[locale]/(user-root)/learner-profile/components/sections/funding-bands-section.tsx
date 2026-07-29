@@ -32,12 +32,12 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("sections.fundingBands.title")}</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg">{t("sections.fundingBands.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <CardContent className="px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.fundingBands.originalAmount")}</Label>
             {canEdit ? (
@@ -84,7 +84,7 @@ export function FundingBandsSection({ learner, canEdit = false }: FundingBandsSe
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">{t("sections.fundingBands.fundingBandId")}</Label>
             {canEdit ? (

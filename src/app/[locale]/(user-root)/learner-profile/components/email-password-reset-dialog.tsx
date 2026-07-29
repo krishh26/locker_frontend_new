@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { useTranslations } from "next-intl"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { toast } from "sonner"
@@ -28,7 +27,6 @@ export function EmailPasswordResetDialog({
   open,
   onOpenChange,
   learnerEmail,
-  learnerName,
 }: EmailPasswordResetDialogProps) {
   const t = useTranslations("learnerProfile")
   const [sendPasswordResetEmail, { isLoading }] = useSendPasswordResetEmailMutation()
@@ -72,26 +70,32 @@ export function EmailPasswordResetDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Mail className="h-5 w-5" />
+      <DialogContent className="w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-md sm:p-6">
+        <DialogHeader className="pr-8 text-left">
+          <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <Mail className="h-5 w-5 shrink-0" />
             {t("emailPasswordResetDialog.title")}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="wrap-break-word">
             {t("emailPasswordResetDialog.description", { email: learnerEmail })}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="gap-2 sm:gap-2">
           <Button
             type="button"
             variant="outline"
+            className="w-full sm:w-auto"
             onClick={() => onOpenChange(false)}
             disabled={isLoading}
           >
             {t("emailPasswordResetDialog.cancel")}
           </Button>
-          <Button type="button" onClick={handleConfirm} disabled={isLoading}>
+          <Button
+            type="button"
+            className="w-full sm:w-auto"
+            onClick={handleConfirm}
+            disabled={isLoading}
+          >
             {isLoading ? t("emailPasswordResetDialog.sending") : t("emailPasswordResetDialog.ok")}
           </Button>
         </DialogFooter>

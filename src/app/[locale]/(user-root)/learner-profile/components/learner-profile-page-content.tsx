@@ -39,6 +39,7 @@ import { ContractedWorkHoursTab } from './contracted-work-hours-tab'
 import { ResetPasswordDialog } from './reset-password-dialog'
 import { EmailPasswordResetDialog } from './email-password-reset-dialog'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 import type {
   LearnerData,
   UpdateLearnerRequest,
@@ -354,39 +355,46 @@ export function LearnerProfilePageContent({
     )
   }
 
+  const tabTriggerClassName =
+    'flex w-full items-center justify-center gap-1.5 px-2.5 py-2.5 text-xs sm:px-3 sm:py-1 sm:text-sm cursor-pointer'
+
   return (
-    <div className='space-y-6 px-4 lg:px-6 pb-8'>
+    <div className='space-y-4 sm:space-y-6 px-4 lg:px-6 pb-8'>
       {/* Page Header */}
-      <div className='flex justify-between items-center'>
+      <div className='flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
         <PageHeader
           title={t('page.title')}
           subtitle={t('page.subtitle')}
           icon={User}
           showBackButton
           backButtonHref={backButtonHref}
+          className='min-w-0 [&_h1]:text-2xl [&_h1]:sm:text-3xl [&_p]:text-base [&_p]:sm:text-lg'
         />
 
         {/* Action Buttons */}
-          <div className='flex gap-2'>
+        <div className='grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:w-auto lg:shrink-0'>
+          <Button
+            variant='outline'
+            className='w-full justify-center lg:w-auto'
+            onClick={() => setIsResetPasswordDialogOpen(true)}
+          >
+            <KeyRound className='h-4 w-4' />
+            {t('page.resetPasswordButton')}
+          </Button>
+
+          <Button
+            variant='outline'
+            className='w-full justify-center lg:w-auto'
+            onClick={() => setIsEmailPasswordResetDialogOpen(true)}
+          >
+            <Mail className='h-4 w-4' />
+            {t('page.emailPasswordResetButton')}
+          </Button>
+
+          {!isLearner && (
             <Button
               variant='outline'
-              onClick={() => setIsResetPasswordDialogOpen(true)}
-            >
-              <KeyRound className='h-4 w-4' />
-              {t('page.resetPasswordButton')}
-            </Button>
-            
-              <Button
-                variant='outline'
-                onClick={() => setIsEmailPasswordResetDialogOpen(true)}
-              >
-                <Mail className='h-4 w-4' />
-                {t('page.emailPasswordResetButton')}
-              </Button>
-            
-              {!isLearner && (
-            <Button
-              variant='outline'
+              className='w-full justify-center sm:col-span-2 lg:col-span-1 lg:w-auto'
               onClick={() =>
                 router.push(`/learner-dashboard/${learner.learner_id}`)
               }
@@ -395,8 +403,8 @@ export function LearnerProfilePageContent({
               {t('page.accessProfile')}
               <ArrowRight className='h-4 w-4' />
             </Button>
-        )}
-          </div>
+          )}
+        </div>
       </div>
       {/* Profile Content with Tabs */}
       <Tabs
@@ -404,33 +412,29 @@ export function LearnerProfilePageContent({
         onValueChange={setActiveTab}
         className='w-full gap-4'
       >
-        <TabsList>
-          <TabsTrigger
-            value='personal'
-            className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
-          >
-            <User className='h-4 w-4' />
-            {t('page.tabs.personalInfo')}
+        <TabsList
+          className={cn(
+            'grid h-auto w-full gap-1 p-1 lg:inline-flex lg:h-9 lg:w-fit',
+            isLearner ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-3',
+          )}
+        >
+          <TabsTrigger value='personal' className={tabTriggerClassName}>
+            <User className='h-4 w-4 shrink-0' />
+            <span className='truncate'>{t('page.tabs.personalInfo')}</span>
           </TabsTrigger>
-          <TabsTrigger
-            value='course'
-            className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
-          >
-            <BookOpen className='h-4 w-4' />
-            {t('page.tabs.courseInformation')}
+          <TabsTrigger value='course' className={tabTriggerClassName}>
+            <BookOpen className='h-4 w-4 shrink-0' />
+            <span className='truncate'>{t('page.tabs.courseInformation')}</span>
           </TabsTrigger>
           {!isLearner && (
-            <TabsTrigger
-              value='contracted-work'
-              className='flex items-center gap-1 px-2.5 sm:px-3 cursor-pointer'
-            >
-              <Briefcase className='h-4 w-4' />
-              {t('page.tabs.contractedWorkHours')}
+            <TabsTrigger value='contracted-work' className={tabTriggerClassName}>
+              <Briefcase className='h-4 w-4 shrink-0' />
+              <span className='truncate'>{t('page.tabs.contractedWorkHours')}</span>
             </TabsTrigger>
           )}
         </TabsList>
 
-        <CardContent>
+        <CardContent className='px-0 sm:px-6'>
           <FormProvider {...form}>
             <form onSubmit={onSubmit}>
               <TabsContent value='personal' className='mt-0 space-y-6'>
@@ -442,8 +446,12 @@ export function LearnerProfilePageContent({
                 <AdditionalInfoSection learner={learner} canEdit={canEdit} />
                 <FundingBandsSection learner={learner} canEdit={canEdit} />
                 {canEdit && (
-                  <div className='flex justify-end pt-4 border-t'>
-                    <Button type='submit' disabled={isUpdating}>
+                  <div className='flex justify-stretch sm:justify-end pt-4 border-t'>
+                    <Button
+                      type='submit'
+                      disabled={isUpdating}
+                      className='w-full sm:w-auto'
+                    >
                       <Save className='h-4 w-4 mr-2' />
                       {isUpdating ? t('page.saving') : t('page.save')}
                     </Button>

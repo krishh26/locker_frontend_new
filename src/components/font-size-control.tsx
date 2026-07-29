@@ -44,7 +44,7 @@ export function FontSizeControl() {
           <Type className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-80">
+      <PopoverContent align="end" className="w-[calc(100vw-2rem)] max-w-sm p-4 sm:w-80">
         <div className="space-y-4">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-0.5">

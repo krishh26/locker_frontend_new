@@ -103,7 +103,10 @@ export function LoginForm({
         
         // Trigger user fetch - the query will run automatically via useEffect
         const userResponse = await getUser().unwrap()
-        const authUser = mapUserApiToAuthUser(userResponse.data)
+        const authUser = mapUserApiToAuthUser(
+          userResponse.data,
+          normalizedUser?.role,
+        )
         dispatch(
           updateUser({
             ...authUser,

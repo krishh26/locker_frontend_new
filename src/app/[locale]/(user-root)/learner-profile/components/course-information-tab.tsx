@@ -570,21 +570,22 @@ export function CourseInformationTab({
 
   return (
     <>
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle>{t("page.tabs.courseInformation")}</CardTitle>
+      <Card className="overflow-hidden">
+        <CardHeader className="flex flex-col gap-3 space-y-0 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <CardTitle className="text-base sm:text-lg">{t("page.tabs.courseInformation")}</CardTitle>
           {canEdit && (
             <Button
               type="button"
               onClick={() => handleOpenDialog()}
               size="sm"
+              className="w-full shrink-0 sm:w-auto"
             >
               <Plus className="mr-2 h-4 w-4" />
               {t("courseInformation.addCourse")}
             </Button>
           )}
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6">
           {courses.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               {t("courseInformation.emptyState")}
@@ -616,7 +617,7 @@ export function CourseInformationTab({
                 <TableBody>
                   {courses.map((course) => (
                     <TableRow key={course.user_course_id}>
-                      <TableCell className="font-medium max-w-[100px]">
+                      <TableCell className="font-medium max-w-25">
                         <div
                           className="truncate"
                           title={course.course?.course_name || "-"}
@@ -738,14 +739,14 @@ export function CourseInformationTab({
       <Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>
         <DialogContent
           className={cn(
-            "w-full max-w-4xl sm:max-w-4xl max-h-[90vh] overflow-y-auto",
+            "w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-4xl sm:p-6",
           )}
         >
-          <DialogHeader>
-            <DialogTitle>
+          <DialogHeader className="pr-8 text-left">
+            <DialogTitle className="text-base sm:text-lg">
               {isEditMode ? t("courseInformation.dialog.editTitle") : t("courseInformation.dialog.addTitle")}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="wrap-break-word">
               {isEditMode
                 ? t("courseInformation.dialog.editDescription")
                 : t("courseInformation.dialog.addDescription")}
@@ -1177,16 +1178,17 @@ export function CourseInformationTab({
                 </div>
               )}
 
-              <DialogFooter>
+              <DialogFooter className="flex-col gap-2 sm:flex-row sm:justify-end">
                 <Button
                   type="button"
                   variant="outline"
+                  className="w-full sm:w-auto"
                   onClick={handleCloseDialog}
                   disabled={isCreating || isUpdating}
                 >
                   {t("courseInformation.buttons.cancel")}
                 </Button>
-                <Button type="submit" disabled={isCreating || isUpdating}>
+                <Button type="submit" className="w-full sm:w-auto" disabled={isCreating || isUpdating}>
                   {(isCreating || isUpdating) && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
@@ -1199,31 +1201,32 @@ export function CourseInformationTab({
       </Dialog>
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
+        <AlertDialogContent className="w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-lg sm:p-6">
+          <AlertDialogHeader className="pr-8 text-left">
+            <AlertDialogTitle className="text-base sm:text-lg">
               {t("courseInformation.deleteDialog.title")}
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="wrap-break-word">
               {t("courseInformation.deleteDialog.description", {
                 courseName: selectedCourse?.course?.course_name || "this course",
               })}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className="gap-2">
             <AlertDialogCancel
               onClick={() => {
                 setDeleteDialogOpen(false);
                 setSelectedCourse(null);
               }}
               disabled={isDeleting}
+              className="w-full sm:w-auto"
             >
               {t("courseInformation.deleteDialog.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90 sm:w-auto"
             >
               {isDeleting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

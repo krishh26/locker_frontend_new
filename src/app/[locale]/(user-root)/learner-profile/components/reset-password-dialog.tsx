@@ -151,23 +151,24 @@ export function ResetPasswordDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("resetPasswordDialog.title")}</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="w-[calc(100%-2rem)] max-w-[calc(100vw-2rem)] min-w-0 max-h-[90vh] overflow-x-hidden overflow-y-auto p-4 sm:max-w-md sm:p-6">
+        <DialogHeader className="pr-8 text-left">
+          <DialogTitle className="text-base sm:text-lg">{t("resetPasswordDialog.title")}</DialogTitle>
+          <DialogDescription className="wrap-break-word">
             {learnerName
               ? t("resetPasswordDialog.descriptionWithName", { name: learnerName, email: learnerEmail })
               : t("resetPasswordDialog.descriptionEmailOnly", { email: learnerEmail })}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div className="grid gap-3">
+        <form onSubmit={onSubmit} className="min-w-0 space-y-4">
+          <div className="grid min-w-0 gap-3">
             <Label htmlFor="password">{t("resetPasswordDialog.newPassword")}</Label>
-            <div className="relative">
+            <div className="relative min-w-0">
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
                 disabled={isSubmitting}
+                className="pr-10"
                 {...form.register("password")}
               />
               <button
@@ -190,13 +191,14 @@ export function ResetPasswordDialog({
               </p>
             ) : null}
           </div>
-          <div className="grid gap-3">
+          <div className="grid min-w-0 gap-3">
             <Label htmlFor="confirmPassword">{t("resetPasswordDialog.confirmPassword")}</Label>
-            <div className="relative">
+            <div className="relative min-w-0">
               <Input
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 disabled={isSubmitting}
+                className="pr-10"
                 {...form.register("confirmPassword")}
               />
               <button
@@ -227,16 +229,17 @@ export function ResetPasswordDialog({
               {errorMessage}
             </p>
           ) : null}
-          <DialogFooter>
+          <DialogFooter className="gap-2 sm:gap-2">
             <Button
               type="button"
               variant="outline"
+              className="w-full sm:w-auto"
               onClick={() => handleOpenChange(false)}
               disabled={isSubmitting}
             >
               {t("resetPasswordDialog.cancel")}
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
               {isSubmitting ? t("resetPasswordDialog.resetting") : t("resetPasswordDialog.resetPassword")}
             </Button>
           </DialogFooter>

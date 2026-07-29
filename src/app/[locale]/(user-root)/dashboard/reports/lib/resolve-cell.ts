@@ -125,18 +125,25 @@ export function resolveColumnCell(
 
 export function resolveMainAimAssessor(row: Record<string, unknown>): string {
   const flat = resolveFromPaths(row, [
+    'trainer_name',
     'mentor',
     'iqas_name',
     'user_course.trainer_name',
+    'learner_id.mentor',
+    'learner_id.iqas_name',
   ])
 
   if (flat != null && String(flat).trim()) {
     return String(flat)
   }
 
-  const trainer = getNestedValue(row, 'user_course.trainer_id') as
-    | Record<string, unknown>
-    | undefined
+  const trainer =
+    (getNestedValue(row, 'trainer_id') as
+      | Record<string, unknown>
+      | undefined) ??
+    (getNestedValue(row, 'user_course.trainer_id') as
+      | Record<string, unknown>
+      | undefined)
 
   if (trainer) {
     const full = `${trainer.first_name ?? ''} ${trainer.last_name ?? ''}`.trim()
@@ -148,19 +155,32 @@ export function resolveMainAimAssessor(row: Record<string, unknown>): string {
 
 export function resolveCourseStartDate(row: Record<string, unknown>): unknown {
   return resolveFromPaths(row, [
+    'start_date',
     'user_course.start_date',
     'registration_date',
+    'learner_id.registration_date',
   ])
 }
 
 export function resolveCourseEndDate(row: Record<string, unknown>): unknown {
   return resolveFromPaths(row, [
+    'end_date',
     'user_course.end_date',
     'course_expected_end_date',
     'course_actual_end_date',
+    'learner_id.course_expected_end_date',
+    'learner_id.course_actual_end_date',
   ])
 }
 
+function hasOwnKey(row: Record<string, unknown>, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(row, key)
+}
+
+/**
+ * Calendar course timeline % from start→end dates.
+ * Do NOT use BE `overall_timeline` — that field is unit green+orange, not calendar progress.
+ */
 export function computeOverallTimeline(
   row: Record<string, unknown>,
 ): number | '' {
@@ -190,7 +210,17 @@ export function computeOverallTimeline(
 export function computeWeeksSinceLastReview(
   row: Record<string, unknown>,
 ): number | '' {
-  const reviewRaw = row.review_date
+  // Prefer BE enrichment when present (including explicit null → blank).
+  if (hasOwnKey(row, 'weeks_since_last_review')) {
+    if (row.weeks_since_last_review == null) return ''
+    const n = Number(row.weeks_since_last_review)
+    return Number.isFinite(n) ? n : ''
+  }
+
+  const reviewRaw = resolveFromPaths(row, [
+    'last_formal_review',
+    'review_date',
+  ])
 
   if (!reviewRaw) return ''
 
@@ -257,53 +287,120 @@ function parseTimeToHours(spend: string | null | undefined): number {
 const otjMetricsCache = new WeakMap<Record<string, unknown>, OtjMetrics>()
 
 /**
- * OTJ metrics from API fields only — no invented defaults.
- * - Hours required: `expected_off_the_job_hours`, or formula only when
- *   course dates + `weekly_working_hours` are all present.
- * - Actual hours / last entry: from `otj_details`.
+ * OTJ metrics — prefer BE enrichment from getOTJSummary (same as Time Log UI).
+ * Fallback: compute from otj_details + course dates when enrichment keys are absent.
  */
-export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
-  const cached = otjMetricsCache.get(row)
-  if (cached) return cached
+const OTJ_ENRICHMENT_KEYS = [
+  'off_the_job_hours_required',
+  'off_the_job_hours_required_to_date',
+  'actual_off_the_job_hours_recorded',
+  'actual_off_the_job_percent_achieved',
+  'actual_otj_differential_to_date',
+  'last_recorded_otj_entry_date',
+] as const
 
+function toOtjNumber(value: unknown): number | null {
+  if (value == null || value === '') return null
+  const n = Number(value)
+  return Number.isFinite(n) ? n : null
+}
+
+function toOtjDate(value: unknown): Date | null {
+  if (value == null || value === '') return null
+  if (value instanceof Date) {
+    return isNaN(value.getTime()) ? null : value
+  }
+  const d = new Date(String(value))
+  return isNaN(d.getTime()) ? null : d
+}
+
+function lastEntryFromOtjDetails(row: Record<string, unknown>): Date | null {
+  if (!Array.isArray(row.otj_details)) return null
+  let lastEntryDate: Date | null = null
+  for (const entry of row.otj_details) {
+    if (!entry || typeof entry !== 'object') continue
+    const activityDate = (entry as OtjLogEntry).activity_date
+    if (!activityDate) continue
+    const d = new Date(String(activityDate))
+    if (!isNaN(d.getTime()) && (!lastEntryDate || d > lastEntryDate)) {
+      lastEntryDate = d
+    }
+  }
+  return lastEntryDate
+}
+
+function metricsFromEnrichment(row: Record<string, unknown>): OtjMetrics {
+  const otjRequired = toOtjNumber(row.off_the_job_hours_required)
+  const requiredToDate = toOtjNumber(row.off_the_job_hours_required_to_date)
+  const totalLoggedHours = toOtjNumber(row.actual_off_the_job_hours_recorded)
+
+  // Match Off-the-Job summary UI: % and differential vs required-to-date
+  let otjPercentAchieved = toOtjNumber(row.actual_off_the_job_percent_achieved)
+  let otjDifferential = toOtjNumber(row.actual_otj_differential_to_date)
+  if (requiredToDate != null && totalLoggedHours != null) {
+    otjPercentAchieved =
+      requiredToDate > 0 ? (totalLoggedHours / requiredToDate) * 100 : null
+    otjDifferential = totalLoggedHours - requiredToDate
+  }
+
+  return {
+    otjRequired,
+    requiredToDate,
+    totalLoggedHours,
+    otjPercentAchieved,
+    otjDifferential,
+    lastEntryDate:
+      toOtjDate(row.last_recorded_otj_entry_date) ??
+      lastEntryFromOtjDetails(row),
+  }
+}
+
+function metricsFromOtjDetails(row: Record<string, unknown>): OtjMetrics {
   const userCourse =
     (row.user_course as Record<string, unknown> | null | undefined) ?? null
-  const hasOtjDetails = Array.isArray(row.otj_details)
-  const otjLogs = hasOtjDetails
+  const otjLogs = Array.isArray(row.otj_details)
     ? (row.otj_details as OtjLogEntry[])
     : []
 
   const startRaw =
-    userCourse?.start_date ?? row.registration_date ?? null
+    userCourse?.start_date ??
+    row.start_date ??
+    row.registration_date ??
+    getNestedValue(row, 'learner_id.registration_date') ??
+    null
   const endRaw =
     userCourse?.end_date ??
+    row.end_date ??
     row.course_expected_end_date ??
     row.course_actual_end_date ??
+    getNestedValue(row, 'learner_id.course_expected_end_date') ??
+    getNestedValue(row, 'learner_id.course_actual_end_date') ??
     null
 
   const startDate = startRaw ? new Date(String(startRaw)) : null
   const endDate = endRaw ? new Date(String(endRaw)) : null
-  const startOk = startDate && !isNaN(startDate.getTime())
-  const endOk = endDate && !isNaN(endDate.getTime())
+  const startOk = Boolean(startDate && !isNaN(startDate.getTime()))
+  const endOk = Boolean(endDate && !isNaN(endDate.getTime()))
 
   const totalDays =
     startOk && endOk ? daysBetweenInclusive(startDate!, endDate!) : 0
 
+  // Prefer OTJ-summary-style formula (weekly hours) over learner.expected_off_the_job_hours
+  // when weekly hours exist — expected hours often diverges from Time Log UI.
   let otjRequired: number | null = null
+  const weeklyWorkingHours = resolveFromPaths(row, [
+    'weekly_working_hours',
+    'learner_id.weekly_working_hours',
+  ])
   if (
-    row.expected_off_the_job_hours != null &&
-    Number(row.expected_off_the_job_hours) > 0
-  ) {
-    otjRequired = Number(row.expected_off_the_job_hours)
-  } else if (
     totalDays > 0 &&
-    row.weekly_working_hours != null &&
-    Number(row.weekly_working_hours) > 0
+    weeklyWorkingHours != null &&
+    Number(weeklyWorkingHours) > 0
   ) {
     const durationWeeks = totalDays / 7
     const statutoryLeaveWeeks =
       durationWeeks * (STATUTORY_LEAVE_WEEKS_PER_YEAR / WEEKS_PER_YEAR)
-    let weeklyHours = Number(row.weekly_working_hours)
+    let weeklyHours = Number(weeklyWorkingHours)
     const capDate = new Date('2022-08-01T00:00:00Z')
     if (startOk && startDate! >= capDate) {
       weeklyHours = Math.min(weeklyHours, 30)
@@ -314,6 +411,14 @@ export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
     const totalApprenticeshipHours =
       roundedWeekly * (roundedWeeks - roundedLeave)
     otjRequired = OTJ_PERCENT * totalApprenticeshipHours
+  } else {
+    const expectedHours = resolveFromPaths(row, [
+      'expected_off_the_job_hours',
+      'learner_id.expected_off_the_job_hours',
+    ])
+    if (expectedHours != null && Number(expectedHours) > 0) {
+      otjRequired = Number(expectedHours)
+    }
   }
 
   let requiredToDate: number | null = null
@@ -328,7 +433,7 @@ export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
 
   let totalLoggedHours: number | null = null
   let lastEntryDate: Date | null = null
-  if (hasOtjDetails) {
+  if (Array.isArray(row.otj_details)) {
     const validLogs = otjLogs.filter((log) => log.activity_date)
     totalLoggedHours = validLogs.reduce(
       (sum, log) => sum + parseTimeToHours(log.spend_time),
@@ -350,7 +455,7 @@ export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
     otjDifferential = totalLoggedHours - requiredToDate
   }
 
-  const metrics: OtjMetrics = {
+  return {
     otjRequired,
     requiredToDate,
     totalLoggedHours,
@@ -358,6 +463,21 @@ export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
     otjDifferential,
     lastEntryDate,
   }
+}
+
+export function computeOtjMetrics(row: Record<string, unknown>): OtjMetrics {
+  const cached = otjMetricsCache.get(row)
+  if (cached) return cached
+
+  // Prefer BE enrichment (getOTJSummary) — matches Time Log Off-the-Job summary
+  const hasEnrichment = OTJ_ENRICHMENT_KEYS.some((key) => hasOwnKey(row, key))
+  if (hasEnrichment) {
+    const metrics = metricsFromEnrichment(row)
+    otjMetricsCache.set(row, metrics)
+    return metrics
+  }
+
+  const metrics = metricsFromOtjDetails(row)
   otjMetricsCache.set(row, metrics)
   return metrics
 }

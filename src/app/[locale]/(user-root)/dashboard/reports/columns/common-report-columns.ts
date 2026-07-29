@@ -8,7 +8,6 @@ import {
   resolveCourseStartDate,
   resolveFromPaths,
   resolveMainAimAssessor,
-  getNestedValue,
 } from '../lib/resolve-cell'
 
 /**
@@ -62,36 +61,56 @@ export const COMMON_REPORT_COLUMNS: ReportColumnDef[] = [
   {
     id: 'curriculum_manager_name',
     header: 'Curriculum Manager Name',
-    accessor: 'director_of_curriculum',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'director_of_curriculum',
+        'learner_id.director_of_curriculum',
+      ]),
   },
   {
     id: 'evidence_last_uploaded',
     header: 'Evidence Last Uploaded',
-    accessor: 'evidence_last_uploaded',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'evidence_last_uploaded',
+        'learner_id.evidence_last_uploaded',
+      ]),
     format: 'datetime',
   },
   {
     id: 'last_feedback',
     header: 'Last Feedback',
-    accessor: 'last_feedback',
+    accessor: (row) =>
+      resolveFromPaths(row, ['last_feedback', 'learner_id.last_feedback']),
     format: 'datetime',
   },
   {
     id: 'overall_green',
     header: 'Overall Green',
-    accessor: 'main_aim_green_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'overall_green',
+        'main_aim_green_progress',
+        'learner_id.main_aim_green_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'overall_orange',
     header: 'Overall Orange',
-    accessor: 'main_aim_orange_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'overall_orange',
+        'main_aim_orange_progress',
+        'learner_id.main_aim_orange_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'overall_timeline',
     header: 'Overall TimeLine',
     accessor: computeOverallTimeline,
+    format: 'percent',
   },
   {
     id: 'main_aim_status',
@@ -127,63 +146,107 @@ export const COMMON_REPORT_COLUMNS: ReportColumnDef[] = [
   {
     id: 'main_green',
     header: 'Main Green',
-    accessor: 'main_aim_green_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'main_green',
+        'main_aim_green_progress',
+        'learner_id.main_aim_green_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'main_orange',
     header: 'Main Orange',
-    accessor: 'main_aim_orange_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'main_orange',
+        'main_aim_orange_progress',
+        'learner_id.main_aim_orange_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'f_skills_eng',
     header: 'F Skills Eng',
-    accessor: (row) => resolveCourseNameField(getNestedValue(row, 'fs_english')),
+    accessor: (row) =>
+      resolveCourseNameField(
+        resolveFromPaths(row, ['fs_english', 'learner_id.fs_english']),
+      ),
   },
   {
     id: 'f_skills_eng_green',
     header: 'F Skills Eng Green',
-    accessor: 'fs_english_green_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fs_english_green_progress',
+        'learner_id.fs_english_green_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'f_skills_eng_orange',
     header: 'F Skills Eng Orange',
-    accessor: 'fs_english_orange_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fs_english_orange_progress',
+        'learner_id.fs_english_orange_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'f_skills_eng_status',
     header: 'F Skills Eng Status',
-    accessor: 'fSkillsEngStatus',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fSkillsEngStatus',
+        'learner_id.fSkillsEngStatus',
+      ]),
   },
   {
     id: 'f_skills_maths',
     header: 'F Skills Maths',
-    accessor: (row) => resolveCourseNameField(getNestedValue(row, 'fs_maths')),
+    accessor: (row) =>
+      resolveCourseNameField(
+        resolveFromPaths(row, ['fs_maths', 'learner_id.fs_maths']),
+      ),
   },
   {
     id: 'f_skills_maths_green',
     header: 'F Skills Maths Green',
-    accessor: 'fs_maths_green_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fs_maths_green_progress',
+        'learner_id.fs_maths_green_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'f_skills_maths_orange',
     header: 'F Skills Maths Orange',
-    accessor: 'fs_maths_orange_progress',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fs_maths_orange_progress',
+        'learner_id.fs_maths_orange_progress',
+      ]),
     format: 'percent',
   },
   {
     id: 'f_skills_maths_status',
     header: 'F Skills Maths Status',
-    accessor: 'fSkillsMathsStatus',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'fSkillsMathsStatus',
+        'learner_id.fSkillsMathsStatus',
+      ]),
   },
   {
     id: 'supplementary_training_status',
     header: 'Supplementary Training Status',
-    accessor: 'supplementary_training_status',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'supplementary_training_status',
+        'learner_id.supplementary_training_status',
+      ]),
   },
   {
     id: 'supplementary_training_status_green',
@@ -200,23 +263,27 @@ export const COMMON_REPORT_COLUMNS: ReportColumnDef[] = [
   {
     id: 'last_visit_type',
     header: 'Last Visit type',
-    accessor: 'last_visit_type',
+    accessor: (row) =>
+      resolveFromPaths(row, ['last_visit_type', 'learner_id.last_visit_type']),
   },
   {
     id: 'last_visit_date',
     header: 'Last Visit Date',
-    accessor: 'last_visit_date',
+    accessor: (row) =>
+      resolveFromPaths(row, ['last_visit_date', 'learner_id.last_visit_date']),
     format: 'date',
   },
   {
     id: 'next_visit_type',
     header: 'Next Visit type',
-    accessor: 'next_visit_type',
+    accessor: (row) =>
+      resolveFromPaths(row, ['next_visit_type', 'learner_id.next_visit_type']),
   },
   {
     id: 'next_visit_date',
     header: 'Next Visit Date',
-    accessor: 'next_visit_date',
+    accessor: (row) =>
+      resolveFromPaths(row, ['next_visit_date', 'learner_id.next_visit_date']),
     format: 'date',
   },
   {
@@ -227,17 +294,28 @@ export const COMMON_REPORT_COLUMNS: ReportColumnDef[] = [
   {
     id: 'trainer_comment',
     header: 'Trainer Comment',
-    accessor: 'comment',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'trainer_comment',
+        'comment',
+        'learner_id.comment',
+      ]),
   },
   {
     id: 'learner_type',
     header: 'Learner Type',
-    accessor: 'learner_type',
+    accessor: (row) =>
+      resolveFromPaths(row, ['learner_type', 'learner_id.learner_type']),
   },
   {
     id: 'last_formal_review',
     header: 'Last Formal Review',
-    accessor: 'review_date',
+    accessor: (row) =>
+      resolveFromPaths(row, [
+        'last_formal_review',
+        'review_date',
+        'learner_id.review_date',
+      ]),
     format: 'date',
   },
   {

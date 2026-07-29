@@ -7,9 +7,16 @@ import {
 import { learnerDisplayName, userDisplayName } from '@/utils/csv-export-helpers'
 
 function resolveLearnerName(row: Record<string, unknown>): string {
+  // New backend endpoints return a flat string (`learner_name`).
+  const direct = resolveFromPaths(row, ['learner_name'])
+  if (direct != null) return String(direct)
+
   const nested =
     (row.learner as Record<string, unknown> | undefined) ??
     (row.learner_id as Record<string, unknown> | undefined)
+
+  const flat = resolveFromPaths(row, ['learner_name'])
+  if (flat != null && String(flat).trim() !== '') return String(flat)
 
   const fromNested = nested ? learnerDisplayName(nested) : ''
   if (fromNested) return fromNested
@@ -90,7 +97,7 @@ export const SAMPLING_PLAN_LEARNER_COLUMNS: ReportColumnDef[] = [
   },
   {
     id: 'assessor_name',
-    header: 'Assessor Name',
+    header: 'Trainer Name',
     accessor: resolveAssessorName,
   },
 ]

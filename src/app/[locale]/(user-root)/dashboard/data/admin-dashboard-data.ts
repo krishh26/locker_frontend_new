@@ -7,8 +7,8 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Learners due to complete within 30 days": "learners_course_due_in_next_30_days",
   "Learners off track": "off_track_learners",
   "Unmapped evidences": "unmapped_evidence",
-  "Learners on a Sampling Plan": "learner_plan_due",
-  "Learners not on a Sampling Plan": "learner_plan_due_in_next_7_days",
+  "Learners on a Sampling Plan": "learners_on_sample_plan",
+  "Learners not on a Sampling Plan": "learners_not_on_sample_plan",
   "IQA actions overdue": "iqa_actions_overdue",
   "All IQA actions": "all_iqa_actions",
   "IQA actions due in 30 days": "iqa_actions_due_in_30_days",
@@ -21,6 +21,7 @@ export const cardTypeMapping: { [key: string]: string } = {
   "Actions due in the next 7 days": "session_action_due_in_next_7_days",
   "Risk ratings": "risk_ratings",
   "Learners in Gateway": "gateway_learners",
+  "OTJ Off Track": "otj_off_track",
 }
 
 export interface AdminDashboardCardData {
@@ -107,7 +108,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "learner_plan_due",
+    apiType: "learners_on_sample_plan",
   },
   {
     id: "learner_not_all_sampling_plan",
@@ -115,7 +116,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
-    apiType: "learners_over_due",
+    apiType: "learners_not_on_sample_plan",
   },
   {
     id: "due_actions",
@@ -147,6 +148,7 @@ export const dashboardCards: AdminDashboardCardData[] = [
     name: "0",
     textColor: "#ffffff",
     radiusColor: "rgba(255, 255, 255, 0.2)",
+    apiType: "otj_off_track",
   },
   // --- IQA cards (second) ---
   {

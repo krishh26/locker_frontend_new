@@ -31,6 +31,9 @@ export type CardApiType =
   | "risk_ratings"
   | "gateway_learners"
   | "off_track_learners"
+  | "learners_on_sample_plan"
+  | "learners_not_on_sample_plan"
+  | "otj_off_track"
 
 // Mapping from CardApiType (query param) to DashboardCounts key (API response)
 export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> = {
@@ -56,6 +59,9 @@ export const cardApiTypeToCountKey: Record<CardApiType, keyof DashboardCounts> =
   risk_ratings: "risk_ratings_count",
   gateway_learners: "gateway_learners_count",
   off_track_learners: "off_track_learners_count",
+  otj_off_track: "otj_off_track_count",
+  learners_on_sample_plan: "learners_on_sample_plan_count",
+  learners_not_on_sample_plan: "learners_not_on_sample_plan_count",
 }
 
 export interface DashboardCounts {
@@ -78,6 +84,8 @@ export interface DashboardCounts {
   sampleDueInMonth_count: number
   samplingPlanOverdue_count: number
   totalCourses: number
+  learners_on_sample_plan_count: number
+  learners_not_on_sample_plan_count: number
   /** License / credit information (admin-only display). */
   totalLicenses?: number
   totalLicenseRemaining?: number

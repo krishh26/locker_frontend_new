@@ -667,17 +667,6 @@ export function ModuleUnitProgressDataTable() {
       },
     ];
 
-    if (isStandardCourse) {
-      baseColumns.push({
-        accessorKey: "comment",
-        header: t("table.columns.code"),
-        cell: ({ row }: { row: Row<SubUnitRow> }) => {
-          const code = row.getValue("comment") as string;
-          return <div className="font-mono text-sm font-medium">{code || "-"}</div>;
-        },
-      });
-    }
-
     baseColumns.push(
       {
         accessorKey: "learnerMap",
@@ -739,7 +728,7 @@ export function ModuleUnitProgressDataTable() {
           return (
             <div className="flex items-center justify-start">
               <div
-                className={`h-6 w-full max-w-[100px] rounded ${getGapColor()}`}
+                className={`h-6 w-full max-w-25 rounded ${getGapColor()}`}
                 title={
                   gap === "complete"
                     ? t("table.gapTooltip.complete")
@@ -811,7 +800,6 @@ export function ModuleUnitProgressDataTable() {
     const headers = isStandardCourse
       ? [
           t("table.columns.title"),
-          t("table.columns.code"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
@@ -828,7 +816,6 @@ export function ModuleUnitProgressDataTable() {
       isStandardCourse
         ? [
             row.subTitle,
-            row.comment,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
             gapStatusLabel(row.gap),
@@ -861,7 +848,6 @@ export function ModuleUnitProgressDataTable() {
     const headers = isStandardCourse
       ? [
           t("table.columns.title"),
-          t("table.columns.code"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),

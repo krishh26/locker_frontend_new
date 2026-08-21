@@ -160,7 +160,7 @@ export async function exportGapAnalysisToPdf(
   const dateStr = new Date().toLocaleDateString()
   const defaultFilename = `${title.replace(/\s+/g, "-")}_${new Date().toISOString().split("T")[0]}.pdf`
   const finalFilename = filename ?? defaultFilename
-  const gapColumnIndex = isStandardCourse ? 4 : 3
+  const gapColumnIndex = 3
 
   type PdfRowMeta = { gap?: GapAnalysisPdfGap; isUnitHeader?: boolean }
   const body: unknown[][] = []
@@ -188,7 +188,6 @@ export async function exportGapAnalysisToPdf(
         isStandardCourse
           ? [
               row.subTitle,
-              row.comment ?? "",
               row.learnerMap,
               row.trainerMap,
               "",

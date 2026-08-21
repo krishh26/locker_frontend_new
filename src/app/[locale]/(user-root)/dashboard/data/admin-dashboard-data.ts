@@ -24,6 +24,7 @@ export const cardTypeMapping: { [key: string]: string } = {
   "OTJ Off Track": "otj_off_track",
 }
 
+
 export interface AdminDashboardCardData {
   id: string
   title: string

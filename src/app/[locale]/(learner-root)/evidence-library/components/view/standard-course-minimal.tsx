@@ -17,6 +17,26 @@ import {
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
 
+/** Match evidence create `units-table` Unit Mappings layout. */
+const LEARNER_MAP_COL_CLASS =
+  "w-28 min-w-28 max-w-28 whitespace-normal align-middle";
+const UNIT_TITLE_HEAD_CLASS =
+  "min-w-56 max-w-80 w-[40%] whitespace-normal";
+const UNIT_TITLE_CELL_CLASS =
+  "min-w-56 max-w-80 w-[40%] align-top whitespace-normal";
+
+function UnitSubUnitTitle({ title }: { title?: string | null }) {
+  const text = title ?? "";
+  return (
+    <div
+      className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground"
+      title={text}
+    >
+      {text}
+    </div>
+  );
+}
+
 export interface StandardCourseMinimalProps {
   title: string;
   rows: Array<{
@@ -158,7 +178,7 @@ export function StandardCourseMinimal({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
+              <TableHead className={LEARNER_MAP_COL_CLASS}>
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     checked={allLearnerMapSelected}
@@ -192,7 +212,7 @@ export function StandardCourseMinimal({
                   <Label className="text-sm font-medium">Learner Map</Label>
                 </div>
               </TableHead>
-              <TableHead>{title}</TableHead>
+              <TableHead className={UNIT_TITLE_HEAD_CLASS}>{title}</TableHead>
               <TableHead>Trainer Comment</TableHead>
               <TableHead className="text-center">Gap</TableHead>
               <TableHead className="text-center">
@@ -226,8 +246,13 @@ export function StandardCourseMinimal({
               const rowKey = `${row.unitId}-${row.unitType ?? ""}-${row.id}`;
 
               return (
-                <TableRow key={rowKey}>
-                  <TableCell>
+                <TableRow
+                  key={rowKey}
+                  className={
+                    currentValues.learnerMap ? "bg-primary/10" : undefined
+                  }
+                >
+                  <TableCell className={LEARNER_MAP_COL_CLASS}>
                     <Checkbox
                       checked={currentValues.learnerMap}
                       onCheckedChange={() => {
@@ -236,7 +261,9 @@ export function StandardCourseMinimal({
                       disabled={!canEditLearnerFields}
                     />
                   </TableCell>
-                  <TableCell>{row.title}</TableCell>
+                  <TableCell className={UNIT_TITLE_CELL_CLASS}>
+                    <UnitSubUnitTitle title={row.title} />
+                  </TableCell>
                   <TableCell>
                     {!canEditTrainerFields ? (
                       <span className="text-sm text-muted-foreground">

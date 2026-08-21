@@ -223,7 +223,9 @@ export function QualificationMinimal({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Performance Criteria</TableHead>
+                    <TableHead className="min-w-56 max-w-80 w-[40%] whitespace-normal">
+                      Performance Criteria
+                    </TableHead>
                     <TableHead>Trainer Comment</TableHead>
                     <TableHead className="text-center">Gap</TableHead>
                     <TableHead className="text-center">Sign Off</TableHead>
@@ -232,10 +234,16 @@ export function QualificationMinimal({
                 <TableBody>
                   {subUnit.topics?.map((pc: any) => {
                     const currentValues = getCurrentTopicValues(pc.topic, pc.unitId, pc.subUnitId);
+                    const pcText = `${pc.code ? `${pc.code} - ` : ""}${pc.description ?? ""}`;
                     
                     return (
-                      <TableRow key={pc.id}>
-                        <TableCell>
+                      <TableRow
+                        key={pc.id}
+                        className={
+                          currentValues.learnerMap ? "bg-primary/10" : undefined
+                        }
+                      >
+                        <TableCell className="min-w-56 max-w-80 w-[40%] align-top whitespace-normal">
                           <div className="flex items-start gap-2">
                             <Checkbox
                               checked={currentValues.learnerMap}
@@ -245,7 +253,10 @@ export function QualificationMinimal({
                               disabled={!canEditLearnerFields}
                               className="mt-0.5"
                             />
-                            <div className="text-sm flex-1">
+                            <div
+                              className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground flex-1"
+                              title={pcText}
+                            >
                               {pc.code && (
                                 <span className="font-medium mr-1">{pc.code} -</span>
                               )}

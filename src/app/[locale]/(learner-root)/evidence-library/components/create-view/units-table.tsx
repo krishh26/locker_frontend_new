@@ -21,6 +21,26 @@ import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
 import { COURSE_TYPES } from "../constants";
 
+/** Compact columns for evidence create Unit Mappings. */
+const LEARNER_MAP_COL_CLASS =
+  "w-28 min-w-28 max-w-28 whitespace-normal align-middle";
+const UNIT_TITLE_HEAD_CLASS =
+  "min-w-56 max-w-80 w-[40%] whitespace-normal";
+const UNIT_TITLE_CELL_CLASS =
+  "min-w-56 max-w-80 w-[40%] align-top whitespace-normal";
+
+function UnitSubUnitTitle({ title }: { title?: string | null }) {
+  const text = title ?? "";
+  return (
+    <div
+      className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground"
+      title={text}
+    >
+      {text}
+    </div>
+  );
+}
+
 interface UnitsTableProps {
   control: Control<EvidenceFormValues>;
   setValue: UseFormSetValue<EvidenceFormValues>;
@@ -176,8 +196,12 @@ export function UnitsTable({
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Learner Map</TableHead>
-                          <TableHead>Unit/Sub Unit</TableHead>
+                          <TableHead className={LEARNER_MAP_COL_CLASS}>
+                            Learner Map
+                          </TableHead>
+                          <TableHead className={UNIT_TITLE_HEAD_CLASS}>
+                            Unit/Sub Unit
+                          </TableHead>
                           <TableHead>Trainer Comment</TableHead>
                           <TableHead className="text-center">Gap</TableHead>
                           <TableHead className="text-center">Signed Off</TableHead>
@@ -204,7 +228,7 @@ export function UnitsTable({
                       const stableKey = `${course.course_id}-${unit.id}-${subUnit.id}`;
                       return (
                         <TableRow key={stableKey}>
-                          <TableCell>
+                          <TableCell className={LEARNER_MAP_COL_CLASS}>
                             <Controller
                               key={`${stableKey}-learnerMap`}
                               name={`units.${unitIndex}.subUnit.${subIndex}.learnerMap` as any}
@@ -218,7 +242,9 @@ export function UnitsTable({
                               )}
                             />
                           </TableCell>
-                          <TableCell>{subUnit.title}</TableCell>
+                          <TableCell className={UNIT_TITLE_CELL_CLASS}>
+                            <UnitSubUnitTitle title={subUnit.title} />
+                          </TableCell>
                           <TableCell>
                             <Controller
                               key={`${stableKey}-comment`}
@@ -308,7 +334,7 @@ export function UnitsTable({
                     const stableKey = `${course.course_id}-${unit.id}`;
                     return (
                       <TableRow key={stableKey}>
-                        <TableCell>
+                        <TableCell className={LEARNER_MAP_COL_CLASS}>
                           <Controller
                             key={`${stableKey}-learnerMap`}
                             name={`units.${unitIndex}.learnerMap` as any}
@@ -322,11 +348,13 @@ export function UnitsTable({
                             )}
                           />
                         </TableCell>
-                        <TableCell>{unit.title}</TableCell>
+                        <TableCell className={UNIT_TITLE_CELL_CLASS}>
+                          <UnitSubUnitTitle title={unit.title} />
+                        </TableCell>
                         <TableCell>
-                          <Controller
-                            key={`${stableKey}-comment`}
-                            name={`units.${unitIndex}.comment` as any}
+                            <Controller
+                              key={`${stableKey}-comment`}
+                              name={`units.${unitIndex}.comment` as any}
                             control={control}
                             render={({ field: unitField }) => (
                               <Input
@@ -429,8 +457,12 @@ export function UnitsTable({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Learner Map</TableHead>
-                    <TableHead>Unit/Sub Unit</TableHead>
+                    <TableHead className={LEARNER_MAP_COL_CLASS}>
+                      Learner Map
+                    </TableHead>
+                    <TableHead className={UNIT_TITLE_HEAD_CLASS}>
+                      Unit/Sub Unit
+                    </TableHead>
                     <TableHead>Trainer Comment</TableHead>
                     <TableHead className="text-center">Gap</TableHead>
                     <TableHead className="text-center">Signed Off</TableHead>
@@ -457,7 +489,7 @@ export function UnitsTable({
                         const stableKey = `${course.course_id}-${unit.id}-${subUnit.id}`;
                         return (
                           <TableRow key={stableKey}>
-                            <TableCell>
+                            <TableCell className={LEARNER_MAP_COL_CLASS}>
                               <Controller
                                 key={`${stableKey}-learnerMap`}
                                 name={`units.${unitIndex}.subUnit.${subIndex}.learnerMap` as any}
@@ -471,7 +503,9 @@ export function UnitsTable({
                                 )}
                               />
                             </TableCell>
-                            <TableCell>{subUnit.title}</TableCell>
+                            <TableCell className={UNIT_TITLE_CELL_CLASS}>
+                            <UnitSubUnitTitle title={subUnit.title} />
+                          </TableCell>
                             <TableCell>
                               <Controller
                                 key={`${stableKey}-comment`}
@@ -561,7 +595,7 @@ export function UnitsTable({
                       const stableKey = `${course.course_id}-${unit.id}`;
                       return (
                         <TableRow key={stableKey}>
-                          <TableCell>
+                          <TableCell className={LEARNER_MAP_COL_CLASS}>
                             <Controller
                               key={`${stableKey}-learnerMap`}
                               name={`units.${unitIndex}.learnerMap` as any}
@@ -575,7 +609,9 @@ export function UnitsTable({
                               )}
                             />
                           </TableCell>
-                          <TableCell>{unit.title}</TableCell>
+                          <TableCell className={UNIT_TITLE_CELL_CLASS}>
+                            <UnitSubUnitTitle title={unit.title} />
+                          </TableCell>
                           <TableCell>
                             <Controller
                               key={`${stableKey}-comment`}

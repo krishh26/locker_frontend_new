@@ -800,13 +800,25 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
               })
             }
           } else {
-            const key = `${courseId}-${unit.id}`
-            const existingMapping = standardMergedByKey.get(key)
-            const currentSubUnitIds = Array.isArray(unit.subUnit)
+            // Standard: only map units/sub-units the learner actually checked.
+            // Previously every formUnits row was POSTed with learnerMap:true, which
+            // fired one /assignment/mapping call per Knowledge/Behaviour/Skills row.
+            const hasSubUnits =
+              Array.isArray(unit.subUnit) && unit.subUnit.length > 0
+            const currentSubUnitIds = hasSubUnits
               ? unit.subUnit
                   .filter((sub: any) => sub?.learnerMap === true)
                   .map((sub: any) => String(sub.id))
               : []
+            const unitLevelMapped =
+              !hasSubUnits && unit.learnerMap === true
+
+            if (!unitLevelMapped && currentSubUnitIds.length === 0) {
+              return
+            }
+
+            const key = `${courseId}-${unit.id}`
+            const existingMapping = standardMergedByKey.get(key)
             const mergedSubUnitIds = Array.from(
               new Set<string>([
                 ...((existingMapping?.sub_unit_ids as string[] | undefined) ||
@@ -814,7 +826,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 ...currentSubUnitIds,
               ]),
             )
-            standardMergedByKey.set(key, {
+            const payload: Record<string, unknown> = {
               assignment_id: Number(createdEvidenceId),
               course_id: Number(courseId),
               code: unit.code,
@@ -833,15 +845,17 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 (existingMapping?.signed_off as boolean | undefined) ??
                 unit.signed_off ??
                 false,
-              sub_unit_ids: mergedSubUnitIds,
-            })
+            }
+            if (mergedSubUnitIds.length > 0) {
+              payload.sub_unit_ids = mergedSubUnitIds
+            }
+            standardMergedByKey.set(key, payload)
           }
         })
 
         for (const payload of standardMergedByKey.values()) {
           mappingRequests.push(payload)
         }
-        console.log("🚀 ~ onSubmit ~ mappingRequests:", mappingRequests)
 
         const allMappingIds: number[] = []
 

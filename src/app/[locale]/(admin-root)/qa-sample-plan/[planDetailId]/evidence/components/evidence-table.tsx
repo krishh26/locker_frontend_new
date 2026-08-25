@@ -21,6 +21,7 @@ import type { EvidenceItem } from "@/store/api/qa-sample-plan/types";
 import {
   findMappedEntryByCriteriaId,
   getMappedCriteriaId,
+  isRawEntityId,
 } from "../../../utils/mapped-topic";
 
 function normalizeRole(role: unknown): string {
@@ -101,7 +102,9 @@ export function EvidenceTable({
                       <Tooltip delayDuration={200}>
                         <TooltipTrigger asChild>
                           <span className="cursor-help line-clamp-3 text-xs font-medium leading-snug">
-                            {unit.code || unit.title}
+                            {unit.code && !isRawEntityId(unit.code)
+                              ? unit.code
+                              : unit.title || t("na")}
                           </span>
                         </TooltipTrigger>
                         <TooltipContent side="top" sideOffset={6} className="max-w-[360px]">

@@ -1,15 +1,24 @@
 /**
  * StandardTopicsForm Component
- * 
+ *
  * Component for managing topics (subUnits) within Standard course modules
  * Used inside StandardModulesStep for Standard courses
+ *
+ * Sr No. is auto-generated per type within the module:
+ * Knowledge → K1, K2… | Behaviour → B1, B2… | Skills → S1, S2…
  */
 
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { Controller, Control, useFieldArray, UseFormSetValue } from "react-hook-form";
+import {
+  Controller,
+  Control,
+  useFieldArray,
+  useWatch,
+  UseFormSetValue,
+} from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +41,42 @@ import { Card } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type CriterionType = "Behaviour" | "Knowledge" | "Skills";
+
+const TYPE_PREFIX: Record<CriterionType, string> = {
+  Knowledge: "K",
+  Behaviour: "B",
+  Skills: "S",
+};
+
+function getTypePrefix(type: string | undefined): string {
+  if (type === "Knowledge" || type === "Behaviour" || type === "Skills") {
+    return TYPE_PREFIX[type];
+  }
+  return TYPE_PREFIX.Behaviour;
+}
+
+/** Build K1/B1/S1… codes from row order, counting separately per type. */
+export function buildStandardSrNos(
+  topics: Array<{ type?: string } | null | undefined>
+): string[] {
+  const counters: Record<string, number> = {
+    Knowledge: 0,
+    Behaviour: 0,
+    Skills: 0,
+  };
+
+  return topics.map((topic) => {
+    const type = (topic?.type as CriterionType) || "Behaviour";
+    const key =
+      type === "Knowledge" || type === "Behaviour" || type === "Skills"
+        ? type
+        : "Behaviour";
+    counters[key] = (counters[key] || 0) + 1;
+    return `${getTypePrefix(key)}${counters[key]}`;
+  });
+}
+
 interface StandardTopicsFormProps {
   control: Control<CourseFormData>;
   moduleIndex: number;
@@ -53,13 +98,47 @@ export function StandardTopicsForm({
     name: `units.${moduleIndex}.subUnit`,
   });
 
+  const watchedTopics = useWatch({
+    control,
+    name: `units.${moduleIndex}.subUnit`,
+    defaultValue: topics,
+  });
+
+  const typeSignature = Array.isArray(watchedTopics)
+    ? watchedTopics.map((topic: any) => topic?.type || "Behaviour").join("|")
+    : "";
+
+  // Keep Sr No. in sync when rows are added/removed or type changes
+  useEffect(() => {
+    if (!setValue || !Array.isArray(watchedTopics) || watchedTopics.length === 0) {
+      return;
+    }
+
+    const codes = buildStandardSrNos(watchedTopics);
+    codes.forEach((code, index) => {
+      if (watchedTopics[index]?.code !== code) {
+        setValue(`units.${moduleIndex}.subUnit.${index}.code` as any, code, {
+          shouldValidate: false,
+          shouldDirty: false,
+        });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fields.length, typeSignature, moduleIndex, setValue]);
+
   const handleAddTopic = () => {
+    const current = Array.isArray(watchedTopics) ? watchedTopics : [];
+    const defaultType: CriterionType = "Knowledge";
+    const nextCode =
+      buildStandardSrNos([...current, { type: defaultType }]).at(-1) || "K1";
+
     const newTopic = {
       id: Date.now(),
       title: "",
-      type: "Behaviour" as const,
+      type: defaultType,
+      code: nextCode,
     };
-    append(newTopic, { shouldFocus: false }); // Don't focus and don't trigger validation
+    append(newTopic, { shouldFocus: false });
   };
 
   return (
@@ -87,6 +166,7 @@ export function StandardTopicsForm({
                   <TableHead>
                     {t("course.standard.type")} <span className="text-destructive">*</span>
                   </TableHead>
+                  <TableHead>{t("course.standard.srNo")}</TableHead>
                   <TableHead>
                     {t("course.standard.title")} <span className="text-destructive">*</span>
                   </TableHead>
@@ -106,7 +186,7 @@ export function StandardTopicsForm({
                           render={({ field: formField, fieldState: { error } }) => (
                             <div className="space-y-1">
                               <Select
-                                value={formField.value || "Behaviour"}
+                                value={formField.value || "Knowledge"}
                                 onValueChange={formField.onChange}
                                 disabled={readOnly}
                               >
@@ -123,6 +203,27 @@ export function StandardTopicsForm({
                                 <p className="text-xs text-destructive">{error.message}</p>
                               )}
                             </div>
+                          )}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Controller
+                          name={`units.${moduleIndex}.subUnit.${index}.code`}
+                          control={control}
+                          render={({ field: formField }) => (
+                            <Input
+                              {...formField}
+                              value={
+                                formField.value ||
+                                buildStandardSrNos(
+                                  Array.isArray(watchedTopics) ? watchedTopics : []
+                                )[index] ||
+                                ""
+                              }
+                              placeholder={t("course.standard.placeholderSrNo")}
+                              className="w-[100px]"
+                              disabled={readOnly}
+                            />
                           )}
                         />
                       </TableCell>

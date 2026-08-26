@@ -37,10 +37,10 @@ import { UnitProgressSection } from "./unit-progress-section";
 import { UnitMappingTable } from "./unit-mapping-table";
 import { useAppSelector } from "@/store/hooks";
 import {
-  compareTopicCodes,
-  extractCriterionCode,
   findMappedEntryByCriteriaId,
   getMappedCriteriaId,
+  isRawEntityId,
+  resolveCriterionDisplayCode,
 } from "../../../utils/mapped-topic";
 
 interface ExamineEvidencePageContentProps {
@@ -265,28 +265,30 @@ export function ExamineEvidencePageContent({
       (u) => String(u.unit_code) === selectedUnitCode
     );
 
-    for (const subUnit of selectedUnit?.subUnits ?? []) {
+    (selectedUnit?.subUnits ?? []).forEach((subUnit, subUnitIndex) => {
       const topics = subUnit.topics ?? [];
 
       if (topics.length === 0) {
         const title = subUnit.title ?? "";
-        const code =
-          (subUnit.code != null && String(subUnit.code).trim() !== ""
-            ? String(subUnit.code).trim()
-            : "") || extractCriterionCode(title) || String(subUnit.id);
+        const code = resolveCriterionDisplayCode({
+          code: subUnit.code,
+          title,
+          fallback: String(subUnitIndex + 1),
+        });
         map.set(String(subUnit.id), { code, title });
-        continue;
+        return;
       }
 
-      for (const topic of topics) {
+      topics.forEach((topic, topicIndex) => {
         const title = topic.title ?? "";
-        const code =
-          topic.code != null && String(topic.code).trim() !== ""
-            ? String(topic.code).trim()
-            : extractCriterionCode(title) || String(topic.id);
+        const code = resolveCriterionDisplayCode({
+          code: topic.code,
+          title,
+          fallback: `${subUnitIndex + 1}.${topicIndex + 1}`,
+        });
         map.set(String(topic.id), { code, title });
-      }
-    }
+      });
+    });
 
     return map;
   }, [unitMappingResponse?.data, unitCode]);
@@ -303,7 +305,11 @@ export function ExamineEvidencePageContent({
       unit_code: string | number;
     }> = [];
 
-    const pushCriterion = (criteriaId: string | number, fallbackTitle = "") => {
+    const pushCriterion = (
+      criteriaId: string | number,
+      fallbackTitle = "",
+      fallbackCode = ""
+    ) => {
       const key = String(criteriaId);
       if (!key || seen.has(key)) return;
       seen.add(key);
@@ -312,7 +318,11 @@ export function ExamineEvidencePageContent({
       const title = meta?.title || fallbackTitle;
       columns.push({
         id: criteriaId,
-        code: meta?.code || extractCriterionCode(title) || key,
+        code: resolveCriterionDisplayCode({
+          code: meta?.code || fallbackCode,
+          title,
+          fallback: fallbackCode || String(columns.length + 1),
+        }),
         title,
         unit_code: selectedUnitCode || "",
       });
@@ -322,16 +332,32 @@ export function ExamineEvidencePageContent({
       const selectedUnit = unitMappingResponse.data.find(
         (u) => String(u.unit_code) === selectedUnitCode
       );
-      for (const subUnit of selectedUnit?.subUnits ?? []) {
+      (selectedUnit?.subUnits ?? []).forEach((subUnit, subUnitIndex) => {
         const topics = subUnit.topics ?? [];
         if (topics.length === 0) {
-          pushCriterion(subUnit.id, subUnit.title ?? "");
+          pushCriterion(
+            subUnit.id,
+            subUnit.title ?? "",
+            resolveCriterionDisplayCode({
+              code: subUnit.code,
+              title: subUnit.title,
+              fallback: String(subUnitIndex + 1),
+            })
+          );
         } else {
-          for (const topic of topics) {
-            pushCriterion(topic.id, topic.title ?? "");
-          }
+          topics.forEach((topic, topicIndex) => {
+            pushCriterion(
+              topic.id,
+              topic.title ?? "",
+              resolveCriterionDisplayCode({
+                code: topic.code,
+                title: topic.title,
+                fallback: `${subUnitIndex + 1}.${topicIndex + 1}`,
+              })
+            );
+          });
         }
-      }
+      });
     }
 
     for (const evidence of evidenceList) {
@@ -340,12 +366,7 @@ export function ExamineEvidencePageContent({
       }
     }
 
-    columns.sort((a, b) => {
-      const byCode = compareTopicCodes(a.code, b.code);
-      if (byCode !== 0) return byCode;
-      return a.title.localeCompare(b.title);
-    });
-
+    // Keep API / course-builder order — do not re-sort by code
     return columns;
   }, [evidenceList, unitMappingResponse, unitCode, criteriaMetaById]);
 
@@ -1180,11 +1201,6 @@ export function ExamineEvidencePageContent({
         </Button>
         <PageHeader
           title={displayTitle}
-          subtitle={
-            unitCode
-              ? t("subtitleForUnit", { unitCode })
-              : t("subtitle")
-          }
           icon={FileText}
         />
       </div>

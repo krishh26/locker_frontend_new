@@ -153,6 +153,7 @@ const standardSchema = baseCourseSchema.extend({
               id: z.any().optional(),
               title: z.string().min(1, "Topic Title is required"),
               type: z.enum(["Behaviour", "Knowledge", "Skills"]),
+              code: z.string().optional(),
             })
           )
           .optional(),
@@ -295,6 +296,7 @@ const getStep1StandardSchema = z.object({
               id: z.any().optional(),
               title: z.string().min(1, "Topic Title is required"),
               type: z.enum(["Behaviour", "Knowledge", "Skills"]),
+              code: z.string().optional(),
             })
           )
           .optional(),

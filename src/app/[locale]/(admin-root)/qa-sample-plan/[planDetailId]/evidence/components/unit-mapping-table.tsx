@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { UnitMappingResponse } from "@/store/api/qa-sample-plan/types";
+import { resolveCriterionDisplayCode } from "../../../utils/mapped-topic";
 
 interface UnitMappingTableProps {
   unitMappingResponse: UnitMappingResponse | undefined;
@@ -47,7 +48,7 @@ export function UnitMappingTable({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {unitMappingResponse.data.map((unit) => {
+              {unitMappingResponse.data.map((unit, unitIndex) => {
                 const hasSubUnits = unit.subUnits && unit.subUnits.length > 0;
                 const isExpanded = expandedUnits.has(unit.unit_code);
 
@@ -70,25 +71,66 @@ export function UnitMappingTable({
                           </Button>
                         )}
                       </TableCell>
-                      <TableCell>{unit.code}</TableCell>
+                      <TableCell>
+                        {resolveCriterionDisplayCode({
+                          code: unit.code,
+                          title: unit.unit_title,
+                          fallback: String(unitIndex + 1),
+                        })}
+                      </TableCell>
                       <TableCell>{unit.unit_title}</TableCell>
                     </TableRow>
                     {hasSubUnits &&
                       isExpanded &&
-                      unit.subUnits?.map((subUnit, index) => (
-                        <TableRow
-                          key={`${String(unit.unit_code)}-${String(subUnit.id)}`}
-                          className="bg-muted hover:bg-muted"
-                        >
-                          <TableCell className="w-[50px] pl-8"></TableCell>
-                          <TableCell>
-                            {subUnit.code && String(subUnit.code).trim() !== ""
-                              ? subUnit.code
-                              : String(index + 1)}
-                          </TableCell>
-                          <TableCell>{subUnit.title || t("na")}</TableCell>
-                        </TableRow>
-                      ))}
+                      unit.subUnits?.map((subUnit, subUnitIndex) => {
+                        const topics = subUnit.topics ?? [];
+                        const loCode = resolveCriterionDisplayCode({
+                          code: subUnit.code,
+                          title: subUnit.title,
+                          fallback: String(subUnitIndex + 1),
+                        });
+
+                        if (topics.length === 0) {
+                          return (
+                            <TableRow
+                              key={`${String(unit.unit_code)}-${String(subUnit.id)}`}
+                              className="bg-muted hover:bg-muted"
+                            >
+                              <TableCell className="w-[50px] pl-8"></TableCell>
+                              <TableCell>{loCode}</TableCell>
+                              <TableCell>{subUnit.title || t("na")}</TableCell>
+                            </TableRow>
+                          );
+                        }
+
+                        return (
+                          <Fragment key={`${String(unit.unit_code)}-${String(subUnit.id)}`}>
+                            <TableRow className="bg-muted/60 hover:bg-muted/60">
+                              <TableCell className="w-[50px] pl-8"></TableCell>
+                              <TableCell className="font-medium">{loCode}</TableCell>
+                              <TableCell className="font-medium">
+                                {subUnit.title || t("na")}
+                              </TableCell>
+                            </TableRow>
+                            {topics.map((topic, topicIndex) => (
+                              <TableRow
+                                key={`${String(unit.unit_code)}-${String(subUnit.id)}-${String(topic.id)}`}
+                                className="bg-muted hover:bg-muted"
+                              >
+                                <TableCell className="w-[50px] pl-12"></TableCell>
+                                <TableCell>
+                                  {resolveCriterionDisplayCode({
+                                    code: topic.code,
+                                    title: topic.title,
+                                    fallback: `${subUnitIndex + 1}.${topicIndex + 1}`,
+                                  })}
+                                </TableCell>
+                                <TableCell>{topic.title || t("na")}</TableCell>
+                              </TableRow>
+                            ))}
+                          </Fragment>
+                        );
+                      })}
                   </Fragment>
                 );
               })}

@@ -1,6 +1,6 @@
 /**
  * TopicsForm Component
- * 
+ *
  * Component for managing topics within assessment criteria (subUnits)
  * Used inside AssessmentCriteriaForm for Qualification courses
  */
@@ -9,7 +9,13 @@
 
 import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { Controller, Control, useFieldArray, UseFormSetValue } from "react-hook-form";
+import {
+  Controller,
+  Control,
+  useFieldArray,
+  useWatch,
+  UseFormSetValue,
+} from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,25 +54,35 @@ export function TopicsForm({
     name: `units.${unitIndex}.subUnit.${subUnitIndex}.topics`,
   });
 
+  const parentShowOrder = useWatch({
+    control,
+    name: `units.${unitIndex}.subUnit.${subUnitIndex}.showOrder`,
+  });
+
+  const learningOutcomeOrder = Number(parentShowOrder) || subUnitIndex + 1;
+
   const handleAddTopic = () => {
+    const nextOrder = fields.length + 1;
     const newTopic = {
       id: Date.now(),
       title: "",
       type: "Knowledge",
-      showOrder: fields.length + 1,
-      code: "",
+      showOrder: nextOrder,
+      code: `${learningOutcomeOrder}.${nextOrder}`,
     };
     append(newTopic, { shouldFocus: false }); // Don't focus and don't trigger validation
   };
 
-  // Auto-update showOrder when topics are added/removed
+  // Auto-update showOrder + hierarchical Sr No. (e.g. 1.1, 1.2) when topics or LO order change
   useEffect(() => {
     if (fields.length > 0 && setValue) {
       fields.forEach((_, index) => {
         const expectedShowOrder = index + 1;
-        const currentValue = topics?.[index]?.showOrder;
-        // Only update if the value needs to change
-        if (currentValue !== expectedShowOrder) {
+        const expectedCode = `${learningOutcomeOrder}.${expectedShowOrder}`;
+        const currentShowOrder = topics?.[index]?.showOrder;
+        const currentCode = topics?.[index]?.code;
+
+        if (currentShowOrder !== expectedShowOrder) {
           setValue(
             `units.${unitIndex}.subUnit.${subUnitIndex}.topics.${index}.showOrder` as any,
             expectedShowOrder,
@@ -76,10 +92,21 @@ export function TopicsForm({
             }
           );
         }
+
+        if (currentCode !== expectedCode) {
+          setValue(
+            `units.${unitIndex}.subUnit.${subUnitIndex}.topics.${index}.code` as any,
+            expectedCode,
+            {
+              shouldValidate: false,
+              shouldDirty: false,
+            }
+          );
+        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fields.length, unitIndex, subUnitIndex]);
+  }, [fields.length, unitIndex, subUnitIndex, learningOutcomeOrder]);
 
   return (
     <div className="space-y-4">
@@ -103,7 +130,7 @@ export function TopicsForm({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{t("course.qualification.code")}</TableHead>
+                  <TableHead>{t("course.qualification.srNo")}</TableHead>
                   <TableHead>{t("course.qualification.showOrder")}</TableHead>
                   <TableHead>
                     {t("course.qualification.title")} <span className="text-destructive">*</span>
@@ -123,9 +150,14 @@ export function TopicsForm({
                         render={({ field: formField }) => (
                           <Input
                             {...formField}
-                            placeholder={t("course.qualification.placeholderCode")}
+                            value={
+                              formField.value ||
+                              `${learningOutcomeOrder}.${index + 1}`
+                            }
+                            placeholder={t("course.qualification.placeholderSrNo")}
                             className="w-[100px]"
-                            disabled={readOnly}
+                            disabled
+                            readOnly
                           />
                         )}
                       />

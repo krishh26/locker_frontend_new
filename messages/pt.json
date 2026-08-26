@@ -640,7 +640,7 @@
     "csvExported": "CSV exportado com sucesso",
     "pdfExportInfo": "A funcionalidade de exportação PDF será implementada"
   },
-  "employers": {  
+  "employers": {
     "pageTitle": "Gestão de empregadores",
     "pageSubtitle": "Gerir informações de empregadores, adicionar, atualizar e remover registos e atribuir alunos a empregadores",
     "table": {
@@ -984,339 +984,380 @@
     }
   },
   "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
-  },
-  "forms": {
-  "pageTitle": "Gestão de formulários",
-  "pageSubtitle": "Criar e gerir formulários dinâmicos com um construtor de arrastar e largar",
-  "tabs": {
-  "formList": "Lista de formulários",
-  "templateList": "Lista de modelos",
-  "response": "Respostas",
-  "reports": "Relatórios"
-  },
-  "reports": {
-    "cardDescription": "Selecione um formulário, escolha os campos e exporte todos os dados submetidos.",
-    "formSearch": {
-      "label": "Pesquisar formulários",
-      "placeholder": "Pesquisar por nome do formulário..."
-    },
-    "formSelect": {
-      "label": "Selecionar formulário",
-      "placeholder": "Por favor selecione"
-    },
-    "fields": {
-      "title": "Campos",
-      "loading": "A carregar campos...",
-      "available": "{count} campos disponíveis",
-      "selectFormHint": "Selecione um formulário para ver os campos"
-    },
-    "actions": {
-      "selectAll": "Selecionar tudo",
-      "clear": "Limpar",
-      "exportCsv": "Exportar CSV"
-    },
-    "validation": {
-      "selectForm": "Por favor selecione um formulário.",
-      "selectAtLeastOneField": "Por favor selecione pelo menos um campo para exportar."
-    },
-    "errors": {
-      "tooManyPages": "Demasiadas páginas para exportar. Restrinja os resultados ou contacte o administrador.",
-      "noSubmissions": "Não foram encontradas submissões para este formulário.",
-      "exportFailed": "Falha na exportação"
-    },
-    "toast": {
-      "exportSuccess": "CSV exportado com sucesso"
-    },
-    "csvHeaders": {
-      "userName": "Nome do utilizador",
-      "email": "Email",
-      "submittedAt": "Submetido em"
-    }
-  },
-  "table": {
-    "searchPlaceholder": "Pesquisar por palavra-chave...",
+    "pageTitle": "Gestão de caseload",
+    "pageSubtitle": "Ver e exportar as cargas de trabalho dos gestores de linha.",
+    "searchPlaceholder": "Procurar gestores de linha...",
+    "refresh": "Atualizar",
     "clear": "Limpar",
-    "export": "Exportar",
-    "exportCsv": "Exportar como CSV",
-    "exportPdf": "Exportar como PDF",
-    "addNewForm": "Adicionar novo formulário",
-    "formName": "Nome do formulário",
-    "description": "Descrição",
-    "type": "Tipo",
-    "createdAt": "Criado em",
-    "actions": "Ações",
-    "view": "Ver",
-    "edit": "Editar",
-    "assignUsers": "Atribuir utilizadores",
-    "delete": "Eliminar",
-    "openMenu": "Abrir menu",
-    "noResults": "Sem resultados.",
-    "toastNoData": "Sem dados para exportar",
-    "toastCsvSuccess": "CSV exportado com sucesso",
-    "toastPdfInfo": "Exportação PDF será implementada em breve",
-    "toastDeleteSuccess": "Formulário eliminado com sucesso",
-    "toastDeleteFailed": "Falha ao eliminar o formulário"
-  },
-  "deleteDialog": {
-    "title": "Tem a certeza?",
-    "description": "Esta ação não pode ser desfeita. O formulário {name} e todos os dados associados serão eliminados permanentemente.",
-    "cancel": "Cancelar",
-    "delete": "Eliminar",
-    "deleting": "A eliminar..."
-  },
-  "assignUsers": {
-    "dialogTitle": "Atribuir utilizadores ao formulário",
-    "dialogDescription": "Atribuir utilizadores ao formulário: {formName}",
-    "selectAssignmentType": "Selecionar tipo de atribuição",
-    "selectUsers": "Selecionar utilizadores",
-    "cancel": "Cancelar",
-    "submit": "Atribuir utilizadores",
-    "validationSelectType": "Selecione um tipo de atribuição",
-    "validationSelectOneUser": "Selecione pelo menos um utilizador",
-    "toastSelectOneUser": "Selecione pelo menos um utilizador",
-    "toastSuccess": "Utilizadores atribuídos com sucesso",
-    "toastFailed": "Falha ao atribuir utilizadores",
-    "optionAll": "Todos",
-    "optionAllLearner": "Todos os formandos",
-    "optionAllEQA": "Todos EQA",
-    "optionAllTrainer": "Todos os formadores",
-    "optionAllEmployer": "Todos os empregadores",
-    "optionAllIQA": "Todos IQA",
-    "optionAllLIQA": "Todos LIQA",
-    "optionIndividual": "Individual"
-  },
-  "submittedForms": {
-    "pageTitle": "Formulários submetidos",
-    "pageSubtitle": "Ver e gerir todos os formulários submetidos",
-    "table": {
-      "searchPlaceholder": "Pesquisar por nome do formulário, utilizador ou email...",
+    "noLineManagersFound": "Nenhum gestor de linha encontrado",
+    "noLineManagersMatch": "Nenhum gestor de linha corresponde à sua pesquisa",
+    "noLineManagersInSystem": "De momento não existem gestores de linha no sistema.",
+    "cards": {
       "export": "Exportar",
       "exportCsv": "Exportar CSV",
-      "formName": "Nome do formulário",
-      "type": "Tipo",
-      "userName": "Nome do utilizador",
-      "email": "Email",
-      "status": "Estado",
-      "submitDate": "Data de submissão",
-      "actions": "Ações",
-      "locked": "Bloqueado",
-      "unlocked": "Desbloqueado",
-      "loading": "A carregar...",
-      "noFormsFound": "Nenhum formulário encontrado.",
-      "toastCsvSuccess": "CSV exportado com sucesso",
-      "toastLockSuccess": "Formulário bloqueado com sucesso!",
-      "toastLockFailed": "Falha ao bloquear o formulário. Tente novamente.",
-      "toastUnlockSuccess": "Formulário desbloqueado com sucesso!",
-      "toastUnlockFailed": "Falha ao desbloquear o formulário. Tente novamente."
-    },
-    "lockDialog": {
-      "title": "Bloquear formulário",
-      "description": "Está prestes a bloquear o formulário: {formName} para o utilizador {userName}",
-      "reasonLabel": "Motivo do bloqueio (opcional)",
-      "reasonPlaceholder": "Indique o motivo do bloqueio deste formulário...",
-      "cancel": "Cancelar",
-      "submit": "Bloquear formulário",
-      "submitting": "A bloquear..."
-    },
-    "unlockDialog": {
-      "title": "Desbloquear formulário",
-      "description": "Está prestes a desbloquear o formulário: {formName} para o utilizador {userName}",
-      "reasonLabel": "Motivo do desbloqueio (opcional)",
-      "reasonPlaceholder": "Indique o motivo do desbloqueio deste formulário...",
-      "cancel": "Cancelar",
-      "submit": "Desbloquear formulário",
-      "submitting": "A desbloquear..."
+      "exportPdf": "Exportar PDF",
+      "usersLabel": "Utilizadores",
+      "learnersLabel": "Formandos",
+      "usersBadge": "{count} utilizadores",
+      "managedUsersTitle": "Utilizadores geridos ({count})",
+      "noUsersAssignedYet": "Ainda não há utilizadores atribuídos",
+      "reportTitle": "Relatório de gestão de caseload",
+      "generatedOn": "Gerado em: {date}",
+      "totalLearnersLine": "Total de formandos: {count}",
+      "totalUsersLine": "Total de utilizadores: {count}",
+      "overallCsv": {
+        "lineManagerName": "Nome do gestor de linha",
+        "managedUserEmail": "Email do utilizador gerido",
+        "totalLearners": "Total de formandos",
+        "totalUsers": "Total de utilizadores"
+      },
+      "managerReportTitle": "{name} - Relatório de caseload",
+      "managerInformation": "Informações do gestor:",
+      "nameLabel": "Nome: {name}",
+      "emailLabel": "Email: {email}",
+      "managedUsersHeading": "Utilizadores geridos:",
+      "managerTableHeaders": {
+        "name": "Nome",
+        "email": "Email",
+        "role": "Função"
+      },
+      "managerNoUsersAssigned": "Não há utilizadores atribuídos a este gestor.",
+      "managerCsv": {
+        "managerName": "Nome do gestor",
+        "managerEmail": "Email do gestor",
+        "userName": "Nome do utilizador",
+        "userEmail": "Email do utilizador",
+        "userRole": "Função do utilizador",
+        "totalLearners": "Total de formandos",
+        "totalUsers": "Total de utilizadores",
+        "defaultUserRole": "Utilizador",
+        "noUsersAssigned": "Nenhum utilizador atribuído"
+      }
     }
   },
-  "templates": {
-    "sectionTitle": "Modelos de formulários",
-    "searchPlaceholder": "Pesquisar modelos...",
-    "clear": "Limpar",
-    "createTemplate": "Criar modelo",
-    "noTemplatesFound": "Nenhum modelo encontrado",
-    "noTemplatesDescription": "Crie um modelo para reutilizar estruturas de formulários",
-    "templateName": "Nome do modelo",
-    "createDate": "Data de criação",
-    "actions": "Ações",
-    "useTemplate": "Usar modelo",
-    "toastDeleteSuccess": "Modelo eliminado com sucesso",
-    "toastDeleteFailed": "Falha ao eliminar o modelo",
+  "forms": {
+    "pageTitle": "Gestão de formulários",
+    "pageSubtitle": "Criar e gerir formulários dinâmicos com um construtor de arrastar e largar",
+    "tabs": {
+      "formList": "Lista de formulários",
+      "templateList": "Lista de modelos",
+      "response": "Respostas",
+      "reports": "Relatórios"
+    },
+    "reports": {
+      "cardDescription": "Selecione um formulário, escolha os campos e exporte todos os dados submetidos.",
+      "formSearch": {
+        "label": "Pesquisar formulários",
+        "placeholder": "Pesquisar por nome do formulário..."
+      },
+      "formSelect": {
+        "label": "Selecionar formulário",
+        "placeholder": "Por favor selecione"
+      },
+      "fields": {
+        "title": "Campos",
+        "loading": "A carregar campos...",
+        "available": "{count} campos disponíveis",
+        "selectFormHint": "Selecione um formulário para ver os campos"
+      },
+      "actions": {
+        "selectAll": "Selecionar tudo",
+        "clear": "Limpar",
+        "exportCsv": "Exportar CSV"
+      },
+      "validation": {
+        "selectForm": "Por favor selecione um formulário.",
+        "selectAtLeastOneField": "Por favor selecione pelo menos um campo para exportar."
+      },
+      "errors": {
+        "tooManyPages": "Demasiadas páginas para exportar. Restrinja os resultados ou contacte o administrador.",
+        "noSubmissions": "Não foram encontradas submissões para este formulário.",
+        "exportFailed": "Falha na exportação"
+      },
+      "toast": {
+        "exportSuccess": "CSV exportado com sucesso"
+      },
+      "csvHeaders": {
+        "userName": "Nome do utilizador",
+        "email": "Email",
+        "submittedAt": "Submetido em"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Pesquisar por palavra-chave...",
+      "clear": "Limpar",
+      "export": "Exportar",
+      "exportCsv": "Exportar como CSV",
+      "exportPdf": "Exportar como PDF",
+      "addNewForm": "Adicionar novo formulário",
+      "formName": "Nome do formulário",
+      "description": "Descrição",
+      "type": "Tipo",
+      "createdAt": "Criado em",
+      "actions": "Ações",
+      "view": "Ver",
+      "edit": "Editar",
+      "assignUsers": "Atribuir utilizadores",
+      "delete": "Eliminar",
+      "openMenu": "Abrir menu",
+      "noResults": "Sem resultados.",
+      "toastNoData": "Sem dados para exportar",
+      "toastCsvSuccess": "CSV exportado com sucesso",
+      "toastPdfInfo": "Exportação PDF será implementada em breve",
+      "toastDeleteSuccess": "Formulário eliminado com sucesso",
+      "toastDeleteFailed": "Falha ao eliminar o formulário"
+    },
     "deleteDialog": {
       "title": "Tem a certeza?",
-      "description": "Esta ação não pode ser anulada. O modelo {name} será eliminado permanentemente.",
+      "description": "Esta ação não pode ser desfeita. O formulário {name} e todos os dados associados serão eliminados permanentemente.",
       "cancel": "Cancelar",
       "delete": "Eliminar",
       "deleting": "A eliminar..."
-    }
-  },
-  "builder": {
-    "back": "Voltar",
-    "backToForms": "Voltar aos formulários",
-    "editForm": "Editar formulário",
-    "createNewForm": "Criar novo formulário",
-    "dragComponentsHint": "Arraste componentes para criar o formulário",
-    "field": "campo",
-    "fields": "campos",
-    "previewButton": "Pré-visualizar",
-    "edit": "Editar",
-    "saving": "A guardar...",
-    "saveAsForm": "Guardar como formulário",
-    "saveForm": "Guardar formulário",
-    "formInformation": "Informação do formulário",
-    "formName": "Nome do formulário",
-    "formType": "Tipo de formulário",
-    "formNamePlaceholder": "ex.: Formulário de comentários",
-    "descriptionOptional": "Descrição (opcional)",
-    "descriptionPlaceholder": "Descreva o objetivo deste formulário...",
-    "formStatistics": "Estatísticas do formulário:",
-    "typeField": "{count} {type} campo",
-    "typeFields": "{count} {type} campos",
-    "accessRights": "Direitos de acesso",
-    "enableCompleteFunction": "Ativar função concluir",
-    "completionRoles": "Papéis de conclusão",
-    "setRequestSignature": "Solicitar assinatura",
-    "emailRecipients": "Destinatários de e-mail",
-    "otherEmailsPlaceholder": "E-mails separados por vírgula (,)",
-    "selectFormType": "Selecionar tipo de formulário",
-    "loadFormError": "Falha ao carregar o formulário. Tente novamente.",
-    "validation": {
-      "formNameRequired": "O nome do formulário é obrigatório",
-      "formTypeRequired": "O tipo de formulário é obrigatório",
-      "selectAccessRight": "Selecione pelo menos um direito de acesso",
-      "selectCompletionRole": "Selecione pelo menos um papel de conclusão",
-      "selectEmailRecipient": "Selecione pelo menos um destinatário",
-      "enterOtherEmails": "Introduza outros e-mails",
-      "validEmails": "Introduza e-mails válidos separados por vírgulas"
     },
-    "toast": {
-      "enterFormName": "Introduza um nome para o formulário",
-      "addOneField": "Adicione pelo menos um campo ao formulário",
-      "formUpdated": "Formulário atualizado com sucesso",
-      "formCreated": "Formulário criado com sucesso",
-      "saveFailed": "Falha ao guardar o formulário",
-      "duplicateName": "Já existe um formulário com este nome. Escolha outro.",
-      "saveAsSuccess": "Formulário guardado como novo com sucesso",
-      "saveAsFailed": "Falha ao guardar como novo formulário"
+    "assignUsers": {
+      "dialogTitle": "Atribuir utilizadores ao formulário",
+      "dialogDescription": "Atribuir utilizadores ao formulário: {formName}",
+      "selectAssignmentType": "Selecionar tipo de atribuição",
+      "selectUsers": "Selecionar utilizadores",
+      "cancel": "Cancelar",
+      "submit": "Atribuir utilizadores",
+      "validationSelectType": "Selecione um tipo de atribuição",
+      "validationSelectOneUser": "Selecione pelo menos um utilizador",
+      "toastSelectOneUser": "Selecione pelo menos um utilizador",
+      "toastSuccess": "Utilizadores atribuídos com sucesso",
+      "toastFailed": "Falha ao atribuir utilizadores",
+      "optionAll": "Todos",
+      "optionAllLearner": "Todos os formandos",
+      "optionAllEQA": "Todos EQA",
+      "optionAllTrainer": "Todos os formadores",
+      "optionAllEmployer": "Todos os empregadores",
+      "optionAllIQA": "Todos IQA",
+      "optionAllLIQA": "Todos LIQA",
+      "optionIndividual": "Individual"
     },
-    "formTypes": {
-      "ILP": "ILP",
-      "Review": "Revisão",
-      "Enrolment": "Inscrição",
-      "Survey": "Inquérito",
-      "Workbook": "Caderno",
-      "testExams": "Teste/Exames",
-      "Others": "Outros"
-    },
-    "roles": {
-      "Admin": "Administrador",
-      "Assessor": "Avaliador",
-      "IQA": "IQA",
-      "EQA": "EQA",
-      "Curriculum Manager": "Gestor de currículo",
-      "Employer": "Empregador",
-      "Employer Manager": "Gestor do empregador",
-      "Partner": "Parceiro",
-      "Custom Manager": "Gestor personalizado",
-      "Learner": "Formando",
-      "Other": "Outro"
-    },
-    "palette": {
-      "components": "Componentes",
-      "presets": "Modelos",
-      "dragComponents": "Arraste componentes para criar o formulário",
-      "choosePresets": "Escolha entre modelos guardados",
-      "formBuilderTitle": "Construtor de formulários",
-      "formBuilderHint": "Arraste componentes para aqui para criar o formulário",
-      "dropHere": "Largue aqui os componentes do formulário",
-      "dropHint": "Arraste um componente do painel esquerdo para começar.",
-      "componentLabels": {
-        "text": "Texto",
-        "email": "E-mail",
-        "phone": "Telefone",
-        "number": "Número",
-        "textarea": "Texto longo",
-        "select": "Lista pendente",
-        "radio": "Escolha múltipla",
-        "checkbox": "Caixas de verificação",
-        "date": "Data",
-        "file": "Carregar ficheiro",
-        "signature": "Assinatura"
+    "submittedForms": {
+      "pageTitle": "Formulários submetidos",
+      "pageSubtitle": "Ver e gerir todos os formulários submetidos",
+      "table": {
+        "searchPlaceholder": "Pesquisar por nome do formulário, utilizador ou email...",
+        "export": "Exportar",
+        "exportCsv": "Exportar CSV",
+        "formName": "Nome do formulário",
+        "type": "Tipo",
+        "userName": "Nome do utilizador",
+        "email": "Email",
+        "status": "Estado",
+        "submitDate": "Data de submissão",
+        "actions": "Ações",
+        "locked": "Bloqueado",
+        "unlocked": "Desbloqueado",
+        "loading": "A carregar...",
+        "noFormsFound": "Nenhum formulário encontrado.",
+        "toastCsvSuccess": "CSV exportado com sucesso",
+        "toastLockSuccess": "Formulário bloqueado com sucesso!",
+        "toastLockFailed": "Falha ao bloquear o formulário. Tente novamente.",
+        "toastUnlockSuccess": "Formulário desbloqueado com sucesso!",
+        "toastUnlockFailed": "Falha ao desbloquear o formulário. Tente novamente."
       },
-      "defaultLabels": {
-        "text": "Nome completo",
-        "email": "Endereço de e-mail",
-        "phone": "Número de telefone",
-        "number": "Idade",
-        "textarea": "Comentários",
-        "select": "Selecionar opção",
-        "radio": "Escolher uma",
-        "checkbox": "Selecionar todos os que se aplicam",
-        "date": "Data",
-        "file": "Carregar ficheiro",
-        "signature": "Assinatura",
-        "default": "Etiqueta do campo"
+      "lockDialog": {
+        "title": "Bloquear formulário",
+        "description": "Está prestes a bloquear o formulário: {formName} para o utilizador {userName}",
+        "reasonLabel": "Motivo do bloqueio (opcional)",
+        "reasonPlaceholder": "Indique o motivo do bloqueio deste formulário...",
+        "cancel": "Cancelar",
+        "submit": "Bloquear formulário",
+        "submitting": "A bloquear..."
       },
-      "defaultPlaceholders": {
-        "text": "Introduza o seu nome completo",
-        "email": "seu.email@exemplo.com",
-        "phone": "+1 (555) 123-4567",
-        "number": "Introduza um número",
-        "textarea": "Escreva a sua mensagem aqui...",
-        "date": "Selecionar data",
-        "file": "Escolher ficheiro para carregar",
-        "default": "Introduza um valor"
-      },
-      "optionLabel": "Opção {n}",
-      "copySuffix": "(Cópia)"
-    },
-    "presets": {
-      "roles": {
-        "learner": "Formando",
-        "trainer": "Formador",
-        "employee": "Funcionário"
-      },
-      "fields": {
-        "learner-name": "Nome do formando",
-        "learner-email": "E-mail do formando",
-        "learner-phone": "Telefone do formando",
-        "date_of_birth": "Data de nascimento",
-        "employer": "Empregador",
-        "trainer-name": "Nome do formador",
-        "email": "E-mail",
-        "employee-name": "Nome do funcionário"
+      "unlockDialog": {
+        "title": "Desbloquear formulário",
+        "description": "Está prestes a desbloquear o formulário: {formName} para o utilizador {userName}",
+        "reasonLabel": "Motivo do desbloqueio (opcional)",
+        "reasonPlaceholder": "Indique o motivo do desbloqueio deste formulário...",
+        "cancel": "Cancelar",
+        "submit": "Desbloquear formulário",
+        "submitting": "A desbloquear..."
       }
     },
-    "preview": {
-      "noFields": "Nenhum campo adicionado ao formulário.",
-      "untitledForm": "Formulário sem título",
-      "clearForm": "Limpar formulário",
-      "submitPreview": "Submeter (apenas pré-visualização)"
+    "templates": {
+      "sectionTitle": "Modelos de formulários",
+      "searchPlaceholder": "Pesquisar modelos...",
+      "clear": "Limpar",
+      "createTemplate": "Criar modelo",
+      "noTemplatesFound": "Nenhum modelo encontrado",
+      "noTemplatesDescription": "Crie um modelo para reutilizar estruturas de formulários",
+      "templateName": "Nome do modelo",
+      "createDate": "Data de criação",
+      "actions": "Ações",
+      "useTemplate": "Usar modelo",
+      "toastDeleteSuccess": "Modelo eliminado com sucesso",
+      "toastDeleteFailed": "Falha ao eliminar o modelo",
+      "deleteDialog": {
+        "title": "Tem a certeza?",
+        "description": "Esta ação não pode ser anulada. O modelo {name} será eliminado permanentemente.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "deleting": "A eliminar..."
+      }
     },
-    "fieldCard": {
-      "selectOption": "Selecionar uma opção",
-      "fileUploadArea": "Área de carregamento de ficheiros",
-      "signaturePad": "Área de assinatura",
-      "editField": "Editar campo",
-      "fieldLabel": "Etiqueta do campo",
-      "placeholder": "Marcador de posição",
-      "requiredField": "Campo obrigatório",
-      "fieldWidth": "Largura do campo",
-      "fullWidth": "Largura total",
-      "halfWidth": "Metade da largura",
-      "oneThird": "Um terço",
-      "options": "Opções",
-      "addOption": "Adicionar opção"
+    "builder": {
+      "back": "Voltar",
+      "backToForms": "Voltar aos formulários",
+      "editForm": "Editar formulário",
+      "createNewForm": "Criar novo formulário",
+      "dragComponentsHint": "Arraste componentes para criar o formulário",
+      "field": "campo",
+      "fields": "campos",
+      "previewButton": "Pré-visualizar",
+      "edit": "Editar",
+      "saving": "A guardar...",
+      "saveAsForm": "Guardar como formulário",
+      "saveForm": "Guardar formulário",
+      "formInformation": "Informação do formulário",
+      "formName": "Nome do formulário",
+      "formType": "Tipo de formulário",
+      "formNamePlaceholder": "ex.: Formulário de comentários",
+      "descriptionOptional": "Descrição (opcional)",
+      "descriptionPlaceholder": "Descreva o objetivo deste formulário...",
+      "formStatistics": "Estatísticas do formulário:",
+      "typeField": "{count} {type} campo",
+      "typeFields": "{count} {type} campos",
+      "accessRights": "Direitos de acesso",
+      "enableCompleteFunction": "Ativar função concluir",
+      "completionRoles": "Papéis de conclusão",
+      "setRequestSignature": "Solicitar assinatura",
+      "emailRecipients": "Destinatários de e-mail",
+      "otherEmailsPlaceholder": "E-mails separados por vírgula (,)",
+      "selectFormType": "Selecionar tipo de formulário",
+      "loadFormError": "Falha ao carregar o formulário. Tente novamente.",
+      "validation": {
+        "formNameRequired": "O nome do formulário é obrigatório",
+        "formTypeRequired": "O tipo de formulário é obrigatório",
+        "selectAccessRight": "Selecione pelo menos um direito de acesso",
+        "selectCompletionRole": "Selecione pelo menos um papel de conclusão",
+        "selectEmailRecipient": "Selecione pelo menos um destinatário",
+        "enterOtherEmails": "Introduza outros e-mails",
+        "validEmails": "Introduza e-mails válidos separados por vírgulas"
+      },
+      "toast": {
+        "enterFormName": "Introduza um nome para o formulário",
+        "addOneField": "Adicione pelo menos um campo ao formulário",
+        "formUpdated": "Formulário atualizado com sucesso",
+        "formCreated": "Formulário criado com sucesso",
+        "saveFailed": "Falha ao guardar o formulário",
+        "duplicateName": "Já existe um formulário com este nome. Escolha outro.",
+        "saveAsSuccess": "Formulário guardado como novo com sucesso",
+        "saveAsFailed": "Falha ao guardar como novo formulário"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "Revisão",
+        "Enrolment": "Inscrição",
+        "Survey": "Inquérito",
+        "Workbook": "Caderno",
+        "testExams": "Teste/Exames",
+        "Others": "Outros"
+      },
+      "roles": {
+        "Admin": "Administrador",
+        "Assessor": "Avaliador",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "Gestor de currículo",
+        "Employer": "Empregador",
+        "Employer Manager": "Gestor do empregador",
+        "Partner": "Parceiro",
+        "Custom Manager": "Gestor personalizado",
+        "Learner": "Formando",
+        "Other": "Outro"
+      },
+      "palette": {
+        "components": "Componentes",
+        "presets": "Modelos",
+        "dragComponents": "Arraste componentes para criar o formulário",
+        "choosePresets": "Escolha entre modelos guardados",
+        "formBuilderTitle": "Construtor de formulários",
+        "formBuilderHint": "Arraste componentes para aqui para criar o formulário",
+        "dropHere": "Largue aqui os componentes do formulário",
+        "dropHint": "Arraste um componente do painel esquerdo para começar.",
+        "componentLabels": {
+          "text": "Texto",
+          "email": "E-mail",
+          "phone": "Telefone",
+          "number": "Número",
+          "textarea": "Texto longo",
+          "select": "Lista pendente",
+          "radio": "Escolha múltipla",
+          "checkbox": "Caixas de verificação",
+          "date": "Data",
+          "file": "Carregar ficheiro",
+          "signature": "Assinatura"
+        },
+        "defaultLabels": {
+          "text": "Nome completo",
+          "email": "Endereço de e-mail",
+          "phone": "Número de telefone",
+          "number": "Idade",
+          "textarea": "Comentários",
+          "select": "Selecionar opção",
+          "radio": "Escolher uma",
+          "checkbox": "Selecionar todos os que se aplicam",
+          "date": "Data",
+          "file": "Carregar ficheiro",
+          "signature": "Assinatura",
+          "default": "Etiqueta do campo"
+        },
+        "defaultPlaceholders": {
+          "text": "Introduza o seu nome completo",
+          "email": "seu.email@exemplo.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "Introduza um número",
+          "textarea": "Escreva a sua mensagem aqui...",
+          "date": "Selecionar data",
+          "file": "Escolher ficheiro para carregar",
+          "default": "Introduza um valor"
+        },
+        "optionLabel": "Opção {n}",
+        "copySuffix": "(Cópia)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "Formando",
+          "trainer": "Formador",
+          "employee": "Funcionário"
+        },
+        "fields": {
+          "learner-name": "Nome do formando",
+          "learner-email": "E-mail do formando",
+          "learner-phone": "Telefone do formando",
+          "date_of_birth": "Data de nascimento",
+          "employer": "Empregador",
+          "trainer-name": "Nome do formador",
+          "email": "E-mail",
+          "employee-name": "Nome do funcionário"
+        }
+      },
+      "preview": {
+        "noFields": "Nenhum campo adicionado ao formulário.",
+        "untitledForm": "Formulário sem título",
+        "clearForm": "Limpar formulário",
+        "submitPreview": "Submeter (apenas pré-visualização)"
+      },
+      "fieldCard": {
+        "selectOption": "Selecionar uma opção",
+        "fileUploadArea": "Área de carregamento de ficheiros",
+        "signaturePad": "Área de assinatura",
+        "editField": "Editar campo",
+        "fieldLabel": "Etiqueta do campo",
+        "placeholder": "Marcador de posição",
+        "requiredField": "Campo obrigatório",
+        "fieldWidth": "Largura do campo",
+        "fullWidth": "Largura total",
+        "halfWidth": "Metade da largura",
+        "oneThird": "Um terço",
+        "options": "Opções",
+        "addOption": "Adicionar opção"
+      }
     }
-  }
   },
   "iqaQuestions": {
     "pageTitle": "Perguntas de manutenção IQA",
@@ -4418,7 +4459,9 @@
         "assessmentCriteria": "Critérios de avaliação",
         "assessmentCriteriaCount": "Critérios de avaliação ({count})",
         "addAssessmentCriteria": "Adicionar critério de avaliação",
-        "placeholderTopicTitle": "Título do tópico"
+        "placeholderTopicTitle": "Título do tópico",
+        "srNo": "N.º",
+        "placeholderSrNo": "N.º"
       },
       "standard": {
         "modulesTitle": "Módulos",
@@ -4452,7 +4495,9 @@
         "placeholderTopicTitle": "Título do tópico",
         "typeBehaviour": "Comportamento",
         "typeKnowledge": "Conhecimento",
-        "typeSkills": "Competências"
+        "typeSkills": "Competências",
+        "srNo": "N.º",
+        "placeholderSrNo": "N.º"
       }
     }
   },
@@ -4683,58 +4728,6 @@
       "saving": "A guardar...",
       "toastSuccess": "Administradores guardados com sucesso",
       "toastFailed": "Falha ao guardar administradores"
-    }
-  },
-  "caseload": {
-    "pageTitle": "Gestão de caseload",
-    "pageSubtitle": "Ver e exportar as cargas de trabalho dos gestores de linha.",
-    "searchPlaceholder": "Procurar gestores de linha...",
-    "refresh": "Atualizar",
-    "clear": "Limpar",
-    "noLineManagersFound": "Nenhum gestor de linha encontrado",
-    "noLineManagersMatch": "Nenhum gestor de linha corresponde à sua pesquisa",
-    "noLineManagersInSystem": "De momento não existem gestores de linha no sistema.",
-    "cards": {
-      "export": "Exportar",
-      "exportCsv": "Exportar CSV",
-      "exportPdf": "Exportar PDF",
-      "usersLabel": "Utilizadores",
-      "learnersLabel": "Formandos",
-      "usersBadge": "{count} utilizadores",
-      "managedUsersTitle": "Utilizadores geridos ({count})",
-      "noUsersAssignedYet": "Ainda não há utilizadores atribuídos",
-      "reportTitle": "Relatório de gestão de caseload",
-      "generatedOn": "Gerado em: {date}",
-      "totalLearnersLine": "Total de formandos: {count}",
-      "totalUsersLine": "Total de utilizadores: {count}",
-      "overallCsv": {
-        "lineManagerName": "Nome do gestor de linha",
-        "managedUserEmail": "Email do utilizador gerido",
-        "totalLearners": "Total de formandos",
-        "totalUsers": "Total de utilizadores"
-      },
-      "managerReportTitle": "{name} - Relatório de caseload",
-      "managerInformation": "Informações do gestor:",
-      "nameLabel": "Nome: {name}",
-      "emailLabel": "Email: {email}",
-      "managedUsersHeading": "Utilizadores geridos:",
-      "managerTableHeaders": {
-        "name": "Nome",
-        "email": "Email",
-        "role": "Função"
-      },
-      "managerNoUsersAssigned": "Não há utilizadores atribuídos a este gestor.",
-      "managerCsv": {
-        "managerName": "Nome do gestor",
-        "managerEmail": "Email do gestor",
-        "userName": "Nome do utilizador",
-        "userEmail": "Email do utilizador",
-        "userRole": "Função do utilizador",
-        "totalLearners": "Total de formandos",
-        "totalUsers": "Total de utilizadores",
-        "defaultUserRole": "Utilizador",
-        "noUsersAssigned": "Nenhum utilizador atribuído"
-      }
     }
   },
   "centres": {
@@ -6313,17 +6306,53 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    },
+    "LO": {
+      "label": "LO",
+      "title": "Learning Outcome"
+    }
   }
 }

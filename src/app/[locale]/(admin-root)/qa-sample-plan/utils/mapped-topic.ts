@@ -48,6 +48,36 @@ export function extractCriterionCode(title: string): string {
   return "";
 }
 
+/** True for generated entity ids (e.g. Date.now()) — not human Sr No. / codes. */
+export function isRawEntityId(value: string | number | null | undefined): boolean {
+  const s = String(value ?? "").trim();
+  return /^\d{10,}$/.test(s);
+}
+
+/**
+ * Prefer API `code` (Sr No. / K1 / 1.1) for IQA column headers.
+ * Never fall back to raw numeric entity ids.
+ */
+export function resolveCriterionDisplayCode(options: {
+  code?: string | number | null;
+  title?: string | null;
+  fallback?: string;
+}): string {
+  const fromApi = options.code != null ? String(options.code).trim() : "";
+  if (fromApi && !isRawEntityId(fromApi)) {
+    return fromApi;
+  }
+  const fromTitle = extractCriterionCode(options.title ?? "");
+  if (fromTitle && !isRawEntityId(fromTitle)) {
+    return fromTitle;
+  }
+  const fallback = options.fallback != null ? String(options.fallback).trim() : "";
+  if (fallback && !isRawEntityId(fallback)) {
+    return fallback;
+  }
+  return fallback || fromApi || "";
+}
+
 /** @deprecated Use extractCriterionCode */
 export function extractTopicCode(title: string): string {
   return extractCriterionCode(title);

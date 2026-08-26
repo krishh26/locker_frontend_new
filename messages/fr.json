@@ -4459,7 +4459,9 @@
         "assessmentCriteria": "Critères d'évaluation",
         "assessmentCriteriaCount": "Critères d'évaluation ({count})",
         "addAssessmentCriteria": "Ajouter un critère d'évaluation",
-        "placeholderTopicTitle": "Titre du thème"
+        "placeholderTopicTitle": "Titre du thème",
+        "srNo": "N°",
+        "placeholderSrNo": "N°"
       },
       "standard": {
         "modulesTitle": "Modules",
@@ -4493,7 +4495,9 @@
         "placeholderTopicTitle": "Titre du thème",
         "typeBehaviour": "Comportement",
         "typeKnowledge": "Connaissance",
-        "typeSkills": "Compétences"
+        "typeSkills": "Compétences",
+        "srNo": "N°",
+        "placeholderSrNo": "N°"
       }
     }
   },
@@ -6302,17 +6306,53 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    },
+    "LO": {
+      "label": "LO",
+      "title": "Learning Outcome"
+    }
   }
 }

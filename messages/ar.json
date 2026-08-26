@@ -977,339 +977,380 @@
     }
   },
   "caseload": {
-    "pageTitle": "Caseload Management",
-    "pageSubtitle": "Manage and view line managers and their assigned users",
-    "searchPlaceholder": "Search line managers by name or email...",
-    "refresh": "Refresh",
-    "clear": "Clear",
-    "noLineManagersFound": "No Line Managers Found",
-    "noLineManagersMatch": "No line managers match",
-    "noLineManagersInSystem": "There are no line managers in the system yet.",
-    "failedToLoad": "Failed to load caseload data. Please try again."
-  },
-  "forms": {
-  "pageTitle": "منشئ النماذج",
-  "pageSubtitle": "إنشاء وإدارة النماذج الديناميكية باستخدام أداة سحب وإفلات",
-  "tabs": {
-  "formList": "قائمة النماذج",
-  "templateList": "قائمة القوالب",
-  "response": "الاستجابات",
-  "reports": "التقارير"
-  },
-  "reports": {
-    "cardDescription": "اختر نموذجًا، وحدد الحقول، ثم صدّر جميع البيانات المُرسلة.",
-    "formSearch": {
-      "label": "بحث النماذج",
-      "placeholder": "ابحث باسم النموذج..."
-    },
-    "formSelect": {
-      "label": "اختر نموذجًا",
-      "placeholder": "يرجى الاختيار"
-    },
-    "fields": {
-      "title": "الحقول",
-      "loading": "جارٍ تحميل الحقول...",
-      "available": "{count} حقول متاحة",
-      "selectFormHint": "اختر نموذجًا لعرض الحقول"
-    },
-    "actions": {
-      "selectAll": "تحديد الكل",
-      "clear": "مسح",
-      "exportCsv": "تصدير CSV"
-    },
-    "validation": {
-      "selectForm": "يرجى اختيار نموذج.",
-      "selectAtLeastOneField": "يرجى تحديد حقل واحد على الأقل للتصدير."
-    },
-    "errors": {
-      "tooManyPages": "عدد الصفحات كبير جدًا للتصدير. يرجى تضييق النتائج أو التواصل مع المسؤول.",
-      "noSubmissions": "لم يتم العثور على أي إرسال لهذا النموذج.",
-      "exportFailed": "فشل التصدير"
-    },
-    "toast": {
-      "exportSuccess": "تم تصدير CSV بنجاح"
-    },
-    "csvHeaders": {
-      "userName": "اسم المستخدم",
-      "email": "البريد الإلكتروني",
-      "submittedAt": "تاريخ الإرسال"
-    }
-  },
-  "table": {
-    "searchPlaceholder": "البحث بالكلمة الرئيسية...",
+    "pageTitle": "إدارة عبء الحالات",
+    "pageSubtitle": "عرض وتصدير عبء الحالات لمديري الخط.",
+    "searchPlaceholder": "البحث عن مديري الخط...",
+    "refresh": "تحديث",
     "clear": "مسح",
-    "export": "تصدير",
-    "exportCsv": "تصدير كـ CSV",
-    "exportPdf": "تصدير كـ PDF",
-    "addNewForm": "إضافة نموذج جديد",
-    "formName": "اسم النموذج",
-    "description": "الوصف",
-    "type": "النوع",
-    "createdAt": "تاريخ الإنشاء",
-    "actions": "إجراءات",
-    "view": "عرض",
-    "edit": "تعديل",
-    "assignUsers": "تعيين المستخدمين",
-    "delete": "حذف",
-    "openMenu": "فتح القائمة",
-    "noResults": "لا توجد نتائج.",
-    "toastNoData": "لا توجد بيانات للتصدير",
-    "toastCsvSuccess": "تم تصدير CSV بنجاح",
-    "toastPdfInfo": "سيتم تنفيذ تصدير PDF لاحقاً",
-    "toastDeleteSuccess": "تم حذف النموذج بنجاح",
-    "toastDeleteFailed": "فشل حذف النموذج"
-  },
-  "deleteDialog": {
-    "title": "هل أنت متأكد؟",
-    "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف النموذج {name} وجميع البيانات المرتبطة به نهائياً.",
-    "cancel": "إلغاء",
-    "delete": "حذف",
-    "deleting": "جاري الحذف..."
-  },
-  "assignUsers": {
-    "dialogTitle": "تعيين المستخدمين للنموذج",
-    "dialogDescription": "تعيين المستخدمين للنموذج: {formName}",
-    "selectAssignmentType": "اختر نوع التعيين",
-    "selectUsers": "اختر المستخدمين",
-    "cancel": "إلغاء",
-    "submit": "تعيين المستخدمين",
-    "validationSelectType": "الرجاء اختيار نوع التعيين",
-    "validationSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
-    "toastSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
-    "toastSuccess": "تم تعيين المستخدمين بنجاح",
-    "toastFailed": "فشل تعيين المستخدمين",
-    "optionAll": "الكل",
-    "optionAllLearner": "جميع المتعلمين",
-    "optionAllEQA": "جميع EQA",
-    "optionAllTrainer": "جميع المدربين",
-    "optionAllEmployer": "جميع أصحاب العمل",
-    "optionAllIQA": "جميع IQA",
-    "optionAllLIQA": "جميع LIQA",
-    "optionIndividual": "فردي"
-  },
-  "submittedForms": {
-    "pageTitle": "النماذج المُرسلة",
-    "pageSubtitle": "عرض وإدارة جميع النماذج المُرسلة",
-    "table": {
-      "searchPlaceholder": "البحث باسم النموذج أو المستخدم أو البريد...",
+    "noLineManagersFound": "لم يتم العثور على أي مدير خط",
+    "noLineManagersMatch": "لا يوجد مدير خط يطابق بحثك",
+    "noLineManagersInSystem": "لا يوجد حالياً أي مدير خط في النظام.",
+    "cards": {
       "export": "تصدير",
       "exportCsv": "تصدير CSV",
-      "formName": "اسم النموذج",
-      "type": "النوع",
-      "userName": "اسم المستخدم",
-      "email": "البريد الإلكتروني",
-      "status": "الحالة",
-      "submitDate": "تاريخ الإرسال",
-      "actions": "إجراءات",
-      "locked": "مقفل",
-      "unlocked": "مفتوح",
-      "loading": "جاري التحميل...",
-      "noFormsFound": "لم يتم العثور على نماذج.",
-      "toastCsvSuccess": "تم تصدير CSV بنجاح",
-      "toastLockSuccess": "تم قفل النموذج بنجاح!",
-      "toastLockFailed": "فشل قفل النموذج. يرجى المحاولة مرة أخرى.",
-      "toastUnlockSuccess": "تم فتح النموذج بنجاح!",
-      "toastUnlockFailed": "فشل فتح النموذج. يرجى المحاولة مرة أخرى."
-    },
-    "lockDialog": {
-      "title": "قفل النموذج",
-      "description": "أنت على وشك قفل النموذج: {formName} للمستخدم {userName}",
-      "reasonLabel": "سبب القفل (اختياري)",
-      "reasonPlaceholder": "يرجى تقديم سبب لقفل هذا النموذج...",
-      "cancel": "إلغاء",
-      "submit": "قفل النموذج",
-      "submitting": "جاري القفل..."
-    },
-    "unlockDialog": {
-      "title": "فتح النموذج",
-      "description": "أنت على وشك فتح النموذج: {formName} للمستخدم {userName}",
-      "reasonLabel": "سبب الفتح (اختياري)",
-      "reasonPlaceholder": "يرجى تقديم سبب لفتح هذا النموذج...",
-      "cancel": "إلغاء",
-      "submit": "فتح النموذج",
-      "submitting": "جاري الفتح..."
+      "exportPdf": "تصدير PDF",
+      "usersLabel": "المستخدمون",
+      "learnersLabel": "المتعلمون",
+      "usersBadge": "{count} مستخدم",
+      "managedUsersTitle": "المستخدمون المُدارون ({count})",
+      "noUsersAssignedYet": "لا يوجد مستخدمون معيَّنون بعد",
+      "reportTitle": "تقرير إدارة عبء الحالات",
+      "generatedOn": "تم الإنشاء في: {date}",
+      "totalLearnersLine": "إجمالي المتعلمين: {count}",
+      "totalUsersLine": "إجمالي المستخدمين: {count}",
+      "overallCsv": {
+        "lineManagerName": "اسم مدير الخط",
+        "managedUserEmail": "البريد الإلكتروني للمستخدم المُدار",
+        "totalLearners": "إجمالي المتعلمين",
+        "totalUsers": "إجمالي المستخدمين"
+      },
+      "managerReportTitle": "{name} - تقرير عبء الحالات",
+      "managerInformation": "معلومات المدير:",
+      "nameLabel": "الاسم: {name}",
+      "emailLabel": "البريد الإلكتروني: {email}",
+      "managedUsersHeading": "المستخدمون المُدارون:",
+      "managerTableHeaders": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "role": "الدور"
+      },
+      "managerNoUsersAssigned": "لا يوجد مستخدمون معيَّنون لهذا المدير.",
+      "managerCsv": {
+        "managerName": "اسم المدير",
+        "managerEmail": "بريد المدير الإلكتروني",
+        "userName": "اسم المستخدم",
+        "userEmail": "بريد المستخدم الإلكتروني",
+        "userRole": "دور المستخدم",
+        "totalLearners": "إجمالي المتعلمين",
+        "totalUsers": "إجمالي المستخدمين",
+        "defaultUserRole": "مستخدم",
+        "noUsersAssigned": "لا يوجد مستخدمون معيَّنون"
+      }
     }
   },
-  "templates": {
-    "sectionTitle": "قوالب النماذج",
-    "searchPlaceholder": "البحث في القوالب...",
-    "clear": "مسح",
-    "createTemplate": "إنشاء قالب",
-    "noTemplatesFound": "لم يتم العثور على قوالب",
-    "noTemplatesDescription": "أنشئ قالباً لإعادة استخدام هياكل النماذج",
-    "templateName": "اسم القالب",
-    "createDate": "تاريخ الإنشاء",
-    "actions": "إجراءات",
-    "useTemplate": "استخدام القالب",
-    "toastDeleteSuccess": "تم حذف القالب بنجاح",
-    "toastDeleteFailed": "فشل حذف القالب",
+  "forms": {
+    "pageTitle": "منشئ النماذج",
+    "pageSubtitle": "إنشاء وإدارة النماذج الديناميكية باستخدام أداة سحب وإفلات",
+    "tabs": {
+      "formList": "قائمة النماذج",
+      "templateList": "قائمة القوالب",
+      "response": "الاستجابات",
+      "reports": "التقارير"
+    },
+    "reports": {
+      "cardDescription": "اختر نموذجًا، وحدد الحقول، ثم صدّر جميع البيانات المُرسلة.",
+      "formSearch": {
+        "label": "بحث النماذج",
+        "placeholder": "ابحث باسم النموذج..."
+      },
+      "formSelect": {
+        "label": "اختر نموذجًا",
+        "placeholder": "يرجى الاختيار"
+      },
+      "fields": {
+        "title": "الحقول",
+        "loading": "جارٍ تحميل الحقول...",
+        "available": "{count} حقول متاحة",
+        "selectFormHint": "اختر نموذجًا لعرض الحقول"
+      },
+      "actions": {
+        "selectAll": "تحديد الكل",
+        "clear": "مسح",
+        "exportCsv": "تصدير CSV"
+      },
+      "validation": {
+        "selectForm": "يرجى اختيار نموذج.",
+        "selectAtLeastOneField": "يرجى تحديد حقل واحد على الأقل للتصدير."
+      },
+      "errors": {
+        "tooManyPages": "عدد الصفحات كبير جدًا للتصدير. يرجى تضييق النتائج أو التواصل مع المسؤول.",
+        "noSubmissions": "لم يتم العثور على أي إرسال لهذا النموذج.",
+        "exportFailed": "فشل التصدير"
+      },
+      "toast": {
+        "exportSuccess": "تم تصدير CSV بنجاح"
+      },
+      "csvHeaders": {
+        "userName": "اسم المستخدم",
+        "email": "البريد الإلكتروني",
+        "submittedAt": "تاريخ الإرسال"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "البحث بالكلمة الرئيسية...",
+      "clear": "مسح",
+      "export": "تصدير",
+      "exportCsv": "تصدير كـ CSV",
+      "exportPdf": "تصدير كـ PDF",
+      "addNewForm": "إضافة نموذج جديد",
+      "formName": "اسم النموذج",
+      "description": "الوصف",
+      "type": "النوع",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "إجراءات",
+      "view": "عرض",
+      "edit": "تعديل",
+      "assignUsers": "تعيين المستخدمين",
+      "delete": "حذف",
+      "openMenu": "فتح القائمة",
+      "noResults": "لا توجد نتائج.",
+      "toastNoData": "لا توجد بيانات للتصدير",
+      "toastCsvSuccess": "تم تصدير CSV بنجاح",
+      "toastPdfInfo": "سيتم تنفيذ تصدير PDF لاحقاً",
+      "toastDeleteSuccess": "تم حذف النموذج بنجاح",
+      "toastDeleteFailed": "فشل حذف النموذج"
+    },
     "deleteDialog": {
       "title": "هل أنت متأكد؟",
-      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف القالب {name} نهائياً.",
+      "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف النموذج {name} وجميع البيانات المرتبطة به نهائياً.",
       "cancel": "إلغاء",
       "delete": "حذف",
       "deleting": "جاري الحذف..."
-    }
-  },
-  "builder": {
-    "back": "رجوع",
-    "backToForms": "العودة إلى النماذج",
-    "editForm": "تعديل النموذج",
-    "createNewForm": "إنشاء نموذج جديد",
-    "dragComponentsHint": "اسحب المكونات لبناء النموذج",
-    "field": "حقل",
-    "fields": "حقول",
-    "previewButton": "معاينة",
-    "edit": "تعديل",
-    "saving": "جاري الحفظ...",
-    "saveAsForm": "حفظ كنموذج",
-    "saveForm": "حفظ النموذج",
-    "formInformation": "معلومات النموذج",
-    "formName": "اسم النموذج",
-    "formType": "نوع النموذج",
-    "formNamePlaceholder": "مثال: نموذج التعليقات",
-    "descriptionOptional": "الوصف (اختياري)",
-    "descriptionPlaceholder": "صف الغرض من هذا النموذج...",
-    "formStatistics": "إحصائيات النموذج:",
-    "typeField": "{count} {type} حقل",
-    "typeFields": "{count} {type} حقول",
-    "accessRights": "صلاحيات الوصول",
-    "enableCompleteFunction": "تفعيل وظيفة الإكمال",
-    "completionRoles": "أدوار الإكمال",
-    "setRequestSignature": "طلب التوقيع",
-    "emailRecipients": "مستلمو البريد",
-    "otherEmailsPlaceholder": "البريد مفصول بفاصلة (،)",
-    "selectFormType": "اختر نوع النموذج",
-    "loadFormError": "فشل تحميل النموذج. يرجى المحاولة مرة أخرى.",
-    "validation": {
-      "formNameRequired": "اسم النموذج مطلوب",
-      "formTypeRequired": "نوع النموذج مطلوب",
-      "selectAccessRight": "اختر صلاحية وصول واحدة على الأقل",
-      "selectCompletionRole": "اختر دور إكمال واحداً على الأقل",
-      "selectEmailRecipient": "اختر مستلماً واحداً على الأقل",
-      "enterOtherEmails": "يرجى إدخال بريد آخر",
-      "validEmails": "أدخل بريداً صالحاً مفصولاً بفواصل"
     },
-    "toast": {
-      "enterFormName": "يرجى إدخال اسم النموذج",
-      "addOneField": "أضف حقل واحداً على الأقل",
-      "formUpdated": "تم تحديث النموذج بنجاح",
-      "formCreated": "تم إنشاء النموذج بنجاح",
-      "saveFailed": "فشل حفظ النموذج",
-      "duplicateName": "يوجد نموذج بهذا الاسم. اختر اسماً آخر.",
-      "saveAsSuccess": "تم حفظ النموذج كنموذج جديد بنجاح",
-      "saveAsFailed": "فشل الحفظ كنموذج جديد"
+    "assignUsers": {
+      "dialogTitle": "تعيين المستخدمين للنموذج",
+      "dialogDescription": "تعيين المستخدمين للنموذج: {formName}",
+      "selectAssignmentType": "اختر نوع التعيين",
+      "selectUsers": "اختر المستخدمين",
+      "cancel": "إلغاء",
+      "submit": "تعيين المستخدمين",
+      "validationSelectType": "الرجاء اختيار نوع التعيين",
+      "validationSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
+      "toastSelectOneUser": "الرجاء اختيار مستخدم واحد على الأقل",
+      "toastSuccess": "تم تعيين المستخدمين بنجاح",
+      "toastFailed": "فشل تعيين المستخدمين",
+      "optionAll": "الكل",
+      "optionAllLearner": "جميع المتعلمين",
+      "optionAllEQA": "جميع EQA",
+      "optionAllTrainer": "جميع المدربين",
+      "optionAllEmployer": "جميع أصحاب العمل",
+      "optionAllIQA": "جميع IQA",
+      "optionAllLIQA": "جميع LIQA",
+      "optionIndividual": "فردي"
     },
-    "formTypes": {
-      "ILP": "ILP",
-      "Review": "مراجعة",
-      "Enrolment": "التسجيل",
-      "Survey": "استبيان",
-      "Workbook": "دفتر العمل",
-      "testExams": "اختبار/امتحانات",
-      "Others": "أخرى"
-    },
-    "roles": {
-      "Admin": "المدير",
-      "Assessor": "مقيّم",
-      "IQA": "IQA",
-      "EQA": "EQA",
-      "Curriculum Manager": "مدير المنهج",
-      "Employer": "صاحب العمل",
-      "Employer Manager": "مدير صاحب العمل",
-      "Partner": "شريك",
-      "Custom Manager": "مدير مخصص",
-      "Learner": "متعلم",
-      "Other": "آخر"
-    },
-    "palette": {
-      "components": "مكونات",
-      "presets": "قوالب",
-      "dragComponents": "اسحب المكونات لبناء النموذج",
-      "choosePresets": "اختر من القوالب المحفوظة",
-      "formBuilderTitle": "منشئ النماذج",
-      "formBuilderHint": "اسحب المكونات هنا لإنشاء النموذج",
-      "dropHere": "أفلت مكونات النموذج هنا",
-      "dropHint": "اسحب أي مكون من اللوحة اليسرى للبدء.",
-      "componentLabels": {
-        "text": "نص",
-        "email": "بريد",
-        "phone": "هاتف",
-        "number": "رقم",
-        "textarea": "نص طويل",
-        "select": "قائمة منسدلة",
-        "radio": "اختيار متعدد",
-        "checkbox": "خانات اختيار",
-        "date": "تاريخ",
-        "file": "رفع ملف",
-        "signature": "توقيع"
-      },
-      "defaultLabels": {
-        "text": "الاسم الكامل",
+    "submittedForms": {
+      "pageTitle": "النماذج المُرسلة",
+      "pageSubtitle": "عرض وإدارة جميع النماذج المُرسلة",
+      "table": {
+        "searchPlaceholder": "البحث باسم النموذج أو المستخدم أو البريد...",
+        "export": "تصدير",
+        "exportCsv": "تصدير CSV",
+        "formName": "اسم النموذج",
+        "type": "النوع",
+        "userName": "اسم المستخدم",
         "email": "البريد الإلكتروني",
-        "phone": "رقم الهاتف",
-        "number": "العمر",
-        "textarea": "تعليقات",
-        "select": "اختر خياراً",
-        "radio": "اختر واحداً",
-        "checkbox": "حدد كل ما ينطبق",
-        "date": "تاريخ",
-        "file": "رفع ملف",
-        "signature": "توقيع",
-        "default": "تسمية الحقل"
+        "status": "الحالة",
+        "submitDate": "تاريخ الإرسال",
+        "actions": "إجراءات",
+        "locked": "مقفل",
+        "unlocked": "مفتوح",
+        "loading": "جاري التحميل...",
+        "noFormsFound": "لم يتم العثور على نماذج.",
+        "toastCsvSuccess": "تم تصدير CSV بنجاح",
+        "toastLockSuccess": "تم قفل النموذج بنجاح!",
+        "toastLockFailed": "فشل قفل النموذج. يرجى المحاولة مرة أخرى.",
+        "toastUnlockSuccess": "تم فتح النموذج بنجاح!",
+        "toastUnlockFailed": "فشل فتح النموذج. يرجى المحاولة مرة أخرى."
       },
-      "defaultPlaceholders": {
-        "text": "أدخل اسمك الكامل",
-        "email": "بريدك@مثال.com",
-        "phone": "+1 (555) 123-4567",
-        "number": "أدخل رقماً",
-        "textarea": "اكتب رسالتك هنا...",
-        "date": "اختر التاريخ",
-        "file": "اختر ملفاً للرفع",
-        "default": "أدخل قيمة"
+      "lockDialog": {
+        "title": "قفل النموذج",
+        "description": "أنت على وشك قفل النموذج: {formName} للمستخدم {userName}",
+        "reasonLabel": "سبب القفل (اختياري)",
+        "reasonPlaceholder": "يرجى تقديم سبب لقفل هذا النموذج...",
+        "cancel": "إلغاء",
+        "submit": "قفل النموذج",
+        "submitting": "جاري القفل..."
       },
-      "optionLabel": "خيار {n}",
-      "copySuffix": "(نسخة)"
-    },
-    "presets": {
-      "roles": {
-        "learner": "متعلم",
-        "trainer": "مدرب",
-        "employee": "موظف"
-      },
-      "fields": {
-        "learner-name": "اسم المتعلم",
-        "learner-email": "بريد المتعلم",
-        "learner-phone": "هاتف المتعلم",
-        "date_of_birth": "تاريخ الميلاد",
-        "employer": "صاحب العمل",
-        "trainer-name": "اسم المدرب",
-        "email": "بريد",
-        "employee-name": "اسم الموظف"
+      "unlockDialog": {
+        "title": "فتح النموذج",
+        "description": "أنت على وشك فتح النموذج: {formName} للمستخدم {userName}",
+        "reasonLabel": "سبب الفتح (اختياري)",
+        "reasonPlaceholder": "يرجى تقديم سبب لفتح هذا النموذج...",
+        "cancel": "إلغاء",
+        "submit": "فتح النموذج",
+        "submitting": "جاري الفتح..."
       }
     },
-    "preview": {
-      "noFields": "لم تتم إضافة حقول إلى النموذج.",
-      "untitledForm": "نموذج بدون عنوان",
-      "clearForm": "مسح النموذج",
-      "submitPreview": "إرسال (معاينة فقط)"
+    "templates": {
+      "sectionTitle": "قوالب النماذج",
+      "searchPlaceholder": "البحث في القوالب...",
+      "clear": "مسح",
+      "createTemplate": "إنشاء قالب",
+      "noTemplatesFound": "لم يتم العثور على قوالب",
+      "noTemplatesDescription": "أنشئ قالباً لإعادة استخدام هياكل النماذج",
+      "templateName": "اسم القالب",
+      "createDate": "تاريخ الإنشاء",
+      "actions": "إجراءات",
+      "useTemplate": "استخدام القالب",
+      "toastDeleteSuccess": "تم حذف القالب بنجاح",
+      "toastDeleteFailed": "فشل حذف القالب",
+      "deleteDialog": {
+        "title": "هل أنت متأكد؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف القالب {name} نهائياً.",
+        "cancel": "إلغاء",
+        "delete": "حذف",
+        "deleting": "جاري الحذف..."
+      }
     },
-    "fieldCard": {
-      "selectOption": "اختر خياراً",
-      "fileUploadArea": "منطقة رفع الملفات",
-      "signaturePad": "لوحة التوقيع",
-      "editField": "تعديل الحقل",
-      "fieldLabel": "تسمية الحقل",
-      "placeholder": "النص التوضيحي",
-      "requiredField": "حقل مطلوب",
-      "fieldWidth": "عرض الحقل",
-      "fullWidth": "عرض كامل",
-      "halfWidth": "نصف العرض",
-      "oneThird": "الثلث",
-      "options": "خيارات",
-      "addOption": "إضافة خيار"
+    "builder": {
+      "back": "رجوع",
+      "backToForms": "العودة إلى النماذج",
+      "editForm": "تعديل النموذج",
+      "createNewForm": "إنشاء نموذج جديد",
+      "dragComponentsHint": "اسحب المكونات لبناء النموذج",
+      "field": "حقل",
+      "fields": "حقول",
+      "previewButton": "معاينة",
+      "edit": "تعديل",
+      "saving": "جاري الحفظ...",
+      "saveAsForm": "حفظ كنموذج",
+      "saveForm": "حفظ النموذج",
+      "formInformation": "معلومات النموذج",
+      "formName": "اسم النموذج",
+      "formType": "نوع النموذج",
+      "formNamePlaceholder": "مثال: نموذج التعليقات",
+      "descriptionOptional": "الوصف (اختياري)",
+      "descriptionPlaceholder": "صف الغرض من هذا النموذج...",
+      "formStatistics": "إحصائيات النموذج:",
+      "typeField": "{count} {type} حقل",
+      "typeFields": "{count} {type} حقول",
+      "accessRights": "صلاحيات الوصول",
+      "enableCompleteFunction": "تفعيل وظيفة الإكمال",
+      "completionRoles": "أدوار الإكمال",
+      "setRequestSignature": "طلب التوقيع",
+      "emailRecipients": "مستلمو البريد",
+      "otherEmailsPlaceholder": "البريد مفصول بفاصلة (،)",
+      "selectFormType": "اختر نوع النموذج",
+      "loadFormError": "فشل تحميل النموذج. يرجى المحاولة مرة أخرى.",
+      "validation": {
+        "formNameRequired": "اسم النموذج مطلوب",
+        "formTypeRequired": "نوع النموذج مطلوب",
+        "selectAccessRight": "اختر صلاحية وصول واحدة على الأقل",
+        "selectCompletionRole": "اختر دور إكمال واحداً على الأقل",
+        "selectEmailRecipient": "اختر مستلماً واحداً على الأقل",
+        "enterOtherEmails": "يرجى إدخال بريد آخر",
+        "validEmails": "أدخل بريداً صالحاً مفصولاً بفواصل"
+      },
+      "toast": {
+        "enterFormName": "يرجى إدخال اسم النموذج",
+        "addOneField": "أضف حقل واحداً على الأقل",
+        "formUpdated": "تم تحديث النموذج بنجاح",
+        "formCreated": "تم إنشاء النموذج بنجاح",
+        "saveFailed": "فشل حفظ النموذج",
+        "duplicateName": "يوجد نموذج بهذا الاسم. اختر اسماً آخر.",
+        "saveAsSuccess": "تم حفظ النموذج كنموذج جديد بنجاح",
+        "saveAsFailed": "فشل الحفظ كنموذج جديد"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "مراجعة",
+        "Enrolment": "التسجيل",
+        "Survey": "استبيان",
+        "Workbook": "دفتر العمل",
+        "testExams": "اختبار/امتحانات",
+        "Others": "أخرى"
+      },
+      "roles": {
+        "Admin": "المدير",
+        "Assessor": "مقيّم",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "مدير المنهج",
+        "Employer": "صاحب العمل",
+        "Employer Manager": "مدير صاحب العمل",
+        "Partner": "شريك",
+        "Custom Manager": "مدير مخصص",
+        "Learner": "متعلم",
+        "Other": "آخر"
+      },
+      "palette": {
+        "components": "مكونات",
+        "presets": "قوالب",
+        "dragComponents": "اسحب المكونات لبناء النموذج",
+        "choosePresets": "اختر من القوالب المحفوظة",
+        "formBuilderTitle": "منشئ النماذج",
+        "formBuilderHint": "اسحب المكونات هنا لإنشاء النموذج",
+        "dropHere": "أفلت مكونات النموذج هنا",
+        "dropHint": "اسحب أي مكون من اللوحة اليسرى للبدء.",
+        "componentLabels": {
+          "text": "نص",
+          "email": "بريد",
+          "phone": "هاتف",
+          "number": "رقم",
+          "textarea": "نص طويل",
+          "select": "قائمة منسدلة",
+          "radio": "اختيار متعدد",
+          "checkbox": "خانات اختيار",
+          "date": "تاريخ",
+          "file": "رفع ملف",
+          "signature": "توقيع"
+        },
+        "defaultLabels": {
+          "text": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "phone": "رقم الهاتف",
+          "number": "العمر",
+          "textarea": "تعليقات",
+          "select": "اختر خياراً",
+          "radio": "اختر واحداً",
+          "checkbox": "حدد كل ما ينطبق",
+          "date": "تاريخ",
+          "file": "رفع ملف",
+          "signature": "توقيع",
+          "default": "تسمية الحقل"
+        },
+        "defaultPlaceholders": {
+          "text": "أدخل اسمك الكامل",
+          "email": "بريدك@مثال.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "أدخل رقماً",
+          "textarea": "اكتب رسالتك هنا...",
+          "date": "اختر التاريخ",
+          "file": "اختر ملفاً للرفع",
+          "default": "أدخل قيمة"
+        },
+        "optionLabel": "خيار {n}",
+        "copySuffix": "(نسخة)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "متعلم",
+          "trainer": "مدرب",
+          "employee": "موظف"
+        },
+        "fields": {
+          "learner-name": "اسم المتعلم",
+          "learner-email": "بريد المتعلم",
+          "learner-phone": "هاتف المتعلم",
+          "date_of_birth": "تاريخ الميلاد",
+          "employer": "صاحب العمل",
+          "trainer-name": "اسم المدرب",
+          "email": "بريد",
+          "employee-name": "اسم الموظف"
+        }
+      },
+      "preview": {
+        "noFields": "لم تتم إضافة حقول إلى النموذج.",
+        "untitledForm": "نموذج بدون عنوان",
+        "clearForm": "مسح النموذج",
+        "submitPreview": "إرسال (معاينة فقط)"
+      },
+      "fieldCard": {
+        "selectOption": "اختر خياراً",
+        "fileUploadArea": "منطقة رفع الملفات",
+        "signaturePad": "لوحة التوقيع",
+        "editField": "تعديل الحقل",
+        "fieldLabel": "تسمية الحقل",
+        "placeholder": "النص التوضيحي",
+        "requiredField": "حقل مطلوب",
+        "fieldWidth": "عرض الحقل",
+        "fullWidth": "عرض كامل",
+        "halfWidth": "نصف العرض",
+        "oneThird": "الثلث",
+        "options": "خيارات",
+        "addOption": "إضافة خيار"
+      }
     }
-  }
   },
   "iqaQuestions": {
     "pageTitle": "إدارة أسئلة IQA",
@@ -4106,7 +4147,9 @@
         "assessmentCriteria": "معايير التقييم",
         "assessmentCriteriaCount": "معايير التقييم ({count})",
         "addAssessmentCriteria": "إضافة معيار تقييم",
-        "placeholderTopicTitle": "عنوان الموضوع"
+        "placeholderTopicTitle": "عنوان الموضوع",
+        "srNo": "الرقم التسلسلي",
+        "placeholderSrNo": "الرقم التسلسلي"
       },
       "standard": {
         "modulesTitle": "الوحدات",
@@ -4140,7 +4183,9 @@
         "placeholderTopicTitle": "عنوان الموضوع",
         "typeBehaviour": "سلوك",
         "typeKnowledge": "معرفة",
-        "typeSkills": "مهارات"
+        "typeSkills": "مهارات",
+        "srNo": "الرقم التسلسلي",
+        "placeholderSrNo": "الرقم التسلسلي"
       }
     }
   },
@@ -4371,58 +4416,6 @@
       "saving": "جاري الحفظ...",
       "toastSuccess": "تم حفظ المسؤولين بنجاح",
       "toastFailed": "فشل في حفظ المسؤولين"
-    }
-  },
-  "caseload": {
-    "pageTitle": "إدارة عبء الحالات",
-    "pageSubtitle": "عرض وتصدير عبء الحالات لمديري الخط.",
-    "searchPlaceholder": "البحث عن مديري الخط...",
-    "refresh": "تحديث",
-    "clear": "مسح",
-    "noLineManagersFound": "لم يتم العثور على أي مدير خط",
-    "noLineManagersMatch": "لا يوجد مدير خط يطابق بحثك",
-    "noLineManagersInSystem": "لا يوجد حالياً أي مدير خط في النظام.",
-    "cards": {
-      "export": "تصدير",
-      "exportCsv": "تصدير CSV",
-      "exportPdf": "تصدير PDF",
-      "usersLabel": "المستخدمون",
-      "learnersLabel": "المتعلمون",
-      "usersBadge": "{count} مستخدم",
-      "managedUsersTitle": "المستخدمون المُدارون ({count})",
-      "noUsersAssignedYet": "لا يوجد مستخدمون معيَّنون بعد",
-      "reportTitle": "تقرير إدارة عبء الحالات",
-      "generatedOn": "تم الإنشاء في: {date}",
-      "totalLearnersLine": "إجمالي المتعلمين: {count}",
-      "totalUsersLine": "إجمالي المستخدمين: {count}",
-      "overallCsv": {
-        "lineManagerName": "اسم مدير الخط",
-        "managedUserEmail": "البريد الإلكتروني للمستخدم المُدار",
-        "totalLearners": "إجمالي المتعلمين",
-        "totalUsers": "إجمالي المستخدمين"
-      },
-      "managerReportTitle": "{name} - تقرير عبء الحالات",
-      "managerInformation": "معلومات المدير:",
-      "nameLabel": "الاسم: {name}",
-      "emailLabel": "البريد الإلكتروني: {email}",
-      "managedUsersHeading": "المستخدمون المُدارون:",
-      "managerTableHeaders": {
-        "name": "الاسم",
-        "email": "البريد الإلكتروني",
-        "role": "الدور"
-      },
-      "managerNoUsersAssigned": "لا يوجد مستخدمون معيَّنون لهذا المدير.",
-      "managerCsv": {
-        "managerName": "اسم المدير",
-        "managerEmail": "بريد المدير الإلكتروني",
-        "userName": "اسم المستخدم",
-        "userEmail": "بريد المستخدم الإلكتروني",
-        "userRole": "دور المستخدم",
-        "totalLearners": "إجمالي المتعلمين",
-        "totalUsers": "إجمالي المستخدمين",
-        "defaultUserRole": "مستخدم",
-        "noUsersAssigned": "لا يوجد مستخدمون معيَّنون"
-      }
     }
   },
   "centres": {
@@ -6235,17 +6228,53 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    },
+    "LO": {
+      "label": "LO",
+      "title": "Learning Outcome"
+    }
   }
 }

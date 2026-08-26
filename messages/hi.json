@@ -656,7 +656,7 @@
       "uploadCsv": "CSV अपलोड करें",
       "noResults": "कोई परिणाम नहीं।",
       "openMenu": "Open menu",
-        "edit": "संपादित करें",
+      "edit": "संपादित करें",
       "delete": "हटाएं",
       "deleteDialogTitle": "क्या आप सुनिश्चित हैं?",
       "deleteDialogDescription": "यह कार्रवाई पूर्ववत नहीं की जा सकती है। यह नियोक्ता को हमेशा हटाएगा",
@@ -984,328 +984,328 @@
     }
   },
   "forms": {
-  "pageTitle": "फ़ॉर्म प्रबंधन",
-  "pageSubtitle": "ड्रैग‑एंड‑ड्रॉप बिल्डर के साथ डायनेमिक फ़ॉर्म बनाएँ और मैनेज करें",
-  "tabs": {
-  "formList": "फ़ॉर्म सूची",
-  "templateList": "टेम्पलेट सूची",
-  "response": "प्रतिक्रियाएँ",
-  "reports": "रिपोर्ट"
-  },
-  "reports": {
-    "cardDescription": "एक फ़ॉर्म चुनें, फ़ील्ड चुनें, और सभी सबमिटेड डेटा एक्सपोर्ट करें।",
-    "formSearch": {
-      "label": "फ़ॉर्म खोजें",
-      "placeholder": "फ़ॉर्म नाम से खोजें..."
+    "pageTitle": "फ़ॉर्म प्रबंधन",
+    "pageSubtitle": "ड्रैग‑एंड‑ड्रॉप बिल्डर के साथ डायनेमिक फ़ॉर्म बनाएँ और मैनेज करें",
+    "tabs": {
+      "formList": "फ़ॉर्म सूची",
+      "templateList": "टेम्पलेट सूची",
+      "response": "प्रतिक्रियाएँ",
+      "reports": "रिपोर्ट"
     },
-    "formSelect": {
-      "label": "फ़ॉर्म चुनें",
-      "placeholder": "कृपया चुनें"
+    "reports": {
+      "cardDescription": "एक फ़ॉर्म चुनें, फ़ील्ड चुनें, और सभी सबमिटेड डेटा एक्सपोर्ट करें।",
+      "formSearch": {
+        "label": "फ़ॉर्म खोजें",
+        "placeholder": "फ़ॉर्म नाम से खोजें..."
+      },
+      "formSelect": {
+        "label": "फ़ॉर्म चुनें",
+        "placeholder": "कृपया चुनें"
+      },
+      "fields": {
+        "title": "फ़ील्ड",
+        "loading": "फ़ील्ड लोड हो रहे हैं...",
+        "available": "{count} फ़ील्ड उपलब्ध",
+        "selectFormHint": "फ़ील्ड देखने के लिए एक फ़ॉर्म चुनें"
+      },
+      "actions": {
+        "selectAll": "सभी चुनें",
+        "clear": "साफ़ करें",
+        "exportExcel": "Excel एक्सपोर्ट करें"
+      },
+      "validation": {
+        "selectForm": "कृपया एक फ़ॉर्म चुनें।",
+        "selectAtLeastOneField": "कृपया एक्सपोर्ट के लिए कम से कम एक फ़ील्ड चुनें।"
+      },
+      "errors": {
+        "tooManyPages": "एक्सपोर्ट करने के लिए बहुत ज़्यादा पेज हैं। कृपया परिणाम सीमित करें या एडमिन से संपर्क करें।",
+        "noSubmissions": "इस फ़ॉर्म के लिए कोई सबमिशन नहीं मिला।",
+        "exportFailed": "एक्सपोर्ट विफल"
+      },
+      "toast": {
+        "exportSuccess": "Excel सफलतापूर्वक एक्सपोर्ट हुआ"
+      },
+      "csvHeaders": {
+        "userName": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "submittedAt": "सबमिट समय"
+      }
     },
-    "fields": {
-      "title": "फ़ील्ड",
-      "loading": "फ़ील्ड लोड हो रहे हैं...",
-      "available": "{count} फ़ील्ड उपलब्ध",
-      "selectFormHint": "फ़ील्ड देखने के लिए एक फ़ॉर्म चुनें"
-    },
-    "actions": {
-      "selectAll": "सभी चुनें",
-      "clear": "साफ़ करें",
-      "exportExcel": "Excel एक्सपोर्ट करें"
-    },
-    "validation": {
-      "selectForm": "कृपया एक फ़ॉर्म चुनें।",
-      "selectAtLeastOneField": "कृपया एक्सपोर्ट के लिए कम से कम एक फ़ील्ड चुनें।"
-    },
-    "errors": {
-      "tooManyPages": "एक्सपोर्ट करने के लिए बहुत ज़्यादा पेज हैं। कृपया परिणाम सीमित करें या एडमिन से संपर्क करें।",
-      "noSubmissions": "इस फ़ॉर्म के लिए कोई सबमिशन नहीं मिला।",
-      "exportFailed": "एक्सपोर्ट विफल"
-    },
-    "toast": {
-      "exportSuccess": "Excel सफलतापूर्वक एक्सपोर्ट हुआ"
-    },
-    "csvHeaders": {
-      "userName": "उपयोगकर्ता नाम",
-      "email": "ईमेल",
-      "submittedAt": "सबमिट समय"
-    }
-  },
-  "table": {
-    "searchPlaceholder": "कीवर्ड से खोजें...",
-    "clear": "साफ़ करें",
-    "export": "एक्सपोर्ट",
-    "exportCsv": "CSV के रूप में एक्सपोर्ट",
-    "exportPdf": "PDF के रूप में एक्सपोर्ट",
-    "addNewForm": "नया फ़ॉर्म जोड़ें",
-    "formName": "फ़ॉर्म का नाम",
-    "description": "विवरण",
-    "type": "प्रकार",
-    "createdAt": "बनाया गया",
-    "actions": "क्रियाएँ",
-    "view": "देखें",
-    "edit": "संपादित करें",
-    "assignUsers": "उपयोगकर्ता नियत करें",
-    "delete": "हटाएं",
-    "openMenu": "मेन्यू खोलें",
-    "noResults": "कोई परिणाम नहीं।",
-    "toastNoData": "एक्सपोर्ट के लिए कोई डेटा नहीं",
-    "toastCsvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
-    "toastPdfInfo": "PDF एक्सपोर्ट जल्द उपलब्ध होगा",
-    "toastDeleteSuccess": "फ़ॉर्म सफलतापूर्वक हटाया गया",
-    "toastDeleteFailed": "फ़ॉर्म हटाने में विफल"
-  },
-  "deleteDialog": {
-    "title": "क्या आप सुनिश्चित हैं?",
-    "description": "इस क्रिया को पूर्ववत नहीं किया जा सकता। फ़ॉर्म {name} और संबंधित सभी डेटा स्थायी रूप से हटा दिए जाएंगे।",
-    "cancel": "रद्द करें",
-    "delete": "हटाएं",
-    "deleting": "हट रहा है..."
-  },
-  "assignUsers": {
-    "dialogTitle": "फ़ॉर्म को उपयोगकर्ता नियत करें",
-    "dialogDescription": "फ़ॉर्म को उपयोगकर्ता नियत करें: {formName}",
-    "selectAssignmentType": "नियत करने का प्रकार चुनें",
-    "selectUsers": "उपयोगकर्ता चुनें",
-    "cancel": "रद्द करें",
-    "submit": "उपयोगकर्ता नियत करें",
-    "validationSelectType": "कृपया नियत करने का प्रकार चुनें",
-    "validationSelectOneUser": "कृपया कम से कम एक उपयोगकर्ता चुनें",
-    "toastSelectOneUser": "कृपया कम से कम एक उपयोगकर्ता चुनें",
-    "toastSuccess": "उपयोगकर्ता सफलतापूर्वक नियत किए गए",
-    "toastFailed": "उपयोगकर्ता नियत करने में विफल",
-    "optionAll": "सभी",
-    "optionAllLearner": "सभी लर्नर",
-    "optionAllEQA": "सभी EQA",
-    "optionAllTrainer": "सभी ट्रेनर",
-    "optionAllEmployer": "सभी एम्प्लॉयर",
-    "optionAllIQA": "सभी IQA",
-    "optionAllLIQA": "सभी LIQA",
-    "optionIndividual": "व्यक्तिगत"
-  },
-  "submittedForms": {
-    "pageTitle": "जमा किए गए फ़ॉर्म",
-    "pageSubtitle": "सभी जमा किए गए फ़ॉर्म देखें और प्रबंधित करें",
     "table": {
-      "searchPlaceholder": "फ़ॉर्म नाम, उपयोगकर्ता या ईमेल से खोजें...",
+      "searchPlaceholder": "कीवर्ड से खोजें...",
+      "clear": "साफ़ करें",
       "export": "एक्सपोर्ट",
-      "exportCsv": "CSV एक्सपोर्ट करें",
+      "exportCsv": "CSV के रूप में एक्सपोर्ट",
+      "exportPdf": "PDF के रूप में एक्सपोर्ट",
+      "addNewForm": "नया फ़ॉर्म जोड़ें",
       "formName": "फ़ॉर्म का नाम",
+      "description": "विवरण",
       "type": "प्रकार",
-      "userName": "उपयोगकर्ता का नाम",
-      "email": "ईमेल",
-      "status": "स्थिति",
-      "submitDate": "जमा तारीख",
+      "createdAt": "बनाया गया",
       "actions": "क्रियाएँ",
-      "locked": "लॉक किया गया",
-      "unlocked": "अनलॉक किया गया",
-      "loading": "लोड हो रहा है...",
-      "noFormsFound": "कोई फ़ॉर्म नहीं मिला।",
+      "view": "देखें",
+      "edit": "संपादित करें",
+      "assignUsers": "उपयोगकर्ता नियत करें",
+      "delete": "हटाएं",
+      "openMenu": "मेन्यू खोलें",
+      "noResults": "कोई परिणाम नहीं।",
+      "toastNoData": "एक्सपोर्ट के लिए कोई डेटा नहीं",
       "toastCsvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
-      "toastLockSuccess": "फ़ॉर्म सफलतापूर्वक लॉक हो गया!",
-      "toastLockFailed": "फ़ॉर्म लॉक करने में विफल। कृपया पुनः प्रयास करें।",
-      "toastUnlockSuccess": "फ़ॉर्म सफलतापूर्वक अनलॉक हो गया!",
-      "toastUnlockFailed": "फ़ॉर्म अनलॉक करने में विफल। कृपया पुनः प्रयास करें।"
+      "toastPdfInfo": "PDF एक्सपोर्ट जल्द उपलब्ध होगा",
+      "toastDeleteSuccess": "फ़ॉर्म सफलतापूर्वक हटाया गया",
+      "toastDeleteFailed": "फ़ॉर्म हटाने में विफल"
     },
-    "lockDialog": {
-      "title": "फ़ॉर्म लॉक करें",
-      "description": "आप फ़ॉर्म लॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
-      "reasonLabel": "लॉक करने का कारण (वैकल्पिक)",
-      "reasonPlaceholder": "कृपया इस फ़ॉर्म को लॉक करने का कारण बताएं...",
-      "cancel": "रद्द करें",
-      "submit": "फ़ॉर्म लॉक करें",
-      "submitting": "लॉक हो रहा है..."
-    },
-    "unlockDialog": {
-      "title": "फ़ॉर्म अनलॉक करें",
-      "description": "आप फ़ॉर्म अनलॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
-      "reasonLabel": "अनलॉक करने का कारण (वैकल्पिक)",
-      "reasonPlaceholder": "कृपया इस फ़ॉर्म को अनलॉक करने का कारण बताएं...",
-      "cancel": "रद्द करें",
-      "submit": "फ़ॉर्म अनलॉक करें",
-      "submitting": "अनलॉक हो रहा है..."
-    }
-  },
-  "templates": {
-    "sectionTitle": "फ़ॉर्म टेम्पलेट",
-    "searchPlaceholder": "टेम्पलेट खोजें...",
-    "clear": "साफ़ करें",
-    "createTemplate": "टेम्पलेट बनाएं",
-    "noTemplatesFound": "कोई टेम्पलेट नहीं मिला",
-    "noTemplatesDescription": "फ़ॉर्म संरचनाओं को पुन: उपयोग करने के लिए टेम्पलेट बनाएं",
-    "templateName": "टेम्पलेट का नाम",
-    "createDate": "बनाने की तारीख",
-    "actions": "कार्रवाइयाँ",
-    "useTemplate": "टेम्पलेट उपयोग करें",
-    "toastDeleteSuccess": "टेम्पलेट सफलतापूर्वक हटाया गया",
-    "toastDeleteFailed": "टेम्पलेट हटाने में विफल",
     "deleteDialog": {
       "title": "क्या आप सुनिश्चित हैं?",
-      "description": "यह क्रिया पूर्ववत नहीं की जा सकती। टेम्पलेट {name} स्थायी रूप से हटा दिया जाएगा।",
+      "description": "इस क्रिया को पूर्ववत नहीं किया जा सकता। फ़ॉर्म {name} और संबंधित सभी डेटा स्थायी रूप से हटा दिए जाएंगे।",
       "cancel": "रद्द करें",
       "delete": "हटाएं",
       "deleting": "हट रहा है..."
-    }
-  },
-  "builder": {
-    "back": "वापस",
-    "backToForms": "फ़ॉर्म पर वापस",
-    "editForm": "फ़ॉर्म संपादित करें",
-    "createNewForm": "नया फ़ॉर्म बनाएं",
-    "dragComponentsHint": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
-    "field": "फ़ील्ड",
-    "fields": "फ़ील्ड",
-    "previewButton": "पूर्वावलोकन",
-    "edit": "संपादित करें",
-    "saving": "सहेज रहा है...",
-    "saveAsForm": "फ़ॉर्म के रूप में सहेजें",
-    "saveForm": "फ़ॉर्म सहेजें",
-    "formInformation": "फ़ॉर्म जानकारी",
-    "formName": "फ़ॉर्म का नाम",
-    "formType": "फ़ॉर्म प्रकार",
-    "formNamePlaceholder": "जैसे, ग्राहक प्रतिक्रिया फ़ॉर्म",
-    "descriptionOptional": "विवरण (वैकल्पिक)",
-    "descriptionPlaceholder": "बताएं कि यह फ़ॉर्म किस लिए है...",
-    "formStatistics": "फ़ॉर्म आंकड़े:",
-    "typeField": "{count} {type} फ़ील्ड",
-    "typeFields": "{count} {type} फ़ील्ड",
-    "accessRights": "एक्सेस अधिकार",
-    "enableCompleteFunction": "पूर्ण फ़ंक्शन सक्षम करें",
-    "completionRoles": "पूर्णता भूमिकाएं",
-    "setRequestSignature": "हस्ताक्षर अनुरोध करें",
-    "emailRecipients": "ईमेल प्राप्तकर्ता",
-    "otherEmailsPlaceholder": "ईमेल अल्पविराम(,) से अलग",
-    "selectFormType": "फ़ॉर्म प्रकार चुनें",
-    "loadFormError": "फ़ॉर्म लोड करने में विफल। कृपया पुनः प्रयास करें।",
-    "validation": {
-      "formNameRequired": "फ़ॉर्म का नाम आवश्यक है",
-      "formTypeRequired": "फ़ॉर्म प्रकार आवश्यक है",
-      "selectAccessRight": "कम से कम एक एक्सेस अधिकार चुनें",
-      "selectCompletionRole": "कम से कम एक पूर्णता भूमिका चुनें",
-      "selectEmailRecipient": "कम से कम एक ईमेल प्राप्तकर्ता चुनें",
-      "enterOtherEmails": "कृपया अन्य ईमेल दर्ज करें",
-      "validEmails": "अल्पविराम से अलग वैध ईमेल दर्ज करें"
     },
-    "toast": {
-      "enterFormName": "कृपया फ़ॉर्म का नाम दर्ज करें",
-      "addOneField": "कृपया फ़ॉर्म में कम से कम एक फ़ील्ड जोड़ें",
-      "formUpdated": "फ़ॉर्म सफलतापूर्वक अपडेट हुआ",
-      "formCreated": "फ़ॉर्म सफलतापूर्वक बनाया गया",
-      "saveFailed": "फ़ॉर्म सहेजने में विफल",
-      "duplicateName": "इस नाम का फ़ॉर्म पहले से मौजूद है। कोई अन्य नाम चुनें।",
-      "saveAsSuccess": "फ़ॉर्म नए के रूप में सफलतापूर्वक सहेजा गया",
-      "saveAsFailed": "फ़ॉर्म को नए के रूप में सहेजने में विफल"
+    "assignUsers": {
+      "dialogTitle": "फ़ॉर्म को उपयोगकर्ता नियत करें",
+      "dialogDescription": "फ़ॉर्म को उपयोगकर्ता नियत करें: {formName}",
+      "selectAssignmentType": "नियत करने का प्रकार चुनें",
+      "selectUsers": "उपयोगकर्ता चुनें",
+      "cancel": "रद्द करें",
+      "submit": "उपयोगकर्ता नियत करें",
+      "validationSelectType": "कृपया नियत करने का प्रकार चुनें",
+      "validationSelectOneUser": "कृपया कम से कम एक उपयोगकर्ता चुनें",
+      "toastSelectOneUser": "कृपया कम से कम एक उपयोगकर्ता चुनें",
+      "toastSuccess": "उपयोगकर्ता सफलतापूर्वक नियत किए गए",
+      "toastFailed": "उपयोगकर्ता नियत करने में विफल",
+      "optionAll": "सभी",
+      "optionAllLearner": "सभी लर्नर",
+      "optionAllEQA": "सभी EQA",
+      "optionAllTrainer": "सभी ट्रेनर",
+      "optionAllEmployer": "सभी एम्प्लॉयर",
+      "optionAllIQA": "सभी IQA",
+      "optionAllLIQA": "सभी LIQA",
+      "optionIndividual": "व्यक्तिगत"
     },
-    "formTypes": {
-      "ILP": "ILP",
-      "Review": "समीक्षा",
-      "Enrolment": "नामांकन",
-      "Survey": "सर्वेक्षण",
-      "Workbook": "कार्यपुस्तिका",
-      "testExams": "टेस्ट/परीक्षा",
-      "Others": "अन्य"
-    },
-    "roles": {
-      "Admin": "एडमिन",
-      "Assessor": "मूल्यांकनकर्ता",
-      "IQA": "IQA",
-      "EQA": "EQA",
-      "Curriculum Manager": "पाठ्यक्रम प्रबंधक",
-      "Employer": "नियोक्ता",
-      "Employer Manager": "नियोक्ता प्रबंधक",
-      "Partner": "साझेदार",
-      "Custom Manager": "कस्टम प्रबंधक",
-      "Learner": "सीखने वाला",
-      "Other": "अन्य"
-    },
-    "palette": {
-      "components": "कंपोनेंट",
-      "presets": "प्रीसेट",
-      "dragComponents": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
-      "choosePresets": "सहेजे गए प्रीसेट में से चुनें",
-      "formBuilderTitle": "फ़ॉर्म बिल्डर",
-      "formBuilderHint": "अपना फ़ॉर्म बनाने के लिए यहां कंपोनेंट खींचें",
-      "dropHere": "फ़ॉर्म कंपोनेंट यहां छोड़ें",
-      "dropHint": "शुरू करने के लिए बाएं पैनल से कोई कंपोनेंट खींचें।",
-      "componentLabels": {
-        "text": "टेक्स्ट",
+    "submittedForms": {
+      "pageTitle": "जमा किए गए फ़ॉर्म",
+      "pageSubtitle": "सभी जमा किए गए फ़ॉर्म देखें और प्रबंधित करें",
+      "table": {
+        "searchPlaceholder": "फ़ॉर्म नाम, उपयोगकर्ता या ईमेल से खोजें...",
+        "export": "एक्सपोर्ट",
+        "exportCsv": "CSV एक्सपोर्ट करें",
+        "formName": "फ़ॉर्म का नाम",
+        "type": "प्रकार",
+        "userName": "उपयोगकर्ता का नाम",
         "email": "ईमेल",
-        "phone": "फ़ोन",
-        "number": "नंबर",
-        "textarea": "लंबा टेक्स्ट",
-        "select": "ड्रॉपडाउन",
-        "radio": "बहुविकल्प",
-        "checkbox": "चेकबॉक्स",
-        "date": "तारीख",
-        "file": "फ़ाइल अपलोड",
-        "signature": "हस्ताक्षर"
+        "status": "स्थिति",
+        "submitDate": "जमा तारीख",
+        "actions": "क्रियाएँ",
+        "locked": "लॉक किया गया",
+        "unlocked": "अनलॉक किया गया",
+        "loading": "लोड हो रहा है...",
+        "noFormsFound": "कोई फ़ॉर्म नहीं मिला।",
+        "toastCsvSuccess": "CSV सफलतापूर्वक एक्सपोर्ट हुआ",
+        "toastLockSuccess": "फ़ॉर्म सफलतापूर्वक लॉक हो गया!",
+        "toastLockFailed": "फ़ॉर्म लॉक करने में विफल। कृपया पुनः प्रयास करें।",
+        "toastUnlockSuccess": "फ़ॉर्म सफलतापूर्वक अनलॉक हो गया!",
+        "toastUnlockFailed": "फ़ॉर्म अनलॉक करने में विफल। कृपया पुनः प्रयास करें।"
       },
-      "defaultLabels": {
-        "text": "पूरा नाम",
-        "email": "ईमेल पता",
-        "phone": "फ़ोन नंबर",
-        "number": "उम्र",
-        "textarea": "टिप्पणियां",
-        "select": "विकल्प चुनें",
-        "radio": "एक चुनें",
-        "checkbox": "सभी लागू चुनें",
-        "date": "तारीख",
-        "file": "फ़ाइल अपलोड करें",
-        "signature": "हस्ताक्षर",
-        "default": "फ़ील्ड लेबल"
+      "lockDialog": {
+        "title": "फ़ॉर्म लॉक करें",
+        "description": "आप फ़ॉर्म लॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
+        "reasonLabel": "लॉक करने का कारण (वैकल्पिक)",
+        "reasonPlaceholder": "कृपया इस फ़ॉर्म को लॉक करने का कारण बताएं...",
+        "cancel": "रद्द करें",
+        "submit": "फ़ॉर्म लॉक करें",
+        "submitting": "लॉक हो रहा है..."
       },
-      "defaultPlaceholders": {
-        "text": "अपना पूरा नाम दर्ज करें",
-        "email": "your.email@example.com",
-        "phone": "+1 (555) 123-4567",
-        "number": "नंबर दर्ज करें",
-        "textarea": "अपना संदेश यहां लिखें...",
-        "date": "तारीख चुनें",
-        "file": "अपलोड के लिए फ़ाइल चुनें",
-        "default": "मान दर्ज करें"
-      },
-      "optionLabel": "विकल्प {n}",
-      "copySuffix": "(कॉपी)"
-    },
-    "presets": {
-      "roles": {
-        "learner": "सीखने वाला",
-        "trainer": "प्रशिक्षक",
-        "employee": "कर्मचारी"
-      },
-      "fields": {
-        "learner-name": "सीखने वाले का नाम",
-        "learner-email": "सीखने वाले का ईमेल",
-        "learner-phone": "सीखने वाले का फ़ोन",
-        "date_of_birth": "जन्म तिथि",
-        "employer": "नियोक्ता",
-        "trainer-name": "प्रशिक्षक का नाम",
-        "email": "ईमेल",
-        "employee-name": "कर्मचारी का नाम"
+      "unlockDialog": {
+        "title": "फ़ॉर्म अनलॉक करें",
+        "description": "आप फ़ॉर्म अनलॉक करने जा रहे हैं: {formName} उपयोगकर्ता {userName} के लिए",
+        "reasonLabel": "अनलॉक करने का कारण (वैकल्पिक)",
+        "reasonPlaceholder": "कृपया इस फ़ॉर्म को अनलॉक करने का कारण बताएं...",
+        "cancel": "रद्द करें",
+        "submit": "फ़ॉर्म अनलॉक करें",
+        "submitting": "अनलॉक हो रहा है..."
       }
     },
-    "preview": {
-      "noFields": "फ़ॉर्म में कोई फ़ील्ड नहीं जोड़ा गया।",
-      "untitledForm": "बिना शीर्षक फ़ॉर्म",
-      "clearForm": "फ़ॉर्म साफ़ करें",
-      "submitPreview": "जमा करें (केवल पूर्वावलोकन)"
+    "templates": {
+      "sectionTitle": "फ़ॉर्म टेम्पलेट",
+      "searchPlaceholder": "टेम्पलेट खोजें...",
+      "clear": "साफ़ करें",
+      "createTemplate": "टेम्पलेट बनाएं",
+      "noTemplatesFound": "कोई टेम्पलेट नहीं मिला",
+      "noTemplatesDescription": "फ़ॉर्म संरचनाओं को पुन: उपयोग करने के लिए टेम्पलेट बनाएं",
+      "templateName": "टेम्पलेट का नाम",
+      "createDate": "बनाने की तारीख",
+      "actions": "कार्रवाइयाँ",
+      "useTemplate": "टेम्पलेट उपयोग करें",
+      "toastDeleteSuccess": "टेम्पलेट सफलतापूर्वक हटाया गया",
+      "toastDeleteFailed": "टेम्पलेट हटाने में विफल",
+      "deleteDialog": {
+        "title": "क्या आप सुनिश्चित हैं?",
+        "description": "यह क्रिया पूर्ववत नहीं की जा सकती। टेम्पलेट {name} स्थायी रूप से हटा दिया जाएगा।",
+        "cancel": "रद्द करें",
+        "delete": "हटाएं",
+        "deleting": "हट रहा है..."
+      }
     },
-    "fieldCard": {
-      "selectOption": "एक विकल्प चुनें",
-      "fileUploadArea": "फ़ाइल अपलोड क्षेत्र",
-      "signaturePad": "हस्ताक्षर पैड",
-      "editField": "फ़ील्ड संपादित करें",
-      "fieldLabel": "फ़ील्ड लेबल",
-      "placeholder": "प्लेसहोल्डर",
-      "requiredField": "आवश्यक फ़ील्ड",
-      "fieldWidth": "फ़ील्ड चौड़ाई",
-      "fullWidth": "पूरी चौड़ाई",
-      "halfWidth": "आधी चौड़ाई",
-      "oneThird": "एक तिहाई",
-      "options": "विकल्प",
-      "addOption": "विकल्प जोड़ें"
+    "builder": {
+      "back": "वापस",
+      "backToForms": "फ़ॉर्म पर वापस",
+      "editForm": "फ़ॉर्म संपादित करें",
+      "createNewForm": "नया फ़ॉर्म बनाएं",
+      "dragComponentsHint": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
+      "field": "फ़ील्ड",
+      "fields": "फ़ील्ड",
+      "previewButton": "पूर्वावलोकन",
+      "edit": "संपादित करें",
+      "saving": "सहेज रहा है...",
+      "saveAsForm": "फ़ॉर्म के रूप में सहेजें",
+      "saveForm": "फ़ॉर्म सहेजें",
+      "formInformation": "फ़ॉर्म जानकारी",
+      "formName": "फ़ॉर्म का नाम",
+      "formType": "फ़ॉर्म प्रकार",
+      "formNamePlaceholder": "जैसे, ग्राहक प्रतिक्रिया फ़ॉर्म",
+      "descriptionOptional": "विवरण (वैकल्पिक)",
+      "descriptionPlaceholder": "बताएं कि यह फ़ॉर्म किस लिए है...",
+      "formStatistics": "फ़ॉर्म आंकड़े:",
+      "typeField": "{count} {type} फ़ील्ड",
+      "typeFields": "{count} {type} फ़ील्ड",
+      "accessRights": "एक्सेस अधिकार",
+      "enableCompleteFunction": "पूर्ण फ़ंक्शन सक्षम करें",
+      "completionRoles": "पूर्णता भूमिकाएं",
+      "setRequestSignature": "हस्ताक्षर अनुरोध करें",
+      "emailRecipients": "ईमेल प्राप्तकर्ता",
+      "otherEmailsPlaceholder": "ईमेल अल्पविराम(,) से अलग",
+      "selectFormType": "फ़ॉर्म प्रकार चुनें",
+      "loadFormError": "फ़ॉर्म लोड करने में विफल। कृपया पुनः प्रयास करें।",
+      "validation": {
+        "formNameRequired": "फ़ॉर्म का नाम आवश्यक है",
+        "formTypeRequired": "फ़ॉर्म प्रकार आवश्यक है",
+        "selectAccessRight": "कम से कम एक एक्सेस अधिकार चुनें",
+        "selectCompletionRole": "कम से कम एक पूर्णता भूमिका चुनें",
+        "selectEmailRecipient": "कम से कम एक ईमेल प्राप्तकर्ता चुनें",
+        "enterOtherEmails": "कृपया अन्य ईमेल दर्ज करें",
+        "validEmails": "अल्पविराम से अलग वैध ईमेल दर्ज करें"
+      },
+      "toast": {
+        "enterFormName": "कृपया फ़ॉर्म का नाम दर्ज करें",
+        "addOneField": "कृपया फ़ॉर्म में कम से कम एक फ़ील्ड जोड़ें",
+        "formUpdated": "फ़ॉर्म सफलतापूर्वक अपडेट हुआ",
+        "formCreated": "फ़ॉर्म सफलतापूर्वक बनाया गया",
+        "saveFailed": "फ़ॉर्म सहेजने में विफल",
+        "duplicateName": "इस नाम का फ़ॉर्म पहले से मौजूद है। कोई अन्य नाम चुनें।",
+        "saveAsSuccess": "फ़ॉर्म नए के रूप में सफलतापूर्वक सहेजा गया",
+        "saveAsFailed": "फ़ॉर्म को नए के रूप में सहेजने में विफल"
+      },
+      "formTypes": {
+        "ILP": "ILP",
+        "Review": "समीक्षा",
+        "Enrolment": "नामांकन",
+        "Survey": "सर्वेक्षण",
+        "Workbook": "कार्यपुस्तिका",
+        "testExams": "टेस्ट/परीक्षा",
+        "Others": "अन्य"
+      },
+      "roles": {
+        "Admin": "एडमिन",
+        "Assessor": "मूल्यांकनकर्ता",
+        "IQA": "IQA",
+        "EQA": "EQA",
+        "Curriculum Manager": "पाठ्यक्रम प्रबंधक",
+        "Employer": "नियोक्ता",
+        "Employer Manager": "नियोक्ता प्रबंधक",
+        "Partner": "साझेदार",
+        "Custom Manager": "कस्टम प्रबंधक",
+        "Learner": "सीखने वाला",
+        "Other": "अन्य"
+      },
+      "palette": {
+        "components": "कंपोनेंट",
+        "presets": "प्रीसेट",
+        "dragComponents": "अपना फ़ॉर्म बनाने के लिए कंपोनेंट खींचें",
+        "choosePresets": "सहेजे गए प्रीसेट में से चुनें",
+        "formBuilderTitle": "फ़ॉर्म बिल्डर",
+        "formBuilderHint": "अपना फ़ॉर्म बनाने के लिए यहां कंपोनेंट खींचें",
+        "dropHere": "फ़ॉर्म कंपोनेंट यहां छोड़ें",
+        "dropHint": "शुरू करने के लिए बाएं पैनल से कोई कंपोनेंट खींचें।",
+        "componentLabels": {
+          "text": "टेक्स्ट",
+          "email": "ईमेल",
+          "phone": "फ़ोन",
+          "number": "नंबर",
+          "textarea": "लंबा टेक्स्ट",
+          "select": "ड्रॉपडाउन",
+          "radio": "बहुविकल्प",
+          "checkbox": "चेकबॉक्स",
+          "date": "तारीख",
+          "file": "फ़ाइल अपलोड",
+          "signature": "हस्ताक्षर"
+        },
+        "defaultLabels": {
+          "text": "पूरा नाम",
+          "email": "ईमेल पता",
+          "phone": "फ़ोन नंबर",
+          "number": "उम्र",
+          "textarea": "टिप्पणियां",
+          "select": "विकल्प चुनें",
+          "radio": "एक चुनें",
+          "checkbox": "सभी लागू चुनें",
+          "date": "तारीख",
+          "file": "फ़ाइल अपलोड करें",
+          "signature": "हस्ताक्षर",
+          "default": "फ़ील्ड लेबल"
+        },
+        "defaultPlaceholders": {
+          "text": "अपना पूरा नाम दर्ज करें",
+          "email": "your.email@example.com",
+          "phone": "+1 (555) 123-4567",
+          "number": "नंबर दर्ज करें",
+          "textarea": "अपना संदेश यहां लिखें...",
+          "date": "तारीख चुनें",
+          "file": "अपलोड के लिए फ़ाइल चुनें",
+          "default": "मान दर्ज करें"
+        },
+        "optionLabel": "विकल्प {n}",
+        "copySuffix": "(कॉपी)"
+      },
+      "presets": {
+        "roles": {
+          "learner": "सीखने वाला",
+          "trainer": "प्रशिक्षक",
+          "employee": "कर्मचारी"
+        },
+        "fields": {
+          "learner-name": "सीखने वाले का नाम",
+          "learner-email": "सीखने वाले का ईमेल",
+          "learner-phone": "सीखने वाले का फ़ोन",
+          "date_of_birth": "जन्म तिथि",
+          "employer": "नियोक्ता",
+          "trainer-name": "प्रशिक्षक का नाम",
+          "email": "ईमेल",
+          "employee-name": "कर्मचारी का नाम"
+        }
+      },
+      "preview": {
+        "noFields": "फ़ॉर्म में कोई फ़ील्ड नहीं जोड़ा गया।",
+        "untitledForm": "बिना शीर्षक फ़ॉर्म",
+        "clearForm": "फ़ॉर्म साफ़ करें",
+        "submitPreview": "जमा करें (केवल पूर्वावलोकन)"
+      },
+      "fieldCard": {
+        "selectOption": "एक विकल्प चुनें",
+        "fileUploadArea": "फ़ाइल अपलोड क्षेत्र",
+        "signaturePad": "हस्ताक्षर पैड",
+        "editField": "फ़ील्ड संपादित करें",
+        "fieldLabel": "फ़ील्ड लेबल",
+        "placeholder": "प्लेसहोल्डर",
+        "requiredField": "आवश्यक फ़ील्ड",
+        "fieldWidth": "फ़ील्ड चौड़ाई",
+        "fullWidth": "पूरी चौड़ाई",
+        "halfWidth": "आधी चौड़ाई",
+        "oneThird": "एक तिहाई",
+        "options": "विकल्प",
+        "addOption": "विकल्प जोड़ें"
+      }
     }
-  }
   },
   "iqaQuestions": {
     "pageTitle": "IQA बनाएं प्रश्न",
@@ -1852,58 +1852,58 @@
     }
   },
   "sessionTypes": {
-  "pageTitle": "सेशन प्रकार",
-  "pageSubtitle": "सेशन टाइप कॉन्फ़िगरेशन प्रबंधित करें",
-  "formDialog": {
-    "createTitle": "सेशन प्रकार जोड़ें",
-    "editTitle": "सेशन प्रकार संपादित करें",
-    "descriptionCreate": "नया सेशन प्रकार बनाएं",
-    "descriptionEdit": "सेशन प्रकार विवरण अपडेट करें"
-  },
-  "form": {
-    "centreLabel": "सेंटर",
-    "centrePlaceholder": "सेंटर चुनें",
-    "centreHelperText": "सेशन प्रकार चुने गए सेंटर के लिए बनाया जाएगा। सेंटर एडमिन केवल अपना सेंटर देखते हैं; ऑर्ग एडमिन सभी देखते हैं।",
-    "requiredAsterisk": "*",
-    "nameLabel": "सेशन प्रकार नाम",
-    "namePlaceholder": "सेशन प्रकार का नाम दर्ज करें",
-    "nameRequired": "सेशन प्रकार नाम आवश्यक है",
-    "offTheJobLabel": "ऑफ द जॉब",
-    "activeLabel": "सक्रिय",
-    "updating": "अपडेट हो रहा है...",
-    "creating": "बनाया जा रहा है...",
-    "selectCentre": "सेंटर चुनें",
-    "update": "अपडेट",
-    "create": "बनाएं"
-  },
-  "table": {
-    "title": "सेशन प्रकार",
-    "count": "{count} सेशन प्रकार",
-    "addButton": "सेशन प्रकार जोड़ें",
-    "headers": {
-      "order": "क्रम",
-      "name": "नाम",
-      "offTheJob": "ऑफ द जॉब",
-      "active": "सक्रिय",
-      "actions": "क्रियाएँ"
+    "pageTitle": "सेशन प्रकार",
+    "pageSubtitle": "सेशन टाइप कॉन्फ़िगरेशन प्रबंधित करें",
+    "formDialog": {
+      "createTitle": "सेशन प्रकार जोड़ें",
+      "editTitle": "सेशन प्रकार संपादित करें",
+      "descriptionCreate": "नया सेशन प्रकार बनाएं",
+      "descriptionEdit": "सेशन प्रकार विवरण अपडेट करें"
     },
-    "emptyDescription": "कोई सेशन प्रकार नहीं मिला। शुरू करने के लिए एक सेशन प्रकार बनाएं।"
-  },
-  "dialogs": {
-    "deleteTitle": "हटाने की पुष्टि करें",
-    "deleteDescription": "क्या आप वाकई इस सेशन प्रकार को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
-    "deleting": "हटाया जा रहा है...",
-    "delete": "हटाएँ"
-  },
-  "toast": {
-    "updateSuccess": "सेशन प्रकार सफलतापूर्वक अपडेट हुआ",
-    "createSuccess": "सेशन प्रकार सफलतापूर्वक बनाया गया",
-    "saveFailed": "सेशन प्रकार सहेजने में विफल",
-    "deleteSuccess": "सेशन प्रकार सफलतापूर्वक हटाया गया",
-    "deleteFailed": "सेशन प्रकार हटाने में विफल",
-    "activatedSuccess": "सेशन प्रकार सफलतापूर्वक सक्रिय हुआ",
-    "deactivatedSuccess": "सेशन प्रकार सफलतापूर्वक निष्क्रिय हुआ"
-  }
+    "form": {
+      "centreLabel": "सेंटर",
+      "centrePlaceholder": "सेंटर चुनें",
+      "centreHelperText": "सेशन प्रकार चुने गए सेंटर के लिए बनाया जाएगा। सेंटर एडमिन केवल अपना सेंटर देखते हैं; ऑर्ग एडमिन सभी देखते हैं।",
+      "requiredAsterisk": "*",
+      "nameLabel": "सेशन प्रकार नाम",
+      "namePlaceholder": "सेशन प्रकार का नाम दर्ज करें",
+      "nameRequired": "सेशन प्रकार नाम आवश्यक है",
+      "offTheJobLabel": "ऑफ द जॉब",
+      "activeLabel": "सक्रिय",
+      "updating": "अपडेट हो रहा है...",
+      "creating": "बनाया जा रहा है...",
+      "selectCentre": "सेंटर चुनें",
+      "update": "अपडेट",
+      "create": "बनाएं"
+    },
+    "table": {
+      "title": "सेशन प्रकार",
+      "count": "{count} सेशन प्रकार",
+      "addButton": "सेशन प्रकार जोड़ें",
+      "headers": {
+        "order": "क्रम",
+        "name": "नाम",
+        "offTheJob": "ऑफ द जॉब",
+        "active": "सक्रिय",
+        "actions": "क्रियाएँ"
+      },
+      "emptyDescription": "कोई सेशन प्रकार नहीं मिला। शुरू करने के लिए एक सेशन प्रकार बनाएं।"
+    },
+    "dialogs": {
+      "deleteTitle": "हटाने की पुष्टि करें",
+      "deleteDescription": "क्या आप वाकई इस सेशन प्रकार को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+      "deleting": "हटाया जा रहा है...",
+      "delete": "हटाएँ"
+    },
+    "toast": {
+      "updateSuccess": "सेशन प्रकार सफलतापूर्वक अपडेट हुआ",
+      "createSuccess": "सेशन प्रकार सफलतापूर्वक बनाया गया",
+      "saveFailed": "सेशन प्रकार सहेजने में विफल",
+      "deleteSuccess": "सेशन प्रकार सफलतापूर्वक हटाया गया",
+      "deleteFailed": "सेशन प्रकार हटाने में विफल",
+      "activatedSuccess": "सेशन प्रकार सफलतापूर्वक सक्रिय हुआ",
+      "deactivatedSuccess": "सेशन प्रकार सफलतापूर्वक निष्क्रिय हुआ"
+    }
   },
   "surveys": {
     "pageTitle": "सर्वेक्षण",
@@ -3032,47 +3032,47 @@
     }
   },
   "acknowledgeMessage": {
-  "pageTitle": "संदेश स्वीकार करें",
-  "pageSubtitle": "लर्नर्स के लिए स्वीकृति संदेश बनाएं और प्रबंधित करें",
-  "form": {
-  "message": "संदेश",
-  "messagePlaceholder": "अपना स्वीकृति संदेश यहाँ लिखें...",
-  "messageRequired": "संदेश आवश्यक है",
-  "messageMaxLength": "संदेश अधिकतम 1000 अक्षरों का हो सकता है",
-  "charactersCount": "{count} / 1000 अक्षर",
-  "uploadFile": "फ़ाइल अपलोड करें",
-  "dragDrop": "अपनी फ़ाइलें यहाँ खींचकर छोड़ें या",
-  "browse": "ब्राउज़ करें",
-  "maxFileSize": "अधिकतम 10MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
-  "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए",
-  "fileTypeError": "केवल PDF, CSV, DOC, DOCX फ़ाइलें अनुमत हैं",
-  "remove": "हटाएँ",
-  "viewCurrentFile": "वर्तमान फ़ाइल देखें",
-  "clear": "साफ़ करें",
-  "clearAll": "सभी लर्नर स्वीकृति साफ़ करें",
-  "clearing": "साफ़ किया जा रहा है...",
-  "save": "सहेजें",
-  "saving": "सहेजा जा रहा है...",
-  "required": "*"
-  },
-  "dialogs": {
-  "deleteTitle": "स्वीकृति हटाएँ",
-  "deleteDescription": "क्या आप वाकई इस स्वीकृति को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
-  "clearAllTitle": "सभी लर्नर स्वीकृतियाँ साफ़ करें",
-  "clearAllDescription": "क्या आप वाकई सभी लर्नर स्वीकृतियाँ साफ़ करना चाहते हैं? यह क्रिया सभी लर्नर्स से सभी स्वीकृतियाँ हटा देगी और वापस नहीं की जा सकती।",
-  "cancel": "रद्द करें",
-  "delete": "हटाएँ",
-  "clearAll": "सब साफ़ करें"
-  },
-  "toast": {
-  "messageUpdated": "संदेश सफलतापूर्वक अपडेट किया गया!",
-  "messageAcknowledged": "संदेश सफलतापूर्वक स्वीकार किया गया!",
-  "acknowledgementDeleted": "स्वीकृति सफलतापूर्वक हटाई गई!",
-  "allCleared": "सभी लर्नर स्वीकृतियाँ सफलतापूर्वक साफ़ की गईं!",
-  "saveFailed": "संदेश स्वीकार करने में विफल। कृपया पुनः प्रयास करें।",
-  "deleteFailed": "स्वीकृति हटाने में विफल। कृपया पुनः प्रयास करें।",
-  "clearFailed": "स्वीकृतियाँ साफ़ करने में विफल। कृपया पुनः प्रयास करें।"
-  }
+    "pageTitle": "संदेश स्वीकार करें",
+    "pageSubtitle": "लर्नर्स के लिए स्वीकृति संदेश बनाएं और प्रबंधित करें",
+    "form": {
+      "message": "संदेश",
+      "messagePlaceholder": "अपना स्वीकृति संदेश यहाँ लिखें...",
+      "messageRequired": "संदेश आवश्यक है",
+      "messageMaxLength": "संदेश अधिकतम 1000 अक्षरों का हो सकता है",
+      "charactersCount": "{count} / 1000 अक्षर",
+      "uploadFile": "फ़ाइल अपलोड करें",
+      "dragDrop": "अपनी फ़ाइलें यहाँ खींचकर छोड़ें या",
+      "browse": "ब्राउज़ करें",
+      "maxFileSize": "अधिकतम 10MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए",
+      "fileTypeError": "केवल PDF, CSV, DOC, DOCX फ़ाइलें अनुमत हैं",
+      "remove": "हटाएँ",
+      "viewCurrentFile": "वर्तमान फ़ाइल देखें",
+      "clear": "साफ़ करें",
+      "clearAll": "सभी लर्नर स्वीकृति साफ़ करें",
+      "clearing": "साफ़ किया जा रहा है...",
+      "save": "सहेजें",
+      "saving": "सहेजा जा रहा है...",
+      "required": "*"
+    },
+    "dialogs": {
+      "deleteTitle": "स्वीकृति हटाएँ",
+      "deleteDescription": "क्या आप वाकई इस स्वीकृति को हटाना चाहते हैं? यह क्रिया वापस नहीं की जा सकती।",
+      "clearAllTitle": "सभी लर्नर स्वीकृतियाँ साफ़ करें",
+      "clearAllDescription": "क्या आप वाकई सभी लर्नर स्वीकृतियाँ साफ़ करना चाहते हैं? यह क्रिया सभी लर्नर्स से सभी स्वीकृतियाँ हटा देगी और वापस नहीं की जा सकती।",
+      "cancel": "रद्द करें",
+      "delete": "हटाएँ",
+      "clearAll": "सब साफ़ करें"
+    },
+    "toast": {
+      "messageUpdated": "संदेश सफलतापूर्वक अपडेट किया गया!",
+      "messageAcknowledged": "संदेश सफलतापूर्वक स्वीकार किया गया!",
+      "acknowledgementDeleted": "स्वीकृति सफलतापूर्वक हटाई गई!",
+      "allCleared": "सभी लर्नर स्वीकृतियाँ सफलतापूर्वक साफ़ की गईं!",
+      "saveFailed": "संदेश स्वीकार करने में विफल। कृपया पुनः प्रयास करें।",
+      "deleteFailed": "स्वीकृति हटाने में विफल। कृपया पुनः प्रयास करें।",
+      "clearFailed": "स्वीकृतियाँ साफ़ करने में विफल। कृपया पुनः प्रयास करें।"
+    }
   },
   "learnerFormSubmit": {
     "page": {
@@ -3861,32 +3861,32 @@
     }
   },
   "safeguarding": {
-  "pageTitle": "सुरक्षा संपर्क प्रबंधन",
-  "pageSubtitle": "सुरक्षा अधिकारी के संपर्क विवरण और अतिरिक्त जानकारी प्रबंधित करें",
-  "form": {
-  "editingExisting": "मौजूदा संपर्क को संपादित किया जा रहा है",
-  "contactInformation": "संपर्क जानकारी",
-  "telephoneNumber": "टेलीफोन नंबर",
-  "telephonePlaceholder": "+44 20 1234 5678",
-  "mobileNumber": "मोबाइल नंबर",
-  "mobilePlaceholder": "+44 7700 900123",
-  "emailAddress": "ईमेल पता",
-  "emailPlaceholder": "safeguarding@example.com",
-  "emailRequired": "ईमेल पता आवश्यक है",
-  "emailInvalid": "कृपया मान्य ईमेल पता दर्ज करें",
-  "additionalInformation": "अतिरिक्त जानकारी",
-  "additionalDetails": "अतिरिक्त विवरण",
-  "additionalDetailsPlaceholder": "तत्काल सुरक्षा संबंधी चिंताओं के लिए 24/7 उपलब्ध",
-  "reset": "रीसेट",
-  "saveContact": "संपर्क सहेजें",
-  "saving": "सहेजा जा रहा है...",
-  "required": "*"
-  },
-  "toast": {
-  "contactSaved": "सुरक्षा संपर्क सफलतापूर्वक सहेजा गया!",
-  "saveFailed": "डेटा सहेजने में त्रुटि। कृपया पुनः प्रयास करें।",
-  "loadFailed": "सुरक्षा संपर्क लोड करने में विफल। कृपया पुनः प्रयास करें।"
-  }
+    "pageTitle": "सुरक्षा संपर्क प्रबंधन",
+    "pageSubtitle": "सुरक्षा अधिकारी के संपर्क विवरण और अतिरिक्त जानकारी प्रबंधित करें",
+    "form": {
+      "editingExisting": "मौजूदा संपर्क को संपादित किया जा रहा है",
+      "contactInformation": "संपर्क जानकारी",
+      "telephoneNumber": "टेलीफोन नंबर",
+      "telephonePlaceholder": "+44 20 1234 5678",
+      "mobileNumber": "मोबाइल नंबर",
+      "mobilePlaceholder": "+44 7700 900123",
+      "emailAddress": "ईमेल पता",
+      "emailPlaceholder": "safeguarding@example.com",
+      "emailRequired": "ईमेल पता आवश्यक है",
+      "emailInvalid": "कृपया मान्य ईमेल पता दर्ज करें",
+      "additionalInformation": "अतिरिक्त जानकारी",
+      "additionalDetails": "अतिरिक्त विवरण",
+      "additionalDetailsPlaceholder": "तत्काल सुरक्षा संबंधी चिंताओं के लिए 24/7 उपलब्ध",
+      "reset": "रीसेट",
+      "saveContact": "संपर्क सहेजें",
+      "saving": "सहेजा जा रहा है...",
+      "required": "*"
+    },
+    "toast": {
+      "contactSaved": "सुरक्षा संपर्क सफलतापूर्वक सहेजा गया!",
+      "saveFailed": "डेटा सहेजने में त्रुटि। कृपया पुनः प्रयास करें।",
+      "loadFailed": "सुरक्षा संपर्क लोड करने में विफल। कृपया पुनः प्रयास करें।"
+    }
   },
   "progressExclusion": {
     "pageTitle": "समग्र प्रोग्रेस से बाहर रखें",
@@ -4224,7 +4224,9 @@
         "assessmentCriteria": "मूल्यांकन मानदंड",
         "assessmentCriteriaCount": "मूल्यांकन मानदंड ({count})",
         "addAssessmentCriteria": "मूल्यांकन मानदंड जोड़ें",
-        "placeholderTopicTitle": "विषय शीर्षक"
+        "placeholderTopicTitle": "विषय शीर्षक",
+        "srNo": "क्रमांक",
+        "placeholderSrNo": "क्रमांक"
       },
       "standard": {
         "modulesTitle": "मॉड्यूल",
@@ -4258,7 +4260,9 @@
         "placeholderTopicTitle": "विषय शीर्षक",
         "typeBehaviour": "व्यवहार",
         "typeKnowledge": "ज्ञान",
-        "typeSkills": "कौशल"
+        "typeSkills": "कौशल",
+        "srNo": "क्रमांक",
+        "placeholderSrNo": "क्रमांक"
       }
     }
   },
@@ -6315,17 +6319,53 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    },
+    "LO": {
+      "label": "LO",
+      "title": "Learning Outcome"
+    }
   }
 }

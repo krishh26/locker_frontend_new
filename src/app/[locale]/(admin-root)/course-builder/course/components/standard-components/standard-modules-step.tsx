@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * StandardModulesStep Component
- * 
- * Step component for managing modules for Standard courses
- * Standard: Modules with topics (subUnits)
- */
 
 "use client";
 
@@ -38,13 +31,11 @@ interface StandardModulesStepProps {
   courseId?: string | number | null;
   courseCoreType: CourseCoreType;
   control: Control<CourseFormData>;
-  setValue: (name: string, value: any) => void;
   errors?: FieldErrors<CourseFormData>;
 }
 
 export function StandardModulesStep({
   control,
-  setValue,
   errors,
 }: StandardModulesStepProps) {
   const t = useTranslations("courseBuilder");
@@ -125,7 +116,7 @@ export function StandardModulesStep({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[50px]"></TableHead>
+                  <TableHead className="w-12.5"></TableHead>
                   <TableHead>
                     {t("course.standard.moduleTitle")} <span className="text-destructive">*</span>
                   </TableHead>
@@ -138,7 +129,7 @@ export function StandardModulesStep({
                   {/* <TableHead>{t("course.standard.deliveryMethod")}</TableHead>
                   <TableHead>{t("course.standard.otjHours")}</TableHead>
                   <TableHead>{t("course.standard.deliveryLead")}</TableHead> */}
-                  <TableHead className="w-[100px] text-center">{t("course.gateway.actions")}</TableHead>
+                  <TableHead className="w-25 text-center">{t("course.gateway.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -171,7 +162,7 @@ export function StandardModulesStep({
                                 <Input
                                   {...formField}
                                   placeholder={t("course.standard.placeholderModuleTitle")}
-                                  className={cn("min-w-[150px]", error && "border-destructive")}
+                                  className={cn("min-w-37.5", error && "border-destructive")}
                                 />
                                 {error && (
                                   <p className="text-xs text-destructive">{error.message}</p>
@@ -206,7 +197,7 @@ export function StandardModulesStep({
                             <Input
                               {...formField}
                               placeholder={t("course.standard.placeholderDescription")}
-                              className="min-w-[150px]"
+                              className="min-w-37.5"
                             />
                             )}
                           />
@@ -220,7 +211,7 @@ export function StandardModulesStep({
                                 value={formField.value === true || formField.value === undefined ? "true" : "false"}
                                 onValueChange={(value) => formField.onChange(value === "true")}
                               >
-                                <SelectTrigger className="w-[100px]">
+                                <SelectTrigger className="w-25">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -240,7 +231,7 @@ export function StandardModulesStep({
                               {...formField}
                               type="text"
                               placeholder={t("course.standard.placeholderAuto")}
-                              className="w-[80px]"
+                              className="w-20"
                             />
                             )}
                           />
@@ -304,8 +295,6 @@ export function StandardModulesStep({
                               <StandardTopicsForm
                                 control={control}
                                 moduleIndex={index}
-                                topics={(units?.[index] as any)?.subUnit || []}
-                                setValue={setValue}
                               />
                             </div>
                           </TableCell>

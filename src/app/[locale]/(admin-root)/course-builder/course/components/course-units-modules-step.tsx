@@ -65,7 +65,6 @@ export function CourseUnitsModulesStep({
         courseId={courseId}
         courseCoreType={courseCoreType}
         control={control}
-        setValue={setValue}
         errors={errors}
       />
     </div>

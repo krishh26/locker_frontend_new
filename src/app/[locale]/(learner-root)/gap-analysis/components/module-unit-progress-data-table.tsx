@@ -58,6 +58,7 @@ import { useTranslations } from "next-intl";
 
 export type SubUnitRow = {
   id: string | number;
+  srNo: string;
   subTitle: string;
   learnerMap: boolean;
   trainerMap: boolean;
@@ -218,10 +219,12 @@ function buildGapRow(
   id: string | number,
   subTitle: string,
   flags: { learnerMap: boolean; trainerMap: boolean },
+  srNo: string,
   comment: string,
 ): SubUnitRow {
   return {
     id,
+    srNo,
     subTitle,
     learnerMap: flags.learnerMap,
     trainerMap: flags.trainerMap,
@@ -236,32 +239,44 @@ function collectQualificationGapRows(
   const rows: SubUnitRow[] = [];
   const subUnits = unit.subUnit ?? [];
 
-  for (const subRaw of subUnits) {
+  for (let subIndex = 0; subIndex < subUnits.length; subIndex++) {
+    const subRaw = subUnits[subIndex];
     const sub = subRaw as MappingSource & {
       id?: string | number;
       title?: string;
       subTitle?: string;
       comment?: string;
       code?: string;
+      showOrder?: number;
       topics?: Array<
         MappingSource & {
           id?: string | number;
           title?: string;
           comment?: string;
           code?: string;
+          showOrder?: number;
         }
       >;
     };
 
+    const loOrder =
+      Number(sub.showOrder) > 0 ? Number(sub.showOrder) : subIndex + 1;
+
     if (Array.isArray(sub.topics) && sub.topics.length > 0) {
-      for (const topic of sub.topics) {
+      for (let topicIndex = 0; topicIndex < sub.topics.length; topicIndex++) {
+        const topic = sub.topics[topicIndex];
+        const topicOrder =
+          Number(topic.showOrder) > 0 ? Number(topic.showOrder) : topicIndex + 1;
+        const codeFromApi = String(topic.code ?? "").trim();
+        const srNo = codeFromApi || `${loOrder}.${topicOrder}`;
         const flags = readMappingFlags(topic, sub);
         rows.push(
           buildGapRow(
             `${String(sub.id ?? "sub")}-${String(topic.id ?? rows.length)}`,
             String(topic.title ?? ""),
             flags,
-            String(topic.comment ?? topic.code ?? ""),
+            srNo,
+            String(topic.comment ?? ""),
           ),
         );
       }
@@ -269,12 +284,14 @@ function collectQualificationGapRows(
     }
 
     const title = String(sub.title ?? sub.subTitle ?? "");
+    const codeFromApi = String(sub.code ?? "").trim();
     rows.push(
       buildGapRow(
         sub.id ?? rows.length,
         title,
         readMappingFlags(sub),
-        String(sub.comment ?? sub.code ?? ""),
+        codeFromApi || String(loOrder),
+        String(sub.comment ?? ""),
       ),
     );
   }
@@ -333,10 +350,11 @@ function collectStandardGapRows(
         const learnerMap = Boolean(sub.learnerMap ?? sub.learner_map ?? false);
         const trainerMap = Boolean(sub.trainerMap ?? sub.trainer_map ?? false);
         const title = String(sub.title ?? sub.subTitle ?? "");
-        const code = String(sub.code ?? "");
+        const code = String(sub.code ?? "").trim();
         const subId = `${String(unit.id ?? "u")}-${String(sub.id ?? sub.code ?? rows.length)}`;
         rows.push({
           id: subId,
+          srNo: code,
           subTitle: title,
           learnerMap,
           trainerMap,
@@ -356,6 +374,7 @@ function collectStandardGapRows(
           item.evidenceBoxes?.some((box) => box.trainerMap) || false;
         rows.push({
           id: item.id,
+          srNo: String(item.code ?? "").trim(),
           subTitle: item.title,
           learnerMap: hasLearnerMap,
           trainerMap: hasTrainerMap,
@@ -381,6 +400,7 @@ function collectStandardGapRows(
         false;
       rows.push({
         id: unit.id ?? rows.length,
+        srNo: String(unit.code ?? "").trim(),
         subTitle: String(unit.title ?? ""),
         learnerMap: hasLearnerMap,
         trainerMap: hasTrainerMap,
@@ -402,6 +422,7 @@ function filterSubUnitRows(
   return rows.filter(
     (row) =>
       row.subTitle.toLowerCase().includes(filter) ||
+      row.srNo.toLowerCase().includes(filter) ||
       row.comment.toLowerCase().includes(filter),
   );
 }
@@ -489,7 +510,11 @@ function GapSubUnitTable({
                   <TableHead
                     key={header.id}
                     className={
-                      header.column.id === "subTitle" ? "w-[55%]" : undefined
+                      header.column.id === "subTitle"
+                        ? "w-[50%]"
+                        : header.column.id === "srNo"
+                          ? "w-24"
+                          : undefined
                     }
                   >
                     {header.isPlaceholder
@@ -649,6 +674,18 @@ export function ModuleUnitProgressDataTable() {
   const columns: ColumnDef<SubUnitRow>[] = useMemo(() => {
     const baseColumns: ColumnDef<SubUnitRow>[] = [
       {
+        accessorKey: "srNo",
+        header: t("table.columns.srNo"),
+        cell: ({ row }: { row: Row<SubUnitRow> }) => {
+          const srNo = String(row.getValue("srNo") ?? "").trim();
+          return (
+            <div className="text-start font-medium tabular-nums">
+              {srNo || "-"}
+            </div>
+          );
+        },
+      },
+      {
         accessorKey: "subTitle",
         header: isStandardCourse
           ? t("table.columns.title")
@@ -773,6 +810,7 @@ export function ModuleUnitProgressDataTable() {
   };
 
   const mapRowToPdfExport = (row: SubUnitRow) => ({
+    srNo: row.srNo,
     subTitle: row.subTitle,
     learnerMap: row.learnerMap ? t("table.yes") : t("table.no"),
     trainerMap: row.trainerMap ? t("table.yes") : t("table.no"),
@@ -799,12 +837,14 @@ export function ModuleUnitProgressDataTable() {
 
     const headers = isStandardCourse
       ? [
+          t("table.columns.srNo"),
           t("table.columns.title"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
         ]
       : [
+          t("table.columns.srNo"),
           t("table.columns.subUnitTitle"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
@@ -815,12 +855,14 @@ export function ModuleUnitProgressDataTable() {
     const rows = exportRows.map((row) =>
       isStandardCourse
         ? [
+            row.srNo,
             row.subTitle,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
             gapStatusLabel(row.gap),
           ]
         : [
+            row.srNo,
             row.subTitle,
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
@@ -847,12 +889,14 @@ export function ModuleUnitProgressDataTable() {
   const handleExportPdf = () => {
     const headers = isStandardCourse
       ? [
+          t("table.columns.srNo"),
           t("table.columns.title"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
         ]
       : [
+          t("table.columns.srNo"),
           t("table.columns.subUnitTitle"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),

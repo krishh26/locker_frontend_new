@@ -2713,6 +2713,7 @@
       "columns": {
         "title": "标题",
         "subUnitTitle": "子单元标题",
+        "srNo": "序号",
         "code": "代码",
         "learnerMap": "学员图",
         "trainerMap": "培训师图",

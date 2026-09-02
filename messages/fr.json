@@ -2807,6 +2807,7 @@
       "columns": {
         "title": "Titre",
         "subUnitTitle": "Titre sous-unité",
+        "srNo": "N° sr.",
         "code": "Code",
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",

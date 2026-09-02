@@ -2597,6 +2597,7 @@
       "columns": {
         "title": "Título",
         "subUnitTitle": "Título subunidad",
+        "srNo": "Nº sr.",
         "code": "Código",
         "learnerMap": "Mapa aprendiz",
         "trainerMap": "Mapa formador",

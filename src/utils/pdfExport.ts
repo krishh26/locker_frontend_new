@@ -34,6 +34,7 @@ export interface ExportTableToPdfOptions {
 export type GapAnalysisPdfGap = "complete" | "partial" | "none"
 
 export interface GapAnalysisPdfRow {
+  srNo: string
   subTitle: string
   learnerMap: string
   trainerMap: string
@@ -160,7 +161,7 @@ export async function exportGapAnalysisToPdf(
   const dateStr = new Date().toLocaleDateString()
   const defaultFilename = `${title.replace(/\s+/g, "-")}_${new Date().toISOString().split("T")[0]}.pdf`
   const finalFilename = filename ?? defaultFilename
-  const gapColumnIndex = 3
+  const gapColumnIndex = 4
 
   type PdfRowMeta = { gap?: GapAnalysisPdfGap; isUnitHeader?: boolean }
   const body: unknown[][] = []
@@ -187,12 +188,14 @@ export async function exportGapAnalysisToPdf(
       body.push(
         isStandardCourse
           ? [
+              row.srNo,
               row.subTitle,
               row.learnerMap,
               row.trainerMap,
               "",
             ]
           : [
+              row.srNo,
               row.subTitle,
               row.learnerMap,
               row.trainerMap,
@@ -228,7 +231,8 @@ export async function exportGapAnalysisToPdf(
     headStyles: { fillColor: [71, 85, 105] },
     columnStyles: {
       [gapColumnIndex]: { cellWidth: 24, halign: "center" },
-      ...(isStandardCourse ? { 0: { cellWidth: 58 } } : { 0: { cellWidth: 72 } }),
+      0: { cellWidth: 22 },
+      ...(isStandardCourse ? { 1: { cellWidth: 58 } } : { 1: { cellWidth: 72 } }),
     },
     didDrawCell: (data: {
       section: string

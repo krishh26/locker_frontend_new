@@ -2632,7 +2632,8 @@
         "status": "Status",
         "createdDate": "Created Date",
         "view": "View",
-        "actions": "Actions"
+        "actions": "Actions",
+        "unitSequenceLabel": "Unit {number}"
       },
       "status": {
         "loading": "Loading evidence library...",
@@ -3095,6 +3096,7 @@
       "columns": {
         "title": "Title",
         "subUnitTitle": "Sub Unit Title",
+        "srNo": "Sr No.",
         "code": "Code",
         "learnerMap": "Learner Map",
         "trainerMap": "Trainer Map",

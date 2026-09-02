@@ -2155,6 +2155,7 @@
       "columns": {
         "title": "Titolo",
         "subUnitTitle": "Titolo sotto-unitaria",
+        "srNo": "N. sr.",
         "code": "Codice",
         "learnerMap": "Mappa discente",
         "trainerMap": "Mappa formatore",

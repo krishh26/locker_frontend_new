@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "Willkommen",
     "dashboard": "Dashboard",
@@ -2197,7 +2197,7 @@
       "columns": {
         "title": "Titel",
         "subUnitTitle": "Untereinheit-Titel",
-        "srNo": "Sr.-Nr.",
+        "srNo": "Kriterien",
         "code": "Code",
         "learnerMap": "Lerner-Karte",
         "trainerMap": "Trainer-Karte",
@@ -3500,8 +3500,8 @@
         "assessmentCriteriaCount": "Bewertungskriterien ({count})",
         "addAssessmentCriteria": "Bewertungskriterium hinzufügen",
         "placeholderTopicTitle": "Thementitel",
-        "srNo": "Nr.",
-        "placeholderSrNo": "Nr."
+        "srNo": "Kriterien",
+        "placeholderSrNo": "Kriterien"
       },
       "standard": {
         "modulesTitle": "Module",
@@ -3536,8 +3536,8 @@
         "typeBehaviour": "Verhalten",
         "typeKnowledge": "Wissen",
         "typeSkills": "Fertigkeiten",
-        "srNo": "Nr.",
-        "placeholderSrNo": "Nr."
+        "srNo": "Kriterien",
+        "placeholderSrNo": "Kriterien"
       }
     }
   },

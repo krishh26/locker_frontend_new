@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "Bienvenido",
     "dashboard": "Panel de control",
@@ -2597,7 +2597,7 @@
       "columns": {
         "title": "Título",
         "subUnitTitle": "Título subunidad",
-        "srNo": "Nº sr.",
+        "srNo": "Criterios",
         "code": "Código",
         "learnerMap": "Mapa aprendiz",
         "trainerMap": "Mapa formador",
@@ -4239,11 +4239,11 @@
         "addLearningOutcome": "Añadir resultado de aprendizaje",
         "type": "Tipo",
         "code": "Código",
-        "srNo": "N.º",
+        "srNo": "Criterios",
         "showOrder": "Orden",
         "title": "Título",
         "placeholderCode": "Código",
-        "placeholderSrNo": "N.º",
+        "placeholderSrNo": "Criterios",
         "placeholderAuto": "Auto",
         "placeholderCriterionTitle": "Título del criterio",
         "typeToDo": "Por hacer",
@@ -4281,9 +4281,9 @@
         "assessmentCriteriaCount": "Criterios de evaluación ({count})",
         "addAssessmentCriteria": "Añadir criterio de evaluación",
         "type": "Tipo",
-        "srNo": "N.º",
+        "srNo": "Criterios",
         "title": "Título",
-        "placeholderSrNo": "N.º",
+        "placeholderSrNo": "Criterios",
         "placeholderSelectType": "Seleccionar tipo",
         "placeholderTopicTitle": "Título del tema",
         "typeBehaviour": "Comportamiento",

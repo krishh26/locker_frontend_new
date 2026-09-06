@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "欢迎",
     "dashboard": "仪表板",
@@ -2713,7 +2713,7 @@
       "columns": {
         "title": "标题",
         "subUnitTitle": "子单元标题",
-        "srNo": "序号",
+        "srNo": "标准",
         "code": "代码",
         "learnerMap": "学员图",
         "trainerMap": "培训师图",
@@ -4367,8 +4367,8 @@
         "assessmentCriteriaCount": "评估标准（{count}）",
         "addAssessmentCriteria": "添加评估标准",
         "placeholderTopicTitle": "主题标题",
-        "srNo": "序号",
-        "placeholderSrNo": "序号"
+        "srNo": "标准",
+        "placeholderSrNo": "标准"
       },
       "standard": {
         "modulesTitle": "模块",
@@ -4403,8 +4403,8 @@
         "typeBehaviour": "行为",
         "typeKnowledge": "知识",
         "typeSkills": "技能",
-        "srNo": "序号",
-        "placeholderSrNo": "序号"
+        "srNo": "标准",
+        "placeholderSrNo": "标准"
       }
     }
   },

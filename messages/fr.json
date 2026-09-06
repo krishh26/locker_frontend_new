@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "Bienvenue",
     "dashboard": "Tableau de bord",
@@ -2807,7 +2807,7 @@
       "columns": {
         "title": "Titre",
         "subUnitTitle": "Titre sous-unité",
-        "srNo": "N° sr.",
+        "srNo": "Critères",
         "code": "Code",
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",
@@ -4461,8 +4461,8 @@
         "assessmentCriteriaCount": "Critères d'évaluation ({count})",
         "addAssessmentCriteria": "Ajouter un critère d'évaluation",
         "placeholderTopicTitle": "Titre du thème",
-        "srNo": "N°",
-        "placeholderSrNo": "N°"
+        "srNo": "Critères",
+        "placeholderSrNo": "Critères"
       },
       "standard": {
         "modulesTitle": "Modules",
@@ -4497,8 +4497,8 @@
         "typeBehaviour": "Comportement",
         "typeKnowledge": "Connaissance",
         "typeSkills": "Compétences",
-        "srNo": "N°",
-        "placeholderSrNo": "N°"
+        "srNo": "Critères",
+        "placeholderSrNo": "Critères"
       }
     }
   },

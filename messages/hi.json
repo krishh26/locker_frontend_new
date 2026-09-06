@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "स्वागत है",
     "dashboard": "डैशबोर्ड",
@@ -2765,7 +2765,7 @@
       "columns": {
         "title": "शीर्षक",
         "subUnitTitle": "उप-इकाई शीर्षक",
-        "srNo": "क्रम सं.",
+        "srNo": "मानदंड",
         "code": "कोड",
         "learnerMap": "शिक्षार्थी मानचित्र",
         "trainerMap": "प्रशिक्षक मानचित्र",
@@ -4226,8 +4226,8 @@
         "assessmentCriteriaCount": "मूल्यांकन मानदंड ({count})",
         "addAssessmentCriteria": "मूल्यांकन मानदंड जोड़ें",
         "placeholderTopicTitle": "विषय शीर्षक",
-        "srNo": "क्रमांक",
-        "placeholderSrNo": "क्रमांक"
+        "srNo": "मानदंड",
+        "placeholderSrNo": "मानदंड"
       },
       "standard": {
         "modulesTitle": "मॉड्यूल",
@@ -4262,8 +4262,8 @@
         "typeBehaviour": "व्यवहार",
         "typeKnowledge": "ज्ञान",
         "typeSkills": "कौशल",
-        "srNo": "क्रमांक",
-        "placeholderSrNo": "क्रमांक"
+        "srNo": "मानदंड",
+        "placeholderSrNo": "मानदंड"
       }
     }
   },

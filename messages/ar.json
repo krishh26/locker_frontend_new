@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "مرحباً",
     "dashboard": "لوحة التحكم",
@@ -2800,7 +2800,7 @@
       "columns": {
         "title": "العنوان",
         "subUnitTitle": "عنوان الوحدة الفرعية",
-        "srNo": "رقم تسلسلي",
+        "srNo": "المعايير",
         "code": "الرمز",
         "learnerMap": "خريطة المتعلم",
         "trainerMap": "خريطة المدرب",
@@ -4149,8 +4149,8 @@
         "assessmentCriteriaCount": "معايير التقييم ({count})",
         "addAssessmentCriteria": "إضافة معيار تقييم",
         "placeholderTopicTitle": "عنوان الموضوع",
-        "srNo": "الرقم التسلسلي",
-        "placeholderSrNo": "الرقم التسلسلي"
+        "srNo": "المعايير",
+        "placeholderSrNo": "المعايير"
       },
       "standard": {
         "modulesTitle": "الوحدات",
@@ -4185,8 +4185,8 @@
         "typeBehaviour": "سلوك",
         "typeKnowledge": "معرفة",
         "typeSkills": "مهارات",
-        "srNo": "الرقم التسلسلي",
-        "placeholderSrNo": "الرقم التسلسلي"
+        "srNo": "المعايير",
+        "placeholderSrNo": "المعايير"
       }
     }
   },

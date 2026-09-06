@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "Welcome",
     "dashboard": "Dashboard",
@@ -3096,7 +3096,7 @@
       "columns": {
         "title": "Title",
         "subUnitTitle": "Sub Unit Title",
-        "srNo": "Sr No.",
+        "srNo": "Criteria",
         "code": "Code",
         "learnerMap": "Learner Map",
         "trainerMap": "Trainer Map",
@@ -4735,11 +4735,11 @@
         "addLearningOutcome": "Add Learning Outcome",
         "type": "Type",
         "code": "Code",
-        "srNo": "Sr No.",
+        "srNo": "Criteria",
         "showOrder": "Show Order",
         "title": "Title",
         "placeholderCode": "Code",
-        "placeholderSrNo": "Sr No.",
+        "placeholderSrNo": "Criteria",
         "placeholderAuto": "Auto",
         "placeholderCriterionTitle": "Criterion title",
         "typeToDo": "To Do",
@@ -4777,9 +4777,9 @@
         "assessmentCriteriaCount": "Assessment Criteria ({count})",
         "addAssessmentCriteria": "Add Assessment Criteria",
         "type": "Type",
-        "srNo": "Sr No.",
+        "srNo": "Criteria",
         "title": "Title",
-        "placeholderSrNo": "Sr No.",
+        "placeholderSrNo": "Criteria",
         "placeholderSelectType": "Select type",
         "placeholderTopicTitle": "Topic title",
         "typeBehaviour": "Behaviour",

@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "welcome": "Bem-vindo",
     "dashboard": "Painel",
@@ -2807,7 +2807,7 @@
       "columns": {
         "title": "Título",
         "subUnitTitle": "Título subunidade",
-        "srNo": "Nº sr.",
+        "srNo": "Critérios",
         "code": "Código",
         "learnerMap": "Mapa formando",
         "trainerMap": "Mapa formador",
@@ -4461,8 +4461,8 @@
         "assessmentCriteriaCount": "Critérios de avaliação ({count})",
         "addAssessmentCriteria": "Adicionar critério de avaliação",
         "placeholderTopicTitle": "Título do tópico",
-        "srNo": "N.º",
-        "placeholderSrNo": "N.º"
+        "srNo": "Critérios",
+        "placeholderSrNo": "Critérios"
       },
       "standard": {
         "modulesTitle": "Módulos",
@@ -4497,8 +4497,8 @@
         "typeBehaviour": "Comportamento",
         "typeKnowledge": "Conhecimento",
         "typeSkills": "Competências",
-        "srNo": "N.º",
-        "placeholderSrNo": "N.º"
+        "srNo": "Critérios",
+        "placeholderSrNo": "Critérios"
       }
     }
   },

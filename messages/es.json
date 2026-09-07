@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "Bienvenido",
     "dashboard": "Panel de control",
@@ -4122,6 +4122,9 @@
       "next": "Siguiente",
       "submit": "Enviar",
       "saving": "Guardando...",
+      "autosaving": "Guardando borrador...",
+      "autosaved": "Borrador guardado",
+      "autosaveFailed": "No se pudo guardar el borrador. Los cambios se mantienen localmente.",
       "toast": {
         "fillRequired": "Complete todos los campos obligatorios.",
         "orgRequired": "La organización es obligatoria al crear un curso.",

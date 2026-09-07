@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "Welcome",
     "dashboard": "Dashboard",
@@ -4618,6 +4618,9 @@
       "next": "Next",
       "submit": "Submit",
       "saving": "Saving...",
+      "autosaving": "Saving draft...",
+      "autosaved": "Draft saved",
+      "autosaveFailed": "Could not save draft. Changes are kept locally.",
       "toast": {
         "fillRequired": "Please fill in all required fields.",
         "orgRequired": "Organisation is required when creating a course.",

@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "欢迎",
     "dashboard": "仪表板",
@@ -4238,6 +4238,9 @@
       "next": "下一步",
       "submit": "提交",
       "saving": "正在保存...",
+      "autosaving": "正在保存草稿...",
+      "autosaved": "草稿已保存",
+      "autosaveFailed": "无法保存草稿。更改仍保留在本地。",
       "toast": {
         "fillRequired": "请填写所有必填字段。",
         "orgRequired": "创建课程时必须选择机构。",

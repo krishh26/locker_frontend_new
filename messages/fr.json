@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "Bienvenue",
     "dashboard": "Tableau de bord",
@@ -4332,6 +4332,9 @@
       "next": "Suivant",
       "submit": "Envoyer",
       "saving": "Enregistrement...",
+      "autosaving": "Enregistrement du brouillon...",
+      "autosaved": "Brouillon enregistré",
+      "autosaveFailed": "Impossible d'enregistrer le brouillon. Les modifications restent locales.",
       "toast": {
         "fillRequired": "Veuillez remplir tous les champs obligatoires.",
         "orgRequired": "L'organisation est obligatoire lors de la création d'un cours.",

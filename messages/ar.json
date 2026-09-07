@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "مرحباً",
     "dashboard": "لوحة التحكم",
@@ -4071,6 +4071,9 @@
       "deleteFailed": "فشل حذف الدورة"
     },
     "course": {
+      "autosaving": "جارٍ حفظ المسودة...",
+      "autosaved": "تم حفظ المسودة",
+      "autosaveFailed": "تعذر حفظ المسودة. تبقى التغييرات محليًا.",
       "form": {
         "courseName": "اسم الدورة",
         "courseNamePlaceholder": "أدخل اسم الدورة",

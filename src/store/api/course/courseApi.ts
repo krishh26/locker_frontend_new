@@ -76,21 +76,28 @@ export const courseApi = createApi({
         return response;
       },
     }),
-    updateCourse: builder.mutation<CourseUpdateResponse, { id: number; data: CourseFormData }>({
+    updateCourse: builder.mutation<
+      CourseUpdateResponse,
+      { id: number; data: CourseFormData; silent?: boolean }
+    >({
       query: ({ id, data }) => ({
         url: `/course/update/${id}`,
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Course", id: arg.id },
-        "Course",
-      ],
+      // Silent autosave: do not invalidate — refetch would reset the live form mid-edit.
+      // Manual update still refreshes list + detail caches.
+      invalidatesTags: (result, error, arg) =>
+        arg.silent
+          ? []
+          : [{ type: "Course", id: arg.id }, "Course"],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          // Clear courses cache after successful update
-          dispatch(clearCoursesList());
+          // Autosave must not thrash the courses list cache
+          if (!arg.silent) {
+            dispatch(clearCoursesList());
+          }
         } catch {
           // Do nothing on error, let the error be handled by the mutation
         }

@@ -47,6 +47,7 @@ import {
 import { cn } from "@/lib/utils";
 import { removeEmptyStrings } from "../constants/course-constants";
 import { isForbiddenError } from "@/store/api/baseQuery";
+import { useCourseAutosave } from "../hooks/use-course-autosave";
 
 interface CourseFormProps {
   courseType: CourseCoreType;
@@ -194,6 +195,7 @@ export function CourseForm({ courseType, courseId, initialStep, isViewMode = fal
     formState: { errors, isDirty },
     reset,
     watch,
+    getValues,
     setValue,
     trigger,
     clearErrors,
@@ -201,6 +203,33 @@ export function CourseForm({ courseType, courseId, initialStep, isViewMode = fal
 
   const courseCoreType = watch("course_core_type") || courseType;
   const courseTypeConfig = COURSE_TYPE_CONFIG[courseCoreType];
+
+  const autosaveEnabled =
+    Boolean(currentCourseId) &&
+    activeStep === 1 &&
+    !isViewMode &&
+    courseCoreType !== "Gateway";
+
+  const autosaveLabels = useMemo(
+    () => ({
+      autosaving: t("course.autosaving"),
+      autosaved: t("course.autosaved"),
+      autosaveFailed: t("course.autosaveFailed"),
+    }),
+    [t]
+  );
+
+  const { statusLabel: autosaveStatusLabel } = useCourseAutosave({
+    enabled: autosaveEnabled,
+    courseId: currentCourseId,
+    courseCoreType,
+    isDirty,
+    isManualSaving: isCreating || isUpdating,
+    getValues,
+    reset,
+    watch,
+    labels: autosaveLabels,
+  });
 
   // Load course data for edit mode
   useEffect(() => {
@@ -739,38 +768,46 @@ export function CourseForm({ courseType, courseId, initialStep, isViewMode = fal
                 : t("course.back")}
             </Button>
 
-            {isViewMode ? (
-              activeStep < steps.length - 1 && courseCoreType !== "Gateway" ? (
-                <Button
-                  type="button"
-                  onClick={() => {
-                    clearErrors();
-                    setActiveStep((prev) => prev + 1);
-                  }}
-                >
-                  {t("course.next")}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              ) : (
-                <span />
-              )
-            ) : (
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t("course.saving")}
-                  </>
-                ) : (
-                  <>
-                    {activeStep === steps.length - 1 || courseCoreType === "Gateway"
-                      ? t("course.submit")
-                      : t("course.next")}
+            <div className="flex items-center gap-3">
+              {autosaveEnabled && autosaveStatusLabel ? (
+                <span className="text-xs text-muted-foreground" aria-live="polite">
+                  {autosaveStatusLabel}
+                </span>
+              ) : null}
+
+              {isViewMode ? (
+                activeStep < steps.length - 1 && courseCoreType !== "Gateway" ? (
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      clearErrors();
+                      setActiveStep((prev) => prev + 1);
+                    }}
+                  >
+                    {t("course.next")}
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            )}
+                  </Button>
+                ) : (
+                  <span />
+                )
+              ) : (
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t("course.saving")}
+                    </>
+                  ) : (
+                    <>
+                      {activeStep === steps.length - 1 || courseCoreType === "Gateway"
+                        ? t("course.submit")
+                        : t("course.next")}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         </form>
       </Card>

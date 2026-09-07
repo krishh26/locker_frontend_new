@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "welcome": "Willkommen",
     "dashboard": "Dashboard",
@@ -3371,6 +3371,9 @@
       "next": "Weiter",
       "submit": "Senden",
       "saving": "Speichern...",
+      "autosaving": "Entwurf wird gespeichert...",
+      "autosaved": "Entwurf gespeichert",
+      "autosaveFailed": "Entwurf konnte nicht gespeichert werden. Änderungen bleiben lokal erhalten.",
       "toast": {
         "fillRequired": "Bitte füllen Sie alle Pflichtfelder aus.",
         "orgRequired": "Bei der Kurserstellung ist eine Organisation erforderlich.",

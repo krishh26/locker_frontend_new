@@ -3714,6 +3714,9 @@
       "next": "Avanti",
       "submit": "Invia",
       "saving": "Salvataggio...",
+      "autosaving": "Salvataggio bozza...",
+      "autosaved": "Bozza salvata",
+      "autosaveFailed": "Impossibile salvare la bozza. Le modifiche restano in locale.",
       "toast": {
         "fillRequired": "Compila tutti i campi obbligatori.",
         "orgRequired": "Per creare un corso è richiesta un'organizzazione.",

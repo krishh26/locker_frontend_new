@@ -4332,6 +4332,9 @@
       "next": "Seguinte",
       "submit": "Submeter",
       "saving": "A guardar...",
+      "autosaving": "A guardar rascunho...",
+      "autosaved": "Rascunho guardado",
+      "autosaveFailed": "Não foi possível guardar o rascunho. As alterações mantêm-se localmente.",
       "toast": {
         "fillRequired": "Preencha todos os campos obrigatórios.",
         "orgRequired": "A organização é obrigatória ao criar um curso.",

@@ -48,14 +48,14 @@ export function extractCriterionCode(title: string): string {
   return "";
 }
 
-/** True for generated entity ids (e.g. Date.now()) — not human Sr No. / codes. */
+/** True for generated entity ids (e.g. Date.now()) — not human criteria / codes. */
 export function isRawEntityId(value: string | number | null | undefined): boolean {
   const s = String(value ?? "").trim();
   return /^\d{10,}$/.test(s);
 }
 
 /**
- * Prefer API `code` (Sr No. / K1 / 1.1) for IQA column headers.
+ * Prefer API `code` (criteria / K1 / 1.1) for IQA column headers.
  * Never fall back to raw numeric entity ids.
  */
 export function resolveCriterionDisplayCode(options: {

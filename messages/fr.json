@@ -4335,6 +4335,9 @@
       "next": "Suivant",
       "submit": "Envoyer",
       "saving": "Enregistrement...",
+      "autosaving": "Enregistrement du brouillon...",
+      "autosaved": "Brouillon enregistré",
+      "autosaveFailed": "Impossible d'enregistrer le brouillon. Les modifications restent locales.",
       "toast": {
         "fillRequired": "Veuillez remplir tous les champs obligatoires.",
         "orgRequired": "L'organisation est obligatoire lors de la création d'un cours.",
@@ -4464,8 +4467,8 @@
         "assessmentCriteriaCount": "Critères d'évaluation ({count})",
         "addAssessmentCriteria": "Ajouter un critère d'évaluation",
         "placeholderTopicTitle": "Titre du thème",
-        "srNo": "N°",
-        "placeholderSrNo": "N°"
+        "srNo": "Critères",
+        "placeholderSrNo": "Critères"
       },
       "standard": {
         "modulesTitle": "Modules",
@@ -4500,8 +4503,8 @@
         "typeBehaviour": "Comportement",
         "typeKnowledge": "Connaissance",
         "typeSkills": "Compétences",
-        "srNo": "N°",
-        "placeholderSrNo": "N°"
+        "srNo": "Critères",
+        "placeholderSrNo": "Critères"
       }
     }
   },

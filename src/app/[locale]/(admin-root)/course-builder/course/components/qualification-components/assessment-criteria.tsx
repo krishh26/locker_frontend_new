@@ -73,7 +73,7 @@ export function TopicsForm({
     append(newTopic, { shouldFocus: false }); // Don't focus and don't trigger validation
   };
 
-  // Auto-update showOrder + hierarchical Sr No. (e.g. 1.1, 1.2) when topics or LO order change
+  // Auto-update showOrder + hierarchical criteria (e.g. 1.1, 1.2) when topics or LO order change
   useEffect(() => {
     if (fields.length > 0 && setValue) {
       fields.forEach((_, index) => {

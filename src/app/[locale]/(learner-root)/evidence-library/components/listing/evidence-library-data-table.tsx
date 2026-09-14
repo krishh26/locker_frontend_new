@@ -335,7 +335,7 @@ export function EvidenceLibraryDataTable() {
         cell: ({ row }) => {
           const title = row.original.title;
           return (
-            <div className="max-w-[200px]">
+            <div className="max-w-50">
               <p className="font-medium">{truncateText(title, 40)}</p>
             </div>
           );
@@ -347,7 +347,7 @@ export function EvidenceLibraryDataTable() {
         cell: ({ row }) => {
           const description = row.original.description;
           return (
-            <div className="max-w-[200px]">
+            <div className="max-w-50">
               <p className="text-sm text-muted-foreground">
                 {truncateText(description, 30)}
               </p>

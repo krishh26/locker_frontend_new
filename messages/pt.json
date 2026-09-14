@@ -4335,6 +4335,9 @@
       "next": "Seguinte",
       "submit": "Submeter",
       "saving": "A guardar...",
+      "autosaving": "A guardar rascunho...",
+      "autosaved": "Rascunho guardado",
+      "autosaveFailed": "Não foi possível guardar o rascunho. As alterações mantêm-se localmente.",
       "toast": {
         "fillRequired": "Preencha todos os campos obrigatórios.",
         "orgRequired": "A organização é obrigatória ao criar um curso.",
@@ -4464,8 +4467,8 @@
         "assessmentCriteriaCount": "Critérios de avaliação ({count})",
         "addAssessmentCriteria": "Adicionar critério de avaliação",
         "placeholderTopicTitle": "Título do tópico",
-        "srNo": "N.º",
-        "placeholderSrNo": "N.º"
+        "srNo": "Critérios",
+        "placeholderSrNo": "Critérios"
       },
       "standard": {
         "modulesTitle": "Módulos",
@@ -4500,8 +4503,8 @@
         "typeBehaviour": "Comportamento",
         "typeKnowledge": "Conhecimento",
         "typeSkills": "Competências",
-        "srNo": "N.º",
-        "placeholderSrNo": "N.º"
+        "srNo": "Critérios",
+        "placeholderSrNo": "Critérios"
       }
     }
   },

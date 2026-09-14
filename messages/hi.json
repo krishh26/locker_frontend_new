@@ -4100,6 +4100,9 @@
       "next": "आगे",
       "submit": "सबमिट करें",
       "saving": "सेव किया जा रहा है...",
+      "autosaving": "ड्राफ्ट सेव हो रहा है...",
+      "autosaved": "ड्राफ्ट सेव हो गया",
+      "autosaveFailed": "ड्राफ्ट सेव नहीं हो सका। बदलाव स्थानीय रूप से रखे गए हैं।",
       "toast": {
         "fillRequired": "कृपया सभी आवश्यक फ़ील्ड भरें।",
         "orgRequired": "कोर्स बनाते समय संगठन आवश्यक है।",
@@ -4229,8 +4232,8 @@
         "assessmentCriteriaCount": "मूल्यांकन मानदंड ({count})",
         "addAssessmentCriteria": "मूल्यांकन मानदंड जोड़ें",
         "placeholderTopicTitle": "विषय शीर्षक",
-        "srNo": "क्रमांक",
-        "placeholderSrNo": "क्रमांक"
+        "srNo": "मानदंड",
+        "placeholderSrNo": "मानदंड"
       },
       "standard": {
         "modulesTitle": "मॉड्यूल",
@@ -4265,8 +4268,8 @@
         "typeBehaviour": "व्यवहार",
         "typeKnowledge": "ज्ञान",
         "typeSkills": "कौशल",
-        "srNo": "क्रमांक",
-        "placeholderSrNo": "क्रमांक"
+        "srNo": "मानदंड",
+        "placeholderSrNo": "मानदंड"
       }
     }
   },

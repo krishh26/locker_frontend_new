@@ -3374,6 +3374,9 @@
       "next": "Weiter",
       "submit": "Senden",
       "saving": "Speichern...",
+      "autosaving": "Entwurf wird gespeichert...",
+      "autosaved": "Entwurf gespeichert",
+      "autosaveFailed": "Entwurf konnte nicht gespeichert werden. Änderungen bleiben lokal erhalten.",
       "toast": {
         "fillRequired": "Bitte füllen Sie alle Pflichtfelder aus.",
         "orgRequired": "Bei der Kurserstellung ist eine Organisation erforderlich.",
@@ -3503,8 +3506,8 @@
         "assessmentCriteriaCount": "Bewertungskriterien ({count})",
         "addAssessmentCriteria": "Bewertungskriterium hinzufügen",
         "placeholderTopicTitle": "Thementitel",
-        "srNo": "Nr.",
-        "placeholderSrNo": "Nr."
+        "srNo": "Kriterien",
+        "placeholderSrNo": "Kriterien"
       },
       "standard": {
         "modulesTitle": "Module",
@@ -3539,8 +3542,8 @@
         "typeBehaviour": "Verhalten",
         "typeKnowledge": "Wissen",
         "typeSkills": "Fertigkeiten",
-        "srNo": "Nr.",
-        "placeholderSrNo": "Nr."
+        "srNo": "Kriterien",
+        "placeholderSrNo": "Kriterien"
       }
     }
   },

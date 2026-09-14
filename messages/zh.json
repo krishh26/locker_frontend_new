@@ -4241,6 +4241,9 @@
       "next": "下一步",
       "submit": "提交",
       "saving": "正在保存...",
+      "autosaving": "正在保存草稿...",
+      "autosaved": "草稿已保存",
+      "autosaveFailed": "无法保存草稿。更改仍保留在本地。",
       "toast": {
         "fillRequired": "请填写所有必填字段。",
         "orgRequired": "创建课程时必须选择机构。",
@@ -4370,8 +4373,8 @@
         "assessmentCriteriaCount": "评估标准（{count}）",
         "addAssessmentCriteria": "添加评估标准",
         "placeholderTopicTitle": "主题标题",
-        "srNo": "序号",
-        "placeholderSrNo": "序号"
+        "srNo": "标准",
+        "placeholderSrNo": "标准"
       },
       "standard": {
         "modulesTitle": "模块",
@@ -4406,8 +4409,8 @@
         "typeBehaviour": "行为",
         "typeKnowledge": "知识",
         "typeSkills": "技能",
-        "srNo": "序号",
-        "placeholderSrNo": "序号"
+        "srNo": "标准",
+        "placeholderSrNo": "标准"
       }
     }
   },

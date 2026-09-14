@@ -4074,6 +4074,9 @@
       "deleteFailed": "فشل حذف الدورة"
     },
     "course": {
+      "autosaving": "جارٍ حفظ المسودة...",
+      "autosaved": "تم حفظ المسودة",
+      "autosaveFailed": "تعذر حفظ المسودة. تبقى التغييرات محليًا.",
       "form": {
         "courseName": "اسم الدورة",
         "courseNamePlaceholder": "أدخل اسم الدورة",
@@ -4152,8 +4155,8 @@
         "assessmentCriteriaCount": "معايير التقييم ({count})",
         "addAssessmentCriteria": "إضافة معيار تقييم",
         "placeholderTopicTitle": "عنوان الموضوع",
-        "srNo": "الرقم التسلسلي",
-        "placeholderSrNo": "الرقم التسلسلي"
+        "srNo": "المعايير",
+        "placeholderSrNo": "المعايير"
       },
       "standard": {
         "modulesTitle": "الوحدات",
@@ -4188,8 +4191,8 @@
         "typeBehaviour": "سلوك",
         "typeKnowledge": "معرفة",
         "typeSkills": "مهارات",
-        "srNo": "الرقم التسلسلي",
-        "placeholderSrNo": "الرقم التسلسلي"
+        "srNo": "المعايير",
+        "placeholderSrNo": "المعايير"
       }
     }
   },

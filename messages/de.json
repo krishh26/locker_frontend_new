@@ -2197,7 +2197,8 @@
       "columns": {
         "title": "Titel",
         "subUnitTitle": "Untereinheit-Titel",
-        "srNo": "Kriterien",
+        "assessmentCriteria": "Bewertungskriterien",
+        "srNo": "Sr.-Nr.",
         "code": "Code",
         "learnerMap": "Lerner-Karte",
         "trainerMap": "Trainer-Karte",
@@ -2262,6 +2263,8 @@
         "noItemsForType": "Keine Elemente für den gewählten Typ",
         "selectUnit": "Bitte wählen Sie eine Einheit, um den Fortschritt zu sehen",
         "noSubUnits": "Keine Untereinheiten für die gewählte Einheit",
+        "noLearningOutcomes": "Keine Lernergebnisse verfügbar",
+        "noAssessmentCriteria": "Keine Bewertungskriterien verfügbar",
         "noCriteriaForFilter": "Keine Kriterien entsprechen dem ausgewählten Filter"
       }
     }
@@ -4111,7 +4114,8 @@
         "status": "Status",
         "createdDate": "Erstellungsdatum",
         "view": "Anzeigen",
-        "actions": "Aktionen"
+        "actions": "Aktionen",
+        "units": "Einheiten"
       },
       "status": {
         "loading": "Evidenzbibliothek wird geladen...",

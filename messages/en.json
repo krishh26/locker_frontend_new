@@ -2633,6 +2633,7 @@
         "createdDate": "Created Date",
         "view": "View",
         "actions": "Actions",
+        "units": "Units",
         "unitSequenceLabel": "Unit {number}"
       },
       "status": {
@@ -3096,7 +3097,8 @@
       "columns": {
         "title": "Title",
         "subUnitTitle": "Sub Unit Title",
-        "srNo": "Criteria",
+        "assessmentCriteria": "Assessment Criteria",
+        "srNo": "Sr No.",
         "code": "Code",
         "learnerMap": "Learner Map",
         "trainerMap": "Trainer Map",
@@ -3161,6 +3163,8 @@
         "noItemsForType": "No items available for the selected type",
         "selectUnit": "Please select a unit to view progress",
         "noSubUnits": "No sub-units available for the selected unit",
+        "noLearningOutcomes": "No learning outcomes available",
+        "noAssessmentCriteria": "No assessment criteria available",
         "noCriteriaForFilter": "No criteria match the selected filter"
       }
     }

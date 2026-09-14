@@ -2807,7 +2807,8 @@
       "columns": {
         "title": "Titre",
         "subUnitTitle": "Titre sous-unité",
-        "srNo": "Critères",
+        "assessmentCriteria": "Critères d'évaluation",
+        "srNo": "N° sr.",
         "code": "Code",
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",
@@ -2872,6 +2873,8 @@
         "noItemsForType": "Aucun élément pour le type sélectionné",
         "selectUnit": "Veuillez sélectionner une unité pour voir la progression",
         "noSubUnits": "Aucune sous-unité pour l'unité sélectionnée",
+        "noLearningOutcomes": "Aucun résultat d'apprentissage disponible",
+        "noAssessmentCriteria": "Aucun critère d'évaluation disponible",
         "noCriteriaForFilter": "Aucun critère ne correspond au filtre sélectionné"
       }
     }
@@ -4915,7 +4918,8 @@
         "status": "Statut",
         "createdDate": "Date de création",
         "view": "Voir",
-        "actions": "Actions"
+        "actions": "Actions",
+        "units": "Unités"
       },
       "status": {
         "loading": "Chargement de la bibliothèque d’évidences...",

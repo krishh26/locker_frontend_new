@@ -421,6 +421,8 @@ export function EvidenceLibraryDataTable() {
       },
     ];
 
+    const mappingColumns: ColumnDef<EvidenceEntry>[] = [];
+
     // If "All" is selected, show course columns
     if (selectedCourseFilter === "all" || !selectedCourseFilter) {
       const courseList = courses
@@ -443,7 +445,7 @@ export function EvidenceLibraryDataTable() {
         .sort((a, b) => a.course_name.localeCompare(b.course_name));
 
       courseList.forEach((course) => {
-        baseColumns.push({
+        mappingColumns.push({
           id: `course_${course.course_id}`,
           header: () => (
             <div className="text-center font-semibold text-sm">
@@ -488,7 +490,7 @@ export function EvidenceLibraryDataTable() {
           const unitCode = unit.unit_ref || String(unitId);
           const unitTitle = unit.title || unitCode;
 
-          baseColumns.push({
+          mappingColumns.push({
             id: `unit_${unitId}`,
             header: () => (
               <Tooltip>
@@ -745,7 +747,7 @@ export function EvidenceLibraryDataTable() {
         COMBINED_UNIT_TYPES.forEach((unitType) => {
           const unitsOfType = unitsByType.get(unitType) || [];
           if (unitsOfType.length > 0) {
-            baseColumns.push({
+            mappingColumns.push({
               id: `type_${unitType}`,
               header: () => (
                 <div className="text-center font-semibold text-sm">
@@ -935,8 +937,7 @@ export function EvidenceLibraryDataTable() {
       }
     }
 
-    // Add actions column
-    baseColumns.push({
+    const actionsColumn: ColumnDef<EvidenceEntry> = {
       id: "actions",
       header: t("table.columns.actions"),
       cell: ({ row }) => {
@@ -953,9 +954,30 @@ export function EvidenceLibraryDataTable() {
           />
         );
       },
-    });
+    };
 
-    return baseColumns;
+    const showUnitsGroup =
+      selectedCourseFilter !== "all" &&
+      Boolean(selectedCourseFilter) &&
+      mappingColumns.length > 0;
+
+    if (showUnitsGroup) {
+      return [
+        ...baseColumns,
+        {
+          id: "unitsGroup",
+          header: () => (
+            <div className="text-center font-semibold">
+              {t("table.columns.units")}
+            </div>
+          ),
+          columns: mappingColumns,
+        },
+        actionsColumn,
+      ];
+    }
+
+    return [...baseColumns, ...mappingColumns, actionsColumn];
   }, [selectedCourseFilter, selectedCourseDetails, learnerSelectedUnits, router, courses, isLearner, handleReuploadClick, handleDownload, t]);
 
   const table = useReactTable({
@@ -1067,22 +1089,89 @@ export function EvidenceLibraryDataTable() {
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+            {(() => {
+              const topHeaders = table.getHeaderGroups()[0]?.headers ?? [];
+              const unitsGroup = topHeaders.find(
+                (header) => header.column.id === "unitsGroup"
+              );
+              const unitHeaders = unitsGroup?.subHeaders ?? [];
+              const hasUnitsGroup = Boolean(unitsGroup) && unitHeaders.length > 0;
+
+              if (!hasUnitsGroup || !unitsGroup) {
+                return (
+                  <TableRow>
+                    {topHeaders.map((header) => (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                );
+              }
+
+              const leftHeaders = topHeaders.filter(
+                (header) =>
+                  header.column.id !== "unitsGroup" &&
+                  header.column.id !== "actions"
+              );
+              const actionsHeader = topHeaders.find(
+                (header) => header.column.id === "actions"
+              );
+
+              return (
+                <>
+                  <TableRow>
+                    {leftHeaders.map((header) => (
+                      <TableHead key={header.id} rowSpan={2} className="align-middle">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </TableHead>
+                    ))}
+                    <TableHead
+                      colSpan={unitHeaders.length}
+                      className="h-9 text-center align-middle border-b border-primary-foreground/25"
+                    >
+                      {flexRender(
+                        unitsGroup.column.columnDef.header,
+                        unitsGroup.getContext()
+                      )}
                     </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
+                    {actionsHeader ? (
+                      <TableHead
+                        key={actionsHeader.id}
+                        rowSpan={2}
+                        className="align-middle"
+                      >
+                        {flexRender(
+                          actionsHeader.column.columnDef.header,
+                          actionsHeader.getContext()
+                        )}
+                      </TableHead>
+                    ) : null}
+                  </TableRow>
+                  <TableRow>
+                    {unitHeaders.map((header) => (
+                      <TableHead
+                        key={header.id}
+                        className="text-center align-middle"
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </>
+              );
+            })()}
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
@@ -1101,7 +1190,7 @@ export function EvidenceLibraryDataTable() {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={Math.max(table.getVisibleLeafColumns().length, 1)}
                   className="h-24 text-center"
                 >
                   {t("table.status.noResults")}

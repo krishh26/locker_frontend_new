@@ -45,6 +45,10 @@ export interface GapAnalysisPdfRow {
 export interface GapAnalysisPdfUnitSection {
   unitTitle: string
   rows: GapAnalysisPdfRow[]
+  subSections?: Array<{
+    title: string
+    rows: GapAnalysisPdfRow[]
+  }>
 }
 
 export interface ExportGapAnalysisToPdfOptions {
@@ -146,7 +150,11 @@ export async function exportGapAnalysisToPdf(
   const { title, courseName, headers, unitSections, isStandardCourse, filename } =
     options
 
-  const hasRows = unitSections.some((section) => section.rows.length > 0)
+  const hasRows = unitSections.some(
+    (section) =>
+      section.rows.length > 0 ||
+      (section.subSections?.some((sub) => sub.rows.length > 0) ?? false),
+  )
   if (!unitSections.length) {
     return
   }
@@ -167,33 +175,30 @@ export async function exportGapAnalysisToPdf(
   const body: unknown[][] = []
   const rowMetas: PdfRowMeta[] = []
 
-  for (const section of unitSections) {
-    if (!isStandardCourse && section.unitTitle) {
-      body.push([
-        {
-          content: section.unitTitle,
-          colSpan: headers.length,
-          styles: {
-            fillColor: [241, 245, 249],
-            textColor: [15, 23, 42],
-            fontStyle: "bold",
-            fontSize: 10,
-          },
-        },
-      ])
-      rowMetas.push({ isUnitHeader: true })
-    }
+  const pushHeaderRow = (
+    content: string,
+    styles: {
+      fillColor: [number, number, number]
+      textColor: [number, number, number]
+      fontStyle: "bold"
+      fontSize: number
+    },
+  ) => {
+    body.push([
+      {
+        content,
+        colSpan: headers.length,
+        styles,
+      },
+    ])
+    rowMetas.push({ isUnitHeader: true })
+  }
 
-    for (const row of section.rows) {
+  const pushDataRows = (rows: GapAnalysisPdfRow[]) => {
+    for (const row of rows) {
       body.push(
         isStandardCourse
-          ? [
-              row.srNo,
-              row.subTitle,
-              row.learnerMap,
-              row.trainerMap,
-              "",
-            ]
+          ? [row.srNo, row.subTitle, row.learnerMap, row.trainerMap, ""]
           : [
               row.srNo,
               row.subTitle,
@@ -204,6 +209,33 @@ export async function exportGapAnalysisToPdf(
             ],
       )
       rowMetas.push({ gap: row.gap })
+    }
+  }
+
+  for (const section of unitSections) {
+    if (section.unitTitle) {
+      pushHeaderRow(section.unitTitle, {
+        fillColor: [241, 245, 249],
+        textColor: [15, 23, 42],
+        fontStyle: "bold",
+        fontSize: 10,
+      })
+    }
+
+    if (section.subSections?.length) {
+      for (const subSection of section.subSections) {
+        if (subSection.title) {
+          pushHeaderRow(subSection.title, {
+            fillColor: [226, 232, 240],
+            textColor: [15, 23, 42],
+            fontStyle: "bold",
+            fontSize: 9,
+          })
+        }
+        pushDataRows(subSection.rows)
+      }
+    } else {
+      pushDataRows(section.rows)
     }
   }
 

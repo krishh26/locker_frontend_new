@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useAppSelector, useAppDispatch } from "@/store/hooks"
 import { useIsImpersonated } from "@/hooks/use-impersonation"
-import { setCredentials } from "@/store/slices/authSlice"
+import { setCredentials, clearCredentials } from "@/store/slices/authSlice"
 import { useChangeUserRoleMutation } from "@/store/api/user/userApi"
 import { toast } from "sonner"
 import type { AuthUser } from "@/store/api/auth/types"
@@ -106,6 +106,12 @@ export function NavUser() {
         "Failed to change role"
       toast.error(errorMessage)
     }
+  }
+
+  const handleLogout = () => {
+    dispatch(clearCredentials())
+    toast.success("You have been logged out")
+    window.location.href = "/"
   }
 
   return (
@@ -197,11 +203,16 @@ export function NavUser() {
             {!isImpersonated && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link href="/auth/sign-in">
-                    <LogOut className="mr-1" />
-                    Log out
-                  </Link>
+                <DropdownMenuItem
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onSelect={(event) => {
+                    event.preventDefault()
+                    handleLogout()
+                  }}
+                >
+                  <LogOut className="mr-1" />
+                  Log out
                 </DropdownMenuItem>
               </>
             )}

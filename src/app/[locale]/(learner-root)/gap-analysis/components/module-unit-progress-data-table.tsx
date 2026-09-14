@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, type ReactNode } from "react";
 import { useStore } from "react-redux";
 import {
   type ColumnDef,
@@ -112,6 +112,7 @@ type QualificationUnit = {
   id: number | string;
   title: string;
   code: string;
+  unit_ref?: string;
   level?: string;
   credit_value?: number;
   glh?: number;
@@ -233,184 +234,256 @@ function buildGapRow(
   };
 }
 
-function collectQualificationGapRows(
-  unit: UnitWithSubUnits | QualificationUnit,
-): SubUnitRow[] {
-  const rows: SubUnitRow[] = [];
-  const subUnits = unit.subUnit ?? [];
-
-  for (let subIndex = 0; subIndex < subUnits.length; subIndex++) {
-    const subRaw = subUnits[subIndex];
-    const sub = subRaw as MappingSource & {
+type QualificationSubUnitSource = MappingSource & {
+  id?: string | number;
+  title?: string;
+  subTitle?: string;
+  comment?: string;
+  code?: string;
+  showOrder?: number;
+  topics?: Array<
+    MappingSource & {
       id?: string | number;
       title?: string;
-      subTitle?: string;
       comment?: string;
       code?: string;
       showOrder?: number;
-      topics?: Array<
-        MappingSource & {
-          id?: string | number;
-          title?: string;
-          comment?: string;
-          code?: string;
-          showOrder?: number;
-        }
-      >;
-    };
+    }
+  >;
+};
 
+type GapUnitSection = {
+  id: string;
+  title: string;
+  rows: SubUnitRow[];
+  children?: GapUnitSection[];
+};
+
+function formatQualificationUnitTitle(
+  unit: UnitWithSubUnits | QualificationUnit,
+  fallback: string,
+): string {
+  const title = String(unit.title ?? "").trim();
+  const ref = String(
+    ("unit_ref" in unit ? unit.unit_ref : undefined) ??
+      ("code" in unit ? unit.code : undefined) ??
+      "",
+  ).trim();
+  if (ref && title && ref !== title) return `${ref} - ${title}`;
+  return title || ref || fallback;
+}
+
+function formatLearningOutcomeTitle(
+  sub: QualificationSubUnitSource,
+  loOrder: number,
+  fallback: string,
+): string {
+  const title = String(sub.title ?? sub.subTitle ?? "").trim();
+  const code = String(sub.code ?? "").trim();
+  const prefix = code || String(loOrder);
+  if (title && title !== prefix) return `${prefix}. ${title}`;
+  return title || prefix || fallback;
+}
+
+function collectQualificationLearningOutcomeRows(
+  sub: QualificationSubUnitSource,
+  subIndex: number,
+): SubUnitRow[] {
+  const rows: SubUnitRow[] = [];
+  const loOrder =
+    Number(sub.showOrder) > 0 ? Number(sub.showOrder) : subIndex + 1;
+
+  if (Array.isArray(sub.topics) && sub.topics.length > 0) {
+    for (let topicIndex = 0; topicIndex < sub.topics.length; topicIndex++) {
+      const topic = sub.topics[topicIndex];
+      const topicOrder =
+        Number(topic.showOrder) > 0 ? Number(topic.showOrder) : topicIndex + 1;
+      const codeFromApi = String(topic.code ?? "").trim();
+      const srNo = codeFromApi || `${loOrder}.${topicOrder}`;
+      rows.push(
+        buildGapRow(
+          `${String(sub.id ?? "sub")}-${String(topic.id ?? rows.length)}`,
+          String(topic.title ?? ""),
+          readMappingFlags(topic, sub),
+          srNo,
+          String(topic.comment ?? ""),
+        ),
+      );
+    }
+    return rows;
+  }
+
+  const title = String(sub.title ?? sub.subTitle ?? "");
+  const codeFromApi = String(sub.code ?? "").trim();
+  rows.push(
+    buildGapRow(
+      sub.id ?? rows.length,
+      title,
+      readMappingFlags(sub),
+      codeFromApi || String(loOrder),
+      String(sub.comment ?? ""),
+    ),
+  );
+  return rows;
+}
+
+function collectQualificationLearningOutcomeSections(
+  unit: UnitWithSubUnits | QualificationUnit,
+  fallbackTitle: string,
+): GapUnitSection[] {
+  const subUnits = unit.subUnit ?? [];
+  return subUnits.map((subRaw, subIndex) => {
+    const sub = subRaw as QualificationSubUnitSource;
     const loOrder =
       Number(sub.showOrder) > 0 ? Number(sub.showOrder) : subIndex + 1;
+    return {
+      id: `${String(unit.id ?? "unit")}-lo-${String(sub.id ?? subIndex)}`,
+      title: formatLearningOutcomeTitle(sub, loOrder, fallbackTitle),
+      rows: collectQualificationLearningOutcomeRows(sub, subIndex),
+    };
+  });
+}
 
-    if (Array.isArray(sub.topics) && sub.topics.length > 0) {
-      for (let topicIndex = 0; topicIndex < sub.topics.length; topicIndex++) {
-        const topic = sub.topics[topicIndex];
-        const topicOrder =
-          Number(topic.showOrder) > 0 ? Number(topic.showOrder) : topicIndex + 1;
-        const codeFromApi = String(topic.code ?? "").trim();
-        const srNo = codeFromApi || `${loOrder}.${topicOrder}`;
-        const flags = readMappingFlags(topic, sub);
-        rows.push(
-          buildGapRow(
-            `${String(sub.id ?? "sub")}-${String(topic.id ?? rows.length)}`,
-            String(topic.title ?? ""),
-            flags,
-            srNo,
-            String(topic.comment ?? ""),
-          ),
+function collectQualificationGapRows(
+  unit: UnitWithSubUnits | QualificationUnit,
+): SubUnitRow[] {
+  return collectQualificationLearningOutcomeSections(unit, "").flatMap(
+    (section) => section.rows,
+  );
+}
+
+type StandardGapTypeFilter = "all" | "Knowledge" | "Behaviour" | "Skills";
+
+type StandardUnitSource = Record<string, unknown> & {
+  id?: string | number;
+  title?: string;
+  type?: string;
+  code?: string;
+  subUnit?: unknown[];
+  items?: StandardItem[];
+  evidenceBoxes?: StandardItem["evidenceBoxes"];
+  learnerMap?: boolean;
+  trainerMap?: boolean;
+};
+
+function collectStandardGapRowsForUnit(
+  unit: StandardUnitSource,
+  selectedType: StandardGapTypeFilter,
+): SubUnitRow[] {
+  const rows: SubUnitRow[] = [];
+  const showAll = selectedType === "all";
+  const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+
+  if (unitSubUnits.length > 0) {
+    const matchingSubUnits = showAll
+      ? unitSubUnits
+      : unitSubUnits.filter(
+          (sub) =>
+            String((sub as { type?: string }).type) === String(selectedType),
         );
-      }
-      continue;
-    }
+    const matchesByUnitType =
+      showAll || String(unit.type) === String(selectedType);
+    if (!matchesByUnitType && matchingSubUnits.length === 0) return rows;
 
-    const title = String(sub.title ?? sub.subTitle ?? "");
-    const codeFromApi = String(sub.code ?? "").trim();
-    rows.push(
-      buildGapRow(
-        sub.id ?? rows.length,
-        title,
-        readMappingFlags(sub),
-        codeFromApi || String(loOrder),
-        String(sub.comment ?? ""),
-      ),
-    );
+    const subsToShow = matchesByUnitType ? unitSubUnits : matchingSubUnits;
+    for (const subRaw of subsToShow) {
+      const sub = subRaw as {
+        id?: string | number;
+        title?: string;
+        subTitle?: string;
+        code?: string;
+        learnerMap?: boolean;
+        trainerMap?: boolean;
+        learner_map?: boolean;
+        trainer_map?: boolean;
+      };
+      const learnerMap = Boolean(sub.learnerMap ?? sub.learner_map ?? false);
+      const trainerMap = Boolean(sub.trainerMap ?? sub.trainer_map ?? false);
+      const title = String(sub.title ?? sub.subTitle ?? "");
+      const code = String(sub.code ?? "").trim();
+      const subId = `${String(unit.id ?? "u")}-${String(sub.id ?? sub.code ?? rows.length)}`;
+      rows.push({
+        id: subId,
+        srNo: code,
+        subTitle: title,
+        learnerMap,
+        trainerMap,
+        gap: gapFromMaps(learnerMap, trainerMap),
+        comment: code,
+      });
+    }
+    return rows;
+  }
+
+  if (Array.isArray(unit.items) && unit.items.length > 0) {
+    for (const item of unit.items) {
+      if (!showAll && String(item.type) !== String(selectedType)) continue;
+      const hasLearnerMap =
+        item.evidenceBoxes?.some((box) => box.learnerMap) || false;
+      const hasTrainerMap =
+        item.evidenceBoxes?.some((box) => box.trainerMap) || false;
+      rows.push({
+        id: item.id,
+        srNo: String(item.code ?? "").trim(),
+        subTitle: item.title,
+        learnerMap: hasLearnerMap,
+        trainerMap: hasTrainerMap,
+        gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
+        comment: item.code || "",
+      });
+    }
+    return rows;
+  }
+
+  if (
+    (unit.title != null || unit.id != null) &&
+    (showAll ||
+      (unit.type != null && String(unit.type) === String(selectedType)))
+  ) {
+    const hasLearnerMap =
+      Boolean(unit.learnerMap ?? (unit as { learner_map?: boolean }).learner_map) ||
+      unit.evidenceBoxes?.some((box) => box.learnerMap) ||
+      false;
+    const hasTrainerMap =
+      Boolean(unit.trainerMap ?? (unit as { trainer_map?: boolean }).trainer_map) ||
+      unit.evidenceBoxes?.some((box) => box.trainerMap) ||
+      false;
+    rows.push({
+      id: unit.id ?? rows.length,
+      srNo: String(unit.code ?? "").trim(),
+      subTitle: String(unit.title ?? ""),
+      learnerMap: hasLearnerMap,
+      trainerMap: hasTrainerMap,
+      gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
+      comment: String(unit.code ?? ""),
+    });
   }
 
   return rows;
 }
 
-type StandardGapTypeFilter = "all" | "Knowledge" | "Behaviour" | "Skills";
-
-function collectStandardGapRows(
+function collectStandardGapUnitSections(
   course: CourseWithUnits,
   selectedType: StandardGapTypeFilter,
-): SubUnitRow[] {
-  const rows: SubUnitRow[] = [];
+  fallbackTitle: string,
+): GapUnitSection[] {
   const units = (course.units || []) as unknown[];
-  const showAll = selectedType === "all";
+  const sections: GapUnitSection[] = [];
 
-  for (const raw of units) {
-    const unit = raw as Record<string, unknown> & {
-      id?: string | number;
-      title?: string;
-      type?: string;
-      code?: string;
-      subUnit?: unknown[];
-      items?: StandardItem[];
-      evidenceBoxes?: StandardItem["evidenceBoxes"];
-      learnerMap?: boolean;
-      trainerMap?: boolean;
-    };
+  units.forEach((raw, index) => {
+    const unit = raw as StandardUnitSource;
+    const rows = collectStandardGapRowsForUnit(unit, selectedType);
+    if (rows.length === 0) return;
 
-    const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+    const title = String(unit.title ?? "").trim();
+    sections.push({
+      id: `${String(unit.id ?? "unit")}-${index}`,
+      title: title || fallbackTitle,
+      rows,
+    });
+  });
 
-    if (unitSubUnits.length > 0) {
-      const matchingSubUnits = showAll
-        ? unitSubUnits
-        : unitSubUnits.filter(
-            (sub) =>
-              String((sub as { type?: string }).type) === String(selectedType),
-          );
-      const matchesByUnitType =
-        showAll || String(unit.type) === String(selectedType);
-      if (!matchesByUnitType && matchingSubUnits.length === 0) continue;
-
-      const subsToShow = matchesByUnitType ? unitSubUnits : matchingSubUnits;
-      for (const subRaw of subsToShow) {
-        const sub = subRaw as {
-          id?: string | number;
-          title?: string;
-          subTitle?: string;
-          code?: string;
-          learnerMap?: boolean;
-          trainerMap?: boolean;
-          learner_map?: boolean;
-          trainer_map?: boolean;
-        };
-        const learnerMap = Boolean(sub.learnerMap ?? sub.learner_map ?? false);
-        const trainerMap = Boolean(sub.trainerMap ?? sub.trainer_map ?? false);
-        const title = String(sub.title ?? sub.subTitle ?? "");
-        const code = String(sub.code ?? "").trim();
-        const subId = `${String(unit.id ?? "u")}-${String(sub.id ?? sub.code ?? rows.length)}`;
-        rows.push({
-          id: subId,
-          srNo: code,
-          subTitle: title,
-          learnerMap,
-          trainerMap,
-          gap: gapFromMaps(learnerMap, trainerMap),
-          comment: code,
-        });
-      }
-      continue;
-    }
-
-    if (Array.isArray(unit.items) && unit.items.length > 0) {
-      for (const item of unit.items) {
-        if (!showAll && String(item.type) !== String(selectedType)) continue;
-        const hasLearnerMap =
-          item.evidenceBoxes?.some((box) => box.learnerMap) || false;
-        const hasTrainerMap =
-          item.evidenceBoxes?.some((box) => box.trainerMap) || false;
-        rows.push({
-          id: item.id,
-          srNo: String(item.code ?? "").trim(),
-          subTitle: item.title,
-          learnerMap: hasLearnerMap,
-          trainerMap: hasTrainerMap,
-          gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
-          comment: item.code || "",
-        });
-      }
-      continue;
-    }
-
-    if (
-      (unit.title != null || unit.id != null) &&
-      (showAll ||
-        (unit.type != null && String(unit.type) === String(selectedType)))
-    ) {
-      const hasLearnerMap =
-        Boolean(unit.learnerMap ?? (unit as { learner_map?: boolean }).learner_map) ||
-        unit.evidenceBoxes?.some((box) => box.learnerMap) ||
-        false;
-      const hasTrainerMap =
-        Boolean(unit.trainerMap ?? (unit as { trainer_map?: boolean }).trainer_map) ||
-        unit.evidenceBoxes?.some((box) => box.trainerMap) ||
-        false;
-      rows.push({
-        id: unit.id ?? rows.length,
-        srNo: String(unit.code ?? "").trim(),
-        subTitle: String(unit.title ?? ""),
-        learnerMap: hasLearnerMap,
-        trainerMap: hasTrainerMap,
-        gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
-        comment: String(unit.code ?? ""),
-      });
-    }
-  }
-
-  return rows;
+  return sections;
 }
 
 function filterSubUnitRows(
@@ -564,6 +637,46 @@ function GapSubUnitTable({
   );
 }
 
+function GapPlusAccordionItem({
+  value,
+  title,
+  nested = false,
+  children,
+}: {
+  value: string;
+  title: string;
+  nested?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <AccordionItem
+      value={value}
+      className={`overflow-hidden rounded-md border border-border last:border-b ${
+        nested ? "bg-muted/20" : "bg-card"
+      }`}
+    >
+      <AccordionTrigger
+        className={`cursor-pointer px-4 text-left hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden ${
+          nested
+            ? "bg-muted/20 py-3 font-medium hover:bg-muted/20"
+            : "bg-card py-4 font-semibold hover:bg-card"
+        }`}
+      >
+        <span className="flex w-full items-center gap-3">
+          <span className="relative flex size-5 shrink-0 items-center justify-center text-muted-foreground">
+            <Plus className="unit-accordion-plus size-4" />
+            <Minus className="unit-accordion-minus absolute size-4" />
+          </span>
+          <span className="truncate">{title}</span>
+        </span>
+      </AccordionTrigger>
+      <AccordionContent className="border-t bg-card px-4 pb-4">
+        {children}
+      </AccordionContent>
+    </AccordionItem>
+  );
+}
+
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
   const dispatch = useAppDispatch();
@@ -625,22 +738,43 @@ export function ModuleUnitProgressDataTable() {
     setGlobalFilter("");
   }, [selectedCourse, isStandardCourse]);
 
-  const standardRows = useMemo(() => {
+  const standardUnitSections = useMemo(() => {
     if (!isStandardCourse || !selectedCourse || !selectedType) return [];
-    return collectStandardGapRows(selectedCourse, selectedType);
-  }, [selectedCourse, selectedType, isStandardCourse]);
+    return collectStandardGapUnitSections(
+      selectedCourse,
+      selectedType,
+      t("table.empty.selectUnit"),
+    );
+  }, [selectedCourse, selectedType, isStandardCourse, t]);
 
   const qualificationUnitSections = useMemo(() => {
     if (isStandardCourse || !selectedCourse?.units?.length) return [];
     return selectedCourse.units.map((unit, index) => {
       const typedUnit = unit as UnitWithSubUnits | QualificationUnit;
+      const children = collectQualificationLearningOutcomeSections(
+        typedUnit,
+        t("table.empty.selectUnit"),
+      );
       return {
         id: String(typedUnit.id ?? `${index}-${typedUnit.title ?? "unit"}`),
-        title: String(typedUnit.title ?? t("table.empty.selectUnit")),
-        rows: collectQualificationGapRows(typedUnit),
+        title: formatQualificationUnitTitle(
+          typedUnit,
+          t("table.empty.selectUnit"),
+        ),
+        rows: children.length === 0 ? collectQualificationGapRows(typedUnit) : [],
+        children,
       };
     });
   }, [isStandardCourse, selectedCourse?.units, t]);
+
+  const unitSections = isStandardCourse
+    ? standardUnitSections
+    : qualificationUnitSections;
+
+  const standardRows = useMemo(
+    () => standardUnitSections.flatMap((section) => section.rows),
+    [standardUnitSections],
+  );
 
   const standardFilteredData = useMemo(
     () => applySubUnitFilters(standardRows, globalFilter, completionFilter),
@@ -648,7 +782,12 @@ export function ModuleUnitProgressDataTable() {
   );
 
   const allQualificationRows = useMemo(
-    () => qualificationUnitSections.flatMap((section) => section.rows),
+    () =>
+      qualificationUnitSections.flatMap((section) =>
+        section.children?.length
+          ? section.children.flatMap((child) => child.rows)
+          : section.rows,
+      ),
     [qualificationUnitSections],
   );
 
@@ -663,10 +802,10 @@ export function ModuleUnitProgressDataTable() {
     : qualificationFilteredData;
 
   const hasQualificationContent = qualificationUnitSections.length > 0;
-  const showStandardTable =
-    isStandardCourse && selectedType && standardRows.length > 0;
-  const showQualificationAccordion =
-    !isStandardCourse && selectedCourse && hasQualificationContent;
+  const showUnitAccordion =
+    Boolean(selectedCourse) &&
+    unitSections.length > 0 &&
+    (isStandardCourse ? Boolean(selectedType) : true);
   const showToolbar =
     Boolean(selectedCourse) &&
     (isStandardCourse ? Boolean(selectedType) : hasQualificationContent);
@@ -689,7 +828,7 @@ export function ModuleUnitProgressDataTable() {
         accessorKey: "subTitle",
         header: isStandardCourse
           ? t("table.columns.title")
-          : t("table.columns.subUnitTitle"),
+          : t("table.columns.assessmentCriteria"),
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const title = String(row.getValue("subTitle") ?? "");
           return (
@@ -845,7 +984,7 @@ export function ModuleUnitProgressDataTable() {
         ]
       : [
           t("table.columns.srNo"),
-          t("table.columns.subUnitTitle"),
+          t("table.columns.assessmentCriteria"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
@@ -897,28 +1036,29 @@ export function ModuleUnitProgressDataTable() {
         ]
       : [
           t("table.columns.srNo"),
-          t("table.columns.subUnitTitle"),
+          t("table.columns.assessmentCriteria"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
           t("table.columns.comment"),
         ];
 
-    const unitSections = isStandardCourse
-      ? [
-          {
-            unitTitle: "",
-            rows: exportRows.map(mapRowToPdfExport),
-          },
-        ]
-      : qualificationUnitSections.map((section) => ({
-          unitTitle: section.title,
-          rows: applySubUnitFilters(
-            section.rows,
-            globalFilter,
-            completionFilter,
-          ).map(mapRowToPdfExport),
-        }));
+    const pdfUnitSections = unitSections.map((section) => ({
+      unitTitle: section.title,
+      rows: applySubUnitFilters(
+        section.rows,
+        globalFilter,
+        completionFilter,
+      ).map(mapRowToPdfExport),
+      subSections: section.children?.map((child) => ({
+        title: child.title,
+        rows: applySubUnitFilters(
+          child.rows,
+          globalFilter,
+          completionFilter,
+        ).map(mapRowToPdfExport),
+      })),
+    }));
 
     const canExportPdf = isStandardCourse
       ? exportRows.length > 0
@@ -933,7 +1073,7 @@ export function ModuleUnitProgressDataTable() {
       title: t("table.pdfTitle"),
       courseName: selectedCourse?.course_name,
       headers,
-      unitSections,
+      unitSections: pdfUnitSections,
       isStandardCourse,
       filename: buildExportFilename("pdf"),
     });
@@ -1098,48 +1238,58 @@ export function ModuleUnitProgressDataTable() {
       </div>
       )}
 
-      {showStandardTable ? (
-        <GapSubUnitTable
-          rows={standardRows}
-          columns={columns}
-          globalFilter={globalFilter}
-          completionFilter={completionFilter}
-          emptyMessage={t("table.empty.noItemsForType")}
-          t={t}
-        />
-      ) : showQualificationAccordion ? (
+      {showUnitAccordion ? (
         <Accordion
-          key={`${selectedCourse?.course_id ?? "course"}-${completionFilter}`}
+          key={`${selectedCourse?.course_id ?? "course"}-${selectedType}-${completionFilter}`}
           type="multiple"
           defaultValue={[]}
           className="w-full space-y-3"
         >
-          {qualificationUnitSections.map((section) => (
-            <AccordionItem
+          {unitSections.map((section) => (
+            <GapPlusAccordionItem
               key={section.id}
               value={section.id}
-              className="overflow-hidden rounded-md border border-border bg-white last:border-b"
+              title={section.title}
             >
-              <AccordionTrigger className="cursor-pointer bg-white px-4 py-4 text-left font-semibold hover:bg-white hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden">
-                <span className="flex w-full items-center gap-3">
-                  <span className="relative flex size-5 shrink-0 items-center justify-center text-muted-foreground">
-                    <Plus className="unit-accordion-plus size-4" />
-                    <Minus className="unit-accordion-minus absolute size-4" />
-                  </span>
-                  <span className="truncate">{section.title}</span>
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="border-t bg-white px-4 pb-4">
+              {section.children && section.children.length > 0 ? (
+                <Accordion
+                  type="multiple"
+                  defaultValue={[]}
+                  className="w-full space-y-2 pt-3"
+                >
+                  {section.children.map((child) => (
+                    <GapPlusAccordionItem
+                      key={child.id}
+                      value={child.id}
+                      title={child.title}
+                      nested
+                    >
+                      <GapSubUnitTable
+                        rows={child.rows}
+                        columns={columns}
+                        globalFilter={globalFilter}
+                        completionFilter={completionFilter}
+                        emptyMessage={t("table.empty.noAssessmentCriteria")}
+                        t={t}
+                      />
+                    </GapPlusAccordionItem>
+                  ))}
+                </Accordion>
+              ) : (
                 <GapSubUnitTable
                   rows={section.rows}
                   columns={columns}
                   globalFilter={globalFilter}
                   completionFilter={completionFilter}
-                  emptyMessage={t("table.empty.noSubUnits")}
+                  emptyMessage={
+                    isStandardCourse
+                      ? t("table.empty.noItemsForType")
+                      : t("table.empty.noLearningOutcomes")
+                  }
                   t={t}
                 />
-              </AccordionContent>
-            </AccordionItem>
+              )}
+            </GapPlusAccordionItem>
           ))}
         </Accordion>
       ) : (

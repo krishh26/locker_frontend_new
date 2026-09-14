@@ -2807,6 +2807,7 @@
       "columns": {
         "title": "Título",
         "subUnitTitle": "Título subunidade",
+        "assessmentCriteria": "Critérios de avaliação",
         "srNo": "Nº sr.",
         "code": "Código",
         "learnerMap": "Mapa formando",
@@ -2872,6 +2873,8 @@
         "noItemsForType": "Nenhum item para o tipo selecionado",
         "selectUnit": "Selecione uma unidade para ver o progresso",
         "noSubUnits": "Nenhuma subunidade para a unidade selecionada",
+        "noLearningOutcomes": "Nenhum resultado de aprendizagem disponível",
+        "noAssessmentCriteria": "Nenhum critério de avaliação disponível",
         "noCriteriaForFilter": "Nenhum critério corresponde ao filtro selecionado"
       }
     }
@@ -4912,7 +4915,8 @@
         "status": "Estado",
         "createdDate": "Data de criação",
         "view": "Ver",
-        "actions": "Ações"
+        "actions": "Ações",
+        "units": "Unidades"
       },
       "status": {
         "loading": "A carregar a biblioteca de evidências...",

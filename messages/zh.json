@@ -2713,6 +2713,7 @@
       "columns": {
         "title": "标题",
         "subUnitTitle": "子单元标题",
+        "assessmentCriteria": "评估标准",
         "srNo": "序号",
         "code": "代码",
         "learnerMap": "学员图",
@@ -2778,6 +2779,8 @@
         "noItemsForType": "所选类型暂无项目",
         "selectUnit": "请选择单元以查看进度",
         "noSubUnits": "所选单元暂无子单元",
+        "noLearningOutcomes": "暂无学习成果",
+        "noAssessmentCriteria": "暂无评估标准",
         "noCriteriaForFilter": "没有符合所选筛选条件的标准"
       }
     }
@@ -4870,7 +4873,8 @@
         "status": "状态",
         "createdDate": "创建日期",
         "view": "查看",
-        "actions": "操作"
+        "actions": "操作",
+        "units": "单元"
       },
       "status": {
         "loading": "正在加载证据库...",

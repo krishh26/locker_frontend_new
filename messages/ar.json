@@ -2800,6 +2800,7 @@
       "columns": {
         "title": "العنوان",
         "subUnitTitle": "عنوان الوحدة الفرعية",
+        "assessmentCriteria": "معايير التقييم",
         "srNo": "رقم تسلسلي",
         "code": "الرمز",
         "learnerMap": "خريطة المتعلم",
@@ -2865,6 +2866,8 @@
         "noItemsForType": "لا توجد عناصر للنوع المحدد",
         "selectUnit": "يرجى اختيار وحدة لعرض التقدم",
         "noSubUnits": "لا توجد وحدات فرعية للوحدة المحددة",
+        "noLearningOutcomes": "لا توجد مخرجات تعلم متاحة",
+        "noAssessmentCriteria": "لا توجد معايير تقييم متاحة",
         "noCriteriaForFilter": "لا توجد معايير تطابق الفلتر المحدد"
       }
     }
@@ -4834,7 +4837,8 @@
         "status": "الحالة",
         "createdDate": "تاريخ الإنشاء",
         "view": "عرض",
-        "actions": "الإجراءات"
+        "actions": "الإجراءات",
+        "units": "الوحدات"
       },
       "status": {
         "loading": "جارٍ تحميل مكتبة الأدلة...",

@@ -2155,6 +2155,7 @@
       "columns": {
         "title": "Titolo",
         "subUnitTitle": "Titolo sotto-unitaria",
+        "assessmentCriteria": "Criteri di valutazione",
         "srNo": "N. sr.",
         "code": "Codice",
         "learnerMap": "Mappa discente",
@@ -2220,6 +2221,8 @@
         "noItemsForType": "Nessun elemento per il tipo selezionato",
         "selectUnit": "Seleziona un'unità per vedere i progressi",
         "noSubUnits": "Nessuna sotto-unità per l'unità selezionata",
+        "noLearningOutcomes": "Nessun risultato di apprendimento disponibile",
+        "noAssessmentCriteria": "Nessun criterio di valutazione disponibile",
         "noCriteriaForFilter": "Nessun criterio corrisponde al filtro selezionato"
       }
     }
@@ -4108,7 +4111,8 @@
         "status": "Stato",
         "createdDate": "Data di creazione",
         "view": "Visualizza",
-        "actions": "Azioni"
+        "actions": "Azioni",
+        "units": "Unità"
       },
       "status": {
         "loading": "Caricamento libreria evidenze...",

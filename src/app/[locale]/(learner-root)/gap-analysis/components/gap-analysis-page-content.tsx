@@ -12,7 +12,7 @@ export function GapAnalysisPageContent() {
   const t = useTranslations("gapAnalysis");
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   return (
-    <div className="space-y-6 px-4 lg:px-6">
+    <div className="min-w-0 space-y-6 px-4 lg:px-6">
       {/* Page Header */}
       <PageHeader
         title={t("pageTitle")}
@@ -26,7 +26,7 @@ export function GapAnalysisPageContent() {
       <ModuleUnitProgressLearnerInfoCard />
 
       {/* Data Table */}
-      <div className="@container/main">
+      <div className="@container/main min-w-0">
         <ModuleUnitProgressDataTable />
       </div>
     </div>

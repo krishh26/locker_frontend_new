@@ -255,34 +255,44 @@ type QualificationSubUnitSource = MappingSource & {
 type GapUnitSection = {
   id: string;
   title: string;
+  unitLabel: string;
+  titleLabel: string;
   rows: SubUnitRow[];
   children?: GapUnitSection[];
 };
 
-function formatQualificationUnitTitle(
+function getQualificationUnitParts(
   unit: UnitWithSubUnits | QualificationUnit,
   fallback: string,
-): string {
-  const title = String(unit.title ?? "").trim();
+  index: number,
+): { unitLabel: string; titleLabel: string; title: string } {
+  const titleLabel = String(unit.title ?? "").trim() || fallback;
   const ref = String(
     ("unit_ref" in unit ? unit.unit_ref : undefined) ??
       ("code" in unit ? unit.code : undefined) ??
       "",
   ).trim();
-  if (ref && title && ref !== title) return `${ref} - ${title}`;
-  return title || ref || fallback;
+  const unitLabel = ref || String(index + 1);
+  const title =
+    ref && titleLabel && ref !== titleLabel
+      ? `${ref} - ${titleLabel}`
+      : titleLabel || unitLabel || fallback;
+  return { unitLabel, titleLabel, title };
 }
 
-function formatLearningOutcomeTitle(
+function getLearningOutcomeParts(
   sub: QualificationSubUnitSource,
   loOrder: number,
   fallback: string,
-): string {
-  const title = String(sub.title ?? sub.subTitle ?? "").trim();
+): { unitLabel: string; titleLabel: string; title: string } {
+  const titleLabel = String(sub.title ?? sub.subTitle ?? "").trim() || fallback;
   const code = String(sub.code ?? "").trim();
-  const prefix = code || String(loOrder);
-  if (title && title !== prefix) return `${prefix}. ${title}`;
-  return title || prefix || fallback;
+  const unitLabel = code || String(loOrder);
+  const title =
+    titleLabel && titleLabel !== unitLabel
+      ? `${unitLabel}. ${titleLabel}`
+      : titleLabel || unitLabel || fallback;
+  return { unitLabel, titleLabel, title };
 }
 
 function collectQualificationLearningOutcomeRows(
@@ -336,9 +346,12 @@ function collectQualificationLearningOutcomeSections(
     const sub = subRaw as QualificationSubUnitSource;
     const loOrder =
       Number(sub.showOrder) > 0 ? Number(sub.showOrder) : subIndex + 1;
+    const parts = getLearningOutcomeParts(sub, loOrder, fallbackTitle);
     return {
       id: `${String(unit.id ?? "unit")}-lo-${String(sub.id ?? subIndex)}`,
-      title: formatLearningOutcomeTitle(sub, loOrder, fallbackTitle),
+      title: parts.title,
+      unitLabel: parts.unitLabel,
+      titleLabel: parts.titleLabel,
       rows: collectQualificationLearningOutcomeRows(sub, subIndex),
     };
   });
@@ -357,8 +370,10 @@ type StandardGapTypeFilter = "all" | "Knowledge" | "Behaviour" | "Skills";
 type StandardUnitSource = Record<string, unknown> & {
   id?: string | number;
   title?: string;
+  description?: string;
   type?: string;
   code?: string;
+  unit_ref?: string;
   subUnit?: unknown[];
   items?: StandardItem[];
   evidenceBoxes?: StandardItem["evidenceBoxes"];
@@ -462,6 +477,30 @@ function collectStandardGapRowsForUnit(
   return rows;
 }
 
+function getStandardUnitParts(
+  unit: StandardUnitSource,
+  fallback: string,
+  index: number,
+): { unitLabel: string; titleLabel: string; title: string } {
+  const title = String(unit.title ?? "").trim();
+  const description = String(unit.description ?? "").trim();
+  const ref = String(unit.unit_ref ?? unit.code ?? "").trim();
+
+  const unitLabel = title || ref || String(index + 1);
+  const titleLabel =
+    description && description !== title
+      ? description
+      : title || description || ref || fallback;
+  const combined =
+    title && description && description !== title
+      ? `${title} - ${description}`
+      : ref && title && ref !== title
+        ? `${ref} - ${title}`
+        : title || description || ref || fallback;
+
+  return { unitLabel, titleLabel, title: combined };
+}
+
 function collectStandardGapUnitSections(
   course: CourseWithUnits,
   selectedType: StandardGapTypeFilter,
@@ -475,10 +514,12 @@ function collectStandardGapUnitSections(
     const rows = collectStandardGapRowsForUnit(unit, selectedType);
     if (rows.length === 0) return;
 
-    const title = String(unit.title ?? "").trim();
+    const parts = getStandardUnitParts(unit, fallbackTitle, index);
     sections.push({
       id: `${String(unit.id ?? "unit")}-${index}`,
-      title: title || fallbackTitle,
+      title: parts.title,
+      unitLabel: parts.unitLabel,
+      titleLabel: parts.titleLabel,
       rows,
     });
   });
@@ -639,35 +680,49 @@ function GapSubUnitTable({
 
 function GapPlusAccordionItem({
   value,
-  title,
+  unitLabel,
+  titleLabel,
   nested = false,
   children,
 }: {
   value: string;
-  title: string;
+  unitLabel: string;
+  titleLabel: string;
   nested?: boolean;
   children: ReactNode;
 }) {
+  const fullTitle = [unitLabel, titleLabel].filter(Boolean).join(" - ");
   return (
     <AccordionItem
       value={value}
-      className={`overflow-hidden rounded-md border border-border last:border-b ${
+      className={`min-w-0 overflow-hidden rounded-md border border-border last:border-b ${
         nested ? "bg-muted/20" : "bg-card"
       }`}
     >
       <AccordionTrigger
-        className={`cursor-pointer px-4 text-left hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden ${
+        className={`cursor-pointer items-center overflow-hidden px-4 text-left hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden ${
           nested
             ? "bg-muted/20 py-3 font-medium hover:bg-muted/20"
             : "bg-card py-4 font-semibold hover:bg-card"
         }`}
       >
-        <span className="flex w-full items-center gap-3">
+        <span className="flex min-w-0 flex-1 items-center gap-3 overflow-hidden">
           <span className="relative flex size-5 shrink-0 items-center justify-center text-muted-foreground">
             <Plus className="unit-accordion-plus size-4" />
             <Minus className="unit-accordion-minus absolute size-4" />
           </span>
-          <span className="truncate">{title}</span>
+          <span
+            className="w-20 shrink-0 truncate sm:w-28"
+            title={unitLabel}
+          >
+            {unitLabel}
+          </span>
+          <span
+            className="block min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap"
+            title={titleLabel || fullTitle}
+          >
+            {titleLabel}
+          </span>
         </span>
       </AccordionTrigger>
       <AccordionContent className="border-t bg-card px-4 pb-4">
@@ -755,12 +810,16 @@ export function ModuleUnitProgressDataTable() {
         typedUnit,
         t("table.empty.selectUnit"),
       );
+      const parts = getQualificationUnitParts(
+        typedUnit,
+        t("table.empty.selectUnit"),
+        index,
+      );
       return {
         id: String(typedUnit.id ?? `${index}-${typedUnit.title ?? "unit"}`),
-        title: formatQualificationUnitTitle(
-          typedUnit,
-          t("table.empty.selectUnit"),
-        ),
+        title: parts.title,
+        unitLabel: parts.unitLabel,
+        titleLabel: parts.titleLabel,
         rows: children.length === 0 ? collectQualificationGapRows(typedUnit) : [],
         children,
       };
@@ -1239,59 +1298,72 @@ export function ModuleUnitProgressDataTable() {
       )}
 
       {showUnitAccordion ? (
-        <Accordion
-          key={`${selectedCourse?.course_id ?? "course"}-${selectedType}-${completionFilter}`}
-          type="multiple"
-          defaultValue={[]}
-          className="w-full space-y-3"
-        >
-          {unitSections.map((section) => (
-            <GapPlusAccordionItem
-              key={section.id}
-              value={section.id}
-              title={section.title}
-            >
-              {section.children && section.children.length > 0 ? (
-                <Accordion
-                  type="multiple"
-                  defaultValue={[]}
-                  className="w-full space-y-2 pt-3"
-                >
-                  {section.children.map((child) => (
-                    <GapPlusAccordionItem
-                      key={child.id}
-                      value={child.id}
-                      title={child.title}
-                      nested
-                    >
-                      <GapSubUnitTable
-                        rows={child.rows}
-                        columns={columns}
-                        globalFilter={globalFilter}
-                        completionFilter={completionFilter}
-                        emptyMessage={t("table.empty.noAssessmentCriteria")}
-                        t={t}
-                      />
-                    </GapPlusAccordionItem>
-                  ))}
-                </Accordion>
-              ) : (
-                <GapSubUnitTable
-                  rows={section.rows}
-                  columns={columns}
-                  globalFilter={globalFilter}
-                  completionFilter={completionFilter}
-                  emptyMessage={
-                    isStandardCourse
-                      ? t("table.empty.noItemsForType")
-                      : t("table.empty.noLearningOutcomes")
-                  }
-                  t={t}
-                />
-              )}
-            </GapPlusAccordionItem>
-          ))}
-        </Accordion>
+        <div className="w-full min-w-0 space-y-3">
+          <div className="flex min-w-0 items-center gap-3 rounded-md border border-border bg-muted/40 px-4 py-3 text-sm font-semibold text-muted-foreground">
+            <span className="size-5 shrink-0" aria-hidden />
+            <span className="w-20 shrink-0 sm:w-28">
+              {t("table.columns.unit")}
+            </span>
+            <span className="min-w-0 flex-1">
+              {t("table.columns.title")}
+            </span>
+          </div>
+          <Accordion
+            key={`${selectedCourse?.course_id ?? "course"}-${selectedType}-${completionFilter}`}
+            type="multiple"
+            defaultValue={[]}
+            className="w-full min-w-0 space-y-3"
+          >
+            {unitSections.map((section) => (
+              <GapPlusAccordionItem
+                key={section.id}
+                value={section.id}
+                unitLabel={section.unitLabel}
+                titleLabel={section.titleLabel}
+              >
+                {section.children && section.children.length > 0 ? (
+                  <Accordion
+                    type="multiple"
+                    defaultValue={[]}
+                    className="w-full space-y-2 pt-3"
+                  >
+                    {section.children.map((child) => (
+                      <GapPlusAccordionItem
+                        key={child.id}
+                        value={child.id}
+                        unitLabel={child.unitLabel}
+                        titleLabel={child.titleLabel}
+                        nested
+                      >
+                        <GapSubUnitTable
+                          rows={child.rows}
+                          columns={columns}
+                          globalFilter={globalFilter}
+                          completionFilter={completionFilter}
+                          emptyMessage={t("table.empty.noAssessmentCriteria")}
+                          t={t}
+                        />
+                      </GapPlusAccordionItem>
+                    ))}
+                  </Accordion>
+                ) : (
+                  <GapSubUnitTable
+                    rows={section.rows}
+                    columns={columns}
+                    globalFilter={globalFilter}
+                    completionFilter={completionFilter}
+                    emptyMessage={
+                      isStandardCourse
+                        ? t("table.empty.noItemsForType")
+                        : t("table.empty.noLearningOutcomes")
+                    }
+                    t={t}
+                  />
+                )}
+              </GapPlusAccordionItem>
+            ))}
+          </Accordion>
+        </div>
       ) : (
         <Card>
           <CardContent className="p-12">

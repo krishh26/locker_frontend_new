@@ -3095,6 +3095,7 @@
     },
     "table": {
       "columns": {
+        "unit": "Unit",
         "title": "Title",
         "subUnitTitle": "Sub Unit Title",
         "assessmentCriteria": "Assessment Criteria",

@@ -761,11 +761,14 @@ export function ModuleUnitProgressDataTable() {
     Boolean(selectedCourse) &&
     (isStandardCourse ? Boolean(selectedType) : hasQualificationContent);
 
-  // Standard courses number this column with Course Builder's KSB codes
-  // (K1/B1/S1) rather than a running sequence.
+  // Standard courses label both hierarchy columns KSB, since their codes are
+  // Course Builder's K1/B1/S1 references rather than units or a sequence.
   const srNoHeader = isStandardCourse
     ? t("table.columns.ksb")
     : t("table.columns.srNo");
+  const unitHeader = isStandardCourse
+    ? t("table.columns.ksb")
+    : t("table.columns.unit");
 
   const columns: ColumnDef<SubUnitRow>[] = useMemo(() => {
     const baseColumns: ColumnDef<SubUnitRow>[] = [
@@ -1198,7 +1201,7 @@ export function ModuleUnitProgressDataTable() {
       {showUnitAccordion ? (
         <div className="w-full min-w-0 space-y-3">
           <UnitHierarchyHeader
-            unitLabel={t("table.columns.unit")}
+            unitLabel={unitHeader}
             titleLabel={t("table.columns.title")}
           />
           <Accordion

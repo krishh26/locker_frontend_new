@@ -36,6 +36,8 @@ interface QualificationHierarchyUnitsProps {
   signed_offHandler: (topic: any, unitId: string | number, subUnitId: string | number) => void;
   commentHandler: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, topicId: string | number, unitId: string | number, subUnitId: string | number) => void;
   getEvidenceCount?: (courseId: number, unitId: string | number, topicId?: string | number) => number;
+  /** 1-based position of the unit within the course, used for the "Unit N" label. */
+  unitOrder?: number;
   /** When true, all learning outcomes (sub-units) start expanded after data loads. */
   isEditMode?: boolean;
   /** Changes when switching assignment so default expand runs again. */
@@ -61,10 +63,12 @@ function QualificationHierarchyUnitsComponent({
   signed_offHandler,
   commentHandler,
   getEvidenceCount,
+  unitOrder,
   isEditMode = false,
   evidenceId,
 }: QualificationHierarchyUnitsProps) {
   const t = useTranslations("evidenceLibrary");
+  const tCommon = useTranslations("common");
   const [expandedSubUnits, setExpandedSubUnits] = useState<Set<string | number>>(new Set());
   const lastDefaultExpandKeyRef = useRef<string | null>(null);
 
@@ -100,15 +104,23 @@ function QualificationHierarchyUnitsComponent({
   return (
     <Card className="p-4 mb-4">
       {/* Unit Title */}
-      <h3 className="font-semibold mb-4 text-lg">{unit.title}</h3>
+      <h3 className="font-semibold mb-4 text-lg">
+        {unitOrder
+          ? `${tCommon("unitNumber", { number: unitOrder })} - ${unit.title}`
+          : unit.title}
+      </h3>
 
       {/* Learning Outcomes (subUnits) */}
       {currentUnit.subUnit && currentUnit.subUnit.length > 0 && (
         <div className="ml-2 space-y-3">
-          {currentUnit.subUnit.map((subUnit: any) => {
+          {currentUnit.subUnit.map((subUnit: any, subUnitIndex: number) => {
             const subUnitId = subUnit.id;
             const isExpanded = expandedSubUnits.has(subUnitId);
             const hasTopics = subUnit.topics && Array.isArray(subUnit.topics) && subUnit.topics.length > 0;
+            const loOrder =
+              Number(subUnit.showOrder) > 0
+                ? Number(subUnit.showOrder)
+                : subUnitIndex + 1;
 
             // Get topics from current unit state
             const currentSubUnit = currentUnit.subUnit?.find(
@@ -143,10 +155,19 @@ function QualificationHierarchyUnitsComponent({
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {topics.map((topic: any) => {
+                          {topics.map((topic: any, topicIndex: number) => {
                             const currentTopic = currentSubUnit?.topics?.find(
                               (t: any) => String(t.id) === String(topic.id)
                             );
+                            const topicOrder =
+                              Number(topic.showOrder) > 0
+                                ? Number(topic.showOrder)
+                                : topicIndex + 1;
+                            // Same rule as Gap Analysis: use the authored code,
+                            // else derive "<learning outcome>.<criteria>".
+                            const criteriaCode =
+                              String(topic.code ?? "").trim() ||
+                              `${loOrder}.${topicOrder}`;
                             const learnerMap = currentTopic?.learnerMap ?? topic.learnerMap ?? false;
                             const trainerMap = currentTopic?.trainerMap ?? topic.trainerMap ?? false;
                             const signed_off =
@@ -165,8 +186,11 @@ function QualificationHierarchyUnitsComponent({
                                   />
                                 </TableCell>
                                 <TableCell>
-                                  <div className="text-sm">
-                                    {topic.code && <strong>{topic.code}: </strong>}
+                                  <div
+                                    className="line-clamp-3 max-w-md text-sm whitespace-normal wrap-break-word"
+                                    title={`${criteriaCode}: ${topic.title ?? ""}`}
+                                  >
+                                    <strong>{criteriaCode}: </strong>
                                     {topic.title}
                                   </div>
                                 </TableCell>

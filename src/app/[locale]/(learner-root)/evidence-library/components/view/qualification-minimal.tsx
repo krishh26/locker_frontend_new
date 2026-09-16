@@ -14,6 +14,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
+import { Accordion } from "@/components/ui/accordion";
+import { UnitAccordionItem } from "@/components/unit-hierarchy-accordion";
+import {
+  getLearningOutcomeParts,
+  getQualificationUnitParts,
+} from "@/utils/unit-labels";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
 
@@ -21,8 +27,11 @@ export interface QualificationMinimalProps {
   unit: {
     id: string | number;
     code?: string;
+    unit_ref?: string;
     title: string;
   };
+  /** Position in the course, used as the unit label when there is no reference. */
+  unitOrder: number;
   findUnitIndex: (unitId: string | number, courseId: number) => number;
   findSubUnitIndex: (unitIndex: number, subUnitId: string | number) => number;
   findTopicIndex: (
@@ -44,6 +53,7 @@ export interface QualificationMinimalProps {
 
 export function QualificationMinimal({
   unit,
+  unitOrder,
   findUnitIndex,
   findSubUnitIndex,
   findTopicIndex,
@@ -110,19 +120,31 @@ export function QualificationMinimal({
     
     const subUnitsData: any[] = [];
     if (currentUnit.subUnit && Array.isArray(currentUnit.subUnit)) {
-      currentUnit.subUnit.forEach((subUnit: any) => {
+      currentUnit.subUnit.forEach((subUnit: any, subUnitPosition: number) => {
         if (subUnit.topics && Array.isArray(subUnit.topics)) {
           const subUnitIndex = findSubUnitIndex(unitIndex, subUnit.id);
           if (subUnitIndex === -1) return;
 
+          const loOrder =
+            Number(subUnit.showOrder) > 0
+              ? Number(subUnit.showOrder)
+              : subUnitPosition + 1;
+
           const topics: any[] = [];
-          subUnit.topics.forEach((topic: any) => {
+          subUnit.topics.forEach((topic: any, topicPosition: number) => {
             const topicIndex = findTopicIndex(unitIndex, subUnitIndex, topic.id);
             if (topicIndex === -1) return;
 
+            const topicOrder =
+              Number(topic.showOrder) > 0
+                ? Number(topic.showOrder)
+                : topicPosition + 1;
+
             topics.push({
               id: topic.id,
-              code: topic.code || "",
+              // Same rule as Gap Analysis: use the authored code, else derive
+              // "<learning outcome>.<criteria>".
+              code: String(topic.code ?? "").trim() || `${loOrder}.${topicOrder}`,
               description: topic.title || topic.description || "",
               topic: topic, // Original topic object for handlers
               subUnitId: subUnit.id,
@@ -134,6 +156,9 @@ export function QualificationMinimal({
             subUnitsData.push({
               id: subUnit.id,
               title: subUnit.title || subUnit.description || "",
+              code: subUnit.code || "",
+              showOrder: subUnit.showOrder,
+              loOrder,
               topics,
               subUnitIndex,
             });
@@ -182,143 +207,147 @@ export function QualificationMinimal({
     return getEvidenceCount(courseId, unitId, topic.id);
   };
 
-  return (
-    <div className="space-y-4 mb-4">
-      {/* Unit Header with Code */}
-      <div>
-        <h3 className="text-lg font-semibold">
-          {unit.code && (
-            <span className="text-muted-foreground mr-1">{unit.code} -</span>
-          )}
-          {unit.title}
-        </h3>
-      </div>
+  const unitParts = getQualificationUnitParts(unit, "Untitled unit", unitOrder);
 
-      {/* Performance Criteria Section */}
-      <div className="space-y-4">
+  return (
+    <UnitAccordionItem
+      value={`unit-${courseId}-${unit.id}`}
+      unitLabel={unitParts.unitLabel}
+      titleLabel={unitParts.titleLabel}
+    >
+      <div className="space-y-3 pt-3">
         {/* Select All Checkbox */}
-        <div className="mb-2">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={allMapped}
-              onCheckedChange={(checked) => {
-                handleSelectAll(checked === true);
-              }}
-              disabled={!canEditLearnerFields}
-            />
-            <Label className="text-sm font-medium">Select All PC&apos;s</Label>
-          </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            checked={allMapped}
+            onCheckedChange={(checked) => {
+              handleSelectAll(checked === true);
+            }}
+            disabled={!canEditLearnerFields}
+          />
+          <Label className="text-sm font-medium">Select All PC&apos;s</Label>
         </div>
 
-        {/* SubUnits with Topics */}
-        {subUnitsWithTopics.map((subUnit) => (
-          <div key={subUnit.id} className="space-y-2">
-            {/* SubUnit Header (Learning Outcome) */}
-            <div className="font-medium text-base text-foreground mb-2">
-              {subUnit.title}
-            </div>
+        {/* Learning Outcomes */}
+        <Accordion type="multiple" defaultValue={[]} className="w-full min-w-0 space-y-2">
+          {subUnitsWithTopics.map((subUnit) => {
+            const loOrder = subUnit.loOrder;
+            const loParts = getLearningOutcomeParts(
+              subUnit,
+              loOrder,
+              "Untitled learning outcome"
+            );
 
-            {/* Performance Criteria Table for this SubUnit */}
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="min-w-56 max-w-80 w-[40%] whitespace-normal">
-                      Performance Criteria
-                    </TableHead>
-                    <TableHead>Trainer Comment</TableHead>
-                    <TableHead className="text-center">Gap</TableHead>
-                    <TableHead className="text-center">Sign Off</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {subUnit.topics?.map((pc: any) => {
-                    const currentValues = getCurrentTopicValues(pc.topic, pc.unitId, pc.subUnitId);
-                    const pcText = `${pc.code ? `${pc.code} - ` : ""}${pc.description ?? ""}`;
-                    
-                    return (
-                      <TableRow
-                        key={pc.id}
-                        className={
-                          currentValues.learnerMap ? "bg-primary/10" : undefined
-                        }
-                      >
-                        <TableCell className="min-w-56 max-w-80 w-[40%] align-top whitespace-normal">
-                          <div className="flex items-start gap-2">
-                            <Checkbox
-                              checked={currentValues.learnerMap}
-                              onCheckedChange={() => {
-                                learnerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
-                              }}
-                              disabled={!canEditLearnerFields}
-                              className="mt-0.5"
-                            />
-                            <div
-                              className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground flex-1"
-                              title={pcText}
-                            >
-                              {pc.code && (
-                                <span className="font-medium mr-1">{pc.code} -</span>
-                              )}
-                              {pc.description}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          {!canEditTrainerFields ? (
-                            <span className="text-sm text-muted-foreground">
-                              {currentValues.comment || 'No comment'}
-                            </span>
-                          ) : (
-                            <Input
-                              value={currentValues.comment}
-                              onChange={(e) => {
-                                commentHandler(e, pc.topic.id, pc.unitId, pc.subUnitId);
-                              }}
-                              placeholder="Trainer comment"
-                              className="w-full"
-                            />
-                          )}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="flex flex-col items-center justify-center gap-1">
-                            <GapIndicator
-                              learnerMap={currentValues.learnerMap}
-                              trainerMap={currentValues.trainerMap}
-                              signed_off={currentValues.signed_off}
-                              onClick={() => {
-                                if (canEditTrainerFields) {
-                                  trainerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
-                                }
-                              }}
-                              disabled={!canEditTrainerFields}
-                            />
-                            <EvidenceIndicator evidenceCount={getTopicEvidenceCount(pc.topic, pc.unitId)} />
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <Checkbox
-                            checked={currentValues.signed_off}
-                            disabled={
-                              !canEditTrainerFields ||
-                              !currentValues.learnerMap ||
-                              !currentValues.trainerMap
-                            }
-                            onCheckedChange={() => {
-                              signed_offHandler(pc.topic, pc.unitId, pc.subUnitId);
-                            }}
-                          />
-                        </TableCell>
+            return (
+              <UnitAccordionItem
+                key={subUnit.id}
+                value={`lo-${courseId}-${unit.id}-${subUnit.id}`}
+                unitLabel={loParts.unitLabel}
+                titleLabel={loParts.titleLabel}
+                nested
+              >
+                {/* Performance Criteria Table for this Learning Outcome */}
+                <div className="overflow-x-auto pt-3">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="min-w-56 max-w-80 w-[40%] whitespace-normal">
+                          Performance Criteria
+                        </TableHead>
+                        <TableHead>Trainer Comment</TableHead>
+                        <TableHead className="text-center">Gap</TableHead>
+                        <TableHead className="text-center">Sign Off</TableHead>
                       </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-        ))}
+                    </TableHeader>
+                    <TableBody>
+                      {subUnit.topics?.map((pc: any) => {
+                        const currentValues = getCurrentTopicValues(pc.topic, pc.unitId, pc.subUnitId);
+                        const pcText = `${pc.code ? `${pc.code} - ` : ""}${pc.description ?? ""}`;
+
+                        return (
+                          <TableRow
+                            key={pc.id}
+                            className={
+                              currentValues.learnerMap ? "bg-primary/10" : undefined
+                            }
+                          >
+                            <TableCell className="min-w-56 max-w-80 w-[40%] align-top whitespace-normal">
+                              <div className="flex items-start gap-2">
+                                <Checkbox
+                                  checked={currentValues.learnerMap}
+                                  onCheckedChange={() => {
+                                    learnerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
+                                  }}
+                                  disabled={!canEditLearnerFields}
+                                  className="mt-0.5"
+                                />
+                                <div
+                                  className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground flex-1"
+                                  title={pcText}
+                                >
+                                  {pc.code && (
+                                    <span className="font-medium mr-1">{pc.code} -</span>
+                                  )}
+                                  {pc.description}
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {!canEditTrainerFields ? (
+                                <span className="text-sm text-muted-foreground">
+                                  {currentValues.comment || 'No comment'}
+                                </span>
+                              ) : (
+                                <Input
+                                  value={currentValues.comment}
+                                  onChange={(e) => {
+                                    commentHandler(e, pc.topic.id, pc.unitId, pc.subUnitId);
+                                  }}
+                                  placeholder="Trainer comment"
+                                  className="w-full"
+                                />
+                              )}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              <div className="flex flex-col items-center justify-center gap-1">
+                                <GapIndicator
+                                  learnerMap={currentValues.learnerMap}
+                                  trainerMap={currentValues.trainerMap}
+                                  signed_off={currentValues.signed_off}
+                                  onClick={() => {
+                                    if (canEditTrainerFields) {
+                                      trainerMapHandler(pc.topic, pc.unitId, pc.subUnitId);
+                                    }
+                                  }}
+                                  disabled={!canEditTrainerFields}
+                                />
+                                <EvidenceIndicator evidenceCount={getTopicEvidenceCount(pc.topic, pc.unitId)} />
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-center">
+                              <Checkbox
+                                checked={currentValues.signed_off}
+                                disabled={
+                                  !canEditTrainerFields ||
+                                  !currentValues.learnerMap ||
+                                  !currentValues.trainerMap
+                                }
+                                onCheckedChange={() => {
+                                  signed_offHandler(pc.topic, pc.unitId, pc.subUnitId);
+                                }}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              </UnitAccordionItem>
+            );
+          })}
+        </Accordion>
       </div>
-    </div>
+    </UnitAccordionItem>
   );
 }
-

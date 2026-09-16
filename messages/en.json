@@ -1,5 +1,6 @@
 {
   "common": {
+    "unitNumber": "Unit {number}",
     "welcome": "Welcome",
     "dashboard": "Dashboard",
     "settings": "Settings",
@@ -3100,6 +3101,7 @@
         "subUnitTitle": "Sub Unit Title",
         "assessmentCriteria": "Assessment Criteria",
         "srNo": "Sr No.",
+        "ksb": "KSB",
         "code": "Code",
         "learnerMap": "Learner Map",
         "trainerMap": "Trainer Map",
@@ -3785,7 +3787,9 @@
       "loading": "Loading units...",
       "noUnits": "No units available",
       "noResults": "No results.",
+      "unitNumber": "Unit {number}",
       "columns": {
+        "unit": "Unit",
         "title": "Title",
         "signedOffAwaiting": "% Signed Off / Awaiting Sign Off",
         "completed": "Completed",

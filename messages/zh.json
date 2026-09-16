@@ -1,5 +1,6 @@
 {
   "common": {
+    "unitNumber": "单元 {number}",
     "welcome": "欢迎",
     "dashboard": "仪表板",
     "settings": "设置",
@@ -2711,10 +2712,12 @@
     },
     "table": {
       "columns": {
+        "unit": "单元",
         "title": "标题",
         "subUnitTitle": "子单元标题",
         "assessmentCriteria": "评估标准",
         "srNo": "序号",
+        "ksb": "KSB",
         "code": "代码",
         "learnerMap": "学员图",
         "trainerMap": "培训师图",
@@ -3416,7 +3419,9 @@
       "loading": "正在加载单元...",
       "noUnits": "暂无可用单元",
       "noResults": "无结果。",
+      "unitNumber": "单元 {number}",
       "columns": {
+        "unit": "单元",
         "title": "标题",
         "signedOffAwaiting": "已签署% / 待签署%",
         "completed": "已完成",

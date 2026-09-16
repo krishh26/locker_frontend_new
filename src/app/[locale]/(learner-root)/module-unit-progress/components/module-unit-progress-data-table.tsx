@@ -28,35 +28,104 @@ import { Progress } from "@/components/ui/progress";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import type { UnitProgress } from "@/store/api/module-unit-progress/types";
 
-export type UnitProgressRow = UnitProgress;
+export type UnitProgressRow = UnitProgress & {
+  unitLabel: string;
+  titleLabel: string;
+};
+
+/**
+ * Qualification units are numbered sequentially ("Unit 1", "Unit 2") because their
+ * references mean little to a learner. Standard modules lead with their own title
+ * and keep the longer description in the Title column, as in Gap Analysis.
+ */
+function getUnitParts(
+  unit: UnitProgress,
+  isStandardCourse: boolean,
+  unitNumberLabel: string
+): { unitLabel: string; titleLabel: string } {
+  const title = String(unit.title ?? "").trim();
+  const description = String(unit.description ?? "").trim();
+  const ref = String(unit.unit_ref ?? unit.code ?? "").trim();
+
+  if (isStandardCourse) {
+    return {
+      unitLabel: title || ref || unitNumberLabel,
+      titleLabel:
+        description && description !== title ? description : title || ref,
+    };
+  }
+
+  return {
+    unitLabel: unitNumberLabel,
+    titleLabel: title || ref,
+  };
+}
 
 interface ModuleUnitProgressDataTableProps {
   units?: UnitProgress[];
   isLoading?: boolean;
+  isStandardCourse?: boolean;
 }
 
 export function ModuleUnitProgressDataTable({
   units = [],
   isLoading = false,
+  isStandardCourse = false,
 }: ModuleUnitProgressDataTableProps) {
   const t = useTranslations("moduleUnitProgress");
   const [globalFilter, setGlobalFilter] = React.useState("");
 
+  // Labels are derived before filtering so the numbering stays tied to the unit's
+  // position in the course rather than its position in the search results.
+  const rows = useMemo<UnitProgressRow[]>(
+    () =>
+      units.map((unit, index) => ({
+        ...unit,
+        ...getUnitParts(
+          unit,
+          isStandardCourse,
+          t("table.unitNumber", { number: index + 1 })
+        ),
+      })),
+    [units, isStandardCourse, t]
+  );
+
   const filteredData = useMemo(() => {
-    if (!globalFilter) return units;
+    if (!globalFilter) return rows;
     const filter = globalFilter.toLowerCase();
-    return units.filter((row) =>
-      row.title.toLowerCase().includes(filter)
+    return rows.filter(
+      (row) =>
+        row.unitLabel.toLowerCase().includes(filter) ||
+        row.titleLabel.toLowerCase().includes(filter)
     );
-  }, [units, globalFilter]);
+  }, [rows, globalFilter]);
 
   const columns: ColumnDef<UnitProgressRow>[] = useMemo(
     () => [
       {
-        accessorKey: "title",
+        accessorKey: "unitLabel",
+        header: t("table.columns.unit"),
+        cell: ({ row }: { row: Row<UnitProgressRow> }) => (
+          <div
+            className="w-20 truncate font-medium sm:w-28"
+            title={row.original.unitLabel}
+          >
+            {row.original.unitLabel}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "titleLabel",
         header: t("table.columns.title"),
         cell: ({ row }: { row: Row<UnitProgressRow> }) => (
-          <div className="font-medium">{row.getValue("title")}</div>
+          <div
+            // TableCell defaults to whitespace-nowrap, which would stop the clamp
+            // from ever reaching a second line.
+            className="line-clamp-3 max-w-md font-medium whitespace-normal wrap-break-word"
+            title={row.original.titleLabel}
+          >
+            {row.original.titleLabel}
+          </div>
         ),
       },
       {

@@ -1351,6 +1351,15 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                           (u: any) => u.course_id === course.course_id,
                         )
 
+                        // "Unit N" is numbered by position in the course, not by
+                        // position in the selection, so it matches Select Units.
+                        const unitOrderById = new Map<string, number>(
+                          (course.units || []).map((u: any, index: number) => [
+                            String(u.id),
+                            index + 1,
+                          ]),
+                        )
+
                         // Check if there's an error for this course
                         // const hasError = unitsError && (displayUnits.length === 0 || displayUnits.some((unit: any) => {
                         //   // Check if unit has no learnerMap in topics
@@ -1400,6 +1409,9 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                                     }
                                     commentHandler={qualificationCommentHandler}
                                     getEvidenceCount={getEvidenceCount}
+                                    unitOrder={unitOrderById.get(
+                                      String(unit.id),
+                                    )}
                                     isEditMode={isEditMode}
                                     evidenceId={evidenceId}
                                   />

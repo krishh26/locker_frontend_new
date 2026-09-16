@@ -13,12 +13,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Accordion } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
+import {
+  UnitAccordionItem,
+  UnitHierarchyHeader,
+} from "@/components/unit-hierarchy-accordion";
 import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
 import { resolveFormErrorMessage } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
+import { UnitSubUnitTitle } from "../unit-sub-unit-title";
+import {
+  buildStandardCriteriaCodes,
+  getStandardUnitParts,
+} from "@/utils/unit-labels";
 import { COURSE_TYPES } from "../constants";
 
 /** Compact columns for evidence create Unit Mappings. */
@@ -29,17 +39,16 @@ const UNIT_TITLE_HEAD_CLASS =
 const UNIT_TITLE_CELL_CLASS =
   "min-w-56 max-w-80 w-[40%] align-top whitespace-normal";
 
-function UnitSubUnitTitle({ title }: { title?: string | null }) {
-  const text = title ?? "";
-  return (
-    <div
-      className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground"
-      title={text}
-    >
-      {text}
-    </div>
-  );
-}
+/** One mappable row: a sub-unit, or a unit that has no sub-units. */
+type MappingRow = {
+  key: string;
+  courseId: number;
+  unit: any;
+  unitIndex: number;
+  subUnit?: any;
+  subIndex?: number;
+  code: string;
+};
 
 interface UnitsTableProps {
   control: Control<EvidenceFormValues>;
@@ -140,6 +149,157 @@ export function UnitsTable({
     );
   };
 
+  /** Flattens a course into mappable rows, skipping anything not in form state. */
+  const collectCourseRows = (course: any, courseUnits: any[]): MappingRow[] => {
+    const criteriaCode = buildStandardCriteriaCodes(courseUnits);
+    const rows: MappingRow[] = [];
+
+    courseUnits.forEach((unit: any) => {
+      const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
+      if (unitIndex === -1) return;
+
+      const subUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+      if (subUnits.length > 0) {
+        subUnits.forEach((subUnit: any) => {
+          const subIndex = findSubUnitIndex(unitIndex, subUnit.id);
+          if (subIndex === -1) return;
+
+          rows.push({
+            key: `${course.course_id}-${unit.id}-${subUnit.id}`,
+            courseId: course.course_id,
+            unit,
+            unitIndex,
+            subUnit,
+            subIndex,
+            code: criteriaCode(unit.id, subUnit.id),
+          });
+        });
+        return;
+      }
+
+      rows.push({
+        key: `${course.course_id}-${unit.id}-${unit.type ?? ""}`,
+        courseId: course.course_id,
+        unit,
+        unitIndex,
+        code: criteriaCode(unit.id, unit.id),
+      });
+    });
+
+    return rows;
+  };
+
+  const mappingHeader = (
+    <TableRow>
+      <TableHead className={LEARNER_MAP_COL_CLASS}>Learner Map</TableHead>
+      <TableHead className={UNIT_TITLE_HEAD_CLASS}>Unit/Sub Unit</TableHead>
+      <TableHead>Trainer Comment</TableHead>
+      <TableHead className="text-center">Gap</TableHead>
+      <TableHead className="text-center">Signed Off</TableHead>
+    </TableRow>
+  );
+
+  /** Sub-units and bare units only differ by the form path they write to. */
+  const renderMappingRow = (row: MappingRow) => {
+    const isSubUnitRow = row.subUnit != null;
+    const path = isSubUnitRow
+      ? `units.${row.unitIndex}.subUnit.${row.subIndex}`
+      : `units.${row.unitIndex}`;
+    const live = isSubUnitRow
+      ? (units?.[row.unitIndex] as any)?.subUnit?.[row.subIndex as number]
+      : (units?.[row.unitIndex] as any);
+
+    return (
+      <TableRow key={row.key}>
+        <TableCell className={LEARNER_MAP_COL_CLASS}>
+          <Controller
+            key={`${row.key}-learnerMap`}
+            name={`${path}.learnerMap` as any}
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                checked={field.value || false}
+                onCheckedChange={field.onChange}
+                disabled={disabled || !canEditLearnerFields}
+              />
+            )}
+          />
+        </TableCell>
+        <TableCell className={UNIT_TITLE_CELL_CLASS}>
+          <UnitSubUnitTitle
+            code={row.code}
+            title={isSubUnitRow ? row.subUnit.title : row.unit.title}
+          />
+        </TableCell>
+        <TableCell>
+          <Controller
+            key={`${row.key}-comment`}
+            name={`${path}.comment` as any}
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                placeholder={t("unitsTable.trainerCommentPlaceholder")}
+                disabled={disabled || !canEditTrainerFields}
+                className="w-full"
+              />
+            )}
+          />
+        </TableCell>
+        <TableCell className="text-center">
+          <div className="flex flex-col items-center">
+            <Controller
+              key={`${row.key}-trainerMap`}
+              name={`${path}.trainerMap` as any}
+              control={control}
+              render={({ field: trainerMapField }) => (
+                <GapIndicator
+                  learnerMap={live?.learnerMap || false}
+                  trainerMap={trainerMapField.value || false}
+                  signed_off={live?.signed_off || false}
+                  disabled={disabled || !canEditTrainerFields}
+                  onClick={() => {
+                    handleTrainerGapClick(
+                      trainerMapField,
+                      `${path}.learnerMap`,
+                      `${path}.signed_off`,
+                    );
+                  }}
+                />
+              )}
+            />
+            <EvidenceIndicator
+              evidenceCount={
+                getEvidenceCount
+                  ? getEvidenceCount(row.courseId, row.unit.id, row.subUnit?.id)
+                  : 0
+              }
+            />
+          </div>
+        </TableCell>
+        <TableCell className="text-center">
+          <Controller
+            key={`${row.key}-signed_off`}
+            name={`${path}.signed_off` as any}
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                checked={field.value || false}
+                onCheckedChange={field.onChange}
+                disabled={
+                  disabled ||
+                  !canEditTrainerFields ||
+                  !live?.learnerMap ||
+                  !live?.trainerMap
+                }
+              />
+            )}
+          />
+        </TableCell>
+      </TableRow>
+    );
+  };
+
   // Early return AFTER all hooks are called
   if (!units || units.length === 0) {
     return (
@@ -152,299 +312,89 @@ export function UnitsTable({
   return (
     <div className="space-y-4">
       {Object.values(unitsByCourse).map(({ course, units: courseUnits }) => {
-        // For Standard courses, group units by type
         const isStandardCourse = course.course_core_type === COURSE_TYPES.STANDARD;
-        
+        const rows = collectCourseRows(course, courseUnits);
+
         if (isStandardCourse) {
-          // Group units by type
-          const unitsByType = new Map<string, typeof courseUnits>();
-          courseUnits.forEach((unit: any) => {
-            const unitType = unit.type || '';
-            if (!unitsByType.has(unitType)) {
-              unitsByType.set(unitType, []);
+          // Standard form units are stored per (unit, type) pair, so regroup
+          // them into the Duty -> criteria hierarchy Gap Analysis uses. Each
+          // row carries its own "K1"/"B1"/"S1" code, so the types stay legible
+          // without a level of their own.
+          const dutyGroups = new Map<string, { unit: any; rows: MappingRow[] }>();
+
+          rows.forEach((row) => {
+            const dutyKey = String(row.unit.id);
+            if (!dutyGroups.has(dutyKey)) {
+              dutyGroups.set(dutyKey, { unit: row.unit, rows: [] });
             }
-            unitsByType.get(unitType)!.push(unit);
+            dutyGroups.get(dutyKey)!.rows.push(row);
           });
 
-          // Get selected types for this course
+          // A type spans several Duties, so the learner-map error belongs to the
+          // course rather than to any single Duty.
           const selectedTypes = courseSelectedTypes[course.course_id] || [];
-          
-          return (
-            <div key={course.course_id} className="space-y-4">
-              {Array.from(unitsByType.entries()).map(([unitType, unitsOfType]) => {
-                // Check if this type is selected
-                const isTypeSelected = selectedTypes.includes(unitType);
-                
-                // Check if at least one learnerMap is checked for this type
-                const hasLearnerMap = unitsOfType.some((unit: any) => {
-                  if (unit.subUnit && unit.subUnit.length > 0) {
-                    return unit.subUnit.some((sub: any) => sub.learnerMap === true);
-                  }
-                  return unit.learnerMap === true;
-                });
-                
-                // Show error if type is selected but no learnerMap is checked
-                const hasError =
-                  isStandardUnitsError && isTypeSelected && !hasLearnerMap;
-                
-                return (
-                <Card key={unitType} className={`p-4 ${hasError ? 'border-destructive border-2' : ''}`}>
-                  <h3 className="font-semibold mb-4">
-                    {course.course_name} - {unitType} Units
-                  </h3>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className={LEARNER_MAP_COL_CLASS}>
-                            Learner Map
-                          </TableHead>
-                          <TableHead className={UNIT_TITLE_HEAD_CLASS}>
-                            Unit/Sub Unit
-                          </TableHead>
-                          <TableHead>Trainer Comment</TableHead>
-                          <TableHead className="text-center">Gap</TableHead>
-                          <TableHead className="text-center">Signed Off</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {unitsOfType.map((unit: any) => {
-                  const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
-                  // Skip if unit index is invalid (shouldn't happen, but safety check)
-                  if (unitIndex === -1) {
-                    return <TableRow key={`invalid-${unit.id}`} style={{ display: 'none' }} />;
-                  }
-                  const hasSubUnits = unit.subUnit && unit.subUnit.length > 0;
+          const typesMissingLearnerMap = selectedTypes.filter(
+            (type) =>
+              !rows.some(
+                (row) =>
+                  String(row.unit.type || "") === String(type) &&
+                  (row.subUnit ?? row.unit).learnerMap === true,
+              ),
+          );
 
-                  if (hasSubUnits) {
-                    // Render sub-units
-                    return unit.subUnit.map((subUnit: any) => {
-                      const subIndex = findSubUnitIndex(unitIndex, subUnit.id);
-                      // Skip if sub-unit index is invalid
-                      if (subIndex === -1) {
-                        return <TableRow key={`invalid-${unit.id}-${subUnit.id}`} style={{ display: 'none' }} />;
-                      }
-                      // Use stable key based on IDs, not indices
-                      const stableKey = `${course.course_id}-${unit.id}-${subUnit.id}`;
-                      return (
-                        <TableRow key={stableKey}>
-                          <TableCell className={LEARNER_MAP_COL_CLASS}>
-                            <Controller
-                              key={`${stableKey}-learnerMap`}
-                              name={`units.${unitIndex}.subUnit.${subIndex}.learnerMap` as any}
-                              control={control}
-                              render={({ field: subField }) => (
-                                <Checkbox
-                                  checked={subField.value || false}
-                                  onCheckedChange={subField.onChange}
-                                  disabled={disabled || !canEditLearnerFields}
-                                />
-                              )}
-                            />
-                          </TableCell>
-                          <TableCell className={UNIT_TITLE_CELL_CLASS}>
-                            <UnitSubUnitTitle title={subUnit.title} />
-                          </TableCell>
-                          <TableCell>
-                            <Controller
-                              key={`${stableKey}-comment`}
-                              name={`units.${unitIndex}.subUnit.${subIndex}.comment` as any}
-                              control={control}
-                              render={({ field: subField }) => (
-                                <Input
-                                  {...subField}
-                                  placeholder={t("unitsTable.trainerCommentPlaceholder")}
-                                  disabled={disabled || !canEditTrainerFields}
-                                  className="w-full"
-                                />
-                              )}
-                            />
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <div className="flex flex-col items-center">
-                              <Controller
-                                key={`${stableKey}-trainerMap`}
-                                name={`units.${unitIndex}.subUnit.${subIndex}.trainerMap` as any}
-                                control={control}
-                                render={({ field: trainerMapField }) => {
-                                  const currentLearnerMap =
-                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                  const current_signed_off =
-                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signed_off || false;
-                                  return (
-                                    <GapIndicator
-                                      learnerMap={currentLearnerMap}
-                                      trainerMap={trainerMapField.value || false}
-                                      signed_off={current_signed_off}
-                                      disabled={disabled || !canEditTrainerFields}
-                                      onClick={() => {
-                                        handleTrainerGapClick(
-                                          trainerMapField,
-                                          `units.${unitIndex}.subUnit.${subIndex}.learnerMap`,
-                                          `units.${unitIndex}.subUnit.${subIndex}.signed_off`,
-                                        );
-                                      }}
-                                    />
-                                  );
-                                }}
-                              />
-                              <EvidenceIndicator
-                                evidenceCount={
-                                  getEvidenceCount
-                                    ? getEvidenceCount(
-                                        course.course_id,
-                                        unit.id,
-                                        subUnit.id,
-                                      )
-                                    : 0
-                                }
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <Controller
-                              key={`${stableKey}-signed_off`}
-                              name={`units.${unitIndex}.subUnit.${subIndex}.signed_off` as any}
-                              control={control}
-                              render={({ field: signed_offField }) => {
-                                const currentLearnerMap =
-                                  (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                const currentTrainerMap =
-                                  (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.trainerMap || false;
-                                return (
-                                  <Checkbox
-                                    checked={signed_offField.value || false}
-                                    onCheckedChange={signed_offField.onChange}
-                                    disabled={
-                                      disabled ||
-                                      !canEditTrainerFields ||
-                                      !currentLearnerMap ||
-                                      !currentTrainerMap
-                                    }
-                                  />
-                                );
-                              }}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    });
-                  } else {
-                    // Render unit without sub-units
-                    const stableKey = `${course.course_id}-${unit.id}`;
-                    return (
-                      <TableRow key={stableKey}>
-                        <TableCell className={LEARNER_MAP_COL_CLASS}>
-                          <Controller
-                            key={`${stableKey}-learnerMap`}
-                            name={`units.${unitIndex}.learnerMap` as any}
-                            control={control}
-                            render={({ field: unitField }) => (
-                              <Checkbox
-                                checked={unitField.value || false}
-                                onCheckedChange={unitField.onChange}
-                                disabled={disabled || !canEditLearnerFields}
-                              />
-                            )}
-                          />
-                        </TableCell>
-                        <TableCell className={UNIT_TITLE_CELL_CLASS}>
-                          <UnitSubUnitTitle title={unit.title} />
-                        </TableCell>
-                        <TableCell>
-                            <Controller
-                              key={`${stableKey}-comment`}
-                              name={`units.${unitIndex}.comment` as any}
-                            control={control}
-                            render={({ field: unitField }) => (
-                              <Input
-                                {...unitField}
-                                placeholder={t("unitsTable.trainerCommentPlaceholder")}
-                                disabled={disabled || !canEditTrainerFields}
-                                className="w-full"
-                              />
-                            )}
-                          />
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="flex flex-col items-center">
-                            <Controller
-                              key={`${stableKey}-trainerMap`}
-                              name={`units.${unitIndex}.trainerMap` as any}
-                              control={control}
-                              render={({ field: trainerMapField }) => {
-                                const currentLearnerMap =
-                                  (units?.[unitIndex] as any)?.learnerMap || false;
-                                const current_signed_off =
-                                  (units?.[unitIndex] as any)?.signed_off || false;
-                                return (
-                                  <GapIndicator
-                                    learnerMap={currentLearnerMap}
-                                    trainerMap={trainerMapField.value || false}
-                                    signed_off={current_signed_off}
-                                    disabled={disabled || !canEditTrainerFields}
-                                    onClick={() => {
-                                      handleTrainerGapClick(
-                                        trainerMapField,
-                                        `units.${unitIndex}.learnerMap`,
-                                        `units.${unitIndex}.signed_off`,
-                                      );
-                                    }}
-                                  />
-                                );
-                              }}
-                            />
-                            <EvidenceIndicator
-                              evidenceCount={
-                                getEvidenceCount
-                                  ? getEvidenceCount(course.course_id, unit.id)
-                                  : 0
-                              }
-                            />
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <Controller
-                            key={`${stableKey}-signed_off`}
-                            name={`units.${unitIndex}.signed_off` as any}
-                            control={control}
-                            render={({ field: signed_offField }) => {
-                              const currentLearnerMap =
-                                (units?.[unitIndex] as any)?.learnerMap || false;
-                              const currentTrainerMap =
-                                (units?.[unitIndex] as any)?.trainerMap || false;
-                              return (
-                                <Checkbox
-                                  checked={signed_offField.value || false}
-                                  onCheckedChange={signed_offField.onChange}
-                                  disabled={
-                                    disabled ||
-                                    !canEditTrainerFields ||
-                                    !currentLearnerMap ||
-                                    !currentTrainerMap
-                                  }
-                                />
-                              );
-                            }}
-                          />
-                        </TableCell>
-                      </TableRow>
+          return (
+            <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
+              <h3 className="font-semibold text-lg mb-2">
+                {course.course_name} - Units
+              </h3>
+              <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
+              <Accordion
+                type="multiple"
+                defaultValue={[]}
+                className="w-full min-w-0 space-y-3"
+              >
+                {Array.from(dutyGroups.values()).map(
+                  ({ unit, rows: dutyRows }, dutyOrder) => {
+                    if (dutyRows.length === 0) return null;
+
+                    const unitParts = getStandardUnitParts(
+                      unit,
+                      "Untitled module",
+                      dutyOrder,
                     );
-                  }
-                })}
-                      </TableBody>
-                    </Table>
-                  </div>
-                  {hasError && unitsErrorMessage && (
-                    <div className="mt-2">
-                      <p className="text-sm text-destructive font-medium">
-                        {t(unitsErrorMessage)}
-                      </p>
-                    </div>
-                  )}
-                </Card>
-                );
-              })}
+                    const dutyHasError =
+                      isStandardUnitsError &&
+                      dutyRows.some((row) =>
+                        typesMissingLearnerMap.includes(
+                          String(row.unit.type || ""),
+                        ),
+                      );
+
+                    return (
+                      <UnitAccordionItem
+                        key={`${course.course_id}-${unit.id}`}
+                        value={`unit-${course.course_id}-${unit.id}`}
+                        unitLabel={unitParts.unitLabel}
+                        titleLabel={unitParts.titleLabel}
+                      >
+                        <div className="overflow-x-auto pt-3">
+                          <Table>
+                            <TableHeader>{mappingHeader}</TableHeader>
+                            <TableBody>
+                              {dutyRows.map(renderMappingRow)}
+                            </TableBody>
+                          </Table>
+                        </div>
+                        {dutyHasError && unitsErrorMessage && (
+                          <p className="mt-2 text-sm text-destructive font-medium">
+                            {t(unitsErrorMessage)}
+                          </p>
+                        )}
+                      </UnitAccordionItem>
+                    );
+                  },
+                )}
+              </Accordion>
             </div>
           );
         }
@@ -455,245 +405,8 @@ export function UnitsTable({
             <h3 className="font-semibold mb-4">{course.course_name}</h3>
             <div className="overflow-x-auto">
               <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className={LEARNER_MAP_COL_CLASS}>
-                      Learner Map
-                    </TableHead>
-                    <TableHead className={UNIT_TITLE_HEAD_CLASS}>
-                      Unit/Sub Unit
-                    </TableHead>
-                    <TableHead>Trainer Comment</TableHead>
-                    <TableHead className="text-center">Gap</TableHead>
-                    <TableHead className="text-center">Signed Off</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {courseUnits.map((unit: any) => {
-                    const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
-                    // Skip if unit index is invalid (shouldn't happen, but safety check)
-                    if (unitIndex === -1) {
-                      return <TableRow key={`invalid-${unit.id}`} style={{ display: 'none' }} />;
-                    }
-                    const hasSubUnits = unit.subUnit && unit.subUnit.length > 0;
-
-                    if (hasSubUnits) {
-                      // Render sub-units
-                      return unit.subUnit.map((subUnit: any) => {
-                        const subIndex = findSubUnitIndex(unitIndex, subUnit.id);
-                        // Skip if sub-unit index is invalid
-                        if (subIndex === -1) {
-                          return <TableRow key={`invalid-${unit.id}-${subUnit.id}`} style={{ display: 'none' }} />;
-                        }
-                        // Use stable key based on IDs, not indices
-                        const stableKey = `${course.course_id}-${unit.id}-${subUnit.id}`;
-                        return (
-                          <TableRow key={stableKey}>
-                            <TableCell className={LEARNER_MAP_COL_CLASS}>
-                              <Controller
-                                key={`${stableKey}-learnerMap`}
-                                name={`units.${unitIndex}.subUnit.${subIndex}.learnerMap` as any}
-                                control={control}
-                                render={({ field: subField }) => (
-                                  <Checkbox
-                                    checked={subField.value || false}
-                                    onCheckedChange={subField.onChange}
-                                    disabled={disabled || !canEditLearnerFields}
-                                  />
-                                )}
-                              />
-                            </TableCell>
-                            <TableCell className={UNIT_TITLE_CELL_CLASS}>
-                            <UnitSubUnitTitle title={subUnit.title} />
-                          </TableCell>
-                            <TableCell>
-                              <Controller
-                                key={`${stableKey}-comment`}
-                                name={`units.${unitIndex}.subUnit.${subIndex}.comment` as any}
-                                control={control}
-                                render={({ field: subField }) => (
-                                  <Input
-                                    {...subField}
-                                    placeholder={t("unitsTable.trainerCommentPlaceholder")}
-                                    disabled={disabled || !canEditTrainerFields}
-                                    className="w-full"
-                                  />
-                                )}
-                              />
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <div className="flex flex-col items-center">
-                                <Controller
-                                  key={`${stableKey}-trainerMap`}
-                                  name={`units.${unitIndex}.subUnit.${subIndex}.trainerMap` as any}
-                                  control={control}
-                                  render={({ field: trainerMapField }) => {
-                                    const currentLearnerMap =
-                                      (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                    const current_signed_off =
-                                      (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.signed_off || false;
-                                    return (
-                                      <GapIndicator
-                                        learnerMap={currentLearnerMap}
-                                        trainerMap={trainerMapField.value || false}
-                                        signed_off={current_signed_off}
-                                        disabled={disabled || !canEditTrainerFields}
-                                        onClick={() => {
-                                          handleTrainerGapClick(
-                                            trainerMapField,
-                                            `units.${unitIndex}.subUnit.${subIndex}.learnerMap`,
-                                            `units.${unitIndex}.subUnit.${subIndex}.signed_off`,
-                                          );
-                                        }}
-                                      />
-                                    );
-                                  }}
-                                />
-                                <EvidenceIndicator
-                                  evidenceCount={
-                                    getEvidenceCount
-                                      ? getEvidenceCount(
-                                          course.course_id,
-                                          unit.id,
-                                          subUnit.id,
-                                        )
-                                      : 0
-                                  }
-                                />
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <Controller
-                                key={`${stableKey}-signed_off`}
-                                name={`units.${unitIndex}.subUnit.${subIndex}.signed_off` as any}
-                                control={control}
-                                render={({ field: signed_offField }) => {
-                                  const currentLearnerMap =
-                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.learnerMap || false;
-                                  const currentTrainerMap =
-                                    (units?.[unitIndex] as any)?.subUnit?.[subIndex]?.trainerMap || false;
-                                  return (
-                                    <Checkbox
-                                      checked={signed_offField.value || false}
-                                      onCheckedChange={signed_offField.onChange}
-                                      disabled={
-                                        disabled ||
-                                        !canEditTrainerFields ||
-                                        !currentLearnerMap ||
-                                        !currentTrainerMap
-                                      }
-                                    />
-                                  );
-                                }}
-                              />
-                            </TableCell>
-                          </TableRow>
-                        );
-                      });
-                    } else {
-                      // Render unit without sub-units
-                      const stableKey = `${course.course_id}-${unit.id}`;
-                      return (
-                        <TableRow key={stableKey}>
-                          <TableCell className={LEARNER_MAP_COL_CLASS}>
-                            <Controller
-                              key={`${stableKey}-learnerMap`}
-                              name={`units.${unitIndex}.learnerMap` as any}
-                              control={control}
-                              render={({ field: unitField }) => (
-                                <Checkbox
-                                  checked={unitField.value || false}
-                                  onCheckedChange={unitField.onChange}
-                                  disabled={disabled || !canEditLearnerFields}
-                                />
-                              )}
-                            />
-                          </TableCell>
-                          <TableCell className={UNIT_TITLE_CELL_CLASS}>
-                            <UnitSubUnitTitle title={unit.title} />
-                          </TableCell>
-                          <TableCell>
-                            <Controller
-                              key={`${stableKey}-comment`}
-                              name={`units.${unitIndex}.comment` as any}
-                              control={control}
-                              render={({ field: unitField }) => (
-                                <Input
-                                  {...unitField}
-                                  placeholder={t("unitsTable.trainerCommentPlaceholder")}
-                                  disabled={disabled || !canEditTrainerFields}
-                                  className="w-full"
-                                />
-                              )}
-                            />
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <div className="flex flex-col items-center">
-                              <Controller
-                                key={`${stableKey}-trainerMap`}
-                                name={`units.${unitIndex}.trainerMap` as any}
-                                control={control}
-                                render={({ field: trainerMapField }) => {
-                                  const currentLearnerMap =
-                                    (units?.[unitIndex] as any)?.learnerMap || false;
-                                  const current_signed_off =
-                                    (units?.[unitIndex] as any)?.signed_off || false;
-                                  return (
-                                    <GapIndicator
-                                      learnerMap={currentLearnerMap}
-                                      trainerMap={trainerMapField.value || false}
-                                      signed_off={current_signed_off}
-                                      disabled={disabled || !canEditTrainerFields}
-                                      onClick={() => {
-                                        handleTrainerGapClick(
-                                          trainerMapField,
-                                          `units.${unitIndex}.learnerMap`,
-                                          `units.${unitIndex}.signed_off`,
-                                        );
-                                      }}
-                                    />
-                                  );
-                                }}
-                              />
-                              <EvidenceIndicator
-                                evidenceCount={
-                                  getEvidenceCount
-                                    ? getEvidenceCount(course.course_id, unit.id)
-                                    : 0
-                                }
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <Controller
-                              key={`${stableKey}-signed_off`}
-                              name={`units.${unitIndex}.signed_off` as any}
-                              control={control}
-                              render={({ field: signed_offField }) => {
-                                const currentLearnerMap =
-                                (units?.[unitIndex] as any)?.learnerMap || false;
-                                const currentTrainerMap =
-                                (units?.[unitIndex] as any)?.trainerMap || false;
-                                return (
-                                  <Checkbox
-                                    checked={signed_offField.value || false}
-                                    onCheckedChange={signed_offField.onChange}
-                                    disabled={
-                                      disabled ||
-                                      !canEditTrainerFields ||
-                                      !currentLearnerMap ||
-                                      !currentTrainerMap
-                                    }
-                                  />
-                                );
-                              }}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    }
-                  })}
-                </TableBody>
+                <TableHeader>{mappingHeader}</TableHeader>
+                <TableBody>{rows.map(renderMappingRow)}</TableBody>
               </Table>
             </div>
           </Card>

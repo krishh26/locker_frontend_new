@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useStore } from "react-redux";
 import {
   type ColumnDef,
@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download, Minus, Plus, Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -38,12 +38,16 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Accordion } from "@/components/ui/accordion";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  UnitAccordionItem,
+  UnitHierarchyHeader,
+} from "@/components/unit-hierarchy-accordion";
+import {
+  getLearningOutcomeParts,
+  getQualificationUnitParts,
+  getStandardUnitParts,
+} from "@/utils/unit-labels";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import type { RootState } from "@/store";
@@ -261,40 +265,6 @@ type GapUnitSection = {
   children?: GapUnitSection[];
 };
 
-function getQualificationUnitParts(
-  unit: UnitWithSubUnits | QualificationUnit,
-  fallback: string,
-  index: number,
-): { unitLabel: string; titleLabel: string; title: string } {
-  const titleLabel = String(unit.title ?? "").trim() || fallback;
-  const ref = String(
-    ("unit_ref" in unit ? unit.unit_ref : undefined) ??
-      ("code" in unit ? unit.code : undefined) ??
-      "",
-  ).trim();
-  const unitLabel = ref || String(index + 1);
-  const title =
-    ref && titleLabel && ref !== titleLabel
-      ? `${ref} - ${titleLabel}`
-      : titleLabel || unitLabel || fallback;
-  return { unitLabel, titleLabel, title };
-}
-
-function getLearningOutcomeParts(
-  sub: QualificationSubUnitSource,
-  loOrder: number,
-  fallback: string,
-): { unitLabel: string; titleLabel: string; title: string } {
-  const titleLabel = String(sub.title ?? sub.subTitle ?? "").trim() || fallback;
-  const code = String(sub.code ?? "").trim();
-  const unitLabel = code || String(loOrder);
-  const title =
-    titleLabel && titleLabel !== unitLabel
-      ? `${unitLabel}. ${titleLabel}`
-      : titleLabel || unitLabel || fallback;
-  return { unitLabel, titleLabel, title };
-}
-
 function collectQualificationLearningOutcomeRows(
   sub: QualificationSubUnitSource,
   subIndex: number,
@@ -477,30 +447,6 @@ function collectStandardGapRowsForUnit(
   return rows;
 }
 
-function getStandardUnitParts(
-  unit: StandardUnitSource,
-  fallback: string,
-  index: number,
-): { unitLabel: string; titleLabel: string; title: string } {
-  const title = String(unit.title ?? "").trim();
-  const description = String(unit.description ?? "").trim();
-  const ref = String(unit.unit_ref ?? unit.code ?? "").trim();
-
-  const unitLabel = title || ref || String(index + 1);
-  const titleLabel =
-    description && description !== title
-      ? description
-      : title || description || ref || fallback;
-  const combined =
-    title && description && description !== title
-      ? `${title} - ${description}`
-      : ref && title && ref !== title
-        ? `${ref} - ${title}`
-        : title || description || ref || fallback;
-
-  return { unitLabel, titleLabel, title: combined };
-}
-
 function collectStandardGapUnitSections(
   course: CourseWithUnits,
   selectedType: StandardGapTypeFilter,
@@ -678,60 +624,6 @@ function GapSubUnitTable({
   );
 }
 
-function GapPlusAccordionItem({
-  value,
-  unitLabel,
-  titleLabel,
-  nested = false,
-  children,
-}: {
-  value: string;
-  unitLabel: string;
-  titleLabel: string;
-  nested?: boolean;
-  children: ReactNode;
-}) {
-  const fullTitle = [unitLabel, titleLabel].filter(Boolean).join(" - ");
-  return (
-    <AccordionItem
-      value={value}
-      className={`min-w-0 overflow-hidden rounded-md border border-border last:border-b ${
-        nested ? "bg-muted/20" : "bg-card"
-      }`}
-    >
-      <AccordionTrigger
-        className={`cursor-pointer items-center overflow-hidden px-4 text-left hover:no-underline data-[state=open]:[&_.unit-accordion-plus]:hidden data-[state=closed]:[&_.unit-accordion-minus]:hidden [&>svg]:hidden ${
-          nested
-            ? "bg-muted/20 py-3 font-medium hover:bg-muted/20"
-            : "bg-card py-4 font-semibold hover:bg-card"
-        }`}
-      >
-        <span className="flex min-w-0 flex-1 items-center gap-3 overflow-hidden">
-          <span className="relative flex size-5 shrink-0 items-center justify-center text-muted-foreground">
-            <Plus className="unit-accordion-plus size-4" />
-            <Minus className="unit-accordion-minus absolute size-4" />
-          </span>
-          <span
-            className="w-20 shrink-0 truncate sm:w-28"
-            title={unitLabel}
-          >
-            {unitLabel}
-          </span>
-          <span
-            className="block min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap"
-            title={titleLabel || fullTitle}
-          >
-            {titleLabel}
-          </span>
-        </span>
-      </AccordionTrigger>
-      <AccordionContent className="border-t bg-card px-4 pb-4">
-        {children}
-      </AccordionContent>
-    </AccordionItem>
-  );
-}
-
 export function ModuleUnitProgressDataTable() {
   const t = useTranslations("gapAnalysis");
   const dispatch = useAppDispatch();
@@ -869,11 +761,17 @@ export function ModuleUnitProgressDataTable() {
     Boolean(selectedCourse) &&
     (isStandardCourse ? Boolean(selectedType) : hasQualificationContent);
 
+  // Standard courses number this column with Course Builder's KSB codes
+  // (K1/B1/S1) rather than a running sequence.
+  const srNoHeader = isStandardCourse
+    ? t("table.columns.ksb")
+    : t("table.columns.srNo");
+
   const columns: ColumnDef<SubUnitRow>[] = useMemo(() => {
     const baseColumns: ColumnDef<SubUnitRow>[] = [
       {
         accessorKey: "srNo",
-        header: t("table.columns.srNo"),
+        header: srNoHeader,
         cell: ({ row }: { row: Row<SubUnitRow> }) => {
           const srNo = String(row.getValue("srNo") ?? "").trim();
           return (
@@ -994,7 +892,7 @@ export function ModuleUnitProgressDataTable() {
     // }
 
     return baseColumns;
-  }, [isStandardCourse, t]);
+  }, [isStandardCourse, srNoHeader, t]);
 
   const gapStatusLabel = (gap: SubUnitRow["gap"]) => {
     switch (gap) {
@@ -1035,14 +933,14 @@ export function ModuleUnitProgressDataTable() {
 
     const headers = isStandardCourse
       ? [
-          t("table.columns.srNo"),
+          srNoHeader,
           t("table.columns.title"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
         ]
       : [
-          t("table.columns.srNo"),
+          srNoHeader,
           t("table.columns.assessmentCriteria"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
@@ -1087,14 +985,14 @@ export function ModuleUnitProgressDataTable() {
   const handleExportPdf = () => {
     const headers = isStandardCourse
       ? [
-          t("table.columns.srNo"),
+          srNoHeader,
           t("table.columns.title"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
         ]
       : [
-          t("table.columns.srNo"),
+          srNoHeader,
           t("table.columns.assessmentCriteria"),
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
@@ -1299,15 +1197,10 @@ export function ModuleUnitProgressDataTable() {
 
       {showUnitAccordion ? (
         <div className="w-full min-w-0 space-y-3">
-          <div className="flex min-w-0 items-center gap-3 rounded-md border border-border bg-muted/40 px-4 py-3 text-sm font-semibold text-muted-foreground">
-            <span className="size-5 shrink-0" aria-hidden />
-            <span className="w-20 shrink-0 sm:w-28">
-              {t("table.columns.unit")}
-            </span>
-            <span className="min-w-0 flex-1">
-              {t("table.columns.title")}
-            </span>
-          </div>
+          <UnitHierarchyHeader
+            unitLabel={t("table.columns.unit")}
+            titleLabel={t("table.columns.title")}
+          />
           <Accordion
             key={`${selectedCourse?.course_id ?? "course"}-${selectedType}-${completionFilter}`}
             type="multiple"
@@ -1315,7 +1208,7 @@ export function ModuleUnitProgressDataTable() {
             className="w-full min-w-0 space-y-3"
           >
             {unitSections.map((section) => (
-              <GapPlusAccordionItem
+              <UnitAccordionItem
                 key={section.id}
                 value={section.id}
                 unitLabel={section.unitLabel}
@@ -1328,7 +1221,7 @@ export function ModuleUnitProgressDataTable() {
                     className="w-full space-y-2 pt-3"
                   >
                     {section.children.map((child) => (
-                      <GapPlusAccordionItem
+                      <UnitAccordionItem
                         key={child.id}
                         value={child.id}
                         unitLabel={child.unitLabel}
@@ -1343,7 +1236,7 @@ export function ModuleUnitProgressDataTable() {
                           emptyMessage={t("table.empty.noAssessmentCriteria")}
                           t={t}
                         />
-                      </GapPlusAccordionItem>
+                      </UnitAccordionItem>
                     ))}
                   </Accordion>
                 ) : (
@@ -1360,7 +1253,7 @@ export function ModuleUnitProgressDataTable() {
                     t={t}
                   />
                 )}
-              </GapPlusAccordionItem>
+              </UnitAccordionItem>
             ))}
           </Accordion>
         </div>

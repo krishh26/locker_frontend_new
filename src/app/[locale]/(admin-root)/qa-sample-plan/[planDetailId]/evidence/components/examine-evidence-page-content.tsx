@@ -120,7 +120,6 @@ export function ExamineEvidencePageContent({
  
   const [lockedCheckboxes, setLockedCheckboxes] = useState<Set<string>>(new Set());
   const [iqaCheckedCheckboxes, setIqaCheckedCheckboxes] = useState<Set<string>>(new Set());
-  const [expandedUnits, setExpandedUnits] = useState<Set<string | number>>(new Set());
   const defaultConfirmationRows = useMemo<ConfirmationRow[]>(
     () => [
       {
@@ -1171,18 +1170,6 @@ export function ExamineEvidencePageContent({
     ]
   );
 
-  const handleToggleUnitExpansion = useCallback((unitCode: string | number) => {
-    setExpandedUnits((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(unitCode)) {
-        newSet.delete(unitCode);
-      } else {
-        newSet.add(unitCode);
-      }
-      return newSet;
-    });
-  }, []);
-
   const handleBack = useCallback(() => {
     router.back();
   }, [router]);
@@ -1256,11 +1243,7 @@ export function ExamineEvidencePageContent({
             isDeletingFile={isDeletingFile}
           />
 
-          <UnitMappingTable
-            unitMappingResponse={unitMappingResponse}
-            expandedUnits={expandedUnits}
-            onToggleUnitExpansion={handleToggleUnitExpansion}
-          />
+          <UnitMappingTable unitMappingResponse={unitMappingResponse} />
 
         </>
       )}

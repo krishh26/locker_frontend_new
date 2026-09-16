@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 import { GapIndicator } from "../gap-indicator";
 import { EvidenceIndicator } from "../evidence-indicator";
+import { UnitSubUnitTitle } from "../unit-sub-unit-title";
 
 /** Match evidence create `units-table` Unit Mappings layout. */
 const LEARNER_MAP_COL_CLASS =
@@ -25,23 +26,12 @@ const UNIT_TITLE_HEAD_CLASS =
 const UNIT_TITLE_CELL_CLASS =
   "min-w-56 max-w-80 w-[40%] align-top whitespace-normal";
 
-function UnitSubUnitTitle({ title }: { title?: string | null }) {
-  const text = title ?? "";
-  return (
-    <div
-      className="line-clamp-2 wrap-break-word text-xs leading-snug text-foreground"
-      title={text}
-    >
-      {text}
-    </div>
-  );
-}
-
 export interface StandardCourseMinimalProps {
   title: string;
   rows: Array<{
     id: string | number;
     title: string;
+    code?: string;
     unitId?: string | number;
     unitType?: string;
     courseId?: string | number;
@@ -172,8 +162,7 @@ export function StandardCourseMinimal({
 
 
   return (
-    <div className="mb-4">
-      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+    <div className="pt-3">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -262,7 +251,7 @@ export function StandardCourseMinimal({
                     />
                   </TableCell>
                   <TableCell className={UNIT_TITLE_CELL_CLASS}>
-                    <UnitSubUnitTitle title={row.title} />
+                    <UnitSubUnitTitle code={row.code} title={row.title} />
                   </TableCell>
                   <TableCell>
                     {!canEditTrainerFields ? (

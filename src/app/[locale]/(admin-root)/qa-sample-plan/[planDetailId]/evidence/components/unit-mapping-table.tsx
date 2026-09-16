@@ -1,9 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import {
   Table,
@@ -13,130 +10,162 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Accordion } from "@/components/ui/accordion";
+import {
+  UnitAccordionItem,
+  UnitHierarchyHeader,
+} from "@/components/unit-hierarchy-accordion";
 import type { UnitMappingResponse } from "@/store/api/qa-sample-plan/types";
 import { resolveCriterionDisplayCode } from "../../../utils/mapped-topic";
 
 interface UnitMappingTableProps {
   unitMappingResponse: UnitMappingResponse | undefined;
-  expandedUnits: Set<string | number>;
-  onToggleUnitExpansion: (unitCode: string | number) => void;
 }
+
+type CriteriaRow = {
+  id: string | number;
+  code: string;
+  title: string;
+};
 
 export function UnitMappingTable({
   unitMappingResponse,
-  expandedUnits,
-  onToggleUnitExpansion,
 }: UnitMappingTableProps) {
   const t = useTranslations("qaSamplePlan.evidence.unitMappingTable");
   if (!unitMappingResponse?.data || unitMappingResponse.data.length === 0) {
     return null;
   }
 
+  const criteriaTable = (rows: CriteriaRow[]) => (
+    <div className="overflow-x-auto pt-3">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-20 sm:w-28">{t("columns.code")}</TableHead>
+            <TableHead>{t("columns.unitTitle")}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell className="w-20 align-top font-medium sm:w-28">
+                {row.code}
+              </TableCell>
+              <TableCell className="max-w-xl align-top whitespace-normal">
+                <div
+                  className="line-clamp-3 wrap-break-word"
+                  title={row.title}
+                >
+                  {row.title || t("na")}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>{t("title")}</CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[50px]"></TableHead>
-                <TableHead>{t("columns.code")}</TableHead>
-                <TableHead>{t("columns.unitTitle")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {unitMappingResponse.data.map((unit, unitIndex) => {
-                const hasSubUnits = unit.subUnits && unit.subUnits.length > 0;
-                const isExpanded = expandedUnits.has(unit.unit_code);
+      <CardContent className="space-y-3">
+        <UnitHierarchyHeader
+          unitLabel={t("columns.code")}
+          titleLabel={t("columns.unitTitle")}
+        />
+        <Accordion
+          type="multiple"
+          defaultValue={[]}
+          className="w-full min-w-0 space-y-3"
+        >
+          {unitMappingResponse.data.map((unit, unitIndex) => {
+            const subUnits = unit.subUnits ?? [];
+            const unitCode = resolveCriterionDisplayCode({
+              code: unit.code,
+              title: unit.unit_title,
+              fallback: String(unitIndex + 1),
+            });
 
-                return (
-                  <Fragment key={unit.unit_code}>
-                    <TableRow className="hover:bg-muted">
-                      <TableCell className="w-[50px]">
-                        {hasSubUnits && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => onToggleUnitExpansion(unit.unit_code)}
-                            className="h-8 w-8"
-                          >
-                            {isExpanded ? (
-                              <ChevronUp className="h-4 w-4" />
-                            ) : (
-                              <ChevronDown className="h-4 w-4" />
-                            )}
-                          </Button>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {resolveCriterionDisplayCode({
-                          code: unit.code,
-                          title: unit.unit_title,
-                          fallback: String(unitIndex + 1),
-                        })}
-                      </TableCell>
-                      <TableCell>{unit.unit_title}</TableCell>
-                    </TableRow>
-                    {hasSubUnits &&
-                      isExpanded &&
-                      unit.subUnits?.map((subUnit, subUnitIndex) => {
-                        const topics = subUnit.topics ?? [];
-                        const loCode = resolveCriterionDisplayCode({
-                          code: subUnit.code,
-                          title: subUnit.title,
-                          fallback: String(subUnitIndex + 1),
-                        });
+            // Qualification drills down Unit -> Learning Outcome -> criteria;
+            // Standard has no topics, so its sub-units are the criteria.
+            const hasLearningOutcomes = subUnits.some(
+              (subUnit) => (subUnit.topics ?? []).length > 0,
+            );
 
-                        if (topics.length === 0) {
-                          return (
-                            <TableRow
-                              key={`${String(unit.unit_code)}-${String(subUnit.id)}`}
-                              className="bg-muted hover:bg-muted"
-                            >
-                              <TableCell className="w-[50px] pl-8"></TableCell>
-                              <TableCell>{loCode}</TableCell>
-                              <TableCell>{subUnit.title || t("na")}</TableCell>
-                            </TableRow>
-                          );
-                        }
+            return (
+              <UnitAccordionItem
+                key={unit.unit_code}
+                value={`unit-${String(unit.unit_code)}`}
+                unitLabel={unitCode}
+                titleLabel={unit.unit_title}
+              >
+                {subUnits.length === 0 ? (
+                  <p className="pt-3 text-sm text-muted-foreground">
+                    {t("na")}
+                  </p>
+                ) : hasLearningOutcomes ? (
+                  <Accordion
+                    type="multiple"
+                    defaultValue={[]}
+                    className="w-full min-w-0 space-y-2 pt-3"
+                  >
+                    {subUnits.map((subUnit, subUnitIndex) => {
+                      const loCode = resolveCriterionDisplayCode({
+                        code: subUnit.code,
+                        title: subUnit.title,
+                        fallback: String(subUnitIndex + 1),
+                      });
+                      const topics = subUnit.topics ?? [];
 
-                        return (
-                          <Fragment key={`${String(unit.unit_code)}-${String(subUnit.id)}`}>
-                            <TableRow className="bg-muted/60 hover:bg-muted/60">
-                              <TableCell className="w-[50px] pl-8"></TableCell>
-                              <TableCell className="font-medium">{loCode}</TableCell>
-                              <TableCell className="font-medium">
-                                {subUnit.title || t("na")}
-                              </TableCell>
-                            </TableRow>
-                            {topics.map((topic, topicIndex) => (
-                              <TableRow
-                                key={`${String(unit.unit_code)}-${String(subUnit.id)}-${String(topic.id)}`}
-                                className="bg-muted hover:bg-muted"
-                              >
-                                <TableCell className="w-[50px] pl-12"></TableCell>
-                                <TableCell>
-                                  {resolveCriterionDisplayCode({
-                                    code: topic.code,
-                                    title: topic.title,
-                                    fallback: `${subUnitIndex + 1}.${topicIndex + 1}`,
-                                  })}
-                                </TableCell>
-                                <TableCell>{topic.title || t("na")}</TableCell>
-                              </TableRow>
-                            ))}
-                          </Fragment>
-                        );
-                      })}
-                  </Fragment>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+                      return (
+                        <UnitAccordionItem
+                          key={subUnit.id}
+                          value={`lo-${String(unit.unit_code)}-${String(subUnit.id)}`}
+                          unitLabel={loCode}
+                          titleLabel={subUnit.title || t("na")}
+                          nested
+                        >
+                          {topics.length === 0 ? (
+                            <p className="pt-3 text-sm text-muted-foreground">
+                              {t("na")}
+                            </p>
+                          ) : (
+                            criteriaTable(
+                              topics.map((topic, topicIndex) => ({
+                                id: topic.id,
+                                code: resolveCriterionDisplayCode({
+                                  code: topic.code,
+                                  title: topic.title,
+                                  fallback: `${subUnitIndex + 1}.${topicIndex + 1}`,
+                                }),
+                                title: topic.title ?? "",
+                              })),
+                            )
+                          )}
+                        </UnitAccordionItem>
+                      );
+                    })}
+                  </Accordion>
+                ) : (
+                  criteriaTable(
+                    subUnits.map((subUnit, subUnitIndex) => ({
+                      id: subUnit.id,
+                      code: resolveCriterionDisplayCode({
+                        code: subUnit.code,
+                        title: subUnit.title,
+                        fallback: String(subUnitIndex + 1),
+                      }),
+                      title: subUnit.title ?? "",
+                    })),
+                  )
+                )}
+              </UnitAccordionItem>
+            );
+          })}
+        </Accordion>
       </CardContent>
     </Card>
   );

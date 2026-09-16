@@ -1,5 +1,6 @@
 {
   "common": {
+    "unitNumber": "इकाई {number}",
     "welcome": "स्वागत है",
     "dashboard": "डैशबोर्ड",
     "settings": "सेटिंग्स",
@@ -2763,10 +2764,12 @@
     },
     "table": {
       "columns": {
+        "unit": "इकाई",
         "title": "शीर्षक",
         "subUnitTitle": "उप-इकाई शीर्षक",
         "assessmentCriteria": "आकलन मानदंड",
         "srNo": "क्रम सं.",
+        "ksb": "KSB",
         "code": "कोड",
         "learnerMap": "शिक्षार्थी मानचित्र",
         "trainerMap": "प्रशिक्षक मानचित्र",
@@ -3468,7 +3471,9 @@
       "loading": "यूनिट्स लोड हो रहे हैं...",
       "noUnits": "कोई यूनिट उपलब्ध नहीं",
       "noResults": "कोई परिणाम नहीं।",
+      "unitNumber": "इकाई {number}",
       "columns": {
+        "unit": "इकाई",
         "title": "शीर्षक",
         "signedOffAwaiting": "% साइन-ऑफ / साइन-ऑफ प्रतीक्षारत",
         "completed": "पूर्ण",

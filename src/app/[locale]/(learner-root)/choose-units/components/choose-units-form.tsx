@@ -25,6 +25,7 @@ export function ChooseUnitsForm() {
   const isEmployer = user?.role === "Employer";
   // Get learner and course data from Redux state
   const learner = useAppSelector((state) => state.auth.learner);
+  const courses = useAppSelector((state) => state.auth.courses);
   // Get learner ID
   const learnerId = learner?.learner_id ? learner.learner_id : null;
   const t = useTranslations("chooseUnits");
@@ -39,6 +40,12 @@ export function ChooseUnitsForm() {
   const units = useMemo(() => {
     return (unitsResponse?.units || []) as Unit[];
   }, [unitsResponse?.units]);
+
+  // Standard modules have no credit_value, so the optional-credit rule below
+  // can never be satisfied and would permanently disable Save.
+  const isStandardCourse =
+    courses.find((c) => c?.course?.course_id === selectedCourseId)?.course
+      ?.course_core_type === "Standard";
   
   const mandatoryUnitIds = useMemo(() => {
     return units
@@ -78,8 +85,8 @@ export function ChooseUnitsForm() {
       return t("form.validation.allMandatoryRequired");
     }
 
-    // Check optional units credit requirement
-    if (optionalUnits.length > 0 && optionalCredits < 15) {
+    // Check optional units credit requirement (Qualification courses only)
+    if (!isStandardCourse && optionalUnits.length > 0 && optionalCredits < 15) {
       return t("form.validation.optionalCreditsMinimum");
     }
 

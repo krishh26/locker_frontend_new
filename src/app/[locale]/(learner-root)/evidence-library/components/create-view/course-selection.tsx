@@ -55,6 +55,7 @@ export function CourseSelection({
   getValues,
 }: CourseSelectionProps) {
   const t = useTranslations("evidenceLibrary");
+  const tCommon = useTranslations("common");
   const selectedCourses = useWatch({ control, name: "selectedCourses" });
   const courseSelectedTypes = useWatch({ control, name: "courseSelectedTypes" }) || {};
   const units = useWatch({ control, name: "units" }) || [];
@@ -427,7 +428,7 @@ export function CourseSelection({
                     <span className="text-destructive ml-1">*</span>
                   </Label>
                   <div className="space-y-2">
-                    {course.units?.map((unit) => {
+                    {course.units?.map((unit, unitIndex) => {
                       const isSelected = units.some(
                         (u) =>
                           String(u.id) === String(unit.id) &&
@@ -445,7 +446,10 @@ export function CourseSelection({
                             disabled={disabled}
                           />
                           <Label htmlFor={checkboxId} className="cursor-pointer">
-                            {unit.title}
+                            <span className="font-semibold">
+                              {tCommon("unitNumber", { number: unitIndex + 1 })}
+                            </span>
+                            {` - ${unit.title}`}
                           </Label>
                         </div>
                       );

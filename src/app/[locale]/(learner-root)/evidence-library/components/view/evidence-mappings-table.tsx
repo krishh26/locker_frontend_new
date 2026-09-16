@@ -5,6 +5,15 @@ import { useMemo, useCallback } from "react";
 import { Control, UseFormSetValue, UseFormTrigger, useWatch } from "react-hook-form";
 import type { EvidenceEntry } from "@/store/api/evidence/types";
 import type { LearnerCourse } from "@/store/api/learner/types";
+import { Accordion } from "@/components/ui/accordion";
+import {
+  UnitAccordionItem,
+  UnitHierarchyHeader,
+} from "@/components/unit-hierarchy-accordion";
+import {
+  buildStandardCriteriaCodes,
+  getStandardUnitParts,
+} from "@/utils/unit-labels";
 import { COURSE_TYPES } from "../constants";
 import { reconstructFormStateFromMappings } from "../../utils/reconstruct-form-state";
 import { applyTrainerMapToggle } from "../../utils/apply-trainer-map-toggle";
@@ -323,31 +332,39 @@ export function EvidenceMappingsTable({
         if (courseUnits.length === 0) return null;
 
         return (
-          <div key={course.course_id} className="space-y-4 mb-4">
+          <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
             <h3 className="font-semibold text-lg mb-2">
               {course.course_name} - Units
             </h3>
-            {courseUnits.map((unit: any) => {
-              return (
-                <QualificationMinimal
-                  key={unit.id}
-                  unit={unit}
-                  courseId={course.course_id}
-                  findUnitIndex={findUnitIndex}
-                  findSubUnitIndex={findSubUnitIndex}
-                  findTopicIndex={findTopicIndex}
-                  setValue={setValue}
-                  unitsWatch={unitsWatch}
-                  learnerMapHandler={qualificationLearnerMapHandler}
-                  trainerMapHandler={qualificationTrainerMapHandler}
-                  signed_offHandler={qualificationSignedOffHandler}
-                  commentHandler={qualificationCommentHandler}
-                  getEvidenceCount={getEvidenceCount}
-                  canEditLearnerFields={canEditLearnerFields}
-                  canEditTrainerFields={canEditTrainerFields}
-                />
-              );
-            })}
+            <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
+            <Accordion
+              type="multiple"
+              defaultValue={[]}
+              className="w-full min-w-0 space-y-3"
+            >
+              {courseUnits.map((unit: any, unitOrder: number) => {
+                return (
+                  <QualificationMinimal
+                    key={unit.id}
+                    unit={unit}
+                    unitOrder={unitOrder}
+                    courseId={course.course_id}
+                    findUnitIndex={findUnitIndex}
+                    findSubUnitIndex={findSubUnitIndex}
+                    findTopicIndex={findTopicIndex}
+                    setValue={setValue}
+                    unitsWatch={unitsWatch}
+                    learnerMapHandler={qualificationLearnerMapHandler}
+                    trainerMapHandler={qualificationTrainerMapHandler}
+                    signed_offHandler={qualificationSignedOffHandler}
+                    commentHandler={qualificationCommentHandler}
+                    getEvidenceCount={getEvidenceCount}
+                    canEditLearnerFields={canEditLearnerFields}
+                    canEditTrainerFields={canEditTrainerFields}
+                  />
+                );
+              })}
+            </Accordion>
           </div>
         );
       })}
@@ -360,80 +377,102 @@ export function EvidenceMappingsTable({
 
         if (courseUnits.length === 0) return null;
 
-        // Group units by type
-        const unitsByType = new Map<string, typeof courseUnits>();
+        const criteriaCode = buildStandardCriteriaCodes(courseUnits);
+
+        // Standard form units are stored per (unit, type) pair, so regroup them
+        // into the Unit -> criteria hierarchy that Gap Analysis uses. Each row
+        // carries its own "K1"/"B1"/"S1" code, so the types stay legible
+        // without a level of their own.
+        const unitGroups = new Map<string, { unit: any; rows: any[] }>();
+
         courseUnits.forEach((unit: any) => {
-          const unitType = unit.type || '';
-          if (!unitsByType.has(unitType)) {
-            unitsByType.set(unitType, []);
+          const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
+          if (unitIndex === -1) return;
+
+          const unitKey = String(unit.id);
+          if (!unitGroups.has(unitKey)) {
+            unitGroups.set(unitKey, { unit, rows: [] });
           }
-          unitsByType.get(unitType)!.push(unit);
+          const { rows } = unitGroups.get(unitKey)!;
+
+          const hasSubUnit = unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0;
+          if (hasSubUnit) {
+            unit.subUnit.forEach((sub: any) => {
+              const subUnitIndex = findSubUnitIndex(unitIndex, sub.id);
+              if (subUnitIndex === -1) return;
+
+              rows.push({
+                id: sub.id,
+                title: sub.title,
+                code: criteriaCode(unit.id, sub.id),
+                unitId: unit.id,
+                unitType: unit.type,
+                courseId: course.course_id,
+                unitIndex,
+                subUnitIndex,
+              });
+            });
+          } else {
+            // If unit doesn't have subUnit, add the unit itself
+            rows.push({
+              id: unit.id,
+              title: unit.title,
+              code: criteriaCode(unit.id, unit.id),
+              unitId: unit.id,
+              unitType: unit.type,
+              courseId: course.course_id,
+              unitIndex,
+            });
+          }
         });
 
         return (
-          <div key={course.course_id} className="space-y-4">
-            {Array.from(unitsByType.entries()).map(([unitType, unitsOfType]) => {
-              // Combine all subUnits from all units of this type
-              const combinedSubUnits: any[] = [];
-              unitsOfType.forEach((unit: any) => {
-                const unitIndex = findUnitIndex(unit.id, course.course_id, unit.type);
-                if (unitIndex === -1) return;
-                
-                const hasSubUnit = unit.subUnit && Array.isArray(unit.subUnit) && unit.subUnit.length > 0;
-                if (hasSubUnit) {
-                  unit.subUnit.forEach((sub: any) => {
-                    const subUnitIndex = findSubUnitIndex(unitIndex, sub.id);
-                    if (subUnitIndex === -1) return;
-                    
-                    combinedSubUnits.push({
-                      id: sub.id,
-                      title: sub.title,
-                      unitId: unit.id,
-                      unitType: unit.type,
-                      courseId: course.course_id,
-                      unitIndex,
-                      subUnitIndex,
-                    });
-                  });
-                } else {
-                  // If unit doesn't have subUnit, add the unit itself
-                  combinedSubUnits.push({
-                    id: unit.id,
-                    title: unit.title,
-                    unitId: unit.id,
-                    unitType: unit.type,
-                    courseId: course.course_id,
-                    unitIndex,
-                  });
-                }
-              });
+          <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
+            <h3 className="font-semibold text-lg mb-2">
+              {course.course_name} - Units
+            </h3>
+            <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
+            <Accordion
+              type="multiple"
+              defaultValue={[]}
+              className="w-full min-w-0 space-y-3"
+            >
+              {Array.from(unitGroups.values()).map(({ unit, rows }, unitOrder) => {
+                if (rows.length === 0) return null;
 
-              if (combinedSubUnits.length === 0) return null;
+                const unitParts = getStandardUnitParts(unit, 'Untitled module', unitOrder);
 
-              return (
-                <StandardCourseMinimal
-                  key={unitType}
-                  title={unitType}
-                  rows={combinedSubUnits}
-                  control={control}
-                  courseId={course.course_id}
-                  findUnitIndex={findUnitIndex}
-                  findSubUnitIndex={findSubUnitIndex}
-                  canEditLearnerFields={canEditLearnerFields}
-                  canEditTrainerFields={canEditTrainerFields}
-                  getEvidenceCount={getEvidenceCount}
-                  setValue={setValue}
-                  trigger={trigger}
-                  unitsWatch={unitsWatch}
-                  learnerMapHandler={standardLearnerMapHandler}
-                  trainerMapHandler={standardTrainerMapHandler}
-                  signed_offHandler={standardSignedOffHandler}
-                  commentHandler={standardCommentHandler}
-                  selectAllSignedOffForCombinedHandler={selectAllSignedOffForCombinedHandler}
-                  combinedSubUnits={combinedSubUnits}
-                />
-              );
-            })}
+                return (
+                  <UnitAccordionItem
+                    key={`${course.course_id}-${unit.id}`}
+                    value={`unit-${course.course_id}-${unit.id}`}
+                    unitLabel={unitParts.unitLabel}
+                    titleLabel={unitParts.titleLabel}
+                  >
+                    <StandardCourseMinimal
+                      title="Unit/Sub Unit"
+                      rows={rows}
+                      control={control}
+                      courseId={course.course_id}
+                      findUnitIndex={findUnitIndex}
+                      findSubUnitIndex={findSubUnitIndex}
+                      canEditLearnerFields={canEditLearnerFields}
+                      canEditTrainerFields={canEditTrainerFields}
+                      getEvidenceCount={getEvidenceCount}
+                      setValue={setValue}
+                      trigger={trigger}
+                      unitsWatch={unitsWatch}
+                      learnerMapHandler={standardLearnerMapHandler}
+                      trainerMapHandler={standardTrainerMapHandler}
+                      signed_offHandler={standardSignedOffHandler}
+                      commentHandler={standardCommentHandler}
+                      selectAllSignedOffForCombinedHandler={selectAllSignedOffForCombinedHandler}
+                      combinedSubUnits={rows}
+                    />
+                  </UnitAccordionItem>
+                );
+              })}
+            </Accordion>
           </div>
         );
       })}

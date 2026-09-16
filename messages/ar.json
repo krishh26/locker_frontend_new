@@ -1,5 +1,6 @@
 {
   "common": {
+    "unitNumber": "الوحدة {number}",
     "welcome": "مرحباً",
     "dashboard": "لوحة التحكم",
     "settings": "الإعدادات",
@@ -2798,10 +2799,12 @@
     },
     "table": {
       "columns": {
+        "unit": "الوحدة",
         "title": "العنوان",
         "subUnitTitle": "عنوان الوحدة الفرعية",
         "assessmentCriteria": "معايير التقييم",
         "srNo": "رقم تسلسلي",
+        "ksb": "KSB",
         "code": "الرمز",
         "learnerMap": "خريطة المتعلم",
         "trainerMap": "خريطة المدرب",
@@ -3503,7 +3506,9 @@
       "loading": "جارٍ تحميل الوحدات...",
       "noUnits": "لا توجد وحدات متاحة",
       "noResults": "لا توجد نتائج.",
+      "unitNumber": "الوحدة {number}",
       "columns": {
+        "unit": "الوحدة",
         "title": "العنوان",
         "signedOffAwaiting": "٪ تم الاعتماد / بانتظار الاعتماد",
         "completed": "مكتمل",

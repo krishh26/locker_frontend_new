@@ -1,5 +1,6 @@
 {
   "common": {
+    "unitNumber": "Unité {number}",
     "welcome": "Bienvenue",
     "dashboard": "Tableau de bord",
     "settings": "Paramètres",
@@ -2805,10 +2806,12 @@
     },
     "table": {
       "columns": {
+        "unit": "Unité",
         "title": "Titre",
         "subUnitTitle": "Titre sous-unité",
         "assessmentCriteria": "Critères d'évaluation",
         "srNo": "N° sr.",
+        "ksb": "KSB",
         "code": "Code",
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",
@@ -3510,7 +3513,9 @@
       "loading": "Chargement des unités...",
       "noUnits": "Aucune unité disponible",
       "noResults": "Aucun résultat.",
+      "unitNumber": "Unité {number}",
       "columns": {
+        "unit": "Unité",
         "title": "Titre",
         "signedOffAwaiting": "% Signé / En attente de signature",
         "completed": "Terminé",

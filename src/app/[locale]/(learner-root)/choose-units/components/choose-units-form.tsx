@@ -194,6 +194,7 @@ export function ChooseUnitsForm() {
         <ChooseUnitsDataTable
           units={units}
           mandatoryUnitIds={mandatoryUnitIds}
+          isStandardCourse={isStandardCourse}
         />
 
         {/* Sticky Summary Footer */}

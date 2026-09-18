@@ -5000,6 +5000,11 @@
       "columns": {
         "select": "Seleccionar",
         "unitName": "Nombre de la unidad",
+        "unit": "Unidad",
+        "title": "Título",
+        "ksb": "KSB",
+        "srNo": "N.º",
+        "assessmentCriteria": "Criterios de evaluación",
         "type": "Tipo",
         "glh": "GLH",
         "level": "Nivel",

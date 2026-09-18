@@ -5116,6 +5116,11 @@
       "columns": {
         "select": "选择",
         "unitName": "单元名称",
+        "unit": "单元",
+        "title": "标题",
+        "ksb": "KSB",
+        "srNo": "序号",
+        "assessmentCriteria": "评估标准",
         "type": "类型",
         "glh": "GLH",
         "level": "级别",

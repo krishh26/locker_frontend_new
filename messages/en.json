@@ -5213,6 +5213,11 @@
       "columns": {
         "select": "Select",
         "unitName": "Unit Name",
+        "unit": "Unit",
+        "title": "Title",
+        "ksb": "KSB",
+        "srNo": "Sr No.",
+        "assessmentCriteria": "Assessment Criteria",
         "type": "Type",
         "glh": "GLH",
         "level": "Level",

@@ -4351,6 +4351,11 @@
       "columns": {
         "select": "Auswählen",
         "unitName": "Einheitenname",
+        "unit": "Einheit",
+        "title": "Titel",
+        "ksb": "KSB",
+        "srNo": "Nr.",
+        "assessmentCriteria": "Bewertungskriterien",
         "type": "Typ",
         "glh": "GLH",
         "level": "Niveau",

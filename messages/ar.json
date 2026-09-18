@@ -5080,6 +5080,11 @@
       "columns": {
         "select": "اختيار",
         "unitName": "اسم الوحدة",
+        "unit": "الوحدة",
+        "title": "العنوان",
+        "ksb": "KSB",
+        "srNo": "الرقم التسلسلي",
+        "assessmentCriteria": "معايير التقييم",
         "type": "النوع",
         "glh": "GLH",
         "level": "المستوى",

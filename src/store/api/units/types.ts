@@ -18,6 +18,9 @@ export type Unit = {
   id: number;
   title: string;
   code: string;
+  description?: string;
+  type?: string;
+  unit_ref?: string;
   mandatory: boolean;
   glh: number;
   level: string;

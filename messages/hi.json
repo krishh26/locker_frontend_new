@@ -5168,6 +5168,11 @@
       "columns": {
         "select": "चुनें",
         "unitName": "यूनिट का नाम",
+        "unit": "यूनिट",
+        "title": "शीर्षक",
+        "ksb": "KSB",
+        "srNo": "क्रमांक",
+        "assessmentCriteria": "मूल्यांकन मानदंड",
         "type": "प्रकार",
         "glh": "GLH",
         "level": "स्तर",

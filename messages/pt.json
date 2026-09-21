@@ -4267,6 +4267,12 @@
         "Qualification": "Qualificação",
         "Standard": "Padrão",
         "Gateway": "Gateway"
+      },
+      "statusPlaceholder": "Estado",
+      "statusTypes": {
+        "active": "Ativos",
+        "archived": "Arquivados",
+        "all": "Todos"
       }
     },
     "table": {
@@ -4278,6 +4284,7 @@
         "sector": "Setor",
         "learningHours": "Horas de aprendizagem"
       },
+      "archivedBadge": "Arquivado",
       "actions": {
         "view": "Ver"
       }

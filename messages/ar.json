@@ -4026,6 +4026,12 @@
         "Qualification": "مؤهل",
         "Standard": "قياسية",
         "Gateway": "Gateway"
+      },
+      "statusPlaceholder": "الحالة",
+      "statusTypes": {
+        "active": "نشط",
+        "archived": "مؤرشف",
+        "all": "الكل"
       }
     },
     "table": {
@@ -4037,6 +4043,7 @@
         "sector": "القطاع",
         "learningHours": "ساعات التعلم"
       },
+      "archivedBadge": "مؤرشف",
       "actions": {
         "view": "عرض"
       }

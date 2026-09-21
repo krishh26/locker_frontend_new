@@ -33,6 +33,8 @@ export interface CourseFilters {
   keyword?: string;
   core_type?: string;
   scope?: "organisation" | "global" | "";
+  /** Soft-delete visibility. Default active (hide archived). */
+  status?: "active" | "archived" | "all";
 }
 
 export interface CourseListResponse {

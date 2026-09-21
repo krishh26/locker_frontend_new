@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type {
+  Course,
   CourseListResponse,
   CourseFilters,
   CourseResponse,
@@ -11,6 +12,22 @@ import type {
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 import { clearCoursesList } from "@/store/slices/cacheSlice";
+
+/** Soft-deleted courses are marked active=false (BE no longer hard-deletes). */
+const isActiveCourse = (course: Course) => course.active !== false;
+const isArchivedCourse = (course: Course) => course.active === false;
+
+const filterCoursesByStatus = (
+  response: CourseListResponse,
+  status: CourseFilters["status"] = "active",
+): CourseListResponse => {
+  if (!response?.data) return response;
+  if (status === "all") return response;
+  if (status === "archived") {
+    return { ...response, data: response.data.filter(isArchivedCourse) };
+  }
+  return { ...response, data: response.data.filter(isActiveCourse) };
+};
 
 export const courseApi = createApi({
   reducerPath: "courseApi",
@@ -25,8 +42,14 @@ export const courseApi = createApi({
           keyword = "",
           core_type = "",
           scope = "organisation",
+          status = "active",
         } = filters;
-        let url = `/course/list?page=${page}&limit=${page_size}&meta=true&scope=${encodeURIComponent(scope)}`;
+        // Archive / all need a wider fetch since BE list does not filter by active
+        const limit =
+          status === "archived" || status === "all"
+            ? Math.max(page_size, 1000)
+            : page_size;
+        let url = `/course/list?page=${page}&limit=${limit}&meta=true&scope=${encodeURIComponent(scope)}`;
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -36,11 +59,15 @@ export const courseApi = createApi({
         return url;
       },
       providesTags: ["Course"],
-      transformResponse: (response: CourseListResponse) => {
+      transformResponse: (
+        response: CourseListResponse,
+        _meta,
+        arg: CourseFilters,
+      ) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        return filterCoursesByStatus(response, arg?.status ?? "active");
       },
     }),
     getCourse: builder.query<CourseResponse, number>({
@@ -163,7 +190,7 @@ export const courseApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        return filterCoursesByStatus(response, "active");
       },
     }),
     getStandardCourses: builder.query<CourseListResponse, void>({
@@ -173,14 +200,7 @@ export const courseApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        // Filter for active courses only (active = true)
-        if (response?.data) {
-          return {
-            ...response,
-            data: response.data.filter((course) => course.active === true),
-          };
-        }
-        return response;
+        return filterCoursesByStatus(response, "active");
       },
     }),
   }),

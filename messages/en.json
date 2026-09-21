@@ -4549,6 +4549,12 @@
       "scopeTypes": {
         "organisation": "Organisation",
         "global": "Global"
+      },
+      "statusPlaceholder": "Status",
+      "statusTypes": {
+        "active": "Active",
+        "archived": "Archived",
+        "all": "All"
       }
     },
     "table": {
@@ -4560,6 +4566,7 @@
         "sector": "Sector",
         "learningHours": "Learning hours"
       },
+      "archivedBadge": "Archived",
       "actions": {
         "view": "View",
         "moveToPersonal": "Move to Personal"

@@ -35,6 +35,7 @@ import {
   FolderInput,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,6 +79,7 @@ import { isMasterAdmin } from '@/utils/permissions'
 import { getErrorMessage } from '@/lib/utils'
 
 const courseTypes = ['all', 'Qualification', 'Standard', 'Gateway'] as const
+const statusTypes = ['active', 'archived', 'all'] as const
 
 const createCourseTypes = ['Qualification', 'Standard', 'Gateway'] as const
 
@@ -86,7 +88,6 @@ export function CourseBuilderDataTable() {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const userRole = user?.role
-  console.log("🚀 ~ CourseBuilderDataTable ~ userRole:", userRole)
   const isEmployer = userRole === 'Employer'
   const isAdmin = userRole === 'Admin'
   const showScopeFilter = !isMasterAdmin(user)
@@ -99,6 +100,8 @@ export function CourseBuilderDataTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState('')
   const [courseTypeFilter, setCourseTypeFilter] = useState<string>('all')
+  const [statusFilter, setStatusFilter] =
+    useState<NonNullable<CourseFilters['status']>>('active')
   const [scopeFilter, setScopeFilter] =
     useState<CourseFilters['scope']>('organisation')
   const isAdminViewingGlobalCourses =
@@ -107,6 +110,7 @@ export function CourseBuilderDataTable() {
     page: 1,
     page_size: 10,
     scope: showScopeFilter ? 'organisation' : "",
+    status: 'active',
   })
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [courseToDelete, setCourseToDelete] = useState<Course | null>(null)
@@ -130,8 +134,9 @@ export function CourseBuilderDataTable() {
           ? courseTypeFilter
           : undefined,
       scope: showScopeFilter ? scopeFilter : prev.scope,
+      status: statusFilter,
     }))
-  }, [globalFilter, courseTypeFilter, scopeFilter, showScopeFilter])
+  }, [globalFilter, courseTypeFilter, scopeFilter, showScopeFilter, statusFilter])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -142,6 +147,7 @@ export function CourseBuilderDataTable() {
   const handleClearSearch = () => {
     setGlobalFilter('')
     setCourseTypeFilter('all')
+    setStatusFilter('active')
     setScopeFilter('organisation')
     setFilters((prev) => ({
       ...prev,
@@ -149,6 +155,7 @@ export function CourseBuilderDataTable() {
       keyword: undefined,
       core_type: undefined,
       scope: 'organisation',
+      status: 'active',
     }))
   }
 
@@ -158,6 +165,18 @@ export function CourseBuilderDataTable() {
       ...prev,
       page: 1,
       core_type: value && value !== 'all' ? value : undefined,
+    }))
+  }
+
+  const handleStatusChange = (value: string) => {
+    const nextStatus = (statusTypes.includes(value as (typeof statusTypes)[number])
+      ? value
+      : 'active') as NonNullable<CourseFilters['status']>
+    setStatusFilter(nextStatus)
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      status: nextStatus,
     }))
   }
 
@@ -313,9 +332,17 @@ export function CourseBuilderDataTable() {
         header: t('table.headers.courseName'),
         cell: ({ row }) => {
           const name = row.original.course_name
+          const isArchived = row.original.active === false
           return (
-            <div className='max-w-[200px] truncate' title={name}>
-              {name}
+            <div className='flex max-w-60 items-center gap-2'>
+              <span className='truncate' title={name}>
+                {name}
+              </span>
+              {isArchived && (
+                <Badge variant='secondary' className='shrink-0'>
+                  {t('table.archivedBadge')}
+                </Badge>
+              )}
             </div>
           )
         },
@@ -338,7 +365,7 @@ export function CourseBuilderDataTable() {
         cell: ({ row }) => {
           const sector = row.original.sector
           return (
-            <div className='max-w-[150px] truncate' title={sector}>
+            <div className='max-w-37.5 truncate' title={sector}>
               {sector}
             </div>
           )
@@ -354,6 +381,7 @@ export function CourseBuilderDataTable() {
         cell: ({ row }) => {
           const course = row.original
           const showGlobalAdminActions = isAdminViewingGlobalCourses
+          const isArchived = course.active === false
 
           return (
             <DropdownMenu>
@@ -370,13 +398,15 @@ export function CourseBuilderDataTable() {
                       <Eye className='mr-2 h-4 w-4' />
                       {t('table.actions.view')}
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleMoveToPersonal(course)}
-                      disabled={isMovingCourse}
-                    >
-                      <FolderInput className='mr-2 h-4 w-4' />
-                      {t('table.actions.moveToPersonal')}
-                    </DropdownMenuItem>
+                    {!isArchived && (
+                      <DropdownMenuItem
+                        onClick={() => handleMoveToPersonal(course)}
+                        disabled={isMovingCourse}
+                      >
+                        <FolderInput className='mr-2 h-4 w-4' />
+                        {t('table.actions.moveToPersonal')}
+                      </DropdownMenuItem>
+                    )}
                   </>
                 ) : (
                   !isEmployer && (
@@ -385,13 +415,15 @@ export function CourseBuilderDataTable() {
                         <Edit className='mr-2 h-4 w-4' />
                         {tCommon('edit')}
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => handleDeleteClick(course)}
-                        className='text-destructive'
-                      >
-                        <Trash2 className='mr-2 h-4 w-4' />
-                        {tCommon('delete')}
-                      </DropdownMenuItem>
+                      {!isArchived && (
+                        <DropdownMenuItem
+                          onClick={() => handleDeleteClick(course)}
+                          className='text-destructive'
+                        >
+                          <Trash2 className='mr-2 h-4 w-4' />
+                          {tCommon('delete')}
+                        </DropdownMenuItem>
+                      )}
                     </>
                   )
                 )}
@@ -468,7 +500,7 @@ export function CourseBuilderDataTable() {
             value={courseTypeFilter}
             onValueChange={handleCourseTypeChange}
           >
-            <SelectTrigger className='w-full sm:w-[200px]'>
+            <SelectTrigger className='w-full sm:w-50'>
               <SelectValue placeholder={t('filters.courseTypePlaceholder')} />
             </SelectTrigger>
             <SelectContent>
@@ -479,9 +511,21 @@ export function CourseBuilderDataTable() {
               ))}
             </SelectContent>
           </Select>
+          <Select value={statusFilter} onValueChange={handleStatusChange}>
+            <SelectTrigger className='w-full sm:w-40'>
+              <SelectValue placeholder={t('filters.statusPlaceholder')} />
+            </SelectTrigger>
+            <SelectContent>
+              {statusTypes.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {t(`filters.statusTypes.${status}`)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {showScopeFilter && (
             <Select value={scopeFilter} onValueChange={handleScopeChange}>
-              <SelectTrigger className='w-full sm:w-[200px]'>
+              <SelectTrigger className='w-full sm:w-50'>
                 <SelectValue placeholder={t('filters.scopePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
@@ -496,6 +540,7 @@ export function CourseBuilderDataTable() {
           )}
           {(globalFilter ||
             (courseTypeFilter && courseTypeFilter !== 'all') ||
+            statusFilter !== 'active' ||
             (showScopeFilter && scopeFilter !== 'organisation')) && (
             <Button
               variant='ghost'
@@ -583,7 +628,7 @@ export function CourseBuilderDataTable() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className='min-w-[150px]'>
+                    <TableHead key={header.id} className='min-w-37.5'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

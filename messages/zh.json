@@ -4173,6 +4173,12 @@
         "Qualification": "资格证书",
         "Standard": "标准课程",
         "Gateway": "Gateway 课程"
+      },
+      "statusPlaceholder": "状态",
+      "statusTypes": {
+        "active": "启用",
+        "archived": "已归档",
+        "all": "全部"
       }
     },
     "table": {
@@ -4184,6 +4190,7 @@
         "sector": "行业",
         "learningHours": "学习时长"
       },
+      "archivedBadge": "已归档",
       "actions": {
         "view": "查看"
       }

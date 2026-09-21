@@ -28,15 +28,19 @@ export const useCachedCoursesList = (options?: { skip?: boolean }) => {
   })
 
   // Use cached data if available, otherwise use API data
+  // Soft-deleted courses (active=false) must not appear in selectors
   const data = useMemo(() => {
-    if (cachedData !== null) {
-      return {
-        status: true,
-        message: "Success",
-        data: cachedData,
-      }
+    const source =
+      cachedData !== null
+        ? { status: true, message: "Success", data: cachedData }
+        : apiData
+
+    if (!source?.data) return source
+
+    return {
+      ...source,
+      data: source.data.filter((course) => course.active !== false),
     }
-    return apiData
   }, [cachedData, apiData])
 
   return {

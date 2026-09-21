@@ -2703,6 +2703,22 @@
   "gapAnalysis": {
     "pageTitle": "差距分析",
     "pageSubtitle": "跟踪课程和单元中的学员差距",
+    "legend": {
+      "title": "差距颜色说明",
+      "description": "Gap 条的颜色取决于每行的 Learner Map 和 Trainer Map。",
+      "complete": {
+        "label": "完成（绿色）",
+        "detail": "Learner Map 和 Trainer Map 均为 Yes — 无差距。"
+      },
+      "partial": {
+        "label": "部分（蓝色）",
+        "detail": "Learner Map 或 Trainer Map 仅有一个为 Yes — 部分进度。"
+      },
+      "none": {
+        "label": "无（红色）",
+        "detail": "Learner Map 和 Trainer Map 均为 No — 完全差距。"
+      }
+    },
     "learnerInfo": {
       "name": "姓名",
       "username": "用户名",

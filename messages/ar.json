@@ -2790,6 +2790,22 @@
   "gapAnalysis": {
     "pageTitle": "تحليل الفجوات",
     "pageSubtitle": "تتبع فجوات المتعلمين عبر الدورات والوحدات",
+    "legend": {
+      "title": "مفتاح ألوان الفجوة",
+      "description": "يعتمد لون شريط Gap على Learner Map و Trainer Map لكل صف.",
+      "complete": {
+        "label": "مكتمل (أخضر)",
+        "detail": "Learner Map و Trainer Map كلاهما Yes — لا توجد فجوة."
+      },
+      "partial": {
+        "label": "جزئي (أزرق)",
+        "detail": "واحد فقط من Learner Map أو Trainer Map هو Yes — تقدم جزئي."
+      },
+      "none": {
+        "label": "لا شيء (أحمر)",
+        "detail": "Learner Map و Trainer Map كلاهما No — فجوة كاملة."
+      }
+    },
     "learnerInfo": {
       "name": "الاسم",
       "username": "اسم المستخدم",

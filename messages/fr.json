@@ -2797,6 +2797,22 @@
   "gapAnalysis": {
     "pageTitle": "Analyse des écarts",
     "pageSubtitle": "Suivre les écarts des apprenants par cours et unités",
+    "legend": {
+      "title": "Légende des couleurs d'écart",
+      "description": "La couleur de la barre Gap dépend du Learner Map et du Trainer Map de chaque ligne.",
+      "complete": {
+        "label": "Complet (vert)",
+        "detail": "Learner Map et Trainer Map sont tous deux Oui — aucun écart."
+      },
+      "partial": {
+        "label": "Partiel (bleu)",
+        "detail": "Un seul des deux (Learner Map ou Trainer Map) est Oui — progression partielle."
+      },
+      "none": {
+        "label": "Aucun (rouge)",
+        "detail": "Learner Map et Trainer Map sont tous deux Non — écart total."
+      }
+    },
     "learnerInfo": {
       "name": "Nom",
       "username": "Nom d'utilisateur",

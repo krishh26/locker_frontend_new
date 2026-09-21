@@ -81,7 +81,7 @@ interface EvidenceFormProps {
 /** Map organisation course list API rows into the `LearnerCourse` shape expected by course selection & reconstruct. */
 function mapCourseListToLearnerCourses(list: Course[]): LearnerCourse[] {
   return list
-    .filter((c) => c.active !== false)
+    // .filter((c) => c.active !== false)
     .map((c) => ({
       user_course_id: c.course_id,
       start_date: c.operational_start_date || '',

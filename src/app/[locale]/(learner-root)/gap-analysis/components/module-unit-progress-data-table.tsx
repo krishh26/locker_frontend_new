@@ -59,6 +59,8 @@ import {
   setCurrentCourseId,
 } from "@/store/slices/courseSlice";
 import { useTranslations } from "next-intl";
+import { EvidenceIndicator } from "@/app/[locale]/(learner-root)/evidence-library/components/evidence-indicator";
+import { useEvidenceSubmissionCounts } from "@/app/[locale]/(learner-root)/evidence-library/hooks/use-evidence-submission-counts";
 
 export type SubUnitRow = {
   id: string | number;
@@ -69,6 +71,12 @@ export type SubUnitRow = {
   gap: "complete" | "partial" | "none";
   comment: string;
   isSubUnitHeader?: boolean;
+  /** Evidence-count lookup: course + unit (+ optional sub-unit / topic). */
+  courseId?: number;
+  unitId?: string | number;
+  topicId?: string | number;
+  /** Qualification learning-outcome id (maps to mapping.sub_unit_id). */
+  subUnitId?: string | number;
 };
 
 type StandardItem = {
@@ -226,6 +234,12 @@ function buildGapRow(
   flags: { learnerMap: boolean; trainerMap: boolean },
   srNo: string,
   comment: string,
+  countIds?: {
+    courseId?: number;
+    unitId?: string | number;
+    topicId?: string | number;
+    subUnitId?: string | number;
+  },
 ): SubUnitRow {
   return {
     id,
@@ -235,6 +249,10 @@ function buildGapRow(
     trainerMap: flags.trainerMap,
     gap: gapFromMaps(flags.learnerMap, flags.trainerMap),
     comment,
+    courseId: countIds?.courseId,
+    unitId: countIds?.unitId,
+    topicId: countIds?.topicId,
+    subUnitId: countIds?.subUnitId,
   };
 }
 
@@ -268,6 +286,8 @@ type GapUnitSection = {
 function collectQualificationLearningOutcomeRows(
   sub: QualificationSubUnitSource,
   subIndex: number,
+  courseId?: number,
+  unitId?: string | number,
 ): SubUnitRow[] {
   const rows: SubUnitRow[] = [];
   const loOrder =
@@ -280,13 +300,20 @@ function collectQualificationLearningOutcomeRows(
         Number(topic.showOrder) > 0 ? Number(topic.showOrder) : topicIndex + 1;
       const codeFromApi = String(topic.code ?? "").trim();
       const srNo = codeFromApi || `${loOrder}.${topicOrder}`;
+      const topicId = topic.id ?? rows.length;
       rows.push(
         buildGapRow(
-          `${String(sub.id ?? "sub")}-${String(topic.id ?? rows.length)}`,
+          `${String(sub.id ?? "sub")}-${String(topicId)}`,
           String(topic.title ?? ""),
           readMappingFlags(topic, sub),
           srNo,
           String(topic.comment ?? ""),
+          {
+            courseId,
+            unitId,
+            topicId,
+            subUnitId: sub.id,
+          },
         ),
       );
     }
@@ -295,13 +322,19 @@ function collectQualificationLearningOutcomeRows(
 
   const title = String(sub.title ?? sub.subTitle ?? "");
   const codeFromApi = String(sub.code ?? "").trim();
+  const subId = sub.id ?? rows.length;
   rows.push(
     buildGapRow(
-      sub.id ?? rows.length,
+      subId,
       title,
       readMappingFlags(sub),
       codeFromApi || String(loOrder),
       String(sub.comment ?? ""),
+      {
+        courseId,
+        unitId,
+        topicId: subId,
+      },
     ),
   );
   return rows;
@@ -310,6 +343,7 @@ function collectQualificationLearningOutcomeRows(
 function collectQualificationLearningOutcomeSections(
   unit: UnitWithSubUnits | QualificationUnit,
   fallbackTitle: string,
+  courseId?: number,
 ): GapUnitSection[] {
   const subUnits = unit.subUnit ?? [];
   return subUnits.map((subRaw, subIndex) => {
@@ -322,17 +356,25 @@ function collectQualificationLearningOutcomeSections(
       title: parts.title,
       unitLabel: parts.unitLabel,
       titleLabel: parts.titleLabel,
-      rows: collectQualificationLearningOutcomeRows(sub, subIndex),
+      rows: collectQualificationLearningOutcomeRows(
+        sub,
+        subIndex,
+        courseId,
+        unit.id,
+      ),
     };
   });
 }
 
 function collectQualificationGapRows(
   unit: UnitWithSubUnits | QualificationUnit,
+  courseId?: number,
 ): SubUnitRow[] {
-  return collectQualificationLearningOutcomeSections(unit, "").flatMap(
-    (section) => section.rows,
-  );
+  return collectQualificationLearningOutcomeSections(
+    unit,
+    "",
+    courseId,
+  ).flatMap((section) => section.rows);
 }
 
 type StandardGapTypeFilter = "all" | "Knowledge" | "Behaviour" | "Skills";
@@ -354,10 +396,12 @@ type StandardUnitSource = Record<string, unknown> & {
 function collectStandardGapRowsForUnit(
   unit: StandardUnitSource,
   selectedType: StandardGapTypeFilter,
+  courseId?: number,
 ): SubUnitRow[] {
   const rows: SubUnitRow[] = [];
   const showAll = selectedType === "all";
   const unitSubUnits = Array.isArray(unit.subUnit) ? unit.subUnit : [];
+  const parentUnitId = unit.id;
 
   if (unitSubUnits.length > 0) {
     const matchingSubUnits = showAll
@@ -386,15 +430,19 @@ function collectStandardGapRowsForUnit(
       const trainerMap = Boolean(sub.trainerMap ?? sub.trainer_map ?? false);
       const title = String(sub.title ?? sub.subTitle ?? "");
       const code = String(sub.code ?? "").trim();
-      const subId = `${String(unit.id ?? "u")}-${String(sub.id ?? sub.code ?? rows.length)}`;
+      const subId = sub.id ?? sub.code ?? rows.length;
+      const rowId = `${String(parentUnitId ?? "u")}-${String(subId)}`;
       rows.push({
-        id: subId,
+        id: rowId,
         srNo: code,
         subTitle: title,
         learnerMap,
         trainerMap,
         gap: gapFromMaps(learnerMap, trainerMap),
         comment: code,
+        courseId,
+        unitId: parentUnitId,
+        topicId: subId,
       });
     }
     return rows;
@@ -415,6 +463,9 @@ function collectStandardGapRowsForUnit(
         trainerMap: hasTrainerMap,
         gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
         comment: item.code || "",
+        courseId,
+        unitId: parentUnitId ?? item.id,
+        topicId: parentUnitId != null ? item.id : undefined,
       });
     }
     return rows;
@@ -433,14 +484,17 @@ function collectStandardGapRowsForUnit(
       Boolean(unit.trainerMap ?? (unit as { trainer_map?: boolean }).trainer_map) ||
       unit.evidenceBoxes?.some((box) => box.trainerMap) ||
       false;
+    const rowUnitId = unit.id ?? rows.length;
     rows.push({
-      id: unit.id ?? rows.length,
+      id: rowUnitId,
       srNo: String(unit.code ?? "").trim(),
       subTitle: String(unit.title ?? ""),
       learnerMap: hasLearnerMap,
       trainerMap: hasTrainerMap,
       gap: gapFromMaps(hasLearnerMap, hasTrainerMap),
       comment: String(unit.code ?? ""),
+      courseId,
+      unitId: rowUnitId,
     });
   }
 
@@ -454,10 +508,11 @@ function collectStandardGapUnitSections(
 ): GapUnitSection[] {
   const units = (course.units || []) as unknown[];
   const sections: GapUnitSection[] = [];
+  const courseId = course.course_id;
 
   units.forEach((raw, index) => {
     const unit = raw as StandardUnitSource;
-    const rows = collectStandardGapRowsForUnit(unit, selectedType);
+    const rows = collectStandardGapRowsForUnit(unit, selectedType, courseId);
     if (rows.length === 0) return;
 
     const parts = getStandardUnitParts(unit, fallbackTitle, index);
@@ -633,6 +688,8 @@ export function ModuleUnitProgressDataTable() {
   const searchParams = useSearchParams();
   const urlCourseIdParam = searchParams.get("course_id");
   const courses = useAppSelector((state) => state.auth.courses);
+  const user = useAppSelector((state) => state.auth.user);
+  const learner = useAppSelector((state) => state.auth.learner);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const prevUrlCourseId = useRef<string | undefined>(undefined);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(
@@ -645,6 +702,23 @@ export function ModuleUnitProgressDataTable() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [completionFilter, setCompletionFilter] =
     useState<GapCompletionFilter>("all");
+
+  const evidenceOwnerUserId = useMemo(() => {
+    if (user?.role === "Learner") {
+      return user.id ?? null;
+    }
+    const learnerRecord = learner as
+      | { user_id?: number | { user_id?: number }; id?: string | number }
+      | null
+      | undefined;
+    const nestedUserId =
+      typeof learnerRecord?.user_id === "object"
+        ? learnerRecord.user_id?.user_id
+        : learnerRecord?.user_id;
+    return nestedUserId ?? learnerRecord?.id ?? user?.id ?? null;
+  }, [user, learner]);
+
+  const { getEvidenceCount } = useEvidenceSubmissionCounts(evidenceOwnerUserId);
 
   const isStandardCourse = selectedCourse?.course_core_type === "Standard";
 
@@ -696,11 +770,13 @@ export function ModuleUnitProgressDataTable() {
 
   const qualificationUnitSections = useMemo(() => {
     if (isStandardCourse || !selectedCourse?.units?.length) return [];
+    const courseId = selectedCourse.course_id;
     return selectedCourse.units.map((unit, index) => {
       const typedUnit = unit as UnitWithSubUnits | QualificationUnit;
       const children = collectQualificationLearningOutcomeSections(
         typedUnit,
         t("table.empty.selectUnit"),
+        courseId,
       );
       const parts = getQualificationUnitParts(
         typedUnit,
@@ -712,11 +788,14 @@ export function ModuleUnitProgressDataTable() {
         title: parts.title,
         unitLabel: parts.unitLabel,
         titleLabel: parts.titleLabel,
-        rows: children.length === 0 ? collectQualificationGapRows(typedUnit) : [],
+        rows:
+          children.length === 0
+            ? collectQualificationGapRows(typedUnit, courseId)
+            : [],
         children,
       };
     });
-  }, [isStandardCourse, selectedCourse?.units, t]);
+  }, [isStandardCourse, selectedCourse?.course_id, selectedCourse?.units, t]);
 
   const unitSections = isStandardCourse
     ? standardUnitSections
@@ -861,8 +940,14 @@ export function ModuleUnitProgressDataTable() {
             }
           };
 
+          const { courseId, unitId, topicId, subUnitId } = row.original;
+          const evidenceCount =
+            courseId != null && unitId != null
+              ? getEvidenceCount(courseId, unitId, topicId, subUnitId)
+              : 0;
+
           return (
-            <div className="flex items-center justify-start">
+            <div className="flex flex-col items-start gap-1">
               <div
                 className={`h-6 w-full max-w-25 rounded ${getGapColor()}`}
                 title={
@@ -873,6 +958,7 @@ export function ModuleUnitProgressDataTable() {
                       : t("table.gapTooltip.none")
                 }
               />
+              <EvidenceIndicator evidenceCount={evidenceCount} />
             </div>
           );
         },
@@ -895,7 +981,7 @@ export function ModuleUnitProgressDataTable() {
     // }
 
     return baseColumns;
-  }, [isStandardCourse, srNoHeader, t]);
+  }, [getEvidenceCount, isStandardCourse, srNoHeader, t]);
 
   const gapStatusLabel = (gap: SubUnitRow["gap"]) => {
     switch (gap) {

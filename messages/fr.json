@@ -2811,6 +2811,10 @@
       "none": {
         "label": "Aucun (rouge)",
         "detail": "Learner Map et Trainer Map sont tous deux Non — écart total."
+      },
+      "evidencePoints": {
+        "label": "Points d'évidence",
+        "detail": "Les carrés bleus sous la barre Gap indiquent combien de fois cette unité ou critère apparaît dans les preuves. Un carré = 1 preuve ; plus de carrés (jusqu'à 3) = plus de soumissions, puis un chiffre au-delà de 3."
       }
     },
     "learnerInfo": {

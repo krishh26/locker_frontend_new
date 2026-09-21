@@ -3101,6 +3101,10 @@
       "none": {
         "label": "None (red)",
         "detail": "Learner Map and Trainer Map are both No — full gap."
+      },
+      "evidencePoints": {
+        "label": "Evidence points",
+        "detail": "Blue squares under the Gap bar show how many times this unit or criterion appears in evidence. One square = 1 evidence; more squares (up to 3) mean more submissions, then a number if above 3."
       }
     },
     "learnerInfo": {

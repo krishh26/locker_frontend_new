@@ -2717,6 +2717,10 @@
       "none": {
         "label": "无（红色）",
         "detail": "Learner Map 和 Trainer Map 均为 No — 完全差距。"
+      },
+      "evidencePoints": {
+        "label": "证据点数",
+        "detail": "Gap 条下方的蓝色方块表示该单元或标准在证据中出现的次数。一个方块 = 1 份证据；更多方块（最多 3 个）表示更多提交，超过 3 则显示数字。"
       }
     },
     "learnerInfo": {

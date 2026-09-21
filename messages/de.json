@@ -2201,6 +2201,10 @@
       "none": {
         "label": "Keine (rot)",
         "detail": "Learner Map und Trainer Map sind beide Nein — volle Lücke."
+      },
+      "evidencePoints": {
+        "label": "Evidence-Punkte",
+        "detail": "Blaue Quadrate unter dem Gap-Balken zeigen, wie oft diese Einheit oder dieses Kriterium in Evidence vorkommt. Ein Quadrat = 1 Evidence; mehr Quadrate (bis 3) = mehr Einreichungen, danach eine Zahl über 3."
       }
     },
     "learnerInfo": {

@@ -2587,6 +2587,22 @@
   "gapAnalysis": {
     "pageTitle": "Análisis de brechas",
     "pageSubtitle": "Seguir las brechas de los aprendices por cursos y unidades",
+    "legend": {
+      "title": "Clave de colores de brecha",
+      "description": "El color de la barra Gap se basa en el Learner Map y el Trainer Map de cada fila.",
+      "complete": {
+        "label": "Completo (verde)",
+        "detail": "Learner Map y Trainer Map son ambos Sí — sin brecha."
+      },
+      "partial": {
+        "label": "Parcial (azul)",
+        "detail": "Solo uno de Learner Map o Trainer Map es Sí — progreso parcial."
+      },
+      "none": {
+        "label": "Ninguno (rojo)",
+        "detail": "Learner Map y Trainer Map son ambos No — brecha total."
+      }
+    },
     "learnerInfo": {
       "name": "Nombre",
       "username": "Usuario",

@@ -3087,6 +3087,22 @@
   "gapAnalysis": {
     "pageTitle": "Gap Analysis",
     "pageSubtitle": "Track learner gaps across courses and units",
+    "legend": {
+      "title": "Gap colour key",
+      "description": "The Gap bar colour is based on Learner Map and Trainer Map for each row.",
+      "complete": {
+        "label": "Complete (green)",
+        "detail": "Learner Map and Trainer Map are both Yes — no gap."
+      },
+      "partial": {
+        "label": "Partial (blue)",
+        "detail": "Only one of Learner Map or Trainer Map is Yes — partial progress."
+      },
+      "none": {
+        "label": "None (red)",
+        "detail": "Learner Map and Trainer Map are both No — full gap."
+      }
+    },
     "learnerInfo": {
       "name": "Name",
       "username": "Username",

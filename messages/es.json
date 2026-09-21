@@ -2601,6 +2601,10 @@
       "none": {
         "label": "Ninguno (rojo)",
         "detail": "Learner Map y Trainer Map son ambos No — brecha total."
+      },
+      "evidencePoints": {
+        "label": "Puntos de evidencia",
+        "detail": "Los cuadrados azules bajo la barra Gap muestran cuántas veces esta unidad o criterio aparece en evidencias. Un cuadrado = 1 evidencia; más cuadrados (hasta 3) = más envíos, luego un número si supera 3."
       }
     },
     "learnerInfo": {

@@ -2811,6 +2811,10 @@
       "none": {
         "label": "Nenhum (vermelho)",
         "detail": "Learner Map e Trainer Map são ambos Não — lacuna total."
+      },
+      "evidencePoints": {
+        "label": "Pontos de evidência",
+        "detail": "Os quadrados azuis sob a barra Gap mostram quantas vezes esta unidade ou critério aparece nas evidências. Um quadrado = 1 evidência; mais quadrados (até 3) = mais submissões, depois um número acima de 3."
       }
     },
     "learnerInfo": {

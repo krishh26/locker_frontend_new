@@ -2159,6 +2159,10 @@
       "none": {
         "label": "Nessuno (rosso)",
         "detail": "Learner Map e Trainer Map sono entrambi No — lacuna totale."
+      },
+      "evidencePoints": {
+        "label": "Punti evidence",
+        "detail": "I quadrati blu sotto la barra Gap indicano quante volte questa unità o criterio compare nelle evidence. Un quadrato = 1 evidence; più quadrati (fino a 3) = più invii, poi un numero oltre 3."
       }
     },
     "learnerInfo": {

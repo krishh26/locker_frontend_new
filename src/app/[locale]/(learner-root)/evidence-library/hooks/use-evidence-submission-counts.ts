@@ -28,8 +28,19 @@ export function useEvidenceSubmissionCounts(
   )
 
   const getEvidenceCount = useCallback(
-    (courseId: string | number, unitId: string | number, topicId?: string | number) =>
-      countEvidenceSubmissionsForCell(entries, courseId, unitId, topicId),
+    (
+      courseId: string | number,
+      unitId: string | number,
+      topicId?: string | number,
+      subUnitId?: string | number,
+    ) =>
+      countEvidenceSubmissionsForCell(
+        entries,
+        courseId,
+        unitId,
+        topicId,
+        subUnitId,
+      ),
     [entries],
   )
 

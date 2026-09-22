@@ -3091,15 +3091,15 @@
       "title": "Gap colour key",
       "description": "The Gap bar colour is based on Learner Map and Trainer Map for each row.",
       "complete": {
-        "label": "Green",
+        "label": "Green - Completed",
         "detail": "Learner Map and Trainer Map are both Yes — no gap."
       },
       "partial": {
-        "label": "Blue",
+        "label": "Blue - Ongoing progress",
         "detail": "Only one of Learner Map or Trainer Map is Yes — partial progress."
       },
       "none": {
-        "label": "Red",
+        "label": "Red - No progress",
         "detail": "Learner Map and Trainer Map are both No — full gap."
       },
       "evidencePoints": {

@@ -2707,15 +2707,15 @@
       "title": "差距颜色说明",
       "description": "Gap 条的颜色取决于每行的 Learner Map 和 Trainer Map。",
       "complete": {
-        "label": "绿色",
+        "label": "绿色 - 已完成",
         "detail": "Learner Map 和 Trainer Map 均为 Yes — 无差距。"
       },
       "partial": {
-        "label": "蓝色",
+        "label": "蓝色 - 进行中",
         "detail": "Learner Map 或 Trainer Map 仅有一个为 Yes — 部分进度。"
       },
       "none": {
-        "label": "红色",
+        "label": "红色 - 无进度",
         "detail": "Learner Map 和 Trainer Map 均为 No — 完全差距。"
       },
       "evidencePoints": {

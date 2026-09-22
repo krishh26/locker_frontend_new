@@ -2149,15 +2149,15 @@
       "title": "Legenda colori Gap",
       "description": "Il colore della barra Gap si basa su Learner Map e Trainer Map di ogni riga.",
       "complete": {
-        "label": "Verde",
+        "label": "Verde - Completato",
         "detail": "Learner Map e Trainer Map sono entrambi Sì — nessuna lacuna."
       },
       "partial": {
-        "label": "Blu",
+        "label": "Blu - Progresso in corso",
         "detail": "Solo uno tra Learner Map e Trainer Map è Sì — progresso parziale."
       },
       "none": {
-        "label": "Rosso",
+        "label": "Rosso - Nessun progresso",
         "detail": "Learner Map e Trainer Map sono entrambi No — lacuna totale."
       },
       "evidencePoints": {

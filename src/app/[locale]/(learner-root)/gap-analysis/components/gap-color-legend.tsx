@@ -49,8 +49,8 @@ export function GapColorLegend() {
 
         <div className="flex items-start gap-3 border-t pt-4">
           <div className="mt-0.5 flex shrink-0 items-center gap-1" aria-hidden>
-            <div className="h-2.5 w-2.5 rounded-sm border border-primary bg-primary" />
-            <div className="h-2.5 w-2.5 rounded-sm border border-primary bg-primary" />
+            <div className="h-2.5 w-2.5 rounded-full border border-primary bg-primary" />
+            <div className="h-2.5 w-2.5 rounded-full border border-primary bg-primary" />
           </div>
           <div className="min-w-0 space-y-0.5">
             <p className="text-sm font-medium text-foreground">

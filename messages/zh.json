@@ -2707,20 +2707,20 @@
       "title": "差距颜色说明",
       "description": "Gap 条的颜色取决于每行的 Learner Map 和 Trainer Map。",
       "complete": {
-        "label": "完成（绿色）",
+        "label": "绿色",
         "detail": "Learner Map 和 Trainer Map 均为 Yes — 无差距。"
       },
       "partial": {
-        "label": "部分（蓝色）",
+        "label": "蓝色",
         "detail": "Learner Map 或 Trainer Map 仅有一个为 Yes — 部分进度。"
       },
       "none": {
-        "label": "无（红色）",
+        "label": "红色",
         "detail": "Learner Map 和 Trainer Map 均为 No — 完全差距。"
       },
       "evidencePoints": {
         "label": "证据点数",
-        "detail": "Gap 条下方的蓝色方块表示该单元或标准在证据中出现的次数。一个方块 = 1 份证据；更多方块（最多 3 个）表示更多提交，超过 3 则显示数字。"
+        "detail": "Gap 条下方的蓝色圆点表示该单元或标准在证据中出现的次数。一个圆点 = 1 份证据；更多圆点（最多 3 个）表示更多提交，超过 3 则显示数字。"
       }
     },
     "learnerInfo": {

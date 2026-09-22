@@ -15,7 +15,7 @@ interface EvidenceIndicatorProps {
  * EvidenceIndicator Component
  *
  * Displays visual indicators showing how many evidence submissions exist
- * for a unit/subunit. Shows a single box for 1 evidence, multiple boxes
+ * for a unit/subunit. Shows a single circle for 1 evidence, multiple circles
  * (up to 3) plus a count for larger numbers.
  */
 export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
@@ -47,7 +47,7 @@ export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
     >
       {evidenceCount === 1 ? (
         <div
-          className={`${boxSize} bg-primary rounded-sm border border-primary`}
+          className={`${boxSize} bg-primary rounded-full border border-primary`}
           title="1 evidence submission"
           aria-label={`${evidenceCount} evidence submission`}
         />
@@ -57,7 +57,7 @@ export const EvidenceIndicator: React.FC<EvidenceIndicatorProps> = ({
             (_, idx) => (
               <div
                 key={idx}
-                className={`${boxSize} bg-primary rounded-sm border border-primary`}
+                className={`${boxSize} bg-primary rounded-full border border-primary`}
                 title={`${evidenceCount} evidence submissions`}
                 aria-label={`${evidenceCount} evidence submissions`}
               />

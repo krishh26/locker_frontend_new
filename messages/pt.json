@@ -2801,20 +2801,20 @@
       "title": "Legenda de cores do Gap",
       "description": "A cor da barra Gap baseia-se no Learner Map e no Trainer Map de cada linha.",
       "complete": {
-        "label": "Completo (verde)",
+        "label": "Verde",
         "detail": "Learner Map e Trainer Map são ambos Sim — sem lacuna."
       },
       "partial": {
-        "label": "Parcial (azul)",
+        "label": "Azul",
         "detail": "Apenas um de Learner Map ou Trainer Map é Sim — progresso parcial."
       },
       "none": {
-        "label": "Nenhum (vermelho)",
+        "label": "Vermelho",
         "detail": "Learner Map e Trainer Map são ambos Não — lacuna total."
       },
       "evidencePoints": {
         "label": "Pontos de evidência",
-        "detail": "Os quadrados azuis sob a barra Gap mostram quantas vezes esta unidade ou critério aparece nas evidências. Um quadrado = 1 evidência; mais quadrados (até 3) = mais submissões, depois um número acima de 3."
+        "detail": "Os círculos azuis sob a barra Gap mostram quantas vezes esta unidade ou critério aparece nas evidências. Um círculo = 1 evidência; mais círculos (até 3) = mais submissões, depois um número acima de 3."
       }
     },
     "learnerInfo": {

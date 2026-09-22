@@ -1246,7 +1246,7 @@ export function ModuleUnitProgressDataTable() {
                 setCompletionFilter(value as GapCompletionFilter)
               }
             >
-              <SelectTrigger id="criteria-filter" className="w-full cursor-pointer sm:w-[260px]">
+              <SelectTrigger id="criteria-filter" className="w-full cursor-pointer sm:w-65">
                 <SelectValue placeholder={t("table.filters.selectCriteriaStatus")} />
               </SelectTrigger>
               <SelectContent>

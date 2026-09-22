@@ -2801,20 +2801,20 @@
       "title": "Légende des couleurs d'écart",
       "description": "La couleur de la barre Gap dépend du Learner Map et du Trainer Map de chaque ligne.",
       "complete": {
-        "label": "Complet (vert)",
+        "label": "Vert",
         "detail": "Learner Map et Trainer Map sont tous deux Oui — aucun écart."
       },
       "partial": {
-        "label": "Partiel (bleu)",
+        "label": "Bleu",
         "detail": "Un seul des deux (Learner Map ou Trainer Map) est Oui — progression partielle."
       },
       "none": {
-        "label": "Aucun (rouge)",
+        "label": "Rouge",
         "detail": "Learner Map et Trainer Map sont tous deux Non — écart total."
       },
       "evidencePoints": {
         "label": "Points d'évidence",
-        "detail": "Les carrés bleus sous la barre Gap indiquent combien de fois cette unité ou critère apparaît dans les preuves. Un carré = 1 preuve ; plus de carrés (jusqu'à 3) = plus de soumissions, puis un chiffre au-delà de 3."
+        "detail": "Les cercles bleus sous la barre Gap indiquent combien de fois cette unité ou critère apparaît dans les preuves. Un cercle = 1 preuve ; plus de cercles (jusqu'à 3) = plus de soumissions, puis un chiffre au-delà de 3."
       }
     },
     "learnerInfo": {

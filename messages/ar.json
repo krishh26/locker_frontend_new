@@ -2794,15 +2794,15 @@
       "title": "مفتاح ألوان الفجوة",
       "description": "يعتمد لون شريط Gap على Learner Map و Trainer Map لكل صف.",
       "complete": {
-        "label": "أخضر",
+        "label": "أخضر - مكتمل",
         "detail": "Learner Map و Trainer Map كلاهما Yes — لا توجد فجوة."
       },
       "partial": {
-        "label": "أزرق",
+        "label": "أزرق - تقدم جارٍ",
         "detail": "واحد فقط من Learner Map أو Trainer Map هو Yes — تقدم جزئي."
       },
       "none": {
-        "label": "أحمر",
+        "label": "أحمر - لا تقدم",
         "detail": "Learner Map و Trainer Map كلاهما No — فجوة كاملة."
       },
       "evidencePoints": {

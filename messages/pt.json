@@ -2801,15 +2801,15 @@
       "title": "Legenda de cores do Gap",
       "description": "A cor da barra Gap baseia-se no Learner Map e no Trainer Map de cada linha.",
       "complete": {
-        "label": "Verde",
+        "label": "Verde - Concluído",
         "detail": "Learner Map e Trainer Map são ambos Sim — sem lacuna."
       },
       "partial": {
-        "label": "Azul",
+        "label": "Azul - Progresso em curso",
         "detail": "Apenas um de Learner Map ou Trainer Map é Sim — progresso parcial."
       },
       "none": {
-        "label": "Vermelho",
+        "label": "Vermelho - Sem progresso",
         "detail": "Learner Map e Trainer Map são ambos Não — lacuna total."
       },
       "evidencePoints": {

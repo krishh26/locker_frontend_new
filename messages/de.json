@@ -2191,15 +2191,15 @@
       "title": "Farblegende für Lücken",
       "description": "Die Farbe des Gap-Balkens basiert auf Learner Map und Trainer Map jeder Zeile.",
       "complete": {
-        "label": "Grün",
+        "label": "Grün - Abgeschlossen",
         "detail": "Learner Map und Trainer Map sind beide Ja — keine Lücke."
       },
       "partial": {
-        "label": "Blau",
+        "label": "Blau - Laufender Fortschritt",
         "detail": "Nur eines von Learner Map oder Trainer Map ist Ja — teilweise Fortschritt."
       },
       "none": {
-        "label": "Rot",
+        "label": "Rot - Kein Fortschritt",
         "detail": "Learner Map und Trainer Map sind beide Nein — volle Lücke."
       },
       "evidencePoints": {

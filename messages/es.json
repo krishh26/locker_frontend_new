@@ -2591,15 +2591,15 @@
       "title": "Clave de colores de brecha",
       "description": "El color de la barra Gap se basa en el Learner Map y el Trainer Map de cada fila.",
       "complete": {
-        "label": "Verde",
+        "label": "Verde - Completado",
         "detail": "Learner Map y Trainer Map son ambos Sí — sin brecha."
       },
       "partial": {
-        "label": "Azul",
+        "label": "Azul - Progreso en curso",
         "detail": "Solo uno de Learner Map o Trainer Map es Sí — progreso parcial."
       },
       "none": {
-        "label": "Rojo",
+        "label": "Rojo - Sin progreso",
         "detail": "Learner Map y Trainer Map son ambos No — brecha total."
       },
       "evidencePoints": {

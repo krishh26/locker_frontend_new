@@ -35,12 +35,9 @@ export function GapColorLegend() {
                 className={`mt-0.5 h-5 w-10 shrink-0 rounded ${item.swatchClass}`}
                 aria-hidden
               />
-              <div className="min-w-0 space-y-0.5">
+              <div className="min-w-0">
                 <p className="text-sm font-medium text-foreground">
                   {t(`${item.key}.label`)}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {t(`${item.key}.detail`)}
                 </p>
               </div>
             </li>

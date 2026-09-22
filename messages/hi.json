@@ -2759,15 +2759,15 @@
       "title": "गैप रंग कुंजी",
       "description": "गैप बार का रंग प्रत्येक पंक्ति के Learner Map और Trainer Map पर आधारित है।",
       "complete": {
-        "label": "हरा",
+        "label": "हरा - पूर्ण",
         "detail": "Learner Map और Trainer Map दोनों Yes हैं — कोई गैप नहीं।"
       },
       "partial": {
-        "label": "नीला",
+        "label": "नीला - चल रही प्रगति",
         "detail": "Learner Map या Trainer Map में से केवल एक Yes है — आंशिक प्रगति।"
       },
       "none": {
-        "label": "लाल",
+        "label": "लाल - कोई प्रगति नहीं",
         "detail": "Learner Map और Trainer Map दोनों No हैं — पूरा गैप।"
       },
       "evidencePoints": {

@@ -2836,6 +2836,7 @@
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",
         "gap": "Écart",
+        "evidence": "Preuve",
         "comment": "Commentaire"
       },
       "yes": "Oui",

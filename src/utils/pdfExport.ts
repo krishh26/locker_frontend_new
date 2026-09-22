@@ -39,6 +39,8 @@ export interface GapAnalysisPdfRow {
   learnerMap: string
   trainerMap: string
   gap: GapAnalysisPdfGap
+  /** Evidence submission count shown as circles under the gap bar (UI parity). */
+  evidenceCount?: number
   comment?: string
 }
 
@@ -171,7 +173,11 @@ export async function exportGapAnalysisToPdf(
   const finalFilename = filename ?? defaultFilename
   const gapColumnIndex = 4
 
-  type PdfRowMeta = { gap?: GapAnalysisPdfGap; isUnitHeader?: boolean }
+  type PdfRowMeta = {
+    gap?: GapAnalysisPdfGap
+    evidenceCount?: number
+    isUnitHeader?: boolean
+  }
   const body: unknown[][] = []
   const rowMetas: PdfRowMeta[] = []
 
@@ -208,7 +214,10 @@ export async function exportGapAnalysisToPdf(
               row.comment ?? "",
             ],
       )
-      rowMetas.push({ gap: row.gap })
+      rowMetas.push({
+        gap: row.gap,
+        evidenceCount: row.evidenceCount ?? 0,
+      })
     }
   }
 
@@ -262,10 +271,11 @@ export async function exportGapAnalysisToPdf(
     styles: { fontSize: 9, valign: "middle" },
     headStyles: { fillColor: [71, 85, 105] },
     columnStyles: {
-      [gapColumnIndex]: { cellWidth: 24, halign: "center" },
+      [gapColumnIndex]: { cellWidth: 28, halign: "center" },
       0: { cellWidth: 22 },
       ...(isStandardCourse ? { 1: { cellWidth: 58 } } : { 1: { cellWidth: 72 } }),
     },
+    bodyStyles: { minCellHeight: 14 },
     didDrawCell: (data: {
       section: string
       row: { index: number }
@@ -279,14 +289,53 @@ export async function exportGapAnalysisToPdf(
         return
       }
 
+      const evidenceCount = meta.evidenceCount ?? 0
+      const showEvidence = evidenceCount > 0
       const boxWidth = Math.min(22, data.cell.width - 6)
-      const boxHeight = 5
+      const boxHeight = 4.5
+      const circleRadius = 1.15
+      const circleGap = 1.1
+      const circleCount = Math.min(evidenceCount, 3)
+      const showCountLabel = evidenceCount > 3
+      const evidenceBlockHeight = showEvidence
+        ? circleRadius * 2 + (showCountLabel ? 3.2 : 0)
+        : 0
+      const contentHeight =
+        boxHeight + (showEvidence ? 1.4 + evidenceBlockHeight : 0)
+      const contentStartY =
+        data.cell.y + Math.max(1.5, (data.cell.height - contentHeight) / 2)
       const boxX = data.cell.x + (data.cell.width - boxWidth) / 2
-      const boxY = data.cell.y + (data.cell.height - boxHeight) / 2
+      const boxY = contentStartY
       const [r, g, b] = getGapPdfColor(meta.gap)
 
       doc.setFillColor(r, g, b)
       doc.roundedRect(boxX, boxY, boxWidth, boxHeight, 1, 1, "F")
+
+      if (!showEvidence) return
+
+      // Primary-blue circles under the gap bar (same idea as UI EvidenceIndicator)
+      const primaryBlue: [number, number, number] = [0, 129, 204]
+      const circlesWidth =
+        circleCount * (circleRadius * 2) +
+        Math.max(0, circleCount - 1) * circleGap +
+        (showCountLabel ? 8 : 0)
+      let circleX =
+        data.cell.x + (data.cell.width - circlesWidth) / 2 + circleRadius
+      const circleY = boxY + boxHeight + 1.4 + circleRadius
+
+      doc.setFillColor(...primaryBlue)
+      doc.setDrawColor(...primaryBlue)
+      for (let i = 0; i < circleCount; i++) {
+        doc.circle(circleX, circleY, circleRadius, "F")
+        circleX += circleRadius * 2 + circleGap
+      }
+
+      if (showCountLabel) {
+        doc.setFontSize(7)
+        doc.setTextColor(...primaryBlue)
+        doc.text(String(evidenceCount), circleX + 1, circleY + 1)
+        doc.setTextColor(0, 0, 0)
+      }
     },
   })
 

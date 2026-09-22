@@ -994,14 +994,27 @@ export function ModuleUnitProgressDataTable() {
     }
   };
 
-  const mapRowToPdfExport = (row: SubUnitRow) => ({
-    srNo: row.srNo,
-    subTitle: row.subTitle,
-    learnerMap: row.learnerMap ? t("table.yes") : t("table.no"),
-    trainerMap: row.trainerMap ? t("table.yes") : t("table.no"),
-    gap: row.gap,
-    comment: row.comment,
-  });
+  const mapRowToPdfExport = (row: SubUnitRow) => {
+    const evidenceCount =
+      row.courseId != null && row.unitId != null && !row.isSubUnitHeader
+        ? getEvidenceCount(row.courseId, row.unitId, row.topicId, row.subUnitId)
+        : 0
+
+    return {
+      srNo: row.srNo,
+      subTitle: row.subTitle,
+      learnerMap: row.learnerMap ? t("table.yes") : t("table.no"),
+      trainerMap: row.trainerMap ? t("table.yes") : t("table.no"),
+      gap: row.gap,
+      evidenceCount,
+      comment: row.comment,
+    }
+  }
+
+  const getRowEvidenceCount = (row: SubUnitRow) =>
+    row.courseId != null && row.unitId != null && !row.isSubUnitHeader
+      ? getEvidenceCount(row.courseId, row.unitId, row.topicId, row.subUnitId)
+      : 0
 
   const buildExportFilename = (extension: "csv" | "pdf") => {
     const rawCourseName = selectedCourse?.course_name?.trim() || "course";
@@ -1027,6 +1040,7 @@ export function ModuleUnitProgressDataTable() {
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
+          t("table.columns.evidence"),
         ]
       : [
           srNoHeader,
@@ -1034,6 +1048,7 @@ export function ModuleUnitProgressDataTable() {
           t("table.columns.learnerMap"),
           t("table.columns.trainerMap"),
           t("table.columns.gap"),
+          t("table.columns.evidence"),
           t("table.columns.comment"),
         ];
 
@@ -1045,6 +1060,7 @@ export function ModuleUnitProgressDataTable() {
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
             gapStatusLabel(row.gap),
+            getRowEvidenceCount(row),
           ]
         : [
             row.srNo,
@@ -1052,6 +1068,7 @@ export function ModuleUnitProgressDataTable() {
             row.learnerMap ? t("table.yes") : t("table.no"),
             row.trainerMap ? t("table.yes") : t("table.no"),
             gapStatusLabel(row.gap),
+            getRowEvidenceCount(row),
             row.comment,
           ],
     );

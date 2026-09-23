@@ -10,11 +10,12 @@ export const useCachedCoursesList = (options?: { skip?: boolean }) => {
   // Only fetch if cache is empty and not explicitly skipped
   const shouldFetch = cachedData === null && !options?.skip
   
-  // Use large page_size to fetch all courses for caching
+  // Use large page_size to fetch all active courses for caching
   const filters: CourseFilters = {
     page: 1,
     page_size: 1000,
     scope: "organisation",
+    status: "active",
   }
   
   const {
@@ -28,15 +29,19 @@ export const useCachedCoursesList = (options?: { skip?: boolean }) => {
   })
 
   // Use cached data if available, otherwise use API data
+  // Soft-deleted courses (active=false) must not appear in selectors
   const data = useMemo(() => {
-    if (cachedData !== null) {
-      return {
-        status: true,
-        message: "Success",
-        data: cachedData,
-      }
+    const source =
+      cachedData !== null
+        ? { status: true, message: "Success", data: cachedData }
+        : apiData
+
+    if (!source?.data) return source
+
+    return {
+      ...source,
+      data: source.data.filter((course) => course.active !== false),
     }
-    return apiData
   }, [cachedData, apiData])
 
   return {

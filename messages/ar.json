@@ -4047,6 +4047,12 @@
         "Qualification": "مؤهل",
         "Standard": "قياسية",
         "Gateway": "Gateway"
+      },
+      "statusPlaceholder": "الحالة",
+      "statusTypes": {
+        "active": "نشط",
+        "archived": "مؤرشف",
+        "all": "الكل"
       }
     },
     "table": {
@@ -4058,6 +4064,7 @@
         "sector": "القطاع",
         "learningHours": "ساعات التعلم"
       },
+      "archivedBadge": "مؤرشف",
       "actions": {
         "view": "عرض"
       }
@@ -4092,10 +4099,10 @@
     },
     "deleteDialog": {
       "title": "حذف الدورة؟",
-      "description": "لا يمكن التراجع عن هذا الإجراء. سيؤدي إلى حذف الدورة \"{name}\" نهائيًا."
+      "description": "سيتم أرشفة الدورة \"{name}\". يمكنك العثور عليها لاحقًا ضمن المؤرشفة."
     },
     "toast": {
-      "deleteSuccess": "تم حذف الدورة بنجاح",
+      "deleteSuccess": "تم أرشفة الدورة بنجاح",
       "forbiddenDelete": "ليست لديك صلاحية لحذف هذه الدورة.",
       "deleteFailed": "فشل حذف الدورة"
     },

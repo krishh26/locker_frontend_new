@@ -12,6 +12,18 @@ import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 import { clearCoursesList } from "@/store/slices/cacheSlice";
 
+/**
+ * Map FE status filter → BE `status` query (course.active).
+ * BE: status=true (active), status=false (soft-deleted/archived), omit = all.
+ */
+const toCourseListStatusParam = (
+  status: CourseFilters["status"] = "active",
+): "true" | "false" | undefined => {
+  if (status === "archived") return "false";
+  if (status === "all") return undefined;
+  return "true";
+};
+
 export const courseApi = createApi({
   reducerPath: "courseApi",
   baseQuery,
@@ -25,8 +37,13 @@ export const courseApi = createApi({
           keyword = "",
           core_type = "",
           scope = "organisation",
+          status = "active",
         } = filters;
         let url = `/course/list?page=${page}&limit=${page_size}&meta=true&scope=${encodeURIComponent(scope)}`;
+        const statusParam = toCourseListStatusParam(status);
+        if (statusParam !== undefined) {
+          url += `&status=${statusParam}`;
+        }
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -157,7 +174,8 @@ export const courseApi = createApi({
       },
     }),
     getGatewayCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Gateway&scope=organisation`,
+      query: () =>
+        `/course/list?limit=100&core_type=Gateway&scope=organisation&status=true`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
@@ -167,18 +185,12 @@ export const courseApi = createApi({
       },
     }),
     getStandardCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Standard&scope=organisation`,
+      query: () =>
+        `/course/list?limit=100&core_type=Standard&scope=organisation&status=true`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
-        }
-        // Filter for active courses only (active = true)
-        if (response?.data) {
-          return {
-            ...response,
-            data: response.data.filter((course) => course.active === true),
-          };
         }
         return response;
       },

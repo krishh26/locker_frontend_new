@@ -4053,6 +4053,12 @@
         "Qualification": "क्वालिफिकेशन",
         "Standard": "स्टैंडर्ड",
         "Gateway": "गेटवे"
+      },
+      "statusPlaceholder": "स्थिति",
+      "statusTypes": {
+        "active": "सक्रिय",
+        "archived": "संग्रहीत",
+        "all": "सभी"
       }
     },
     "table": {
@@ -4064,6 +4070,7 @@
         "sector": "सेक्टर",
         "learningHours": "लर्निंग आवर्स"
       },
+      "archivedBadge": "संग्रहीत",
       "actions": {
         "view": "देखें"
       }
@@ -4098,10 +4105,10 @@
     },
     "deleteDialog": {
       "title": "कोर्स हटाएँ?",
-      "description": "इस क्रिया को वापस नहीं लिया जा सकता। यह कोर्स \"{name}\" को स्थायी रूप से हटा देगा।"
+      "description": "यह कोर्स \"{name}\" को संग्रहीत कर देगा। आप इसे बाद में संग्रहीत में पा सकते हैं।"
     },
     "toast": {
-      "deleteSuccess": "कोर्स सफलतापूर्वक हटाया गया",
+      "deleteSuccess": "कोर्स सफलतापूर्वक संग्रहीत किया गया",
       "forbiddenDelete": "आपको यह कोर्स हटाने की अनुमति नहीं है।",
       "deleteFailed": "कोर्स हटाने में विफल"
     },

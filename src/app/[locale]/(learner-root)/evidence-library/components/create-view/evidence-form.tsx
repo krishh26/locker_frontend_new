@@ -22,7 +22,7 @@ import { useSaveSignatureMutation } from '@/store/api/documents-to-sign/document
 import { useGetCoursesQuery } from '@/store/api/course/courseApi'
 import type { Course } from '@/store/api/course/types'
 import { useAppSelector } from '@/store/hooks'
-import { selectCourses } from '@/store/slices/authSlice'
+import { selectCourses, selectLearner } from '@/store/slices/authSlice'
 import type { LearnerCourse, LearnerData } from '@/store/api/learner/types'
 import type { AuthUser } from '@/store/api/auth/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -157,11 +157,11 @@ function resolveEvidenceOwnerUserId(
 export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
-  const learner = useAppSelector((state) => state.auth.learner)
+  const learner = useAppSelector(selectLearner)
   const authCourses = useAppSelector(selectCourses)
 
   const { data: coursesApiResponse } = useGetCoursesQuery(
-    { page: 1, page_size: 1000, scope: 'organisation' },
+    { page: 1, page_size: 1000, scope: 'organisation', status: 'active' },
     { skip: !user },
   )
 

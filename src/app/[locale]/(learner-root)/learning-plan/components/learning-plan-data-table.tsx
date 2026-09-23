@@ -65,6 +65,7 @@ import {
   useUpdateSessionMutation,
 } from '@/store/api/learner-plan/learnerPlanApi'
 import { useAppSelector } from '@/store/hooks'
+import { selectLearner } from '@/store/slices/authSlice'
 import { toast } from 'sonner'
 import type { LearningPlanSession } from '@/store/api/learner-plan/types'
 import { DataTablePagination } from '@/components/data-table-pagination'
@@ -120,7 +121,7 @@ export function LearningPlanDataTable() {
   const t = useTranslations('learningPlan')
   const commonT = useTranslations('common')
   const user = useAppSelector((state) => state.auth.user)
-  const learner = useAppSelector((state) => state.auth.learner)
+  const learner = useAppSelector(selectLearner)
   const [typeFilter, setTypeFilter] = useState<string>('')
   const [attendedFilter, setAttendedFilter] = useState<string>('')
   const [globalFilter, setGlobalFilter] = useState('')

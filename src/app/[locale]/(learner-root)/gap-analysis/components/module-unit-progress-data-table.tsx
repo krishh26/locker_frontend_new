@@ -58,6 +58,7 @@ import {
   selectCurrentCourseId,
   setCurrentCourseId,
 } from "@/store/slices/courseSlice";
+import { selectCourses ,selectLearner  } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
 import { EvidenceIndicator } from "@/app/[locale]/(learner-root)/evidence-library/components/evidence-indicator";
 import { useEvidenceSubmissionCounts } from "@/app/[locale]/(learner-root)/evidence-library/hooks/use-evidence-submission-counts";
@@ -687,9 +688,9 @@ export function ModuleUnitProgressDataTable() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const urlCourseIdParam = searchParams.get("course_id");
-  const courses = useAppSelector((state) => state.auth.courses);
+  const courses = useAppSelector(selectCourses);
   const user = useAppSelector((state) => state.auth.user);
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const prevUrlCourseId = useRef<string | undefined>(undefined);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(

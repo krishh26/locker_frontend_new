@@ -4078,6 +4078,12 @@
         "Qualification": "Cualificación",
         "Standard": "Estándar",
         "Gateway": "Gateway"
+      },
+      "statusPlaceholder": "Estado",
+      "statusTypes": {
+        "active": "Activos",
+        "archived": "Archivados",
+        "all": "Todos"
       }
     },
     "table": {
@@ -4089,6 +4095,7 @@
         "sector": "Sector",
         "learningHours": "Horas de aprendizaje"
       },
+      "archivedBadge": "Archivado",
       "actions": {
         "view": "Ver"
       }
@@ -4123,10 +4130,10 @@
     },
     "deleteDialog": {
       "title": "¿Eliminar curso?",
-      "description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el curso \"{name}\"."
+      "description": "Esto archivará el curso \"{name}\". Aún podrá encontrarlo en Archivados."
     },
     "toast": {
-      "deleteSuccess": "Curso eliminado correctamente",
+      "deleteSuccess": "Curso archivado correctamente",
       "forbiddenDelete": "No tiene acceso para eliminar este curso.",
       "deleteFailed": "Error al eliminar el curso"
     },

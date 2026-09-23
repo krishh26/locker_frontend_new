@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { selectLearner } from "@/store/slices/authSlice";
 import type { LearnerData } from "@/store/api/learner/types";
 
 interface ModuleUnitProgressLearnerInfoCardProps {
@@ -15,7 +16,7 @@ export function ModuleUnitProgressLearnerInfoCard({
   isLoading,
 }: ModuleUnitProgressLearnerInfoCardProps) {
   const t = useTranslations("moduleUnitProgress");
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
 
   const courseName = useMemo(() => {

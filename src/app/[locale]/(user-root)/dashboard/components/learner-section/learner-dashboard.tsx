@@ -19,6 +19,7 @@ import { AcknowledgementDialog } from './acknowledgement-dialog'
 import { Button } from '@/components/ui/button'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { clearCurrentCourseId } from '@/store/slices/courseSlice'
+import { selectLearner } from '@/store/slices/authSlice'
 import { overviewCards } from '../../data/portfolio-data'
 import { SafeguardingCard } from './safeguarding-card'
 import { useTranslations } from 'next-intl'
@@ -27,7 +28,7 @@ export function LearnerDashboard() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
-  const learner = useAppSelector((state) => state.auth.learner)
+  const learner = useAppSelector(selectLearner)
   const t = useTranslations('learnerDashboard')
 
   // When admin/trainer views a learner dashboard, queries must use the learner's id (not logged-in user's id).

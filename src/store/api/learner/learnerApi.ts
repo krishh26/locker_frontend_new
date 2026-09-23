@@ -18,6 +18,10 @@ import type {
 } from "./types";
 import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
+import {
+  withActiveLearnerCourses,
+  withActiveLearnerData,
+} from "./filter-active-courses";
 
 export const learnerApi = createApi({
   reducerPath: "learnerApi",
@@ -31,7 +35,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: withActiveLearnerData(response.data),
+        };
       },
     }),
     getLearnersList: builder.query<LearnerListResponse, LearnerFilters>({
@@ -84,7 +92,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: response.data.map(withActiveLearnerCourses),
+        };
       },
     }),
     createLearner: builder.mutation<LearnerResponse, CreateLearnerRequest>({
@@ -98,7 +110,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: withActiveLearnerData(response.data),
+        };
       },
     }),
     updateLearner: builder.mutation<LearnerResponse, { id: number; data: UpdateLearnerRequest }>({
@@ -112,7 +128,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: withActiveLearnerData(response.data),
+        };
       },
     }),
     deleteLearner: builder.mutation<{ message: string; status: boolean }, number>({
@@ -139,7 +159,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: withActiveLearnerData(response.data),
+        };
       },
     }),
     bulkCreateLearners: builder.mutation<BulkCreateLearnersResponse, BulkCreateLearnersRequest>({
@@ -163,7 +187,11 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: response.data.map(withActiveLearnerCourses),
+        };
       },
     }),
     uploadLearnerAvatar: builder.mutation<UploadFileResponse, { learnerId: number; file: File }>({
@@ -275,7 +303,13 @@ export const learnerApi = createApi({
         if (!response?.status) {
           throw new Error(response?.error ?? DEFAULT_ERROR_MESSAGE);
         }
-        return response;
+        if (!response.data) return response;
+        return {
+          ...response,
+          data: response.data.filter(
+            (row) => (row.course as { active?: boolean } | undefined)?.active !== false,
+          ),
+        };
       },
     }),
   }),

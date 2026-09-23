@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { useAppSelector } from "@/store/hooks"
 import { useGetLearnersListQuery } from "@/store/api/learner/learnerApi"
 import { selectLearnersList } from "@/store/slices/cacheSlice"
+import { withActiveLearnerCourses } from "@/store/api/learner/filter-active-courses"
 import type { LearnerFilters } from "@/store/api/learner/types"
 
 export const useCachedLearnersList = (options?: { skip?: boolean }) => {
@@ -27,12 +28,13 @@ export const useCachedLearnersList = (options?: { skip?: boolean }) => {
   })
 
   // Use cached data if available, otherwise use API data
+  // Re-filter enrollments so soft-deleted courses stay hidden from stale cache
   const data = useMemo(() => {
     if (cachedData !== null) {
       return {
         status: true,
         message: "Success",
-        data: cachedData,
+        data: cachedData.map(withActiveLearnerCourses),
       }
     }
     return apiData

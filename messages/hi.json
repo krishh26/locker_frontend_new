@@ -2755,6 +2755,26 @@
   "gapAnalysis": {
     "pageTitle": "गैप विश्लेषण",
     "pageSubtitle": "पाठ्यक्रमों और इकाइयों में शिक्षार्थी अंतराल ट्रैक करें",
+    "legend": {
+      "title": "गैप रंग कुंजी",
+      "description": "गैप बार का रंग प्रत्येक पंक्ति के Learner Map और Trainer Map पर आधारित है।",
+      "complete": {
+        "label": "हरा - पूर्ण",
+        "detail": "Learner Map और Trainer Map दोनों Yes हैं — कोई गैप नहीं।"
+      },
+      "partial": {
+        "label": "नीला - चल रही प्रगति",
+        "detail": "Learner Map या Trainer Map में से केवल एक Yes है — आंशिक प्रगति।"
+      },
+      "none": {
+        "label": "लाल - कोई प्रगति नहीं",
+        "detail": "Learner Map और Trainer Map दोनों No हैं — पूरा गैप।"
+      },
+      "evidencePoints": {
+        "label": "एविडेंस पॉइंट्स",
+        "detail": "Gap बार के नीचे नीले वृत्त दिखाते हैं कि यह यूनिट/क्राइटेरिया कितनी बार एविडेंस में मैप हुआ है। एक वृत्त = 1 एविडेंस; ज़्यादा वृत्त (अधिकतम 3) ज़्यादा सबमिशन, 3 से ऊपर संख्या दिखती है।"
+      }
+    },
     "learnerInfo": {
       "name": "नाम",
       "username": "उपयोगकर्ता नाम",
@@ -2774,6 +2794,7 @@
         "learnerMap": "शिक्षार्थी मानचित्र",
         "trainerMap": "प्रशिक्षक मानचित्र",
         "gap": "अंतर",
+        "evidence": "एविडेंस",
         "comment": "टिप्पणी"
       },
       "yes": "हाँ",

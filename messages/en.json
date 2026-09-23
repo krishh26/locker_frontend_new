@@ -3087,6 +3087,26 @@
   "gapAnalysis": {
     "pageTitle": "Gap Analysis",
     "pageSubtitle": "Track learner gaps across courses and units",
+    "legend": {
+      "title": "Gap colour key",
+      "description": "The Gap bar colour is based on Learner Map and Trainer Map for each row.",
+      "complete": {
+        "label": "Green - Completed",
+        "detail": "Learner Map and Trainer Map are both Yes — no gap."
+      },
+      "partial": {
+        "label": "Blue - Ongoing progress",
+        "detail": "Only one of Learner Map or Trainer Map is Yes — partial progress."
+      },
+      "none": {
+        "label": "Red - No progress",
+        "detail": "Learner Map and Trainer Map are both No — full gap."
+      },
+      "evidencePoints": {
+        "label": "Evidence points",
+        "detail": "Blue circles under the Gap bar show how many times this unit or criterion appears in evidence. One circle = 1 evidence; more circles (up to 3) mean more submissions, then a number if above 3."
+      }
+    },
     "learnerInfo": {
       "name": "Name",
       "username": "Username",
@@ -3106,6 +3126,7 @@
         "learnerMap": "Learner Map",
         "trainerMap": "Trainer Map",
         "gap": "Gap",
+        "evidence": "Evidence",
         "comment": "Comment"
       },
       "yes": "Yes",

@@ -2587,6 +2587,26 @@
   "gapAnalysis": {
     "pageTitle": "Análisis de brechas",
     "pageSubtitle": "Seguir las brechas de los aprendices por cursos y unidades",
+    "legend": {
+      "title": "Clave de colores de brecha",
+      "description": "El color de la barra Gap se basa en el Learner Map y el Trainer Map de cada fila.",
+      "complete": {
+        "label": "Verde - Completado",
+        "detail": "Learner Map y Trainer Map son ambos Sí — sin brecha."
+      },
+      "partial": {
+        "label": "Azul - Progreso en curso",
+        "detail": "Solo uno de Learner Map o Trainer Map es Sí — progreso parcial."
+      },
+      "none": {
+        "label": "Rojo - Sin progreso",
+        "detail": "Learner Map y Trainer Map son ambos No — brecha total."
+      },
+      "evidencePoints": {
+        "label": "Puntos de evidencia",
+        "detail": "Los círculos azules bajo la barra Gap muestran cuántas veces esta unidad o criterio aparece en evidencias. Un círculo = 1 evidencia; más círculos (hasta 3) = más envíos, luego un número si supera 3."
+      }
+    },
     "learnerInfo": {
       "name": "Nombre",
       "username": "Usuario",
@@ -2606,6 +2626,7 @@
         "learnerMap": "Mapa aprendiz",
         "trainerMap": "Mapa formador",
         "gap": "Brecha",
+        "evidence": "Evidencia",
         "comment": "Comentario"
       },
       "yes": "Sí",

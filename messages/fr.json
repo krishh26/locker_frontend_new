@@ -2797,6 +2797,26 @@
   "gapAnalysis": {
     "pageTitle": "Analyse des écarts",
     "pageSubtitle": "Suivre les écarts des apprenants par cours et unités",
+    "legend": {
+      "title": "Légende des couleurs d'écart",
+      "description": "La couleur de la barre Gap dépend du Learner Map et du Trainer Map de chaque ligne.",
+      "complete": {
+        "label": "Vert - Terminé",
+        "detail": "Learner Map et Trainer Map sont tous deux Oui — aucun écart."
+      },
+      "partial": {
+        "label": "Bleu - Progression en cours",
+        "detail": "Un seul des deux (Learner Map ou Trainer Map) est Oui — progression partielle."
+      },
+      "none": {
+        "label": "Rouge - Aucune progression",
+        "detail": "Learner Map et Trainer Map sont tous deux Non — écart total."
+      },
+      "evidencePoints": {
+        "label": "Points d'évidence",
+        "detail": "Les cercles bleus sous la barre Gap indiquent combien de fois cette unité ou critère apparaît dans les preuves. Un cercle = 1 preuve ; plus de cercles (jusqu'à 3) = plus de soumissions, puis un chiffre au-delà de 3."
+      }
+    },
     "learnerInfo": {
       "name": "Nom",
       "username": "Nom d'utilisateur",
@@ -2816,6 +2836,7 @@
         "learnerMap": "Carte apprenant",
         "trainerMap": "Carte formateur",
         "gap": "Écart",
+        "evidence": "Preuve",
         "comment": "Commentaire"
       },
       "yes": "Oui",

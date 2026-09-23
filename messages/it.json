@@ -2145,6 +2145,26 @@
   "gapAnalysis": {
     "pageTitle": "Analisi lacune",
     "pageSubtitle": "Monitora le lacune dei discenti tra corsi e unità",
+    "legend": {
+      "title": "Legenda colori Gap",
+      "description": "Il colore della barra Gap si basa su Learner Map e Trainer Map di ogni riga.",
+      "complete": {
+        "label": "Verde - Completato",
+        "detail": "Learner Map e Trainer Map sono entrambi Sì — nessuna lacuna."
+      },
+      "partial": {
+        "label": "Blu - Progresso in corso",
+        "detail": "Solo uno tra Learner Map e Trainer Map è Sì — progresso parziale."
+      },
+      "none": {
+        "label": "Rosso - Nessun progresso",
+        "detail": "Learner Map e Trainer Map sono entrambi No — lacuna totale."
+      },
+      "evidencePoints": {
+        "label": "Punti evidence",
+        "detail": "I cerchi blu sotto la barra Gap indicano quante volte questa unità o criterio compare nelle evidence. Un cerchio = 1 evidence; più cerchi (fino a 3) = più invii, poi un numero oltre 3."
+      }
+    },
     "learnerInfo": {
       "name": "Nome",
       "username": "Nome utente",
@@ -2164,6 +2184,7 @@
         "learnerMap": "Mappa discente",
         "trainerMap": "Mappa formatore",
         "gap": "Lacuna",
+        "evidence": "Evidence",
         "comment": "Commento"
       },
       "yes": "Sì",

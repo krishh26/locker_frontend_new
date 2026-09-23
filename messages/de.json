@@ -2187,6 +2187,26 @@
   "gapAnalysis": {
     "pageTitle": "Lückenanalyse",
     "pageSubtitle": "Lernerlücken über Kurse und Einheiten verfolgen",
+    "legend": {
+      "title": "Farblegende für Lücken",
+      "description": "Die Farbe des Gap-Balkens basiert auf Learner Map und Trainer Map jeder Zeile.",
+      "complete": {
+        "label": "Grün - Abgeschlossen",
+        "detail": "Learner Map und Trainer Map sind beide Ja — keine Lücke."
+      },
+      "partial": {
+        "label": "Blau - Laufender Fortschritt",
+        "detail": "Nur eines von Learner Map oder Trainer Map ist Ja — teilweise Fortschritt."
+      },
+      "none": {
+        "label": "Rot - Kein Fortschritt",
+        "detail": "Learner Map und Trainer Map sind beide Nein — volle Lücke."
+      },
+      "evidencePoints": {
+        "label": "Evidence-Punkte",
+        "detail": "Blaue Kreise unter dem Gap-Balken zeigen, wie oft diese Einheit oder dieses Kriterium in Evidence vorkommt. Ein Kreis = 1 Evidence; mehr Kreise (bis 3) = mehr Einreichungen, danach eine Zahl über 3."
+      }
+    },
     "learnerInfo": {
       "name": "Name",
       "username": "Benutzername",
@@ -2206,6 +2226,7 @@
         "learnerMap": "Lerner-Karte",
         "trainerMap": "Trainer-Karte",
         "gap": "Lücke",
+        "evidence": "Evidence",
         "comment": "Kommentar"
       },
       "yes": "Ja",

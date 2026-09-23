@@ -13,6 +13,8 @@ export type LearnerCourse = {
     brand_guidelines: string;
     course_type: string | null;
     course_core_type: string | null;
+    /** Soft-delete flag from course / enrollment snapshot. false = archived. */
+    active?: boolean;
     is_excluded?: boolean;
   };
   start_date: string;
@@ -264,6 +266,8 @@ export interface AssignedLearnerResponse {
     course: {
       course_id: number;
       course_name: string;
+      /** Soft-delete flag; false = archived */
+      active?: boolean;
       [key: string]: unknown;
     };
     start_date: string;

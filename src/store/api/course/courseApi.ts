@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type {
-  Course,
   CourseListResponse,
   CourseFilters,
   CourseResponse,
@@ -13,20 +12,16 @@ import { DEFAULT_ERROR_MESSAGE } from "../auth/api";
 import { baseQuery } from "@/store/api/baseQuery";
 import { clearCoursesList } from "@/store/slices/cacheSlice";
 
-/** Soft-deleted courses are marked active=false (BE no longer hard-deletes). */
-const isActiveCourse = (course: Course) => course.active !== false;
-const isArchivedCourse = (course: Course) => course.active === false;
-
-const filterCoursesByStatus = (
-  response: CourseListResponse,
+/**
+ * Map FE status filter → BE `status` query (course.active).
+ * BE: status=true (active), status=false (soft-deleted/archived), omit = all.
+ */
+const toCourseListStatusParam = (
   status: CourseFilters["status"] = "active",
-): CourseListResponse => {
-  if (!response?.data) return response;
-  if (status === "all") return response;
-  if (status === "archived") {
-    return { ...response, data: response.data.filter(isArchivedCourse) };
-  }
-  return { ...response, data: response.data.filter(isActiveCourse) };
+): "true" | "false" | undefined => {
+  if (status === "archived") return "false";
+  if (status === "all") return undefined;
+  return "true";
 };
 
 export const courseApi = createApi({
@@ -44,12 +39,11 @@ export const courseApi = createApi({
           scope = "organisation",
           status = "active",
         } = filters;
-        // Archive / all need a wider fetch since BE list does not filter by active
-        const limit =
-          status === "archived" || status === "all"
-            ? Math.max(page_size, 1000)
-            : page_size;
-        let url = `/course/list?page=${page}&limit=${limit}&meta=true&scope=${encodeURIComponent(scope)}`;
+        let url = `/course/list?page=${page}&limit=${page_size}&meta=true&scope=${encodeURIComponent(scope)}`;
+        const statusParam = toCourseListStatusParam(status);
+        if (statusParam !== undefined) {
+          url += `&status=${statusParam}`;
+        }
         if (keyword) {
           url += `&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -59,15 +53,11 @@ export const courseApi = createApi({
         return url;
       },
       providesTags: ["Course"],
-      transformResponse: (
-        response: CourseListResponse,
-        _meta,
-        arg: CourseFilters,
-      ) => {
+      transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return filterCoursesByStatus(response, arg?.status ?? "active");
+        return response;
       },
     }),
     getCourse: builder.query<CourseResponse, number>({
@@ -184,23 +174,25 @@ export const courseApi = createApi({
       },
     }),
     getGatewayCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Gateway&scope=organisation`,
+      query: () =>
+        `/course/list?limit=100&core_type=Gateway&scope=organisation&status=true`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return filterCoursesByStatus(response, "active");
+        return response;
       },
     }),
     getStandardCourses: builder.query<CourseListResponse, void>({
-      query: () => `/course/list?limit=100&core_type=Standard&scope=organisation`,
+      query: () =>
+        `/course/list?limit=100&core_type=Standard&scope=organisation&status=true`,
       providesTags: ["Course"],
       transformResponse: (response: CourseListResponse) => {
         if (!response?.status) {
           throw new Error(response?.error ?? response?.message ?? DEFAULT_ERROR_MESSAGE);
         }
-        return filterCoursesByStatus(response, "active");
+        return response;
       },
     }),
   }),

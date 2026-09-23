@@ -33,7 +33,10 @@ export interface CourseFilters {
   keyword?: string;
   core_type?: string;
   scope?: "organisation" | "global" | "";
-  /** Soft-delete visibility. Default active (hide archived). */
+  /**
+   * Soft-delete visibility (maps to BE `status` boolean on course.active).
+   * active → status=true, archived → status=false, all → omit param.
+   */
   status?: "active" | "archived" | "all";
 }
 

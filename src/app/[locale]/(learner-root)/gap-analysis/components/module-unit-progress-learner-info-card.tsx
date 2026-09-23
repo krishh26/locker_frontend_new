@@ -3,6 +3,7 @@
 import { User, Mail, Phone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppSelector } from "@/store/hooks";
+import { selectLearner } from "@/store/slices/authSlice";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
@@ -38,7 +39,7 @@ function MetricCard({ title, value, icon: Icon, className }: MetricCardProps) {
 
 export function ModuleUnitProgressLearnerInfoCard() {
   const t = useTranslations("gapAnalysis");
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
 
   const learnerName = [learner?.first_name, learner?.last_name]
     .filter(Boolean)

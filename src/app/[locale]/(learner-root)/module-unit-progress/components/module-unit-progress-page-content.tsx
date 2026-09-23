@@ -8,6 +8,7 @@ import { ModuleUnitProgressLearnerInfoCard } from "./module-unit-progress-learne
 import { ModuleUnitProgressDataTable } from "./module-unit-progress-data-table";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { useGetLearnerUnitsProgressQuery } from "@/store/api/module-unit-progress/moduleUnitProgressApi";
 import { Card, CardContent } from "@/components/ui/card";
 import { buildUnitProgressFromCourseUnits } from "../utils/build-unit-progress";
@@ -15,9 +16,9 @@ import { buildUnitProgressFromCourseUnits } from "../utils/build-unit-progress";
 export function ModuleUnitProgressPageContent() {
   const t = useTranslations("moduleUnitProgress");
   const currentCourseId = useAppSelector(selectCurrentCourseId);
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
   const learnerId = learner?.learner_id;
-  const courses = useAppSelector((state) => state.auth.courses);
+  const courses = useAppSelector(selectCourses);
 
   const {
     data: progressData,

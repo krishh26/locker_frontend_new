@@ -52,7 +52,7 @@ import {
   useReuploadEvidenceMutation,
 } from "@/store/api/evidence/evidenceApi";
 import { useAppSelector } from "@/store/hooks";
-import { selectCourses } from "@/store/slices/authSlice";
+import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { toast } from "sonner";
 import type { EvidenceEntry } from "@/store/api/evidence/types";
 import { SearchAndFilter } from "./search-and-filter";
@@ -120,7 +120,7 @@ function selectionReducer(
 
 export function EvidenceLibraryDataTable() {
   const router = useRouter();
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
   const courses = useAppSelector(selectCourses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const userId = learner?.user_id || "";

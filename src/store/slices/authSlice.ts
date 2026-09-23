@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import type { LoginResult, AuthUser } from "@/store/api/auth/types"
 import type { LearnerData, LearnerCourse } from "@/store/api/learner/types"
+import { filterActiveLearnerCourses } from "@/store/api/learner/filter-active-courses"
 
 export type AuthState = {
   token: string | null
@@ -61,12 +62,13 @@ const authSlice = createSlice({
         state.learner = null
         state.courses = []
       } else {
-        state.learner = action.payload
-        state.courses = action.payload.course || []
+        const course = filterActiveLearnerCourses(action.payload.course)
+        state.learner = { ...action.payload, course }
+        state.courses = course
       }
     },
     setCourses: (state, action: PayloadAction<LearnerCourse[]>) => {
-      state.courses = action.payload
+      state.courses = filterActiveLearnerCourses(action.payload)
     },
   },
 })
@@ -84,8 +86,16 @@ export const selectAuth = (state: StateWithAuth) => state.auth
 export const selectAuthToken = (state: StateWithAuth) => state.auth.token
 export const selectAuthUser = (state: StateWithAuth) => state.auth.user
 export const selectAuthError = (state: StateWithAuth) => state.auth.error
-export const selectLearner = (state: StateWithAuth) => state.auth.learner
-export const selectCourses = (state: StateWithAuth) => state.auth.courses || []
+export const selectLearner = (state: StateWithAuth) => {
+  const learner = state.auth.learner
+  if (!learner?.course) return learner
+  return {
+    ...learner,
+    course: filterActiveLearnerCourses(learner.course),
+  }
+}
+export const selectCourses = (state: StateWithAuth) =>
+  filterActiveLearnerCourses(state.auth.courses)
 
 export default authSlice.reducer
 

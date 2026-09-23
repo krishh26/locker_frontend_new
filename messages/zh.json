@@ -4225,10 +4225,10 @@
     },
     "deleteDialog": {
       "title": "删除课程？",
-      "description": "此操作无法撤销，将永久删除课程“{name}”。"
+      "description": "这将归档课程“{name}”。您之后仍可在“已归档”中找到它。"
     },
     "toast": {
-      "deleteSuccess": "课程删除成功",
+      "deleteSuccess": "课程已归档",
       "forbiddenDelete": "您无权删除此课程。",
       "deleteFailed": "删除课程失败"
     },

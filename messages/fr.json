@@ -4319,10 +4319,10 @@
     },
     "deleteDialog": {
       "title": "Supprimer le cours ?",
-      "description": "Cette action est irréversible. Elle supprimera définitivement le cours « {name} »."
+      "description": "Le cours « {name} » sera archivé. Vous pourrez toujours le retrouver sous Archivé."
     },
     "toast": {
-      "deleteSuccess": "Cours supprimé avec succès",
+      "deleteSuccess": "Cours archivé avec succès",
       "forbiddenDelete": "Vous n'avez pas accès pour supprimer ce cours.",
       "deleteFailed": "Échec de la suppression du cours"
     },

@@ -58,6 +58,7 @@ import {
   selectCurrentCourseId,
   setCurrentCourseId,
 } from "@/store/slices/courseSlice";
+import { selectCourses } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
 
 export type SubUnitRow = {
@@ -632,7 +633,7 @@ export function ModuleUnitProgressDataTable() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const urlCourseIdParam = searchParams.get("course_id");
-  const courses = useAppSelector((state) => state.auth.courses);
+  const courses = useAppSelector(selectCourses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const prevUrlCourseId = useRef<string | undefined>(undefined);
   const [selectedCourse, setSelectedCourse] = useState<CourseWithUnits | null>(

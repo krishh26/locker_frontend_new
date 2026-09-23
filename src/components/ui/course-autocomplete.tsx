@@ -44,16 +44,17 @@ export function CourseAutocomplete({
   const [displayedCount, setDisplayedCount] = React.useState(10)
   const listRef = React.useRef<HTMLDivElement>(null)
 
-  // Fetch courses directly from course API
+  // Fetch active courses directly from course API
   const { data: coursesData, isLoading } = useGetCoursesQuery({
     page: 1,
     page_size: 1000,
     scope: "organisation",
+    status: "active",
   })
 
-  // Get all courses from response
+  // Get all active courses from response (defense-in-depth if BE omits status filter)
   const allCourses = React.useMemo(() => {
-    return coursesData?.data || []
+    return (coursesData?.data || []).filter((course) => course.active !== false)
   }, [coursesData])
 
   // Filter courses based on search term
@@ -192,7 +193,7 @@ export function CourseAutocomplete({
                       variant="secondary"
                       className="mr-1"
                     >
-                      <span className="truncate max-w-[150px]">
+                      <span className="truncate max-w-37.5">
                         {course.course_name || "Unknown course"}
                       </span>
                       <button

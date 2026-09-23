@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useAppSelector } from "@/store/hooks";
 import { ChooseUnitsDataTable } from "./choose-units-data-table";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
@@ -24,8 +25,8 @@ export function ChooseUnitsForm() {
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
   // Get learner and course data from Redux state
-  const learner = useAppSelector((state) => state.auth.learner);
-  const courses = useAppSelector((state) => state.auth.courses);
+  const learner = useAppSelector(selectLearner);
+  const courses = useAppSelector(selectCourses);
   // Get learner ID
   const learnerId = learner?.learner_id ? learner.learner_id : null;
   const t = useTranslations("chooseUnits");

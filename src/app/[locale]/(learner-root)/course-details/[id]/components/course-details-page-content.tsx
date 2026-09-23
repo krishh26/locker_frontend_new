@@ -11,6 +11,7 @@ import { CourseInfoCards } from "./course-info-cards"
 import { SupervisorCards } from "./supervisor-cards"
 import { useAppSelector } from "@/store/hooks"
 import { selectCurrentCourseId } from "@/store/slices/courseSlice"
+import { selectLearner } from "@/store/slices/authSlice"
 import {
   courseCards,
   gatewayCards,
@@ -26,7 +27,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
   const t = useTranslations("courseDetails.page")
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
-  const learner = useAppSelector((state) => state.auth.learner)
+  const learner = useAppSelector(selectLearner)
   const currentCourseId = useAppSelector(selectCurrentCourseId)
   const userRole = user?.role
 

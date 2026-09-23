@@ -58,7 +58,7 @@ import {
 } from "@/store/api/time-log/timeLogApi";
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
-import { selectCourses } from "@/store/slices/authSlice";
+import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import type { TimeLogEntry } from "@/store/api/time-log/types";
 import { TimeLogSummaryCards } from "./time-log-summary-cards";
 import { RecentActivitySection } from "./recent-activity-section";
@@ -68,7 +68,7 @@ import { useTranslations } from "next-intl";
 
 export function TimeLogDataTable() {
   const user = useAppSelector((state) => state.auth.user);
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
   const courses = useAppSelector(selectCourses);
   // When admin/trainer opens a learner dashboard, use the learner's id for queries (not the logged-in admin).
   // API expects `user_id`; the learner object may expose `id`/`user_id` (user id) or only `learner_id`.

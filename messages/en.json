@@ -4602,10 +4602,10 @@
     },
     "deleteDialog": {
       "title": "Delete course?",
-      "description": "This action cannot be undone. This will permanently delete the course \"{name}\"."
+      "description": "This will archive the course \"{name}\". You can still find it under Archived."
     },
     "toast": {
-      "deleteSuccess": "Course deleted successfully",
+      "deleteSuccess": "Course archived successfully",
       "forbiddenDelete": "You do not have access to delete this course.",
       "deleteFailed": "Failed to delete course",
       "moveToPersonalSuccess": "Course moved to your organisation successfully",

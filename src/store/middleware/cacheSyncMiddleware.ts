@@ -28,14 +28,17 @@ export const cacheSyncMiddleware: Middleware<object, RootState> = (store) => (ne
   }
 
   // Handle courses list response
-  // Only cache when fetching with large page_size (>= 1000) to avoid caching paginated management queries
+  // Only cache when fetching active courses with large page_size (>= 1000)
+  // to avoid caching paginated management queries or archived lists
   if (courseApi.endpoints.getCourses.matchFulfilled(action)) {
     const response = action.payload
     if (response?.status && response?.data) {
       // Extract filters from the original query arg
       const filters = action.meta?.arg?.originalArgs
+      const isActiveList =
+        !filters?.status || filters.status === "active"
       // Only cache if page_size is >= 1000 (indicating a fetch-all request)
-      if (filters && (filters.page_size ?? 0) >= 1000) {
+      if (filters && (filters.page_size ?? 0) >= 1000 && isActiveList) {
         store.dispatch(setCoursesList(response.data))
       }
     }

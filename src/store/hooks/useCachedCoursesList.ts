@@ -10,11 +10,12 @@ export const useCachedCoursesList = (options?: { skip?: boolean }) => {
   // Only fetch if cache is empty and not explicitly skipped
   const shouldFetch = cachedData === null && !options?.skip
   
-  // Use large page_size to fetch all courses for caching
+  // Use large page_size to fetch all active courses for caching
   const filters: CourseFilters = {
     page: 1,
     page_size: 1000,
     scope: "organisation",
+    status: "active",
   }
   
   const {

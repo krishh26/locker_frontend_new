@@ -19,7 +19,9 @@ import {
 } from "@/components/ui/table";
 import { useGetOtjSummaryQuery } from "@/store/api/time-log/timeLogApi";
 import { useAppSelector } from "@/store/hooks";
+import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 interface OffTheJobSummaryProps {
   courseId?: string | number | null;
@@ -27,7 +29,8 @@ interface OffTheJobSummaryProps {
 
 export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
   const user = useAppSelector((state) => state.auth.user);
-  const learner = useAppSelector((state) => state.auth.learner);
+  const learner = useAppSelector(selectLearner);
+  const activeCourses = useAppSelector(selectCourses);
   const targetLearnerId =
     user?.role === "Learner"
       ? String(
@@ -48,6 +51,22 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
   );
 
   const summaryData = summaryResponse?.data;
+
+  const activeCourseIds = useMemo(
+    () =>
+      new Set(
+        activeCourses
+          .map((c) => c.course?.course_id)
+          .filter((id): id is number => id != null),
+      ),
+    [activeCourses],
+  );
+
+  const courseSummaries = useMemo(() => {
+    const rows = summaryData?.courseSummaries ?? [];
+    if (activeCourseIds.size === 0) return rows;
+    return rows.filter((row) => activeCourseIds.has(row.course_id));
+  }, [summaryData?.courseSummaries, activeCourseIds]);
 
   // Format minutes to hours:minutes string
   const formatMinutesToTime = (minutes: number): string => {
@@ -334,8 +353,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
           </div>
 
           {/* Course List Table */}
-          {summaryData.courseSummaries &&
-            summaryData.courseSummaries.length > 0 && (
+          {courseSummaries.length > 0 && (
               <div>
                 <h4 className="text-xl font-semibold mb-4">
                   {t("offTheJob.courses.title")}
@@ -359,7 +377,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {summaryData.courseSummaries.map((course, index) => {
+                      {courseSummaries.map((course, index) => {
                         const totalMinutes =
                           (course.offTheJobHours || 0) * 60 +
                           (course.offTheJobMinutes || 0);

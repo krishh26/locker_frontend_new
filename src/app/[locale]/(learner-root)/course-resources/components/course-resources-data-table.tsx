@@ -50,11 +50,12 @@ import { exportTableToPdf } from "@/utils/pdfExport";
 import type { CourseResource } from "@/store/api/resources/types";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
+import { selectCourses } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
 
 export function CourseResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user);
-  const courses = useAppSelector((state) => state.auth.courses);
+  const courses = useAppSelector(selectCourses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   // Filter and validate courses that have the required structure
   const validCourses = useMemo(() => {

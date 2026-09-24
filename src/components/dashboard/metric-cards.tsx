@@ -20,6 +20,10 @@ export interface MetricCardsProps {
   cards: MetricCard[]
   /** Optional count data for cards that need to display counts */
   countData?: Record<number, number | undefined>
+  /** Optional custom badge text (e.g. "09h 00m") — shown instead of count + items */
+  labelData?: Record<number, string | undefined>
+  /** Optional subtitle above the badge (e.g. "Off The Job Total") */
+  detailData?: Record<number, string | undefined>
   /** Optional course ID to append to routes */
   courseId?: string
   /** Grid layout variant */
@@ -43,6 +47,8 @@ const metricCardBgColors = [
 export function MetricCards({
   cards,
   countData = {},
+  labelData = {},
+  detailData = {},
   courseId,
   variant = "default",
 }: MetricCardsProps) {
@@ -67,6 +73,9 @@ export function MetricCards({
         // Get count for this card if available
         const count = countData?.[card.id]
         const hasCount = count !== undefined && count > 0
+        const customLabel = labelData?.[card.id]
+        const detail = detailData?.[card.id]
+        const hasCustomLabel = Boolean(customLabel)
 
         const displayName = card.nameKey ? t(card.nameKey) : (card.name ?? "")
         const initial = displayName.charAt(0)
@@ -91,7 +100,15 @@ export function MetricCards({
                     <h3 className="font-semibold text-sm group-hover:text-white/80 transition-colors">
                       {displayName}
                     </h3>
-                    {hasCount && (
+                    {detail && (
+                      <p className="text-xs text-white/70">{detail}</p>
+                    )}
+                    {hasCustomLabel && (
+                      <Badge variant="secondary" className="rounded-full shadow-sm">
+                        {customLabel}
+                      </Badge>
+                    )}
+                    {!hasCustomLabel && hasCount && (
                       <Badge variant="secondary" className="rounded-full shadow-sm">
                         {count} {count === 1 ? t("item") : t("items")}
                       </Badge>

@@ -7,6 +7,7 @@ import { useGetEvidenceListQuery } from '@/store/api/evidence/evidenceApi'
 import { useGetCpdEntriesQuery } from '@/store/api/cpd/cpdApi'
 import { useGetLearnerPlanListQuery } from '@/store/api/learner-plan/learnerPlanApi'
 import { useGetResourcesByCourseQuery } from '@/store/api/resources/resourcesApi'
+import { useGetTimeLogSpendQuery } from '@/store/api/time-log/timeLogApi'
 import type { PortfolioCountData } from '@/store/api/dashboard/types'
 import { LayoutDashboard, Mail, Calendar, FileSignature } from 'lucide-react'
 import { PageHeader } from '@/components/dashboard/page-header'
@@ -98,6 +99,25 @@ export function LearnerDashboard() {
     { skip: !firstCourseId || !targetUserId }
   )
 
+  const { data: ofjSpendResponse, isLoading: isOfjLoading } =
+    useGetTimeLogSpendQuery(
+      {
+        user_id: targetUserId,
+        type: 'Off the job',
+      },
+      { skip: !targetUserId }
+    )
+
+  const formatOffTheJobTime = (timeString?: string) => {
+    if (!timeString) return '0h 0m'
+    const [hours, minutes] = timeString.split(':')
+    return `${hours || '0'}h ${minutes || '0'}m`
+  }
+
+  const timeLogLabel = isOfjLoading
+    ? '...'
+    : formatOffTheJobTime(ofjSpendResponse?.data?.total)
+
   const countData: PortfolioCountData = useMemo(() => {
     const newDocTotal = pendingSignaturesData?.data?.length ?? 0
     const evidenceTotal =
@@ -152,23 +172,31 @@ export function LearnerDashboard() {
 
   return (
     <>
-      <div className='px-4 lg:px-6'>
-        <PageHeader
-          title={t('pageHeader.title')}
-          subtitle={t('pageHeader.subtitle')}
-          icon={LayoutDashboard}
-        />
-      </div>
+      <div className='px-4 lg:px-6 space-y-4'>
+        <div className='flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between xl:gap-3'>
+          <PageHeader
+            title={t('pageHeader.title')}
+            subtitle={t('pageHeader.subtitle')}
+            icon={LayoutDashboard}
+            className='xl:shrink-0 xl:max-w-[260px] space-y-1'
+          />
 
-      <div className='px-4 lg:px-6 space-y-6'>
+          {/* Whole profile card in dashboard heading row */}
+          {learner && (
+            <div className='min-w-0 flex-1'>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              <LearnerInfoCard learner={learner as any} user={user || undefined} />
+            </div>
+          )}
+        </div>
+
         {/* Portfolio Metric Cards */}
-        <PortfolioMetricCards cards={overviewCards} countData={countData} />
-
-        {/* Learner Information Card */}
-        {learner && (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          <LearnerInfoCard learner={learner as any} user={user || undefined} />
-        )}
+        <PortfolioMetricCards
+          cards={overviewCards}
+          countData={countData}
+          labelData={{ 9: timeLogLabel }}
+          detailData={{ 9: t('infoCard.timeLog.offTheJob') }}
+        />
 
         {/* Course Progress Charts */}
         {learner?.course && learner.course.length > 0 && (

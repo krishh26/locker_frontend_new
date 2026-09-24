@@ -3,18 +3,14 @@
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { ArrowRight } from 'lucide-react'
-import Image from 'next/image'
 import { Card } from '@/components/ui/card'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useLocale, useTranslations } from 'next-intl'
 import { isCourseEligibleForOverallProgress } from '@/lib/is-enrollment-excluded'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
-import { useGetTimeLogSpendQuery } from '@/store/api/time-log/timeLogApi'
 
 interface Learner {
   learner_id?: string | number
@@ -68,15 +64,6 @@ interface LearnerInfoCardProps {
   user?: User
 }
 
-function initialsFromName(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? '')
-    .join('')
-}
-
 function formatNextVisitDate(
   dateString: string | undefined | null,
   locale: string,
@@ -105,63 +92,6 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
       ),
     [learner?.nextvisitdate, learner?.next_visit_date, locale],
   )
-  // When Admin/Trainer views a learner dashboard, the time log API must use the learner's user_id (not the viewer's).
-  const timeLogUserId = String(
-    (learner as unknown as { id?: string | number; user_id?: string | number })?.id ??
-      (learner as unknown as { user_id?: string | number })?.user_id ??
-      user?.id ??
-      '',
-  ) || undefined
-
-  const { data: otjSpendResponse, isLoading: isOtjLoading } =
-    useGetTimeLogSpendQuery(
-      {
-        user_id: timeLogUserId || '',
-        type: 'On the job',
-      },
-      { skip: !timeLogUserId }
-    )
-
-  const { data: ofjSpendResponse, isLoading: isOfjLoading } =
-    useGetTimeLogSpendQuery(
-      {
-        user_id: timeLogUserId || '',
-        type: 'Off the job',
-      },
-      { skip: !timeLogUserId }
-    )
-
-  const formatTime = (timeString?: string) => {
-    if (!timeString) return '0h 0m'
-    const [hours, minutes] = timeString.split(':')
-    return `${hours || '0'}h ${minutes || '0'}m`
-  }
-
-  const calculateTotalHours = (otjTotal?: string, ofjTotal?: string) => {
-    const parseTime = (timeString?: string) => {
-      if (!timeString) return { hours: 0, minutes: 0 }
-      const [hours, minutes] = timeString.split(':')
-      return {
-        hours: parseInt(hours || '0', 10),
-        minutes: parseInt(minutes || '0', 10),
-      }
-    }
-
-    const otj = parseTime(otjTotal)
-    const ofj = parseTime(ofjTotal)
-    const totalMinutes = otj.hours * 60 + otj.minutes + ofj.hours * 60 + ofj.minutes
-    const totalHours = Math.floor(totalMinutes / 60)
-    const remainingMinutes = totalMinutes % 60
-
-    if (totalHours === 0 && remainingMinutes === 0) return '0h'
-    if (remainingMinutes === 0) return `${totalHours}h`
-    return `${totalHours}h ${remainingMinutes}m`
-  }
-
-  const isTimeLogLoading = isOtjLoading || isOfjLoading
-  const otjTotal = otjSpendResponse?.data?.total
-  const ofjTotal = ofjSpendResponse?.data?.total
-  const totalHoursLabel = calculateTotalHours(otjTotal, ofjTotal)
 
   // Calculate overall progress across all courses
   const overallProgressData = useMemo(() => {
@@ -207,9 +137,6 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
     ? `${user.first_name || ''} ${user.last_name || ''}`.trim()
     : t('fallbackLearnerName')
 
-  const avatarUrl = learner?.avatar || user?.avatar?.url
-  const initials = initialsFromName(learnerName)
-
   const primaryCourse =
     learner?.course?.find((c) => isCourseEligibleForOverallProgress(c)) ??
     learner?.course?.[0]
@@ -229,143 +156,95 @@ export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
 
  
   return (
-    <Card className='overflow-hidden border border-border/60 shadow-sm'>
-      <div className='grid lg:grid-cols-[1fr_1fr]'>
-        {/* Left Section - Dark Background with Learner Info */}
-        <div className='px-4 mb-4'>
-          <div className='flex flex-col gap-4'>
-            <div className='flex items-start gap-4'>
-              <Avatar className='size-16 border-2 border-primary/30 shadow-md'>
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt={learnerName}
-                    width={64}
-                    height={64}
-                    className='rounded-full object-cover'
-                  />
-                ) : (
-                  <AvatarFallback className='bg-primary text-base font-semibold text-primary-foreground'>
-                    {initials}
-                  </AvatarFallback>
-                )}
-              </Avatar>
-              <div className='space-y-1'>
-                <h2 className='text-2xl font-semibold text-foreground'>{learnerName}</h2>
-                <Button
-                  variant='link'
-                  size='sm'
-                  asChild
-                  className='h-auto p-0 text-muted-foreground hover:text-primary'
-                >
-                  <Link
-                    href={`/learner-profile?learner_id=${String(
-                      learner?.learner_id || ''
-                    )}`}
-                  >
-                    <span className='text-sm'>{t('viewProfile')}</span>
-                    <ArrowRight className='ml-1 size-4' />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            <div className='space-y-2 text-sm'>
-              <div className='flex items-center gap-2 rounded-md bg-white/60 dark:bg-white/5 px-3 py-1.5'>
-                <span className='text-muted-foreground'>Trainer:</span>
-                <span className='text-foreground font-medium'>{trainerName}</span>
-              </div>
-              <div className='flex items-center gap-2 rounded-md bg-white/60 dark:bg-white/5 px-3 py-1.5'>
-                <span className='text-muted-foreground'>IQA:</span>
-                <span className='text-foreground font-medium'>{iqaName}</span>
-              </div>
-            </div>
-
-            <Badge
-              variant='outline'
-              className='w-fit rounded-full px-4 py-2 shadow-sm border-primary bg-primary text-white'
+    <Card className='overflow-hidden border border-border/60 shadow-sm gap-0 py-2.5'>
+      <div className='flex flex-col gap-2 px-3 xl:flex-row xl:items-center xl:gap-3'>
+        {/* Profile info — single row */}
+        <div className='flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-2'>
+          <div className='flex min-w-0 items-center gap-2'>
+            <h2 className='truncate text-base font-semibold text-foreground'>
+              {learnerName}
+            </h2>
+            <Link
+              href={`/learner-profile?learner_id=${String(
+                learner?.learner_id || ''
+              )}`}
+              className='inline-flex shrink-0 items-center gap-0.5 text-xs font-medium text-primary underline underline-offset-2 hover:text-primary/80'
             >
-              {t('nextVisit')} {formattedNextVisit ?? t('notAvailable')}
-            </Badge>
+              {t('viewProfile')}
+              <ArrowRight className='size-3.5' />
+            </Link>
           </div>
+
+          <div className='flex items-center gap-1.5 rounded-md bg-muted/60 px-2 py-1 text-xs'>
+            <span className='text-muted-foreground'>{t('trainerLabel')}</span>
+            <span className='font-medium text-foreground'>{trainerName}</span>
+          </div>
+
+          <div className='flex items-center gap-1.5 rounded-md bg-muted/60 px-2 py-1 text-xs'>
+            <span className='text-muted-foreground'>{t('iqaLabel')}</span>
+            <span className='font-medium text-foreground'>{iqaName}</span>
+          </div>
+
+          <Badge
+            variant='outline'
+            className='w-fit shrink-0 rounded-full border-primary bg-primary px-2.5 py-1 text-xs text-white shadow-sm'
+          >
+            {t('nextVisit')} {formattedNextVisit ?? t('notAvailable')}
+          </Badge>
         </div>
 
-        {/* Right Section - Overall Progress and Time Log */}
-        <div className='flex justify-end flex-col lg:flex-row gap-4 px-4'>
-          {/* Overall Progress Card */}
-          <div className='min-w-[280px] rounded-lg border border-accent bg-accent p-4 shadow-sm'>
-            <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-white'>
-                {t('overallProgress.title')}
-              </h3>
-              <Badge
-                variant='outline'
-                className={cn(
-                  'rounded-full px-3 py-1 text-sm font-semibold shadow-sm',
-                  completion >= 70
-                    ? 'border-white/30 bg-white/10 text-white'
-                    : 'border-white/30 bg-white/10 text-white'
-                )}
-              >
-                {completion.toFixed(0)}%
-              </Badge>
-            </div>
-            <Progress value={completion} className='h-2 mb-4' />
-            <div className='grid grid-cols-3 gap-2 text-center'>
-              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>
-                  {t('overallProgress.completed')}
-                </p>
-                <p className='text-lg font-bold text-white'>
-                  {overallProgressData.fullyCompleted}
-                </p>
-              </div>
-              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>
-                  {t('overallProgress.inProgress')}
-                </p>
-                <p className='text-lg font-bold text-white'>
-                  {overallProgressData.workInProgress}
-                </p>
-              </div>
-              <div className='space-y-1 rounded-lg bg-white/10 p-2'>
-                <p className='text-xs text-white font-medium'>
-                  {t('overallProgress.pending')}
-                </p>
-                <p className='text-lg font-bold text-white'>
-                  {overallProgressData.yetToComplete}
-                </p>
-              </div>
-            </div>
-            <p className='text-xs text-white/70 mt-3 text-center'>
-              {t('overallProgress.totalUnits', {
-                units: overallProgressData.totalUnits,
-                courses: overallProgressData.countedCourses,
-              })}
-            </p>
+        {/* Overall Progress — single compact row */}
+        <div className='flex min-w-0 shrink-0 items-center gap-2 rounded-lg border border-accent bg-accent px-2.5 py-2 shadow-sm xl:max-w-[520px]'>
+          <div className='flex shrink-0 items-center gap-1.5'>
+            <h3 className='whitespace-nowrap text-xs font-semibold text-white'>
+              {t('overallProgress.title')}
+            </h3>
+            <Badge
+              variant='outline'
+              className={cn(
+                'rounded-full px-1.5 py-0 text-[10px] font-semibold shadow-sm',
+                'border-white/30 bg-white/10 text-white'
+              )}
+            >
+              {completion.toFixed(0)}%
+            </Badge>
           </div>
 
-          {/* Time Log Card - Compact Version */}
-          <div className='flex-1 max-w-[200px] rounded-lg border border-secondary bg-secondary p-4 shadow-sm flex flex-col justify-center'>
-            <div className='flex items-center justify-between mb-3'>
-              <h3 className='text-sm font-semibold text-white'>
-                {t('timeLog.title')}
-              </h3>
-              <Badge variant='secondary' className='rounded-full px-3 py-1 text-sm font-semibold bg-white/10 text-white shadow-sm'>
-                {isTimeLogLoading ? '...' : totalHoursLabel}
-              </Badge>
+          <Progress value={completion} className='h-1.5 w-16 shrink-0 sm:w-20' />
+
+          <div className='flex items-center gap-1.5'>
+            <div className='rounded-md bg-white/10 px-1.5 py-1 text-center'>
+              <p className='text-[9px] font-medium leading-tight text-white/80'>
+                {t('overallProgress.completed')}
+              </p>
+              <p className='text-xs font-bold text-white'>
+                {overallProgressData.fullyCompleted}
+              </p>
             </div>
-            <div className='grid grid-cols-1 gap-4 flex-1 items-center'>
-              <div className='text-center space-y-1'>
-                <p className='text-xs text-white/70'>
-                  {t('timeLog.offTheJob')}
-                </p>
-                <p className='text-lg font-bold text-white'>
-                  {isTimeLogLoading ? '...' : formatTime(ofjTotal)}
-                </p>
-              </div>
+            <div className='rounded-md bg-white/10 px-1.5 py-1 text-center'>
+              <p className='text-[9px] font-medium leading-tight text-white/80'>
+                {t('overallProgress.inProgress')}
+              </p>
+              <p className='text-xs font-bold text-white'>
+                {overallProgressData.workInProgress}
+              </p>
+            </div>
+            <div className='rounded-md bg-white/10 px-1.5 py-1 text-center'>
+              <p className='text-[9px] font-medium leading-tight text-white/80'>
+                {t('overallProgress.pending')}
+              </p>
+              <p className='text-xs font-bold text-white'>
+                {overallProgressData.yetToComplete}
+              </p>
             </div>
           </div>
+
+          <p className='hidden text-[10px] leading-tight text-white/70 sm:block'>
+            {t('overallProgress.totalUnits', {
+              units: overallProgressData.totalUnits,
+              courses: overallProgressData.countedCourses,
+            })}
+          </p>
         </div>
       </div>
     </Card>

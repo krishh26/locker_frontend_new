@@ -6,9 +6,18 @@ import type { PortfolioCountData } from "@/store/api/dashboard/types"
 interface PortfolioMetricCardsProps {
   cards: MetricCard[]
   countData: PortfolioCountData
+  /** Custom badge text by card id (e.g. Time Log → "09h 00m") */
+  labelData?: Record<number, string | undefined>
+  /** Subtitle above badge by card id (e.g. "Off The Job Total") */
+  detailData?: Record<number, string | undefined>
 }
 
-export function PortfolioMetricCards({ cards, countData }: PortfolioMetricCardsProps) {
+export function PortfolioMetricCards({
+  cards,
+  countData,
+  labelData,
+  detailData,
+}: PortfolioMetricCardsProps) {
   // Map portfolio card IDs to countData fields (card IDs from config/portfolio-cards)
   const cardCountData: Record<number, number | undefined> = {
     1: countData.evidenceTotal, // Evidence Library
@@ -20,7 +29,15 @@ export function PortfolioMetricCards({ cards, countData }: PortfolioMetricCardsP
     11: countData.newDocTotal, // New Doc to Sign
   }
 
-  return <MetricCards cards={cards} countData={cardCountData} variant="default" />
+  return (
+    <MetricCards
+      cards={cards}
+      countData={cardCountData}
+      labelData={labelData}
+      detailData={detailData}
+      variant="default"
+    />
+  )
 }
 
 // Re-export MetricCard type for convenience

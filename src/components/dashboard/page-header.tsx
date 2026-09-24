@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { type LucideIcon } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,8 @@ interface PageHeaderProps {
   className?: string;
   showBackButton?: boolean;
   backButtonHref?: string;
+  /** Optional right-side content (e.g. time log summary on learner dashboard) */
+  actions?: ReactNode;
 }
 
 export function PageHeader({
@@ -23,6 +26,7 @@ export function PageHeader({
   className,
   showBackButton = false,
   backButtonHref,
+  actions,
 }: PageHeaderProps) {
   const router = useRouter();
   const t = useTranslations("common");
@@ -48,14 +52,20 @@ export function PageHeader({
           {t("back")}
         </Button>
       )}
-      <div className="flex items-center gap-3">
-        {Icon && <Icon className="h-8 w-8 text-primary" />}
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+        <div className="space-y-1 min-w-0">
+          <div className="flex items-center gap-2.5">
+            {Icon && <Icon className="h-7 w-7 text-primary shrink-0" />}
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
+          </div>
+          {subtitle && (
+            <p className="text-muted-foreground text-sm sm:text-base">{subtitle}</p>
+          )}
+        </div>
+        {actions && (
+          <div className="shrink-0 sm:ml-3">{actions}</div>
+        )}
       </div>
-      {subtitle && (
-        <p className="text-muted-foreground text-lg">{subtitle}</p>
-      )}
     </div>
   );
 }
-

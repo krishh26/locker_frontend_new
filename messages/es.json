@@ -261,7 +261,7 @@
         "fileSize": "Tamaño del archivo: {size} MB",
         "dragDrop": "Arrastra y suelta tu archivo CSV aquí o",
         "browse": "Buscar",
-        "maxSize": "Se permiten archivos de hasta 10 MB",
+        "maxSize": "Se permiten archivos de hasta 300MB",
         "supportedFormats": "Formato admitido: solo CSV"
       },
       "summary": {
@@ -2504,7 +2504,7 @@
         "centreLabel": "Centro (opcional)",
         "centrePlaceholder": "ID del centro",
         "attachmentLabel": "Adjuntos (opcional)",
-        "attachmentHint": "Hasta 5 archivos, 25 MB cada uno (opcional)."
+        "attachmentHint": "Hasta 5 archivos, 300 MB cada uno (opcional)."
       },
       "buttons": {
         "cancel": "Cancelar",
@@ -2515,7 +2515,7 @@
         "titleRequired": "El título es obligatorio",
         "descriptionRequired": "La descripción es obligatoria",
         "tooManyFiles": "Puedes adjuntar como máximo 5 archivos.",
-        "fileTooLarge": "Cada archivo debe ser de 25 MB o menos."
+        "fileTooLarge": "Cada archivo debe ser de 300 MB o menos."
       },
       "toast": {
         "createSuccess": "¡Ticket creado correctamente!",
@@ -2846,8 +2846,8 @@
       "uploadFile": "Subir Archivo",
       "dragDrop": "Arrastre y suelte sus archivos aquí o",
       "browse": "Navegar",
-      "maxFileSize": "Se permiten archivos de máximo 10MB (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "El tamaño del archivo debe ser menor a 10MB",
+      "maxFileSize": "Se permiten archivos de máximo 300MB (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "El tamaño del archivo debe ser menor a 300MB",
       "fileTypeError": "Solo se permiten archivos PDF, CSV, DOC, DOCX",
       "remove": "Eliminar",
       "viewCurrentFile": "Ver Archivo Actual",
@@ -2911,7 +2911,7 @@
       "number": "{label} debe ser un número",
       "phone": "{label} solo puede contener números",
       "required": "{label} es obligatorio",
-      "fileTooLarge": "{label} es demasiado grande (máx. 10 MB)"
+      "fileTooLarge": "{label} es demasiado grande (máx. 300MB)"
     },
     "toast": {
       "submitSuccess": "¡Formulario enviado correctamente!",
@@ -3188,7 +3188,7 @@
         "helper": {
           "dragDrop": "Arrastra y suelta tus archivos aquí o",
           "browse": "Explorar",
-          "maxSize": "Se permiten archivos de hasta 10MB"
+          "maxSize": "Se permiten archivos de hasta 300MB"
         },
         "buttons": {
           "cancel": "Cancelar",
@@ -3201,7 +3201,7 @@
         },
         "validation": {
           "fileRequired": "Se requiere un archivo",
-          "fileTooLarge": "El tamaño del archivo debe ser menor de 10MB",
+          "fileTooLarge": "El tamaño del archivo debe ser menor de 300MB",
           "unsupportedFormat": "Formato de archivo no compatible"
         }
       }
@@ -3377,7 +3377,7 @@
       "helper": {
         "currentFilePrefix": "Archivo actual:",
         "viewFile": "Ver archivo",
-        "maxFileSize": "Tamaño máximo del archivo: 10MB",
+        "maxFileSize": "Tamaño máximo del archivo: 300MB",
         "nameAuto": "El nombre se establece automáticamente a partir del archivo subido"
       },
       "buttons": {
@@ -3395,7 +3395,7 @@
         "selectCourse": "Selecciona un curso.",
         "nameRequired": "El nombre es obligatorio.",
         "uploadFile": "Sube un archivo.",
-        "fileTooLarge": "El tamaño del archivo debe ser menor de 10MB.",
+        "fileTooLarge": "El tamaño del archivo debe ser menor de 300MB.",
         "hoursMin": "Las horas deben ser 0 o más",
         "hoursMax": "Las horas deben ser menos de 24",
         "minutesMin": "Los minutos deben ser 0 o más",
@@ -4951,7 +4951,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "El tamaño del archivo debe ser inferior a 10 MB"
+      "fileSizeError": "El tamaño del archivo debe ser inferior a 300MB"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "Comentario del formador"

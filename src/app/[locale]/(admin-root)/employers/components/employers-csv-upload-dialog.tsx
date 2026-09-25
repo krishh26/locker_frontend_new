@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { useBulkCreateEmployersMutation } from "@/store/api/employer/employerApi";
 import type { CreateEmployerRequest } from "@/store/api/employer/types";
 import { toast } from "sonner";
+import { MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/upload-limits";
 
 const csvFieldToApiFieldMap = {
   CompanyName: "employer_name",
@@ -393,7 +394,7 @@ export function EmployersCsvUploadDialog({
                     </span>
                   </h3>
                   <p className="text-muted-foreground text-base">
-                    Max 10MB files are allowed
+                    Max {MAX_UPLOAD_FILE_SIZE_MB}MB files are allowed
                   </p>
                 </div>
               )}

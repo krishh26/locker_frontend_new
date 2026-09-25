@@ -34,6 +34,7 @@ import {
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/upload-limits";
 
 const ALLOWED_FILE_TYPES = [
   "JPG", "PNG", "GIF", "PDF", "DOCX", "XLSX", "PPTX", "TXT", "ZIP", "MP4", "MP3", "AVI", "MOV",
@@ -50,7 +51,7 @@ const ALLOWED_MIME_TYPES = [
   "video/mp4", "audio/mpeg", "video/x-msvideo", "video/quicktime",
 ];
 
-const MAX_FILE_SIZE_MB = 10;
+const MAX_FILE_SIZE_MB = MAX_UPLOAD_FILE_SIZE_MB;
 
 const getResourceFormSchema = (
   t: (key: string, values?: Record<string, string | number | Date>) => string

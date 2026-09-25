@@ -17,6 +17,7 @@ import { useUploadActionFileMutation } from "@/store/api/learner-plan/learnerPla
 import { toast } from "sonner";
 import { Upload, X } from "lucide-react";
 import { useState, useRef } from "react";
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits";
 
 type FileFormData = {
   file: File
@@ -43,7 +44,7 @@ export function ManageActionFileDialog({
   const fileSchema = z.object({
     file: z
       .instanceof(File, { message: t("dialogs.manageActionFile.validation.fileRequired") })
-      .refine((file) => file.size <= 10 * 1024 * 1024, {
+      .refine((file) => file.size <= MAX_UPLOAD_FILE_SIZE_BYTES, {
         message: t("dialogs.manageActionFile.validation.fileTooLarge"),
       })
       .refine(

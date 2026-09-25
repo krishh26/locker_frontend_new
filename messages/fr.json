@@ -260,7 +260,7 @@
         "fileSize": "Taille du fichier : {size} Mo",
         "dragDrop": "Glissez-déposez votre fichier CSV ici ou",
         "browse": "Parcourir",
-        "maxSize": "Les fichiers de maximum 10 Mo sont autorisés",
+        "maxSize": "Les fichiers de maximum 300Mo sont autorisés",
         "supportedFormats": "Format pris en charge : uniquement CSV"
       },
       "summary": {
@@ -2714,7 +2714,7 @@
         "centreLabel": "Centre (facultatif)",
         "centrePlaceholder": "ID du centre",
         "attachmentLabel": "Pièces jointes (facultatif)",
-        "attachmentHint": "Jusqu'à 5 fichiers, 25 Mo chacun (facultatif)."
+        "attachmentHint": "Jusqu'à 5 fichiers, 300 Mo chacun (facultatif)."
       },
       "buttons": {
         "cancel": "Annuler",
@@ -2725,7 +2725,7 @@
         "titleRequired": "Le titre est obligatoire",
         "descriptionRequired": "La description est obligatoire",
         "tooManyFiles": "Vous pouvez joindre au maximum 5 fichiers.",
-        "fileTooLarge": "Chaque fichier doit faire 25 Mo ou moins."
+        "fileTooLarge": "Chaque fichier doit faire 300 Mo ou moins."
       },
       "toast": {
         "createSuccess": "Ticket créé avec succès !",
@@ -3056,8 +3056,8 @@
       "uploadFile": "Téléverser un fichier",
       "dragDrop": "Glissez-déposez vos fichiers ici ou",
       "browse": "Parcourir",
-      "maxFileSize": "Des fichiers de 10 Mo maximum sont autorisés (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "La taille du fichier doit être inférieure à 10 Mo",
+      "maxFileSize": "Des fichiers de 300Mo maximum sont autorisés (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "La taille du fichier doit être inférieure à 300Mo",
       "fileTypeError": "Seuls les fichiers PDF, CSV, DOC et DOCX sont autorisés",
       "remove": "Supprimer",
       "viewCurrentFile": "Afficher le fichier actuel",
@@ -3178,7 +3178,7 @@
       "number": "{label} doit être un nombre",
       "phone": "{label} ne doit contenir que des chiffres",
       "required": "{label} est obligatoire",
-      "fileTooLarge": "{label} est trop volumineux (max 10 Mo)"
+      "fileTooLarge": "{label} est trop volumineux (max 300Mo)"
     },
     "toast": {
       "submitSuccess": "Formulaire soumis avec succès !",
@@ -3455,7 +3455,7 @@
         "helper": {
           "dragDrop": "Glissez-déposez vos fichiers ici ou",
           "browse": "Parcourir",
-          "maxSize": "Taille max 10MB"
+          "maxSize": "Taille max 300MB"
         },
         "buttons": {
           "cancel": "Annuler",
@@ -3468,7 +3468,7 @@
         },
         "validation": {
           "fileRequired": "Un fichier est requis",
-          "fileTooLarge": "La taille du fichier doit être inférieure à 10MB",
+          "fileTooLarge": "La taille du fichier doit être inférieure à 300MB",
           "unsupportedFormat": "Format de fichier non pris en charge"
         }
       }
@@ -3644,7 +3644,7 @@
       "helper": {
         "currentFilePrefix": "Fichier actuel :",
         "viewFile": "Voir le fichier",
-        "maxFileSize": "Taille maximale du fichier : 10MB",
+        "maxFileSize": "Taille maximale du fichier : 300MB",
         "nameAuto": "Le nom est défini automatiquement à partir du fichier téléversé"
       },
       "buttons": {
@@ -3662,7 +3662,7 @@
         "selectCourse": "Veuillez sélectionner un cours.",
         "nameRequired": "Le nom est obligatoire.",
         "uploadFile": "Veuillez téléverser un fichier.",
-        "fileTooLarge": "La taille du fichier doit être inférieure à 10MB.",
+        "fileTooLarge": "La taille du fichier doit être inférieure à 300MB.",
         "hoursMin": "Les heures doivent être supérieures ou égales à 0",
         "hoursMax": "Les heures doivent être inférieures à 24",
         "minutesMin": "Les minutes doivent être supérieures ou égales à 0",
@@ -5169,7 +5169,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "La taille du fichier doit être inférieure à 10 Mo"
+      "fileSizeError": "La taille du fichier doit être inférieure à 300Mo"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "Commentaire du formateur"

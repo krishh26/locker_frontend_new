@@ -38,6 +38,10 @@ import { useGetCentresQuery } from "@/store/api/centres/centreApi";
 import { useAppSelector } from "@/store/hooks";
 import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 import { toast } from "sonner";
+import {
+  MAX_UPLOAD_FILE_SIZE_BYTES,
+  MAX_UPLOAD_FILE_SIZE_MB,
+} from "@/lib/upload-limits";
 
 const businessCategories = [
   "Media and creative services",
@@ -240,9 +244,9 @@ export function EmployersFormDialog({
       return;
     }
 
-    // Validate file size (10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("File size must be less than 10MB");
+    // Validate file size
+    if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
+      toast.error(`File size must be less than ${MAX_UPLOAD_FILE_SIZE_MB}MB`);
       return;
     }
 
@@ -710,7 +714,10 @@ export function EmployersFormDialog({
           <div className="space-y-4">
             <h3 className="text-lg font-semibold border-b pb-2">File Upload</h3>
             <div className="space-y-2">
-              <Label>Choose File for Employer (PDF only, max 10MB)</Label>
+              <Label>
+                Choose File for Employer (PDF only, max {MAX_UPLOAD_FILE_SIZE_MB}
+                MB)
+              </Label>
               <div className="flex items-center gap-2">
                 <Input
                   ref={fileInputRef}

@@ -5,6 +5,10 @@ import { Upload, X, FileText } from "lucide-react";
 import { Controller, Control, FieldError } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  MAX_UPLOAD_FILE_SIZE_BYTES,
+  MAX_UPLOAD_FILE_SIZE_MB,
+} from "@/lib/upload-limits";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import type { EvidenceFormValues } from "./evidence-form-types";
@@ -49,7 +53,7 @@ export function FileUpload({
           toast.error("Unsupported file type. Use PDF, DOC, DOCX, JPG, PNG, MP4, or MP3.");
           return;
         }
-        if (file.size > 10 * 1024 * 1024) {
+        if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
           toast.error(t("fileUpload.fileSizeError"));
           return;
         }
@@ -166,7 +170,8 @@ export function FileUpload({
                   Click to upload or drag and drop
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  PDF, DOC, DOCX, JPG, PNG, MP4, MP3 (Max 10MB)
+                  PDF, DOC, DOCX, JPG, PNG, MP4, MP3 (Max{" "}
+                  {MAX_UPLOAD_FILE_SIZE_MB}MB)
                 </p>
               </button>
             )}

@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus, ChevronDown, MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { ChevronDown, MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 
 import { Badge } from "@/components/ui/badge";
@@ -66,7 +66,15 @@ import { TimeLogFormDialog } from "./time-log-form-dialog";
 import { OffTheJobSummary } from "./off-the-job-summary";
 import { useTranslations } from "next-intl";
 
-export function TimeLogDataTable() {
+interface TimeLogDataTableProps {
+  createDialogOpen?: boolean;
+  onCreateDialogOpenChange?: (open: boolean) => void;
+}
+
+export function TimeLogDataTable({
+  createDialogOpen = false,
+  onCreateDialogOpenChange,
+}: TimeLogDataTableProps) {
   const user = useAppSelector((state) => state.auth.user);
   const learner = useAppSelector(selectLearner);
   const courses = useAppSelector(selectCourses);
@@ -168,6 +176,22 @@ export function TimeLogDataTable() {
     setEditMode(false);
     setFormDialogOpen(true);
   }, []);
+
+  useEffect(() => {
+    if (createDialogOpen) {
+      handleAdd();
+    }
+  }, [createDialogOpen, handleAdd]);
+
+  const handleFormDialogOpenChange = useCallback(
+    (open: boolean) => {
+      setFormDialogOpen(open);
+      if (!open) {
+        onCreateDialogOpenChange?.(false);
+      }
+    },
+    [onCreateDialogOpenChange],
+  );
 
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "-";
@@ -421,14 +445,8 @@ export function TimeLogDataTable() {
       {/* Recent Activity Section */}
       <RecentActivitySection activities={recentActivities} />
 
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row justify-between gap-4">
-        {!isEmployer && (
-          <Button onClick={handleAdd} className="cursor-pointer">
-            <Plus className="mr-2 h-4 w-4" />
-            {t("actions.addButton")}
-          </Button>
-        )}
+      {/* Column visibility */}
+      <div className="flex justify-end">
         <div className="space-y-2">
           <Label htmlFor="column-visibility" className="text-sm font-medium">
             {t("actions.columnVisibilityLabel")}
@@ -561,13 +579,14 @@ export function TimeLogDataTable() {
       {!isEmployer && (
         <TimeLogFormDialog
           open={formDialogOpen}
-          onOpenChange={setFormDialogOpen}
+          onOpenChange={handleFormDialogOpenChange}
           timeLog={selectedTimeLog}
           editMode={editMode}
           onSuccess={() => {
             refetch();
             setFormDialogOpen(false);
             setSelectedTimeLog(null);
+            onCreateDialogOpenChange?.(false);
           }}
         />
       )}

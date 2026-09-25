@@ -3273,27 +3273,27 @@
             "label": "1. Select Activity Date"
           },
           "activityType": {
-            "label": "2. Select Activity Type",
+            "label": "4. Select Activity Type",
             "placeholder": "Select Activity Type"
           },
           "course": {
-            "label": "3. Select Course",
+            "label": "5. Select Course",
             "noneOption": "None",
             "loading": "Loading courses..."
           },
           "unit": {
-            "label": "4. Select Unit",
+            "label": "6. Select Unit",
             "placeholderDefault": "Select Unit(s)",
             "placeholderWithCount": "{count} unit(s) selected",
             "noUnits": "No units available for selected course"
           },
           "trainer": {
-            "label": "5. Select Trainer",
+            "label": "Select Trainer",
             "noneOption": "None",
             "loading": "Loading trainers..."
           },
           "type": {
-            "label": "6. Was it on the Job?",
+            "label": "Was it on the Job?",
             "placeholder": "Select Job Type",
             "options": {
               "notApplicable": "Not Applicable",
@@ -3302,20 +3302,20 @@
             }
           },
           "spendTime": {
-            "label": "7. Time Spent on Activity"
+            "label": "2. Time Spent on Activity"
           },
           "startTime": {
-            "label": "8. Activity Start Time"
+            "label": "3. Activity Start Time"
           },
           "endTime": {
-            "label": "9. Activity End Time"
+            "label": "Activity End Time"
           },
           "impact": {
-            "label": "10. What impact has this activity had on your learning?",
+            "label": "7. What impact has this activity had on your learning?",
             "placeholder": "Please type in any impact notes."
           },
           "evidence": {
-            "label": "11. Evidence Links",
+            "label": "8. Evidence Links",
             "placeholder": "Enter evidence link"
           }
         },

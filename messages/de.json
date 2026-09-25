@@ -3971,27 +3971,27 @@
             "label": "1. Aktivitätsdatum auswählen"
           },
           "activityType": {
-            "label": "2. Aktivitätstyp auswählen",
+            "label": "4. Aktivitätstyp auswählen",
             "placeholder": "Aktivitätstyp auswählen"
           },
           "course": {
-            "label": "3. Kurs auswählen",
+            "label": "5. Kurs auswählen",
             "noneOption": "Keiner",
             "loading": "Kurse werden geladen..."
           },
           "unit": {
-            "label": "4. Einheit auswählen",
+            "label": "6. Einheit auswählen",
             "placeholderDefault": "Einheit(en) auswählen",
             "placeholderWithCount": "{count} Einheit(en) ausgewählt",
             "noUnits": "Für den ausgewählten Kurs sind keine Einheiten verfügbar"
           },
           "trainer": {
-            "label": "5. Trainer auswählen",
+            "label": "Trainer auswählen",
             "noneOption": "Keiner",
             "loading": "Trainer werden geladen..."
           },
           "type": {
-            "label": "6. War es am Arbeitsplatz?",
+            "label": "War es am Arbeitsplatz?",
             "placeholder": "Art der Tätigkeit auswählen",
             "options": {
               "notApplicable": "Nicht zutreffend",
@@ -4000,20 +4000,20 @@
             }
           },
           "spendTime": {
-            "label": "7. Für die Aktivität aufgewendete Zeit"
+            "label": "2. Für die Aktivität aufgewendete Zeit"
           },
           "startTime": {
-            "label": "8. Startzeit der Aktivität"
+            "label": "3. Startzeit der Aktivität"
           },
           "endTime": {
-            "label": "9. Endzeit der Aktivität"
+            "label": "Endzeit der Aktivität"
           },
           "impact": {
-            "label": "10. Wie hat diese Aktivität Ihr Lernen beeinflusst?",
+            "label": "7. Wie hat diese Aktivität Ihr Lernen beeinflusst?",
             "placeholder": "Bitte geben Sie Hinweise zur Auswirkung ein."
           },
           "evidence": {
-            "label": "11. Nachweis-Links",
+            "label": "8. Nachweis-Links",
             "placeholder": "Nachweis-Link eingeben"
           }
         },

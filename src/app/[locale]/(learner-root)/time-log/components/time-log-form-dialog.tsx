@@ -42,21 +42,19 @@ import { selectCourses } from "@/store/slices/authSlice";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
 import { useTranslations } from "next-intl";
 
-const timeLogFormSchema = z.object({
-  activity_date: z.string().min(1, "validation.activityDateRequired"),
-  activity_type: z.string().min(1, "validation.activityTypeRequired"),
-  course_id: z.string().nullable().optional(),
-  unit: z.array(z.string()).optional(),
-  trainer_id: z.string().nullable().optional(),
-  type: z.string().min(1, "validation.jobTypeRequired"),
-  spend_time: z.string().min(1, "validation.timeSpentRequired"),
-  start_time: z.string().min(1, "validation.startTimeRequired"),
-  end_time: z.string().min(1, "validation.endTimeRequired"),
-  impact_on_learner: z.string().min(1, "validation.impactRequired"),
-  evidence_link: z.string().optional(),
-});
-
-type TimeLogFormValues = z.infer<typeof timeLogFormSchema>;
+type TimeLogFormValues = {
+  activity_date: string;
+  activity_type: string;
+  course_id: string | null | undefined;
+  unit: string[] | undefined;
+  trainer_id: string | null | undefined;
+  type: string | undefined;
+  spend_time: string;
+  start_time: string;
+  end_time: string | undefined;
+  impact_on_learner: string;
+  evidence_link: string | undefined;
+};
 
 interface TimeLogFormDialogProps {
   open: boolean;
@@ -65,6 +63,33 @@ interface TimeLogFormDialogProps {
   editMode?: boolean;
   onSuccess?: () => void;
 }
+
+/** Black asterisk for required fields (stays black even when label is in error state). */
+function RequiredMark() {
+  return (
+    <span className="ml-1 !text-black dark:!text-white" aria-hidden="true">
+      *
+    </span>
+  );
+}
+
+/**
+ * Toggle field visibility without deleting form code.
+ * Set a key to `true` to show that field again later.
+ */
+const TIME_LOG_FORM_FIELD_VISIBILITY = {
+  activityDate: true,
+  spendTime: true,
+  startTime: true,
+  endTime: false, // still auto-calculated on submit
+  activityType: true,
+  course: true,
+  unit: true,
+  trainer: false,
+  jobType: false, // defaults to "Not Applicable" when hidden
+  impact: true,
+  evidence: true,
+} as const;
 
 // Time conversion helpers
 const timeToMinutes = (timeStr: string): number => {
@@ -105,6 +130,34 @@ export function TimeLogFormDialog({
   const userId = user?.id || "";
   const t = useTranslations("timeLog");
 
+  const timeLogFormSchema = useMemo(
+    () =>
+      z.object({
+        activity_date: z
+          .string()
+          .min(1, t("dialog.form.validation.activityDateRequired")),
+        activity_type: z
+          .string()
+          .min(1, t("dialog.form.validation.activityTypeRequired")),
+        course_id: z.string().nullable().optional(),
+        unit: z.array(z.string()).optional(),
+        trainer_id: z.string().nullable().optional(),
+        type: z.string().optional(),
+        spend_time: z
+          .string()
+          .min(1, t("dialog.form.validation.timeSpentRequired")),
+        start_time: z
+          .string()
+          .min(1, t("dialog.form.validation.startTimeRequired")),
+        end_time: z.string().optional(),
+        impact_on_learner: z
+          .string()
+          .min(1, t("dialog.form.validation.impactRequired")),
+        evidence_link: z.string().optional(),
+      }),
+    [t],
+  );
+
   const [createTimeLog, { isLoading: isCreating }] = useCreateTimeLogMutation();
   const [updateTimeLog, { isLoading: isUpdating }] = useUpdateTimeLogMutation();
 
@@ -112,7 +165,7 @@ export function TimeLogFormDialog({
   const learnerCourses = useAppSelector(selectCourses);
   const { data: usersData, isLoading: isLoadingUsers } = useGetUsersQuery(
     { page: 1, page_size: 1000, role: "Trainer" },
-    { skip: !open }
+    { skip: !open || !TIME_LOG_FORM_FIELD_VISIBILITY.trainer }
   );
 
   const courses = useMemo(
@@ -155,7 +208,7 @@ export function TimeLogFormDialog({
       course_id: null,
       unit: [],
       trainer_id: null,
-      type: "",
+      type: "Not Applicable",
       spend_time: "00:00",
       start_time: "00:00",
       end_time: "00:00",
@@ -182,7 +235,7 @@ export function TimeLogFormDialog({
         course_id: courseId,
         unit: getUnitValue(timeLog),
         trainer_id: trainerId,
-        type: timeLog.type || "",
+        type: timeLog.type || "Not Applicable",
         spend_time: timeLog.spend_time || "00:00",
         start_time: timeLog.start_time || "00:00",
         end_time: timeLog.end_time || "00:00",
@@ -196,7 +249,7 @@ export function TimeLogFormDialog({
         course_id: null,
         unit: [],
         trainer_id: null,
-        type: "",
+        type: "Not Applicable",
         spend_time: "00:00",
         start_time: "00:00",
         end_time: "00:00",
@@ -224,6 +277,15 @@ export function TimeLogFormDialog({
 
   async function onSubmit(data: TimeLogFormValues) {
     try {
+      // Always derive end time from start + spend (field is hidden from the form UI).
+      const derivedEndTime =
+        data.start_time &&
+        data.spend_time &&
+        data.start_time !== "00:00" &&
+        data.spend_time !== "00:00"
+          ? calculateEndTime(data.start_time, data.spend_time)
+          : data.end_time || "00:00";
+
       const payload: TimeLogCreateRequest = {
         user_id: userId,
         course_id: data.course_id || null,
@@ -231,10 +293,10 @@ export function TimeLogFormDialog({
         activity_type: data.activity_type,
         unit: data.unit || [],
         trainer_id: data.trainer_id || null,
-        type: data.type,
+        type: data.type || "Not Applicable",
         spend_time: data.spend_time,
         start_time: data.start_time,
-        end_time: data.end_time,
+        end_time: derivedEndTime,
         impact_on_learner: data.impact_on_learner,
         evidence_link: data.evidence_link,
       };
@@ -300,357 +362,389 @@ export function TimeLogFormDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 *:min-w-0">
-              <FormField
-                control={form.control}
-                name="activity_date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.activityDate.label")}
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="activity_type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.activityType.label")}
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl className="w-full">
-                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
-                          <SelectValue
-                            placeholder={t(
-                              "dialog.form.fields.activityType.placeholder"
-                            )}
-                          />
-                        </SelectTrigger>
+              {TIME_LOG_FORM_FIELD_VISIBILITY.activityDate && (
+                <FormField
+                  control={form.control}
+                  name="activity_date"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.activityDate.label")}
+                        <RequiredMark />
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="date" {...field} />
                       </FormControl>
-                      <SelectContent>
-                        {activityTypes.map((type) => (
-                          <SelectItem key={type} value={type}>
-                            {type}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="course_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.course.label")}
-                    </FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        field.onChange(value === "none" ? null : value);
-                        form.setValue("unit", []); // Reset units when course changes
-                      }}
-                      value={field.value || "none"}
-                    >
+              {TIME_LOG_FORM_FIELD_VISIBILITY.spendTime && (
+                <FormField
+                  control={form.control}
+                  name="spend_time"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.spendTime.label")}
+                        <RequiredMark />
+                      </FormLabel>
                       <FormControl className="w-full">
-                        <SelectTrigger
-                          className="w-full min-w-0 cursor-pointer"
-                          title={selectedCourse?.course_name}
-                        >
-                          <SelectValue
-                            placeholder={t("dialog.form.fields.course.label")}
-                          />
-                        </SelectTrigger>
+                        <Input
+                          type="time"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                            handleTimeChange("spend_time", e.target.value);
+                          }}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="none">
-                          {t("dialog.form.fields.course.noneOption")}
-                        </SelectItem>
-                        {isLoadingCourses ? (
-                          <SelectItem value="loading" disabled>
-                            {t("dialog.form.fields.course.loading")}
-                          </SelectItem>
-                        ) : (
-                          courses.map((course) => (
-                            <SelectItem key={course.course_id} value={String(course.course_id)}>
-                              {course.course_name}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {TIME_LOG_FORM_FIELD_VISIBILITY.startTime && (
+                <FormField
+                  control={form.control}
+                  name="start_time"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.startTime.label")}
+                        <RequiredMark />
+                      </FormLabel>
+                      <FormControl className="w-full">
+                        <Input
+                          type="time"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                            handleTimeChange("start_time", e.target.value);
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {TIME_LOG_FORM_FIELD_VISIBILITY.endTime && (
+                <FormField
+                  control={form.control}
+                  name="end_time"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.endTime.label")}
+                        <RequiredMark />
+                      </FormLabel>
+                      <FormControl className="w-full">
+                        <Input type="time" {...field} disabled />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {TIME_LOG_FORM_FIELD_VISIBILITY.activityType && (
+                <FormField
+                  control={form.control}
+                  name="activity_type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.activityType.label")}
+                        <RequiredMark />
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="w-full">
+                          <SelectTrigger className="w-full min-w-0 cursor-pointer">
+                            <SelectValue
+                              placeholder={t(
+                                "dialog.form.fields.activityType.placeholder"
+                              )}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {activityTypes.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
                             </SelectItem>
-                          ))
-                        )}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="unit"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.unit.label")}
-                    </FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        const currentUnits = field.value || [];
-                        if (currentUnits.includes(value)) {
-                          field.onChange(currentUnits.filter((u) => u !== value));
-                        } else {
-                          field.onChange([...currentUnits, value]);
-                        }
-                      }}
-                      value=""
-                    >
-                      <FormControl className="w-full">
-                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
-                          <SelectValue
-                            placeholder={
-                              selectedUnits.length > 0
-                                ? t(
-                                    "dialog.form.fields.unit.placeholderWithCount",
-                                    { count: selectedUnits.length }
-                                  )
-                                : t(
-                                    "dialog.form.fields.unit.placeholderDefault"
-                                  )
-                            }
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {(() => {
-                          const units = (selectedCourse as { units?: { id: string; title: string }[] } | undefined)?.units;
-                          return units && units.length > 0 ? (
-                          units.map((unit) => (
-                            <div key={unit.id} className="flex items-center space-x-2 p-2">
-                              <Checkbox
-                                checked={selectedUnits.includes(unit.title)}
-                                onCheckedChange={() => {
-                                  const currentUnits = field.value || [];
-                                  if (currentUnits.includes(unit.title)) {
-                                    field.onChange(
-                                      currentUnits.filter((u) => u !== unit.title)
-                                    );
-                                  } else {
-                                    field.onChange([...currentUnits, unit.title]);
-                                  }
-                                }}
-                              />
-                              <label className="text-sm">{unit.title}</label>
-                            </div>
-                          ))
+              {TIME_LOG_FORM_FIELD_VISIBILITY.course && (
+                <FormField
+                  control={form.control}
+                  name="course_id"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.course.label")}
+                      </FormLabel>
+                      <Select
+                        onValueChange={(value) => {
+                          field.onChange(value === "none" ? null : value);
+                          form.setValue("unit", []); // Reset units when course changes
+                        }}
+                        value={field.value || "none"}
+                      >
+                        <FormControl className="w-full">
+                          <SelectTrigger
+                            className="w-full min-w-0 cursor-pointer"
+                            title={selectedCourse?.course_name}
+                          >
+                            <SelectValue
+                              placeholder={t("dialog.form.fields.course.label")}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="none">
+                            {t("dialog.form.fields.course.noneOption")}
+                          </SelectItem>
+                          {isLoadingCourses ? (
+                            <SelectItem value="loading" disabled>
+                              {t("dialog.form.fields.course.loading")}
+                            </SelectItem>
                           ) : (
-                            <div className="p-2 text-sm text-muted-foreground">
-                              {t("dialog.form.fields.unit.noUnits")}
-                            </div>
-                          );
-                        })()}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                            courses.map((course) => (
+                              <SelectItem key={course.course_id} value={String(course.course_id)}>
+                                {course.course_name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="trainer_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.trainer.label")}
-                    </FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        field.onChange(value === "none" ? null : value);
-                      }}
-                      value={field.value || "none"}
-                    >
-                      <FormControl className="w-full">
-                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
-                          <SelectValue
-                            placeholder={t(
-                              "dialog.form.fields.trainer.label"
-                            )}
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="none">
-                          {t("dialog.form.fields.trainer.noneOption")}
-                        </SelectItem>
-                        {isLoadingUsers ? (
-                          <SelectItem value="loading" disabled>
-                            {t("dialog.form.fields.trainer.loading")}
+              {TIME_LOG_FORM_FIELD_VISIBILITY.unit && (
+                <FormField
+                  control={form.control}
+                  name="unit"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.unit.label")}
+                      </FormLabel>
+                      <Select
+                        onValueChange={(value) => {
+                          const currentUnits = field.value || [];
+                          if (currentUnits.includes(value)) {
+                            field.onChange(currentUnits.filter((u) => u !== value));
+                          } else {
+                            field.onChange([...currentUnits, value]);
+                          }
+                        }}
+                        value=""
+                      >
+                        <FormControl className="w-full">
+                          <SelectTrigger className="w-full min-w-0 cursor-pointer">
+                            <SelectValue
+                              placeholder={
+                                selectedUnits.length > 0
+                                  ? t(
+                                      "dialog.form.fields.unit.placeholderWithCount",
+                                      { count: selectedUnits.length }
+                                    )
+                                  : t(
+                                      "dialog.form.fields.unit.placeholderDefault"
+                                    )
+                              }
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {(() => {
+                            const units = (selectedCourse as { units?: { id: string; title: string }[] } | undefined)?.units;
+                            return units && units.length > 0 ? (
+                              units.map((unit) => (
+                                <div key={unit.id} className="flex items-center space-x-2 p-2">
+                                  <Checkbox
+                                    checked={selectedUnits.includes(unit.title)}
+                                    onCheckedChange={() => {
+                                      const currentUnits = field.value || [];
+                                      if (currentUnits.includes(unit.title)) {
+                                        field.onChange(
+                                          currentUnits.filter((u) => u !== unit.title)
+                                        );
+                                      } else {
+                                        field.onChange([...currentUnits, unit.title]);
+                                      }
+                                    }}
+                                  />
+                                  <label className="text-sm">{unit.title}</label>
+                                </div>
+                              ))
+                            ) : (
+                              <div className="p-2 text-sm text-muted-foreground">
+                                {t("dialog.form.fields.unit.noUnits")}
+                              </div>
+                            );
+                          })()}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {TIME_LOG_FORM_FIELD_VISIBILITY.trainer && (
+                <FormField
+                  control={form.control}
+                  name="trainer_id"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.trainer.label")}
+                      </FormLabel>
+                      <Select
+                        onValueChange={(value) => {
+                          field.onChange(value === "none" ? null : value);
+                        }}
+                        value={field.value || "none"}
+                      >
+                        <FormControl className="w-full">
+                          <SelectTrigger className="w-full min-w-0 cursor-pointer">
+                            <SelectValue
+                              placeholder={t(
+                                "dialog.form.fields.trainer.label"
+                              )}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="none">
+                            {t("dialog.form.fields.trainer.noneOption")}
                           </SelectItem>
-                        ) : (
-                          trainers.map((trainer) => (
-                            <SelectItem key={trainer.user_id} value={String(trainer.user_id)}>
-                              {trainer.user_name || `${trainer.first_name} ${trainer.last_name}`}
+                          {isLoadingUsers ? (
+                            <SelectItem value="loading" disabled>
+                              {t("dialog.form.fields.trainer.loading")}
                             </SelectItem>
-                          ))
-                        )}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                          ) : (
+                            trainers.map((trainer) => (
+                              <SelectItem key={trainer.user_id} value={String(trainer.user_id)}>
+                                {trainer.user_name || `${trainer.first_name} ${trainer.last_name}`}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.type.label")}
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl className="w-full">
-                        <SelectTrigger className="w-full min-w-0 cursor-pointer">
-                          <SelectValue
-                            placeholder={t(
-                              "dialog.form.fields.type.placeholder"
-                            )}
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Not Applicable">
-                          {t("dialog.form.fields.type.options.notApplicable")}
-                        </SelectItem>
-                        <SelectItem value="On the job">
-                          {t("dialog.form.fields.type.options.on")}
-                        </SelectItem>
-                        <SelectItem value="Off the job">
-                          {t("dialog.form.fields.type.options.off")}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="spend_time"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.spendTime.label")}
-                    </FormLabel>
-                    <FormControl className="w-full">
-                      <Input
-                        type="time"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                          handleTimeChange("spend_time", e.target.value);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="start_time"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.startTime.label")}
-                    </FormLabel>
-                    <FormControl className="w-full">
-                      <Input
-                        type="time"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                          handleTimeChange("start_time", e.target.value);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="end_time"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t("dialog.form.fields.endTime.label")}
-                    </FormLabel>
-                    <FormControl className="w-full">
-                      <Input type="time" {...field} disabled />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {TIME_LOG_FORM_FIELD_VISIBILITY.jobType && (
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t("dialog.form.fields.type.label")}
+                        <RequiredMark />
+                      </FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl className="w-full">
+                          <SelectTrigger className="w-full min-w-0 cursor-pointer">
+                            <SelectValue
+                              placeholder={t(
+                                "dialog.form.fields.type.placeholder"
+                              )}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Not Applicable">
+                            {t("dialog.form.fields.type.options.notApplicable")}
+                          </SelectItem>
+                          <SelectItem value="On the job">
+                            {t("dialog.form.fields.type.options.on")}
+                          </SelectItem>
+                          <SelectItem value="Off the job">
+                            {t("dialog.form.fields.type.options.off")}
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
 
-            <FormField
-              control={form.control}
-              name="impact_on_learner"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("dialog.form.fields.impact.label")}
-                  </FormLabel>
-                  <FormControl className="w-full">
-                    <Textarea
-                      placeholder={t(
-                        "dialog.form.fields.impact.placeholder"
-                      )}
-                      className="resize-none"
-                      rows={7}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {TIME_LOG_FORM_FIELD_VISIBILITY.impact && (
+              <FormField
+                control={form.control}
+                name="impact_on_learner"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      {t("dialog.form.fields.impact.label")}
+                      <RequiredMark />
+                    </FormLabel>
+                    <FormControl className="w-full">
+                      <Textarea
+                        placeholder={t(
+                          "dialog.form.fields.impact.placeholder"
+                        )}
+                        className="resize-none"
+                        rows={7}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
-            <FormField
-              control={form.control}
-              name="evidence_link"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("dialog.form.fields.evidence.label")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t(
-                        "dialog.form.fields.evidence.placeholder"
-                      )}
-                      {...field}
-                      value={field.value || ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {TIME_LOG_FORM_FIELD_VISIBILITY.evidence && (
+              <FormField
+                control={form.control}
+                name="evidence_link"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      {t("dialog.form.fields.evidence.label")}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={t(
+                          "dialog.form.fields.evidence.placeholder"
+                        )}
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <DialogFooter>
               <Button

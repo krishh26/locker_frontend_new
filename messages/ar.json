@@ -970,7 +970,12 @@
     "thread": {
       "loading": "جارٍ تحميل الرسائل...",
       "empty": "لا توجد رسائل بعد",
-      "emptyDescription": "ابدأ المحادثة الآن"
+      "emptyDescription": "ابدأ المحادثة الآن",
+      "searchPlaceholder": "ابحث في الرسائل...",
+      "noMatches": "لم يتم العثور على رسائل",
+      "matchCount": "{current} من {total}",
+      "previousMatch": "النتيجة السابقة",
+      "nextMatch": "النتيجة التالية"
     },
     "empty": {
       "noChatSelected": "لم يتم اختيار محادثة",
@@ -4704,27 +4709,27 @@
             "label": "1. اختر تاريخ النشاط"
           },
           "activityType": {
-            "label": "2. اختر نوع النشاط",
+            "label": "4. اختر نوع النشاط",
             "placeholder": "اختر نوع النشاط"
           },
           "course": {
-            "label": "3. اختر الدورة",
+            "label": "5. اختر الدورة",
             "noneOption": "لا يوجد",
             "loading": "جارٍ تحميل الدورات..."
           },
           "unit": {
-            "label": "4. اختر الوحدة",
+            "label": "6. اختر الوحدة",
             "placeholderDefault": "اختر الوحدة/الوحدات",
             "placeholderWithCount": "{count} وحدة محددة",
             "noUnits": "لا توجد وحدات متاحة للدورة المحددة"
           },
           "trainer": {
-            "label": "5. اختر المدرب",
+            "label": "اختر المدرب",
             "noneOption": "لا يوجد",
             "loading": "جارٍ تحميل المدربين..."
           },
           "type": {
-            "label": "6. هل كان أثناء العمل؟",
+            "label": "هل كان أثناء العمل؟",
             "placeholder": "اختر نوع العمل",
             "options": {
               "notApplicable": "غير مطبق",
@@ -4733,20 +4738,20 @@
             }
           },
           "spendTime": {
-            "label": "7. الوقت المستغرق في النشاط"
+            "label": "2. الوقت المستغرق في النشاط"
           },
           "startTime": {
-            "label": "8. وقت بدء النشاط"
+            "label": "3. وقت بدء النشاط"
           },
           "endTime": {
-            "label": "9. وقت انتهاء النشاط"
+            "label": "وقت انتهاء النشاط"
           },
           "impact": {
-            "label": "10. ما تأثير هذا النشاط على تعلمك؟",
+            "label": "7. ما تأثير هذا النشاط على تعلمك؟",
             "placeholder": "يرجى كتابة أي ملاحظات عن التأثير."
           },
           "evidence": {
-            "label": "11. روابط الأدلة",
+            "label": "8. روابط الأدلة",
             "placeholder": "أدخل رابط الدليل"
           }
         },

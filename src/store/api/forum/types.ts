@@ -3,7 +3,31 @@ export type ForumChat = {
   course_course_name: string;
   course_course_code: string;
   latest_forum_created_at?: string;
+  latest_forum_message?: string;
+  /** Latest message sender (when provided by /forum/list). */
+  latest_forum_sender?: ForumMessageSender;
+  sender?: ForumMessageSender;
+  /** Flat name fields some list payloads include. */
+  first_name?: string;
+  last_name?: string;
+  latest_forum_sender_first_name?: string;
+  latest_forum_sender_last_name?: string;
+  latest_forum_sender_user_name?: string;
 };
+
+export type ForumMessageSender = {
+  user_id: string;
+  user_name: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  avatar?: {
+    url: string;
+  };
+};
+
+/** Client-side delivery state for WhatsApp-style ticks. */
+export type ForumMessageDeliveryStatus = "pending" | "sent" | "failed";
 
 export type ForumMessage = {
   id: string;
@@ -15,13 +39,9 @@ export type ForumMessage = {
     name: string;
   };
   created_at: string;
-  sender: {
-    user_id: string;
-    user_name: string;
-    avatar?: {
-      url: string;
-    };
-  };
+  sender: ForumMessageSender;
+  /** Present for optimistic local sends; server messages are treated as sent. */
+  delivery_status?: ForumMessageDeliveryStatus;
 };
 
 export type ForumChatListResponse = {

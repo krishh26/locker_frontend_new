@@ -4,15 +4,9 @@ import { useState, useRef } from "react";
 import { Send, Smile, Paperclip, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { useSendMessageMutation } from "@/store/api/forum/forumApi";
-import { useAppSelector } from "@/store/hooks";
-import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 
-// Dynamically import emoji picker to avoid SSR issues
-// Note: Install emoji-picker-react: npm install emoji-picker-react
 const EmojiPicker = dynamic(
   () => import("emoji-picker-react").then((mod) => mod.default),
   {
@@ -21,44 +15,40 @@ const EmojiPicker = dynamic(
   }
 );
 
+export type ForumSendPayload = {
+  message: string;
+  file: File | null;
+};
+
 interface ForumMessageInputProps {
-  courseId: string;
+  onSend: (payload: ForumSendPayload) => void;
+  disabled?: boolean;
 }
 
-export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
-  const user = useAppSelector((state) => state.auth.user);
+export function ForumMessageInput({
+  onSend,
+  disabled = false,
+}: ForumMessageInputProps) {
   const t = useTranslations("forum");
   const [message, setMessage] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [sendMessage, { isLoading }] = useSendMessageMutation();
 
-  const handleSendMessage = async () => {
-    if (!message.trim() && !file) {
+  const handleSendMessage = () => {
+    const trimmed = message.trim();
+    if ((!trimmed && !file) || disabled) {
       return;
     }
 
-    try {
-      const formData = new FormData();
-      formData.append("course_id", courseId);
-      formData.append("sender_id", user?.id || "");
-      formData.append("message", message);
-      if (file) {
-        formData.append("file", file);
-      }
+    onSend({ message: trimmed, file });
 
-      await sendMessage(formData).unwrap();
-      setMessage("");
-      setFile(null);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-      setShowEmojiPicker(false);
-      toast.success(t("messageInput.toastSuccess"));
-    } catch (error) {
-      toast.error(t("messageInput.toastError"));
+    setMessage("");
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
+    setShowEmojiPicker(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -87,13 +77,12 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
     }
   };
 
-  const canSend = (message.trim() || file) && !isLoading;
+  const canSend = Boolean(message.trim() || file) && !disabled;
 
   return (
     <div className="relative space-y-2">
-      {/* File Preview */}
       {file && (
-        <div className="flex items-center gap-2 rounded-lg border bg-accent border-accent p-2">
+        <div className="flex items-center gap-2 rounded-lg border border-accent bg-accent p-2">
           <FileText className="h-4 w-4 text-white" />
           <span className="flex-1 truncate text-sm">{file.name}</span>
           <Button
@@ -107,7 +96,6 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
         </div>
       )}
 
-      {/* Input Area */}
       <div className="flex items-end gap-2">
         <div className="relative flex-1">
           <Textarea
@@ -115,17 +103,15 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t("messageInput.placeholder")}
-            className="min-h-[60px] resize-none pr-20 border border-primary/30 focus-visible:ring-primary/30"
-            disabled={isLoading}
+            className="min-h-[60px] resize-none border border-primary/30 pr-20 focus-visible:ring-primary/30"
           />
-          <div className="absolute bottom-2 right-2 flex items-center gap-1">
+          <div className="absolute right-2 bottom-2 flex items-center gap-1">
             <Button
               type="button"
               variant="ghost"
               size="icon"
               className="h-8 w-8"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-              disabled={isLoading}
             >
               <Smile className="h-4 w-4" />
             </Button>
@@ -142,7 +128,6 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
               size="icon"
               className="h-8 w-8"
               onClick={() => fileInputRef.current?.click()}
-              disabled={isLoading}
             >
               <Paperclip className="h-4 w-4" />
             </Button>
@@ -152,19 +137,17 @@ export function ForumMessageInput({ courseId }: ForumMessageInputProps) {
           onClick={handleSendMessage}
           disabled={!canSend}
           size="icon"
-          className="h-[60px] w-[60px] bg-linear-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-md transition-all duration-200 hover:shadow-lg"
+          className="h-[60px] w-[60px] bg-linear-to-br from-primary to-primary/80 shadow-md transition-all duration-200 hover:from-primary/90 hover:to-primary hover:shadow-lg"
         >
           <Send className="h-5 w-5" />
         </Button>
       </div>
 
-      {/* Emoji Picker */}
       {showEmojiPicker && (
-        <div className="absolute bottom-full right-0 mb-2 z-10">
+        <div className="absolute right-0 bottom-full z-10 mb-2">
           <EmojiPicker onEmojiClick={handleEmojiClick} />
         </div>
       )}
     </div>
   );
 }
-

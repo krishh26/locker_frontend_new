@@ -1,6 +1,7 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
+import { MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/upload-limits";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -380,7 +381,7 @@ export function FormFieldsRenderer({
                             {field.placeholder || "Drag and drop your files here or Browse"}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            Max 10MB files are allowed
+                            Max {MAX_UPLOAD_FILE_SIZE_MB}MB files are allowed
                           </p>
                         </div>
                       </div>

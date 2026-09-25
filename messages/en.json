@@ -261,7 +261,7 @@
         "fileSize": "File size: {size} MB",
         "dragDrop": "Drag and drop your CSV file here or",
         "browse": "Browse",
-        "maxSize": "Max 10MB files are allowed",
+        "maxSize": "Max 300MB files are allowed",
         "supportedFormats": "Supported format: CSV only"
       },
       "summary": {
@@ -2794,7 +2794,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "File size must be less than 10MB"
+      "fileSizeError": "File size must be less than 300MB"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "Trainer comment"
@@ -3006,7 +3006,7 @@
         "centreLabel": "Centre (optional)",
         "centrePlaceholder": "Centre ID",
         "attachmentLabel": "Attachment (optional)",
-        "attachmentHint": "You can attach one file (optional)."
+        "attachmentHint": "You can attach up to 5 files, 300MB each (optional)."
       },
       "buttons": {
         "cancel": "Cancel",
@@ -3015,7 +3015,9 @@
       },
       "validation": {
         "titleRequired": "Title is required",
-        "descriptionRequired": "Description is required"
+        "descriptionRequired": "Description is required",
+        "tooManyFiles": "You can attach at most 5 files.",
+        "fileTooLarge": "Each file must be 300MB or less."
       },
       "toast": {
         "createSuccess": "Ticket raised successfully!",
@@ -3346,8 +3348,8 @@
       "uploadFile": "Upload File",
       "dragDrop": "Drag and drop your files here or",
       "browse": "Browse",
-      "maxFileSize": "Max 10MB files are allowed (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "File size must be less than 10MB",
+      "maxFileSize": "Max 300MB files are allowed (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "File size must be less than 300MB",
       "fileTypeError": "Only PDF, CSV, DOC, DOCX files are allowed",
       "remove": "Remove",
       "viewCurrentFile": "View Current File",
@@ -3452,7 +3454,7 @@
       "number": "{label} must be a number",
       "phone": "{label} must contain only numbers",
       "required": "{label} is required",
-      "fileTooLarge": "{label} is too large (max 10MB)"
+      "fileTooLarge": "{label} is too large (max 300MB)"
     },
     "toast": {
       "submitSuccess": "Form submitted successfully!",
@@ -3729,7 +3731,7 @@
         "helper": {
           "dragDrop": "Drag and drop your files here or",
           "browse": "Browse",
-          "maxSize": "Max 10MB files are allowed"
+          "maxSize": "Max 300MB files are allowed"
         },
         "buttons": {
           "cancel": "Cancel",
@@ -3742,7 +3744,7 @@
         },
         "validation": {
           "fileRequired": "A file is required",
-          "fileTooLarge": "File size must be less than 10MB",
+          "fileTooLarge": "File size must be less than 300MB",
           "unsupportedFormat": "Unsupported file format"
         }
       }
@@ -3918,7 +3920,7 @@
       "helper": {
         "currentFilePrefix": "Current file:",
         "viewFile": "View file",
-        "maxFileSize": "Max file size: 10MB",
+        "maxFileSize": "Max file size: 300MB",
         "nameAuto": "Name is automatically set from the uploaded file"
       },
       "buttons": {
@@ -3936,7 +3938,7 @@
         "selectCourse": "Please select a course.",
         "nameRequired": "Name is required.",
         "uploadFile": "Please upload a file.",
-        "fileTooLarge": "File size must be less than 10MB.",
+        "fileTooLarge": "File size must be less than 300MB.",
         "hoursMin": "Hours must be 0 or greater",
         "hoursMax": "Hours must be less than 24",
         "minutesMin": "Minutes must be 0 or greater",
@@ -5612,7 +5614,7 @@
         "initialAssessmentLiteracy": "Initial Assessment Literacy",
         "initialAssessmentICT": "Initial Assessment ICT",
         "avatarInvalidFile": "Please select a valid image file",
-        "avatarTooLarge": "Image size should be less than 5MB",
+        "avatarTooLarge": "Image size should be less than 300MB",
         "avatarSuccess": "Avatar uploaded successfully",
         "avatarFailed": "Failed to upload avatar. Please try again."
       },

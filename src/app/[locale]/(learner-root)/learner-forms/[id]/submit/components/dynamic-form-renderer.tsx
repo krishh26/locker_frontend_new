@@ -28,6 +28,7 @@ import {
 } from "@/store/api/forms/formsApi"
 import { useAppSelector } from "@/store/hooks"
 import type { FormField } from "@/store/api/forms/types"
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits"
 import { FileUploadField } from "./file-upload-field"
 import { SignatureInput } from "./signature-input"
 import { useTranslations } from "next-intl"
@@ -94,7 +95,7 @@ const getDynamicZodSchema = (
           .refine(
             (file) => {
               if (!file) return true
-              return file.size <= 10 * 1024 * 1024 // 10MB
+              return file.size <= MAX_UPLOAD_FILE_SIZE_BYTES
             },
             { message: t("validation.fileTooLarge", { label }) }
           )

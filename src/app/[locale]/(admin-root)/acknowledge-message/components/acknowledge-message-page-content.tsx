@@ -34,9 +34,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits";
 
 const fileTypes = ["PDF", "CSV", "DOC", "DOCX"];
-const maxFileSize = 10 * 1024 * 1024; // 10MB
+const maxFileSize = MAX_UPLOAD_FILE_SIZE_BYTES;
 
 const acknowledgementSchema = (t: (key: string) => string) => z.object({
   message: z

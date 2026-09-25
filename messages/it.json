@@ -2062,7 +2062,7 @@
         "centreLabel": "Centro (facoltativo)",
         "centrePlaceholder": "ID centro",
         "attachmentLabel": "Allegati (facoltativo)",
-        "attachmentHint": "Fino a 5 file, 25 MB ciascuno (facoltativo)."
+        "attachmentHint": "Fino a 5 file, 300 MB ciascuno (facoltativo)."
       },
       "buttons": {
         "cancel": "Annulla",
@@ -2073,7 +2073,7 @@
         "titleRequired": "Il titolo è obbligatorio",
         "descriptionRequired": "La descrizione è obbligatoria",
         "tooManyFiles": "Puoi allegare al massimo 5 file.",
-        "fileTooLarge": "Ogni file deve essere di 25 MB o inferiore."
+        "fileTooLarge": "Ogni file deve essere di 300 MB o inferiore."
       },
       "toast": {
         "createSuccess": "Ticket creato con successo!",
@@ -2404,8 +2404,8 @@
       "uploadFile": "Carica file",
       "dragDrop": "Trascina qui i tuoi file oppure",
       "browse": "Sfoglia",
-      "maxFileSize": "Sono consentiti file fino a 10MB (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "La dimensione del file deve essere inferiore a 10MB",
+      "maxFileSize": "Sono consentiti file fino a 300MB (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "La dimensione del file deve essere inferiore a 300MB",
       "fileTypeError": "Sono consentiti solo file PDF, CSV, DOC e DOCX",
       "remove": "Rimuovi",
       "viewCurrentFile": "Visualizza file corrente",
@@ -2526,7 +2526,7 @@
       "number": "{label} deve essere un numero",
       "phone": "{label} deve contenere solo numeri",
       "required": "{label} è obbligatorio",
-      "fileTooLarge": "{label} è troppo grande (max 10 MB)"
+      "fileTooLarge": "{label} è troppo grande (max 300MB)"
     },
     "toast": {
       "submitSuccess": "Modulo inviato con successo!",
@@ -2803,7 +2803,7 @@
         "helper": {
           "dragDrop": "Trascina e rilascia i file qui oppure",
           "browse": "Sfoglia",
-          "maxSize": "Sono consentiti file fino a 10MB"
+          "maxSize": "Sono consentiti file fino a 300MB"
         },
         "buttons": {
           "cancel": "Annulla",
@@ -2816,7 +2816,7 @@
         },
         "validation": {
           "fileRequired": "È richiesto un file",
-          "fileTooLarge": "La dimensione del file deve essere inferiore a 10MB",
+          "fileTooLarge": "La dimensione del file deve essere inferiore a 300MB",
           "unsupportedFormat": "Formato file non supportato"
         }
       }
@@ -2992,7 +2992,7 @@
       "helper": {
         "currentFilePrefix": "File corrente:",
         "viewFile": "Visualizza file",
-        "maxFileSize": "Dimensione massima file: 10MB",
+        "maxFileSize": "Dimensione massima file: 300MB",
         "nameAuto": "Il nome viene impostato automaticamente dal file caricato"
       },
       "buttons": {
@@ -3010,7 +3010,7 @@
         "selectCourse": "Seleziona un corso.",
         "nameRequired": "Il nome è obbligatorio.",
         "uploadFile": "Carica un file.",
-        "fileTooLarge": "La dimensione del file deve essere inferiore a 10MB.",
+        "fileTooLarge": "La dimensione del file deve essere inferiore a 300MB.",
         "hoursMin": "Le ore devono essere 0 o superiori",
         "hoursMax": "Le ore devono essere inferiori a 24",
         "minutesMin": "I minuti devono essere 0 o superiori",
@@ -4355,7 +4355,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "La dimensione del file deve essere inferiore a 10 MB"
+      "fileSizeError": "La dimensione del file deve essere inferiore a 300MB"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "Commento del formatore"

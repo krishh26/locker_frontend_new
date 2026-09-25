@@ -32,6 +32,7 @@ import {
 import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/upload-limits";
 
 const ALLOWED_FILE_TYPES = [
   "JPG", "PNG", "GIF", "PDF", "DOCX", "XLSX", "PPTX", "TXT", "ZIP", "MP4", "MP3", "AVI", "MOV",
@@ -48,7 +49,7 @@ const ALLOWED_MIME_TYPES = [
   "video/mp4", "audio/mpeg", "video/x-msvideo", "video/quicktime",
 ];
 
-const MAX_FILE_SIZE_MB = 10;
+const MAX_FILE_SIZE_MB = MAX_UPLOAD_FILE_SIZE_MB;
 
 const resourceFormSchema = z.object({
   resource_name: z.string().min(1, "Resource name is required"),

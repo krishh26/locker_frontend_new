@@ -12,6 +12,7 @@ import { getRandomColor } from "@/app/[locale]/(learner-root)/forum/utils/random
 import { toast } from "sonner";
 import { Loader2, Camera } from "lucide-react";
 import type { LearnerData } from "@/store/api/learner/types";
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits";
 import {
   ETHNICITY_OPTIONS,
   LEARNER_DISABILITY_OPTIONS,
@@ -61,8 +62,8 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
         return;
       }
 
-      // Validate file size (e.g., max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
+      // Validate file size
+      if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
         toast.error(t("sections.aboutYou.avatarTooLarge"));
         return;
       }

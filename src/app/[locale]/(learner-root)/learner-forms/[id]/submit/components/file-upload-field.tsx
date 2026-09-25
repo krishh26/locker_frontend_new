@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Upload, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits";
 
 interface FileUploadFieldProps {
   name: string;
@@ -49,8 +50,8 @@ export function FileUploadField({
                 onChange={(e) => {
                   const selectedFile = e.target.files?.[0];
                   if (selectedFile) {
-                    // Validate file size (10MB)
-                    if (selectedFile.size > 10 * 1024 * 1024) {
+                    // Validate file size
+                    if (selectedFile.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
                       return;
                     }
                     onChange(selectedFile);

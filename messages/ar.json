@@ -257,7 +257,7 @@
         "fileSize": "حجم الملف: {size} ميجابايت",
         "dragDrop": "اسحب وأسقط ملف CSV هنا أو",
         "browse": "استعراض",
-        "maxSize": "الحد الأقصى المسموح به هو 10 ميجابايت",
+        "maxSize": "الحد الأقصى المسموح به هو 300 ميجابايت",
         "supportedFormats": "التنسيق المدعوم: CSV فقط"
       },
       "summary": {
@@ -2712,7 +2712,7 @@
         "centreLabel": "المركز (اختياري)",
         "centrePlaceholder": "معرف المركز",
         "attachmentLabel": "مرفقات (اختياري)",
-        "attachmentHint": "حتى 5 ملفات، 25 ميغابايت لكل ملف (اختياري)."
+        "attachmentHint": "حتى 5 ملفات، 300 ميغابايت لكل ملف (اختياري)."
       },
       "buttons": {
         "cancel": "إلغاء",
@@ -2723,7 +2723,7 @@
         "titleRequired": "العنوان مطلوب",
         "descriptionRequired": "الوصف مطلوب",
         "tooManyFiles": "يمكنك إرفاق 5 ملفات كحد أقصى.",
-        "fileTooLarge": "يجب ألا يزيد حجم كل ملف عن 25 ميغابايت."
+        "fileTooLarge": "يجب ألا يزيد حجم كل ملف عن 300 ميغابايت."
       },
       "toast": {
         "createSuccess": "تم إنشاء التذكرة بنجاح!",
@@ -3054,8 +3054,8 @@
       "uploadFile": "رفع ملف",
       "dragDrop": "اسحب الملفات وأفلتها هنا أو",
       "browse": "استعراض",
-      "maxFileSize": "يُسمح بملفات حتى 10 ميجابايت (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "يجب أن يكون حجم الملف أقل من 10 ميجابايت",
+      "maxFileSize": "يُسمح بملفات حتى 300 ميجابايت (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "يجب أن يكون حجم الملف أقل من 300 ميجابايت",
       "fileTypeError": "يُسمح فقط بملفات PDF وCSV وDOC وDOCX",
       "remove": "إزالة",
       "viewCurrentFile": "عرض الملف الحالي",
@@ -3176,7 +3176,7 @@
       "number": "يجب أن يكون {label} رقماً",
       "phone": "يجب أن يحتوي {label} على أرقام فقط",
       "required": "{label} مطلوب",
-      "fileTooLarge": "{label} كبير جداً (الحد الأقصى 10 ميجابايت)"
+      "fileTooLarge": "{label} كبير جداً (الحد الأقصى 300 ميجابايت)"
     },
     "toast": {
       "submitSuccess": "تم إرسال النموذج بنجاح!",
@@ -3453,7 +3453,7 @@
         "helper": {
           "dragDrop": "اسحب وأفلت ملفاتك هنا أو",
           "browse": "تصفح",
-          "maxSize": "يسمح بملفات حتى 10MB"
+          "maxSize": "يسمح بملفات حتى 300MB"
         },
         "buttons": {
           "cancel": "إلغاء",
@@ -3466,7 +3466,7 @@
         },
         "validation": {
           "fileRequired": "الملف مطلوب",
-          "fileTooLarge": "يجب أن يكون حجم الملف أقل من 10MB",
+          "fileTooLarge": "يجب أن يكون حجم الملف أقل من 300MB",
           "unsupportedFormat": "تنسيق ملف غير مدعوم"
         }
       }
@@ -3642,7 +3642,7 @@
       "helper": {
         "currentFilePrefix": "الملف الحالي:",
         "viewFile": "عرض الملف",
-        "maxFileSize": "الحد الأقصى لحجم الملف: 10MB",
+        "maxFileSize": "الحد الأقصى لحجم الملف: 300MB",
         "nameAuto": "يتم تعيين الاسم تلقائيًا من الملف الذي تم تحميله"
       },
       "buttons": {
@@ -3660,7 +3660,7 @@
         "selectCourse": "يرجى اختيار دورة.",
         "nameRequired": "الاسم مطلوب.",
         "uploadFile": "يرجى تحميل ملف.",
-        "fileTooLarge": "يجب أن يكون حجم الملف أقل من 10MB.",
+        "fileTooLarge": "يجب أن يكون حجم الملف أقل من 300MB.",
         "hoursMin": "يجب أن تكون الساعات 0 أو أكثر",
         "hoursMax": "يجب أن تكون الساعات أقل من 24",
         "minutesMin": "يجب أن تكون الدقائق 0 أو أكثر",
@@ -5036,7 +5036,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "يجب أن يكون حجم الملف أقل من 10 ميجابايت"
+      "fileSizeError": "يجب أن يكون حجم الملف أقل من 300 ميجابايت"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "تعليق المدرب"

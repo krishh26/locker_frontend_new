@@ -260,7 +260,7 @@
         "fileSize": "फ़ाइल साइज़: {size} MB",
         "dragDrop": "अपनी CSV फ़ाइल यहां drag और drop करें या",
         "browse": "Browse",
-        "maxSize": "अधिकतम 10MB फ़ाइलें अनुमत हैं",
+        "maxSize": "अधिकतम 300MB फ़ाइलें अनुमत हैं",
         "supportedFormats": "समर्थित फ़ॉर्मेट: केवल CSV"
       },
       "summary": {
@@ -2677,7 +2677,7 @@
         "centreLabel": "केंद्र (वैकल्पिक)",
         "centrePlaceholder": "केंद्र ID",
         "attachmentLabel": "संलग्नक (वैकल्पिक)",
-        "attachmentHint": "अधिकतम 5 फ़ाइलें, प्रत्येक 25 MB तक (वैकल्पिक)।"
+        "attachmentHint": "अधिकतम 5 फ़ाइलें, प्रत्येक 300 MB तक (वैकल्पिक)।"
       },
       "buttons": {
         "cancel": "रद्द करें",
@@ -2688,7 +2688,7 @@
         "titleRequired": "शीर्षक आवश्यक है",
         "descriptionRequired": "विवरण आवश्यक है",
         "tooManyFiles": "आप अधिकतम 5 फ़ाइलें संलग्न कर सकते हैं।",
-        "fileTooLarge": "प्रत्येक फ़ाइल 25 MB या उससे कम होनी चाहिए।"
+        "fileTooLarge": "प्रत्येक फ़ाइल 300 MB या उससे कम होनी चाहिए।"
       },
       "toast": {
         "createSuccess": "टिकट सफलतापूर्वक बनाया गया!",
@@ -3076,8 +3076,8 @@
       "uploadFile": "फ़ाइल अपलोड करें",
       "dragDrop": "अपनी फ़ाइलें यहाँ खींचकर छोड़ें या",
       "browse": "ब्राउज़ करें",
-      "maxFileSize": "अधिकतम 10MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
-      "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए",
+      "maxFileSize": "अधिकतम 300MB तक की फ़ाइलें मान्य हैं (PDF, CSV, DOC, DOCX)",
+      "fileSizeError": "फ़ाइल का आकार 300MB से कम होना चाहिए",
       "fileTypeError": "केवल PDF, CSV, DOC, DOCX फ़ाइलें अनुमत हैं",
       "remove": "हटाएँ",
       "viewCurrentFile": "वर्तमान फ़ाइल देखें",
@@ -3141,7 +3141,7 @@
       "number": "{label} एक संख्या होनी चाहिए",
       "phone": "{label} में केवल संख्याएं होनी चाहिए",
       "required": "{label} आवश्यक है",
-      "fileTooLarge": "{label} बहुत बड़ा है (अधिकतम 10 MB)"
+      "fileTooLarge": "{label} बहुत बड़ा है (अधिकतम 300MB)"
     },
     "toast": {
       "submitSuccess": "फॉर्म सफलतापूर्वक जमा हो गया!",
@@ -3418,7 +3418,7 @@
         "helper": {
           "dragDrop": "अपनी फाइलें यहाँ ड्रैग और ड्रॉप करें या",
           "browse": "ब्राउज़",
-          "maxSize": "अधिकतम 10MB फाइलें अनुमत हैं"
+          "maxSize": "अधिकतम 300MB फाइलें अनुमत हैं"
         },
         "buttons": {
           "cancel": "रद्द करें",
@@ -3431,7 +3431,7 @@
         },
         "validation": {
           "fileRequired": "फाइल आवश्यक है",
-          "fileTooLarge": "फाइल का आकार 10MB से कम होना चाहिए",
+          "fileTooLarge": "फाइल का आकार 300MB से कम होना चाहिए",
           "unsupportedFormat": "असमर्थित फाइल प्रारूप"
         }
       }
@@ -3607,7 +3607,7 @@
       "helper": {
         "currentFilePrefix": "वर्तमान फ़ाइल:",
         "viewFile": "फ़ाइल देखें",
-        "maxFileSize": "अधिकतम फ़ाइल आकार: 10MB",
+        "maxFileSize": "अधिकतम फ़ाइल आकार: 300MB",
         "nameAuto": "अपलोड की गई फ़ाइल से नाम अपने आप सेट हो जाता है"
       },
       "buttons": {
@@ -3625,7 +3625,7 @@
         "selectCourse": "कृपया कोर्स चुनें।",
         "nameRequired": "नाम आवश्यक है।",
         "uploadFile": "कृपया फ़ाइल अपलोड करें।",
-        "fileTooLarge": "फ़ाइल का आकार 10MB से कम होना चाहिए।",
+        "fileTooLarge": "फ़ाइल का आकार 300MB से कम होना चाहिए।",
         "hoursMin": "घंटे 0 या उससे अधिक होने चाहिए",
         "hoursMax": "घंटे 24 से कम होने चाहिए",
         "minutesMin": "मिनट 0 या उससे अधिक होने चाहिए",
@@ -5124,7 +5124,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "फ़ाइल का आकार 10MB से कम होना चाहिए"
+      "fileSizeError": "फ़ाइल का आकार 300MB से कम होना चाहिए"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "ट्रेनर टिप्पणी"
@@ -5572,7 +5572,7 @@
         "initialAssessmentLiteracy": "प्रारंभिक मूल्यांकन - साक्षरता",
         "initialAssessmentICT": "प्रारंभिक मूल्यांकन - आईसीटी",
         "avatarInvalidFile": "कृपया एक वैध छवि फ़ाइल चुनें",
-        "avatarTooLarge": "छवि का आकार 5MB से कम होना चाहिए",
+        "avatarTooLarge": "छवि का आकार 300MB से कम होना चाहिए",
         "avatarSuccess": "अवतार सफलतापूर्वक अपलोड हो गया",
         "avatarFailed": "अवतार अपलोड करने में विफल। कृपया पुनः प्रयास करें।"
       },

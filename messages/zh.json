@@ -260,7 +260,7 @@
         "fileSize": "文件大小：{size} MB",
         "dragDrop": "将 CSV 文件拖放到此处，或",
         "browse": "浏览",
-        "maxSize": "允许的最大文件大小为 10MB",
+        "maxSize": "允许的最大文件大小为 300MB",
         "supportedFormats": "支持的格式：仅 CSV"
       },
       "summary": {
@@ -2625,7 +2625,7 @@
         "centreLabel": "中心（可选）",
         "centrePlaceholder": "中心 ID",
         "attachmentLabel": "附件（可选）",
-        "attachmentHint": "最多 5 个文件，每个不超过 25 MB（可选）。"
+        "attachmentHint": "最多 5 个文件，每个不超过 300 MB（可选）。"
       },
       "buttons": {
         "cancel": "取消",
@@ -2636,7 +2636,7 @@
         "titleRequired": "标题为必填项",
         "descriptionRequired": "描述为必填项",
         "tooManyFiles": "最多只能附加 5 个文件。",
-        "fileTooLarge": "每个文件必须不超过 25 MB。"
+        "fileTooLarge": "每个文件必须不超过 300 MB。"
       },
       "toast": {
         "createSuccess": "工单创建成功！",
@@ -2967,8 +2967,8 @@
       "uploadFile": "上传文件",
       "dragDrop": "将文件拖放到此处或",
       "browse": "浏览",
-      "maxFileSize": "允许最大 10MB 的文件（PDF、CSV、DOC、DOCX）",
-      "fileSizeError": "文件大小必须小于 10MB",
+      "maxFileSize": "允许最大 300MB 的文件（PDF、CSV、DOC、DOCX）",
+      "fileSizeError": "文件大小必须小于 300MB",
       "fileTypeError": "仅支持 PDF、CSV、DOC、DOCX 文件",
       "remove": "移除",
       "viewCurrentFile": "查看当前文件",
@@ -3089,7 +3089,7 @@
       "number": "{label} 必须是数字",
       "phone": "{label} 只能包含数字",
       "required": "{label} 为必填项",
-      "fileTooLarge": "{label} 文件过大（最大 10 MB）"
+      "fileTooLarge": "{label} 文件过大（最大 300MB）"
     },
     "toast": {
       "submitSuccess": "表单提交成功！",
@@ -3366,7 +3366,7 @@
         "helper": {
           "dragDrop": "将文件拖拽到此处或",
           "browse": "浏览",
-          "maxSize": "最多允许 10MB 文件"
+          "maxSize": "最多允许 300MB 文件"
         },
         "buttons": {
           "cancel": "取消",
@@ -3379,7 +3379,7 @@
         },
         "validation": {
           "fileRequired": "必须选择文件",
-          "fileTooLarge": "文件大小必须小于 10MB",
+          "fileTooLarge": "文件大小必须小于 300MB",
           "unsupportedFormat": "不支持的文件格式"
         }
       }
@@ -3555,7 +3555,7 @@
       "helper": {
         "currentFilePrefix": "当前文件：",
         "viewFile": "查看文件",
-        "maxFileSize": "最大文件大小：10MB",
+        "maxFileSize": "最大文件大小：300MB",
         "nameAuto": "名称会根据上传的文件自动设置"
       },
       "buttons": {
@@ -3573,7 +3573,7 @@
         "selectCourse": "请选择课程。",
         "nameRequired": "名称为必填项。",
         "uploadFile": "请上传文件。",
-        "fileTooLarge": "文件大小必须小于 10MB。",
+        "fileTooLarge": "文件大小必须小于 300MB。",
         "hoursMin": "小时必须大于或等于 0",
         "hoursMax": "小时必须小于 24",
         "minutesMin": "分钟必须大于或等于 0",
@@ -5072,7 +5072,7 @@
       }
     },
     "fileUpload": {
-      "fileSizeError": "文件大小必须小于 10 MB"
+      "fileSizeError": "文件大小必须小于 300MB"
     },
     "unitsTable": {
       "trainerCommentPlaceholder": "培训师评论"
@@ -5517,7 +5517,7 @@
         "initialAssessmentLiteracy": "初步评估 - 读写",
         "initialAssessmentICT": "初步评估 - 信息通信技术",
         "avatarInvalidFile": "请选择有效的图片文件",
-        "avatarTooLarge": "图片大小应小于 5MB",
+        "avatarTooLarge": "图片大小应小于 300MB",
         "avatarSuccess": "头像上传成功",
         "avatarFailed": "上传头像失败，请重试。"
       },

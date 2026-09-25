@@ -1,6 +1,7 @@
-/** Matches locker_backend `TicketRouter` ticketCreateMulter limits for POST /ticket/create */
+import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits";
+
 export const MAX_TICKET_ATTACHMENT_FILES = 5;
-export const MAX_TICKET_ATTACHMENT_FILE_BYTES = 25 * 1024 * 1024;
+export const MAX_TICKET_ATTACHMENT_FILE_BYTES = MAX_UPLOAD_FILE_SIZE_BYTES;
 
 export type TicketUser = {
   user_id: number;

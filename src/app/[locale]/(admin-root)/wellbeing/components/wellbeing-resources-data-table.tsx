@@ -59,6 +59,7 @@ import {
 } from "@/store/api/health-wellbeing/healthWellbeingApi";
 import type { WellbeingResource } from "@/store/api/health-wellbeing/types";
 import { formatWellbeingDisplayName } from "@/lib/wellbeing-resource-display";
+import { getErrorMessage } from "@/lib/utils";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
@@ -198,11 +199,11 @@ export function WellbeingResourcesDataTable() {
       URL.revokeObjectURL(url);
       toast.success(t("toast.exportSuccess"));
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "";
+      const msg = getErrorMessage(err) || t("toast.exportFailed");
       if (msg.toLowerCase().includes("no feedback")) {
-        toast.info(t("toast.noFeedbackToExport"));
+        toast.info(msg);
       } else {
-        toast.error(msg || t("toast.exportFailed"));
+        toast.error(msg);
       }
     }
   };

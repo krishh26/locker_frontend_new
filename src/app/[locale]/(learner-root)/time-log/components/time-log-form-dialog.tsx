@@ -45,15 +45,15 @@ import { useTranslations } from "next-intl";
 type TimeLogFormValues = {
   activity_date: string;
   activity_type: string;
-  course_id: string | null | undefined;
-  unit: string[] | undefined;
-  trainer_id: string | null | undefined;
-  type: string | undefined;
+  course_id?: string | null;
+  unit?: string[];
+  trainer_id?: string | null;
+  type?: string;
   spend_time: string;
   start_time: string;
-  end_time: string | undefined;
+  end_time?: string;
   impact_on_learner: string;
-  evidence_link: string | undefined;
+  evidence_link?: string;
 };
 
 interface TimeLogFormDialogProps {

@@ -86,20 +86,25 @@ export function HealthWellbeingDataTable() {
 
   const handleResourceAction = useCallback(
     async (resource: WellbeingResource) => {
-      try {
-        await trackResourceOpen({
-          resourceId: resource.id,
-        }).unwrap();
-        window.open(resource.location, "_blank");
-      } catch (error: unknown) {
-        const errorMessage =
-          error && typeof error === "object" && "data" in error
-            ? (error as { data?: { error?: string } }).data?.error
-            : undefined;
-        toast.error(errorMessage || t("table.toast.trackFailed"));
+      if (user?.role === "Learner") {
+        try {
+          await trackResourceOpen({
+            resourceId: resource.id,
+          }).unwrap();
+          refetch();
+        } catch (error: unknown) {
+          const errorMessage =
+            error && typeof error === "object" && "data" in error
+              ? (error as { data?: { error?: string } }).data?.error
+              : undefined;
+          toast.error(errorMessage || t("table.toast.trackFailed"));
+          // Still open the resource after a failed track attempt
+        }
       }
+
+      window.open(resource.location, "_blank");
     },
-    [trackResourceOpen]
+    [user?.role, trackResourceOpen, refetch, t]
   );
 
   const handleOpenFeedback = useCallback((resource: WellbeingResource) => {

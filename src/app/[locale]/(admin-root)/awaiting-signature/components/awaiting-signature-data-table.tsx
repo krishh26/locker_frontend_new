@@ -180,15 +180,20 @@ export function AwaitingSignatureDataTable() {
     setCurrentPage(1)
   }
 
-  const exportToCSV = async () => {
+  const exportToCSV = () => {
     if (!data || data.length === 0) {
       toast.error(t('toast.noDataToExport'))
       return
     }
 
     try {
-      const csvContent = await exportAwaitingSignatureToCSV(data)
-      const filename = await generateAwaitingSignatureFilename()
+      const csvContent = exportAwaitingSignatureToCSV(
+        data,
+        (key) => t(`csv.headers.${key}`),
+      )
+      const filename = generateAwaitingSignatureFilename(
+        t('csv.filenamePrefix'),
+      )
       downloadCSV(csvContent, filename)
       toast.success(t('toast.exportSuccess'))
     } catch (error) {

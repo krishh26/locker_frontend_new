@@ -27,6 +27,16 @@ export function extractBaseQueryErrorMessage(
       }
     }
   }
+
+  // Thrown errors from responseHandler become { status: 'CUSTOM_ERROR', error: string }
+  if (
+    "error" in error &&
+    typeof (error as { error?: unknown }).error === "string"
+  ) {
+    const custom = (error as { error: string }).error.trim()
+    if (custom.length > 0) return custom
+  }
+
   return null
 }
 

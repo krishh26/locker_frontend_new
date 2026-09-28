@@ -75,20 +75,25 @@ export function SupplementaryTrainingDataTable() {
 
   const handleResourceAction = useCallback(
     async (resource: SupplementaryTrainingResource) => {
-      try {
-        await trackResourceOpen({
-          resourceId: resource.id,
-        }).unwrap();
-        window.open(resource.location, "_blank");
-      } catch (error: unknown) {
-        const errorMessage =
-          error && typeof error === "object" && "data" in error
-            ? (error as { data?: { error?: string } }).data?.error
-            : undefined;
-        toast.error(errorMessage || t("toast.trackFailed"));
+      if (user?.role === "Learner") {
+        try {
+          await trackResourceOpen({
+            resourceId: resource.id,
+          }).unwrap();
+          refetch();
+        } catch (error: unknown) {
+          const errorMessage =
+            error && typeof error === "object" && "data" in error
+              ? (error as { data?: { error?: string } }).data?.error
+              : undefined;
+          toast.error(errorMessage || t("toast.trackFailed"));
+          // Still open the resource after a failed track attempt
+        }
       }
+
+      window.open(resource.location, "_blank");
     },
-    [trackResourceOpen, t]
+    [user?.role, trackResourceOpen, refetch, t]
   );
 
   const handleOpenFeedback = useCallback((resource: SupplementaryTrainingResource) => {

@@ -1,6 +1,7 @@
 import type { AwaitingSignatureEntry } from "@/store/api/awaiting-signature/types";
 import { formatCsvDateTime } from "@/utils/csv-export-helpers";
-import { getTranslations } from "next-intl/server";
+
+type TranslateFn = (key: string) => string;
 
 /**
  * Escape CSV field value
@@ -8,44 +9,47 @@ import { getTranslations } from "next-intl/server";
 function escapeCSVField(value: string | undefined): string {
   if (!value) return "-";
   const stringValue = String(value);
-  if (stringValue.includes(",") || stringValue.includes('"') || stringValue.includes("\n")) {
+  if (
+    stringValue.includes(",") ||
+    stringValue.includes('"') ||
+    stringValue.includes("\n")
+  ) {
     return `"${stringValue.replace(/"/g, '""')}"`;
   }
   return stringValue;
 }
 
 /**
- * Convert awaiting signature data to CSV format
+ * Convert awaiting signature data to CSV format (client-safe).
  */
-export async function exportAwaitingSignatureToCSV(data: AwaitingSignatureEntry[]): Promise<string> {
+export function exportAwaitingSignatureToCSV(
+  data: AwaitingSignatureEntry[],
+  tHeaders: TranslateFn,
+): string {
   if (!data || data.length === 0) {
     return "";
   }
 
-  const t = await getTranslations("awaitingSignature.csv.headers");
-
-  // Define CSV headers
   const headers = [
-    t("learnerName"),
-    t("courseName"),
-    t("courseCode"),
-    t("employerName"),
-    t("trainerName"),
-    t("fileType"),
-    t("fileName"),
-    t("fileDescription"),
-    t("uploadDate"),
-    t("trainerReceived"),
-    t("trainerSigned"),
-    t("learnerReceived"),
-    t("learnerSigned"),
-    t("employerReceived"),
-    t("employerSigned"),
-    t("iqaReceived"),
-    t("iqaSigned"),
+    tHeaders("learnerName"),
+    tHeaders("courseName"),
+    tHeaders("courseCode"),
+    tHeaders("employerName"),
+    tHeaders("trainerName"),
+    tHeaders("fileType"),
+    tHeaders("fileName"),
+    tHeaders("fileDescription"),
+    tHeaders("uploadDate"),
+    tHeaders("trainerReceived"),
+    tHeaders("trainerSigned"),
+    tHeaders("learnerReceived"),
+    tHeaders("learnerSigned"),
+    tHeaders("employerReceived"),
+    tHeaders("employerSigned"),
+    tHeaders("iqaReceived"),
+    tHeaders("iqaSigned"),
   ];
 
-  // Convert data to CSV rows
   const rows = data.map((row) => [
     escapeCSVField(row.learner?.name),
     escapeCSVField(row.course?.name),
@@ -66,14 +70,11 @@ export async function exportAwaitingSignatureToCSV(data: AwaitingSignatureEntry[
     formatCsvDateTime(row.signatures?.IQA?.signedAt),
   ]);
 
-  // Combine headers and rows
-  const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
-
-  return csvContent;
+  return [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
 }
 
 /**
- * Download CSV file
+ * Download CSV file in the browser.
  */
 export function downloadCSV(csvContent: string, filename: string): void {
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -90,12 +91,9 @@ export function downloadCSV(csvContent: string, filename: string): void {
 }
 
 /**
- * Generate filename with timestamp
+ * Generate filename with timestamp (client-safe).
  */
-export async function generateAwaitingSignatureFilename(): Promise<string> {
-  const t = await getTranslations("awaitingSignature.csv");
+export function generateAwaitingSignatureFilename(prefix: string): string {
   const timestamp = new Date().toISOString().split("T")[0];
-  const prefix = t("filenamePrefix");
   return `${prefix}_${timestamp}.csv`;
 }
-

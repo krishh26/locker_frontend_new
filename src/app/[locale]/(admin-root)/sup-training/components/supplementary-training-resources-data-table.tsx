@@ -58,6 +58,7 @@ import {
 } from "@/store/api/supplementary-training/supplementaryTrainingApi";
 import type { SupplementaryTrainingResource } from "@/store/api/supplementary-training/types";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTablePagination } from "@/components/data-table-pagination";
 import { SupplementaryTrainingResourceFormDialog } from "./supplementary-training-resource-form-dialog";
@@ -195,11 +196,11 @@ export function SupplementaryTrainingResourcesDataTable() {
       URL.revokeObjectURL(url);
       toast.success("Feedback report exported successfully");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "";
+      const msg = getErrorMessage(err) || "Could not export feedbacks. Please try again.";
       if (msg.toLowerCase().includes("no feedback")) {
-        toast.info("No feedback data available to export");
+        toast.info(msg);
       } else {
-        toast.error(msg || "Could not export feedbacks. Please try again.");
+        toast.error(msg);
       }
     }
   };

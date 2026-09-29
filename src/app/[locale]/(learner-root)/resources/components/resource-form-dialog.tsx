@@ -301,11 +301,12 @@ export function ResourceFormDialog({
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-col gap-2">
-                      {isEditMode && resource?.url?.url && (
+                      {isEditMode &&
+                        (resource?.url?.url || resource?.file_url) && (
                         <div className="text-sm text-muted-foreground mb-2">
                           {t("form.helper.currentFilePrefix")}{" "}
                           <a
-                            href={resource.url.url}
+                            href={resource.url?.url || resource.file_url}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-primary hover:underline"

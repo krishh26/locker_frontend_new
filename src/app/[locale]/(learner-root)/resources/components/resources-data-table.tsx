@@ -70,6 +70,20 @@ import { useAppSelector } from '@/store/hooks'
 import type { Resource } from '@/store/api/resources/types'
 import { Loader2 } from 'lucide-react'
 
+function getResourceOpenUrl(resource: Resource): string | undefined {
+  const nestedUrl = resource.url?.url
+  if (typeof nestedUrl === 'string' && nestedUrl.trim()) {
+    return nestedUrl.trim()
+  }
+  if (typeof resource.file_url === 'string' && resource.file_url.trim()) {
+    return resource.file_url.trim()
+  }
+  if (typeof resource.file === 'string' && /^https?:\/\//i.test(resource.file)) {
+    return resource.file
+  }
+  return undefined
+}
+
 export function ResourcesDataTable() {
   const t = useTranslations('resources')
   const user = useAppSelector((state) => state.auth.user)
@@ -100,6 +114,8 @@ export function ResourcesDataTable() {
   } = useGetResourcesByCourseQuery(
     {
       course_id: selectedCourseId,
+      // Backend expects user_id to resolve signed file URLs (same as course-resources)
+      ...(user?.id != null && user.id !== '' ? { user_id: user.id } : {}),
       search: debouncedSearch,
       job_type: jobType,
     },
@@ -213,9 +229,21 @@ export function ResourcesDataTable() {
         header: t('table.columns.name'),
         cell: ({ row }) => {
           const resource = row.original
+          const resourceUrl = getResourceOpenUrl(resource)
           return (
             <div className='flex flex-col'>
-              <span className='font-medium'>{resource.name}</span>
+              {resourceUrl ? (
+                <a
+                  href={resourceUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='font-medium text-primary hover:underline'
+                >
+                  {resource.name}
+                </a>
+              ) : (
+                <span className='font-medium'>{resource.name}</span>
+              )}
               {resource.description && (
                 <span className='text-sm text-muted-foreground truncate max-w-md'>
                   {resource.description}
@@ -296,45 +324,43 @@ export function ResourcesDataTable() {
         cell: ({ row }) => {
           const resource = row.original
           const resourceId = String(resource.resource_id || resource.id || '')
-          const resourceUrl = resource.url?.url
+          const resourceUrl = getResourceOpenUrl(resource)
           const isLearner = user?.role === 'Learner'
+
+          const viewButton = resourceUrl ? (
+            <Button
+              variant='ghost'
+              size='icon'
+              className='h-8 w-8 cursor-pointer'
+              asChild
+            >
+              <a
+                href={resourceUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={t('table.buttons.view')}
+              >
+                <Eye className='size-4' />
+              </a>
+            </Button>
+          ) : null
 
           // For learners, show only eye icon if URL exists
           if (isLearner) {
-            if (!resourceUrl) {
+            if (!viewButton) {
               return (
                 <span className='text-muted-foreground text-sm'>
                   {t('common.dash')}
                 </span>
               )
             }
-            return (
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-8 w-8 cursor-pointer'
-                onClick={() => window.open(resourceUrl, '_blank')}
-              >
-                <Eye className='size-4' />
-                <span className='sr-only'>{t('table.buttons.view')}</span>
-              </Button>
-            )
+            return viewButton
           }
 
-          // For non-learners, show full actions menu
+          // For non-learners (Trainer, Admin, etc.), show full actions menu
           return (
             <div className='flex items-center gap-2'>
-              {resourceUrl && (
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  className='h-8 w-8 cursor-pointer'
-                  onClick={() => window.open(resourceUrl, '_blank')}
-                >
-                  <Eye className='size-4' />
-                  <span className='sr-only'>{t('table.buttons.view')}</span>
-                </Button>
-              )}
+              {viewButton}
               {!isEmployer && (
                 <Button
                   variant='ghost'
@@ -363,12 +389,15 @@ export function ResourcesDataTable() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align='end'>
                     {resourceUrl && (
-                      <DropdownMenuItem
-                        className='cursor-pointer'
-                        onClick={() => window.open(resourceUrl, '_blank')}
-                      >
-                        <Download className='mr-2 size-4' />
-                        {t('table.buttons.download')}
+                      <DropdownMenuItem className='cursor-pointer' asChild>
+                        <a
+                          href={resourceUrl}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <Download className='mr-2 size-4' />
+                          {t('table.buttons.download')}
+                        </a>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator />

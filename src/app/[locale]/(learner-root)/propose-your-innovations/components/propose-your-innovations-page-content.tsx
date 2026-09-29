@@ -9,13 +9,15 @@ export function ProposeYourInnovationsPageContent() {
   const t = useTranslations("proposeInnovations")
 
   return (
-    <div className="space-y-6 px-4 lg:px-6">
+    <div className="w-full space-y-6 px-4 lg:px-6">
       <PageHeader
         title={t("page.title")}
         subtitle={t("page.subtitle")}
         icon={Lightbulb}
       />
-      <ProposeYourInnovationsDataTable />
+      <div className="w-full">
+        <ProposeYourInnovationsDataTable />
+      </div>
     </div>
   )
 }

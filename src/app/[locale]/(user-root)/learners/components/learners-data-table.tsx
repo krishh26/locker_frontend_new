@@ -117,6 +117,10 @@ const formatDate = (dateString?: string | null): string => {
   }
 };
 
+/** Course-name hover tooltip styling on learners table */
+const COURSE_TOOLTIP_CLASS = "bg-[#32B3B8] text-white border-[#32B3B8]";
+const COURSE_TOOLTIP_ARROW_CLASS = "bg-[#32B3B8] fill-[#32B3B8]";
+
 export function LearnersDataTable() {
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role;
@@ -522,7 +526,10 @@ export function LearnersDataTable() {
                             <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                           </Link>
                         </TooltipTrigger>
-                        <TooltipContent>
+                        <TooltipContent
+                          className={COURSE_TOOLTIP_CLASS}
+                          arrowClassName={COURSE_TOOLTIP_ARROW_CLASS}
+                        >
                           <p className="max-w-xs">{courseName}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -691,7 +698,10 @@ export function LearnersDataTable() {
                           <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                         </Link>
                       </TooltipTrigger>
-                      <TooltipContent>
+                      <TooltipContent
+                        className={COURSE_TOOLTIP_CLASS}
+                        arrowClassName={COURSE_TOOLTIP_ARROW_CLASS}
+                      >
                         <p className="max-w-xs">{courseName}</p>
                       </TooltipContent>
                     </Tooltip>
@@ -890,7 +900,10 @@ export function LearnersDataTable() {
                         <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                       </Link>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent
+                      className={COURSE_TOOLTIP_CLASS}
+                      arrowClassName={COURSE_TOOLTIP_ARROW_CLASS}
+                    >
                       <p className="max-w-xs">{courseName}</p>
                     </TooltipContent>
                   </Tooltip>

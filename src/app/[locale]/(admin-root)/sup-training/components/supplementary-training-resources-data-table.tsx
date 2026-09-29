@@ -221,10 +221,18 @@ export function SupplementaryTrainingResourcesDataTable() {
         cell: ({ row }) => {
           const resource = row.original;
           return (
-            <div className="flex flex-col">
-              <span className="font-medium">{resource.resource_name}</span>
+            <div className="flex w-full flex-col gap-0.5">
+              <span
+                className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug"
+                title={resource.resource_name}
+              >
+                {resource.resource_name}
+              </span>
               {resource.description && (
-                <span className="text-sm text-muted-foreground truncate max-w-md">
+                <span
+                  className="block w-full max-w-[30ch] break-words whitespace-normal text-sm text-muted-foreground leading-snug"
+                  title={resource.description}
+                >
                   {resource.description}
                 </span>
               )}
@@ -376,21 +384,27 @@ export function SupplementaryTrainingResourcesDataTable() {
       </div>
 
       {/* Table */}
-      <div className="rounded-md border">
-        <Table>
+      <div className="w-full rounded-md border overflow-x-auto">
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const isName = header.column.id === "resource_name";
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={isName ? "min-w-[30ch] w-[32%]" : undefined}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
@@ -401,14 +415,22 @@ export function SupplementaryTrainingResourcesDataTable() {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isName = cell.column.id === "resource_name";
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          isName ? "align-top whitespace-normal" : undefined
+                        }
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (

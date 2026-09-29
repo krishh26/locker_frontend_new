@@ -334,8 +334,11 @@ export function CourseBuilderDataTable() {
           const name = row.original.course_name
           const isArchived = row.original.active === false
           return (
-            <div className='flex max-w-60 items-center gap-2'>
-              <span className='truncate' title={name}>
+            <div className='flex w-full items-start gap-2'>
+              <span
+                className='block w-full max-w-[30ch] break-words whitespace-normal leading-snug'
+                title={name}
+              >
                 {name}
               </span>
               {isArchived && (
@@ -621,14 +624,22 @@ export function CourseBuilderDataTable() {
       </div>
 
       {/* Table */}
-      <div className='rounded-md border overflow-x-auto'>
-        <Table>
+      <div className='w-full rounded-md border overflow-x-auto'>
+        <Table className='w-full'>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
+                  const isCourseName = header.column.id === 'course_name'
                   return (
-                    <TableHead key={header.id} className='min-w-37.5'>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        isCourseName
+                          ? 'min-w-[30ch] w-[32%]'
+                          : 'min-w-37.5'
+                      }
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -648,14 +659,24 @@ export function CourseBuilderDataTable() {
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isCourseName = cell.column.id === 'course_name'
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          isCourseName
+                            ? 'align-top whitespace-normal'
+                            : undefined
+                        }
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    )
+                  })}
                 </TableRow>
               ))
             ) : (

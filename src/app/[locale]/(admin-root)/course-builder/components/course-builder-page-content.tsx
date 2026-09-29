@@ -9,7 +9,7 @@ export function CourseBuilderPageContent() {
   const t = useTranslations("courseBuilder");
   
   return (
-    <div className="space-y-6 px-4 lg:px-6 pb-8">
+    <div className="w-full space-y-6 px-4 lg:px-6 pb-8">
       {/* Page Header */}
       <PageHeader
         title={t("pageTitle")}
@@ -18,7 +18,7 @@ export function CourseBuilderPageContent() {
       />
 
       {/* Data Table */}
-      <div className="@container/main">
+      <div className="@container/main w-full">
         <CourseBuilderDataTable />
       </div>
     </div>

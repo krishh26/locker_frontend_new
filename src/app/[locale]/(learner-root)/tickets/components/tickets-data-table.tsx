@@ -201,7 +201,12 @@ export function TicketsDataTable() {
         accessorKey: "title",
         header: t("table.columns.title"),
         cell: ({ row }) => (
-          <div className="font-medium max-w-[200px] truncate">{row.original.title}</div>
+          <div
+            className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug"
+            title={row.original.title}
+          >
+            {row.original.title}
+          </div>
         ),
       },
       ...(isAdmin
@@ -209,11 +214,17 @@ export function TicketsDataTable() {
             {
               id: "raised_by",
               header: t("table.columns.raisedBy"),
-              cell: ({ row }: { row: { original: Ticket } }) => (
-                <div className="max-w-[160px] truncate">
-                  {displayUser(row.original.raised_by)}
-                </div>
-              ),
+              cell: ({ row }: { row: { original: Ticket } }) => {
+                const name = displayUser(row.original.raised_by)
+                return (
+                  <div
+                    className="block w-full max-w-[30ch] break-words whitespace-normal leading-snug"
+                    title={name !== "-" ? name : undefined}
+                  >
+                    {name}
+                  </div>
+                )
+              },
             },
           ]
         : []),
@@ -435,18 +446,26 @@ export function TicketsDataTable() {
         )}
       </div>
 
-      <div className="rounded-md border">
-        <Table>
+      <div className="w-full rounded-md border overflow-x-auto">
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const isWrapCol =
+                    header.column.id === "title" ||
+                    header.column.id === "raised_by"
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={isWrapCol ? "min-w-[30ch] w-[32%]" : undefined}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
+                  )
+                })}
               </TableRow>
             ))}
           </TableHeader>
@@ -460,11 +479,19 @@ export function TicketsDataTable() {
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isWrapCol =
+                      cell.column.id === "title" ||
+                      cell.column.id === "raised_by"
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={isWrapCol ? "align-top whitespace-normal" : undefined}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    )
+                  })}
                 </TableRow>
               ))
             ) : (

@@ -145,14 +145,22 @@ export function ProposeYourInnovationsDataTable() {
         accessorKey: "topic",
         header: t("table.headers.topic"),
         cell: ({ row }) => (
-          <div className="font-medium max-w-[200px] truncate">{row.original.topic}</div>
+          <div
+            className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug"
+            title={row.original.topic}
+          >
+            {row.original.topic}
+          </div>
         ),
       },
       {
         accessorKey: "description",
         header: t("table.headers.description"),
         cell: ({ row }) => (
-          <div className="max-w-[300px] truncate text-muted-foreground">
+          <div
+            className="block w-full max-w-[30ch] break-words whitespace-normal text-muted-foreground leading-snug"
+            title={row.original.description || undefined}
+          >
             {row.original.description || "-"}
           </div>
         ),
@@ -273,21 +281,29 @@ export function ProposeYourInnovationsDataTable() {
       </div>
 
       {/* Table */}
-      <div className="rounded-md border">
-        <Table>
+      <div className="w-full rounded-md border overflow-x-auto">
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const isWrapCol =
+                    header.column.id === "topic" ||
+                    header.column.id === "description";
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={isWrapCol ? "min-w-[30ch] w-[32%]" : undefined}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
@@ -307,14 +323,24 @@ export function ProposeYourInnovationsDataTable() {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isWrapCol =
+                      cell.column.id === "topic" ||
+                      cell.column.id === "description";
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          isWrapCol ? "align-top whitespace-normal" : undefined
+                        }
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (

@@ -40,7 +40,14 @@ import { useAppSelector } from "@/store/hooks";
 import type { TimeLogEntry, TimeLogCreateRequest } from "@/store/api/time-log/types";
 import { selectCourses } from "@/store/slices/authSlice";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
+import { useGetCourseQuery } from "@/store/api/course/courseApi";
 import { useTranslations } from "next-intl";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ChevronDown } from "lucide-react";
 
 type TimeLogFormValues = {
   activity_date: string;
@@ -54,6 +61,148 @@ type TimeLogFormValues = {
   end_time?: string;
   impact_on_learner: string;
   evidence_link?: string;
+};
+
+type CourseUnitOption = {
+  id: string;
+  title: string;
+  code: string;
+  ref: string;
+};
+
+const normalizeUnitKey = (value: string): string =>
+  value.normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim();
+
+const compactUnitKey = (value: string): string =>
+  normalizeUnitKey(value).replace(/[^a-z0-9]/g, "");
+
+const toCourseUnitOption = (raw: unknown, index: number): CourseUnitOption | null => {
+  if (raw == null) return null;
+  if (typeof raw === "string" || typeof raw === "number") {
+    const title = String(raw).trim();
+    if (!title) return null;
+    return { id: title, title, code: "", ref: "" };
+  }
+  if (typeof raw !== "object") return null;
+
+  const u = raw as Record<string, unknown>;
+  const id = String(
+    u.id ?? u.unit_id ?? u._id ?? u.unitId ?? "",
+  ).trim();
+  const title = String(
+    u.title ?? u.unit_title ?? u.name ?? u.unit_name ?? "",
+  ).trim();
+  const code = String(u.code ?? u.unit_code ?? "").trim();
+  const ref = String(u.unit_ref ?? u.ref ?? u.reference ?? "").trim();
+  const label = title || ref || code || id || `Unit ${index + 1}`;
+  if (!label) return null;
+  return {
+    id: id || label,
+    title: label,
+    code,
+    ref,
+  };
+};
+
+const unitIdentityKeys = (unit: CourseUnitOption): string[] => {
+  const values = [unit.title, unit.id, unit.code, unit.ref].filter(Boolean);
+  const keys = new Set<string>();
+  for (const value of values) {
+    keys.add(normalizeUnitKey(value));
+    const compact = compactUnitKey(value);
+    if (compact) keys.add(compact);
+  }
+  return Array.from(keys);
+};
+
+const isUnitSelected = (
+  selected: string[],
+  unit: CourseUnitOption,
+): boolean => {
+  const keys = new Set(unitIdentityKeys(unit));
+  return selected.some((value) => {
+    const normalized = normalizeUnitKey(value);
+    const compact = compactUnitKey(value);
+    return keys.has(normalized) || (compact.length > 0 && keys.has(compact));
+  });
+};
+
+/** Parse time-log unit field from API into string tokens. */
+const parseTimeLogUnits = (unitField: TimeLogEntry["unit"]): string[] => {
+  if (unitField == null || unitField === "") return [];
+
+  const pushParsed = (item: unknown, out: string[]) => {
+    if (item == null || item === "") return;
+    if (Array.isArray(item)) {
+      item.forEach((nested) => pushParsed(nested, out));
+      return;
+    }
+    if (typeof item === "object") {
+      const obj = item as Record<string, unknown>;
+      const label = String(
+        obj.title ??
+          obj.unit_title ??
+          obj.name ??
+          obj.unit_name ??
+          obj.code ??
+          obj.unit_code ??
+          obj.unit_ref ??
+          obj.id ??
+          obj.unit_id ??
+          obj._id ??
+          "",
+      ).trim();
+      if (label) out.push(label);
+      return;
+    }
+    if (typeof item === "string") {
+      const trimmed = item.trim();
+      if (!trimmed) return;
+      if (
+        (trimmed.startsWith("[") && trimmed.endsWith("]")) ||
+        (trimmed.startsWith("{") && trimmed.endsWith("}"))
+      ) {
+        try {
+          pushParsed(JSON.parse(trimmed), out);
+          return;
+        } catch {
+          // keep as plain string
+        }
+      }
+      out.push(trimmed);
+      return;
+    }
+    out.push(String(item).trim());
+  };
+
+  const result: string[] = [];
+  pushParsed(unitField, result);
+  return result.filter(Boolean);
+};
+
+const mapSelectedUnitsToTitles = (
+  selected: string[],
+  courseUnits: CourseUnitOption[],
+): string[] => {
+  if (!selected.length) return [];
+  if (!courseUnits.length) return selected;
+
+  const resolved: string[] = [];
+  for (const value of selected) {
+    const match = courseUnits.find((unit) => isUnitSelected([value], unit));
+    const title = match?.title || value.trim();
+    if (title && !resolved.includes(title)) {
+      resolved.push(title);
+    }
+  }
+  return resolved;
+};
+
+const collectUnitsFromUnknown = (rawUnits: unknown): CourseUnitOption[] => {
+  if (!Array.isArray(rawUnits) || rawUnits.length === 0) return [];
+  return rawUnits
+    .map((raw, index) => toCourseUnitOption(raw, index))
+    .filter((unit): unit is CourseUnitOption => Boolean(unit));
 };
 
 interface TimeLogFormDialogProps {
@@ -105,6 +254,28 @@ const minutesToTime = (totalMinutes: number): string => {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 };
 
+/** Normalize typed duration to HH:MM (e.g. "1:5" → "01:05"). */
+const normalizeSpendTimeInput = (value: string): string => {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  const match = trimmed.match(/^(\d{1,3}):(\d{1,2})$/);
+  if (!match) return trimmed;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (Number.isNaN(hours) || Number.isNaN(minutes) || minutes > 59) {
+    return trimmed;
+  }
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
+const isValidSpendTime = (value: string): boolean => {
+  const normalized = normalizeSpendTimeInput(value);
+  if (!/^\d{1,3}:\d{2}$/.test(normalized)) return false;
+  const [, minutesPart] = normalized.split(":");
+  const minutes = Number(minutesPart);
+  return !Number.isNaN(minutes) && minutes <= 59 && timeToMinutes(normalized) > 0;
+};
+
 const calculateEndTime = (startTime: string, spendTime: string): string => {
   if (!startTime || startTime === "0:0" || startTime === "00:00") return "";
   if (!spendTime || spendTime === "0:0" || spendTime === "00:00") return "";
@@ -145,7 +316,11 @@ export function TimeLogFormDialog({
         type: z.string().optional(),
         spend_time: z
           .string()
-          .min(1, t("dialog.form.validation.timeSpentRequired")),
+          .min(1, t("dialog.form.validation.timeSpentRequired"))
+          .refine(
+            (val) => isValidSpendTime(val),
+            t("dialog.form.validation.timeSpentInvalid"),
+          ),
         start_time: z
           .string()
           .min(1, t("dialog.form.validation.startTimeRequired")),
@@ -172,32 +347,58 @@ export function TimeLogFormDialog({
     () =>
       (learnerCourses || [])
         .map((courseItem) => {
-          const course = (courseItem as { course?: unknown; units?: unknown }).course || courseItem;
-          const courseData = course as {
-            course_id?: string | number;
-            course_name?: string;
-            units?: { id: string; title: string }[];
+          const item = courseItem as {
+            course?: {
+              course_id?: string | number;
+              course_name?: string;
+              units?: unknown[];
+            };
+            units?: unknown[];
           };
+          const courseData = item.course || (courseItem as typeof item.course);
           if (!courseData?.course_id) return null;
+
+          // Prefer non-empty unit lists — empty [] must not block fallback.
+          const fromCourse = collectUnitsFromUnknown(courseData.units);
+          const fromItem = collectUnitsFromUnknown(item.units);
+          const units = fromCourse.length > 0 ? fromCourse : fromItem;
+
           return {
             course_id: String(courseData.course_id),
             course_name: courseData.course_name || "",
-            units: Array.isArray(courseData.units) ? courseData.units : [],
+            units,
           };
         })
-        .filter((course): course is { course_id: string; course_name: string; units: { id: string; title: string }[] } => Boolean(course)),
-    [learnerCourses]
+        .filter(
+          (
+            course,
+          ): course is {
+            course_id: string;
+            course_name: string;
+            units: CourseUnitOption[];
+          } => Boolean(course),
+        ),
+    [learnerCourses],
   );
   const isLoadingCourses = false;
   const trainers = usersData?.data || [];
 
   const isLoading = isCreating || isUpdating;
 
-  // Extract unit value from timeLog
-  const getUnitValue = (timeLog: TimeLogEntry | null | undefined): string[] => {
-    if (!timeLog?.unit) return [];
-    if (Array.isArray(timeLog.unit)) return timeLog.unit;
-    return [timeLog.unit];
+  /** Select values must be strings — API often returns numeric course_id. */
+  const normalizeCourseId = (
+    courseId: TimeLogEntry["course_id"] | string | number | null | undefined,
+  ): string | null => {
+    if (courseId == null || courseId === "") return null;
+    if (typeof courseId === "object") {
+      const nested =
+        courseId.course_id ??
+        (courseId as { id?: string | number }).id ??
+        null;
+      if (nested == null || nested === "") return null;
+      return String(nested);
+    }
+    return String(courseId);
   };
 
   const form = useForm<TimeLogFormValues>({
@@ -209,7 +410,7 @@ export function TimeLogFormDialog({
       unit: [],
       trainer_id: null,
       type: "Not Applicable",
-      spend_time: "00:00",
+      spend_time: "",
       start_time: "00:00",
       end_time: "00:00",
       impact_on_learner: "",
@@ -217,32 +418,63 @@ export function TimeLogFormDialog({
     },
   });
 
+  const watchedCourseId = form.watch("course_id");
+  const courseIdNumber = watchedCourseId ? Number(watchedCourseId) : NaN;
+
+  const { data: courseDetailResponse } = useGetCourseQuery(courseIdNumber, {
+    skip: !open || !watchedCourseId || Number.isNaN(courseIdNumber),
+  });
+
+  const selectedCourse = useMemo(() => {
+    const fromLearner = courses.find(
+      (c) => String(c.course_id) === String(watchedCourseId ?? ""),
+    );
+    const detailUnits = collectUnitsFromUnknown(
+      (courseDetailResponse?.data as { units?: unknown[] } | undefined)?.units,
+    );
+    if (!fromLearner && !watchedCourseId) return undefined;
+    if (!fromLearner) {
+      return {
+        course_id: String(watchedCourseId),
+        course_name:
+          (courseDetailResponse?.data as { course_name?: string } | undefined)
+            ?.course_name || "",
+        units: detailUnits,
+      };
+    }
+    return {
+      ...fromLearner,
+      units: detailUnits.length > 0 ? detailUnits : fromLearner.units,
+    };
+  }, [courses, watchedCourseId, courseDetailResponse?.data]);
+
+  const availableUnits = selectedCourse?.units;
+
   useEffect(() => {
     if (timeLog && editMode) {
-      const courseId =
-        typeof timeLog.course_id === "object" && timeLog.course_id
-          ? timeLog.course_id.course_id
-          : timeLog.course_id || null;
+      const courseId = normalizeCourseId(timeLog.course_id);
 
       const trainerId =
         typeof timeLog.trainer_id === "object" && timeLog.trainer_id
-          ? timeLog.trainer_id.user_id
-          : timeLog.trainer_id || null;
+          ? String(timeLog.trainer_id.user_id)
+          : timeLog.trainer_id != null && timeLog.trainer_id !== ""
+            ? String(timeLog.trainer_id)
+            : null;
 
       form.reset({
         activity_date: timeLog.activity_date?.substring(0, 10) || "",
         activity_type: timeLog.activity_type || "",
         course_id: courseId,
-        unit: getUnitValue(timeLog),
+        unit: parseTimeLogUnits(timeLog.unit),
         trainer_id: trainerId,
         type: timeLog.type || "Not Applicable",
-        spend_time: timeLog.spend_time || "00:00",
+        spend_time: timeLog.spend_time || "",
         start_time: timeLog.start_time || "00:00",
         end_time: timeLog.end_time || "00:00",
         impact_on_learner: timeLog.impact_on_learner || "",
         evidence_link: timeLog.evidence_link || "",
       });
-    } else {
+    } else if (!editMode) {
       form.reset({
         activity_date: "",
         activity_type: "",
@@ -250,14 +482,32 @@ export function TimeLogFormDialog({
         unit: [],
         trainer_id: null,
         type: "Not Applicable",
-        spend_time: "00:00",
+        spend_time: "",
         start_time: "00:00",
         end_time: "00:00",
         impact_on_learner: "",
         evidence_link: "",
       });
     }
-  }, [timeLog, editMode, form]);
+  }, [timeLog, editMode, form, open]);
+
+  // Rematch saved unit ids/codes/refs to course unit titles once units are available.
+  useEffect(() => {
+    if (!open || !editMode || !timeLog) return;
+    if (!availableUnits?.length) return;
+
+    const resolved = mapSelectedUnitsToTitles(
+      parseTimeLogUnits(timeLog.unit),
+      availableUnits,
+    );
+    const current = form.getValues("unit") || [];
+    const same =
+      resolved.length === current.length &&
+      resolved.every((title, index) => title === current[index]);
+    if (!same) {
+      form.setValue("unit", resolved, { shouldDirty: false });
+    }
+  }, [open, editMode, timeLog, availableUnits, form]);
 
   const handleTimeChange = useCallback(
     (field: "start_time" | "spend_time", value: string) => {
@@ -277,13 +527,14 @@ export function TimeLogFormDialog({
 
   async function onSubmit(data: TimeLogFormValues) {
     try {
+      const normalizedSpendTime = normalizeSpendTimeInput(data.spend_time);
       // Always derive end time from start + spend (field is hidden from the form UI).
       const derivedEndTime =
         data.start_time &&
-        data.spend_time &&
+        normalizedSpendTime &&
         data.start_time !== "00:00" &&
-        data.spend_time !== "00:00"
-          ? calculateEndTime(data.start_time, data.spend_time)
+        normalizedSpendTime !== "00:00"
+          ? calculateEndTime(data.start_time, normalizedSpendTime)
           : data.end_time || "00:00";
 
       const payload: TimeLogCreateRequest = {
@@ -294,7 +545,7 @@ export function TimeLogFormDialog({
         unit: data.unit || [],
         trainer_id: data.trainer_id || null,
         type: data.type || "Not Applicable",
-        spend_time: data.spend_time,
+        spend_time: normalizedSpendTime,
         start_time: data.start_time,
         end_time: derivedEndTime,
         impact_on_learner: data.impact_on_learner,
@@ -338,10 +589,7 @@ export function TimeLogFormDialog({
     "Other",
   ];
 
-  const selectedCourse = courses.find(
-    (c) => String(c.course_id) === form.watch("course_id")
-  );
-  const selectedUnits = form.watch("unit") || [];
+  const unitOptions = availableUnits ?? [];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -393,11 +641,23 @@ export function TimeLogFormDialog({
                       </FormLabel>
                       <FormControl className="w-full">
                         <Input
-                          type="time"
+                          type="text"
+                          inputMode="numeric"
+                          placeholder={t(
+                            "dialog.form.fields.spendTime.placeholder",
+                          )}
                           {...field}
                           onChange={(e) => {
                             field.onChange(e.target.value);
                             handleTimeChange("spend_time", e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            const normalized = normalizeSpendTimeInput(
+                              e.target.value,
+                            );
+                            field.onChange(normalized);
+                            field.onBlur();
+                            handleTimeChange("spend_time", normalized);
                           }}
                         />
                       </FormControl>
@@ -500,10 +760,15 @@ export function TimeLogFormDialog({
                       </FormLabel>
                       <Select
                         onValueChange={(value) => {
-                          field.onChange(value === "none" ? null : value);
-                          form.setValue("unit", []); // Reset units when course changes
+                          const next = value === "none" ? null : value;
+                          const prev = field.value ? String(field.value) : null;
+                          field.onChange(next);
+                          // Only clear units when the user actually changes course
+                          if (next !== prev) {
+                            form.setValue("unit", []);
+                          }
                         }}
-                        value={field.value || "none"}
+                        value={field.value ? String(field.value) : "none"}
                       >
                         <FormControl className="w-full">
                           <SelectTrigger
@@ -542,71 +807,114 @@ export function TimeLogFormDialog({
                 <FormField
                   control={form.control}
                   name="unit"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t("dialog.form.fields.unit.label")}
-                      </FormLabel>
-                      <Select
-                        onValueChange={(value) => {
-                          const currentUnits = field.value || [];
-                          if (currentUnits.includes(value)) {
-                            field.onChange(currentUnits.filter((u) => u !== value));
-                          } else {
-                            field.onChange([...currentUnits, value]);
-                          }
-                        }}
-                        value=""
-                      >
-                        <FormControl className="w-full">
-                          <SelectTrigger className="w-full min-w-0 cursor-pointer">
-                            <SelectValue
-                              placeholder={
-                                selectedUnits.length > 0
-                                  ? t(
-                                      "dialog.form.fields.unit.placeholderWithCount",
-                                      { count: selectedUnits.length }
-                                    )
-                                  : t(
-                                      "dialog.form.fields.unit.placeholderDefault"
-                                    )
-                              }
-                            />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {(() => {
-                            const units = (selectedCourse as { units?: { id: string; title: string }[] } | undefined)?.units;
-                            return units && units.length > 0 ? (
-                              units.map((unit) => (
-                                <div key={unit.id} className="flex items-center space-x-2 p-2">
+                  render={({ field }) => {
+                    const currentUnits = field.value || [];
+                    const orphanUnits = currentUnits.filter(
+                      (value) =>
+                        !unitOptions.some((unit) =>
+                          isUnitSelected([value], unit),
+                        ),
+                    );
+
+                    const toggleUnit = (unit: CourseUnitOption) => {
+                      if (isUnitSelected(currentUnits, unit)) {
+                        const keys = new Set(unitIdentityKeys(unit));
+                        field.onChange(
+                          currentUnits.filter((value) => {
+                            const normalized = normalizeUnitKey(value);
+                            const compact = compactUnitKey(value);
+                            return (
+                              !keys.has(normalized) &&
+                              !(compact && keys.has(compact))
+                            );
+                          }),
+                        );
+                      } else {
+                        field.onChange([...currentUnits, unit.title]);
+                      }
+                    };
+
+                    return (
+                      <FormItem>
+                        <FormLabel>
+                          {t("dialog.form.fields.unit.label")}
+                        </FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                className="w-full min-w-0 justify-between font-normal"
+                                disabled={!watchedCourseId}
+                              >
+                                <span className="truncate">
+                                  {currentUnits.length > 0
+                                    ? t(
+                                        "dialog.form.fields.unit.placeholderWithCount",
+                                        { count: currentUnits.length },
+                                      )
+                                    : t(
+                                        "dialog.form.fields.unit.placeholderDefault",
+                                      )}
+                                </span>
+                                <ChevronDown className="ml-2 size-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent
+                            className="w-[var(--radix-popover-trigger-width)] p-2"
+                            align="start"
+                          >
+                            <div className="max-h-60 space-y-1 overflow-y-auto">
+                              {orphanUnits.map((orphan) => (
+                                <label
+                                  key={`orphan-${orphan}`}
+                                  className="flex cursor-pointer items-center gap-2 rounded-sm p-2 hover:bg-muted"
+                                >
                                   <Checkbox
-                                    checked={selectedUnits.includes(unit.title)}
+                                    checked
                                     onCheckedChange={() => {
-                                      const currentUnits = field.value || [];
-                                      if (currentUnits.includes(unit.title)) {
-                                        field.onChange(
-                                          currentUnits.filter((u) => u !== unit.title)
-                                        );
-                                      } else {
-                                        field.onChange([...currentUnits, unit.title]);
-                                      }
+                                      field.onChange(
+                                        currentUnits.filter((u) => u !== orphan),
+                                      );
                                     }}
                                   />
-                                  <label className="text-sm">{unit.title}</label>
+                                  <span className="text-sm break-words">
+                                    {orphan}
+                                  </span>
+                                </label>
+                              ))}
+                              {unitOptions.length > 0 ? (
+                                unitOptions.map((unit) => (
+                                  <label
+                                    key={unit.id}
+                                    className="flex cursor-pointer items-center gap-2 rounded-sm p-2 hover:bg-muted"
+                                  >
+                                    <Checkbox
+                                      checked={isUnitSelected(
+                                        currentUnits,
+                                        unit,
+                                      )}
+                                      onCheckedChange={() => toggleUnit(unit)}
+                                    />
+                                    <span className="text-sm break-words">
+                                      {unit.title}
+                                    </span>
+                                  </label>
+                                ))
+                              ) : (
+                                <div className="p-2 text-sm text-muted-foreground">
+                                  {t("dialog.form.fields.unit.noUnits")}
                                 </div>
-                              ))
-                            ) : (
-                              <div className="p-2 text-sm text-muted-foreground">
-                                {t("dialog.form.fields.unit.noUnits")}
-                              </div>
-                            );
-                          })()}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                              )}
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
               )}
 

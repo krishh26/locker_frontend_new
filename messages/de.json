@@ -4000,7 +4000,8 @@
             }
           },
           "spendTime": {
-            "label": "2. Für die Aktivität aufgewendete Zeit"
+            "label": "2. Für die Aktivität aufgewendete Zeit",
+            "placeholder": "HH:MM"
           },
           "startTime": {
             "label": "3. Startzeit der Aktivität"
@@ -4029,6 +4030,7 @@
           "activityTypeRequired": "Aktivitätstyp ist erforderlich",
           "jobTypeRequired": "Art der Tätigkeit ist erforderlich",
           "timeSpentRequired": "Aufgewendete Zeit ist erforderlich",
+          "timeSpentInvalid": "Zeit im Format HH:MM eingeben (z. B. 01:30)",
           "startTimeRequired": "Startzeit ist erforderlich",
           "endTimeRequired": "Endzeit ist erforderlich",
           "impactRequired": "Auswirkung auf den Lerner ist erforderlich"

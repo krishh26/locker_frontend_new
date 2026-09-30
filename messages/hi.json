@@ -4826,7 +4826,8 @@
             }
           },
           "spendTime": {
-            "label": "2. गतिविधि पर लगा समय"
+            "label": "2. गतिविधि पर लगा समय",
+            "placeholder": "HH:MM"
           },
           "startTime": {
             "label": "3. गतिविधि शुरू होने का समय"
@@ -4855,6 +4856,7 @@
           "activityTypeRequired": "गतिविधि प्रकार आवश्यक है",
           "jobTypeRequired": "जॉब प्रकार आवश्यक है",
           "timeSpentRequired": "समय दर्ज करना आवश्यक है",
+          "timeSpentInvalid": "समय HH:MM प्रारूप में दर्ज करें (जैसे 01:30)",
           "startTimeRequired": "शुरू होने का समय आवश्यक है",
           "endTimeRequired": "समाप्त होने का समय आवश्यक है",
           "impactRequired": "लर्नर पर प्रभाव आवश्यक है"

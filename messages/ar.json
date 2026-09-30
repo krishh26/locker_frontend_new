@@ -4738,7 +4738,8 @@
             }
           },
           "spendTime": {
-            "label": "2. الوقت المستغرق في النشاط"
+            "label": "2. الوقت المستغرق في النشاط",
+            "placeholder": "HH:MM"
           },
           "startTime": {
             "label": "3. وقت بدء النشاط"
@@ -4767,6 +4768,7 @@
           "activityTypeRequired": "نوع النشاط مطلوب",
           "jobTypeRequired": "نوع العمل مطلوب",
           "timeSpentRequired": "الوقت المستغرق مطلوب",
+          "timeSpentInvalid": "أدخل الوقت بصيغة HH:MM (مثل 01:30)",
           "startTimeRequired": "وقت البدء مطلوب",
           "endTimeRequired": "وقت الانتهاء مطلوب",
           "impactRequired": "تأثير النشاط على المتعلم مطلوب"

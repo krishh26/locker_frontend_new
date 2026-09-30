@@ -3865,7 +3865,8 @@
             }
           },
           "spendTime": {
-            "label": "2. Time Spent on Activity"
+            "label": "2. Time Spent on Activity",
+            "placeholder": "HH:MM"
           },
           "startTime": {
             "label": "3. Activity Start Time"
@@ -3894,6 +3895,7 @@
           "activityTypeRequired": "Activity type is required",
           "jobTypeRequired": "Job type is required",
           "timeSpentRequired": "Time spent is required",
+          "timeSpentInvalid": "Enter time spent as HH:MM (e.g. 01:30)",
           "startTimeRequired": "Start time is required",
           "endTimeRequired": "End time is required",
           "impactRequired": "Impact on learner is required"

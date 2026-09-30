@@ -355,7 +355,13 @@ export function TimeLogFormDialog({
             };
             units?: unknown[];
           };
-          const courseData = item.course || (courseItem as typeof item.course);
+          const courseData =
+            item.course ??
+            (courseItem as unknown as {
+              course_id?: string | number;
+              course_name?: string;
+              units?: unknown[];
+            });
           if (!courseData?.course_id) return null;
 
           // Prefer non-empty unit lists — empty [] must not block fallback.

@@ -3918,7 +3918,7 @@
       "placeholders": {
         "selectCourse": "Select course",
         "noCourses": "No courses available",
-        "description": "Enter description (optional)",
+        "description": "Enter description",
         "jobType": "Select job type",
         "resourceType": "Select resource type"
       },
@@ -3942,10 +3942,13 @@
       "validation": {
         "selectCourse": "Please select a course.",
         "nameRequired": "Name is required.",
+        "descriptionRequired": "Description is required.",
         "uploadFile": "Please upload a file.",
         "fileTooLarge": "File size must be less than 300MB.",
+        "hoursRequired": "Hours are required.",
         "hoursMin": "Hours must be 0 or greater",
         "hoursMax": "Hours must be less than 24",
+        "minutesRequired": "Minutes are required.",
         "minutesMin": "Minutes must be 0 or greater",
         "minutesMax": "Minutes must be less than 60"
       }

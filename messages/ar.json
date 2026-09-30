@@ -3635,7 +3635,7 @@
       "placeholders": {
         "selectCourse": "اختر دورة",
         "noCourses": "لا توجد دورات متاحة",
-        "description": "أدخل الوصف (اختياري)",
+        "description": "أدخل الوصف",
         "jobType": "اختر نوع الوظيفة",
         "resourceType": "اختر نوع المورد"
       },
@@ -3659,10 +3659,13 @@
       "validation": {
         "selectCourse": "يرجى اختيار دورة.",
         "nameRequired": "الاسم مطلوب.",
+        "descriptionRequired": "الوصف مطلوب.",
         "uploadFile": "يرجى تحميل ملف.",
         "fileTooLarge": "يجب أن يكون حجم الملف أقل من 300MB.",
+        "hoursRequired": "الساعات مطلوبة.",
         "hoursMin": "يجب أن تكون الساعات 0 أو أكثر",
         "hoursMax": "يجب أن تكون الساعات أقل من 24",
+        "minutesRequired": "الدقائق مطلوبة.",
         "minutesMin": "يجب أن تكون الدقائق 0 أو أكثر",
         "minutesMax": "يجب أن تكون الدقائق أقل من 60"
       }

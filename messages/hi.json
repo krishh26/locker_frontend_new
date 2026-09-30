@@ -3600,7 +3600,7 @@
       "placeholders": {
         "selectCourse": "कोर्स चुनें",
         "noCourses": "कोई कोर्स उपलब्ध नहीं",
-        "description": "विवरण दर्ज करें (वैकल्पिक)",
+        "description": "विवरण दर्ज करें",
         "jobType": "जॉब प्रकार चुनें",
         "resourceType": "संसाधन प्रकार चुनें"
       },
@@ -3624,10 +3624,13 @@
       "validation": {
         "selectCourse": "कृपया कोर्स चुनें।",
         "nameRequired": "नाम आवश्यक है।",
+        "descriptionRequired": "विवरण आवश्यक है।",
         "uploadFile": "कृपया फ़ाइल अपलोड करें।",
         "fileTooLarge": "फ़ाइल का आकार 300MB से कम होना चाहिए।",
+        "hoursRequired": "घंटे आवश्यक हैं।",
         "hoursMin": "घंटे 0 या उससे अधिक होने चाहिए",
         "hoursMax": "घंटे 24 से कम होने चाहिए",
+        "minutesRequired": "मिनट आवश्यक हैं।",
         "minutesMin": "मिनट 0 या उससे अधिक होने चाहिए",
         "minutesMax": "मिनट 60 से कम होने चाहिए"
       }

@@ -2970,7 +2970,7 @@
       "placeholders": {
         "selectCourse": "Kurs auswählen",
         "noCourses": "Keine Kurse verfügbar",
-        "description": "Beschreibung eingeben (optional)",
+        "description": "Beschreibung eingeben",
         "jobType": "Jobtyp auswählen",
         "resourceType": "Ressourcentyp auswählen"
       },
@@ -2994,10 +2994,13 @@
       "validation": {
         "selectCourse": "Bitte wählen Sie einen Kurs aus.",
         "nameRequired": "Name ist erforderlich.",
+        "descriptionRequired": "Beschreibung ist erforderlich.",
         "uploadFile": "Bitte laden Sie eine Datei hoch.",
         "fileTooLarge": "Die Dateigröße muss kleiner als 300MB sein.",
+        "hoursRequired": "Stunden sind erforderlich.",
         "hoursMin": "Stunden müssen 0 oder größer sein",
         "hoursMax": "Stunden müssen weniger als 24 sein",
+        "minutesRequired": "Minuten sind erforderlich.",
         "minutesMin": "Minuten müssen 0 oder größer sein",
         "minutesMax": "Minuten müssen weniger als 60 sein"
       }

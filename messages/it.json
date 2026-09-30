@@ -2985,7 +2985,7 @@
       "placeholders": {
         "selectCourse": "Seleziona corso",
         "noCourses": "Nessun corso disponibile",
-        "description": "Inserisci descrizione (opzionale)",
+        "description": "Inserisci descrizione",
         "jobType": "Seleziona tipo di lavoro",
         "resourceType": "Seleziona tipo di risorsa"
       },
@@ -3009,10 +3009,13 @@
       "validation": {
         "selectCourse": "Seleziona un corso.",
         "nameRequired": "Il nome è obbligatorio.",
+        "descriptionRequired": "La descrizione è obbligatoria.",
         "uploadFile": "Carica un file.",
         "fileTooLarge": "La dimensione del file deve essere inferiore a 300MB.",
+        "hoursRequired": "Le ore sono obbligatorie.",
         "hoursMin": "Le ore devono essere 0 o superiori",
         "hoursMax": "Le ore devono essere inferiori a 24",
+        "minutesRequired": "I minuti sono obbligatori.",
         "minutesMin": "I minuti devono essere 0 o superiori",
         "minutesMax": "I minuti devono essere inferiori a 60"
       }

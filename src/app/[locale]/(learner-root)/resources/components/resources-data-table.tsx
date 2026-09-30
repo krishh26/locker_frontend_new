@@ -56,6 +56,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Switch } from '@/components/ui/switch'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { ResourceFormDialog } from './resource-form-dialog'
 import { DataTablePagination } from '@/components/data-table-pagination'
 import {
@@ -106,7 +116,8 @@ export function ResourcesDataTable() {
     { skip: !selectedCourseId },
   )
 
-  const [deleteResource] = useDeleteResourceMutation()
+  const [deleteResource, { isLoading: isDeleting }] = useDeleteResourceMutation()
+  const [resourceToDelete, setResourceToDelete] = useState<string | null>(null)
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -151,30 +162,22 @@ export function ResourcesDataTable() {
     [t]
   )
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      if (
-        !confirm(
-          `${t('table.confirm.deleteTitle')}\n\n${t('table.confirm.deleteBody')}`
-        )
-      ) {
-        return
-      }
+  const handleDelete = useCallback(async () => {
+    if (!resourceToDelete) return
 
-      try {
-        await deleteResource(id).unwrap()
-        toast.success(t('table.toast.deleted'))
-        refetch()
-      } catch (error: unknown) {
-        const errorMessage =
-          error && typeof error === 'object' && 'data' in error
-            ? (error as { data?: { error?: string } }).data?.error
-            : undefined
-        toast.error(errorMessage || t('table.toast.deleteFailed'))
-      }
-    },
-    [deleteResource, refetch, t]
-  )
+    try {
+      await deleteResource(resourceToDelete).unwrap()
+      toast.success(t('table.toast.deleted'))
+      setResourceToDelete(null)
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === 'object' && 'data' in error
+          ? (error as { data?: { error?: string } }).data?.error
+          : undefined
+      toast.error(errorMessage || t('table.toast.deleteFailed'))
+    }
+  }, [deleteResource, refetch, resourceToDelete, t])
 
   const getJobTypeColor = (jobType: string | undefined) => {
     switch (jobType) {
@@ -375,7 +378,7 @@ export function ResourcesDataTable() {
                     <DropdownMenuItem
                       variant='destructive'
                       className='cursor-pointer'
-                      onClick={() => handleDelete(resourceId)}
+                      onClick={() => setResourceToDelete(resourceId)}
                     >
                       <Trash2 className='mr-2 size-4' />
                       {t('table.buttons.delete')}
@@ -391,7 +394,6 @@ export function ResourcesDataTable() {
     [
       getJobTypeLabel,
       getResourceTypeLabel,
-      handleDelete,
       isEmployer,
       t,
       user?.role,
@@ -614,6 +616,37 @@ export function ResourcesDataTable() {
         resource={editResource}
         mode="edit"
       />
+
+      <AlertDialog
+        open={resourceToDelete !== null}
+        onOpenChange={(open) => {
+          if (!open && !isDeleting) setResourceToDelete(null)
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('table.confirm.deleteTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('table.confirm.deleteBody')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              {t('form.buttons.cancel')}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(event) => {
+                event.preventDefault()
+                void handleDelete()
+              }}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {t('table.buttons.delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

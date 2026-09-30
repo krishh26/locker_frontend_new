@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateResourceMutation, useUpdateResourceMutation } from "@/store/api/resources/resourcesApi";
@@ -42,13 +42,35 @@ import { useTranslations } from "next-intl";
 type ResourceFormValues = {
   course_id: string;
   name: string;
-  description?: string;
+  description: string;
   job_type: "On" | "Off";
   resource_type: "PDF" | "WORD" | "PPT" | "Text" | "Image";
-  hours: number;
-  minute: number;
+  hours?: number;
+  minute?: number;
   file?: File;
 };
+
+const emptyResourceDefaults: ResourceFormValues = {
+  course_id: "",
+  name: "",
+  description: "",
+  job_type: "On",
+  resource_type: "PDF",
+  hours: undefined,
+  minute: undefined,
+};
+
+function toOptionalNumber(value: string | number | null | undefined): number | undefined {
+  if (value === null || value === undefined || value === "") return undefined;
+  const parsed = Number(value);
+  return Number.isNaN(parsed) ? undefined : parsed;
+}
+
+function parseNumberInput(value: string): number | undefined {
+  if (value.trim() === "") return undefined;
+  const parsed = Number(value);
+  return Number.isNaN(parsed) ? undefined : parsed;
+}
 
 function getFileSizeInMb(file: File): string {
   return (file.size / (1024 * 1024)).toFixed(2);
@@ -61,12 +83,12 @@ function appendResourceFormFields(
 ) {
   formData.append("course_id", data.course_id);
   formData.append("name", data.name || file.name);
-  formData.append("description", data.description || "");
+  formData.append("description", data.description.trim());
   formData.append("size", getFileSizeInMb(file));
   formData.append("job_type", data.job_type);
   formData.append("resource_type", data.resource_type);
-  formData.append("hours", String(data.hours ?? 0));
-  formData.append("minute", String(data.minute ?? 0));
+  formData.append("hours", String(data.hours));
+  formData.append("minute", String(data.minute));
   formData.append("file", file);
 }
 
@@ -110,15 +132,17 @@ export function ResourceFormDialog({
         name: z.string().min(1, {
           message: t("form.validation.nameRequired"),
         }),
-        description: z.string().optional(),
+        description: z.string().trim().min(1, {
+          message: t("form.validation.descriptionRequired"),
+        }),
         job_type: z.enum(["On", "Off"]),
         resource_type: z.enum(["PDF", "WORD", "PPT", "Text", "Image"]),
         hours: z
-          .number()
+          .number({ error: t("form.validation.hoursRequired") })
           .min(0, t("form.validation.hoursMin"))
           .max(23, t("form.validation.hoursMax")),
         minute: z
-          .number()
+          .number({ error: t("form.validation.minutesRequired") })
           .min(0, t("form.validation.minutesMin"))
           .max(59, t("form.validation.minutesMax")),
         file: z
@@ -141,16 +165,20 @@ export function ResourceFormDialog({
   );
 
   const form = useForm<ResourceFormValues>({
-    resolver: zodResolver(isEditMode ? resourceFormSchema : createResourceSchema),
-    defaultValues: {
-      course_id: (resource?.course_id ? String(resource.course_id) : "") as string,
-      name: resource?.name ?? "",
-      description: resource?.description ?? "",
-      job_type: (resource?.job_type as "On" | "Off") ?? "On",
-      resource_type: (resource?.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
-      hours: Number(resource?.hours ?? 0),
-      minute: Number(resource?.minute ?? 0),
-    },
+    resolver: zodResolver(
+      isEditMode ? resourceFormSchema : createResourceSchema
+    ) as Resolver<ResourceFormValues>,
+    defaultValues: isEditMode && resource
+      ? {
+          course_id: String(resource.course_id ?? ""),
+          name: resource.name ?? "",
+          description: resource.description ?? "",
+          job_type: (resource.job_type as "On" | "Off") ?? "On",
+          resource_type: (resource.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
+          hours: toOptionalNumber(resource.hours),
+          minute: toOptionalNumber(resource.minute),
+        }
+      : emptyResourceDefaults,
   });
 
   // Reset form when resource changes or dialog opens
@@ -162,8 +190,8 @@ export function ResourceFormDialog({
         description: resource.description ?? "",
         job_type: (resource.job_type as "On" | "Off") ?? "On",
         resource_type: (resource.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
-        hours: Number(resource.hours ?? 0),
-        minute: Number(resource.minute ?? 0),
+        hours: toOptionalNumber(resource.hours),
+        minute: toOptionalNumber(resource.minute),
       });
     }
   }, [form, isEditMode, open, resource]);
@@ -175,11 +203,11 @@ export function ResourceFormDialog({
         const updateData: Record<string, unknown> = {
           course_id: data.course_id,
           name: data.name,
-          description: data.description || "",
+          description: data.description.trim(),
           job_type: data.job_type,
           resource_type: data.resource_type,
-          hours: String(data.hours ?? 0),
-          minute: String(data.minute ?? 0),
+          hours: String(data.hours),
+          minute: String(data.minute),
         };
         
         // If a new file is provided, use FormData
@@ -210,15 +238,7 @@ export function ResourceFormDialog({
         toast.success(t("form.toast.created"));
       }
       
-      form.reset({
-        course_id: "",
-        name: "",
-        description: "",
-        job_type: "On",
-        resource_type: "PDF",
-        hours: 0,
-        minute: 0,
-      });
+      form.reset(emptyResourceDefaults);
       setOpen(false);
       onSuccess?.();
     } catch (error: unknown) {
@@ -362,7 +382,10 @@ export function ResourceFormDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("form.fields.description")}</FormLabel>
+                  <FormLabel>
+                    {t("form.fields.description")}{" "}
+                    <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={t("form.placeholders.description")}
@@ -381,17 +404,20 @@ export function ResourceFormDialog({
                 name="hours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("form.fields.hours")}</FormLabel>
+                    <FormLabel>
+                      {t("form.fields.hours")}{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         min={0}
                         max={23}
-                        placeholder="0"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
-                        }
+                        name={field.name}
+                        ref={field.ref}
+                        onBlur={field.onBlur}
+                        value={field.value ?? ""}
+                        onChange={(e) => field.onChange(parseNumberInput(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -403,17 +429,20 @@ export function ResourceFormDialog({
                 name="minute"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("form.fields.minutes")}</FormLabel>
+                    <FormLabel>
+                      {t("form.fields.minutes")}{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         min={0}
                         max={59}
-                        placeholder="0"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
-                        }
+                        name={field.name}
+                        ref={field.ref}
+                        onBlur={field.onBlur}
+                        value={field.value ?? ""}
+                        onChange={(e) => field.onChange(parseNumberInput(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />

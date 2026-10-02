@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/store/hooks";
 import { TimeLogDataTable } from "./time-log-data-table";
 import { useTranslations } from "next-intl";
+import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href";
 
 export function TimeLogPageContent() {
   const t = useTranslations("timeLog");
   const user = useAppSelector((state) => state.auth.user);
   const isEmployer = user?.role === "Employer";
+  const backHref = useLearnerDashboardHref();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   return (
@@ -21,7 +23,7 @@ export function TimeLogPageContent() {
         title={t("page.title")}
         subtitle={t("page.subtitle")}
         icon={Clock}
-        backButtonHref="/dashboard"
+        backButtonHref={backHref}
         showBackButton
         actions={
           !isEmployer ? (

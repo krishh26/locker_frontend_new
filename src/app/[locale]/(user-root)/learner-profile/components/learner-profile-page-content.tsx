@@ -12,6 +12,7 @@ import {
 } from '@/store/api/learner/learnerApi'
 import { useAppSelector } from '@/store/hooks'
 import { PageHeader } from '@/components/dashboard/page-header'
+import { useLearnerDashboardHref } from '@/hooks/use-learner-dashboard-href'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -222,6 +223,7 @@ export function LearnerProfilePageContent({
   const isAdmin = userRole === 'Admin'
   const isTrainer = userRole === 'Trainer'
   const canEdit = isAdmin || isTrainer
+  const learnerDashboardHref = useLearnerDashboardHref()
 
   const learnerIdNum = learnerId ? parseInt(learnerId, 10) : NaN
 
@@ -293,8 +295,12 @@ export function LearnerProfilePageContent({
     }
   })
 
-  // Determine back button href based on role
-  const backButtonHref = isLearner || isAdmin ? '/dashboard' : '/learner-overview'
+  // Back to this learner's dashboard when staff are viewing a profile
+  const backButtonHref = learnerId
+    ? isLearner
+      ? '/dashboard'
+      : `/learner-dashboard/${learnerId}`
+    : learnerDashboardHref
 
   // Handle loading state
   if (isLoading) {

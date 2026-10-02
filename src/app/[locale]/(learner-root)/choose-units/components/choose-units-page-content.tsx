@@ -6,9 +6,11 @@ import { ChooseUnitsForm } from "./choose-units-form";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 import { useTranslations } from "next-intl";
+import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href";
 
 export function ChooseUnitsPageContent() {
   const currentCourseId = useAppSelector(selectCurrentCourseId);
+  const learnerDashboardHref = useLearnerDashboardHref();
   const t = useTranslations("chooseUnits");
   return (
     <div className="space-y-6 px-4 lg:px-6 pb-24">
@@ -17,7 +19,11 @@ export function ChooseUnitsPageContent() {
         title={t("pageTitle")}
         subtitle={t("pageSubtitle")}
         icon={ClipboardList}
-        backButtonHref={currentCourseId ? `/course-details/${currentCourseId}` : "/"}
+        backButtonHref={
+          currentCourseId
+            ? `/course-details/${currentCourseId}`
+            : learnerDashboardHref
+        }
         showBackButton
       />
 

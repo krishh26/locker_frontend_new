@@ -12,6 +12,7 @@ import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { useGetLearnerUnitsProgressQuery } from "@/store/api/module-unit-progress/moduleUnitProgressApi";
 import { Card, CardContent } from "@/components/ui/card";
 import { buildUnitProgressFromCourseUnits } from "../utils/build-unit-progress";
+import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href";
 
 export function ModuleUnitProgressPageContent() {
   const t = useTranslations("moduleUnitProgress");
@@ -19,6 +20,7 @@ export function ModuleUnitProgressPageContent() {
   const learner = useAppSelector(selectLearner);
   const learnerId = learner?.learner_id;
   const courses = useAppSelector(selectCourses);
+  const learnerDashboardHref = useLearnerDashboardHref();
 
   const {
     data: progressData,
@@ -60,7 +62,11 @@ export function ModuleUnitProgressPageContent() {
         subtitle={t("page.subtitle")}
         icon={BookOpen}
         showBackButton
-        backButtonHref={`/course-details/${currentCourseId}`}
+        backButtonHref={
+          currentCourseId
+            ? `/course-details/${currentCourseId}`
+            : learnerDashboardHref
+        }
       />
 
       {/* Error State */}

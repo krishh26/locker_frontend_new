@@ -97,7 +97,7 @@ export function LearnerDashboardViewer({
           title={t('viewer.pageTitle', {
             name: `${learnerResponse?.data?.first_name ?? ''} ${learnerResponse?.data?.last_name ?? ''}`.trim() || '—',
           })}
-          backButtonHref='/'
+          backButtonHref='/learner-overview'
           showBackButton
         />
       </div>

@@ -6,9 +6,11 @@ import { CourseResourcesDataTable } from "./course-resources-data-table";
 import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 import { useTranslations } from "next-intl";
+import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href";
 
 export function CourseResourcesPageContent() {
   const currentCourseId = useAppSelector(selectCurrentCourseId);
+  const learnerDashboardHref = useLearnerDashboardHref();
   const t = useTranslations("courseResources");
   return (
     <div className="space-y-6 px-4 lg:px-6">
@@ -18,7 +20,11 @@ export function CourseResourcesPageContent() {
         subtitle={t("pageSubtitle")}
         icon={BookOpen}
         showBackButton
-        backButtonHref={`/course-details/${currentCourseId}`}
+        backButtonHref={
+          currentCourseId
+            ? `/course-details/${currentCourseId}`
+            : learnerDashboardHref
+        }
       />
 
       {/* Data Table */}

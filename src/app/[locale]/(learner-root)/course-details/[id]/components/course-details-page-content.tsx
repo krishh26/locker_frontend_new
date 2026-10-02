@@ -12,6 +12,7 @@ import { SupervisorCards } from "./supervisor-cards"
 import { useAppSelector } from "@/store/hooks"
 import { selectCurrentCourseId } from "@/store/slices/courseSlice"
 import { selectLearner } from "@/store/slices/authSlice"
+import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href"
 import {
   courseCards,
   gatewayCards,
@@ -26,10 +27,9 @@ interface CourseDetailsPageContentProps {
 export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDetailsPageContentProps) {
   const t = useTranslations("courseDetails.page")
   const router = useRouter()
-  const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector(selectLearner)
   const currentCourseId = useAppSelector(selectCurrentCourseId)
-  const userRole = user?.role
+  const backHref = useLearnerDashboardHref()
 
   // Use course ID from Redux store, fallback to route param if available
   const courseId = currentCourseId ? String(currentCourseId) : routeCourseId
@@ -67,11 +67,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
   }, [courseData])
 
   const handleBack = () => {
-    if (userRole === 'Learner' || userRole === 'Admin') {
-      router.push("/dashboard")
-    } else {
-      router.push('/learner-overview')
-    }
+    router.push(backHref)
   }
 
   if (!courseData || !course || !courseId) {
@@ -82,7 +78,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
             title={t("notFoundTitle")}
             icon={BookOpen}
             showBackButton
-            backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}
+            backButtonHref={backHref}
           />
         </div>
         <div className="px-4 lg:px-6 py-12 text-center">
@@ -106,7 +102,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
           subtitle={t("subtitle")}
           icon={BookOpen}
           showBackButton
-          backButtonHref={userRole === 'Learner' || userRole === 'Admin' ? '/dashboard' : '/learner-overview'}
+          backButtonHref={backHref}
         />
       </div>
 

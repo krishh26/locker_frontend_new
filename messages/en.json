@@ -4599,7 +4599,8 @@
       "archivedBadge": "Archived",
       "actions": {
         "view": "View",
-        "moveToPersonal": "Move to Personal"
+        "moveToPersonal": "Move to Personal",
+        "restore": "Restore"
       }
     },
     "export": {
@@ -4640,7 +4641,10 @@
       "deleteFailed": "Failed to delete course",
       "moveToPersonalSuccess": "Course moved to your organisation successfully",
       "moveToPersonalFailed": "Failed to move course to your organisation",
-      "moveToPersonalNoOrganisation": "No organisation assigned to your account"
+      "moveToPersonalNoOrganisation": "No organisation assigned to your account",
+      "restoreSuccess": "Course restored successfully",
+      "forbiddenRestore": "You do not have access to restore this course.",
+      "restoreFailed": "Failed to restore course"
     },
     "course": {
       "pageTitleCreate": "Create Course",

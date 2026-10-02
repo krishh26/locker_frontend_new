@@ -4099,7 +4099,8 @@
       },
       "archivedBadge": "Archivado",
       "actions": {
-        "view": "Ver"
+        "view": "Ver",
+        "restore": "Restaurar"
       }
     },
     "export": {
@@ -4137,7 +4138,10 @@
     "toast": {
       "deleteSuccess": "Curso archivado correctamente",
       "forbiddenDelete": "No tiene acceso para eliminar este curso.",
-      "deleteFailed": "Error al eliminar el curso"
+      "deleteFailed": "Error al eliminar el curso",
+      "restoreSuccess": "Curso restaurado correctamente",
+      "forbiddenRestore": "No tiene acceso para restaurar este curso.",
+      "restoreFailed": "Error al restaurar el curso"
     },
     "course": {
       "pageTitleCreate": "Crear curso",

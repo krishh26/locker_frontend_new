@@ -8,6 +8,7 @@ import { exportTableToPdf } from '@/utils/pdfExport'
 import {
   useGetCoursesQuery,
   useDeleteCourseMutation,
+  useUpdateCourseMutation,
   useAddCourseFromLibraryMutation,
 } from '@/store/api/course/courseApi'
 import {
@@ -33,6 +34,7 @@ import {
   Eye,
   ChevronDown,
   FolderInput,
+  ArchiveRestore,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -121,6 +123,8 @@ export function CourseBuilderDataTable() {
     refetchOnMountOrArgChange: true,
   })
   const [deleteCourse] = useDeleteCourseMutation()
+  const [updateCourse, { isLoading: isRestoringCourse }] =
+    useUpdateCourseMutation()
   const [addCourseFromLibrary, { isLoading: isMovingCourse }] =
     useAddCourseFromLibraryMutation()
 
@@ -230,6 +234,25 @@ export function CourseBuilderDataTable() {
       }
     },
     [addCourseFromLibrary, t, user?.assignedOrganisationIds],
+  )
+
+  const handleRestore = useCallback(
+    async (course: Course) => {
+      try {
+        await updateCourse({
+          id: course.course_id,
+          data: { active: true },
+        }).unwrap()
+        toast.success(t('toast.restoreSuccess'))
+      } catch (error: unknown) {
+        if (isForbiddenError(error)) {
+          toast.error(getErrorMessage(error) ?? t('toast.forbiddenRestore'))
+          return
+        }
+        toast.error(getErrorMessage(error) ?? t('toast.restoreFailed'))
+      }
+    },
+    [updateCourse, t],
   )
 
   const handleDeleteClick = (course: Course) => {
@@ -418,7 +441,15 @@ export function CourseBuilderDataTable() {
                         <Edit className='mr-2 h-4 w-4' />
                         {tCommon('edit')}
                       </DropdownMenuItem>
-                      {!isArchived && (
+                      {isArchived ? (
+                        <DropdownMenuItem
+                          onClick={() => handleRestore(course)}
+                          disabled={isRestoringCourse}
+                        >
+                          <ArchiveRestore className='mr-2 h-4 w-4' />
+                          {t('table.actions.restore')}
+                        </DropdownMenuItem>
+                      ) : (
                         <DropdownMenuItem
                           onClick={() => handleDeleteClick(course)}
                           className='text-destructive'
@@ -440,9 +471,11 @@ export function CourseBuilderDataTable() {
       handleEdit,
       handleView,
       handleMoveToPersonal,
+      handleRestore,
       isAdminViewingGlobalCourses,
       isEmployer,
       isMovingCourse,
+      isRestoringCourse,
       t,
       tCommon,
       tAdmin,

@@ -4220,7 +4220,8 @@
       },
       "archivedBadge": "已归档",
       "actions": {
-        "view": "查看"
+        "view": "查看",
+        "restore": "恢复"
       }
     },
     "export": {
@@ -4258,7 +4259,10 @@
     "toast": {
       "deleteSuccess": "课程已归档",
       "forbiddenDelete": "您无权删除此课程。",
-      "deleteFailed": "删除课程失败"
+      "deleteFailed": "删除课程失败",
+      "restoreSuccess": "课程已恢复",
+      "forbiddenRestore": "您无权恢复此课程。",
+      "restoreFailed": "恢复课程失败"
     },
     "course": {
       "pageTitleCreate": "创建课程",

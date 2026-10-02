@@ -4071,7 +4071,8 @@
       },
       "archivedBadge": "مؤرشف",
       "actions": {
-        "view": "عرض"
+        "view": "عرض",
+        "restore": "استعادة"
       }
     },
     "export": {
@@ -4109,7 +4110,10 @@
     "toast": {
       "deleteSuccess": "تم أرشفة الدورة بنجاح",
       "forbiddenDelete": "ليست لديك صلاحية لحذف هذه الدورة.",
-      "deleteFailed": "فشل حذف الدورة"
+      "deleteFailed": "فشل حذف الدورة",
+      "restoreSuccess": "تمت استعادة الدورة بنجاح",
+      "forbiddenRestore": "ليست لديك صلاحية لاستعادة هذه الدورة.",
+      "restoreFailed": "فشل استعادة الدورة"
     },
     "course": {
       "autosaving": "جارٍ حفظ المسودة...",

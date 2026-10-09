@@ -15,6 +15,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
 import type { FormField, SimpleFormField } from "@/store/api/forms/types";
+import { RichTextContent } from "./rich-text-content";
+import { fieldWidthClass, isTodayDateField } from "./field-types";
+import { getTodayDateValue } from "./preset-values";
+import { TableField } from "./table-field";
+import { parseTableAnswer } from "./table-utils";
+import { usePresetLabel } from "./use-preset-label";
 
 type FormFieldType = FormField | SimpleFormField;
 
@@ -35,6 +41,8 @@ export function FormFieldsRenderer({
   onChange,
   className,
 }: FormFieldsRendererProps) {
+  const presetLabel = usePresetLabel();
+
   if (fields.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
@@ -82,14 +90,9 @@ export function FormFieldsRenderer({
 
   return (
     <div className={className || "space-y-6"}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         {fields.map((field) => {
-          const widthClass =
-            field.width === "half"
-              ? "md:col-span-1"
-              : field.width === "third"
-              ? "md:col-span-1"
-              : "md:col-span-2";
+          const widthClass = fieldWidthClass(field.width);
 
           const fieldValue = isSubmitted || isPreview ? getFieldValue(field.id, field.type) : (field.type === "checkbox" ? [] : "");
 
@@ -97,6 +100,33 @@ export function FormFieldsRenderer({
             <div key={field.id} className={widthClass}>
               {(() => {
                 switch (field.type) {
+                  case "richtext":
+                    return <RichTextContent html={field.content} />;
+
+                  case "table":
+                    return (
+                      <div className="space-y-2">
+                        <Label>
+                          {field.label}
+                          {field.required && (
+                            <span className="text-destructive ml-1">*</span>
+                          )}
+                        </Label>
+                        <TableField
+                          config={field.table}
+                          value={parseTableAnswer(values[field.id])}
+                          onChange={
+                            isPreview
+                              ? (answer) => handleChange(field.id, JSON.stringify(answer))
+                              : undefined
+                          }
+                          disabled={!isPreview}
+                          presetPlaceholder={presetLabel}
+                          idPrefix={field.id}
+                        />
+                      </div>
+                    );
+
                   case "text":
                   case "email":
                   case "phone":
@@ -317,7 +347,10 @@ export function FormFieldsRenderer({
                       </div>
                     );
 
-                  case "date":
+                  case "date": {
+                    const isToday = isTodayDateField(field);
+                    const dateValue =
+                      isToday && isPreview ? getTodayDateValue() : (fieldValue as string);
                     return (
                       <div className="space-y-2">
                         <Label>
@@ -327,14 +360,15 @@ export function FormFieldsRenderer({
                           )}
                         </Label>
                         <Input
-                          disabled={!isPreview}
+                          disabled={!isPreview || isToday}
                           type="date"
-                          value={isPreview || isSubmitted ? (fieldValue as string) : ""}
+                          value={isPreview || isSubmitted ? dateValue : ""}
                           onChange={(e) => isPreview && handleChange(field.id, e.target.value)}
-                          className={!isPreview ? "bg-muted" : ""}
+                          className={!isPreview || isToday ? "bg-muted" : ""}
                         />
                       </div>
                     );
+                  }
 
                   case "file":
                     if (isSubmitted) {

@@ -1289,7 +1289,9 @@
           "checkbox": "خانات اختيار",
           "date": "تاريخ",
           "file": "رفع ملف",
-          "signature": "توقيع"
+          "signature": "توقيع",
+          "richtext": "كتلة نصية",
+          "table": "جدول"
         },
         "defaultLabels": {
           "text": "الاسم الكامل",
@@ -1303,7 +1305,9 @@
           "date": "تاريخ",
           "file": "رفع ملف",
           "signature": "توقيع",
-          "default": "تسمية الحقل"
+          "default": "تسمية الحقل",
+          "richtext": "كتلة نصية",
+          "table": "جدول"
         },
         "defaultPlaceholders": {
           "text": "أدخل اسمك الكامل",
@@ -1316,13 +1320,16 @@
           "default": "أدخل قيمة"
         },
         "optionLabel": "خيار {n}",
-        "copySuffix": "(نسخة)"
+        "copySuffix": "(نسخة)",
+        "defaultRichTextContent": "أضف تعليمات أو معلومات للشخص الذي يملأ هذا النموذج."
       },
       "presets": {
         "roles": {
           "learner": "متعلم",
           "trainer": "مدرب",
-          "employee": "موظف"
+          "employee": "موظف",
+          "course": "الدورة",
+          "general": "عام"
         },
         "fields": {
           "learner-name": "اسم المتعلم",
@@ -1332,7 +1339,25 @@
           "employer": "صاحب العمل",
           "trainer-name": "اسم المدرب",
           "email": "بريد",
-          "employee-name": "اسم الموظف"
+          "employee-name": "اسم الموظف",
+          "course-name": "اسم الدورة",
+          "course-code": "رمز الدورة",
+          "course-level": "مستوى الدورة",
+          "course-sector": "القطاع",
+          "course-awarding-body": "الجهة المانحة",
+          "course-type": "نوع الدورة",
+          "course-glh": "ساعات التعلم الموجه",
+          "course-total-credits": "إجمالي الساعات المعتمدة",
+          "course-duration": "مدة الدورة",
+          "course-start-date": "تاريخ البدء",
+          "course-end-date": "تاريخ الانتهاء المتوقع",
+          "course-status": "حالة الدورة",
+          "course-predicted-grade": "الدرجة المتوقعة",
+          "course-final-grade": "الدرجة النهائية",
+          "course-trainer": "المدرب",
+          "course-iqa": "IQA",
+          "course-employer": "صاحب العمل",
+          "today-date": "تاريخ اليوم"
         }
       },
       "preview": {
@@ -1354,7 +1379,52 @@
         "halfWidth": "نصف العرض",
         "oneThird": "الثلث",
         "options": "خيارات",
-        "addOption": "إضافة خيار"
+        "addOption": "إضافة خيار",
+        "emptyTextBlock": "كتلة نصية فارغة. انقر على تعديل لإضافة محتوى.",
+        "blockName": "اسم الكتلة",
+        "blockNameHint": "يظهر فقط في المنشئ لمساعدتك على تمييز هذه الكتلة.",
+        "content": "المحتوى",
+        "textBlockTag": "كتلة نصية",
+        "todayAutoFill": "تاريخ اليوم (يُملأ تلقائيًا)",
+        "tableLayout": "تخطيط الجدول"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "عريض",
+          "italic": "مائل",
+          "underline": "تسطير",
+          "strike": "يتوسطه خط",
+          "heading1": "عنوان 1",
+          "heading2": "عنوان 2",
+          "heading3": "عنوان 3",
+          "bulletList": "قائمة نقطية",
+          "orderedList": "قائمة مرقمة",
+          "blockquote": "اقتباس",
+          "divider": "فاصل",
+          "undo": "تراجع",
+          "redo": "إعادة"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "إظهار صف العناوين",
+        "hint": "اجعل كل خلية نصًا ثابتًا أو حقل إدخال أو بيانات من Locker.",
+        "columnHeader": "عنوان العمود",
+        "defaultColumn": "العمود {n}",
+        "setWholeColumn": "تعيين العمود بالكامل إلى...",
+        "cellType": "نوع الخلية",
+        "cellTypes": {
+          "static": "نص ثابت",
+          "text": "حقل نص",
+          "date": "حقل تاريخ",
+          "checkbox": "مربع اختيار",
+          "preset": "بيانات Locker"
+        },
+        "staticPlaceholder": "اكتب النص الثابت",
+        "presetPlaceholder": "اختر بيانات Locker",
+        "addRow": "إضافة صف",
+        "addColumn": "إضافة عمود",
+        "removeRow": "حذف الصف",
+        "removeColumn": "حذف العمود"
       }
     }
   },
@@ -3176,7 +3246,8 @@
       "number": "يجب أن يكون {label} رقماً",
       "phone": "يجب أن يحتوي {label} على أرقام فقط",
       "required": "{label} مطلوب",
-      "fileTooLarge": "{label} كبير جداً (الحد الأقصى 300 ميجابايت)"
+      "fileTooLarge": "{label} كبير جداً (الحد الأقصى 300 ميجابايت)",
+      "tableIncomplete": "يرجى ملء جميع خلايا {label}"
     },
     "toast": {
       "submitSuccess": "تم إرسال النموذج بنجاح!",

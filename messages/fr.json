@@ -1302,7 +1302,9 @@
           "checkbox": "Cases à cocher",
           "date": "Date",
           "file": "Téléverser un fichier",
-          "signature": "Signature"
+          "signature": "Signature",
+          "richtext": "Bloc de texte",
+          "table": "Tableau"
         },
         "defaultLabels": {
           "text": "Nom complet",
@@ -1316,7 +1318,9 @@
           "date": "Date",
           "file": "Téléverser un fichier",
           "signature": "Signature",
-          "default": "Libellé du champ"
+          "default": "Libellé du champ",
+          "richtext": "Bloc de texte",
+          "table": "Tableau"
         },
         "defaultPlaceholders": {
           "text": "Entrez votre nom complet",
@@ -1329,13 +1333,16 @@
           "default": "Entrez une valeur"
         },
         "optionLabel": "Option {n}",
-        "copySuffix": "(Copie)"
+        "copySuffix": "(Copie)",
+        "defaultRichTextContent": "Ajoutez des instructions ou des informations pour la personne qui remplit ce formulaire."
       },
       "presets": {
         "roles": {
           "learner": "Apprenant",
           "trainer": "Formateur",
-          "employee": "Employé"
+          "employee": "Employé",
+          "course": "Cours",
+          "general": "Général"
         },
         "fields": {
           "learner-name": "Nom de l’apprenant",
@@ -1345,7 +1352,25 @@
           "employer": "Employeur",
           "trainer-name": "Nom du formateur",
           "email": "E-mail",
-          "employee-name": "Nom de l’employé"
+          "employee-name": "Nom de l’employé",
+          "course-name": "Nom du cours",
+          "course-code": "Code du cours",
+          "course-level": "Niveau du cours",
+          "course-sector": "Secteur",
+          "course-awarding-body": "Organisme certificateur",
+          "course-type": "Type de cours",
+          "course-glh": "Heures d'apprentissage guidé",
+          "course-total-credits": "Crédits totaux",
+          "course-duration": "Durée du cours",
+          "course-start-date": "Date de début",
+          "course-end-date": "Date de fin prévue",
+          "course-status": "Statut du cours",
+          "course-predicted-grade": "Note prévue",
+          "course-final-grade": "Note finale",
+          "course-trainer": "Formateur",
+          "course-iqa": "IQA",
+          "course-employer": "Employeur",
+          "today-date": "Date du jour"
         }
       },
       "fieldCard": {
@@ -1361,7 +1386,52 @@
         "halfWidth": "Demi-largeur",
         "oneThird": "Un tiers",
         "options": "Options",
-        "addOption": "Ajouter une option"
+        "addOption": "Ajouter une option",
+        "emptyTextBlock": "Bloc de texte vide. Cliquez sur modifier pour ajouter du contenu.",
+        "blockName": "Nom du bloc",
+        "blockNameHint": "Affiché uniquement dans le générateur pour identifier ce bloc.",
+        "content": "Contenu",
+        "textBlockTag": "Bloc de texte",
+        "todayAutoFill": "Date du jour (remplie automatiquement)",
+        "tableLayout": "Disposition du tableau"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "Gras",
+          "italic": "Italique",
+          "underline": "Souligné",
+          "strike": "Barré",
+          "heading1": "Titre 1",
+          "heading2": "Titre 2",
+          "heading3": "Titre 3",
+          "bulletList": "Liste à puces",
+          "orderedList": "Liste numérotée",
+          "blockquote": "Citation",
+          "divider": "Séparateur",
+          "undo": "Annuler",
+          "redo": "Rétablir"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "Afficher la ligne d'en-tête",
+        "hint": "Définissez chaque cellule comme texte fixe, champ à remplir ou donnée provenant de Locker.",
+        "columnHeader": "En-tête de colonne",
+        "defaultColumn": "Colonne {n}",
+        "setWholeColumn": "Appliquer à toute la colonne...",
+        "cellType": "Type de cellule",
+        "cellTypes": {
+          "static": "Texte fixe",
+          "text": "Champ texte",
+          "date": "Champ date",
+          "checkbox": "Case à cocher",
+          "preset": "Données Locker"
+        },
+        "staticPlaceholder": "Saisir le texte fixe",
+        "presetPlaceholder": "Choisir une donnée Locker",
+        "addRow": "Ajouter une ligne",
+        "addColumn": "Ajouter une colonne",
+        "removeRow": "Supprimer la ligne",
+        "removeColumn": "Supprimer la colonne"
       }
     }
   },
@@ -3183,7 +3253,8 @@
       "number": "{label} doit être un nombre",
       "phone": "{label} ne doit contenir que des chiffres",
       "required": "{label} est obligatoire",
-      "fileTooLarge": "{label} est trop volumineux (max 300Mo)"
+      "fileTooLarge": "{label} est trop volumineux (max 300Mo)",
+      "tableIncomplete": "Veuillez remplir toutes les cellules de {label}"
     },
     "toast": {
       "submitSuccess": "Formulaire soumis avec succès !",

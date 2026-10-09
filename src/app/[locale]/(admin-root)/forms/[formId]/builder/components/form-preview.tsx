@@ -48,7 +48,7 @@ export function FormPreview({
   }
 
   return (
-    <Card className="max-w-3xl mx-auto">
+    <Card className="max-w-4xl mx-auto">
       <CardContent className="p-6">
         <h2 className="text-2xl font-bold mb-2">{formName || t("untitledForm")}</h2>
         {description && (

@@ -1,4 +1,5 @@
 import type { SimpleFormField } from "@/store/api/forms/types";
+import { TODAY_DATE_PRESET } from "@/components/forms/field-types";
 
 export interface PresetField {
   type: string;
@@ -10,13 +11,35 @@ export interface RolePresets {
   learner: PresetField[];
   trainer: PresetField[];
   employee: PresetField[];
+  course: PresetField[];
+  general: PresetField[];
 }
 
 export const roleIcons: Record<string, string> = {
   learner: "🧑‍🎓",
   trainer: "🧑‍🏫",
   employee: "👨‍💼",
+  course: "📚",
+  general: "🗓️",
 };
+
+const coursePreset = (
+  type: string,
+  label: string,
+  presetField: string,
+  fieldType: "text" | "date" = "text"
+): PresetField => ({
+  type,
+  label,
+  field: {
+    id: type,
+    type: fieldType,
+    label,
+    required: false,
+    presetField,
+    width: "half",
+  },
+});
 
 // Simplified preset fields - focusing on most common ones
 export const PRESET_FIELDS: RolePresets = {
@@ -122,6 +145,39 @@ export const PRESET_FIELDS: RolePresets = {
         placeholder: "Enter your name",
         presetField: "EmployeeName",
         width: "full",
+      },
+    },
+  ],
+  course: [
+    coursePreset("course-name", "Course Name", "courseName"),
+    coursePreset("course-code", "Course Code", "courseCode"),
+    coursePreset("course-level", "Course Level", "courseLevel"),
+    coursePreset("course-sector", "Sector", "courseSector"),
+    coursePreset("course-awarding-body", "Awarding Body", "courseAwardingBody"),
+    coursePreset("course-type", "Course Type", "courseType"),
+    coursePreset("course-glh", "Guided Learning Hours", "courseGuidedLearningHours"),
+    coursePreset("course-total-credits", "Total Credits", "courseTotalCredits"),
+    coursePreset("course-duration", "Course Duration", "courseDuration"),
+    coursePreset("course-start-date", "Start Date", "courseStartDate", "date"),
+    coursePreset("course-end-date", "Expected End Date", "courseEndDate", "date"),
+    coursePreset("course-status", "Course Status", "courseStatus"),
+    coursePreset("course-predicted-grade", "Predicted Grade", "coursePredictedGrade"),
+    coursePreset("course-final-grade", "Final Grade", "courseFinalGrade"),
+    coursePreset("course-trainer", "Trainer", "courseTrainer"),
+    coursePreset("course-iqa", "IQA", "courseIQA"),
+    coursePreset("course-employer", "Employer", "courseEmployer"),
+  ],
+  general: [
+    {
+      type: "today-date",
+      label: "Today's Date",
+      field: {
+        id: "today-date",
+        type: "date",
+        label: "Date",
+        required: false,
+        presetField: TODAY_DATE_PRESET,
+        width: "half",
       },
     },
   ],

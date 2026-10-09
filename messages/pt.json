@@ -1296,7 +1296,9 @@
           "checkbox": "Caixas de verificação",
           "date": "Data",
           "file": "Carregar ficheiro",
-          "signature": "Assinatura"
+          "signature": "Assinatura",
+          "richtext": "Bloco de texto",
+          "table": "Tabela"
         },
         "defaultLabels": {
           "text": "Nome completo",
@@ -1310,7 +1312,9 @@
           "date": "Data",
           "file": "Carregar ficheiro",
           "signature": "Assinatura",
-          "default": "Etiqueta do campo"
+          "default": "Etiqueta do campo",
+          "richtext": "Bloco de texto",
+          "table": "Tabela"
         },
         "defaultPlaceholders": {
           "text": "Introduza o seu nome completo",
@@ -1323,13 +1327,16 @@
           "default": "Introduza um valor"
         },
         "optionLabel": "Opção {n}",
-        "copySuffix": "(Cópia)"
+        "copySuffix": "(Cópia)",
+        "defaultRichTextContent": "Adicione instruções ou informações para quem preenche este formulário."
       },
       "presets": {
         "roles": {
           "learner": "Formando",
           "trainer": "Formador",
-          "employee": "Funcionário"
+          "employee": "Funcionário",
+          "course": "Curso",
+          "general": "Geral"
         },
         "fields": {
           "learner-name": "Nome do formando",
@@ -1339,7 +1346,25 @@
           "employer": "Empregador",
           "trainer-name": "Nome do formador",
           "email": "E-mail",
-          "employee-name": "Nome do funcionário"
+          "employee-name": "Nome do funcionário",
+          "course-name": "Nome do curso",
+          "course-code": "Código do curso",
+          "course-level": "Nível do curso",
+          "course-sector": "Setor",
+          "course-awarding-body": "Entidade certificadora",
+          "course-type": "Tipo de curso",
+          "course-glh": "Horas de aprendizagem orientada",
+          "course-total-credits": "Créditos totais",
+          "course-duration": "Duração do curso",
+          "course-start-date": "Data de início",
+          "course-end-date": "Data de término prevista",
+          "course-status": "Estado do curso",
+          "course-predicted-grade": "Nota prevista",
+          "course-final-grade": "Nota final",
+          "course-trainer": "Formador",
+          "course-iqa": "IQA",
+          "course-employer": "Empregador",
+          "today-date": "Data de hoje"
         }
       },
       "preview": {
@@ -1361,7 +1386,52 @@
         "halfWidth": "Metade da largura",
         "oneThird": "Um terço",
         "options": "Opções",
-        "addOption": "Adicionar opção"
+        "addOption": "Adicionar opção",
+        "emptyTextBlock": "Bloco de texto vazio. Clique em editar para adicionar conteúdo.",
+        "blockName": "Nome do bloco",
+        "blockNameHint": "Exibido apenas no construtor para identificar este bloco.",
+        "content": "Conteúdo",
+        "textBlockTag": "Bloco de texto",
+        "todayAutoFill": "Data de hoje (preenchida automaticamente)",
+        "tableLayout": "Layout da tabela"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "Negrito",
+          "italic": "Itálico",
+          "underline": "Sublinhado",
+          "strike": "Tachado",
+          "heading1": "Título 1",
+          "heading2": "Título 2",
+          "heading3": "Título 3",
+          "bulletList": "Lista com marcadores",
+          "orderedList": "Lista numerada",
+          "blockquote": "Citação",
+          "divider": "Divisor",
+          "undo": "Desfazer",
+          "redo": "Refazer"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "Mostrar linha de cabeçalho",
+        "hint": "Defina cada célula como texto fixo, campo a preencher ou dados do Locker.",
+        "columnHeader": "Cabeçalho da coluna",
+        "defaultColumn": "Coluna {n}",
+        "setWholeColumn": "Aplicar a toda a coluna...",
+        "cellType": "Tipo de célula",
+        "cellTypes": {
+          "static": "Texto fixo",
+          "text": "Campo de texto",
+          "date": "Campo de data",
+          "checkbox": "Caixa de seleção",
+          "preset": "Dados do Locker"
+        },
+        "staticPlaceholder": "Escreva o texto fixo",
+        "presetPlaceholder": "Escolher dados do Locker",
+        "addRow": "Adicionar linha",
+        "addColumn": "Adicionar coluna",
+        "removeRow": "Remover linha",
+        "removeColumn": "Remover coluna"
       }
     }
   },
@@ -3183,7 +3253,8 @@
       "number": "{label} deve ser um número",
       "phone": "{label} deve conter apenas números",
       "required": "{label} é obrigatório",
-      "fileTooLarge": "{label} é demasiado grande (máx. 300MB)"
+      "fileTooLarge": "{label} é demasiado grande (máx. 300MB)",
+      "tableIncomplete": "Preencha todas as células de {label}"
     },
     "toast": {
       "submitSuccess": "Formulário submetido com sucesso!",

@@ -892,7 +892,9 @@
           "checkbox": "Kontrollkästchen",
           "date": "Datum",
           "file": "Datei hochladen",
-          "signature": "Unterschrift"
+          "signature": "Unterschrift",
+          "richtext": "Textblock",
+          "table": "Tabelle"
         },
         "defaultLabels": {
           "text": "Vollständiger Name",
@@ -906,7 +908,9 @@
           "date": "Datum",
           "file": "Datei hochladen",
           "signature": "Unterschrift",
-          "default": "Feldbezeichnung"
+          "default": "Feldbezeichnung",
+          "richtext": "Textblock",
+          "table": "Tabelle"
         },
         "defaultPlaceholders": {
           "text": "Vollständigen Namen eingeben",
@@ -919,13 +923,16 @@
           "default": "Wert eingeben"
         },
         "optionLabel": "Option {n}",
-        "copySuffix": "(Kopie)"
+        "copySuffix": "(Kopie)",
+        "defaultRichTextContent": "Fügen Sie Anweisungen oder Informationen für die Person hinzu, die dieses Formular ausfüllt."
       },
       "presets": {
         "roles": {
           "learner": "Lernender",
           "trainer": "Trainer",
-          "employee": "Mitarbeiter"
+          "employee": "Mitarbeiter",
+          "course": "Kurs",
+          "general": "Allgemein"
         },
         "fields": {
           "learner-name": "Name des Lernenden",
@@ -935,7 +942,25 @@
           "employer": "Arbeitgeber",
           "trainer-name": "Name des Trainers",
           "email": "E-Mail",
-          "employee-name": "Name des Mitarbeiters"
+          "employee-name": "Name des Mitarbeiters",
+          "course-name": "Kursname",
+          "course-code": "Kurscode",
+          "course-level": "Kursniveau",
+          "course-sector": "Sektor",
+          "course-awarding-body": "Vergabestelle",
+          "course-type": "Kurstyp",
+          "course-glh": "Angeleitete Lernstunden",
+          "course-total-credits": "Gesamtpunkte",
+          "course-duration": "Kursdauer",
+          "course-start-date": "Startdatum",
+          "course-end-date": "Voraussichtliches Enddatum",
+          "course-status": "Kursstatus",
+          "course-predicted-grade": "Prognostizierte Note",
+          "course-final-grade": "Endnote",
+          "course-trainer": "Trainer",
+          "course-iqa": "IQA",
+          "course-employer": "Arbeitgeber",
+          "today-date": "Heutiges Datum"
         }
       },
       "preview": {
@@ -957,7 +982,52 @@
         "halfWidth": "Halbe Breite",
         "oneThird": "Ein Drittel",
         "options": "Optionen",
-        "addOption": "Option hinzufügen"
+        "addOption": "Option hinzufügen",
+        "emptyTextBlock": "Leerer Textblock. Klicken Sie auf Bearbeiten, um Inhalt hinzuzufügen.",
+        "blockName": "Blockname",
+        "blockNameHint": "Wird nur im Builder angezeigt, um diesen Block zu erkennen.",
+        "content": "Inhalt",
+        "textBlockTag": "Textblock",
+        "todayAutoFill": "Heutiges Datum (automatisch ausgefüllt)",
+        "tableLayout": "Tabellenlayout"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "Fett",
+          "italic": "Kursiv",
+          "underline": "Unterstrichen",
+          "strike": "Durchgestrichen",
+          "heading1": "Überschrift 1",
+          "heading2": "Überschrift 2",
+          "heading3": "Überschrift 3",
+          "bulletList": "Aufzählung",
+          "orderedList": "Nummerierte Liste",
+          "blockquote": "Zitat",
+          "divider": "Trennlinie",
+          "undo": "Rückgängig",
+          "redo": "Wiederholen"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "Kopfzeile anzeigen",
+        "hint": "Legen Sie jede Zelle als festen Text, Eingabefeld oder Daten aus Locker fest.",
+        "columnHeader": "Spaltenüberschrift",
+        "defaultColumn": "Spalte {n}",
+        "setWholeColumn": "Ganze Spalte setzen auf...",
+        "cellType": "Zelltyp",
+        "cellTypes": {
+          "static": "Fester Text",
+          "text": "Texteingabe",
+          "date": "Datumseingabe",
+          "checkbox": "Kontrollkästchen",
+          "preset": "Locker-Daten"
+        },
+        "staticPlaceholder": "Festen Text eingeben",
+        "presetPlaceholder": "Locker-Daten wählen",
+        "addRow": "Zeile hinzufügen",
+        "addColumn": "Spalte hinzufügen",
+        "removeRow": "Zeile entfernen",
+        "removeColumn": "Spalte entfernen"
       }
     }
   },
@@ -2511,7 +2581,8 @@
       "number": "{label} muss eine Zahl sein",
       "phone": "{label} darf nur Zahlen enthalten",
       "required": "{label} ist erforderlich",
-      "fileTooLarge": "{label} ist zu groß (max 300MB)"
+      "fileTooLarge": "{label} ist zu groß (max 300MB)",
+      "tableIncomplete": "Bitte füllen Sie alle Zellen in {label} aus"
     },
     "toast": {
       "submitSuccess": "Formular erfolgreich eingereicht!",

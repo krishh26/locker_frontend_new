@@ -3,11 +3,22 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from '@hello-pangea/dnd'
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+  sortableKeyboardCoordinates,
+  useSortable,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -16,14 +27,32 @@ import type { SimpleFormField } from '@/store/api/forms/types'
 import { ComponentItem } from './component-item'
 import { PresetItem } from './preset-item'
 import { FormFieldCard } from './form-field-card'
+import { fieldWidthClass } from '@/components/forms/field-types'
+import { createDefaultTable } from '@/components/forms/table-utils'
 
 function uuidv4(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 }
 
 const COMPONENT_TYPES = [
-  'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature',
+  'richtext', 'table', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature',
 ] as const
+
+const COMPONENT_ICONS: Record<string, string> = {
+  richtext: '🅰️',
+  table: '📊',
+  text: '📝',
+  email: '📧',
+  phone: '📞',
+  number: '🔢',
+  textarea: '📄',
+  select: '📋',
+  radio: '🔘',
+  checkbox: '☑️',
+  date: '📅',
+  file: '📎',
+  signature: '✍️',
+}
 
 interface SimpleFormBuilderProps {
   initialFields?: SimpleFormField[]
@@ -35,6 +64,7 @@ export function SimpleFormBuilder({
   onChange,
 }: SimpleFormBuilderProps) {
   const t = useTranslations('forms.builder.palette')
+  const tTable = useTranslations('forms.builder.tableEditor')
   const [formFields, setFormFields] = useState<SimpleFormField[]>(initialFields)
   const [editingField, setEditingField] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'components' | 'presets'>(
@@ -45,41 +75,30 @@ export function SimpleFormBuilder({
   const simpleComponents = (COMPONENT_TYPES as readonly string[]).map((type) => ({
     type,
     label: t(`componentLabels.${type}` as 'componentLabels.text'),
-    icon: type === 'text' ? '📝' : type === 'email' ? '📧' : type === 'phone' ? '📞' : type === 'number' ? '🔢' : type === 'textarea' ? '📄' : type === 'select' ? '📋' : type === 'radio' ? '🔘' : type === 'checkbox' ? '☑️' : type === 'date' ? '📅' : type === 'file' ? '📎' : '✍️',
+    icon: COMPONENT_ICONS[type] ?? '✍️',
   }))
 
   useEffect(() => {
     setFormFields(initialFields)
   }, [initialFields])
 
+  const sensors = useSensors(
+    // A small distance keeps clicks on the card buttons from starting a drag.
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  )
+
   const handleDragEnd = useCallback(
-    (result: DropResult) => {
-      const { destination, source } = result
+    ({ active, over }: DragEndEvent) => {
+      if (!over || active.id === over.id) return
 
-      // If dropped outside a droppable area
-      if (!destination) {
-        return
-      }
+      const oldIndex = formFields.findIndex((f) => f.id === active.id)
+      const newIndex = formFields.findIndex((f) => f.id === over.id)
+      if (oldIndex === -1 || newIndex === -1) return
 
-      // If dropped in the same position
-      if (
-        destination.droppableId === source.droppableId &&
-        destination.index === source.index
-      ) {
-        return
-      }
-
-      // Reordering fields within the form area
-      if (
-        source.droppableId === 'form-area' &&
-        destination.droppableId === 'form-area'
-      ) {
-        const newFields = Array.from(formFields)
-        const [reorderedField] = newFields.splice(source.index, 1)
-        newFields.splice(destination.index, 0, reorderedField)
-        setFormFields(newFields)
-        onChange?.(newFields)
-      }
+      const newFields = arrayMove(formFields, oldIndex, newIndex)
+      setFormFields(newFields)
+      onChange?.(newFields)
     },
     [formFields, onChange]
   )
@@ -100,7 +119,7 @@ export function SimpleFormBuilder({
       const componentType = e.dataTransfer.getData('application/component-type')
       const presetData = e.dataTransfer.getData('application/preset-field')
 
-      const DEFAULT_LABEL_TYPES = ['text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature'] as const
+      const DEFAULT_LABEL_TYPES = ['richtext', 'table', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature'] as const
       const DEFAULT_PLACEHOLDER_TYPES = ['text', 'email', 'phone', 'number', 'textarea', 'date', 'file'] as const
 
       const getDefaultLabel = (type: string): string => {
@@ -133,6 +152,24 @@ export function SimpleFormBuilder({
           console.error('Error parsing preset data:', error)
           return
         }
+      } else if (componentType === 'richtext') {
+        newField = {
+          id: uuidv4(),
+          type: componentType,
+          label: getDefaultLabel(componentType),
+          content: `<p>${t('defaultRichTextContent')}</p>`,
+          required: false,
+          width: 'full',
+        }
+      } else if (componentType === 'table') {
+        newField = {
+          id: uuidv4(),
+          type: componentType,
+          label: getDefaultLabel(componentType),
+          required: false,
+          width: 'full',
+          table: createDefaultTable((n) => tTable('defaultColumn', { n })),
+        }
       } else if (componentType) {
         newField = {
           id: uuidv4(),
@@ -158,7 +195,7 @@ export function SimpleFormBuilder({
         setEditingField(newField.id)
       }
     },
-    [formFields, onChange, t]
+    [formFields, onChange, t, tTable]
   )
 
   const handleFormAreaDragOver = useCallback(
@@ -213,7 +250,7 @@ export function SimpleFormBuilder({
   )
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div className='flex h-full gap-4 bg-muted/30'>
         {/* Component Palette */}
         <Card className='w-72 shrink-0'>
@@ -299,7 +336,7 @@ export function SimpleFormBuilder({
           </Card>
         </div>
       </div>
-    </DragDropContext>
+    </DndContext>
   )
 }
 
@@ -337,7 +374,7 @@ function FormArea({
         onDragOver={onDragOver}
         className={`h-full min-h-0 rounded-lg border-2 border-dashed p-12 flex flex-col items-center justify-center transition-colors ${
           isDraggingFromPalette
-            ? 'border-primary bg-primary'
+            ? 'border-primary bg-primary/5'
             : 'border-muted bg-muted'
         }`}
       >
@@ -353,48 +390,62 @@ function FormArea({
   }
 
   return (
-    <Droppable droppableId='form-area'>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          className={`h-full min-h-0 rounded-lg border-2 border-dashed p-6 pb-24 space-y-4 transition-colors overflow-y-auto ${
-            snapshot.isDraggingOver || isDraggingFromPalette
-              ? 'border-primary bg-primary'
-              : 'border-muted'
-          }`}
-        >
-          {fields.map((field, index) => (
-            <Draggable key={field.id} draggableId={field.id} index={index}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  className={`transition-all ${
-                    snapshot.isDragging
-                      ? 'opacity-50 scale-95 shadow-lg'
-                      : 'opacity-100'
-                  }`}
-                >
-                  <FormFieldCard
-                    field={field}
-                    isEditing={editingField === field.id}
-                    onEdit={() => onFieldEdit(field.id)}
-                    onStopEdit={() => onFieldEdit(null)}
-                    onUpdate={(updates) => onFieldUpdate(field.id, updates)}
-                    onDelete={() => onFieldDelete(field.id)}
-                    onDuplicate={() => onFieldDuplicate(field.id)}
-                  />
-                </div>
-              )}
-            </Draggable>
+    <div
+      onDrop={onDrop}
+      onDragOver={onDragOver}
+      className={`h-full min-h-0 rounded-lg border-2 border-dashed p-6 pb-24 transition-colors overflow-y-auto ${
+        isDraggingFromPalette ? 'border-primary bg-primary/5' : 'border-muted'
+      }`}
+    >
+      <SortableContext items={fields.map((f) => f.id)} strategy={rectSortingStrategy}>
+        <div className='grid grid-cols-1 md:grid-cols-12 gap-4 items-start'>
+          {fields.map((field) => (
+            <SortableFieldItem
+              key={field.id}
+              field={field}
+              isEditing={editingField === field.id}
+              onEdit={() => onFieldEdit(field.id)}
+              onStopEdit={() => onFieldEdit(null)}
+              onUpdate={(updates) => onFieldUpdate(field.id, updates)}
+              onDelete={() => onFieldDelete(field.id)}
+              onDuplicate={() => onFieldDuplicate(field.id)}
+            />
           ))}
-          {provided.placeholder}
         </div>
-      )}
-    </Droppable>
+      </SortableContext>
+    </div>
+  )
+}
+
+interface SortableFieldItemProps {
+  field: SimpleFormField
+  isEditing: boolean
+  onEdit: () => void
+  onStopEdit: () => void
+  onUpdate: (updates: Partial<SimpleFormField>) => void
+  onDelete: () => void
+  onDuplicate: () => void
+}
+
+function SortableFieldItem({ field, isEditing, ...cardProps }: SortableFieldItemProps) {
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } =
+    useSortable({ id: field.id, disabled: isEditing })
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Translate.toString(transform), transition }}
+      // The settings panel needs room, so a field being edited always spans the full row.
+      className={`${isEditing ? 'col-span-1 md:col-span-12' : fieldWidthClass(field.width)} ${
+        isDragging ? 'relative z-10 opacity-60' : ''
+      }`}
+    >
+      <FormFieldCard
+        field={field}
+        isEditing={isEditing}
+        dragHandle={{ ref: setActivatorNodeRef, ...attributes, ...listeners }}
+        {...cardProps}
+      />
+    </div>
   )
 }

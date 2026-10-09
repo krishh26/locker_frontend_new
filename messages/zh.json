@@ -1240,7 +1240,9 @@
           "checkbox": "多选",
           "date": "日期",
           "file": "文件上传",
-          "signature": "签名"
+          "signature": "签名",
+          "richtext": "文本块",
+          "table": "表格"
         },
         "defaultLabels": {
           "text": "姓名",
@@ -1254,7 +1256,9 @@
           "date": "日期",
           "file": "上传文件",
           "signature": "签名",
-          "default": "字段标签"
+          "default": "字段标签",
+          "richtext": "文本块",
+          "table": "表格"
         },
         "defaultPlaceholders": {
           "text": "请输入您的姓名",
@@ -1267,13 +1271,16 @@
           "default": "输入值"
         },
         "optionLabel": "选项 {n}",
-        "copySuffix": "（副本）"
+        "copySuffix": "（副本）",
+        "defaultRichTextContent": "为填写此表单的人添加说明或信息。"
       },
       "presets": {
         "roles": {
           "learner": "学员",
           "trainer": "培训师",
-          "employee": "员工"
+          "employee": "员工",
+          "course": "课程",
+          "general": "通用"
         },
         "fields": {
           "learner-name": "学员姓名",
@@ -1283,7 +1290,25 @@
           "employer": "雇主",
           "trainer-name": "培训师姓名",
           "email": "邮箱",
-          "employee-name": "员工姓名"
+          "employee-name": "员工姓名",
+          "course-name": "课程名称",
+          "course-code": "课程代码",
+          "course-level": "课程级别",
+          "course-sector": "领域",
+          "course-awarding-body": "颁证机构",
+          "course-type": "课程类型",
+          "course-glh": "指导学习时数",
+          "course-total-credits": "总学分",
+          "course-duration": "课程时长",
+          "course-start-date": "开始日期",
+          "course-end-date": "预计结束日期",
+          "course-status": "课程状态",
+          "course-predicted-grade": "预测成绩",
+          "course-final-grade": "最终成绩",
+          "course-trainer": "培训师",
+          "course-iqa": "IQA",
+          "course-employer": "雇主",
+          "today-date": "今天的日期"
         }
       },
       "preview": {
@@ -1305,7 +1330,52 @@
         "halfWidth": "半宽",
         "oneThird": "三分之一",
         "options": "选项",
-        "addOption": "添加选项"
+        "addOption": "添加选项",
+        "emptyTextBlock": "空文本块。点击编辑以添加内容。",
+        "blockName": "块名称",
+        "blockNameHint": "仅在构建器中显示，用于识别此块。",
+        "content": "内容",
+        "textBlockTag": "文本块",
+        "todayAutoFill": "今天的日期（自动填写）",
+        "tableLayout": "表格布局"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "粗体",
+          "italic": "斜体",
+          "underline": "下划线",
+          "strike": "删除线",
+          "heading1": "标题 1",
+          "heading2": "标题 2",
+          "heading3": "标题 3",
+          "bulletList": "项目符号列表",
+          "orderedList": "编号列表",
+          "blockquote": "引用",
+          "divider": "分隔线",
+          "undo": "撤销",
+          "redo": "重做"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "显示表头行",
+        "hint": "将每个单元格设置为固定文本、填写输入框或来自 Locker 的数据。",
+        "columnHeader": "列标题",
+        "defaultColumn": "第 {n} 列",
+        "setWholeColumn": "将整列设置为...",
+        "cellType": "单元格类型",
+        "cellTypes": {
+          "static": "固定文本",
+          "text": "文本输入",
+          "date": "日期输入",
+          "checkbox": "复选框",
+          "preset": "Locker 数据"
+        },
+        "staticPlaceholder": "输入固定文本",
+        "presetPlaceholder": "选择 Locker 数据",
+        "addRow": "添加行",
+        "addColumn": "添加列",
+        "removeRow": "删除行",
+        "removeColumn": "删除列"
       }
     }
   },
@@ -3089,7 +3159,8 @@
       "number": "{label} 必须是数字",
       "phone": "{label} 只能包含数字",
       "required": "{label} 为必填项",
-      "fileTooLarge": "{label} 文件过大（最大 300MB）"
+      "fileTooLarge": "{label} 文件过大（最大 300MB）",
+      "tableIncomplete": "请填写 {label} 中的所有单元格"
     },
     "toast": {
       "submitSuccess": "表单提交成功！",

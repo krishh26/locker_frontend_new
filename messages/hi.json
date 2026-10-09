@@ -1244,7 +1244,9 @@
           "checkbox": "चेकबॉक्स",
           "date": "तारीख",
           "file": "फ़ाइल अपलोड",
-          "signature": "हस्ताक्षर"
+          "signature": "हस्ताक्षर",
+          "richtext": "टेक्स्ट ब्लॉक",
+          "table": "टेबल"
         },
         "defaultLabels": {
           "text": "पूरा नाम",
@@ -1258,7 +1260,9 @@
           "date": "तारीख",
           "file": "फ़ाइल अपलोड करें",
           "signature": "हस्ताक्षर",
-          "default": "फ़ील्ड लेबल"
+          "default": "फ़ील्ड लेबल",
+          "richtext": "टेक्स्ट ब्लॉक",
+          "table": "टेबल"
         },
         "defaultPlaceholders": {
           "text": "अपना पूरा नाम दर्ज करें",
@@ -1271,13 +1275,16 @@
           "default": "मान दर्ज करें"
         },
         "optionLabel": "विकल्प {n}",
-        "copySuffix": "(कॉपी)"
+        "copySuffix": "(कॉपी)",
+        "defaultRichTextContent": "इस फ़ॉर्म को भरने वाले व्यक्ति के लिए निर्देश या जानकारी जोड़ें।"
       },
       "presets": {
         "roles": {
           "learner": "सीखने वाला",
           "trainer": "प्रशिक्षक",
-          "employee": "कर्मचारी"
+          "employee": "कर्मचारी",
+          "course": "कोर्स",
+          "general": "सामान्य"
         },
         "fields": {
           "learner-name": "सीखने वाले का नाम",
@@ -1287,7 +1294,25 @@
           "employer": "नियोक्ता",
           "trainer-name": "प्रशिक्षक का नाम",
           "email": "ईमेल",
-          "employee-name": "कर्मचारी का नाम"
+          "employee-name": "कर्मचारी का नाम",
+          "course-name": "कोर्स का नाम",
+          "course-code": "कोर्स कोड",
+          "course-level": "कोर्स स्तर",
+          "course-sector": "सेक्टर",
+          "course-awarding-body": "प्रमाणन संस्था",
+          "course-type": "कोर्स प्रकार",
+          "course-glh": "निर्देशित शिक्षण घंटे",
+          "course-total-credits": "कुल क्रेडिट",
+          "course-duration": "कोर्स अवधि",
+          "course-start-date": "प्रारंभ तिथि",
+          "course-end-date": "अपेक्षित समाप्ति तिथि",
+          "course-status": "कोर्स स्थिति",
+          "course-predicted-grade": "अनुमानित ग्रेड",
+          "course-final-grade": "अंतिम ग्रेड",
+          "course-trainer": "ट्रेनर",
+          "course-iqa": "IQA",
+          "course-employer": "नियोक्ता",
+          "today-date": "आज की तारीख"
         }
       },
       "preview": {
@@ -1309,7 +1334,52 @@
         "halfWidth": "आधी चौड़ाई",
         "oneThird": "एक तिहाई",
         "options": "विकल्प",
-        "addOption": "विकल्प जोड़ें"
+        "addOption": "विकल्प जोड़ें",
+        "emptyTextBlock": "खाली टेक्स्ट ब्लॉक। सामग्री जोड़ने के लिए संपादित करें पर क्लिक करें।",
+        "blockName": "ब्लॉक का नाम",
+        "blockNameHint": "केवल बिल्डर में इस ब्लॉक को पहचानने के लिए दिखाया जाता है।",
+        "content": "सामग्री",
+        "textBlockTag": "टेक्स्ट ब्लॉक",
+        "todayAutoFill": "आज की तारीख (स्वचालित रूप से भरी जाती है)",
+        "tableLayout": "टेबल लेआउट"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "बोल्ड",
+          "italic": "इटैलिक",
+          "underline": "रेखांकित",
+          "strike": "स्ट्राइकथ्रू",
+          "heading1": "शीर्षक 1",
+          "heading2": "शीर्षक 2",
+          "heading3": "शीर्षक 3",
+          "bulletList": "बुलेट सूची",
+          "orderedList": "क्रमांकित सूची",
+          "blockquote": "उद्धरण",
+          "divider": "विभाजक",
+          "undo": "पूर्ववत करें",
+          "redo": "फिर से करें"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "हेडर पंक्ति दिखाएँ",
+        "hint": "हर सेल को स्थिर टेक्स्ट, भरने वाले के लिए इनपुट, या Locker से लिया गया डेटा बनाएँ।",
+        "columnHeader": "कॉलम हेडर",
+        "defaultColumn": "कॉलम {n}",
+        "setWholeColumn": "पूरे कॉलम को सेट करें...",
+        "cellType": "सेल प्रकार",
+        "cellTypes": {
+          "static": "स्थिर टेक्स्ट",
+          "text": "टेक्स्ट इनपुट",
+          "date": "दिनांक इनपुट",
+          "checkbox": "चेकबॉक्स",
+          "preset": "Locker डेटा"
+        },
+        "staticPlaceholder": "स्थिर टेक्स्ट लिखें",
+        "presetPlaceholder": "Locker डेटा चुनें",
+        "addRow": "पंक्ति जोड़ें",
+        "addColumn": "कॉलम जोड़ें",
+        "removeRow": "पंक्ति हटाएँ",
+        "removeColumn": "कॉलम हटाएँ"
       }
     }
   },
@@ -3141,7 +3211,8 @@
       "number": "{label} एक संख्या होनी चाहिए",
       "phone": "{label} में केवल संख्याएं होनी चाहिए",
       "required": "{label} आवश्यक है",
-      "fileTooLarge": "{label} बहुत बड़ा है (अधिकतम 300MB)"
+      "fileTooLarge": "{label} बहुत बड़ा है (अधिकतम 300MB)",
+      "tableIncomplete": "कृपया {label} के सभी सेल भरें"
     },
     "toast": {
       "submitSuccess": "फॉर्म सफलतापूर्वक जमा हो गया!",

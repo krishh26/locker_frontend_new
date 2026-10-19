@@ -91,8 +91,10 @@ export function useCourseAutosave({
     setStatus("saving");
 
     try {
+      // Deep clone: getValues() shares nested references with live form state
+      const savedValues = structuredClone(getValues());
       const payload = removeEmptyStrings({
-        ...getValues(),
+        ...savedValues,
         course_core_type: courseCoreTypeRef.current,
       }) as CourseFormData;
 
@@ -103,8 +105,13 @@ export function useCourseAutosave({
       }).unwrap();
 
       if (result.status) {
-        // Re-baseline defaults to current values so isDirty clears and we don't loop
-        reset(getValues());
+        // Only move the dirty baseline. A plain reset regenerates useFieldArray ids,
+        // remounting every unit/outcome row (collapses expanded rows, loses focus/scroll).
+        reset(savedValues, {
+          keepValues: true,
+          keepErrors: true,
+          keepTouched: true,
+        });
         failureCountRef.current = 0;
         setStatus("saved");
         if (savedClearTimerRef.current) {

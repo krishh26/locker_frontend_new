@@ -359,7 +359,7 @@ export function CourseBuilderDataTable() {
           return (
             <div className='flex w-full items-start gap-2'>
               <span
-                className='block w-full max-w-[30ch] break-words whitespace-normal leading-snug'
+                className='block w-full max-w-[60ch] break-words whitespace-normal leading-snug'
                 title={name}
               >
                 {name}
@@ -384,22 +384,6 @@ export function CourseBuilderDataTable() {
       {
         accessorKey: 'level',
         header: t('table.headers.level'),
-      },
-      {
-        accessorKey: 'sector',
-        header: t('table.headers.sector'),
-        cell: ({ row }) => {
-          const sector = row.original.sector
-          return (
-            <div className='max-w-37.5 truncate' title={sector}>
-              {sector}
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'guided_learning_hours',
-        header: t('table.headers.learningHours'),
       },
       {
         id: 'actions',
@@ -669,7 +653,7 @@ export function CourseBuilderDataTable() {
                       key={header.id}
                       className={
                         isCourseName
-                          ? 'min-w-[30ch] w-[32%]'
+                          ? 'min-w-[40ch] w-[45%]'
                           : 'min-w-37.5'
                       }
                     >

@@ -42,11 +42,11 @@ import { useTranslations } from "next-intl";
 type ResourceFormValues = {
   course_id: string;
   name: string;
-  description?: string;
+  description: string;
   job_type: "On" | "Off";
   resource_type: "PDF" | "WORD" | "PPT" | "Text" | "Image";
-  hours: number;
-  minute: number;
+  hours?: number;
+  minute?: number;
   file?: File;
 };
 
@@ -110,17 +110,27 @@ export function ResourceFormDialog({
         name: z.string().min(1, {
           message: t("form.validation.nameRequired"),
         }),
-        description: z.string().optional(),
+        description: z.string().trim().min(1, {
+          message: t("form.validation.descriptionRequired"),
+        }),
         job_type: z.enum(["On", "Off"]),
         resource_type: z.enum(["PDF", "WORD", "PPT", "Text", "Image"]),
         hours: z
           .number()
           .min(0, t("form.validation.hoursMin"))
-          .max(23, t("form.validation.hoursMax")),
+          .max(23, t("form.validation.hoursMax"))
+          .optional()
+          .refine((v) => v !== undefined, {
+            message: t("form.validation.hoursRequired"),
+          }),
         minute: z
           .number()
           .min(0, t("form.validation.minutesMin"))
-          .max(59, t("form.validation.minutesMax")),
+          .max(59, t("form.validation.minutesMax"))
+          .optional()
+          .refine((v) => v !== undefined, {
+            message: t("form.validation.minutesRequired"),
+          }),
         file: z
           .instanceof(File, {
             message: t("form.validation.uploadFile"),
@@ -148,8 +158,8 @@ export function ResourceFormDialog({
       description: resource?.description ?? "",
       job_type: (resource?.job_type as "On" | "Off") ?? "On",
       resource_type: (resource?.resource_type as "PDF" | "WORD" | "PPT" | "Text" | "Image") ?? "PDF",
-      hours: Number(resource?.hours ?? 0),
-      minute: Number(resource?.minute ?? 0),
+      hours: resource ? Number(resource.hours ?? 0) : undefined,
+      minute: resource ? Number(resource.minute ?? 0) : undefined,
     },
   });
 
@@ -216,8 +226,8 @@ export function ResourceFormDialog({
         description: "",
         job_type: "On",
         resource_type: "PDF",
-        hours: 0,
-        minute: 0,
+        hours: undefined,
+        minute: undefined,
       });
       setOpen(false);
       onSuccess?.();
@@ -363,7 +373,10 @@ export function ResourceFormDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("form.fields.description")}</FormLabel>
+                  <FormLabel>
+                    {t("form.fields.description")}{" "}
+                    <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={t("form.placeholders.description")}
@@ -382,7 +395,10 @@ export function ResourceFormDialog({
                 name="hours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("form.fields.hours")}</FormLabel>
+                    <FormLabel>
+                      {t("form.fields.hours")}{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -390,8 +406,11 @@ export function ResourceFormDialog({
                         max={23}
                         placeholder="0"
                         {...field}
+                        value={field.value ?? ""}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
+                          field.onChange(
+                            e.target.value === "" ? undefined : parseInt(e.target.value, 10)
+                          )
                         }
                       />
                     </FormControl>
@@ -404,7 +423,10 @@ export function ResourceFormDialog({
                 name="minute"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("form.fields.minutes")}</FormLabel>
+                    <FormLabel>
+                      {t("form.fields.minutes")}{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -412,8 +434,11 @@ export function ResourceFormDialog({
                         max={59}
                         placeholder="0"
                         {...field}
+                        value={field.value ?? ""}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
+                          field.onChange(
+                            e.target.value === "" ? undefined : parseInt(e.target.value, 10)
+                          )
                         }
                       />
                     </FormControl>

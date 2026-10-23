@@ -3989,7 +3989,7 @@
       "placeholders": {
         "selectCourse": "Select course",
         "noCourses": "No courses available",
-        "description": "Enter description (optional)",
+        "description": "Enter description",
         "jobType": "Select job type",
         "resourceType": "Select resource type"
       },
@@ -4018,7 +4018,10 @@
         "hoursMin": "Hours must be 0 or greater",
         "hoursMax": "Hours must be less than 24",
         "minutesMin": "Minutes must be 0 or greater",
-        "minutesMax": "Minutes must be less than 60"
+        "minutesMax": "Minutes must be less than 60",
+        "descriptionRequired": "Description is required.",
+        "hoursRequired": "Hours is required.",
+        "minutesRequired": "Minutes is required."
       }
     },
     "options": {

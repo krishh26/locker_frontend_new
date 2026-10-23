@@ -3441,7 +3441,7 @@
       "placeholders": {
         "selectCourse": "Selecciona curso",
         "noCourses": "No hay cursos disponibles",
-        "description": "Introduce descripción (opcional)",
+        "description": "Introduce descripción",
         "jobType": "Selecciona tipo de trabajo",
         "resourceType": "Selecciona tipo de recurso"
       },
@@ -3470,7 +3470,10 @@
         "hoursMin": "Las horas deben ser 0 o más",
         "hoursMax": "Las horas deben ser menos de 24",
         "minutesMin": "Los minutos deben ser 0 o más",
-        "minutesMax": "Los minutos deben ser menos de 60"
+        "minutesMax": "Los minutos deben ser menos de 60",
+        "descriptionRequired": "La descripción es obligatoria.",
+        "hoursRequired": "Las horas son obligatorias.",
+        "minutesRequired": "Los minutos son obligatorios."
       }
     },
     "options": {

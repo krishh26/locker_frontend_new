@@ -3713,7 +3713,7 @@
       "placeholders": {
         "selectCourse": "Sélectionner un cours",
         "noCourses": "Aucun cours disponible",
-        "description": "Saisir une description (facultatif)",
+        "description": "Saisir une description",
         "jobType": "Sélectionner le type de poste",
         "resourceType": "Sélectionner le type de ressource"
       },
@@ -3742,7 +3742,10 @@
         "hoursMin": "Les heures doivent être supérieures ou égales à 0",
         "hoursMax": "Les heures doivent être inférieures à 24",
         "minutesMin": "Les minutes doivent être supérieures ou égales à 0",
-        "minutesMax": "Les minutes doivent être inférieures à 60"
+        "minutesMax": "Les minutes doivent être inférieures à 60",
+        "descriptionRequired": "La description est obligatoire.",
+        "hoursRequired": "Les heures sont obligatoires.",
+        "minutesRequired": "Les minutes sont obligatoires."
       }
     },
     "options": {

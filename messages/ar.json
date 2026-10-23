@@ -3706,7 +3706,7 @@
       "placeholders": {
         "selectCourse": "اختر دورة",
         "noCourses": "لا توجد دورات متاحة",
-        "description": "أدخل الوصف (اختياري)",
+        "description": "أدخل الوصف",
         "jobType": "اختر نوع الوظيفة",
         "resourceType": "اختر نوع المورد"
       },
@@ -3735,7 +3735,10 @@
         "hoursMin": "يجب أن تكون الساعات 0 أو أكثر",
         "hoursMax": "يجب أن تكون الساعات أقل من 24",
         "minutesMin": "يجب أن تكون الدقائق 0 أو أكثر",
-        "minutesMax": "يجب أن تكون الدقائق أقل من 60"
+        "minutesMax": "يجب أن تكون الدقائق أقل من 60",
+        "descriptionRequired": "الوصف مطلوب.",
+        "hoursRequired": "الساعات مطلوبة.",
+        "minutesRequired": "الدقائق مطلوبة."
       }
     },
     "options": {

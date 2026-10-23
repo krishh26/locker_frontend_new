@@ -3041,7 +3041,7 @@
       "placeholders": {
         "selectCourse": "Kurs auswählen",
         "noCourses": "Keine Kurse verfügbar",
-        "description": "Beschreibung eingeben (optional)",
+        "description": "Beschreibung eingeben",
         "jobType": "Jobtyp auswählen",
         "resourceType": "Ressourcentyp auswählen"
       },
@@ -3070,7 +3070,10 @@
         "hoursMin": "Stunden müssen 0 oder größer sein",
         "hoursMax": "Stunden müssen weniger als 24 sein",
         "minutesMin": "Minuten müssen 0 oder größer sein",
-        "minutesMax": "Minuten müssen weniger als 60 sein"
+        "minutesMax": "Minuten müssen weniger als 60 sein",
+        "descriptionRequired": "Beschreibung ist erforderlich.",
+        "hoursRequired": "Stunden sind erforderlich.",
+        "minutesRequired": "Minuten sind erforderlich."
       }
     },
     "options": {

@@ -39,8 +39,14 @@ import {
   isDisplayOnlyField,
   isTodayDateField,
 } from "@/components/forms/field-types"
-import { buildCoursePresetMap, getTodayDateValue } from "@/components/forms/preset-values"
+import {
+  buildCoursePresetMap,
+  buildLineManagerPresetMap,
+  getTodayDateValue,
+} from "@/components/forms/preset-values"
 import { TableField } from "@/components/forms/table-field"
+import { StatementField } from "@/components/forms/statement-field"
+import { useTemplateResolver } from "@/components/forms/template-variables"
 import {
   buildTableAnswer,
   isTableAnswerComplete,
@@ -206,10 +212,16 @@ export function DynamicFormRenderer({
           map[key] = value
         }
       })
-      Object.assign(map, buildCoursePresetMap(learner))
+      Object.assign(map, buildCoursePresetMap(learner), buildLineManagerPresetMap(learner))
     }
     return map
   }, [user, learner])
+
+  const resolveTemplate = useTemplateResolver()
+  const templateValues = useMemo(
+    () => (user?.role === "Learner" ? presetMap : {}),
+    [presetMap, user?.role]
+  )
 
   // Learner data only auto-fills for the learner themselves; today's date applies to everyone.
   const getTablePresetValues = useCallback(
@@ -492,7 +504,7 @@ export function DynamicFormRenderer({
             {allFields.map((field) => (
               <div key={field.id} className={fieldWidthClass(field.width)}>
                 {field.type === "richtext" ? (
-                  <RichTextContent html={field.content} />
+                  <RichTextContent html={field.content} values={templateValues} />
                 ) : (
                 <Controller
                   name={field.id}
@@ -502,6 +514,33 @@ export function DynamicFormRenderer({
                     const errorMessage = fieldState.error?.message
 
                     switch (field.type) {
+                      case "statement": {
+                        // The answer stores the exact statement agreed to, so it stays the same if names change later.
+                        const agreedText =
+                          typeof controllerField.value === "string" ? controllerField.value : ""
+                        const currentText = resolveTemplate(field.content || "", templateValues)
+                        return (
+                          <div className="space-y-2">
+                            <StatementField
+                              id={field.id}
+                              required={field.required}
+                              text={agreedText || currentText}
+                              checked={Boolean(agreedText)}
+                              onCheckedChange={(checked) =>
+                                controllerField.onChange(checked ? currentText : "")
+                              }
+                              disabled={isLocked}
+                              error={error}
+                            />
+                            {errorMessage && (
+                              <p className="text-sm text-destructive">
+                                {errorMessage}
+                              </p>
+                            )}
+                          </div>
+                        )
+                      }
+
                       case "table":
                         return (
                           <div className="space-y-2">

@@ -88,13 +88,14 @@ export const buildTableAnswer = (
   return answer;
 };
 
-/** True when every text/date input cell has a value (checkboxes are optional by nature). */
+/** True when every text/date/dropdown input cell has a value (checkboxes are optional by nature). */
 export const isTableAnswerComplete = (config: TableConfig | undefined, answer: TableAnswer): boolean => {
   if (!config) return true;
   return config.rows.every((row) =>
     config.columns.every((column) => {
       const cell = getTableCell(row, column.id);
-      if (cell.type !== "text" && cell.type !== "date") return true;
+      if (cell.type === "dropdown" && !cell.options?.length) return true;
+      if (cell.type !== "text" && cell.type !== "date" && cell.type !== "dropdown") return true;
       return Boolean(answer[row.id]?.[column.id]?.trim());
     })
   );

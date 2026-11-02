@@ -2,6 +2,13 @@
 
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import type { TableAnswer, TableConfig } from "@/store/api/forms/types";
 import { getTableCell, setTableAnswerCell } from "./table-utils";
@@ -108,6 +115,30 @@ export function TableField({
                           }
                         />
                       </div>
+                    )}
+
+                    {cell.type === "dropdown" && (
+                      <Select
+                        value={cellValue}
+                        disabled={readOnly}
+                        onValueChange={(selected) => update(row.id, column.id, selected)}
+                      >
+                        <SelectTrigger
+                          id={cellId}
+                          size="sm"
+                          aria-label={column.header}
+                          className={cn("h-8 w-full", readOnly && "bg-muted")}
+                        >
+                          <SelectValue placeholder="—" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(cell.options ?? []).map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     )}
 
                     {cell.type === "preset" &&

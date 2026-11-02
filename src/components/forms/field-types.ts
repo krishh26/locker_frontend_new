@@ -4,13 +4,23 @@ export const DISPLAY_ONLY_FIELD_TYPES = ["richtext"] as const;
 export const isDisplayOnlyField = (type: string): boolean =>
   (DISPLAY_ONLY_FIELD_TYPES as readonly string[]).includes(type);
 
+export type FieldWidth = "full" | "threeQuarters" | "twoThirds" | "half" | "third" | "quarter";
+
+export const FIELD_WIDTHS: FieldWidth[] = ["full", "threeQuarters", "twoThirds", "half", "third", "quarter"];
+
 // Grid column span for a field inside a `grid-cols-1 md:grid-cols-12` container.
 export const fieldWidthClass = (width?: string): string => {
   switch (width) {
+    case "threeQuarters":
+      return "col-span-1 md:col-span-9";
+    case "twoThirds":
+      return "col-span-1 md:col-span-8";
     case "half":
       return "col-span-1 md:col-span-6";
     case "third":
       return "col-span-1 md:col-span-4";
+    case "quarter":
+      return "col-span-1 md:col-span-3";
     default:
       return "col-span-1 md:col-span-12";
   }

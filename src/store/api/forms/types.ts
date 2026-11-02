@@ -143,7 +143,7 @@ export type UsersListResponse = {
 };
 
 // Table field ("table" type): fixed text, inputs, or Locker data per cell.
-export type TableCellType = "static" | "text" | "date" | "checkbox" | "preset";
+export type TableCellType = "static" | "text" | "date" | "checkbox" | "dropdown" | "preset";
 
 export type TableCell = {
   type: TableCellType;
@@ -151,6 +151,8 @@ export type TableCell = {
   text?: string;
   /** Preset key for "preset" cells, e.g. "courseName". */
   presetField?: string;
+  /** Choices for "dropdown" cells. */
+  options?: string[];
 };
 
 export type TableColumn = { id: string; header: string };
@@ -174,7 +176,7 @@ export type FormField = {
   placeholder?: string;
   required?: boolean;
   options?: { label: string; value: string }[];
-  width?: "full" | "half" | "third";
+  width?: "full" | "threeQuarters" | "twoThirds" | "half" | "third" | "quarter";
   presetField?: string;
   signatureRole?: string;
   content?: string;
@@ -263,7 +265,7 @@ export type SimpleFormField = {
   placeholder?: string;
   required?: boolean;
   options?: { label: string; value: string }[];
-  width?: "full" | "half" | "third";
+  width?: "full" | "threeQuarters" | "twoThirds" | "half" | "third" | "quarter";
   presetField?: string;
   signatureRole?: string;
   content?: string;

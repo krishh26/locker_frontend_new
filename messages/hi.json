@@ -1246,7 +1246,8 @@
           "file": "फ़ाइल अपलोड",
           "signature": "हस्ताक्षर",
           "richtext": "टेक्स्ट ब्लॉक",
-          "table": "टेबल"
+          "table": "टेबल",
+          "statement": "घोषणा चेकबॉक्स"
         },
         "defaultLabels": {
           "text": "पूरा नाम",
@@ -1262,7 +1263,8 @@
           "signature": "हस्ताक्षर",
           "default": "फ़ील्ड लेबल",
           "richtext": "टेक्स्ट ब्लॉक",
-          "table": "टेबल"
+          "table": "टेबल",
+          "statement": "घोषणा"
         },
         "defaultPlaceholders": {
           "text": "अपना पूरा नाम दर्ज करें",
@@ -1276,12 +1278,15 @@
         },
         "optionLabel": "विकल्प {n}",
         "copySuffix": "(कॉपी)",
-        "defaultRichTextContent": "इस फ़ॉर्म को भरने वाले व्यक्ति के लिए निर्देश या जानकारी जोड़ें।"
+        "defaultRichTextContent": "इस फ़ॉर्म को भरने वाले व्यक्ति के लिए निर्देश या जानकारी जोड़ें।",
+        "defaultStatementContent": "मैं {learner_name} पुष्टि करता/करती हूँ कि मैंने सभी नीतियाँ पढ़ और समझ ली हैं।",
+        "addToForm": "फ़ॉर्म में जोड़ें"
       },
       "presets": {
         "roles": {
           "learner": "सीखने वाला",
           "trainer": "प्रशिक्षक",
+          "lineManager": "लाइन मैनेजर",
           "employee": "कर्मचारी",
           "course": "कोर्स",
           "general": "सामान्य"
@@ -1291,9 +1296,13 @@
           "learner-email": "सीखने वाले का ईमेल",
           "learner-phone": "सीखने वाले का फ़ोन",
           "date_of_birth": "जन्म तिथि",
+          "learner-uln": "शिक्षार्थी ULN",
           "employer": "नियोक्ता",
           "trainer-name": "प्रशिक्षक का नाम",
-          "email": "ईमेल",
+          "email": "ट्रेनर का ईमेल",
+          "line-manager-name": "लाइन मैनेजर का नाम",
+          "line-manager-email": "लाइन मैनेजर का ईमेल",
+          "line-manager-phone": "लाइन मैनेजर का संपर्क नंबर",
           "employee-name": "कर्मचारी का नाम",
           "course-name": "कोर्स का नाम",
           "course-code": "कोर्स कोड",
@@ -1330,9 +1339,14 @@
         "placeholder": "प्लेसहोल्डर",
         "requiredField": "आवश्यक फ़ील्ड",
         "fieldWidth": "फ़ील्ड चौड़ाई",
-        "fullWidth": "पूरी चौड़ाई",
-        "halfWidth": "आधी चौड़ाई",
-        "oneThird": "एक तिहाई",
+        "widths": {
+          "full": "पूरी चौड़ाई",
+          "threeQuarters": "तीन चौथाई (3/4)",
+          "twoThirds": "दो तिहाई (2/3)",
+          "half": "आधी चौड़ाई (1/2)",
+          "third": "एक तिहाई (1/3)",
+          "quarter": "एक चौथाई (1/4)"
+        },
         "options": "विकल्प",
         "addOption": "विकल्प जोड़ें",
         "emptyTextBlock": "खाली टेक्स्ट ब्लॉक। सामग्री जोड़ने के लिए संपादित करें पर क्लिक करें।",
@@ -1341,7 +1355,10 @@
         "content": "सामग्री",
         "textBlockTag": "टेक्स्ट ब्लॉक",
         "todayAutoFill": "आज की तारीख (स्वचालित रूप से भरी जाती है)",
-        "tableLayout": "टेबल लेआउट"
+        "tableLayout": "टेबल लेआउट",
+        "statementText": "घोषणा",
+        "statementPlaceholder": "उदा. मैं {learner_name} ने सभी नीतियाँ पढ़ ली हैं",
+        "variablesHint": "{learner_name} जैसे वेरिएबल फ़ॉर्म भरते समय वास्तविक विवरण से बदल दिए जाते हैं।"
       },
       "richText": {
         "toolbar": {
@@ -1357,7 +1374,11 @@
           "blockquote": "उद्धरण",
           "divider": "विभाजक",
           "undo": "पूर्ववत करें",
-          "redo": "फिर से करें"
+          "redo": "फिर से करें",
+          "link": "लिंक",
+          "linkPlaceholder": "https://example.com",
+          "unlink": "लिंक हटाएँ",
+          "applyLink": "लागू करें"
         }
       },
       "tableEditor": {
@@ -1372,14 +1393,30 @@
           "text": "टेक्स्ट इनपुट",
           "date": "दिनांक इनपुट",
           "checkbox": "चेकबॉक्स",
+          "dropdown": "ड्रॉपडाउन",
           "preset": "Locker डेटा"
         },
         "staticPlaceholder": "स्थिर टेक्स्ट लिखें",
         "presetPlaceholder": "Locker डेटा चुनें",
+        "optionsPlaceholder": "विकल्प, अल्पविराम से अलग करें",
+        "columnOptionsPlaceholder": "कॉलम विकल्प, अल्पविराम से अलग करें",
         "addRow": "पंक्ति जोड़ें",
         "addColumn": "कॉलम जोड़ें",
         "removeRow": "पंक्ति हटाएँ",
         "removeColumn": "कॉलम हटाएँ"
+      }
+    },
+    "variables": {
+      "insert": "वेरिएबल डालें",
+      "labels": {
+        "learner_name": "शिक्षार्थी का नाम",
+        "learner_uln": "शिक्षार्थी ULN",
+        "trainer_name": "ट्रेनर का नाम",
+        "iqa_name": "IQA का नाम",
+        "line_manager_name": "लाइन मैनेजर का नाम",
+        "employer_name": "नियोक्ता का नाम",
+        "course_name": "कोर्स का नाम",
+        "today_date": "आज की तारीख"
       }
     }
   },

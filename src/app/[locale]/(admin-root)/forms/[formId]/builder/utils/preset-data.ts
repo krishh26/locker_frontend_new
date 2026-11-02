@@ -10,6 +10,7 @@ export interface PresetField {
 export interface RolePresets {
   learner: PresetField[];
   trainer: PresetField[];
+  lineManager: PresetField[];
   employee: PresetField[];
   course: PresetField[];
   general: PresetField[];
@@ -18,6 +19,7 @@ export interface RolePresets {
 export const roleIcons: Record<string, string> = {
   learner: "🧑‍🎓",
   trainer: "🧑‍🏫",
+  lineManager: "🧑‍💼",
   employee: "👨‍💼",
   course: "📚",
   general: "🗓️",
@@ -96,6 +98,18 @@ export const PRESET_FIELDS: RolePresets = {
       },
     },
     {
+      type: "learner-uln",
+      label: "ULN",
+      field: {
+        id: "learner-uln",
+        type: "text",
+        label: "ULN",
+        required: false,
+        presetField: "uln",
+        width: "half",
+      },
+    },
+    {
       type: "employer",
       label: "Employer",
       field: {
@@ -134,6 +148,41 @@ export const PRESET_FIELDS: RolePresets = {
       },
     },
   ],
+  lineManager: [
+    {
+      type: "line-manager-name",
+      label: "Line Manager Name",
+      field: {
+        id: "line-manager-name",
+        type: "text",
+        label: "Line Manager Name",
+        presetField: "LineManagerFullName",
+        width: "half",
+      },
+    },
+    {
+      type: "line-manager-email",
+      label: "Line Manager Email",
+      field: {
+        id: "line-manager-email",
+        type: "email",
+        label: "Line Manager Email",
+        presetField: "LineManagerEmail",
+        width: "half",
+      },
+    },
+    {
+      type: "line-manager-phone",
+      label: "Line Manager Contact Number",
+      field: {
+        id: "line-manager-phone",
+        type: "phone",
+        label: "Line Manager Contact Number",
+        presetField: "LineManagerPhone",
+        width: "half",
+      },
+    },
+  ],
   employee: [
     {
       type: "employee-name",
@@ -163,7 +212,6 @@ export const PRESET_FIELDS: RolePresets = {
     coursePreset("course-status", "Course Status", "courseStatus"),
     coursePreset("course-predicted-grade", "Predicted Grade", "coursePredictedGrade"),
     coursePreset("course-final-grade", "Final Grade", "courseFinalGrade"),
-    coursePreset("course-trainer", "Trainer", "courseTrainer"),
     coursePreset("course-iqa", "IQA", "courseIQA"),
     coursePreset("course-employer", "Employer", "courseEmployer"),
   ],

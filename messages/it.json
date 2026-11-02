@@ -952,7 +952,8 @@
           "file": "Carica file",
           "signature": "Firma",
           "richtext": "Blocco di testo",
-          "table": "Tabella"
+          "table": "Tabella",
+          "statement": "Casella di dichiarazione"
         },
         "defaultLabels": {
           "text": "Nome completo",
@@ -968,7 +969,8 @@
           "signature": "Firma",
           "default": "Etichetta campo",
           "richtext": "Blocco di testo",
-          "table": "Tabella"
+          "table": "Tabella",
+          "statement": "Dichiarazione"
         },
         "defaultPlaceholders": {
           "text": "Inserisci il tuo nome completo",
@@ -982,12 +984,15 @@
         },
         "optionLabel": "Opzione {n}",
         "copySuffix": "(Copia)",
-        "defaultRichTextContent": "Aggiungi istruzioni o informazioni per chi compila questo modulo."
+        "defaultRichTextContent": "Aggiungi istruzioni o informazioni per chi compila questo modulo.",
+        "defaultStatementContent": "Io, {learner_name}, confermo di aver letto e compreso tutte le politiche.",
+        "addToForm": "Aggiungi al modulo"
       },
       "presets": {
         "roles": {
           "learner": "Apprendista",
           "trainer": "Formatore",
+          "lineManager": "Responsabile diretto",
           "employee": "Dipendente",
           "course": "Corso",
           "general": "Generale"
@@ -997,9 +1002,13 @@
           "learner-email": "E-mail apprendista",
           "learner-phone": "Telefono apprendista",
           "date_of_birth": "Data di nascita",
+          "learner-uln": "ULN del discente",
           "employer": "Datore di lavoro",
           "trainer-name": "Nome formatore",
-          "email": "E-mail",
+          "email": "E-mail del formatore",
+          "line-manager-name": "Nome del responsabile diretto",
+          "line-manager-email": "E-mail del responsabile diretto",
+          "line-manager-phone": "Telefono del responsabile diretto",
           "employee-name": "Nome dipendente",
           "course-name": "Nome del corso",
           "course-code": "Codice del corso",
@@ -1030,9 +1039,14 @@
         "placeholder": "Segnaposto",
         "requiredField": "Campo obbligatorio",
         "fieldWidth": "Larghezza campo",
-        "fullWidth": "Larghezza piena",
-        "halfWidth": "Metà larghezza",
-        "oneThird": "Un terzo",
+        "widths": {
+          "full": "Larghezza piena",
+          "threeQuarters": "Tre quarti (3/4)",
+          "twoThirds": "Due terzi (2/3)",
+          "half": "Metà larghezza (1/2)",
+          "third": "Un terzo (1/3)",
+          "quarter": "Un quarto (1/4)"
+        },
         "options": "Opzioni",
         "addOption": "Aggiungi opzione",
         "emptyTextBlock": "Blocco di testo vuoto. Fai clic su modifica per aggiungere contenuto.",
@@ -1041,7 +1055,10 @@
         "content": "Contenuto",
         "textBlockTag": "Blocco di testo",
         "todayAutoFill": "Data odierna (compilata automaticamente)",
-        "tableLayout": "Layout della tabella"
+        "tableLayout": "Layout della tabella",
+        "statementText": "Dichiarazione",
+        "statementPlaceholder": "es. Io, {learner_name}, ho letto tutte le politiche",
+        "variablesHint": "Le variabili come {learner_name} vengono sostituite con i dati reali quando il modulo viene compilato."
       },
       "richText": {
         "toolbar": {
@@ -1057,7 +1074,11 @@
           "blockquote": "Citazione",
           "divider": "Divisore",
           "undo": "Annulla",
-          "redo": "Ripeti"
+          "redo": "Ripeti",
+          "link": "Link",
+          "linkPlaceholder": "https://esempio.it",
+          "unlink": "Rimuovi link",
+          "applyLink": "Applica"
         }
       },
       "tableEditor": {
@@ -1072,14 +1093,30 @@
           "text": "Campo di testo",
           "date": "Campo data",
           "checkbox": "Casella di controllo",
+          "dropdown": "Menu a tendina",
           "preset": "Dati Locker"
         },
         "staticPlaceholder": "Scrivi il testo fisso",
         "presetPlaceholder": "Scegli dati Locker",
+        "optionsPlaceholder": "Opzioni, separate da virgole",
+        "columnOptionsPlaceholder": "Opzioni della colonna, separate da virgole",
         "addRow": "Aggiungi riga",
         "addColumn": "Aggiungi colonna",
         "removeRow": "Rimuovi riga",
         "removeColumn": "Rimuovi colonna"
+      }
+    },
+    "variables": {
+      "insert": "Inserisci variabile",
+      "labels": {
+        "learner_name": "Nome del discente",
+        "learner_uln": "ULN del discente",
+        "trainer_name": "Nome del formatore",
+        "iqa_name": "Nome dell'IQA",
+        "line_manager_name": "Nome del responsabile diretto",
+        "employer_name": "Nome del datore di lavoro",
+        "course_name": "Nome del corso",
+        "today_date": "Data odierna"
       }
     }
   },

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useEditor, useEditorState, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useTranslations } from "next-intl";
@@ -17,10 +18,14 @@ import {
   Minus,
   Undo2,
   Redo2,
+  Link2,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { VariableMenu } from "./variable-menu";
 
 interface RichTextEditorProps {
   value: string;
@@ -62,11 +67,111 @@ const TOOLBAR_GROUPS: ToolbarAction[][] = [
 
 const ALL_ACTIONS = TOOLBAR_GROUPS.flat();
 
+const normalizeUrl = (raw: string): string => {
+  const url = raw.trim();
+  if (!url) return "";
+  return /^(https?:\/\/|mailto:|tel:)/i.test(url) ? url : `https://${url}`;
+};
+
+interface LinkButtonProps {
+  editor: Editor | null;
+  active: boolean;
+}
+
+function LinkButton({ editor, active }: LinkButtonProps) {
+  const t = useTranslations("forms.builder.richText.toolbar");
+  const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState("");
+
+  const handleOpenChange = (next: boolean) => {
+    if (next && editor) {
+      setUrl((editor.getAttributes("link").href as string | undefined) ?? "");
+    }
+    setOpen(next);
+  };
+
+  const applyLink = () => {
+    if (!editor) return;
+    const href = normalizeUrl(url);
+    if (!href) {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    } else if (editor.state.selection.empty && !editor.isActive("link")) {
+      // Nothing selected: insert the URL itself as the link text.
+      editor
+        .chain()
+        .focus()
+        .insertContent({ type: "text", text: url.trim(), marks: [{ type: "link", attrs: { href } }] })
+        .run();
+    } else {
+      editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
+    }
+    setOpen(false);
+  };
+
+  const removeLink = () => {
+    editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+    setOpen(false);
+  };
+
+  return (
+    <Popover open={open} onOpenChange={handleOpenChange}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          title={t("link")}
+          aria-label={t("link")}
+          aria-pressed={active}
+          disabled={!editor}
+          className={cn("h-8 w-8 p-0", active && "bg-primary/10 text-primary")}
+        >
+          <Link2 className="h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-80 space-y-2 p-3">
+        <Input
+          autoFocus
+          value={url}
+          placeholder={t("linkPlaceholder")}
+          onChange={(e) => setUrl(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              applyLink();
+            }
+          }}
+          className="h-8"
+        />
+        <div className="flex justify-end gap-2">
+          {active && (
+            <Button type="button" size="sm" variant="outline" onClick={removeLink}>
+              {t("unlink")}
+            </Button>
+          )}
+          <Button type="button" size="sm" onClick={applyLink}>
+            {t("applyLink")}
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 export function RichTextEditor({ value, onChange, className }: RichTextEditorProps) {
   const t = useTranslations("forms.builder.richText.toolbar");
 
   const editor = useEditor({
-    extensions: [StarterKit.configure({ link: false })],
+    extensions: [
+      StarterKit.configure({
+        link: {
+          openOnClick: false,
+          autolink: true,
+          defaultProtocol: "https",
+          HTMLAttributes: { target: "_blank", rel: "noopener noreferrer" },
+        },
+      }),
+    ],
     content: value,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
@@ -88,6 +193,11 @@ export function RichTextEditor({ value, onChange, className }: RichTextEditorPro
         ])
       ) as Record<string, { active: boolean; disabled: boolean }>;
     },
+  });
+
+  const linkActive = useEditorState({
+    editor,
+    selector: ({ editor }) => editor?.isActive("link") ?? false,
   });
 
   return (
@@ -120,6 +230,14 @@ export function RichTextEditor({ value, onChange, className }: RichTextEditorPro
             })}
           </div>
         ))}
+        <div className="flex items-center gap-0.5 border-l pl-1">
+          <LinkButton editor={editor} active={linkActive ?? false} />
+          <VariableMenu
+            compact
+            disabled={!editor}
+            onInsert={(token) => editor?.chain().focus().insertContent(token).run()}
+          />
+        </div>
       </div>
       <EditorContent editor={editor} className="rich-text-content px-3 py-2 text-sm" />
     </div>

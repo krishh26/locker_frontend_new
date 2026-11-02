@@ -60,6 +60,10 @@ export type LearnerData = {
   course: LearnerCourse[];
   organisation_id?: number;
   centre_id?: number;
+  uln?: string | null;
+  line_manager_name?: string | null;
+  line_manager_email?: string | null;
+  line_manager_mobile?: string | null;
   [key: string]: unknown;
 };
 

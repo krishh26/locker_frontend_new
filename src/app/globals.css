@@ -398,6 +398,10 @@ input[type=number]::-webkit-outer-spin-button {
 .rich-text-content li > p {
   margin: 0;
 }
+/* Saved blank lines are empty <p></p>; give them a line's height like the editor does. */
+.rich-text-content p:empty::before {
+  content: "\00a0";
+}
 .rich-text-content blockquote {
   border-left: 3px solid var(--border);
   padding-left: 0.75rem;

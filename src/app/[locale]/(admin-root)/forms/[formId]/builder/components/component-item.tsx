@@ -1,5 +1,7 @@
 "use client";
 
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 interface ComponentItemProps {
@@ -10,12 +12,16 @@ interface ComponentItemProps {
   };
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  onAdd?: (type: string) => void;
+  addLabel?: string;
 }
 
 export function ComponentItem({
   component,
   onDragStart,
   onDragEnd,
+  onAdd,
+  addLabel,
 }: ComponentItemProps) {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.effectAllowed = "copy";
@@ -36,7 +42,20 @@ export function ComponentItem({
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{component.icon}</span>
-        <span className="text-sm font-medium">{component.label}</span>
+        <span className="flex-1 text-sm font-medium">{component.label}</span>
+        {onAdd && (
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="h-7 w-7 shrink-0 p-0"
+            onClick={() => onAdd(component.type)}
+            aria-label={addLabel}
+            title={addLabel}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        )}
       </div>
     </Card>
   );

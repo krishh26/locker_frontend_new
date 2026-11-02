@@ -1291,7 +1291,8 @@
           "file": "رفع ملف",
           "signature": "توقيع",
           "richtext": "كتلة نصية",
-          "table": "جدول"
+          "table": "جدول",
+          "statement": "خانة إقرار"
         },
         "defaultLabels": {
           "text": "الاسم الكامل",
@@ -1307,7 +1308,8 @@
           "signature": "توقيع",
           "default": "تسمية الحقل",
           "richtext": "كتلة نصية",
-          "table": "جدول"
+          "table": "جدول",
+          "statement": "إقرار"
         },
         "defaultPlaceholders": {
           "text": "أدخل اسمك الكامل",
@@ -1321,12 +1323,15 @@
         },
         "optionLabel": "خيار {n}",
         "copySuffix": "(نسخة)",
-        "defaultRichTextContent": "أضف تعليمات أو معلومات للشخص الذي يملأ هذا النموذج."
+        "defaultRichTextContent": "أضف تعليمات أو معلومات للشخص الذي يملأ هذا النموذج.",
+        "defaultStatementContent": "أنا {learner_name} أؤكد أنني قرأت وفهمت جميع السياسات.",
+        "addToForm": "إضافة إلى النموذج"
       },
       "presets": {
         "roles": {
           "learner": "متعلم",
           "trainer": "مدرب",
+          "lineManager": "المدير المباشر",
           "employee": "موظف",
           "course": "الدورة",
           "general": "عام"
@@ -1336,9 +1341,13 @@
           "learner-email": "بريد المتعلم",
           "learner-phone": "هاتف المتعلم",
           "date_of_birth": "تاريخ الميلاد",
+          "learner-uln": "الرقم الفريد للمتعلم (ULN)",
           "employer": "صاحب العمل",
           "trainer-name": "اسم المدرب",
-          "email": "بريد",
+          "email": "البريد الإلكتروني للمدرب",
+          "line-manager-name": "اسم المدير المباشر",
+          "line-manager-email": "البريد الإلكتروني للمدير المباشر",
+          "line-manager-phone": "رقم هاتف المدير المباشر",
           "employee-name": "اسم الموظف",
           "course-name": "اسم الدورة",
           "course-code": "رمز الدورة",
@@ -1375,9 +1384,14 @@
         "placeholder": "النص التوضيحي",
         "requiredField": "حقل مطلوب",
         "fieldWidth": "عرض الحقل",
-        "fullWidth": "عرض كامل",
-        "halfWidth": "نصف العرض",
-        "oneThird": "الثلث",
+        "widths": {
+          "full": "عرض كامل",
+          "threeQuarters": "ثلاثة أرباع (3/4)",
+          "twoThirds": "ثلثان (2/3)",
+          "half": "نصف العرض (1/2)",
+          "third": "ثلث (1/3)",
+          "quarter": "ربع (1/4)"
+        },
         "options": "خيارات",
         "addOption": "إضافة خيار",
         "emptyTextBlock": "كتلة نصية فارغة. انقر على تعديل لإضافة محتوى.",
@@ -1386,7 +1400,10 @@
         "content": "المحتوى",
         "textBlockTag": "كتلة نصية",
         "todayAutoFill": "تاريخ اليوم (يُملأ تلقائيًا)",
-        "tableLayout": "تخطيط الجدول"
+        "tableLayout": "تخطيط الجدول",
+        "statementText": "الإقرار",
+        "statementPlaceholder": "مثال: أنا {learner_name} قرأت جميع السياسات",
+        "variablesHint": "يتم استبدال المتغيرات مثل {learner_name} بالبيانات الفعلية عند تعبئة النموذج."
       },
       "richText": {
         "toolbar": {
@@ -1402,7 +1419,11 @@
           "blockquote": "اقتباس",
           "divider": "فاصل",
           "undo": "تراجع",
-          "redo": "إعادة"
+          "redo": "إعادة",
+          "link": "رابط",
+          "linkPlaceholder": "https://example.com",
+          "unlink": "إزالة الرابط",
+          "applyLink": "تطبيق"
         }
       },
       "tableEditor": {
@@ -1417,14 +1438,30 @@
           "text": "حقل نص",
           "date": "حقل تاريخ",
           "checkbox": "مربع اختيار",
+          "dropdown": "قائمة منسدلة",
           "preset": "بيانات Locker"
         },
         "staticPlaceholder": "اكتب النص الثابت",
         "presetPlaceholder": "اختر بيانات Locker",
+        "optionsPlaceholder": "الخيارات، مفصولة بفواصل",
+        "columnOptionsPlaceholder": "خيارات العمود، مفصولة بفواصل",
         "addRow": "إضافة صف",
         "addColumn": "إضافة عمود",
         "removeRow": "حذف الصف",
         "removeColumn": "حذف العمود"
+      }
+    },
+    "variables": {
+      "insert": "إدراج متغير",
+      "labels": {
+        "learner_name": "اسم المتعلم",
+        "learner_uln": "الرقم الفريد للمتعلم (ULN)",
+        "trainer_name": "اسم المدرب",
+        "iqa_name": "اسم IQA",
+        "line_manager_name": "اسم المدير المباشر",
+        "employer_name": "اسم صاحب العمل",
+        "course_name": "اسم الدورة",
+        "today_date": "تاريخ اليوم"
       }
     }
   },

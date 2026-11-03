@@ -65,6 +65,7 @@ import {
   useExportResourcesCsvMutation,
 } from '@/store/api/resources/resourcesApi'
 import { useCachedCoursesList } from '@/store/hooks/useCachedCoursesList'
+import { getCourseLabel } from '@/utils/course-label'
 import { toast } from 'sonner'
 import { useAppSelector } from '@/store/hooks'
 import type { Resource } from '@/store/api/resources/types'
@@ -484,7 +485,7 @@ export function ResourcesDataTable() {
                       key={course.course_id}
                       value={String(course.course_id)}
                     >
-                      {course.course_name}
+                      {getCourseLabel(course)}
                     </SelectItem>
                   ))
                 ) : (

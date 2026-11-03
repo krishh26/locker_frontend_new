@@ -51,6 +51,7 @@ export function reconstructFormStateFromMappings(
     course_id: number;
     course_name: string;
     course_code: string;
+    level?: string;
     course_core_type?: string;
     units?: StandardUnit[];
   }>;
@@ -78,6 +79,7 @@ export function reconstructFormStateFromMappings(
     course_id: number;
     course_name: string;
     course_code: string;
+    level?: string;
     course_core_type?: string;
     units?: StandardUnit[];
   }> = [];
@@ -98,6 +100,7 @@ export function reconstructFormStateFromMappings(
       course_id: course.course_id,
       course_name: course.course_name,
       course_code: course.course_code,
+      level: course.level,
       course_core_type: course.course_core_type,
       units: course.units || [],
     });

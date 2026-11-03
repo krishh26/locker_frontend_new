@@ -64,6 +64,7 @@ import {
 } from "@/store/api/learner/learnerApi";
 import type { LearnerData, LearnerCourse } from "@/store/api/learner/types";
 import { cn } from "@/lib/utils";
+import { getCourseLabel } from "@/utils/course-label";
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -551,7 +552,7 @@ export function CourseInformationTab({
   const courseNameById = useMemo(() => {
     const m = new Map<string, string>();
     for (const c of coursesList) {
-      if (c.course_id != null) m.set(String(c.course_id), c.course_name || "");
+      if (c.course_id != null) m.set(String(c.course_id), getCourseLabel(c));
     }
     return m;
   }, [coursesList]);
@@ -693,7 +694,7 @@ export function CourseInformationTab({
                 <Card key={course.user_course_id} className="border-dashed">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base">
-                      {course.course?.course_name || "Course"}
+                      {getCourseLabel(course.course, "Course")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
@@ -784,7 +785,7 @@ export function CourseInformationTab({
                               key={course.course_id}
                               value={course.course_id.toString()}
                             >
-                              {course.course_name}
+                              {getCourseLabel(course)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -1208,7 +1209,7 @@ export function CourseInformationTab({
             </AlertDialogTitle>
             <AlertDialogDescription className="wrap-break-word">
               {t("courseInformation.deleteDialog.description", {
-                courseName: selectedCourse?.course?.course_name || "this course",
+                courseName: getCourseLabel(selectedCourse?.course, "this course"),
               })}
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -22,6 +22,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectCourses, selectLearner } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface OffTheJobSummaryProps {
   courseId?: string | number | null;
@@ -58,6 +59,14 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
         activeCourses
           .map((c) => c.course?.course_id)
           .filter((id): id is number => id != null),
+      ),
+    [activeCourses],
+  );
+
+  const courseLabelById = useMemo(
+    () =>
+      new Map(
+        activeCourses.map((c) => [c.course?.course_id, getCourseLabel(c.course)]),
       ),
     [activeCourses],
   );
@@ -387,7 +396,7 @@ export function OffTheJobSummary({ courseId = null }: OffTheJobSummaryProps) {
                             className="hover:bg-muted/50"
                           >
                             <TableCell className="font-medium">
-                              {course.course_name}
+                              {courseLabelById.get(course.course_id) || course.course_name}
                             </TableCell>
                             <TableCell>
                               {course.course_type ? (

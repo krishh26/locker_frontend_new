@@ -20,6 +20,7 @@ import { useTranslations } from "next-intl";
 import type { EvidenceFormValues } from "./evidence-form-types";
 import type { LearnerCourse } from "@/store/api/learner/types";
 import { COURSE_TYPES } from "../constants";
+import { getCourseLabel } from "@/utils/course-label";
 
 const UNIT_TYPE_KEYS = {
   Knowledge: "knowledge",
@@ -66,6 +67,7 @@ export function CourseSelection({
       course_id: number;
       course_name: string;
       course_code: string;
+      level?: string;
       course_core_type?: string;
       units?: Array<{ id?: number | string; title?: string; type?: string; code?: string; subUnit?: Array<{ id?: number | string; title?: string }> }>;
     }>;
@@ -85,6 +87,7 @@ export function CourseSelection({
             course_id: course.course_id,
             course_name: course.course_name,
             course_code: course.course_code,
+            level: course.level,
             course_core_type: course.course_core_type,
             units: courseWithStructure.units || [],
           };
@@ -319,7 +322,7 @@ export function CourseSelection({
                       variant="secondary"
                       className="px-3 py-1.5 text-sm"
                     >
-                      {course.course_name} ({course.course_code})
+                      {getCourseLabel(course)} ({course.course_code})
                       {!disabled && (
                         <Button
                           type="button"
@@ -355,7 +358,7 @@ export function CourseSelection({
                           key={course.course_id}
                           value={String(course.course_id)}
                         >
-                          {course.course_name} ({course.course_code}) -{" "}
+                          {getCourseLabel(course)} ({course.course_code}) -{" "}
                           {course.course_core_type}
                         </SelectItem>
                       ))}
@@ -379,7 +382,7 @@ export function CourseSelection({
                return (
                  <Card key={course.course_id} className={`p-4 ${hasError ? 'border-destructive border-2' : ''}`}>
                    <Label className="text-base font-semibold mb-3 block">
-                     {t("courseSelection.selectTypeFor", { courseName: course.course_name })}
+                     {t("courseSelection.selectTypeFor", { courseName: getCourseLabel(course) })}
                      <span className="text-destructive ml-1">*</span>
                    </Label>
                    <div className={`flex flex-wrap gap-4 ${hasError ? 'mb-2' : ''}`}>
@@ -424,7 +427,7 @@ export function CourseSelection({
               return (
                 <Card key={course.course_id} className="p-4">
                   <Label className="text-base font-semibold mb-3 block">
-                    {t("courseSelection.selectUnitsFor", { courseName: course.course_name })}
+                    {t("courseSelection.selectUnitsFor", { courseName: getCourseLabel(course) })}
                     <span className="text-destructive ml-1">*</span>
                   </Label>
                   <div className="space-y-2">
@@ -457,7 +460,7 @@ export function CourseSelection({
                   </div>
                   {unitsError && !hasSelectedUnits && (
                     <p className="text-sm text-destructive mt-2">
-                      {t("courseSelection.selectOneUnitError", { courseName: course.course_name })}
+                      {t("courseSelection.selectOneUnitError", { courseName: getCourseLabel(course) })}
                     </p>
                   )}
                 </Card>

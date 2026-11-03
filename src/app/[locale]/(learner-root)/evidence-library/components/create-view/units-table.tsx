@@ -20,6 +20,7 @@ import {
   UnitHierarchyHeader,
 } from "@/components/unit-hierarchy-accordion";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import type { EvidenceFormValues } from "./evidence-form-types";
 import { resolveFormErrorMessage } from "./evidence-form-types";
 import { GapIndicator } from "../gap-indicator";
@@ -57,6 +58,7 @@ interface UnitsTableProps {
     course_id: number;
     course_name: string;
     course_code: string;
+    level?: string;
     course_core_type?: string;
     units?: any[];
   }>;
@@ -345,7 +347,7 @@ export function UnitsTable({
           return (
             <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
               <h3 className="font-semibold text-lg mb-2">
-                {course.course_name} - Units
+                {getCourseLabel(course)} - Units
               </h3>
               <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
               <Accordion
@@ -402,7 +404,7 @@ export function UnitsTable({
         // For non-Standard courses, show units as before
         return (
           <Card key={course.course_id} className="p-4">
-            <h3 className="font-semibold mb-4">{course.course_name}</h3>
+            <h3 className="font-semibold mb-4">{getCourseLabel(course)}</h3>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>{mappingHeader}</TableHeader>

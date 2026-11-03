@@ -29,6 +29,7 @@ import {
   type GatewayCourse,
 } from "../constants/course-constants";
 import { cn } from "@/lib/utils";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface CourseDetailsFormProps {
   control: Control<CourseFormData>;
@@ -630,7 +631,7 @@ export function CourseDetailsForm({
                               key={gateway.course_id}
                               value={gateway.course_id.toString()}
                             >
-                              {gateway.course_name} ({gateway.course_code})
+                              {getCourseLabel(gateway)} ({gateway.course_code})
                             </SelectItem>
                           ))}
                         </SelectContent>

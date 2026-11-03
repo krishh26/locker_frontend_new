@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import MultipleSelector, { type Option } from "@/components/ui/multi-select";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 type BroadcastMessageFormValues = {
   target:
@@ -149,7 +150,7 @@ export function BroadcastMessageDialog({
     if (!coursesData?.data) return [];
     return coursesData.data.map((course) => ({
       value: course.course_id.toString(),
-      label: course.course_name,
+      label: getCourseLabel(course),
     }));
   }, [coursesData]);
 

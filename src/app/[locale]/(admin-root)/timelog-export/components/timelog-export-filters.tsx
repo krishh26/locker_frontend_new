@@ -4,6 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -71,7 +72,7 @@ export function TimelogExportFilters() {
   const courses =
     coursesData?.data?.map((course: Course) => ({
       id: course.course_id?.toString() || "",
-      name: course.course_name || "Unknown",
+      name: getCourseLabel(course, "Unknown"),
     })) || [];
 
   const lineManagers =

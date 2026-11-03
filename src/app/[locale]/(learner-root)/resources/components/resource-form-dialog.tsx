@@ -38,6 +38,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import type { Resource } from "@/store/api/resources/types";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 type ResourceFormValues = {
   course_id: string;
@@ -285,7 +286,7 @@ export function ResourceFormDialog({
                             key={course.course_id}
                             value={course.course_id.toString()}
                           >
-                            {course.course_name}
+                            {getCourseLabel(course)}
                           </SelectItem>
                         ))
                       ) : (

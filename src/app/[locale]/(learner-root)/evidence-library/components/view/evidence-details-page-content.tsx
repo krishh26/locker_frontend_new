@@ -132,6 +132,7 @@ export function EvidenceDetailsPageContent() {
             course_id: course.course_id,
             course_name: course.course_name,
             course_code: course.course_code,
+            level: course.level,
             course_core_type: course.course_core_type,
             units: course.units || [],
           };

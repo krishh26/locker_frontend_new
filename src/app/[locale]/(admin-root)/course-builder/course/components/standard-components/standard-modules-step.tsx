@@ -31,11 +31,13 @@ interface StandardModulesStepProps {
   courseId?: string | number | null;
   courseCoreType: CourseCoreType;
   control: Control<CourseFormData>;
+  setValue: (name: string, value: unknown) => void;
   errors?: FieldErrors<CourseFormData>;
 }
 
 export function StandardModulesStep({
   control,
+  setValue,
   errors,
 }: StandardModulesStepProps) {
   const t = useTranslations("courseBuilder");
@@ -294,6 +296,7 @@ export function StandardModulesStep({
                             <div className="p-4 bg-muted/50">
                               <StandardTopicsForm
                                 control={control}
+                                setValue={setValue}
                                 moduleIndex={index}
                               />
                             </div>

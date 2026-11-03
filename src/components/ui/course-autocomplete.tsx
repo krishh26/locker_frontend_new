@@ -19,6 +19,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { useGetCoursesQuery } from "@/store/api/course/courseApi"
+import { getCourseLabel } from "@/utils/course-label"
 
 interface CourseAutocompleteProps {
   value?: string | string[]
@@ -64,7 +65,7 @@ export function CourseAutocomplete({
     }
     const searchLower = search.toLowerCase()
     return allCourses.filter((course) =>
-      course.course_name?.toLowerCase().includes(searchLower)
+      getCourseLabel(course).toLowerCase().includes(searchLower)
     )
   }, [allCourses, search])
 
@@ -194,7 +195,7 @@ export function CourseAutocomplete({
                       className="mr-1"
                     >
                       <span className="truncate max-w-37.5">
-                        {course.course_name || "Unknown course"}
+                        {getCourseLabel(course, "Unknown course")}
                       </span>
                       <button
                         type="button"
@@ -221,7 +222,7 @@ export function CourseAutocomplete({
               )
             ) : selectedCourse ? (
               <span className="truncate text-sm">
-                {selectedCourse.course_name || "Unknown course"}
+                {getCourseLabel(selectedCourse, "Unknown course")}
               </span>
             ) : (
               <span className="text-sm">{placeholder}</span>
@@ -269,7 +270,7 @@ export function CourseAutocomplete({
                       className="cursor-pointer flex items-center justify-between"
                     >
                       <span className="truncate flex-1">
-                        {course.course_name || "Unknown course"}
+                        {getCourseLabel(course, "Unknown course")}
                       </span>
                       {isSelected && <Check className="ml-2 h-4 w-4 shrink-0" />}
                     </CommandItem>

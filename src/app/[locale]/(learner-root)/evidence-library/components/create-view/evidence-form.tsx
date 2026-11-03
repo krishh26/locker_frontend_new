@@ -71,6 +71,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useTranslations } from 'next-intl'
+import { getCourseLabel } from '@/utils/course-label'
 import { TimeLogFormDialog } from '../../../time-log/components/time-log-form-dialog'
 import type { TimeLogEntry } from '@/store/api/time-log/types'
 
@@ -1380,7 +1381,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                             className='space-y-4 mb-4'
                           >
                             <h3 className='font-semibold text-lg mb-2'>
-                              {course.course_name} - Units
+                              {getCourseLabel(course)} - Units
                             </h3>
                             {isQualificationUnitsError && unitsErrorMessage && (
                               <p className='text-sm text-white font-medium p-2 bg-destructive border border-destructive rounded'>

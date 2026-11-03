@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import type { LearnerCourse } from "@/store/api/learner/types";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface SearchAndFilterProps {
   searchQuery: string;
@@ -41,7 +42,7 @@ export const SearchAndFilter: FC<SearchAndFilterProps> = ({
         if (course?.course_id && course.course_core_type !== "Gateway") {
           return {
             value: course.course_id,
-            label: `${course.course_name} (${course.course_code})`,
+            label: `${getCourseLabel(course)} (${course.course_code})`,
             course_id: course.course_id,
             course_name: course.course_name,
             course_code: course.course_code,

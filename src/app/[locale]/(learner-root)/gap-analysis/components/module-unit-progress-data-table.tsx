@@ -60,6 +60,7 @@ import {
 } from "@/store/slices/courseSlice";
 import { selectCourses ,selectLearner  } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { EvidenceIndicator } from "@/app/[locale]/(learner-root)/evidence-library/components/evidence-indicator";
 import { useEvidenceSubmissionCounts } from "@/app/[locale]/(learner-root)/evidence-library/hooks/use-evidence-submission-counts";
 
@@ -136,6 +137,7 @@ type QualificationUnit = {
 type CourseWithUnits = {
   course_id: number;
   course_name: string;
+  level?: string;
   course_core_type?: string | null;
   units?: Array<
     | QualificationUnit
@@ -1135,7 +1137,7 @@ export function ModuleUnitProgressDataTable() {
 
     void exportGapAnalysisToPdf({
       title: t("table.pdfTitle"),
-      courseName: selectedCourse?.course_name,
+      courseName: getCourseLabel(selectedCourse) || undefined,
       headers,
       unitSections: pdfUnitSections,
       isStandardCourse,
@@ -1193,7 +1195,7 @@ export function ModuleUnitProgressDataTable() {
                         key={index}
                         value={course.course.course_id?.toString()}
                       >
-                        {course.course.course_name}
+                        {getCourseLabel(course.course)}
                       </SelectItem>
                     ))}
                   </SelectContent>

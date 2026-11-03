@@ -9,7 +9,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Controller, Control, useFieldArray } from "react-hook-form";
+import { Controller, Control, useFieldArray, useWatch } from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,14 +32,27 @@ import { Card } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type CriteriaType = "Behaviour" | "Knowledge" | "Skills";
+
+const TYPE_PREFIX: Record<CriteriaType, string> = {
+  Knowledge: "K",
+  Skills: "S",
+  Behaviour: "B",
+};
+
+/** Matches codes this form fills in (K1, S12, B3) so hand-typed codes are never overwritten. */
+const AUTO_CODE_PATTERN = /^[KSB]\d+$/i;
+
 interface StandardTopicsFormProps {
   control: Control<CourseFormData>;
+  setValue: (name: string, value: unknown) => void;
   moduleIndex: number;
   readOnly?: boolean;
 }
 
 export function StandardTopicsForm({
   control,
+  setValue,
   moduleIndex,
   readOnly = false,
 }: StandardTopicsFormProps) {
@@ -48,15 +61,40 @@ export function StandardTopicsForm({
     control,
     name: `units.${moduleIndex}.subUnit`,
   });
+  const topics = useWatch({ control, name: `units.${moduleIndex}.subUnit` }) as
+    | Array<{ type?: string; code?: string }>
+    | undefined;
+
+  // Highest existing number for the prefix + 1, so deleting a row never produces a duplicate code.
+  const nextCode = (type: CriteriaType, excludeIndex?: number) => {
+    const prefix = TYPE_PREFIX[type];
+    const pattern = new RegExp(`^${prefix}(\\d+)$`, "i");
+    const highest = (topics ?? []).reduce((max, topic, i) => {
+      if (i === excludeIndex) return max;
+      const match = topic?.code?.trim().match(pattern);
+      return match ? Math.max(max, Number(match[1])) : max;
+    }, 0);
+    return `${prefix}${highest + 1}`;
+  };
 
   const handleAddTopic = () => {
     const newTopic = {
       id: Date.now(),
       title: "",
       type: "Behaviour" as const,
-      code: "",
+      code: nextCode("Behaviour"),
     };
     append(newTopic, { shouldFocus: false });
+  };
+
+  const handleTypeChange = (index: number, type: CriteriaType, onChange: (value: CriteriaType) => void) => {
+    const previous = topics?.[index];
+    onChange(type);
+    if (previous?.type === type) return;
+    const currentCode = previous?.code?.trim() ?? "";
+    if (!currentCode || AUTO_CODE_PATTERN.test(currentCode)) {
+      setValue(`units.${moduleIndex}.subUnit.${index}.code`, nextCode(type, index));
+    }
   };
 
   return (
@@ -105,7 +143,9 @@ export function StandardTopicsForm({
                             <div className="space-y-1">
                               <Select
                                 value={formField.value || "Behaviour"}
-                                onValueChange={formField.onChange}
+                                onValueChange={(value) =>
+                                  handleTypeChange(index, value as CriteriaType, formField.onChange)
+                                }
                                 disabled={readOnly}
                               >
                                 <SelectTrigger className={cn("w-37.5", error && "border-destructive")}>

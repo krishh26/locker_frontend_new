@@ -16,6 +16,7 @@ export type EvidenceFormValues = {
     course_id: number;
     course_name: string;
     course_code: string;
+    level?: string;
     course_core_type?: string;
     units?: StandardUnit[];
   }>;

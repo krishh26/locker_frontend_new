@@ -25,6 +25,7 @@ import {
   sanitizeFileName,
 } from "../../utils/download-helpers";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface DownloadDialogProps {
   open: boolean;
@@ -67,6 +68,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
             course_id: course.course_id,
             course_name: course.course_name,
             course_code: course.course_code,
+            level: course.level,
           };
         }
         return null;
@@ -323,7 +325,7 @@ export const DownloadDialog: FC<DownloadDialogProps> = ({
                         : "hover:bg-accent"
                     }`}
                   >
-                    <div className="font-medium text-sm">{course.course_name}</div>
+                    <div className="font-medium text-sm">{getCourseLabel(course)}</div>
                     <div className="text-xs text-muted-foreground mt-1">
                       Code: {course.course_code}
                     </div>

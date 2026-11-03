@@ -41,6 +41,7 @@ import type { TimeLogEntry, TimeLogCreateRequest } from "@/store/api/time-log/ty
 import { selectCourses } from "@/store/slices/authSlice";
 import { useGetUsersQuery } from "@/store/api/user/userApi";
 import { useGetCourseQuery } from "@/store/api/course/courseApi";
+import { getCourseLabel } from "@/utils/course-label";
 import { useTranslations } from "next-intl";
 import {
   Popover,
@@ -351,6 +352,7 @@ export function TimeLogFormDialog({
             course?: {
               course_id?: string | number;
               course_name?: string;
+              level?: string;
               units?: unknown[];
             };
             units?: unknown[];
@@ -360,6 +362,7 @@ export function TimeLogFormDialog({
             (courseItem as unknown as {
               course_id?: string | number;
               course_name?: string;
+              level?: string;
               units?: unknown[];
             });
           if (!courseData?.course_id) return null;
@@ -372,6 +375,7 @@ export function TimeLogFormDialog({
           return {
             course_id: String(courseData.course_id),
             course_name: courseData.course_name || "",
+            label: getCourseLabel(courseData),
             units,
           };
         })
@@ -381,6 +385,7 @@ export function TimeLogFormDialog({
           ): course is {
             course_id: string;
             course_name: string;
+            label: string;
             units: CourseUnitOption[];
           } => Boolean(course),
         ),
@@ -440,11 +445,13 @@ export function TimeLogFormDialog({
     );
     if (!fromLearner && !watchedCourseId) return undefined;
     if (!fromLearner) {
+      const detail = courseDetailResponse?.data as
+        | { course_name?: string; level?: string }
+        | undefined;
       return {
         course_id: String(watchedCourseId),
-        course_name:
-          (courseDetailResponse?.data as { course_name?: string } | undefined)
-            ?.course_name || "",
+        course_name: detail?.course_name || "",
+        label: getCourseLabel(detail),
         units: detailUnits,
       };
     }
@@ -779,7 +786,7 @@ export function TimeLogFormDialog({
                         <FormControl className="w-full">
                           <SelectTrigger
                             className="w-full min-w-0 cursor-pointer"
-                            title={selectedCourse?.course_name}
+                            title={selectedCourse?.label}
                           >
                             <SelectValue
                               placeholder={t("dialog.form.fields.course.label")}
@@ -797,7 +804,7 @@ export function TimeLogFormDialog({
                           ) : (
                             courses.map((course) => (
                               <SelectItem key={course.course_id} value={String(course.course_id)}>
-                                {course.course_name}
+                                {course.label}
                               </SelectItem>
                             ))
                           )}

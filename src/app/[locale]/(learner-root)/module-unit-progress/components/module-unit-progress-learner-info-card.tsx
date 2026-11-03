@@ -7,6 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 import { selectLearner } from "@/store/slices/authSlice";
 import type { LearnerData } from "@/store/api/learner/types";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface ModuleUnitProgressLearnerInfoCardProps {
   isLoading?: boolean;
@@ -24,7 +25,7 @@ export function ModuleUnitProgressLearnerInfoCard({
     const course = learner.course.find(
       (c) => c.course?.course_id === currentCourseId
     );
-    return course?.course?.course_name || t("common.dash");
+    return getCourseLabel(course?.course, t("common.dash"));
   }, [learner?.course, currentCourseId, t]);
 
   if (isLoading) {

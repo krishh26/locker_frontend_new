@@ -31,12 +31,14 @@ import {
   selectCourseData,
 } from "@/store/slices/skillsScanSlice";
 import { useLocale, useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 // CourseOption type matches LearnerCourse structure
 type CourseOption = {
   course: {
     course_id: string | number;
     course_name: string;
+    level?: string;
   };
   start_date: string;
   end_date: string;
@@ -99,6 +101,7 @@ export function SkillsScanTnaUnits({
     course: {
       course_id: String(c.course.course_id),
       course_name: c.course.course_name,
+      level: c.course.level,
     },
     start_date: c.start_date,
     end_date: c.end_date,
@@ -188,7 +191,7 @@ export function SkillsScanTnaUnits({
                       key={course.course.course_id}
                       value={String(course.course.course_id)}
                     >
-                      {course.course.course_name}
+                      {getCourseLabel(course.course)}
                     </SelectItem>
                   ))
                 ) : (

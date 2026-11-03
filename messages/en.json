@@ -4681,6 +4681,7 @@
       "searchPlaceholder": "Search by keyword...",
       "courseTypePlaceholder": "Course type",
       "scopePlaceholder": "Scope",
+      "ownershipPlaceholder": "Ownership",
       "courseTypes": {
         "all": "All types",
         "Qualification": "Qualification",
@@ -4690,6 +4691,11 @@
       "scopeTypes": {
         "organisation": "Organisation",
         "global": "Global"
+      },
+      "ownershipTypes": {
+        "all": "All courses",
+        "own": "Own courses",
+        "other": "Other organisations"
       },
       "statusPlaceholder": "Status",
       "statusTypes": {

@@ -83,8 +83,11 @@ const formTypeOptions = [
   "Survey",
   "Workbook",
   "Test/Exams",
-  "Others",
+  "Other",
 ] as const;
+
+const formTypeLabelKey = (option: (typeof formTypeOptions)[number]) =>
+  option === "Test/Exams" ? "testExams" : option === "Other" ? "Others" : option;
 
 function buildMetadataSchema(t: (key: string) => string) {
   return z
@@ -566,7 +569,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                         <SelectContent>
                           {formTypeOptions.map((option) => (
                             <SelectItem key={option} value={option}>
-                              {t(`formTypes.${option === "Test/Exams" ? "testExams" : option}`)}
+                              {t(`formTypes.${formTypeLabelKey(option)}`)}
                             </SelectItem>
                           ))}
                         </SelectContent>

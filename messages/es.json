@@ -4197,6 +4197,12 @@
         "active": "Activos",
         "archived": "Archivados",
         "all": "Todos"
+      },
+      "ownershipPlaceholder": "Propiedad",
+      "ownershipTypes": {
+        "all": "Todos los cursos",
+        "own": "Cursos propios",
+        "other": "Otras organizaciones"
       }
     },
     "table": {

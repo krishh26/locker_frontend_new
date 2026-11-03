@@ -4412,6 +4412,12 @@
         "active": "Actifs",
         "archived": "Archivés",
         "all": "Tous"
+      },
+      "ownershipPlaceholder": "Propriété",
+      "ownershipTypes": {
+        "all": "Tous les cours",
+        "own": "Mes cours",
+        "other": "Autres organisations"
       }
     },
     "table": {

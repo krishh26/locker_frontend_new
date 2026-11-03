@@ -4175,6 +4175,12 @@
         "active": "सक्रिय",
         "archived": "संग्रहीत",
         "all": "सभी"
+      },
+      "ownershipPlaceholder": "स्वामित्व",
+      "ownershipTypes": {
+        "all": "सभी कोर्स",
+        "own": "अपने कोर्स",
+        "other": "अन्य संगठन"
       }
     },
     "table": {

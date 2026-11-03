@@ -4169,6 +4169,12 @@
         "active": "نشط",
         "archived": "مؤرشف",
         "all": "الكل"
+      },
+      "ownershipPlaceholder": "الملكية",
+      "ownershipTypes": {
+        "all": "جميع الدورات",
+        "own": "دوراتي",
+        "other": "مؤسسات أخرى"
       }
     },
     "table": {

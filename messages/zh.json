@@ -4318,6 +4318,12 @@
         "active": "启用",
         "archived": "已归档",
         "all": "全部"
+      },
+      "ownershipPlaceholder": "归属",
+      "ownershipTypes": {
+        "all": "所有课程",
+        "own": "自有课程",
+        "other": "其他组织"
       }
     },
     "table": {

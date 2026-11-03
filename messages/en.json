@@ -54,7 +54,7 @@
     "courses": "Courses",
     "resources": "Resources",
     "calendar": "Calendar",
-    "chat": "Chat", 
+    "chat": "Chat",
     "mail": "Mail",
     "tasks": "Tasks",
     "support": "Support"
@@ -1264,7 +1264,8 @@
           "file": "File Upload",
           "signature": "Signature",
           "richtext": "Text Block",
-          "table": "Table"
+          "table": "Table",
+          "statement": "Statement Checkbox"
         },
         "defaultLabels": {
           "text": "Full Name",
@@ -1280,7 +1281,8 @@
           "signature": "Signature",
           "default": "Field Label",
           "richtext": "Text Block",
-          "table": "Table"
+          "table": "Table",
+          "statement": "Declaration"
         },
         "defaultPlaceholders": {
           "text": "Enter your full name",
@@ -1294,12 +1296,15 @@
         },
         "optionLabel": "Option {n}",
         "copySuffix": "(Copy)",
-        "defaultRichTextContent": "Add instructions or information for the person completing this form."
+        "defaultRichTextContent": "Add instructions or information for the person completing this form.",
+        "defaultStatementContent": "I {learner_name} confirm that I have read and understood all policies.",
+        "addToForm": "Add to form"
       },
       "presets": {
         "roles": {
           "learner": "Learner",
           "trainer": "Trainer",
+          "lineManager": "Line Manager",
           "employee": "Employee",
           "course": "Course",
           "general": "General"
@@ -1309,9 +1314,13 @@
           "learner-email": "Learner Email",
           "learner-phone": "Learner Phone",
           "date_of_birth": "Date of Birth",
+          "learner-uln": "Learner ULN",
           "employer": "Employer",
           "trainer-name": "Trainer Name",
-          "email": "Email",
+          "email": "Trainer Email",
+          "line-manager-name": "Line Manager Name",
+          "line-manager-email": "Line Manager Email",
+          "line-manager-phone": "Line Manager Contact Number",
           "employee-name": "Employee Name",
           "course-name": "Course Name",
           "course-code": "Course Code",
@@ -1348,9 +1357,14 @@
         "placeholder": "Placeholder",
         "requiredField": "Required field",
         "fieldWidth": "Field Width",
-        "fullWidth": "Full Width",
-        "halfWidth": "Half Width",
-        "oneThird": "One Third",
+        "widths": {
+          "full": "Full Width",
+          "threeQuarters": "Three Quarters (3/4)",
+          "twoThirds": "Two Thirds (2/3)",
+          "half": "Half Width (1/2)",
+          "third": "One Third (1/3)",
+          "quarter": "One Quarter (1/4)"
+        },
         "options": "Options",
         "addOption": "Add Option",
         "emptyTextBlock": "Empty text block. Click edit to add content.",
@@ -1359,7 +1373,10 @@
         "content": "Content",
         "textBlockTag": "Text Block",
         "todayAutoFill": "Today's date (filled automatically)",
-        "tableLayout": "Table Layout"
+        "tableLayout": "Table Layout",
+        "statementText": "Statement",
+        "statementPlaceholder": "e.g. I {learner_name} have read all policies",
+        "variablesHint": "Variables like {learner_name} are replaced with real details when the form is filled in."
       },
       "tableEditor": {
         "showHeader": "Show header row",
@@ -1373,10 +1390,13 @@
           "text": "Text input",
           "date": "Date input",
           "checkbox": "Checkbox",
+          "dropdown": "Dropdown",
           "preset": "Locker data"
         },
         "staticPlaceholder": "Type fixed text",
         "presetPlaceholder": "Choose Locker data",
+        "optionsPlaceholder": "Options, separated by commas",
+        "columnOptionsPlaceholder": "Column options, separated by commas",
         "addRow": "Add Row",
         "addColumn": "Add Column",
         "removeRow": "Remove row",
@@ -1396,8 +1416,25 @@
           "blockquote": "Quote",
           "divider": "Divider",
           "undo": "Undo",
-          "redo": "Redo"
+          "redo": "Redo",
+          "link": "Link",
+          "linkPlaceholder": "https://example.com",
+          "unlink": "Remove link",
+          "applyLink": "Apply"
         }
+      }
+    },
+    "variables": {
+      "insert": "Insert variable",
+      "labels": {
+        "learner_name": "Learner Name",
+        "learner_uln": "Learner ULN",
+        "trainer_name": "Trainer Name",
+        "iqa_name": "IQA Name",
+        "line_manager_name": "Line Manager Name",
+        "employer_name": "Employer Name",
+        "course_name": "Course Name",
+        "today_date": "Today's Date"
       }
     }
   },
@@ -4644,6 +4681,7 @@
       "searchPlaceholder": "Search by keyword...",
       "courseTypePlaceholder": "Course type",
       "scopePlaceholder": "Scope",
+      "ownershipPlaceholder": "Ownership",
       "courseTypes": {
         "all": "All types",
         "Qualification": "Qualification",
@@ -4653,6 +4691,11 @@
       "scopeTypes": {
         "organisation": "Organisation",
         "global": "Global"
+      },
+      "ownershipTypes": {
+        "all": "All courses",
+        "own": "Own courses",
+        "other": "Other organisations"
       },
       "statusPlaceholder": "Status",
       "statusTypes": {
@@ -6501,16 +6544,49 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    }
   }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,35 @@ import {
 } from "@/components/forms/table-utils";
 import { PRESET_OPTION_GROUPS, usePresetLabel } from "@/components/forms/use-preset-label";
 
-const CELL_TYPES: TableCellType[] = ["static", "text", "date", "checkbox", "preset"];
+const CELL_TYPES: TableCellType[] = ["static", "text", "date", "checkbox", "dropdown", "preset"];
+
+const parseOptions = (raw: string): string[] =>
+  raw
+    .split(",")
+    .map((option) => option.trim())
+    .filter(Boolean);
+
+interface OptionsInputProps {
+  options?: string[];
+  placeholder: string;
+  onChange: (options: string[]) => void;
+}
+
+/** Comma-separated choices; keeps the raw text locally so typing a trailing comma isn't swallowed. */
+function OptionsInput({ options, placeholder, onChange }: OptionsInputProps) {
+  const [draft, setDraft] = useState(() => (options ?? []).join(", "));
+  return (
+    <Input
+      value={draft}
+      placeholder={placeholder}
+      onChange={(e) => {
+        setDraft(e.target.value);
+        onChange(parseOptions(e.target.value));
+      }}
+      className="h-8"
+    />
+  );
+}
 
 interface TableEditorProps {
   value: TableConfig;
@@ -35,6 +64,8 @@ export function TableEditor({ value, onChange }: TableEditorProps) {
   const tRoles = useTranslations("forms.builder.presets.roles");
   const presetLabel = usePresetLabel();
   const { columns, rows } = value;
+  // Bumped when a column's shared options change so per-cell option inputs pick up the new text.
+  const [optionsVersion, setOptionsVersion] = useState<Record<string, number>>({});
 
   const setCell = (rowId: string, columnId: string, cell: TableCell) => {
     onChange({
@@ -50,10 +81,24 @@ export function TableEditor({ value, onChange }: TableEditorProps) {
       ...value,
       rows: rows.map((row) => ({
         ...row,
-        cells: { ...row.cells, [columnId]: { type } },
+        cells: { ...row.cells, [columnId]: type === "dropdown" ? { type, options: [] } : { type } },
       })),
     });
   };
+
+  const setColumnOptions = (columnId: string, options: string[]) => {
+    setOptionsVersion((prev) => ({ ...prev, [columnId]: (prev[columnId] ?? 0) + 1 }));
+    onChange({
+      ...value,
+      rows: rows.map((row) => ({
+        ...row,
+        cells: { ...row.cells, [columnId]: { type: "dropdown", options } },
+      })),
+    });
+  };
+
+  const isDropdownColumn = (columnId: string) =>
+    rows.length > 0 && rows.every((row) => getTableCell(row, columnId).type === "dropdown");
 
   const renameColumn = (columnId: string, header: string) => {
     onChange({
@@ -98,7 +143,9 @@ export function TableEditor({ value, onChange }: TableEditorProps) {
     <div className="space-y-1.5">
       <Select
         value={cell.type}
-        onValueChange={(type: TableCellType) => setCell(rowId, columnId, { type })}
+        onValueChange={(type: TableCellType) =>
+          setCell(rowId, columnId, type === "dropdown" ? { type, options: [] } : { type })
+        }
       >
         <SelectTrigger size="sm" className="h-8 w-full" aria-label={t("cellType")}>
           <SelectValue />
@@ -118,6 +165,15 @@ export function TableEditor({ value, onChange }: TableEditorProps) {
           placeholder={t("staticPlaceholder")}
           onChange={(e) => setCell(rowId, columnId, { ...cell, text: e.target.value })}
           className="h-8"
+        />
+      )}
+
+      {cell.type === "dropdown" && (
+        <OptionsInput
+          key={`${columnId}-${optionsVersion[columnId] ?? 0}`}
+          options={cell.options}
+          placeholder={t("optionsPlaceholder")}
+          onChange={(options) => setCell(rowId, columnId, { ...cell, options })}
         />
       )}
 
@@ -200,6 +256,13 @@ export function TableEditor({ value, onChange }: TableEditorProps) {
                         ))}
                       </SelectContent>
                     </Select>
+                    {isDropdownColumn(column.id) && (
+                      <OptionsInput
+                        options={rows[0] ? getTableCell(rows[0], column.id).options : []}
+                        placeholder={t("columnOptionsPlaceholder")}
+                        onChange={(options) => setColumnOptions(column.id, options)}
+                      />
+                    )}
                   </div>
                 </th>
               ))}

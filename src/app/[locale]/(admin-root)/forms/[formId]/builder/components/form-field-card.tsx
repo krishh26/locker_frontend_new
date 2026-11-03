@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type HTMLAttributes } from "react";
+import { useRef, useState, type HTMLAttributes } from "react";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,8 +28,16 @@ import {
 import type { SimpleFormField } from "@/store/api/forms/types";
 import { RichTextEditor } from "@/components/forms/rich-text-editor";
 import { RichTextContent } from "@/components/forms/rich-text-content";
-import { isDisplayOnlyField, isTodayDateField } from "@/components/forms/field-types";
+import {
+  FIELD_WIDTHS,
+  isDisplayOnlyField,
+  isTodayDateField,
+  type FieldWidth,
+} from "@/components/forms/field-types";
 import { TableField } from "@/components/forms/table-field";
+import { StatementField } from "@/components/forms/statement-field";
+import { useTemplateResolver } from "@/components/forms/template-variables";
+import { VariableMenu } from "@/components/forms/variable-menu";
 import { usePresetLabel } from "@/components/forms/use-preset-label";
 import { TableEditor } from "./table-editor";
 
@@ -105,7 +113,25 @@ export function FormFieldCard({
   };
 
   const presetLabel = usePresetLabel();
+  const resolveTemplate = useTemplateResolver();
   const isDisplayOnly = isDisplayOnlyField(field.type);
+  const isStatement = field.type === "statement";
+  const statementRef = useRef<HTMLTextAreaElement>(null);
+
+  const insertStatementVariable = (token: string) => {
+    const content = localField.content || "";
+    const textarea = statementRef.current;
+    const start = textarea?.selectionStart ?? content.length;
+    const end = textarea?.selectionEnd ?? content.length;
+    setLocalField((prev) => ({
+      ...prev,
+      content: content.slice(0, start) + token + content.slice(end),
+    }));
+    requestAnimationFrame(() => {
+      textarea?.focus();
+      textarea?.setSelectionRange(start + token.length, start + token.length);
+    });
+  };
 
   const renderFieldPreview = () => {
     switch (field.type) {
@@ -123,6 +149,16 @@ export function FormFieldCard({
             disabled
             presetPlaceholder={presetLabel}
             idPrefix={field.id}
+          />
+        );
+      case "statement":
+        return (
+          <StatementField
+            id={`${field.id}-preview`}
+            required={field.required}
+            text={resolveTemplate(field.content || "")}
+            checked={false}
+            disabled
           />
         );
       case "text":
@@ -251,6 +287,7 @@ export function FormFieldCard({
           </div>
 
           <div className="space-y-3">
+            {!isStatement && (
             <div>
               <Label>{isDisplayOnly ? t("blockName") : t("fieldLabel")}</Label>
               <Input
@@ -265,6 +302,7 @@ export function FormFieldCard({
                 </p>
               )}
             </div>
+            )}
 
             {field.type === "richtext" && (
               <div>
@@ -275,6 +313,26 @@ export function FormFieldCard({
                     setLocalField((prev) => ({ ...prev, content: html }))
                   }
                 />
+              </div>
+            )}
+
+            {field.type === "statement" && (
+              <div>
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <Label htmlFor={`statement-${field.id}`}>{t("statementText")}</Label>
+                  <VariableMenu onInsert={insertStatementVariable} />
+                </div>
+                <Textarea
+                  id={`statement-${field.id}`}
+                  ref={statementRef}
+                  rows={3}
+                  value={localField.content || ""}
+                  placeholder={t.raw("statementPlaceholder")}
+                  onChange={(e) =>
+                    setLocalField((prev) => ({ ...prev, content: e.target.value }))
+                  }
+                />
+                <p className="text-xs text-muted-foreground mt-1">{t.raw("variablesHint")}</p>
               </div>
             )}
 
@@ -326,7 +384,7 @@ export function FormFieldCard({
                 <Label>{t("fieldWidth")}</Label>
                 <Select
                   value={localField.width || "full"}
-                  onValueChange={(value: "full" | "half" | "third") =>
+                  onValueChange={(value: FieldWidth) =>
                     setLocalField({ ...localField, width: value })
                   }
                 >
@@ -334,9 +392,11 @@ export function FormFieldCard({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="full">{t("fullWidth")}</SelectItem>
-                    <SelectItem value="half">{t("halfWidth")}</SelectItem>
-                    <SelectItem value="third">{t("oneThird")}</SelectItem>
+                    {FIELD_WIDTHS.map((width) => (
+                      <SelectItem key={width} value={width}>
+                        {t(`widths.${width}`)}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -391,7 +451,9 @@ export function FormFieldCard({
           </div>
           <div className="flex-1 min-w-0 space-y-2">
             <div className="flex items-center justify-between">
-              {isDisplayOnly ? (
+              {isStatement ? (
+                <span />
+              ) : isDisplayOnly ? (
                 <span className="text-xs text-muted-foreground">
                   {t("textBlockTag")}: {field.label}
                 </span>

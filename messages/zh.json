@@ -1242,7 +1242,8 @@
           "file": "文件上传",
           "signature": "签名",
           "richtext": "文本块",
-          "table": "表格"
+          "table": "表格",
+          "statement": "声明复选框"
         },
         "defaultLabels": {
           "text": "姓名",
@@ -1258,7 +1259,8 @@
           "signature": "签名",
           "default": "字段标签",
           "richtext": "文本块",
-          "table": "表格"
+          "table": "表格",
+          "statement": "声明"
         },
         "defaultPlaceholders": {
           "text": "请输入您的姓名",
@@ -1272,12 +1274,15 @@
         },
         "optionLabel": "选项 {n}",
         "copySuffix": "（副本）",
-        "defaultRichTextContent": "为填写此表单的人添加说明或信息。"
+        "defaultRichTextContent": "为填写此表单的人添加说明或信息。",
+        "defaultStatementContent": "本人 {learner_name} 确认已阅读并理解所有政策。",
+        "addToForm": "添加到表单"
       },
       "presets": {
         "roles": {
           "learner": "学员",
           "trainer": "培训师",
+          "lineManager": "直属经理",
           "employee": "员工",
           "course": "课程",
           "general": "通用"
@@ -1287,9 +1292,13 @@
           "learner-email": "学员邮箱",
           "learner-phone": "学员电话",
           "date_of_birth": "出生日期",
+          "learner-uln": "学员 ULN",
           "employer": "雇主",
           "trainer-name": "培训师姓名",
-          "email": "邮箱",
+          "email": "培训师邮箱",
+          "line-manager-name": "直属经理姓名",
+          "line-manager-email": "直属经理邮箱",
+          "line-manager-phone": "直属经理联系电话",
           "employee-name": "员工姓名",
           "course-name": "课程名称",
           "course-code": "课程代码",
@@ -1326,9 +1335,14 @@
         "placeholder": "占位符",
         "requiredField": "必填字段",
         "fieldWidth": "字段宽度",
-        "fullWidth": "全宽",
-        "halfWidth": "半宽",
-        "oneThird": "三分之一",
+        "widths": {
+          "full": "全宽",
+          "threeQuarters": "四分之三 (3/4)",
+          "twoThirds": "三分之二 (2/3)",
+          "half": "半宽 (1/2)",
+          "third": "三分之一 (1/3)",
+          "quarter": "四分之一 (1/4)"
+        },
         "options": "选项",
         "addOption": "添加选项",
         "emptyTextBlock": "空文本块。点击编辑以添加内容。",
@@ -1337,7 +1351,10 @@
         "content": "内容",
         "textBlockTag": "文本块",
         "todayAutoFill": "今天的日期（自动填写）",
-        "tableLayout": "表格布局"
+        "tableLayout": "表格布局",
+        "statementText": "声明",
+        "statementPlaceholder": "例如：本人 {learner_name} 已阅读所有政策",
+        "variablesHint": "填写表单时，{learner_name} 等变量会被替换为实际信息。"
       },
       "richText": {
         "toolbar": {
@@ -1353,7 +1370,11 @@
           "blockquote": "引用",
           "divider": "分隔线",
           "undo": "撤销",
-          "redo": "重做"
+          "redo": "重做",
+          "link": "链接",
+          "linkPlaceholder": "https://example.com",
+          "unlink": "移除链接",
+          "applyLink": "应用"
         }
       },
       "tableEditor": {
@@ -1368,14 +1389,30 @@
           "text": "文本输入",
           "date": "日期输入",
           "checkbox": "复选框",
+          "dropdown": "下拉菜单",
           "preset": "Locker 数据"
         },
         "staticPlaceholder": "输入固定文本",
         "presetPlaceholder": "选择 Locker 数据",
+        "optionsPlaceholder": "选项，用逗号分隔",
+        "columnOptionsPlaceholder": "列选项，用逗号分隔",
         "addRow": "添加行",
         "addColumn": "添加列",
         "removeRow": "删除行",
         "removeColumn": "删除列"
+      }
+    },
+    "variables": {
+      "insert": "插入变量",
+      "labels": {
+        "learner_name": "学员姓名",
+        "learner_uln": "学员 ULN",
+        "trainer_name": "培训师姓名",
+        "iqa_name": "IQA 姓名",
+        "line_manager_name": "直属经理姓名",
+        "employer_name": "雇主名称",
+        "course_name": "课程名称",
+        "today_date": "今天日期"
       }
     }
   },
@@ -4281,6 +4318,12 @@
         "active": "启用",
         "archived": "已归档",
         "all": "全部"
+      },
+      "ownershipPlaceholder": "归属",
+      "ownershipTypes": {
+        "all": "所有课程",
+        "own": "自有课程",
+        "other": "其他组织"
       }
     },
     "table": {

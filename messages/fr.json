@@ -1304,7 +1304,8 @@
           "file": "Téléverser un fichier",
           "signature": "Signature",
           "richtext": "Bloc de texte",
-          "table": "Tableau"
+          "table": "Tableau",
+          "statement": "Case de déclaration"
         },
         "defaultLabels": {
           "text": "Nom complet",
@@ -1320,7 +1321,8 @@
           "signature": "Signature",
           "default": "Libellé du champ",
           "richtext": "Bloc de texte",
-          "table": "Tableau"
+          "table": "Tableau",
+          "statement": "Déclaration"
         },
         "defaultPlaceholders": {
           "text": "Entrez votre nom complet",
@@ -1334,12 +1336,15 @@
         },
         "optionLabel": "Option {n}",
         "copySuffix": "(Copie)",
-        "defaultRichTextContent": "Ajoutez des instructions ou des informations pour la personne qui remplit ce formulaire."
+        "defaultRichTextContent": "Ajoutez des instructions ou des informations pour la personne qui remplit ce formulaire.",
+        "defaultStatementContent": "Je soussigné(e) {learner_name} confirme avoir lu et compris toutes les politiques.",
+        "addToForm": "Ajouter au formulaire"
       },
       "presets": {
         "roles": {
           "learner": "Apprenant",
           "trainer": "Formateur",
+          "lineManager": "Responsable hiérarchique",
           "employee": "Employé",
           "course": "Cours",
           "general": "Général"
@@ -1349,9 +1354,13 @@
           "learner-email": "E-mail de l’apprenant",
           "learner-phone": "Téléphone de l’apprenant",
           "date_of_birth": "Date de naissance",
+          "learner-uln": "ULN de l'apprenant",
           "employer": "Employeur",
           "trainer-name": "Nom du formateur",
-          "email": "E-mail",
+          "email": "E-mail du formateur",
+          "line-manager-name": "Nom du responsable hiérarchique",
+          "line-manager-email": "E-mail du responsable hiérarchique",
+          "line-manager-phone": "Téléphone du responsable hiérarchique",
           "employee-name": "Nom de l’employé",
           "course-name": "Nom du cours",
           "course-code": "Code du cours",
@@ -1382,9 +1391,14 @@
         "placeholder": "Texte d’indication",
         "requiredField": "Champ obligatoire",
         "fieldWidth": "Largeur du champ",
-        "fullWidth": "Pleine largeur",
-        "halfWidth": "Demi-largeur",
-        "oneThird": "Un tiers",
+        "widths": {
+          "full": "Pleine largeur",
+          "threeQuarters": "Trois quarts (3/4)",
+          "twoThirds": "Deux tiers (2/3)",
+          "half": "Demi-largeur (1/2)",
+          "third": "Un tiers (1/3)",
+          "quarter": "Un quart (1/4)"
+        },
         "options": "Options",
         "addOption": "Ajouter une option",
         "emptyTextBlock": "Bloc de texte vide. Cliquez sur modifier pour ajouter du contenu.",
@@ -1393,7 +1407,10 @@
         "content": "Contenu",
         "textBlockTag": "Bloc de texte",
         "todayAutoFill": "Date du jour (remplie automatiquement)",
-        "tableLayout": "Disposition du tableau"
+        "tableLayout": "Disposition du tableau",
+        "statementText": "Déclaration",
+        "statementPlaceholder": "ex. Je soussigné(e) {learner_name} ai lu toutes les politiques",
+        "variablesHint": "Les variables comme {learner_name} sont remplacées par les vraies informations lors du remplissage du formulaire."
       },
       "richText": {
         "toolbar": {
@@ -1409,7 +1426,11 @@
           "blockquote": "Citation",
           "divider": "Séparateur",
           "undo": "Annuler",
-          "redo": "Rétablir"
+          "redo": "Rétablir",
+          "link": "Lien",
+          "linkPlaceholder": "https://exemple.com",
+          "unlink": "Supprimer le lien",
+          "applyLink": "Appliquer"
         }
       },
       "tableEditor": {
@@ -1424,14 +1445,30 @@
           "text": "Champ texte",
           "date": "Champ date",
           "checkbox": "Case à cocher",
+          "dropdown": "Liste déroulante",
           "preset": "Données Locker"
         },
         "staticPlaceholder": "Saisir le texte fixe",
         "presetPlaceholder": "Choisir une donnée Locker",
+        "optionsPlaceholder": "Options, séparées par des virgules",
+        "columnOptionsPlaceholder": "Options de la colonne, séparées par des virgules",
         "addRow": "Ajouter une ligne",
         "addColumn": "Ajouter une colonne",
         "removeRow": "Supprimer la ligne",
         "removeColumn": "Supprimer la colonne"
+      }
+    },
+    "variables": {
+      "insert": "Insérer une variable",
+      "labels": {
+        "learner_name": "Nom de l'apprenant",
+        "learner_uln": "ULN de l'apprenant",
+        "trainer_name": "Nom du formateur",
+        "iqa_name": "Nom de l'IQA",
+        "line_manager_name": "Nom du responsable hiérarchique",
+        "employer_name": "Nom de l'employeur",
+        "course_name": "Nom du cours",
+        "today_date": "Date du jour"
       }
     }
   },
@@ -4375,6 +4412,12 @@
         "active": "Actifs",
         "archived": "Archivés",
         "all": "Tous"
+      },
+      "ownershipPlaceholder": "Propriété",
+      "ownershipTypes": {
+        "all": "Tous les cours",
+        "own": "Mes cours",
+        "other": "Autres organisations"
       }
     },
     "table": {

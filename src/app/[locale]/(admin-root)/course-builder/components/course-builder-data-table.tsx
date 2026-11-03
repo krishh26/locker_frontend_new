@@ -83,6 +83,15 @@ import { getErrorMessage } from '@/lib/utils'
 const courseTypes = ['all', 'Qualification', 'Standard', 'Gateway'] as const
 const statusTypes = ['active', 'archived', 'all'] as const
 
+// Master Admin only: own = courses created for all organisations, other = courses owned by an organisation.
+const ownershipTypes = ['all', 'own', 'other'] as const
+type OwnershipType = (typeof ownershipTypes)[number]
+const ownershipToScope: Record<OwnershipType, CourseFilters['scope']> = {
+  all: '',
+  own: 'global',
+  other: 'organisation',
+}
+
 const createCourseTypes = ['Qualification', 'Standard', 'Gateway'] as const
 
 export function CourseBuilderDataTable() {
@@ -106,12 +115,13 @@ export function CourseBuilderDataTable() {
     useState<NonNullable<CourseFilters['status']>>('active')
   const [scopeFilter, setScopeFilter] =
     useState<CourseFilters['scope']>('organisation')
+  const [ownershipFilter, setOwnershipFilter] = useState<OwnershipType>('own')
   const isAdminViewingGlobalCourses =
     isAdmin && showScopeFilter && scopeFilter === 'global'
   const [filters, setFilters] = useState<CourseFilters>({
     page: 1,
     page_size: 10,
-    scope: showScopeFilter ? 'organisation' : "",
+    scope: showScopeFilter ? 'organisation' : ownershipToScope.own,
     status: 'active',
   })
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
@@ -153,13 +163,26 @@ export function CourseBuilderDataTable() {
     setCourseTypeFilter('all')
     setStatusFilter('active')
     setScopeFilter('organisation')
+    setOwnershipFilter('own')
     setFilters((prev) => ({
       ...prev,
       page: 1,
       keyword: undefined,
       core_type: undefined,
-      scope: 'organisation',
+      scope: showScopeFilter ? 'organisation' : ownershipToScope.own,
       status: 'active',
+    }))
+  }
+
+  const handleOwnershipChange = (value: string) => {
+    const nextOwnership = (ownershipTypes.includes(value as OwnershipType)
+      ? value
+      : 'all') as OwnershipType
+    setOwnershipFilter(nextOwnership)
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      scope: ownershipToScope[nextOwnership],
     }))
   }
 
@@ -558,10 +581,25 @@ export function CourseBuilderDataTable() {
               </SelectContent>
             </Select>
           )}
+          {!showScopeFilter && (
+            <Select value={ownershipFilter} onValueChange={handleOwnershipChange}>
+              <SelectTrigger className='w-full sm:w-50'>
+                <SelectValue placeholder={t('filters.ownershipPlaceholder')} />
+              </SelectTrigger>
+              <SelectContent>
+                {ownershipTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {t(`filters.ownershipTypes.${type}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
           {(globalFilter ||
             (courseTypeFilter && courseTypeFilter !== 'all') ||
             statusFilter !== 'active' ||
-            (showScopeFilter && scopeFilter !== 'organisation')) && (
+            (showScopeFilter && scopeFilter !== 'organisation') ||
+            (!showScopeFilter && ownershipFilter !== 'own')) && (
             <Button
               variant='ghost'
               size='sm'

@@ -1082,7 +1082,8 @@
           "file": "Subir archivo",
           "signature": "Firma",
           "richtext": "Bloque de texto",
-          "table": "Tabla"
+          "table": "Tabla",
+          "statement": "Casilla de declaración"
         },
         "defaultLabels": {
           "text": "Nombre completo",
@@ -1098,7 +1099,8 @@
           "signature": "Firma",
           "default": "Etiqueta del campo",
           "richtext": "Bloque de texto",
-          "table": "Tabla"
+          "table": "Tabla",
+          "statement": "Declaración"
         },
         "defaultPlaceholders": {
           "text": "Introduzca su nombre completo",
@@ -1112,12 +1114,15 @@
         },
         "optionLabel": "Opción {n}",
         "copySuffix": "(Copia)",
-        "defaultRichTextContent": "Añade instrucciones o información para la persona que completa este formulario."
+        "defaultRichTextContent": "Añade instrucciones o información para la persona que completa este formulario.",
+        "defaultStatementContent": "Yo, {learner_name}, confirmo que he leído y comprendido todas las políticas.",
+        "addToForm": "Añadir al formulario"
       },
       "presets": {
         "roles": {
           "learner": "Aprendiz",
           "trainer": "Formador",
+          "lineManager": "Responsable directo",
           "employee": "Empleado",
           "course": "Curso",
           "general": "General"
@@ -1127,9 +1132,13 @@
           "learner-email": "Correo del aprendiz",
           "learner-phone": "Teléfono del aprendiz",
           "date_of_birth": "Fecha de nacimiento",
+          "learner-uln": "ULN del alumno",
           "employer": "Empleador",
           "trainer-name": "Nombre del formador",
-          "email": "Correo",
+          "email": "Correo del formador",
+          "line-manager-name": "Nombre del responsable directo",
+          "line-manager-email": "Correo del responsable directo",
+          "line-manager-phone": "Teléfono del responsable directo",
           "employee-name": "Nombre del empleado",
           "course-name": "Nombre del curso",
           "course-code": "Código del curso",
@@ -1166,9 +1175,14 @@
         "placeholder": "Marcador de posición",
         "requiredField": "Campo obligatorio",
         "fieldWidth": "Ancho del campo",
-        "fullWidth": "Ancho completo",
-        "halfWidth": "Mitad de ancho",
-        "oneThird": "Un tercio",
+        "widths": {
+          "full": "Ancho completo",
+          "threeQuarters": "Tres cuartos (3/4)",
+          "twoThirds": "Dos tercios (2/3)",
+          "half": "Medio ancho (1/2)",
+          "third": "Un tercio (1/3)",
+          "quarter": "Un cuarto (1/4)"
+        },
         "options": "Opciones",
         "addOption": "Añadir opción",
         "emptyTextBlock": "Bloque de texto vacío. Haz clic en editar para añadir contenido.",
@@ -1177,7 +1191,10 @@
         "content": "Contenido",
         "textBlockTag": "Bloque de texto",
         "todayAutoFill": "Fecha de hoy (se completa automáticamente)",
-        "tableLayout": "Diseño de la tabla"
+        "tableLayout": "Diseño de la tabla",
+        "statementText": "Declaración",
+        "statementPlaceholder": "p. ej. Yo, {learner_name}, he leído todas las políticas",
+        "variablesHint": "Las variables como {learner_name} se sustituyen por los datos reales al completar el formulario."
       },
       "tableEditor": {
         "showHeader": "Mostrar fila de encabezado",
@@ -1191,10 +1208,13 @@
           "text": "Campo de texto",
           "date": "Campo de fecha",
           "checkbox": "Casilla",
+          "dropdown": "Desplegable",
           "preset": "Datos de Locker"
         },
         "staticPlaceholder": "Escribe el texto fijo",
         "presetPlaceholder": "Elige datos de Locker",
+        "optionsPlaceholder": "Opciones, separadas por comas",
+        "columnOptionsPlaceholder": "Opciones de la columna, separadas por comas",
         "addRow": "Añadir fila",
         "addColumn": "Añadir columna",
         "removeRow": "Eliminar fila",
@@ -1214,8 +1234,25 @@
           "blockquote": "Cita",
           "divider": "Separador",
           "undo": "Deshacer",
-          "redo": "Rehacer"
+          "redo": "Rehacer",
+          "link": "Enlace",
+          "linkPlaceholder": "https://ejemplo.com",
+          "unlink": "Quitar enlace",
+          "applyLink": "Aplicar"
         }
+      }
+    },
+    "variables": {
+      "insert": "Insertar variable",
+      "labels": {
+        "learner_name": "Nombre del alumno",
+        "learner_uln": "ULN del alumno",
+        "trainer_name": "Nombre del formador",
+        "iqa_name": "Nombre del IQA",
+        "line_manager_name": "Nombre del responsable directo",
+        "employer_name": "Nombre del empleador",
+        "course_name": "Nombre del curso",
+        "today_date": "Fecha de hoy"
       }
     }
   },
@@ -1756,58 +1793,58 @@
     }
   },
   "sessionTypes": {
-  "pageTitle": "Tipos de sesión",
-  "pageSubtitle": "Gestione configuraciones de tipos de sesión",
-  "formDialog": {
-    "createTitle": "Agregar tipo de sesión",
-    "editTitle": "Editar tipo de sesión",
-    "descriptionCreate": "Cree un nuevo tipo de sesión",
-    "descriptionEdit": "Actualice los detalles del tipo de sesión"
-  },
-  "form": {
-    "centreLabel": "Centro",
-    "centrePlaceholder": "Seleccione un centro",
-    "centreHelperText": "El tipo de sesión se creará para el centro seleccionado. Los administradores de centro solo ven su centro; los administradores de organización ven todos.",
-    "requiredAsterisk": "*",
-    "nameLabel": "Nombre del tipo de sesión",
-    "namePlaceholder": "Introduzca el nombre del tipo de sesión",
-    "nameRequired": "El nombre del tipo de sesión es obligatorio",
-    "offTheJobLabel": "Fuera del trabajo",
-    "activeLabel": "Activo",
-    "updating": "Actualizando...",
-    "creating": "Creando...",
-    "selectCentre": "Seleccione un centro",
-    "update": "Actualizar",
-    "create": "Crear"
-  },
-  "table": {
-    "title": "Tipos de sesión",
-    "count": "{count} tipo(s) de sesión",
-    "addButton": "Agregar tipo de sesión",
-    "headers": {
-      "order": "Orden",
-      "name": "Nombre",
-      "offTheJob": "Fuera del trabajo",
-      "active": "Activo",
-      "actions": "Acciones"
+    "pageTitle": "Tipos de sesión",
+    "pageSubtitle": "Gestione configuraciones de tipos de sesión",
+    "formDialog": {
+      "createTitle": "Agregar tipo de sesión",
+      "editTitle": "Editar tipo de sesión",
+      "descriptionCreate": "Cree un nuevo tipo de sesión",
+      "descriptionEdit": "Actualice los detalles del tipo de sesión"
     },
-    "emptyDescription": "No se encontraron tipos de sesión. Cree uno para comenzar."
-  },
-  "dialogs": {
-    "deleteTitle": "Confirmar eliminación",
-    "deleteDescription": "¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.",
-    "deleting": "Eliminando...",
-    "delete": "Eliminar"
-  },
-  "toast": {
-    "updateSuccess": "Tipo de sesión actualizado correctamente",
-    "createSuccess": "Tipo de sesión creado correctamente",
-    "saveFailed": "Error al guardar el tipo de sesión",
-    "deleteSuccess": "Tipo de sesión eliminado correctamente",
-    "deleteFailed": "Error al eliminar el tipo de sesión",
-    "activatedSuccess": "Tipo de sesión activado correctamente",
-    "deactivatedSuccess": "Tipo de sesión desactivado correctamente"
-  }
+    "form": {
+      "centreLabel": "Centro",
+      "centrePlaceholder": "Seleccione un centro",
+      "centreHelperText": "El tipo de sesión se creará para el centro seleccionado. Los administradores de centro solo ven su centro; los administradores de organización ven todos.",
+      "requiredAsterisk": "*",
+      "nameLabel": "Nombre del tipo de sesión",
+      "namePlaceholder": "Introduzca el nombre del tipo de sesión",
+      "nameRequired": "El nombre del tipo de sesión es obligatorio",
+      "offTheJobLabel": "Fuera del trabajo",
+      "activeLabel": "Activo",
+      "updating": "Actualizando...",
+      "creating": "Creando...",
+      "selectCentre": "Seleccione un centro",
+      "update": "Actualizar",
+      "create": "Crear"
+    },
+    "table": {
+      "title": "Tipos de sesión",
+      "count": "{count} tipo(s) de sesión",
+      "addButton": "Agregar tipo de sesión",
+      "headers": {
+        "order": "Orden",
+        "name": "Nombre",
+        "offTheJob": "Fuera del trabajo",
+        "active": "Activo",
+        "actions": "Acciones"
+      },
+      "emptyDescription": "No se encontraron tipos de sesión. Cree uno para comenzar."
+    },
+    "dialogs": {
+      "deleteTitle": "Confirmar eliminación",
+      "deleteDescription": "¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.",
+      "deleting": "Eliminando...",
+      "delete": "Eliminar"
+    },
+    "toast": {
+      "updateSuccess": "Tipo de sesión actualizado correctamente",
+      "createSuccess": "Tipo de sesión creado correctamente",
+      "saveFailed": "Error al guardar el tipo de sesión",
+      "deleteSuccess": "Tipo de sesión eliminado correctamente",
+      "deleteFailed": "Error al eliminar el tipo de sesión",
+      "activatedSuccess": "Tipo de sesión activado correctamente",
+      "deactivatedSuccess": "Tipo de sesión desactivado correctamente"
+    }
   },
   "surveys": {
     "pageTitle": "Encuestas",
@@ -4160,6 +4197,12 @@
         "active": "Activos",
         "archived": "Archivados",
         "all": "Todos"
+      },
+      "ownershipPlaceholder": "Propiedad",
+      "ownershipTypes": {
+        "all": "Todos los cursos",
+        "own": "Cursos propios",
+        "other": "Otras organizaciones"
       }
     },
     "table": {
@@ -5039,14 +5082,14 @@
     "qualificationHierarchy": {
       "trainerCommentPlaceholder": "Comentario del formador",
       "noComment": "Sin comentario"
-      },
-      "deleteDialog": {
-        "title": "¿Eliminar evidencia?",
-        "description": "Al eliminar esta evidencia también se eliminarán todos los datos y relaciones asociados. Esta acción no se puede deshacer. ¿Desea continuar?",
-        "cancel": "Cancelar",
-        "confirm": "Eliminar evidencia",
-        "deleting": "Eliminando..."
-      },
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar evidencia?",
+      "description": "Al eliminar esta evidencia también se eliminarán todos los datos y relaciones asociados. Esta acción no se puede deshacer. ¿Desea continuar?",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar evidencia",
+      "deleting": "Eliminando..."
+    },
     "downloadDialog": {
       "title": "Descargar archivos de evidencias",
       "description": "Seleccione un curso para ver y descargar sus archivos de evidencias",
@@ -6274,17 +6317,53 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" },
-    "LO": { "label": "LO", "title": "Learning Outcome" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    },
+    "LO": {
+      "label": "LO",
+      "title": "Learning Outcome"
+    }
   }
 }

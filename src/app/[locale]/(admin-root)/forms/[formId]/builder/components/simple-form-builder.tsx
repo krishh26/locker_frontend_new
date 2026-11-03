@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import {
   DndContext,
@@ -22,7 +22,6 @@ import { CSS } from '@dnd-kit/utilities'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import type { SimpleFormField } from '@/store/api/forms/types'
 import { ComponentItem } from './component-item'
 import { PresetItem } from './preset-item'
@@ -35,12 +34,13 @@ function uuidv4(): string {
 }
 
 const COMPONENT_TYPES = [
-  'richtext', 'table', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature',
+  'richtext', 'table', 'statement', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature',
 ] as const
 
 const COMPONENT_ICONS: Record<string, string> = {
   richtext: '🅰️',
   table: '📊',
+  statement: '✅',
   text: '📝',
   email: '📧',
   phone: '📞',
@@ -111,15 +111,19 @@ export function SimpleFormBuilder({
     setIsDraggingFromPalette(false)
   }, [])
 
-  const handleFormAreaDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      setIsDraggingFromPalette(false)
+  const addField = useCallback(
+    (newField: SimpleFormField) => {
+      const updatedFields = [...formFields, newField]
+      setFormFields(updatedFields)
+      onChange?.(updatedFields)
+      setEditingField(newField.id)
+    },
+    [formFields, onChange]
+  )
 
-      const componentType = e.dataTransfer.getData('application/component-type')
-      const presetData = e.dataTransfer.getData('application/preset-field')
-
-      const DEFAULT_LABEL_TYPES = ['richtext', 'table', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature'] as const
+  const buildComponentField = useCallback(
+    (componentType: string): SimpleFormField => {
+      const DEFAULT_LABEL_TYPES = ['richtext', 'table', 'statement', 'text', 'email', 'phone', 'number', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'signature'] as const
       const DEFAULT_PLACEHOLDER_TYPES = ['text', 'email', 'phone', 'number', 'textarea', 'date', 'file'] as const
 
       const getDefaultLabel = (type: string): string => {
@@ -139,21 +143,8 @@ export function SimpleFormBuilder({
       const needsOptions = (type: string): boolean =>
         ['select', 'radio', 'checkbox'].includes(type)
 
-      let newField: SimpleFormField | null = null
-
-      if (presetData) {
-        try {
-          const presetField = JSON.parse(presetData) as SimpleFormField
-          newField = {
-            ...presetField,
-            id: uuidv4(),
-          }
-        } catch (error) {
-          console.error('Error parsing preset data:', error)
-          return
-        }
-      } else if (componentType === 'richtext') {
-        newField = {
+      if (componentType === 'richtext') {
+        return {
           id: uuidv4(),
           type: componentType,
           label: getDefaultLabel(componentType),
@@ -161,8 +152,9 @@ export function SimpleFormBuilder({
           required: false,
           width: 'full',
         }
-      } else if (componentType === 'table') {
-        newField = {
+      }
+      if (componentType === 'table') {
+        return {
           id: uuidv4(),
           type: componentType,
           label: getDefaultLabel(componentType),
@@ -170,32 +162,66 @@ export function SimpleFormBuilder({
           width: 'full',
           table: createDefaultTable((n) => tTable('defaultColumn', { n })),
         }
-      } else if (componentType) {
-        newField = {
+      }
+      if (componentType === 'statement') {
+        return {
           id: uuidv4(),
           type: componentType,
           label: getDefaultLabel(componentType),
-          placeholder: getDefaultPlaceholder(componentType),
-          required: false,
+          // Raw so ICU formatting leaves the {variable} tokens untouched.
+          content: t.raw('defaultStatementContent'),
+          required: true,
           width: 'full',
-          ...(needsOptions(componentType) && {
-            options: [
-              { label: t('optionLabel', { n: 1 }), value: 'option_1' },
-              { label: t('optionLabel', { n: 2 }), value: 'option_2' },
-              { label: t('optionLabel', { n: 3 }), value: 'option_3' },
-            ],
-          }),
         }
       }
-
-      if (newField) {
-        const updatedFields = [...formFields, newField]
-        setFormFields(updatedFields)
-        onChange?.(updatedFields)
-        setEditingField(newField.id)
+      return {
+        id: uuidv4(),
+        type: componentType,
+        label: getDefaultLabel(componentType),
+        placeholder: getDefaultPlaceholder(componentType),
+        required: false,
+        width: 'full',
+        ...(needsOptions(componentType) && {
+          options: [
+            { label: t('optionLabel', { n: 1 }), value: 'option_1' },
+            { label: t('optionLabel', { n: 2 }), value: 'option_2' },
+            { label: t('optionLabel', { n: 3 }), value: 'option_3' },
+          ],
+        }),
       }
     },
-    [formFields, onChange, t, tTable]
+    [t, tTable]
+  )
+
+  const addComponent = useCallback(
+    (componentType: string) => addField(buildComponentField(componentType)),
+    [addField, buildComponentField]
+  )
+
+  const addPreset = useCallback(
+    (presetField: SimpleFormField) => addField({ ...presetField, id: uuidv4() }),
+    [addField]
+  )
+
+  const handleFormAreaDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault()
+      setIsDraggingFromPalette(false)
+
+      const componentType = e.dataTransfer.getData('application/component-type')
+      const presetData = e.dataTransfer.getData('application/preset-field')
+
+      if (presetData) {
+        try {
+          addPreset(JSON.parse(presetData) as SimpleFormField)
+        } catch (error) {
+          console.error('Error parsing preset data:', error)
+        }
+      } else if (componentType) {
+        addComponent(componentType)
+      }
+    },
+    [addComponent, addPreset]
   )
 
   const handleFormAreaDragOver = useCallback(
@@ -253,8 +279,8 @@ export function SimpleFormBuilder({
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div className='flex h-full gap-4 bg-muted/30'>
         {/* Component Palette */}
-        <Card className='w-72 shrink-0'>
-          <CardContent className='p-4'>
+        <Card className='w-72 shrink-0 sticky top-4 self-start max-h-[calc(100vh-2rem)] flex flex-col overflow-hidden'>
+          <CardContent className='p-4 flex-1 min-h-0 overflow-y-auto'>
             {/* Tab Toggle */}
             <div className='flex items-center justify-between mb-4'>
               <Button
@@ -284,25 +310,26 @@ export function SimpleFormBuilder({
                 : t('choosePresets')}
             </p>
 
-            <ScrollArea className='h-full'>
-              <div className='space-y-2'>
-                {activeTab === 'components' ? (
-                  simpleComponents.map((item) => (
-                    <ComponentItem
-                      key={item.type}
-                      component={item}
-                      onDragStart={handlePaletteDragStart}
-                      onDragEnd={handlePaletteDragEnd}
-                    />
-                  ))
-                ) : (
-                  <PresetItem
+            <div className='space-y-2'>
+              {activeTab === 'components' ? (
+                simpleComponents.map((item) => (
+                  <ComponentItem
+                    key={item.type}
+                    component={item}
                     onDragStart={handlePaletteDragStart}
                     onDragEnd={handlePaletteDragEnd}
+                    onAdd={addComponent}
+                    addLabel={t('addToForm')}
                   />
-                )}
-              </div>
-            </ScrollArea>
+                ))
+              ) : (
+                <PresetItem
+                  onDragStart={handlePaletteDragStart}
+                  onDragEnd={handlePaletteDragEnd}
+                  onAdd={addPreset}
+                />
+              )}
+            </div>
           </CardContent>
         </Card>
 
@@ -430,10 +457,18 @@ interface SortableFieldItemProps {
 function SortableFieldItem({ field, isEditing, ...cardProps }: SortableFieldItemProps) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } =
     useSortable({ id: field.id, disabled: isEditing })
+  const nodeRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (isEditing) nodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [isEditing])
 
   return (
     <div
-      ref={setNodeRef}
+      ref={(node) => {
+        nodeRef.current = node
+        setNodeRef(node)
+      }}
       style={{ transform: CSS.Translate.toString(transform), transition }}
       // The settings panel needs room, so a field being edited always spans the full row.
       className={`${isEditing ? 'col-span-1 md:col-span-12' : fieldWidthClass(field.width)} ${

@@ -16,10 +16,15 @@ export const PRESET_OPTION_GROUPS: PresetOptionGroup[] = Object.entries(PRESET_F
   })
 );
 
+// Presets removed from the palette that existing forms may still reference.
+const LEGACY_PRESET_TYPES: Record<string, string> = {
+  courseTrainer: "course-trainer",
+};
+
 export function usePresetLabel() {
   const t = useTranslations("forms.builder.presets.fields");
   const typeByPreset = useMemo(() => {
-    const map = new Map<string, string>();
+    const map = new Map<string, string>(Object.entries(LEGACY_PRESET_TYPES));
     PRESET_OPTION_GROUPS.forEach((g) => g.options.forEach((o) => map.set(o.presetField, o.type)));
     return map;
   }, []);

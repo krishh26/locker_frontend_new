@@ -21,6 +21,8 @@ import { getTodayDateValue } from "./preset-values";
 import { TableField } from "./table-field";
 import { parseTableAnswer } from "./table-utils";
 import { usePresetLabel } from "./use-preset-label";
+import { StatementField } from "./statement-field";
+import { useTemplateResolver } from "./template-variables";
 
 type FormFieldType = FormField | SimpleFormField;
 
@@ -42,6 +44,7 @@ export function FormFieldsRenderer({
   className,
 }: FormFieldsRendererProps) {
   const presetLabel = usePresetLabel();
+  const resolveTemplate = useTemplateResolver();
 
   if (fields.length === 0) {
     return (
@@ -102,6 +105,28 @@ export function FormFieldsRenderer({
                 switch (field.type) {
                   case "richtext":
                     return <RichTextContent html={field.content} />;
+
+                  case "statement": {
+                    const agreedText = fieldValue as string;
+                    return (
+                      <StatementField
+                        id={field.id}
+                        required={field.required}
+                        text={agreedText || resolveTemplate(field.content || "")}
+                        checked={Boolean(agreedText)}
+                        onCheckedChange={
+                          isPreview
+                            ? (checked) =>
+                                handleChange(
+                                  field.id,
+                                  checked ? resolveTemplate(field.content || "") : ""
+                                )
+                            : undefined
+                        }
+                        disabled={!isPreview}
+                      />
+                    );
+                  }
 
                   case "table":
                     return (

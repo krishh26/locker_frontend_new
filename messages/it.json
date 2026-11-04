@@ -4025,7 +4025,11 @@
         "typeKnowledge": "Conoscenza",
         "typeSkills": "Competenze",
         "srNo": "Criteri",
-        "placeholderSrNo": "Criteri"
+        "placeholderSrNo": "Criteri",
+        "generateCodes": "Genera codici",
+        "generateCodesHint": "Compila i codici dei criteri vuoti o numerici (1, 2, 3) con K1, S1, B1 in base al tipo",
+        "codesGenerated": "{count} codici dei criteri generati. Salva il corso per applicarli.",
+        "noCodesToGenerate": "Tutti i criteri hanno già un codice."
       }
     }
   },
@@ -4880,6 +4884,7 @@
         "title": "Ente finanziatore",
         "fundingBody": "Ente finanziatore",
         "awardingBody": "Ente certificatore",
+        "selectAwardingBody": "Seleziona ente certificatore",
         "registrationNumber": "Numero di registrazione",
         "registrationDate": "Data di registrazione",
         "laraCode": "Codice LARA"

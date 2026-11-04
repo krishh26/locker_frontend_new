@@ -4954,7 +4954,11 @@
         "placeholderTopicTitle": "Topic title",
         "typeBehaviour": "Behaviour",
         "typeKnowledge": "Knowledge",
-        "typeSkills": "Skills"
+        "typeSkills": "Skills",
+        "generateCodes": "Generate codes",
+        "generateCodesHint": "Fill empty or numeric criteria codes (1, 2, 3) with K1, S1, B1 based on each criteria type",
+        "codesGenerated": "{count} criteria codes generated. Save the course to apply them.",
+        "noCodesToGenerate": "All criteria already have codes."
       }
     }
   },
@@ -5773,6 +5777,7 @@
         "title": "Funding Body",
         "fundingBody": "Funding Body",
         "awardingBody": "Awarding Body",
+        "selectAwardingBody": "Select Awarding Body",
         "registrationNumber": "Registration Number",
         "registrationDate": "Registration Date",
         "laraCode": "LARA Code"

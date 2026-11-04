@@ -4571,7 +4571,11 @@
         "typeKnowledge": "知识",
         "typeSkills": "技能",
         "srNo": "标准",
-        "placeholderSrNo": "标准"
+        "placeholderSrNo": "标准",
+        "generateCodes": "生成编码",
+        "generateCodesHint": "根据每个标准的类型，将空白或纯数字的标准编码（1、2、3）填充为 K1、S1、B1",
+        "codesGenerated": "已生成 {count} 个标准编码。保存课程以应用。",
+        "noCodesToGenerate": "所有标准都已有编码。"
       }
     }
   },
@@ -5667,6 +5671,7 @@
         "title": "资助机构",
         "fundingBody": "资助机构",
         "awardingBody": "颁证机构",
+        "selectAwardingBody": "选择颁证机构",
         "registrationNumber": "注册号",
         "registrationDate": "注册日期",
         "laraCode": "LARA 代码"

@@ -29,6 +29,8 @@ interface CourseAutocompleteProps {
   className?: string
   error?: boolean
   multiple?: boolean
+  /** Course ids hidden from the options, e.g. courses the learner is already enrolled on. */
+  excludeCourseIds?: string[]
 }
 
 export function CourseAutocomplete({
@@ -39,6 +41,7 @@ export function CourseAutocomplete({
   className,
   error = false,
   multiple = false,
+  excludeCourseIds,
 }: CourseAutocompleteProps) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState("")
@@ -58,16 +61,22 @@ export function CourseAutocomplete({
     return (coursesData?.data || []).filter((course) => course.active !== false)
   }, [coursesData])
 
+  const selectableCourses = React.useMemo(() => {
+    if (!excludeCourseIds?.length) return allCourses
+    const excluded = new Set(excludeCourseIds)
+    return allCourses.filter((course) => !excluded.has(course.course_id?.toString() || ""))
+  }, [allCourses, excludeCourseIds])
+
   // Filter courses based on search term
   const filteredCourses = React.useMemo(() => {
     if (!search.trim()) {
-      return allCourses
+      return selectableCourses
     }
     const searchLower = search.toLowerCase()
-    return allCourses.filter((course) =>
+    return selectableCourses.filter((course) =>
       getCourseLabel(course).toLowerCase().includes(searchLower)
     )
-  }, [allCourses, search])
+  }, [selectableCourses, search])
 
   // Get displayed courses (paginated)
   const displayedCourses = React.useMemo(() => {

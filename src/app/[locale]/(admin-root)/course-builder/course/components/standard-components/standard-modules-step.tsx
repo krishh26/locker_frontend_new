@@ -31,7 +31,7 @@ interface StandardModulesStepProps {
   courseId?: string | number | null;
   courseCoreType: CourseCoreType;
   control: Control<CourseFormData>;
-  setValue: (name: string, value: unknown) => void;
+  setValue: (name: string, value: unknown, options?: { shouldDirty?: boolean }) => void;
   errors?: FieldErrors<CourseFormData>;
 }
 

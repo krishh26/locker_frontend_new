@@ -4351,7 +4351,11 @@
         "typeKnowledge": "معرفة",
         "typeSkills": "مهارات",
         "srNo": "المعايير",
-        "placeholderSrNo": "المعايير"
+        "placeholderSrNo": "المعايير",
+        "generateCodes": "إنشاء الرموز",
+        "generateCodesHint": "تعبئة رموز المعايير الفارغة أو الرقمية (1، 2، 3) بـ K1 وS1 وB1 حسب نوع كل معيار",
+        "codesGenerated": "تم إنشاء {count} من رموز المعايير. احفظ الدورة لتطبيقها.",
+        "noCodesToGenerate": "جميع المعايير لديها رموز بالفعل."
       }
     }
   },
@@ -5631,6 +5635,7 @@
         "title": "جهة التمويل",
         "fundingBody": "جهة التمويل",
         "awardingBody": "الجهة المانحة",
+        "selectAwardingBody": "اختر جهة منح الشهادة",
         "registrationNumber": "رقم التسجيل",
         "registrationDate": "تاريخ التسجيل",
         "laraCode": "رمز LARA"

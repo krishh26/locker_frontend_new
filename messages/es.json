@@ -4450,7 +4450,11 @@
         "placeholderTopicTitle": "Título del tema",
         "typeBehaviour": "Comportamiento",
         "typeKnowledge": "Conocimiento",
-        "typeSkills": "Destrezas"
+        "typeSkills": "Destrezas",
+        "generateCodes": "Generar códigos",
+        "generateCodesHint": "Rellena los códigos de criterios vacíos o numéricos (1, 2, 3) con K1, S1, B1 según el tipo",
+        "codesGenerated": "Se generaron {count} códigos de criterios. Guarde el curso para aplicarlos.",
+        "noCodesToGenerate": "Todos los criterios ya tienen código."
       }
     }
   },
@@ -5546,6 +5550,7 @@
         "title": "Organismo de financiación",
         "fundingBody": "Organismo de financiación",
         "awardingBody": "Organismo certificador",
+        "selectAwardingBody": "Seleccione la entidad certificadora",
         "registrationNumber": "N.º de registro",
         "registrationDate": "Fecha de registro",
         "laraCode": "Código LARA"

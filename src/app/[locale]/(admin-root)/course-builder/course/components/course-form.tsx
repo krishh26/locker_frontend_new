@@ -643,7 +643,8 @@ export function CourseForm({ courseType, courseId, initialStep, isViewMode = fal
               courseId={currentCourseId}
               courseCoreType={courseCoreType}
               control={control}
-              setValue={((name: string, value: any) => setValue(name as any, value)) as any}
+              setValue={((name: string, value: any, options?: { shouldDirty?: boolean }) =>
+                setValue(name as any, value, options)) as any}
               errors={errors}
             />
         );

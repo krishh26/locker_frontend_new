@@ -31,17 +31,12 @@ import {
 import { Card } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type CriteriaType = "Behaviour" | "Knowledge" | "Skills";
-
-const TYPE_PREFIX: Record<CriteriaType, string> = {
-  Knowledge: "K",
-  Skills: "S",
-  Behaviour: "B",
-};
-
-/** Matches codes this form fills in (K1, S12, B3) so hand-typed codes are never overwritten. */
-const AUTO_CODE_PATTERN = /^[KSB]\d+$/i;
+import {
+  AUTO_CODE_PATTERN,
+  nextCriteriaCode,
+  type CriteriaRow,
+  type CriteriaType,
+} from "../../utils/standard-criteria-codes";
 
 interface StandardTopicsFormProps {
   control: Control<CourseFormData>;
@@ -62,27 +57,15 @@ export function StandardTopicsForm({
     name: `units.${moduleIndex}.subUnit`,
   });
   const topics = useWatch({ control, name: `units.${moduleIndex}.subUnit` }) as
-    | Array<{ type?: string; code?: string }>
+    | CriteriaRow[]
     | undefined;
-
-  // Highest existing number for the prefix + 1, so deleting a row never produces a duplicate code.
-  const nextCode = (type: CriteriaType, excludeIndex?: number) => {
-    const prefix = TYPE_PREFIX[type];
-    const pattern = new RegExp(`^${prefix}(\\d+)$`, "i");
-    const highest = (topics ?? []).reduce((max, topic, i) => {
-      if (i === excludeIndex) return max;
-      const match = topic?.code?.trim().match(pattern);
-      return match ? Math.max(max, Number(match[1])) : max;
-    }, 0);
-    return `${prefix}${highest + 1}`;
-  };
 
   const handleAddTopic = () => {
     const newTopic = {
       id: Date.now(),
       title: "",
       type: "Behaviour" as const,
-      code: nextCode("Behaviour"),
+      code: nextCriteriaCode(topics, "Behaviour"),
     };
     append(newTopic, { shouldFocus: false });
   };
@@ -93,7 +76,7 @@ export function StandardTopicsForm({
     if (previous?.type === type) return;
     const currentCode = previous?.code?.trim() ?? "";
     if (!currentCode || AUTO_CODE_PATTERN.test(currentCode)) {
-      setValue(`units.${moduleIndex}.subUnit.${index}.code`, nextCode(type, index));
+      setValue(`units.${moduleIndex}.subUnit.${index}.code`, nextCriteriaCode(topics, type, index));
     }
   };
 

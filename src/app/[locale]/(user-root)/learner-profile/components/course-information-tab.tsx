@@ -65,6 +65,7 @@ import {
 import type { LearnerData, LearnerCourse } from "@/store/api/learner/types";
 import { cn } from "@/lib/utils";
 import { getCourseLabel } from "@/utils/course-label";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -240,6 +241,14 @@ export function CourseInformationTab({
   const [isEditMode, setIsEditMode] = useState(false);
 
   const courses = useMemo(() => learner.course || [], [learner.course]);
+  const enrolledCourseIds = useMemo(
+    () =>
+      courses
+        .map((c) => c.course?.course_id)
+        .filter((id) => id != null)
+        .map(String),
+    [courses]
+  );
 
   // Fetch courses list for dropdown
   const { data: coursesResponse, isLoading: isLoadingCourses } =
@@ -603,33 +612,41 @@ export function CourseInformationTab({
             </div>
           ) : (
             <div className="rounded-md border overflow-x-auto">
-              <Table>
+              <Table className="min-w-[56rem]">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("courseInformation.table.courseName")}</TableHead>
-                    <TableHead>{t("courseInformation.table.level")}</TableHead>
-                    <TableHead>{t("courseInformation.table.startDate")}</TableHead>
-                    <TableHead>{t("courseInformation.table.endDate")}</TableHead>
-                    <TableHead>{t("courseInformation.table.status")}</TableHead>
-                    <TableHead>{t("courseInformation.table.mainCourse")}</TableHead>
-                    {canEdit && <TableHead>{t("courseInformation.table.actions")}</TableHead>}
+                    <TableHead className="px-4">{t("courseInformation.table.courseName")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.level")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.startDate")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.endDate")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.status")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap text-center">{t("courseInformation.table.mainCourse")}</TableHead>
+                    {canEdit && (
+                      <TableHead className="px-4 whitespace-nowrap text-right">{t("courseInformation.table.actions")}</TableHead>
+                    )}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {courses.map((course) => (
                     <TableRow key={course.user_course_id}>
-                      <TableCell className="font-medium max-w-25">
-                        <div
-                          className="truncate"
-                          title={course.course?.course_name || "-"}
-                        >
-                          {course.course?.course_name || "-"}
-                        </div>
+                      <TableCell className="px-4 py-3 font-medium w-[32%] min-w-56 max-w-80">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="truncate cursor-default">
+                              {course.course?.course_name || "-"}
+                            </div>
+                          </TooltipTrigger>
+                          {course.course?.course_name && (
+                            <TooltipContent side="top" align="start" className="max-w-sm">
+                              {course.course.course_name}
+                            </TooltipContent>
+                          )}
+                        </Tooltip>
                       </TableCell>
-                      <TableCell>{course.course?.level || "-"}</TableCell>
-                      <TableCell>{formatDate(course.start_date)}</TableCell>
-                      <TableCell>{formatDate(course.end_date)}</TableCell>
-                      <TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{course.course?.level || "-"}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{formatDate(course.start_date)}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">{formatDate(course.end_date)}</TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">
                         <Badge
                           variant={getStatusBadgeVariant(course.course_status)}
                           className={cn(
@@ -649,7 +666,7 @@ export function CourseInformationTab({
                             : "-"}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="px-4 py-3 text-center">
                         {course.is_main_course ? (
                           <Badge variant="default">{t("courseInformation.yes")}</Badge>
                         ) : (
@@ -657,8 +674,8 @@ export function CourseInformationTab({
                         )}
                       </TableCell>
                       {canEdit && (
-                        <TableCell>
-                          <div className="flex gap-2">
+                        <TableCell className="px-4 py-3">
+                          <div className="flex justify-end gap-1">
                             <Button
                               type="button"
                               variant="ghost"
@@ -809,6 +826,7 @@ export function CourseInformationTab({
                         <FormControl>
                           <CourseAutocomplete
                             multiple
+                            excludeCourseIds={enrolledCourseIds}
                             value={selectedIds}
                             onValueChange={(next) => {
                               const nextIds = Array.isArray(next) ? next : next ? [next] : [];

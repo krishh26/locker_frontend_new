@@ -3680,7 +3680,11 @@
         "typeKnowledge": "Wissen",
         "typeSkills": "Fertigkeiten",
         "srNo": "Kriterien",
-        "placeholderSrNo": "Kriterien"
+        "placeholderSrNo": "Kriterien",
+        "generateCodes": "Codes generieren",
+        "generateCodesHint": "Leere oder numerische Kriteriencodes (1, 2, 3) je nach Typ mit K1, S1, B1 füllen",
+        "codesGenerated": "{count} Kriteriencodes generiert. Speichern Sie den Kurs, um sie zu übernehmen.",
+        "noCodesToGenerate": "Alle Kriterien haben bereits Codes."
       }
     }
   },
@@ -4880,6 +4884,7 @@
         "title": "Förderstelle",
         "fundingBody": "Förderstelle",
         "awardingBody": "Zertifizierungsstelle",
+        "selectAwardingBody": "Zertifizierungsstelle auswählen",
         "registrationNumber": "Registrierungsnummer",
         "registrationDate": "Registrierungsdatum",
         "laraCode": "LARA-Code"

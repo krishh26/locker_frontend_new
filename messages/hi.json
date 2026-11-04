@@ -4428,7 +4428,11 @@
         "typeKnowledge": "ज्ञान",
         "typeSkills": "कौशल",
         "srNo": "मानदंड",
-        "placeholderSrNo": "मानदंड"
+        "placeholderSrNo": "मानदंड",
+        "generateCodes": "कोड बनाएँ",
+        "generateCodesHint": "खाली या संख्या वाले मानदंड कोड (1, 2, 3) को प्रकार के अनुसार K1, S1, B1 से भरें",
+        "codesGenerated": "{count} मानदंड कोड बनाए गए। लागू करने के लिए कोर्स सेव करें।",
+        "noCodesToGenerate": "सभी मानदंडों के पास पहले से कोड हैं।"
       }
     }
   },
@@ -5722,6 +5726,7 @@
         "title": "फंडिंग बॉडी",
         "fundingBody": "फंडिंग बॉडी",
         "awardingBody": "पुरस्कार देने वाली संस्था",
+        "selectAwardingBody": "पुरस्कार देने वाली संस्था चुनें",
         "registrationNumber": "पंजीकरण संख्या",
         "registrationDate": "पंजीकरण तिथि",
         "laraCode": "LARA कोड"

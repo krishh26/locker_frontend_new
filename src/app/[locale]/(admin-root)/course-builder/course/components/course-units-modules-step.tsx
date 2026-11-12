@@ -20,7 +20,7 @@ interface CourseUnitsModulesStepProps {
   courseId?: string | number | null;
   courseCoreType: CourseCoreType;
   control: Control<CourseFormData>;
-  setValue: (name: string, value: any) => void;
+  setValue: (name: string, value: any, options?: { shouldDirty?: boolean }) => void;
   errors?: FieldErrors<CourseFormData>;
 }
 
@@ -65,6 +65,7 @@ export function CourseUnitsModulesStep({
         courseId={courseId}
         courseCoreType={courseCoreType}
         control={control}
+        setValue={setValue}
         errors={errors}
       />
     </div>

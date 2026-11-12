@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { useTranslations } from "next-intl"
+import { getCourseLabel } from "@/utils/course-label"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -391,7 +392,7 @@ export function AllocateSurveyDialog({
                                 key={course.course_id}
                                 value={String(course.course_id)}
                               >
-                                {course.course_name}
+                                {getCourseLabel(course)}
                               </SelectItem>
                             ))}
                           </SelectContent>

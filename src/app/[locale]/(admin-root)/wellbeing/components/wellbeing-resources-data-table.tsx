@@ -228,12 +228,24 @@ export function WellbeingResourcesDataTable() {
           const displayName = formatWellbeingDisplayName(resource);
           return (
             <div className="flex w-full flex-col gap-0.5">
-              <span
-                className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug"
-                title={title}
-              >
-                {displayName}
-              </span>
+              {resource.location ? (
+                <a
+                  href={resource.location}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug text-primary underline-offset-4 hover:underline"
+                  title={title}
+                >
+                  {displayName}
+                </a>
+              ) : (
+                <span
+                  className="block w-full max-w-[30ch] break-words whitespace-normal font-medium leading-snug"
+                  title={title}
+                >
+                  {displayName}
+                </span>
+              )}
               {resource.description && (
                 <span
                   className="block w-full max-w-[30ch] break-words whitespace-normal text-sm text-muted-foreground leading-snug"

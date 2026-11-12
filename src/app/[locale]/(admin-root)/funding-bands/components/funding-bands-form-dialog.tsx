@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { Loader2 } from "lucide-react";
 import {
   Dialog,
@@ -247,7 +248,7 @@ export function FundingBandsFormDialog({
                               value={course.course_id.toString()}
                               className="h-auto min-h-8 min-w-0 items-start whitespace-normal wrap-break-word py-2 pr-8"
                             >
-                              {course.course_name}
+                              {getCourseLabel(course)}
                               {course.course_code && ` (Code: ${course.course_code})`}
                             </SelectItem>
                           ))
@@ -314,7 +315,7 @@ export function FundingBandsFormDialog({
             <div className="space-y-2">
               <Label>{t("form.course")}</Label>
               <div className="bg-muted text-foreground rounded-md border px-3 py-2 text-sm break-words min-w-0 w-full">
-                {fundingBand.course.course_name}
+                {getCourseLabel(fundingBand.course)}
               </div>
             </div>
           )}

@@ -95,7 +95,7 @@ export const courseApi = createApi({
     }),
     updateCourse: builder.mutation<
       CourseUpdateResponse,
-      { id: number; data: CourseFormData; silent?: boolean }
+      { id: number; data: Partial<CourseFormData>; silent?: boolean }
     >({
       query: ({ id, data }) => ({
         url: `/course/update/${id}`,

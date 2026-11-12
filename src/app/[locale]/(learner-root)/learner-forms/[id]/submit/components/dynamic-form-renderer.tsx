@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { useForm, Controller, Control } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -32,23 +32,35 @@ import { MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/upload-limits"
 import { FileUploadField } from "./file-upload-field"
 import { SignatureInput } from "./signature-input"
 import { useTranslations } from "next-intl"
+import { RichTextContent } from "@/components/forms/rich-text-content"
+import {
+  TODAY_DATE_PRESET,
+  fieldWidthClass,
+  isDisplayOnlyField,
+  isTodayDateField,
+} from "@/components/forms/field-types"
+import {
+  buildCoursePresetMap,
+  buildLineManagerPresetMap,
+  getTodayDateValue,
+} from "@/components/forms/preset-values"
+import { TableField } from "@/components/forms/table-field"
+import { StatementField } from "@/components/forms/statement-field"
+import { useTemplateResolver } from "@/components/forms/template-variables"
+import {
+  buildTableAnswer,
+  isTableAnswerComplete,
+  parseTableAnswer,
+} from "@/components/forms/table-utils"
+import type { TableAnswer } from "@/store/api/forms/types"
+
+type FieldValue = string | string[] | File | TableAnswer | undefined
 
 interface DynamicFormRendererProps {
   formId: string
   formName?: string
   description?: string
   fields: FormField[]
-}
-
-const widthToClass = (width?: string) => {
-  switch (width) {
-    case "half":
-      return "md:col-span-6"
-    case "third":
-      return "md:col-span-4"
-    default:
-      return "md:col-span-12"
-  }
 }
 
 const getDynamicZodSchema = (
@@ -59,6 +71,8 @@ const getDynamicZodSchema = (
 
   fields.forEach((field) => {
     const { id, label, required, type } = field
+
+    if (isDisplayOnlyField(type)) return
 
     let schema: z.ZodTypeAny
 
@@ -103,6 +117,12 @@ const getDynamicZodSchema = (
       case "signature":
         schema = z.any().optional()
         break
+      case "table":
+        schema = z.any().refine(
+          (value) => !required || isTableAnswerComplete(field.table, parseTableAnswer(value)),
+          { message: t("validation.tableIncomplete", { label }) }
+        )
+        break
       case "textfield": // Handle API's "textfield" type
       case "text":
       default:
@@ -110,7 +130,7 @@ const getDynamicZodSchema = (
         break
     }
 
-    if (required && type !== "file" && type !== "signature") {
+    if (required && type !== "file" && type !== "signature" && type !== "table") {
       if (z.string().safeParse("").success) {
         schema = (schema as z.ZodString).min(1, t("validation.required", { label }))
       }
@@ -126,8 +146,12 @@ export function DynamicFormRenderer({
   formId,
   formName,
   description,
-  fields,
+  fields: allFields,
 }: DynamicFormRendererProps) {
+  const fields = useMemo(
+    () => allFields.filter((field) => !isDisplayOnlyField(field.type)),
+    [allFields]
+  )
   const t = useTranslations("learnerFormSubmit")
   const router = useRouter()
   const user = useAppSelector((state) => state.auth.user)
@@ -164,48 +188,62 @@ export function DynamicFormRenderer({
     resolver: zodResolver(validationSchema),
     mode: "onSubmit",
     defaultValues: fields.reduce((acc, field) => {
-      acc[field.id] = field.type === "checkbox" ? [] : ""
+      acc[field.id] = field.type === "checkbox" ? [] : field.type === "table" ? {} : ""
       return acc
-    }, {} as Record<string, string | string[] | File | undefined>),
+    }, {} as Record<string, FieldValue>),
   })
 
-  // Apply preset values and form data
-  useEffect(() => {
-    if (!user) return
+  const presetMap = useMemo(() => {
+    const map: Record<string, string | number | null | undefined> = {}
+    if (!user) return map
 
-    const presetMap: Record<string, string | number | null | undefined> = {
-      learnerFullName:
-        `${user.first_name || ""} ${user.last_name || ""}`.trim() || undefined,
-      LearnerEmail: typeof user.email === "string" ? user.email : undefined,
-      LearnerPhoneNumber:
-        typeof user.mobile === "string" ? user.mobile : undefined,
-    }
+    map.learnerFullName =
+      `${user.first_name || ""} ${user.last_name || ""}`.trim() || undefined
+    map.LearnerEmail = typeof user.email === "string" ? user.email : undefined
+    map.LearnerPhoneNumber =
+      typeof user.mobile === "string" ? user.mobile : undefined
 
     if (learner) {
       Object.keys(learner).forEach((key) => {
         const value = (learner as Record<string, unknown>)[key]
         if (typeof value === "string" || typeof value === "number") {
-          presetMap[key] = value
+          map[key] = value
         } else if (value === null || value === undefined) {
-          presetMap[key] = value
-        } else if (
-          typeof value === "object" &&
-          value !== null &&
-          !Array.isArray(value)
-        ) {
-          // Skip nested objects
-          return
+          map[key] = value
         }
       })
+      Object.assign(map, buildCoursePresetMap(learner), buildLineManagerPresetMap(learner))
     }
+    return map
+  }, [user, learner])
 
-    const defaultValues: Record<string, string | string[] | File | undefined> =
-      {}
+  const resolveTemplate = useTemplateResolver()
+  const templateValues = useMemo(
+    () => (user?.role === "Learner" ? presetMap : {}),
+    [presetMap, user?.role]
+  )
+
+  // Learner data only auto-fills for the learner themselves; today's date applies to everyone.
+  const getTablePresetValues = useCallback(
+    () => ({
+      ...(user?.role === "Learner" ? presetMap : {}),
+      [TODAY_DATE_PRESET]: getTodayDateValue(),
+    }),
+    [presetMap, user?.role]
+  )
+
+  // Apply preset values and form data
+  useEffect(() => {
+    if (!user) return
+
+    const defaultValues: Record<string, FieldValue> = {}
 
     fields.forEach((field) => {
-      let defaultValue: string | string[] | File | undefined = ""
+      let defaultValue: FieldValue = ""
 
-      if (user.role === "Learner" && field.presetField) {
+      if (field.type === "table") {
+        defaultValue = {}
+      } else if (user.role === "Learner" && field.presetField) {
         const presetValue = presetMap[field.presetField]
         if (presetValue !== undefined && presetValue !== null) {
           defaultValue = String(presetValue)
@@ -226,7 +264,9 @@ export function DynamicFormRenderer({
          const fieldDef = fields.find((f) => f.id === key)
          if (!fieldDef) return
 
-         if (fieldDef.type === "checkbox") {
+         if (fieldDef.type === "table") {
+           defaultValues[key] = parseTableAnswer(value)
+         } else if (fieldDef.type === "checkbox") {
            defaultValues[key] =
              typeof value === "string" && value
                ? value.split(",").map((v) => v.trim())
@@ -254,8 +294,24 @@ export function DynamicFormRenderer({
        })
      }
 
+    // Locked forms keep the date they were completed on; otherwise it is always today.
+    const tablePresetValues = getTablePresetValues()
+    fields.forEach((field) => {
+      if (isTodayDateField(field) && (!isLocked || !defaultValues[field.id])) {
+        defaultValues[field.id] = getTodayDateValue()
+      }
+      if (field.type === "table") {
+        defaultValues[field.id] = buildTableAnswer(
+          field.table,
+          parseTableAnswer(defaultValues[field.id]),
+          tablePresetValues,
+          isLocked
+        )
+      }
+    })
+
     reset(defaultValues)
-  }, [fields, formDataDetails, user, learner, reset])
+  }, [fields, formDataDetails, user, presetMap, getTablePresetValues, reset, isLocked])
 
   const onSubmit = async (data: Record<string, unknown>) => {
     if (!user?.user_id) return
@@ -399,15 +455,22 @@ export function DynamicFormRenderer({
   }
 
   const onClear = () => {
+    const tablePresetValues = getTablePresetValues()
     reset(
       fields.reduce((acc, field) => {
-        acc[field.id] = field.type === "checkbox" ? [] : ""
+        acc[field.id] = isTodayDateField(field)
+          ? getTodayDateValue()
+          : field.type === "table"
+          ? buildTableAnswer(field.table, {}, tablePresetValues)
+          : field.type === "checkbox"
+          ? []
+          : ""
         return acc
-      }, {} as Record<string, string | string[] | File | undefined>)
+      }, {} as Record<string, FieldValue>)
     )
   }
 
-  if (fields.length === 0) {
+  if (allFields.length === 0) {
     return (
       <Card>
         <CardContent className="p-6">
@@ -438,8 +501,11 @@ export function DynamicFormRenderer({
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-            {fields.map((field) => (
-              <div key={field.id} className={widthToClass(field.width)}>
+            {allFields.map((field) => (
+              <div key={field.id} className={fieldWidthClass(field.width)}>
+                {field.type === "richtext" ? (
+                  <RichTextContent html={field.content} values={templateValues} />
+                ) : (
                 <Controller
                   name={field.id}
                   control={control}
@@ -448,6 +514,58 @@ export function DynamicFormRenderer({
                     const errorMessage = fieldState.error?.message
 
                     switch (field.type) {
+                      case "statement": {
+                        // The answer stores the exact statement agreed to, so it stays the same if names change later.
+                        const agreedText =
+                          typeof controllerField.value === "string" ? controllerField.value : ""
+                        const currentText = resolveTemplate(field.content || "", templateValues)
+                        return (
+                          <div className="space-y-2">
+                            <StatementField
+                              id={field.id}
+                              required={field.required}
+                              text={agreedText || currentText}
+                              checked={Boolean(agreedText)}
+                              onCheckedChange={(checked) =>
+                                controllerField.onChange(checked ? currentText : "")
+                              }
+                              disabled={isLocked}
+                              error={error}
+                            />
+                            {errorMessage && (
+                              <p className="text-sm text-destructive">
+                                {errorMessage}
+                              </p>
+                            )}
+                          </div>
+                        )
+                      }
+
+                      case "table":
+                        return (
+                          <div className="space-y-2">
+                            <Label>
+                              {field.label}
+                              {field.required && (
+                                <span className="text-destructive ml-1">*</span>
+                              )}
+                            </Label>
+                            <TableField
+                              config={field.table}
+                              value={parseTableAnswer(controllerField.value)}
+                              onChange={controllerField.onChange}
+                              disabled={isLocked}
+                              error={error}
+                              idPrefix={field.id}
+                            />
+                            {errorMessage && (
+                              <p className="text-sm text-destructive">
+                                {errorMessage}
+                              </p>
+                            )}
+                          </div>
+                        )
+
                       case "text":
                       case "textfield": // API returns "textfield" instead of "text"
                       case "email":
@@ -661,7 +779,7 @@ export function DynamicFormRenderer({
                               {...controllerField}
                               id={field.id}
                               type="date"
-                              disabled={isLocked}
+                              disabled={isLocked || isTodayDateField(field)}
                               className={error ? "border-destructive" : ""}
                               value={
                                 controllerField.value &&
@@ -750,6 +868,7 @@ export function DynamicFormRenderer({
                     }
                   }}
                 />
+                )}
               </div>
             ))}
           </div>

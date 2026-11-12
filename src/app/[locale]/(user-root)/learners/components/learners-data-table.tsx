@@ -88,6 +88,7 @@ import Link from "next/link";
 import { useCachedCoursesList } from "@/store/hooks/useCachedCoursesList";
 import { useGetEmployersQuery } from "@/store/api/employer/employerApi";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 const statusOptions = [
   "Awaiting Induction",
@@ -514,7 +515,7 @@ export function LearnersDataTable() {
             return (
               <div className="flex items-center gap-1">
                 {courses.map((c, index: number) => {
-                  const courseName = c.course?.course_name || tTable("unknownCourse");
+                  const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
                   return (
                     <div key={index} className="flex items-center gap-3">
                       <Tooltip>
@@ -687,7 +688,7 @@ export function LearnersDataTable() {
             return (
               <div className="flex items-center gap-1">
                 {courses.map((c, index) => {
-                  const courseName = c.course?.course_name || tTable("unknownCourse");
+                  const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
                   return (
                     <Tooltip key={index}>
                       <TooltipTrigger asChild>
@@ -725,7 +726,7 @@ export function LearnersDataTable() {
                   const courseId = item?.course?.course_id;
           
                   if (!courseId) return null;
-                  const courseName = item?.course?.course_name || tTable("unknownCourse");
+                  const courseName = getCourseLabel(item?.course, tTable("unknownCourse"));
           
                   return (
                     <div key={courseId} className="flex items-center gap-2">
@@ -889,7 +890,7 @@ export function LearnersDataTable() {
           return (
             <div className="flex items-center gap-1">
               {courses.map((c, index) => {
-                const courseName = c.course?.course_name || tTable("unknownCourse");
+                const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
                 return (
                   <Tooltip key={index}>
                     <TooltipTrigger asChild>
@@ -1074,7 +1075,7 @@ export function LearnersDataTable() {
                 ) : (
                   courseOptions.map((course) => (
                     <SelectItem key={course.course_id} value={String(course.course_id)}>
-                      {course.course_name}
+                      {getCourseLabel(course)}
                     </SelectItem>
                   ))
                 )}

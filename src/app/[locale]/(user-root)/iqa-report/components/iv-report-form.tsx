@@ -23,6 +23,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface AssessmentQuestion {
   id: string;
@@ -104,7 +105,7 @@ export function IVReportForm() {
                       key={selectedCourse.course_id}
                       value={selectedCourse.course_id.toString()}
                     >
-                      {selectedCourse.course_name || t("form.untitledCourse")}
+                      {getCourseLabel(selectedCourse, t("form.untitledCourse"))}
                     </SelectItem>
                   )}
                 </SelectContent>

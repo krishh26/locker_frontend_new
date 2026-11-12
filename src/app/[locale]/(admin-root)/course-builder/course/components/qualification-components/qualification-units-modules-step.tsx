@@ -72,7 +72,7 @@ export function QualificationUnitsModulesStep({
       credit_value: null,
       subUnit: [],
     };
-    append(newUnit);
+    append(newUnit, { shouldFocus: false });
   };
 
   const toggleRow = (index: number) => {

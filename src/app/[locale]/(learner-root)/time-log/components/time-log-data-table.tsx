@@ -65,6 +65,7 @@ import { RecentActivitySection } from "./recent-activity-section";
 import { TimeLogFormDialog } from "./time-log-form-dialog";
 import { OffTheJobSummary } from "./off-the-job-summary";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 interface TimeLogDataTableProps {
   createDialogOpen?: boolean;
@@ -218,6 +219,15 @@ export function TimeLogDataTable({
     return { variant: "default" as const, className: "" };
   };
 
+  // Time log entries only carry the course name, so the level comes from the learner's courses.
+  const courseLabelById = useMemo(
+    () =>
+      new Map(
+        (courses || []).map((c) => [String(c.course?.course_id), getCourseLabel(c.course)])
+      ),
+    [courses]
+  );
+
   const columns: ColumnDef<TimeLogEntry>[] = useMemo(
     () => [
       {
@@ -238,7 +248,7 @@ export function TimeLogDataTable({
           const course = row.original.course_id;
           const courseName =
             typeof course === "object" && course
-              ? course.course_name
+              ? courseLabelById.get(String(course.course_id)) || course.course_name
               : course || "-";
           return <span className="text-sm">{courseName}</span>;
         },
@@ -351,7 +361,7 @@ export function TimeLogDataTable({
         },
       },
     ],
-    [isEmployer, handleEdit, t]
+    [isEmployer, handleEdit, t, courseLabelById]
   );
 
   const table = useReactTable({
@@ -401,7 +411,7 @@ export function TimeLogDataTable({
                   key={index}
                   value={String(learnerCourse.course.course_id)}
                 >
-                  {learnerCourse.course.course_name}
+                  {getCourseLabel(learnerCourse.course)}
                 </SelectItem>
               ))}
             </SelectContent>

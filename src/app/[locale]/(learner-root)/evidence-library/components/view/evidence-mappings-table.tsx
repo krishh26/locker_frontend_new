@@ -15,6 +15,7 @@ import {
   getStandardUnitParts,
 } from "@/utils/unit-labels";
 import { COURSE_TYPES } from "../constants";
+import { getCourseLabel } from "@/utils/course-label";
 import { reconstructFormStateFromMappings } from "../../utils/reconstruct-form-state";
 import { applyTrainerMapToggle } from "../../utils/apply-trainer-map-toggle";
 import { QualificationMinimal } from "./qualification-minimal";
@@ -73,6 +74,7 @@ export function EvidenceMappingsTable({
             course_id: course.course_id,
             course_name: course.course_name,
             course_code: course.course_code,
+            level: course.level,
             course_core_type: course.course_core_type,
             units: course.units || [],
           };
@@ -334,7 +336,7 @@ export function EvidenceMappingsTable({
         return (
           <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
             <h3 className="font-semibold text-lg mb-2">
-              {course.course_name} - Units
+              {getCourseLabel(course)} - Units
             </h3>
             <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
             <Accordion
@@ -429,7 +431,7 @@ export function EvidenceMappingsTable({
         return (
           <div key={course.course_id} className="space-y-3 mb-4 min-w-0">
             <h3 className="font-semibold text-lg mb-2">
-              {course.course_name} - Units
+              {getCourseLabel(course)} - Units
             </h3>
             <UnitHierarchyHeader unitLabel="Unit" titleLabel="Title" />
             <Accordion

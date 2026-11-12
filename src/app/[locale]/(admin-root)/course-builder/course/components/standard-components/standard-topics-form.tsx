@@ -9,7 +9,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Controller, Control, useFieldArray } from "react-hook-form";
+import { Controller, Control, useFieldArray, useWatch } from "react-hook-form";
 import type { CourseFormData } from "@/store/api/course/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,15 +31,23 @@ import {
 import { Card } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  AUTO_CODE_PATTERN,
+  nextCriteriaCode,
+  type CriteriaRow,
+  type CriteriaType,
+} from "../../utils/standard-criteria-codes";
 
 interface StandardTopicsFormProps {
   control: Control<CourseFormData>;
+  setValue: (name: string, value: unknown) => void;
   moduleIndex: number;
   readOnly?: boolean;
 }
 
 export function StandardTopicsForm({
   control,
+  setValue,
   moduleIndex,
   readOnly = false,
 }: StandardTopicsFormProps) {
@@ -48,15 +56,28 @@ export function StandardTopicsForm({
     control,
     name: `units.${moduleIndex}.subUnit`,
   });
+  const topics = useWatch({ control, name: `units.${moduleIndex}.subUnit` }) as
+    | CriteriaRow[]
+    | undefined;
 
   const handleAddTopic = () => {
     const newTopic = {
       id: Date.now(),
       title: "",
       type: "Behaviour" as const,
-      code: "",
+      code: nextCriteriaCode(topics, "Behaviour"),
     };
     append(newTopic, { shouldFocus: false });
+  };
+
+  const handleTypeChange = (index: number, type: CriteriaType, onChange: (value: CriteriaType) => void) => {
+    const previous = topics?.[index];
+    onChange(type);
+    if (previous?.type === type) return;
+    const currentCode = previous?.code?.trim() ?? "";
+    if (!currentCode || AUTO_CODE_PATTERN.test(currentCode)) {
+      setValue(`units.${moduleIndex}.subUnit.${index}.code`, nextCriteriaCode(topics, type, index));
+    }
   };
 
   return (
@@ -105,7 +126,9 @@ export function StandardTopicsForm({
                             <div className="space-y-1">
                               <Select
                                 value={formField.value || "Behaviour"}
-                                onValueChange={formField.onChange}
+                                onValueChange={(value) =>
+                                  handleTypeChange(index, value as CriteriaType, formField.onChange)
+                                }
                                 disabled={readOnly}
                               >
                                 <SelectTrigger className={cn("w-37.5", error && "border-destructive")}>

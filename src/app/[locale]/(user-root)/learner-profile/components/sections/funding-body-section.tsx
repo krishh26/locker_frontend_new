@@ -1,11 +1,19 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { LearnerData } from "@/store/api/learner/types";
+import { AWARDING_BODY_OPTIONS } from "@/app/[locale]/(admin-root)/course-builder/course/constants/course-constants";
 
 interface FundingBodySectionProps {
   learner: LearnerData;
@@ -63,10 +71,31 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
             <Label className="text-sm font-medium">{t("sections.fundingBody.awardingBody")}</Label>
             {canEdit ? (
               <>
-                <Input
-                  type="text"
-                  {...form.register("awarding_body")}
-                  className="min-h-10"
+                <Controller
+                  control={form.control}
+                  name="awarding_body"
+                  render={({ field }) => {
+                    const value = typeof field.value === "string" ? field.value : "";
+                    // Keep values saved before the list existed selectable.
+                    const options =
+                      value && !(AWARDING_BODY_OPTIONS as readonly string[]).includes(value)
+                        ? [value, ...AWARDING_BODY_OPTIONS]
+                        : AWARDING_BODY_OPTIONS;
+                    return (
+                      <Select value={value} onValueChange={field.onChange}>
+                        <SelectTrigger className="min-h-10 w-full">
+                          <SelectValue placeholder={t("sections.fundingBody.selectAwardingBody")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {options.map((body) => (
+                            <SelectItem key={body} value={body}>
+                              {body}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    );
+                  }}
                 />
                 {form.formState.errors.awarding_body && (
                   <p className="text-destructive text-sm">

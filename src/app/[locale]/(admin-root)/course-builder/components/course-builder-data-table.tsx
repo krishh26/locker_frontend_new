@@ -8,6 +8,7 @@ import { exportTableToPdf } from '@/utils/pdfExport'
 import {
   useGetCoursesQuery,
   useDeleteCourseMutation,
+  useUpdateCourseMutation,
   useAddCourseFromLibraryMutation,
 } from '@/store/api/course/courseApi'
 import {
@@ -33,6 +34,7 @@ import {
   Eye,
   ChevronDown,
   FolderInput,
+  ArchiveRestore,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -81,6 +83,15 @@ import { getErrorMessage } from '@/lib/utils'
 const courseTypes = ['all', 'Qualification', 'Standard', 'Gateway'] as const
 const statusTypes = ['active', 'archived', 'all'] as const
 
+// Master Admin only: own = courses created for all organisations, other = courses owned by an organisation.
+const ownershipTypes = ['all', 'own', 'other'] as const
+type OwnershipType = (typeof ownershipTypes)[number]
+const ownershipToScope: Record<OwnershipType, CourseFilters['scope']> = {
+  all: '',
+  own: 'global',
+  other: 'organisation',
+}
+
 const createCourseTypes = ['Qualification', 'Standard', 'Gateway'] as const
 
 export function CourseBuilderDataTable() {
@@ -104,12 +115,13 @@ export function CourseBuilderDataTable() {
     useState<NonNullable<CourseFilters['status']>>('active')
   const [scopeFilter, setScopeFilter] =
     useState<CourseFilters['scope']>('organisation')
+  const [ownershipFilter, setOwnershipFilter] = useState<OwnershipType>('own')
   const isAdminViewingGlobalCourses =
     isAdmin && showScopeFilter && scopeFilter === 'global'
   const [filters, setFilters] = useState<CourseFilters>({
     page: 1,
     page_size: 10,
-    scope: showScopeFilter ? 'organisation' : "",
+    scope: showScopeFilter ? 'organisation' : ownershipToScope.own,
     status: 'active',
   })
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
@@ -121,6 +133,8 @@ export function CourseBuilderDataTable() {
     refetchOnMountOrArgChange: true,
   })
   const [deleteCourse] = useDeleteCourseMutation()
+  const [updateCourse, { isLoading: isRestoringCourse }] =
+    useUpdateCourseMutation()
   const [addCourseFromLibrary, { isLoading: isMovingCourse }] =
     useAddCourseFromLibraryMutation()
 
@@ -149,13 +163,26 @@ export function CourseBuilderDataTable() {
     setCourseTypeFilter('all')
     setStatusFilter('active')
     setScopeFilter('organisation')
+    setOwnershipFilter('own')
     setFilters((prev) => ({
       ...prev,
       page: 1,
       keyword: undefined,
       core_type: undefined,
-      scope: 'organisation',
+      scope: showScopeFilter ? 'organisation' : ownershipToScope.own,
       status: 'active',
+    }))
+  }
+
+  const handleOwnershipChange = (value: string) => {
+    const nextOwnership = (ownershipTypes.includes(value as OwnershipType)
+      ? value
+      : 'all') as OwnershipType
+    setOwnershipFilter(nextOwnership)
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      scope: ownershipToScope[nextOwnership],
     }))
   }
 
@@ -230,6 +257,25 @@ export function CourseBuilderDataTable() {
       }
     },
     [addCourseFromLibrary, t, user?.assignedOrganisationIds],
+  )
+
+  const handleRestore = useCallback(
+    async (course: Course) => {
+      try {
+        await updateCourse({
+          id: course.course_id,
+          data: { active: true },
+        }).unwrap()
+        toast.success(t('toast.restoreSuccess'))
+      } catch (error: unknown) {
+        if (isForbiddenError(error)) {
+          toast.error(getErrorMessage(error) ?? t('toast.forbiddenRestore'))
+          return
+        }
+        toast.error(getErrorMessage(error) ?? t('toast.restoreFailed'))
+      }
+    },
+    [updateCourse, t],
   )
 
   const handleDeleteClick = (course: Course) => {
@@ -336,7 +382,7 @@ export function CourseBuilderDataTable() {
           return (
             <div className='flex w-full items-start gap-2'>
               <span
-                className='block w-full max-w-[30ch] break-words whitespace-normal leading-snug'
+                className='block w-full max-w-[60ch] break-words whitespace-normal leading-snug'
                 title={name}
               >
                 {name}
@@ -361,22 +407,6 @@ export function CourseBuilderDataTable() {
       {
         accessorKey: 'level',
         header: t('table.headers.level'),
-      },
-      {
-        accessorKey: 'sector',
-        header: t('table.headers.sector'),
-        cell: ({ row }) => {
-          const sector = row.original.sector
-          return (
-            <div className='max-w-37.5 truncate' title={sector}>
-              {sector}
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: 'guided_learning_hours',
-        header: t('table.headers.learningHours'),
       },
       {
         id: 'actions',
@@ -418,7 +448,15 @@ export function CourseBuilderDataTable() {
                         <Edit className='mr-2 h-4 w-4' />
                         {tCommon('edit')}
                       </DropdownMenuItem>
-                      {!isArchived && (
+                      {isArchived ? (
+                        <DropdownMenuItem
+                          onClick={() => handleRestore(course)}
+                          disabled={isRestoringCourse}
+                        >
+                          <ArchiveRestore className='mr-2 h-4 w-4' />
+                          {t('table.actions.restore')}
+                        </DropdownMenuItem>
+                      ) : (
                         <DropdownMenuItem
                           onClick={() => handleDeleteClick(course)}
                           className='text-destructive'
@@ -440,9 +478,11 @@ export function CourseBuilderDataTable() {
       handleEdit,
       handleView,
       handleMoveToPersonal,
+      handleRestore,
       isAdminViewingGlobalCourses,
       isEmployer,
       isMovingCourse,
+      isRestoringCourse,
       t,
       tCommon,
       tAdmin,
@@ -541,10 +581,25 @@ export function CourseBuilderDataTable() {
               </SelectContent>
             </Select>
           )}
+          {!showScopeFilter && (
+            <Select value={ownershipFilter} onValueChange={handleOwnershipChange}>
+              <SelectTrigger className='w-full sm:w-50'>
+                <SelectValue placeholder={t('filters.ownershipPlaceholder')} />
+              </SelectTrigger>
+              <SelectContent>
+                {ownershipTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {t(`filters.ownershipTypes.${type}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
           {(globalFilter ||
             (courseTypeFilter && courseTypeFilter !== 'all') ||
             statusFilter !== 'active' ||
-            (showScopeFilter && scopeFilter !== 'organisation')) && (
+            (showScopeFilter && scopeFilter !== 'organisation') ||
+            (!showScopeFilter && ownershipFilter !== 'own')) && (
             <Button
               variant='ghost'
               size='sm'

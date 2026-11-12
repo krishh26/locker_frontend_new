@@ -48,6 +48,7 @@ import type { User } from '@/store/api/user/types'
 import type { Course } from '@/store/api/course/types'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useTranslations } from 'next-intl'
+import { getCourseLabel } from '@/utils/course-label'
 
 interface FilterState {
   trainer: string
@@ -119,7 +120,7 @@ export function AwaitingSignatureDataTable() {
   const courses =
     coursesData?.data?.map((course: Course) => ({
       id: course.course_id?.toString() || '',
-      name: course.course_name || 'Unknown',
+      name: getCourseLabel(course, 'Unknown'),
     })) || []
 
   // API query

@@ -19,6 +19,7 @@ import {
   useGenerateFormsReportExcelMutation,
 } from "@/store/api/forms/formsApi";
 import { downloadBlob, generateFormsReportFilename } from "./utils/csv-export";
+import { isDisplayOnlyField } from "@/components/forms/field-types";
 
 export function FormsReportsPageContent() {
   const t = useTranslations("forms");
@@ -49,7 +50,8 @@ export function FormsReportsPageContent() {
 
   const fields: FormField[] = useMemo(() => {
     const d = formDetailsData?.data;
-    return (d?.form_data ?? d?.fields ?? []) as FormField[];
+    const all = (d?.form_data ?? d?.fields ?? []) as FormField[];
+    return all.filter((f) => !isDisplayOnlyField(f.type));
   }, [formDetailsData]);
 
   const selectedFields = useMemo(

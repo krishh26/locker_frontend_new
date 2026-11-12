@@ -52,6 +52,7 @@ import { DataTablePagination } from "@/components/data-table-pagination";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 import { selectCourses } from "@/store/slices/authSlice";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 export function CourseResourcesDataTable() {
   const user = useAppSelector((state) => state.auth.user);
@@ -328,7 +329,7 @@ export function CourseResourcesDataTable() {
                         key={course.course.course_id}
                         value={course.course.course_id.toString()}
                       >
-                        {course.course.course_name}
+                        {getCourseLabel(course.course)}
                       </SelectItem>
                     ))}
                   </SelectContent>

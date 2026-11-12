@@ -83,8 +83,11 @@ const formTypeOptions = [
   "Survey",
   "Workbook",
   "Test/Exams",
-  "Others",
+  "Other",
 ] as const;
+
+const formTypeLabelKey = (option: (typeof formTypeOptions)[number]) =>
+  option === "Test/Exams" ? "testExams" : option === "Other" ? "Others" : option;
 
 function buildMetadataSchema(t: (key: string) => string) {
   return z
@@ -314,11 +317,14 @@ export function FormBuilder({ formId }: FormBuilderProps) {
         await updateForm({ id: formId!, data: formData }).unwrap();
         toast.success(t("toast.formUpdated"));
       } else {
-        await createForm(formData).unwrap();
+        const res = await createForm(formData).unwrap();
         toast.success(t("toast.formCreated"));
+        // Move to the edit route so the next Save updates this form instead of creating another.
+        if (res.data?.id !== undefined) {
+          router.replace(`/forms/${res.data.id}/builder`);
+        }
       }
       setSaveStatus("saved");
-      setTimeout(() => router.push("/forms"), 1500);
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -384,10 +390,12 @@ export function FormBuilder({ formId }: FormBuilderProps) {
     };
 
     try {
-      await createForm(formData).unwrap();
+      const res = await createForm(formData).unwrap();
       toast.success(t("toast.saveAsSuccess"));
       setSaveStatus("saved");
-      setTimeout(() => router.push("/forms"), 1500);
+      if (res.data?.id !== undefined) {
+        router.replace(`/forms/${res.data.id}/builder`);
+      }
     } catch (error: unknown) {
       const errorMessage =
         error && typeof error === "object" && "data" in error
@@ -561,7 +569,7 @@ export function FormBuilder({ formId }: FormBuilderProps) {
                         <SelectContent>
                           {formTypeOptions.map((option) => (
                             <SelectItem key={option} value={option}>
-                              {t(`formTypes.${option === "Test/Exams" ? "testExams" : option}`)}
+                              {t(`formTypes.${formTypeLabelKey(option)}`)}
                             </SelectItem>
                           ))}
                         </SelectContent>

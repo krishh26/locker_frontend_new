@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -200,7 +201,7 @@ export function EqaLearnerSelectionDialog({
                 <SelectContent>
                   {courses.map((course) => (
                     <SelectItem key={course.course_id} value={String(course.course_id)}>
-                      {course.course_name}
+                      {getCourseLabel(course)}
                     </SelectItem>
                   ))}
                 </SelectContent>

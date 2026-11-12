@@ -142,6 +142,32 @@ export type UsersListResponse = {
   data?: User[];
 };
 
+// Table field ("table" type): fixed text, inputs, or Locker data per cell.
+export type TableCellType = "static" | "text" | "date" | "checkbox" | "dropdown" | "preset";
+
+export type TableCell = {
+  type: TableCellType;
+  /** Fixed text for "static" cells. */
+  text?: string;
+  /** Preset key for "preset" cells, e.g. "courseName". */
+  presetField?: string;
+  /** Choices for "dropdown" cells. */
+  options?: string[];
+};
+
+export type TableColumn = { id: string; header: string };
+
+export type TableRow = { id: string; cells: Record<string, TableCell> };
+
+export type TableConfig = {
+  showHeader: boolean;
+  columns: TableColumn[];
+  rows: TableRow[];
+};
+
+/** Answer for a table field: rowId -> columnId -> value ("true"/"" for checkboxes). */
+export type TableAnswer = Record<string, Record<string, string>>;
+
 // Form Details Types
 export type FormField = {
   id: string;
@@ -150,9 +176,11 @@ export type FormField = {
   placeholder?: string;
   required?: boolean;
   options?: { label: string; value: string }[];
-  width?: "full" | "half" | "third";
+  width?: "full" | "threeQuarters" | "twoThirds" | "half" | "third" | "quarter";
   presetField?: string;
   signatureRole?: string;
+  content?: string;
+  table?: TableConfig;
 };
 
 export type FormDetails = {
@@ -237,9 +265,11 @@ export type SimpleFormField = {
   placeholder?: string;
   required?: boolean;
   options?: { label: string; value: string }[];
-  width?: "full" | "half" | "third";
+  width?: "full" | "threeQuarters" | "twoThirds" | "half" | "third" | "quarter";
   presetField?: string;
   signatureRole?: string;
+  content?: string;
+  table?: TableConfig;
 };
 
 // Create Form Request

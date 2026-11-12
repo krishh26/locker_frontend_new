@@ -950,7 +950,10 @@
           "checkbox": "Caselle di controllo",
           "date": "Data",
           "file": "Carica file",
-          "signature": "Firma"
+          "signature": "Firma",
+          "richtext": "Blocco di testo",
+          "table": "Tabella",
+          "statement": "Casella di dichiarazione"
         },
         "defaultLabels": {
           "text": "Nome completo",
@@ -964,7 +967,10 @@
           "date": "Data",
           "file": "Carica file",
           "signature": "Firma",
-          "default": "Etichetta campo"
+          "default": "Etichetta campo",
+          "richtext": "Blocco di testo",
+          "table": "Tabella",
+          "statement": "Dichiarazione"
         },
         "defaultPlaceholders": {
           "text": "Inserisci il tuo nome completo",
@@ -977,23 +983,51 @@
           "default": "Inserisci valore"
         },
         "optionLabel": "Opzione {n}",
-        "copySuffix": "(Copia)"
+        "copySuffix": "(Copia)",
+        "defaultRichTextContent": "Aggiungi istruzioni o informazioni per chi compila questo modulo.",
+        "defaultStatementContent": "Io, {learner_name}, confermo di aver letto e compreso tutte le politiche.",
+        "addToForm": "Aggiungi al modulo"
       },
       "presets": {
         "roles": {
           "learner": "Apprendista",
           "trainer": "Formatore",
-          "employee": "Dipendente"
+          "lineManager": "Responsabile diretto",
+          "employee": "Dipendente",
+          "course": "Corso",
+          "general": "Generale"
         },
         "fields": {
           "learner-name": "Nome apprendista",
           "learner-email": "E-mail apprendista",
           "learner-phone": "Telefono apprendista",
           "date_of_birth": "Data di nascita",
+          "learner-uln": "ULN del discente",
           "employer": "Datore di lavoro",
           "trainer-name": "Nome formatore",
-          "email": "E-mail",
-          "employee-name": "Nome dipendente"
+          "email": "E-mail del formatore",
+          "line-manager-name": "Nome del responsabile diretto",
+          "line-manager-email": "E-mail del responsabile diretto",
+          "line-manager-phone": "Telefono del responsabile diretto",
+          "employee-name": "Nome dipendente",
+          "course-name": "Nome del corso",
+          "course-code": "Codice del corso",
+          "course-level": "Livello del corso",
+          "course-sector": "Settore",
+          "course-awarding-body": "Ente certificatore",
+          "course-type": "Tipo di corso",
+          "course-glh": "Ore di apprendimento guidato",
+          "course-total-credits": "Crediti totali",
+          "course-duration": "Durata del corso",
+          "course-start-date": "Data di inizio",
+          "course-end-date": "Data di fine prevista",
+          "course-status": "Stato del corso",
+          "course-predicted-grade": "Voto previsto",
+          "course-final-grade": "Voto finale",
+          "course-trainer": "Formatore",
+          "course-iqa": "IQA",
+          "course-employer": "Datore di lavoro",
+          "today-date": "Data odierna"
         }
       },
       "fieldCard": {
@@ -1005,11 +1039,84 @@
         "placeholder": "Segnaposto",
         "requiredField": "Campo obbligatorio",
         "fieldWidth": "Larghezza campo",
-        "fullWidth": "Larghezza piena",
-        "halfWidth": "Metà larghezza",
-        "oneThird": "Un terzo",
+        "widths": {
+          "full": "Larghezza piena",
+          "threeQuarters": "Tre quarti (3/4)",
+          "twoThirds": "Due terzi (2/3)",
+          "half": "Metà larghezza (1/2)",
+          "third": "Un terzo (1/3)",
+          "quarter": "Un quarto (1/4)"
+        },
         "options": "Opzioni",
-        "addOption": "Aggiungi opzione"
+        "addOption": "Aggiungi opzione",
+        "emptyTextBlock": "Blocco di testo vuoto. Fai clic su modifica per aggiungere contenuto.",
+        "blockName": "Nome del blocco",
+        "blockNameHint": "Mostrato solo nel builder per identificare questo blocco.",
+        "content": "Contenuto",
+        "textBlockTag": "Blocco di testo",
+        "todayAutoFill": "Data odierna (compilata automaticamente)",
+        "tableLayout": "Layout della tabella",
+        "statementText": "Dichiarazione",
+        "statementPlaceholder": "es. Io, {learner_name}, ho letto tutte le politiche",
+        "variablesHint": "Le variabili come {learner_name} vengono sostituite con i dati reali quando il modulo viene compilato."
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "Grassetto",
+          "italic": "Corsivo",
+          "underline": "Sottolineato",
+          "strike": "Barrato",
+          "heading1": "Titolo 1",
+          "heading2": "Titolo 2",
+          "heading3": "Titolo 3",
+          "bulletList": "Elenco puntato",
+          "orderedList": "Elenco numerato",
+          "blockquote": "Citazione",
+          "divider": "Divisore",
+          "undo": "Annulla",
+          "redo": "Ripeti",
+          "link": "Link",
+          "linkPlaceholder": "https://esempio.it",
+          "unlink": "Rimuovi link",
+          "applyLink": "Applica"
+        }
+      },
+      "tableEditor": {
+        "showHeader": "Mostra riga di intestazione",
+        "hint": "Imposta ogni cella come testo fisso, campo da compilare o dati presi da Locker.",
+        "columnHeader": "Intestazione colonna",
+        "defaultColumn": "Colonna {n}",
+        "setWholeColumn": "Imposta tutta la colonna su...",
+        "cellType": "Tipo di cella",
+        "cellTypes": {
+          "static": "Testo fisso",
+          "text": "Campo di testo",
+          "date": "Campo data",
+          "checkbox": "Casella di controllo",
+          "dropdown": "Menu a tendina",
+          "preset": "Dati Locker"
+        },
+        "staticPlaceholder": "Scrivi il testo fisso",
+        "presetPlaceholder": "Scegli dati Locker",
+        "optionsPlaceholder": "Opzioni, separate da virgole",
+        "columnOptionsPlaceholder": "Opzioni della colonna, separate da virgole",
+        "addRow": "Aggiungi riga",
+        "addColumn": "Aggiungi colonna",
+        "removeRow": "Rimuovi riga",
+        "removeColumn": "Rimuovi colonna"
+      }
+    },
+    "variables": {
+      "insert": "Inserisci variabile",
+      "labels": {
+        "learner_name": "Nome del discente",
+        "learner_uln": "ULN del discente",
+        "trainer_name": "Nome del formatore",
+        "iqa_name": "Nome dell'IQA",
+        "line_manager_name": "Nome del responsabile diretto",
+        "employer_name": "Nome del datore di lavoro",
+        "course_name": "Nome del corso",
+        "today_date": "Data odierna"
       }
     }
   },
@@ -2526,7 +2633,8 @@
       "number": "{label} deve essere un numero",
       "phone": "{label} deve contenere solo numeri",
       "required": "{label} è obbligatorio",
-      "fileTooLarge": "{label} è troppo grande (max 300MB)"
+      "fileTooLarge": "{label} è troppo grande (max 300MB)",
+      "tableIncomplete": "Compila tutte le celle di {label}"
     },
     "toast": {
       "submitSuccess": "Modulo inviato con successo!",
@@ -2985,7 +3093,7 @@
       "placeholders": {
         "selectCourse": "Seleziona corso",
         "noCourses": "Nessun corso disponibile",
-        "description": "Inserisci descrizione (opzionale)",
+        "description": "Inserisci descrizione",
         "jobType": "Seleziona tipo di lavoro",
         "resourceType": "Seleziona tipo di risorsa"
       },
@@ -3014,7 +3122,10 @@
         "hoursMin": "Le ore devono essere 0 o superiori",
         "hoursMax": "Le ore devono essere inferiori a 24",
         "minutesMin": "I minuti devono essere 0 o superiori",
-        "minutesMax": "I minuti devono essere inferiori a 60"
+        "minutesMax": "I minuti devono essere inferiori a 60",
+        "descriptionRequired": "La descrizione è obbligatoria.",
+        "hoursRequired": "Le ore sono obbligatorie.",
+        "minutesRequired": "I minuti sono obbligatori."
       }
     },
     "options": {
@@ -3914,7 +4025,11 @@
         "typeKnowledge": "Conoscenza",
         "typeSkills": "Competenze",
         "srNo": "Criteri",
-        "placeholderSrNo": "Criteri"
+        "placeholderSrNo": "Criteri",
+        "generateCodes": "Genera codici",
+        "generateCodesHint": "Compila i codici dei criteri vuoti o numerici (1, 2, 3) con K1, S1, B1 in base al tipo",
+        "codesGenerated": "{count} codici dei criteri generati. Salva il corso per applicarli.",
+        "noCodesToGenerate": "Tutti i criteri hanno già un codice."
       }
     }
   },
@@ -4769,6 +4884,7 @@
         "title": "Ente finanziatore",
         "fundingBody": "Ente finanziatore",
         "awardingBody": "Ente certificatore",
+        "selectAwardingBody": "Seleziona ente certificatore",
         "registrationNumber": "Numero di registrazione",
         "registrationDate": "Data di registrazione",
         "laraCode": "Codice LARA"

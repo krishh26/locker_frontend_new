@@ -13,6 +13,7 @@ import { useAppSelector } from "@/store/hooks"
 import { selectCurrentCourseId } from "@/store/slices/courseSlice"
 import { selectLearner } from "@/store/slices/authSlice"
 import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href"
+import { getCourseLabel } from "@/utils/course-label"
 import {
   courseCards,
   gatewayCards,
@@ -98,7 +99,7 @@ export function CourseDetailsPageContent({ courseId: routeCourseId }: CourseDeta
     <>
       <div className="px-4 lg:px-6">
         <PageHeader
-          title={course.course_name}
+          title={getCourseLabel(course)}
           subtitle={t("subtitle")}
           icon={BookOpen}
           showBackButton

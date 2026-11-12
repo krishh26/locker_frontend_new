@@ -23,6 +23,7 @@ import {
 import type { Course } from "@/store/api/course/types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { useAppSelector } from "@/store/hooks";
 import { selectMasterAdminOrganisationId } from "@/store/slices/orgContextSlice";
 
@@ -140,7 +141,7 @@ export function ProgressExclusionForm() {
             <SelectContent>
               {courses.map((course: Course) => (
                 <SelectItem key={course.course_id} value={course.course_id.toString()}>
-                  {course.course_name} {course.course_code ? `(${course.course_code})` : ""}
+                  {getCourseLabel(course)} {course.course_code ? `(${course.course_code})` : ""}
                 </SelectItem>
               ))}
             </SelectContent>

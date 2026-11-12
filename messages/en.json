@@ -54,7 +54,7 @@
     "courses": "Courses",
     "resources": "Resources",
     "calendar": "Calendar",
-    "chat": "Chat", 
+    "chat": "Chat",
     "mail": "Mail",
     "tasks": "Tasks",
     "support": "Support"
@@ -1262,7 +1262,10 @@
           "checkbox": "Checkboxes",
           "date": "Date",
           "file": "File Upload",
-          "signature": "Signature"
+          "signature": "Signature",
+          "richtext": "Text Block",
+          "table": "Table",
+          "statement": "Statement Checkbox"
         },
         "defaultLabels": {
           "text": "Full Name",
@@ -1276,7 +1279,10 @@
           "date": "Date",
           "file": "Upload File",
           "signature": "Signature",
-          "default": "Field Label"
+          "default": "Field Label",
+          "richtext": "Text Block",
+          "table": "Table",
+          "statement": "Declaration"
         },
         "defaultPlaceholders": {
           "text": "Enter your full name",
@@ -1289,23 +1295,51 @@
           "default": "Enter value"
         },
         "optionLabel": "Option {n}",
-        "copySuffix": "(Copy)"
+        "copySuffix": "(Copy)",
+        "defaultRichTextContent": "Add instructions or information for the person completing this form.",
+        "defaultStatementContent": "I {learner_name} confirm that I have read and understood all policies.",
+        "addToForm": "Add to form"
       },
       "presets": {
         "roles": {
           "learner": "Learner",
           "trainer": "Trainer",
-          "employee": "Employee"
+          "lineManager": "Line Manager",
+          "employee": "Employee",
+          "course": "Course",
+          "general": "General"
         },
         "fields": {
           "learner-name": "Learner Name",
           "learner-email": "Learner Email",
           "learner-phone": "Learner Phone",
           "date_of_birth": "Date of Birth",
+          "learner-uln": "Learner ULN",
           "employer": "Employer",
           "trainer-name": "Trainer Name",
-          "email": "Email",
-          "employee-name": "Employee Name"
+          "email": "Trainer Email",
+          "line-manager-name": "Line Manager Name",
+          "line-manager-email": "Line Manager Email",
+          "line-manager-phone": "Line Manager Contact Number",
+          "employee-name": "Employee Name",
+          "course-name": "Course Name",
+          "course-code": "Course Code",
+          "course-level": "Course Level",
+          "course-sector": "Sector",
+          "course-awarding-body": "Awarding Body",
+          "course-type": "Course Type",
+          "course-glh": "Guided Learning Hours",
+          "course-total-credits": "Total Credits",
+          "course-duration": "Course Duration",
+          "course-start-date": "Start Date",
+          "course-end-date": "Expected End Date",
+          "course-status": "Course Status",
+          "course-predicted-grade": "Predicted Grade",
+          "course-final-grade": "Final Grade",
+          "course-trainer": "Trainer",
+          "course-iqa": "IQA",
+          "course-employer": "Employer",
+          "today-date": "Today's Date"
         }
       },
       "preview": {
@@ -1323,11 +1357,84 @@
         "placeholder": "Placeholder",
         "requiredField": "Required field",
         "fieldWidth": "Field Width",
-        "fullWidth": "Full Width",
-        "halfWidth": "Half Width",
-        "oneThird": "One Third",
+        "widths": {
+          "full": "Full Width",
+          "threeQuarters": "Three Quarters (3/4)",
+          "twoThirds": "Two Thirds (2/3)",
+          "half": "Half Width (1/2)",
+          "third": "One Third (1/3)",
+          "quarter": "One Quarter (1/4)"
+        },
         "options": "Options",
-        "addOption": "Add Option"
+        "addOption": "Add Option",
+        "emptyTextBlock": "Empty text block. Click edit to add content.",
+        "blockName": "Block Name",
+        "blockNameHint": "Only shown in the builder to help you identify this block.",
+        "content": "Content",
+        "textBlockTag": "Text Block",
+        "todayAutoFill": "Today's date (filled automatically)",
+        "tableLayout": "Table Layout",
+        "statementText": "Statement",
+        "statementPlaceholder": "e.g. I {learner_name} have read all policies",
+        "variablesHint": "Variables like {learner_name} are replaced with real details when the form is filled in."
+      },
+      "tableEditor": {
+        "showHeader": "Show header row",
+        "hint": "Set each cell to fixed text, an input for the person completing the form, or data pulled from Locker.",
+        "columnHeader": "Column header",
+        "defaultColumn": "Column {n}",
+        "setWholeColumn": "Set whole column to...",
+        "cellType": "Cell type",
+        "cellTypes": {
+          "static": "Fixed text",
+          "text": "Text input",
+          "date": "Date input",
+          "checkbox": "Checkbox",
+          "dropdown": "Dropdown",
+          "preset": "Locker data"
+        },
+        "staticPlaceholder": "Type fixed text",
+        "presetPlaceholder": "Choose Locker data",
+        "optionsPlaceholder": "Options, separated by commas",
+        "columnOptionsPlaceholder": "Column options, separated by commas",
+        "addRow": "Add Row",
+        "addColumn": "Add Column",
+        "removeRow": "Remove row",
+        "removeColumn": "Remove column"
+      },
+      "richText": {
+        "toolbar": {
+          "bold": "Bold",
+          "italic": "Italic",
+          "underline": "Underline",
+          "strike": "Strikethrough",
+          "heading1": "Heading 1",
+          "heading2": "Heading 2",
+          "heading3": "Heading 3",
+          "bulletList": "Bullet list",
+          "orderedList": "Numbered list",
+          "blockquote": "Quote",
+          "divider": "Divider",
+          "undo": "Undo",
+          "redo": "Redo",
+          "link": "Link",
+          "linkPlaceholder": "https://example.com",
+          "unlink": "Remove link",
+          "applyLink": "Apply"
+        }
+      }
+    },
+    "variables": {
+      "insert": "Insert variable",
+      "labels": {
+        "learner_name": "Learner Name",
+        "learner_uln": "Learner ULN",
+        "trainer_name": "Trainer Name",
+        "iqa_name": "IQA Name",
+        "line_manager_name": "Line Manager Name",
+        "employer_name": "Employer Name",
+        "course_name": "Course Name",
+        "today_date": "Today's Date"
       }
     }
   },
@@ -3459,7 +3566,8 @@
       "number": "{label} must be a number",
       "phone": "{label} must contain only numbers",
       "required": "{label} is required",
-      "fileTooLarge": "{label} is too large (max 300MB)"
+      "fileTooLarge": "{label} is too large (max 300MB)",
+      "tableIncomplete": "Please fill in every cell in {label}"
     },
     "toast": {
       "submitSuccess": "Form submitted successfully!",
@@ -3918,7 +4026,7 @@
       "placeholders": {
         "selectCourse": "Select course",
         "noCourses": "No courses available",
-        "description": "Enter description (optional)",
+        "description": "Enter description",
         "jobType": "Select job type",
         "resourceType": "Select resource type"
       },
@@ -3947,7 +4055,10 @@
         "hoursMin": "Hours must be 0 or greater",
         "hoursMax": "Hours must be less than 24",
         "minutesMin": "Minutes must be 0 or greater",
-        "minutesMax": "Minutes must be less than 60"
+        "minutesMax": "Minutes must be less than 60",
+        "descriptionRequired": "Description is required.",
+        "hoursRequired": "Hours is required.",
+        "minutesRequired": "Minutes is required."
       }
     },
     "options": {
@@ -4570,6 +4681,7 @@
       "searchPlaceholder": "Search by keyword...",
       "courseTypePlaceholder": "Course type",
       "scopePlaceholder": "Scope",
+      "ownershipPlaceholder": "Ownership",
       "courseTypes": {
         "all": "All types",
         "Qualification": "Qualification",
@@ -4579,6 +4691,11 @@
       "scopeTypes": {
         "organisation": "Organisation",
         "global": "Global"
+      },
+      "ownershipTypes": {
+        "all": "All courses",
+        "own": "Own courses",
+        "other": "Other organisations"
       },
       "statusPlaceholder": "Status",
       "statusTypes": {
@@ -4599,7 +4716,8 @@
       "archivedBadge": "Archived",
       "actions": {
         "view": "View",
-        "moveToPersonal": "Move to Personal"
+        "moveToPersonal": "Move to Personal",
+        "restore": "Restore"
       }
     },
     "export": {
@@ -4640,7 +4758,10 @@
       "deleteFailed": "Failed to delete course",
       "moveToPersonalSuccess": "Course moved to your organisation successfully",
       "moveToPersonalFailed": "Failed to move course to your organisation",
-      "moveToPersonalNoOrganisation": "No organisation assigned to your account"
+      "moveToPersonalNoOrganisation": "No organisation assigned to your account",
+      "restoreSuccess": "Course restored successfully",
+      "forbiddenRestore": "You do not have access to restore this course.",
+      "restoreFailed": "Failed to restore course"
     },
     "course": {
       "pageTitleCreate": "Create Course",
@@ -4833,7 +4954,11 @@
         "placeholderTopicTitle": "Topic title",
         "typeBehaviour": "Behaviour",
         "typeKnowledge": "Knowledge",
-        "typeSkills": "Skills"
+        "typeSkills": "Skills",
+        "generateCodes": "Generate codes",
+        "generateCodesHint": "Fill empty or numeric criteria codes (1, 2, 3) with K1, S1, B1 based on each criteria type",
+        "codesGenerated": "{count} criteria codes generated. Save the course to apply them.",
+        "noCodesToGenerate": "All criteria already have codes."
       }
     }
   },
@@ -5652,6 +5777,7 @@
         "title": "Funding Body",
         "fundingBody": "Funding Body",
         "awardingBody": "Awarding Body",
+        "selectAwardingBody": "Select Awarding Body",
         "registrationNumber": "Registration Number",
         "registrationDate": "Registration Date",
         "laraCode": "LARA Code"
@@ -6423,16 +6549,49 @@
     }
   },
   "assessmentMethods": {
-    "PE": { "label": "PE", "title": "Professional Discussion" },
-    "DO": { "label": "DO", "title": "Direct Observation" },
-    "WT": { "label": "WT", "title": "Witness Testimony" },
-    "QA": { "label": "QA", "title": "Question and Answer" },
-    "PS": { "label": "PS", "title": "Product Sample" },
-    "DI": { "label": "DI", "title": "Discussion" },
-    "SI": { "label": "SI", "title": "Simulation" },
-    "ET": { "label": "ET", "title": "Expert Evidence" },
-    "RA": { "label": "RA", "title": "Basic Assessment" },
-    "OT": { "label": "OT", "title": "Other" },
-    "RPL": { "label": "RPL", "title": "Individual Personal Log" }
+    "PE": {
+      "label": "PE",
+      "title": "Professional Discussion"
+    },
+    "DO": {
+      "label": "DO",
+      "title": "Direct Observation"
+    },
+    "WT": {
+      "label": "WT",
+      "title": "Witness Testimony"
+    },
+    "QA": {
+      "label": "QA",
+      "title": "Question and Answer"
+    },
+    "PS": {
+      "label": "PS",
+      "title": "Product Sample"
+    },
+    "DI": {
+      "label": "DI",
+      "title": "Discussion"
+    },
+    "SI": {
+      "label": "SI",
+      "title": "Simulation"
+    },
+    "ET": {
+      "label": "ET",
+      "title": "Expert Evidence"
+    },
+    "RA": {
+      "label": "RA",
+      "title": "Basic Assessment"
+    },
+    "OT": {
+      "label": "OT",
+      "title": "Other"
+    },
+    "RPL": {
+      "label": "RPL",
+      "title": "Individual Personal Log"
+    }
   }
 }

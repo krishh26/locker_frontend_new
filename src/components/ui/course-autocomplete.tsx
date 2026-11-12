@@ -19,6 +19,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { useGetCoursesQuery } from "@/store/api/course/courseApi"
+import { getCourseLabel } from "@/utils/course-label"
 
 interface CourseAutocompleteProps {
   value?: string | string[]
@@ -28,6 +29,8 @@ interface CourseAutocompleteProps {
   className?: string
   error?: boolean
   multiple?: boolean
+  /** Course ids hidden from the options, e.g. courses the learner is already enrolled on. */
+  excludeCourseIds?: string[]
 }
 
 export function CourseAutocomplete({
@@ -38,6 +41,7 @@ export function CourseAutocomplete({
   className,
   error = false,
   multiple = false,
+  excludeCourseIds,
 }: CourseAutocompleteProps) {
   const [open, setOpen] = React.useState(false)
   const [search, setSearch] = React.useState("")
@@ -57,16 +61,22 @@ export function CourseAutocomplete({
     return (coursesData?.data || []).filter((course) => course.active !== false)
   }, [coursesData])
 
+  const selectableCourses = React.useMemo(() => {
+    if (!excludeCourseIds?.length) return allCourses
+    const excluded = new Set(excludeCourseIds)
+    return allCourses.filter((course) => !excluded.has(course.course_id?.toString() || ""))
+  }, [allCourses, excludeCourseIds])
+
   // Filter courses based on search term
   const filteredCourses = React.useMemo(() => {
     if (!search.trim()) {
-      return allCourses
+      return selectableCourses
     }
     const searchLower = search.toLowerCase()
-    return allCourses.filter((course) =>
-      course.course_name?.toLowerCase().includes(searchLower)
+    return selectableCourses.filter((course) =>
+      getCourseLabel(course).toLowerCase().includes(searchLower)
     )
-  }, [allCourses, search])
+  }, [selectableCourses, search])
 
   // Get displayed courses (paginated)
   const displayedCourses = React.useMemo(() => {
@@ -194,7 +204,7 @@ export function CourseAutocomplete({
                       className="mr-1"
                     >
                       <span className="truncate max-w-37.5">
-                        {course.course_name || "Unknown course"}
+                        {getCourseLabel(course, "Unknown course")}
                       </span>
                       <button
                         type="button"
@@ -221,7 +231,7 @@ export function CourseAutocomplete({
               )
             ) : selectedCourse ? (
               <span className="truncate text-sm">
-                {selectedCourse.course_name || "Unknown course"}
+                {getCourseLabel(selectedCourse, "Unknown course")}
               </span>
             ) : (
               <span className="text-sm">{placeholder}</span>
@@ -269,7 +279,7 @@ export function CourseAutocomplete({
                       className="cursor-pointer flex items-center justify-between"
                     >
                       <span className="truncate flex-1">
-                        {course.course_name || "Unknown course"}
+                        {getCourseLabel(course, "Unknown course")}
                       </span>
                       {isSelected && <Check className="ml-2 h-4 w-4 shrink-0" />}
                     </CommandItem>

@@ -64,6 +64,7 @@ import {
 } from "../../utils/evidence-helpers";
 import { selectCurrentCourseId } from "@/store/slices/courseSlice";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 
 // Selection state reducer
 type SelectionState = {
@@ -437,6 +438,7 @@ export function EvidenceLibraryDataTable() {
               course_id: course.course_id,
               course_name: course.course_name,
               course_code: course.course_code,
+              level: course.level,
             };
           }
           return null;
@@ -449,7 +451,7 @@ export function EvidenceLibraryDataTable() {
           id: `course_${course.course_id}`,
           header: () => (
             <div className="text-center font-semibold text-sm">
-              {course.course_name}
+              {getCourseLabel(course)}
             </div>
           ),
               cell: ({ row }) => {

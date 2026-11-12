@@ -10,6 +10,7 @@
 import { useEffect, useState } from "react";
 import { useFieldArray, Controller, useWatch, Control, UseFormSetValue, FieldErrors, UseFormTrigger } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { getCourseLabel } from "@/utils/course-label";
 import { toast } from "sonner";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -89,7 +90,7 @@ export function GatewayQuestionsStep({
   // Transform API response to CourseItem format
   const allStandardCourses: CourseItem[] = standardCoursesData?.data?.map((course) => ({
     id: course.course_id.toString(),
-    name: `${course.course_name} (${course.course_code})`,
+    name: `${getCourseLabel(course)} (${course.course_code})`,
   })) || [];
 
   // Show validation errors via toast

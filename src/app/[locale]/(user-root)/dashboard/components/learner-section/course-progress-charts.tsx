@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge"
 import { Flag, CalendarDays, TrendingUp, Ban } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { isEnrollmentExcluded } from "@/lib/is-enrollment-excluded"
+import { getCourseLabel } from "@/utils/course-label"
 
 interface Course {
   user_course_id?: number
@@ -25,6 +26,7 @@ interface Course {
   course?: {
     course_id?: number
     course_name: string
+    level?: string
     course_core_type?: string
     questions?: Array<{ achieved?: boolean }>
     is_excluded?: boolean
@@ -426,7 +428,7 @@ export function CourseProgressCharts({ courses }: CourseProgressChartsProps) {
         {visibleCourses.map((course, index) => {
           const progressData = convertToProgressData(course)
           const metrics = getNestedChartMetrics(course)
-          const courseName = course?.course?.course_name || t("courseFallback", { index: index + 1 })
+          const courseName = getCourseLabel(course?.course, t("courseFallback", { index: index + 1 }))
           const colorIdx = index % cardBgColors.length
           const rowKey = course.user_course_id ?? course.course?.course_id ?? index
           const isExcluded = isEnrollmentExcluded(course)

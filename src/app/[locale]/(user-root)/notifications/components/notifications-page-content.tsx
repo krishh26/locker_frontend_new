@@ -3,6 +3,16 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { CheckCheck, Trash2, Loader2, Bell } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { NotificationItem } from './notification-item'
@@ -29,6 +39,9 @@ import { PageHeader } from '@/components/dashboard/page-header'
 
 export function NotificationsPageContent() {
   const t = useTranslations('notifications')
+  const tCommon = useTranslations('common')
+  const tResources = useTranslations('resources')
+  const [deleteTarget, setDeleteTarget] = useState<number | 'all' | null>(null)
   const [page, setPage] = useState(1)
   const [pageSize] = useState(10)
   const [typeFilter, setTypeFilter] = useState<NotificationType | 'all'>('all')
@@ -154,7 +167,7 @@ export function NotificationsPageContent() {
             </Button>
             <Button
               variant='outline'
-              onClick={handleDeleteAll}
+              onClick={() => setDeleteTarget('all')}
               disabled={isDeletingAll}
               className='text-destructive hover:text-destructive'
             >
@@ -194,7 +207,7 @@ export function NotificationsPageContent() {
                 key={notification.notification_id}
                 notification={notification}
                 onRead={handleRead}
-                onDelete={handleDelete}
+                onDelete={(id) => setDeleteTarget(id)}
               />
             ))}
           </div>
@@ -270,6 +283,37 @@ export function NotificationsPageContent() {
           )}
         </>
       )}
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null)
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tCommon('delete')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {tResources('table.confirm.deleteBody')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tCommon('cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (deleteTarget === 'all') {
+                  void handleDeleteAll()
+                } else if (deleteTarget != null) {
+                  void handleDelete(deleteTarget)
+                }
+                setDeleteTarget(null)
+              }}
+              className="bg-destructive text-white hover:bg-destructive/90"
+            >
+              {tCommon('delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }

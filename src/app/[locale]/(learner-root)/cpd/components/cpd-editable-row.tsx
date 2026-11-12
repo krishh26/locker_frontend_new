@@ -9,6 +9,16 @@ import { z } from "zod";
 import { format, startOfDay, isAfter } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -86,6 +96,9 @@ export function CpdEditableRow({
   const [updateEntry] = useUpdateCpdEntryMutation();
   const [deleteEntry] = useDeleteCpdEntryMutation();
   const t = useTranslations("cpd");
+  const tCommon = useTranslations("common");
+  const tResources = useTranslations("resources");
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const form = useForm<CpdEntryFormValues>({
     resolver: zodResolver(cpdEntrySchema),
@@ -167,6 +180,7 @@ export function CpdEditableRow({
   };
 
   const handleDelete = async () => {
+    setConfirmOpen(false);
     if (isNewRow) {
       onDelete(rowId);
       return;
@@ -312,12 +326,31 @@ export function CpdEditableRow({
               type="button"
               size="sm"
               variant="ghost"
-              onClick={handleDelete}
+              onClick={() => setConfirmOpen(true)}
               disabled={isSaving}
               className="h-8 w-8 p-0 text-destructive hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
+            <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{tCommon("delete")}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {tResources("table.confirm.deleteBody")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDelete}
+                    className="bg-destructive text-white hover:bg-destructive/90"
+                  >
+                    {tCommon("delete")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         )}
       </TableCell>

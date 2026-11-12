@@ -55,6 +55,11 @@ function getFileSizeInMb(file: File): string {
   return (file.size / (1024 * 1024)).toFixed(2);
 }
 
+function descriptionForApi(description: string, fileName: string): string {
+  const trimmed = description.trim();
+  return trimmed || fileName;
+}
+
 function appendResourceFormFields(
   formData: FormData,
   data: ResourceFormValues,
@@ -62,7 +67,7 @@ function appendResourceFormFields(
 ) {
   formData.append("course_id", data.course_id);
   formData.append("name", data.name || file.name);
-  formData.append("description", data.description || "");
+  formData.append("description", descriptionForApi(data.description, data.name || file.name));
   formData.append("size", getFileSizeInMb(file));
   formData.append("job_type", data.job_type);
   formData.append("resource_type", data.resource_type);
@@ -78,6 +83,8 @@ interface ResourceFormDialogProps {
   onOpenChange?: (open: boolean) => void;
   resource?: Resource | null;
   mode?: "create" | "edit";
+  /** Course already chosen on the Resources page. Hides the duplicate dropdown. */
+  courseId?: string;
 }
 
 export function ResourceFormDialog({ 
@@ -87,9 +94,11 @@ export function ResourceFormDialog({
   onOpenChange: controlledOnOpenChange,
   resource,
   mode = "create",
+  courseId,
 }: ResourceFormDialogProps) {
   const t = useTranslations("resources");
   const isEditMode = mode === "edit" && !!resource;
+  const lockedCourseId = !isEditMode && courseId ? courseId : "";
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = controlledOnOpenChange || setInternalOpen;
@@ -111,9 +120,7 @@ export function ResourceFormDialog({
         name: z.string().min(1, {
           message: t("form.validation.nameRequired"),
         }),
-        description: z.string().trim().min(1, {
-          message: t("form.validation.descriptionRequired"),
-        }),
+        description: z.string(),
         job_type: z.enum(["On", "Off"]),
         resource_type: z.enum(["PDF", "WORD", "PPT", "Text", "Image"]),
         hours: z
@@ -154,7 +161,9 @@ export function ResourceFormDialog({
   const form = useForm<ResourceFormValues>({
     resolver: zodResolver(isEditMode ? resourceFormSchema : createResourceSchema),
     defaultValues: {
-      course_id: (resource?.course_id ? String(resource.course_id) : "") as string,
+      course_id: (resource?.course_id
+        ? String(resource.course_id)
+        : lockedCourseId) as string,
       name: resource?.name ?? "",
       description: resource?.description ?? "",
       job_type: (resource?.job_type as "On" | "Off") ?? "On",
@@ -179,14 +188,22 @@ export function ResourceFormDialog({
     }
   }, [form, isEditMode, open, resource]);
 
+  useEffect(() => {
+    if (open && lockedCourseId) {
+      form.setValue("course_id", lockedCourseId);
+    }
+  }, [form, lockedCourseId, open]);
+
   async function onSubmit(data: ResourceFormValues) {
     try {
       if (isEditMode && resource) {
         // Update existing resource
+        const fileName =
+          data.file?.name || data.name || resource.name || resource.url?.key || "";
         const updateData: Record<string, unknown> = {
           course_id: data.course_id,
           name: data.name,
-          description: data.description || "",
+          description: descriptionForApi(data.description, fileName),
           job_type: data.job_type,
           resource_type: data.resource_type,
           hours: String(data.hours ?? 0),
@@ -222,7 +239,7 @@ export function ResourceFormDialog({
       }
       
       form.reset({
-        course_id: "",
+        course_id: lockedCourseId,
         name: "",
         description: "",
         job_type: "On",
@@ -260,6 +277,7 @@ export function ResourceFormDialog({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {!lockedCourseId && (
             <FormField
               control={form.control}
               name="course_id"
@@ -300,6 +318,7 @@ export function ResourceFormDialog({
                 </FormItem>
               )}
             />
+            )}
 
               <FormField
                 control={form.control}
@@ -374,10 +393,7 @@ export function ResourceFormDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t("form.fields.description")}{" "}
-                    <span className="text-destructive">*</span>
-                  </FormLabel>
+                  <FormLabel>{t("form.fields.description")}</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={t("form.placeholders.description")}

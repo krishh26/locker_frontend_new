@@ -27,6 +27,16 @@ import {
 } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -87,6 +97,7 @@ function getResourceOpenUrl(resource: Resource): string | undefined {
 
 export function ResourcesDataTable() {
   const t = useTranslations('resources')
+  const tCommon = useTranslations('common')
   const user = useAppSelector((state) => state.auth.user)
   const isLearner = user?.role === 'Learner'
   const isEmployer = user?.role === 'Employer'
@@ -131,6 +142,7 @@ export function ResourcesDataTable() {
   const [rowSelection, setRowSelection] = useState({})
   const [editResource, setEditResource] = useState<Resource | null>(null)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [deleteResourceId, setDeleteResourceId] = useState<string | null>(null)
 
   const resources = (resourcesResponse?.data ?? []) as Resource[]
 
@@ -168,30 +180,22 @@ export function ResourcesDataTable() {
     [t]
   )
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      if (
-        !confirm(
-          `${t('table.confirm.deleteTitle')}\n\n${t('table.confirm.deleteBody')}`
-        )
-      ) {
-        return
-      }
+  const handleDeleteConfirm = useCallback(async () => {
+    if (!deleteResourceId) return
 
-      try {
-        await deleteResource(id).unwrap()
-        toast.success(t('table.toast.deleted'))
-        refetch()
-      } catch (error: unknown) {
-        const errorMessage =
-          error && typeof error === 'object' && 'data' in error
-            ? (error as { data?: { error?: string } }).data?.error
-            : undefined
-        toast.error(errorMessage || t('table.toast.deleteFailed'))
-      }
-    },
-    [deleteResource, refetch, t]
-  )
+    try {
+      await deleteResource(deleteResourceId).unwrap()
+      toast.success(t('table.toast.deleted'))
+      setDeleteResourceId(null)
+      refetch()
+    } catch (error: unknown) {
+      const errorMessage =
+        error && typeof error === 'object' && 'data' in error
+          ? (error as { data?: { error?: string } }).data?.error
+          : undefined
+      toast.error(errorMessage || t('table.toast.deleteFailed'))
+    }
+  }, [deleteResource, deleteResourceId, refetch, t])
 
   const getJobTypeColor = (jobType: string | undefined) => {
     switch (jobType) {
@@ -405,7 +409,7 @@ export function ResourcesDataTable() {
                     <DropdownMenuItem
                       variant='destructive'
                       className='cursor-pointer'
-                      onClick={() => handleDelete(resourceId)}
+                      onClick={() => setDeleteResourceId(resourceId)}
                     >
                       <Trash2 className='mr-2 size-4' />
                       {t('table.buttons.delete')}
@@ -421,7 +425,6 @@ export function ResourcesDataTable() {
     [
       getJobTypeLabel,
       getResourceTypeLabel,
-      handleDelete,
       isEmployer,
       t,
       user?.role,
@@ -558,6 +561,7 @@ export function ResourcesDataTable() {
           {!isLearner && !isEmployer && (
             <ResourceFormDialog
               open={dialogOpen}
+              courseId={selectedCourseId}
               onOpenChange={setDialogOpen}
               onSuccess={() => {
                 setDialogOpen(false)
@@ -641,6 +645,31 @@ export function ResourcesDataTable() {
         resource={editResource}
         mode="edit"
       />
+
+      <AlertDialog
+        open={deleteResourceId !== null}
+        onOpenChange={(open) => {
+          if (!open) setDeleteResourceId(null)
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('table.confirm.deleteTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('table.confirm.deleteBody')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tCommon('cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              className="bg-destructive text-white hover:bg-destructive/90"
+            >
+              {t('table.buttons.delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

@@ -16,6 +16,16 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -126,6 +136,9 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent, mark
 
 export function NotificationBell() {
   const t = useTranslations("notifications")
+  const tCommon = useTranslations("common")
+  const tResources = useTranslations("resources")
+  const [deleteTarget, setDeleteTarget] = useState<number | "all" | null>(null)
   const router = useRouter()
   const [open, setOpen] = useState(false)
 
@@ -206,6 +219,7 @@ export function NotificationBell() {
   }
 
   return (
+    <>
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon" className="relative cursor-pointer bg-primary border-primary hover:bg-primary/90 text-white hover:text-white shadow-sm hover:shadow-md transition-all duration-200">
@@ -268,7 +282,7 @@ export function NotificationBell() {
                   key={notification.notification_id}
                   notification={notification}
                   onRead={handleRead}
-                  onDelete={handleDelete}
+                  onDelete={(id) => setDeleteTarget(id)}
                   onClickContent={isTicketNotification(notification) ? handleTicketNotificationClick : undefined}
                   markAsReadTitle={t("bell.markAsReadTitle")}
                   deleteTitle={t("bell.deleteTitle")}
@@ -308,7 +322,7 @@ export function NotificationBell() {
                   variant="ghost"
                   size="sm"
                   className="flex-1 text-destructive hover:text-destructive"
-                  onClick={handleDeleteAll}
+                  onClick={() => setDeleteTarget("all")}
                   disabled={isDeletingAll}
                 >
                   {isDeletingAll ? (
@@ -324,6 +338,38 @@ export function NotificationBell() {
         )}
       </PopoverContent>
     </Popover>
+    <AlertDialog
+      open={deleteTarget !== null}
+      onOpenChange={(open) => {
+        if (!open) setDeleteTarget(null)
+      }}
+    >
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{tCommon("delete")}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {tResources("table.confirm.deleteBody")}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              if (deleteTarget === "all") {
+                void handleDeleteAll()
+              } else if (deleteTarget != null) {
+                void handleDelete(deleteTarget)
+              }
+              setDeleteTarget(null)
+            }}
+            className="bg-destructive text-white hover:bg-destructive/90"
+          >
+            {tCommon("delete")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   )
 }
 

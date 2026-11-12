@@ -98,7 +98,7 @@ export function BasicDetailsSection({
         </div>
       </div>
 
-      <div className='md:col-span-6 space-y-2'>
+      <div className='col-span-full space-y-2 lg:col-span-6'>
         <Label>{t('plannedDate')}</Label>
         <Input
           type='date'
@@ -108,7 +108,7 @@ export function BasicDetailsSection({
           readOnly={isReadOnly}
         />
       </div>
-      <div className='md:col-span-6 space-y-2'>
+      <div className='col-span-full space-y-2 lg:col-span-6'>
         <Label>{t('completedDate')}</Label>
         <Input
           type='date'

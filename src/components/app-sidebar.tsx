@@ -8,6 +8,7 @@ import {
   Download,
   FileSignature,
   Ban,
+  X,
 } from 'lucide-react'
 import {
   LayoutDashboard,
@@ -37,6 +38,7 @@ import * as React from 'react'
 
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
+import { Button } from '@/components/ui/button'
 import {
   Sidebar,
   SidebarContent,
@@ -45,6 +47,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { useAppSelector } from '@/store/hooks'
 import { getAllowedRolesForPath } from '@/config/route-access'
@@ -711,6 +714,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const effectiveUserRole = normalizeRole(userRole) ?? userRole
   const learner = useAppSelector((state) => state.auth.learner)
   const tSidebar = useTranslations('sidebar')
+  const { isMobile, setOpenMobile } = useSidebar()
 
   // MasterAdmin bypasses all feature checks
   const isMasterAdminUser = isMasterAdmin(user)
@@ -949,31 +953,45 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size='lg' asChild>
-                <span className="logo-wrapper">
-              <Link href='/dashboard'>
-                  <Image
-                    src="/logo-text.png"
-                    alt="Locker"
-                    width={100}
-                    height={100}
-                    className="h-14 w-auto"
-                  />
-              </Link>
-                </span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarHeader className={isMobile ? 'gap-1 p-1.5' : undefined}>
+        <div className="flex min-w-0 items-center gap-1">
+          <SidebarMenu className="min-w-0 flex-1">
+            <SidebarMenuItem>
+              <SidebarMenuButton size='lg' asChild>
+                  <span className="logo-wrapper">
+                <Link href='/dashboard' onClick={() => isMobile && setOpenMobile(false)}>
+                    <Image
+                      src="/logo-text.png"
+                      alt="Locker"
+                      width={100}
+                      height={100}
+                      className="h-14 w-auto"
+                    />
+                </Link>
+                  </span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+          {isMobile ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="shrink-0 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              aria-label="Close sidebar"
+              onClick={() => setOpenMobile(false)}
+            >
+              <X className="size-5" />
+            </Button>
+          ) : null}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         {filteredNavGroups.map((group) => (
           <NavMain key={group.label} label={group.label} items={group.items} />
         ))}
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className={isMobile ? 'p-1.5' : undefined}>
         {/* <SidebarNotification /> */}
         {(user || learner) && <NavUser />}
       </SidebarFooter>

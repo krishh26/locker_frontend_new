@@ -83,7 +83,7 @@ export function ModuleUnitProgressLearnerInfoCard({
         <div className="space-y-3">
           {infoItems.map((item) => (
             <div key={item.label} className="flex gap-4">
-              <span className="font-medium text-muted-foreground min-w-[180px]">
+              <span className="font-medium text-muted-foreground sm:min-w-[180px]">
                 {item.label}:
               </span>
               <span className="text-foreground">{item.value}</span>

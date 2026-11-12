@@ -636,8 +636,8 @@ export function CourseBuilderDataTable() {
                       key={header.id}
                       className={
                         isCourseName
-                          ? 'min-w-[30ch] w-[32%]'
-                          : 'min-w-37.5'
+                          ? 'h-8 px-2 py-1 whitespace-normal'
+                          : 'h-8 px-2 py-1'
                       }
                     >
                       {header.isPlaceholder
@@ -666,8 +666,8 @@ export function CourseBuilderDataTable() {
                         key={cell.id}
                         className={
                           isCourseName
-                            ? 'align-top whitespace-normal'
-                            : undefined
+                            ? 'px-2 py-1 align-top whitespace-normal'
+                            : 'px-2 py-1'
                         }
                       >
                         {flexRender(

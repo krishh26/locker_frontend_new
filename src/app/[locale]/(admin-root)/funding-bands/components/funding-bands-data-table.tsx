@@ -284,11 +284,11 @@ export function FundingBandsDataTable() {
                   return (
                     <TableHead
                       key={header.id}
-                      className={cn(
-                        "min-w-[150px]",
-                        header.column.id === "course_course_name" &&
-                          "max-w-[min(100%,28rem)] min-w-0"
-                      )}
+                      className={
+                        header.column.id === "course_course_name"
+                          ? "max-w-[min(100%,28rem)] min-w-0 whitespace-normal"
+                          : undefined
+                      }
                     >
                       {header.isPlaceholder
                         ? null

@@ -459,10 +459,9 @@ export function ResourcesDataTable() {
   }
 
   return (
-    <div className='w-full space-y-4'>
-      <div className='flex gap-4 items-center justify-between flex-wrap'>
-        <div className='flex flex-wrap items-end gap-4'>
-          <div className='space-y-2 min-w-[220px]'>
+    <div className='w-full min-w-0 space-y-4'>
+      <div className='flex w-full min-w-0 flex-wrap items-end gap-3'>
+          <div className='w-full min-w-0 space-y-2 sm:w-64 sm:max-w-full'>
             <Label htmlFor='course-filter' className='text-sm font-medium'>
               {t('form.fields.course')}
             </Label>
@@ -470,7 +469,7 @@ export function ResourcesDataTable() {
               value={selectedCourseId}
               onValueChange={setSelectedCourseId}
             >
-              <SelectTrigger id='course-filter' className='cursor-pointer w-full'>
+              <SelectTrigger id='course-filter' className='w-full min-w-0 cursor-pointer'>
                 <SelectValue placeholder={t('form.placeholders.selectCourse')} />
               </SelectTrigger>
               <SelectContent>
@@ -495,18 +494,16 @@ export function ResourcesDataTable() {
               </SelectContent>
             </Select>
           </div>
-          <div className='relative flex-1 max-w-sm'>
-            <Search className='absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground' />
+          <div className='relative w-full min-w-0 sm:min-w-48 sm:flex-1 sm:basis-64 sm:max-w-md'>
+            <Search className='pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground' />
             <Input
               placeholder={t('table.searchPlaceholder')}
               value={searchKeyword}
               onChange={(event) => setSearchKeyword(event.target.value)}
-              className='pl-9'
+              className='w-full pl-9'
             />
           </div>
-        </div>
-        <div className='flex items-center justify-end gap-4'>
-          <div className='flex items-center space-x-2'>
+          <div className='flex shrink-0 items-center gap-2'>
             <Switch
               id='job-type-switch'
               checked={jobType === 'On'}
@@ -514,8 +511,9 @@ export function ResourcesDataTable() {
                 const newJobType = checked ? 'On' : 'Off'
                 setJobType(newJobType)
               }}
+              className='shrink-0'
             />
-            <Label htmlFor='job-type-switch' className='text-sm'>
+            <Label htmlFor='job-type-switch' className='text-sm whitespace-nowrap'>
               {jobType
                 ? `${t('table.filters.jobType.label')}: ${getJobTypeLabel(jobType)}`
                 : `${t('table.filters.jobType.label')}: ${t('options.jobType.on')}/${t(
@@ -523,7 +521,7 @@ export function ResourcesDataTable() {
                   )}`}
             </Label>
           </div>
-          <div className='space-y-2'>
+          <div className='w-full min-w-0 space-y-2 sm:w-52'>
             <Label
               htmlFor='resource-type-filter'
               className='text-sm font-medium'
@@ -539,7 +537,7 @@ export function ResourcesDataTable() {
               }
             >
               <SelectTrigger
-                className='cursor-pointer w-full'
+                className='w-full min-w-0 cursor-pointer'
                 id='resource-type-filter'
               >
                 <SelectValue placeholder={t('table.filters.resourceType.placeholder')} />
@@ -565,17 +563,16 @@ export function ResourcesDataTable() {
                 refetch()
               }}
               trigger={
-                <Button type='button' className='cursor-pointer'>
-                  <Plus className='mr-2 h-4 w-4' />
+                <Button type='button' className='w-full shrink-0 cursor-pointer sm:w-auto'>
+                  <Plus className='mr-2 h-4 w-4 shrink-0' />
                   {t('table.buttons.addResource')}
                 </Button>
               }
             />
           )}
-        </div>
       </div>
 
-      <div className='rounded-md border'>
+      <div className='min-w-0 overflow-x-auto rounded-md border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

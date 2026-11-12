@@ -185,7 +185,7 @@ export const ActionButtons = memo(function ActionButtons({ triggerSamplePlanLear
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
-      <div className="flex gap-4 flex-1">
+      <div className="grid w-full min-w-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="space-y-2 flex-1">
           <Label>{t("dateFrom")}</Label>
           <Input

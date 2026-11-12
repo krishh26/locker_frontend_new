@@ -56,14 +56,14 @@ export function PageHeader({
         <div className="space-y-1 min-w-0">
           <div className="flex items-center gap-2.5">
             {Icon && <Icon className="h-7 w-7 text-primary shrink-0" />}
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
+            <h1 className="min-w-0 break-words text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
           </div>
           {subtitle && (
-            <p className="text-muted-foreground text-sm sm:text-base">{subtitle}</p>
+            <p className="text-muted-foreground text-sm break-words sm:text-base">{subtitle}</p>
           )}
         </div>
         {actions && (
-          <div className="shrink-0 sm:ml-3">{actions}</div>
+          <div className="flex min-w-0 flex-wrap items-center gap-2 sm:ml-3">{actions}</div>
         )}
       </div>
     </div>

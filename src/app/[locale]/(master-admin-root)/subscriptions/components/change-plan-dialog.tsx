@@ -118,7 +118,7 @@ export function ChangePlanDialog({
           </SelectContent>
         </Select>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4">
         <div className="space-y-2">
           <Label htmlFor="change-startDate">{t("changePlan.labels.startDate")}</Label>
           <Input

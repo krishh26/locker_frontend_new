@@ -138,7 +138,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
       <Sheet open={open} onOpenChange={onOpenChange} modal={false}>
         <SheetContent
           side="right"
-          className="w-[400px] p-0 gap-0 pointer-events-auto [&>button]:hidden overflow-hidden flex flex-col"
+          className="w-full max-w-[min(400px,100vw)] p-0 gap-0 pointer-events-auto [&>button]:hidden overflow-hidden flex flex-col"
           onInteractOutside={(e) => {
             // Prevent the sheet from closing when dialog is open
             if (importModalOpen) {

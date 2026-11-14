@@ -94,6 +94,10 @@ const ownershipToScope: Record<OwnershipType, CourseFilters['scope']> = {
 
 const createCourseTypes = ['Qualification', 'Standard', 'Gateway'] as const
 
+// Awarding bodies only apply to Qualification courses.
+const awardingBodyFor = (course: Course): string =>
+  course.course_core_type === 'Qualification' ? course.awarding_body || '-' : '-'
+
 export function CourseBuilderDataTable() {
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -118,6 +122,8 @@ export function CourseBuilderDataTable() {
   const [ownershipFilter, setOwnershipFilter] = useState<OwnershipType>('own')
   const isAdminViewingGlobalCourses =
     isAdmin && showScopeFilter && scopeFilter === 'global'
+  const showAwardingBody =
+    courseTypeFilter === 'all' || courseTypeFilter === 'Qualification'
   const [filters, setFilters] = useState<CourseFilters>({
     page: 1,
     page_size: 10,
@@ -321,6 +327,7 @@ export function CourseBuilderDataTable() {
       t('table.headers.level'),
       t('table.headers.sector'),
       t('table.headers.learningHours'),
+      ...(showAwardingBody ? [t('table.headers.awardingBody')] : []),
     ]
     const rows = data.data.map((course) => [
       course.course_name,
@@ -329,6 +336,7 @@ export function CourseBuilderDataTable() {
       course.level,
       course.sector,
       course.guided_learning_hours,
+      ...(showAwardingBody ? [awardingBodyFor(course)] : []),
     ])
 
     const csvContent = [
@@ -358,6 +366,7 @@ export function CourseBuilderDataTable() {
       t('table.headers.level'),
       t('table.headers.sector'),
       t('table.headers.learningHours'),
+      ...(showAwardingBody ? [t('table.headers.awardingBody')] : []),
     ]
     const rows = data.data.map((course) => [
       course.course_name,
@@ -366,6 +375,7 @@ export function CourseBuilderDataTable() {
       course.level,
       course.sector,
       String(course.guided_learning_hours ?? ''),
+      ...(showAwardingBody ? [awardingBodyFor(course)] : []),
     ])
     void exportTableToPdf({ title: t('export.pdfTitle'), headers, rows })
     toast.success(t('export.pdfExported'))
@@ -408,6 +418,15 @@ export function CourseBuilderDataTable() {
         accessorKey: 'level',
         header: t('table.headers.level'),
       },
+      ...(showAwardingBody
+        ? [
+            {
+              id: 'awarding_body',
+              header: t('table.headers.awardingBody'),
+              cell: ({ row }) => awardingBodyFor(row.original),
+            } satisfies ColumnDef<Course>,
+          ]
+        : []),
       {
         id: 'actions',
         header: tAdmin('actions'),
@@ -483,6 +502,7 @@ export function CourseBuilderDataTable() {
       isEmployer,
       isMovingCourse,
       isRestoringCourse,
+      showAwardingBody,
       t,
       tCommon,
       tAdmin,

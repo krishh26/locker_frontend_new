@@ -11,23 +11,13 @@ export const TYPE_PREFIX: Record<CriteriaType, string> = {
 const prefixFor = (type?: string): string =>
   TYPE_PREFIX[(type as CriteriaType) in TYPE_PREFIX ? (type as CriteriaType) : "Behaviour"];
 
-/** Codes this feature generates (K1, S12, B3); anything else was typed by hand and is left alone. */
-export const AUTO_CODE_PATTERN = /^[KSB]\d+$/i;
+/** A type letter, optionally followed by a number the user typed (K, B15); anything else was typed by hand and is left alone. */
+export const AUTO_CODE_PATTERN = /^[KSB](\d*)$/i;
 
-/** Highest existing number for the type's prefix + 1, so deleting a row never produces a duplicate. */
-export const nextCriteriaCode = (
-  rows: CriteriaRow[] | undefined,
-  type: CriteriaType,
-  excludeIndex?: number
-): string => {
-  const prefix = TYPE_PREFIX[type];
-  const pattern = new RegExp(`^${prefix}(\\d+)$`, "i");
-  const highest = (rows ?? []).reduce((max, row, i) => {
-    if (i === excludeIndex) return max;
-    const match = row?.code?.trim().match(pattern);
-    return match ? Math.max(max, Number(match[1])) : max;
-  }, 0);
-  return `${prefix}${highest + 1}`;
+/** The type's letter, keeping any number the user already typed after the old letter (K15 -> B15). */
+export const criteriaCodeForType = (type: CriteriaType, currentCode?: string): string => {
+  const typedNumber = currentCode?.trim().match(AUTO_CODE_PATTERN)?.[1] ?? "";
+  return `${TYPE_PREFIX[type]}${typedNumber}`;
 };
 
 /**

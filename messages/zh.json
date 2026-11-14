@@ -4333,7 +4333,8 @@
         "coreType": "核心类型",
         "level": "级别",
         "sector": "行业",
-        "learningHours": "学习时长"
+        "learningHours": "学习时长",
+        "awardingBody": "颁证机构"
       },
       "archivedBadge": "已归档",
       "actions": {

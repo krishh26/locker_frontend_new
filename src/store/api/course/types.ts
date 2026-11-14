@@ -20,6 +20,7 @@ export interface Course {
   course_type?: string;
   brand_guidelines?: string;
   overall_grading_type?: string;
+  awarding_body?: string;
   active?: boolean;
   organisation_id?: number | null;
   created_at?: string;

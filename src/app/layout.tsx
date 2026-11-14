@@ -5,6 +5,7 @@ import { inter } from "@/lib/fonts";
 export const metadata: Metadata = {
   title: "Locker",
   description: "Locker is a platform for learning and development",
+  other: { google: "notranslate" },
 };
 
 // Root layout - Next.js requires HTML structure here
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" translate="no" className={`${inter.variable} antialiased`} suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         {children}
       </body>

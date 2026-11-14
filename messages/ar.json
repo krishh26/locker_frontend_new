@@ -4184,7 +4184,8 @@
         "coreType": "النوع الأساسي",
         "level": "المستوى",
         "sector": "القطاع",
-        "learningHours": "ساعات التعلم"
+        "learningHours": "ساعات التعلم",
+        "awardingBody": "الجهة المانحة"
       },
       "archivedBadge": "مؤرشف",
       "actions": {

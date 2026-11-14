@@ -33,7 +33,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   AUTO_CODE_PATTERN,
-  nextCriteriaCode,
+  criteriaCodeForType,
   type CriteriaRow,
   type CriteriaType,
 } from "../../utils/standard-criteria-codes";
@@ -65,7 +65,7 @@ export function StandardTopicsForm({
       id: Date.now(),
       title: "",
       type: "Behaviour" as const,
-      code: nextCriteriaCode(topics, "Behaviour"),
+      code: criteriaCodeForType("Behaviour"),
     };
     append(newTopic, { shouldFocus: false });
   };
@@ -76,7 +76,7 @@ export function StandardTopicsForm({
     if (previous?.type === type) return;
     const currentCode = previous?.code?.trim() ?? "";
     if (!currentCode || AUTO_CODE_PATTERN.test(currentCode)) {
-      setValue(`units.${moduleIndex}.subUnit.${index}.code`, nextCriteriaCode(topics, type, index));
+      setValue(`units.${moduleIndex}.subUnit.${index}.code`, criteriaCodeForType(type, currentCode));
     }
   };
 

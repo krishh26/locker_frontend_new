@@ -57,9 +57,14 @@ export function StandardModulesStep({
   const handleAddModule = () => {
     // Get current units count for auto-filling sort_order
     const currentUnitsCount = units?.length || 0;
+    // Highest "Duty N" + 1, so deleting a module never produces a duplicate title.
+    const highestDuty = (units ?? []).reduce((max, unit) => {
+      const match = String(unit?.title ?? "").trim().match(/^Duty\s+(\d+)$/i);
+      return match ? Math.max(max, Number(match[1])) : max;
+    }, 0);
     const newModule = {
       id: Date.now(),
-      title: "",
+      title: `Duty ${highestDuty + 1}`,
       // unit_ref: "",
       mandatory: true,
       description: "",

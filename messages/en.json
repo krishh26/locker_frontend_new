@@ -4711,7 +4711,8 @@
         "coreType": "Core type",
         "level": "Level",
         "sector": "Sector",
-        "learningHours": "Learning hours"
+        "learningHours": "Learning hours",
+        "awardingBody": "Awarding body"
       },
       "archivedBadge": "Archived",
       "actions": {

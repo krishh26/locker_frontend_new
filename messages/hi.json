@@ -4190,7 +4190,8 @@
         "coreType": "कोर प्रकार",
         "level": "स्तर",
         "sector": "सेक्टर",
-        "learningHours": "लर्निंग आवर्स"
+        "learningHours": "लर्निंग आवर्स",
+        "awardingBody": "पुरस्कार देने वाली संस्था"
       },
       "archivedBadge": "संग्रहीत",
       "actions": {

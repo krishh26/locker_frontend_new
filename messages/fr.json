@@ -4427,7 +4427,8 @@
         "coreType": "Type principal",
         "level": "Niveau",
         "sector": "Secteur",
-        "learningHours": "Heures d'apprentissage"
+        "learningHours": "Heures d'apprentissage",
+        "awardingBody": "Organisme certificateur"
       },
       "archivedBadge": "Archivé",
       "actions": {

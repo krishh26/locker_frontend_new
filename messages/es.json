@@ -4212,7 +4212,8 @@
         "coreType": "Tipo principal",
         "level": "Nivel",
         "sector": "Sector",
-        "learningHours": "Horas de aprendizaje"
+        "learningHours": "Horas de aprendizaje",
+        "awardingBody": "Organismo certificador"
       },
       "archivedBadge": "Archivado",
       "actions": {

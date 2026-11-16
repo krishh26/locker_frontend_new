@@ -322,6 +322,11 @@ export function getAllowedRolesForPath(pathname: string): AllowedRoles {
   return matchedRule?.roles ?? ALL_ROLES
 }
 
+/** True when pathname has an explicit role rule (used by proxy auth enforcement). */
+export function matchesRouteAccessRule(pathname: string): boolean {
+  return routeRoleRules.some((rule) => rule.pattern.test(pathname))
+}
+
 export function canAccess(pathname: string, role: string | null): boolean {
   const normalizedRole = normalizeRole(role)
   // Admin (incl. OrganisationAdmin / CentreAdmin) and MasterAdmin have access to all routes

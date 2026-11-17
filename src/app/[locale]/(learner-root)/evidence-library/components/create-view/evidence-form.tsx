@@ -486,7 +486,10 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
 
   const onSubmit = async (data: EvidenceFormValues) => {
     // Validate course selections before submitting
-    if (!data.selectedCourses || data.selectedCourses.length === 0) {
+    if (
+      userRole !== 'Learner' &&
+      (!data.selectedCourses || data.selectedCourses.length === 0)
+    ) {
       toast.error(t('form.toast.selectOneCourse'))
       return
     }
@@ -1305,6 +1308,7 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
                 <CourseSelection
                   control={form.control as any}
                   courses={courses}
+                  courseRequired={userRole !== 'Learner'}
                   disabled={!canEditPrimarySections}
                   error={form.formState.errors.selectedCourses as any}
                   courseSelectedTypesError={

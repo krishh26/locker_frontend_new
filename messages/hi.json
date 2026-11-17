@@ -5577,8 +5577,26 @@
         "startDate": "प्रारंभ तिथि",
         "endDate": "समाप्ति तिथि",
         "status": "स्थिति",
+        "awardingBody": "Awarding Body",
         "mainCourse": "मुख्य कोर्स",
         "actions": "कार्रवाई"
+      },
+      "details": {
+        "view": "View course details",
+        "title": "Course details",
+        "description": "Full course information for this learner.",
+        "courseName": "Course Name",
+        "level": "Level",
+        "awardingBody": "Awarding Body",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "status": "Status",
+        "mainCourse": "Main Course",
+        "totalCredits": "Total Credits",
+        "guidedLearningHours": "Guided Learning Hours",
+        "courseType": "Course Type",
+        "coreType": "Core Type",
+        "minAge": "Min Age"
       },
       "dialog": {
         "editTitle": "कोर्स संपादित करें",

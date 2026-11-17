@@ -5523,8 +5523,26 @@
         "startDate": "开始日期",
         "endDate": "结束日期",
         "status": "状态",
+        "awardingBody": "Awarding Body",
         "mainCourse": "主修课程",
         "actions": "操作"
+      },
+      "details": {
+        "view": "View course details",
+        "title": "Course details",
+        "description": "Full course information for this learner.",
+        "courseName": "Course Name",
+        "level": "Level",
+        "awardingBody": "Awarding Body",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "status": "Status",
+        "mainCourse": "Main Course",
+        "totalCredits": "Total Credits",
+        "guidedLearningHours": "Guided Learning Hours",
+        "courseType": "Course Type",
+        "coreType": "Core Type",
+        "minAge": "Min Age"
       },
       "dialog": {
         "editTitle": "编辑课程",

@@ -115,7 +115,7 @@ export const getEvidenceFormSchema = (userRole?: string, isEditMode?: boolean) =
       .min(1, 'form.validation.assessmentMethodRequired'),
     selectedCourses: z
       .array(z.any())
-      .min(1, 'form.validation.selectOneCourse'),
+      .min(userRole === 'Learner' ? 0 : 1, 'form.validation.selectOneCourse'),
     courseSelectedTypes: z
       .record(z.string(), z.array(z.string()))
       .optional(),

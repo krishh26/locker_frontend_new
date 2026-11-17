@@ -37,6 +37,7 @@ const UNIT_TYPES = {
 interface CourseSelectionProps {
   control: Control<EvidenceFormValues>;
   courses: LearnerCourse[];
+  courseRequired?: boolean;
   disabled?: boolean;
   error?: FieldError;
   courseSelectedTypesError?: FieldError;
@@ -48,6 +49,7 @@ interface CourseSelectionProps {
 export function CourseSelection({
   control,
   courses,
+  courseRequired = true,
   disabled,
   error,
   courseSelectedTypesError,
@@ -310,7 +312,8 @@ export function CourseSelection({
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>
-              {t("courseSelection.selectCourses")} <span className="text-destructive">*</span>
+              {t("courseSelection.selectCourses")}
+              {courseRequired && <span className="text-destructive"> *</span>}
             </Label>
             <div className="space-y-3">
               {/* Selected Courses Display */}

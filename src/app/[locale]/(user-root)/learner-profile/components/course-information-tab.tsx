@@ -66,7 +66,7 @@ import type { LearnerData, LearnerCourse } from "@/store/api/learner/types";
 import { cn } from "@/lib/utils";
 import { getCourseLabel } from "@/utils/course-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, Eye } from "lucide-react";
 import { toast } from "sonner";
 
 interface CourseInformationTabProps {
@@ -234,6 +234,7 @@ export function CourseInformationTab({
   }, []);
   const courseSchema = useMemo(() => getDialogCourseSchema((key) => t(key)), [t]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [detailsCourse, setDetailsCourse] = useState<LearnerCourse | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<LearnerCourse | null>(
     null
@@ -620,10 +621,9 @@ export function CourseInformationTab({
                     <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.startDate")}</TableHead>
                     <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.endDate")}</TableHead>
                     <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.status")}</TableHead>
+                    <TableHead className="px-4 whitespace-nowrap">{t("courseInformation.table.awardingBody")}</TableHead>
                     <TableHead className="px-4 whitespace-nowrap text-center">{t("courseInformation.table.mainCourse")}</TableHead>
-                    {canEdit && (
-                      <TableHead className="px-4 whitespace-nowrap text-right">{t("courseInformation.table.actions")}</TableHead>
-                    )}
+                    <TableHead className="px-4 whitespace-nowrap text-right">{t("courseInformation.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -666,6 +666,9 @@ export function CourseInformationTab({
                             : "-"}
                         </Badge>
                       </TableCell>
+                      <TableCell className="px-4 py-3 whitespace-nowrap">
+                        {(course.course as { awarding_body?: string } | undefined)?.awarding_body || "-"}
+                      </TableCell>
                       <TableCell className="px-4 py-3 text-center">
                         {course.is_main_course ? (
                           <Badge variant="default">{t("courseInformation.yes")}</Badge>
@@ -673,30 +676,42 @@ export function CourseInformationTab({
                           <span className="text-muted-foreground">{t("courseInformation.no")}</span>
                         )}
                       </TableCell>
-                      {canEdit && (
-                        <TableCell className="px-4 py-3">
-                          <div className="flex justify-end gap-1">
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleOpenDialog(course)}
-                              className="h-8 w-8"
-                            >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleDeleteClick(course)}
-                              className="h-8 w-8 text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      )}
+                      <TableCell className="px-4 py-3">
+                        <div className="flex justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setDetailsCourse(course)}
+                            className="h-8 w-8"
+                            aria-label={t("courseInformation.details.view")}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          {canEdit && (
+                            <>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleOpenDialog(course)}
+                                className="h-8 w-8"
+                              >
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleDeleteClick(course)}
+                                className="h-8 w-8 text-destructive hover:text-destructive"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -704,54 +719,44 @@ export function CourseInformationTab({
             </div>
           )}
 
-          {/* Additional Course Details */}
-          {courses.length > 0 && (
-            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {courses.map((course) => (
-                <Card key={course.user_course_id} className="border-dashed">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-base">
-                      {getCourseLabel(course.course, "Course")}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Total Credits:
-                      </span>
-                      <span>{course.course?.total_credits || "-"}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Guided Learning Hours:
-                      </span>
-                      <span>
-                        {course.course?.guided_learning_hours || "-"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Course Type:
-                      </span>
-                      <span>{course.course?.course_type || "-"}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Core Type:</span>
-                      <span>{course.course?.course_core_type || "-"}</span>
-                    </div>
-                    {course.course?.recommended_minimum_age && (
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Min Age:</span>
-                        <span>{course.course.recommended_minimum_age}</span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+        </CardContent>
+      </Card>
+
+      <Dialog open={detailsCourse != null} onOpenChange={(open) => !open && setDetailsCourse(null)}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>
+              {detailsCourse ? getCourseLabel(detailsCourse.course, "Course") : t("courseInformation.details.title")}
+            </DialogTitle>
+            <DialogDescription>{t("courseInformation.details.description")}</DialogDescription>
+          </DialogHeader>
+          {detailsCourse && (
+            <div className="space-y-3 text-sm">
+              {(
+                [
+                  [t("courseInformation.details.courseName"), detailsCourse.course?.course_name],
+                  [t("courseInformation.details.level"), detailsCourse.course?.level],
+                  [t("courseInformation.details.awardingBody"), (detailsCourse.course as { awarding_body?: string } | undefined)?.awarding_body],
+                  [t("courseInformation.details.startDate"), formatDate(detailsCourse.start_date)],
+                  [t("courseInformation.details.endDate"), formatDate(detailsCourse.end_date)],
+                  [t("courseInformation.details.status"), detailsCourse.course_status],
+                  [t("courseInformation.details.mainCourse"), detailsCourse.is_main_course ? t("courseInformation.yes") : t("courseInformation.no")],
+                  [t("courseInformation.details.totalCredits"), detailsCourse.course?.total_credits],
+                  [t("courseInformation.details.guidedLearningHours"), detailsCourse.course?.guided_learning_hours],
+                  [t("courseInformation.details.courseType"), detailsCourse.course?.course_type],
+                  [t("courseInformation.details.coreType"), detailsCourse.course?.course_core_type],
+                  [t("courseInformation.details.minAge"), detailsCourse.course?.recommended_minimum_age],
+                ] as Array<[string, string | null | undefined]>
+              ).map(([label, value]) => (
+                <div key={label} className="flex justify-between gap-4">
+                  <span className="text-muted-foreground">{label}</span>
+                  <span className="text-right">{value || "-"}</span>
+                </div>
               ))}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </DialogContent>
+      </Dialog>
 
       {/* Add/Edit Course Dialog */}
       <Dialog open={dialogOpen} onOpenChange={handleCloseDialog}>

@@ -4735,8 +4735,26 @@
         "startDate": "Startdatum",
         "endDate": "Enddatum",
         "status": "Status",
+        "awardingBody": "Awarding Body",
         "mainCourse": "Hauptkurs",
         "actions": "Aktionen"
+      },
+      "details": {
+        "view": "View course details",
+        "title": "Course details",
+        "description": "Full course information for this learner.",
+        "courseName": "Course Name",
+        "level": "Level",
+        "awardingBody": "Awarding Body",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "status": "Status",
+        "mainCourse": "Main Course",
+        "totalCredits": "Total Credits",
+        "guidedLearningHours": "Guided Learning Hours",
+        "courseType": "Course Type",
+        "coreType": "Core Type",
+        "minAge": "Min Age"
       },
       "dialog": {
         "editTitle": "Kurs bearbeiten",

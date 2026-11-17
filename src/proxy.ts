@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 import createMiddleware from 'next-intl/middleware';
 
 import { TOKEN_COOKIE_KEY, USER_COOKIE_KEY } from "@/store/api/auth/api"
-import { canAccess } from "@/config/route-access"
+import { canAccess, matchesRouteAccessRule } from "@/config/route-access"
 import { resolveSessionRole } from "@/lib/auth/session-role"
 import { routing } from "@/i18n/navigation"
 
@@ -21,6 +21,7 @@ const PROTECTED_PATH_PREFIXES = [
   "/surveys",
   "/demo",
   "/users",
+  "/employers",
   "/settings",
   "/pricing",
   "/evidence-library",
@@ -55,9 +56,16 @@ const PUBLIC_PATH = "/"
 
 // Since locale is not in path, pathname is already clean
 function isProtectedRoute(pathname: string) {
-  return PROTECTED_PATH_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-  )
+  // Prefer the explicit prefix list, and also enforce any path that has a
+  // role rule in route-access (keeps lists from drifting — e.g. /employers).
+  if (
+    PROTECTED_PATH_PREFIXES.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+    )
+  ) {
+    return true
+  }
+  return matchesRouteAccessRule(pathname)
 }
 
 function isAuthRoute(pathname: string) {

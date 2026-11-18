@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     'new.yourlockerroom.co.uk',
     'localhost',
     '127.0.0.1',
+    'demoextra.locker-online.co.uk'
   ],
   
   experimental: {

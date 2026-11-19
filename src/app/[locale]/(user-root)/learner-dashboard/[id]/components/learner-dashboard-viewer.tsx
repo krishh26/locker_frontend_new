@@ -6,6 +6,7 @@ import { useGetLearnerDetailsQuery } from '@/store/api/learner/learnerApi'
 import { useAppDispatch } from '@/store/hooks'
 import { setLearnerData } from '@/store/slices/authSlice'
 import { LearnerDashboard } from '@/app/[locale]/(user-root)/dashboard/components/learner-section/learner-dashboard'
+import { LearnerCoursesPage } from '@/app/[locale]/(user-root)/dashboard/components/learner-section/learner-courses-page'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
@@ -15,10 +16,12 @@ import { useTranslations } from 'next-intl'
 
 interface LearnerDashboardViewerProps {
   learnerId: string
+  view?: 'dashboard' | 'courses'
 }
 
 export function LearnerDashboardViewer({
   learnerId,
+  view = 'dashboard',
 }: LearnerDashboardViewerProps) {
   const t = useTranslations('learnerDashboard')
   const router = useRouter()
@@ -101,7 +104,7 @@ export function LearnerDashboardViewer({
           showBackButton
         />
       </div>
-      <LearnerDashboard />
+      {view === 'courses' ? <LearnerCoursesPage /> : <LearnerDashboard />}
     </>
   )
 }

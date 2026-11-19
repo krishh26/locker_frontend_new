@@ -5309,6 +5309,38 @@
       "title": "لوحة التحكم",
       "subtitle": "إدارة رحلة التعلم الخاصة بك وتتبع التقدم"
     },
+    "navTabs": {
+      "ariaLabel": "قسم المتعلم",
+      "dashboard": "لوحة التحكم",
+      "courses": "الدورات"
+    },
+    "coursesPage": {
+      "title": "الدورات",
+      "subtitle": "اعرض جميع دوراتك المسجّلة وتتبع التقدم",
+      "emptyTitle": "لم يتم العثور على دورات",
+      "emptyDescription": "لست مسجلاً في أي دورة حتى الآن."
+    },
+    "courseWork": {
+      "title": "أعمال الدورة",
+      "showSummaryCounts": "إظهار الإجماليات",
+      "courseFilter": "تصفية الدورة",
+      "submissionStatus": "حالة التسليم",
+      "allCourses": "جميع الدورات",
+      "allStatuses": "جميع الحالات",
+      "notSubmitted": "غير مُسلَّم",
+      "submitted": "مُسلَّم",
+      "due": "مستحق",
+      "missing": "ناقص",
+      "goToCourse": "الانتقال إلى الدورة",
+      "uploadWork": "رفع العمل",
+      "uploadRemaining": "رفع العمل المتبقي",
+      "unitsRemaining": "{count} وحدات متبقية",
+      "submittedEvidence": "دليل مُسلَّم",
+      "gradeLabel": "الدرجة: {grade}",
+      "untitledEvidence": "دليل بلا عنوان",
+      "loading": "جارٍ تحميل أعمال الدورة...",
+      "empty": "لا توجد أعمال دورة تطابق عوامل التصفية."
+    },
     "viewer": {
       "errorTitle": "خطأ في تحميل لوحة تحكم المتعلم",
       "loadError": "فشل تحميل تفاصيل المتعلم",

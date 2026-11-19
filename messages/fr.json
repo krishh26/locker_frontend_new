@@ -5387,6 +5387,38 @@
       "title": "Tableau de bord",
       "subtitle": "Gérez votre parcours d’apprentissage et suivez votre progression"
     },
+    "navTabs": {
+      "ariaLabel": "Section apprenant",
+      "dashboard": "Tableau de bord",
+      "courses": "Cours"
+    },
+    "coursesPage": {
+      "title": "Cours",
+      "subtitle": "Consultez tous vos cours inscrits et suivez votre progression",
+      "emptyTitle": "Aucun cours trouvé",
+      "emptyDescription": "Vous n’êtes inscrit à aucun cours pour le moment."
+    },
+    "courseWork": {
+      "title": "Travail de cours",
+      "showSummaryCounts": "Afficher les totaux",
+      "courseFilter": "Filtre de cours",
+      "submissionStatus": "Statut de soumission",
+      "allCourses": "Tous les cours",
+      "allStatuses": "Tous les statuts",
+      "notSubmitted": "Non soumis",
+      "submitted": "Soumis",
+      "due": "À rendre",
+      "missing": "Manquant",
+      "goToCourse": "Aller au cours",
+      "uploadWork": "Téléverser le travail",
+      "uploadRemaining": "Téléverser le travail restant",
+      "unitsRemaining": "{count} unités restantes",
+      "submittedEvidence": "Preuve soumise",
+      "gradeLabel": "Note : {grade}",
+      "untitledEvidence": "Preuve sans titre",
+      "loading": "Chargement du travail de cours...",
+      "empty": "Aucun travail de cours ne correspond à vos filtres."
+    },
     "viewer": {
       "errorTitle": "Erreur lors du chargement du tableau de bord de l'apprenant",
       "loadError": "Échec du chargement des détails de l'apprenant",

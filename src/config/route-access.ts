@@ -271,6 +271,11 @@ const routeRoleRules: RouteRule[] = [
     pattern: /^\/dashboard\/?$/,
     roles: R.adminWith("Learner", "Trainer", "IQA", "Employer", "MasterAdmin", "AccountManager"),
   },
+  // Learner courses list (switched from dashboard tabs)
+  {
+    pattern: /^\/courses(?:\/|$)/,
+    roles: R.adminWith("Learner"),
+  },
   // IV Report (accessible to all roles)
   {
     pattern: /^\/iqa-report(?:\/|$)/,

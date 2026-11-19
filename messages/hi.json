@@ -5397,6 +5397,38 @@
       "title": "डैशबोर्ड",
       "subtitle": "अपनी सीखने की यात्रा प्रबंधित करें और प्रगति ट्रैक करें"
     },
+    "navTabs": {
+      "ariaLabel": "लर्नर अनुभाग",
+      "dashboard": "डैशबोर्ड",
+      "courses": "कोर्स"
+    },
+    "coursesPage": {
+      "title": "कोर्स",
+      "subtitle": "अपने सभी नामांकित कोर्स देखें और प्रगति ट्रैक करें",
+      "emptyTitle": "कोई कोर्स नहीं मिला",
+      "emptyDescription": "आप अभी तक किसी कोर्स में नामांकित नहीं हैं।"
+    },
+    "courseWork": {
+      "title": "कोर्स कार्य",
+      "showSummaryCounts": "सारांश संख्या दिखाएँ",
+      "courseFilter": "कोर्स फ़िल्टर",
+      "submissionStatus": "सबमिशन स्थिति",
+      "allCourses": "सभी कोर्स",
+      "allStatuses": "सभी स्थितियाँ",
+      "notSubmitted": "सबमिट नहीं",
+      "submitted": "सबमिट किया",
+      "due": "देय",
+      "missing": "लंबित",
+      "goToCourse": "कोर्स पर जाएँ",
+      "uploadWork": "कार्य अपलोड करें",
+      "uploadRemaining": "शेष कार्य अपलोड करें",
+      "unitsRemaining": "{count} यूनिट शेष",
+      "submittedEvidence": "सबमिट किया गया साक्ष्य",
+      "gradeLabel": "ग्रेड: {grade}",
+      "untitledEvidence": "बिना शीर्षक साक्ष्य",
+      "loading": "कोर्स कार्य लोड हो रहा है...",
+      "empty": "आपके फ़िल्टर से कोई कोर्स कार्य मेल नहीं खाता।"
+    },
     "viewer": {
       "errorTitle": "लर्नर डैशबोर्ड लोड करने में त्रुटि",
       "loadError": "लर्नर विवरण लोड करने में विफल",

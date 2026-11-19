@@ -13,7 +13,6 @@ import { LayoutDashboard, Mail, Calendar, FileSignature } from 'lucide-react'
 import { PageHeader } from '@/components/dashboard/page-header'
 import { PortfolioMetricCards } from './portfolio-metric-cards'
 import { LearnerInfoCard } from './learner-info-card'
-import { CourseProgressCharts } from './course-progress-charts'
 import { EmailDialog } from './email-dialog'
 import { CalendarDialog } from './calendar-dialog'
 import { AcknowledgementDialog } from './acknowledgement-dialog'
@@ -23,6 +22,9 @@ import { clearCurrentCourseId } from '@/store/slices/courseSlice'
 import { selectLearner } from '@/store/slices/authSlice'
 import { overviewCards } from '../../data/portfolio-data'
 import { SafeguardingCard } from './safeguarding-card'
+import { LearnerNavTabs } from './learner-nav-tabs'
+import { CourseWorkPanel } from './course-work-panel'
+import type { LearnerCourse } from '@/store/api/learner/types'
 import { useTranslations } from 'next-intl'
 
 export function LearnerDashboard() {
@@ -190,6 +192,8 @@ export function LearnerDashboard() {
           )}
         </div>
 
+        <LearnerNavTabs />
+
         {/* Portfolio Metric Cards */}
         <PortfolioMetricCards
           cards={overviewCards}
@@ -198,10 +202,8 @@ export function LearnerDashboard() {
           detailData={{ 9: t('infoCard.timeLog.offTheJob') }}
         />
 
-        {/* Course Progress Charts */}
         {learner?.course && learner.course.length > 0 && (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          <CourseProgressCharts courses={learner.course as any} />
+          <CourseWorkPanel courses={learner.course as LearnerCourse[]} />
         )}
 
         {/* Time Log and Safeguarding Cards Grid */}

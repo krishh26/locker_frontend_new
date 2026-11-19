@@ -28,6 +28,7 @@ import type { AuthUser } from '@/store/api/auth/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ExternalLink, Loader2, Upload, FileText } from 'lucide-react'
 import { useRouter } from '@/i18n/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -157,9 +158,12 @@ function resolveEvidenceOwnerUserId(
 
 export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector(selectLearner)
   const authCourses = useAppSelector(selectCourses)
+  const preselectCourseId = searchParams.get('course_id')
+  const hasPreselectedCourseRef = useRef(false)
 
   const { data: coursesApiResponse } = useGetCoursesQuery(
     { page: 1, page_size: 1000, scope: 'organisation', status: 'active' },
@@ -323,6 +327,33 @@ export function EvidenceForm({ evidenceId }: EvidenceFormProps) {
       ],
     },
   })
+
+  // Pre-select course when arriving from Course work "Upload work"
+  useEffect(() => {
+    if (isEditMode || hasPreselectedCourseRef.current) return
+    if (!preselectCourseId || courses.length === 0) return
+
+    const match = courses.find(
+      (c) => String(c.course?.course_id) === String(preselectCourseId),
+    )
+    if (!match?.course) return
+
+    const current = form.getValues('selectedCourses') || []
+    if (current.length > 0) {
+      hasPreselectedCourseRef.current = true
+      return
+    }
+
+    form.setValue('selectedCourses', [
+      {
+        course_id: match.course.course_id,
+        course_name: match.course.course_name,
+        course_code: match.course.course_code,
+        course_core_type: match.course.course_core_type ?? undefined,
+      },
+    ])
+    hasPreselectedCourseRef.current = true
+  }, [courses, form, isEditMode, preselectCourseId])
 
   // Process sessions data
   useEffect(() => {

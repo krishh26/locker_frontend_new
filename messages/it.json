@@ -4557,6 +4557,38 @@
       "title": "Dashboard",
       "subtitle": "Gestisci il tuo percorso di apprendimento e monitora i progressi"
     },
+    "navTabs": {
+      "ariaLabel": "Sezione apprendista",
+      "dashboard": "Dashboard",
+      "courses": "Corsi"
+    },
+    "coursesPage": {
+      "title": "Corsi",
+      "subtitle": "Visualizza tutti i corsi a cui sei iscritto e monitora i progressi",
+      "emptyTitle": "Nessun corso trovato",
+      "emptyDescription": "Non sei ancora iscritto a nessun corso."
+    },
+    "courseWork": {
+      "title": "Lavoro del corso",
+      "showSummaryCounts": "Mostra totali",
+      "courseFilter": "Filtro corso",
+      "submissionStatus": "Stato di invio",
+      "allCourses": "Tutti i corsi",
+      "allStatuses": "Tutti gli stati",
+      "notSubmitted": "Non inviato",
+      "submitted": "Inviato",
+      "due": "In scadenza",
+      "missing": "Mancante",
+      "goToCourse": "Vai al corso",
+      "uploadWork": "Carica lavoro",
+      "uploadRemaining": "Carica lavoro rimanente",
+      "unitsRemaining": "{count} unità rimanenti",
+      "submittedEvidence": "Evidenza inviata",
+      "gradeLabel": "Voto: {grade}",
+      "untitledEvidence": "Evidenza senza titolo",
+      "loading": "Caricamento lavoro del corso...",
+      "empty": "Nessun lavoro corrisponde ai filtri."
+    },
     "viewer": {
       "errorTitle": "Errore nel caricamento della dashboard dell'apprendista",
       "loadError": "Impossibile caricare i dettagli dell'apprendista",

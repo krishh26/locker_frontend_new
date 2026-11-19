@@ -5224,6 +5224,38 @@
       "title": "Panel",
       "subtitle": "Gestione su trayectoria de aprendizaje y supervise el progreso"
     },
+    "navTabs": {
+      "ariaLabel": "Sección del aprendiz",
+      "dashboard": "Panel",
+      "courses": "Cursos"
+    },
+    "coursesPage": {
+      "title": "Cursos",
+      "subtitle": "Vea todos sus cursos inscritos y siga el progreso",
+      "emptyTitle": "No se encontraron cursos",
+      "emptyDescription": "Aún no está inscrito en ningún curso."
+    },
+    "courseWork": {
+      "title": "Trabajo del curso",
+      "showSummaryCounts": "Mostrar totales",
+      "courseFilter": "Filtro de curso",
+      "submissionStatus": "Estado de envío",
+      "allCourses": "Todos los cursos",
+      "allStatuses": "Todos los estados",
+      "notSubmitted": "No enviado",
+      "submitted": "Enviado",
+      "due": "Pendiente",
+      "missing": "Faltante",
+      "goToCourse": "Ir al curso",
+      "uploadWork": "Subir trabajo",
+      "uploadRemaining": "Subir trabajo restante",
+      "unitsRemaining": "{count} unidades restantes",
+      "submittedEvidence": "Evidencia enviada",
+      "gradeLabel": "Calificación: {grade}",
+      "untitledEvidence": "Evidencia sin título",
+      "loading": "Cargando trabajo del curso...",
+      "empty": "Ningún trabajo coincide con sus filtros."
+    },
     "viewer": {
       "errorTitle": "Error al cargar el panel del aprendiz",
       "loadError": "Error al cargar los detalles del aprendiz",

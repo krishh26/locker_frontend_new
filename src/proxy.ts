@@ -14,6 +14,7 @@ const intlMiddleware = createMiddleware(routing)
 // The route-access.ts file defines which roles can access which routes
 const PROTECTED_PATH_PREFIXES = [
   "/dashboard",
+  "/courses",
   "/cpd",
   "/forum",
   "/skills-scan",

@@ -5444,6 +5444,38 @@
       "title": "Dashboard",
       "subtitle": "Manage your learning journey and track progress"
     },
+    "navTabs": {
+      "ariaLabel": "Learner section",
+      "dashboard": "Dashboard",
+      "courses": "Courses"
+    },
+    "coursesPage": {
+      "title": "Courses",
+      "subtitle": "View all your enrolled courses and track progress",
+      "emptyTitle": "No courses found",
+      "emptyDescription": "You are not enrolled in any courses yet."
+    },
+    "courseWork": {
+      "title": "Course work",
+      "showSummaryCounts": "Show summary counts",
+      "courseFilter": "Course filter",
+      "submissionStatus": "Submission status",
+      "allCourses": "All courses",
+      "allStatuses": "All statuses",
+      "notSubmitted": "Not submitted",
+      "submitted": "Submitted",
+      "due": "Due",
+      "missing": "Missing",
+      "goToCourse": "Go to course",
+      "uploadWork": "Upload work",
+      "uploadRemaining": "Upload remaining work",
+      "unitsRemaining": "{count} units remaining",
+      "submittedEvidence": "Submitted evidence",
+      "gradeLabel": "Grade: {grade}",
+      "untitledEvidence": "Untitled evidence",
+      "loading": "Loading course work...",
+      "empty": "No course work matches your filters."
+    },
     "viewer": {
       "errorTitle": "Error Loading Learner Dashboard",
       "loadError": "Failed to load learner details",

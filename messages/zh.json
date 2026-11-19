@@ -5345,6 +5345,38 @@
       "title": "仪表盘",
       "subtitle": "管理你的学习旅程并跟踪进度"
     },
+    "navTabs": {
+      "ariaLabel": "学员区域",
+      "dashboard": "仪表盘",
+      "courses": "课程"
+    },
+    "coursesPage": {
+      "title": "课程",
+      "subtitle": "查看你报名的所有课程并跟踪进度",
+      "emptyTitle": "未找到课程",
+      "emptyDescription": "你尚未报名任何课程。"
+    },
+    "courseWork": {
+      "title": "课程作业",
+      "showSummaryCounts": "显示汇总数量",
+      "courseFilter": "课程筛选",
+      "submissionStatus": "提交状态",
+      "allCourses": "全部课程",
+      "allStatuses": "全部状态",
+      "notSubmitted": "未提交",
+      "submitted": "已提交",
+      "due": "即将到期",
+      "missing": "缺失",
+      "goToCourse": "前往课程",
+      "uploadWork": "上传作业",
+      "uploadRemaining": "上传剩余作业",
+      "unitsRemaining": "剩余 {count} 个单元",
+      "submittedEvidence": "已提交的证据",
+      "gradeLabel": "成绩：{grade}",
+      "untitledEvidence": "未命名证据",
+      "loading": "正在加载课程作业...",
+      "empty": "没有符合筛选条件的课程作业。"
+    },
     "viewer": {
       "errorTitle": "加载学员仪表盘时出错",
       "loadError": "加载学员详情失败",

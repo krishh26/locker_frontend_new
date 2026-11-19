@@ -4557,6 +4557,38 @@
       "title": "Dashboard",
       "subtitle": "Verwalten Sie Ihren Lernweg und verfolgen Sie den Fortschritt"
     },
+    "navTabs": {
+      "ariaLabel": "Lernerbereich",
+      "dashboard": "Dashboard",
+      "courses": "Kurse"
+    },
+    "coursesPage": {
+      "title": "Kurse",
+      "subtitle": "Alle eingeschriebenen Kurse anzeigen und Fortschritt verfolgen",
+      "emptyTitle": "Keine Kurse gefunden",
+      "emptyDescription": "Sie sind noch in keinem Kurs eingeschrieben."
+    },
+    "courseWork": {
+      "title": "Kursarbeit",
+      "showSummaryCounts": "Zusammenfassung anzeigen",
+      "courseFilter": "Kursfilter",
+      "submissionStatus": "Abgabestatus",
+      "allCourses": "Alle Kurse",
+      "allStatuses": "Alle Status",
+      "notSubmitted": "Nicht eingereicht",
+      "submitted": "Eingereicht",
+      "due": "Fällig",
+      "missing": "Fehlend",
+      "goToCourse": "Zum Kurs",
+      "uploadWork": "Arbeit hochladen",
+      "uploadRemaining": "Verbleibende Arbeit hochladen",
+      "unitsRemaining": "{count} Einheiten verbleibend",
+      "submittedEvidence": "Eingereichte Evidenz",
+      "gradeLabel": "Note: {grade}",
+      "untitledEvidence": "Unbenannte Evidenz",
+      "loading": "Kursarbeit wird geladen...",
+      "empty": "Keine Kursarbeit entspricht Ihren Filtern."
+    },
     "viewer": {
       "errorTitle": "Fehler beim Laden des Lerner-Dashboards",
       "loadError": "Lernerdetails konnten nicht geladen werden",

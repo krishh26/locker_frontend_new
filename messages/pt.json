@@ -5387,6 +5387,38 @@
       "title": "Painel",
       "subtitle": "Gira o seu percurso de aprendizagem e acompanhe o progresso"
     },
+    "navTabs": {
+      "ariaLabel": "Secção do formando",
+      "dashboard": "Painel",
+      "courses": "Cursos"
+    },
+    "coursesPage": {
+      "title": "Cursos",
+      "subtitle": "Veja todos os seus cursos inscritos e acompanhe o progresso",
+      "emptyTitle": "Nenhum curso encontrado",
+      "emptyDescription": "Ainda não está inscrito em nenhum curso."
+    },
+    "courseWork": {
+      "title": "Trabalho do curso",
+      "showSummaryCounts": "Mostrar totais",
+      "courseFilter": "Filtro de curso",
+      "submissionStatus": "Estado de submissão",
+      "allCourses": "Todos os cursos",
+      "allStatuses": "Todos os estados",
+      "notSubmitted": "Não submetido",
+      "submitted": "Submetido",
+      "due": "A entregar",
+      "missing": "Em falta",
+      "goToCourse": "Ir para o curso",
+      "uploadWork": "Carregar trabalho",
+      "uploadRemaining": "Carregar trabalho restante",
+      "unitsRemaining": "{count} unidades restantes",
+      "submittedEvidence": "Evidência submetida",
+      "gradeLabel": "Nota: {grade}",
+      "untitledEvidence": "Evidência sem título",
+      "loading": "A carregar trabalho do curso...",
+      "empty": "Nenhum trabalho corresponde aos seus filtros."
+    },
     "viewer": {
       "errorTitle": "Erro ao carregar o painel do formando",
       "loadError": "Falha ao carregar detalhes do formando",

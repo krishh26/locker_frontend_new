@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Control, type UseFormSetValue, type UseFormTrigger } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import {
   Dialog,
@@ -326,11 +326,11 @@ export function EvidenceDetailsModal({
               <div className="space-y-2">
                 <Label>Unit Mappings</Label>
                 <EvidenceMappingsTable
-                  control={form.control}
+                  control={form.control as Control<any>}
                   evidence={evidenceData}
                   courses={courses}
-                  setValue={form.setValue}
-                  trigger={form.trigger}
+                  setValue={form.setValue as UseFormSetValue<any>}
+                  trigger={form.trigger as UseFormTrigger<any>}
                   getEvidenceCount={getEvidenceCount}
                 />
               </div>

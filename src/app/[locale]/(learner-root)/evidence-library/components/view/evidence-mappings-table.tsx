@@ -22,6 +22,7 @@ import { QualificationMinimal } from "./qualification-minimal";
 import { StandardCourseMinimal } from "./standard-course-minimal";
 
 interface EvidenceMappingsTableProps {
+  // RHF Control is invariant; callers cast when form values are a narrower type.
   control: Control<any>;
   evidence: EvidenceEntry;
   courses: LearnerCourse[];

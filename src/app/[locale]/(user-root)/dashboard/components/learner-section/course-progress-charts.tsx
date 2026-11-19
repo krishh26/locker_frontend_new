@@ -27,7 +27,7 @@ interface Course {
     course_id?: number
     course_name: string
     level?: string
-    course_core_type?: string
+    course_core_type?: string | null
     questions?: Array<{ achieved?: boolean }>
     is_excluded?: boolean
   }

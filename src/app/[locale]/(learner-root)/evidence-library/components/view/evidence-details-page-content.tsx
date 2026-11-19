@@ -4,7 +4,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useParams, useSearchParams } from "next/navigation";;
-import { useForm } from "react-hook-form";
+import { useForm, type Control, type UseFormSetValue, type UseFormTrigger } from "react-hook-form";
 import { Loader2, FileText, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -483,11 +483,11 @@ export function EvidenceDetailsPageContent() {
             <div className="space-y-2">
               <Label>Unit Mappings</Label>
               <EvidenceMappingsTable
-                control={form.control}
+                control={form.control as Control<any>}
                 evidence={evidenceData}
                 courses={courses}
-                setValue={form.setValue}
-                trigger={form.trigger}
+                setValue={form.setValue as UseFormSetValue<any>}
+                trigger={form.trigger as UseFormTrigger<any>}
                 canEditLearnerFields={isTrainer}
                 canEditTrainerFields={isTrainer}
                 getEvidenceCount={getEvidenceCount}

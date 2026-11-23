@@ -64,6 +64,7 @@ import {
   useDeleteLearnerPlanMutation,
   useUpdateSessionMutation,
 } from '@/store/api/learner-plan/learnerPlanApi'
+import { useGetSessionTypesQuery } from '@/store/api/session-type/sessionTypeApi'
 import { useAppSelector } from '@/store/hooks'
 import { selectLearner } from '@/store/slices/authSlice'
 import { toast } from 'sonner'
@@ -94,21 +95,6 @@ export type SessionRow = {
   rawData: LearningPlanSession
 }
 
-const sessionTypes = [
-  'All',
-  'General',
-  'Induction',
-  'Formal Review',
-  'Telephone',
-  'Exit Session',
-  'Out Of the Workplace',
-  'Tests/Exams',
-  'Learner Support',
-  'Initial Session',
-  'Gateway Ready',
-  'EPA',
-]
-
 const attendedStatuses = [
   'All',
   'Cancelled',
@@ -135,36 +121,19 @@ export function LearningPlanDataTable() {
 
   const learnerId = learner?.learner_id || user?.id
 
+  const { data: sessionTypesData } = useGetSessionTypesQuery()
+  const sessionTypeFilterOptions = useMemo(() => {
+    const activeNames = (sessionTypesData?.data ?? [])
+      .filter((item) => item.isActive)
+      .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
+      .map((item) => item.name)
+    return ['All', ...activeNames]
+  }, [sessionTypesData?.data])
+
   const getSessionTypeLabel = useCallback(
     (value: string) => {
-      switch (value) {
-        case 'All':
-          return t('options.sessionTypes.all')
-        case 'General':
-          return t('options.sessionTypes.general')
-        case 'Induction':
-          return t('options.sessionTypes.induction')
-        case 'Formal Review':
-          return t('options.sessionTypes.formalReview')
-        case 'Telephone':
-          return t('options.sessionTypes.telephone')
-        case 'Exit Session':
-          return t('options.sessionTypes.exitSession')
-        case 'Out Of the Workplace':
-          return t('options.sessionTypes.outOfTheWorkplace')
-        case 'Tests/Exams':
-          return t('options.sessionTypes.testsExams')
-        case 'Learner Support':
-          return t('options.sessionTypes.learnerSupport')
-        case 'Initial Session':
-          return t('options.sessionTypes.initialSession')
-        case 'Gateway Ready':
-          return t('options.sessionTypes.gatewayReady')
-        case 'EPA':
-          return t('options.sessionTypes.epa')
-        default:
-          return value
-      }
+      if (value === 'All') return t('options.sessionTypes.all')
+      return value
     },
     [t]
   )
@@ -658,7 +627,7 @@ export function LearningPlanDataTable() {
                     <SelectValue placeholder={t('table.filters.type.placeholder')} />
                   </SelectTrigger>
                   <SelectContent>
-                    {sessionTypes.map((type) => (
+                    {sessionTypeFilterOptions.map((type) => (
                       <SelectItem key={type} value={type}>
                         {getSessionTypeLabel(type)}
                       </SelectItem>

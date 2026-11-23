@@ -32,6 +32,7 @@ import {
   useCreateLearnerPlanMutation,
   useUpdateSessionMutation,
 } from "@/store/api/learner-plan/learnerPlanApi"
+import { useGetSessionTypesQuery } from "@/store/api/session-type/sessionTypeApi"
 import type { Session } from "@/store/api/session/types"
 import { toast } from "sonner"
 import MultipleSelector, { type Option } from "@/components/ui/multi-select"
@@ -71,20 +72,6 @@ interface SessionDialogProps {
   onSuccess?: () => void
 }
 
-const SESSION_TYPES = [
-  'General',
-  'Induction',
-  'Formal Review',
-  'Telephone',
-  'Exit Session',
-  'Out Of the Workplace',
-  'Tests/Exams',
-  'Learner Support',
-  'Initial Session',
-  'Gateway Ready',
-  'EPA',
-]
-
 export function SessionDialog({
   open,
   onOpenChange,
@@ -96,6 +83,8 @@ export function SessionDialog({
   const { data: trainersData, isLoading: isTrainersLoading } =
     useCachedUsersByRole('Trainer', { skip: !open })
   const { data: learnersData, isLoading: isLearnersLoading } = useCachedLearnersList({ skip: !open })
+  const { data: sessionTypesData, isLoading: isSessionTypesLoading } =
+    useGetSessionTypesQuery(undefined, { skip: !open })
   const [createLearnerPlan, { isLoading: isCreating }] = useCreateLearnerPlanMutation()
   const [updateSession, { isLoading: isUpdating }] = useUpdateSessionMutation()
 
@@ -126,6 +115,19 @@ export function SessionDialog({
       })) || []
     )
   }, [learnersData])
+
+  const currentSessionType = isEdit ? session?.type || '' : ''
+  const sessionTypeOptions = React.useMemo(() => {
+    const activeNames = (sessionTypesData?.data ?? [])
+      .filter((item) => item.isActive)
+      .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
+      .map((item) => item.name)
+
+    if (currentSessionType && !activeNames.includes(currentSessionType)) {
+      return [...activeNames, currentSessionType]
+    }
+    return activeNames
+  }, [sessionTypesData?.data, currentSessionType])
 
   // State for MultipleSelector
   const [selectedLearners, setSelectedLearners] = React.useState<Option[]>([])
@@ -487,7 +489,7 @@ export function SessionDialog({
                 <Select
                   value={field.value}
                   onValueChange={field.onChange}
-                  disabled={isLoading}
+                  disabled={isLoading || isSessionTypesLoading}
                 >
                   <SelectTrigger>
                     <SelectValue
@@ -495,9 +497,9 @@ export function SessionDialog({
                     />
                   </SelectTrigger>
                   <SelectContent>
-                    {SESSION_TYPES.map((type) => (
+                    {sessionTypeOptions.map((type) => (
                       <SelectItem key={type} value={type}>
-                        {t(`sessionDialog.typeOptions.${type}`)}
+                        {type}
                       </SelectItem>
                     ))}
                   </SelectContent>

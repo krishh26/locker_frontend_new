@@ -31,6 +31,7 @@ import {
   useCreateLearnerPlanMutation,
   useUpdateSessionMutation,
 } from '@/store/api/learner-plan/learnerPlanApi'
+import { useGetSessionTypesQuery } from '@/store/api/session-type/sessionTypeApi'
 import type { LearningPlanSession } from '@/store/api/learner-plan/types'
 import { toast } from 'sonner'
 
@@ -42,20 +43,6 @@ type AddSessionFormValues = {
   Duration: string
   type: string
 }
-
-const SESSION_TYPES = [
-  'General',
-  'Induction',
-  'Formal Review',
-  'Telephone',
-  'Exit Session',
-  'Out Of the Workplace',
-  'Tests/Exams',
-  'Learner Support',
-  'Initial Session',
-  'Gateway Ready',
-  'EPA',
-]
 
 export interface AddSessionDialogProps {
   open: boolean
@@ -79,8 +66,26 @@ export function AddSessionDialog({
   sessionToEdit = null,
 }: AddSessionDialogProps) {
   const t = useTranslations('learningPlan')
+  const commonT = useTranslations('common')
   const [createLearnerPlan, { isLoading: isCreating }] = useCreateLearnerPlanMutation()
   const [updateSession, { isLoading: isUpdating }] = useUpdateSessionMutation()
+  const { data: sessionTypesData, isLoading: isSessionTypesLoading } =
+    useGetSessionTypesQuery(undefined, { skip: !open })
+
+  const currentSessionType = isEditMode ? sessionToEdit?.type || '' : ''
+  const sessionTypeOptions = React.useMemo(() => {
+    const types = sessionTypesData?.data ?? []
+    const activeNames = types
+      .filter((item) => item.isActive)
+      .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
+      .map((item) => item.name)
+
+    // Keep the current edit value selectable even if that type was deactivated
+    if (currentSessionType && !activeNames.includes(currentSessionType)) {
+      return [...activeNames, currentSessionType]
+    }
+    return activeNames
+  }, [sessionTypesData?.data, currentSessionType])
 
   const addSessionSchema = React.useMemo(
     () =>
@@ -337,37 +342,21 @@ export function AddSessionDialog({
                 <Select
                   value={field.value}
                   onValueChange={field.onChange}
-                  disabled={!canSubmit}
+                  disabled={!canSubmit || isSessionTypesLoading}
                 >
                   <SelectTrigger id="type">
-                    <SelectValue placeholder={t('dialogs.addSession.placeholders.sessionType')} />
+                    <SelectValue
+                      placeholder={
+                        isSessionTypesLoading
+                          ? commonT('loading')
+                          : t('dialogs.addSession.placeholders.sessionType')
+                      }
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    {SESSION_TYPES.map((sessionType) => (
+                    {sessionTypeOptions.map((sessionType) => (
                       <SelectItem key={sessionType} value={sessionType}>
-                        {sessionType === 'General'
-                          ? t('options.sessionTypes.general')
-                          : sessionType === 'Induction'
-                          ? t('options.sessionTypes.induction')
-                          : sessionType === 'Formal Review'
-                          ? t('options.sessionTypes.formalReview')
-                          : sessionType === 'Telephone'
-                          ? t('options.sessionTypes.telephone')
-                          : sessionType === 'Exit Session'
-                          ? t('options.sessionTypes.exitSession')
-                          : sessionType === 'Out Of the Workplace'
-                          ? t('options.sessionTypes.outOfTheWorkplace')
-                          : sessionType === 'Tests/Exams'
-                          ? t('options.sessionTypes.testsExams')
-                          : sessionType === 'Learner Support'
-                          ? t('options.sessionTypes.learnerSupport')
-                          : sessionType === 'Initial Session'
-                          ? t('options.sessionTypes.initialSession')
-                          : sessionType === 'Gateway Ready'
-                          ? t('options.sessionTypes.gatewayReady')
-                          : sessionType === 'EPA'
-                          ? t('options.sessionTypes.epa')
-                          : sessionType}
+                        {sessionType}
                       </SelectItem>
                     ))}
                   </SelectContent>

@@ -3520,7 +3520,7 @@
         "sections": {
           "who": "1. Quem:",
           "fileType": "2. Tipo de ficheiro:",
-          "uploadType": "3. Tipo de envio:"
+          "uploadType": "1. Tipo de envio:"
         },
         "tableHeaders": {
           "name": "Nome",

@@ -73,6 +73,7 @@ import {
   useGetEqaAssignedLearnersQuery,
 } from "@/store/api/learner/learnerApi";
 import type { LearnerListItem, LearnerFilters, LearnerCourse } from "@/store/api/learner/types";
+import { getCourseFolderColor } from "@/utils/course-folder-color";
 import { LearnersFormDialog } from "./learners-form-dialog";
 import { LearnerCommentDialog } from "./learner-comment-dialog";
 import { LearnersCsvUploadDialog } from "./learners-csv-upload-dialog";
@@ -513,6 +514,10 @@ export function LearnersDataTable() {
               <div className="flex items-center gap-1">
                 {courses.map((c, index: number) => {
                   const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
+                  const folderColor = getCourseFolderColor({
+                    ...c.course,
+                    course_core_type: c.course?.course_core_type ?? (c as LearnerCourse).course_core_type,
+                  });
                   return (
                     <div key={index} className="flex items-center gap-3">
                       <Tooltip>
@@ -521,7 +526,12 @@ export function LearnersDataTable() {
                             href={`/learner-dashboard/${learner.learner_id}`}
                             className="flex items-center justify-center cursor-pointer"
                           >
-                            <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                            <Folder
+                              className="h-[17px] w-[17px] hover:opacity-80 transition-opacity"
+                              style={{ color: folderColor }}
+                              fill="currentColor"
+                              fillOpacity={0.45}
+                            />
                           </Link>
                         </TooltipTrigger>
                         <TooltipContent
@@ -686,6 +696,10 @@ export function LearnersDataTable() {
               <div className="flex items-center gap-1">
                 {courses.map((c, index) => {
                   const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
+                  const folderColor = getCourseFolderColor({
+                    ...c.course,
+                    course_core_type: c.course?.course_core_type ?? c.course_core_type,
+                  });
                   return (
                     <Tooltip key={index}>
                       <TooltipTrigger asChild>
@@ -693,7 +707,12 @@ export function LearnersDataTable() {
                           href={`/learner-dashboard/${learner.learner_id}`}
                           className="flex items-center justify-center cursor-pointer"
                         >
-                          <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          <Folder
+                            className="h-[17px] w-[17px] hover:opacity-80 transition-opacity"
+                            style={{ color: folderColor }}
+                            fill="currentColor"
+                            fillOpacity={0.45}
+                          />
                         </Link>
                       </TooltipTrigger>
                       <TooltipContent
@@ -888,6 +907,10 @@ export function LearnersDataTable() {
             <div className="flex items-center gap-1">
               {courses.map((c, index) => {
                 const courseName = getCourseLabel(c.course, tTable("unknownCourse"));
+                const folderColor = getCourseFolderColor({
+                  ...c.course,
+                  course_core_type: c.course?.course_core_type ?? c.course_core_type,
+                });
                 return (
                   <Tooltip key={index}>
                     <TooltipTrigger asChild>
@@ -895,7 +918,12 @@ export function LearnersDataTable() {
                         href={`/learner-dashboard/${learner.learner_id}`}
                         className="flex items-center justify-center cursor-pointer"
                       >
-                        <Folder className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                        <Folder
+                          className="h-[17px] w-[17px] hover:opacity-80 transition-opacity"
+                          style={{ color: folderColor }}
+                          fill="currentColor"
+                          fillOpacity={0.45}
+                        />
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent

@@ -53,14 +53,23 @@ import {
   parseTableAnswer,
 } from "@/components/forms/table-utils"
 import type { TableAnswer } from "@/store/api/forms/types"
+import {
+  LEARNER_FORM_PDF_CONTENT_ID,
+  type FormPdfSnapshot,
+} from "../utils/export-form-pdf"
 
 type FieldValue = string | string[] | File | TableAnswer | undefined
 
+export type FormExportApi = {
+  getSnapshot: (meta: { formName: string; description?: string }) => FormPdfSnapshot
+}
+
 interface DynamicFormRendererProps {
   formId: string
-  formName?: string
-  description?: string
   fields: FormField[]
+  /** Where to go after submit/draft; defaults to learner forms list */
+  returnTo?: string
+  onExportApiChange?: (api: FormExportApi | null) => void
 }
 
 const getDynamicZodSchema = (
@@ -144,9 +153,9 @@ const getDynamicZodSchema = (
 
 export function DynamicFormRenderer({
   formId,
-  formName,
-  description,
   fields: allFields,
+  returnTo = "/learner-forms",
+  onExportApiChange,
 }: DynamicFormRendererProps) {
   const fields = useMemo(
     () => allFields.filter((field) => !isDisplayOnlyField(field.type)),
@@ -159,6 +168,7 @@ export function DynamicFormRenderer({
   const isEmployer = user?.role === "Employer";
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDraftLoading, setIsDraftLoading] = useState(false)
+  const redirectAfterSave = returnTo || "/learner-forms"
 
   const validationSchema = getDynamicZodSchema(fields, t)
 
@@ -222,6 +232,20 @@ export function DynamicFormRenderer({
     () => (user?.role === "Learner" ? presetMap : {}),
     [presetMap, user?.role]
   )
+
+  useEffect(() => {
+    if (!onExportApiChange) return
+    onExportApiChange({
+      getSnapshot: ({ formName, description }) => ({
+        formName,
+        description,
+        fields: allFields,
+        values: getValues() as Record<string, unknown>,
+        templateValues,
+      }),
+    })
+    return () => onExportApiChange(null)
+  }, [allFields, getValues, onExportApiChange, templateValues])
 
   // Learner data only auto-fills for the learner themselves; today's date applies to everyone.
   const getTablePresetValues = useCallback(
@@ -370,7 +394,7 @@ export function DynamicFormRenderer({
 
       if (user.role === "Learner") {
         setTimeout(() => {
-          router.push("/learner-forms")
+          router.push(redirectAfterSave)
         }, 2000)
       }
     } catch (error: unknown) {
@@ -437,7 +461,7 @@ export function DynamicFormRenderer({
 
       toast.success(t("toast.draftSuccess"))
       setTimeout(() => {
-        router.push("/learner-forms")
+        router.push(redirectAfterSave)
       }, 2000)
     } catch (error: unknown) {
       const errorMessage =
@@ -500,7 +524,10 @@ export function DynamicFormRenderer({
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div
+            id={LEARNER_FORM_PDF_CONTENT_ID}
+            className="grid grid-cols-1 md:grid-cols-12 gap-4"
+          >
             {allFields.map((field) => (
               <div key={field.id} className={fieldWidthClass(field.width)}>
                 {field.type === "richtext" ? (

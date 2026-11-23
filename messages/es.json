@@ -3248,7 +3248,7 @@
         "sections": {
           "who": "1. Quién:",
           "fileType": "2. Tipo de archivo:",
-          "uploadType": "3. Tipo de carga:"
+          "uploadType": "1. Tipo de carga:"
         },
         "tableHeaders": {
           "name": "Nombre",

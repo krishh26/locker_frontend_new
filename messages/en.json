@@ -3559,7 +3559,9 @@
       "saveAsDraft": "Save as Draft",
       "saving": "Saving...",
       "submit": "Submit",
-      "submitting": "Submitting..."
+      "submitting": "Submitting...",
+      "downloadPdf": "Download PDF",
+      "downloadingPdf": "Downloading..."
     },
     "validation": {
       "email": "{label} must be a valid email",
@@ -3573,7 +3575,11 @@
       "submitSuccess": "Form submitted successfully!",
       "submitFailed": "Failed to submit form. Please try again.",
       "draftSuccess": "Form saved as draft!",
-      "draftFailed": "Failed to save draft. Please try again."
+      "draftFailed": "Failed to save draft. Please try again.",
+      "generatingPdf": "Generating PDF...",
+      "pdfDownloaded": "PDF downloaded successfully",
+      "pdfDownloadFailed": "Failed to download PDF. Please try again.",
+      "pdfContentNotFound": "Form content not found for PDF download"
     }
   },
   "learnerForms": {
@@ -3796,7 +3802,7 @@
         "sections": {
           "who": "1. Who:",
           "fileType": "2. File Type:",
-          "uploadType": "3. Upload Type:"
+          "uploadType": "1. Upload Type:"
         },
         "tableHeaders": {
           "name": "Name",

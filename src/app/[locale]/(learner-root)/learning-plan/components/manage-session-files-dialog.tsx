@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
@@ -33,6 +33,10 @@ import { useGetFormsListQuery } from "@/store/api/forms/formsApi";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
+/** Defaults: every upload/form goes to All Aims + General Files */
+const DEFAULT_WHO = "All Aim";
+const DEFAULT_FILE_TYPE = "General Files";
+
 interface ManageSessionFilesDialogProps {
   open: boolean;
   onClose: () => void;
@@ -47,21 +51,17 @@ export function ManageSessionFilesDialog({
   onSuccess,
 }: ManageSessionFilesDialogProps) {
   const t = useTranslations("learningPlan");
-  const [who, setWho] = useState<"This Aim" | "All Aim">("This Aim");
-  const [fileType, setFileType] = useState<string>("General Files");
   const [uploadMode, setUploadMode] = useState<"File Upload" | "Form Selection">("File Upload");
   const [selectedForm, setSelectedForm] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [addFormToLearner, { isLoading: isAddFormToLearnerLoading }] = useAddFormToLearnerMutation();
-  
-  // Get uploaded documents for this session
+
   const { data: uploadedDocsData, refetch } = useGetFormListOfLearnerQuery(
     { id: learnerPlanId },
     { skip: !open || !learnerPlanId }
   );
 
-  // Get available forms list
   const { data: formsListData } = useGetFormsListQuery(
     {
       page: 1,
@@ -71,8 +71,23 @@ export function ManageSessionFilesDialog({
     { skip: !open }
   );
 
-  const uploadedDocs = uploadedDocsData?.data || [];
-  const availableForms = formsListData?.data || [];
+  const uploadedDocs = useMemo(() => {
+    const docs = uploadedDocsData?.data || [];
+    return [...docs].sort((a: any, b: any) => {
+      const nameA = String(a.name || a.form_name || "").toLowerCase();
+      const nameB = String(b.name || b.form_name || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [uploadedDocsData?.data]);
+
+  const availableForms = useMemo(() => {
+    const forms = formsListData?.data || [];
+    return [...forms].sort((a: any, b: any) => {
+      const nameA = String(a.form_name || "").toLowerCase();
+      const nameB = String(b.form_name || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [formsListData?.data]);
 
   const handleAddUpload = async () => {
     if (!selectedFile) {
@@ -83,10 +98,10 @@ export function ManageSessionFilesDialog({
     const newEntry = {
       name: selectedFile.name,
       description: selectedFile.name,
-      who,
+      who: DEFAULT_WHO,
       learner_plan_id: learnerPlanId,
       upload_type: uploadMode,
-      file_type: fileType,
+      file_type: DEFAULT_FILE_TYPE,
       signature_roles: [
         "Primary Assessor",
         "Secondary Assessor",
@@ -126,18 +141,17 @@ export function ManageSessionFilesDialog({
       return;
     }
 
-    // Find form name from available forms list
     const selectedFormItem = availableForms.find((f: any) => String(f.id) === selectedForm) as any;
     const formName = selectedFormItem?.form_name || selectedForm;
-    
+
     const newEntry = {
       name: formName,
       description: formName,
-      who,
+      who: DEFAULT_WHO,
       form_id: selectedForm,
       learner_plan_id: learnerPlanId,
       upload_type: uploadMode,
-      file_type: fileType,
+      file_type: DEFAULT_FILE_TYPE,
       signature_roles: [
         "Primary Assessor",
         "Secondary Assessor",
@@ -171,67 +185,13 @@ export function ManageSessionFilesDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-[min(95vw,72rem)] sm:max-w-[min(95vw,72rem)] w-[95vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{t("dialogs.manageSessionFiles.title")}</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* 1. Who */}
-          <div>
-            <Label className="text-base font-semibold mb-2 block">
-              {t("dialogs.manageSessionFiles.sections.who")}
-            </Label>
-            <RadioGroup value={who} onValueChange={(value) => setWho(value as "This Aim" | "All Aim")}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="This Aim" id="this-aim" />
-                <Label htmlFor="this-aim" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.who.thisAim")}
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="All Aim" id="all-aim" />
-                <Label htmlFor="all-aim" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.who.allAim")}
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          {/* 2. File Type */}
-          <div>
-            <Label className="text-base font-semibold mb-2 block">
-              {t("dialogs.manageSessionFiles.sections.fileType")}
-            </Label>
-            <RadioGroup value={fileType} onValueChange={setFileType}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="ILP File" id="ilp-file" />
-                <Label htmlFor="ilp-file" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.fileTypes.ilpFile")}
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Review Files" id="review-files" />
-                <Label htmlFor="review-files" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.fileTypes.reviewFiles")}
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Assessment Files" id="assessment-files" />
-                <Label htmlFor="assessment-files" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.fileTypes.assessmentFiles")}
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="General Files" id="general-files" />
-                <Label htmlFor="general-files" className="cursor-pointer">
-                  {t("dialogs.manageSessionFiles.fileTypes.generalFiles")}
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          {/* 3. Upload Type */}
+        <div className="space-y-6 min-w-0">
+          {/* Upload Type */}
           <div>
             <Label className="text-base font-semibold mb-2 block">
               {t("dialogs.manageSessionFiles.sections.uploadType")}
@@ -252,7 +212,7 @@ export function ManageSessionFilesDialog({
             </RadioGroup>
 
             {uploadMode === "File Upload" ? (
-              <div className="mt-4 flex items-center gap-4">
+              <div className="mt-4 flex flex-wrap items-center gap-4">
                 <Button variant="outline" asChild>
                   <label className="cursor-pointer">
                     {t("dialogs.manageSessionFiles.buttons.chooseFile")}
@@ -268,7 +228,7 @@ export function ManageSessionFilesDialog({
                     />
                   </label>
                 </Button>
-                {selectedFile && <span className="text-sm">{selectedFile.name}</span>}
+                {selectedFile && <span className="text-sm truncate max-w-[240px]">{selectedFile.name}</span>}
                 <Button
                   variant="outline"
                   onClick={handleAddUpload}
@@ -280,9 +240,9 @@ export function ManageSessionFilesDialog({
                 </Button>
               </div>
             ) : (
-              <div className="mt-4 flex items-center gap-4">
+              <div className="mt-4 flex flex-wrap items-center gap-4">
                 <Select value={selectedForm} onValueChange={setSelectedForm}>
-                  <SelectTrigger className="w-[300px]">
+                  <SelectTrigger className="w-full sm:w-[360px]">
                     <SelectValue placeholder={t("dialogs.manageSessionFiles.placeholders.selectForm")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -308,23 +268,27 @@ export function ManageSessionFilesDialog({
 
           {/* Files List */}
           {uploadedDocs.length > 0 && (
-            <div className="mt-6">
-              <Table>
+            <div className="mt-6 w-full overflow-x-auto rounded-md border">
+              <Table className="w-full table-fixed">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.name")}</TableHead>
-                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.type")}</TableHead>
-                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.description")}</TableHead>
-                    <TableHead>{t("dialogs.manageSessionFiles.tableHeaders.dateUploaded")}</TableHead>
+                    <TableHead className="w-[32%]">{t("dialogs.manageSessionFiles.tableHeaders.name")}</TableHead>
+                    <TableHead className="w-[18%]">{t("dialogs.manageSessionFiles.tableHeaders.type")}</TableHead>
+                    <TableHead className="w-[30%]">{t("dialogs.manageSessionFiles.tableHeaders.description")}</TableHead>
+                    <TableHead className="w-[20%]">{t("dialogs.manageSessionFiles.tableHeaders.dateUploaded")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {uploadedDocs.map((file: any, idx: number) => (
                     <TableRow key={idx}>
-                      <TableCell>{file.name || file.form_name}</TableCell>
-                      <TableCell>{file.file_type}</TableCell>
-                      <TableCell>{file.description}</TableCell>
-                      <TableCell>
+                      <TableCell className="truncate" title={file.name || file.form_name}>
+                        {file.name || file.form_name}
+                      </TableCell>
+                      <TableCell className="truncate">{file.file_type}</TableCell>
+                      <TableCell className="truncate" title={file.description}>
+                        {file.description}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
                         {file.created_at
                           ? format(new Date(file.created_at), "dd/MM/yyyy")
                           : t("common.dash")}
@@ -346,4 +310,3 @@ export function ManageSessionFilesDialog({
     </Dialog>
   );
 }
-

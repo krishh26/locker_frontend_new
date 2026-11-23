@@ -2,6 +2,7 @@
 
 import { FileText, File } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useRouter } from "@/i18n/navigation";
@@ -41,6 +42,17 @@ const categories = [
 export function FileCategorySummary({ data }: FileCategorySummaryProps) {
   const t = useTranslations("learningPlan");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const courseId = searchParams.get("course_id");
+
+  const openFormSubmit = (formId: number) => {
+    const returnTo = courseId
+      ? `/learning-plan?course_id=${encodeURIComponent(courseId)}`
+      : "/learning-plan";
+    router.push(
+      `/learner-forms/${formId}/submit?returnTo=${encodeURIComponent(returnTo)}`
+    );
+  };
 
   const getCategoryLabel = (category: string) => {
     switch (category) {
@@ -123,9 +135,7 @@ export function FileCategorySummary({ data }: FileCategorySummaryProps) {
                             size="icon"
                             className="h-8 w-8"
                             onClick={() =>
-                              router.push(
-                                `/learner-forms/${doc.selected_form!.id}/submit`
-                              )
+                              openFormSubmit(doc.selected_form!.id)
                             }
                           >
                             <FileText className="h-4 w-4 text-primary" />

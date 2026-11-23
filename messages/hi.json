@@ -3478,7 +3478,7 @@
         "sections": {
           "who": "1. कौन:",
           "fileType": "2. फाइल प्रकार:",
-          "uploadType": "3. अपलोड प्रकार:"
+          "uploadType": "1. अपलोड प्रकार:"
         },
         "tableHeaders": {
           "name": "नाम",

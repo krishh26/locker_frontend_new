@@ -2863,7 +2863,7 @@
         "sections": {
           "who": "1. Chi:",
           "fileType": "2. Tipo di file:",
-          "uploadType": "3. Tipo di caricamento:"
+          "uploadType": "1. Tipo di caricamento:"
         },
         "tableHeaders": {
           "name": "Nome",

@@ -3426,7 +3426,7 @@
         "sections": {
           "who": "1. 对象：",
           "fileType": "2. 文件类型：",
-          "uploadType": "3. 上传类型："
+          "uploadType": "1. 上传类型："
         },
         "tableHeaders": {
           "name": "名称",

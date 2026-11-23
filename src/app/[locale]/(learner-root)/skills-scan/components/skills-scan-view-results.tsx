@@ -105,36 +105,21 @@ export function SkillsScanViewResults() {
 
       // Browser ESM build — bare "jspdf" resolves to node build under Turbopack/SSR (fflate + Worker error).
       const { jsPDF } = await import("jspdf/dist/jspdf.es.min.js");
+      const { addCanvasAsPdfPages } = await import("@/utils/pdf-canvas-pages");
 
-      // Calculate PDF dimensions
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-
-      // Create PDF
       const pdf = new jsPDF("p", "mm", "a4");
-      let position = 0;
-
-      // Add first page
-      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Add additional pages if content is longer than one page
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      // Generate filename with course name and date
       const courseName = selectedCourse?.course?.course_name || "SkillsAssessment";
-      const date = new Date().toISOString().split("T")[0];
-      const filename = `${courseName}_Results_${date}.pdf`;
 
-      // Save PDF
-      pdf.save(filename);
+      addCanvasAsPdfPages(pdf, canvas, {
+        marginX: 10,
+        marginTop: 10,
+        marginBottom: 14,
+        footerLabel: courseName,
+        backgroundColor: "#ffffff",
+      });
+
+      const date = new Date().toISOString().split("T")[0];
+      pdf.save(`${courseName}_Results_${date}.pdf`);
 
       toast.success(t("results.toast.pdfDownloaded"), { id: "pdf-generating" });
     } catch (error) {

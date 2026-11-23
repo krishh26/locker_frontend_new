@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { format } from "date-fns"
+import { addMonths, differenceInCalendarMonths, format } from "date-fns"
 import {
   CalendarClock,
   FilePenLine,
@@ -20,15 +20,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
 import { useGetEvidenceListQuery } from "@/store/api/evidence/evidenceApi"
 import type { EvidenceEntry } from "@/store/api/evidence/types"
 import type { LearnerCourse } from "@/store/api/learner/types"
-import { useAppSelector } from "@/store/hooks"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { selectLearner } from "@/store/slices/authSlice"
+import { setCurrentCourseId } from "@/store/slices/courseSlice"
 
 type SubmissionFilter = "all" | "not_submitted" | "submitted"
-type CourseWorkStatus = "due" | "missing" | "submitted"
+/** due = within schedule window; overdue = past monthly due date with no upload */
+type CourseWorkStatus = "due" | "overdue" | "submitted"
 
 type CourseWorkItem = {
   id: string
@@ -38,7 +39,8 @@ type CourseWorkItem = {
   pointsLabel: string
   deadline: Date | null
   status: CourseWorkStatus
-  kind: "course" | "evidence"
+  kind: "assignment" | "evidence"
+  assignmentIndex?: number
   evidenceId?: number
 }
 
@@ -48,54 +50,65 @@ function parseDate(value?: string | null): Date | null {
   return Number.isFinite(d.getTime()) ? d : null
 }
 
-function getCourseProgress(course: LearnerCourse) {
-  const total =
-    Number(course.totalUnits ?? 0) ||
-    Number(course.unitsNotStarted ?? 0) +
-      Number(course.unitsFullyCompleted ?? 0) +
-      Number(course.unitsPartiallyCompleted ?? 0)
-  const completed = Number(course.unitsFullyCompleted ?? 0)
-  const notStarted = Number(course.unitsNotStarted ?? 0)
-  const partial = Number(course.unitsPartiallyCompleted ?? 0)
-  return { total, completed, notStarted, partial }
+function endOfDay(date: Date): Date {
+  const d = new Date(date)
+  d.setHours(23, 59, 59, 999)
+  return d
 }
 
-function getCourseStatus(course: LearnerCourse, now = Date.now()): CourseWorkStatus {
-  const { total, completed, notStarted, partial } = getCourseProgress(course)
-  const end = parseDate(course.end_date)
-  const fullyDone = total > 0 && completed >= total && partial === 0 && notStarted === 0
+/**
+ * Expected assignment count = months on the qualification (1 per month),
+ * falling back to unit count when dates are missing.
+ */
+function getExpectedAssignmentCount(enrollment: LearnerCourse): number {
+  const start = parseDate(enrollment.start_date)
+  const end = parseDate(enrollment.end_date)
 
-  if (fullyDone) return "submitted"
-
-  if (end) {
-    const msLeft = end.getTime() - now
-    if (msLeft < 0) return "missing"
-    const fourteenDays = 14 * 24 * 60 * 60 * 1000
-    if (msLeft <= fourteenDays) return "due"
+  if (start && end && end > start) {
+    const months = Math.max(1, differenceInCalendarMonths(end, start))
+    return months
   }
 
-  if (notStarted > 0 || partial > 0 || (total > 0 && completed < total)) {
-    return "missing"
-  }
+  const units =
+    Number(enrollment.totalUnits ?? 0) ||
+    Number(enrollment.unitsNotStarted ?? 0) +
+      Number(enrollment.unitsFullyCompleted ?? 0) +
+      Number(enrollment.unitsPartiallyCompleted ?? 0)
 
-  // No unit data yet — treat open enrollments as missing work
-  return "missing"
+  return Math.max(1, units || 1)
 }
 
-function getEvidenceCourse(entry: EvidenceEntry): {
-  courseId: number | null
-  label: string
-} {
+/** Assignment i (1-based) is due one month after start, capped at course end. */
+function getAssignmentDueDate(
+  enrollment: LearnerCourse,
+  assignmentIndex: number,
+  expectedCount: number
+): Date | null {
+  const start = parseDate(enrollment.start_date)
+  const end = parseDate(enrollment.end_date)
+  if (!start) return end ? endOfDay(end) : null
+
+  let due = endOfDay(addMonths(start, assignmentIndex))
+  if (end && due > end) {
+    due = endOfDay(end)
+  }
+
+  // Last assignment aligns to course end when months don't divide evenly
+  if (assignmentIndex === expectedCount && end) {
+    due = endOfDay(end)
+  }
+
+  return due
+}
+
+function getEvidenceCourseId(entry: EvidenceEntry): number | null {
   const mapped = entry.mappings?.find((m) => m.course?.course_id || m.course_id)
   const courseId =
     mapped?.course?.course_id ??
     mapped?.course_id ??
     entry.course_id?.course_id ??
     null
-  const code = mapped?.course?.course_code || entry.course_id?.course_code || ""
-  const name = mapped?.course?.course_name || entry.course_id?.course_name || ""
-  const label = [code, name].filter(Boolean).join(" ") || "—"
-  return { courseId: courseId != null ? Number(courseId) : null, label }
+  return courseId != null ? Number(courseId) : null
 }
 
 function formatDeadline(date: Date | null): string {
@@ -110,6 +123,7 @@ interface CourseWorkPanelProps {
 export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
   const t = useTranslations("learnerDashboard.courseWork")
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.auth.user)
   const learner = useAppSelector(selectLearner)
 
@@ -133,56 +147,109 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
       { skip: !targetUserId }
     )
 
-  const evidenceItems = useMemo(() => evidenceData?.data ?? [], [evidenceData?.data])
+  const evidenceItems = useMemo(
+    () => evidenceData?.data ?? [],
+    [evidenceData?.data]
+  )
+
+  const evidenceByCourse = useMemo(() => {
+    const map = new Map<number, EvidenceEntry[]>()
+    for (const entry of evidenceItems) {
+      const courseId = getEvidenceCourseId(entry)
+      if (courseId == null) continue
+      const list = map.get(courseId) ?? []
+      list.push(entry)
+      map.set(courseId, list)
+    }
+    for (const [, list] of map) {
+      list.sort(
+        (a, b) =>
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      )
+    }
+    return map
+  }, [evidenceItems])
 
   const allItems = useMemo(() => {
     const items: CourseWorkItem[] = []
+    const now = Date.now()
 
     for (const enrollment of courses) {
       const course = enrollment.course
       if (!course?.course_id) continue
       if (course.active === false) continue
 
-      const status = getCourseStatus(enrollment)
-      if (status === "submitted") continue
-
-      const { total, completed } = getCourseProgress(enrollment)
-      const remaining = Math.max(total - completed, 0)
-
-      items.push({
-        id: `course-${course.course_id}`,
-        title: course.course_code || course.course_name,
-        courseId: course.course_id,
-        courseLabel: [course.course_code, course.course_name]
-          .filter(Boolean)
-          .join(" "),
-        pointsLabel:
-          total > 0
-            ? t("unitsRemaining", { count: remaining || total })
-            : t("uploadRemaining"),
-        deadline: parseDate(enrollment.end_date),
-        status,
-        kind: "course",
+      const courseId = course.course_id
+      const expected = getExpectedAssignmentCount(enrollment)
+      const uploads = evidenceByCourse.get(courseId) ?? []
+      const uploadedCount = uploads.length
+      const outstanding = Math.max(expected - uploadedCount, 0)
+      const courseName = course.course_name || course.course_code
+      const courseCode = course.course_code || course.course_name
+      const outstandingLabel = t("assignmentsOutstanding", {
+        count: outstanding,
       })
-    }
 
-    for (const entry of evidenceItems) {
-      const { courseId, label } = getEvidenceCourse(entry)
-      if (courseId == null) continue
+      for (let index = 1; index <= expected; index += 1) {
+        const deadline = getAssignmentDueDate(enrollment, index, expected)
+        const matchedEvidence = uploads[index - 1]
+        const isSubmitted = index <= uploadedCount
 
-      items.push({
-        id: `evidence-${entry.assignment_id}`,
-        title: entry.title?.trim() || t("untitledEvidence"),
-        courseId,
-        courseLabel: label,
-        pointsLabel: entry.grade?.trim()
-          ? t("gradeLabel", { grade: entry.grade })
-          : t("submittedEvidence"),
-        deadline: parseDate(entry.updated_at || entry.created_at),
-        status: "submitted",
-        kind: "evidence",
-        evidenceId: entry.assignment_id,
-      })
+        if (isSubmitted && matchedEvidence) {
+          items.push({
+            id: `assignment-${courseId}-${index}`,
+            title: courseName,
+            courseId,
+            courseLabel: courseCode,
+            pointsLabel: t("assignmentOf", {
+              index,
+              total: expected,
+            }),
+            deadline:
+              parseDate(matchedEvidence.created_at) ||
+              deadline,
+            status: "submitted",
+            kind: "evidence",
+            assignmentIndex: index,
+            evidenceId: matchedEvidence.assignment_id,
+          })
+          continue
+        }
+
+        if (isSubmitted) {
+          items.push({
+            id: `assignment-${courseId}-${index}`,
+            title: courseName,
+            courseId,
+            courseLabel: courseCode,
+            pointsLabel: t("assignmentOf", {
+              index,
+              total: expected,
+            }),
+            deadline,
+            status: "submitted",
+            kind: "assignment",
+            assignmentIndex: index,
+          })
+          continue
+        }
+
+        const dueMs = deadline?.getTime()
+        const status: CourseWorkStatus =
+          dueMs != null && now > dueMs ? "overdue" : "due"
+
+        items.push({
+          id: `assignment-${courseId}-${index}`,
+          title: courseName,
+          courseId,
+          courseLabel: courseCode,
+          pointsLabel: outstandingLabel,
+          deadline,
+          status,
+          kind: "assignment",
+          assignmentIndex: index,
+        })
+      }
     }
 
     return items.sort((a, b) => {
@@ -190,7 +257,7 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
       const bTime = b.deadline?.getTime() ?? Number.MAX_SAFE_INTEGER
       return aTime - bTime
     })
-  }, [courses, evidenceItems, t])
+  }, [courses, evidenceByCourse, t])
 
   const counts = useMemo(() => {
     const scoped =
@@ -200,7 +267,7 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
 
     return {
       due: scoped.filter((i) => i.status === "due").length,
-      missing: scoped.filter((i) => i.status === "missing").length,
+      overdue: scoped.filter((i) => i.status === "overdue").length,
       submitted: scoped.filter((i) => i.status === "submitted").length,
     }
   }, [allItems, courseFilter])
@@ -211,7 +278,7 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
         return false
       }
       if (statusFilter === "not_submitted") {
-        return item.status === "due" || item.status === "missing"
+        return item.status === "due" || item.status === "overdue"
       }
       if (statusFilter === "submitted") {
         return item.status === "submitted"
@@ -220,21 +287,18 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
     })
   }, [allItems, courseFilter, statusFilter])
 
-  const goToCourse = (courseId: number) => {
-    router.push(`/course-details/${courseId}`)
+  const goToAssignment = (item: CourseWorkItem) => {
+    dispatch(setCurrentCourseId(item.courseId))
+    router.push(`/resources?course_id=${item.courseId}`)
   }
 
   const goToUpload = (courseId: number) => {
+    dispatch(setCurrentCourseId(courseId))
     router.push(`/evidence-library/new?course_id=${courseId}`)
   }
 
-  const openItem = (item: CourseWorkItem) => {
-    if (item.kind === "evidence" && item.evidenceId) {
-      router.push(`/evidence-library/${item.evidenceId}/view`)
-      return
-    }
-    goToUpload(item.courseId)
-  }
+  const assignmentHref = (item: CourseWorkItem) =>
+    `/resources?course_id=${item.courseId}`
 
   return (
     <section className="rounded-xl border bg-card shadow-sm">
@@ -319,10 +383,10 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
             </div>
             <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 dark:border-red-900/50 dark:bg-red-950/30">
               <p className="text-3xl font-bold text-red-600 dark:text-red-400">
-                {counts.missing}
+                {counts.overdue}
               </p>
               <p className="text-sm text-red-700/80 dark:text-red-300/80">
-                {t("missing")}
+                {t("overdue")}
               </p>
             </div>
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-900/50 dark:bg-emerald-950/30">
@@ -350,7 +414,7 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
           <ul className="divide-y">
             {filteredItems.map((item) => {
               const isPending =
-                item.status === "missing" || item.status === "due"
+                item.status === "overdue" || item.status === "due"
               return (
                 <li
                   key={item.id}
@@ -358,21 +422,14 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
                 >
                   <button
                     type="button"
-                    onClick={() => openItem(item)}
+                    onClick={() => goToAssignment(item)}
                     className="flex min-w-0 flex-1 items-start gap-3 text-left"
                   >
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300">
                       <FilePenLine className="size-5" />
                     </div>
                     <div className="min-w-0 space-y-1">
-                      <p
-                        className={cn(
-                          "truncate font-semibold",
-                          isPending
-                            ? "text-red-600 dark:text-red-400"
-                            : "text-foreground"
-                        )}
-                      >
+                      <p className="truncate font-semibold text-red-600 dark:text-red-400">
                         {item.title}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -381,15 +438,20 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
                           |
                         </span>
                         <Link
-                          href={`/course-details/${item.courseId}`}
+                          href={assignmentHref(item)}
                           onClick={(e) => e.stopPropagation()}
                           className="font-medium text-red-600 hover:underline dark:text-red-400"
                         >
-                          {t("goToCourse")}
+                          {t("goToAssignment")}
                         </Link>
                       </p>
                       <p className="text-sm text-muted-foreground">
                         {item.pointsLabel}
+                        {item.status === "overdue" ? (
+                          <span className="ml-2 font-medium text-red-600 dark:text-red-400">
+                            · {t("overdue")}
+                          </span>
+                        ) : null}
                       </p>
                     </div>
                   </button>
@@ -417,9 +479,9 @@ export function CourseWorkPanel({ courses }: CourseWorkPanelProps) {
                       <Button
                         size="sm"
                         variant="ghost"
-                        onClick={() => goToCourse(item.courseId)}
+                        onClick={() => goToAssignment(item)}
                       >
-                        {t("goToCourse")}
+                        {t("goToAssignment")}
                       </Button>
                     )}
                   </div>

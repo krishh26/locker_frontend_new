@@ -77,7 +77,9 @@ import {
 import { useCachedCoursesList } from '@/store/hooks/useCachedCoursesList'
 import { getCourseLabel } from '@/utils/course-label'
 import { toast } from 'sonner'
+import { useSearchParams } from 'next/navigation'
 import { useAppSelector } from '@/store/hooks'
+import { selectCurrentCourseId } from '@/store/slices/courseSlice'
 import type { Resource } from '@/store/api/resources/types'
 import { Loader2 } from 'lucide-react'
 
@@ -99,8 +101,11 @@ export function ResourcesDataTable() {
   const t = useTranslations('resources')
   const tCommon = useTranslations('common')
   const user = useAppSelector((state) => state.auth.user)
+  const currentCourseId = useAppSelector(selectCurrentCourseId)
+  const searchParams = useSearchParams()
   const isLearner = user?.role === 'Learner'
   const isEmployer = user?.role === 'Employer'
+  const courseIdFromUrl = searchParams.get('course_id')
   const [selectedCourseId, setSelectedCourseId] = useState('')
   const [searchKeyword, setSearchKeyword] = useState('')
   const [jobType, setJobType] = useState<'On' | 'Off' | ''>('')
@@ -115,9 +120,17 @@ export function ResourcesDataTable() {
   )
 
   useEffect(() => {
+    if (courseIdFromUrl) {
+      setSelectedCourseId(String(courseIdFromUrl))
+      return
+    }
+    if (currentCourseId != null) {
+      setSelectedCourseId(String(currentCourseId))
+      return
+    }
     if (selectedCourseId || courses.length === 0) return
     setSelectedCourseId(String(courses[0].course_id))
-  }, [courses, selectedCourseId])
+  }, [courses, selectedCourseId, courseIdFromUrl, currentCourseId])
 
   const {
     data: resourcesResponse,

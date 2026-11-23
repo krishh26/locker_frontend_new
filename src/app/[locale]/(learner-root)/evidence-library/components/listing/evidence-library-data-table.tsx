@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useReducer } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -124,7 +125,15 @@ export function EvidenceLibraryDataTable() {
   const learner = useAppSelector(selectLearner);
   const courses = useAppSelector(selectCourses);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
+  const searchParams = useSearchParams();
   const userId = learner?.user_id || "";
+  const courseIdFromUrl = searchParams.get("course_id");
+  const initialCourseFilter = (() => {
+    if (courseIdFromUrl && !Number.isNaN(Number(courseIdFromUrl))) {
+      return Number(courseIdFromUrl);
+    }
+    return currentCourseId || "all";
+  })();
 
   // State
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -133,7 +142,7 @@ export function EvidenceLibraryDataTable() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [selectedCourseFilter, setSelectedCourseFilter] = useState<
     number | "all"
-  >(currentCourseId || "all");
+  >(initialCourseFilter);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -1004,6 +1013,17 @@ export function EvidenceLibraryDataTable() {
       pagination,
     },
   });
+
+  // Keep course filter in sync when arriving from Course work "Go to assignment"
+  useEffect(() => {
+    if (courseIdFromUrl && !Number.isNaN(Number(courseIdFromUrl))) {
+      setSelectedCourseFilter(Number(courseIdFromUrl));
+      return;
+    }
+    if (currentCourseId) {
+      setSelectedCourseFilter(currentCourseId);
+    }
+  }, [courseIdFromUrl, currentCourseId]);
 
   // Reset to first page when filter changes
   useEffect(() => {

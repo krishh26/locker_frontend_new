@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useTranslations } from "next-intl";
 import { Controller, useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +34,7 @@ export function FundingBodySection({ learner, canEdit = false }: FundingBodySect
     if (!date || date === "-") return "-";
     try {
       const d = new Date(date);
-      return d.toLocaleDateString();
+      return formatDateUK(d, String(date));
     } catch {
       return date;
     }

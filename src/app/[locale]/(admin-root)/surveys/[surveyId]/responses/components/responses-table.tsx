@@ -115,7 +115,7 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
       // Handle date strings
       if (questionType === "date") {
         try {
-          return format(new Date(answer), "yyyy-MM-dd")
+          return format(new Date(answer), "dd/MM/yyyy")
         } catch {
           return answer
         }
@@ -158,7 +158,7 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
       const rows = allResponses.map((response) => {
         const row = [
           response.id,
-          format(new Date(response.submittedAt), "yyyy-MM-dd HH:mm:ss"),
+          format(new Date(response.submittedAt), "dd/MM/yyyy HH:mm:ss"),
           response.email || "",
           response.userId || "",
           ...sortedQuestions.map((question) => {
@@ -227,7 +227,7 @@ export function ResponsesTable({ surveyId }: ResponsesTableProps) {
         const date = row.getValue("submittedAt") as string
         return (
           <span className="font-medium">
-            {format(new Date(date), "MMM d, yyyy 'at' h:mm a")}
+            {format(new Date(date), "dd/MM/yyyy HH:mm")}
           </span>
         )
       },

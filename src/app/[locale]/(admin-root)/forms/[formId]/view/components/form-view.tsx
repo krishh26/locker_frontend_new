@@ -132,7 +132,7 @@ export function FormView({ formId }: FormViewProps) {
                   Created At
                 </label>
                 <p className="text-base mt-1">
-                  {format(new Date(form.created_at), "MMM dd, yyyy HH:mm")}
+                  {format(new Date(form.created_at), "dd/MM/yyyy HH:mm")}
                 </p>
               </div>
             )}
@@ -142,7 +142,7 @@ export function FormView({ formId }: FormViewProps) {
                   Updated At
                 </label>
                 <p className="text-base mt-1">
-                  {format(new Date(form.updated_at), "MMM dd, yyyy HH:mm")}
+                  {format(new Date(form.updated_at), "dd/MM/yyyy HH:mm")}
                 </p>
               </div>
             )}

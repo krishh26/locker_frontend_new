@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDateUK } from "@/utils/date-format"
 import { useParams, useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { filterRolesFromApi } from "@/config/auth-roles"
@@ -74,7 +75,7 @@ function computeLicenseHealth(sub: { warningStatus?: string; usedLicenses?: numb
 function formatDate(value: string | null | undefined): string {
   if (!value) return "—"
   const d = new Date(value)
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString()
+  return Number.isNaN(d.getTime()) ? "—" : formatDateUK(d)
 }
 
 export default function OrganisationDetailPage() {
@@ -559,7 +560,7 @@ export default function OrganisationDetailPage() {
                     {payments.map((payment) => (
                       <TableRow key={payment.id}>
                         <TableCell>
-                          {new Date(payment.date).toLocaleDateString()}
+                          {formatDateUK(payment.date)}
                         </TableCell>
                         <TableCell className="font-medium">
                           £{payment.amount.toLocaleString()}

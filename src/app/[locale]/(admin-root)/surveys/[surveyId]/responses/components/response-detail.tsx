@@ -151,7 +151,7 @@ export function ResponseDetail({
 
     if (question.type === 'date' && typeof answer === 'string') {
       try {
-        return format(new Date(answer), 'PPP')
+        return format(new Date(answer), 'dd/MM/yyyy')
       } catch {
         return answer
       }
@@ -170,7 +170,7 @@ export function ResponseDetail({
         <DialogHeader>
           <DialogTitle>Response Details</DialogTitle>
           <DialogDescription>
-            Submitted on {format(new Date(response.submittedAt), "PPP 'at' p")}
+            Submitted on {format(new Date(response.submittedAt), "dd/MM/yyyy HH:mm")}
           </DialogDescription>
         </DialogHeader>
 

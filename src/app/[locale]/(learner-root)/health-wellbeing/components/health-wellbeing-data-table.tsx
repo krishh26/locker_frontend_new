@@ -120,7 +120,7 @@ export function HealthWellbeingDataTable() {
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return t("table.dates.never");
     try {
-      return format(new Date(dateString), "MMM dd, yyyy");
+      return format(new Date(dateString), "dd/MM/yyyy");
     } catch {
       return t("table.dates.invalid");
     }

@@ -189,7 +189,7 @@ export function CalendarMain({ selectedDate, onDateSelect, onMenuClick, events, 
                       <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                         <div className="flex items-center flex-wrap gap-1">
                           <CalendarIcon className="w-4 h-4" />
-                          {format(event.date, 'MMM d, yyyy')}
+                          {format(event.date, 'dd/MM/yyyy')}
                         </div>
                         <div className="flex items-center flex-wrap gap-1">
                           <Clock className="w-4 h-4" />
@@ -302,7 +302,7 @@ export function CalendarMain({ selectedDate, onDateSelect, onMenuClick, events, 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4 text-muted-foreground" />
-                <span>{format(selectedEvent.date, 'EEEE, MMMM d, yyyy')}</span>
+                <span>{format(selectedEvent.date, 'EEEE, dd/MM/yyyy')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />

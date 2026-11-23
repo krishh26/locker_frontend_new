@@ -54,7 +54,7 @@ export function TicketCommentSection({ ticket, onCommentAdded }: TicketCommentSe
               <div className="flex justify-between gap-2">
                 <span className="font-medium">{displayUser(c.user, t("unknownUser"))}</span>
                 <span className="text-muted-foreground text-xs">
-                  {format(new Date(c.created_at), "dd MMM yyyy, HH:mm")}
+                  {format(new Date(c.created_at), "dd/MM/yyyy HH:mm")}
                 </span>
               </div>
               <p className="mt-1 whitespace-pre-wrap">{c.message}</p>

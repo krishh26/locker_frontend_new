@@ -161,7 +161,7 @@ export function FormsDataTable() {
       form.form_name,
       form.description || "",
       form.type,
-      form.created_at ? format(new Date(form.created_at), "yyyy-MM-dd") : "",
+      form.created_at ? format(new Date(form.created_at), "dd/MM/yyyy") : "",
     ]);
 
     const csvContent = [
@@ -213,7 +213,7 @@ export function FormsDataTable() {
         header: t("table.createdAt"),
         cell: ({ row }) => {
           return row.original.created_at
-            ? format(new Date(row.original.created_at), "MMM dd, yyyy")
+            ? format(new Date(row.original.created_at), "dd/MM/yyyy")
             : "-";
         },
       },

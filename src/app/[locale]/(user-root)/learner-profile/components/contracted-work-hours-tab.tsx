@@ -200,7 +200,7 @@ export function ContractedWorkHoursTab({
   const formatDate = (date: string | null | undefined): string => {
     if (!date) return '-'
     try {
-      return format(new Date(date), 'MMM d, yyyy')
+      return format(new Date(date), 'dd/MM/yyyy')
     } catch {
       return date
     }
@@ -557,7 +557,7 @@ export function ContractedWorkHoursTab({
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'PPP')
+                              format(field.value, 'dd/MM/yyyy')
                             ) : (
                               <span>
                                 {t('contractedWorkHours.dialog.pickDate')}
@@ -603,7 +603,7 @@ export function ContractedWorkHoursTab({
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'PPP')
+                              format(field.value, 'dd/MM/yyyy')
                             ) : (
                               <span>
                                 {t(

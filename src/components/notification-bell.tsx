@@ -89,7 +89,7 @@ function NotificationItem({ notification, onRead, onDelete, onClickContent, mark
             : notification.message}
         </p>
         <p className="text-xs text-muted-foreground">
-          {format(new Date(notification.created_at), "MMM d, h:mm a")}
+          {format(new Date(notification.created_at), "dd/MM/yyyy HH:mm")}
         </p>
       </div>
       <div className="flex gap-1">

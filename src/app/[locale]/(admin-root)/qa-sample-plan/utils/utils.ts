@@ -1,3 +1,4 @@
+import { formatDateUK } from "@/utils/date-format"
 import type { SamplePlanLearnerUnit } from "@/store/api/qa-sample-plan/types";
 
 export const sanitizeText = (value?: string | null): string => {
@@ -16,11 +17,7 @@ export const formatDisplayDate = (value?: string | null): string => {
   if (Number.isNaN(date.getTime())) {
     return "-";
   }
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return formatDateUK(date);
 };
 
 export const getRiskBadgeVariant = (riskLevel?: string): "default" | "destructive" | "secondary" | "outline" => {

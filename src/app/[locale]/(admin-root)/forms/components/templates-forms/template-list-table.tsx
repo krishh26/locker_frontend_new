@@ -206,7 +206,7 @@ export function TemplateListTable() {
                   </TableCell>
                   <TableCell>
                     {template.created_at
-                      ? format(new Date(template.created_at), "MMM dd, yyyy")
+                      ? format(new Date(template.created_at), "dd/MM/yyyy")
                       : "-"}
                   </TableCell>
                   <TableCell className="text-right">

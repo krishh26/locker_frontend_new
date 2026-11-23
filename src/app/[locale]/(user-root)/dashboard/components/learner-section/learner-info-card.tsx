@@ -1,5 +1,6 @@
 'use client'
 
+import { formatDateTimeUK } from "@/utils/date-format"
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { ArrowRight } from 'lucide-react'
@@ -7,7 +8,7 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { isCourseEligibleForOverallProgress } from '@/lib/is-enrollment-excluded'
 import { calculateLearnerProgress } from '@/lib/learner-progress-utils'
 import type { LearnerCourse, LearnerListItem } from '@/store/api/learner/types'
@@ -66,31 +67,20 @@ interface LearnerInfoCardProps {
 
 function formatNextVisitDate(
   dateString: string | undefined | null,
-  locale: string,
 ): string | null {
   if (!dateString) return null
   const date = new Date(dateString)
   if (Number.isNaN(date.getTime())) return null
-  return date.toLocaleString(locale, {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+  return formatDateTimeUK(date)
 }
 
 export function LearnerInfoCard({ learner, user }: LearnerInfoCardProps) {
   const t = useTranslations('learnerDashboard.infoCard')
-  const locale = useLocale()
 
   const formattedNextVisit = useMemo(
     () =>
-      formatNextVisitDate(
-        learner?.nextvisitdate ?? learner?.next_visit_date,
-        locale,
-      ),
-    [learner?.nextvisitdate, learner?.next_visit_date, locale],
+      formatNextVisitDate(learner?.nextvisitdate ?? learner?.next_visit_date),
+    [learner?.nextvisitdate, learner?.next_visit_date],
   )
 
   // Calculate overall progress across all courses

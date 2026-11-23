@@ -237,7 +237,7 @@ export function CpdEditableRow({
                             const d = field.value?.trim()
                               ? parseCpdFormDate(field.value)
                               : undefined;
-                            if (d) return format(d, "PPP");
+                            if (d) return format(d, "dd/MM/yyyy");
                             if (field.value?.trim())
                               return (
                                 <span className="text-muted-foreground">

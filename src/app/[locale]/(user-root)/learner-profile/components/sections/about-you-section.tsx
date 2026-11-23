@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
@@ -90,7 +91,7 @@ export function AboutYouSection({ learner, canEdit = false }: AboutYouSectionPro
     if (!date) return "-";
     try {
       const d = new Date(date);
-      return d.toLocaleDateString();
+      return formatDateUK(d, String(date));
     } catch {
       return date;
     }

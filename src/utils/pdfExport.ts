@@ -1,3 +1,4 @@
+import { formatDateUK } from "@/utils/date-format"
 import type { jsPDF as JsPDFCtor } from "jspdf"
 
 let pdfDepsPromise:
@@ -196,7 +197,7 @@ export async function exportTableToPdf(options: ExportTableToPdfOptions): Promis
   applyPlugin(jsPDF)
 
   const doc = new jsPDF()
-  const dateStr = new Date().toLocaleDateString()
+  const dateStr = formatDateUK(new Date())
   const defaultFilename = `${title.replace(/\s+/g, "-")}_${new Date().toISOString().split("T")[0]}.pdf`
   const finalFilename = filename ?? defaultFilename
 
@@ -250,7 +251,7 @@ export async function exportGapAnalysisToPdf(
   applyPlugin(jsPDF)
 
   const doc = new jsPDF()
-  const dateStr = new Date().toLocaleDateString()
+  const dateStr = formatDateUK(new Date())
   const safeTitle = sanitizePdfText(title)
   const safeCourseName = courseName ? sanitizePdfText(courseName) : undefined
   const safeHeaders = headers.map(sanitizePdfText)
@@ -664,9 +665,7 @@ export async function exportInvoiceToPdf(options: ExportInvoiceToPdfOptions): Pr
   applyPlugin(jsPDF)
 
   const doc = new jsPDF()
-  const dateDisplay = invoiceDate.includes("T")
-    ? new Date(invoiceDate).toLocaleDateString()
-    : invoiceDate
+  const dateDisplay = formatDateUK(invoiceDate, invoiceDate)
   const defaultFilename = `Invoice_${organisationName.replace(/\s+/g, "-")}_${invoiceDate.split("T")[0]}.pdf`
   const finalFilename = filename ?? defaultFilename
 

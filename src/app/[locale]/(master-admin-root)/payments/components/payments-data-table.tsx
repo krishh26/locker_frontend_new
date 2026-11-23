@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "@/i18n/navigation"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
@@ -112,7 +113,7 @@ export function PaymentsDataTable() {
       t("table.columns.paymentMethod"),
     ]
     const rows = filteredPayments.map((payment: Payment) => [
-      new Date(payment.date).toLocaleDateString(),
+      formatDateUK(payment.date),
       orgMap.get(payment.organisationId) || t("common.unknown"),
       payment.planName ?? t("common.dash"),
       payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
@@ -161,7 +162,7 @@ export function PaymentsDataTable() {
       t("table.columns.paymentMethod"),
     ]
     const rows = filteredPayments.map((payment: Payment) => [
-      new Date(payment.date).toLocaleDateString(),
+      formatDateUK(payment.date),
       orgMap.get(payment.organisationId) || t("common.unknown"),
       payment.planName ?? t("common.dash"),
       payment.subtotal != null ? `£${Number(payment.subtotal).toLocaleString()}` : `£${payment.amount.toLocaleString()}`,
@@ -194,7 +195,7 @@ export function PaymentsDataTable() {
         accessorKey: "date",
         header: t("table.columns.date"),
         cell: ({ row }) => {
-          return new Date(row.original.date).toLocaleDateString()
+          return formatDateUK(row.original.date)
         },
       },
       {

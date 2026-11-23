@@ -483,7 +483,7 @@ export function ForumMessageThread({
             const message = item as ForumMessage;
             const isSent = isOwnMessage(message);
             const messageDate = new Date(message.created_at);
-            const timeString = format(messageDate, "MMM d, HH:mm");
+            const timeString = format(messageDate, "dd/MM/yyyy HH:mm");
             const senderDisplayName = isSent
               ? getCurrentUserDisplayName(user, message.sender)
               : getForumSenderDisplayName(message.sender);

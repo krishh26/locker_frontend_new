@@ -1,3 +1,4 @@
+import { formatDateUK } from "@/utils/date-format"
 import {
   toQaAssessmentMethodList,
   type AssessmentMethodCode,
@@ -51,11 +52,7 @@ export const formatDate = (dateString: string): string => {
   if (Number.isNaN(date.getTime())) {
     return dateString;
   }
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return formatDateUK(date);
 };
 
 export const formatDateForInput = (dateString: string | null | undefined): string => {

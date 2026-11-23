@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -335,7 +336,7 @@ export function CourseInformationTab({
     if (!date) return "-";
     try {
       const d = new Date(date);
-      return d.toLocaleDateString();
+      return formatDateUK(d, String(date));
     } catch {
       return date;
     }

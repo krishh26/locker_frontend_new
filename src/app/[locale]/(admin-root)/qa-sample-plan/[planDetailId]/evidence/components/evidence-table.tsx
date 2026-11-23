@@ -201,7 +201,7 @@ export function EvidenceTable({
                       </TableCell>
                       <TableCell>
                         {evidence.created_at
-                          ? format(new Date(evidence.created_at), "dd MMM yyyy")
+                          ? format(new Date(evidence.created_at), "dd/MM/yyyy")
                           : t("na")}
                       </TableCell>
                       <TableCell className="text-center">

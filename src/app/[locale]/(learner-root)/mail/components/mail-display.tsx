@@ -160,7 +160,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             </div>
             {mail.date && (
               <div className="text-muted-foreground ml-auto text-xs">
-                {format(new Date(mail.date), "PPpp")}
+                {format(new Date(mail.date), "dd/MM/yyyy HH:mm")}
               </div>
             )}
           </div>

@@ -205,7 +205,7 @@ export function AccountManagerDataTable() {
       manager.lastName || "",
       manager.isActive ? t("table.status.active") : t("table.status.inactive"),
       manager.assignedOrganisationIds.length.toString(),
-      manager.createdAt ? format(new Date(manager.createdAt), "yyyy-MM-dd") : "",
+      manager.createdAt ? format(new Date(manager.createdAt), "dd/MM/yyyy") : "",
     ])
 
     const csvContent = [
@@ -238,7 +238,7 @@ export function AccountManagerDataTable() {
       manager.lastName || "",
       manager.isActive ? t("table.status.active") : t("table.status.inactive"),
       manager.assignedOrganisationIds.length.toString(),
-      manager.createdAt ? format(new Date(manager.createdAt), "yyyy-MM-dd") : "",
+      manager.createdAt ? format(new Date(manager.createdAt), "dd/MM/yyyy") : "",
     ])
     if (rows.length === 0) {
       toast.info(t("toast.noDataToExport"))
@@ -297,7 +297,7 @@ export function AccountManagerDataTable() {
         header: t("table.columns.createdAt"),
         cell: ({ row }) => {
           const date = row.original.createdAt
-          return date ? format(new Date(date), "MMM dd, yyyy") : "—"
+          return date ? format(new Date(date), "dd/MM/yyyy") : "—"
         },
       },
       {

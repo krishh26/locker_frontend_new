@@ -197,7 +197,7 @@ export function TimeLogDataTable({
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "-";
     try {
-      return format(new Date(dateString), "MMM dd, yyyy");
+      return format(new Date(dateString), "dd/MM/yyyy");
     } catch {
       return dateString?.substring(0, 10) || "-";
     }

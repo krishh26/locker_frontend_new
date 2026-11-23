@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateTimeUK } from "@/utils/date-format"
 import { useState, useMemo } from "react";
 import {
   type ColumnDef,
@@ -143,13 +144,7 @@ export function LearnersDocumentsToSignDataTable() {
   const formatDate = (dateString: string) => {
     if (!dateString || dateString === "N/A") return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString(locale, {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return formatDateTimeUK(date);
   };
 
   const getSignatureStatus = (

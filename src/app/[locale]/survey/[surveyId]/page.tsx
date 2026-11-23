@@ -203,7 +203,7 @@ export default function PublicFormPage({ params }: PublicFormPageProps) {
               <CardDescription>
                 This survey has expired and is no longer accepting responses.
                 <span className="block mt-2 text-sm">
-                  Expired on: {format(expirationDate, "PPP 'at' p")}
+                  Expired on: {format(expirationDate, "dd/MM/yyyy HH:mm")}
                 </span>
               </CardDescription>
             </CardHeader>
@@ -571,7 +571,7 @@ function QuestionField({ question, form }: QuestionFieldProps) {
                     )}
                   >
                     {field.value ? (
-                      format(field.value, "PPP")
+                      format(field.value, "dd/MM/yyyy")
                     ) : (
                       <span>Pick a date</span>
                     )}

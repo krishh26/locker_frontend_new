@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState, useMemo, useCallback } from "react"
 import { useRouter } from "@/i18n/navigation"
 import {
@@ -79,7 +80,7 @@ function computeLicenseHealth(sub: Subscription): LicenseHealth {
 function formatDate(value: string | null | undefined): string {
   if (!value) return "—"
   const d = new Date(value)
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString()
+  return Number.isNaN(d.getTime()) ? "—" : formatDateUK(d)
 }
 
 export function SubscriptionsDataTable() {

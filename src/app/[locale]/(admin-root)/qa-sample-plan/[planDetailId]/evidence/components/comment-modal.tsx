@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateTimeUK } from "@/utils/date-format"
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import {
@@ -154,7 +155,7 @@ export function CommentModal({
                         </p>
                         {reviewData.signed_off_at && (
                           <p className="text-xs text-muted-foreground">
-                            {t("signedOffAt", { date: new Date(reviewData.signed_off_at).toLocaleString() })}
+                            {t("signedOffAt", { date: formatDateTimeUK(reviewData.signed_off_at) })}
                             {reviewData.signed_off_by ? ` ${t("by")} ${reviewData.signed_off_by}` : ""}
                           </p>
                         )}

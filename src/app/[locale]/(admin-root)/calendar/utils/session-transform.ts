@@ -1,3 +1,4 @@
+import { formatDateUK } from "@/utils/date-format"
 import { CalendarEvent } from "@/app/[locale]/(learner-root)/demo-calendar/types";
 import { type Session } from "@/store/api/session/types";
 import type { LearningPlanSession } from "@/store/api/learner-plan/types";
@@ -132,10 +133,6 @@ export function transformSessionsToCalendarEvents(
  */
 export function formatSessionDate(date: string | Date): string {
   const dateObj = typeof date === "string" ? new Date(date) : date;
-  return dateObj.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  return formatDateUK(dateObj);
 }
 

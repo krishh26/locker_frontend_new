@@ -1,7 +1,8 @@
 "use client";
 
+import { formatDateTimeUK } from "@/utils/date-format"
 import { useState, useEffect } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -63,7 +64,6 @@ export function SignatureModal({
   onSave,
 }: SignatureModalProps) {
   const t = useTranslations("learnerDocumentsToSign");
-  const locale = useLocale();
   const user = useAppSelector((state) => state.auth.user);
   const userRole = user?.role || "";
   const [signatures, setSignatures] = useState<DocumentSignatures>(
@@ -182,13 +182,7 @@ export function SignatureModal({
     if (!dateString) return "";
     const date = new Date(dateString);
     if (Number.isNaN(date.getTime())) return dateString;
-    return new Intl.DateTimeFormat(locale, {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(date);
+    return formatDateTimeUK(date);
   };
 
   return (

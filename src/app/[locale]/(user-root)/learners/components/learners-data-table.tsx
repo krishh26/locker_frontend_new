@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   type ColumnDef,
@@ -108,11 +109,7 @@ const formatDate = (dateString?: string | null): string => {
   if (!dateString) return "-";
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    return formatDateUK(date);
   } catch {
     return "-";
   }

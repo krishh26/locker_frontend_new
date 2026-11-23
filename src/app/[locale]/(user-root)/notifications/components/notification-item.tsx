@@ -151,7 +151,7 @@ export function NotificationItem({
               })}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              {format(new Date(notification.created_at), "MMM d, yyyy 'at' h:mm a")}
+              {format(new Date(notification.created_at), "dd/MM/yyyy HH:mm")}
             </p>
           </div>
         </div>

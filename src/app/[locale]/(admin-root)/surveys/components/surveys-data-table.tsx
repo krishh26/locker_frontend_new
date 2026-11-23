@@ -297,7 +297,7 @@ export function SurveysDataTable() {
         const date = row.getValue("createdAt") as string
         return (
           <span className="text-sm">
-            {format(new Date(date), "MMM d, yyyy")}
+            {format(new Date(date), "dd/MM/yyyy")}
           </span>
         )
       },
@@ -309,7 +309,7 @@ export function SurveysDataTable() {
         const date = row.getValue("updatedAt") as string
         return (
           <span className="text-sm">
-            {format(new Date(date), "MMM d, yyyy")}
+            {format(new Date(date), "dd/MM/yyyy")}
           </span>
         )
       },

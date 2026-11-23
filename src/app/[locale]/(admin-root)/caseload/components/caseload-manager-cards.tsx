@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState } from "react";
 import {
   Users,
@@ -100,7 +101,7 @@ export function CaseloadManagerCards({
     doc.text(t("cards.reportTitle"), 14, 20);
     doc.setFontSize(12);
     doc.text(
-      t("cards.generatedOn", { date: new Date().toLocaleDateString() }),
+      t("cards.generatedOn", { date: formatDateUK(new Date()) }),
       14,
       30
     );
@@ -209,7 +210,7 @@ export function CaseloadManagerCards({
     );
     doc.setFontSize(12);
     doc.text(
-      t("cards.generatedOn", { date: new Date().toLocaleDateString() }),
+      t("cards.generatedOn", { date: formatDateUK(new Date()) }),
       14,
       30
     );

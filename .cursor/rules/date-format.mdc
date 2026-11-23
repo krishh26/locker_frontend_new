@@ -1,0 +1,56 @@
+---
+description: UK date display must always be DD/MM/YYYY — no other user-facing date formats
+globs: "**/*.{ts,tsx}"
+alwaysApply: true
+---
+
+# Date Format — UK Only (`DD/MM/YYYY`)
+
+All **user-facing** dates in this product use UK format **`DD/MM/YYYY`** (`dd/MM/yyyy` in date-fns). No US, ISO-looking display, or locale-long formats for full dates.
+
+## Required helpers
+
+Prefer shared helpers from `@/utils/date-format`:
+
+```ts
+import { formatDateUK, formatDateTimeUK, formatDateISO, UK_DATE_FORMAT } from "@/utils/date-format"
+
+formatDateUK(value)        // → "23/11/2026"
+formatDateTimeUK(value)    // → "23/11/2026 14:30"
+format(date, UK_DATE_FORMAT) // when you already have a Date
+```
+
+## Allowed
+
+| Use | Format |
+|---|---|
+| Tables, labels, exports (CSV/PDF cells), pickers display | `dd/MM/yyyy` |
+| Date + time shown to users | `dd/MM/yyyy HH:mm` |
+| `<input type="date">`, API payloads, storage keys | `yyyy-MM-dd` via `formatDateISO` |
+| Time-only / relative ("3 hours ago") | OK |
+| Calendar chrome (day number, "November 2026" header) | OK |
+
+## Forbidden for display
+
+```ts
+// ❌ BAD — never for user-visible full dates
+format(date, "MMM dd, yyyy")
+format(date, "MMM d, yyyy")
+format(date, "dd MMM yyyy")
+format(date, "MM-dd-yyyy")
+format(date, "yyyy-MM-dd") // display only — OK for inputs/API
+format(date, "PPP")
+toLocaleDateString()                 // browser-dependent
+toLocaleDateString("en-US", { ... })
+```
+
+```ts
+// ✅ GOOD
+formatDateUK(date)
+format(date, "dd/MM/yyyy")
+toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" })
+```
+
+## Rule of thumb
+
+If a human reads it as a full date, it must look like **`23/11/2026`**. Nothing else.

@@ -79,7 +79,7 @@ export function MessageList({ messages, users, currentUserId = "current-user" }:
     } else if (isYesterday(date)) {
       return `Yesterday ${format(date, "HH:mm")}`
     } else {
-      return format(date, "MMM d, HH:mm")
+      return format(date, "dd/MM/yyyy HH:mm")
     }
   }
 
@@ -135,7 +135,7 @@ export function MessageList({ messages, users, currentUserId = "current-user" }:
     } else if (isYesterday(date)) {
       return "Yesterday"
     } else {
-      return format(date, "EEEE, MMMM d")
+      return format(date, "EEEE, dd/MM/yyyy")
     }
   }
 

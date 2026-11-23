@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useCallback, useState, useMemo } from "react";
@@ -502,7 +503,7 @@ export function ExamineEvidencePageContent({
               comments: reviewData.comment || "",
               signedOffBy: reviewData.signed_off_by || "",
               dated: reviewData.signed_off_at
-                ? new Date(reviewData.signed_off_at).toLocaleDateString()
+                ? formatDateUK(reviewData.signed_off_at)
                 : "",
               file: fileName || row.file || "",
               assignment_review_id: reviewData.id || row.assignment_review_id,

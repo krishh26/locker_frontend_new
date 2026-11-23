@@ -45,7 +45,7 @@ function formatMessageTime(timestamp: string): string {
   } else if (isThisWeek(date)) {
     return format(date, 'EEEE') // Day name
   } else if (isThisYear(date)) {
-    return format(date, 'MMM d') // Jan 15
+    return format(date, 'dd/MM/yyyy') // 15/01/2025
   } else {
     return format(date, 'dd/MM/yy') // 15/01/24
   }

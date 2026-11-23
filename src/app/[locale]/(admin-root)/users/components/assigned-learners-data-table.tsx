@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import {
@@ -162,11 +163,7 @@ export function AssignedLearnersDataTable({
     if (!dateString || dateString === "N/A") return "N/A";
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
+      return formatDateUK(date);
     } catch {
       return dateString;
     }

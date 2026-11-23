@@ -178,7 +178,7 @@ export function EventForm({ event, open, onOpenChange, onSave, onDelete }: Event
               <Popover open={showCalendar} onOpenChange={setShowCalendar}>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="w-full justify-start text-left font-normal">
-                    {format(formData.date, "PPP")}
+                    {format(formData.date, "dd/MM/yyyy")}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">

@@ -27,7 +27,7 @@ interface CourseInfoCardsProps {
 function formatDate(dateString?: string, notAvailableLabel?: string) {
   if (!dateString) return notAvailableLabel ?? "N/A"
   try {
-    return format(new Date(dateString), "d MMMM yyyy")
+    return format(new Date(dateString), "dd/MM/yyyy")
   } catch {
     return dateString
   }

@@ -364,7 +364,7 @@ export function QuestionVisualization({
             >
               <div className="mb-1">{response.text}</div>
               <div className="text-xs text-muted-foreground">
-                {format(new Date(response.submittedAt), "MMM d, yyyy 'at' h:mm a")}
+                {format(new Date(response.submittedAt), "dd/MM/yyyy HH:mm")}
               </div>
             </div>
           ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK, formatDateTimeUK } from "@/utils/date-format"
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -184,7 +185,7 @@ export function CreateDocumentCard({
         <div class="presentation-header">
             <h1 class="presentation-title">${presentationTitle}</h1>
             <div class="presentation-info">
-                Created: ${new Date().toLocaleDateString()} | ${slides.length} Slides | Evidence Presentation
+                Created: ${formatDateUK(new Date())} | ${slides.length} Slides | Evidence Presentation
             </div>
         </div>
 `;
@@ -205,7 +206,7 @@ export function CreateDocumentCard({
 
     htmlContent += `
         <div class="footer">
-            <p>${new Date().toLocaleString()}</p>
+            <p>${formatDateTimeUK(new Date())}</p>
         </div>
     </div>
 </body>

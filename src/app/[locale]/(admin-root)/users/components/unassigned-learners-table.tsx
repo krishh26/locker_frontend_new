@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -131,11 +132,7 @@ export function UnassignedLearnersTable({
     if (dateString === "N/A") return "N/A";
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
+      return formatDateUK(date);
     } catch {
       return dateString;
     }

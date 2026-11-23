@@ -221,11 +221,11 @@ export function TicketDetailSheet({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t("created")}</span>
-                  <span>{format(new Date(ticket.created_at), "dd MMM yyyy")}</span>
+                  <span>{format(new Date(ticket.created_at), "dd/MM/yyyy")}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">{t("lastActivity")}</span>
-                  <span>{format(new Date(ticket.last_activity_at), "dd MMM yyyy")}</span>
+                  <span>{format(new Date(ticket.last_activity_at), "dd/MM/yyyy")}</span>
                 </div>
               </div>
 

@@ -273,7 +273,7 @@ export function TimelogExportFilters() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {filters.dateFrom ? format(filters.dateFrom, "PPP") : <span>{t("filters.pickDatePlaceholder")}</span>}
+                  {filters.dateFrom ? format(filters.dateFrom, "dd/MM/yyyy") : <span>{t("filters.pickDatePlaceholder")}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -300,7 +300,7 @@ export function TimelogExportFilters() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {filters.dateTo ? format(filters.dateTo, "PPP") : <span>{t("filters.pickDatePlaceholder")}</span>}
+                  {filters.dateTo ? format(filters.dateTo, "dd/MM/yyyy") : <span>{t("filters.pickDatePlaceholder")}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

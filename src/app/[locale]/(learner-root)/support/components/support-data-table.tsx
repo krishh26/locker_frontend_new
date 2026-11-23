@@ -129,7 +129,7 @@ export function SupportDataTable() {
 
   const formatDate = (date: string) => {
     if (!date) return ""
-    return format(new Date(date), "dd MMM yyyy")
+    return format(new Date(date), "dd/MM/yyyy")
   }
 
   const getStatusVariant = (status: string) => {

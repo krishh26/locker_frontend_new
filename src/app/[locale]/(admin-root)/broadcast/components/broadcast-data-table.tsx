@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDateUK } from "@/utils/date-format"
 import { useState, useMemo, useCallback } from "react";
 import {
   type ColumnDef,
@@ -148,11 +149,7 @@ export function BroadcastDataTable() {
 
   const formatDate = (date: string) => {
     if (!date) return "-";
-    return new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+    return formatDateUK(date);
   };
 
   const handleExportCsv = () => {

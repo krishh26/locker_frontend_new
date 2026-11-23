@@ -170,7 +170,7 @@ export function AccountManagerDashboard() {
                     <TableCell>{log.userName ?? log.userEmail ?? "—"}</TableCell>
                     <TableCell>{log.organisationName ?? "—"}</TableCell>
                     <TableCell className="text-right text-muted-foreground">
-                      {log.createdAt ? format(new Date(log.createdAt), "MMM d, yyyy HH:mm") : "—"}
+                      {log.createdAt ? format(new Date(log.createdAt), "dd/MM/yyyy HH:mm") : "—"}
                     </TableCell>
                   </TableRow>
                 ))}

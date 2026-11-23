@@ -109,7 +109,7 @@ export function SupplementaryTrainingDataTable() {
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return t("dates.never");
     try {
-      return format(new Date(dateString), "MMM dd, yyyy");
+      return format(new Date(dateString), "dd/MM/yyyy");
     } catch {
       return t("dates.invalid");
     }

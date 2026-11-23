@@ -326,7 +326,7 @@ export function ManageSessionFilesDialog({
                       <TableCell>{file.description}</TableCell>
                       <TableCell>
                         {file.created_at
-                          ? format(new Date(file.created_at), "MM-dd-yyyy")
+                          ? format(new Date(file.created_at), "dd/MM/yyyy")
                           : t("common.dash")}
                       </TableCell>
                     </TableRow>

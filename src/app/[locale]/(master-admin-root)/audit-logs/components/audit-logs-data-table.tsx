@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDateTimeUK } from "@/utils/date-format"
 import { useState, useMemo } from "react"
 import { useRouter } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
@@ -117,7 +118,7 @@ export function AuditLogsDataTable() {
       t("table.columns.details"),
     ]
     const rows = filteredLogs.map((log: AuditLog) => [
-      new Date(log.createdAt).toLocaleString(),
+      formatDateTimeUK(log.createdAt),
       log.organisationName ??
         orgMap.get(log.organisationId ?? 0) ??
         t("common.dash"),
@@ -150,7 +151,7 @@ export function AuditLogsDataTable() {
       t("table.columns.details"),
     ]
     const rows = filteredLogs.map((log: AuditLog) => [
-      new Date(log.createdAt).toLocaleString(),
+      formatDateTimeUK(log.createdAt),
       log.organisationName ??
         orgMap.get(log.organisationId ?? 0) ??
         t("common.dash"),
@@ -175,7 +176,7 @@ export function AuditLogsDataTable() {
           return (
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
-              {new Date(row.original.createdAt).toLocaleString()}
+              {formatDateTimeUK(row.original.createdAt)}
             </div>
           )
         },

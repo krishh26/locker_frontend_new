@@ -1,5 +1,6 @@
 "use client"
 
+import { formatDateUK } from "@/utils/date-format"
 import {
   Phone,
   Video,
@@ -71,7 +72,7 @@ export function ChatHeader({
         case "away":
           return "Away"
         case "offline":
-          return `Last seen ${new Date(primaryUser.lastSeen).toLocaleDateString()}`
+          return `Last seen ${formatDateUK(primaryUser.lastSeen)}`
         default:
           return ""
       }

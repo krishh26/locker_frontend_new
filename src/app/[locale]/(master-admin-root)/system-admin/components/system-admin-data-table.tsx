@@ -195,7 +195,7 @@ export function SystemAdminDataTable() {
       admin.lastName || "",
       admin.isActive ? t("table.status.active") : t("table.status.inactive"),
       admin.isProtected ? t("table.protected.yes") : t("table.protected.no"),
-      admin.createdAt ? format(new Date(admin.createdAt), "yyyy-MM-dd") : "",
+      admin.createdAt ? format(new Date(admin.createdAt), "dd/MM/yyyy") : "",
     ])
 
     const csvContent = [
@@ -228,7 +228,7 @@ export function SystemAdminDataTable() {
       admin.lastName || "",
       admin.isActive ? t("table.status.active") : t("table.status.inactive"),
       admin.isProtected ? t("table.protected.yes") : t("table.protected.no"),
-      admin.createdAt ? format(new Date(admin.createdAt), "yyyy-MM-dd") : "",
+      admin.createdAt ? format(new Date(admin.createdAt), "dd/MM/yyyy") : "",
     ])
     if (rows.length === 0) {
       toast.info(t("toast.noDataToExport"))
@@ -285,7 +285,7 @@ export function SystemAdminDataTable() {
         header: t("table.columns.createdAt"),
         cell: ({ row }) => {
           const date = row.original.createdAt
-          return date ? format(new Date(date), "MMM dd, yyyy") : t("common.dash")
+          return date ? format(new Date(date), "dd/MM/yyyy") : t("common.dash")
         },
       },
       {

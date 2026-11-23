@@ -1,12 +1,9 @@
+import { formatDateUK } from "@/utils/date-format"
 // Helper functions for Evidence Library
 
 export const formatDate = (dateString: string | null): string => {
   if (!dateString) return "-";
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  return formatDateUK(dateString);
 };
 
 export const getStatusColor = (

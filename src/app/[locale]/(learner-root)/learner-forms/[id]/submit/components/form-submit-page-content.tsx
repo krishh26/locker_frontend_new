@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
 interface FormSubmitPageContentProps {
   formId: string;
@@ -14,6 +15,17 @@ interface FormSubmitPageContentProps {
 
 export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
   const t = useTranslations("learnerFormSubmit");
+  const router = useRouter();
+
+  // Return to wherever the form was opened from (learner forms, learning plan, etc.).
+  // Fall back to the learner forms list when the page was opened directly.
+  const goBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/learner-forms");
+    }
+  };
   const {
     data: formDetails,
     isLoading,
@@ -32,7 +44,7 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
           subtitle={t("page.subtitle")}
           icon={FileText}
           showBackButton
-          backButtonHref="/learner-forms"
+          onBack={goBack}
         />
         <Card>
           <CardContent className="p-6">
@@ -55,7 +67,7 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
           subtitle={t("page.subtitle")}
           icon={FileText}
           showBackButton
-          backButtonHref="/learner-forms"
+          onBack={goBack}
         />
         <Card>
           <CardContent className="p-6">
@@ -80,11 +92,12 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
         subtitle={formDetails.data.description || t("page.subtitle")}
         icon={FileText}
         showBackButton
-        backButtonHref="/learner-forms"
+        onBack={goBack}
       />
       <DynamicFormRenderer
         formId={formId}
         fields={formDetails.data.form_data || []}
+        onDone={goBack}
       />
     </div>
   );

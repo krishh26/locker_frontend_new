@@ -45,6 +45,13 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { CourseUnit, SubUnit } from "@/store/api/skills-scan/types";
 import { useTranslations } from "next-intl";
+import { ratesUnitDirectly } from "../utils/rating-target";
+
+const KSB_BADGE_CLASS: Record<string, string> = {
+  Knowledge: "border-blue-300 bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:text-blue-300",
+  Skills: "border-green-300 bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-300",
+  Behaviour: "border-purple-300 bg-purple-50 text-purple-700 dark:bg-purple-950/30 dark:text-purple-300",
+};
 
 interface SkillsScanTnaQuestionnaireProps {
   onTabChange: (tab: string) => void;
@@ -103,8 +110,8 @@ export function SkillsScanTnaQuestionnaire({
 
   const totalTopics = units.length;
   const completedTopics = units.filter((unit: CourseUnit) => {
-    // For Standard courses: if unit type is "Duty", check subUnits; otherwise check unit's quarter_review
-    if (isStandardType && unit.type !== "Duty") {
+    // Standard units without KSB criteria are rated directly; everything else via subUnits
+    if (ratesUnitDirectly(unit, isStandardType)) {
       return (
         unit.quarter_review?.induction &&
         unit.quarter_review?.first &&
@@ -112,7 +119,7 @@ export function SkillsScanTnaQuestionnaire({
         unit.quarter_review?.third
       );
     }
-    // For Qualification courses or Duty units in Standard courses, check subUnits
+    // For Qualification units or Standard units with KSB criteria, check subUnits
     return unit.subUnit?.every((sub) =>
       sub.quarter_review?.induction &&
       sub.quarter_review?.first &&
@@ -130,8 +137,8 @@ export function SkillsScanTnaQuestionnaire({
 
     const updatedUnits = units.map((unit: CourseUnit) => {
       if (unit.id === selectedUnit.id) {
-        // For Standard courses: if unit type is NOT "Duty", update unit's quarter_review directly
-        if (isStandardType && unit.type !== "Duty") {
+        // Standard units without KSB criteria: update the unit's quarter_review directly
+        if (ratesUnitDirectly(unit, isStandardType)) {
           return {
             ...unit,
             quarter_review: {
@@ -140,7 +147,7 @@ export function SkillsScanTnaQuestionnaire({
             },
           };
         }
-        // For Qualification courses or Duty units in Standard courses, update subUnit
+        // For Qualification units or Standard units with KSB criteria, update subUnit
         const updatedSubUnits = unit.subUnit?.map((sub: SubUnit) => {
           if (sub.id === subUnitId) {
             return {
@@ -390,8 +397,8 @@ export function SkillsScanTnaQuestionnaire({
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {/* For Standard courses: if unit type is NOT "Duty", show unit directly */}
-                      {isStandardType && selectedUnit.type !== "Duty" ? (
+                      {/* Standard units without KSB criteria are rated as a single row */}
+                      {ratesUnitDirectly(selectedUnit, isStandardType) ? (
                         <TableRow key={selectedUnit.id}>
                           <TableCell className="font-medium">
                             {selectedUnit.title}
@@ -440,12 +447,35 @@ export function SkillsScanTnaQuestionnaire({
                           })}
                         </TableRow>
                       ) : (
-                        /* For Qualification courses or Duty units in Standard courses, show subUnits */
+                        /* For Qualification units or Standard units with KSB criteria, show subUnits */
                         selectedUnit.subUnit && selectedUnit.subUnit.length > 0 ? (
                           selectedUnit.subUnit.map((subUnit: SubUnit) => (
                             <TableRow key={subUnit.id}>
-                              <TableCell className="font-medium">
-                                {subUnit.title}
+                              <TableCell className="font-medium whitespace-normal">
+                                {isStandardType && (subUnit.code || subUnit.type) ? (
+                                  <div className="flex items-start gap-2">
+                                    <Badge
+                                      variant="outline"
+                                      className={cn(
+                                        "shrink-0 font-semibold",
+                                        KSB_BADGE_CLASS[subUnit.type ?? ""]
+                                      )}
+                                      title={subUnit.type}
+                                    >
+                                      {subUnit.code || subUnit.type?.charAt(0)}
+                                    </Badge>
+                                    <div className="min-w-0">
+                                      <p>{subUnit.title}</p>
+                                      {subUnit.type && (
+                                        <p className="text-xs font-normal text-muted-foreground">
+                                          {subUnit.type}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  subUnit.title
+                                )}
                               </TableCell>
                               {reviewPhases.map((phase) => {
                                 const reviewValue = phase.key === 'induction' ? subUnit.quarter_review?.induction :

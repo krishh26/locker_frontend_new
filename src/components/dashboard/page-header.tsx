@@ -15,6 +15,8 @@ interface PageHeaderProps {
   className?: string;
   showBackButton?: boolean;
   backButtonHref?: string;
+  /** Custom back handler; takes precedence over backButtonHref */
+  onBack?: () => void;
   /** Optional right-side content (e.g. time log summary on learner dashboard) */
   actions?: ReactNode;
 }
@@ -26,13 +28,16 @@ export function PageHeader({
   className,
   showBackButton = false,
   backButtonHref,
+  onBack,
   actions,
 }: PageHeaderProps) {
   const router = useRouter();
   const t = useTranslations("common");
 
   const handleBack = () => {
-    if (backButtonHref) {
+    if (onBack) {
+      onBack();
+    } else if (backButtonHref) {
       router.push(backButtonHref);
     } else {
       router.back();

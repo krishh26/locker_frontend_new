@@ -1374,6 +1374,7 @@
           "course-start-date": "Date de début",
           "course-end-date": "Date de fin prévue",
           "course-status": "Statut du cours",
+          "course-progress": "Progression du cours",
           "course-predicted-grade": "Note prévue",
           "course-final-grade": "Note finale",
           "course-trainer": "Formateur",

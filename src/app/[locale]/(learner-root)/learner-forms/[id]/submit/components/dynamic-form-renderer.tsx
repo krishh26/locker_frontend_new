@@ -41,9 +41,12 @@ import {
 } from "@/components/forms/field-types"
 import {
   buildCoursePresetMap,
+  buildLearnerPresetMap,
   buildLineManagerPresetMap,
   getTodayDateValue,
 } from "@/components/forms/preset-values"
+import { useGetLearnerDetailsQuery } from "@/store/api/learner/learnerApi"
+import { withActiveLearnerData } from "@/store/api/learner/filter-active-courses"
 import { TableField } from "@/components/forms/table-field"
 import { StatementField } from "@/components/forms/statement-field"
 import { useTemplateResolver } from "@/components/forms/template-variables"
@@ -210,12 +213,25 @@ export function DynamicFormRenderer({
   // (the learner dashboard stores the viewed learner in auth.learner).
   const canAutofill = user?.role === "Learner" || !!learner
 
+  // The persisted auth.learner can be stale (or missing course/trainer data), so always
+  // load the learner's current record and fall back to the stored copy while it loads.
+  const learnerIdRaw = user?.role === "Learner" ? user?.learner_id : learner?.learner_id
+  const learnerId = Number(learnerIdRaw)
+  const { data: learnerDetails } = useGetLearnerDetailsQuery(learnerId, {
+    skip: !Number.isFinite(learnerId) || learnerId <= 0,
+    refetchOnMountOrArgChange: true,
+  })
+  const presetLearner = useMemo(
+    () => (learnerDetails?.data ? withActiveLearnerData(learnerDetails.data) : learner),
+    [learnerDetails, learner]
+  )
+
   const presetMap = useMemo(() => {
     const map: Record<string, string | number | null | undefined> = {}
     if (!user) return map
 
     // Prefer the learner record so trainer/admin get the learner's details, not their own.
-    const source = learner ?? (user.role === "Learner" ? user : null)
+    const source = presetLearner ?? (user.role === "Learner" ? user : null)
     if (!source) return map
 
     map.learnerFullName =
@@ -224,19 +240,24 @@ export function DynamicFormRenderer({
     map.LearnerPhoneNumber =
       typeof source.mobile === "string" ? source.mobile : undefined
 
-    if (learner) {
-      Object.keys(learner).forEach((key) => {
-        const value = (learner as Record<string, unknown>)[key]
+    if (presetLearner) {
+      Object.keys(presetLearner).forEach((key) => {
+        const value = (presetLearner as Record<string, unknown>)[key]
         if (typeof value === "string" || typeof value === "number") {
           map[key] = value
         } else if (value === null || value === undefined) {
           map[key] = value
         }
       })
-      Object.assign(map, buildCoursePresetMap(learner), buildLineManagerPresetMap(learner))
+      Object.assign(
+        map,
+        buildLearnerPresetMap(presetLearner),
+        buildCoursePresetMap(presetLearner),
+        buildLineManagerPresetMap(presetLearner)
+      )
     }
     return map
-  }, [user, learner])
+  }, [user, presetLearner])
 
   const resolveTemplate = useTemplateResolver()
   const templateValues = useMemo(

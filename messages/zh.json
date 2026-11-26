@@ -1312,6 +1312,7 @@
           "course-start-date": "开始日期",
           "course-end-date": "预计结束日期",
           "course-status": "课程状态",
+          "course-progress": "课程进度",
           "course-predicted-grade": "预测成绩",
           "course-final-grade": "最终成绩",
           "course-trainer": "培训师",

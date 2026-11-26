@@ -35,7 +35,12 @@ export function LearnersPageContent() {
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t pt-4 text-sm text-muted-foreground">
         {COURSE_FOLDER_LEGEND.map((item) => (
           <span key={item.label} className="inline-flex items-center gap-2">
-            <Folder className="size-4 shrink-0" style={{ color: item.color }} />
+            <Folder
+              className="size-4 shrink-0"
+              style={{ color: item.color }}
+              fill="currentColor"
+              fillOpacity={0.45}
+            />
             {item.label}
           </span>
         ))}

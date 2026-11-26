@@ -964,6 +964,7 @@
           "course-start-date": "Startdatum",
           "course-end-date": "Voraussichtliches Enddatum",
           "course-status": "Kursstatus",
+          "course-progress": "Kursfortschritt",
           "course-predicted-grade": "Prognostizierte Note",
           "course-final-grade": "Endnote",
           "course-trainer": "Trainer",

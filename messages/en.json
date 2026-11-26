@@ -1334,6 +1334,7 @@
           "course-start-date": "Start Date",
           "course-end-date": "Expected End Date",
           "course-status": "Course Status",
+          "course-progress": "Course Progress",
           "course-predicted-grade": "Predicted Grade",
           "course-final-grade": "Final Grade",
           "course-trainer": "Trainer",

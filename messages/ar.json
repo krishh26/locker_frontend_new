@@ -1361,6 +1361,7 @@
           "course-start-date": "تاريخ البدء",
           "course-end-date": "تاريخ الانتهاء المتوقع",
           "course-status": "حالة الدورة",
+          "course-progress": "تقدم الدورة",
           "course-predicted-grade": "الدرجة المتوقعة",
           "course-final-grade": "الدرجة النهائية",
           "course-trainer": "المدرب",

@@ -1,7 +1,8 @@
 "use client";
 
-import { GraduationCap } from "lucide-react";
+import { Folder, GraduationCap } from "lucide-react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { COURSE_FOLDER_LEGEND } from "@/utils/course-folder-color";
 import { LearnersDataTable } from "./learners-data-table";
 import { useAppSelector } from "@/store/hooks";
 import { useTranslations } from "next-intl";
@@ -29,6 +30,15 @@ export function LearnersPageContent() {
       {/* Data Table */}
       <div className="@container/main">
         <LearnersDataTable />
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t pt-4 text-sm text-muted-foreground">
+        {COURSE_FOLDER_LEGEND.map((item) => (
+          <span key={item.label} className="inline-flex items-center gap-2">
+            <Folder className="size-4 shrink-0" style={{ color: item.color }} />
+            {item.label}
+          </span>
+        ))}
       </div>
     </div>
   );

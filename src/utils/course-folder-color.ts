@@ -14,9 +14,8 @@ type CourseColorSource = {
 const FOLDER_COLOR = {
   qualification: "#ef4444", // red
   standard: "#eab308", // yellow
-  fsMaths: "#2563eb", // blue
-  fsEnglish: "#10b981", // green
-  powerUp: "#8b5cf6", // violet
+  functionalSkills: "#10b981", // green
+  powerUp: "#10b981", // green
   fallback: "#94a3b8", // slate
 } as const
 
@@ -31,30 +30,25 @@ export function getCourseFolderColor(course: CourseColorSource): string {
   const core = normalize(course?.course_core_type)
   const haystack = `${type} ${name}`
 
-  if (
-    type === "functional skills - maths" ||
-    (type.includes("functional skills") && type.includes("math"))
-  ) {
-    return FOLDER_COLOR.fsMaths
+  if (haystack.includes("functional skills")) {
+    return FOLDER_COLOR.functionalSkills
   }
   if (
-    type === "functional skills english" ||
-    (type.includes("functional skills") && type.includes("english"))
+    haystack.includes("power-up") ||
+    haystack.includes("power up") ||
+    haystack.includes("powerup")
   ) {
-    return FOLDER_COLOR.fsEnglish
-  }
-  if (haystack.includes("power up") || haystack.includes("powerup")) {
     return FOLDER_COLOR.powerUp
   }
   if (core === "qualification") return FOLDER_COLOR.qualification
   if (core === "standard") return FOLDER_COLOR.standard
 
-  if (name.includes("functional skills") && name.includes("math")) {
-    return FOLDER_COLOR.fsMaths
-  }
-  if (name.includes("functional skills") && name.includes("english")) {
-    return FOLDER_COLOR.fsEnglish
-  }
-
   return FOLDER_COLOR.fallback
 }
+
+/** Legend shown under Learner Management. */
+export const COURSE_FOLDER_LEGEND = [
+  { label: "Functional skills", color: FOLDER_COLOR.functionalSkills },
+  { label: "Standards", color: FOLDER_COLOR.standard },
+  { label: "Qualification", color: FOLDER_COLOR.qualification },
+] as const

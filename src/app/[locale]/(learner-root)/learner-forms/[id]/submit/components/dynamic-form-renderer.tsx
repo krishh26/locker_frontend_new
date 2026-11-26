@@ -70,6 +70,8 @@ interface DynamicFormRendererProps {
   /** Where to go after submit/draft; defaults to learner forms list */
   returnTo?: string
   onExportApiChange?: (api: FormExportApi | null) => void
+  /** Called after a successful submit/draft save to leave the page */
+  onDone?: () => void
 }
 
 const getDynamicZodSchema = (
@@ -156,6 +158,7 @@ export function DynamicFormRenderer({
   fields: allFields,
   returnTo = "/learner-forms",
   onExportApiChange,
+  onDone,
 }: DynamicFormRendererProps) {
   const fields = useMemo(
     () => allFields.filter((field) => !isDisplayOnlyField(field.type)),
@@ -203,15 +206,23 @@ export function DynamicFormRenderer({
     }, {} as Record<string, FieldValue>),
   })
 
+  // Auto-fill for the learner themselves, or for trainer/admin viewing a learner
+  // (the learner dashboard stores the viewed learner in auth.learner).
+  const canAutofill = user?.role === "Learner" || !!learner
+
   const presetMap = useMemo(() => {
     const map: Record<string, string | number | null | undefined> = {}
     if (!user) return map
 
+    // Prefer the learner record so trainer/admin get the learner's details, not their own.
+    const source = learner ?? (user.role === "Learner" ? user : null)
+    if (!source) return map
+
     map.learnerFullName =
-      `${user.first_name || ""} ${user.last_name || ""}`.trim() || undefined
-    map.LearnerEmail = typeof user.email === "string" ? user.email : undefined
+      `${source.first_name || ""} ${source.last_name || ""}`.trim() || undefined
+    map.LearnerEmail = typeof source.email === "string" ? source.email : undefined
     map.LearnerPhoneNumber =
-      typeof user.mobile === "string" ? user.mobile : undefined
+      typeof source.mobile === "string" ? source.mobile : undefined
 
     if (learner) {
       Object.keys(learner).forEach((key) => {
@@ -229,8 +240,8 @@ export function DynamicFormRenderer({
 
   const resolveTemplate = useTemplateResolver()
   const templateValues = useMemo(
-    () => (user?.role === "Learner" ? presetMap : {}),
-    [presetMap, user?.role]
+    () => (canAutofill ? presetMap : {}),
+    [presetMap, canAutofill]
   )
 
   useEffect(() => {
@@ -248,12 +259,13 @@ export function DynamicFormRenderer({
   }, [allFields, getValues, onExportApiChange, templateValues])
 
   // Learner data only auto-fills for the learner themselves; today's date applies to everyone.
+  // Learner data auto-fills when a learner is in context; today's date applies to everyone.
   const getTablePresetValues = useCallback(
     () => ({
-      ...(user?.role === "Learner" ? presetMap : {}),
+      ...(canAutofill ? presetMap : {}),
       [TODAY_DATE_PRESET]: getTodayDateValue(),
     }),
-    [presetMap, user?.role]
+    [presetMap, canAutofill]
   )
 
   // Apply preset values and form data
@@ -267,7 +279,7 @@ export function DynamicFormRenderer({
 
       if (field.type === "table") {
         defaultValue = {}
-      } else if (user.role === "Learner" && field.presetField) {
+      } else if (canAutofill && field.presetField) {
         const presetValue = presetMap[field.presetField]
         if (presetValue !== undefined && presetValue !== null) {
           defaultValue = String(presetValue)
@@ -335,7 +347,7 @@ export function DynamicFormRenderer({
     })
 
     reset(defaultValues)
-  }, [fields, formDataDetails, user, presetMap, getTablePresetValues, reset, isLocked])
+  }, [fields, formDataDetails, user, canAutofill, presetMap, getTablePresetValues, reset, isLocked])
 
   const onSubmit = async (data: Record<string, unknown>) => {
     if (!user?.user_id) return
@@ -395,6 +407,8 @@ export function DynamicFormRenderer({
       if (user.role === "Learner") {
         setTimeout(() => {
           router.push(redirectAfterSave)
+          if (onDone) onDone()
+          else router.push("/learner-forms")
         }, 2000)
       }
     } catch (error: unknown) {
@@ -462,6 +476,8 @@ export function DynamicFormRenderer({
       toast.success(t("toast.draftSuccess"))
       setTimeout(() => {
         router.push(redirectAfterSave)
+        if (onDone) onDone()
+        else router.push("/learner-forms")
       }, 2000)
     } catch (error: unknown) {
       const errorMessage =

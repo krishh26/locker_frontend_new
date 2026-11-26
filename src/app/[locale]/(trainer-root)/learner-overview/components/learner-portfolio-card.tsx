@@ -5,7 +5,6 @@ import { useRouter } from '@/i18n/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import {
   Dialog,
@@ -46,6 +45,7 @@ export function LearnerPortfolioCard({
   onCommentUpdate,
 }: LearnerPortfolioCardProps) {
   const t = useTranslations('learnerOverview')
+  const progressT = useTranslations('learnerDashboard.infoCard.overallProgress')
   const router = useRouter()
   const [isEditingComment, setIsEditingComment] = useState(false)
   const [editedComment, setEditedComment] = useState('')
@@ -73,6 +73,7 @@ export function LearnerPortfolioCard({
         totalCompleted: 0,
         totalInProgress: 0,
         totalNotStarted: 0,
+        totalUnits: 0,
         completionPercentage: 0,
         countedCourses: 0,
       }
@@ -135,13 +136,13 @@ export function LearnerPortfolioCard({
 
   return (
     <>
-      <Card className='hover:shadow-lg transition-all duration-300 hover:-translate-y-1'>
-        <CardContent className='p-0'>
-          <div className='flex flex-col md:flex-row items-stretch md:items-center gap-4 px-4'>
-            {/* Section 1: Learner Info */}
-            <div className='flex-1 md:flex-2 flex items-center gap-4 p-4 rounded-lg border'>
+      <Card className='py-0 transition-shadow hover:shadow-md'>
+        <CardContent className='p-3 sm:px-4'>
+          <div className='flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6'>
+            {/* Learner info */}
+            <div className='flex min-w-0 items-center gap-3 lg:w-[34%] lg:shrink-0'>
               <Avatar
-                className='h-12 w-12 md:h-14 md:w-14 shrink-0'
+                className='h-10 w-10 shrink-0'
                 style={{ backgroundColor: avatarColor }}
               >
                 <AvatarImage
@@ -160,92 +161,96 @@ export function LearnerPortfolioCard({
                   }
                   alt={initials}
                 />
-                <AvatarFallback className='text-lg md:text-xl font-semibold'>
+                <AvatarFallback className='text-sm font-semibold'>
                   {initials}
                 </AvatarFallback>
               </Avatar>
 
-              <div className='flex-1 min-w-0'>
-                <h3 className='text-lg md:text-xl font-bold mb-2 truncate'>
+              <div className='min-w-0 flex-1'>
+                <h3 className='truncate text-sm sm:text-base font-semibold leading-tight'>
                   {learner?.first_name} {learner?.last_name}
                 </h3>
-
-                <div className='flex flex-col sm:flex-row gap-2 sm:gap-4 flex-wrap'>
-                  <div className='flex items-center gap-1.5'>
-                    <User className='h-4 w-4 text-primary' />
-                    <span className='text-sm font-semibold'>
-                      ID: {learner?.learner_id}
-                    </span>
-                  </div>
-
-                  <div className='flex items-center gap-1.5'>
-                    <MessageSquare className='h-4 w-4 text-blue-500' />
-                    <span className='text-sm font-semibold truncate max-w-[200px]'>
+                <div className='mt-0.5 flex min-w-0 items-center gap-3 text-xs text-muted-foreground'>
+                  <span className='flex shrink-0 items-center gap-1'>
+                    <User className='h-3.5 w-3.5 text-primary' />
+                    {learner?.learner_id}
+                  </span>
+                  <span className='flex min-w-0 items-center gap-1'>
+                    <MessageSquare className='h-3.5 w-3.5 shrink-0 text-blue-500' />
+                    <span className='truncate' title={learner?.comment || ''}>
                       {learner?.comment || t('card.noComment')}
                     </span>
                     <Button
                       variant='ghost'
-                      size='sm'
-                      className='h-6 w-6 p-0'
+                      size='icon'
+                      className='h-5 w-5 shrink-0'
                       onClick={handleOpenCommentDialog}
+                      aria-label={t('card.editCommentTitle')}
                     >
                       <Edit className='h-3 w-3 text-blue-500' />
                     </Button>
-                  </div>
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className='flex-1 md:flex-[1.5] p-4 rounded-lg border border-primary flex flex-col justify-center'>
-              <div className='flex justify-between items-center mb-2'>
-                <span className='text-sm md:text-base font-bold text-primary'>
+            {/* Overall progress */}
+            <div className='min-w-0 flex-1'>
+              <div className='mb-1 flex items-center justify-between gap-2'>
+                <span className='text-xs font-semibold text-primary'>
                   {t('card.overallProgress')}
                 </span>
-                <Badge className='bg-primary text-primary-foreground font-bold'>
+                <span className='text-xs font-bold text-primary'>
                   {overallProgressData.completionPercentage.toFixed(0)}%
-                </Badge>
+                </span>
               </div>
-
               <Progress
                 value={Math.min(overallProgressData.completionPercentage, 100)}
-                className='h-2 md:h-3 mb-2'
+                className='h-2'
               />
-
-              <div className='flex justify-between gap-2 text-xs md:text-sm'>
-                <div className='text-center flex-1'>
-                  <span className='font-semibold text-success'>
-                    ✓ {overallProgressData.totalCompleted}
-                  </span>
-                </div>
-                <div className='text-center flex-1'>
-                  <span className='font-semibold text-warning'>
-                    ⟳ {overallProgressData.totalInProgress}
-                  </span>
-                </div>
-                <div className='text-center flex-1'>
-                  <span className='font-semibold text-destructive'>
-                    ○ {overallProgressData.totalNotStarted}
-                  </span>
-                </div>
+              <div className='mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-muted-foreground'>
+                <span>
+                  {progressT('completed')}:{' '}
+                  <b className='text-success'>
+                    {overallProgressData.totalCompleted}
+                  </b>
+                </span>
+                <span>
+                  {progressT('inProgress')}:{' '}
+                  <b className='text-warning'>
+                    {overallProgressData.totalInProgress}
+                  </b>
+                </span>
+                <span>
+                  {progressT('pending')}:{' '}
+                  <b className='text-foreground'>
+                    {overallProgressData.totalNotStarted}
+                  </b>
+                </span>
+                <span className='sm:ml-auto'>
+                  {progressT('totalUnits', {
+                    units: overallProgressData.totalUnits,
+                    courses: overallProgressData.countedCourses,
+                  })}
+                </span>
               </div>
             </div>
 
-            <div className='flex-1 md:flex-[0.8] flex items-center justify-center'>
-              <Button
-                onClick={() => {
-                  if (learner?.learner_id) {
-                    router.push(`/learner-dashboard/${learner.learner_id}`)
-                  }
-                }}
-                className='w-full md:w-auto'
-                size='lg'
-                disabled={!learner?.learner_id}
-              >
-                <LayoutDashboard className='mr-2 h-4 w-4' />
-                {t('card.viewPortfolio')}
-                <ArrowRight className='ml-2 h-4 w-4' />
-              </Button>
-            </div>
+            {/* Action */}
+            <Button
+              onClick={() => {
+                if (learner?.learner_id) {
+                  router.push(`/learner-dashboard/${learner.learner_id}`)
+                }
+              }}
+              className='w-full lg:w-auto lg:shrink-0'
+              size='sm'
+              disabled={!learner?.learner_id}
+            >
+              <LayoutDashboard className='mr-1.5 h-4 w-4' />
+              {t('card.viewPortfolio')}
+              <ArrowRight className='ml-1.5 h-4 w-4' />
+            </Button>
           </div>
         </CardContent>
       </Card>

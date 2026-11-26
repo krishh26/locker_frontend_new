@@ -18,8 +18,12 @@ import html2canvas from "html2canvas-pro";
 import { Download, Eye, TrendingUp } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { SkillsScanProgressChart } from "./skills-scan-progress-chart";
+import {
+  SkillsScanProgressChart,
+  getUnitChartSeries,
+} from "./skills-scan-progress-chart";
 import { useTranslations } from "next-intl";
+import { ratesUnitDirectly } from "../utils/rating-target";
 
 export function SkillsScanViewResults() {
   const t = useTranslations("skillsScan");
@@ -44,8 +48,8 @@ export function SkillsScanViewResults() {
 
   const totalSkills = useMemo(() => {
     return units.reduce((sum: number, unit: CourseUnit) => {
-      // For Standard courses: if unit type is NOT "Duty", count as 1 skill; otherwise count subUnits
-      if (isStandardType && unit.type !== "Duty") {
+      // Standard units without KSB criteria count as 1 skill; otherwise count subUnits
+      if (ratesUnitDirectly(unit, isStandardType)) {
         return sum + 1;
       }
       return sum + (unit.subUnit?.length || 0);
@@ -54,8 +58,8 @@ export function SkillsScanViewResults() {
 
   const completedSkills = useMemo(() => {
     return units.reduce((sum: number, unit: CourseUnit) => {
-      // For Standard courses: if unit type is NOT "Duty", check unit's quarter_review
-      if (isStandardType && unit.type !== "Duty") {
+      // Standard units without KSB criteria: check the unit's quarter_review
+      if (ratesUnitDirectly(unit, isStandardType)) {
         const isCompleted =
           unit.quarter_review?.induction &&
           unit.quarter_review?.first &&
@@ -63,7 +67,7 @@ export function SkillsScanViewResults() {
           unit.quarter_review?.third;
         return sum + (isCompleted ? 1 : 0);
       }
-      // For Qualification courses or Duty units in Standard courses, check subUnits
+      // For Qualification units or Standard units with KSB criteria, check subUnits
       const completed = unit.subUnit?.filter(
         (sub) =>
           sub.quarter_review?.induction &&
@@ -74,6 +78,17 @@ export function SkillsScanViewResults() {
       return sum + completed;
     }, 0);
   }, [units, isStandardType]);
+
+  const selectedUnit = useMemo(
+    () => units.find((unit: CourseUnit) => unit.title === selectedTopic),
+    [units, selectedTopic]
+  );
+
+  // Same series (codes + colours) the chart draws, so the legend matches the lines.
+  const legendSeries = useMemo(
+    () => getUnitChartSeries(selectedUnit, isStandardType),
+    [selectedUnit, isStandardType]
+  );
 
   useEffect(() => {
     if (units.length > 0 && !selectedTopic) {
@@ -194,7 +209,7 @@ export function SkillsScanViewResults() {
                 <CardTitle className="text-base">{t("results.chart.title")}</CardTitle>
                 {units.length > 0 && (
                   <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-                    <SelectTrigger className="w-full sm:w-[250px]">
+                    <SelectTrigger className="w-full bg-background sm:w-[250px]">
                       <SelectValue placeholder={t("results.chart.selectTopicPlaceholder")} />
                     </SelectTrigger>
                     <SelectContent>
@@ -229,18 +244,33 @@ export function SkillsScanViewResults() {
             <CardTitle className="text-base">{t("results.legend.title")}</CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <div className="space-y-4">
-              {units.map((unit: CourseUnit) => (
-                <div key={unit.id} className="space-y-2">
-                  <h4 className="font-semibold">{unit.title}</h4>
-                  <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-                    {unit.subUnit?.map((sub, idx) => (
-                      <li key={sub.id || idx}>{sub.title}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+            {selectedUnit ? (
+              <div className="space-y-3">
+                <h4 className="font-semibold">{selectedUnit.title}</h4>
+                <ul className="space-y-2.5">
+                  {legendSeries.map((s) => (
+                    <li key={s.key} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="mt-1.5 size-2.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: s.color }}
+                      />
+                      <div className="min-w-0">
+                        {s.label !== s.title && (
+                          <span className="font-semibold" style={{ color: s.color }}>
+                            {s.label}
+                          </span>
+                        )}
+                        <p className="break-words text-xs leading-relaxed text-muted-foreground">
+                          {s.title}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">{t("results.chart.noData")}</p>
+            )}
           </CardContent>
         </Card>
       </div>

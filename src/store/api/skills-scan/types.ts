@@ -21,6 +21,8 @@ export type CourseUnit = {
 export type SubUnit = {
   id: string;
   title: string;
+  /** Standard criteria code, e.g. K1 / S1 / B1 */
+  code?: string;
   topics?: SubTopic[];
   rating?: number;
   type?: string;

@@ -162,7 +162,7 @@ export function LearnerOverviewPageContent() {
           ))}
         </div>
       ) : paginatedLearners.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-2">
           {paginatedLearners.map((learner) => (
             <LearnerPortfolioCard
               key={learner.learner_id}

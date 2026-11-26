@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, Download, FileText, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useRouter } from "@/i18n/navigation";
 
 interface FormSubmitPageContentProps {
   formId: string;
@@ -41,6 +42,17 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
     [searchParams]
   );
 
+  const router = useRouter();
+
+  // Return to wherever the form was opened from (learner forms, learning plan, etc.).
+  // Fall back to the learner forms list when the page was opened directly.
+  const goBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/learner-forms");
+    }
+  };
   const {
     data: formDetails,
     isLoading,
@@ -108,6 +120,7 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
           icon={FileText}
           showBackButton
           backButtonHref={backHref}
+          onBack={goBack}
         />
         <Card>
           <CardContent className="p-6">
@@ -131,6 +144,7 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
           icon={FileText}
           showBackButton
           backButtonHref={backHref}
+          onBack={goBack}
         />
         <Card>
           <CardContent className="p-6">
@@ -155,12 +169,14 @@ export function FormSubmitPageContent({ formId }: FormSubmitPageContentProps) {
         showBackButton
         backButtonHref={backHref}
         actions={downloadButton}
+        onBack={goBack}
       />
       <DynamicFormRenderer
         formId={formId}
         fields={formDetails.data.form_data || []}
         returnTo={backHref}
         onExportApiChange={handleExportApiChange}
+        onDone={goBack}
       />
     </div>
   );

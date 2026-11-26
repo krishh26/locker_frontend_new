@@ -1,5 +1,6 @@
 import { format, isValid } from "date-fns";
 import type { LearnerCourse, LearnerData } from "@/store/api/learner/types";
+import { convertToMatrixData } from "@/lib/learner-progress-utils";
 
 type PresetValue = string | number | null | undefined;
 
@@ -29,7 +30,41 @@ const personName = (person: PersonRef): string | undefined => {
 const asText = (value: unknown): string | undefined =>
   value === null || value === undefined || value === "" ? undefined : String(value);
 
-export const getMainCourse = (learner: LearnerData | null | undefined): LearnerCourse | undefined => {
+// The learner API sends employer_id as a plain id and the name as employer_name.
+const learnerEmployerName = (learner: LearnerData): string | undefined => {
+  const employer = learner.employer_id as { employer_name?: string } | null | undefined;
+  return (
+    asText(learner.employer_name) ??
+    (employer && typeof employer === "object" ? asText(employer.employer_name) : undefined)
+  );
+};
+
+/** Learner group presets, read from the learner record (not the logged-in user). */
+export const buildLearnerPresetMap = (
+  learner: LearnerData | null | undefined
+): Record<string, PresetValue> => {
+  if (!learner) return {};
+  const fullName = personName(learner as PersonRef);
+  return {
+    learnerFullName: fullName,
+    LearnerEmail: asText(learner.email),
+    LearnerPhoneNumber: asText(learner.mobile ?? learner.telephone),
+    uln: asText(learner.uln),
+    dob: toDateInputValue(learner.dob),
+    employer: learnerEmployerName(learner),
+    EmployeeName: fullName,
+  };
+};
+
+/** Same completion % as the learner dashboard: full units count 100%, partial units 50%. */
+const courseProgressPercent = (course: LearnerCourse): string | undefined => {
+  const { fullyCompleted, workInProgress, totalUnits } = convertToMatrixData(course);
+  if (!totalUnits) return undefined;
+  const percent = (fullyCompleted / totalUnits) * 100 + (workInProgress / totalUnits) * 50;
+  return `${Math.round(Math.min(Math.max(percent, 0), 100))}%`;
+};
+
+export const getMainCourse =(learner: LearnerData | null | undefined): LearnerCourse | undefined => {
   const courses = learner?.course ?? [];
   return courses.find((c) => c.is_main_course) ?? courses[0];
 };
@@ -60,12 +95,17 @@ export const buildCoursePresetMap = (
     courseStartDate: toDateInputValue(main.start_date),
     courseEndDate: toDateInputValue(main.end_date),
     courseStatus: asText(main.course_status),
+    courseProgress: courseProgressPercent(main),
     coursePredictedGrade: asText(main.predicted_grade),
     courseFinalGrade: asText(main.final_grade),
     // Older forms still reference courseTrainer; new forms use the Trainer group.
     courseTrainer: personName(trainer),
     courseIQA: personName(main.IQA_id as PersonRef),
-    courseEmployer: asText(employer?.employer?.employer_name) ?? personName(employer),
+    // Falls back to the learner's employer when the enrolment has none of its own.
+    courseEmployer:
+      asText(employer?.employer?.employer_name) ??
+      personName(employer) ??
+      (learner ? learnerEmployerName(learner) : undefined),
     TrainerFullName: personName(trainer),
     TrainerEmail: asText(trainer?.email),
   };

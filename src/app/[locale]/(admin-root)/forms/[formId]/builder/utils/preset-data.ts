@@ -210,6 +210,7 @@ export const PRESET_FIELDS: RolePresets = {
     coursePreset("course-start-date", "Start Date", "courseStartDate", "date"),
     coursePreset("course-end-date", "Expected End Date", "courseEndDate", "date"),
     coursePreset("course-status", "Course Status", "courseStatus"),
+    coursePreset("course-progress", "Course Progress", "courseProgress"),
     coursePreset("course-predicted-grade", "Predicted Grade", "coursePredictedGrade"),
     coursePreset("course-final-grade", "Final Grade", "courseFinalGrade"),
     coursePreset("course-iqa", "IQA", "courseIQA"),

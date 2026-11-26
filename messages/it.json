@@ -1022,6 +1022,7 @@
           "course-start-date": "Data di inizio",
           "course-end-date": "Data di fine prevista",
           "course-status": "Stato del corso",
+          "course-progress": "Avanzamento del corso",
           "course-predicted-grade": "Voto previsto",
           "course-final-grade": "Voto finale",
           "course-trainer": "Formatore",

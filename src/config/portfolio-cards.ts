@@ -8,7 +8,7 @@ export type PortfolioCard = MetricCard
  * nameKey is the i18n key under "portfolioCards" namespace.
  */
 export const portfolioCards: PortfolioCard[] = [
-  { id: 1, nameKey: "evidenceLibrary", color: "#FCA14E", route: "/evidence-library" },
+  { id: 1, nameKey: "evidenceLibrary", color: "#FCA14E", route: "/evidence-library?course_id=all" },
   { id: 2, nameKey: "unitProgress", color: "#8F78F4", route: "/module-unit-progress" },
   { id: 3, nameKey: "gapAnalysis", color: "#F44771", route: "/gap-analysis" },
   { id: 4, nameKey: "actionsAndActivities", color: "#009FB7", route: "/resources" },
@@ -22,26 +22,26 @@ export const portfolioCards: PortfolioCard[] = [
 ]
 
 /**
- * Overview cards shown on the main /portfolio page
- * IDs: 4 (Actions), 5 (Health), 9 (Time Log), 10 (Training), 11 (Docs)
+ * Overview cards shown on the learner dashboard
+ * IDs: 1 (Evidence), 4 (Actions), 5 (Health), 7 (Learning Plan), 9 (Time Log), 10 (Training), 11 (Docs)
  */
 export const overviewCards = portfolioCards.filter((card) =>
-  [4, 5, 9, 10, 11].includes(card.id)
+  [1, 4, 5, 7, 9, 10, 11].includes(card.id)
 )
 
 /**
  * Course-specific cards shown on course details page
- * IDs: 1 (Evidence), 2 (Unit Progress), 3 (Gap), 6 (Choose Units), 7 (Learning Plan), 8 (Resources)
+ * IDs: 1 (Evidence), 2 (Unit Progress), 3 (Gap), 6 (Choose Units), 8 (Resources)
  */
 export const courseCards = portfolioCards.filter((card) =>
-  [1, 2, 3, 6, 7, 8].includes(card.id)
+  [1, 2, 3, 6, 8].includes(card.id)
 )
 
 /**
  * Gateway course cards (subset of course cards)
- * IDs: 7 (Learning Plan), 8 (Resources)
+ * IDs: 8 (Resources)
  */
 export const gatewayCards = portfolioCards.filter((card) =>
-  [7, 8].includes(card.id)
+  [8].includes(card.id)
 )
 

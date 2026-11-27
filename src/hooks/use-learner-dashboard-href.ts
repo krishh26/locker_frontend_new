@@ -25,9 +25,16 @@ export function useLearnerDashboardHref(): string {
     return "/learner-overview"
   }
 
-  if (role === "Employer") {
-    return "/learners"
+  return "/learners"
+}
+
+/** Where staff return after leaving a learner dashboard. */
+export function useLearnerListHref(): string {
+  const role = useAppSelector((state) => state.auth.user?.role)
+
+  if (role === "Trainer") {
+    return "/learner-overview"
   }
 
-  return "/dashboard"
+  return "/learners"
 }

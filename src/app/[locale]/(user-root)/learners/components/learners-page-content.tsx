@@ -23,8 +23,6 @@ export function LearnersPageContent() {
         title={title}
         subtitle={subtitle}
         icon={GraduationCap}
-        showBackButton={isAdmin}
-        backButtonHref={isAdmin ? "/admin" : "/learner-overview"}
       />
 
       {/* Data Table */}

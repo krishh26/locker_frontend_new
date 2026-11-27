@@ -35,7 +35,7 @@ export function PortfolioMetricCards({
       countData={cardCountData}
       labelData={labelData}
       detailData={detailData}
-      variant="default"
+      variant="row"
     />
   )
 }

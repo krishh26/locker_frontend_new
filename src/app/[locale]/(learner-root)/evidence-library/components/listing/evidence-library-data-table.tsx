@@ -129,6 +129,9 @@ export function EvidenceLibraryDataTable() {
   const userId = learner?.user_id || "";
   const courseIdFromUrl = searchParams.get("course_id");
   const initialCourseFilter = (() => {
+    if (courseIdFromUrl === "all") {
+      return "all" as const;
+    }
     if (courseIdFromUrl && !Number.isNaN(Number(courseIdFromUrl))) {
       return Number(courseIdFromUrl);
     }
@@ -1016,6 +1019,10 @@ export function EvidenceLibraryDataTable() {
 
   // Keep course filter in sync when arriving from Course work "Go to assignment"
   useEffect(() => {
+    if (courseIdFromUrl === "all") {
+      setSelectedCourseFilter("all");
+      return;
+    }
     if (courseIdFromUrl && !Number.isNaN(Number(courseIdFromUrl))) {
       setSelectedCourseFilter(Number(courseIdFromUrl));
       return;

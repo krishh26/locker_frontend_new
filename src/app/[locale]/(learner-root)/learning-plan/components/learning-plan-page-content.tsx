@@ -10,8 +10,15 @@ import { useLearnerDashboardHref } from "@/hooks/use-learner-dashboard-href";
 
 export function LearningPlanPageContent() {
   const t = useTranslations("learningPlan");
+  const role = useAppSelector((state) => state.auth.user?.role);
   const currentCourseId = useAppSelector(selectCurrentCourseId);
   const learnerDashboardHref = useLearnerDashboardHref();
+  const backButtonHref =
+    role === "Admin"
+      ? learnerDashboardHref
+      : currentCourseId
+        ? `/course-details/${currentCourseId}`
+        : learnerDashboardHref;
   return (
     <div className="space-y-6 px-4 lg:px-6">
       {/* Page Header */}
@@ -20,11 +27,7 @@ export function LearningPlanPageContent() {
         subtitle={t("page.subtitle")}
         icon={Calendar} 
         showBackButton
-        backButtonHref={
-          currentCourseId
-            ? `/course-details/${currentCourseId}`
-            : learnerDashboardHref
-        }
+        backButtonHref={backButtonHref}
       />
 
       {/* Data Table */}

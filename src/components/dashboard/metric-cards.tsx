@@ -27,7 +27,7 @@ export interface MetricCardsProps {
   /** Optional course ID to append to routes */
   courseId?: string
   /** Grid layout variant */
-  variant?: "default" | "compact"
+  variant?: "default" | "compact" | "row"
 }
 
 const metricCardBgColors = [
@@ -54,12 +54,15 @@ export function MetricCards({
 }: MetricCardsProps) {
   const t = useTranslations("portfolioCards")
   const gridClasses =
-    variant === "compact"
+    variant === "row"
+      ? "grid gap-2 grid-cols-2 sm:grid-cols-4 xl:grid-cols-7"
+      : variant === "compact"
       ? "grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
       : "grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5"
 
-  const iconSize = variant === "compact" ? "w-12 h-12" : "w-16 h-16"
-  const textSize = variant === "compact" ? "text-lg" : "text-2xl"
+  const iconSize = variant === "row" ? "w-9 h-9" : variant === "compact" ? "w-12 h-12" : "w-16 h-16"
+  const textSize = variant === "row" ? "text-sm" : variant === "compact" ? "text-lg" : "text-2xl"
+  const titleSize = variant === "row" ? "text-xs leading-tight" : "text-sm"
 
   return (
     <div className={gridClasses}>
@@ -67,7 +70,8 @@ export function MetricCards({
         // Build route with optional courseId
         let route = card.route || "#"
         if (courseId && card.route) {
-          route = `${card.route}?course_id=${courseId}`
+          const path = card.route.split("?")[0]
+          route = `${path}?course_id=${courseId}`
         }
 
         // Get count for this card if available
@@ -86,8 +90,8 @@ export function MetricCards({
               "h-full shadow-sm transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
               metricCardBgColors[index % metricCardBgColors.length]
             )}>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center text-center space-y-3">
+              <CardContent className={variant === "row" ? "px-2 py-3" : undefined}>
+                <div className={`flex flex-col items-center justify-center text-center ${variant === "row" ? "space-y-2" : "space-y-3"}`}>
                   <div
                     className={`${iconSize} rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-md`}
                     style={{ backgroundColor: card.color }}
@@ -97,7 +101,7 @@ export function MetricCards({
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-semibold text-sm group-hover:text-white/80 transition-colors">
+                    <h3 className={`font-semibold ${titleSize} group-hover:text-white/80 transition-colors`}>
                       {displayName}
                     </h3>
                     {detail && (

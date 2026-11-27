@@ -13,6 +13,7 @@ import { AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PageHeader } from '@/components/dashboard/page-header'
 import { useTranslations } from 'next-intl'
+import { useLearnerListHref } from '@/hooks/use-learner-dashboard-href'
 
 interface LearnerDashboardViewerProps {
   learnerId: string
@@ -25,6 +26,7 @@ export function LearnerDashboardViewer({
 }: LearnerDashboardViewerProps) {
   const t = useTranslations('learnerDashboard')
   const router = useRouter()
+  const listHref = useLearnerListHref()
   const dispatch = useAppDispatch()
 
   // Parse learner ID from string to number
@@ -81,7 +83,7 @@ export function LearnerDashboardViewer({
             <div className='mt-4'>
               <Button
                 variant='outline'
-                onClick={() => router.push('/learner-overview')}
+                onClick={() => router.push(listHref)}
               >
                 {t('viewer.backToOverview')}
               </Button>
@@ -100,7 +102,7 @@ export function LearnerDashboardViewer({
           title={t('viewer.pageTitle', {
             name: `${learnerResponse?.data?.first_name ?? ''} ${learnerResponse?.data?.last_name ?? ''}`.trim() || '—',
           })}
-          backButtonHref='/learner-overview'
+          backButtonHref={listHref}
           showBackButton
         />
       </div>

@@ -15,7 +15,7 @@ const FOLDER_COLOR = {
   qualification: "#ef4444", // red
   standard: "#eab308", // yellow
   functionalSkills: "#10b981", // green
-  powerUp: "#10b981", // green
+  powerUp: "#2563eb", // blue
   fallback: "#94a3b8", // slate
 } as const
 
@@ -49,6 +49,7 @@ export function getCourseFolderColor(course: CourseColorSource): string {
 /** Legend shown under Learner Management. */
 export const COURSE_FOLDER_LEGEND = [
   { label: "Functional skills", color: FOLDER_COLOR.functionalSkills },
+  { label: "Power-up", color: FOLDER_COLOR.powerUp },
   { label: "Standards", color: FOLDER_COLOR.standard },
   { label: "Qualification", color: FOLDER_COLOR.qualification },
 ] as const

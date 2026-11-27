@@ -299,7 +299,9 @@ export function LearnerProfilePageContent({
   const backButtonHref = learnerId
     ? isLearner
       ? '/dashboard'
-      : `/learner-dashboard/${learnerId}`
+      : userRole === 'Admin'
+        ? '/learners'
+        : `/learner-dashboard/${learnerId}`
     : learnerDashboardHref
 
   // Handle loading state
